@@ -1,0 +1,55 @@
+# Task ID: 15
+# Title: Phase 3.1: Создание graph_client.py — клиент Knowledge Graph
+# Status: done
+# Dependencies: 14
+# Priority: high
+# Description: Модуль для работы с Knowledge Graph. Содержит классы GraphNode, GraphEdge, KnowledgeGraphClient. Загрузка графов из JSON, поиск узлов и связей, BFS-навигация.
+# Details:
+Файл: bot_agent/graph_client.py. Типы узлов: CONCEPT, PRACTICE, TECHNIQUE, EXERCISE, PATTERN, PROCESS_STAGE. Типы связей: IS_PRACTICE_FOR, IS_TECHNIQUE_FOR, ENABLES, REQUIRES, IS_PART_OF, HAS_PART, RELATED_TO. Источник данных: *.knowledge_graph.json или поле knowledge_graph внутри *.for_vector.json. Глобальный синглтон graph_client.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 3.1.1 Создать класс GraphNode [done]
+### Dependencies: None
+### Description: Класс узла Knowledge Graph: node_id, name, node_type (CONCEPT, PRACTICE, TECHNIQUE, EXERCISE, PATTERN, PROCESS_STAGE), metadata
+### Details:
+
+
+## 2. 3.1.2 Создать класс GraphEdge [done]
+### Dependencies: None
+### Description: Класс связи: from_id, to_id, from_name, to_name, edge_type, explanation, confidence (0.0-1.0), metadata
+### Details:
+
+
+## 3. 3.1.3 Создать KnowledgeGraphClient с загрузкой графов [done]
+### Dependencies: None
+### Description: Методы: load_graphs_from_all_documents, _find_graph_file_for_doc, _load_single_graph. Источник: *.knowledge_graph.json или поле knowledge_graph в for_vector.json
+### Details:
+
+
+## 4. 3.1.4 Реализовать методы поиска узлов [done]
+### Dependencies: None
+### Description: Методы: find_node (по имени, case-insensitive), find_node_by_id, node_by_name индекс для быстрого поиска
+### Details:
+
+
+## 5. 3.1.5 Реализовать методы поиска связей [done]
+### Dependencies: None
+### Description: Методы: get_related (outgoing/incoming/both), adjacency и reverse_adjacency индексы, фильтрация по edge_types
+### Details:
+
+
+## 6. 3.1.6 Реализовать навигационные методы [done]
+### Dependencies: None
+### Description: Методы: get_practices_for_concept, get_chain (BFS), get_prerequisites_for_concept, get_concept_hierarchy, get_statistics
+### Details:
+
+
+## 7. 3.1.7 Создать глобальный синглтон graph_client [done]
+### Dependencies: None
+### Description: Инстанс KnowledgeGraphClient для использования во всём проекте с lazy-loading
+### Details:
+
+

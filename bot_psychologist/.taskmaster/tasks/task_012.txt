@@ -1,6 +1,6 @@
 # Task ID: 12
 # Title: Phase 2.5: Обновление __init__.py
-# Status: pending
+# Status: done
 # Dependencies: 11
 # Priority: medium
 # Description: Обновить bot_agent/__init__.py — добавить импорт Phase 2 модулей и обновить __all__.
@@ -11,13 +11,13 @@
 
 
 # Subtasks:
-## 1. 2.5.1 Добавить импорт answer_sag_aware [pending]
+## 1. 2.5.1 Добавить импорт answer_sag_aware [done]
 ### Dependencies: None
 ### Description: from answer_sag_aware import answer_question_sag_aware
 ### Details:
 
 
-## 2. 2.5.2 Обновить __all__ и лог инициализации [pending]
+## 2. 2.5.2 Обновить __all__ и лог инициализации [done]
 ### Dependencies: None
 ### Description: Добавить answer_question_sag_aware в __all__, обновить лог: Phase 1 + Phase 2
 ### Details:

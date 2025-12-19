@@ -1,6 +1,6 @@
 # Task ID: 10
 # Title: Phase 2.3: Создание semantic_analyzer.py
-# Status: pending
+# Status: done
 # Dependencies: 8
 # Priority: high
 # Description: Модуль для анализа семантических отношений между концептами в найденных блоках. Извлечение primary_concepts, related_concepts, conceptual_links.
@@ -11,25 +11,25 @@
 
 
 # Subtasks:
-## 1. 2.3.1 Создать SemanticAnalyzer class [pending]
+## 1. 2.3.1 Создать SemanticAnalyzer class [done]
 ### Dependencies: None
 ### Description: Базовый класс для анализа семантических отношений между концептами
 ### Details:
 
 
-## 2. 2.3.2 Реализовать analyze_relations [pending]
+## 2. 2.3.2 Реализовать analyze_relations [done]
 ### Dependencies: None
 ### Description: Возвращает Dict с primary_concepts, related_concepts, conceptual_links, analysis_summary
 ### Details:
 
 
-## 3. 2.3.3 Реализовать _find_related_concepts и _extract_conceptual_links [pending]
+## 3. 2.3.3 Реализовать _find_related_concepts и _extract_conceptual_links [done]
 ### Dependencies: None
 ### Description: Поиск связей между концептами через совместное появление в блоках
 ### Details:
 
 
-## 4. 2.3.4 Реализовать _generate_analysis_summary [pending]
+## 4. 2.3.4 Реализовать _generate_analysis_summary [done]
 ### Dependencies: None
 ### Description: Генерация текстового резюме семантического анализа
 ### Details:

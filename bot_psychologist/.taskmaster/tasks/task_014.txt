@@ -1,6 +1,6 @@
 # Task ID: 14
 # Title: Phase 2.7: Финальная проверка и валидация Phase 2
-# Status: pending
+# Status: done
 # Dependencies: 13
 # Priority: medium
 # Description: Финальная проверка всех компонентов Phase 2 по чек-листу. Валидация результатов и готовности к Phase 3.
@@ -11,13 +11,13 @@
 
 
 # Subtasks:
-## 1. 2.7.1 Пройти чек-лист Phase 2 [pending]
+## 1. 2.7.1 Пройти чек-лист Phase 2 [done]
 ### Dependencies: None
 ### Description: Проверить: data_loader.py обновлён, все модули созданы, __init__.py обновлён, тесты проходят
 ### Details:
 
 
-## 2. 2.7.2 Валидация результатов Phase 2 [pending]
+## 2. 2.7.2 Валидация результатов Phase 2 [done]
 ### Dependencies: None
 ### Description: Ответы адаптируются под уровень, концепты извлекаются, готовность к Phase 3
 ### Details:

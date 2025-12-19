@@ -1,0 +1,43 @@
+# Task ID: 16
+# Title: Phase 3.2: Создание practices_recommender.py — рекомендатор практик
+# Status: done
+# Dependencies: 15
+# Priority: high
+# Description: Модуль для рекомендации практик, техник и упражнений на основе Knowledge Graph. Построение путей обучения между концептами.
+# Details:
+Файл: bot_agent/practices_recommender.py. Класс PracticesRecommender с методами: suggest_practices_for_concept (поиск практик через граф + привязка к блокам), get_learning_path (BFS от start_concept к target_concept через граф), get_practice_details (детали практики из блоков). Глобальный синглтон practices_recommender.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 3.2.1 Создать класс PracticesRecommender [done]
+### Dependencies: None
+### Description: Базовый класс с инициализацией graph_client.load_graphs_from_all_documents()
+### Details:
+
+
+## 2. 3.2.2 Реализовать suggest_practices_for_concept [done]
+### Dependencies: None
+### Description: Поиск практик через граф для концепта, привязка к блокам по graph_entities, возврат Dict с practice_name, type, confidence, source_blocks
+### Details:
+
+
+## 3. 3.2.3 Реализовать get_learning_path [done]
+### Dependencies: None
+### Description: Построение пути обучения от start_concept к target_concept через BFS или на основе prerequisites
+### Details:
+
+
+## 4. 3.2.4 Реализовать get_practice_details [done]
+### Dependencies: None
+### Description: Получение полной информации о практике: description, full_content, source_blocks из блоков по graph_entities
+### Details:
+
+
+## 5. 3.2.5 Создать глобальный синглтон practices_recommender [done]
+### Dependencies: None
+### Description: Инстанс PracticesRecommender для использования в answer_graph_powered
+### Details:
+
+

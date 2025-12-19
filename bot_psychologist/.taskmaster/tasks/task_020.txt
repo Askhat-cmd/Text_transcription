@@ -1,0 +1,25 @@
+# Task ID: 20
+# Title: Phase 3.6: Финальная проверка и валидация Phase 3
+# Status: done
+# Dependencies: 19
+# Priority: medium
+# Description: Финальная проверка всех компонентов Phase 3 по чек-листу. Валидация загрузки графов, поиска практик, построения цепочек и иерархии концептов.
+# Details:
+Чек-лист: graph_client.py создан и загружает графы, practices_recommender.py создан и находит практики, answer_graph_powered.py создан и работает, __init__.py обновлён, test_phase3.py создан и проходит, графы загружаются корректно, практики рекомендуются, цепочки связей строятся, иерархия концептов отображается.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 3.6.1 Пройти чек-лист Phase 3 [done]
+### Dependencies: None
+### Description: Проверить: graph_client.py создан, practices_recommender.py создан, answer_graph_powered.py создан, __init__.py обновлён, test_phase3.py создан и проходит
+### Details:
+
+
+## 2. 3.6.2 Валидация результатов Phase 3 [done]
+### Dependencies: None
+### Description: Графы успешно загружаются, практики находятся и рекомендуются, цепочки связей строятся, иерархия концептов отображается правильно
+### Details:
+
+

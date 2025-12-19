@@ -636,11 +636,321 @@
             "parentTaskId": 14
           }
         ]
+      },
+      {
+        "id": 15,
+        "title": "Phase 3.1: Создание graph_client.py — клиент Knowledge Graph",
+        "description": "Модуль для работы с Knowledge Graph. Содержит классы GraphNode, GraphEdge, KnowledgeGraphClient. Загрузка графов из JSON, поиск узлов и связей, BFS-навигация.",
+        "details": "Файл: bot_agent/graph_client.py. Типы узлов: CONCEPT, PRACTICE, TECHNIQUE, EXERCISE, PATTERN, PROCESS_STAGE. Типы связей: IS_PRACTICE_FOR, IS_TECHNIQUE_FOR, ENABLES, REQUIRES, IS_PART_OF, HAS_PART, RELATED_TO. Источник данных: *.knowledge_graph.json или поле knowledge_graph внутри *.for_vector.json. Глобальный синглтон graph_client.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          14
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.1.1 Создать класс GraphNode",
+            "description": "Класс узла Knowledge Graph: node_id, name, node_type (CONCEPT, PRACTICE, TECHNIQUE, EXERCISE, PATTERN, PROCESS_STAGE), metadata",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 2,
+            "title": "3.1.2 Создать класс GraphEdge",
+            "description": "Класс связи: from_id, to_id, from_name, to_name, edge_type, explanation, confidence (0.0-1.0), metadata",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 3,
+            "title": "3.1.3 Создать KnowledgeGraphClient с загрузкой графов",
+            "description": "Методы: load_graphs_from_all_documents, _find_graph_file_for_doc, _load_single_graph. Источник: *.knowledge_graph.json или поле knowledge_graph в for_vector.json",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 4,
+            "title": "3.1.4 Реализовать методы поиска узлов",
+            "description": "Методы: find_node (по имени, case-insensitive), find_node_by_id, node_by_name индекс для быстрого поиска",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 5,
+            "title": "3.1.5 Реализовать методы поиска связей",
+            "description": "Методы: get_related (outgoing/incoming/both), adjacency и reverse_adjacency индексы, фильтрация по edge_types",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 6,
+            "title": "3.1.6 Реализовать навигационные методы",
+            "description": "Методы: get_practices_for_concept, get_chain (BFS), get_prerequisites_for_concept, get_concept_hierarchy, get_statistics",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 7,
+            "title": "3.1.7 Создать глобальный синглтон graph_client",
+            "description": "Инстанс KnowledgeGraphClient для использования во всём проекте с lazy-loading",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 15
+          }
+        ]
+      },
+      {
+        "id": 16,
+        "title": "Phase 3.2: Создание practices_recommender.py — рекомендатор практик",
+        "description": "Модуль для рекомендации практик, техник и упражнений на основе Knowledge Graph. Построение путей обучения между концептами.",
+        "details": "Файл: bot_agent/practices_recommender.py. Класс PracticesRecommender с методами: suggest_practices_for_concept (поиск практик через граф + привязка к блокам), get_learning_path (BFS от start_concept к target_concept через граф), get_practice_details (детали практики из блоков). Глобальный синглтон practices_recommender.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          15
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.2.1 Создать класс PracticesRecommender",
+            "description": "Базовый класс с инициализацией graph_client.load_graphs_from_all_documents()",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 2,
+            "title": "3.2.2 Реализовать suggest_practices_for_concept",
+            "description": "Поиск практик через граф для концепта, привязка к блокам по graph_entities, возврат Dict с practice_name, type, confidence, source_blocks",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 3,
+            "title": "3.2.3 Реализовать get_learning_path",
+            "description": "Построение пути обучения от start_concept к target_concept через BFS или на основе prerequisites",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 4,
+            "title": "3.2.4 Реализовать get_practice_details",
+            "description": "Получение полной информации о практике: description, full_content, source_blocks из блоков по graph_entities",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 5,
+            "title": "3.2.5 Создать глобальный синглтон practices_recommender",
+            "description": "Инстанс PracticesRecommender для использования в answer_graph_powered",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 16
+          }
+        ]
+      },
+      {
+        "id": 17,
+        "title": "Phase 3.3: Создание answer_graph_powered.py — Graph-Powered QA",
+        "description": "Функция answer_question_graph_powered для ответов с полной поддержкой Knowledge Graph. 8 этапов обработки: от базового поиска до формирования ответа с практиками и цепочками.",
+        "details": "Файл: bot_agent/answer_graph_powered.py. Этапы: 1) Инициализация, 2) Поиск блоков, 3) Загрузка Knowledge Graph, 4) Анализ концептов через граф, 5) Формирование ответа, 6) Рекомендация практик, 7) Анализ цепочек, 8) Форматирование результата. Возвращает расширенный Dict: status, answer, sources, concepts, relations, practices, concept_hierarchy, learning_path, metadata.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          15,
+          16
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.3.1 Создать структуру answer_question_graph_powered с импортами",
+            "description": "Импорты: data_loader, retriever, LLMAnswerer, UserLevelAdapter, SemanticAnalyzer, graph_client, practices_recommender, config",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 2,
+            "title": "3.3.2 Этапы 1-2: Базовая обработка и поиск блоков",
+            "description": "Инициализация компонентов (как в Phase 2), поиск релевантных блоков через retriever",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 3,
+            "title": "3.3.3 Этапы 3-4: Загрузка Knowledge Graph и анализ концептов",
+            "description": "Загрузка графов, получение иерархии концептов через get_concept_hierarchy для primary_concepts",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 4,
+            "title": "3.3.4 Этап 5: Формирование ответа через LLM",
+            "description": "Обогащённый контекст с информацией из графа (структура концептов), генерация ответа через LLMAnswerer",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 5,
+            "title": "3.3.5 Этапы 6-7: Рекомендация практик и анализ цепочек",
+            "description": "suggest_practices_for_concept для main_concept, get_learning_path между primary_concepts",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 6,
+            "title": "3.3.6 Этап 8: Форматирование результата",
+            "description": "Возврат Dict: status, answer, sources, concepts, relations, practices, concept_hierarchy, learning_path, metadata, debug",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 17
+          }
+        ]
+      },
+      {
+        "id": 18,
+        "title": "Phase 3.4: Обновление __init__.py для Phase 3",
+        "description": "Обновить bot_agent/__init__.py — добавить импорт Phase 3 модулей и обновить __all__.",
+        "details": "Файл: bot_agent/__init__.py. Добавить: from answer_graph_powered import answer_question_graph_powered. Обновить __all__ с новыми экспортами. Обновить лог инициализации: Phase 1 + Phase 2 + Phase 3.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          17
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.4.1 Добавить импорт answer_graph_powered",
+            "description": "from answer_graph_powered import answer_question_graph_powered",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 2,
+            "title": "3.4.2 Обновить __all__ и лог инициализации",
+            "description": "Добавить answer_question_graph_powered в __all__, обновить лог: Phase 1 + Phase 2 + Phase 3",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 18
+          }
+        ]
+      },
+      {
+        "id": 19,
+        "title": "Phase 3.5: Создание test_phase3.py",
+        "description": "Тестовый скрипт для проверки Phase 3 функциональности с разными уровнями пользователей, проверкой практик, цепочек и иерархии концептов.",
+        "details": "Файл: test_phase3.py. Тестовые кейсы: (вопрос, уровень, with_practices, with_chain). Проверка: status, processing_time, answer, concepts, practices, learning_path, concept_hierarchy. Debug-вывод с graph_stats.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          18
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.5.1 Создать test_phase3.py с тестовыми кейсами",
+            "description": "Тестовые комбинации: (вопрос, уровень, with_practices, with_chain) для beginner/intermediate/advanced",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 2,
+            "title": "3.5.2 Реализовать вывод результатов Phase 3",
+            "description": "Вывод: status, processing_time, answer, concepts, practices, learning_path, concept_hierarchy, debug (graph_stats)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 3,
+            "title": "3.5.3 Запуск и верификация тестов Phase 3",
+            "description": "Выполнить python test_phase3.py, проверить: графы загружаются, практики рекомендуются, цепочки строятся, иерархия отображается",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 19
+          }
+        ]
+      },
+      {
+        "id": 20,
+        "title": "Phase 3.6: Финальная проверка и валидация Phase 3",
+        "description": "Финальная проверка всех компонентов Phase 3 по чек-листу. Валидация загрузки графов, поиска практик, построения цепочек и иерархии концептов.",
+        "details": "Чек-лист: graph_client.py создан и загружает графы, practices_recommender.py создан и находит практики, answer_graph_powered.py создан и работает, __init__.py обновлён, test_phase3.py создан и проходит, графы загружаются корректно, практики рекомендуются, цепочки связей строятся, иерархия концептов отображается.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          19
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "3.6.1 Пройти чек-лист Phase 3",
+            "description": "Проверить: graph_client.py создан, practices_recommender.py создан, answer_graph_powered.py создан, __init__.py обновлён, test_phase3.py создан и проходит",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 2,
+            "title": "3.6.2 Валидация результатов Phase 3",
+            "description": "Графы успешно загружаются, практики находятся и рекомендуются, цепочки связей строятся, иерархия концептов отображается правильно",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 20
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-12-19T04:02:29.457Z",
-      "updated": "2025-12-19T06:17:34.285Z",
+      "updated": "2025-12-19T06:47:06.033Z",
       "description": "Tasks for master context"
     }
   }

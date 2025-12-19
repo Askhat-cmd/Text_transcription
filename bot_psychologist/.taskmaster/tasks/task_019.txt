@@ -1,0 +1,31 @@
+# Task ID: 19
+# Title: Phase 3.5: Создание test_phase3.py
+# Status: done
+# Dependencies: 18
+# Priority: medium
+# Description: Тестовый скрипт для проверки Phase 3 функциональности с разными уровнями пользователей, проверкой практик, цепочек и иерархии концептов.
+# Details:
+Файл: test_phase3.py. Тестовые кейсы: (вопрос, уровень, with_practices, with_chain). Проверка: status, processing_time, answer, concepts, practices, learning_path, concept_hierarchy. Debug-вывод с graph_stats.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 3.5.1 Создать test_phase3.py с тестовыми кейсами [done]
+### Dependencies: None
+### Description: Тестовые комбинации: (вопрос, уровень, with_practices, with_chain) для beginner/intermediate/advanced
+### Details:
+
+
+## 2. 3.5.2 Реализовать вывод результатов Phase 3 [done]
+### Dependencies: None
+### Description: Вывод: status, processing_time, answer, concepts, practices, learning_path, concept_hierarchy, debug (graph_stats)
+### Details:
+
+
+## 3. 3.5.3 Запуск и верификация тестов Phase 3 [done]
+### Dependencies: None
+### Description: Выполнить python test_phase3.py, проверить: графы загружаются, практики рекомендуются, цепочки строятся, иерархия отображается
+### Details:
+
+

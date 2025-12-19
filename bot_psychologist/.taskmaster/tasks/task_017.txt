@@ -1,0 +1,49 @@
+# Task ID: 17
+# Title: Phase 3.3: Создание answer_graph_powered.py — Graph-Powered QA
+# Status: done
+# Dependencies: 15, 16
+# Priority: high
+# Description: Функция answer_question_graph_powered для ответов с полной поддержкой Knowledge Graph. 8 этапов обработки: от базового поиска до формирования ответа с практиками и цепочками.
+# Details:
+Файл: bot_agent/answer_graph_powered.py. Этапы: 1) Инициализация, 2) Поиск блоков, 3) Загрузка Knowledge Graph, 4) Анализ концептов через граф, 5) Формирование ответа, 6) Рекомендация практик, 7) Анализ цепочек, 8) Форматирование результата. Возвращает расширенный Dict: status, answer, sources, concepts, relations, practices, concept_hierarchy, learning_path, metadata.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 3.3.1 Создать структуру answer_question_graph_powered с импортами [done]
+### Dependencies: None
+### Description: Импорты: data_loader, retriever, LLMAnswerer, UserLevelAdapter, SemanticAnalyzer, graph_client, practices_recommender, config
+### Details:
+
+
+## 2. 3.3.2 Этапы 1-2: Базовая обработка и поиск блоков [done]
+### Dependencies: None
+### Description: Инициализация компонентов (как в Phase 2), поиск релевантных блоков через retriever
+### Details:
+
+
+## 3. 3.3.3 Этапы 3-4: Загрузка Knowledge Graph и анализ концептов [done]
+### Dependencies: None
+### Description: Загрузка графов, получение иерархии концептов через get_concept_hierarchy для primary_concepts
+### Details:
+
+
+## 4. 3.3.4 Этап 5: Формирование ответа через LLM [done]
+### Dependencies: None
+### Description: Обогащённый контекст с информацией из графа (структура концептов), генерация ответа через LLMAnswerer
+### Details:
+
+
+## 5. 3.3.5 Этапы 6-7: Рекомендация практик и анализ цепочек [done]
+### Dependencies: None
+### Description: suggest_practices_for_concept для main_concept, get_learning_path между primary_concepts
+### Details:
+
+
+## 6. 3.3.6 Этап 8: Форматирование результата [done]
+### Dependencies: None
+### Description: Возврат Dict: status, answer, sources, concepts, relations, practices, concept_hierarchy, learning_path, metadata, debug
+### Details:
+
+

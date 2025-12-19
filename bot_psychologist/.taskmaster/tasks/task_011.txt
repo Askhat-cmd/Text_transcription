@@ -1,6 +1,6 @@
 # Task ID: 11
 # Title: Phase 2.4: Создание answer_sag_aware.py
-# Status: pending
+# Status: done
 # Dependencies: 9, 10
 # Priority: high
 # Description: Новая функция answer_question_sag_aware для ответов с учетом SAG v2.0. Интеграция UserLevelAdapter и SemanticAnalyzer. 6 этапов обработки запроса.
@@ -11,31 +11,31 @@
 
 
 # Subtasks:
-## 1. 2.4.1 Создать структуру answer_question_sag_aware с импортами [pending]
+## 1. 2.4.1 Создать структуру answer_question_sag_aware с импортами [done]
 ### Dependencies: None
 ### Description: Импорты: data_loader, retriever, LLMAnswerer, UserLevelAdapter, SemanticAnalyzer, config
 ### Details:
 
 
-## 2. 2.4.2 Этап 1-2: Инициализация компонентов и поиск блоков [pending]
+## 2. 2.4.2 Этап 1-2: Инициализация компонентов и поиск блоков [done]
 ### Dependencies: None
 ### Description: Загрузка данных, создание level_adapter и semantic_analyzer, поиск через retriever
 ### Details:
 
 
-## 3. 2.4.3 Этап 3-4: Адаптация по уровню и семантический анализ [pending]
+## 3. 2.4.3 Этап 3-4: Адаптация по уровню и семантический анализ [done]
 ### Dependencies: None
 ### Description: filter_blocks_by_level, analyze_relations для извлечения концептов
 ### Details:
 
 
-## 4. 2.4.4 Этап 5: Формирование ответа через LLM [pending]
+## 4. 2.4.4 Этап 5: Формирование ответа через LLM [done]
 ### Dependencies: None
 ### Description: adapted_system_prompt, расширенный контекст с концептами, generate_answer
 ### Details:
 
 
-## 5. 2.4.5 Этап 6: Форматирование вывода [pending]
+## 5. 2.4.5 Этап 6: Форматирование вывода [done]
 ### Dependencies: None
 ### Description: Возврат Dict с status, answer, sources, concepts, relations, metadata, debug
 ### Details:

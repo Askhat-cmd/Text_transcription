@@ -1,0 +1,46 @@
+# Task ID: 50
+# Title: Phase 6.15: Финальная проверка и валидация Phase 6
+# Status: pending
+# Dependencies: 49
+# Priority: medium
+# Description: Финальная проверка всех компонентов Phase 6 по чек-листу из Phase_6.md. Валидация готовности Web UI к production.
+# Details:
+Чек-лист Phase 6:
+- [ ] Создан проект React + TypeScript + Vite
+- [ ] Установлены зависимости (Tailwind, React Router, Axios, Zustand)
+- [ ] Создана структура типов (API, Chat, User)
+- [ ] Создан API Service с интеграцией к Phase 5
+- [ ] Создано 5+ custom hooks (useChat, useAPI, useTheme, useLocalStorage, useWebSocket)
+- [ ] Созданы компоненты chat (ChatWindow, Message, InputBox, TypingIndicator)
+- [ ] Созданы компоненты insights (StateCard, SourcesList, PathBuilder)
+- [ ] Созданы компоненты profile (UserProfile, InterestsCard, StatisticsCard)
+- [ ] Созданы компоненты feedback (FeedbackWidget, RatingStars)
+- [ ] Созданы страницы (HomePage, ChatPage, ProfilePage, SettingsPage, NotFoundPage)
+- [ ] Настроен Tailwind CSS + Dark Mode
+- [ ] Реализована валидация API ключа
+- [ ] Dev server запущен и работает
+- [ ] UI отзывчив на мобильных устройствах
+- [ ] Все тесты проходят
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.15.1 Пройти чек-лист Phase 6 [pending]
+### Dependencies: None
+### Description: Проверить все файлы: types, services, hooks, components, pages, styles, utils
+### Details:
+
+
+## 2. 6.15.2 Валидация интеграции с Phase 5 [pending]
+### Dependencies: None
+### Description: API key auth работает, все endpoints отвечают, данные отображаются корректно
+### Details:
+
+
+## 3. 6.15.3 Подтвердить готовность к production [pending]
+### Dependencies: None
+### Description: Dev server стабильный, UI responsive, все тесты проходят, готовность к deployment
+### Details:
+
+

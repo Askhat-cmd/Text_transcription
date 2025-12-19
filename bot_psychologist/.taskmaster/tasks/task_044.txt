@@ -1,0 +1,35 @@
+# Task ID: 44
+# Title: Phase 6.9: Создание компонентов обратной связи (feedback)
+# Status: pending
+# Dependencies: 38
+# Priority: medium
+# Description: Создание компонентов для сбора обратной связи от пользователя согласно структуре Phase_6.md.
+# Details:
+Файлы:
+1. src/components/feedback/FeedbackWidget.tsx — виджет обратной связи:
+   - Positive/Negative/Neutral buttons
+   - Rating stars (1-5)
+   - Optional comment field
+   - Submit handler с apiService.submitFeedback
+   
+2. src/components/feedback/RatingStars.tsx — компонент звёзд:
+   - 5 звёзд с hover state
+   - onClick handler
+   - Controlled value prop
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.9.1 Создать FeedbackWidget.tsx [pending]
+### Dependencies: None
+### Description: Виджет обратной связи: positive/negative/neutral buttons, rating stars, comment field, submit handler
+### Details:
+
+
+## 2. 6.9.2 Создать RatingStars.tsx [pending]
+### Dependencies: None
+### Description: Компонент 5 звёзд: hover state, onClick handler, controlled value prop
+### Details:
+
+

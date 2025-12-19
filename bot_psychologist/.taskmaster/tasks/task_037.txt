@@ -1,0 +1,36 @@
+# Task ID: 37
+# Title: Phase 6.2: Создание TypeScript типов
+# Status: pending
+# Dependencies: 36
+# Priority: high
+# Description: Создание файлов типов для строгой типизации всего приложения. Типы для API responses, Chat state, User profile согласно Phase_6.md Шаг 2.
+# Details:
+Файлы:
+1. src/types/api.types.ts — StateAnalysis, PathStep, PathRecommendation, Source, AdaptiveAnswerResponse, UserHistoryResponse, ConversationTurn, FeedbackRequest
+2. src/types/chat.types.ts — Message, ChatState, UserSettings с импортом из api.types.ts
+3. src/types/user.types.ts — UserProfile, UserStats
+
+Все типы должны соответствовать структуре ответов Phase 5 API.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.2.1 Создать api.types.ts [pending]
+### Dependencies: None
+### Description: Типы: StateAnalysis, PathStep, PathRecommendation, Source, AdaptiveAnswerResponse, UserHistoryResponse, ConversationTurn, FeedbackRequest
+### Details:
+
+
+## 2. 6.2.2 Создать chat.types.ts [pending]
+### Dependencies: None
+### Description: Типы: Message, ChatState, UserSettings с импортом Source и PathRecommendation из api.types
+### Details:
+
+
+## 3. 6.2.3 Создать user.types.ts [pending]
+### Dependencies: None
+### Description: Типы: UserProfile, UserStats
+### Details:
+
+

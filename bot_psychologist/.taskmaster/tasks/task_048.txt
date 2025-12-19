@@ -1,0 +1,47 @@
+# Task ID: 48
+# Title: Phase 6.13: Создание утилит (utils)
+# Status: pending
+# Dependencies: 36
+# Priority: low
+# Description: Создание вспомогательных утилит для приложения.
+# Details:
+Файлы:
+1. src/utils/constants.ts — константы:
+   - API endpoints
+   - Default values
+   - State colors mapping
+   - State emojis mapping
+
+2. src/utils/helpers.ts — вспомогательные функции:
+   - formatTime (seconds → MM:SS)
+   - generateUserId
+   - truncateText
+   - classNames helper (clsx wrapper)
+
+3. src/utils/validators.ts — валидаторы:
+   - isValidApiKey
+   - isValidUserId
+   - sanitizeInput
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.13.1 Создать constants.ts [pending]
+### Dependencies: None
+### Description: API endpoints, default values, state colors mapping, state emojis mapping
+### Details:
+
+
+## 2. 6.13.2 Создать helpers.ts [pending]
+### Dependencies: None
+### Description: formatTime, generateUserId, truncateText, classNames helper
+### Details:
+
+
+## 3. 6.13.3 Создать validators.ts [pending]
+### Dependencies: None
+### Description: isValidApiKey, isValidUserId, sanitizeInput
+### Details:
+
+

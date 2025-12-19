@@ -1,0 +1,43 @@
+# Task ID: 40
+# Title: Phase 6.5: Создание общих компонентов (common)
+# Status: pending
+# Dependencies: 36
+# Priority: medium
+# Description: Создание переиспользуемых UI компонентов: Header, Sidebar, Footer, Loader согласно структуре Phase_6.md.
+# Details:
+Файлы:
+1. src/components/common/Header.tsx — верхняя панель с логотипом, навигацией, theme toggle
+2. src/components/common/Sidebar.tsx — боковая панель навигации (опционально)
+3. src/components/common/Footer.tsx — нижняя панель с информацией
+4. src/components/common/Loader.tsx — индикатор загрузки (spinner)
+
+Все компоненты должны поддерживать dark mode через Tailwind CSS классы.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.5.1 Создать Header.tsx [pending]
+### Dependencies: None
+### Description: Верхняя панель: логотип, навигация, theme toggle button
+### Details:
+
+
+## 2. 6.5.2 Создать Sidebar.tsx [pending]
+### Dependencies: None
+### Description: Боковая панель навигации (опционально)
+### Details:
+
+
+## 3. 6.5.3 Создать Footer.tsx [pending]
+### Dependencies: None
+### Description: Нижняя панель с информацией о версии
+### Details:
+
+
+## 4. 6.5.4 Создать Loader.tsx [pending]
+### Dependencies: None
+### Description: Индикатор загрузки (spinner) с анимацией
+### Details:
+
+

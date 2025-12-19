@@ -11,7 +11,7 @@ import requests
 import json
 from datetime import datetime
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:8001"
 API_KEY = "test-key-001"
 
 

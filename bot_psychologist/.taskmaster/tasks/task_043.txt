@@ -1,0 +1,45 @@
+# Task ID: 43
+# Title: Phase 6.8: Создание компонентов профиля (profile)
+# Status: pending
+# Dependencies: 39
+# Priority: medium
+# Description: Создание компонентов для отображения профиля пользователя согласно структуре Phase_6.md.
+# Details:
+Файлы:
+1. src/components/profile/UserProfile.tsx — основной профиль:
+   - User ID, User Level
+   - Total questions
+   - Average rating
+   - Last interaction
+   
+2. src/components/profile/InterestsCard.tsx — карточка интересов:
+   - Primary interests (tags)
+   - Top concepts
+   
+3. src/components/profile/StatisticsCard.tsx — статистика:
+   - Total turns
+   - Top states distribution
+   - Rating history
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.8.1 Создать UserProfile.tsx [pending]
+### Dependencies: None
+### Description: Основной профиль: User ID, User Level, total questions, average rating, last interaction
+### Details:
+
+
+## 2. 6.8.2 Создать InterestsCard.tsx [pending]
+### Dependencies: None
+### Description: Карточка интересов: primary interests tags, top concepts
+### Details:
+
+
+## 3. 6.8.3 Создать StatisticsCard.tsx [pending]
+### Dependencies: None
+### Description: Статистика: total turns, top states distribution, rating history
+### Details:
+
+

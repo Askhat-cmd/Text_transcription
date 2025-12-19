@@ -1,0 +1,62 @@
+# Task ID: 39
+# Title: Phase 6.4: Создание Custom Hooks
+# Status: pending
+# Dependencies: 38
+# Priority: high
+# Description: Создание React hooks для управления состоянием, API вызовами и темой согласно Phase_6.md Шаг 4.
+# Details:
+Файлы:
+1. src/hooks/useChat.ts — основной hook для чата:
+   - messages state, isLoading, error, currentUserState
+   - addMessage, sendQuestion, clearChat методы
+   - интеграция с apiService.askAdaptiveQuestion
+   - обновление currentUserState из state_analysis
+
+2. src/hooks/useAPI.ts — generic async hook:
+   - data, isLoading, error states
+   - execute callback
+   - error handling
+
+3. src/hooks/useTheme.ts — dark/light mode:
+   - theme state из localStorage
+   - toggleTheme метод
+   - document.documentElement class toggle
+
+4. src/hooks/useLocalStorage.ts — типизированный localStorage hook
+
+5. src/hooks/useWebSocket.ts — WebSocket connection hook
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.4.1 Создать useChat.ts hook [pending]
+### Dependencies: None
+### Description: Hook для управления чатом: messages, isLoading, error, currentUserState, sendQuestion, clearChat, addMessage
+### Details:
+
+
+## 2. 6.4.2 Создать useAPI.ts hook [pending]
+### Dependencies: None
+### Description: Generic async hook: data, isLoading, error states, execute callback
+### Details:
+
+
+## 3. 6.4.3 Создать useTheme.ts hook [pending]
+### Dependencies: None
+### Description: Dark/light mode: theme state из localStorage, toggleTheme метод, document.documentElement class toggle
+### Details:
+
+
+## 4. 6.4.4 Создать useLocalStorage.ts hook [pending]
+### Dependencies: None
+### Description: Типизированный localStorage hook с get/set/remove
+### Details:
+
+
+## 5. 6.4.5 Создать useWebSocket.ts hook [pending]
+### Dependencies: None
+### Description: WebSocket connection hook для real-time обновлений (опционально)
+### Details:
+
+

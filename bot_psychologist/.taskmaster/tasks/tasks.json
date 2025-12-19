@@ -1853,11 +1853,719 @@
             "parentTaskId": 35
           }
         ]
+      },
+      {
+        "id": 36,
+        "title": "Phase 6.1: Инициализация React проекта (Vite + TypeScript)",
+        "description": "Создание базовой структуры React SPA проекта с Vite, TypeScript, Tailwind CSS. Установка всех зависимостей согласно Phase_6.md (react-router-dom, axios, zustand, react-markdown, react-icons, date-fns, clsx). Инициализация Tailwind CSS.",
+        "details": "Этапы:\n1. Создать React проект: npm create vite@latest web_ui -- --template react-ts\n2. Установить зависимости: react-router-dom, axios, tailwindcss, postcss, autoprefixer, zustand, react-markdown, react-icons, date-fns, clsx\n3. Инициализировать Tailwind: npx tailwindcss init -p\n4. Создать структуру папок: src/components/, src/pages/, src/hooks/, src/services/, src/types/, src/styles/, src/utils/\n5. Настроить базовый package.json согласно Phase_6.md\n6. Создать .env.example с VITE_API_URL=http://localhost:8001/api/v1",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          35
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.1.1 Создать React проект с Vite + TypeScript",
+            "description": "npm create vite@latest web_ui -- --template react-ts && cd web_ui",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 36
+          },
+          {
+            "id": 2,
+            "title": "6.1.2 Установить основные зависимости",
+            "description": "npm install react-router-dom axios zustand typescript",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 36
+          },
+          {
+            "id": 3,
+            "title": "6.1.3 Установить UI зависимости",
+            "description": "npm install tailwindcss postcss autoprefixer react-markdown react-icons date-fns clsx uuid",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 36
+          },
+          {
+            "id": 4,
+            "title": "6.1.4 Инициализировать Tailwind CSS",
+            "description": "npx tailwindcss init -p, настроить tailwind.config.js и postcss.config.js",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 36
+          },
+          {
+            "id": 5,
+            "title": "6.1.5 Создать структуру папок и .env файлы",
+            "description": "Создать: src/components/, src/pages/, src/hooks/, src/services/, src/types/, src/styles/, src/utils/. Создать .env.example и .env.local",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 36
+          }
+        ]
+      },
+      {
+        "id": 37,
+        "title": "Phase 6.2: Создание TypeScript типов",
+        "description": "Создание файлов типов для строгой типизации всего приложения. Типы для API responses, Chat state, User profile согласно Phase_6.md Шаг 2.",
+        "details": "Файлы:\n1. src/types/api.types.ts — StateAnalysis, PathStep, PathRecommendation, Source, AdaptiveAnswerResponse, UserHistoryResponse, ConversationTurn, FeedbackRequest\n2. src/types/chat.types.ts — Message, ChatState, UserSettings с импортом из api.types.ts\n3. src/types/user.types.ts — UserProfile, UserStats\n\nВсе типы должны соответствовать структуре ответов Phase 5 API.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          36
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.2.1 Создать api.types.ts",
+            "description": "Типы: StateAnalysis, PathStep, PathRecommendation, Source, AdaptiveAnswerResponse, UserHistoryResponse, ConversationTurn, FeedbackRequest",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 37
+          },
+          {
+            "id": 2,
+            "title": "6.2.2 Создать chat.types.ts",
+            "description": "Типы: Message, ChatState, UserSettings с импортом Source и PathRecommendation из api.types",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 37
+          },
+          {
+            "id": 3,
+            "title": "6.2.3 Создать user.types.ts",
+            "description": "Типы: UserProfile, UserStats",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 37
+          }
+        ]
+      },
+      {
+        "id": 38,
+        "title": "Phase 6.3: Создание Services (API, Storage, WebSocket)",
+        "description": "Создание сервисного слоя для работы с API, localStorage и WebSocket согласно Phase_6.md Шаг 3.",
+        "details": "Файлы:\n1. src/services/api.service.ts — APIService class:\n   - axios instance с baseURL из env\n   - interceptors для API key header (X-API-Key)\n   - методы: askAdaptiveQuestion, askBasicQuestion, askSagAwareQuestion, askGraphQuestion\n   - методы: getUserHistory, submitFeedback, getStatistics, healthCheck\n   - error handling с handleAuthError\n   \n2. src/services/storage.service.ts — LocalStorage wrapper:\n   - get/set/remove методы\n   - типизированные методы для API key, user settings\n   \n3. src/services/websocket.service.ts — WebSocket client (для real-time updates)\n   \n4. src/services/formatter.service.ts — форматирование данных (время, даты)",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          37
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.3.1 Создать api.service.ts",
+            "description": "APIService class: axios instance, X-API-Key interceptor, методы askAdaptiveQuestion, getUserHistory, submitFeedback, healthCheck, error handling",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 38
+          },
+          {
+            "id": 2,
+            "title": "6.3.2 Создать storage.service.ts",
+            "description": "LocalStorage wrapper: get/set/remove методы, типизированные методы для API key и user settings",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 38
+          },
+          {
+            "id": 3,
+            "title": "6.3.3 Создать websocket.service.ts",
+            "description": "WebSocket client для real-time обновлений (опционально для будущего расширения)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 38
+          },
+          {
+            "id": 4,
+            "title": "6.3.4 Создать formatter.service.ts",
+            "description": "Форматирование данных: formatTime (seconds→MM:SS), formatDate",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 38
+          }
+        ]
+      },
+      {
+        "id": 39,
+        "title": "Phase 6.4: Создание Custom Hooks",
+        "description": "Создание React hooks для управления состоянием, API вызовами и темой согласно Phase_6.md Шаг 4.",
+        "details": "Файлы:\n1. src/hooks/useChat.ts — основной hook для чата:\n   - messages state, isLoading, error, currentUserState\n   - addMessage, sendQuestion, clearChat методы\n   - интеграция с apiService.askAdaptiveQuestion\n   - обновление currentUserState из state_analysis\n\n2. src/hooks/useAPI.ts — generic async hook:\n   - data, isLoading, error states\n   - execute callback\n   - error handling\n\n3. src/hooks/useTheme.ts — dark/light mode:\n   - theme state из localStorage\n   - toggleTheme метод\n   - document.documentElement class toggle\n\n4. src/hooks/useLocalStorage.ts — типизированный localStorage hook\n\n5. src/hooks/useWebSocket.ts — WebSocket connection hook",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          38
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.4.1 Создать useChat.ts hook",
+            "description": "Hook для управления чатом: messages, isLoading, error, currentUserState, sendQuestion, clearChat, addMessage",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 39
+          },
+          {
+            "id": 2,
+            "title": "6.4.2 Создать useAPI.ts hook",
+            "description": "Generic async hook: data, isLoading, error states, execute callback",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 39
+          },
+          {
+            "id": 3,
+            "title": "6.4.3 Создать useTheme.ts hook",
+            "description": "Dark/light mode: theme state из localStorage, toggleTheme метод, document.documentElement class toggle",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 39
+          },
+          {
+            "id": 4,
+            "title": "6.4.4 Создать useLocalStorage.ts hook",
+            "description": "Типизированный localStorage hook с get/set/remove",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 39
+          },
+          {
+            "id": 5,
+            "title": "6.4.5 Создать useWebSocket.ts hook",
+            "description": "WebSocket connection hook для real-time обновлений (опционально)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 39
+          }
+        ]
+      },
+      {
+        "id": 40,
+        "title": "Phase 6.5: Создание общих компонентов (common)",
+        "description": "Создание переиспользуемых UI компонентов: Header, Sidebar, Footer, Loader согласно структуре Phase_6.md.",
+        "details": "Файлы:\n1. src/components/common/Header.tsx — верхняя панель с логотипом, навигацией, theme toggle\n2. src/components/common/Sidebar.tsx — боковая панель навигации (опционально)\n3. src/components/common/Footer.tsx — нижняя панель с информацией\n4. src/components/common/Loader.tsx — индикатор загрузки (spinner)\n\nВсе компоненты должны поддерживать dark mode через Tailwind CSS классы.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          36
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.5.1 Создать Header.tsx",
+            "description": "Верхняя панель: логотип, навигация, theme toggle button",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 40
+          },
+          {
+            "id": 2,
+            "title": "6.5.2 Создать Sidebar.tsx",
+            "description": "Боковая панель навигации (опционально)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 40
+          },
+          {
+            "id": 3,
+            "title": "6.5.3 Создать Footer.tsx",
+            "description": "Нижняя панель с информацией о версии",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 40
+          },
+          {
+            "id": 4,
+            "title": "6.5.4 Создать Loader.tsx",
+            "description": "Индикатор загрузки (spinner) с анимацией",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 40
+          }
+        ]
+      },
+      {
+        "id": 41,
+        "title": "Phase 6.6: Создание компонентов чата (chat)",
+        "description": "Создание основных компонентов диалогового интерфейса согласно Phase_6.md Шаг 5.",
+        "details": "Файлы:\n1. src/components/chat/ChatWindow.tsx — контейнер чата:\n   - Header с названием и текущим состоянием\n   - Messages area с auto-scroll\n   - InputBox внизу\n   \n2. src/components/chat/MessageList.tsx — список сообщений\n\n3. src/components/chat/Message.tsx — отдельное сообщение:\n   - Различие user/bot по стилю\n   - ReactMarkdown для контента\n   - StateCard для состояния\n   - Concepts tags\n   - SourcesList (expandable)\n   - PathRecommendation (если есть)\n   - FeedbackPrompt\n   \n4. src/components/chat/InputBox.tsx — поле ввода:\n   - Input с placeholder\n   - Send button\n   - Enter key support\n   - disabled state при loading\n   \n5. src/components/chat/TypingIndicator.tsx — анимация \"Bot печатает...\"",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          39
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.6.1 Создать ChatWindow.tsx",
+            "description": "Контейнер чата: header с названием и состоянием, messages area с auto-scroll, InputBox внизу",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 41
+          },
+          {
+            "id": 2,
+            "title": "6.6.2 Создать MessageList.tsx",
+            "description": "Список сообщений с маппингом Message компонентов",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 41
+          },
+          {
+            "id": 3,
+            "title": "6.6.3 Создать Message.tsx",
+            "description": "Компонент сообщения: user/bot стили, ReactMarkdown, StateCard, concepts tags, SourcesList, PathRecommendation",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 41
+          },
+          {
+            "id": 4,
+            "title": "6.6.4 Создать InputBox.tsx",
+            "description": "Поле ввода: input с placeholder, send button, Enter key support, disabled state",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 41
+          },
+          {
+            "id": 5,
+            "title": "6.6.5 Создать TypingIndicator.tsx",
+            "description": "Анимация \"Bot печатает...\" с bouncing dots",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 41
+          }
+        ]
+      },
+      {
+        "id": 42,
+        "title": "Phase 6.7: Создание компонентов инсайтов (insights)",
+        "description": "Создание компонентов для визуализации состояния, пути и источников согласно Phase_6.md Шаг 6.",
+        "details": "Файлы:\n1. src/components/insights/StateCard.tsx — карточка состояния:\n   - Цветовая индикация (10 состояний: curious, overwhelmed, resistant, committed, practicing, stagnant, breakthrough, integrated, confused, unaware)\n   - Emoji для каждого состояния\n   - Confidence progress bar\n   - getStateColor, getStateEmoji helpers\n\n2. src/components/insights/SourcesList.tsx — список источников:\n   - Expandable/collapsible\n   - YouTube ссылки с таймкодами\n   - formatTime helper (seconds → MM:SS)\n   - Block type и complexity score\n\n3. src/components/insights/PathBuilder.tsx — визуализация пути:\n   - Current → Target состояния\n   - Progress bar\n   - Steps count, duration weeks\n   - Key focus\n   \n4. src/components/insights/PathStep.tsx — отдельный шаг пути (опционально)",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          39
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.7.1 Создать StateCard.tsx",
+            "description": "Карточка состояния: цветовая индикация 10 состояний, emoji, confidence progress bar, getStateColor/getStateEmoji helpers",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 42
+          },
+          {
+            "id": 2,
+            "title": "6.7.2 Создать SourcesList.tsx",
+            "description": "Expandable список источников: YouTube ссылки с таймкодами, formatTime helper, block type и complexity",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 42
+          },
+          {
+            "id": 3,
+            "title": "6.7.3 Создать PathBuilder.tsx",
+            "description": "Визуализация пути: current→target состояния, progress bar, steps count, duration weeks, key focus",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 42
+          },
+          {
+            "id": 4,
+            "title": "6.7.4 Создать PathStep.tsx",
+            "description": "Отдельный шаг пути с title, practices, key_concepts (опционально)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 42
+          }
+        ]
+      },
+      {
+        "id": 43,
+        "title": "Phase 6.8: Создание компонентов профиля (profile)",
+        "description": "Создание компонентов для отображения профиля пользователя согласно структуре Phase_6.md.",
+        "details": "Файлы:\n1. src/components/profile/UserProfile.tsx — основной профиль:\n   - User ID, User Level\n   - Total questions\n   - Average rating\n   - Last interaction\n   \n2. src/components/profile/InterestsCard.tsx — карточка интересов:\n   - Primary interests (tags)\n   - Top concepts\n   \n3. src/components/profile/StatisticsCard.tsx — статистика:\n   - Total turns\n   - Top states distribution\n   - Rating history",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          39
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.8.1 Создать UserProfile.tsx",
+            "description": "Основной профиль: User ID, User Level, total questions, average rating, last interaction",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 43
+          },
+          {
+            "id": 2,
+            "title": "6.8.2 Создать InterestsCard.tsx",
+            "description": "Карточка интересов: primary interests tags, top concepts",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 43
+          },
+          {
+            "id": 3,
+            "title": "6.8.3 Создать StatisticsCard.tsx",
+            "description": "Статистика: total turns, top states distribution, rating history",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 43
+          }
+        ]
+      },
+      {
+        "id": 44,
+        "title": "Phase 6.9: Создание компонентов обратной связи (feedback)",
+        "description": "Создание компонентов для сбора обратной связи от пользователя согласно структуре Phase_6.md.",
+        "details": "Файлы:\n1. src/components/feedback/FeedbackWidget.tsx — виджет обратной связи:\n   - Positive/Negative/Neutral buttons\n   - Rating stars (1-5)\n   - Optional comment field\n   - Submit handler с apiService.submitFeedback\n   \n2. src/components/feedback/RatingStars.tsx — компонент звёзд:\n   - 5 звёзд с hover state\n   - onClick handler\n   - Controlled value prop",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          38
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.9.1 Создать FeedbackWidget.tsx",
+            "description": "Виджет обратной связи: positive/negative/neutral buttons, rating stars, comment field, submit handler",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 44
+          },
+          {
+            "id": 2,
+            "title": "6.9.2 Создать RatingStars.tsx",
+            "description": "Компонент 5 звёзд: hover state, onClick handler, controlled value prop",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 44
+          }
+        ]
+      },
+      {
+        "id": 45,
+        "title": "Phase 6.10: Создание страниц (pages)",
+        "description": "Создание основных страниц приложения согласно Phase_6.md Шаги 7-8.",
+        "details": "Файлы:\n1. src/pages/HomePage.tsx — стартовая страница:\n   - Welcome message\n   - Quick start button\n   - Features overview\n   \n2. src/pages/ChatPage.tsx — главная страница чата:\n   - useChat hook интеграция\n   - ChatWindow component\n   - API key check → redirect to Settings\n   - URL params: user_id, level\n\n3. src/pages/ProfilePage.tsx — страница профиля:\n   - UserProfile component\n   - History loading через apiService.getUserHistory\n   - InterestsCard, StatisticsCard\n\n4. src/pages/SettingsPage.tsx — страница настроек:\n   - API Key input с валидацией\n   - User ID input\n   - User Level select (beginner/intermediate/advanced)\n   - Health check при сохранении\n   - Redirect to /chat on success\n\n5. src/pages/NotFoundPage.tsx — страница 404",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          41,
+          42,
+          43,
+          44
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.10.1 Создать HomePage.tsx",
+            "description": "Стартовая страница: welcome message, quick start button, features overview",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 45
+          },
+          {
+            "id": 2,
+            "title": "6.10.2 Создать ChatPage.tsx",
+            "description": "Главная страница чата: useChat hook, ChatWindow, API key check → redirect, URL params (user_id, level)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 45
+          },
+          {
+            "id": 3,
+            "title": "6.10.3 Создать ProfilePage.tsx",
+            "description": "Страница профиля: UserProfile, getUserHistory, InterestsCard, StatisticsCard",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 45
+          },
+          {
+            "id": 4,
+            "title": "6.10.4 Создать SettingsPage.tsx",
+            "description": "Страница настроек: API Key input, User ID, Level select, health check, redirect to /chat",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 45
+          },
+          {
+            "id": 5,
+            "title": "6.10.5 Создать NotFoundPage.tsx",
+            "description": "Страница 404: сообщение об ошибке, ссылка на главную",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 45
+          }
+        ]
+      },
+      {
+        "id": 46,
+        "title": "Phase 6.11: Создание главного приложения (App.tsx, routing)",
+        "description": "Настройка главного компонента App.tsx с роутингом и темой согласно Phase_6.md Шаг 9.",
+        "details": "Файлы:\n1. src/App.tsx — главный компонент:\n   - BrowserRouter\n   - useTheme hook для dark mode\n   - Routes configuration:\n     - \"/\" → Navigate to /settings (или HomePage)\n     - \"/settings\" → SettingsPage\n     - \"/chat\" → ChatPage\n     - \"/profile\" → ProfilePage\n     - \"*\" → NotFoundPage\n   - Header/Footer layout (опционально)\n\n2. src/main.tsx — entry point:\n   - ReactDOM.createRoot\n   - StrictMode\n   - App render\n   - CSS imports",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          45
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.11.1 Создать App.tsx с routing",
+            "description": "BrowserRouter, Routes: /, /settings, /chat, /profile, /*, useTheme hook",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 46
+          },
+          {
+            "id": 2,
+            "title": "6.11.2 Создать main.tsx entry point",
+            "description": "ReactDOM.createRoot, StrictMode, App render, CSS imports",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 46
+          }
+        ]
+      },
+      {
+        "id": 47,
+        "title": "Phase 6.12: Стилизация (Tailwind CSS, глобальные стили)",
+        "description": "Настройка Tailwind CSS и создание глобальных стилей согласно Phase_6.md Шаг 10.",
+        "details": "Файлы:\n1. tailwind.config.js — конфигурация Tailwind:\n   - content paths\n   - darkMode: 'class'\n   - extend: teal color palette\n   - animation: bounce\n\n2. postcss.config.js — PostCSS конфигурация\n\n3. src/styles/globals.css — глобальные стили:\n   - Tailwind directives (@tailwind base/components/utilities)\n   - Base styles\n   \n4. src/styles/variables.css — CSS переменные (опционально)\n\n5. src/styles/animations.css — кастомные анимации:\n   - Typing indicator animation\n   - Fade in/out\n   - Slide transitions",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          36
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.12.1 Настроить tailwind.config.js",
+            "description": "content paths, darkMode: 'class', extend colors (teal palette), animation",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 47
+          },
+          {
+            "id": 2,
+            "title": "6.12.2 Создать globals.css",
+            "description": "Tailwind directives (@tailwind base/components/utilities), base styles",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 47
+          },
+          {
+            "id": 3,
+            "title": "6.12.3 Создать animations.css",
+            "description": "Кастомные анимации: typing indicator, fade in/out, slide transitions",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 47
+          }
+        ]
+      },
+      {
+        "id": 48,
+        "title": "Phase 6.13: Создание утилит (utils)",
+        "description": "Создание вспомогательных утилит для приложения.",
+        "details": "Файлы:\n1. src/utils/constants.ts — константы:\n   - API endpoints\n   - Default values\n   - State colors mapping\n   - State emojis mapping\n\n2. src/utils/helpers.ts — вспомогательные функции:\n   - formatTime (seconds → MM:SS)\n   - generateUserId\n   - truncateText\n   - classNames helper (clsx wrapper)\n\n3. src/utils/validators.ts — валидаторы:\n   - isValidApiKey\n   - isValidUserId\n   - sanitizeInput",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          36
+        ],
+        "priority": "low",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.13.1 Создать constants.ts",
+            "description": "API endpoints, default values, state colors mapping, state emojis mapping",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 48
+          },
+          {
+            "id": 2,
+            "title": "6.13.2 Создать helpers.ts",
+            "description": "formatTime, generateUserId, truncateText, classNames helper",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 48
+          },
+          {
+            "id": 3,
+            "title": "6.13.3 Создать validators.ts",
+            "description": "isValidApiKey, isValidUserId, sanitizeInput",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 48
+          }
+        ]
+      },
+      {
+        "id": 49,
+        "title": "Phase 6.14: Тестирование UI и интеграция",
+        "description": "Тестирование Web UI, проверка интеграции с Phase 5 API, responsive design.",
+        "details": "Тесты:\n1. Запуск dev сервера: npm run dev\n2. Проверка всех страниц:\n   - SettingsPage: ввод API key, валидация, сохранение\n   - ChatPage: отправка вопроса, получение ответа, отображение state/path/sources\n   - ProfilePage: загрузка истории, отображение статистики\n\n3. Проверка интеграции с API:\n   - Health check при старте\n   - Adaptive question endpoint\n   - User history endpoint\n   - Feedback endpoint\n\n4. Проверка responsive design:\n   - Desktop (1920x1080)\n   - Tablet (768px)\n   - Mobile (375px)\n\n5. Проверка dark mode toggle\n\n6. Проверка error states:\n   - Invalid API key\n   - Network error\n   - Empty responses",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          46
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.14.1 Запустить dev сервер и проверить страницы",
+            "description": "npm run dev, проверить SettingsPage, ChatPage, ProfilePage",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 49
+          },
+          {
+            "id": 2,
+            "title": "6.14.2 Проверить интеграцию с API Phase 5",
+            "description": "Health check, adaptive question, user history, feedback endpoints",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 49
+          },
+          {
+            "id": 3,
+            "title": "6.14.3 Проверить responsive design",
+            "description": "Desktop (1920x1080), Tablet (768px), Mobile (375px)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 49
+          },
+          {
+            "id": 4,
+            "title": "6.14.4 Проверить error states и dark mode",
+            "description": "Invalid API key, network error, empty responses, dark mode toggle",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 49
+          }
+        ]
+      },
+      {
+        "id": 50,
+        "title": "Phase 6.15: Финальная проверка и валидация Phase 6",
+        "description": "Финальная проверка всех компонентов Phase 6 по чек-листу из Phase_6.md. Валидация готовности Web UI к production.",
+        "details": "Чек-лист Phase 6:\n- [ ] Создан проект React + TypeScript + Vite\n- [ ] Установлены зависимости (Tailwind, React Router, Axios, Zustand)\n- [ ] Создана структура типов (API, Chat, User)\n- [ ] Создан API Service с интеграцией к Phase 5\n- [ ] Создано 5+ custom hooks (useChat, useAPI, useTheme, useLocalStorage, useWebSocket)\n- [ ] Созданы компоненты chat (ChatWindow, Message, InputBox, TypingIndicator)\n- [ ] Созданы компоненты insights (StateCard, SourcesList, PathBuilder)\n- [ ] Созданы компоненты profile (UserProfile, InterestsCard, StatisticsCard)\n- [ ] Созданы компоненты feedback (FeedbackWidget, RatingStars)\n- [ ] Созданы страницы (HomePage, ChatPage, ProfilePage, SettingsPage, NotFoundPage)\n- [ ] Настроен Tailwind CSS + Dark Mode\n- [ ] Реализована валидация API ключа\n- [ ] Dev server запущен и работает\n- [ ] UI отзывчив на мобильных устройствах\n- [ ] Все тесты проходят",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          49
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "6.15.1 Пройти чек-лист Phase 6",
+            "description": "Проверить все файлы: types, services, hooks, components, pages, styles, utils",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 50
+          },
+          {
+            "id": 2,
+            "title": "6.15.2 Валидация интеграции с Phase 5",
+            "description": "API key auth работает, все endpoints отвечают, данные отображаются корректно",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 50
+          },
+          {
+            "id": 3,
+            "title": "6.15.3 Подтвердить готовность к production",
+            "description": "Dev server стабильный, UI responsive, все тесты проходят, готовность к deployment",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 50
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-12-19T04:02:29.457Z",
-      "updated": "2025-12-19T08:21:23.090Z",
+      "updated": "2025-12-19T10:03:09.982Z",
       "description": "Tasks for master context"
     }
   }

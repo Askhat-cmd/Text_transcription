@@ -1,0 +1,56 @@
+# Task ID: 42
+# Title: Phase 6.7: Создание компонентов инсайтов (insights)
+# Status: pending
+# Dependencies: 39
+# Priority: high
+# Description: Создание компонентов для визуализации состояния, пути и источников согласно Phase_6.md Шаг 6.
+# Details:
+Файлы:
+1. src/components/insights/StateCard.tsx — карточка состояния:
+   - Цветовая индикация (10 состояний: curious, overwhelmed, resistant, committed, practicing, stagnant, breakthrough, integrated, confused, unaware)
+   - Emoji для каждого состояния
+   - Confidence progress bar
+   - getStateColor, getStateEmoji helpers
+
+2. src/components/insights/SourcesList.tsx — список источников:
+   - Expandable/collapsible
+   - YouTube ссылки с таймкодами
+   - formatTime helper (seconds → MM:SS)
+   - Block type и complexity score
+
+3. src/components/insights/PathBuilder.tsx — визуализация пути:
+   - Current → Target состояния
+   - Progress bar
+   - Steps count, duration weeks
+   - Key focus
+   
+4. src/components/insights/PathStep.tsx — отдельный шаг пути (опционально)
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.7.1 Создать StateCard.tsx [pending]
+### Dependencies: None
+### Description: Карточка состояния: цветовая индикация 10 состояний, emoji, confidence progress bar, getStateColor/getStateEmoji helpers
+### Details:
+
+
+## 2. 6.7.2 Создать SourcesList.tsx [pending]
+### Dependencies: None
+### Description: Expandable список источников: YouTube ссылки с таймкодами, formatTime helper, block type и complexity
+### Details:
+
+
+## 3. 6.7.3 Создать PathBuilder.tsx [pending]
+### Dependencies: None
+### Description: Визуализация пути: current→target состояния, progress bar, steps count, duration weeks, key focus
+### Details:
+
+
+## 4. 6.7.4 Создать PathStep.tsx [pending]
+### Dependencies: None
+### Description: Отдельный шаг пути с title, practices, key_concepts (опционально)
+### Details:
+
+

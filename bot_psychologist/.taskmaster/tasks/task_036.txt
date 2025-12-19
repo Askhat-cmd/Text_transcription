@@ -1,0 +1,49 @@
+# Task ID: 36
+# Title: Phase 6.1: Инициализация React проекта (Vite + TypeScript)
+# Status: pending
+# Dependencies: 35
+# Priority: high
+# Description: Создание базовой структуры React SPA проекта с Vite, TypeScript, Tailwind CSS. Установка всех зависимостей согласно Phase_6.md (react-router-dom, axios, zustand, react-markdown, react-icons, date-fns, clsx). Инициализация Tailwind CSS.
+# Details:
+Этапы:
+1. Создать React проект: npm create vite@latest web_ui -- --template react-ts
+2. Установить зависимости: react-router-dom, axios, tailwindcss, postcss, autoprefixer, zustand, react-markdown, react-icons, date-fns, clsx
+3. Инициализировать Tailwind: npx tailwindcss init -p
+4. Создать структуру папок: src/components/, src/pages/, src/hooks/, src/services/, src/types/, src/styles/, src/utils/
+5. Настроить базовый package.json согласно Phase_6.md
+6. Создать .env.example с VITE_API_URL=http://localhost:8001/api/v1
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.1.1 Создать React проект с Vite + TypeScript [pending]
+### Dependencies: None
+### Description: npm create vite@latest web_ui -- --template react-ts && cd web_ui
+### Details:
+
+
+## 2. 6.1.2 Установить основные зависимости [pending]
+### Dependencies: None
+### Description: npm install react-router-dom axios zustand typescript
+### Details:
+
+
+## 3. 6.1.3 Установить UI зависимости [pending]
+### Dependencies: None
+### Description: npm install tailwindcss postcss autoprefixer react-markdown react-icons date-fns clsx uuid
+### Details:
+
+
+## 4. 6.1.4 Инициализировать Tailwind CSS [pending]
+### Dependencies: None
+### Description: npx tailwindcss init -p, настроить tailwind.config.js и postcss.config.js
+### Details:
+
+
+## 5. 6.1.5 Создать структуру папок и .env файлы [pending]
+### Dependencies: None
+### Description: Создать: src/components/, src/pages/, src/hooks/, src/services/, src/types/, src/styles/, src/utils/. Создать .env.example и .env.local
+### Details:
+
+

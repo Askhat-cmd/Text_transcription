@@ -1,0 +1,60 @@
+# Task ID: 49
+# Title: Phase 6.14: Тестирование UI и интеграция
+# Status: pending
+# Dependencies: 46
+# Priority: medium
+# Description: Тестирование Web UI, проверка интеграции с Phase 5 API, responsive design.
+# Details:
+Тесты:
+1. Запуск dev сервера: npm run dev
+2. Проверка всех страниц:
+   - SettingsPage: ввод API key, валидация, сохранение
+   - ChatPage: отправка вопроса, получение ответа, отображение state/path/sources
+   - ProfilePage: загрузка истории, отображение статистики
+
+3. Проверка интеграции с API:
+   - Health check при старте
+   - Adaptive question endpoint
+   - User history endpoint
+   - Feedback endpoint
+
+4. Проверка responsive design:
+   - Desktop (1920x1080)
+   - Tablet (768px)
+   - Mobile (375px)
+
+5. Проверка dark mode toggle
+
+6. Проверка error states:
+   - Invalid API key
+   - Network error
+   - Empty responses
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.14.1 Запустить dev сервер и проверить страницы [pending]
+### Dependencies: None
+### Description: npm run dev, проверить SettingsPage, ChatPage, ProfilePage
+### Details:
+
+
+## 2. 6.14.2 Проверить интеграцию с API Phase 5 [pending]
+### Dependencies: None
+### Description: Health check, adaptive question, user history, feedback endpoints
+### Details:
+
+
+## 3. 6.14.3 Проверить responsive design [pending]
+### Dependencies: None
+### Description: Desktop (1920x1080), Tablet (768px), Mobile (375px)
+### Details:
+
+
+## 4. 6.14.4 Проверить error states и dark mode [pending]
+### Dependencies: None
+### Description: Invalid API key, network error, empty responses, dark mode toggle
+### Details:
+
+

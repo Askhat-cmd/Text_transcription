@@ -1,0 +1,49 @@
+# Task ID: 47
+# Title: Phase 6.12: Стилизация (Tailwind CSS, глобальные стили)
+# Status: pending
+# Dependencies: 36
+# Priority: medium
+# Description: Настройка Tailwind CSS и создание глобальных стилей согласно Phase_6.md Шаг 10.
+# Details:
+Файлы:
+1. tailwind.config.js — конфигурация Tailwind:
+   - content paths
+   - darkMode: 'class'
+   - extend: teal color palette
+   - animation: bounce
+
+2. postcss.config.js — PostCSS конфигурация
+
+3. src/styles/globals.css — глобальные стили:
+   - Tailwind directives (@tailwind base/components/utilities)
+   - Base styles
+   
+4. src/styles/variables.css — CSS переменные (опционально)
+
+5. src/styles/animations.css — кастомные анимации:
+   - Typing indicator animation
+   - Fade in/out
+   - Slide transitions
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.12.1 Настроить tailwind.config.js [pending]
+### Dependencies: None
+### Description: content paths, darkMode: 'class', extend colors (teal palette), animation
+### Details:
+
+
+## 2. 6.12.2 Создать globals.css [pending]
+### Dependencies: None
+### Description: Tailwind directives (@tailwind base/components/utilities), base styles
+### Details:
+
+
+## 3. 6.12.3 Создать animations.css [pending]
+### Dependencies: None
+### Description: Кастомные анимации: typing indicator, fade in/out, slide transitions
+### Details:
+
+

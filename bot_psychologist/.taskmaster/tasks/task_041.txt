@@ -1,0 +1,66 @@
+# Task ID: 41
+# Title: Phase 6.6: Создание компонентов чата (chat)
+# Status: pending
+# Dependencies: 39
+# Priority: high
+# Description: Создание основных компонентов диалогового интерфейса согласно Phase_6.md Шаг 5.
+# Details:
+Файлы:
+1. src/components/chat/ChatWindow.tsx — контейнер чата:
+   - Header с названием и текущим состоянием
+   - Messages area с auto-scroll
+   - InputBox внизу
+   
+2. src/components/chat/MessageList.tsx — список сообщений
+
+3. src/components/chat/Message.tsx — отдельное сообщение:
+   - Различие user/bot по стилю
+   - ReactMarkdown для контента
+   - StateCard для состояния
+   - Concepts tags
+   - SourcesList (expandable)
+   - PathRecommendation (если есть)
+   - FeedbackPrompt
+   
+4. src/components/chat/InputBox.tsx — поле ввода:
+   - Input с placeholder
+   - Send button
+   - Enter key support
+   - disabled state при loading
+   
+5. src/components/chat/TypingIndicator.tsx — анимация "Bot печатает..."
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.6.1 Создать ChatWindow.tsx [pending]
+### Dependencies: None
+### Description: Контейнер чата: header с названием и состоянием, messages area с auto-scroll, InputBox внизу
+### Details:
+
+
+## 2. 6.6.2 Создать MessageList.tsx [pending]
+### Dependencies: None
+### Description: Список сообщений с маппингом Message компонентов
+### Details:
+
+
+## 3. 6.6.3 Создать Message.tsx [pending]
+### Dependencies: None
+### Description: Компонент сообщения: user/bot стили, ReactMarkdown, StateCard, concepts tags, SourcesList, PathRecommendation
+### Details:
+
+
+## 4. 6.6.4 Создать InputBox.tsx [pending]
+### Dependencies: None
+### Description: Поле ввода: input с placeholder, send button, Enter key support, disabled state
+### Details:
+
+
+## 5. 6.6.5 Создать TypingIndicator.tsx [pending]
+### Dependencies: None
+### Description: Анимация "Bot печатает..." с bouncing dots
+### Details:
+
+

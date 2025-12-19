@@ -1,0 +1,51 @@
+# Task ID: 38
+# Title: Phase 6.3: Создание Services (API, Storage, WebSocket)
+# Status: pending
+# Dependencies: 37
+# Priority: high
+# Description: Создание сервисного слоя для работы с API, localStorage и WebSocket согласно Phase_6.md Шаг 3.
+# Details:
+Файлы:
+1. src/services/api.service.ts — APIService class:
+   - axios instance с baseURL из env
+   - interceptors для API key header (X-API-Key)
+   - методы: askAdaptiveQuestion, askBasicQuestion, askSagAwareQuestion, askGraphQuestion
+   - методы: getUserHistory, submitFeedback, getStatistics, healthCheck
+   - error handling с handleAuthError
+   
+2. src/services/storage.service.ts — LocalStorage wrapper:
+   - get/set/remove методы
+   - типизированные методы для API key, user settings
+   
+3. src/services/websocket.service.ts — WebSocket client (для real-time updates)
+   
+4. src/services/formatter.service.ts — форматирование данных (время, даты)
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.3.1 Создать api.service.ts [pending]
+### Dependencies: None
+### Description: APIService class: axios instance, X-API-Key interceptor, методы askAdaptiveQuestion, getUserHistory, submitFeedback, healthCheck, error handling
+### Details:
+
+
+## 2. 6.3.2 Создать storage.service.ts [pending]
+### Dependencies: None
+### Description: LocalStorage wrapper: get/set/remove методы, типизированные методы для API key и user settings
+### Details:
+
+
+## 3. 6.3.3 Создать websocket.service.ts [pending]
+### Dependencies: None
+### Description: WebSocket client для real-time обновлений (опционально для будущего расширения)
+### Details:
+
+
+## 4. 6.3.4 Создать formatter.service.ts [pending]
+### Dependencies: None
+### Description: Форматирование данных: formatTime (seconds→MM:SS), formatDate
+### Details:
+
+

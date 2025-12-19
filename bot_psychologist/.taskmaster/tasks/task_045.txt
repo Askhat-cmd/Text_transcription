@@ -1,0 +1,67 @@
+# Task ID: 45
+# Title: Phase 6.10: Создание страниц (pages)
+# Status: pending
+# Dependencies: 41, 42, 43, 44
+# Priority: high
+# Description: Создание основных страниц приложения согласно Phase_6.md Шаги 7-8.
+# Details:
+Файлы:
+1. src/pages/HomePage.tsx — стартовая страница:
+   - Welcome message
+   - Quick start button
+   - Features overview
+   
+2. src/pages/ChatPage.tsx — главная страница чата:
+   - useChat hook интеграция
+   - ChatWindow component
+   - API key check → redirect to Settings
+   - URL params: user_id, level
+
+3. src/pages/ProfilePage.tsx — страница профиля:
+   - UserProfile component
+   - History loading через apiService.getUserHistory
+   - InterestsCard, StatisticsCard
+
+4. src/pages/SettingsPage.tsx — страница настроек:
+   - API Key input с валидацией
+   - User ID input
+   - User Level select (beginner/intermediate/advanced)
+   - Health check при сохранении
+   - Redirect to /chat on success
+
+5. src/pages/NotFoundPage.tsx — страница 404
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.10.1 Создать HomePage.tsx [pending]
+### Dependencies: None
+### Description: Стартовая страница: welcome message, quick start button, features overview
+### Details:
+
+
+## 2. 6.10.2 Создать ChatPage.tsx [pending]
+### Dependencies: None
+### Description: Главная страница чата: useChat hook, ChatWindow, API key check → redirect, URL params (user_id, level)
+### Details:
+
+
+## 3. 6.10.3 Создать ProfilePage.tsx [pending]
+### Dependencies: None
+### Description: Страница профиля: UserProfile, getUserHistory, InterestsCard, StatisticsCard
+### Details:
+
+
+## 4. 6.10.4 Создать SettingsPage.tsx [pending]
+### Dependencies: None
+### Description: Страница настроек: API Key input, User ID, Level select, health check, redirect to /chat
+### Details:
+
+
+## 5. 6.10.5 Создать NotFoundPage.tsx [pending]
+### Dependencies: None
+### Description: Страница 404: сообщение об ошибке, ссылка на главную
+### Details:
+
+

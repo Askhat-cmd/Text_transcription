@@ -1,0 +1,41 @@
+# Task ID: 46
+# Title: Phase 6.11: Создание главного приложения (App.tsx, routing)
+# Status: pending
+# Dependencies: 45
+# Priority: high
+# Description: Настройка главного компонента App.tsx с роутингом и темой согласно Phase_6.md Шаг 9.
+# Details:
+Файлы:
+1. src/App.tsx — главный компонент:
+   - BrowserRouter
+   - useTheme hook для dark mode
+   - Routes configuration:
+     - "/" → Navigate to /settings (или HomePage)
+     - "/settings" → SettingsPage
+     - "/chat" → ChatPage
+     - "/profile" → ProfilePage
+     - "*" → NotFoundPage
+   - Header/Footer layout (опционально)
+
+2. src/main.tsx — entry point:
+   - ReactDOM.createRoot
+   - StrictMode
+   - App render
+   - CSS imports
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 6.11.1 Создать App.tsx с routing [pending]
+### Dependencies: None
+### Description: BrowserRouter, Routes: /, /settings, /chat, /profile, /*, useTheme hook
+### Details:
+
+
+## 2. 6.11.2 Создать main.tsx entry point [pending]
+### Dependencies: None
+### Description: ReactDOM.createRoot, StrictMode, App render, CSS imports
+### Details:
+
+

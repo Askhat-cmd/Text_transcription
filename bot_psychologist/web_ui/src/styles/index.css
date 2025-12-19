@@ -1,0 +1,248 @@
+/**
+ * Bot Psychologist Web UI - Global Styles
+ * 
+ * Tailwind CSS 4 + Custom Components + Animations
+ */
+
+/* Tailwind CSS 4 import */
+@import "tailwindcss";
+
+/* Import custom animations */
+@import './animations.css';
+
+/* Import Tailwind config for themes */
+@config "../../tailwind.config.js";
+
+/* ===== BASE STYLES ===== */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply antialiased bg-gray-50 text-gray-900;
+    @apply dark:bg-gray-900 dark:text-gray-100;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
+
+  /* Selection color */
+  ::selection {
+    @apply bg-purple-200 dark:bg-purple-800;
+  }
+
+  /* Focus ring for accessibility */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-purple-500 ring-offset-2;
+    @apply dark:ring-offset-gray-900;
+  }
+}
+
+/* ===== COMPONENT STYLES ===== */
+@layer components {
+  /* Button variants */
+  .btn-primary {
+    @apply px-4 py-2 bg-purple-600 text-white font-medium rounded-lg;
+    @apply hover:bg-purple-700 active:bg-purple-800;
+    @apply transition-colors duration-200;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 bg-gray-200 text-gray-800 font-medium rounded-lg;
+    @apply hover:bg-gray-300 active:bg-gray-400;
+    @apply dark:bg-gray-700 dark:text-gray-200;
+    @apply dark:hover:bg-gray-600 dark:active:bg-gray-500;
+    @apply transition-colors duration-200;
+  }
+
+  .btn-ghost {
+    @apply px-4 py-2 text-gray-600 font-medium rounded-lg;
+    @apply hover:bg-gray-100 active:bg-gray-200;
+    @apply dark:text-gray-400 dark:hover:bg-gray-800 dark:active:bg-gray-700;
+    @apply transition-colors duration-200;
+  }
+  
+  /* Card styles */
+  .card {
+    @apply bg-white rounded-xl shadow-md p-6;
+    @apply dark:bg-gray-800;
+    @apply border border-gray-200 dark:border-gray-700;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-xl shadow-md p-6;
+    @apply dark:bg-gray-800;
+    @apply border border-gray-200 dark:border-gray-700;
+    @apply hover:shadow-lg transition-shadow duration-200;
+  }
+  
+  /* Input styles */
+  .input {
+    @apply w-full px-4 py-2 bg-white rounded-lg;
+    @apply border border-gray-300;
+    @apply focus:ring-2 focus:ring-purple-500 focus:border-transparent;
+    @apply dark:bg-gray-800 dark:border-gray-600 dark:text-white;
+    @apply placeholder-gray-400 dark:placeholder-gray-500;
+    @apply outline-none transition-all duration-200;
+  }
+
+  .input-error {
+    @apply w-full px-4 py-2 bg-white rounded-lg;
+    @apply border border-red-500;
+    @apply focus:ring-2 focus:ring-red-500 focus:border-transparent;
+    @apply dark:bg-gray-800 dark:border-red-500 dark:text-white;
+    @apply placeholder-gray-400 dark:placeholder-gray-500;
+    @apply outline-none transition-all duration-200;
+  }
+
+  /* Badge styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply bg-purple-100 text-purple-800;
+    @apply dark:bg-purple-900/30 dark:text-purple-300;
+  }
+
+  .badge-success {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply bg-green-100 text-green-800;
+    @apply dark:bg-green-900/30 dark:text-green-300;
+  }
+
+  .badge-warning {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply bg-yellow-100 text-yellow-800;
+    @apply dark:bg-yellow-900/30 dark:text-yellow-300;
+  }
+
+  .badge-error {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+    @apply bg-red-100 text-red-800;
+    @apply dark:bg-red-900/30 dark:text-red-300;
+  }
+
+  /* Chat message bubbles */
+  .message-user {
+    @apply bg-purple-600 text-white rounded-2xl rounded-br-md;
+    @apply p-4 max-w-[85%] md:max-w-2xl;
+  }
+
+  .message-bot {
+    @apply bg-gray-100 text-gray-900 rounded-2xl rounded-bl-md;
+    @apply dark:bg-gray-800 dark:text-white;
+    @apply p-4 max-w-[85%] md:max-w-2xl;
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent;
+  }
+
+  .text-gradient-pink {
+    @apply bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent;
+  }
+}
+
+/* ===== UTILITY STYLES ===== */
+@layer utilities {
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Text truncation */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Glass effect */
+  .glass {
+    @apply bg-white/80 backdrop-blur-lg;
+    @apply dark:bg-gray-900/80;
+  }
+
+  /* Gradient backgrounds */
+  .bg-gradient-primary {
+    @apply bg-gradient-to-r from-purple-600 to-indigo-600;
+  }
+
+  .bg-gradient-secondary {
+    @apply bg-gradient-to-r from-indigo-500 to-purple-500;
+  }
+
+  /* Safe area for mobile */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* ===== PROSE OVERRIDES FOR MARKDOWN ===== */
+.prose {
+  @apply text-gray-800 dark:text-gray-200;
+}
+
+.prose code {
+  @apply bg-gray-100 dark:bg-gray-800 px-1 py-0.5 rounded text-sm;
+  @apply before:content-none after:content-none;
+}
+
+.prose pre {
+  @apply bg-gray-900 dark:bg-gray-950 text-gray-100 rounded-lg;
+}
+
+.prose a {
+  @apply text-purple-600 dark:text-purple-400 hover:underline;
+}
+
+.prose strong {
+  @apply text-gray-900 dark:text-white;
+}
+
+/* ===== DARK MODE TRANSITIONS ===== */
+html.dark {
+  color-scheme: dark;
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

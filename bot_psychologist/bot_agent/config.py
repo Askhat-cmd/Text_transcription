@@ -10,8 +10,10 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from project root
+_project_root = Path(__file__).parent.parent
+_env_path = _project_root / ".env"
+load_dotenv(_env_path)
 
 
 class Config:
@@ -30,7 +32,7 @@ class Config:
     
     # === Параметры поиска ===
     TOP_K_BLOCKS = 5          # сколько релевантных блоков брать
-    MIN_RELEVANCE_SCORE = 0.3  # минимальный порог релевантности (0-1)
+    MIN_RELEVANCE_SCORE = 0.1  # минимальный порог релевантности (0-1)
     
     # === LLM параметры ===
     LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")

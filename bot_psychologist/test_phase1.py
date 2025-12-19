@@ -12,7 +12,13 @@ Test Phase 1 - Bot Psychologist QA
 """
 
 import sys
+import io
 from pathlib import Path
+
+# Fix Windows console encoding
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Add bot_agent to path
 sys.path.insert(0, str(Path(__file__).parent))

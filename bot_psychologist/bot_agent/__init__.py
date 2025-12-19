@@ -1,9 +1,12 @@
 # bot_agent/__init__.py
 """
-Bot Psychologist - Phase 1: Semantic QA Bot
-===========================================
+Bot Psychologist - Phase 1 + Phase 2: Semantic QA Bot
+=====================================================
 
 AI-бот-психолог на базе данных voice_bot_pipeline (SAG v2.0).
+
+Phase 1: Базовый QA с TF-IDF retriever
+Phase 2: Адаптация по уровню пользователя, семантический анализ
 """
 
 import logging
@@ -30,13 +33,25 @@ logging.basicConfig(
 logger = logging.getLogger("bot_agent")
 
 # Version
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __author__ = "Bot Psychologist Team"
 
-# Import main functions
+# Phase 1: Basic QA
 from .answer_basic import answer_question_basic, ask
 
-__all__ = ["answer_question_basic", "ask", "__version__"]
+# Phase 2: SAG v2.0 Aware QA
+from .answer_sag_aware import answer_question_sag_aware, ask_sag
 
-logger.info(f"🚀 Bot Agent v{__version__} initialized (Phase 1)")
+__all__ = [
+    # Phase 1
+    "answer_question_basic",
+    "ask",
+    # Phase 2
+    "answer_question_sag_aware",
+    "ask_sag",
+    # Meta
+    "__version__"
+]
+
+logger.info(f"🚀 Bot Agent v{__version__} initialized (Phase 1 + Phase 2)")
 

@@ -1,0 +1,43 @@
+# Task ID: 9
+# Title: Phase 2.2: Создание user_level_adapter.py
+# Status: pending
+# Dependencies: 8
+# Priority: high
+# Description: Новый модуль для адаптации ответов под уровень пользователя (beginner/intermediate/advanced). Фильтрация блоков по сложности, адаптация системных промптов, извлечение ключевых концептов.
+# Details:
+Файл: bot_agent/user_level_adapter.py. Компоненты: UserLevel enum, UserLevelAdapter class с методами filter_blocks_by_level, adapt_system_prompt, extract_key_concepts, get_answer_length_guidance, format_concepts_for_output.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 2.2.1 Создать UserLevel enum [pending]
+### Dependencies: None
+### Description: Enum: BEGINNER, INTERMEDIATE, ADVANCED со строковыми значениями
+### Details:
+
+
+## 2. 2.2.2 Создать UserLevelAdapter class с конструктором [pending]
+### Dependencies: None
+### Description: Конструктор принимает user_level строку и конвертирует в UserLevel enum
+### Details:
+
+
+## 3. 2.2.3 Реализовать filter_blocks_by_level [pending]
+### Dependencies: None
+### Description: Фильтрация блоков по complexity_score и conceptual_depth в зависимости от уровня
+### Details:
+
+
+## 4. 2.2.4 Реализовать adapt_system_prompt [pending]
+### Dependencies: None
+### Description: Добавление инструкций для LLM в зависимости от уровня пользователя
+### Details:
+
+
+## 5. 2.2.5 Реализовать вспомогательные методы [pending]
+### Dependencies: None
+### Description: extract_key_concepts, get_answer_length_guidance, format_concepts_for_output
+### Details:
+
+

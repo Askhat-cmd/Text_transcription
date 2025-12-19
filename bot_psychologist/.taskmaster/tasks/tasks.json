@@ -312,11 +312,335 @@
             "parentTaskId": 7
           }
         ]
+      },
+      {
+        "id": 8,
+        "title": "Phase 2.1: Расширение data_loader.py (SAG v2.0)",
+        "description": "Обновить data_loader.py — добавить поддержку новых полей SAG v2.0: block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities. Обновить класс Block и метод _load_single_document.",
+        "details": "Файл: bot_agent/data_loader.py. Добавить поля: block_type (monologue/dialogue/practice/theory), emotional_tone (contemplative/explanatory/intense/light), conceptual_depth (low/medium/high), complexity_score (1.0-10.0), graph_entities (List[str] до 30 сущностей). Обновить __post_init__ и парсинг JSON.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          7
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.1.1 Добавить новые поля SAG v2.0 в Block dataclass",
+            "description": "Добавить поля: block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 2,
+            "title": "2.1.2 Добавить __post_init__ для инициализации опциональных полей",
+            "description": "Инициализация graph_entities как пустой список если None",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 3,
+            "title": "2.1.3 Обновить _load_single_document для парсинга SAG v2.0 полей",
+            "description": "Парсинг block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities из JSON",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 4,
+            "title": "2.1.4 Добавить метод get_preview в Block",
+            "description": "Метод для получения краткого содержания блока с ограничением длины",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Phase 2.2: Создание user_level_adapter.py",
+        "description": "Новый модуль для адаптации ответов под уровень пользователя (beginner/intermediate/advanced). Фильтрация блоков по сложности, адаптация системных промптов, извлечение ключевых концептов.",
+        "details": "Файл: bot_agent/user_level_adapter.py. Компоненты: UserLevel enum, UserLevelAdapter class с методами filter_blocks_by_level, adapt_system_prompt, extract_key_concepts, get_answer_length_guidance, format_concepts_for_output.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          8
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.2.1 Создать UserLevel enum",
+            "description": "Enum: BEGINNER, INTERMEDIATE, ADVANCED со строковыми значениями",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 2,
+            "title": "2.2.2 Создать UserLevelAdapter class с конструктором",
+            "description": "Конструктор принимает user_level строку и конвертирует в UserLevel enum",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 3,
+            "title": "2.2.3 Реализовать filter_blocks_by_level",
+            "description": "Фильтрация блоков по complexity_score и conceptual_depth в зависимости от уровня",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 4,
+            "title": "2.2.4 Реализовать adapt_system_prompt",
+            "description": "Добавление инструкций для LLM в зависимости от уровня пользователя",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 9
+          },
+          {
+            "id": 5,
+            "title": "2.2.5 Реализовать вспомогательные методы",
+            "description": "extract_key_concepts, get_answer_length_guidance, format_concepts_for_output",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 9
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Phase 2.3: Создание semantic_analyzer.py",
+        "description": "Модуль для анализа семантических отношений между концептами в найденных блоках. Извлечение primary_concepts, related_concepts, conceptual_links.",
+        "details": "Файл: bot_agent/semantic_analyzer.py. Класс SemanticAnalyzer с методами: analyze_relations (возвращает structured dict), _find_related_concepts, _extract_conceptual_links, _generate_analysis_summary.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          8
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.3.1 Создать SemanticAnalyzer class",
+            "description": "Базовый класс для анализа семантических отношений между концептами",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 2,
+            "title": "2.3.2 Реализовать analyze_relations",
+            "description": "Возвращает Dict с primary_concepts, related_concepts, conceptual_links, analysis_summary",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 3,
+            "title": "2.3.3 Реализовать _find_related_concepts и _extract_conceptual_links",
+            "description": "Поиск связей между концептами через совместное появление в блоках",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 10
+          },
+          {
+            "id": 4,
+            "title": "2.3.4 Реализовать _generate_analysis_summary",
+            "description": "Генерация текстового резюме семантического анализа",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 10
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Phase 2.4: Создание answer_sag_aware.py",
+        "description": "Новая функция answer_question_sag_aware для ответов с учетом SAG v2.0. Интеграция UserLevelAdapter и SemanticAnalyzer. 6 этапов обработки запроса.",
+        "details": "Файл: bot_agent/answer_sag_aware.py. Функция answer_question_sag_aware(query, user_level, top_k, debug). Этапы: 1) Инициализация компонентов, 2) Поиск блоков, 3) Адаптация по уровню, 4) Семантический анализ, 5) Формирование ответа через LLM, 6) Форматирование вывода. Возвращает расширенный Dict с concepts, relations, metadata.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          9,
+          10
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.4.1 Создать структуру answer_question_sag_aware с импортами",
+            "description": "Импорты: data_loader, retriever, LLMAnswerer, UserLevelAdapter, SemanticAnalyzer, config",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 2,
+            "title": "2.4.2 Этап 1-2: Инициализация компонентов и поиск блоков",
+            "description": "Загрузка данных, создание level_adapter и semantic_analyzer, поиск через retriever",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 3,
+            "title": "2.4.3 Этап 3-4: Адаптация по уровню и семантический анализ",
+            "description": "filter_blocks_by_level, analyze_relations для извлечения концептов",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 4,
+            "title": "2.4.4 Этап 5: Формирование ответа через LLM",
+            "description": "adapted_system_prompt, расширенный контекст с концептами, generate_answer",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 5,
+            "title": "2.4.5 Этап 6: Форматирование вывода",
+            "description": "Возврат Dict с status, answer, sources, concepts, relations, metadata, debug",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 11
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Phase 2.5: Обновление __init__.py",
+        "description": "Обновить bot_agent/__init__.py — добавить импорт Phase 2 модулей и обновить __all__.",
+        "details": "Файл: bot_agent/__init__.py. Добавить: from answer_sag_aware import answer_question_sag_aware. Обновить __all__ = [..., 'answer_question_sag_aware']. Обновить лог инициализации.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          11
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.5.1 Добавить импорт answer_sag_aware",
+            "description": "from answer_sag_aware import answer_question_sag_aware",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 2,
+            "title": "2.5.2 Обновить __all__ и лог инициализации",
+            "description": "Добавить answer_question_sag_aware в __all__, обновить лог: Phase 1 + Phase 2",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 12
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Phase 2.6: Создание test_phase2.py",
+        "description": "Тестовый скрипт для проверки Phase 2 функциональности с разными уровнями пользователя и тестовыми вопросами.",
+        "details": "Файл: test_phase2.py. Тестовые комбинации: вопрос + уровень (beginner/intermediate/advanced). Проверка: status, processing_time, answer, concepts, relations, sources. Вывод debug информации.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          12
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.6.1 Создать test_phase2.py с тестовыми кейсами",
+            "description": "Тестовые комбинации: (вопрос, уровень) для beginner/intermediate/advanced",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 2,
+            "title": "2.6.2 Реализовать вывод результатов",
+            "description": "Вывод status, processing_time, answer, concepts, relations, sources, debug",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 3,
+            "title": "2.6.3 Запуск и верификация тестов",
+            "description": "Выполнить python test_phase2.py и проверить корректность результатов",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 13
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Phase 2.7: Финальная проверка и валидация Phase 2",
+        "description": "Финальная проверка всех компонентов Phase 2 по чек-листу. Валидация результатов и готовности к Phase 3.",
+        "details": "Чек-лист: data_loader.py обновлён, user_level_adapter.py создан, semantic_analyzer.py создан, answer_sag_aware.py создан, __init__.py обновлён, test_phase2.py создан и проходит, ответы адаптируются под уровень, концепты извлекаются корректно.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          13
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "2.7.1 Пройти чек-лист Phase 2",
+            "description": "Проверить: data_loader.py обновлён, все модули созданы, __init__.py обновлён, тесты проходят",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 2,
+            "title": "2.7.2 Валидация результатов Phase 2",
+            "description": "Ответы адаптируются под уровень, концепты извлекаются, готовность к Phase 3",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 14
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-12-19T04:02:29.457Z",
-      "updated": "2025-12-19T04:27:30.465Z",
+      "updated": "2025-12-19T06:17:34.285Z",
       "description": "Tasks for master context"
     }
   }

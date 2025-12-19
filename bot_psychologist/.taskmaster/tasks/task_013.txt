@@ -1,0 +1,31 @@
+# Task ID: 13
+# Title: Phase 2.6: Создание test_phase2.py
+# Status: pending
+# Dependencies: 12
+# Priority: medium
+# Description: Тестовый скрипт для проверки Phase 2 функциональности с разными уровнями пользователя и тестовыми вопросами.
+# Details:
+Файл: test_phase2.py. Тестовые комбинации: вопрос + уровень (beginner/intermediate/advanced). Проверка: status, processing_time, answer, concepts, relations, sources. Вывод debug информации.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 2.6.1 Создать test_phase2.py с тестовыми кейсами [pending]
+### Dependencies: None
+### Description: Тестовые комбинации: (вопрос, уровень) для beginner/intermediate/advanced
+### Details:
+
+
+## 2. 2.6.2 Реализовать вывод результатов [pending]
+### Dependencies: None
+### Description: Вывод status, processing_time, answer, concepts, relations, sources, debug
+### Details:
+
+
+## 3. 2.6.3 Запуск и верификация тестов [pending]
+### Dependencies: None
+### Description: Выполнить python test_phase2.py и проверить корректность результатов
+### Details:
+
+

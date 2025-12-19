@@ -1,0 +1,31 @@
+# Task ID: 4
+# Title: Phase 1.4: Create retriever.py
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Simple TF-IDF retriever for semantic block search with cosine similarity
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.4.1 Build TF-IDF index [done]
+### Dependencies: None
+### Description: TfidfVectorizer with char n-grams for Russian text
+### Details:
+
+
+## 2. 1.4.2 Implement retrieve method [done]
+### Dependencies: None
+### Description: Cosine similarity search returning top-k blocks with scores
+### Details:
+
+
+## 3. 1.4.3 Add relevance threshold filter [done]
+### Dependencies: None
+### Description: Filter results by MIN_RELEVANCE_SCORE from config
+### Details:
+
+

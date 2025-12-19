@@ -1,0 +1,37 @@
+# Task ID: 8
+# Title: Phase 2.1: Расширение data_loader.py (SAG v2.0)
+# Status: pending
+# Dependencies: 7
+# Priority: high
+# Description: Обновить data_loader.py — добавить поддержку новых полей SAG v2.0: block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities. Обновить класс Block и метод _load_single_document.
+# Details:
+Файл: bot_agent/data_loader.py. Добавить поля: block_type (monologue/dialogue/practice/theory), emotional_tone (contemplative/explanatory/intense/light), conceptual_depth (low/medium/high), complexity_score (1.0-10.0), graph_entities (List[str] до 30 сущностей). Обновить __post_init__ и парсинг JSON.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 2.1.1 Добавить новые поля SAG v2.0 в Block dataclass [pending]
+### Dependencies: None
+### Description: Добавить поля: block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities
+### Details:
+
+
+## 2. 2.1.2 Добавить __post_init__ для инициализации опциональных полей [pending]
+### Dependencies: None
+### Description: Инициализация graph_entities как пустой список если None
+### Details:
+
+
+## 3. 2.1.3 Обновить _load_single_document для парсинга SAG v2.0 полей [pending]
+### Dependencies: None
+### Description: Парсинг block_type, emotional_tone, conceptual_depth, complexity_score, graph_entities из JSON
+### Details:
+
+
+## 4. 2.1.4 Добавить метод get_preview в Block [pending]
+### Dependencies: None
+### Description: Метод для получения краткого содержания блока с ограничением длины
+### Details:
+
+

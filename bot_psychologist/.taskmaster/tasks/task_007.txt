@@ -1,0 +1,31 @@
+# Task ID: 7
+# Title: Phase 1.7: Create test_phase1.py
+# Status: done
+# Dependencies: 6
+# Priority: medium
+# Description: Test script to verify Phase 1 QA bot functionality with sample questions
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.7.1 Create test questions [done]
+### Dependencies: None
+### Description: Sample questions about awareness, practices, transformation
+### Details:
+
+
+## 2. 1.7.2 Run tests and verify output [done]
+### Dependencies: None
+### Description: Check answer quality, sources, youtube links with timecodes
+### Details:
+
+
+## 3. 1.7.3 Validate logging [done]
+### Dependencies: None
+### Description: Verify logs are written to logs/bot_agent/bot_agent.log
+### Details:
+
+

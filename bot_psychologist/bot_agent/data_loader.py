@@ -24,6 +24,8 @@ class Block:
     Представление одного блока лекции.
     
     Блок — это семантическая единица контента с таймкодами.
+    
+    Phase 2: Добавлены поля SAG v2.0 для адаптации ответов.
     """
     block_id: str
     video_id: str
@@ -36,6 +38,26 @@ class Block:
     youtube_link: str
     document_title: str  # из какой лекции
     
+    # === НОВЫЕ ПОЛЯ SAG v2.0 (Phase 2) ===
+    block_type: Optional[str] = None          # monologue, dialogue, practice, theory
+    emotional_tone: Optional[str] = None      # contemplative, explanatory, intense, light
+    conceptual_depth: Optional[str] = None    # low, medium, high
+    complexity_score: Optional[float] = None  # 1.0-10.0
+    graph_entities: Optional[List[str]] = None  # до 30 сущностей
+    
+    def __post_init__(self):
+        """Инициализация опциональных полей SAG v2.0"""
+        if self.graph_entities is None:
+            self.graph_entities = []
+        if self.block_type is None:
+            self.block_type = "theory"
+        if self.emotional_tone is None:
+            self.emotional_tone = "explanatory"
+        if self.conceptual_depth is None:
+            self.conceptual_depth = "medium"
+        if self.complexity_score is None:
+            self.complexity_score = 5.0
+    
     def get_preview(self, max_len: int = 200) -> str:
         """Вернуть краткое содержание блока"""
         text = self.content[:max_len] if len(self.content) > max_len else self.content
@@ -45,6 +67,10 @@ class Block:
         """Вернуть текст для поиска (title + keywords + summary)"""
         keywords_str = " ".join(self.keywords) if self.keywords else ""
         return f"{self.title} {keywords_str} {self.summary}"
+    
+    def get_entities_text(self) -> str:
+        """Вернуть текст сущностей для семантического анализа (Phase 2)"""
+        return " ".join(self.graph_entities) if self.graph_entities else ""
 
 
 @dataclass
@@ -125,7 +151,11 @@ class DataLoader:
         logger.info(f"✅ Загружено: {len(self.documents)} документов, {len(self.all_blocks)} блоков")
     
     def _load_single_document(self, json_path: Path) -> None:
-        """Загрузить один JSON файл и распарсить его"""
+        """
+        Загрузить один JSON файл и распарсить его.
+        
+        Phase 2: Добавлена поддержка полей SAG v2.0.
+        """
         with open(json_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
         
@@ -136,6 +166,15 @@ class DataLoader:
         
         blocks = []
         for block_data in data.get("blocks", []):
+            # Парсим complexity_score с валидацией типа
+            raw_complexity = block_data.get("complexity_score")
+            complexity_score = None
+            if raw_complexity is not None:
+                try:
+                    complexity_score = float(raw_complexity)
+                except (ValueError, TypeError):
+                    complexity_score = None
+            
             block = Block(
                 block_id=block_data.get("block_id", ""),
                 video_id=block_data.get("video_id", video_id),
@@ -146,7 +185,13 @@ class DataLoader:
                 content=block_data.get("content", ""),
                 keywords=block_data.get("keywords", []),
                 youtube_link=block_data.get("youtube_link", ""),
-                document_title=document_title
+                document_title=document_title,
+                # === НОВЫЕ ПОЛЯ SAG v2.0 (Phase 2) ===
+                block_type=block_data.get("block_type"),
+                emotional_tone=block_data.get("emotional_tone"),
+                conceptual_depth=block_data.get("conceptual_depth"),
+                complexity_score=complexity_score,
+                graph_entities=block_data.get("graph_entities")
             )
             blocks.append(block)
             self._block_id_to_block[block.block_id] = block

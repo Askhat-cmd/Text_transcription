@@ -1,0 +1,37 @@
+# Task ID: 3
+# Title: Phase 1.3: Create data_loader.py
+# Status: done
+# Dependencies: 2
+# Priority: high
+# Description: Data loader for SAG v2.0 JSON files with Block and Document dataclasses
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.3.1 Create Block dataclass [done]
+### Dependencies: None
+### Description: Dataclass with fields: block_id, video_id, start, end, title, summary, content, keywords, youtube_link
+### Details:
+
+
+## 2. 1.3.2 Create Document dataclass [done]
+### Dependencies: None
+### Description: Dataclass with fields: video_id, source_url, title, blocks, metadata
+### Details:
+
+
+## 3. 1.3.3 Implement DataLoader class [done]
+### Dependencies: None
+### Description: Class with methods: load_all_data, get_all_blocks, get_document_by_video_id, get_block_by_id
+### Details:
+
+
+## 4. 1.3.4 Create global data_loader singleton [done]
+### Dependencies: None
+### Description: Singleton instance for caching loaded data across requests
+### Details:
+
+

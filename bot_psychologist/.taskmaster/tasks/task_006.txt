@@ -1,0 +1,31 @@
+# Task ID: 6
+# Title: Phase 1.6: Create answer_basic.py
+# Status: done
+# Dependencies: 5
+# Priority: high
+# Description: Main QA function answer_question_basic combining retriever and LLM answerer
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.6.1 Implement answer_question_basic function [done]
+### Dependencies: None
+### Description: Main function: load data -> retrieve blocks -> generate answer -> return result
+### Details:
+
+
+## 2. 1.6.2 Create simple ask() interface [done]
+### Dependencies: None
+### Description: Wrapper function returning only text answer for quick usage
+### Details:
+
+
+## 3. 1.6.3 Add error handling and debug info [done]
+### Dependencies: None
+### Description: Handle no_data, no_blocks, LLM errors; optional debug output
+### Details:
+
+

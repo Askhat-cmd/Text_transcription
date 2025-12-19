@@ -1,0 +1,37 @@
+# Task ID: 2
+# Title: Phase 1.2: Create config.py
+# Status: done
+# Dependencies: 1
+# Priority: high
+# Description: Configuration module with paths, LLM parameters, search settings, caching
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.2.1 Define PROJECT_ROOT and DATA_ROOT paths [done]
+### Dependencies: None
+### Description: Configure base paths for data and project root
+### Details:
+
+
+## 2. 1.2.2 Configure search parameters [done]
+### Dependencies: None
+### Description: TOP_K_BLOCKS, MIN_RELEVANCE_SCORE settings
+### Details:
+
+
+## 3. 1.2.3 Configure LLM parameters [done]
+### Dependencies: None
+### Description: LLM_MODEL, TEMPERATURE, MAX_TOKENS, OPENAI_API_KEY
+### Details:
+
+
+## 4. 1.2.4 Add validation method [done]
+### Dependencies: None
+### Description: Config.validate() to check required settings
+### Details:
+
+

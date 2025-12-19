@@ -1,0 +1,31 @@
+# Task ID: 5
+# Title: Phase 1.5: Create llm_answerer.py
+# Status: done
+# Dependencies: 4
+# Priority: high
+# Description: LLM answerer module for generating responses via OpenAI API with system prompt
+# Details:
+
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 1.5.1 Create system prompt [done]
+### Dependencies: None
+### Description: Psychologist bot persona: calm, supportive, no medical diagnoses
+### Details:
+
+
+## 2. 1.5.2 Build context prompt [done]
+### Dependencies: None
+### Description: Format blocks with title, summary, content, youtube_link, timecodes
+### Details:
+
+
+## 3. 1.5.3 Integrate OpenAI API [done]
+### Dependencies: None
+### Description: Chat completion with temperature, max_tokens, error handling
+### Details:
+
+

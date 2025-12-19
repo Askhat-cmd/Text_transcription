@@ -5,62 +5,216 @@
 ## Описание
 
 Специализированный AI-бот-психолог, который:
-- Работает поверх готовых данных SAG v2.0 JSON + Knowledge Graph
+- Работает поверх готовых данных SAG v2.0 JSON + Knowledge Graph из `voice_bot_pipeline`
 - Использует все слои структуры: блоки, граф-сущности, семантические связи
 - Отвечает на вопросы с отсылками к конкретным видео и таймкодам
+- Адаптирует ответы по уровню пользователя (beginner/intermediate/advanced)
+- Классифицирует состояние пользователя (10 состояний)
+- Строит персональные пути трансформации через Knowledge Graph
+
+## Архитектурный обзор
+
+Проект состоит из 6 фаз разработки:
+
+| Фаза | Название | Описание |
+|------|----------|----------|
+| **Phase 1** | Базовый QA | TF-IDF поиск + LLM ответы с таймкодами |
+| **Phase 2** | SAG-aware QA | Адаптация по уровню пользователя, семантический анализ |
+| **Phase 3** | Knowledge Graph Powered | Рекомендация практик через граф знаний (95 узлов, 2182 связи) |
+| **Phase 4** | Adaptive QA | Классификация состояний, память диалога, персональные пути |
+| **Phase 5** | REST API | FastAPI сервер с endpoints для всех Phase 1-4 |
+| **Phase 6** | Web UI | React SPA интерфейс для взаимодействия с ботом |
+
+## Быстрый старт
+
+### 1. Установка зависимостей
+
+```bash
+cd bot_psychologist
+
+# Python зависимости
+pip install -r requirements_bot.txt
+pip install -r api/requirements.txt
+
+# Node.js зависимости (для Web UI, опционально)
+cd web_ui
+npm install
+cd ..
+```
+
+### 2. Настройка переменных окружения
+
+Создайте `.env` файл:
+
+```bash
+cp .env.example .env
+```
+
+Заполните обязательные переменные:
+
+```env
+OPENAI_API_KEY=sk-proj-...
+DATA_ROOT=../voice_bot_pipeline/data
+```
+
+### 3. Проверка данных
+
+Убедитесь, что данные из `voice_bot_pipeline` доступны:
+
+```bash
+ls ../voice_bot_pipeline/data/sag_final/
+```
+
+### 4. Тестирование
+
+```bash
+# Phase 1: Базовый QA
+python test_phase1.py
+
+# Phase 2: SAG-aware QA
+python test_phase2.py
+
+# Phase 3: Knowledge Graph Powered QA
+python test_phase3.py
+
+# Phase 4: Adaptive QA
+python test_phase4.py
+
+# API тесты
+python test_api.py
+```
+
+### 5. Запуск API сервера
+
+```bash
+cd api
+uvicorn main:app --reload --port 8000
+```
+
+API будет доступен по адресу `http://localhost:8000/api/docs`
+
+### 6. Запуск Web UI (опционально)
+
+```bash
+cd web_ui
+npm run dev
+```
+
+Web UI будет доступен по адресу `http://localhost:5173`
 
 ## Структура проекта
 
 ```
 bot_psychologist/
-├── .taskmaster/           # TaskMaster — система управления задачами
-│   ├── tasks/             # JSON файлы с задачами
-│   └── config.json        # Конфигурация TaskMaster
-├── Docs_for_make_tasks/   # Документация и спецификации
-│   ├── PRD*.md            # Product Requirements Document
-│   ├── Phase_1.md         # Детали Phase 1
-│   ├── Phase_2.md         # Детали Phase 2
-│   └── Phase_3.md         # Детали Phase 3
-├── bot_agent/             # (будет создан) Основной код бота
-├── .env.example           # Пример переменных окружения
-├── .gitignore             # Git ignore
-└── README.md              # Этот файл
+├── bot_agent/              # Основной код бота (Phase 1-4)
+│   ├── config.py           # Конфигурация
+│   ├── data_loader.py      # Загрузка данных из voice_bot_pipeline
+│   ├── retriever.py        # TF-IDF поиск
+│   ├── llm_answerer.py     # Генерация ответов через OpenAI
+│   ├── answer_basic.py     # Phase 1: Базовый QA
+│   ├── answer_sag_aware.py # Phase 2: SAG-aware QA
+│   ├── answer_graph_powered.py # Phase 3: Graph-powered QA
+│   ├── answer_adaptive.py  # Phase 4: Adaptive QA
+│   ├── user_level_adapter.py # Адаптация по уровню
+│   ├── semantic_analyzer.py # Семантический анализ
+│   ├── graph_client.py     # Работа с Knowledge Graph
+│   ├── practices_recommender.py # Рекомендация практик
+│   ├── state_classifier.py # Классификация состояний
+│   ├── conversation_memory.py # Память диалога
+│   └── path_builder.py     # Построение путей трансформации
+│
+├── api/                    # FastAPI сервер (Phase 5)
+│   ├── main.py             # Приложение FastAPI
+│   ├── routes.py            # API endpoints
+│   ├── models.py            # Pydantic модели
+│   ├── auth.py              # Аутентификация
+│   └── requirements.txt     # Зависимости API
+│
+├── web_ui/                 # React приложение (Phase 6)
+│   ├── src/
+│   │   ├── components/     # React компоненты
+│   │   ├── pages/          # Страницы приложения
+│   │   ├── hooks/          # React hooks
+│   │   ├── services/       # API сервисы
+│   │   └── types/          # TypeScript типы
+│   └── package.json        # npm зависимости
+│
+├── docs/                   # Документация проекта
+│   ├── overview.md         # Общее описание
+│   ├── architecture.md     # Архитектура Phase 1-6
+│   ├── data_flow.md        # Поток данных от voice_bot_pipeline
+│   ├── sag_v2.md           # SAG v2.0 + семантика
+│   ├── knowledge_graph.md  # Knowledge Graph
+│   ├── bot_agent.md        # Bot Agent, состояния, логика
+│   ├── api.md              # REST API
+│   ├── web_ui.md           # Web UI
+│   ├── configuration.md    # Конфигурация
+│   ├── testing.md          # Тестирование
+│   ├── deployment.md       # Развёртывание
+│   └── roadmap.md          # Дорожная карта
+│
+├── .cache_bot_agent/       # Кэш и данные бота
+│   └── conversations/      # История диалогов пользователей
+│
+├── test_phase1.py          # Тесты Phase 1
+├── test_phase2.py          # Тесты Phase 2
+├── test_phase3.py          # Тесты Phase 3
+├── test_phase4.py          # Тесты Phase 4
+├── test_api.py             # Тесты API
+│
+├── requirements_bot.txt    # Python зависимости
+├── .env.example            # Пример переменных окружения
+└── README.md               # Этот файл
 ```
 
-## Фазы разработки
+## Связь с voice_bot_pipeline
 
-| Фаза | Название | Описание |
-|------|----------|----------|
-| Phase 1 | Семантический QA | Базовый поиск по блокам и ответы с таймкодами |
-| Phase 2 | SAG v2.0 Aware | Учёт уровня пользователя, концептов, связей |
-| Phase 3 | Knowledge Graph | Рекомендация практик через граф знаний |
-| Phase 4 | Диагностика | Распознавание состояний и маршруты трансформации |
+`bot_psychologist` является потребителем данных, сгенерированных `voice_bot_pipeline`:
 
-## Текущий статус
+- **Данные**: `voice_bot_pipeline/data/sag_final/*.for_vector.json`
+- **Векторная БД** (опционально): `voice_bot_pipeline/data/chromadb/`
 
-**Phase 1** — в процессе планирования (задачи созданы в TaskMaster)
+**Важно**: `bot_psychologist` только читает данные, не изменяет их.
 
-## Команды TaskMaster
+Подробнее о потоке данных см. [docs/data_flow.md](docs/data_flow.md)
 
-```bash
-# Просмотр всех задач
-cd bot_psychologist
-npx task-master list --with-subtasks
+## Документация
 
-# Следующая задача
-npx task-master next
+Полная документация проекта находится в папке [`docs/`](docs/):
 
-# Изменить статус задачи
-npx task-master set-status --id=1 --status=in-progress
-```
+- [Обзор проекта](docs/overview.md) — общее описание проекта
+- [Архитектура](docs/architecture.md) — архитектура Phase 1-6
+- [Поток данных](docs/data_flow.md) — как данные поступают от voice_bot_pipeline
+- [SAG v2.0](docs/sag_v2.md) — использование SAG v2.0 данных
+- [Knowledge Graph](docs/knowledge_graph.md) — работа с графом знаний
+- [Bot Agent](docs/bot_agent.md) — компоненты бота, состояния, логика
+- [REST API](docs/api.md) — описание API endpoints
+- [Web UI](docs/web_ui.md) — описание Web UI
+- [Конфигурация](docs/configuration.md) — настройка проекта
+- [Тестирование](docs/testing.md) — тестирование Phase 1-6
+- [Развёртывание](docs/deployment.md) — локальный запуск и production
+- [Дорожная карта](docs/roadmap.md) — возможное развитие проекта
 
 ## Требования
 
-- Python 3.10+
-- OpenAI API Key
-- Данные из `voice_bot_pipeline/data/sag_final/`
+- **Python 3.10+**
+- **Node.js 18+** (для Web UI, опционально)
+- **OpenAI API Key** (обязательно)
+- **Данные из voice_bot_pipeline** (SAG v2.0 JSON файлы)
+
+## Проект является частью монорепозитория
+
+Этот проект является частью монорепозитория `Text_transcription`, который содержит:
+
+1. **voice_bot_pipeline** — пайплайн подготовки данных из YouTube-лекций
+2. **bot_psychologist** — AI-бот, использующий эти данные
+
+См. корневой [README.md](../README.md) для общей информации о монорепозитории.
 
 ## Лицензия
 
 Private — для внутреннего использования
 
+## Автор
+
+Askhat-cmd

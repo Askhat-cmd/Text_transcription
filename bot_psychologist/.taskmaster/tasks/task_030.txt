@@ -1,0 +1,82 @@
+# Task ID: 30
+# Title: Phase 5.3: Создание api/routes.py — API Endpoints
+# Status: done
+# Dependencies: 28, 29
+# Priority: high
+# Description: Создать api/routes.py с REST endpoints для всех функций Phase 1-4. Включает 4 endpoints для вопросов (/basic, /sag-aware, /graph-powered, /adaptive), endpoints для истории, обратной связи, статистики и health check.
+# Details:
+Файл: bot_psychologist/api/routes.py
+
+Содержимое:
+1. Router: APIRouter(prefix="/api/v1", tags=["bot"])
+2. QUESTIONS ENDPOINTS:
+   - POST /questions/basic — Phase 1 базовый QA
+   - POST /questions/sag-aware — Phase 2 SAG-aware QA
+   - POST /questions/graph-powered — Phase 3 Graph-powered QA
+   - POST /questions/adaptive — Phase 4 Adaptive QA (главный endpoint)
+3. USER HISTORY ENDPOINTS:
+   - POST /users/{user_id}/history — получение истории диалога
+4. FEEDBACK ENDPOINTS:
+   - POST /feedback — отправка обратной связи
+5. STATISTICS ENDPOINTS:
+   - GET /stats — общая статистика системы
+6. HEALTH CHECK:
+   - GET /health — проверка здоровья сервера
+7. Интеграция:
+   - Импорт answer_question_basic, answer_question_sag_aware, answer_question_graph_powered, answer_question_adaptive
+   - Импорт get_conversation_memory
+   - Импорт Pydantic models
+   - Импорт verify_api_key dependency
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.3.1 Создать router с prefix /api/v1 [done]
+### Dependencies: None
+### Description: Настроить APIRouter с prefix, tags, импорты bot_agent functions, models, auth
+### Details:
+
+
+## 2. 5.3.2 Реализовать POST /questions/basic [done]
+### Dependencies: None
+### Description: Phase 1 базовый QA endpoint, интеграция с answer_question_basic
+### Details:
+
+
+## 3. 5.3.3 Реализовать POST /questions/sag-aware [done]
+### Dependencies: None
+### Description: Phase 2 SAG-aware QA endpoint, интеграция с answer_question_sag_aware
+### Details:
+
+
+## 4. 5.3.4 Реализовать POST /questions/graph-powered [done]
+### Dependencies: None
+### Description: Phase 3 Graph-powered QA endpoint, интеграция с answer_question_graph_powered
+### Details:
+
+
+## 5. 5.3.5 Реализовать POST /questions/adaptive [done]
+### Dependencies: None
+### Description: Phase 4 Adaptive QA endpoint (главный), интеграция с answer_question_adaptive
+### Details:
+
+
+## 6. 5.3.6 Реализовать POST /users/{user_id}/history [done]
+### Dependencies: None
+### Description: Endpoint для получения истории диалога пользователя
+### Details:
+
+
+## 7. 5.3.7 Реализовать POST /feedback [done]
+### Dependencies: None
+### Description: Endpoint для отправки обратной связи на ответ бота
+### Details:
+
+
+## 8. 5.3.8 Реализовать GET /stats и GET /health [done]
+### Dependencies: None
+### Description: Endpoints для статистики системы и проверки здоровья сервера
+### Details:
+
+

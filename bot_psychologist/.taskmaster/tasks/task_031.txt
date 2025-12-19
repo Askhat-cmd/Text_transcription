@@ -1,0 +1,75 @@
+# Task ID: 31
+# Title: Phase 5.4: Создание api/main.py — FastAPI Application
+# Status: done
+# Dependencies: 30
+# Priority: high
+# Description: Создать api/main.py — главный файл FastAPI приложения. Включает настройку app, middleware (CORS, TrustedHost, logging), подключение router, custom OpenAPI schema, root endpoints и uvicorn entrypoint.
+# Details:
+Файл: bot_psychologist/api/main.py
+
+Содержимое:
+1. Logging setup: basicConfig с INFO level
+2. Lifespan context manager для startup/shutdown
+3. FastAPI app:
+   - title: "Bot Psychologist API"
+   - version: "0.5.0"
+   - docs_url: "/api/docs"
+   - redoc_url: "/api/redoc"
+   - openapi_url: "/api/openapi.json"
+4. MIDDLEWARE:
+   - CORSMiddleware: allow_origins (localhost:3000, localhost:8080), allow_methods, allow_headers
+   - TrustedHostMiddleware: allowed_hosts (localhost, 127.0.0.1)
+   - Custom log_requests middleware: логирование входящих запросов и времени обработки
+5. Router: app.include_router(router)
+6. Custom OpenAPI: custom_openapi() с logo и описанием
+7. ROOT ENDPOINTS:
+   - GET / — информация о сервере
+   - GET /api/v1/info — детальная информация об API и endpoints
+8. Uvicorn entrypoint: uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.4.1 Настроить logging и lifespan [done]
+### Dependencies: None
+### Description: basicConfig с INFO level, lifespan context manager для startup/shutdown
+### Details:
+
+
+## 2. 5.4.2 Создать FastAPI app с metadata [done]
+### Dependencies: None
+### Description: title, version 0.5.0, docs_url /api/docs, redoc_url /api/redoc, openapi_url
+### Details:
+
+
+## 3. 5.4.3 Добавить CORSMiddleware [done]
+### Dependencies: None
+### Description: Cross-origin requests: allow_origins (localhost:3000, 8080), allow_methods, allow_headers
+### Details:
+
+
+## 4. 5.4.4 Добавить TrustedHostMiddleware [done]
+### Dependencies: None
+### Description: Безопасность: allowed_hosts (localhost, 127.0.0.1)
+### Details:
+
+
+## 5. 5.4.5 Добавить log_requests middleware [done]
+### Dependencies: None
+### Description: Custom middleware для логирования входящих запросов и времени обработки
+### Details:
+
+
+## 6. 5.4.6 Подключить router и custom_openapi [done]
+### Dependencies: None
+### Description: app.include_router(router), custom_openapi() с logo и описанием
+### Details:
+
+
+## 7. 5.4.7 Создать root endpoints и uvicorn [done]
+### Dependencies: None
+### Description: GET /, GET /api/v1/info, uvicorn.run entrypoint (host 0.0.0.0, port 8000)
+### Details:
+
+

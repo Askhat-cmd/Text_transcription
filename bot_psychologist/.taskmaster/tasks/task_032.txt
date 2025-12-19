@@ -1,0 +1,43 @@
+# Task ID: 32
+# Title: Phase 5.5: Создание api/__init__.py и api/requirements.txt
+# Status: done
+# Dependencies: 31
+# Priority: medium
+# Description: Создать api/__init__.py с экспортами модуля и api/requirements.txt с зависимостями для Phase 5.
+# Details:
+Файлы:
+
+1. bot_psychologist/api/__init__.py:
+   - from .main import app
+   - from .models import *
+   - from .auth import api_key_manager, verify_api_key
+   - __all__ = ["app", "api_key_manager", "verify_api_key"]
+
+2. bot_psychologist/api/requirements.txt:
+   - fastapi==0.104.1
+   - uvicorn[standard]==0.24.0
+   - pydantic==2.5.0
+   - pydantic-settings==2.1.0
+   - python-multipart==0.0.6
+   - python-jose[cryptography]==3.3.0
+   - passlib[bcrypt]==1.7.4
+   - pytest==7.4.3
+   - pytest-asyncio==0.21.1
+   - httpx==0.25.1
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.5.1 Создать api/__init__.py [done]
+### Dependencies: None
+### Description: Экспорты: app, api_key_manager, verify_api_key; __all__ список
+### Details:
+
+
+## 2. 5.5.2 Создать api/requirements.txt [done]
+### Dependencies: None
+### Description: Зависимости: fastapi, uvicorn, pydantic, pytest, httpx и др.
+### Details:
+
+

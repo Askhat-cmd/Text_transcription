@@ -1,0 +1,59 @@
+# Task ID: 28
+# Title: Phase 5.1: Создание api/models.py — Pydantic Models
+# Status: done
+# Dependencies: 27
+# Priority: high
+# Description: Создать api/models.py с Pydantic моделями для валидации запросов и ответов API. Включает Enum для уровней и обратной связи, Request Models (AskQuestionRequest, FeedbackRequest, GetUserHistoryRequest, GetStatsRequest) и Response Models (SourceResponse, StateAnalysisResponse, PathRecommendationResponse, AnswerResponse, AdaptiveAnswerResponse, etc.).
+# Details:
+Файл: bot_psychologist/api/models.py
+
+Содержимое:
+1. ENUMS: UserLevel (beginner/intermediate/advanced), FeedbackType (positive/negative/neutral)
+2. REQUEST MODELS:
+   - AskQuestionRequest: query, user_id, user_level, include_path, include_feedback_prompt, debug
+   - FeedbackRequest: user_id, turn_index, feedback, rating, comment
+   - GetUserHistoryRequest: user_id, last_n_turns
+   - GetStatsRequest: user_id (optional), time_range_days
+3. RESPONSE MODELS:
+   - SourceResponse: block_id, title, youtube_link, start, end, block_type, complexity_score
+   - StateAnalysisResponse: primary_state, confidence, emotional_tone, recommendations
+   - PathStepResponse: step_number, title, duration_weeks, practices, key_concepts
+   - PathRecommendationResponse: current_state, target_state, key_focus, steps_count, total_duration_weeks, first_step
+   - AnswerResponse: status, answer, concepts, sources, metadata, timestamp, processing_time_seconds
+   - AdaptiveAnswerResponse: всё от AnswerResponse + state_analysis, path_recommendation, feedback_prompt, conversation_context
+   - ConversationTurnResponse, UserHistoryResponse, FeedbackResponse, HealthCheckResponse, ErrorResponse, StatsResponse
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.1.1 Создать Enum UserLevel и FeedbackType [done]
+### Dependencies: None
+### Description: Создать UserLevel (beginner/intermediate/advanced) и FeedbackType (positive/negative/neutral) enums
+### Details:
+
+
+## 2. 5.1.2 Создать Request Models [done]
+### Dependencies: None
+### Description: AskQuestionRequest с валидаторами, FeedbackRequest, GetUserHistoryRequest, GetStatsRequest
+### Details:
+
+
+## 3. 5.1.3 Создать базовые Response Models [done]
+### Dependencies: None
+### Description: SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse
+### Details:
+
+
+## 4. 5.1.4 Создать основные Response Models [done]
+### Dependencies: None
+### Description: AnswerResponse, AdaptiveAnswerResponse с полной структурой Phase 4
+### Details:
+
+
+## 5. 5.1.5 Создать вспомогательные Response Models [done]
+### Dependencies: None
+### Description: ConversationTurnResponse, UserHistoryResponse, FeedbackResponse, HealthCheckResponse, ErrorResponse, StatsResponse
+### Details:
+
+

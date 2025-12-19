@@ -1380,11 +1380,484 @@
             "parentTaskId": 27
           }
         ]
+      },
+      {
+        "id": 28,
+        "title": "Phase 5.1: Создание api/models.py — Pydantic Models",
+        "description": "Создать api/models.py с Pydantic моделями для валидации запросов и ответов API. Включает Enum для уровней и обратной связи, Request Models (AskQuestionRequest, FeedbackRequest, GetUserHistoryRequest, GetStatsRequest) и Response Models (SourceResponse, StateAnalysisResponse, PathRecommendationResponse, AnswerResponse, AdaptiveAnswerResponse, etc.).",
+        "details": "Файл: bot_psychologist/api/models.py\n\nСодержимое:\n1. ENUMS: UserLevel (beginner/intermediate/advanced), FeedbackType (positive/negative/neutral)\n2. REQUEST MODELS:\n   - AskQuestionRequest: query, user_id, user_level, include_path, include_feedback_prompt, debug\n   - FeedbackRequest: user_id, turn_index, feedback, rating, comment\n   - GetUserHistoryRequest: user_id, last_n_turns\n   - GetStatsRequest: user_id (optional), time_range_days\n3. RESPONSE MODELS:\n   - SourceResponse: block_id, title, youtube_link, start, end, block_type, complexity_score\n   - StateAnalysisResponse: primary_state, confidence, emotional_tone, recommendations\n   - PathStepResponse: step_number, title, duration_weeks, practices, key_concepts\n   - PathRecommendationResponse: current_state, target_state, key_focus, steps_count, total_duration_weeks, first_step\n   - AnswerResponse: status, answer, concepts, sources, metadata, timestamp, processing_time_seconds\n   - AdaptiveAnswerResponse: всё от AnswerResponse + state_analysis, path_recommendation, feedback_prompt, conversation_context\n   - ConversationTurnResponse, UserHistoryResponse, FeedbackResponse, HealthCheckResponse, ErrorResponse, StatsResponse",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          27
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.1.1 Создать Enum UserLevel и FeedbackType",
+            "description": "Создать UserLevel (beginner/intermediate/advanced) и FeedbackType (positive/negative/neutral) enums",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 2,
+            "title": "5.1.2 Создать Request Models",
+            "description": "AskQuestionRequest с валидаторами, FeedbackRequest, GetUserHistoryRequest, GetStatsRequest",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 3,
+            "title": "5.1.3 Создать базовые Response Models",
+            "description": "SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 4,
+            "title": "5.1.4 Создать основные Response Models",
+            "description": "AnswerResponse, AdaptiveAnswerResponse с полной структурой Phase 4",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          },
+          {
+            "id": 5,
+            "title": "5.1.5 Создать вспомогательные Response Models",
+            "description": "ConversationTurnResponse, UserHistoryResponse, FeedbackResponse, HealthCheckResponse, ErrorResponse, StatsResponse",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 28
+          }
+        ]
+      },
+      {
+        "id": 29,
+        "title": "Phase 5.2: Создание api/auth.py — API Key Authentication & Rate Limiting",
+        "description": "Создать api/auth.py с классом APIKeyManager для управления API ключами и rate limiting. Включает валидацию ключей, проверку лимитов запросов, dependency для FastAPI verify_api_key.",
+        "details": "Файл: bot_psychologist/api/auth.py\n\nСодержимое:\n1. APIKeyManager class:\n   - __init__: инициализация api_keys dict (test-key-001, dev-key-001), request_counts dict\n   - get_api_key(key): получить информацию об API ключе\n   - is_valid(key): проверить валидность и активность ключа\n   - check_rate_limit(api_key): проверить лимит частоты запросов (100-1000 req/min)\n   - add_api_key(key, name, rate_limit): добавить новый ключ\n2. verify_api_key async dependency:\n   - Проверка заголовка X-API-Key\n   - HTTPException 403 если ключ отсутствует или невалиден\n   - HTTPException 429 если превышен rate limit\n3. get_api_key_info с lru_cache\n4. Глобальный api_key_manager singleton",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          27
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.2.1 Создать APIKeyManager class",
+            "description": "Конструктор с api_keys dict (test-key-001, dev-key-001), request_counts dict",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 29
+          },
+          {
+            "id": 2,
+            "title": "5.2.2 Реализовать get_api_key и is_valid",
+            "description": "Методы для получения информации о ключе и проверки валидности",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 29
+          },
+          {
+            "id": 3,
+            "title": "5.2.3 Реализовать check_rate_limit",
+            "description": "Ограничение частоты запросов (100-1000 req/min) с очисткой старых записей",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 29
+          },
+          {
+            "id": 4,
+            "title": "5.2.4 Реализовать verify_api_key dependency",
+            "description": "Async dependency для FastAPI: X-API-Key header, HTTPException 403/429",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 29
+          },
+          {
+            "id": 5,
+            "title": "5.2.5 Создать singleton и get_api_key_info",
+            "description": "Глобальный api_key_manager singleton и get_api_key_info с lru_cache",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 29
+          }
+        ]
+      },
+      {
+        "id": 30,
+        "title": "Phase 5.3: Создание api/routes.py — API Endpoints",
+        "description": "Создать api/routes.py с REST endpoints для всех функций Phase 1-4. Включает 4 endpoints для вопросов (/basic, /sag-aware, /graph-powered, /adaptive), endpoints для истории, обратной связи, статистики и health check.",
+        "details": "Файл: bot_psychologist/api/routes.py\n\nСодержимое:\n1. Router: APIRouter(prefix=\"/api/v1\", tags=[\"bot\"])\n2. QUESTIONS ENDPOINTS:\n   - POST /questions/basic — Phase 1 базовый QA\n   - POST /questions/sag-aware — Phase 2 SAG-aware QA\n   - POST /questions/graph-powered — Phase 3 Graph-powered QA\n   - POST /questions/adaptive — Phase 4 Adaptive QA (главный endpoint)\n3. USER HISTORY ENDPOINTS:\n   - POST /users/{user_id}/history — получение истории диалога\n4. FEEDBACK ENDPOINTS:\n   - POST /feedback — отправка обратной связи\n5. STATISTICS ENDPOINTS:\n   - GET /stats — общая статистика системы\n6. HEALTH CHECK:\n   - GET /health — проверка здоровья сервера\n7. Интеграция:\n   - Импорт answer_question_basic, answer_question_sag_aware, answer_question_graph_powered, answer_question_adaptive\n   - Импорт get_conversation_memory\n   - Импорт Pydantic models\n   - Импорт verify_api_key dependency",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          28,
+          29
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.3.1 Создать router с prefix /api/v1",
+            "description": "Настроить APIRouter с prefix, tags, импорты bot_agent functions, models, auth",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 2,
+            "title": "5.3.2 Реализовать POST /questions/basic",
+            "description": "Phase 1 базовый QA endpoint, интеграция с answer_question_basic",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 3,
+            "title": "5.3.3 Реализовать POST /questions/sag-aware",
+            "description": "Phase 2 SAG-aware QA endpoint, интеграция с answer_question_sag_aware",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 4,
+            "title": "5.3.4 Реализовать POST /questions/graph-powered",
+            "description": "Phase 3 Graph-powered QA endpoint, интеграция с answer_question_graph_powered",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 5,
+            "title": "5.3.5 Реализовать POST /questions/adaptive",
+            "description": "Phase 4 Adaptive QA endpoint (главный), интеграция с answer_question_adaptive",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 6,
+            "title": "5.3.6 Реализовать POST /users/{user_id}/history",
+            "description": "Endpoint для получения истории диалога пользователя",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 7,
+            "title": "5.3.7 Реализовать POST /feedback",
+            "description": "Endpoint для отправки обратной связи на ответ бота",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          },
+          {
+            "id": 8,
+            "title": "5.3.8 Реализовать GET /stats и GET /health",
+            "description": "Endpoints для статистики системы и проверки здоровья сервера",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 30
+          }
+        ]
+      },
+      {
+        "id": 31,
+        "title": "Phase 5.4: Создание api/main.py — FastAPI Application",
+        "description": "Создать api/main.py — главный файл FastAPI приложения. Включает настройку app, middleware (CORS, TrustedHost, logging), подключение router, custom OpenAPI schema, root endpoints и uvicorn entrypoint.",
+        "details": "Файл: bot_psychologist/api/main.py\n\nСодержимое:\n1. Logging setup: basicConfig с INFO level\n2. Lifespan context manager для startup/shutdown\n3. FastAPI app:\n   - title: \"Bot Psychologist API\"\n   - version: \"0.5.0\"\n   - docs_url: \"/api/docs\"\n   - redoc_url: \"/api/redoc\"\n   - openapi_url: \"/api/openapi.json\"\n4. MIDDLEWARE:\n   - CORSMiddleware: allow_origins (localhost:3000, localhost:8080), allow_methods, allow_headers\n   - TrustedHostMiddleware: allowed_hosts (localhost, 127.0.0.1)\n   - Custom log_requests middleware: логирование входящих запросов и времени обработки\n5. Router: app.include_router(router)\n6. Custom OpenAPI: custom_openapi() с logo и описанием\n7. ROOT ENDPOINTS:\n   - GET / — информация о сервере\n   - GET /api/v1/info — детальная информация об API и endpoints\n8. Uvicorn entrypoint: uvicorn.run(\"main:app\", host=\"0.0.0.0\", port=8000, reload=True)",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          30
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.4.1 Настроить logging и lifespan",
+            "description": "basicConfig с INFO level, lifespan context manager для startup/shutdown",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 2,
+            "title": "5.4.2 Создать FastAPI app с metadata",
+            "description": "title, version 0.5.0, docs_url /api/docs, redoc_url /api/redoc, openapi_url",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 3,
+            "title": "5.4.3 Добавить CORSMiddleware",
+            "description": "Cross-origin requests: allow_origins (localhost:3000, 8080), allow_methods, allow_headers",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 4,
+            "title": "5.4.4 Добавить TrustedHostMiddleware",
+            "description": "Безопасность: allowed_hosts (localhost, 127.0.0.1)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 5,
+            "title": "5.4.5 Добавить log_requests middleware",
+            "description": "Custom middleware для логирования входящих запросов и времени обработки",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 6,
+            "title": "5.4.6 Подключить router и custom_openapi",
+            "description": "app.include_router(router), custom_openapi() с logo и описанием",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          },
+          {
+            "id": 7,
+            "title": "5.4.7 Создать root endpoints и uvicorn",
+            "description": "GET /, GET /api/v1/info, uvicorn.run entrypoint (host 0.0.0.0, port 8000)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 31
+          }
+        ]
+      },
+      {
+        "id": 32,
+        "title": "Phase 5.5: Создание api/__init__.py и api/requirements.txt",
+        "description": "Создать api/__init__.py с экспортами модуля и api/requirements.txt с зависимостями для Phase 5.",
+        "details": "Файлы:\n\n1. bot_psychologist/api/__init__.py:\n   - from .main import app\n   - from .models import *\n   - from .auth import api_key_manager, verify_api_key\n   - __all__ = [\"app\", \"api_key_manager\", \"verify_api_key\"]\n\n2. bot_psychologist/api/requirements.txt:\n   - fastapi==0.104.1\n   - uvicorn[standard]==0.24.0\n   - pydantic==2.5.0\n   - pydantic-settings==2.1.0\n   - python-multipart==0.0.6\n   - python-jose[cryptography]==3.3.0\n   - passlib[bcrypt]==1.7.4\n   - pytest==7.4.3\n   - pytest-asyncio==0.21.1\n   - httpx==0.25.1",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          31
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.5.1 Создать api/__init__.py",
+            "description": "Экспорты: app, api_key_manager, verify_api_key; __all__ список",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 32
+          },
+          {
+            "id": 2,
+            "title": "5.5.2 Создать api/requirements.txt",
+            "description": "Зависимости: fastapi, uvicorn, pydantic, pytest, httpx и др.",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 32
+          }
+        ]
+      },
+      {
+        "id": 33,
+        "title": "Phase 5.6: Создание test_api.py — Тестирование API",
+        "description": "Создать test_api.py — тестовый скрипт для проверки всех API endpoints. Включает тесты health check, adaptive question, user history, feedback, statistics и invalid API key.",
+        "details": "Файл: bot_psychologist/test_api.py\n\nСодержимое:\n1. Константы: BASE_URL = \"http://localhost:8000\", API_KEY = \"test-key-001\"\n2. get_headers(): возврат {\"X-API-Key\": API_KEY, \"Content-Type\": \"application/json\"}\n3. ТЕСТЫ:\n   - test_health_check(): GET /api/v1/health, assert status 200\n   - test_adaptive_question(): POST /api/v1/questions/adaptive с payload, assert status 200\n   - test_user_history(): POST /api/v1/users/{user_id}/history, assert status 200\n   - test_feedback(): POST /api/v1/feedback с payload, assert status 200\n   - test_statistics(): GET /api/v1/stats, assert status 200\n   - test_invalid_api_key(): запрос с невалиден ключом, assert status 403\n4. Main block: запуск всех тестов с выводом результатов",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          32
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.6.1 Создать test_health_check",
+            "description": "GET /api/v1/health, assert status 200, проверка status: healthy",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          },
+          {
+            "id": 2,
+            "title": "5.6.2 Создать test_adaptive_question",
+            "description": "POST /api/v1/questions/adaptive, payload с query и user_id, проверка state_analysis",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          },
+          {
+            "id": 3,
+            "title": "5.6.3 Создать test_user_history",
+            "description": "POST /api/v1/users/{user_id}/history, проверка total_turns и turns",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          },
+          {
+            "id": 4,
+            "title": "5.6.4 Создать test_feedback",
+            "description": "POST /api/v1/feedback, payload с user_id, turn_index, feedback, проверка success",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          },
+          {
+            "id": 5,
+            "title": "5.6.5 Создать test_statistics",
+            "description": "GET /api/v1/stats, проверка total_users, total_questions, average_processing_time",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          },
+          {
+            "id": 6,
+            "title": "5.6.6 Создать test_invalid_api_key",
+            "description": "Запрос с невалидным API ключом, assert status 403, проверка detail",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 33
+          }
+        ]
+      },
+      {
+        "id": 34,
+        "title": "Phase 5.7: Запуск и тестирование API Server",
+        "description": "Установить зависимости, запустить FastAPI сервер, проверить Swagger документацию и выполнить все тесты test_api.py.",
+        "details": "Шаги:\n1. Установка зависимостей:\n   cd bot_psychologist\n   pip install -r api/requirements.txt\n\n2. Запуск сервера:\n   python api/main.py\n\n3. Проверка endpoints:\n   - Main: http://localhost:8000\n   - Swagger Docs: http://localhost:8000/api/docs\n   - ReDoc: http://localhost:8000/api/redoc\n\n4. Запуск тестов:\n   python test_api.py\n\n5. Ожидаемые результаты:\n   - Все 6 тестов проходят\n   - Health check возвращает status: healthy\n   - Adaptive question возвращает ответ с state_analysis\n   - API key authentication работает (403 для невалиден ключей)",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          33
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.7.1 Установить зависимости",
+            "description": "pip install -r api/requirements.txt",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 34
+          },
+          {
+            "id": 2,
+            "title": "5.7.2 Запустить FastAPI сервер",
+            "description": "python api/main.py, проверить http://localhost:8000",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 34
+          },
+          {
+            "id": 3,
+            "title": "5.7.3 Проверить Swagger документацию",
+            "description": "Открыть http://localhost:8000/api/docs, проверить все endpoints",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 34
+          },
+          {
+            "id": 4,
+            "title": "5.7.4 Выполнить все тесты test_api.py",
+            "description": "python test_api.py, убедиться что все 6 тестов проходят",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 34
+          }
+        ]
+      },
+      {
+        "id": 35,
+        "title": "Phase 5.8: Финальная проверка и валидация Phase 5",
+        "description": "Финальная проверка всех компонентов Phase 5 по чек-листу. Валидация: все endpoints работают, Swagger документация доступна, authentication и rate limiting функционируют, готовность к Phase 6.",
+        "details": "Чек-лист Phase 5:\n- [ ] Создан api/models.py (Pydantic models)\n- [ ] Создан api/auth.py (API Key validation + Rate limiting)\n- [ ] Создан api/routes.py (4 endpoints для вопросов + 3 дополнительных)\n- [ ] Создан api/main.py (FastAPI app + middleware)\n- [ ] Создан api/__init__.py\n- [ ] Создан api/requirements.txt\n- [ ] Создан test_api.py\n- [ ] FastAPI сервер запущен и все endpoints работают\n- [ ] Swagger документация доступна\n- [ ] 6/6 тестов пройдены\n\nВалидация:\n- POST /api/v1/questions/basic работает (Phase 1)\n- POST /api/v1/questions/sag-aware работает (Phase 2)\n- POST /api/v1/questions/graph-powered работает (Phase 3)\n- POST /api/v1/questions/adaptive работает (Phase 4)\n- POST /api/v1/users/{user_id}/history работает\n- POST /api/v1/feedback работает\n- GET /api/v1/stats работает\n- GET /api/v1/health работает\n- Authentication: 403 для невалиден API ключей\n- Rate limiting: 429 при превышении лимита\n\nГотовность к Phase 6 (Web UI)",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          34
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "5.8.1 Пройти чек-лист Phase 5",
+            "description": "Проверить все файлы: models.py, auth.py, routes.py, main.py, __init__.py, requirements.txt, test_api.py",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 35
+          },
+          {
+            "id": 2,
+            "title": "5.8.2 Валидация endpoints",
+            "description": "Проверить все 8 endpoints работают с API key auth, rate limiting функционирует",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 35
+          },
+          {
+            "id": 3,
+            "title": "5.8.3 Подтвердить готовность к Phase 6",
+            "description": "Swagger доступен, все тесты проходят, готовность к Web UI",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 35
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-12-19T04:02:29.457Z",
-      "updated": "2025-12-19T07:30:28.359Z",
+      "updated": "2025-12-19T08:21:23.090Z",
       "description": "Tasks for master context"
     }
   }

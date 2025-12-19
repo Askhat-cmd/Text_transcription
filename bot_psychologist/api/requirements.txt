@@ -1,0 +1,24 @@
+# api/requirements.txt
+# Dependencies for Bot Psychologist API (Phase 5)
+
+# FastAPI & ASGI Server
+fastapi>=0.104.0,<0.200.0
+uvicorn[standard]>=0.24.0,<1.0.0
+
+# Pydantic for validation
+pydantic>=2.5.0,<3.0.0
+pydantic-settings>=2.1.0,<3.0.0
+
+# HTTP client (for testing)
+httpx>=0.25.0,<1.0.0
+
+# Multipart form data
+python-multipart>=0.0.6,<1.0.0
+
+# Testing
+pytest>=7.4.0,<8.0.0
+pytest-asyncio>=0.21.0,<1.0.0
+
+# Optional: Security (JWT)
+python-jose[cryptography]>=3.3.0,<4.0.0
+passlib[bcrypt]>=1.7.4,<2.0.0

@@ -1,0 +1,61 @@
+# Task ID: 33
+# Title: Phase 5.6: Создание test_api.py — Тестирование API
+# Status: done
+# Dependencies: 32
+# Priority: medium
+# Description: Создать test_api.py — тестовый скрипт для проверки всех API endpoints. Включает тесты health check, adaptive question, user history, feedback, statistics и invalid API key.
+# Details:
+Файл: bot_psychologist/test_api.py
+
+Содержимое:
+1. Константы: BASE_URL = "http://localhost:8000", API_KEY = "test-key-001"
+2. get_headers(): возврат {"X-API-Key": API_KEY, "Content-Type": "application/json"}
+3. ТЕСТЫ:
+   - test_health_check(): GET /api/v1/health, assert status 200
+   - test_adaptive_question(): POST /api/v1/questions/adaptive с payload, assert status 200
+   - test_user_history(): POST /api/v1/users/{user_id}/history, assert status 200
+   - test_feedback(): POST /api/v1/feedback с payload, assert status 200
+   - test_statistics(): GET /api/v1/stats, assert status 200
+   - test_invalid_api_key(): запрос с невалиден ключом, assert status 403
+4. Main block: запуск всех тестов с выводом результатов
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.6.1 Создать test_health_check [done]
+### Dependencies: None
+### Description: GET /api/v1/health, assert status 200, проверка status: healthy
+### Details:
+
+
+## 2. 5.6.2 Создать test_adaptive_question [done]
+### Dependencies: None
+### Description: POST /api/v1/questions/adaptive, payload с query и user_id, проверка state_analysis
+### Details:
+
+
+## 3. 5.6.3 Создать test_user_history [done]
+### Dependencies: None
+### Description: POST /api/v1/users/{user_id}/history, проверка total_turns и turns
+### Details:
+
+
+## 4. 5.6.4 Создать test_feedback [done]
+### Dependencies: None
+### Description: POST /api/v1/feedback, payload с user_id, turn_index, feedback, проверка success
+### Details:
+
+
+## 5. 5.6.5 Создать test_statistics [done]
+### Dependencies: None
+### Description: GET /api/v1/stats, проверка total_users, total_questions, average_processing_time
+### Details:
+
+
+## 6. 5.6.6 Создать test_invalid_api_key [done]
+### Dependencies: None
+### Description: Запрос с невалидным API ключом, assert status 403, проверка detail
+### Details:
+
+

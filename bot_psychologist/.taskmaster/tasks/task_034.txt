@@ -1,0 +1,57 @@
+# Task ID: 34
+# Title: Phase 5.7: Запуск и тестирование API Server
+# Status: done
+# Dependencies: 33
+# Priority: medium
+# Description: Установить зависимости, запустить FastAPI сервер, проверить Swagger документацию и выполнить все тесты test_api.py.
+# Details:
+Шаги:
+1. Установка зависимостей:
+   cd bot_psychologist
+   pip install -r api/requirements.txt
+
+2. Запуск сервера:
+   python api/main.py
+
+3. Проверка endpoints:
+   - Main: http://localhost:8000
+   - Swagger Docs: http://localhost:8000/api/docs
+   - ReDoc: http://localhost:8000/api/redoc
+
+4. Запуск тестов:
+   python test_api.py
+
+5. Ожидаемые результаты:
+   - Все 6 тестов проходят
+   - Health check возвращает status: healthy
+   - Adaptive question возвращает ответ с state_analysis
+   - API key authentication работает (403 для невалиден ключей)
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.7.1 Установить зависимости [done]
+### Dependencies: None
+### Description: pip install -r api/requirements.txt
+### Details:
+
+
+## 2. 5.7.2 Запустить FastAPI сервер [done]
+### Dependencies: None
+### Description: python api/main.py, проверить http://localhost:8000
+### Details:
+
+
+## 3. 5.7.3 Проверить Swagger документацию [done]
+### Dependencies: None
+### Description: Открыть http://localhost:8000/api/docs, проверить все endpoints
+### Details:
+
+
+## 4. 5.7.4 Выполнить все тесты test_api.py [done]
+### Dependencies: None
+### Description: python test_api.py, убедиться что все 6 тестов проходят
+### Details:
+
+

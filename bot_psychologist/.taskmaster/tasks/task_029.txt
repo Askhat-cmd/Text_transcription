@@ -1,0 +1,57 @@
+# Task ID: 29
+# Title: Phase 5.2: Создание api/auth.py — API Key Authentication & Rate Limiting
+# Status: done
+# Dependencies: 27
+# Priority: high
+# Description: Создать api/auth.py с классом APIKeyManager для управления API ключами и rate limiting. Включает валидацию ключей, проверку лимитов запросов, dependency для FastAPI verify_api_key.
+# Details:
+Файл: bot_psychologist/api/auth.py
+
+Содержимое:
+1. APIKeyManager class:
+   - __init__: инициализация api_keys dict (test-key-001, dev-key-001), request_counts dict
+   - get_api_key(key): получить информацию об API ключе
+   - is_valid(key): проверить валидность и активность ключа
+   - check_rate_limit(api_key): проверить лимит частоты запросов (100-1000 req/min)
+   - add_api_key(key, name, rate_limit): добавить новый ключ
+2. verify_api_key async dependency:
+   - Проверка заголовка X-API-Key
+   - HTTPException 403 если ключ отсутствует или невалиден
+   - HTTPException 429 если превышен rate limit
+3. get_api_key_info с lru_cache
+4. Глобальный api_key_manager singleton
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 5.2.1 Создать APIKeyManager class [done]
+### Dependencies: None
+### Description: Конструктор с api_keys dict (test-key-001, dev-key-001), request_counts dict
+### Details:
+
+
+## 2. 5.2.2 Реализовать get_api_key и is_valid [done]
+### Dependencies: None
+### Description: Методы для получения информации о ключе и проверки валидности
+### Details:
+
+
+## 3. 5.2.3 Реализовать check_rate_limit [done]
+### Dependencies: None
+### Description: Ограничение частоты запросов (100-1000 req/min) с очисткой старых записей
+### Details:
+
+
+## 4. 5.2.4 Реализовать verify_api_key dependency [done]
+### Dependencies: None
+### Description: Async dependency для FastAPI: X-API-Key header, HTTPException 403/429
+### Details:
+
+
+## 5. 5.2.5 Создать singleton и get_api_key_info [done]
+### Dependencies: None
+### Description: Глобальный api_key_manager singleton и get_api_key_info с lru_cache
+### Details:
+
+

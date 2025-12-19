@@ -1,0 +1,323 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Phase 1.1: Project Initialization",
+        "description": "Create folder structure and dependencies",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.1.1 Create bot_agent folder structure",
+            "description": "Create folders: bot_agent/, logs/bot_agent/",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 2,
+            "title": "1.1.2 Create requirements_bot.txt",
+            "description": "Add dependencies: openai, scikit-learn, numpy, python-dotenv",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 3,
+            "title": "1.1.3 Setup .env configuration",
+            "description": "Configure OPENAI_API_KEY, PRIMARY_MODEL, DATA_ROOT",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          },
+          {
+            "id": 4,
+            "title": "1.1.4 Create __init__.py for bot_agent",
+            "description": "Initialize package with logging and main imports",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Phase 1.2: Create config.py",
+        "description": "Configuration module with paths, LLM parameters, search settings, caching",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          1
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.2.1 Define PROJECT_ROOT and DATA_ROOT paths",
+            "description": "Configure base paths for data and project root",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 2,
+            "title": "1.2.2 Configure search parameters",
+            "description": "TOP_K_BLOCKS, MIN_RELEVANCE_SCORE settings",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 3,
+            "title": "1.2.3 Configure LLM parameters",
+            "description": "LLM_MODEL, TEMPERATURE, MAX_TOKENS, OPENAI_API_KEY",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          },
+          {
+            "id": 4,
+            "title": "1.2.4 Add validation method",
+            "description": "Config.validate() to check required settings",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 2
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Phase 1.3: Create data_loader.py",
+        "description": "Data loader for SAG v2.0 JSON files with Block and Document dataclasses",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          2
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.3.1 Create Block dataclass",
+            "description": "Dataclass with fields: block_id, video_id, start, end, title, summary, content, keywords, youtube_link",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 2,
+            "title": "1.3.2 Create Document dataclass",
+            "description": "Dataclass with fields: video_id, source_url, title, blocks, metadata",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 3,
+            "title": "1.3.3 Implement DataLoader class",
+            "description": "Class with methods: load_all_data, get_all_blocks, get_document_by_video_id, get_block_by_id",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 4,
+            "title": "1.3.4 Create global data_loader singleton",
+            "description": "Singleton instance for caching loaded data across requests",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Phase 1.4: Create retriever.py",
+        "description": "Simple TF-IDF retriever for semantic block search with cosine similarity",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          3
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.4.1 Build TF-IDF index",
+            "description": "TfidfVectorizer with char n-grams for Russian text",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 2,
+            "title": "1.4.2 Implement retrieve method",
+            "description": "Cosine similarity search returning top-k blocks with scores",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 3,
+            "title": "1.4.3 Add relevance threshold filter",
+            "description": "Filter results by MIN_RELEVANCE_SCORE from config",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 4
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Phase 1.5: Create llm_answerer.py",
+        "description": "LLM answerer module for generating responses via OpenAI API with system prompt",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          4
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.5.1 Create system prompt",
+            "description": "Psychologist bot persona: calm, supportive, no medical diagnoses",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 2,
+            "title": "1.5.2 Build context prompt",
+            "description": "Format blocks with title, summary, content, youtube_link, timecodes",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 3,
+            "title": "1.5.3 Integrate OpenAI API",
+            "description": "Chat completion with temperature, max_tokens, error handling",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 5
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Phase 1.6: Create answer_basic.py",
+        "description": "Main QA function answer_question_basic combining retriever and LLM answerer",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          5
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.6.1 Implement answer_question_basic function",
+            "description": "Main function: load data -> retrieve blocks -> generate answer -> return result",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 2,
+            "title": "1.6.2 Create simple ask() interface",
+            "description": "Wrapper function returning only text answer for quick usage",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 3,
+            "title": "1.6.3 Add error handling and debug info",
+            "description": "Handle no_data, no_blocks, LLM errors; optional debug output",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 6
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Phase 1.7: Create test_phase1.py",
+        "description": "Test script to verify Phase 1 QA bot functionality with sample questions",
+        "details": "",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          6
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "1.7.1 Create test questions",
+            "description": "Sample questions about awareness, practices, transformation",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 2,
+            "title": "1.7.2 Run tests and verify output",
+            "description": "Check answer quality, sources, youtube links with timecodes",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 3,
+            "title": "1.7.3 Validate logging",
+            "description": "Verify logs are written to logs/bot_agent/bot_agent.log",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 7
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-12-19T04:02:29.457Z",
+      "updated": "2025-12-19T04:27:30.465Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

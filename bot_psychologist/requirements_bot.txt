@@ -1,0 +1,16 @@
+# Bot Psychologist - Phase 1 Dependencies
+# =========================================
+
+# OpenAI API client
+openai>=1.3.0
+
+# ML/Search
+scikit-learn>=1.3.0
+numpy>=1.24.0
+
+# Environment
+python-dotenv>=1.0.0
+
+# Logging (standard library, but including for clarity)
+# logging - built-in
+

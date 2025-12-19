@@ -946,11 +946,445 @@
             "parentTaskId": 20
           }
         ]
+      },
+      {
+        "id": 21,
+        "title": "Phase 4.1: Создание state_classifier.py — Классификатор состояний",
+        "description": "Модуль классификации психологического состояния пользователя. Содержит: UserState enum (10 состояний от UNAWARE до INTEGRATED), StateAnalysis dataclass, StateClassifier class с keyword и LLM анализом, рекомендации по состояниям.",
+        "details": "Создать bot_agent/state_classifier.py с: 1) UserState enum (UNAWARE, CURIOUS, OVERWHELMED, RESISTANT, CONFUSED, COMMITTED, PRACTICING, STAGNANT, BREAKTHROUGH, INTEGRATED), 2) StateAnalysis dataclass (primary_state, confidence, secondary_states, indicators, emotional_tone, depth, recommendations), 3) StateClassifier class с методами analyze_message, _classify_by_keywords, _classify_by_llm, _merge_classifications, _get_recommendations_for_state, 4) Глобальный инстанс state_classifier.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          20
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.1.1 Создать UserState enum (10 состояний)",
+            "description": "Enum: UNAWARE, CURIOUS, OVERWHELMED, RESISTANT, CONFUSED, COMMITTED, PRACTICING, STAGNANT, BREAKTHROUGH, INTEGRATED",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 2,
+            "title": "4.1.2 Создать StateAnalysis dataclass",
+            "description": "Поля: primary_state, confidence (0.0-1.0), secondary_states, indicators, emotional_tone, depth, recommendations",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 3,
+            "title": "4.1.3 Создать StateClassifier class с state_indicators",
+            "description": "Конструктор с LLMAnswerer, метод _init_state_indicators с ключевыми словами для каждого состояния",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 4,
+            "title": "4.1.4 Реализовать analyze_message и _classify_by_keywords",
+            "description": "Основной метод analyze_message, первичная классификация по ключевым словам с подсчетом score",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 5,
+            "title": "4.1.5 Реализовать _classify_by_llm",
+            "description": "LLM анализ через OpenAI API с JSON промптом для уточнения состояния",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 6,
+            "title": "4.1.6 Реализовать _merge_classifications",
+            "description": "Объединение результатов keyword и LLM классификации, формирование StateAnalysis",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 7,
+            "title": "4.1.7 Реализовать _get_recommendations_for_state",
+            "description": "Возврат рекомендаций по работе с пользователем для каждого из 10 состояний",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 8,
+            "title": "4.1.8 Создать глобальный state_classifier singleton",
+            "description": "Инстанс StateClassifier для использования во всём проекте",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 21
+          }
+        ]
+      },
+      {
+        "id": 22,
+        "title": "Phase 4.2: Создание conversation_memory.py — Память диалога",
+        "description": "Модуль долгосрочной памяти диалога. Персистентное хранение истории, метаданные пользователя, интересы, вызовы, прорывы. Поддержка обратной связи.",
+        "details": "Создать bot_agent/conversation_memory.py с: 1) ConversationTurn dataclass (timestamp, user_input, user_state, bot_response, blocks_used, concepts, user_feedback, user_rating), 2) ConversationMemory class (user_id, turns, metadata), 3) Методы: load_from_disk, save_to_disk, add_turn, add_feedback, get_last_turns, get_context_for_llm, get_primary_interests, get_challenges, get_breakthroughs, get_summary, 4) Factory function get_conversation_memory с кэшем.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          20
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.2.1 Создать ConversationTurn dataclass",
+            "description": "Поля: timestamp, user_input, user_state, bot_response, blocks_used, concepts, user_feedback, user_rating",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 2,
+            "title": "4.2.2 Создать ConversationMemory class",
+            "description": "Конструктор с user_id, turns, metadata (created, last_updated, total_turns, user_level, primary_interests, challenges, breakthroughs)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 3,
+            "title": "4.2.3 Реализовать load_from_disk / save_to_disk",
+            "description": "JSON persistence в cache_dir/conversations/{user_id}.json",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 4,
+            "title": "4.2.4 Реализовать add_turn / add_feedback",
+            "description": "Добавление хода в историю, добавление обратной связи (positive/negative/neutral, rating 1-5)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 5,
+            "title": "4.2.5 Реализовать get_last_turns / get_context_for_llm",
+            "description": "Получение последних N оборотов, форматирование контекста для LLM",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 6,
+            "title": "4.2.6 Реализовать get_primary_interests / get_challenges / get_breakthroughs",
+            "description": "Анализ истории: интересы по частоте концептов, вызовы по negative feedback, прорывы по positive feedback",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 7,
+            "title": "4.2.7 Реализовать get_summary",
+            "description": "Возврат Dict: total_turns, primary_interests, num_challenges, num_breakthroughs, average_rating, user_level",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 8,
+            "title": "4.2.8 Создать get_conversation_memory factory function",
+            "description": "Factory с кэшем _memory_instances для получения/создания памяти по user_id",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 22
+          }
+        ]
+      },
+      {
+        "id": 23,
+        "title": "Phase 4.3: Создание path_builder.py — Построитель траекторий",
+        "description": "Модуль построения персональных путей трансформации. Генерация шагов пути на основе текущего состояния, уровня, истории, Knowledge Graph. Интеграция с практиками.",
+        "details": "Создать bot_agent/path_builder.py с: 1) TransformationPathStep dataclass (step_number, title, description, duration_weeks, practices, key_concepts, expected_outcomes, focus_areas, warning_signs), 2) PersonalTransformationPath dataclass (user_id, current_state, target_state, current_level, path_steps, total_duration_weeks, key_focus, challenges_identified, adaptation_notes), 3) PathBuilder class с build_path, _get_intermediate_states, _build_step, _get_concepts_for_transition, _get_expected_outcomes, _personalize_path, _determine_key_focus, 4) Глобальный инстанс path_builder.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          21,
+          22
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.3.1 Создать TransformationPathStep dataclass",
+            "description": "Поля: step_number, title, description, duration_weeks, practices, key_concepts, expected_outcomes, focus_areas, warning_signs",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 2,
+            "title": "4.3.2 Создать PersonalTransformationPath dataclass",
+            "description": "Поля: user_id, current_state, target_state, current_level, path_steps, total_duration_weeks, key_focus, challenges_identified, adaptation_notes",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 3,
+            "title": "4.3.3 Создать PathBuilder class с конструктором",
+            "description": "Инициализация с загрузкой графов через graph_client.load_graphs_from_all_documents()",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 4,
+            "title": "4.3.4 Реализовать build_path (основной метод)",
+            "description": "5 этапов: анализ интересов/вызовов, промежуточные состояния, шаги пути, персонализация, определение фокуса",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 5,
+            "title": "4.3.5 Реализовать _get_intermediate_states",
+            "description": "Построение цепочки переходов между состояниями на основе state_progression",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 6,
+            "title": "4.3.6 Реализовать _build_step / _get_concepts_for_transition",
+            "description": "Построение одного шага пути, определение концептов для перехода, получение практик из графа",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 7,
+            "title": "4.3.7 Реализовать вспомогательные методы состояний",
+            "description": "_get_expected_outcomes, _get_focus_areas, _get_warning_signs, _get_step_description для каждого состояния",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          },
+          {
+            "id": 8,
+            "title": "4.3.8 Реализовать _personalize_path / _determine_key_focus / singleton",
+            "description": "Персонализация по интересам/вызовам/уровню, определение фокуса, глобальный path_builder",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 23
+          }
+        ]
+      },
+      {
+        "id": 24,
+        "title": "Phase 4.4: Создание answer_adaptive.py — Адаптивный QA",
+        "description": "Основная функция Phase 4: answer_question_adaptive. Интеграция всех компонентов: state_classifier, conversation_memory, path_builder с базовыми компонентами Phase 1-3.",
+        "details": "Создать bot_agent/answer_adaptive.py с answer_question_adaptive(): 1) Параметры: query, user_id, user_level, include_path_recommendation, include_feedback_prompt, debug, 2) Этап 1: загрузка данных и памяти, 3) Этап 2: анализ состояния через state_classifier, 4) Этап 3: поиск блоков через retriever, 5) Этап 4: генерация ответа с контекстом состояния, 6) Этап 5: рекомендация пути через path_builder, 7) Этап 6: подготовка запроса обратной связи, 8) Этап 7: сохранение в conversation_memory, 9) Возврат расширенного Dict: status, answer, state_analysis, path_recommendation, conversation_context, feedback_prompt, sources, concepts, metadata.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          21,
+          22,
+          23
+        ],
+        "priority": "high",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.4.1 Создать структуру answer_question_adaptive с импортами",
+            "description": "Импорты: data_loader, retriever, LLMAnswerer, UserLevelAdapter, SemanticAnalyzer, graph_client, state_classifier, conversation_memory, path_builder, config",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          },
+          {
+            "id": 2,
+            "title": "4.4.2 Этапы 1-2: Загрузка данных, памяти, анализ состояния",
+            "description": "Загрузка data_loader, get_conversation_memory(user_id), state_classifier.analyze_message с history context",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          },
+          {
+            "id": 3,
+            "title": "4.4.3 Этапы 3-4: Поиск блоков, генерация ответа с контекстом состояния",
+            "description": "Retriever search, filter_blocks_by_level, добавление state_context в промпт, LLM generate_answer",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          },
+          {
+            "id": 4,
+            "title": "4.4.4 Этап 5: Построение рекомендации пути",
+            "description": "path_builder.build_path если include_path_recommendation, форматирование path_recommendation dict",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          },
+          {
+            "id": 5,
+            "title": "4.4.5 Этапы 6-7: Подготовка обратной связи и сохранение в память",
+            "description": "feedback_prompt по состоянию, memory.add_turn с state/concepts, автосохранение",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          },
+          {
+            "id": 6,
+            "title": "4.4.6 Форматирование финального результата Phase 4",
+            "description": "Возврат Dict: status, answer, state_analysis, path_recommendation, conversation_context, feedback_prompt, sources, concepts, metadata, timestamp, processing_time",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 24
+          }
+        ]
+      },
+      {
+        "id": 25,
+        "title": "Phase 4.5: Обновление __init__.py для Phase 4",
+        "description": "Обновить bot_agent/__init__.py — добавить импорт Phase 4 модулей, обновить __all__ и лог инициализации.",
+        "details": "1) Добавить: from answer_adaptive import answer_question_adaptive, 2) Обновить __all__ добавив answer_question_adaptive, 3) Обновить лог: Bot Agent v0.4.0 initialized (Phase 1 + 2 + 3 + 4).",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          24
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.5.1 Добавить импорт Phase 4 модулей",
+            "description": "from answer_adaptive import answer_question_adaptive",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 25
+          },
+          {
+            "id": 2,
+            "title": "4.5.2 Обновить __all__ и лог инициализации",
+            "description": "Добавить answer_question_adaptive в __all__, обновить лог: Bot Agent v0.4.0 (Phase 1 + 2 + 3 + 4)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 25
+          }
+        ]
+      },
+      {
+        "id": 26,
+        "title": "Phase 4.6: Создание test_phase4.py",
+        "description": "Тестовый скрипт для проверки Phase 4 функциональности. 4 тестовых сценария: новый пользователь, продолжение диалога (память), STAGNANT состояние, BREAKTHROUGH состояние.",
+        "details": "Создать bot_psychologist/test_phase4.py с: 1) 4 тестовых сценария с разными user_id, user_level, состояниями, 2) Вывод: status, processing_time, state_analysis, answer, path_recommendation, feedback_prompt, sources, debug, 3) Проверка: состояние определяется корректно, память сохраняется, путь строится, обратная связь запрашивается.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          25
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.6.1 Создать test_phase4.py с тестовыми сценариями",
+            "description": "4 сценария: новый пользователь (beginner), продолжение диалога (память), STAGNANT (intermediate), BREAKTHROUGH (advanced)",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 26
+          },
+          {
+            "id": 2,
+            "title": "4.6.2 Реализовать вывод результатов",
+            "description": "Вывод: status, processing_time, state_analysis, answer, path_recommendation, feedback_prompt, sources, debug info",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 26
+          },
+          {
+            "id": 3,
+            "title": "4.6.3 Запуск и верификация тестов Phase 4",
+            "description": "Выполнить python test_phase4.py, проверить все 4 сценария passed",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 26
+          }
+        ]
+      },
+      {
+        "id": 27,
+        "title": "Phase 4.7: Финальная проверка и валидация Phase 4",
+        "description": "Финальная проверка всех компонентов Phase 4 по чек-листу. Валидация: классификация состояний, память диалога, построение путей, адаптивные ответы, готовность к production.",
+        "details": "1) Чек-лист Phase 4: state_classifier.py создан (10 состояний, keyword + LLM анализ), conversation_memory.py создан (персистентное хранилище), path_builder.py создан (персональные пути), answer_adaptive.py создан (основной pipeline), __init__.py обновлён, test_phase4.py создан и проходит, 2) Валидация результатов: состояния определяются корректно, история сохраняется и загружается, пути строятся персонализированно, все 4 тестовых сценария passed.",
+        "testStrategy": "",
+        "status": "done",
+        "dependencies": [
+          26
+        ],
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "4.7.1 Пройти чек-лист Phase 4",
+            "description": "Проверить: state_classifier.py, conversation_memory.py, path_builder.py, answer_adaptive.py созданы, __init__.py обновлён, test_phase4.py проходит",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 27
+          },
+          {
+            "id": 2,
+            "title": "4.7.2 Валидация результатов Phase 4",
+            "description": "Состояния определяются корректно, память сохраняется и загружается, пути строятся персонализированно, готовность к production",
+            "details": "",
+            "status": "done",
+            "dependencies": [],
+            "parentTaskId": 27
+          }
+        ]
       }
     ],
     "metadata": {
       "created": "2025-12-19T04:02:29.457Z",
-      "updated": "2025-12-19T06:47:06.033Z",
+      "updated": "2025-12-19T07:30:28.359Z",
       "description": "Tasks for master context"
     }
   }

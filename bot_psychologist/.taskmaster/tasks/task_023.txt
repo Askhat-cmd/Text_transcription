@@ -1,0 +1,61 @@
+# Task ID: 23
+# Title: Phase 4.3: Создание path_builder.py — Построитель траекторий
+# Status: done
+# Dependencies: 21, 22
+# Priority: high
+# Description: Модуль построения персональных путей трансформации. Генерация шагов пути на основе текущего состояния, уровня, истории, Knowledge Graph. Интеграция с практиками.
+# Details:
+Создать bot_agent/path_builder.py с: 1) TransformationPathStep dataclass (step_number, title, description, duration_weeks, practices, key_concepts, expected_outcomes, focus_areas, warning_signs), 2) PersonalTransformationPath dataclass (user_id, current_state, target_state, current_level, path_steps, total_duration_weeks, key_focus, challenges_identified, adaptation_notes), 3) PathBuilder class с build_path, _get_intermediate_states, _build_step, _get_concepts_for_transition, _get_expected_outcomes, _personalize_path, _determine_key_focus, 4) Глобальный инстанс path_builder.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 4.3.1 Создать TransformationPathStep dataclass [done]
+### Dependencies: None
+### Description: Поля: step_number, title, description, duration_weeks, practices, key_concepts, expected_outcomes, focus_areas, warning_signs
+### Details:
+
+
+## 2. 4.3.2 Создать PersonalTransformationPath dataclass [done]
+### Dependencies: None
+### Description: Поля: user_id, current_state, target_state, current_level, path_steps, total_duration_weeks, key_focus, challenges_identified, adaptation_notes
+### Details:
+
+
+## 3. 4.3.3 Создать PathBuilder class с конструктором [done]
+### Dependencies: None
+### Description: Инициализация с загрузкой графов через graph_client.load_graphs_from_all_documents()
+### Details:
+
+
+## 4. 4.3.4 Реализовать build_path (основной метод) [done]
+### Dependencies: None
+### Description: 5 этапов: анализ интересов/вызовов, промежуточные состояния, шаги пути, персонализация, определение фокуса
+### Details:
+
+
+## 5. 4.3.5 Реализовать _get_intermediate_states [done]
+### Dependencies: None
+### Description: Построение цепочки переходов между состояниями на основе state_progression
+### Details:
+
+
+## 6. 4.3.6 Реализовать _build_step / _get_concepts_for_transition [done]
+### Dependencies: None
+### Description: Построение одного шага пути, определение концептов для перехода, получение практик из графа
+### Details:
+
+
+## 7. 4.3.7 Реализовать вспомогательные методы состояний [done]
+### Dependencies: None
+### Description: _get_expected_outcomes, _get_focus_areas, _get_warning_signs, _get_step_description для каждого состояния
+### Details:
+
+
+## 8. 4.3.8 Реализовать _personalize_path / _determine_key_focus / singleton [done]
+### Dependencies: None
+### Description: Персонализация по интересам/вызовам/уровню, определение фокуса, глобальный path_builder
+### Details:
+
+

@@ -1,0 +1,61 @@
+# Task ID: 22
+# Title: Phase 4.2: Создание conversation_memory.py — Память диалога
+# Status: done
+# Dependencies: 20
+# Priority: high
+# Description: Модуль долгосрочной памяти диалога. Персистентное хранение истории, метаданные пользователя, интересы, вызовы, прорывы. Поддержка обратной связи.
+# Details:
+Создать bot_agent/conversation_memory.py с: 1) ConversationTurn dataclass (timestamp, user_input, user_state, bot_response, blocks_used, concepts, user_feedback, user_rating), 2) ConversationMemory class (user_id, turns, metadata), 3) Методы: load_from_disk, save_to_disk, add_turn, add_feedback, get_last_turns, get_context_for_llm, get_primary_interests, get_challenges, get_breakthroughs, get_summary, 4) Factory function get_conversation_memory с кэшем.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 4.2.1 Создать ConversationTurn dataclass [done]
+### Dependencies: None
+### Description: Поля: timestamp, user_input, user_state, bot_response, blocks_used, concepts, user_feedback, user_rating
+### Details:
+
+
+## 2. 4.2.2 Создать ConversationMemory class [done]
+### Dependencies: None
+### Description: Конструктор с user_id, turns, metadata (created, last_updated, total_turns, user_level, primary_interests, challenges, breakthroughs)
+### Details:
+
+
+## 3. 4.2.3 Реализовать load_from_disk / save_to_disk [done]
+### Dependencies: None
+### Description: JSON persistence в cache_dir/conversations/{user_id}.json
+### Details:
+
+
+## 4. 4.2.4 Реализовать add_turn / add_feedback [done]
+### Dependencies: None
+### Description: Добавление хода в историю, добавление обратной связи (positive/negative/neutral, rating 1-5)
+### Details:
+
+
+## 5. 4.2.5 Реализовать get_last_turns / get_context_for_llm [done]
+### Dependencies: None
+### Description: Получение последних N оборотов, форматирование контекста для LLM
+### Details:
+
+
+## 6. 4.2.6 Реализовать get_primary_interests / get_challenges / get_breakthroughs [done]
+### Dependencies: None
+### Description: Анализ истории: интересы по частоте концептов, вызовы по negative feedback, прорывы по positive feedback
+### Details:
+
+
+## 7. 4.2.7 Реализовать get_summary [done]
+### Dependencies: None
+### Description: Возврат Dict: total_turns, primary_interests, num_challenges, num_breakthroughs, average_rating, user_level
+### Details:
+
+
+## 8. 4.2.8 Создать get_conversation_memory factory function [done]
+### Dependencies: None
+### Description: Factory с кэшем _memory_instances для получения/создания памяти по user_id
+### Details:
+
+

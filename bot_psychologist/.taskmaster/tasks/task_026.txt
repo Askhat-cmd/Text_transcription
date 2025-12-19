@@ -1,0 +1,31 @@
+# Task ID: 26
+# Title: Phase 4.6: Создание test_phase4.py
+# Status: done
+# Dependencies: 25
+# Priority: medium
+# Description: Тестовый скрипт для проверки Phase 4 функциональности. 4 тестовых сценария: новый пользователь, продолжение диалога (память), STAGNANT состояние, BREAKTHROUGH состояние.
+# Details:
+Создать bot_psychologist/test_phase4.py с: 1) 4 тестовых сценария с разными user_id, user_level, состояниями, 2) Вывод: status, processing_time, state_analysis, answer, path_recommendation, feedback_prompt, sources, debug, 3) Проверка: состояние определяется корректно, память сохраняется, путь строится, обратная связь запрашивается.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 4.6.1 Создать test_phase4.py с тестовыми сценариями [done]
+### Dependencies: None
+### Description: 4 сценария: новый пользователь (beginner), продолжение диалога (память), STAGNANT (intermediate), BREAKTHROUGH (advanced)
+### Details:
+
+
+## 2. 4.6.2 Реализовать вывод результатов [done]
+### Dependencies: None
+### Description: Вывод: status, processing_time, state_analysis, answer, path_recommendation, feedback_prompt, sources, debug info
+### Details:
+
+
+## 3. 4.6.3 Запуск и верификация тестов Phase 4 [done]
+### Dependencies: None
+### Description: Выполнить python test_phase4.py, проверить все 4 сценария passed
+### Details:
+
+

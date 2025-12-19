@@ -1,0 +1,61 @@
+# Task ID: 21
+# Title: Phase 4.1: Создание state_classifier.py — Классификатор состояний
+# Status: done
+# Dependencies: 20
+# Priority: high
+# Description: Модуль классификации психологического состояния пользователя. Содержит: UserState enum (10 состояний от UNAWARE до INTEGRATED), StateAnalysis dataclass, StateClassifier class с keyword и LLM анализом, рекомендации по состояниям.
+# Details:
+Создать bot_agent/state_classifier.py с: 1) UserState enum (UNAWARE, CURIOUS, OVERWHELMED, RESISTANT, CONFUSED, COMMITTED, PRACTICING, STAGNANT, BREAKTHROUGH, INTEGRATED), 2) StateAnalysis dataclass (primary_state, confidence, secondary_states, indicators, emotional_tone, depth, recommendations), 3) StateClassifier class с методами analyze_message, _classify_by_keywords, _classify_by_llm, _merge_classifications, _get_recommendations_for_state, 4) Глобальный инстанс state_classifier.
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 4.1.1 Создать UserState enum (10 состояний) [done]
+### Dependencies: None
+### Description: Enum: UNAWARE, CURIOUS, OVERWHELMED, RESISTANT, CONFUSED, COMMITTED, PRACTICING, STAGNANT, BREAKTHROUGH, INTEGRATED
+### Details:
+
+
+## 2. 4.1.2 Создать StateAnalysis dataclass [done]
+### Dependencies: None
+### Description: Поля: primary_state, confidence (0.0-1.0), secondary_states, indicators, emotional_tone, depth, recommendations
+### Details:
+
+
+## 3. 4.1.3 Создать StateClassifier class с state_indicators [done]
+### Dependencies: None
+### Description: Конструктор с LLMAnswerer, метод _init_state_indicators с ключевыми словами для каждого состояния
+### Details:
+
+
+## 4. 4.1.4 Реализовать analyze_message и _classify_by_keywords [done]
+### Dependencies: None
+### Description: Основной метод analyze_message, первичная классификация по ключевым словам с подсчетом score
+### Details:
+
+
+## 5. 4.1.5 Реализовать _classify_by_llm [done]
+### Dependencies: None
+### Description: LLM анализ через OpenAI API с JSON промптом для уточнения состояния
+### Details:
+
+
+## 6. 4.1.6 Реализовать _merge_classifications [done]
+### Dependencies: None
+### Description: Объединение результатов keyword и LLM классификации, формирование StateAnalysis
+### Details:
+
+
+## 7. 4.1.7 Реализовать _get_recommendations_for_state [done]
+### Dependencies: None
+### Description: Возврат рекомендаций по работе с пользователем для каждого из 10 состояний
+### Details:
+
+
+## 8. 4.1.8 Создать глобальный state_classifier singleton [done]
+### Dependencies: None
+### Description: Инстанс StateClassifier для использования во всём проекте
+### Details:
+
+

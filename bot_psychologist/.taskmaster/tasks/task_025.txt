@@ -1,0 +1,25 @@
+# Task ID: 25
+# Title: Phase 4.5: Обновление __init__.py для Phase 4
+# Status: done
+# Dependencies: 24
+# Priority: medium
+# Description: Обновить bot_agent/__init__.py — добавить импорт Phase 4 модулей, обновить __all__ и лог инициализации.
+# Details:
+1) Добавить: from answer_adaptive import answer_question_adaptive, 2) Обновить __all__ добавив answer_question_adaptive, 3) Обновить лог: Bot Agent v0.4.0 initialized (Phase 1 + 2 + 3 + 4).
+
+# Test Strategy:
+
+
+# Subtasks:
+## 1. 4.5.1 Добавить импорт Phase 4 модулей [done]
+### Dependencies: None
+### Description: from answer_adaptive import answer_question_adaptive
+### Details:
+
+
+## 2. 4.5.2 Обновить __all__ и лог инициализации [done]
+### Dependencies: None
+### Description: Добавить answer_question_adaptive в __all__, обновить лог: Bot Agent v0.4.0 (Phase 1 + 2 + 3 + 4)
+### Details:
+
+

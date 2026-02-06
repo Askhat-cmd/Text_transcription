@@ -73,10 +73,7 @@ def answer_question_sag_aware(
     try:
         # === ЭТАП 0: Загрузка памяти диалога ===
         memory = get_conversation_memory(user_id)
-        conversation_context = memory.get_context_for_llm(
-            n=config.CONVERSATION_HISTORY_DEPTH,
-            max_chars=config.MAX_CONTEXT_SIZE
-        )
+        conversation_context = memory.get_adaptive_context_text(query)
 
         # === ЭТАП 1: Инициализация компонентов ===
         logger.debug("🔧 Этап 1: Инициализация компонентов...")

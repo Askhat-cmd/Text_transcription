@@ -91,10 +91,7 @@ def answer_question_adaptive(
         
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
-        conversation_context = memory.get_context_for_llm(
-            n=config.CONVERSATION_HISTORY_DEPTH,
-            max_chars=config.MAX_CONTEXT_SIZE
-        )
+        conversation_context = memory.get_adaptive_context_text(query)
         
         # Парсим уровень пользователя
         try:
@@ -149,7 +146,8 @@ def answer_question_adaptive(
                 "К сожалению, релевантный материал не найден. Попробуйте переформулировать вопрос.",
                 state_analysis,
                 memory,
-                start_time
+                start_time,
+                query
             )
             memory.add_turn(
                 user_input=query,
@@ -319,10 +317,7 @@ def answer_question_adaptive(
                 "recommendations": state_analysis.recommendations
             },
             "path_recommendation": path_recommendation,
-            "conversation_context": memory.get_context_for_llm(
-                n=config.CONVERSATION_HISTORY_DEPTH,
-                max_chars=config.MAX_CONTEXT_SIZE
-            ),
+            "conversation_context": memory.get_adaptive_context_text(query),
             "feedback_prompt": feedback_prompt,
             "sources": sources,
             "concepts": concepts,
@@ -394,7 +389,8 @@ def _build_partial_response(
     message: str,
     state_analysis: StateAnalysis,
     memory,
-    start_time: datetime
+    start_time: datetime,
+    query: str
 ) -> Dict:
     """Построить частичный ответ (нет блоков)"""
     return {
@@ -407,10 +403,7 @@ def _build_partial_response(
             "recommendations": state_analysis.recommendations
         } if state_analysis else None,
         "path_recommendation": None,
-        "conversation_context": memory.get_context_for_llm(
-            n=config.CONVERSATION_HISTORY_DEPTH,
-            max_chars=config.MAX_CONTEXT_SIZE
-        ) if memory else "",
+        "conversation_context": memory.get_adaptive_context_text(query) if memory else "",
         "feedback_prompt": "Попробуйте переформулировать вопрос.",
         "sources": [],
         "concepts": [],

@@ -51,6 +51,23 @@ class Config:
     CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
     MAX_CONTEXT_SIZE = int(os.getenv("MAX_CONTEXT_SIZE", "2000"))
     MAX_CONVERSATION_TURNS = int(os.getenv("MAX_CONVERSATION_TURNS", "1000"))
+
+    # === Semantic Memory (NEW) ===
+    ENABLE_SEMANTIC_MEMORY = os.getenv("ENABLE_SEMANTIC_MEMORY", "True").lower() == "true"
+    SEMANTIC_SEARCH_TOP_K = int(os.getenv("SEMANTIC_SEARCH_TOP_K", "3"))
+    SEMANTIC_MIN_SIMILARITY = float(os.getenv("SEMANTIC_MIN_SIMILARITY", "0.7"))
+    SEMANTIC_MAX_CHARS = int(os.getenv("SEMANTIC_MAX_CHARS", "1000"))
+
+    # Модель для эмбеддингов
+    EMBEDDING_MODEL = os.getenv(
+        "EMBEDDING_MODEL",
+        "paraphrase-multilingual-MiniLM-L12-v2"
+    )
+
+    # === Conversation Summary (NEW) ===
+    ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"
+    SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "5"))
+    SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "500"))
     
     # === Отладка ===
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"

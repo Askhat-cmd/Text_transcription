@@ -15,6 +15,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .config import config
+from .semantic_memory import get_semantic_memory, SemanticMemory
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,15 @@ class ConversationMemory:
         }
         self.memory_dir = config.CACHE_DIR / "conversations"
         self.memory_dir.mkdir(parents=True, exist_ok=True)
+
+        # === НОВОЕ: Semantic Memory ===
+        self.semantic_memory: Optional[SemanticMemory] = None
+        if config.ENABLE_SEMANTIC_MEMORY:
+            self.semantic_memory = get_semantic_memory(user_id)
+
+        # === НОВОЕ: Conversation Summary ===
+        self.summary: Optional[str] = None
+        self.summary_updated_at: Optional[int] = None  # turn index
     
     def load_from_disk(self) -> bool:
         """
@@ -75,6 +85,10 @@ class ConversationMemory:
                 ConversationTurn(**turn_data)
                 for turn_data in data.get("turns", [])
             ]
+
+            # === НОВОЕ: Загрузить summary ===
+            self.summary = data.get("summary")
+            self.summary_updated_at = data.get("summary_updated_at")
             
             logger.info(f"✅ Загружена история диалога: {len(self.turns)} оборотов")
             return True
@@ -96,7 +110,10 @@ class ConversationMemory:
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump({
                     "metadata": self.metadata,
-                    "turns": [asdict(turn) for turn in self.turns]
+                    "turns": [asdict(turn) for turn in self.turns],
+                    # === НОВОЕ: Сохранить summary ===
+                    "summary": self.summary,
+                    "summary_updated_at": self.summary_updated_at
                 }, f, ensure_ascii=False, indent=2)
             
             logger.debug(f"💾 История сохранена ({len(self.turns)} оборотов)")
@@ -135,9 +152,30 @@ class ConversationMemory:
         )
         
         self.turns.append(turn)
+        turn_index = len(self.turns)
         logger.debug(f"➕ Добавлен ход #{len(self.turns)}")
 
         # Ограничиваем общее число ходов (авторотация)
+        # === НОВОЕ: Добавить эмбеддинг в semantic memory ===
+        if self.semantic_memory and config.ENABLE_SEMANTIC_MEMORY:
+            try:
+                self.semantic_memory.add_turn_embedding(
+                    turn_index=turn_index,
+                    user_input=user_input,
+                    bot_response=bot_response,
+                    user_state=user_state,
+                    concepts=concepts or [],
+                    timestamp=turn.timestamp
+                )
+                self.semantic_memory.save_to_disk()
+            except Exception as e:
+                logger.error(f"❌ Ошибка добавления эмбеддинга: {e}")
+
+        # === НОВОЕ: Обновить summary каждые N ходов ===
+        if config.ENABLE_CONVERSATION_SUMMARY and config.SUMMARY_UPDATE_INTERVAL > 0:
+            if turn_index % config.SUMMARY_UPDATE_INTERVAL == 0:
+                self._update_summary()
+
         max_turns = config.MAX_CONVERSATION_TURNS
         if max_turns and len(self.turns) > max_turns:
             overflow = len(self.turns) - max_turns
@@ -246,13 +284,190 @@ class ConversationMemory:
 
         return context
 
+    def get_full_context_for_llm(
+        self,
+        current_question: str,
+        include_semantic: bool = True,
+        include_summary: bool = True
+    ) -> Dict[str, str]:
+        """
+        Получить полный контекст для LLM со всеми типами памяти.
+        """
+        context = {"short_term": "", "semantic": "", "summary": ""}
+
+        context["short_term"] = self.get_context_for_llm(
+            n=config.CONVERSATION_HISTORY_DEPTH,
+            max_chars=config.MAX_CONTEXT_SIZE
+        )
+
+        if include_semantic and self.semantic_memory and config.ENABLE_SEMANTIC_MEMORY:
+            try:
+                context["semantic"] = self.semantic_memory.get_context_for_llm(
+                    query=current_question,
+                    max_chars=config.SEMANTIC_MAX_CHARS,
+                    top_k=config.SEMANTIC_SEARCH_TOP_K,
+                    min_similarity=config.SEMANTIC_MIN_SIMILARITY
+                )
+            except Exception as e:
+                logger.error(f"❌ Ошибка semantic search: {e}")
+
+        if include_summary and config.ENABLE_CONVERSATION_SUMMARY and self.summary:
+            context["summary"] = self.summary
+
+        return context
+
+    def get_adaptive_context_for_llm(self, current_question: str) -> Dict[str, str]:
+        """
+        Адаптивная загрузка контекста в зависимости от длины диалога.
+        """
+        total_turns = len(self.turns)
+
+        if total_turns <= 5:
+            return {
+                "short_term": self.get_context_for_llm(n=total_turns),
+                "semantic": "",
+                "summary": ""
+            }
+        if total_turns <= 20:
+            return self.get_full_context_for_llm(
+                current_question,
+                include_semantic=True,
+                include_summary=False
+            )
+        return self.get_full_context_for_llm(
+            current_question,
+            include_semantic=True,
+            include_summary=True
+        )
+
+    def format_context_for_llm(self, context: Dict[str, str]) -> str:
+        """Сформировать единый текстовый контекст для LLM."""
+        parts: List[str] = []
+
+        if context.get("summary"):
+            parts.append(
+                "КРАТКОЕ РЕЗЮМЕ ДИАЛОГА:\n"
+                f"{context['summary']}\n\n---\n"
+            )
+
+        if context.get("semantic"):
+            parts.append(context["semantic"].strip() + "\n---\n")
+
+        if context.get("short_term"):
+            parts.append(context["short_term"].strip() + "\n---\n")
+
+        return "".join(parts).strip()
+
+    def get_adaptive_context_text(self, current_question: str) -> str:
+        """Получить готовый текст контекста (short-term + semantic + summary)."""
+        context = self.get_adaptive_context_for_llm(current_question)
+        return self.format_context_for_llm(context)
+
+    def _update_summary(self) -> None:
+        """
+        Обновить резюме диалога через LLM.
+        """
+        if len(self.turns) < 5:
+            return
+        if not config.OPENAI_API_KEY:
+            logger.warning("⚠️ OPENAI_API_KEY не установлен — summary не обновляется")
+            return
+
+        logger.info(f"📝 Обновляю резюме диалога (ход #{len(self.turns)})...")
+
+        try:
+            recent_turns = self.turns[-10:]
+            turns_text = ""
+            for i, turn in enumerate(recent_turns, 1):
+                turns_text += f"\nХод {i}:\n"
+                turns_text += f"Пользователь: {turn.user_input}\n"
+                response = turn.bot_response or ""
+                if len(response) > 200:
+                    response = response[:200] + "..."
+                turns_text += f"Бот: {response}\n"
+                if turn.user_state:
+                    turns_text += f"Состояние: {turn.user_state}\n"
+
+            summary_prompt = f"""Создай КРАТКОЕ резюме диалога (максимум {config.SUMMARY_MAX_CHARS} символов, по-русски).
+
+Включи:
+- Ключевые темы, которые обсуждались
+- Прогресс пользователя в понимании
+- Важные инсайты или прорывы (если были)
+- Текущий фокус диалога
+
+ДИАЛОГ (последние 10 ходов):
+{turns_text}
+
+РЕЗЮМЕ (кратко, одним параграфом, без заголовков):"""
+
+            from .llm_answerer import LLMAnswerer
+
+            answerer = LLMAnswerer()
+            if not answerer.client:
+                logger.warning("⚠️ LLM клиент недоступен — summary не обновляется")
+                return
+
+            response = answerer.client.chat.completions.create(
+                model=config.LLM_MODEL,
+                messages=[{"role": "user", "content": summary_prompt}],
+                temperature=0.3,
+                max_tokens=200
+            )
+
+            summary_text = response.choices[0].message.content.strip()
+            if len(summary_text) > config.SUMMARY_MAX_CHARS:
+                summary_text = summary_text[:config.SUMMARY_MAX_CHARS].rstrip()
+
+            self.summary = summary_text
+            self.summary_updated_at = len(self.turns)
+
+            logger.info(f"✅ Резюме обновлено: {len(self.summary)} символов")
+            self.save_to_disk()
+        except Exception as e:
+            logger.error(f"❌ Ошибка обновления резюме: {e}")
+
     def clear(self) -> None:
         """Очистить историю диалога и сохранить пустое состояние."""
         self.turns = []
         self.metadata["last_updated"] = datetime.now().isoformat()
         self.metadata["total_turns"] = 0
+
+        # === НОВОЕ: Очистить summary ===
+        self.summary = None
+        self.summary_updated_at = None
+
+        # === НОВОЕ: Очистить semantic memory ===
+        if self.semantic_memory:
+            self.semantic_memory.clear()
+
         self.save_to_disk()
     
+    def rebuild_semantic_memory(self) -> None:
+        """
+        Пересоздать semantic memory на основе текущей истории.
+        """
+        if not self.semantic_memory:
+            logger.warning("⚠️ Semantic memory не включена")
+            return
+        if not self.turns:
+            logger.warning("⚠️ Нет ходов для создания эмбеддингов")
+            return
+
+        logger.info(f"🔨 Пересоздаю semantic memory для {len(self.turns)} ходов...")
+        turns_data = [
+            {
+                "user_input": turn.user_input,
+                "bot_response": turn.bot_response,
+                "user_state": turn.user_state,
+                "concepts": turn.concepts,
+                "timestamp": turn.timestamp
+            }
+            for turn in self.turns
+        ]
+        self.semantic_memory.rebuild_all_embeddings(turns_data)
+        logger.info("✅ Semantic memory пересоздана")
+
     def get_primary_interests(self) -> List[str]:
         """
         Получить основные интересы пользователя на основе истории.
@@ -334,15 +549,23 @@ class ConversationMemory:
             ratings = [t.user_rating for t in self.turns if t.user_rating]
             avg_rating = sum(ratings) / len(ratings) if ratings else 0.0
         
-        return {
+        result = {
             "total_turns": len(self.turns),
             "primary_interests": interests,
             "num_challenges": len(challenges),
             "num_breakthroughs": len(breakthroughs),
             "average_rating": round(avg_rating, 2),
             "user_level": self.metadata.get("user_level", "beginner"),
-            "last_interaction": self.turns[-1].timestamp if self.turns else None
+            "last_interaction": self.turns[-1].timestamp if self.turns else None,
+            # === НОВОЕ: Summary данные ===
+            "conversation_summary": self.summary,
+            "summary_updated_at_turn": self.summary_updated_at
         }
+
+        if self.semantic_memory:
+            result["semantic_memory"] = self.semantic_memory.get_stats()
+
+        return result
     
     def set_user_level(self, level: str) -> None:
         """

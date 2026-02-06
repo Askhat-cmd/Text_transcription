@@ -11,6 +11,9 @@
 - Адаптирует ответы по уровню пользователя (beginner/intermediate/advanced)
 - Классифицирует состояние пользователя (10 состояний)
 - Строит персональные пути трансформации через Knowledge Graph
+- Поддерживает semantic memory: поиск релевантных прошлых обменов по смыслу
+- Генерирует краткое summary диалога и добавляет в контекст
+- Адаптивно формирует контекст (short-term + semantic + summary по длине диалога)
 
 ## Промпт (System Prompt) и уровни сложности
 
@@ -34,12 +37,18 @@
 
 Бот поддерживает персистентную память диалога по `user_id`:
 
+Новые уровни памяти:
+- Semantic memory — поиск релевантных прошлых обменов по смыслу, а не по хронологии.
+- Conversation summary — краткое резюме диалога, обновляемое каждые N ходов.
+- Adaptive context — динамическая загрузка контекста в зависимости от длины диалога.
+
 - История хранится на диске в `bot_psychologist/.cache_bot_agent/conversations/{user_id}.json` (папка в git игнорируется).
 - Контекст последних сообщений автоматически добавляется в промпт перед материалами из базы знаний.
 - Память используется во всех режимах ответов: Phase 1-4 (basic, sag-aware, graph-powered, adaptive).
 
 Оптимизация контекста (чтобы не раздувать токены):
 
+- Адаптивная стратегия: 1-5 ходов — только short-term, 6-20 — short-term + semantic, 21+ — short-term + semantic + summary.
 - В LLM передаются только последние N обменов.
 - Контекст обрезается по лимиту символов.
 - История автоматически ротируется, если превысила максимальное число сохранённых ходов.
@@ -49,10 +58,19 @@
 - `CONVERSATION_HISTORY_DEPTH` (default: `3`) — сколько последних обменов добавлять в контекст.
 - `MAX_CONTEXT_SIZE` (default: `2000`) — максимальный размер контекста в символах.
 - `MAX_CONVERSATION_TURNS` (default: `1000`) — максимальное число ходов, хранимых для одного пользователя (старые удаляются).
+- `ENABLE_SEMANTIC_MEMORY` (default: `true`) — включить semantic memory.
+- `SEMANTIC_SEARCH_TOP_K` (default: `3`) — количество релевантных прошлых обменов.
+- `SEMANTIC_MIN_SIMILARITY` (default: `0.7`) — порог косинусного сходства.
+- `SEMANTIC_MAX_CHARS` (default: `1000`) — лимит символов для semantic контекста.
+- `EMBEDDING_MODEL` (default: `paraphrase-multilingual-MiniLM-L12-v2`) — модель эмбеддингов.
+- `ENABLE_CONVERSATION_SUMMARY` (default: `true`) — включить summary диалога.
+- `SUMMARY_UPDATE_INTERVAL` (default: `5`) — обновление summary каждые N ходов.
+- `SUMMARY_MAX_CHARS` (default: `500`) — лимит длины summary.
 
 Ключевые файлы:
 
 - `bot_agent/conversation_memory.py` — хранение, загрузка/сохранение, сбор контекста, очистка.
+- `bot_agent/semantic_memory.py` — semantic memory, эмбеддинги, поиск, кэширование.
 - `bot_agent/llm_answerer.py` — принимает `conversation_history` и добавляет в `build_context_prompt(...)`.
 - `bot_agent/answer_basic.py`, `bot_agent/answer_sag_aware.py`, `bot_agent/answer_graph_powered.py`, `bot_agent/answer_adaptive.py` — подключают память, добавляют историю в LLM и сохраняют ход после ответа.
 - `api/routes.py` — пробрасывает `user_id` во все режимы и даёт endpoints управления историей.
@@ -62,6 +80,10 @@ API для истории:
 - `GET /api/v1/users/{user_id}/history?last_n_turns=10`
 - `GET /api/v1/users/{user_id}/summary`
 - `DELETE /api/v1/users/{user_id}/history`
+- `POST /api/v1/questions/basic-with-semantic`
+- `GET /api/v1/users/{user_id}/semantic-stats`
+- `POST /api/v1/users/{user_id}/rebuild-semantic-memory`
+- `POST /api/v1/users/{user_id}/update-summary`
 
 ## Архитектурный обзор
 
@@ -111,6 +133,18 @@ DATA_ROOT=../voice_bot_pipeline/data
 CONVERSATION_HISTORY_DEPTH=3
 MAX_CONTEXT_SIZE=2000
 MAX_CONVERSATION_TURNS=1000
+
+# Semantic Memory
+ENABLE_SEMANTIC_MEMORY=true
+SEMANTIC_SEARCH_TOP_K=3
+SEMANTIC_MIN_SIMILARITY=0.7
+SEMANTIC_MAX_CHARS=1000
+EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
+
+# Conversation Summary
+ENABLE_CONVERSATION_SUMMARY=true
+SUMMARY_UPDATE_INTERVAL=5
+SUMMARY_MAX_CHARS=500
 ```
 
 ### 3. Проверка данных
@@ -135,6 +169,9 @@ python test_phase3.py
 
 # Phase 4: Adaptive QA
 python test_phase4.py
+
+# Semantic Memory
+python test_semantic_memory.py
 
 # API тесты
 python test_api.py
@@ -177,6 +214,7 @@ bot_psychologist/
 │   ├── practices_recommender.py # Рекомендация практик
 │   ├── state_classifier.py # Классификация состояний
 │   ├── conversation_memory.py # Память диалога
+│   ├── semantic_memory.py     # Semantic memory (эмбеддинги + поиск)
 │   └── path_builder.py     # Построение путей трансформации
 │
 ├── api/                    # FastAPI сервер (Phase 5)
@@ -211,11 +249,13 @@ bot_psychologist/
 │
 ├── .cache_bot_agent/       # Кэш и данные бота
 │   └── conversations/      # История диалогов пользователей
+│   └── semantic_memory/    # Эмбеддинги semantic memory
 │
 ├── test_phase1.py          # Тесты Phase 1
 ├── test_phase2.py          # Тесты Phase 2
 ├── test_phase3.py          # Тесты Phase 3
 ├── test_phase4.py          # Тесты Phase 4
+├── test_semantic_memory.py # Тесты Semantic Memory
 ├── test_api.py             # Тесты API
 │
 ├── requirements_bot.txt    # Python зависимости
@@ -257,6 +297,7 @@ bot_psychologist/
 - **Node.js 18+** (для Web UI, опционально)
 - **OpenAI API Key** (обязательно)
 - **Данные из voice_bot_pipeline** (SAG v2.0 JSON файлы)
+- **sentence-transformers + torch** (для semantic memory)
 
 ## Проект является частью монорепозитория
 

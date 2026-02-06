@@ -81,7 +81,8 @@ async def ask_basic_question(
     try:
         result = answer_question_basic(
             request.query,
-            user_id=request.user_id
+            user_id=request.user_id,
+            use_semantic_memory=False
         )
         
         # Обновить статистику
@@ -112,6 +113,62 @@ async def ask_basic_question(
             processing_time_seconds=result.get("processing_time_seconds", 0)
         )
     
+    except Exception as e:
+        logger.error(f"❌ Ошибка: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.post(
+    "/questions/basic-with-semantic",
+    response_model=AnswerResponse,
+    summary="Phase 1: QA + Semantic Memory",
+    description="Basic QA with semantic memory and summary"
+)
+async def ask_basic_question_with_semantic(
+    request: AskQuestionRequest,
+    api_key: str = Depends(verify_api_key)
+):
+    """
+    Phase 1 enhanced: basic QA with memory.
+    """
+    logger.info(f"🧠 Basic+Semantic question: {request.query[:50]}... (user: {request.user_id})")
+
+    try:
+        result = answer_question_basic(
+            request.query,
+            user_id=request.user_id,
+            debug=request.debug,
+            use_semantic_memory=True
+        )
+
+        _stats["total_users"].add(request.user_id)
+        _stats["total_questions"] += 1
+        _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
+
+        sources = []
+        for src in result.get("sources", []):
+            sources.append(SourceResponse(
+                block_id=src.get("block_id", ""),
+                title=src.get("title", ""),
+                youtube_link=src.get("youtube_link", ""),
+                start=src.get("start", 0),
+                end=src.get("end", 0),
+                block_type=src.get("block_type", "unknown"),
+                complexity_score=src.get("complexity_score", 0.0)
+            ))
+
+        return AnswerResponse(
+            status=result.get("status", "success"),
+            answer=result.get("answer", ""),
+            concepts=result.get("concepts", []),
+            sources=sources,
+            metadata=result.get("metadata", {}),
+            timestamp=datetime.now().isoformat(),
+            processing_time_seconds=result.get("processing_time_seconds", 0)
+        )
     except Exception as e:
         logger.error(f"❌ Ошибка: {e}")
         raise HTTPException(
@@ -459,6 +516,95 @@ async def get_user_summary(
         )
     except Exception as e:
         logger.error(f"❌ Ошибка: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.get(
+    "/users/{user_id}/semantic-stats",
+    summary="Semantic Memory Stats",
+    description="Get semantic memory stats for user"
+)
+async def get_semantic_stats(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        memory = get_conversation_memory(user_id)
+        if not memory.semantic_memory:
+            return {"enabled": False, "message": "Semantic memory disabled"}
+        stats = memory.semantic_memory.get_stats()
+        return {"enabled": True, "user_id": user_id, **stats}
+    except Exception as e:
+        logger.error(f"❌ Error getting semantic stats: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.post(
+    "/users/{user_id}/rebuild-semantic-memory",
+    summary="Rebuild Semantic Memory",
+    description="Rebuild semantic memory for user"
+)
+async def rebuild_semantic_memory(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        memory = get_conversation_memory(user_id)
+        if not memory.semantic_memory:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Semantic memory disabled"
+            )
+        memory.rebuild_semantic_memory()
+        stats = memory.semantic_memory.get_stats()
+        return {
+            "success": True,
+            "message": f"Semantic memory rebuilt for {stats.get('total_embeddings', 0)} turns",
+            "stats": stats
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error rebuilding semantic memory: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.post(
+    "/users/{user_id}/update-summary",
+    summary="Update Conversation Summary",
+    description="Force update conversation summary for user"
+)
+async def force_update_summary(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        memory = get_conversation_memory(user_id)
+        if len(memory.turns) < 5:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Not enough turns to create summary (minimum 5)"
+            )
+        memory._update_summary()
+        return {
+            "success": True,
+            "summary": memory.summary,
+            "updated_at_turn": memory.summary_updated_at,
+            "summary_length": len(memory.summary) if memory.summary else 0
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error updating summary: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)

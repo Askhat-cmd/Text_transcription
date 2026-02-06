@@ -23,7 +23,8 @@ def answer_question_basic(
     query: str,
     user_id: str = "default",
     top_k: Optional[int] = None,
-    debug: bool = False
+    debug: bool = False,
+    use_semantic_memory: bool = True
 ) -> Dict:
     """
     Основная функция Phase 1: QA по лекциям.
@@ -62,10 +63,31 @@ def answer_question_basic(
     try:
         # === ЭТАП 0: Загрузка памяти диалога ===
         memory = get_conversation_memory(user_id)
-        conversation_context = memory.get_context_for_llm(
-            n=config.CONVERSATION_HISTORY_DEPTH,
-            max_chars=config.MAX_CONTEXT_SIZE
-        )
+
+        if use_semantic_memory and (
+            config.ENABLE_SEMANTIC_MEMORY or config.ENABLE_CONVERSATION_SUMMARY
+        ):
+            memory_context = memory.get_adaptive_context_for_llm(query)
+            conversation_context = memory.format_context_for_llm(memory_context)
+        else:
+            conversation_context = memory.get_context_for_llm(
+                n=config.CONVERSATION_HISTORY_DEPTH,
+                max_chars=config.MAX_CONTEXT_SIZE
+            )
+            memory_context = {
+                "short_term": conversation_context,
+                "semantic": "",
+                "summary": ""
+            }
+
+        if debug_info is not None:
+            debug_info["memory_context_used"] = {
+                "short_term_chars": len(memory_context.get("short_term", "")),
+                "semantic_chars": len(memory_context.get("semantic", "")),
+                "summary_chars": len(memory_context.get("summary", "")),
+                "semantic_enabled": bool(use_semantic_memory and config.ENABLE_SEMANTIC_MEMORY),
+                "summary_enabled": bool(use_semantic_memory and config.ENABLE_CONVERSATION_SUMMARY)
+            }
 
         # === ЭТАП 1: Загрузка данных ===
         logger.debug("📂 Этап 1: Загрузка данных...")

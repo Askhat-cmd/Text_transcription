@@ -206,3 +206,5 @@ def ask(query: str, verbose: bool = False) -> str:
     
     return result["answer"]
 
+
+

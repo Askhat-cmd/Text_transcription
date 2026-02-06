@@ -445,3 +445,5 @@ def ask_graph(
         include_practices=include_practices
     )
     return result.get("answer", "Ошибка при формировании ответа")
+
+

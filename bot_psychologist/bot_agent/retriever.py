@@ -144,3 +144,5 @@ def get_retriever() -> SimpleRetriever:
     
     return _retriever_instance
 
+
+

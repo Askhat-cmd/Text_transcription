@@ -370,3 +370,5 @@ Respond ONLY in valid JSON format (no markdown, no explanations):
 
 # Глобальный инстанс
 state_classifier = StateClassifier()
+
+

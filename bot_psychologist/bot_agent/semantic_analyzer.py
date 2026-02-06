@@ -246,3 +246,5 @@ class SemanticAnalyzer:
             b for b in blocks
             if concept in (b.graph_entities or [])
         ]
+
+

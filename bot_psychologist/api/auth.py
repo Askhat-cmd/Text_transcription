@@ -157,3 +157,5 @@ async def verify_api_key(
 def get_api_key_info(api_key: str) -> dict:
     """Получить информацию об API ключе (с кэшированием)"""
     return api_key_manager.get_api_key(api_key) or {}
+
+

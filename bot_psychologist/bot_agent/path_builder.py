@@ -501,3 +501,5 @@ class PathBuilder:
 
 # Глобальный инстанс
 path_builder = PathBuilder()
+
+

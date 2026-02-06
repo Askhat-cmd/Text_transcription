@@ -297,3 +297,5 @@ def ask_sag(query: str, user_level: str = "beginner") -> str:
     """
     result = answer_question_sag_aware(query, user_level=user_level)
     return result.get("answer", "Ошибка при формировании ответа")
+
+

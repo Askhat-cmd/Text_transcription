@@ -29,3 +29,5 @@ export const TypingIndicator: React.FC = () => {
 };
 
 export default TypingIndicator;
+
+

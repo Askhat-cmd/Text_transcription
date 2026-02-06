@@ -8,11 +8,26 @@ LLM Answerer Module
 
 import logging
 from typing import List, Dict, Optional
+from pathlib import Path
 
 from .data_loader import Block
 from .config import config
 
 logger = logging.getLogger(__name__)
+
+_PROMPT_BASE_PATH = Path(__file__).resolve().parent / "prompt_system_base.md"
+
+
+def _read_prompt_text(path: Path) -> str:
+    """
+    Read UTF-8 prompt text from disk.
+    We allow BOM so the file can be edited in Windows tools comfortably.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        text = path.read_text(encoding="utf-8-sig")
+    return text.lstrip("\ufeff").strip()
 
 
 class LLMAnswerer:
@@ -50,27 +65,15 @@ class LLMAnswerer:
         
         Определяет поведение, тон и ограничения бота.
         """
-        return """Ты — спокойный и поддерживающий гид, специализирующийся на учении Саламата Сарсекенова о нейросталкинге и трансформации сознания.
-
-ТВОЁ ПОВЕДЕНИЕ:
-1. Отвечай спокойно, уважительно, без осуждения.
-2. Используй информацию ТОЛЬКО из предоставленных материалов лекций.
-3. Если информации нет в материалах — честно скажи об этом.
-4. Всегда старайся найти практическое применение для жизни пользователя.
-5. Избегай медицинских/психиатрических диагнозов.
-
-ТОНУС:
-- Спокойный, но не безличный
-- "Предлагаю исследовать..." вместо "Ты должен..."
-- Поддерживающий, но честный
-
-СТРУКТУРА ОТВЕТА:
-1. Прямо ответить на вопрос
-2. Привести примеры из материалов
-3. Предложить практическое применение (если уместно)
-4. Упомянуть источники с таймкодами
-
-ВАЖНО: Если пользователь упоминает серьёзные состояния (суицидальные мысли, панические атаки), добавь дисклеймер о необходимости обращения к специалисту."""
+        try:
+            return _read_prompt_text(_PROMPT_BASE_PATH)
+        except FileNotFoundError:
+            logger.warning(f"⚠️ System prompt file not found: {_PROMPT_BASE_PATH}. Falling back to встроенному промпту.")
+            return (
+                "Ты — спокойный и точный помощник.\n"
+                "Отвечай по-русски. Опирайся на материалы, переданные в контексте. "
+                "Если в материалах нет ответа — честно скажи об этом и попроси уточнение."
+            )
     
     def build_context_prompt(self, blocks: List[Block], user_question: str) -> str:
         """
@@ -95,7 +98,7 @@ class LLMAnswerer:
             context += f"Полный текст:\n{block.content}\n\n"
         
         context += f"ВОПРОС ПОЛЬЗОВАТЕЛЯ:\n{user_question}\n\n"
-        context += "Сформируй ответ, опираясь на материал выше. Обязательно упомяни источники с таймкодами."
+        context += "Сформируй ответ, опираясь на материал выше."
         
         return context
     
@@ -185,4 +188,6 @@ class LLMAnswerer:
                 "tokens_used": 0,
                 "error": str(e)
             }
+
+
 

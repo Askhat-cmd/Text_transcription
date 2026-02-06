@@ -388,3 +388,5 @@ class PracticesRecommender:
 
 # Глобальный синглтон
 practices_recommender = PracticesRecommender()
+
+

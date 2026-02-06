@@ -46,3 +46,5 @@ export interface UserProfileStats {
   ratingDistribution: Record<number, number>;
   activityByDay: Record<string, number>;
 }
+
+

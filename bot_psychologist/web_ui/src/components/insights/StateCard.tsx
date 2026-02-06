@@ -271,3 +271,5 @@ export const StateCardFull: React.FC<StateCardFullProps> = ({
 };
 
 export default StateCard;
+
+

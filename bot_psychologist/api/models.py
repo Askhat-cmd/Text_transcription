@@ -214,3 +214,5 @@ class StatsResponse(BaseModel):
     top_interests: List[str]
     feedback_stats: Dict[str, int]
     timestamp: str
+
+

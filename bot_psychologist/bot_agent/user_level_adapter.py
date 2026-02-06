@@ -12,10 +12,21 @@ User Level Adapter for Phase 2
 import logging
 from typing import List, Optional
 from enum import Enum
+from pathlib import Path
 
 from .data_loader import Block
 
 logger = logging.getLogger(__name__)
+
+_PROMPT_DIR = Path(__file__).resolve().parent
+
+
+def _read_prompt_text(path: Path) -> str:
+    try:
+        text = path.read_text(encoding="utf-8")
+    except UnicodeDecodeError:
+        text = path.read_text(encoding="utf-8-sig")
+    return text.lstrip("\ufeff").strip()
 
 
 class UserLevel(Enum):
@@ -102,35 +113,21 @@ class UserLevelAdapter:
         Returns:
             Адаптированный промпт с дополнительными инструкциями
         """
-        if self.level == UserLevel.BEGINNER:
-            addition = """
+        prompt_path = _PROMPT_DIR / f"prompt_system_level_{self.level.value}.md"
+        try:
+            addition = _read_prompt_text(prompt_path)
+        except FileNotFoundError:
+            logger.warning(f"⚠️ Level prompt file not found: {prompt_path}. Using minimal встроенные правила.")
+            if self.level == UserLevel.BEGINNER:
+                addition = "Пиши коротко и простыми словами. Если используешь термин — сразу поясняй."
+            elif self.level == UserLevel.INTERMEDIATE:
+                addition = "Пиши развернуто и точно, но без лекций. Поясняй новые термины."
+            else:
+                addition = "Пиши глубже и точнее, допускай нюансы. Не превращай ответ в лекцию."
 
-ДОПОЛНИТЕЛЬНО ДЛЯ BEGINNER:
-- Избегай сложной терминологии, объясняй простыми словами.
-- Используй аналогии из повседневной жизни.
-- Сосредоточься на практическом применении, а не теории.
-- Предлагай конкретные шаги, которые пользователь может начать прямо сейчас.
-- Если используешь термин — сразу дай краткое пояснение."""
-        
-        elif self.level == UserLevel.INTERMEDIATE:
-            addition = """
-
-ДОПОЛНИТЕЛЬНО ДЛЯ INTERMEDIATE:
-- Используй правильную терминологию, но объясняй новые термины.
-- Показывай связи между концептами.
-- Балансируй между теорией и практикой.
-- Можешь упоминать более глубокие аспекты, но не углубляйся чрезмерно."""
-        
-        else:  # ADVANCED
-            addition = """
-
-ДОПОЛНИТЕЛЬНО ДЛЯ ADVANCED:
-- Можешь использовать сложную терминологию и концепции.
-- Углубляйся в философские и теоретические основы.
-- Показывай взаимосвязи на уровне всей системы учения.
-- Можешь обсуждать нюансы, парадоксы и тонкие различия."""
-        
-        return base_prompt + addition
+        if not addition:
+            return base_prompt
+        return f"{base_prompt}\n\n{addition}"
     
     def extract_key_concepts(self, blocks: List[Block]) -> List[str]:
         """
@@ -226,3 +223,5 @@ class UserLevelAdapter:
             "max_complexity": 5.0 if self.level == UserLevel.BEGINNER else 
                              7.5 if self.level == UserLevel.INTERMEDIATE else 10.0
         }
+
+

@@ -259,3 +259,5 @@ class DataLoader:
 # Глобальный инстанс (синглтон)
 data_loader = DataLoader()
 
+
+

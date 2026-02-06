@@ -402,3 +402,5 @@ export function getConfidenceColor(confidence: number): string {
   if (confidence >= 0.5) return 'text-yellow-600';
   return 'text-red-600';
 }
+
+

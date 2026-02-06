@@ -252,3 +252,5 @@ function extractTopConcepts(turns: UserHistoryResponse['turns']): string[] {
 }
 
 export default ProfilePage;
+
+

@@ -323,3 +323,5 @@ export const ProfileCardMini: React.FC<ProfileCardMiniProps> = ({
 };
 
 export default UserProfile;
+
+

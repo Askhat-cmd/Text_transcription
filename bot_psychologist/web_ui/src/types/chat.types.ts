@@ -70,3 +70,5 @@ export interface SettingsStore extends UserSettings {
 
 // Helper type for message creation
 export type NewMessage = Omit<Message, 'id' | 'timestamp'>;
+
+

@@ -669,3 +669,5 @@ class KnowledgeGraphClient:
 
 # Глобальный синглтон
 graph_client = KnowledgeGraphClient()
+
+

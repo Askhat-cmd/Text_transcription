@@ -7,10 +7,28 @@
 Специализированный AI-бот-психолог, который:
 - Работает поверх готовых данных SAG v2.0 JSON + Knowledge Graph из `voice_bot_pipeline`
 - Использует все слои структуры: блоки, граф-сущности, семантические связи
-- Отвечает на вопросы с отсылками к конкретным видео и таймкодам
+- Отвечает на вопросы, опираясь на материалы из `voice_bot_pipeline` (таймкоды в ответе не требуются)
 - Адаптирует ответы по уровню пользователя (beginner/intermediate/advanced)
 - Классифицирует состояние пользователя (10 состояний)
 - Строит персональные пути трансформации через Knowledge Graph
+
+## Промпт (System Prompt) и уровни сложности
+
+Системный промпт вынесен в отдельные файлы, чтобы его было проще редактировать без правок кода:
+
+- Базовый системный промпт: `bot_agent/prompt_system_base.md`
+
+Добавки по сложности:
+- `bot_agent/prompt_system_level_beginner.md`
+- `bot_agent/prompt_system_level_intermediate.md`
+- `bot_agent/prompt_system_level_advanced.md`
+
+Интеграция в коде:
+
+- `bot_agent/llm_answerer.py`: `LLMAnswerer.build_system_prompt()` читает `prompt_system_base.md`
+- `bot_agent/user_level_adapter.py`: `UserLevelAdapter.adapt_system_prompt()` добавляет к базовому промпту текст из `prompt_system_level_{beginner|intermediate|advanced}.md`
+
+Важно: бот должен опираться на материалы, переданные в контексте (блоки/фрагменты). Если в материалах нет ответа, он должен честно сказать об этом и попросить уточнение.
 
 ## Архитектурный обзор
 

@@ -75,18 +75,29 @@ class LLMAnswerer:
                 "Если в материалах нет ответа — честно скажи об этом и попроси уточнение."
             )
     
-    def build_context_prompt(self, blocks: List[Block], user_question: str) -> str:
+    def build_context_prompt(
+        self,
+        blocks: List[Block],
+        user_question: str,
+        conversation_history: Optional[str] = None
+    ) -> str:
         """
         Формирует контекст для LLM: найденные блоки + вопрос.
         
         Args:
             blocks: Список релевантных блоков
             user_question: Вопрос пользователя
+            conversation_history: История последних N обменов (если есть)
             
         Returns:
             Отформатированный контекст для LLM
         """
-        context = "МАТЕРИАЛ ИЗ ЛЕКЦИЙ:\n\n"
+        context = ""
+
+        if conversation_history:
+            context += conversation_history.strip() + "\n\n"
+
+        context += "МАТЕРИАЛ ИЗ ЛЕКЦИЙ:\n\n"
         
         for i, block in enumerate(blocks, 1):
             context += f"--- БЛОК {i} ---\n"
@@ -106,6 +117,7 @@ class LLMAnswerer:
         self,
         user_question: str,
         blocks: List[Block],
+        conversation_history: Optional[str] = None,
         model: Optional[str] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None
@@ -153,7 +165,11 @@ class LLMAnswerer:
         
         # Промпты
         system_prompt = self.build_system_prompt()
-        context = self.build_context_prompt(blocks, user_question)
+        context = self.build_context_prompt(
+            blocks,
+            user_question,
+            conversation_history=conversation_history
+        )
         
         logger.debug(f"📤 Отправляю запрос к {model}...")
         

@@ -180,6 +180,25 @@ class UserHistoryResponse(BaseModel):
     last_interaction: Optional[str] = None
 
 
+class UserSummaryResponse(BaseModel):
+    """Краткое резюме истории пользователя"""
+    user_id: str
+    total_turns: int
+    primary_interests: List[str]
+    num_challenges: int
+    num_breakthroughs: int
+    average_rating: float
+    user_level: str
+    last_interaction: Optional[str] = None
+
+
+class DeleteHistoryResponse(BaseModel):
+    """Ответ на очистку истории"""
+    status: str
+    message: str
+    user_id: str
+
+
 class FeedbackResponse(BaseModel):
     """Ответ на отправку обратной связи"""
     status: str

@@ -91,6 +91,10 @@ def answer_question_adaptive(
         
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
+        conversation_context = memory.get_context_for_llm(
+            n=config.CONVERSATION_HISTORY_DEPTH,
+            max_chars=config.MAX_CONTEXT_SIZE
+        )
         
         # Парсим уровень пользователя
         try:
@@ -112,7 +116,7 @@ def answer_question_adaptive(
         # Получить историю для контекста анализа
         conversation_history = [
             {"role": "user", "content": turn.user_input}
-            for turn in memory.get_last_turns(3)
+            for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
         ]
         
         state_analysis = state_classifier.analyze_message(
@@ -141,12 +145,20 @@ def answer_question_adaptive(
         retrieved_blocks = retriever.retrieve(query, top_k=top_k)
         
         if not retrieved_blocks:
-            return _build_partial_response(
+            response = _build_partial_response(
                 "К сожалению, релевантный материал не найден. Попробуйте переформулировать вопрос.",
                 state_analysis,
                 memory,
                 start_time
             )
+            memory.add_turn(
+                user_input=query,
+                bot_response=response.get("answer", ""),
+                user_state=state_analysis.primary_state.value if state_analysis else None,
+                blocks_used=0,
+                concepts=[]
+            )
+            return response
         
         blocks = [block for block, score in retrieved_blocks]
         adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
@@ -180,21 +192,36 @@ def answer_question_adaptive(
 Адаптируй свой ответ к состоянию пользователя.
 """
         
-        # Контекст предыдущего диалога
-        history_context = memory.get_context_for_llm(n=2)
-        if history_context:
-            state_context += f"\n{history_context}"
-        
-        # Генерация ответа
-        llm_result = answerer.generate_answer(query, adapted_blocks)
+        # Генерация ответа (с учётом истории диалога)
+        final_system_prompt = f"{adapted_prompt}\n\n{state_context.strip()}"
+        original_build_prompt = answerer.build_system_prompt
+        answerer.build_system_prompt = lambda: final_system_prompt
+
+        llm_result = answerer.generate_answer(
+            query,
+            adapted_blocks,
+            conversation_history=conversation_context
+        )
+        answerer.build_system_prompt = original_build_prompt
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"❌ Ошибка LLM: {llm_result['error']}")
-            return _build_error_response(
+            response = _build_error_response(
                 f"Ошибка при генерации ответа: {llm_result['error']}",
                 state_analysis,
                 start_time
             )
+            try:
+                memory.add_turn(
+                    user_input=query,
+                    bot_response=response.get("answer", ""),
+                    user_state=state_analysis.primary_state.value if state_analysis else None,
+                    blocks_used=0,
+                    concepts=[]
+                )
+            except Exception:
+                pass
+            return response
         
         answer = llm_result["answer"]
         
@@ -292,7 +319,10 @@ def answer_question_adaptive(
                 "recommendations": state_analysis.recommendations
             },
             "path_recommendation": path_recommendation,
-            "conversation_context": memory.get_context_for_llm(n=2),
+            "conversation_context": memory.get_context_for_llm(
+                n=config.CONVERSATION_HISTORY_DEPTH,
+                max_chars=config.MAX_CONTEXT_SIZE
+            ),
             "feedback_prompt": feedback_prompt,
             "sources": sources,
             "concepts": concepts,
@@ -319,7 +349,7 @@ def answer_question_adaptive(
     
     except Exception as e:
         logger.error(f"❌ Ошибка: {e}", exc_info=True)
-        return {
+        response = {
             "status": "error",
             "answer": f"Произошла ошибка при обработке запроса: {str(e)}",
             "state_analysis": None,
@@ -332,6 +362,12 @@ def answer_question_adaptive(
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": (datetime.now() - start_time).total_seconds()
         }
+        try:
+            memory = get_conversation_memory(user_id)
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+        except Exception:
+            pass
+        return response
 
 
 def _get_feedback_prompt_for_state(state: UserState) -> str:
@@ -371,7 +407,10 @@ def _build_partial_response(
             "recommendations": state_analysis.recommendations
         } if state_analysis else None,
         "path_recommendation": None,
-        "conversation_context": memory.get_context_for_llm(n=2) if memory else "",
+        "conversation_context": memory.get_context_for_llm(
+            n=config.CONVERSATION_HISTORY_DEPTH,
+            max_chars=config.MAX_CONTEXT_SIZE
+        ) if memory else "",
         "feedback_prompt": "Попробуйте переформулировать вопрос.",
         "sources": [],
         "concepts": [],

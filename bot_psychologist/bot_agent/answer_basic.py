@@ -14,12 +14,14 @@ from .data_loader import data_loader, Block
 from .retriever import get_retriever
 from .llm_answerer import LLMAnswerer
 from .config import config
+from .conversation_memory import get_conversation_memory
 
 logger = logging.getLogger(__name__)
 
 
 def answer_question_basic(
     query: str,
+    user_id: str = "default",
     top_k: Optional[int] = None,
     debug: bool = False
 ) -> Dict:
@@ -51,19 +53,26 @@ def answer_question_basic(
         ...     print(f"  - {src['title']} ({src['youtube_link']})")
     """
     
-    logger.info(f"📋 Обработка запроса: '{query[:50]}...'")
+    logger.info(f"📋 Обработка запроса: '{query[:50]}...' (user: {user_id})")
     
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
     debug_info = {} if debug else None
     
     try:
+        # === ЭТАП 0: Загрузка памяти диалога ===
+        memory = get_conversation_memory(user_id)
+        conversation_context = memory.get_context_for_llm(
+            n=config.CONVERSATION_HISTORY_DEPTH,
+            max_chars=config.MAX_CONTEXT_SIZE
+        )
+
         # === ЭТАП 1: Загрузка данных ===
         logger.debug("📂 Этап 1: Загрузка данных...")
         data_loader.load_all_data()
         
         if not data_loader.get_all_blocks():
-            return {
+            response = {
                 "status": "error",
                 "answer": f"❌ Не удалось загрузить данные лекций. Проверьте наличие файлов в {config.SAG_FINAL_DIR}",
                 "sources": [],
@@ -73,6 +82,8 @@ def answer_question_basic(
                 "processing_time_seconds": 0.0,
                 "debug": {"error_detail": "data_loader returned empty blocks"} if debug else None
             }
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+            return response
         
         if debug_info is not None:
             debug_info["data_loaded"] = {
@@ -87,7 +98,7 @@ def answer_question_basic(
         
         if not retrieved_blocks:
             logger.warning(f"⚠️ Не найдено релевантных блоков для: '{query}'")
-            return {
+            response = {
                 "status": "partial",
                 "answer": "К сожалению, я не нашёл релевантного материала для этого вопроса. Попробуйте переформулировать или спросить что-то более конкретное.",
                 "sources": [],
@@ -96,6 +107,8 @@ def answer_question_basic(
                 "processing_time_seconds": (datetime.now() - start_time).total_seconds(),
                 "debug": debug_info
             }
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+            return response
         
         blocks = [block for block, score in retrieved_blocks]
         
@@ -111,11 +124,15 @@ def answer_question_basic(
         # === ЭТАП 3: Формирование ответа через LLM ===
         logger.debug("🤖 Этап 3: Формирование ответа через LLM...")
         answerer = LLMAnswerer()
-        llm_result = answerer.generate_answer(query, blocks)
+        llm_result = answerer.generate_answer(
+            query,
+            blocks,
+            conversation_history=conversation_context
+        )
         
         if llm_result.get("error"):
             logger.error(f"❌ Ошибка LLM: {llm_result['error']}")
-            return {
+            response = {
                 "status": "error",
                 "answer": llm_result.get("answer", "Произошла ошибка при формировании ответа."),
                 "sources": [],
@@ -125,6 +142,8 @@ def answer_question_basic(
                 "processing_time_seconds": (datetime.now() - start_time).total_seconds(),
                 "debug": debug_info
             }
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+            return response
         
         if debug_info is not None:
             debug_info["llm"] = {
@@ -159,6 +178,13 @@ def answer_question_basic(
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
         }
+
+        memory.add_turn(
+            user_input=query,
+            bot_response=llm_result["answer"],
+            blocks_used=len(blocks),
+            concepts=[b.title for b in blocks]
+        )
         
         if debug_info is not None:
             debug_info["total_time"] = elapsed_time
@@ -170,7 +196,7 @@ def answer_question_basic(
     
     except Exception as e:
         logger.error(f"❌ Непредвиденная ошибка: {e}", exc_info=True)
-        return {
+        response = {
             "status": "error",
             "answer": f"❌ Произошла непредвиденная ошибка: {str(e)}",
             "sources": [],
@@ -180,6 +206,12 @@ def answer_question_basic(
             "processing_time_seconds": (datetime.now() - start_time).total_seconds(),
             "debug": debug_info
         }
+        try:
+            memory = get_conversation_memory(user_id)
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+        except Exception:
+            pass
+        return response
 
 
 # === ПРОСТОЙ ИНТЕРФЕЙС ДЛЯ БЫСТРОГО ИСПОЛЬЗОВАНИЯ ===

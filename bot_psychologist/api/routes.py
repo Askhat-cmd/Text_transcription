@@ -27,7 +27,7 @@ from bot_agent.conversation_memory import get_conversation_memory
 from .models import (
     AskQuestionRequest, FeedbackRequest,
     AnswerResponse, AdaptiveAnswerResponse, FeedbackResponse, 
-    UserHistoryResponse, StatsResponse,
+    UserHistoryResponse, UserSummaryResponse, DeleteHistoryResponse, StatsResponse,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
     ConversationTurnResponse
 )
@@ -79,7 +79,10 @@ async def ask_basic_question(
     logger.info(f"📝 Basic question: {request.query[:50]}... (user: {request.user_id})")
     
     try:
-        result = answer_question_basic(request.query)
+        result = answer_question_basic(
+            request.query,
+            user_id=request.user_id
+        )
         
         # Обновить статистику
         _stats["total_users"].add(request.user_id)
@@ -142,6 +145,7 @@ async def ask_sag_aware_question(
     try:
         result = answer_question_sag_aware(
             request.query,
+            user_id=request.user_id,
             user_level=request.user_level.value,
             debug=request.debug
         )
@@ -206,6 +210,7 @@ async def ask_graph_powered_question(
     try:
         result = answer_question_graph_powered(
             request.query,
+            user_id=request.user_id,
             user_level=request.user_level.value,
             debug=request.debug
         )
@@ -360,11 +365,17 @@ async def ask_adaptive_question(
 
 # ===== USER HISTORY ENDPOINTS =====
 
-@router.post(
+@router.get(
     "/users/{user_id}/history",
     response_model=UserHistoryResponse,
     summary="История пользователя",
     description="Получить историю диалога пользователя"
+)
+@router.post(
+    "/users/{user_id}/history",
+    response_model=UserHistoryResponse,
+    summary="История пользователя (POST)",
+    description="Получить историю диалога пользователя (совместимость)"
 )
 async def get_user_history(
     user_id: str,
@@ -414,6 +425,65 @@ async def get_user_history(
             last_interaction=summary.get("last_interaction")
         )
     
+    except Exception as e:
+        logger.error(f"❌ Ошибка: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.get(
+    "/users/{user_id}/summary",
+    response_model=UserSummaryResponse,
+    summary="Сводка пользователя",
+    description="Краткая сводка по истории диалога пользователя"
+)
+async def get_user_summary(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    logger.info(f"📌 Сводка для {user_id}")
+    try:
+        memory = get_conversation_memory(user_id)
+        summary = memory.get_summary()
+        return UserSummaryResponse(
+            user_id=user_id,
+            total_turns=summary.get("total_turns", len(memory.turns)),
+            primary_interests=summary.get("primary_interests", []),
+            num_challenges=summary.get("num_challenges", 0),
+            num_breakthroughs=summary.get("num_breakthroughs", 0),
+            average_rating=summary.get("average_rating", 0),
+            user_level=summary.get("user_level", "beginner"),
+            last_interaction=summary.get("last_interaction")
+        )
+    except Exception as e:
+        logger.error(f"❌ Ошибка: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.delete(
+    "/users/{user_id}/history",
+    response_model=DeleteHistoryResponse,
+    summary="Очистить историю пользователя",
+    description="Удалить историю диалога пользователя"
+)
+async def delete_user_history(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    logger.info(f"🧹 Очистка истории для {user_id}")
+    try:
+        memory = get_conversation_memory(user_id)
+        memory.clear()
+        return DeleteHistoryResponse(
+            status="success",
+            message=f"История пользователя {user_id} очищена",
+            user_id=user_id
+        )
     except Exception as e:
         logger.error(f"❌ Ошибка: {e}")
         raise HTTPException(

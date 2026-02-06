@@ -46,6 +46,11 @@ class Config:
     # === Кэширование ===
     ENABLE_CACHING = True
     CACHE_DIR = PROJECT_ROOT / ".cache_bot_agent"
+
+    # === Память диалога ===
+    CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
+    MAX_CONTEXT_SIZE = int(os.getenv("MAX_CONTEXT_SIZE", "2000"))
+    MAX_CONVERSATION_TURNS = int(os.getenv("MAX_CONVERSATION_TURNS", "1000"))
     
     # === Отладка ===
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
@@ -97,4 +102,3 @@ class Config:
 
 # Глобальный инстанс конфига
 config = Config()
-

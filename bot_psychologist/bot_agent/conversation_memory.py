@@ -136,6 +136,12 @@ class ConversationMemory:
         
         self.turns.append(turn)
         logger.debug(f"➕ Добавлен ход #{len(self.turns)}")
+
+        # Ограничиваем общее число ходов (авторотация)
+        max_turns = config.MAX_CONVERSATION_TURNS
+        if max_turns and len(self.turns) > max_turns:
+            overflow = len(self.turns) - max_turns
+            self.turns = self.turns[overflow:]
         
         self.save_to_disk()
         return turn
@@ -178,13 +184,14 @@ class ConversationMemory:
         """
         return self.turns[-n:] if self.turns else []
     
-    def get_context_for_llm(self, n: int = 3) -> str:
+    def get_context_for_llm(self, n: int = 3, max_chars: Optional[int] = None) -> str:
         """
         Получить контекст последних оборотов для LLM.
         Используется для учета истории в ответе.
         
         Args:
             n: Количество последних ходов для контекста
+            max_chars: Максимальный размер контекста (символы)
             
         Returns:
             Отформатированная строка с историей
@@ -193,23 +200,58 @@ class ConversationMemory:
         
         if not last_turns:
             return ""
+
+        if max_chars is None:
+            max_chars = config.MAX_CONTEXT_SIZE
         
         context = "ИСТОРИЯ ДИАЛОГА (последние обороты):\n\n"
-        
-        for i, turn in enumerate(last_turns, 1):
-            turn_num = len(self.turns) - len(last_turns) + i
-            context += f"Обмен #{turn_num}:\n"
-            context += f"  Пользователь: {turn.user_input}\n"
-            
-            # Обрезаем ответ бота для краткости
-            response_preview = turn.bot_response[:200] + "..." if turn.bot_response and len(turn.bot_response) > 200 else turn.bot_response
-            context += f"  Бот: {response_preview}\n"
-            
+
+        # Добавляем последние ходы с учетом лимита
+        entries: List[str] = []
+        current_len = len(context)
+
+        for i, turn in enumerate(reversed(last_turns), 1):
+            turn_num = len(self.turns) - i + 1
+            response_preview = (
+                turn.bot_response[:200] + "..."
+                if turn.bot_response and len(turn.bot_response) > 200
+                else (turn.bot_response or "")
+            )
+
+            entry = (
+                f"Обмен #{turn_num}:\n"
+                f"  Пользователь: {turn.user_input}\n"
+                f"  Бот: {response_preview}\n"
+            )
             if turn.user_state:
-                context += f"  Состояние: {turn.user_state}\n"
-            context += "\n"
-        
+                entry += f"  Состояние: {turn.user_state}\n"
+            entry += "\n"
+
+            # Проверяем лимит
+            if max_chars and current_len + len(entry) > max_chars:
+                if not entries:
+                    # Если даже один ход слишком большой, обрежем его
+                    allowed = max(0, max_chars - current_len)
+                    entry = (entry[:max(0, allowed - 3)] + "...") if allowed > 0 else ""
+                    if entry:
+                        entries.append(entry)
+                break
+
+            entries.append(entry)
+            current_len += len(entry)
+
+        # Возвращаем в хронологическом порядке
+        for entry in reversed(entries):
+            context += entry
+
         return context
+
+    def clear(self) -> None:
+        """Очистить историю диалога и сохранить пустое состояние."""
+        self.turns = []
+        self.metadata["last_updated"] = datetime.now().isoformat()
+        self.metadata["total_turns"] = 0
+        self.save_to_disk()
     
     def get_primary_interests(self) -> List[str]:
         """

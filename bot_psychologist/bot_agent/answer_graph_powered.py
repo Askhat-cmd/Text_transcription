@@ -25,12 +25,14 @@ from .semantic_analyzer import SemanticAnalyzer
 from .graph_client import graph_client
 from .practices_recommender import practices_recommender
 from .config import config
+from .conversation_memory import get_conversation_memory
 
 logger = logging.getLogger(__name__)
 
 
 def answer_question_graph_powered(
     query: str,
+    user_id: str = "default",
     user_level: str = "beginner",
     include_practices: bool = True,
     include_chain: bool = True,
@@ -74,13 +76,20 @@ def answer_question_graph_powered(
             - debug: Optional[Dict] — отладочная информация
     """
     
-    logger.info(f"📊 Phase 3: Обработка запроса '{query[:50]}...' [Level: {user_level}]")
+    logger.info(f"📊 Phase 3: Обработка запроса '{query[:50]}...' [Level: {user_level}, user: {user_id}]")
     
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
     debug_info = {} if debug else None
     
     try:
+        # === ЭТАП 0: Загрузка памяти диалога ===
+        memory = get_conversation_memory(user_id)
+        conversation_context = memory.get_context_for_llm(
+            n=config.CONVERSATION_HISTORY_DEPTH,
+            max_chars=config.MAX_CONTEXT_SIZE
+        )
+
         # === ЭТАП 1: Инициализация компонентов ===
         logger.debug("🔧 Этап 1: Инициализация компонентов...")
         
@@ -105,13 +114,15 @@ def answer_question_graph_powered(
         
         if not retrieved_blocks:
             elapsed = (datetime.now() - start_time).total_seconds()
-            return _build_empty_response(
+            response = _build_empty_response(
                 query=query,
                 user_level=user_level,
                 reason="no_blocks_found",
                 elapsed=elapsed,
                 debug_info=debug_info
             )
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+            return response
         
         # Извлекаем блоки из результатов
         blocks = [block for block, score in retrieved_blocks]
@@ -193,6 +204,7 @@ def answer_question_graph_powered(
         llm_result = answerer.generate_answer(
             query,
             adapted_blocks,
+            conversation_history=conversation_context,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
             max_tokens=config.LLM_MAX_TOKENS
@@ -210,7 +222,7 @@ def answer_question_graph_powered(
         # Проверяем ошибки LLM
         if llm_result.get("error") and llm_result.get("error") not in ["no_blocks"]:
             elapsed = (datetime.now() - start_time).total_seconds()
-            return {
+            response = {
                 "status": "error",
                 "answer": llm_result.get("answer", "Ошибка при формировании ответа"),
                 "sources": _format_sources(adapted_blocks),
@@ -224,6 +236,8 @@ def answer_question_graph_powered(
                 "processing_time_seconds": round(elapsed, 2),
                 "debug": debug_info
             }
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=len(adapted_blocks))
+            return response
         
         # === ЭТАП 6: Рекомендация практик ===
         logger.debug("🎯 Этап 6: Рекомендация практик...")
@@ -300,6 +314,13 @@ def answer_question_graph_powered(
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
         }
+
+        memory.add_turn(
+            user_input=query,
+            bot_response=answer,
+            blocks_used=len(adapted_blocks),
+            concepts=[b.title for b in adapted_blocks]
+        )
         
         if debug_info is not None:
             debug_info["total_time"] = elapsed_time
@@ -316,7 +337,7 @@ def answer_question_graph_powered(
     except Exception as e:
         logger.error(f"❌ Phase 3 Error: {e}", exc_info=True)
         elapsed = (datetime.now() - start_time).total_seconds()
-        return {
+        response = {
             "status": "error",
             "answer": f"Произошла ошибка при обработке запроса: {str(e)}",
             "sources": [],
@@ -330,6 +351,12 @@ def answer_question_graph_powered(
             "processing_time_seconds": round(elapsed, 2),
             "debug": debug_info
         }
+        try:
+            memory = get_conversation_memory(user_id)
+            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+        except Exception:
+            pass
+        return response
 
 
 def _build_empty_response(

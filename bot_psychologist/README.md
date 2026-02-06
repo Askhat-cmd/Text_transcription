@@ -30,6 +30,39 @@
 
 Важно: бот должен опираться на материалы, переданные в контексте (блоки/фрагменты). Если в материалах нет ответа, он должен честно сказать об этом и попросить уточнение.
 
+## Память Диалога (Conversation Memory)
+
+Бот поддерживает персистентную память диалога по `user_id`:
+
+- История хранится на диске в `bot_psychologist/.cache_bot_agent/conversations/{user_id}.json` (папка в git игнорируется).
+- Контекст последних сообщений автоматически добавляется в промпт перед материалами из базы знаний.
+- Память используется во всех режимах ответов: Phase 1-4 (basic, sag-aware, graph-powered, adaptive).
+
+Оптимизация контекста (чтобы не раздувать токены):
+
+- В LLM передаются только последние N обменов.
+- Контекст обрезается по лимиту символов.
+- История автоматически ротируется, если превысила максимальное число сохранённых ходов.
+
+Настройки через `.env` (см. `bot_psychologist/.env.example`):
+
+- `CONVERSATION_HISTORY_DEPTH` (default: `3`) — сколько последних обменов добавлять в контекст.
+- `MAX_CONTEXT_SIZE` (default: `2000`) — максимальный размер контекста в символах.
+- `MAX_CONVERSATION_TURNS` (default: `1000`) — максимальное число ходов, хранимых для одного пользователя (старые удаляются).
+
+Ключевые файлы:
+
+- `bot_agent/conversation_memory.py` — хранение, загрузка/сохранение, сбор контекста, очистка.
+- `bot_agent/llm_answerer.py` — принимает `conversation_history` и добавляет в `build_context_prompt(...)`.
+- `bot_agent/answer_basic.py`, `bot_agent/answer_sag_aware.py`, `bot_agent/answer_graph_powered.py`, `bot_agent/answer_adaptive.py` — подключают память, добавляют историю в LLM и сохраняют ход после ответа.
+- `api/routes.py` — пробрасывает `user_id` во все режимы и даёт endpoints управления историей.
+
+API для истории:
+
+- `GET /api/v1/users/{user_id}/history?last_n_turns=10`
+- `GET /api/v1/users/{user_id}/summary`
+- `DELETE /api/v1/users/{user_id}/history`
+
 ## Архитектурный обзор
 
 Проект состоит из 6 фаз разработки:
@@ -73,6 +106,11 @@ cp .env.example .env
 ```env
 OPENAI_API_KEY=sk-proj-...
 DATA_ROOT=../voice_bot_pipeline/data
+
+# Conversation Memory
+CONVERSATION_HISTORY_DEPTH=3
+MAX_CONTEXT_SIZE=2000
+MAX_CONVERSATION_TURNS=1000
 ```
 
 ### 3. Проверка данных

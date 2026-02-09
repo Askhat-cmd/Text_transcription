@@ -12,9 +12,11 @@ from datetime import datetime
 
 from .data_loader import data_loader, Block
 from .retriever import get_retriever
-from .llm_answerer import LLMAnswerer
 from .config import config
 from .conversation_memory import get_conversation_memory
+from .decision import DecisionGate, detect_routing_signals, resolve_user_stage
+from .retrieval import HybridQueryBuilder, VoyageReranker
+from .response import ResponseFormatter, ResponseGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +91,8 @@ def answer_question_basic(
                 "summary_enabled": bool(use_semantic_memory and config.ENABLE_CONVERSATION_SUMMARY)
             }
 
+        user_stage = resolve_user_stage(memory)
+
         # === ЭТАП 1: Загрузка данных ===
         logger.debug("📂 Этап 1: Загрузка данных...")
         data_loader.load_all_data()
@@ -115,8 +119,38 @@ def answer_question_basic(
         
         # === ЭТАП 2: Поиск релевантных блоков ===
         logger.debug("🔍 Этап 2: Поиск релевантных блоков...")
+        query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+        hybrid_query = query_builder.build_query(
+            current_question=query,
+            conversation_summary=memory.summary or "",
+            working_state=memory.working_state,
+            short_term_context=conversation_context,
+        )
         retriever = get_retriever()
-        retrieved_blocks = retriever.retrieve(query, top_k=top_k)
+        retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        reranker = VoyageReranker(
+            model=config.VOYAGE_MODEL,
+            enabled=config.VOYAGE_ENABLED,
+        )
+        rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
+        if rerank_k > 0:
+            reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
+            if reranked:
+                retrieved_blocks = reranked
+
+        decision_gate = DecisionGate()
+        routing_signals = detect_routing_signals(query, retrieved_blocks)
+        routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+
+        stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
+            user_stage,
+            retrieved_blocks,
+        )
+        block_cap = decision_gate.scorer.suggest_block_cap(
+            len(stage_filtered_blocks),
+            routing_result.confidence_level,
+        )
+        retrieved_blocks = stage_filtered_blocks[:block_cap]
         
         if not retrieved_blocks:
             logger.warning(f"⚠️ Не найдено релевантных блоков для: '{query}'")
@@ -137,19 +171,38 @@ def answer_question_basic(
         if debug_info is not None:
             debug_info["retrieval"] = {
                 "query": query,
+                "hybrid_query": hybrid_query,
                 "blocks_found": len(blocks),
-                "scores": [float(score) for block, score in retrieved_blocks]
+                "scores": [float(score) for block, score in retrieved_blocks],
+                "voyage_enabled": bool(config.VOYAGE_ENABLED),
+                "voyage_top_k": rerank_k,
+                "stage_filter_applied": True,
+                "confidence_block_cap": block_cap,
+            }
+            debug_info["routing"] = {
+                "mode": routing_result.mode,
+                "rule_id": routing_result.decision.rule_id,
+                "reason": routing_result.decision.reason,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "adjusted_by_stage": routing_result.adjusted_by_stage,
             }
         
         logger.info(f"✅ Найдено {len(blocks)} релевантных блоков")
         
         # === ЭТАП 3: Формирование ответа через LLM ===
         logger.debug("🤖 Этап 3: Формирование ответа через LLM...")
-        answerer = LLMAnswerer()
-        llm_result = answerer.generate_answer(
+        response_generator = ResponseGenerator()
+        llm_result = response_generator.generate(
             query,
             blocks,
-            conversation_history=conversation_context
+            conversation_context=conversation_context,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+            forbid=routing_result.decision.forbid,
+            model=config.LLM_MODEL,
+            temperature=config.LLM_TEMPERATURE,
+            max_tokens=config.LLM_MAX_TOKENS,
         )
         
         if llm_result.get("error"):
@@ -192,18 +245,33 @@ def answer_question_basic(
         # === ФИНАЛЬНЫЙ РЕЗУЛЬТАТ ===
         elapsed_time = (datetime.now() - start_time).total_seconds()
         
+        formatter = ResponseFormatter()
+        formatted_answer = formatter.format_answer(
+            llm_result["answer"],
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+        )
+
         result = {
             "status": "success",
-            "answer": llm_result["answer"],
+            "answer": formatted_answer,
             "sources": sources,
             "blocks_used": len(blocks),
+            "metadata": {
+                "recommended_mode": routing_result.mode,
+                "decision_rule_id": routing_result.decision.rule_id,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "mode_reason": routing_result.decision.reason,
+                "retrieval_block_cap": block_cap,
+            },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
         }
 
         memory.add_turn(
             user_input=query,
-            bot_response=llm_result["answer"],
+            bot_response=formatted_answer,
             blocks_used=len(blocks),
             concepts=[b.title for b in blocks]
         )

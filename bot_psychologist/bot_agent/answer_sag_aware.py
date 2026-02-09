@@ -17,11 +17,13 @@ from datetime import datetime
 
 from .data_loader import data_loader, Block
 from .retriever import get_retriever
-from .llm_answerer import LLMAnswerer
 from .user_level_adapter import UserLevelAdapter
 from .semantic_analyzer import SemanticAnalyzer
 from .config import config
 from .conversation_memory import get_conversation_memory
+from .decision import DecisionGate, detect_routing_signals, resolve_user_stage
+from .retrieval import HybridQueryBuilder, VoyageReranker
+from .response import ResponseFormatter, ResponseGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -74,6 +76,7 @@ def answer_question_sag_aware(
         # === ЭТАП 0: Загрузка памяти диалога ===
         memory = get_conversation_memory(user_id)
         conversation_context = memory.get_adaptive_context_text(query)
+        user_stage = resolve_user_stage(memory)
 
         # === ЭТАП 1: Инициализация компонентов ===
         logger.debug("🔧 Этап 1: Инициализация компонентов...")
@@ -88,9 +91,39 @@ def answer_question_sag_aware(
         
         # === ЭТАП 2: Поиск блоков ===
         logger.debug("🔍 Этап 2: Поиск релевантных блоков...")
-        
+        query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+        hybrid_query = query_builder.build_query(
+            current_question=query,
+            conversation_summary=memory.summary or "",
+            working_state=memory.working_state,
+            short_term_context=conversation_context,
+        )
+
         retriever = get_retriever()
-        retrieved_blocks = retriever.retrieve(query, top_k=top_k)
+        retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        reranker = VoyageReranker(
+            model=config.VOYAGE_MODEL,
+            enabled=config.VOYAGE_ENABLED,
+        )
+        rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
+        if rerank_k > 0:
+            reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
+            if reranked:
+                retrieved_blocks = reranked
+
+        decision_gate = DecisionGate()
+        routing_signals = detect_routing_signals(query, retrieved_blocks)
+        routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+
+        stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
+            user_stage,
+            retrieved_blocks,
+        )
+        block_cap = decision_gate.scorer.suggest_block_cap(
+            len(stage_filtered_blocks),
+            routing_result.confidence_level,
+        )
+        retrieved_blocks = stage_filtered_blocks[:block_cap]
         
         if debug_info is not None:
             debug_info["blocks_retrieved"] = len(retrieved_blocks)
@@ -121,6 +154,21 @@ def answer_question_sag_aware(
                 {"block_id": b.block_id, "score": round(s, 3)} 
                 for b, s in retrieved_blocks
             ]
+            debug_info["hybrid_query"] = hybrid_query
+            debug_info["voyage_rerank"] = {
+                "enabled": bool(config.VOYAGE_ENABLED),
+                "top_k": rerank_k,
+                "stage_filter_applied": True,
+                "confidence_block_cap": block_cap,
+            }
+            debug_info["routing"] = {
+                "mode": routing_result.mode,
+                "rule_id": routing_result.decision.rule_id,
+                "reason": routing_result.decision.reason,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "adjusted_by_stage": routing_result.adjusted_by_stage,
+            }
         
         # === ЭТАП 3: Адаптация по уровню ===
         logger.debug("🎯 Этап 3: Адаптация блоков по уровню пользователя...")
@@ -144,39 +192,19 @@ def answer_question_sag_aware(
         # === ЭТАП 5: Формирование ответа через LLM ===
         logger.debug("🤖 Этап 5: Формирование ответа через LLM...")
         
-        answerer = LLMAnswerer()
-        
-        # Адаптируем системный промпт под уровень
-        base_system_prompt = answerer.build_system_prompt()
-        adapted_system_prompt = level_adapter.adapt_system_prompt(base_system_prompt)
-        
-        # Добавляем guidance по длине ответа
-        length_guidance = level_adapter.get_answer_length_guidance()
-        
-        # Формируем контекст с информацией о концептах
-        context = answerer.build_context_prompt(adapted_blocks, query)
-        context += f"\n\n{length_guidance}"
-        
-        if semantic_data["primary_concepts"]:
-            concepts_hint = ", ".join(semantic_data["primary_concepts"])
-            context += f"\n\n🔑 Основные концепты для этого ответа: {concepts_hint}"
-        
-        # Генерируем ответ с адаптированным промптом
-        # Временно подменяем build_system_prompt для использования adapted версии
-        original_build_prompt = answerer.build_system_prompt
-        answerer.build_system_prompt = lambda: adapted_system_prompt
-        
-        llm_result = answerer.generate_answer(
+        response_generator = ResponseGenerator()
+        llm_result = response_generator.generate(
             query,
             adapted_blocks,
-            conversation_history=conversation_context,
+            conversation_context=conversation_context,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+            forbid=routing_result.decision.forbid,
+            user_level_adapter=level_adapter,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
-            max_tokens=config.LLM_MAX_TOKENS
+            max_tokens=config.LLM_MAX_TOKENS,
         )
-        
-        # Восстанавливаем оригинальный метод
-        answerer.build_system_prompt = original_build_prompt
         
         if debug_info is not None:
             debug_info["llm_result"] = {
@@ -214,6 +242,12 @@ def answer_question_sag_aware(
         )
         if concepts_section:
             answer += concepts_section
+        formatter = ResponseFormatter()
+        answer = formatter.format_answer(
+            answer,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+        )
         
         # Формируем источники с SAG v2.0 полями
         sources = _format_sources(adapted_blocks)
@@ -232,7 +266,13 @@ def answer_question_sag_aware(
                 "blocks_used": len(adapted_blocks),
                 "semantic_links": len(semantic_data["conceptual_links"]),
                 "model_used": llm_result.get("model_used"),
-                "tokens_used": llm_result.get("tokens_used", 0)
+                "tokens_used": llm_result.get("tokens_used", 0),
+                "recommended_mode": routing_result.mode,
+                "decision_rule_id": routing_result.decision.rule_id,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "mode_reason": routing_result.decision.reason,
+                "retrieval_block_cap": block_cap,
             },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)

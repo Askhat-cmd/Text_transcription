@@ -85,6 +85,13 @@ API для истории:
 - `POST /api/v1/users/{user_id}/rebuild-semantic-memory`
 - `POST /api/v1/users/{user_id}/update-summary`
 
+Режимные поля в ответах API (новое):
+
+- `recommended_mode` — выбранный режим ответа (`PRESENCE`, `CLARIFICATION`, `VALIDATION`, `THINKING`, `INTERVENTION`, `INTEGRATION`).
+- `decision_rule_id` — сработавшее правило decision table.
+- `confidence_level` и `confidence_score` — уровень/число уверенности роутинга.
+- Поле `metadata` сохранено для обратной совместимости и содержит расширенные детали retrieval/decision.
+
 ## Архитектурный обзор
 
 Проект состоит из 6 фаз разработки:
@@ -145,6 +152,13 @@ EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 ENABLE_CONVERSATION_SUMMARY=true
 SUMMARY_UPDATE_INTERVAL=5
 SUMMARY_MAX_CHARS=500
+
+# Session Storage (SQLite)
+ENABLE_SESSION_STORAGE=true
+BOT_DB_PATH=data/bot_sessions.db
+SESSION_RETENTION_DAYS=90
+ARCHIVE_RETENTION_DAYS=365
+AUTO_CLEANUP_ENABLED=true
 ```
 
 ### 3. Проверка данных
@@ -173,8 +187,28 @@ python test_phase4.py
 # Semantic Memory
 python test_semantic_memory.py
 
+# SessionManager (SQLite persistence bootstrap)
+python test_session_manager.py
+python test_conversation_memory_persistence.py
+python test_working_state.py
+python test_decision_table.py
+python test_decision_gate.py
+python test_hybrid_query.py
+python test_confidence_scorer.py
+python test_stage_filter.py
+python test_signal_detector.py
+python test_voyage_reranker.py
+python test_prompt_templates.py
+python test_mode_handlers.py
+
 # API тесты
 python test_api.py
+```
+
+Очистка старых сессий (ретеншн):
+
+```bash
+python scripts/cleanup_old_sessions.py --active-days 90 --archive-days 365
 ```
 
 ### 5. Запуск API сервера

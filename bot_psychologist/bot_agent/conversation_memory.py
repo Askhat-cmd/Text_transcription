@@ -13,9 +13,12 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass, asdict, field
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from .config import config
-from .semantic_memory import get_semantic_memory, SemanticMemory
+from .semantic_memory import get_semantic_memory, SemanticMemory, TurnEmbedding
+from .storage import SessionManager
+from .working_state import WorkingState
 
 logger = logging.getLogger(__name__)
 
@@ -62,6 +65,20 @@ class ConversationMemory:
         # === НОВОЕ: Conversation Summary ===
         self.summary: Optional[str] = None
         self.summary_updated_at: Optional[int] = None  # turn index
+        self.working_state: Optional[WorkingState] = None
+
+        # === PRD v2.0 bootstrap: SQLite Session Storage ===
+        self.session_manager: Optional[SessionManager] = None
+        if config.ENABLE_SESSION_STORAGE:
+            try:
+                self.session_manager = SessionManager(str(config.BOT_DB_PATH))
+                self.session_manager.create_session(
+                    session_id=self.user_id,
+                    user_id=self.user_id,
+                    metadata={"source": "conversation_memory"},
+                )
+            except Exception as exc:
+                logger.error(f"❌ Ошибка инициализации SessionManager: {exc}")
     
     def load_from_disk(self) -> bool:
         """
@@ -70,6 +87,9 @@ class ConversationMemory:
         Returns:
             True если загрузка успешна, False если файл не найден
         """
+        if self._load_from_session_storage():
+            return True
+
         filepath = self.memory_dir / f"{self.user_id}.json"
         
         if not filepath.exists():
@@ -89,6 +109,9 @@ class ConversationMemory:
             # === НОВОЕ: Загрузить summary ===
             self.summary = data.get("summary")
             self.summary_updated_at = data.get("summary_updated_at")
+            raw_working_state = data.get("working_state")
+            if isinstance(raw_working_state, dict):
+                self.working_state = WorkingState.from_dict(raw_working_state)
             
             logger.info(f"✅ Загружена история диалога: {len(self.turns)} оборотов")
             return True
@@ -96,6 +119,97 @@ class ConversationMemory:
         except Exception as e:
             logger.error(f"❌ Ошибка загрузки истории: {e}")
             return False
+
+    def _load_from_session_storage(self) -> bool:
+        """Загрузить состояние из SQLite SessionManager."""
+        if not self.session_manager:
+            return False
+
+        try:
+            payload = self.session_manager.load_session(self.user_id)
+            if not payload:
+                return False
+
+            turns_data = payload.get("conversation_turns", [])
+            session_info = payload.get("session_info", {})
+
+            if not turns_data and not session_info.get("conversation_summary"):
+                return False
+
+            metadata = session_info.get("metadata")
+            if isinstance(metadata, dict):
+                self.metadata.update(metadata)
+
+            restored_turns: List[ConversationTurn] = []
+            for turn in turns_data:
+                concepts = turn.get("chunks_used") or []
+                restored_turns.append(
+                    ConversationTurn(
+                        timestamp=turn["timestamp"],
+                        user_input=turn["user_input"],
+                        user_state=turn.get("user_state"),
+                        bot_response=turn["bot_response"],
+                        blocks_used=len(concepts),
+                        concepts=concepts,
+                        user_feedback=turn.get("user_feedback"),
+                        user_rating=turn.get("user_rating"),
+                    )
+                )
+
+            self.turns = restored_turns
+            self.summary = session_info.get("conversation_summary")
+            self.summary_updated_at = len(self.turns) if self.summary else None
+            raw_working_state = session_info.get("working_state")
+            if isinstance(raw_working_state, dict):
+                self.working_state = WorkingState.from_dict(raw_working_state)
+            self.metadata["last_updated"] = datetime.now().isoformat()
+            self.metadata["total_turns"] = len(self.turns)
+
+            self._restore_semantic_embeddings_from_session(payload)
+
+            logger.info(
+                f"✅ Загружена история из SQLite: {len(self.turns)} оборотов для {self.user_id}"
+            )
+            return True
+        except Exception as exc:
+            logger.error(f"❌ Ошибка загрузки из SessionManager: {exc}")
+            return False
+
+    def _restore_semantic_embeddings_from_session(self, payload: Dict[str, Any]) -> None:
+        """Восстановить semantic embeddings из SQLite в runtime-кеш."""
+        if not self.semantic_memory:
+            return
+
+        embeddings = payload.get("semantic_embeddings", [])
+        if not embeddings:
+            return
+
+        turns_by_number = {
+            idx: turn for idx, turn in enumerate(payload.get("conversation_turns", []), start=1)
+        }
+
+        restored: List[TurnEmbedding] = []
+        for item in embeddings:
+            turn_number = item.get("turn_number")
+            turn_data = turns_by_number.get(turn_number)
+            if not turn_data:
+                continue
+
+            bot_response = turn_data.get("bot_response") or ""
+            restored.append(
+                TurnEmbedding(
+                    turn_index=turn_number,
+                    user_input=turn_data.get("user_input", ""),
+                    bot_response_preview=bot_response[:200],
+                    user_state=None,
+                    concepts=turn_data.get("chunks_used", []),
+                    timestamp=turn_data.get("timestamp", ""),
+                    embedding=item["embedding"],
+                )
+            )
+
+        if restored:
+            self.semantic_memory.turn_embeddings = restored
     
     def save_to_disk(self) -> None:
         """
@@ -113,13 +227,46 @@ class ConversationMemory:
                     "turns": [asdict(turn) for turn in self.turns],
                     # === НОВОЕ: Сохранить summary ===
                     "summary": self.summary,
-                    "summary_updated_at": self.summary_updated_at
+                    "summary_updated_at": self.summary_updated_at,
+                    "working_state": (
+                        self.working_state.to_dict() if self.working_state else None
+                    ),
                 }, f, ensure_ascii=False, indent=2)
             
             logger.debug(f"💾 История сохранена ({len(self.turns)} оборотов)")
         
         except Exception as e:
             logger.error(f"❌ Ошибка сохранения истории: {e}")
+
+        if self.session_manager:
+            try:
+                self.session_manager.create_session(
+                    session_id=self.user_id,
+                    user_id=self.user_id,
+                    metadata=self.metadata,
+                )
+                if self.summary:
+                    self.session_manager.update_summary(self.user_id, self.summary)
+                if self.working_state:
+                    self.session_manager.update_working_state(
+                        self.user_id,
+                        self.working_state.to_dict(),
+                    )
+            except Exception as exc:
+                logger.error(f"❌ Ошибка синхронизации metadata в SessionManager: {exc}")
+
+    def set_working_state(self, working_state: WorkingState) -> None:
+        """Обновить рабочее состояние пользователя и синхронизировать хранение."""
+        self.working_state = working_state
+        if self.session_manager:
+            try:
+                self.session_manager.update_working_state(
+                    self.user_id,
+                    working_state.to_dict(),
+                )
+            except Exception as exc:
+                logger.error(f"❌ Ошибка сохранения working_state в SessionManager: {exc}")
+        self.save_to_disk()
     
     def add_turn(
         self,
@@ -155,6 +302,8 @@ class ConversationMemory:
         turn_index = len(self.turns)
         logger.debug(f"➕ Добавлен ход #{len(self.turns)}")
 
+        embedding_to_store = None
+
         # Ограничиваем общее число ходов (авторотация)
         # === НОВОЕ: Добавить эмбеддинг в semantic memory ===
         if self.semantic_memory and config.ENABLE_SEMANTIC_MEMORY:
@@ -168,8 +317,16 @@ class ConversationMemory:
                     timestamp=turn.timestamp
                 )
                 self.semantic_memory.save_to_disk()
+                if self.semantic_memory.turn_embeddings:
+                    embedding_to_store = self.semantic_memory.turn_embeddings[-1].embedding
             except Exception as e:
                 logger.error(f"❌ Ошибка добавления эмбеддинга: {e}")
+
+        self._persist_turn_to_session_storage(
+            turn_index=turn_index,
+            turn=turn,
+            embedding=embedding_to_store,
+        )
 
         # === НОВОЕ: Обновить summary каждые N ходов ===
         if config.ENABLE_CONVERSATION_SUMMARY and config.SUMMARY_UPDATE_INTERVAL > 0:
@@ -183,6 +340,33 @@ class ConversationMemory:
         
         self.save_to_disk()
         return turn
+
+    def _persist_turn_to_session_storage(
+        self,
+        turn_index: int,
+        turn: ConversationTurn,
+        embedding: Optional[object] = None,
+    ) -> None:
+        """Сохранить ход в SQLite, если SessionManager включён."""
+        if not self.session_manager:
+            return
+
+        try:
+            self.session_manager.save_turn(
+                session_id=self.user_id,
+                turn_number=turn_index,
+                user_input=turn.user_input,
+                bot_response=turn.bot_response or "",
+                mode="ADAPTIVE",
+                timestamp=turn.timestamp,
+                chunks_used=turn.concepts,
+                user_state=turn.user_state,
+                user_feedback=turn.user_feedback,
+                user_rating=turn.user_rating,
+                embedding=embedding,
+            )
+        except Exception as exc:
+            logger.error(f"❌ Ошибка сохранения хода в SessionManager: {exc}")
     
     def add_feedback(
         self,
@@ -206,9 +390,34 @@ class ConversationMemory:
             self.turns[turn_index].user_rating = rating
             
             logger.debug(f"👍 Обратная связь добавлена: {feedback} (рейтинг: {rating})")
+            self._sync_feedback_to_session_storage(turn_index)
             self.save_to_disk()
         else:
             logger.warning(f"⚠️ Некорректный индекс хода: {turn_index}")
+
+    def _sync_feedback_to_session_storage(self, turn_index: int) -> None:
+        """Обновить feedback/rating в SQLite для уже сохранённого хода."""
+        if not self.session_manager:
+            return
+        if not (0 <= turn_index < len(self.turns)):
+            return
+
+        turn = self.turns[turn_index]
+        try:
+            self.session_manager.save_turn(
+                session_id=self.user_id,
+                turn_number=turn_index + 1,
+                user_input=turn.user_input,
+                bot_response=turn.bot_response or "",
+                mode="ADAPTIVE",
+                timestamp=turn.timestamp,
+                chunks_used=turn.concepts,
+                user_state=turn.user_state,
+                user_feedback=turn.user_feedback,
+                user_rating=turn.user_rating,
+            )
+        except Exception as exc:
+            logger.error(f"❌ Ошибка обновления feedback в SessionManager: {exc}")
     
     def get_last_turns(self, n: int = 5) -> List[ConversationTurn]:
         """
@@ -423,6 +632,8 @@ class ConversationMemory:
             self.summary_updated_at = len(self.turns)
 
             logger.info(f"✅ Резюме обновлено: {len(self.summary)} символов")
+            if self.session_manager and self.summary:
+                self.session_manager.update_summary(self.user_id, self.summary)
             self.save_to_disk()
         except Exception as e:
             logger.error(f"❌ Ошибка обновления резюме: {e}")
@@ -436,12 +647,43 @@ class ConversationMemory:
         # === НОВОЕ: Очистить summary ===
         self.summary = None
         self.summary_updated_at = None
+        self.working_state = None
 
         # === НОВОЕ: Очистить semantic memory ===
         if self.semantic_memory:
             self.semantic_memory.clear()
 
+        if self.session_manager:
+            self.session_manager.delete_session_data(self.user_id)
+            self.session_manager.create_session(
+                session_id=self.user_id,
+                user_id=self.user_id,
+                metadata={"source": "conversation_memory", "reset": True},
+            )
+
         self.save_to_disk()
+
+    def purge_user_data(self) -> None:
+        """
+        Полностью удалить данные пользователя (GDPR):
+        JSON, semantic cache и SQLite-сессию без авто-воссоздания.
+        """
+        self.turns = []
+        self.summary = None
+        self.summary_updated_at = None
+        self.working_state = None
+        self.metadata["last_updated"] = datetime.now().isoformat()
+        self.metadata["total_turns"] = 0
+
+        if self.semantic_memory:
+            self.semantic_memory.clear()
+
+        if self.session_manager:
+            self.session_manager.delete_session_data(self.user_id)
+
+        filepath = self.memory_dir / f"{self.user_id}.json"
+        if filepath.exists():
+            filepath.unlink()
     
     def rebuild_semantic_memory(self) -> None:
         """
@@ -559,7 +801,10 @@ class ConversationMemory:
             "last_interaction": self.turns[-1].timestamp if self.turns else None,
             # === НОВОЕ: Summary данные ===
             "conversation_summary": self.summary,
-            "summary_updated_at_turn": self.summary_updated_at
+            "summary_updated_at_turn": self.summary_updated_at,
+            "working_state": (
+                self.working_state.to_dict() if self.working_state else None
+            ),
         }
 
         if self.semantic_memory:

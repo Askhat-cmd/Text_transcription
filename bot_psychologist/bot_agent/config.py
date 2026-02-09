@@ -64,10 +64,25 @@ class Config:
         "paraphrase-multilingual-MiniLM-L12-v2"
     )
 
+    # === Voyage Rerank (optional) ===
+    VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY")
+    VOYAGE_MODEL = os.getenv("VOYAGE_MODEL", "rerank-2")
+    VOYAGE_TOP_K = int(os.getenv("VOYAGE_TOP_K", "1"))
+    VOYAGE_ENABLED = os.getenv("VOYAGE_ENABLED", "False").lower() == "true"
+
     # === Conversation Summary (NEW) ===
     ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"
     SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "5"))
     SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "500"))
+
+    # === Session Storage (PRD v2.0 bootstrap) ===
+    ENABLE_SESSION_STORAGE = os.getenv("ENABLE_SESSION_STORAGE", "True").lower() == "true"
+    BOT_DB_PATH = Path(os.getenv("BOT_DB_PATH", "data/bot_sessions.db"))
+    if not BOT_DB_PATH.is_absolute():
+        BOT_DB_PATH = PROJECT_ROOT / BOT_DB_PATH
+    SESSION_RETENTION_DAYS = int(os.getenv("SESSION_RETENTION_DAYS", "90"))
+    ARCHIVE_RETENTION_DAYS = int(os.getenv("ARCHIVE_RETENTION_DAYS", "365"))
+    AUTO_CLEANUP_ENABLED = os.getenv("AUTO_CLEANUP_ENABLED", "True").lower() == "true"
     
     # === Отладка ===
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"

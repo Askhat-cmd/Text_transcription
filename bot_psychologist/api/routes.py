@@ -22,12 +22,15 @@ from bot_agent import (
     answer_question_graph_powered,
     answer_question_adaptive
 )
+from bot_agent.config import config
 from bot_agent.conversation_memory import get_conversation_memory
+from bot_agent.storage import SessionManager
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
     AnswerResponse, AdaptiveAnswerResponse, FeedbackResponse, 
     UserHistoryResponse, UserSummaryResponse, DeleteHistoryResponse, StatsResponse,
+    SessionInfoResponse, ArchiveSessionsResponse,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
     ConversationTurnResponse
 )
@@ -108,6 +111,10 @@ async def ask_basic_question(
             answer=result.get("answer", ""),
             concepts=result.get("concepts", []),
             sources=sources,
+            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
+            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
+            confidence_level=result.get("metadata", {}).get("confidence_level"),
+            confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=result.get("metadata", {}),
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
@@ -165,6 +172,10 @@ async def ask_basic_question_with_semantic(
             answer=result.get("answer", ""),
             concepts=result.get("concepts", []),
             sources=sources,
+            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
+            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
+            confidence_level=result.get("metadata", {}).get("confidence_level"),
+            confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=result.get("metadata", {}),
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
@@ -229,6 +240,10 @@ async def ask_sag_aware_question(
             answer=result.get("answer", ""),
             concepts=result.get("concepts", []),
             sources=sources,
+            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
+            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
+            confidence_level=result.get("metadata", {}).get("confidence_level"),
+            confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=result.get("metadata", {}),
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
@@ -294,6 +309,10 @@ async def ask_graph_powered_question(
             answer=result.get("answer", ""),
             concepts=result.get("concepts", []),
             sources=sources,
+            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
+            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
+            confidence_level=result.get("metadata", {}).get("confidence_level"),
+            confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=result.get("metadata", {}),
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
@@ -407,6 +426,10 @@ async def ask_adaptive_question(
             concepts=result.get("concepts", []),
             sources=sources,
             conversation_context=result.get("conversation_context", ""),
+            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
+            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
+            confidence_level=result.get("metadata", {}).get("confidence_level"),
+            confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=result.get("metadata", {}),
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
@@ -523,6 +546,95 @@ async def get_user_summary(
 
 
 @router.get(
+    "/users/{user_id}/session",
+    response_model=SessionInfoResponse,
+    summary="Session Storage Status",
+    description="Статус SQLite-персистентности для пользователя"
+)
+async def get_user_session_info(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        memory = get_conversation_memory(user_id)
+        manager = memory.session_manager
+        if not manager:
+            return SessionInfoResponse(
+                user_id=user_id,
+                enabled=False,
+                exists=False,
+            )
+
+        payload = manager.load_session(user_id)
+        if not payload:
+            return SessionInfoResponse(
+                user_id=user_id,
+                enabled=True,
+                exists=False,
+            )
+
+        session_info = payload.get("session_info", {})
+        turns = payload.get("conversation_turns", [])
+        embeddings = payload.get("semantic_embeddings", [])
+
+        return SessionInfoResponse(
+            user_id=user_id,
+            enabled=True,
+            exists=True,
+            status=session_info.get("status"),
+            total_turns=len(turns),
+            total_embeddings=len(embeddings),
+            last_active=session_info.get("last_active"),
+            has_working_state=bool(session_info.get("working_state")),
+            has_summary=bool(session_info.get("conversation_summary")),
+        )
+    except Exception as e:
+        logger.error(f"❌ Error loading session info: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.post(
+    "/sessions/archive",
+    response_model=ArchiveSessionsResponse,
+    summary="Archive Old Sessions",
+    description="Архивировать старые SQLite-сессии старше N дней"
+)
+async def archive_old_sessions(
+    active_days: int = 90,
+    archive_days: int = 365,
+    api_key: str = Depends(verify_api_key)
+):
+    if active_days < 1 or archive_days < 1:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="active_days and archive_days must be >= 1"
+        )
+    try:
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        cleanup_result = manager.run_retention_cleanup(
+            active_days=active_days,
+            archive_days=archive_days,
+        )
+        return ArchiveSessionsResponse(
+            status="success",
+            archived_count=cleanup_result["archived_count"],
+            deleted_count=cleanup_result["deleted_count"],
+            active_days=active_days,
+            archive_days=archive_days,
+            db_path=str(config.BOT_DB_PATH),
+        )
+    except Exception as e:
+        logger.error(f"❌ Error archiving sessions: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.get(
     "/users/{user_id}/semantic-stats",
     summary="Semantic Memory Stats",
     description="Get semantic memory stats for user"
@@ -632,6 +744,33 @@ async def delete_user_history(
         )
     except Exception as e:
         logger.error(f"❌ Ошибка: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.delete(
+    "/users/{user_id}/gdpr-data",
+    response_model=DeleteHistoryResponse,
+    summary="GDPR Delete User Data",
+    description="Полностью удалить данные пользователя из JSON/semantic cache/SQLite"
+)
+async def gdpr_delete_user_data(
+    user_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    logger.info(f"🗑️ GDPR delete for {user_id}")
+    try:
+        memory = get_conversation_memory(user_id)
+        memory.purge_user_data()
+        return DeleteHistoryResponse(
+            status="success",
+            message=f"Данные пользователя {user_id} полностью удалены (GDPR)",
+            user_id=user_id
+        )
+    except Exception as e:
+        logger.error(f"❌ GDPR delete error: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)

@@ -138,6 +138,10 @@ class AnswerResponse(BaseModel):
     answer: str
     concepts: List[str]
     sources: List[SourceResponse]
+    recommended_mode: Optional[str] = None
+    decision_rule_id: Optional[int] = None
+    confidence_level: Optional[str] = None
+    confidence_score: Optional[float] = None
     metadata: Dict[str, Any]
     timestamp: str
     processing_time_seconds: float
@@ -153,6 +157,10 @@ class AdaptiveAnswerResponse(BaseModel):
     concepts: List[str]
     sources: List[SourceResponse]
     conversation_context: str
+    recommended_mode: Optional[str] = None
+    decision_rule_id: Optional[int] = None
+    confidence_level: Optional[str] = None
+    confidence_score: Optional[float] = None
     metadata: Dict[str, Any]
     timestamp: str
     processing_time_seconds: float
@@ -197,6 +205,29 @@ class DeleteHistoryResponse(BaseModel):
     status: str
     message: str
     user_id: str
+
+
+class SessionInfoResponse(BaseModel):
+    """Состояние персистентной сессии пользователя в SQLite."""
+    user_id: str
+    enabled: bool
+    exists: bool
+    status: Optional[str] = None
+    total_turns: int = 0
+    total_embeddings: int = 0
+    last_active: Optional[str] = None
+    has_working_state: bool = False
+    has_summary: bool = False
+
+
+class ArchiveSessionsResponse(BaseModel):
+    """Ответ на архивирование старых сессий."""
+    status: str
+    archived_count: int
+    deleted_count: int
+    active_days: int
+    archive_days: int
+    db_path: str
 
 
 class FeedbackResponse(BaseModel):

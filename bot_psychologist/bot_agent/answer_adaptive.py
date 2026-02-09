@@ -19,7 +19,6 @@ from datetime import datetime
 
 from .data_loader import data_loader
 from .retriever import get_retriever
-from .llm_answerer import LLMAnswerer
 from .user_level_adapter import UserLevelAdapter, UserLevel
 from .semantic_analyzer import SemanticAnalyzer
 from .graph_client import graph_client
@@ -27,6 +26,14 @@ from .state_classifier import state_classifier, StateAnalysis, UserState
 from .conversation_memory import get_conversation_memory
 from .path_builder import path_builder
 from .config import config
+from .decision import (
+    DecisionGate,
+    build_mode_directive,
+    detect_routing_signals,
+    resolve_user_stage,
+)
+from .retrieval import HybridQueryBuilder, VoyageReranker
+from .response import ResponseFormatter, ResponseGenerator
 
 logger = logging.getLogger(__name__)
 
@@ -120,7 +127,8 @@ def answer_question_adaptive(
             query,
             conversation_history=conversation_history
         )
-        
+        user_stage = resolve_user_stage(memory, state_analysis)
+
         logger.info(f"✅ Состояние: {state_analysis.primary_state.value} "
                    f"(уверенность: {state_analysis.confidence:.2f})")
         
@@ -130,17 +138,54 @@ def answer_question_adaptive(
                 "confidence": state_analysis.confidence,
                 "secondary": [s.value for s in state_analysis.secondary_states],
                 "emotional_tone": state_analysis.emotional_tone,
-                "depth": state_analysis.depth
+                "depth": state_analysis.depth,
+                "user_stage": user_stage,
             }
         
         # ================================================================
         # ЭТАП 3: Поиск релевантных блоков
         # ================================================================
         logger.debug("🔍 Этап 3: Поиск блоков...")
-        
+
+        query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+        hybrid_query = query_builder.build_query(
+            current_question=query,
+            conversation_summary=memory.summary or "",
+            working_state=memory.working_state,
+            short_term_context=conversation_context,
+        )
+
         retriever = get_retriever()
-        retrieved_blocks = retriever.retrieve(query, top_k=top_k)
-        
+        retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        reranker = VoyageReranker(
+            model=config.VOYAGE_MODEL,
+            enabled=config.VOYAGE_ENABLED,
+        )
+        rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
+        if rerank_k > 0:
+            reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
+            if reranked:
+                retrieved_blocks = reranked
+
+        decision_gate = DecisionGate()
+        routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
+        routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+        stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
+            user_stage,
+            retrieved_blocks,
+        )
+        block_cap = decision_gate.scorer.suggest_block_cap(
+            len(stage_filtered_blocks),
+            routing_result.confidence_level,
+        )
+        retrieved_blocks = stage_filtered_blocks[:block_cap]
+        mode_directive = build_mode_directive(
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+            reason=routing_result.decision.reason,
+            forbid=routing_result.decision.forbid,
+        )
+
         if not retrieved_blocks:
             response = _build_partial_response(
                 "К сожалению, релевантный материал не найден. Попробуйте переформулировать вопрос.",
@@ -167,15 +212,26 @@ def answer_question_adaptive(
         if debug_info is not None:
             debug_info["blocks_found"] = len(retrieved_blocks)
             debug_info["blocks_after_filter"] = len(adapted_blocks)
+            debug_info["hybrid_query"] = hybrid_query
+            debug_info["voyage_rerank"] = {
+                "enabled": bool(config.VOYAGE_ENABLED),
+                "top_k": rerank_k,
+                "stage_filter_applied": True,
+                "confidence_block_cap": block_cap,
+            }
+            debug_info["routing"] = {
+                "mode": routing_result.mode,
+                "rule_id": routing_result.decision.rule_id,
+                "reason": routing_result.decision.reason,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "adjusted_by_stage": routing_result.adjusted_by_stage,
+            }
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
         # ================================================================
         logger.debug("🤖 Этап 4: Генерация ответа...")
-        
-        answerer = LLMAnswerer()
-        base_prompt = answerer.build_system_prompt()
-        adapted_prompt = level_adapter.adapt_system_prompt(base_prompt)
         
         # Добавить контекст состояния
         state_context = f"""
@@ -188,19 +244,26 @@ def answer_question_adaptive(
 {state_analysis.recommendations[0] if state_analysis.recommendations else "Отвечай в своём обычном стиле"}
 
 Адаптируй свой ответ к состоянию пользователя.
-"""
-        
-        # Генерация ответа (с учётом истории диалога)
-        final_system_prompt = f"{adapted_prompt}\n\n{state_context.strip()}"
-        original_build_prompt = answerer.build_system_prompt
-        answerer.build_system_prompt = lambda: final_system_prompt
 
-        llm_result = answerer.generate_answer(
+РЕЖИМНАЯ ДИРЕКТИВА:
+{mode_directive.prompt}
+"""
+
+        # Генерация ответа (с учётом истории диалога)
+        response_generator = ResponseGenerator()
+        llm_result = response_generator.generate(
             query,
             adapted_blocks,
-            conversation_history=conversation_context
+            conversation_context=conversation_context,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+            forbid=routing_result.decision.forbid,
+            user_level_adapter=level_adapter,
+            additional_system_context=state_context,
+            model=config.LLM_MODEL,
+            temperature=config.LLM_TEMPERATURE,
+            max_tokens=config.LLM_MAX_TOKENS,
         )
-        answerer.build_system_prompt = original_build_prompt
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"❌ Ошибка LLM: {llm_result['error']}")
@@ -222,6 +285,12 @@ def answer_question_adaptive(
             return response
         
         answer = llm_result["answer"]
+        formatter = ResponseFormatter()
+        answer = formatter.format_answer(
+            answer,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+        )
         
         # ================================================================
         # ЭТАП 5: Семантический анализ и извлечение концептов
@@ -326,7 +395,13 @@ def answer_question_adaptive(
                 "user_level": user_level,
                 "blocks_used": len(adapted_blocks),
                 "state": state_analysis.primary_state.value,
-                "conversation_turns": len(memory.turns)
+                "conversation_turns": len(memory.turns),
+                "recommended_mode": routing_result.mode,
+                "decision_rule_id": routing_result.decision.rule_id,
+                "confidence_score": routing_result.confidence_score,
+                "confidence_level": routing_result.confidence_level,
+                "mode_reason": mode_directive.reason,
+                "retrieval_block_cap": block_cap,
             },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
@@ -435,5 +510,7 @@ def _build_error_response(
         "timestamp": datetime.now().isoformat(),
         "processing_time_seconds": (datetime.now() - start_time).total_seconds()
     }
+
+
 
 

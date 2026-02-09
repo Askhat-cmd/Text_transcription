@@ -92,6 +92,20 @@ API для истории:
 - `confidence_level` и `confidence_score` — уровень/число уверенности роутинга.
 - Поле `metadata` сохранено для обратной совместимости и содержит расширенные детали retrieval/decision.
 
+## Response Layer (PRD v2.0)
+
+Единый слой генерации/форматирования ответов используется во всех `answer_*`:
+
+- `bot_agent/response/response_generator.py` — mode-aware генерация (директива режима + confidence behavior).
+- `bot_agent/response/response_formatter.py` — mode-aware ограничения длины/формата ответа.
+
+## Retrieval Policy (PRD v2.0)
+
+При retrieval используется дополнительная политика:
+
+- Stage filter: ограничивает complexity блоков на ранних стадиях пользователя.
+- Confidence cap: при низкой уверенности уменьшает число блоков, чтобы не «синтезировать лишнее».
+
 ## Архитектурный обзор
 
 Проект состоит из 6 фаз разработки:
@@ -148,6 +162,12 @@ SEMANTIC_MIN_SIMILARITY=0.7
 SEMANTIC_MAX_CHARS=1000
 EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 
+# Voyage Rerank (optional)
+VOYAGE_API_KEY=pa-...
+VOYAGE_MODEL=rerank-2
+VOYAGE_TOP_K=1
+VOYAGE_ENABLED=false
+
 # Conversation Summary
 ENABLE_CONVERSATION_SUMMARY=true
 SUMMARY_UPDATE_INTERVAL=5
@@ -200,6 +220,9 @@ python test_signal_detector.py
 python test_voyage_reranker.py
 python test_prompt_templates.py
 python test_mode_handlers.py
+python test_response_generator.py
+python test_response_formatter.py
+python test_full_dialogue_pipeline.py
 
 # API тесты
 python test_api.py

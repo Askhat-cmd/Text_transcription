@@ -91,6 +91,7 @@ voice_bot_pipeline/pipeline.log
 # ========================================
 bot_psychologist/logs/
 bot_psychologist/.cache_bot_agent/
+bot_psychologist/data/
 
 # ========================================
 # ЗАВИСИМОСТИ

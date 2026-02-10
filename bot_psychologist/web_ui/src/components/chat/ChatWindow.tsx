@@ -37,7 +37,7 @@ function formatState(state: string): string {
 }
 
 function formatConfidence(confidence?: number): string {
-  if (confidence === undefined) return 'n/a';
+  if (confidence === undefined) return 'н/д';
   return `${Math.round(confidence * 100)}%`;
 }
 
@@ -85,14 +85,14 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               <button
                 onClick={onToggleSidebar}
                 className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
-                title="Open chats"
+                title="Открыть список чатов"
               >
                 <FiMenu size={18} />
               </button>
             )}
             <div className="min-w-0">
               <h1 className="text-base font-semibold text-slate-900 dark:text-slate-100 truncate">
-                {chatTitle || 'New chat'}
+                {chatTitle || 'Новый чат'}
               </h1>
               {userId && (
                 <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
@@ -107,7 +107,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               <button
                 onClick={onClearChat}
                 className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
-                title="Clear chat"
+                title="Очистить чат"
               >
                 <FiRefreshCw size={17} />
               </button>
@@ -116,7 +116,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               <button
                 onClick={onProfileClick}
                 className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
-                title="Profile"
+                title="Профиль"
               >
                 <FiUser size={17} />
               </button>
@@ -125,7 +125,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               <button
                 onClick={onSettingsClick}
                 className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
-                title="Settings"
+                title="Настройки"
               >
                 <FiSettings size={17} />
               </button>
@@ -139,17 +139,17 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               onClick={() => setIsStateDetailsOpen((prev) => !prev)}
               className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
             >
-              State: {formatState(currentUserState)}
+              Состояние: {formatState(currentUserState)}
               <FiChevronDown size={12} />
             </button>
 
             {isStateDetailsOpen && (
               <div className="absolute left-0 mt-2 w-64 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-lg p-3 z-20">
-                <p className="text-xs text-slate-500 dark:text-slate-400">Current state</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Текущее состояние</p>
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 mt-1">
                   {formatState(currentUserState)}
                 </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Confidence</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Уверенность</p>
                 <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 mt-1">
                   {formatConfidence(currentStateConfidence)}
                 </p>
@@ -167,7 +167,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               onClick={onClearError}
               className="text-rose-600 hover:text-rose-800 dark:text-rose-400 text-xs underline"
             >
-              Close
+              Закрыть
             </button>
           )}
         </div>
@@ -177,9 +177,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full text-slate-500 dark:text-slate-400">
             <div className="text-center max-w-md">
-              <p className="text-3xl mb-3">Start the conversation</p>
+              <p className="text-3xl mb-3">Начните диалог</p>
               <p className="text-sm">
-                Ask your question and the assistant will adapt the answer to your current context.
+                Задайте вопрос, и ассистент адаптирует ответ под ваш текущий контекст.
               </p>
             </div>
           </div>
@@ -203,3 +203,4 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
 };
 
 export default ChatWindow;
+

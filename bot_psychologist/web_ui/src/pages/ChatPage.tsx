@@ -57,7 +57,7 @@ interface SessionGroup {
 function buildChatTitle(messages: Message[]): string {
   const firstUserMessage = messages.find((message) => message.role === 'user');
   if (!firstUserMessage) {
-    return 'New chat';
+    return 'Новый чат';
   }
 
   const compact = firstUserMessage.content.replace(/\s+/g, ' ').trim();
@@ -70,7 +70,7 @@ function buildChatTitle(messages: Message[]): string {
 
 function buildChatPreview(messages: Message[]): string {
   if (messages.length === 0) {
-    return 'No messages yet';
+    return 'Сообщений пока нет';
   }
 
   const lastMessage = messages[messages.length - 1];
@@ -93,11 +93,11 @@ function formatSessionTime(isoDate: string): string {
 function mapServerSession(item: ChatSessionInfo): ChatSession {
   return {
     id: item.session_id,
-    title: item.title || 'New chat',
+    title: item.title || 'Новый чат',
     createdAt: item.created_at,
     updatedAt: item.last_active || item.created_at,
     turnsCount: item.turns_count || 0,
-    preview: item.last_user_input || item.last_bot_response || 'No messages yet',
+    preview: item.last_user_input || item.last_bot_response || 'Сообщений пока нет',
   };
 }
 
@@ -240,7 +240,7 @@ const ChatPage: React.FC = () => {
       clearError();
     } catch (historyError) {
       replaceMessages([]);
-      setSidebarError(historyError instanceof Error ? historyError.message : 'Failed to load chat history');
+      setSidebarError(historyError instanceof Error ? historyError.message : 'Не удалось загрузить историю чата');
     }
   }, [replaceMessages, clearError]);
 
@@ -276,7 +276,7 @@ const ChatPage: React.FC = () => {
         return sorted[0].id;
       });
     } catch (sessionsError) {
-      setSidebarError(sessionsError instanceof Error ? sessionsError.message : 'Failed to load sessions');
+      setSidebarError(sessionsError instanceof Error ? sessionsError.message : 'Не удалось загрузить сессии');
     } finally {
       setIsSessionsLoading(false);
     }
@@ -304,7 +304,7 @@ const ChatPage: React.FC = () => {
 
   useEffect(() => {
     if (!apiService.hasAPIKey()) {
-      setSettingsNotice('API key is required before using chat.');
+      setSettingsNotice('Перед началом работы нужно указать API key.');
       setIsSettingsOpen(true);
       setIsSessionsLoading(false);
       return;
@@ -395,7 +395,7 @@ const ChatPage: React.FC = () => {
       setSidebarError(null);
       setIsMobileSidebarOpen(false);
     } catch (createError) {
-      setSidebarError(createError instanceof Error ? createError.message : 'Failed to create chat');
+      setSidebarError(createError instanceof Error ? createError.message : 'Не удалось создать чат');
     }
   };
 
@@ -425,7 +425,7 @@ const ChatPage: React.FC = () => {
         setActiveChatId(remaining[0].id);
       }
     } catch (deleteError) {
-      setSidebarError(deleteError instanceof Error ? deleteError.message : 'Failed to delete chat');
+      setSidebarError(deleteError instanceof Error ? deleteError.message : 'Не удалось удалить чат');
     }
   };
 
@@ -445,7 +445,7 @@ const ChatPage: React.FC = () => {
       replaceMessages([]);
       clearError();
     } catch (clearChatError) {
-      setSidebarError(clearChatError instanceof Error ? clearChatError.message : 'Failed to clear chat');
+      setSidebarError(clearChatError instanceof Error ? clearChatError.message : 'Не удалось очистить чат');
     }
   };
 
@@ -496,7 +496,7 @@ const ChatPage: React.FC = () => {
             return {
               session,
               history: null,
-              error: error instanceof Error ? error.message : 'Failed to load history',
+              error: error instanceof Error ? error.message : 'Не удалось загрузить историю',
             };
           }
         })
@@ -522,21 +522,21 @@ const ChatPage: React.FC = () => {
       link.remove();
       URL.revokeObjectURL(url);
 
-      setDataActionMessage('Data export completed');
+      setDataActionMessage('Экспорт данных завершён');
     } catch (error) {
-      setDataActionMessage(error instanceof Error ? error.message : 'Failed to export data');
+      setDataActionMessage(error instanceof Error ? error.message : 'Не удалось экспортировать данные');
     } finally {
       setDataActionStatus('idle');
     }
   };
 
   const handleDeleteAllChats = async () => {
-    const firstConfirmed = window.confirm('Delete all chats? This action cannot be undone.');
+    const firstConfirmed = window.confirm('Удалить все чаты? Это действие нельзя отменить.');
     if (!firstConfirmed) {
       return;
     }
 
-    const secondConfirmed = window.confirm('Please confirm again: remove all chat sessions?');
+    const secondConfirmed = window.confirm('Подтвердите ещё раз: удалить все сессии чата?');
     if (!secondConfirmed) {
       return;
     }
@@ -558,9 +558,9 @@ const ChatPage: React.FC = () => {
       replaceMessages([]);
       clearError();
 
-      setDataActionMessage(`Deleted ${deletedCount} chat(s). New chat created.`);
+      setDataActionMessage(`Удалено чатов: ${deletedCount}. Создан новый чат.`);
     } catch (error) {
-      setDataActionMessage(error instanceof Error ? error.message : 'Failed to delete all chats');
+      setDataActionMessage(error instanceof Error ? error.message : 'Не удалось удалить все чаты');
     } finally {
       setDataActionStatus('idle');
     }
@@ -569,12 +569,12 @@ const ChatPage: React.FC = () => {
   const handleSaveSettings = async () => {
     if (!apiKey.trim()) {
       setValidationStatus('error');
-      setValidationMessage('API key is required');
+      setValidationMessage('API key обязателен');
       return;
     }
 
     setValidationStatus('validating');
-    setValidationMessage('Checking API connection...');
+    setValidationMessage('Проверка подключения к API...');
 
     try {
       apiService.setAPIKey(apiKey.trim());
@@ -600,7 +600,7 @@ const ChatPage: React.FC = () => {
       setChatSettings(updatedSettings);
 
       setValidationStatus('success');
-      setValidationMessage('Settings saved');
+      setValidationMessage('Настройки сохранены');
       setIsSettingsOpen(false);
       setSettingsNotice(null);
 
@@ -612,7 +612,7 @@ const ChatPage: React.FC = () => {
       await loadSessions();
     } catch (settingsError) {
       setValidationStatus('error');
-      setValidationMessage(settingsError instanceof Error ? settingsError.message : 'Failed to connect to API');
+      setValidationMessage(settingsError instanceof Error ? settingsError.message : 'Не удалось подключиться к API');
       apiService.clearAPIKey();
     }
   };
@@ -630,17 +630,17 @@ const ChatPage: React.FC = () => {
           className="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-slate-600 px-3 py-2 text-sm font-medium hover:bg-slate-800 transition-colors"
         >
           <FiPlus size={16} />
-          New chat
+          Новый чат
         </button>
       </div>
 
       <div className="flex-1 overflow-y-auto p-2 space-y-4">
         {isSessionsLoading && (
-          <p className="px-2 text-xs text-slate-400">Loading sessions...</p>
+          <p className="px-2 text-xs text-slate-400">Загрузка сессий...</p>
         )}
 
         {!isSessionsLoading && groupedSessions.length === 0 && (
-          <p className="px-2 text-xs text-slate-400">No chats yet</p>
+          <p className="px-2 text-xs text-slate-400">Чатов пока нет</p>
         )}
 
         {groupedSessions.map((group) => (
@@ -695,7 +695,7 @@ const ChatPage: React.FC = () => {
             className="inline-flex items-center gap-1 hover:text-slate-200"
           >
             <FiX size={13} />
-            Close
+            Закрыть
           </button>
         )}
       </div>
@@ -731,7 +731,7 @@ const ChatPage: React.FC = () => {
             currentUserState={currentUserState}
             currentStateConfidence={currentStateConfidence}
             userId={userId}
-            chatTitle={activeSession?.title || 'New chat'}
+            chatTitle={activeSession?.title || 'Новый чат'}
             showSources={chatSettings.showSources}
             showPath={chatSettings.showPath}
             autoScroll={chatSettings.autoScroll}
@@ -746,7 +746,7 @@ const ChatPage: React.FC = () => {
 
           <div className="relative z-10 w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Settings</h2>
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Настройки</h2>
               <button
                 onClick={() => setIsSettingsOpen(false)}
                 className="p-1 rounded text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -765,7 +765,7 @@ const ChatPage: React.FC = () => {
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
                   <FiInfo className="w-4 h-4" />
-                  System info
+                  Информация о системе
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2">
@@ -773,7 +773,7 @@ const ChatPage: React.FC = () => {
                     <p className="text-slate-800 dark:text-slate-100 font-medium truncate">{userId}</p>
                   </div>
                   <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2">
-                    <p className="text-slate-500 dark:text-slate-400 text-xs">Sessions</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">Сессии</p>
                     <p className="text-slate-800 dark:text-slate-100 font-medium">{sessions.length}</p>
                   </div>
                   <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2">
@@ -786,7 +786,7 @@ const ChatPage: React.FC = () => {
               </section>
 
               <section className="space-y-4 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Credentials</h3>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Данные доступа</h3>
                 <div>
                   <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
                     <FiKey className="w-4 h-4" />
@@ -797,7 +797,7 @@ const ChatPage: React.FC = () => {
                       type={showApiKey ? 'text' : 'password'}
                       value={apiKey}
                       onChange={(event) => setApiKey(event.target.value)}
-                      placeholder="Enter API key"
+                      placeholder="Введите API key"
                       className="w-full px-4 py-3 pr-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     />
                     <button
@@ -827,17 +827,17 @@ const ChatPage: React.FC = () => {
                       onClick={generateSettingsUserId}
                       className="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
                     >
-                      Generate
+                      Сгенерировать
                     </button>
                   </div>
                 </div>
               </section>
 
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">UI settings</h3>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Настройки интерфейса</h3>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Show sources</span>
+                  <span className="text-slate-600 dark:text-slate-400">Показывать источники</span>
                   <input
                     type="checkbox"
                     checked={showSources}
@@ -847,7 +847,7 @@ const ChatPage: React.FC = () => {
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Compact mode</span>
+                  <span className="text-slate-600 dark:text-slate-400">Компактный режим</span>
                   <input
                     type="checkbox"
                     checked={compactMode}
@@ -857,7 +857,7 @@ const ChatPage: React.FC = () => {
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Auto scroll</span>
+                  <span className="text-slate-600 dark:text-slate-400">Автопрокрутка</span>
                   <input
                     type="checkbox"
                     checked={autoScroll}
@@ -868,10 +868,10 @@ const ChatPage: React.FC = () => {
               </section>
 
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Bot settings</h3>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Настройки бота</h3>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Show path recommendations</span>
+                  <span className="text-slate-600 dark:text-slate-400">Показывать рекомендации пути</span>
                   <input
                     type="checkbox"
                     checked={showPath}
@@ -881,7 +881,7 @@ const ChatPage: React.FC = () => {
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Include feedback prompt</span>
+                  <span className="text-slate-600 dark:text-slate-400">Запрашивать обратную связь</span>
                   <input
                     type="checkbox"
                     checked={includeFeedbackPrompt}
@@ -892,12 +892,12 @@ const ChatPage: React.FC = () => {
               </section>
 
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Theme</h3>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Тема</h3>
                 <div className="grid grid-cols-3 gap-2">
                   {([
-                    { value: 'light' as Theme, label: 'Light', icon: <FiSun className="w-4 h-4" /> },
-                    { value: 'dark' as Theme, label: 'Dark', icon: <FiMoon className="w-4 h-4" /> },
-                    { value: 'system' as Theme, label: 'System', icon: <FiMonitor className="w-4 h-4" /> },
+                    { value: 'light' as Theme, label: 'Светлая', icon: <FiSun className="w-4 h-4" /> },
+                    { value: 'dark' as Theme, label: 'Тёмная', icon: <FiMoon className="w-4 h-4" /> },
+                    { value: 'system' as Theme, label: 'Системная', icon: <FiMonitor className="w-4 h-4" /> },
                   ]).map((themeOption) => (
                     <button
                       key={themeOption.value}
@@ -918,7 +918,7 @@ const ChatPage: React.FC = () => {
               </section>
 
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Data management</h3>
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Управление данными</h3>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <button
                     type="button"
@@ -927,7 +927,7 @@ const ChatPage: React.FC = () => {
                     className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-60"
                   >
                     <FiDownload className="w-4 h-4" />
-                    {dataActionStatus === 'exporting' ? 'Exporting...' : 'Export data'}
+                    {dataActionStatus === 'exporting' ? 'Экспорт...' : 'Экспорт данных'}
                   </button>
                   <button
                     type="button"
@@ -936,11 +936,11 @@ const ChatPage: React.FC = () => {
                     className="inline-flex items-center justify-center gap-2 rounded-lg border border-rose-300 dark:border-rose-700 px-3 py-2 text-sm text-rose-700 dark:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 disabled:opacity-60"
                   >
                     <FiAlertTriangle className="w-4 h-4" />
-                    {dataActionStatus === 'deleting' ? 'Deleting...' : 'Delete all chats'}
+                    {dataActionStatus === 'deleting' ? 'Удаление...' : 'Удалить все чаты'}
                   </button>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Total sessions: {sessions.length}. Active: {activeSession?.title || 'n/a'}.
+                  Всего сессий: {sessions.length}. Активная: {activeSession?.title || 'нет'}.
                 </p>
               </section>
 
@@ -969,13 +969,13 @@ const ChatPage: React.FC = () => {
                   className="sm:w-1/3 inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                 >
                   <FiRotateCcw className="w-4 h-4" />
-                  Reset
+                  Сброс
                 </button>
                 <button
                   onClick={() => void handleSaveSettings()}
                   className="sm:w-2/3 py-3 rounded-xl font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
                 >
-                  {validationStatus === 'validating' ? 'Checking...' : 'Save settings'}
+                  {validationStatus === 'validating' ? 'Проверка...' : 'Сохранить настройки'}
                 </button>
               </div>
             </div>

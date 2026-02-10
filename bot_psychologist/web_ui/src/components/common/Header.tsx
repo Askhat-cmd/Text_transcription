@@ -1,14 +1,14 @@
 /**
  * Header Component
- * 
+ *
  * Top navigation bar with logo, navigation links, and theme toggle.
  */
 
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiSun, FiMoon, FiMonitor, FiSettings, FiUser, FiMessageCircle, FiHome } from 'react-icons/fi';
-import { useTheme } from '../../hooks/useTheme';
+import { FiHome, FiMessageCircle, FiMonitor, FiMoon, FiSettings, FiSun, FiUser } from 'react-icons/fi';
 import clsx from 'clsx';
+import { useTheme } from '../../hooks/useTheme';
 
 interface NavLinkProps {
   to: string;
@@ -35,12 +35,19 @@ const NavLink: React.FC<NavLinkProps> = ({ to, icon, label, isActive }) => (
 export const Header: React.FC = () => {
   const location = useLocation();
   const { theme, setTheme, isDark } = useTheme();
+  const settingsFromChat = location.pathname === '/chat'
+    && new URLSearchParams(location.search).get('open_settings') === '1';
 
   const navLinks = [
-    { to: '/', icon: <FiHome size={20} />, label: 'Главная' },
-    { to: '/chat', icon: <FiMessageCircle size={20} />, label: 'Чат' },
-    { to: '/profile', icon: <FiUser size={20} />, label: 'Профиль' },
-    { to: '/settings', icon: <FiSettings size={20} />, label: 'Настройки' },
+    { to: '/', icon: <FiHome size={20} />, label: 'Главная', isActive: location.pathname === '/' },
+    {
+      to: '/chat',
+      icon: <FiMessageCircle size={20} />,
+      label: 'Чат',
+      isActive: location.pathname === '/chat' && !settingsFromChat,
+    },
+    { to: '/profile', icon: <FiUser size={20} />, label: 'Профиль', isActive: location.pathname === '/profile' },
+    { to: '/chat?open_settings=1', icon: <FiSettings size={20} />, label: 'Настройки', isActive: settingsFromChat },
   ];
 
   const cycleTheme = () => {
@@ -59,7 +66,6 @@ export const Header: React.FC = () => {
     <header className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl">🧠</span>
             <span className="font-bold text-xl text-gray-900 dark:text-white hidden sm:inline">
@@ -67,7 +73,6 @@ export const Header: React.FC = () => {
             </span>
           </Link>
 
-          {/* Navigation */}
           <nav className="flex items-center gap-1">
             {navLinks.map((link) => (
               <NavLink
@@ -75,15 +80,14 @@ export const Header: React.FC = () => {
                 to={link.to}
                 icon={link.icon}
                 label={link.label}
-                isActive={location.pathname === link.to}
+                isActive={link.isActive}
               />
             ))}
 
-            {/* Theme Toggle */}
             <button
               onClick={cycleTheme}
               className="ml-2 p-2 rounded-lg text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800 transition-colors"
-              title={`Theme: ${theme}`}
+              title={`Тема: ${theme}`}
             >
               <ThemeIcon />
             </button>
@@ -95,5 +99,3 @@ export const Header: React.FC = () => {
 };
 
 export default Header;
-
-

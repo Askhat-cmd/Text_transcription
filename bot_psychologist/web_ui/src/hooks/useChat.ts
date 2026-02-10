@@ -115,9 +115,9 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       });
 
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to get response';
+      const errorMessage = err instanceof Error ? err.message : 'Не удалось получить ответ';
       setError(errorMessage);
-      addMessage('bot', `Error: ${errorMessage}`);
+      addMessage('bot', `Ошибка: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }

@@ -245,10 +245,10 @@ class APIService {
         axiosError.response?.data?.detail ||
         axiosError.response?.data?.error ||
         axiosError.message ||
-        'Unknown error occurred';
+        'Произошла неизвестная ошибка';
       return new Error(message);
     }
-    return error instanceof Error ? error : new Error('Unknown error');
+    return error instanceof Error ? error : new Error('Неизвестная ошибка');
   }
 }
 

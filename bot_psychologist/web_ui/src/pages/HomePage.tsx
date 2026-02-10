@@ -56,7 +56,7 @@ const HomePage: React.FC = () => {
     } else {
       const params = new URLSearchParams({
         open_settings: '1',
-        settings_notice: 'Please configure API key',
+        settings_notice: 'Пожалуйста, настройте API key',
       });
       navigate(`/chat?${params.toString()}`);
     }

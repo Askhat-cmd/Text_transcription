@@ -7,12 +7,19 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
+  FiAlertTriangle,
   FiCheck,
+  FiDownload,
   FiEye,
   FiEyeOff,
+  FiInfo,
   FiKey,
   FiMessageSquare,
+  FiMonitor,
+  FiMoon,
   FiPlus,
+  FiRotateCcw,
+  FiSun,
   FiTrash2,
   FiUser,
   FiX,
@@ -20,12 +27,15 @@ import {
 import clsx from 'clsx';
 import { ChatWindow } from '../components/chat';
 import { useChat } from '../hooks/useChat';
+import { useTheme, type Theme } from '../hooks/useTheme';
 import { formatterService } from '../services/formatter.service';
 import { storageService } from '../services/storage.service';
 import { apiService } from '../services/api.service';
 import type { ChatSessionInfo, ConversationTurn, Message, UserSettings } from '../types';
+import { DEFAULT_SETTINGS } from '../utils';
 
 type ValidationStatus = 'idle' | 'validating' | 'success' | 'error';
+type DataActionStatus = 'idle' | 'exporting' | 'deleting';
 
 type SessionGroupKey = 'today' | 'yesterday' | 'week' | 'older';
 
@@ -151,6 +161,7 @@ function getSessionGroupKey(isoDate: string): SessionGroupKey {
 const ChatPage: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { theme, setTheme } = useTheme();
 
   const urlUserId = searchParams.get('user_id');
   const shouldOpenSettings = searchParams.get('open_settings') === '1';
@@ -172,9 +183,14 @@ const ChatPage: React.FC = () => {
   const [settingsUserId, setSettingsUserId] = useState(userId);
   const [showSources, setShowSources] = useState(true);
   const [showPath, setShowPath] = useState(true);
+  const [includeFeedbackPrompt, setIncludeFeedbackPrompt] = useState(true);
   const [autoScroll, setAutoScroll] = useState(true);
+  const [compactMode, setCompactMode] = useState(false);
+  const [selectedTheme, setSelectedTheme] = useState<Theme>(theme);
   const [validationStatus, setValidationStatus] = useState<ValidationStatus>('idle');
   const [validationMessage, setValidationMessage] = useState('');
+  const [dataActionStatus, setDataActionStatus] = useState<DataActionStatus>('idle');
+  const [dataActionMessage, setDataActionMessage] = useState<string | null>(null);
 
   const {
     messages,
@@ -188,7 +204,7 @@ const ChatPage: React.FC = () => {
   } = useChat({
     userId,
     includePath: chatSettings.showPath,
-    includeFeedback: true,
+    includeFeedback: chatSettings.includeFeedbackPrompt,
     sessionId: activeChatId || undefined,
   });
 
@@ -274,8 +290,11 @@ const ChatPage: React.FC = () => {
     setSettingsUserId(stored.userId || userId);
     setShowSources(stored.showSources);
     setShowPath(stored.showPath);
+    setIncludeFeedbackPrompt(stored.includeFeedbackPrompt);
     setAutoScroll(stored.autoScroll);
-  }, [userId]);
+    setCompactMode(stored.compactMode);
+    setSelectedTheme(stored.theme || theme);
+  }, [userId, theme]);
 
   useEffect(() => {
     if (!storageService.getUserId()) {
@@ -432,6 +451,10 @@ const ChatPage: React.FC = () => {
 
   const handleSettingsClick = () => {
     setSettingsNotice(null);
+    setValidationStatus('idle');
+    setValidationMessage('');
+    setDataActionStatus('idle');
+    setDataActionMessage(null);
     setIsSettingsOpen(true);
   };
 
@@ -441,6 +464,106 @@ const ChatPage: React.FC = () => {
 
   const generateSettingsUserId = () => {
     setSettingsUserId(`user_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`);
+  };
+
+  const handleResetSettings = () => {
+    setApiKey(DEFAULT_SETTINGS.apiKey);
+    setSettingsUserId(DEFAULT_SETTINGS.userId || userId);
+    setShowSources(DEFAULT_SETTINGS.showSources);
+    setShowPath(DEFAULT_SETTINGS.showPath);
+    setIncludeFeedbackPrompt(DEFAULT_SETTINGS.includeFeedbackPrompt);
+    setAutoScroll(DEFAULT_SETTINGS.autoScroll);
+    setCompactMode(DEFAULT_SETTINGS.compactMode);
+    setSelectedTheme(DEFAULT_SETTINGS.theme);
+    setValidationStatus('idle');
+    setValidationMessage('');
+  };
+
+  const handleExportData = async () => {
+    setDataActionStatus('exporting');
+    setDataActionMessage(null);
+
+    try {
+      const sessionsPayload = await Promise.all(
+        sessions.map(async (session) => {
+          try {
+            const history = await apiService.getUserHistory(session.id, 200);
+            return {
+              session,
+              history,
+            };
+          } catch (error) {
+            return {
+              session,
+              history: null,
+              error: error instanceof Error ? error.message : 'Failed to load history',
+            };
+          }
+        })
+      );
+
+      const exportData = {
+        user_id: userId,
+        exported_at: new Date().toISOString(),
+        settings: chatSettings,
+        total_sessions: sessions.length,
+        sessions: sessionsPayload,
+      };
+
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: 'application/json',
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `bot-psychologist-export-${Date.now()}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+
+      setDataActionMessage('Data export completed');
+    } catch (error) {
+      setDataActionMessage(error instanceof Error ? error.message : 'Failed to export data');
+    } finally {
+      setDataActionStatus('idle');
+    }
+  };
+
+  const handleDeleteAllChats = async () => {
+    const firstConfirmed = window.confirm('Delete all chats? This action cannot be undone.');
+    if (!firstConfirmed) {
+      return;
+    }
+
+    const secondConfirmed = window.confirm('Please confirm again: remove all chat sessions?');
+    if (!secondConfirmed) {
+      return;
+    }
+
+    setDataActionStatus('deleting');
+    setDataActionMessage(null);
+
+    try {
+      const deleteResults = await Promise.allSettled(
+        sessions.map((session) => apiService.deleteUserSession(userId, session.id))
+      );
+      const deletedCount = deleteResults.filter((result) => result.status === 'fulfilled').length;
+
+      const created = await apiService.createUserSession(userId);
+      const mapped = mapServerSession(created);
+
+      setSessions([mapped]);
+      setActiveChatId(mapped.id);
+      replaceMessages([]);
+      clearError();
+
+      setDataActionMessage(`Deleted ${deletedCount} chat(s). New chat created.`);
+    } catch (error) {
+      setDataActionMessage(error instanceof Error ? error.message : 'Failed to delete all chats');
+    } finally {
+      setDataActionStatus('idle');
+    }
   };
 
   const handleSaveSettings = async () => {
@@ -462,14 +585,18 @@ const ChatPage: React.FC = () => {
         ...chatSettings,
         apiKey: apiKey.trim(),
         userId: nextUserId,
+        theme: selectedTheme,
         showSources,
         showPath,
+        includeFeedbackPrompt,
         autoScroll,
+        compactMode,
       };
 
       storageService.setApiKey(updatedSettings.apiKey);
       storageService.setUserId(updatedSettings.userId);
       storageService.setSettings(updatedSettings);
+      setTheme(selectedTheme);
       setChatSettings(updatedSettings);
 
       setValidationStatus('success');
@@ -608,6 +735,7 @@ const ChatPage: React.FC = () => {
             showSources={chatSettings.showSources}
             showPath={chatSettings.showPath}
             autoScroll={chatSettings.autoScroll}
+            compactMode={chatSettings.compactMode}
           />
         </main>
       </div>
@@ -616,7 +744,7 @@ const ChatPage: React.FC = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50" onClick={() => setIsSettingsOpen(false)} />
 
-          <div className="relative z-10 w-full max-w-lg rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
+          <div className="relative z-10 w-full max-w-2xl rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
             <div className="px-5 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
               <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">Settings</h2>
               <button
@@ -627,60 +755,86 @@ const ChatPage: React.FC = () => {
               </button>
             </div>
 
-            <div className="p-5 space-y-5">
+            <div className="p-5 space-y-6 max-h-[78vh] overflow-y-auto">
               {settingsNotice && (
                 <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-800 dark:bg-amber-900/20 dark:text-amber-200">
                   {settingsNotice}
                 </div>
               )}
 
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                  <FiKey className="w-4 h-4" />
-                  API key
-                </label>
-                <div className="relative">
-                  <input
-                    type={showApiKey ? 'text' : 'password'}
-                    value={apiKey}
-                    onChange={(event) => setApiKey(event.target.value)}
-                    placeholder="Enter API key"
-                    className="w-full px-4 py-3 pr-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowApiKey((prev) => !prev)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                  >
-                    {showApiKey ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
-                  </button>
+              <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                  <FiInfo className="w-4 h-4" />
+                  System info
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                  <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">User ID</p>
+                    <p className="text-slate-800 dark:text-slate-100 font-medium truncate">{userId}</p>
+                  </div>
+                  <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">Sessions</p>
+                    <p className="text-slate-800 dark:text-slate-100 font-medium">{sessions.length}</p>
+                  </div>
+                  <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">API URL</p>
+                    <p className="text-slate-800 dark:text-slate-100 font-medium break-all">
+                      {import.meta.env.VITE_API_URL || 'http://localhost:8001/api/v1'}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </section>
 
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                  <FiUser className="w-4 h-4" />
-                  User ID
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={settingsUserId}
-                    onChange={(event) => setSettingsUserId(event.target.value)}
-                    className="flex-1 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                  />
-                  <button
-                    type="button"
-                    onClick={generateSettingsUserId}
-                    className="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-                  >
-                    Generate
-                  </button>
+              <section className="space-y-4 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Credentials</h3>
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                    <FiKey className="w-4 h-4" />
+                    API key
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showApiKey ? 'text' : 'password'}
+                      value={apiKey}
+                      onChange={(event) => setApiKey(event.target.value)}
+                      placeholder="Enter API key"
+                      className="w-full px-4 py-3 pr-12 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowApiKey((prev) => !prev)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    >
+                      {showApiKey ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <div className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
-                <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Interface options</p>
+                <div>
+                  <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+                    <FiUser className="w-4 h-4" />
+                    User ID
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={settingsUserId}
+                      onChange={(event) => setSettingsUserId(event.target.value)}
+                      className="flex-1 px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                    />
+                    <button
+                      type="button"
+                      onClick={generateSettingsUserId}
+                      className="px-4 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                    >
+                      Generate
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">UI settings</h3>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
                   <span className="text-slate-600 dark:text-slate-400">Show sources</span>
@@ -693,11 +847,11 @@ const ChatPage: React.FC = () => {
                 </label>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
-                  <span className="text-slate-600 dark:text-slate-400">Show path recommendations</span>
+                  <span className="text-slate-600 dark:text-slate-400">Compact mode</span>
                   <input
                     type="checkbox"
-                    checked={showPath}
-                    onChange={(event) => setShowPath(event.target.checked)}
+                    checked={compactMode}
+                    onChange={(event) => setCompactMode(event.target.checked)}
                     className="w-4 h-4"
                   />
                 </label>
@@ -711,7 +865,84 @@ const ChatPage: React.FC = () => {
                     className="w-4 h-4"
                   />
                 </label>
-              </div>
+              </section>
+
+              <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Bot settings</h3>
+
+                <label className="flex items-center justify-between cursor-pointer text-sm">
+                  <span className="text-slate-600 dark:text-slate-400">Show path recommendations</span>
+                  <input
+                    type="checkbox"
+                    checked={showPath}
+                    onChange={(event) => setShowPath(event.target.checked)}
+                    className="w-4 h-4"
+                  />
+                </label>
+
+                <label className="flex items-center justify-between cursor-pointer text-sm">
+                  <span className="text-slate-600 dark:text-slate-400">Include feedback prompt</span>
+                  <input
+                    type="checkbox"
+                    checked={includeFeedbackPrompt}
+                    onChange={(event) => setIncludeFeedbackPrompt(event.target.checked)}
+                    className="w-4 h-4"
+                  />
+                </label>
+              </section>
+
+              <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Theme</h3>
+                <div className="grid grid-cols-3 gap-2">
+                  {([
+                    { value: 'light' as Theme, label: 'Light', icon: <FiSun className="w-4 h-4" /> },
+                    { value: 'dark' as Theme, label: 'Dark', icon: <FiMoon className="w-4 h-4" /> },
+                    { value: 'system' as Theme, label: 'System', icon: <FiMonitor className="w-4 h-4" /> },
+                  ]).map((themeOption) => (
+                    <button
+                      key={themeOption.value}
+                      type="button"
+                      onClick={() => setSelectedTheme(themeOption.value)}
+                      className={clsx(
+                        'inline-flex items-center justify-center gap-2 rounded-lg border px-3 py-2 text-sm',
+                        selectedTheme === themeOption.value
+                          ? 'border-emerald-500 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300'
+                          : 'border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200'
+                      )}
+                    >
+                      {themeOption.icon}
+                      {themeOption.label}
+                    </button>
+                  ))}
+                </div>
+              </section>
+
+              <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+                <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Data management</h3>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <button
+                    type="button"
+                    onClick={() => void handleExportData()}
+                    disabled={dataActionStatus !== 'idle'}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-60"
+                  >
+                    <FiDownload className="w-4 h-4" />
+                    {dataActionStatus === 'exporting' ? 'Exporting...' : 'Export data'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => void handleDeleteAllChats()}
+                    disabled={dataActionStatus !== 'idle' || sessions.length === 0}
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-rose-300 dark:border-rose-700 px-3 py-2 text-sm text-rose-700 dark:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-900/20 disabled:opacity-60"
+                  >
+                    <FiAlertTriangle className="w-4 h-4" />
+                    {dataActionStatus === 'deleting' ? 'Deleting...' : 'Delete all chats'}
+                  </button>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  Total sessions: {sessions.length}. Active: {activeSession?.title || 'n/a'}.
+                </p>
+              </section>
 
               {validationMessage && (
                 <div className={clsx(
@@ -725,12 +956,28 @@ const ChatPage: React.FC = () => {
                 </div>
               )}
 
-              <button
-                onClick={() => void handleSaveSettings()}
-                className="w-full py-3 rounded-xl font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
-              >
-                {validationStatus === 'validating' ? 'Checking...' : 'Save settings'}
-              </button>
+              {dataActionMessage && (
+                <div className="rounded-xl px-3 py-2 text-sm bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                  {dataActionMessage}
+                </div>
+              )}
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <button
+                  type="button"
+                  onClick={handleResetSettings}
+                  className="sm:w-1/3 inline-flex items-center justify-center gap-2 py-3 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                >
+                  <FiRotateCcw className="w-4 h-4" />
+                  Reset
+                </button>
+                <button
+                  onClick={() => void handleSaveSettings()}
+                  className="sm:w-2/3 py-3 rounded-xl font-semibold bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+                >
+                  {validationStatus === 'validating' ? 'Checking...' : 'Save settings'}
+                </button>
+              </div>
             </div>
           </div>
         </div>

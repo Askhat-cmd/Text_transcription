@@ -171,11 +171,14 @@ class StorageService {
       theme: this.getTheme(),
       showSources: true,
       showPath: true,
+      includeFeedbackPrompt: true,
       autoScroll: true,
+      compactMode: false,
       soundEnabled: false,
     };
 
-    return this.get<UserSettings>(STORAGE_KEYS.SETTINGS, defaultSettings);
+    const stored = this.get<Partial<UserSettings>>(STORAGE_KEYS.SETTINGS, {});
+    return { ...defaultSettings, ...stored };
   }
 
   setSettings(settings: Partial<UserSettings>): boolean {

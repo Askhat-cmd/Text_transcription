@@ -39,7 +39,9 @@ export const DEFAULT_SETTINGS = {
   theme: DEFAULT_THEME,
   showSources: true,
   showPath: true,
+  includeFeedbackPrompt: true,
   autoScroll: true,
+  compactMode: false,
   soundEnabled: false,
 } as const;
 

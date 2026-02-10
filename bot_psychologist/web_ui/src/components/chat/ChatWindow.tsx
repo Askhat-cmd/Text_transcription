@@ -28,6 +28,7 @@ interface ChatWindowProps {
   showSources?: boolean;
   showPath?: boolean;
   autoScroll?: boolean;
+  compactMode?: boolean;
 }
 
 function formatState(state: string): string {
@@ -57,6 +58,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   showSources = true,
   showPath = true,
   autoScroll = true,
+  compactMode = false,
 }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [isStateDetailsOpen, setIsStateDetailsOpen] = useState(false);
@@ -187,6 +189,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               messages={messages}
               showSources={showSources}
               showPath={showPath}
+              compactMode={compactMode}
             />
             {isLoading && <TypingIndicator />}
             <div ref={messagesEndRef} />

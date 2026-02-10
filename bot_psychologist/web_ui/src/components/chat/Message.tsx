@@ -21,12 +21,14 @@ interface MessageItemProps {
   message: Message;
   showSources?: boolean;
   showPath?: boolean;
+  compactMode?: boolean;
 }
 
 export const MessageItem: React.FC<MessageItemProps> = ({
   message,
   showSources = true,
   showPath = true,
+  compactMode = false,
 }) => {
   const isUser = message.role === 'user';
 
@@ -34,7 +36,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({
     <div className={clsx('flex', isUser ? 'justify-end' : 'justify-start')}>
       <div
         className={clsx(
-          'max-w-[85%] md:max-w-2xl rounded-2xl p-4',
+          'max-w-[85%] md:max-w-2xl rounded-2xl',
+          compactMode ? 'p-3' : 'p-4',
           isUser
             ? 'bg-purple-600 text-white rounded-br-md'
             : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-bl-md'

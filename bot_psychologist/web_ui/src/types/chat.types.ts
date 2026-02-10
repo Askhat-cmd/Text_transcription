@@ -35,7 +35,9 @@ export interface UserSettings {
   theme: 'light' | 'dark' | 'system';
   showSources: boolean;
   showPath: boolean;
+  includeFeedbackPrompt: boolean;
   autoScroll: boolean;
+  compactMode: boolean;
   soundEnabled: boolean;
 }
 

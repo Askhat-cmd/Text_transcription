@@ -1,4 +1,4 @@
-# Bot Psychologist
+﻿# Bot Psychologist
 
 **Супер-Умный Бот-Психолог** — AI-ассистент на базе данных `voice_bot_pipeline`.
 
@@ -15,6 +15,20 @@
 - Генерирует краткое summary диалога и добавляет в контекст
 - Адаптивно формирует контекст (short-term + semantic + summary по длине диалога)
 
+## Web UI (PRD 09.02.2026)
+
+Ключевые изменения по PRD редизайна Web UI (стиль ChatGPT) и миграции на серверные сессии.
+
+- Серверные chat sessions: `session_id` поддерживается в adaptive-flow; добавлены эндпоинты `GET/POST/DELETE /users/{user_id}/sessions`.
+- Sidebar с историей чатов: создание, переключение, удаление; группировка по датам (Сегодня/Вчера/Последние 7 дней/Старые).
+- Settings modal (внутри ChatPage): секции "Информация о системе", "Данные доступа", "Настройки интерфейса", "Настройки бота", "Тема", "Управление данными".
+- Настройки UI/бота: `showSources`, `showPath`, `autoScroll`, `compactMode`, `includeFeedbackPrompt`; хранение в localStorage; применение без перезагрузки.
+- Управление данными: экспорт истории/сессий в JSON, удаление всех чатов с двойным подтверждением.
+- Навигация: открытие настроек через `/chat?open_settings=1`, закрытие по `Escape` и клику вне модалки.
+
+Связанные файлы:
+- Backend: `bot_agent/storage/session_manager.py`, `api/models.py`, `api/routes.py`
+- Frontend: `web_ui/src/pages/ChatPage.tsx`, `web_ui/src/hooks/useChat.ts`, `web_ui/src/services/api.service.ts`
 ## Промпт (System Prompt) и уровни сложности
 
 Системный промпт вынесен в отдельные файлы, чтобы его было проще редактировать без правок кода:
@@ -372,3 +386,32 @@ Private — для внутреннего использования
 ## Автор
 
 Askhat-cmd
+
+## Retrieval Diagnostics (Adaptive QA)
+
+Начиная с текущей версии, adaptive-pipeline поддерживает расширенную диагностику retrieval:
+
+- Логи по этапам: initial retrieval, stage filter, confidence cap, final blocks to LLM, sources.
+- Логи retriever: query hash/timestamp, top TF-IDF кандидаты со score и block_id.
+- Логи confidence: contribution по сигналам и итоговый cap.
+- Логи stage-filter: вход/выход, fallback-поведение при пустом фильтре.
+- При `debug=true` в ответе API доступно `metadata.retrieval_details` с наборами блоков по каждому этапу.
+
+Также исправлено схлопывание источников в fallback-сценариях:
+
+- `VoyageReranker` fallback больше не режет кандидатов до `top_k=1`, если Voyage недоступен.
+- `StageFilter` fallback при пустом фильтре возвращает stage-aware `top-N` (с backfill для разнообразия), а не только `top-1`.
+
+## Session Data Storage
+
+Данные пользовательских сессий и памяти сохраняются в проекте:
+
+- JSON-история диалогов: `.cache_bot_agent/conversations/<user_id>.json`
+- Semantic memory (эмбеддинги и метаданные): `.cache_bot_agent/semantic_memory/`
+- SQLite-сессии (если включено): `data/bot_sessions.db` (путь задается `BOT_DB_PATH`)
+
+Важно:
+
+- Runtime-логи сервера (`uvicorn`/stdout) в файл по умолчанию не пишутся, если отдельно не настроен file handler или редирект вывода.
+- Для HTTP API (кроме health-check) требуется заголовок `X-API-Key`; для `/api/v1/questions/adaptive` поле запроса — `query`.
+

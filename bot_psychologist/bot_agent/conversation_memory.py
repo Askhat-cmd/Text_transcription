@@ -839,9 +839,14 @@ def get_conversation_memory(user_id: str = "default") -> ConversationMemory:
         ConversationMemory для данного пользователя
     """
     if user_id not in _memory_instances:
+        logger.info(f"[CONV_MEMORY] cache_miss user_id={user_id}")
         memory = ConversationMemory(user_id)
         memory.load_from_disk()
         _memory_instances[user_id] = memory
+    else:
+        logger.info(
+            f"[CONV_MEMORY] cache_hit user_id={user_id} turns={len(_memory_instances[user_id].turns)}"
+        )
     
     return _memory_instances[user_id]
 

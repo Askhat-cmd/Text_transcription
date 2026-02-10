@@ -38,6 +38,22 @@ from .response import ResponseFormatter, ResponseGenerator
 logger = logging.getLogger(__name__)
 
 
+def _log_retrieval_pairs(stage: str, pairs, limit: int = 5) -> None:
+    logger.info(f"[DEBUG] {stage}: {len(pairs)} blocks")
+    for i, (block, score) in enumerate(pairs[:limit], start=1):
+        title = (block.title or "")[:60]
+        logger.info(
+            f"  [{i}] block_id={block.block_id} score={float(score):.4f} title={title}"
+        )
+
+
+def _log_blocks(stage: str, blocks, limit: int = 5) -> None:
+    logger.info(f"[DEBUG] {stage}: {len(blocks)} blocks")
+    for i, block in enumerate(blocks[:limit], start=1):
+        title = (block.title or "")[:60]
+        logger.info(f"  [{i}] block_id={block.block_id} title={title}")
+
+
 def answer_question_adaptive(
     query: str,
     user_id: str = "default",
@@ -157,6 +173,8 @@ def answer_question_adaptive(
 
         retriever = get_retriever()
         retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        _log_retrieval_pairs("Initial retrieval", retrieved_blocks, limit=10)
+        initial_retrieved_blocks = list(retrieved_blocks)
         reranker = VoyageReranker(
             model=config.VOYAGE_MODEL,
             enabled=config.VOYAGE_ENABLED,
@@ -174,11 +192,18 @@ def answer_question_adaptive(
             user_stage,
             retrieved_blocks,
         )
+        _log_retrieval_pairs("After stage filter", stage_filtered_blocks, limit=10)
         block_cap = decision_gate.scorer.suggest_block_cap(
             len(stage_filtered_blocks),
             routing_result.confidence_level,
         )
+        stage_count_before_cap = len(stage_filtered_blocks)
         retrieved_blocks = stage_filtered_blocks[:block_cap]
+        capped_retrieved_blocks = list(retrieved_blocks)
+        logger.info(
+            f"[CONFIDENCE_CAP] Capped to {block_cap} blocks (was {stage_count_before_cap})"
+        )
+        _log_retrieval_pairs("After confidence cap", retrieved_blocks, limit=10)
         mode_directive = build_mode_directive(
             mode=routing_result.mode,
             confidence_level=routing_result.confidence_level,
@@ -204,6 +229,7 @@ def answer_question_adaptive(
             return response
         
         blocks = [block for block, score in retrieved_blocks]
+        _log_blocks("Final blocks to LLM", blocks, limit=10)
         adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
         
         if not adapted_blocks:
@@ -213,6 +239,39 @@ def answer_question_adaptive(
             debug_info["blocks_found"] = len(retrieved_blocks)
             debug_info["blocks_after_filter"] = len(adapted_blocks)
             debug_info["hybrid_query"] = hybrid_query
+            debug_info["retrieval_details"] = {
+                "initial_retrieval": [
+                    {
+                        "block_id": block.block_id,
+                        "score": float(score),
+                        "title": block.title,
+                    }
+                    for block, score in initial_retrieved_blocks
+                ],
+                "after_stage_filter": [
+                    {
+                        "block_id": block.block_id,
+                        "score": float(score),
+                        "title": block.title,
+                    }
+                    for block, score in stage_filtered_blocks
+                ],
+                "after_confidence_cap": [
+                    {
+                        "block_id": block.block_id,
+                        "score": float(score),
+                        "title": block.title,
+                    }
+                    for block, score in capped_retrieved_blocks
+                ],
+                "final_blocks": [
+                    {
+                        "block_id": block.block_id,
+                        "title": block.title,
+                    }
+                    for block in adapted_blocks
+                ],
+            }
             debug_info["voyage_rerank"] = {
                 "enabled": bool(config.VOYAGE_ENABLED),
                 "top_k": rerank_k,
@@ -373,6 +432,7 @@ def answer_question_adaptive(
             }
             for b in adapted_blocks
         ]
+        _log_blocks("SOURCES", adapted_blocks, limit=10)
         
         result = {
             "status": "success",
@@ -411,6 +471,8 @@ def answer_question_adaptive(
             debug_info["memory_summary"] = memory.get_summary()
             debug_info["total_time"] = elapsed_time
             debug_info["llm_tokens"] = llm_result.get("tokens_used", 0)
+            result["metadata"]["retrieval_details"] = debug_info.get("retrieval_details", {})
+            result["metadata"]["sources"] = sources
             result["debug"] = debug_info
         
         logger.info(f"✅ Адаптивный ответ готов за {elapsed_time:.2f}с")

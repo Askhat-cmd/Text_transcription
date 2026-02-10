@@ -3,7 +3,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import logging
 from typing import Dict
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -70,6 +73,12 @@ class ConfidenceScorer:
         else:
             level = "medium"
 
+        logger.info(
+            f"[CONFIDENCE] score={total:.4f} level={level} "
+            f"thresholds(low={self.low_threshold:.2f}, high={self.high_threshold:.2f})"
+        )
+        logger.info(f"[CONFIDENCE] contributions={contributions}")
+
         return ConfidenceResult(
             score=total,
             level=level,
@@ -92,7 +101,13 @@ class ConfidenceScorer:
 
         level = (confidence_level or "medium").lower()
         if level == "low":
-            return min(count, 2)
-        if level == "medium":
-            return min(count, 3)
-        return count
+            cap = min(count, 2)
+        elif level == "medium":
+            cap = min(count, 3)
+        else:
+            cap = count
+
+        logger.info(
+            f"[CONFIDENCE_CAP] level={level} available={count} suggested_cap={cap}"
+        )
+        return cap

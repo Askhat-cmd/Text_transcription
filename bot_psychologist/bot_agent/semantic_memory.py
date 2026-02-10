@@ -388,8 +388,10 @@ def get_semantic_memory(user_id: str = "default") -> SemanticMemory:
     Получить экземпляр semantic memory для пользователя (singleton).
     """
     if user_id not in _semantic_memory_instances:
+        logger.info(f"[SEMANTIC_MEMORY] cache_miss user_id={user_id}")
         semantic_mem = SemanticMemory(user_id)
         semantic_mem.load_from_disk()
         _semantic_memory_instances[user_id] = semantic_mem
+    else:
+        logger.info(f"[SEMANTIC_MEMORY] cache_hit user_id={user_id}")
     return _semantic_memory_instances[user_id]
-

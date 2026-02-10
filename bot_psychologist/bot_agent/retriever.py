@@ -8,6 +8,7 @@ Simple TF-IDF Retriever
 
 import logging
 from typing import List, Tuple, Optional
+import time
 import numpy as np
 
 from .data_loader import data_loader, Block
@@ -93,6 +94,9 @@ class SimpleRetriever:
         """
         if top_k is None:
             top_k = config.TOP_K_BLOCKS
+
+        logger.info(f"[CACHE CHECK] Query hash={hash(query)} timestamp={time.time():.6f}")
+        logger.info(f"[RETRIEVER] Query='{query}' top_k={top_k}")
         
         if not self._is_built:
             self.build_index()
@@ -121,7 +125,12 @@ class SimpleRetriever:
                 if len(results) >= top_k:
                     break
         
-        logger.debug(f"🔍 Найдено {len(results)} релевантных блоков для: '{query[:50]}...'")
+        logger.info(f"[RETRIEVER] TF-IDF found {len(results)} blocks")
+        for i, (block, score) in enumerate(results[:10], start=1):
+            title = (block.title or "")[:60]
+            logger.info(
+                f"  [{i}] score={score:.4f} block_id={block.block_id} title={title}"
+            )
         return results
 
 

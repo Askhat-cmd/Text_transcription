@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Dict, Iterable, List, Sequence, Tuple
+
+logger = logging.getLogger(__name__)
 
 
 class StageFilter:
@@ -55,6 +58,17 @@ class StageFilter:
         return float(self.complexity_cap.get(user_stage, self.complexity_cap["surface"]))
 
     @staticmethod
+    def _fallback_keep_count(user_stage: str, available: int) -> int:
+        stage = (user_stage or "surface").lower()
+        if stage in {"surface", "awareness"}:
+            target = 3
+        elif stage == "exploration":
+            target = 4
+        else:
+            target = 5
+        return max(1, min(int(available), target))
+
+    @staticmethod
     def _extract_complexity(block: object) -> float:
         raw = getattr(block, "complexity_score", None)
         if raw is None:
@@ -76,12 +90,54 @@ class StageFilter:
         Keeps at least one candidate to avoid emptying the result set.
         """
         if not candidates:
+            logger.info(f"[STAGE_FILTER] Input: 0 blocks stage={user_stage}")
             return []
 
         cap = self.complexity_threshold(user_stage)
+        logger.info(
+            f"[STAGE_FILTER] Input: {len(candidates)} blocks stage={user_stage} complexity_cap={cap:.2f}"
+        )
+        for i, (block, score) in enumerate(candidates[:10], start=1):
+            block_id = getattr(block, "block_id", "unknown")
+            complexity = self._extract_complexity(block)
+            logger.info(
+                f"  [in:{i}] score={float(score):.4f} complexity={complexity:.2f} block_id={block_id}"
+            )
         filtered: List[Tuple[object, float]] = []
         for block, score in candidates:
             if self._extract_complexity(block) <= cap:
                 filtered.append((block, score))
 
-        return filtered or [candidates[0]]
+        if not filtered:
+            keep = self._fallback_keep_count(user_stage, len(candidates))
+            logger.info(
+                f"[STAGE_FILTER] Output: 0 blocks after filter, fallback to top-{keep} input blocks"
+            )
+            return list(candidates[:keep])
+
+        fallback_keep = self._fallback_keep_count(user_stage, len(candidates))
+        if len(filtered) < fallback_keep:
+            filtered_ids = {
+                getattr(block, "block_id", id(block))
+                for block, _ in filtered
+            }
+            for block, score in candidates:
+                block_id = getattr(block, "block_id", id(block))
+                if block_id in filtered_ids:
+                    continue
+                filtered.append((block, score))
+                filtered_ids.add(block_id)
+                if len(filtered) >= fallback_keep:
+                    break
+            logger.info(
+                f"[STAGE_FILTER] Backfilled to {len(filtered)} blocks for diversity (target={fallback_keep})"
+            )
+
+        logger.info(f"[STAGE_FILTER] Output: {len(filtered)} blocks after filter")
+        for i, (block, score) in enumerate(filtered[:10], start=1):
+            block_id = getattr(block, "block_id", "unknown")
+            complexity = self._extract_complexity(block)
+            logger.info(
+                f"  [out:{i}] score={float(score):.4f} complexity={complexity:.2f} block_id={block_id}"
+            )
+        return filtered

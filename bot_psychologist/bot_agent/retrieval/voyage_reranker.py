@@ -32,7 +32,8 @@ class VoyageReranker:
         if not items:
             return []
         if not self.enabled or not self.api_key:
-            return sorted(items, key=lambda x: x.score, reverse=True)[:top_k]
+            # Preserve candidate diversity when Voyage rerank is unavailable.
+            return sorted(items, key=lambda x: x.score, reverse=True)
 
         try:
             import voyageai  # type: ignore
@@ -58,7 +59,8 @@ class VoyageReranker:
             return reranked
         except Exception as exc:
             logger.warning(f"Voyage rerank fallback: {exc}")
-            return sorted(items, key=lambda x: x.score, reverse=True)[:top_k]
+            # Preserve candidate diversity in local fallback.
+            return sorted(items, key=lambda x: x.score, reverse=True)
 
     def rerank_pairs(
         self,

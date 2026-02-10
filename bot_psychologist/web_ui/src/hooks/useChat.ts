@@ -1,19 +1,19 @@
-/**
+﻿/**
  * useChat Hook - Chat state management
- * 
+ *
  * Manages chat messages, loading state, and API interactions.
  */
 
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { Message, UserLevel } from '../types';
+import type { Message } from '../types';
 import { apiService } from '../services/api.service';
 
 export interface UseChatOptions {
   userId: string;
-  userLevel?: UserLevel;
   includePath?: boolean;
   includeFeedback?: boolean;
+  sessionId?: string;
 }
 
 export interface UseChatReturn {
@@ -21,25 +21,39 @@ export interface UseChatReturn {
   isLoading: boolean;
   error: string | null;
   currentUserState: string | undefined;
+  currentStateConfidence: number | undefined;
   sendQuestion: (query: string) => Promise<void>;
   clearChat: () => void;
+  replaceMessages: (messages: Message[]) => void;
   addMessage: (role: 'user' | 'bot', content: string, metadata?: Partial<Message>) => Message;
   updateMessageFeedback: (messageId: string, feedback: 'positive' | 'negative' | 'neutral', rating?: number) => void;
   clearError: () => void;
 }
 
+function normalizeMessage(message: Message): Message {
+  return {
+    ...message,
+    timestamp: message.timestamp instanceof Date ? message.timestamp : new Date(message.timestamp),
+  };
+}
+
+function getLastBotMessage(messages: Message[]): Message | undefined {
+  return messages.slice().reverse().find((item) => item.role === 'bot');
+}
+
 export const useChat = (options: UseChatOptions): UseChatReturn => {
-  const { 
-    userId, 
-    userLevel = 'beginner', 
-    includePath = true, 
-    includeFeedback = true 
+  const {
+    userId,
+    includePath = true,
+    includeFeedback = true,
+    sessionId,
   } = options;
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentUserState, setCurrentUserState] = useState<string | undefined>();
+  const [currentStateConfidence, setCurrentStateConfidence] = useState<number | undefined>();
 
   const addMessage = useCallback((
     role: 'user' | 'bot',
@@ -57,30 +71,39 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     return message;
   }, []);
 
+  const replaceMessages = useCallback((nextMessages: Message[]) => {
+    const normalized = nextMessages.map(normalizeMessage);
+    setMessages(normalized);
+
+    const lastBotMessage = getLastBotMessage(normalized);
+    setCurrentUserState(lastBotMessage?.state);
+    setCurrentStateConfidence(lastBotMessage?.confidence);
+
+    setIsLoading(false);
+    setError(null);
+  }, []);
+
   const sendQuestion = useCallback(async (query: string) => {
     if (!query.trim()) return;
 
-    // Add user message
     addMessage('user', query);
     setIsLoading(true);
     setError(null);
 
     try {
-      // API request
       const response = await apiService.askAdaptiveQuestion(
         query,
         userId,
-        userLevel,
         includePath,
-        includeFeedback
+        includeFeedback,
+        sessionId
       );
 
-      // Update user state
       if (response.state_analysis) {
         setCurrentUserState(response.state_analysis.primary_state);
+        setCurrentStateConfidence(response.state_analysis.confidence);
       }
 
-      // Add bot response
       addMessage('bot', response.answer, {
         state: response.state_analysis?.primary_state,
         confidence: response.state_analysis?.confidence,
@@ -94,11 +117,11 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to get response';
       setError(errorMessage);
-      addMessage('bot', `❌ Ошибка: ${errorMessage}`);
+      addMessage('bot', `Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
     }
-  }, [userId, userLevel, includePath, includeFeedback, addMessage]);
+  }, [userId, includePath, includeFeedback, sessionId, addMessage]);
 
   const updateMessageFeedback = useCallback((
     messageId: string,
@@ -118,6 +141,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     setMessages([]);
     setError(null);
     setCurrentUserState(undefined);
+    setCurrentStateConfidence(undefined);
   }, []);
 
   const clearError = useCallback(() => {
@@ -129,12 +153,13 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     isLoading,
     error,
     currentUserState,
+    currentStateConfidence,
     sendQuestion,
     clearChat,
+    replaceMessages,
     addMessage,
     updateMessageFeedback,
     clearError,
   };
 };
-
 

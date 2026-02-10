@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Formatter Service for Bot Psychologist Web UI
- * 
+ *
  * Utility functions for formatting dates, times, and other data.
  */
 
@@ -15,13 +15,13 @@ class FormatterService {
    */
   formatTime(seconds: number | string): string {
     const totalSeconds = typeof seconds === 'string' ? parseInt(seconds, 10) : seconds;
-    
+
     if (isNaN(totalSeconds) || totalSeconds < 0) return '00:00';
-    
+
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const secs = Math.floor(totalSeconds % 60);
-    
+
     if (hours > 0) {
       return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     }
@@ -32,8 +32,8 @@ class FormatterService {
    * Parse timecode string (HH:MM:SS or MM:SS) to seconds
    */
   parseTimecode(timecode: string): number {
-    const parts = timecode.split(':').map(p => parseInt(p, 10));
-    
+    const parts = timecode.split(':').map((p) => parseInt(p, 10));
+
     if (parts.length === 3) {
       return parts[0] * 3600 + parts[1] * 60 + parts[2];
     } else if (parts.length === 2) {
@@ -59,9 +59,9 @@ class FormatterService {
    */
   formatDate(date: Date | string, formatStr: string = 'dd MMMM yyyy'): string {
     const dateObj = typeof date === 'string' ? parseISO(date) : date;
-    
+
     if (!isValid(dateObj)) return 'Invalid date';
-    
+
     return format(dateObj, formatStr, { locale: ru });
   }
 
@@ -70,9 +70,9 @@ class FormatterService {
    */
   formatRelativeTime(date: Date | string): string {
     const dateObj = typeof date === 'string' ? parseISO(date) : date;
-    
+
     if (!isValid(dateObj)) return 'Invalid date';
-    
+
     return formatDistanceToNow(dateObj, { addSuffix: true, locale: ru });
   }
 
@@ -81,16 +81,16 @@ class FormatterService {
    */
   formatMessageTime(date: Date | string): string {
     const dateObj = typeof date === 'string' ? parseISO(date) : date;
-    
+
     if (!isValid(dateObj)) return '';
-    
+
     const now = new Date();
     const isToday = dateObj.toDateString() === now.toDateString();
-    
+
     if (isToday) {
       return format(dateObj, 'HH:mm', { locale: ru });
     }
-    
+
     return format(dateObj, 'dd MMM, HH:mm', { locale: ru });
   }
 
@@ -136,7 +136,7 @@ class FormatterService {
    */
   truncate(text: string, maxLength: number): string {
     if (text.length <= maxLength) return text;
-    return text.slice(0, maxLength - 3) + '...';
+    return `${text.slice(0, maxLength - 3)}...`;
   }
 
   /**
@@ -145,18 +145,6 @@ class FormatterService {
   capitalize(text: string): string {
     if (!text) return '';
     return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-
-  /**
-   * Format user level to Russian
-   */
-  formatUserLevel(level: string): string {
-    const levels: Record<string, string> = {
-      beginner: 'Начинающий',
-      intermediate: 'Средний',
-      advanced: 'Продвинутый',
-    };
-    return levels[level] || level;
   }
 
   /**
@@ -177,25 +165,22 @@ class FormatterService {
    * Create YouTube URL with timestamp
    */
   formatYouTubeUrl(baseUrl: string, startSeconds: number | string): string {
-    const seconds = typeof startSeconds === 'string' 
-      ? this.parseTimecode(startSeconds) 
+    const seconds = typeof startSeconds === 'string'
+      ? this.parseTimecode(startSeconds)
       : startSeconds;
-    
-    // Handle different YouTube URL formats
+
     if (baseUrl.includes('youtu.be/')) {
       return `${baseUrl}?t=${seconds}`;
     }
-    
+
     if (baseUrl.includes('youtube.com/watch')) {
       const separator = baseUrl.includes('?') ? '&' : '?';
       return `${baseUrl}${separator}t=${seconds}`;
     }
-    
+
     return baseUrl;
   }
 }
 
 // Singleton instance
 export const formatterService = new FormatterService();
-
-

@@ -1,6 +1,6 @@
-/**
+﻿/**
  * API Service for Bot Psychologist Web UI
- * 
+ *
  * Handles all HTTP requests to the FastAPI backend.
  */
 
@@ -13,7 +13,10 @@ import type {
   FeedbackResponse,
   StatsResponse,
   HealthCheckResponse,
-  UserLevel,
+  UserSessionsResponse,
+  ChatSessionInfo,
+  CreateSessionRequest,
+  DeleteSessionResponse,
 } from '../types/api.types';
 
 class APIService {
@@ -23,13 +26,12 @@ class APIService {
   constructor() {
     this.api = axios.create({
       baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8001/api/v1',
-      timeout: 60000, // 60 seconds for LLM responses
+      timeout: 60000,
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    // Add API key to all requests
     this.api.interceptors.request.use((config) => {
       if (this.apiKey) {
         config.headers['X-API-Key'] = this.apiKey;
@@ -37,7 +39,6 @@ class APIService {
       return config;
     });
 
-    // Handle response errors
     this.api.interceptors.response.use(
       (response) => response,
       (error: AxiosError) => {
@@ -48,14 +49,11 @@ class APIService {
       }
     );
 
-    // Load saved API key
     const savedKey = localStorage.getItem('bot_api_key');
     if (savedKey) {
       this.apiKey = savedKey;
     }
   }
-
-  // === API KEY MANAGEMENT ===
 
   setAPIKey(key: string): void {
     this.apiKey = key;
@@ -77,7 +75,6 @@ class APIService {
 
   private handleAuthError(): void {
     localStorage.removeItem('bot_api_key');
-    // Don't redirect automatically, let the UI handle it
     console.warn('API key is invalid or expired');
   }
 
@@ -86,9 +83,9 @@ class APIService {
   async askAdaptiveQuestion(
     query: string,
     userId: string,
-    userLevel: UserLevel = 'beginner',
     includePath: boolean = true,
-    includeFeedback: boolean = true
+    includeFeedback: boolean = true,
+    sessionId?: string
   ): Promise<AdaptiveAnswerResponse> {
     try {
       const response = await this.api.post<AdaptiveAnswerResponse>(
@@ -96,7 +93,7 @@ class APIService {
         {
           query,
           user_id: userId,
-          user_level: userLevel,
+          session_id: sessionId,
           include_path: includePath,
           include_feedback_prompt: includeFeedback,
           debug: false,
@@ -120,16 +117,38 @@ class APIService {
     }
   }
 
-  async askSagAwareQuestion(
-    query: string,
-    userLevel: UserLevel = 'beginner'
-  ): Promise<AnswerResponse> {
+  async askSagAwareQuestion(query: string): Promise<AnswerResponse> {
     try {
       const response = await this.api.post<AnswerResponse>(
         '/questions/sag-aware',
+        { query }
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async askGraphQuestion(query: string): Promise<AnswerResponse> {
+    try {
+      const response = await this.api.post<AnswerResponse>(
+        '/questions/graph-powered',
+        { query }
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  // === CHAT SESSIONS ===
+
+  async getUserSessions(userId: string, limit: number = 100): Promise<UserSessionsResponse> {
+    try {
+      const response = await this.api.get<UserSessionsResponse>(
+        `/users/${encodeURIComponent(userId)}/sessions`,
         {
-          query,
-          user_level: userLevel,
+          params: { limit },
         }
       );
       return response.data;
@@ -138,17 +157,26 @@ class APIService {
     }
   }
 
-  async askGraphQuestion(
-    query: string,
-    userLevel: UserLevel = 'beginner'
-  ): Promise<AnswerResponse> {
+  async createUserSession(userId: string, title?: string): Promise<ChatSessionInfo> {
     try {
-      const response = await this.api.post<AnswerResponse>(
-        '/questions/graph-powered',
-        {
-          query,
-          user_level: userLevel,
-        }
+      const payload: CreateSessionRequest = {};
+      if (title && title.trim()) {
+        payload.title = title.trim();
+      }
+      const response = await this.api.post<ChatSessionInfo>(
+        `/users/${encodeURIComponent(userId)}/sessions`,
+        payload
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async deleteUserSession(userId: string, sessionId: string): Promise<DeleteSessionResponse> {
+    try {
+      const response = await this.api.delete<DeleteSessionResponse>(
+        `/users/${encodeURIComponent(userId)}/sessions/${encodeURIComponent(sessionId)}`
       );
       return response.data;
     } catch (error) {
@@ -160,9 +188,11 @@ class APIService {
 
   async getUserHistory(userId: string, lastNTurns: number = 10): Promise<UserHistoryResponse> {
     try {
-      const response = await this.api.post<UserHistoryResponse>(
-        `/users/${userId}/history`,
-        { last_n_turns: lastNTurns }
+      const response = await this.api.get<UserHistoryResponse>(
+        `/users/${encodeURIComponent(userId)}/history`,
+        {
+          params: { last_n_turns: lastNTurns },
+        }
       );
       return response.data;
     } catch (error) {
@@ -211,7 +241,7 @@ class APIService {
   private handleError(error: unknown): Error {
     if (axios.isAxiosError(error)) {
       const axiosError = error as AxiosError<{ detail?: string; error?: string }>;
-      const message = 
+      const message =
         axiosError.response?.data?.detail ||
         axiosError.response?.data?.error ||
         axiosError.message ||
@@ -222,7 +252,4 @@ class APIService {
   }
 }
 
-// Singleton instance
 export const apiService = new APIService();
-
-

@@ -1,15 +1,15 @@
-/**
+﻿/**
  * Types Index - Re-export all types from a single entry point
  */
 
 // API types
 export type {
-  UserLevel,
   FeedbackType,
   AskQuestionRequest,
   FeedbackRequest,
   GetUserHistoryRequest,
   GetStatsRequest,
+  CreateSessionRequest,
   Source,
   StateAnalysis,
   PathStep,
@@ -18,6 +18,9 @@ export type {
   AdaptiveAnswerResponse,
   ConversationTurn,
   UserHistoryResponse,
+  ChatSessionInfo,
+  UserSessionsResponse,
+  DeleteSessionResponse,
   FeedbackResponse,
   HealthCheckResponse,
   ErrorResponse,
@@ -41,5 +44,4 @@ export type {
   UserSession,
   UserProfileStats,
 } from './user.types';
-
 

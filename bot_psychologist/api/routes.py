@@ -1,8 +1,8 @@
-# api/routes.py
+﻿# api/routes.py
 """
 API Routes for Bot Psychologist API (Phase 5)
 
-REST endpoints для всех функций Phase 1-4.
+REST endpoints РґР»СЏ РІСЃРµС… С„СѓРЅРєС†РёР№ Phase 1-4.
 """
 
 import logging
@@ -13,7 +13,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
-# Добавить путь к bot_agent
+# Р”РѕР±Р°РІРёС‚СЊ РїСѓС‚СЊ Рє bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from bot_agent import (
@@ -28,9 +28,10 @@ from bot_agent.storage import SessionManager
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
-    AnswerResponse, AdaptiveAnswerResponse, FeedbackResponse, 
+    AnswerResponse, AdaptiveAnswerResponse, FeedbackResponse,
     UserHistoryResponse, UserSummaryResponse, DeleteHistoryResponse, StatsResponse,
     SessionInfoResponse, ArchiveSessionsResponse,
+    ChatSessionInfoResponse, UserSessionsResponse, CreateSessionRequest, DeleteSessionResponse,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
     ConversationTurnResponse
 )
@@ -40,7 +41,7 @@ logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/v1", tags=["bot"])
 
-# Глобальная статистика (в production используй БД)
+# Р“Р»РѕР±Р°Р»СЊРЅР°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР° (РІ production РёСЃРїРѕР»СЊР·СѓР№ Р‘Р”)
 _stats = {
     "total_users": set(),
     "total_questions": 0,
@@ -55,31 +56,31 @@ _stats = {
 @router.post(
     "/questions/basic",
     response_model=AnswerResponse,
-    summary="Phase 1: Базовый QA",
-    description="Базовый вопрос-ответ (Phase 1)"
+    summary="Phase 1: Р‘Р°Р·РѕРІС‹Р№ QA",
+    description="Р‘Р°Р·РѕРІС‹Р№ РІРѕРїСЂРѕСЃ-РѕС‚РІРµС‚ (Phase 1)"
 )
 async def ask_basic_question(
     request: AskQuestionRequest,
     api_key: str = Depends(verify_api_key)
 ):
     """
-    **Phase 1:** Базовый QA без адаптации.
+    **Phase 1:** Р‘Р°Р·РѕРІС‹Р№ QA Р±РµР· Р°РґР°РїС‚Р°С†РёРё.
     
-    Использует:
+    РСЃРїРѕР»СЊР·СѓРµС‚:
     - TF-IDF retrieval
     - GPT LLM
-    - Простой ответ
+    - РџСЂРѕСЃС‚РѕР№ РѕС‚РІРµС‚
     
-    **Пример:**
+    **РџСЂРёРјРµСЂ:**
     ```
     {
-      "query": "Что такое осознавание?",
+      "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
       "user_id": "user_123"
     }
     ```
     """
     
-    logger.info(f"📝 Basic question: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(f"рџ“ќ Basic question: {request.query[:50]}... (user: {request.user_id})")
     
     try:
         result = answer_question_basic(
@@ -88,12 +89,12 @@ async def ask_basic_question(
             use_semantic_memory=False
         )
         
-        # Обновить статистику
+        # РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         
-        # Преобразовать sources
+        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
         sources = []
         for src in result.get("sources", []):
             sources.append(SourceResponse(
@@ -121,7 +122,7 @@ async def ask_basic_question(
         )
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -141,7 +142,7 @@ async def ask_basic_question_with_semantic(
     """
     Phase 1 enhanced: basic QA with memory.
     """
-    logger.info(f"🧠 Basic+Semantic question: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(f"рџ§  Basic+Semantic question: {request.query[:50]}... (user: {request.user_id})")
 
     try:
         result = answer_question_basic(
@@ -181,7 +182,7 @@ async def ask_basic_question_with_semantic(
             processing_time_seconds=result.get("processing_time_seconds", 0)
         )
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -192,23 +193,23 @@ async def ask_basic_question_with_semantic(
     "/questions/sag-aware",
     response_model=AnswerResponse,
     summary="Phase 2: SAG-aware QA",
-    description="QA с учетом SAG v2.0 и уровня пользователя"
+    description="QA СЃ СѓС‡РµС‚РѕРј SAG v2.0 Рё СѓСЂРѕРІРЅСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
 )
 async def ask_sag_aware_question(
     request: AskQuestionRequest,
     api_key: str = Depends(verify_api_key)
 ):
     """
-    **Phase 2:** SAG-aware QA с адаптацией по уровню.
+    **Phase 2:** SAG-aware QA СЃ Р°РґР°РїС‚Р°С†РёРµР№ РїРѕ СѓСЂРѕРІРЅСЋ.
     
-    Использует:
+    РСЃРїРѕР»СЊР·СѓРµС‚:
     - TF-IDF retrieval
     - User level adaptation (beginner/intermediate/advanced)
     - Semantic analysis
-    - Адаптивные ответы
+    - РђРґР°РїС‚РёРІРЅС‹Рµ РѕС‚РІРµС‚С‹
     """
     
-    logger.info(f"🧠 SAG-aware question: {request.query[:50]}... (level: {request.user_level})")
+    logger.info(f"рџ§  SAG-aware question: {request.query[:50]}... (level: {request.user_level})")
     
     try:
         result = answer_question_sag_aware(
@@ -222,7 +223,7 @@ async def ask_sag_aware_question(
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         
-        # Преобразовать sources
+        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
         sources = []
         for src in result.get("sources", []):
             sources.append(SourceResponse(
@@ -250,7 +251,7 @@ async def ask_sag_aware_question(
         )
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -261,23 +262,23 @@ async def ask_sag_aware_question(
     "/questions/graph-powered",
     response_model=AnswerResponse,
     summary="Phase 3: Knowledge Graph QA",
-    description="QA с использованием Knowledge Graph"
+    description="QA СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Knowledge Graph"
 )
 async def ask_graph_powered_question(
     request: AskQuestionRequest,
     api_key: str = Depends(verify_api_key)
 ):
     """
-    **Phase 3:** Graph-powered QA с использованием Knowledge Graph.
+    **Phase 3:** Graph-powered QA СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Knowledge Graph.
     
-    Использует:
+    РСЃРїРѕР»СЊР·СѓРµС‚:
     - TF-IDF retrieval
-    - Knowledge Graph (95 узлов, 2182 связи)
+    - Knowledge Graph (95 СѓР·Р»РѕРІ, 2182 СЃРІСЏР·Рё)
     - Concept hierarchy
-    - Практики из графа
+    - РџСЂР°РєС‚РёРєРё РёР· РіСЂР°С„Р°
     """
     
-    logger.info(f"📊 Graph-powered question: {request.query[:50]}...")
+    logger.info(f"рџ“Љ Graph-powered question: {request.query[:50]}...")
     
     try:
         result = answer_question_graph_powered(
@@ -291,7 +292,7 @@ async def ask_graph_powered_question(
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         
-        # Преобразовать sources
+        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
         sources = []
         for src in result.get("sources", []):
             sources.append(SourceResponse(
@@ -319,7 +320,7 @@ async def ask_graph_powered_question(
         )
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -330,41 +331,57 @@ async def ask_graph_powered_question(
     "/questions/adaptive",
     response_model=AdaptiveAnswerResponse,
     summary="Phase 4: Adaptive QA",
-    description="Полностью адаптивный QA с анализом состояния и персональными путями"
+    description="РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РґР°РїС‚РёРІРЅС‹Р№ QA СЃ Р°РЅР°Р»РёР·РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ Рё РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹РјРё РїСѓС‚СЏРјРё"
 )
 async def ask_adaptive_question(
     request: AskQuestionRequest,
     api_key: str = Depends(verify_api_key)
 ):
     """
-    **Phase 4:** Полностью адаптивный QA.
+    **Phase 4:** РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РґР°РїС‚РёРІРЅС‹Р№ QA.
     
-    Использует:
-    - State Classification (10 состояний)
-    - Conversation Memory (история диалога)
-    - Personal Path Building (персональные пути)
-    - Все возможности Phase 1-3
+    РСЃРїРѕР»СЊР·СѓРµС‚:
+    - State Classification (10 СЃРѕСЃС‚РѕСЏРЅРёР№)
+    - Conversation Memory (РёСЃС‚РѕСЂРёСЏ РґРёР°Р»РѕРіР°)
+    - Personal Path Building (РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹Рµ РїСѓС‚Рё)
+    - Р’СЃРµ РІРѕР·РјРѕР¶РЅРѕСЃС‚Рё Phase 1-3
     
-    **Возвращает:**
-    - Адаптивный ответ
-    - Анализ состояния пользователя
-    - Рекомендацию персонального пути
-    - Адаптивный запрос обратной связи
+    **Р’РѕР·РІСЂР°С‰Р°РµС‚:**
+    - РђРґР°РїС‚РёРІРЅС‹Р№ РѕС‚РІРµС‚
+    - РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    - Р РµРєРѕРјРµРЅРґР°С†РёСЋ РїРµСЂСЃРѕРЅР°Р»СЊРЅРѕРіРѕ РїСѓС‚Рё
+    - РђРґР°РїС‚РёРІРЅС‹Р№ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
     """
     
     logger.info(f"🎯 Adaptive question: {request.query[:50]}... (user: {request.user_id})")
-    
+
     try:
+        session_key = request.session_id or request.user_id
+
+        if request.session_id:
+            try:
+                session_manager = SessionManager(str(config.BOT_DB_PATH))
+                session_manager.create_session(
+                    session_id=session_key,
+                    user_id=request.user_id,
+                    metadata={
+                        "source": "api",
+                        "owner_user_id": request.user_id,
+                    },
+                )
+            except Exception as exc:
+                logger.warning(f"⚠️ Failed to pre-create session {session_key}: {exc}")
+
         result = answer_question_adaptive(
             request.query,
-            user_id=request.user_id,
+            user_id=session_key,
             user_level=request.user_level.value,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
             debug=request.debug
         )
         
-        # Обновить статистику
+        # РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
@@ -372,7 +389,7 @@ async def ask_adaptive_question(
         state = result.get("state_analysis", {}).get("primary_state", "unknown")
         _stats["states_count"][state] = _stats["states_count"].get(state, 0) + 1
         
-        # Преобразовать sources
+        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
         sources = []
         for src in result.get("sources", []):
             sources.append(SourceResponse(
@@ -385,7 +402,7 @@ async def ask_adaptive_question(
                 complexity_score=src.get("complexity_score", 0.0)
             ))
         
-        # Построить state_analysis
+        # РџРѕСЃС‚СЂРѕРёС‚СЊ state_analysis
         state_analysis_data = result.get("state_analysis", {})
         state_analysis = StateAnalysisResponse(
             primary_state=state_analysis_data.get("primary_state", "unknown"),
@@ -394,7 +411,7 @@ async def ask_adaptive_question(
             recommendations=state_analysis_data.get("recommendations", [])
         )
         
-        # Построить path_recommendation
+        # РџРѕСЃС‚СЂРѕРёС‚СЊ path_recommendation
         path_rec = result.get("path_recommendation")
         path_recommendation = None
         if path_rec:
@@ -417,6 +434,10 @@ async def ask_adaptive_question(
                 first_step=first_step_response
             )
         
+        response_metadata = dict(result.get("metadata", {}))
+        response_metadata["user_id"] = request.user_id
+        response_metadata["session_id"] = session_key
+
         return AdaptiveAnswerResponse(
             status=result.get("status", "success"),
             answer=result.get("answer", ""),
@@ -430,32 +451,180 @@ async def ask_adaptive_question(
             decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
             confidence_level=result.get("metadata", {}).get("confidence_level"),
             confidence_score=result.get("metadata", {}).get("confidence_score"),
-            metadata=result.get("metadata", {}),
+            metadata=response_metadata,
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
         )
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
         )
 
 
+
+# ===== USER SESSIONS ENDPOINTS =====
+
+def _session_title(item: dict) -> str:
+    metadata = item.get("metadata") or {}
+    raw_title = metadata.get("title")
+    if isinstance(raw_title, str) and raw_title.strip():
+        return raw_title.strip()
+
+    last_user_input = (item.get("last_user_input") or "").strip()
+    if not last_user_input:
+        return "New chat"
+    if len(last_user_input) <= 42:
+        return last_user_input
+    return f"{last_user_input[:42]}..."
+
+
+@router.get(
+    "/users/{user_id}/sessions",
+    response_model=UserSessionsResponse,
+    summary="User chat sessions",
+    description="Get all chat sessions for user"
+)
+async def list_user_sessions(
+    user_id: str,
+    limit: int = 100,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        raw_sessions = manager.list_user_sessions(user_id=user_id, limit=limit)
+
+        sessions = [
+            ChatSessionInfoResponse(
+                session_id=item.get("session_id", ""),
+                user_id=user_id,
+                created_at=item.get("created_at") or datetime.now().isoformat(),
+                last_active=item.get("last_active") or item.get("created_at") or datetime.now().isoformat(),
+                status=item.get("status") or "active",
+                title=_session_title(item),
+                turns_count=item.get("turns_count") or 0,
+                last_user_input=item.get("last_user_input"),
+                last_bot_response=item.get("last_bot_response"),
+                last_turn_timestamp=item.get("last_turn_timestamp"),
+            )
+            for item in raw_sessions
+        ]
+
+        return UserSessionsResponse(
+            user_id=user_id,
+            total_sessions=len(sessions),
+            sessions=sessions,
+        )
+    except Exception as e:
+        logger.error(f"❌ Error listing user sessions: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.post(
+    "/users/{user_id}/sessions",
+    response_model=ChatSessionInfoResponse,
+    summary="Create user chat session",
+    description="Create a new chat session for user"
+)
+async def create_user_session(
+    user_id: str,
+    request: Optional[CreateSessionRequest] = None,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        created = manager.create_user_session(
+            user_id=user_id,
+            title=(request.title if request else None),
+        )
+
+        return ChatSessionInfoResponse(
+            session_id=created.get("session_id", ""),
+            user_id=user_id,
+            created_at=created.get("created_at") or datetime.now().isoformat(),
+            last_active=created.get("last_active") or datetime.now().isoformat(),
+            status=created.get("status") or "active",
+            title=_session_title(created),
+            turns_count=created.get("turns_count") or 0,
+            last_user_input=created.get("last_user_input"),
+            last_bot_response=created.get("last_bot_response"),
+            last_turn_timestamp=created.get("last_turn_timestamp"),
+        )
+    except Exception as e:
+        logger.error(f"❌ Error creating session for {user_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
+
+
+@router.delete(
+    "/users/{user_id}/sessions/{session_id}",
+    response_model=DeleteSessionResponse,
+    summary="Delete user chat session",
+    description="Delete one chat session of user"
+)
+async def delete_user_session(
+    user_id: str,
+    session_id: str,
+    api_key: str = Depends(verify_api_key)
+):
+    try:
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        payload = manager.load_session(session_id)
+        if not payload:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Session {session_id} not found"
+            )
+
+        session_info = payload.get("session_info", {})
+        session_user_id = session_info.get("user_id")
+        if session_user_id and session_user_id != user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Session does not belong to user"
+            )
+
+        deleted = manager.delete_session_data(session_id)
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Session {session_id} not found"
+            )
+
+        return DeleteSessionResponse(
+            status="success",
+            message=f"Session {session_id} deleted",
+            user_id=user_id,
+            session_id=session_id,
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error deleting session {session_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=str(e)
+        )
 # ===== USER HISTORY ENDPOINTS =====
 
 @router.get(
     "/users/{user_id}/history",
     response_model=UserHistoryResponse,
-    summary="История пользователя",
-    description="Получить историю диалога пользователя"
+    summary="РСЃС‚РѕСЂРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+    description="РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
 )
 @router.post(
     "/users/{user_id}/history",
     response_model=UserHistoryResponse,
-    summary="История пользователя (POST)",
-    description="Получить историю диалога пользователя (совместимость)"
+    summary="РСЃС‚РѕСЂРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (POST)",
+    description="РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ)"
 )
 async def get_user_history(
     user_id: str,
@@ -463,20 +632,20 @@ async def get_user_history(
     api_key: str = Depends(verify_api_key)
 ):
     """
-    Получить историю диалога пользователя.
+    РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
     
-    **Параметры:**
-    - `user_id`: ID пользователя
-    - `last_n_turns`: Последние N оборотов (по умолчанию 10)
+    **РџР°СЂР°РјРµС‚СЂС‹:**
+    - `user_id`: ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    - `last_n_turns`: РџРѕСЃР»РµРґРЅРёРµ N РѕР±РѕСЂРѕС‚РѕРІ (РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ 10)
     
-    **Возвращает:**
-    - История диалогов
-    - Основные интересы
-    - Средний рейтинг
-    - Последнее взаимодействие
+    **Р’РѕР·РІСЂР°С‰Р°РµС‚:**
+    - РСЃС‚РѕСЂРёСЏ РґРёР°Р»РѕРіРѕРІ
+    - РћСЃРЅРѕРІРЅС‹Рµ РёРЅС‚РµСЂРµСЃС‹
+    - РЎСЂРµРґРЅРёР№ СЂРµР№С‚РёРЅРі
+    - РџРѕСЃР»РµРґРЅРµРµ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёРµ
     """
     
-    logger.info(f"📋 История для {user_id}")
+    logger.info(f"рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ {user_id}")
     
     try:
         memory = get_conversation_memory(user_id)
@@ -506,7 +675,7 @@ async def get_user_history(
         )
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -516,14 +685,14 @@ async def get_user_history(
 @router.get(
     "/users/{user_id}/summary",
     response_model=UserSummaryResponse,
-    summary="Сводка пользователя",
-    description="Краткая сводка по истории диалога пользователя"
+    summary="РЎРІРѕРґРєР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+    description="РљСЂР°С‚РєР°СЏ СЃРІРѕРґРєР° РїРѕ РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
 )
 async def get_user_summary(
     user_id: str,
     api_key: str = Depends(verify_api_key)
 ):
-    logger.info(f"📌 Сводка для {user_id}")
+    logger.info(f"рџ“Њ РЎРІРѕРґРєР° РґР»СЏ {user_id}")
     try:
         memory = get_conversation_memory(user_id)
         summary = memory.get_summary()
@@ -538,7 +707,7 @@ async def get_user_summary(
             last_interaction=summary.get("last_interaction")
         )
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -549,7 +718,7 @@ async def get_user_summary(
     "/users/{user_id}/session",
     response_model=SessionInfoResponse,
     summary="Session Storage Status",
-    description="Статус SQLite-персистентности для пользователя"
+    description="РЎС‚Р°С‚СѓСЃ SQLite-РїРµСЂСЃРёСЃС‚РµРЅС‚РЅРѕСЃС‚Рё РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
 )
 async def get_user_session_info(
     user_id: str,
@@ -589,7 +758,7 @@ async def get_user_session_info(
             has_summary=bool(session_info.get("conversation_summary")),
         )
     except Exception as e:
-        logger.error(f"❌ Error loading session info: {e}")
+        logger.error(f"вќЊ Error loading session info: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -600,7 +769,7 @@ async def get_user_session_info(
     "/sessions/archive",
     response_model=ArchiveSessionsResponse,
     summary="Archive Old Sessions",
-    description="Архивировать старые SQLite-сессии старше N дней"
+    description="РђСЂС…РёРІРёСЂРѕРІР°С‚СЊ СЃС‚Р°СЂС‹Рµ SQLite-СЃРµСЃСЃРёРё СЃС‚Р°СЂС€Рµ N РґРЅРµР№"
 )
 async def archive_old_sessions(
     active_days: int = 90,
@@ -627,7 +796,7 @@ async def archive_old_sessions(
             db_path=str(config.BOT_DB_PATH),
         )
     except Exception as e:
-        logger.error(f"❌ Error archiving sessions: {e}")
+        logger.error(f"вќЊ Error archiving sessions: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -650,7 +819,7 @@ async def get_semantic_stats(
         stats = memory.semantic_memory.get_stats()
         return {"enabled": True, "user_id": user_id, **stats}
     except Exception as e:
-        logger.error(f"❌ Error getting semantic stats: {e}")
+        logger.error(f"вќЊ Error getting semantic stats: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -683,7 +852,7 @@ async def rebuild_semantic_memory(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error rebuilding semantic memory: {e}")
+        logger.error(f"вќЊ Error rebuilding semantic memory: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -716,7 +885,7 @@ async def force_update_summary(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error updating summary: {e}")
+        logger.error(f"вќЊ Error updating summary: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -726,24 +895,24 @@ async def force_update_summary(
 @router.delete(
     "/users/{user_id}/history",
     response_model=DeleteHistoryResponse,
-    summary="Очистить историю пользователя",
-    description="Удалить историю диалога пользователя"
+    summary="РћС‡РёСЃС‚РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
+    description="РЈРґР°Р»РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
 )
 async def delete_user_history(
     user_id: str,
     api_key: str = Depends(verify_api_key)
 ):
-    logger.info(f"🧹 Очистка истории для {user_id}")
+    logger.info(f"рџ§№ РћС‡РёСЃС‚РєР° РёСЃС‚РѕСЂРёРё РґР»СЏ {user_id}")
     try:
         memory = get_conversation_memory(user_id)
         memory.clear()
         return DeleteHistoryResponse(
             status="success",
-            message=f"История пользователя {user_id} очищена",
+            message=f"РСЃС‚РѕСЂРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ {user_id} РѕС‡РёС‰РµРЅР°",
             user_id=user_id
         )
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -754,23 +923,23 @@ async def delete_user_history(
     "/users/{user_id}/gdpr-data",
     response_model=DeleteHistoryResponse,
     summary="GDPR Delete User Data",
-    description="Полностью удалить данные пользователя из JSON/semantic cache/SQLite"
+    description="РџРѕР»РЅРѕСЃС‚СЊСЋ СѓРґР°Р»РёС‚СЊ РґР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РёР· JSON/semantic cache/SQLite"
 )
 async def gdpr_delete_user_data(
     user_id: str,
     api_key: str = Depends(verify_api_key)
 ):
-    logger.info(f"🗑️ GDPR delete for {user_id}")
+    logger.info(f"рџ—‘пёЏ GDPR delete for {user_id}")
     try:
         memory = get_conversation_memory(user_id)
         memory.purge_user_data()
         return DeleteHistoryResponse(
             status="success",
-            message=f"Данные пользователя {user_id} полностью удалены (GDPR)",
+            message=f"Р”Р°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ {user_id} РїРѕР»РЅРѕСЃС‚СЊСЋ СѓРґР°Р»РµРЅС‹ (GDPR)",
             user_id=user_id
         )
     except Exception as e:
-        logger.error(f"❌ GDPR delete error: {e}")
+        logger.error(f"вќЊ GDPR delete error: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -782,25 +951,25 @@ async def gdpr_delete_user_data(
 @router.post(
     "/feedback",
     response_model=FeedbackResponse,
-    summary="Отправить обратную связь",
-    description="Отправить обратную связь на ответ"
+    summary="РћС‚РїСЂР°РІРёС‚СЊ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ",
+    description="РћС‚РїСЂР°РІРёС‚СЊ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ РЅР° РѕС‚РІРµС‚"
 )
 async def submit_feedback(
     request: FeedbackRequest,
     api_key: str = Depends(verify_api_key)
 ):
     """
-    Отправить обратную связь на ответ.
+    РћС‚РїСЂР°РІРёС‚СЊ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ РЅР° РѕС‚РІРµС‚.
     
-    **Типы обратной связи:**
-    - `positive`: Ответ был полезен ✅
-    - `negative`: Ответ не помог ❌
-    - `neutral`: Нейтральная оценка 🤷
+    **РўРёРїС‹ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё:**
+    - `positive`: РћС‚РІРµС‚ Р±С‹Р» РїРѕР»РµР·РµРЅ вњ…
+    - `negative`: РћС‚РІРµС‚ РЅРµ РїРѕРјРѕРі вќЊ
+    - `neutral`: РќРµР№С‚СЂР°Р»СЊРЅР°СЏ РѕС†РµРЅРєР° рџ¤·
     
-    **Рейтинг:** 1-5 звезд
+    **Р РµР№С‚РёРЅРі:** 1-5 Р·РІРµР·Рґ
     """
     
-    logger.info(f"👍 Обратная связь от {request.user_id}: {request.feedback}")
+    logger.info(f"рџ‘Ќ РћР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ РѕС‚ {request.user_id}: {request.feedback}")
     
     try:
         memory = get_conversation_memory(request.user_id)
@@ -812,7 +981,7 @@ async def submit_feedback(
         
         return FeedbackResponse(
             status="success",
-            message="Обратная связь сохранена",
+            message="РћР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ СЃРѕС…СЂР°РЅРµРЅР°",
             user_id=request.user_id,
             turn_index=request.turn_index
         )
@@ -820,10 +989,10 @@ async def submit_feedback(
     except IndexError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Ход #{request.turn_index} не найден"
+            detail=f"РҐРѕРґ #{request.turn_index} РЅРµ РЅР°Р№РґРµРЅ"
         )
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -835,25 +1004,25 @@ async def submit_feedback(
 @router.get(
     "/stats",
     response_model=StatsResponse,
-    summary="Общая статистика",
-    description="Получить общую статистику системы"
+    summary="РћР±С‰Р°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР°",
+    description="РџРѕР»СѓС‡РёС‚СЊ РѕР±С‰СѓСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ СЃРёСЃС‚РµРјС‹"
 )
 async def get_statistics(
     api_key: str = Depends(verify_api_key)
 ):
     """
-    Получить общую статистику системы.
+    РџРѕР»СѓС‡РёС‚СЊ РѕР±С‰СѓСЋ СЃС‚Р°С‚РёСЃС‚РёРєСѓ СЃРёСЃС‚РµРјС‹.
     
-    **Возвращает:**
-    - Всего пользователей
-    - Всего вопросов
-    - Среднее время обработки
-    - Топ состояний
-    - Топ интересов
-    - Статистика обратной связи
+    **Р’РѕР·РІСЂР°С‰Р°РµС‚:**
+    - Р’СЃРµРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
+    - Р’СЃРµРіРѕ РІРѕРїСЂРѕСЃРѕРІ
+    - РЎСЂРµРґРЅРµРµ РІСЂРµРјСЏ РѕР±СЂР°Р±РѕС‚РєРё
+    - РўРѕРї СЃРѕСЃС‚РѕСЏРЅРёР№
+    - РўРѕРї РёРЅС‚РµСЂРµСЃРѕРІ
+    - РЎС‚Р°С‚РёСЃС‚РёРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
     """
     
-    logger.info("📊 Запрос статистики")
+    logger.info("рџ“Љ Р—Р°РїСЂРѕСЃ СЃС‚Р°С‚РёСЃС‚РёРєРё")
     
     avg_time = (
         _stats["total_processing_time"] / _stats["total_questions"]
@@ -875,17 +1044,17 @@ async def get_statistics(
 
 @router.get(
     "/health",
-    summary="Проверка здоровья",
-    description="Проверить статус сервера"
+    summary="РџСЂРѕРІРµСЂРєР° Р·РґРѕСЂРѕРІСЊСЏ",
+    description="РџСЂРѕРІРµСЂРёС‚СЊ СЃС‚Р°С‚СѓСЃ СЃРµСЂРІРµСЂР°"
 )
 async def health_check():
     """
-    Проверить статус сервера.
+    РџСЂРѕРІРµСЂРёС‚СЊ СЃС‚Р°С‚СѓСЃ СЃРµСЂРІРµСЂР°.
     
-    **Возвращает:**
-    - Статус (healthy/unhealthy)
-    - Версию API
-    - Статус каждого модуля
+    **Р’РѕР·РІСЂР°С‰Р°РµС‚:**
+    - РЎС‚Р°С‚СѓСЃ (healthy/unhealthy)
+    - Р’РµСЂСЃРёСЋ API
+    - РЎС‚Р°С‚СѓСЃ РєР°Р¶РґРѕРіРѕ РјРѕРґСѓР»СЏ
     """
     
     return {
@@ -900,5 +1069,11 @@ async def health_check():
             "api": True
         }
     }
+
+
+
+
+
+
 
 

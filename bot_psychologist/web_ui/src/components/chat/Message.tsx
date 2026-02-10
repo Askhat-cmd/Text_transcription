@@ -19,9 +19,15 @@ import { PathBuilderCompact } from '../insights/PathBuilder';
 
 interface MessageItemProps {
   message: Message;
+  showSources?: boolean;
+  showPath?: boolean;
 }
 
-export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
+export const MessageItem: React.FC<MessageItemProps> = ({
+  message,
+  showSources = true,
+  showPath = true,
+}) => {
   const isUser = message.role === 'user';
 
   return (
@@ -78,12 +84,12 @@ export const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
             )}
 
             {/* Sources */}
-            {message.sources && message.sources.length > 0 && (
+            {showSources && message.sources && message.sources.length > 0 && (
               <SourcesList sources={message.sources} />
             )}
 
             {/* Path Recommendation */}
-            {message.path && (
+            {showPath && message.path && (
               <div className="mt-3 border-t border-gray-200 dark:border-gray-700 pt-3">
                 <h4 className="font-semibold text-sm mb-2 flex items-center gap-1">
                   🛤️ Персональный путь

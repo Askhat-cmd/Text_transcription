@@ -54,7 +54,11 @@ const HomePage: React.FC = () => {
     if (hasApiKey && userId) {
       navigate('/chat');
     } else {
-      navigate('/settings');
+      const params = new URLSearchParams({
+        open_settings: '1',
+        settings_notice: 'Please configure API key',
+      });
+      navigate(`/chat?${params.toString()}`);
     }
   };
 

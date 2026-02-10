@@ -1,10 +1,11 @@
-"""SQLite-backed persistence for bot sessions."""
+﻿"""SQLite-backed persistence for bot sessions."""
 
 from __future__ import annotations
 
 import json
 import pickle
 import sqlite3
+import uuid
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -130,8 +131,8 @@ class SessionManager:
                 ) VALUES (?, ?, ?, ?, 'active', ?)
                 ON CONFLICT(session_id) DO UPDATE SET
                     last_active = excluded.last_active,
-                    user_id = COALESCE(excluded.user_id, sessions.user_id),
-                    metadata = COALESCE(excluded.metadata, sessions.metadata)
+                    user_id = COALESCE(sessions.user_id, excluded.user_id),
+                    metadata = COALESCE(sessions.metadata, excluded.metadata)
                 """,
                 (session_id, user_id, now, now, self._json_dumps(metadata)),
             )
@@ -353,3 +354,105 @@ class SessionManager:
                 (session_id,),
             ).rowcount
         return deleted > 0
+
+    def list_user_sessions(
+        self,
+        user_id: str,
+        limit: int = 100,
+    ) -> List[Dict[str, Any]]:
+        """Return active sessions for a user with lightweight stats."""
+        safe_limit = max(1, min(limit, 500))
+
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT
+                    s.session_id,
+                    s.user_id,
+                    s.created_at,
+                    s.last_active,
+                    s.status,
+                    s.metadata,
+                    COUNT(t.id) AS turns_count
+                FROM sessions s
+                LEFT JOIN conversation_turns t ON t.session_id = s.session_id
+                WHERE (s.user_id = ? OR s.session_id = ?) AND s.status != 'archived'
+                GROUP BY s.session_id
+                ORDER BY s.last_active DESC
+                LIMIT ?
+                """,
+                (user_id, user_id, safe_limit),
+            ).fetchall()
+
+            last_turns_by_session: Dict[str, Dict[str, Any]] = {}
+            if rows:
+                session_ids = [row["session_id"] for row in rows]
+                placeholders = ",".join("?" for _ in session_ids)
+                last_turn_rows = conn.execute(
+                    f"""
+                    SELECT t.session_id, t.user_input, t.bot_response, t.timestamp
+                    FROM conversation_turns t
+                    INNER JOIN (
+                        SELECT session_id, MAX(turn_number) AS turn_number
+                        FROM conversation_turns
+                        WHERE session_id IN ({placeholders})
+                        GROUP BY session_id
+                    ) latest
+                    ON t.session_id = latest.session_id AND t.turn_number = latest.turn_number
+                    """,
+                    session_ids,
+                ).fetchall()
+                for turn in last_turn_rows:
+                    last_turns_by_session[turn["session_id"]] = {
+                        "last_user_input": turn["user_input"],
+                        "last_bot_response": turn["bot_response"],
+                        "last_turn_timestamp": turn["timestamp"],
+                    }
+
+        result: List[Dict[str, Any]] = []
+        for row in rows:
+            metadata_raw = row["metadata"]
+            metadata = json.loads(metadata_raw) if metadata_raw else {}
+            turn_data = last_turns_by_session.get(row["session_id"], {})
+            result.append(
+                {
+                    "session_id": row["session_id"],
+                    "user_id": row["user_id"],
+                    "created_at": row["created_at"],
+                    "last_active": row["last_active"],
+                    "status": row["status"],
+                    "metadata": metadata,
+                    "turns_count": row["turns_count"] or 0,
+                    "last_user_input": turn_data.get("last_user_input"),
+                    "last_bot_response": turn_data.get("last_bot_response"),
+                    "last_turn_timestamp": turn_data.get("last_turn_timestamp"),
+                }
+            )
+        return result
+
+    def create_user_session(
+        self,
+        user_id: str,
+        title: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Create a dedicated chat session for a user."""
+        now = self._utc_now_iso()
+        session_id = str(uuid.uuid4())
+        metadata: Dict[str, Any] = {
+            "source": "web_ui",
+            "title": title or "New chat",
+            "owner_user_id": user_id,
+        }
+        self.create_session(session_id=session_id, user_id=user_id, metadata=metadata)
+        return {
+            "session_id": session_id,
+            "user_id": user_id,
+            "created_at": now,
+            "last_active": now,
+            "status": "active",
+            "metadata": metadata,
+            "turns_count": 0,
+            "last_user_input": None,
+            "last_bot_response": None,
+            "last_turn_timestamp": None,
+        }

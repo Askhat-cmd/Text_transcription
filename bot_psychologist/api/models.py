@@ -1,8 +1,8 @@
-# api/models.py
+﻿# api/models.py
 """
 Pydantic Models for Bot Psychologist API (Phase 5)
 
-Request и Response модели для валидации данных API.
+Request Рё Response РјРѕРґРµР»Рё РґР»СЏ РІР°Р»РёРґР°С†РёРё РґР°РЅРЅС‹С… API.
 """
 
 from pydantic import BaseModel, Field, field_validator
@@ -14,14 +14,14 @@ from enum import Enum
 # ===== ENUMS =====
 
 class UserLevel(str, Enum):
-    """Уровень пользователя для адаптации ответов"""
+    """РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ Р°РґР°РїС‚Р°С†РёРё РѕС‚РІРµС‚РѕРІ"""
     BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
 
 
 class FeedbackType(str, Enum):
-    """Тип обратной связи"""
+    """РўРёРї РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё"""
     POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
@@ -30,26 +30,28 @@ class FeedbackType(str, Enum):
 # ===== REQUEST MODELS =====
 
 class AskQuestionRequest(BaseModel):
-    """Запрос на ответ на вопрос"""
-    query: str = Field(..., min_length=3, max_length=500, description="Вопрос пользователя")
-    user_id: str = Field(default="default", min_length=1, max_length=100, description="ID пользователя")
-    user_level: UserLevel = Field(default=UserLevel.BEGINNER, description="Уровень пользователя")
-    include_path: bool = Field(default=True, description="Включить рекомендацию пути")
-    include_feedback_prompt: bool = Field(default=True, description="Включить запрос обратной связи")
-    debug: bool = Field(default=False, description="Отладочная информация")
+    """Р—Р°РїСЂРѕСЃ РЅР° РѕС‚РІРµС‚ РЅР° РІРѕРїСЂРѕСЃ"""
+    query: str = Field(..., min_length=3, max_length=500, description="Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    user_id: str = Field(default="default", min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    session_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="ID chat session")
+    user_level: UserLevel = Field(default=UserLevel.BEGINNER, description="РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    include_path: bool = Field(default=True, description="Р’РєР»СЋС‡РёС‚СЊ СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё")
+    include_feedback_prompt: bool = Field(default=True, description="Р’РєР»СЋС‡РёС‚СЊ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё")
+    debug: bool = Field(default=False, description="РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ")
     
     @field_validator('query')
     @classmethod
     def query_not_empty(cls, v: str) -> str:
         if not v.strip():
-            raise ValueError("Вопрос не может быть пустым")
+            raise ValueError("Р’РѕРїСЂРѕСЃ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј")
         return v.strip()
     
     model_config = {
         "json_schema_extra": {
             "example": {
-                "query": "Что такое осознавание?",
+                "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
                 "user_id": "user_123",
+                "session_id": "chat_abc",
                 "user_level": "beginner",
                 "include_path": True,
                 "include_feedback_prompt": True,
@@ -60,12 +62,12 @@ class AskQuestionRequest(BaseModel):
 
 
 class FeedbackRequest(BaseModel):
-    """Запрос на сохранение обратной связи"""
-    user_id: str = Field(..., min_length=1, max_length=100, description="ID пользователя")
-    turn_index: int = Field(..., ge=0, description="Индекс хода диалога (0-based)")
-    feedback: FeedbackType = Field(..., description="Тип обратной связи")
-    rating: Optional[int] = Field(default=None, ge=1, le=5, description="Рейтинг (1-5)")
-    comment: Optional[str] = Field(default=None, max_length=500, description="Комментарий пользователя")
+    """Р—Р°РїСЂРѕСЃ РЅР° СЃРѕС…СЂР°РЅРµРЅРёРµ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё"""
+    user_id: str = Field(..., min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    turn_index: int = Field(..., ge=0, description="РРЅРґРµРєСЃ С…РѕРґР° РґРёР°Р»РѕРіР° (0-based)")
+    feedback: FeedbackType = Field(..., description="РўРёРї РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё")
+    rating: Optional[int] = Field(default=None, ge=1, le=5, description="Р РµР№С‚РёРЅРі (1-5)")
+    comment: Optional[str] = Field(default=None, max_length=500, description="РљРѕРјРјРµРЅС‚Р°СЂРёР№ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     
     model_config = {
         "json_schema_extra": {
@@ -74,28 +76,28 @@ class FeedbackRequest(BaseModel):
                 "turn_index": 0,
                 "feedback": "positive",
                 "rating": 5,
-                "comment": "Очень помогло!"
+                "comment": "РћС‡РµРЅСЊ РїРѕРјРѕРіР»Рѕ!"
             }
         }
     }
 
 
 class GetUserHistoryRequest(BaseModel):
-    """Запрос на историю пользователя"""
-    user_id: str = Field(..., min_length=1, max_length=100, description="ID пользователя")
-    last_n_turns: int = Field(default=10, ge=1, le=50, description="Последние N оборотов")
+    """Р—Р°РїСЂРѕСЃ РЅР° РёСЃС‚РѕСЂРёСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"""
+    user_id: str = Field(..., min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    last_n_turns: int = Field(default=10, ge=1, le=50, description="РџРѕСЃР»РµРґРЅРёРµ N РѕР±РѕСЂРѕС‚РѕРІ")
 
 
 class GetStatsRequest(BaseModel):
-    """Запрос на статистику"""
-    user_id: Optional[str] = Field(default=None, description="ID пользователя (опционально)")
-    time_range_days: int = Field(default=30, ge=1, le=365, description="Временной диапазон (дни)")
+    """Р—Р°РїСЂРѕСЃ РЅР° СЃС‚Р°С‚РёСЃС‚РёРєСѓ"""
+    user_id: Optional[str] = Field(default=None, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)")
+    time_range_days: int = Field(default=30, ge=1, le=365, description="Р’СЂРµРјРµРЅРЅРѕР№ РґРёР°РїР°Р·РѕРЅ (РґРЅРё)")
 
 
 # ===== RESPONSE MODELS =====
 
 class SourceResponse(BaseModel):
-    """Источник (блок)"""
+    """РСЃС‚РѕС‡РЅРёРє (Р±Р»РѕРє)"""
     block_id: str
     title: str
     youtube_link: str
@@ -106,7 +108,7 @@ class SourceResponse(BaseModel):
 
 
 class StateAnalysisResponse(BaseModel):
-    """Анализ состояния пользователя"""
+    """РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"""
     primary_state: str
     confidence: float
     emotional_tone: str
@@ -114,7 +116,7 @@ class StateAnalysisResponse(BaseModel):
 
 
 class PathStepResponse(BaseModel):
-    """Один шаг пути"""
+    """РћРґРёРЅ С€Р°Рі РїСѓС‚Рё"""
     step_number: int
     title: str
     duration_weeks: int
@@ -123,7 +125,7 @@ class PathStepResponse(BaseModel):
 
 
 class PathRecommendationResponse(BaseModel):
-    """Рекомендация пути"""
+    """Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё"""
     current_state: str
     target_state: str
     key_focus: str
@@ -133,7 +135,7 @@ class PathRecommendationResponse(BaseModel):
 
 
 class AnswerResponse(BaseModel):
-    """Ответ на вопрос (фаза 1-3)"""
+    """РћС‚РІРµС‚ РЅР° РІРѕРїСЂРѕСЃ (С„Р°Р·Р° 1-3)"""
     status: str
     answer: str
     concepts: List[str]
@@ -148,7 +150,7 @@ class AnswerResponse(BaseModel):
 
 
 class AdaptiveAnswerResponse(BaseModel):
-    """Адаптивный ответ (фаза 4)"""
+    """РђРґР°РїС‚РёРІРЅС‹Р№ РѕС‚РІРµС‚ (С„Р°Р·Р° 4)"""
     status: str
     answer: str
     state_analysis: StateAnalysisResponse
@@ -167,7 +169,7 @@ class AdaptiveAnswerResponse(BaseModel):
 
 
 class ConversationTurnResponse(BaseModel):
-    """Один ход диалога"""
+    """РћРґРёРЅ С…РѕРґ РґРёР°Р»РѕРіР°"""
     timestamp: str
     user_input: str
     user_state: Optional[str] = None
@@ -179,7 +181,7 @@ class ConversationTurnResponse(BaseModel):
 
 
 class UserHistoryResponse(BaseModel):
-    """История пользователя"""
+    """РСЃС‚РѕСЂРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"""
     user_id: str
     total_turns: int
     turns: List[ConversationTurnResponse]
@@ -189,7 +191,7 @@ class UserHistoryResponse(BaseModel):
 
 
 class UserSummaryResponse(BaseModel):
-    """Краткое резюме истории пользователя"""
+    """РљСЂР°С‚РєРѕРµ СЂРµР·СЋРјРµ РёСЃС‚РѕСЂРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"""
     user_id: str
     total_turns: int
     primary_interests: List[str]
@@ -201,14 +203,48 @@ class UserSummaryResponse(BaseModel):
 
 
 class DeleteHistoryResponse(BaseModel):
-    """Ответ на очистку истории"""
+    """РћС‚РІРµС‚ РЅР° РѕС‡РёСЃС‚РєСѓ РёСЃС‚РѕСЂРёРё"""
     status: str
     message: str
     user_id: str
 
 
+class ChatSessionInfoResponse(BaseModel):
+    """Lightweight chat session item for sidebar/history."""
+    session_id: str
+    user_id: str
+    created_at: str
+    last_active: str
+    status: str
+    title: str
+    turns_count: int = 0
+    last_user_input: Optional[str] = None
+    last_bot_response: Optional[str] = None
+    last_turn_timestamp: Optional[str] = None
+
+
+class UserSessionsResponse(BaseModel):
+    """List of chat sessions for a user."""
+    user_id: str
+    total_sessions: int
+    sessions: List[ChatSessionInfoResponse]
+
+
+class CreateSessionRequest(BaseModel):
+    """Create new chat session request."""
+    title: Optional[str] = Field(default=None, max_length=120)
+
+
+class DeleteSessionResponse(BaseModel):
+    """Delete chat session response."""
+    status: str
+    message: str
+    user_id: str
+    session_id: str
+
+
 class SessionInfoResponse(BaseModel):
-    """Состояние персистентной сессии пользователя в SQLite."""
+    """РЎРѕСЃС‚РѕСЏРЅРёРµ РїРµСЂСЃРёСЃС‚РµРЅС‚РЅРѕР№ СЃРµСЃСЃРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ SQLite."""
     user_id: str
     enabled: bool
     exists: bool
@@ -221,7 +257,7 @@ class SessionInfoResponse(BaseModel):
 
 
 class ArchiveSessionsResponse(BaseModel):
-    """Ответ на архивирование старых сессий."""
+    """РћС‚РІРµС‚ РЅР° Р°СЂС…РёРІРёСЂРѕРІР°РЅРёРµ СЃС‚Р°СЂС‹С… СЃРµСЃСЃРёР№."""
     status: str
     archived_count: int
     deleted_count: int
@@ -231,7 +267,7 @@ class ArchiveSessionsResponse(BaseModel):
 
 
 class FeedbackResponse(BaseModel):
-    """Ответ на отправку обратной связи"""
+    """РћС‚РІРµС‚ РЅР° РѕС‚РїСЂР°РІРєСѓ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё"""
     status: str
     message: str
     user_id: str
@@ -239,7 +275,7 @@ class FeedbackResponse(BaseModel):
 
 
 class HealthCheckResponse(BaseModel):
-    """Проверка здоровья"""
+    """РџСЂРѕРІРµСЂРєР° Р·РґРѕСЂРѕРІСЊСЏ"""
     status: str
     version: str
     timestamp: str
@@ -248,7 +284,7 @@ class HealthCheckResponse(BaseModel):
 
 
 class ErrorResponse(BaseModel):
-    """Ошибка"""
+    """РћС€РёР±РєР°"""
     status: str
     error: str
     detail: Optional[str] = None
@@ -256,7 +292,7 @@ class ErrorResponse(BaseModel):
 
 
 class StatsResponse(BaseModel):
-    """Статистика"""
+    """РЎС‚Р°С‚РёСЃС‚РёРєР°"""
     total_users: int
     total_questions: int
     average_processing_time: float

@@ -1,12 +1,10 @@
-/**
+﻿/**
  * API Types for Bot Psychologist Web UI
- * 
+ *
  * Types matching the FastAPI backend models from Phase 5.
  */
 
 // ===== ENUMS =====
-
-export type UserLevel = 'beginner' | 'intermediate' | 'advanced';
 
 export type FeedbackType = 'positive' | 'negative' | 'neutral';
 
@@ -15,7 +13,7 @@ export type FeedbackType = 'positive' | 'negative' | 'neutral';
 export interface AskQuestionRequest {
   query: string;
   user_id?: string;
-  user_level?: UserLevel;
+  session_id?: string;
   include_path?: boolean;
   include_feedback_prompt?: boolean;
   debug?: boolean;
@@ -37,6 +35,10 @@ export interface GetUserHistoryRequest {
 export interface GetStatsRequest {
   user_id?: string;
   time_range_days?: number;
+}
+
+export interface CreateSessionRequest {
+  title?: string;
 }
 
 // ===== RESPONSE TYPES =====
@@ -119,6 +121,32 @@ export interface UserHistoryResponse {
   last_interaction?: string;
 }
 
+export interface ChatSessionInfo {
+  session_id: string;
+  user_id: string;
+  created_at: string;
+  last_active: string;
+  status: string;
+  title: string;
+  turns_count: number;
+  last_user_input?: string;
+  last_bot_response?: string;
+  last_turn_timestamp?: string;
+}
+
+export interface UserSessionsResponse {
+  user_id: string;
+  total_sessions: number;
+  sessions: ChatSessionInfo[];
+}
+
+export interface DeleteSessionResponse {
+  status: string;
+  message: string;
+  user_id: string;
+  session_id: string;
+}
+
 export interface FeedbackResponse {
   status: string;
   message: string;
@@ -150,5 +178,3 @@ export interface StatsResponse {
   feedback_stats: Record<string, number>;
   timestamp: string;
 }
-
-

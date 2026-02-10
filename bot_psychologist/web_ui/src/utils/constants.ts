@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Constants for Bot Psychologist Web UI
- * 
+ *
  * Centralized configuration and constant values used throughout the application.
  */
 
@@ -14,13 +14,13 @@ export const API_ENDPOINTS = {
   QUESTIONS_BASIC: '/questions/basic',
   QUESTIONS_SAG_AWARE: '/questions/sag-aware',
   QUESTIONS_GRAPH: '/questions/graph-powered',
-  
+
   // Users
   USER_HISTORY: (userId: string) => `/users/${userId}/history`,
-  
+
   // Feedback
   FEEDBACK: '/feedback',
-  
+
   // Stats & Health
   STATS: '/stats',
   HEALTH: '/health',
@@ -30,14 +30,12 @@ export const API_TIMEOUT = 60000; // 60 seconds for LLM responses
 
 // ===== DEFAULT VALUES =====
 
-export const DEFAULT_USER_LEVEL = 'beginner' as const;
 export const DEFAULT_THEME = 'system' as const;
 export const DEFAULT_HISTORY_TURNS = 10;
 
 export const DEFAULT_SETTINGS = {
   apiKey: '',
   userId: '',
-  userLevel: DEFAULT_USER_LEVEL,
   theme: DEFAULT_THEME,
   showSources: true,
   showPath: true,
@@ -62,36 +60,29 @@ export const STORAGE_KEYS = {
  * Based on Sadhguru's framework for inner states
  */
 export const STATE_COLORS: Record<string, string> = {
-  // Positive states
-  'joy': '#FFD700',        // Gold
-  'peace': '#87CEEB',      // Sky blue
-  'love': '#FF69B4',       // Pink
-  'clarity': '#00CED1',    // Turquoise
-  'gratitude': '#98FB98',  // Pale green
-  'enthusiasm': '#FFA500', // Orange
-  'compassion': '#DDA0DD', // Plum
-  'awareness': '#E6E6FA',  // Lavender
-  'equanimity': '#B0E0E6', // Powder blue
-  'bliss': '#FFE4B5',      // Moccasin
-  
-  // Challenging states
-  'anxiety': '#FF6B6B',    // Coral red
-  'stress': '#FF4500',     // Orange red
-  'confusion': '#808080',  // Gray
-  'anger': '#DC143C',      // Crimson
-  'fear': '#4B0082',       // Indigo
-  'sadness': '#6495ED',    // Cornflower blue
-  'frustration': '#CD853F', // Peru
-  'restlessness': '#DAA520', // Goldenrod
-  
-  // Neutral/Transition states
-  'neutral': '#A9A9A9',    // Dark gray
-  'seeking': '#7B68EE',    // Medium slate blue
-  'curious': '#40E0D0',    // Turquoise
-  'contemplative': '#708090', // Slate gray
-  
-  // Default
-  'default': '#6B7280',    // Gray-500
+  joy: '#FFD700',
+  peace: '#87CEEB',
+  love: '#FF69B4',
+  clarity: '#00CED1',
+  gratitude: '#98FB98',
+  enthusiasm: '#FFA500',
+  compassion: '#DDA0DD',
+  awareness: '#E6E6FA',
+  equanimity: '#B0E0E6',
+  bliss: '#FFE4B5',
+  anxiety: '#FF6B6B',
+  stress: '#FF4500',
+  confusion: '#808080',
+  anger: '#DC143C',
+  fear: '#4B0082',
+  sadness: '#6495ED',
+  frustration: '#CD853F',
+  restlessness: '#DAA520',
+  neutral: '#A9A9A9',
+  seeking: '#7B68EE',
+  curious: '#40E0D0',
+  contemplative: '#708090',
+  default: '#6B7280',
 } as const;
 
 // ===== STATE EMOJIS MAPPING =====
@@ -100,52 +91,29 @@ export const STATE_COLORS: Record<string, string> = {
  * Emojis for psychological/emotional states visualization
  */
 export const STATE_EMOJIS: Record<string, string> = {
-  // Positive states
-  'joy': '😊',
-  'peace': '🕊️',
-  'love': '💝',
-  'clarity': '💎',
-  'gratitude': '🙏',
-  'enthusiasm': '✨',
-  'compassion': '💗',
-  'awareness': '👁️',
-  'equanimity': '⚖️',
-  'bliss': '🌟',
-  
-  // Challenging states
-  'anxiety': '😰',
-  'stress': '😫',
-  'confusion': '😕',
-  'anger': '😠',
-  'fear': '😨',
-  'sadness': '😢',
-  'frustration': '😤',
-  'restlessness': '🌀',
-  
-  // Neutral/Transition states
-  'neutral': '😐',
-  'seeking': '🔍',
-  'curious': '🤔',
-  'contemplative': '🧘',
-  
-  // Default
-  'default': '💭',
-} as const;
-
-// ===== USER LEVELS =====
-
-export const USER_LEVELS = ['beginner', 'intermediate', 'advanced'] as const;
-
-export const USER_LEVEL_LABELS: Record<string, string> = {
-  'beginner': 'Начинающий',
-  'intermediate': 'Практикующий',
-  'advanced': 'Продвинутый',
-} as const;
-
-export const USER_LEVEL_DESCRIPTIONS: Record<string, string> = {
-  'beginner': 'Только начинаю изучение',
-  'intermediate': 'Имею базовый опыт практики',
-  'advanced': 'Глубокое понимание и регулярная практика',
+  joy: '😊',
+  peace: '🕉️',
+  love: '💝',
+  clarity: '💎',
+  gratitude: '🙏',
+  enthusiasm: '✨',
+  compassion: '💗',
+  awareness: '👁️',
+  equanimity: '⚖️',
+  bliss: '🌟',
+  anxiety: '😰',
+  stress: '😫',
+  confusion: '😕',
+  anger: '😠',
+  fear: '😨',
+  sadness: '😢',
+  frustration: '😤',
+  restlessness: '🌀',
+  neutral: '😐',
+  seeking: '🔍',
+  curious: '🤔',
+  contemplative: '🧘',
+  default: '💭',
 } as const;
 
 // ===== FEEDBACK =====
@@ -153,15 +121,15 @@ export const USER_LEVEL_DESCRIPTIONS: Record<string, string> = {
 export const FEEDBACK_TYPES = ['positive', 'negative', 'neutral'] as const;
 
 export const FEEDBACK_LABELS: Record<string, string> = {
-  'positive': 'Полезно',
-  'negative': 'Не полезно',
-  'neutral': 'Нейтрально',
+  positive: 'Полезно',
+  negative: 'Не полезно',
+  neutral: 'Нейтрально',
 } as const;
 
 export const FEEDBACK_EMOJIS: Record<string, string> = {
-  'positive': '👍',
-  'negative': '👎',
-  'neutral': '😐',
+  positive: '👍',
+  negative: '👎',
+  neutral: '😐',
 } as const;
 
 // ===== THEME =====
@@ -169,18 +137,18 @@ export const FEEDBACK_EMOJIS: Record<string, string> = {
 export const THEMES = ['light', 'dark', 'system'] as const;
 
 export const THEME_LABELS: Record<string, string> = {
-  'light': 'Светлая',
-  'dark': 'Тёмная',
-  'system': 'Системная',
+  light: 'Светлая',
+  dark: 'Тёмная',
+  system: 'Системная',
 } as const;
 
 // ===== ANIMATION TIMINGS =====
 
 export const ANIMATION = {
-  DURATION_FAST: 150,    // ms
-  DURATION_NORMAL: 300,  // ms
-  DURATION_SLOW: 500,    // ms
-  TYPING_DELAY: 50,      // ms per character
+  DURATION_FAST: 150,
+  DURATION_NORMAL: 300,
+  DURATION_SLOW: 500,
+  TYPING_DELAY: 50,
 } as const;
 
 // ===== LIMITS =====
@@ -202,5 +170,3 @@ export const PATTERNS = {
   UUID: /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i,
   TIMECODE: /^(\d{1,2}:)?[0-5]?\d:[0-5]\d$/,
 } as const;
-
-

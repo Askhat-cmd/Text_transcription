@@ -1,16 +1,17 @@
-/**
+﻿/**
  * Storage Service for Bot Psychologist Web UI
- * 
+ *
  * Type-safe wrapper around localStorage with fallback support.
  */
 
-import type { UserSettings, UserLevel } from '../types';
+import type { UserSettings } from '../types';
+
+const LEGACY_USER_LEVEL_KEY = 'bot_user_level';
 
 // Storage keys
 const STORAGE_KEYS = {
   API_KEY: 'bot_api_key',
   USER_ID: 'bot_user_id',
-  USER_LEVEL: 'bot_user_level',
   THEME: 'bot_theme',
   SETTINGS: 'bot_settings',
   CHAT_HISTORY: 'bot_chat_history',
@@ -41,7 +42,7 @@ class StorageService {
 
   get<T>(key: StorageKey, defaultValue: T): T {
     if (!this.isAvailable) return defaultValue;
-    
+
     try {
       const item = localStorage.getItem(key);
       if (item === null) return defaultValue;
@@ -53,7 +54,7 @@ class StorageService {
 
   set<T>(key: StorageKey, value: T): boolean {
     if (!this.isAvailable) return false;
-    
+
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
@@ -65,7 +66,7 @@ class StorageService {
 
   remove(key: StorageKey): boolean {
     if (!this.isAvailable) return false;
-    
+
     try {
       localStorage.removeItem(key);
       return true;
@@ -76,12 +77,14 @@ class StorageService {
 
   clear(): boolean {
     if (!this.isAvailable) return false;
-    
+
     try {
-      // Only clear our app's keys
-      Object.values(STORAGE_KEYS).forEach(key => {
+      Object.values(STORAGE_KEYS).forEach((key) => {
         localStorage.removeItem(key);
       });
+
+      // Cleanup key from previous versions.
+      localStorage.removeItem(LEGACY_USER_LEVEL_KEY);
       return true;
     } catch {
       return false;
@@ -117,7 +120,7 @@ class StorageService {
   // User ID
   getUserId(): string {
     if (!this.isAvailable) return this.generateUserId();
-    
+
     let userId = localStorage.getItem(STORAGE_KEYS.USER_ID);
     if (!userId) {
       userId = this.generateUserId();
@@ -138,26 +141,6 @@ class StorageService {
 
   private generateUserId(): string {
     return `user_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-  }
-
-  // User Level
-  getUserLevel(): UserLevel {
-    if (!this.isAvailable) return 'beginner';
-    const level = localStorage.getItem(STORAGE_KEYS.USER_LEVEL);
-    if (level === 'intermediate' || level === 'advanced') {
-      return level;
-    }
-    return 'beginner';
-  }
-
-  setUserLevel(level: UserLevel): boolean {
-    if (!this.isAvailable) return false;
-    try {
-      localStorage.setItem(STORAGE_KEYS.USER_LEVEL, level);
-      return true;
-    } catch {
-      return false;
-    }
   }
 
   // Theme
@@ -185,7 +168,6 @@ class StorageService {
     const defaultSettings: UserSettings = {
       apiKey: this.getApiKey(),
       userId: this.getUserId(),
-      userLevel: this.getUserLevel(),
       theme: this.getTheme(),
       showSources: true,
       showPath: true,
@@ -199,18 +181,14 @@ class StorageService {
   setSettings(settings: Partial<UserSettings>): boolean {
     const current = this.getSettings();
     const updated = { ...current, ...settings };
-    
-    // Also update individual keys for backwards compatibility
+
     if (settings.apiKey !== undefined) this.setApiKey(settings.apiKey);
     if (settings.userId !== undefined) this.setUserId(settings.userId);
-    if (settings.userLevel !== undefined) this.setUserLevel(settings.userLevel);
     if (settings.theme !== undefined) this.setTheme(settings.theme);
-    
+
     return this.set(STORAGE_KEYS.SETTINGS, updated);
   }
 }
 
 // Singleton instance
 export const storageService = new StorageService();
-
-

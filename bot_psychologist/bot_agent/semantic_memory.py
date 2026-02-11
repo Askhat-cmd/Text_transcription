@@ -9,7 +9,9 @@ Semantic Memory Module
 
 import logging
 import json
+import sys
 from dataclasses import dataclass
+from importlib.util import find_spec
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -47,12 +49,14 @@ class SemanticMemory:
 
         self._model = None
         self._model_loaded = False
+        self._unavailable_logged = False
 
-        self.cache_dir = config.CACHE_DIR / "semantic_memory"
+        # Store per-user to avoid collisions and simplify cleanup.
+        self.cache_dir = config.CACHE_DIR / "semantic_memory" / user_id
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-        self.embeddings_file = self.cache_dir / f"{user_id}_embeddings.npz"
-        self.metadata_file = self.cache_dir / f"{user_id}_metadata.json"
+        self.embeddings_file = self.cache_dir / "embeddings.npz"
+        self.metadata_file = self.cache_dir / "metadata.json"
 
         logger.debug(f"📦 SemanticMemory создан для пользователя: {user_id}")
 
@@ -63,27 +67,45 @@ class SemanticMemory:
             self._load_model()
         return self._model
 
+    def _warn_unavailable_once(self, reason: str) -> None:
+        if self._unavailable_logged:
+            return
+        self._unavailable_logged = True
+        logger.warning(
+            "[SEMANTIC] disabled: %s (python=%s)",
+            reason,
+            sys.executable,
+        )
+
     def _load_model(self) -> None:
         """Загрузить модель sentence-transformers."""
+        # If dependencies are missing in the active interpreter/venv, do not crash:
+        # semantic memory becomes a no-op instead of spamming errors.
+        if find_spec("sentence_transformers") is None:
+            self._model = None
+            self._model_loaded = True
+            self._warn_unavailable_once("sentence-transformers not installed")
+            return
+        if find_spec("torch") is None:
+            self._model = None
+            self._model_loaded = True
+            self._warn_unavailable_once("torch not installed (required by sentence-transformers)")
+            return
+
         try:
             from sentence_transformers import SentenceTransformer
 
             model_name = config.EMBEDDING_MODEL
-            logger.info(f"🤖 Загружаю модель эмбеддингов: {model_name}")
+            logger.info("[SEMANTIC] loading embedding model: %s", model_name)
 
             self._model = SentenceTransformer(model_name)
             self._model_loaded = True
 
-            logger.info("✅ Модель эмбеддингов загружена")
-        except ImportError as exc:
-            logger.error(
-                "❌ sentence-transformers не установлен. "
-                "Установите: pip install sentence-transformers"
-            )
-            raise exc
+            logger.info("[SEMANTIC] embedding model loaded")
         except Exception as exc:
-            logger.error(f"❌ Ошибка загрузки модели: {exc}")
-            raise
+            self._model = None
+            self._model_loaded = True
+            self._warn_unavailable_once(f"failed to load model ({type(exc).__name__}: {exc})")
 
     def add_turn_embedding(
         self,
@@ -105,9 +127,10 @@ class SemanticMemory:
             concepts: Список концептов
             timestamp: Временная метка
         """
-        logger.info(
-            f"[SEMANTIC] add_turn_embedding user_id={self.user_id} turn_index={turn_index}"
-        )
+        if self.model is None:
+            # Disabled in current environment.
+            return
+        logger.info(f"[SEMANTIC] add_turn_embedding user_id={self.user_id} turn_index={turn_index}")
         response_preview = bot_response[:200] if bot_response else ""
         text_to_embed = f"{user_input} {response_preview}"
 
@@ -149,11 +172,13 @@ class SemanticMemory:
             min_similarity: Минимальное косинусное сходство (0-1)
             exclude_last_n: Исключить последние N ходов (они уже в short-term)
         """
+        if self.model is None:
+            return []
         logger.info(
             f"[SEMANTIC] search start user_id={self.user_id} top_k={top_k} min_similarity={min_similarity}"
         )
         if not self.turn_embeddings:
-            logger.debug("🔍 Нет эмбеддингов для поиска")
+            logger.debug("No embeddings available for search")
             return []
 
         try:
@@ -282,7 +307,7 @@ class SemanticMemory:
                 f"💾 Semantic memory сохранена: {len(self.turn_embeddings)} эмбеддингов"
             )
         except Exception as exc:
-            logger.error(f"❌ Ошибка сохранения semantic memory: {exc}")
+            logger.error(f"Semantic memory save error: {exc}")
 
     def load_from_disk(self) -> bool:
         """
@@ -291,7 +316,43 @@ class SemanticMemory:
         Returns:
             True если загрузка успешна, False если файлы не найдены
         """
+        # Backward compatibility: older versions stored files in the parent folder.
         if not self.embeddings_file.exists() or not self.metadata_file.exists():
+            old_dir = config.CACHE_DIR / "semantic_memory"
+            old_embeddings = old_dir / f"{self.user_id}_embeddings.npz"
+            old_metadata = old_dir / f"{self.user_id}_metadata.json"
+            if old_embeddings.exists() and old_metadata.exists():
+                try:
+                    data = np.load(old_embeddings)
+                    embeddings_array = data["embeddings"]
+
+                    with open(old_metadata, "r", encoding="utf-8") as file:
+                        metadata_list = json.load(file)
+
+                    self.turn_embeddings = []
+                    for i, meta in enumerate(metadata_list):
+                        self.turn_embeddings.append(
+                            TurnEmbedding(
+                                turn_index=meta["turn_index"],
+                                user_input=meta["user_input"],
+                                bot_response_preview=meta["bot_response_preview"],
+                                user_state=meta.get("user_state"),
+                                concepts=meta.get("concepts", []),
+                                timestamp=meta["timestamp"],
+                                embedding=embeddings_array[i],
+                            )
+                        )
+
+                    # Persist into the new per-user directory for future runs.
+                    self.save_to_disk()
+                    logger.info(
+                        f"Semantic memory migrated: {len(self.turn_embeddings)} embeddings"
+                    )
+                    return True
+                except Exception as exc:
+                    logger.error(f"Semantic memory migration error: {exc}", exc_info=True)
+                    return False
+
             logger.debug(f"📋 Новая semantic memory для пользователя {self.user_id}")
             return False
 
@@ -317,17 +378,19 @@ class SemanticMemory:
                 )
 
             logger.info(
-                f"✅ Semantic memory загружена: {len(self.turn_embeddings)} эмбеддингов"
+                f"Semantic memory loaded: {len(self.turn_embeddings)} embeddings"
             )
             return True
         except Exception as exc:
-            logger.error(f"❌ Ошибка загрузки semantic memory: {exc}")
+            logger.error(f"Semantic memory load error: {exc}")
             return False
 
     def rebuild_all_embeddings(self, turns_data: List[Dict]) -> None:
         """
         Пересоздать все эмбеддинги batch'ем.
         """
+        if self.model is None:
+            return
         if not turns_data:
             return
 
@@ -377,7 +440,7 @@ class SemanticMemory:
             self.embeddings_file.unlink()
         if self.metadata_file.exists():
             self.metadata_file.unlink()
-        logger.info("🗑️ Semantic memory очищена")
+        logger.info("Semantic memory cleared")
 
     def get_stats(self) -> Dict:
         """Получить статистику semantic memory."""

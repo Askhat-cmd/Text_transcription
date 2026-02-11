@@ -1,0 +1,875 @@
+2026-02-11 13:49:37 | INFO     | root                                | ======================================================================
+2026-02-11 13:49:37 | INFO     | root                                | Logging initialized
+2026-02-11 13:49:37 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
+2026-02-11 13:49:37 | INFO     | root                                | App log: logs/app/bot.log
+2026-02-11 13:49:37 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
+2026-02-11 13:49:37 | INFO     | root                                | Error log: logs/error/error.log
+2026-02-11 13:49:37 | INFO     | root                                | ======================================================================
+2026-02-11 13:49:37 | INFO     | api.main                            | API server starting
+2026-02-11 13:49:37 | INFO     | api.main                            | Version: 0.5.0
+2026-02-11 13:49:37 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
+2026-02-11 13:49:53 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1770619963149_54f65/sessions (key: none)
+2026-02-11 13:49:53 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1770619963149_54f65/sessions (key: none)
+2026-02-11 13:49:53 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1770619963149_54f65/sessions | status=200 | 0.001s
+2026-02-11 13:49:53 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1770619963149_54f65/sessions | status=200 | 0.002s
+2026-02-11 13:49:53 | INFO     | api.main                            | -> OPTIONS /api/v1/users/30325bc0-d7d3-4eab-9ccf-88431b90a91a/history (key: none)
+2026-02-11 13:49:53 | INFO     | api.main                            | <- OPTIONS /api/v1/users/30325bc0-d7d3-4eab-9ccf-88431b90a91a/history | status=200 | 0.001s
+2026-02-11 13:49:53 | INFO     | api.main                            | -> GET /api/v1/users/30325bc0-d7d3-4eab-9ccf-88431b90a91a/history (key: dev-key-00...)
+2026-02-11 13:49:53 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ 30325bc0-d7d3-4eab-9ccf-88431b90a91a
+2026-02-11 13:49:53 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=30325bc0-d7d3-4eab-9ccf-88431b90a91a
+2026-02-11 13:49:53 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=30325bc0-d7d3-4eab-9ccf-88431b90a91a
+2026-02-11 13:49:53 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=30325bc0-d7d3-4eab-9ccf-88431b90a91a
+2026-02-11 13:49:53 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=6 user_id=30325bc0-d7d3-4eab-9ccf-88431b90a91a
+2026-02-11 13:49:53 | INFO     | api.main                            | <- GET /api/v1/users/30325bc0-d7d3-4eab-9ccf-88431b90a91a/history | status=200 | 0.017s
+2026-02-11 13:49:56 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1770619963149_54f65/sessions (key: none)
+2026-02-11 13:49:56 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1770619963149_54f65/sessions | status=200 | 0.001s
+2026-02-11 13:49:56 | INFO     | api.main                            | -> POST /api/v1/users/user_1770619963149_54f65/sessions (key: dev-key-00...)
+2026-02-11 13:49:56 | INFO     | api.main                            | <- POST /api/v1/users/user_1770619963149_54f65/sessions | status=200 | 0.009s
+2026-02-11 13:49:56 | INFO     | api.main                            | -> OPTIONS /api/v1/users/c9c23f90-f83a-4cee-b3f6-b7f28f60468b/history (key: none)
+2026-02-11 13:49:56 | INFO     | api.main                            | <- OPTIONS /api/v1/users/c9c23f90-f83a-4cee-b3f6-b7f28f60468b/history | status=200 | 0.001s
+2026-02-11 13:49:56 | INFO     | api.main                            | -> GET /api/v1/users/c9c23f90-f83a-4cee-b3f6-b7f28f60468b/history (key: dev-key-00...)
+2026-02-11 13:49:56 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:49:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:49:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:49:56 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:49:56 | INFO     | api.main                            | <- GET /api/v1/users/c9c23f90-f83a-4cee-b3f6-b7f28f60468b/history | status=200 | 0.013s
+2026-02-11 13:50:05 | INFO     | api.main                            | -> OPTIONS /api/v1/questions/adaptive (key: none)
+2026-02-11 13:50:05 | INFO     | api.main                            | <- OPTIONS /api/v1/questions/adaptive | status=200 | 0.001s
+2026-02-11 13:50:05 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+2026-02-11 13:50:05 | INFO     | api.routes                          | [ADAPTIVE] Adaptive question: привет... (user: user_1770619963149_54f65)
+2026-02-11 13:50:05 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='привет...'
+2026-02-11 13:50:05 | INFO     | bot_agent.data_loader               | 📂 Загрузка SAG v2.0 данных из C:\My_practice\Text_transcription\bot_psychologist\..\voice_bot_pipeline\data\sag_final
+2026-02-11 13:50:05 | INFO     | bot_agent.data_loader               | 🔍 Найдено 33 файлов
+2026-02-11 13:50:07 | INFO     | bot_agent.data_loader               | ✅ Загружено: 33 документов, 781 блоков
+2026-02-11 13:50:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=0
+2026-02-11 13:50:07 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+2026-02-11 13:50:10 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious (уверенность: 0.70)
+2026-02-11 13:50:10 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенность: 0.70)
+2026-02-11 13:50:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=47 (orig_query len=6)
+2026-02-11 13:50:10 | INFO     | bot_agent.retriever                 | [RETRIEVAL] cache_check hash=-6789670959819930084 ts=1770799810.606560
+2026-02-11 13:50:10 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: привет
+СНОВА ВОПРОС-ЯКОРЬ: привет' top_k=5
+2026-02-11 13:50:11 | INFO     | bot_agent.retriever                 | [RETRIEVAL] building TF-IDF index
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL] index built for 781 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [1] score=0.2360 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 title=Наблюдение за вопрошающим и его влияние на вопросы
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [2] score=0.2228 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [3] score=0.2012 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [4] score=0.1995 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [5] score=0.1925 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 score=0.2360 title=Наблюдение за вопрошающим и его влияние на вопросы
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2228 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2012 title=Вопросы и обсуждение
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.1995 title=Структура сессий и взаимодействие
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.1925 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.voyage_reranker | [VOYAGE] rerank enabled (model=rerank-2). Calling Voyage API.
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5887 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.17578125, 'voyage_confidence': 0.234375, 'delta_top1_top2': 0.05859375, 'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5859 complexity=1.00 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:21 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:50:22 | INFO     | bot_agent.path_builder              | 🛤️ Строю путь трансформации для c9c23f90-f83a-4cee-b3f6-b7f28f60468b...
+2026-02-11 13:50:22 | INFO     | bot_agent.graph_client              | 📊 Загружаю Knowledge Graphs из всех документов...
+2026-02-11 13:50:25 | INFO     | bot_agent.graph_client              | ✅ Загружено графов из 33 документов
+2026-02-11 13:50:25 | INFO     | bot_agent.graph_client              |    Всего узлов: 142, связей: 11908
+2026-02-11 13:50:25 | INFO     | bot_agent.path_builder              | ✅ Путь построен: 8 шагов, 24 недель, фокус: Целостное развитие
+2026-02-11 13:50:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=0
+2026-02-11 13:50:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=1
+2026-02-11 13:50:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: paraphrase-multilingual-MiniLM-L12-v2
+2026-02-11 13:50:27 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-02-11 13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+2026-02-11 13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=1
+2026-02-11 13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+2026-02-11 13:50:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=1 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:50:32 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:50:32 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:32 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 27.26s
+2026-02-11 13:50:32 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 27.272s
+2026-02-11 13:50:47 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+2026-02-11 13:50:47 | INFO     | api.routes                          | [ADAPTIVE] Adaptive question: меня зовут Асхат... (user: user_1770619963149_54f65)
+2026-02-11 13:50:47 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='меня зовут Асхат...'
+2026-02-11 13:50:47 | INFO     | bot_agent.data_loader               | ✓ Данные уже загружены, используем кэш
+2026-02-11 13:50:47 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=1
+2026-02-11 13:50:47 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+2026-02-11 13:50:49 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious (уверенность: 0.70)
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенность: 0.70)
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=386 (orig_query len=16)
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL] cache_check hash=-8007798290497715468 ts=1770799849.703037
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: меня зовут Асхат
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious ---
+СНОВА ВОПРОС-ЯКОРЬ: меня зовут Асхат' top_k=5
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [1] score=0.3122 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [2] score=0.3025 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [3] score=0.2845 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [4] score=0.2806 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [5] score=0.2528 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3122 title=Структура сессий и взаимодействие
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.2845 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2806 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2528 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5638 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.16640625, 'voyage_confidence': 0.22187500000000002, 'delta_top1_top2': 0.055468750000000004, 'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5547 complexity=1.00 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:50 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:50:54 | INFO     | bot_agent.path_builder              | 🛤️ Строю путь трансформации для c9c23f90-f83a-4cee-b3f6-b7f28f60468b...
+2026-02-11 13:50:54 | INFO     | bot_agent.path_builder              | ✅ Путь построен: 8 шагов, 24 недель, фокус: Исследование: сталкинг
+2026-02-11 13:50:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=1
+2026-02-11 13:50:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=2
+2026-02-11 13:50:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=2
+2026-02-11 13:50:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+2026-02-11 13:50:55 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=2 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:50:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:50:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:55 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 7.45s
+2026-02-11 13:50:55 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 7.468s
+2026-02-11 13:51:22 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+2026-02-11 13:51:22 | INFO     | api.routes                          | [ADAPTIVE] Adaptive question: я хочу познать себя... (user: user_1770619963149_54f65)
+2026-02-11 13:51:22 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='я хочу познать себя...'
+2026-02-11 13:51:22 | INFO     | bot_agent.data_loader               | ✓ Данные уже загружены, используем кэш
+2026-02-11 13:51:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=2
+2026-02-11 13:51:22 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+2026-02-11 13:51:25 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious (уверенность: 0.75)
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенность: 0.75)
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=661 (orig_query len=19)
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL] cache_check hash=-8811471388574485080 ts=1770799885.106957
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я хочу познать себя
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious ---
+СНОВА ВОПРОС-ЯКОРЬ: я хочу познать себя' top_k=5
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [1] score=0.3616 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [2] score=0.3456 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [3] score=0.3037 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [4] score=0.3020 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [5] score=0.2948 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3616 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3456 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3037 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3020 title=Структура сессий и взаимодействие
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2948 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6719 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.18632812499999998, 'voyage_confidence': 0.2484375, 'delta_top1_top2': 0.062109375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.6211 complexity=1.00 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:51:28 | INFO     | bot_agent.path_builder              | 🛤️ Строю путь трансформации для c9c23f90-f83a-4cee-b3f6-b7f28f60468b...
+2026-02-11 13:51:28 | INFO     | bot_agent.path_builder              | ✅ Путь построен: 8 шагов, 24 недель, фокус: Исследование: сталкинг
+2026-02-11 13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=2
+2026-02-11 13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=3
+2026-02-11 13:51:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=3
+2026-02-11 13:51:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=3
+2026-02-11 13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=3 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:51:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:51:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:28 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 5.25s
+2026-02-11 13:51:28 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 5.257s
+2026-02-11 13:51:55 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+2026-02-11 13:51:55 | INFO     | api.routes                          | [ADAPTIVE] Adaptive question: Но важно не только задавать вопросы, но и быть вни... (user: user_1770619963149_54f65)
+2026-02-11 13:51:55 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='Но важно не только задавать вопросы, но и быть вни...'
+2026-02-11 13:51:55 | INFO     | bot_agent.data_loader               | ✓ Данные уже загружены, используем кэш
+2026-02-11 13:51:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=3
+2026-02-11 13:51:55 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+2026-02-11 13:51:59 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious (уверенность: 0.75)
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенность: 0.75)
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=949 (orig_query len=97)
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL] cache_check hash=-1946225097842524591 ts=1770799919.651080
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто их задает. какэто понять?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто их задает. какэто понять?' top_k=5
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [1] score=0.3807 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [2] score=0.3657 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [3] score=0.3332 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [4] score=0.3285 block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 title=Искусство задавать вопросы и открытость к ответам
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [5] score=0.2982 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3807 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3657 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.3332 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 score=0.3285 title=Искусство задавать вопросы и открытость к ответам
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.2982 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.7219 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.205078125, 'voyage_confidence': 0.2734375, 'delta_top1_top2': 0.068359375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.6836 complexity=1.00 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:00 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:52:03 | INFO     | bot_agent.path_builder              | 🛤️ Строю путь трансформации для c9c23f90-f83a-4cee-b3f6-b7f28f60468b...
+2026-02-11 13:52:03 | INFO     | bot_agent.path_builder              | ✅ Путь построен: 8 шагов, 24 недель, фокус: Исследование: личность
+2026-02-11 13:52:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=3
+2026-02-11 13:52:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=4
+2026-02-11 13:52:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=4
+2026-02-11 13:52:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=4
+2026-02-11 13:52:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=4 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:52:04 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:52:04 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:04 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 8.54s
+2026-02-11 13:52:04 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 8.546s
+2026-02-11 13:53:25 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+2026-02-11 13:53:25 | INFO     | api.routes                          | [ADAPTIVE] Adaptive question: я очень не люблю когда мне грубят другие люди, мне... (user: user_1770619963149_54f65)
+2026-02-11 13:53:25 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='я очень не люблю когда мне грубят другие люди, мне...'
+2026-02-11 13:53:25 | INFO     | bot_agent.data_loader               | ✓ Данные уже загружены, используем кэш
+2026-02-11 13:53:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=4
+2026-02-11 13:53:25 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+2026-02-11 13:53:27 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: confused (уверенность: 0.75)
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: confused (уверенность: 0.75)
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=959 (orig_query len=102)
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL] cache_check hash=4233879635624775732 ts=1770800007.657963
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?' top_k=5
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [1] score=0.3272 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [2] score=0.3194 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [3] score=0.2853 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [4] score=0.2775 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL]   [5] score=0.2742 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3272 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3194 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2853 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2775 title=Вопросы и обсуждение
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.2742 title=Структура сессий и взаимодействие
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6219 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.167578125, 'voyage_confidence': 0.2234375, 'delta_top1_top2': 0.055859375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5586 complexity=1.00 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы и обсуждение
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы и обсуждение
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:53:28 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:53:32 | INFO     | bot_agent.path_builder              | 🛤️ Строю путь трансформации для c9c23f90-f83a-4cee-b3f6-b7f28f60468b...
+2026-02-11 13:53:32 | INFO     | bot_agent.path_builder              | ✅ Путь построен: 7 шагов, 21 недель, фокус: Прояснение и интеграция понимания
+2026-02-11 13:53:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=4
+2026-02-11 13:53:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=5
+2026-02-11 13:53:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=5
+2026-02-11 13:53:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+2026-02-11 13:53:32 | INFO     | bot_agent.conversation_memory       | Updating conversation summary (turn #5)...
+2026-02-11 13:53:32 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован
+2026-02-11 13:53:36 | INFO     | bot_agent.conversation_memory       | Summary updated: 500 chars
+2026-02-11 13:53:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=5 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:53:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=5 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+2026-02-11 13:53:36 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:53:36 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:53:36 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 11.07s
+2026-02-11 13:53:36 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 11.085s
+2026-02-11 13:49:37,111 | bot_agent.llm_answerer | INFO | ✓ OpenAI клиент инициализирован
+2026-02-11 13:49:37,114 | bot_agent | INFO | 🚀 Bot Agent v0.4.0 initialized (Phase 1 + Phase 2 + Phase 3 + Phase 4)
+2026-02-11 13:50:10 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] built hybrid_query len=47 (orig_query len=6)
+2026-02-11 13:50:10 | INFO     | bot_agent.retriever            | [RETRIEVAL] cache_check hash=-6789670959819930084 ts=1770799810.606560
+2026-02-11 13:50:10 | INFO     | bot_agent.retriever            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: привет
+СНОВА ВОПРОС-ЯКОРЬ: привет' top_k=5
+2026-02-11 13:50:11 | INFO     | bot_agent.retriever            | [RETRIEVAL] building TF-IDF index
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL] index built for 781 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [1] score=0.2360 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 title=Наблюдение за вопрошающим и его влияние на вопросы
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [2] score=0.2228 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [3] score=0.2012 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [4] score=0.1995 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:12 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [5] score=0.1925 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 score=0.2360 title=Наблюдение за вопрошающим и его влияние на вопросы
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2228 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2012 title=Вопросы и обсуждение
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.1995 title=Структура сессий и взаимодействие
+2026-02-11 13:50:12 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [5] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.1925 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.voyage_reranker | [VOYAGE] rerank enabled (model=rerank-2). Calling Voyage API.
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5887 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.17578125, 'voyage_confidence': 0.234375, 'delta_top1_top2': 0.05859375, 'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter |   [in:1] score=0.5859 complexity=1.00 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003
+2026-02-11 13:50:20 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:50:20 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:32 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:50:32 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] built hybrid_query len=386 (orig_query len=16)
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL] cache_check hash=-8007798290497715468 ts=1770799849.703037
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: меня зовут Асхат
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious ---
+СНОВА ВОПРОС-ЯКОРЬ: меня зовут Асхат' top_k=5
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [1] score=0.3122 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [2] score=0.3025 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [3] score=0.2845 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [4] score=0.2806 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:50:49 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [5] score=0.2528 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3122 title=Структура сессий и взаимодействие
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [2] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [3] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.2845 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [4] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2806 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [5] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2528 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5638 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.16640625, 'voyage_confidence': 0.22187500000000002, 'delta_top1_top2': 0.055468750000000004, 'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter |   [in:1] score=0.5547 complexity=1.00 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003
+2026-02-11 13:50:49 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:50:49 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:50:55 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:50:55 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] built hybrid_query len=661 (orig_query len=19)
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL] cache_check hash=-8811471388574485080 ts=1770799885.106957
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я хочу познать себя
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious ---
+СНОВА ВОПРОС-ЯКОРЬ: я хочу познать себя' top_k=5
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [1] score=0.3616 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [2] score=0.3456 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [3] score=0.3037 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [4] score=0.3020 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:51:25 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [5] score=0.2948 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3616 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3456 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3037 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3020 title=Структура сессий и взаимодействие
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [5] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2948 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6719 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.18632812499999998, 'voyage_confidence': 0.2484375, 'delta_top1_top2': 0.062109375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter |   [in:1] score=0.6211 complexity=1.00 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000
+2026-02-11 13:51:25 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:51:25 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:51:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] built hybrid_query len=949 (orig_query len=97)
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL] cache_check hash=-1946225097842524591 ts=1770799919.651080
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто их задает. какэто понять?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто их задает. какэто понять?' top_k=5
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [1] score=0.3807 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [2] score=0.3657 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [3] score=0.3332 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [4] score=0.3285 block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 title=Искусство задавать вопросы и открытость к ответам
+2026-02-11 13:51:59 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [5] score=0.2982 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3807 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3657 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.3332 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [4] block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 score=0.3285 title=Искусство задавать вопросы и открытость к ответам
+2026-02-11 13:51:59 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [5] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.2982 title=Подготовка к следующей сессии: Вопросы и диалог
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.7219 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.205078125, 'voyage_confidence': 0.2734375, 'delta_top1_top2': 0.068359375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter |   [in:1] score=0.6836 complexity=1.00 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025
+2026-02-11 13:52:00 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:52:00 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:52:04 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:52:04 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] built hybrid_query len=959 (orig_query len=102)
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL] cache_check hash=4233879635624775732 ts=1770800007.657963
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние обороты): Обмен #1: Пользователь: привет Бот: Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?' top_k=5
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL] tfidf found 5 blocks
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [1] score=0.3272 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [2] score=0.3194 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [3] score=0.2853 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [4] score=0.2775 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:53:27 | INFO     | bot_agent.retriever            | [RETRIEVAL]   [5] score=0.2742 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Initial retrieval: 5 blocks
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3272 title=Вопросы и их влияние на восприятие себя
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3194 title=Вопросы и их природа в контексте осознавания
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2853 title=Важность тематической сессии и взаимодействия
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [4] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2775 title=Вопросы и обсуждение
+2026-02-11 13:53:27 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [5] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.2742 title=Структура сессий и взаимодействие
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6219 level=medium thresholds(low=0.40, high=0.75)
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.167578125, 'voyage_confidence': 0.2234375, 'delta_top1_top2': 0.055859375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter |   [in:1] score=0.5586 complexity=1.00 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022
+2026-02-11 13:53:28 | INFO     | bot_agent.retrieval.stage_filter | [STAGE_FILTER] Output: 0 blocks after filter, fallback to top-1 input blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After stage filter: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы и обсуждение
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] confidence_cap=1 (before=1)
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] After confidence cap: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы и обсуждение
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] Final blocks to LLM: 1 blocks
+2026-02-11 13:53:28 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+2026-02-11 13:53:36 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL] SOURCES: 1 blocks
+2026-02-11 13:53:36 | INFO     | bot_agent.answer_adaptive      | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение
+ивет... (user: user_1770619963149_54f65)      
+13:50:05 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='привет...'
+13:50:05 | INFO     | bot_agent.data_loader   
+            | 📂 Загрузка SAG v2.0 данных из C:\My_practice\Text_transcription\bot_psychologist\..\voice_bot_pipeline\data\sag_final      
+13:50:05 | INFO     | bot_agent.data_loader   
+            | 🔍 Найдено 33 файлов
+13:50:07 | INFO     | bot_agent.data_loader   
+            | ✅ Загружено: 33 документов, 781 
+блоков
+13:50:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=0  
+13:50:07 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+13:50:10 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious 
+(уверенность: 0.70)
+13:50:10 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенност
+ь: 0.70)
+13:50:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=47 (orig_query len=6)
+13:50:10 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] cache_check hash=-6789670959819930084 ts=1770799810.606560        
+13:50:10 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: привет
+СНОВА ВОПРОС-ЯКОРЬ: привет' top_k=5
+13:50:11 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] building TF-IDF index
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] index built for 781 
+blocks
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] tfidf found 5 blocks13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [1] score=0.2360 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 title=Наблюдение за вопрошающим и его влияние на вопросы
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [2] score=0.2228 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [3] score=0.2012 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы 
+и обсуждение
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [4] score=0.1995 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие 
+13:50:12 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [5] score=0.1925 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_002 score=0.2360 title=Наблюдение за вопрошающим и его влияние на вопросы
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2228 title=Вопросы и их природа в контексте осознавания
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2012 title=Вопросы 
+и обсуждение
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.1995 title=Структура сессий и взаимодействие 
+13:50:12 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.1925 title=Вопросы и их влияние на восприятие себя
+13:50:20 | INFO     | bot_agent.retrieval.voyage_reranker | [VOYAGE] rerank enabled (model=rerank-2). Calling Voyage API.
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5887 level=medium thresholds(low=0.40, high=0.75)      
+13:50:20 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.17578125, 'voyage_confidence': 0.234375, 'delta_top1_top2': 0.05859375, 
+'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+13:50:20 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+13:50:20 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5859 complexity=1.00 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003
+13:50:20 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks 
+after filter, fallback to top-1 input blocks  
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 
+1 blocks
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие 
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.5859 title=Структура сессий и взаимодействие 
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+13:50:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+13:50:21 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:50:22 | INFO     | bot_agent.path_builder  
+            | 🛤️ Строю путь трансформации для 
+ c9c23f90-f83a-4cee-b3f6-b7f28f60468b...      
+13:50:22 | INFO     | bot_agent.graph_client  
+            | 📊 Загружаю Knowledge Graphs из 
+всех документов...
+13:50:25 | INFO     | bot_agent.graph_client  
+            | ✅ Загружено графов из 33 докумен
+тов
+13:50:25 | INFO     | bot_agent.graph_client  
+            |    Всего узлов: 142, связей: 11908
+13:50:25 | INFO     | bot_agent.path_builder  
+            | ✅ Путь построен: 8 шагов, 24 нед
+ель, фокус: Целостное развитие
+13:50:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=0 
+13:50:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=1 
+13:50:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: paraphrase-multilingual-MiniLM-L12-v2     
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads. 
+13:50:27 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a 
+HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|█| 199/199 [00:00<00:00
+BertModel LOAD REPORT from: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2     
+Key                     | Status     |  |     
+------------------------+------------+--+-    
+embeddings.position_ids | UNEXPECTED |  |     
+
+Notes:
+- UNEXPECTED    :can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=1
+13:50:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+13:50:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=1 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:50:32 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks   
+13:50:32 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие
+13:50:32 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 27.26s
+13:50:32 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive | status=200 | 27.272s
+INFO:     127.0.0.1:50690 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+13:50:47 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+13:50:47 | INFO     | api.routes
+            | [ADAPTIVE] Adaptive question: меня зовут Асхат... (user: user_1770619963149_54f65)
+13:50:47 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='меня зовут Асхат...'
+13:50:47 | INFO     | bot_agent.data_loader   
+            | ✓ Данные уже загружены, используем кэш
+13:50:47 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=1  
+13:50:47 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+13:50:49 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious 
+(уверенность: 0.70)
+13:50:49 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенност
+ь: 0.70)
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=386 (orig_query len=16)
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] cache_check hash=-8007798290497715468 ts=1770799849.703037        
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: меня зовут Асхат
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние 
+обороты): Обмен #1: Пользователь: привет Бот: 
+Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious ---    
+СНОВА ВОПРОС-ЯКОРЬ: меня зовут Асхат' top_k=5 
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] tfidf found 5 blocks13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [1] score=0.3122 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие 
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [2] score=0.3025 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [3] score=0.2845 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [4] score=0.2806 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия       
+13:50:49 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [5] score=0.2528 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3122 title=Структура сессий и взаимодействие 
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3025 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.2845 title=Вопросы и их влияние на восприятие себя
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2806 title=Важность тематической сессии и взаимодействия       
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.2528 title=Вопросы и их природа в контексте осознавания
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.5638 level=medium thresholds(low=0.40, high=0.75)      
+13:50:49 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.16640625, 'voyage_confidence': 0.22187500000000002, 'delta_top1_top2': 0.055468750000000004, 'state_match': 0.06999999999999999, 'question_clarity': 0.05}
+13:50:49 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+13:50:49 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5547 complexity=1.00 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003
+13:50:49 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks 
+after filter, fallback to top-1 input blocks  
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 
+1 blocks
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.5547 title=Вопросы и их природа в контексте осознавания
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+13:50:49 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:50:50 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:50:54 | INFO     | bot_agent.path_builder  
+            | 🛤️ Строю путь трансформации для 
+ c9c23f90-f83a-4cee-b3f6-b7f28f60468b...      
+13:50:54 | INFO     | bot_agent.path_builder  
+            | ✅ Путь построен: 8 шагов, 24 нед
+ель, фокус: Исследование: сталкинг
+13:50:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=1 
+13:50:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=2 
+13:50:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=2
+13:50:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+13:50:55 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=2 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:50:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks   
+13:50:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:50:55 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 7.45s
+13:50:55 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive | status=200 | 7.468s
+INFO:     127.0.0.1:50719 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+13:51:22 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+13:51:22 | INFO     | api.routes
+            | [ADAPTIVE] Adaptive question: я 
+хочу познать себя... (user: user_1770619963149_54f65)
+13:51:22 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='я хочу познать себя...'
+13:51:22 | INFO     | bot_agent.data_loader   
+            | ✓ Данные уже загружены, используем кэш
+13:51:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=2  
+13:51:22 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+13:51:25 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious 
+(уверенность: 0.75)
+13:51:25 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенност
+ь: 0.75)
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=661 (orig_query len=19)
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] cache_check hash=-8811471388574485080 ts=1770799885.106957        
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я хочу познать себя
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние 
+обороты): Обмен #1: Пользователь: привет Бот: 
+Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы 
+часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious ---
+СНОВА ВОПРОС-ЯКОРЬ: я хочу познать себя' top_k=5
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] tfidf found 5 blocks13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [1] score=0.3616 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [2] score=0.3456 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [3] score=0.3037 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [4] score=0.3020 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие 
+13:51:25 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [5] score=0.2948 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия       
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3616 title=Вопросы и их влияние на восприятие себя
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3456 title=Вопросы и их природа в контексте осознавания
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.3037 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.3020 title=Структура сессий и взаимодействие 
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2948 title=Важность тематической сессии и взаимодействия       
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6719 level=medium thresholds(low=0.40, high=0.75)      
+13:51:25 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.18632812499999998, 'voyage_confidence': 0.2484375, 'delta_top1_top2': 0.062109375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+13:51:25 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+13:51:25 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.6211 complexity=1.00 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000  
+13:51:25 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks 
+after filter, fallback to top-1 input blocks  
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 
+1 blocks
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.6211 title=Вопросы и их влияние на восприятие себя
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+13:51:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:51:25 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:51:28 | INFO     | bot_agent.path_builder  
+            | 🛤️ Строю путь трансформации для 
+ c9c23f90-f83a-4cee-b3f6-b7f28f60468b...      
+13:51:28 | INFO     | bot_agent.path_builder  
+            | ✅ Путь построен: 8 шагов, 24 нед
+ель, фокус: Исследование: сталкинг
+13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=2 
+13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=3 
+13:51:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=3
+13:51:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=3
+13:51:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=3 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:51:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks   
+13:51:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:51:28 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 5.25s
+13:51:28 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive | status=200 | 5.257s
+INFO:     127.0.0.1:50721 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+13:51:55 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+13:51:55 | INFO     | api.routes
+            | [ADAPTIVE] Adaptive question: Но важно не только задавать вопросы, но и быть вни... (user: user_1770619963149_54f65)        
+13:51:55 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='Но 
+важно не только задавать вопросы, но и быть вни...'
+13:51:55 | INFO     | bot_agent.data_loader   
+            | ✓ Данные уже загружены, используем кэш
+13:51:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=3  
+13:51:55 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+13:51:59 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: curious 
+(уверенность: 0.75)
+13:51:59 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: curious (уверенност
+ь: 0.75)
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=949 (orig_query len=97)
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] cache_check hash=-1946225097842524591 ts=1770799919.651080        
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто их задает. какэто понять?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние 
+обороты): Обмен #1: Пользователь: привет Бот: 
+Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы 
+часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: Но важно не только задавать вопросы, но и быть внимательным к тому, кто 
+их задает. какэто понять?' top_k=5
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] tfidf found 5 blocks13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [1] score=0.3807 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [2] score=0.3657 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [3] score=0.3332 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия       
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [4] score=0.3285 block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 title=Искусство задавать вопросы и открытость к ответам    
+13:51:59 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [5] score=0.2982 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3807 title=Вопросы и их влияние на восприятие себя
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3657 title=Вопросы и их природа в контексте осознавания
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.3332 title=Важность тематической сессии и взаимодействия       
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2023-12-26_cGCdRqADR64_НейроСталкинг_3_сессия_Память_Интегративная_034 score=0.3285 title=Искусство задавать вопросы и открытость к ответам    
+13:51:59 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_025 score=0.2982 title=Подготовка к следующей сессии: Вопросы и диалог       
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.7219 level=medium thresholds(low=0.40, high=0.75)      
+13:52:00 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.205078125, 'voyage_confidence': 0.2734375, 'delta_top1_top2': 0.068359375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+13:52:00 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+13:52:00 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.6836 complexity=1.00 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025      
+13:52:00 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks 
+after filter, fallback to top-1 input blocks  
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 
+1 blocks
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия       
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.6836 title=Важность тематической сессии и взаимодействия       
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+13:52:00 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+13:52:00 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:52:03 | INFO     | bot_agent.path_builder  
+            | 🛤️ Строю путь трансформации для 
+ c9c23f90-f83a-4cee-b3f6-b7f28f60468b...      
+13:52:03 | INFO     | bot_agent.path_builder  
+            | ✅ Путь построен: 8 шагов, 24 нед
+ель, фокус: Исследование: личность
+13:52:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=3 
+13:52:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=4 
+13:52:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=4
+13:52:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=4
+13:52:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=4 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:52:04 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks   
+13:52:04 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия
+13:52:04 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 8.54s
+13:52:04 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive | status=200 | 8.546s
+INFO:     127.0.0.1:50751 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+13:53:25 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+13:53:25 | INFO     | api.routes
+            | [ADAPTIVE] Adaptive question: я 
+очень не люблю когда мне грубят другие люди, мне... (user: user_1770619963149_54f65)        
+13:53:25 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b query='я очень не люблю когда мне грубят другие люди, мне...'
+13:53:25 | INFO     | bot_agent.data_loader   
+            | ✓ Данные уже загружены, используем кэш
+13:53:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns=4  
+13:53:25 | INFO     | bot_agent.state_classifier          | 🎯 Анализирую состояние пользователя...
+13:53:27 | INFO     | bot_agent.state_classifier          | ✅ Состояние определено: confused
+ (уверенность: 0.75)
+13:53:27 | INFO     | bot_agent.answer_adaptive           | ✅ Состояние: confused (увереннос
+ть: 0.75)
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=959 (orig_query len=102)
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] cache_check hash=4233879635624775732 ts=1770800007.657963
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?
+КОРОТКИЙ КОНТЕКСТ: ИСТОРИЯ ДИАЛОГА (последние 
+обороты): Обмен #1: Пользователь: привет Бот: 
+Привет! Ты интересуешься темами, которые обсуждаются на сессиях нейросталкинга? Важно, что формат включает лекции и семинары, а также возможность задавать вопросы в любое время. Это помогает лучше усв... Состояние: curious Обмен #2: Пользователь: меня зовут Асхат Бот: Привет, Асхат! Здорово, что ты интересуешься вопросами и их природой. Из лекции видно, что вопросы 
+часто исходят из ума, и это нормально. Но важнее не сами вопросы, а то, как они помогают раскрыть вну... Состояние: curious Обмен #3: Пользователь: я хочу познать себя Бот: Познать себя — это действительно важное стремление. В лекции говорится, что вопросы...
+СНОВА ВОПРОС-ЯКОРЬ: я очень не люблю когда мне грубят другие люди, мне хочется их побить. Как не гневаться и принимать их?' top_k=5       
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] tfidf found 5 blocks13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [1] score=0.3272 block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 title=Вопросы и их влияние на восприятие себя
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [2] score=0.3194 block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 title=Вопросы и их природа в контексте осознавания
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [3] score=0.2853 block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 title=Важность тематической сессии и взаимодействия       
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [4] score=0.2775 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы 
+и обсуждение
+13:53:27 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL]   [5] score=0.2742 block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 title=Структура сессий и взаимодействие 
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 5 blocks
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-10-27_hLaWBnHLVlI_8_сессия_НеоСталкинга_Врожденные_и_Приобретенные_000 score=0.3272 title=Вопросы и их влияние на восприятие себя
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=2024-11-11_XwHpw0Z7Wks_9_сессия_НеоСталкинг_Время_как_инструмент_003 score=0.3194 title=Вопросы и их природа в контексте осознавания
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=2025-12-10_tIx4QPWLKyI_НеоСталкинг_6_сессия_5_измерение_Перспективы_025 score=0.2853 title=Важность тематической сессии и взаимодействия       
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.2775 title=Вопросы 
+и обсуждение
+13:53:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=2023-12-12_j2YElLQ58FU_Вводная_1_сессия_003 score=0.2742 title=Структура сессий и взаимодействие 
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] reranked top_k=1 (voyage_active=True)
+13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] score=0.6219 level=medium thresholds(low=0.40, high=0.75)      
+13:53:28 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] contributions={'local_similarity': 0.167578125, 'voyage_confidence': 0.2234375, 'delta_top1_top2': 0.055859375, 'state_match': 0.07500000000000001, 'question_clarity': 0.1}
+13:53:28 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Input: 1 blocks stage=surface complexity_cap=0.45
+13:53:28 | INFO     | bot_agent.retrieval.stage_filter    |   [in:1] score=0.5586 complexity=1.00 block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022        
+13:53:28 | INFO     | bot_agent.retrieval.stage_filter    | [STAGE_FILTER] Output: 0 blocks 
+after filter, fallback to top-1 input blocks  
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After stage filter: 
+1 blocks
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы 
+и обсуждение
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=1 (before=1)
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 1 blocks
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 score=0.5586 title=Вопросы 
+и обсуждение
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Final blocks to LLM: 1 blocks
+13:53:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение 
+13:53:28 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:53:32 | INFO     | bot_agent.path_builder  
+            | 🛤️ Строю путь трансформации для 
+ c9c23f90-f83a-4cee-b3f6-b7f28f60468b...      
+13:53:32 | INFO     | bot_agent.path_builder  
+            | ✅ Путь построен: 7 шагов, 21 нед
+ель, фокус: Прояснение и интеграция понимания 
+13:53:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turns_before=4 
+13:53:32 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=5 
+13:53:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b turn_index=5
+13:53:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+13:53:32 | INFO     | bot_agent.conversation_memory       | Updating conversation summary (turn #5)...
+13:53:32 | INFO     | bot_agent.llm_answerer  
+            | ✓ OpenAI клиент инициализирован 
+13:53:36 | INFO     | bot_agent.conversation_memory       | Summary updated: 500 chars      
+13:53:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=5 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:53:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] saved turns=5 user_id=c9c23f90-f83a-4cee-b3f6-b7f28f60468b
+13:53:36 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 1 blocks   
+13:53:36 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=2024-04-28_WBrArACu4io_8_сессия_Основы_Потоков_Состояний_Сознания_022 title=Вопросы и обсуждение 
+13:53:36 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 11.07s
+13:53:36 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive | status=200 | 11.085s
+INFO:     127.0.0.1:50798 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK

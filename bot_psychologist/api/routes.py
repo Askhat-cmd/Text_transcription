@@ -353,7 +353,7 @@ async def ask_adaptive_question(
     - РђРґР°РїС‚РёРІРЅС‹Р№ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
     """
     
-    logger.info(f"🎯 Adaptive question: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(f"[ADAPTIVE] Adaptive question: {request.query[:50]}... (user: {request.user_id})")
 
     try:
         session_key = request.session_id or request.user_id
@@ -518,7 +518,7 @@ async def list_user_sessions(
             sessions=sessions,
         )
     except Exception as e:
-        logger.error(f"❌ Error listing user sessions: {e}")
+        logger.error(f"Error listing user sessions: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -556,7 +556,7 @@ async def create_user_session(
             last_turn_timestamp=created.get("last_turn_timestamp"),
         )
     except Exception as e:
-        logger.error(f"❌ Error creating session for {user_id}: {e}")
+        logger.error(f"Error creating session for {user_id}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
@@ -607,7 +607,7 @@ async def delete_user_session(
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"❌ Error deleting session {session_id}: {e}")
+        logger.error(f"Error deleting session {session_id}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)

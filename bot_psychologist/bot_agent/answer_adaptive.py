@@ -14,16 +14,18 @@ Adaptive Answer Module - Phase 4
 """
 
 import logging
+import re
 from typing import Dict, Optional
 from datetime import datetime
 
-from .data_loader import data_loader
+from .data_loader import Block, data_loader
 from .retriever import get_retriever
 from .user_level_adapter import UserLevelAdapter, UserLevel
 from .semantic_analyzer import SemanticAnalyzer
 from .graph_client import graph_client
 from .state_classifier import state_classifier, StateAnalysis, UserState
 from .conversation_memory import get_conversation_memory
+from .working_state import WorkingState
 from .path_builder import path_builder
 from .config import config
 from .decision import (
@@ -52,6 +54,138 @@ def _log_blocks(stage: str, blocks, limit: int = 5) -> None:
     for i, block in enumerate(blocks[:limit], start=1):
         title = (block.title or "")[:60]
         logger.info(f"[RETRIEVAL]   [{i}] block_id={block.block_id} title={title}")
+
+
+def _build_state_context(state_analysis: StateAnalysis, mode_prompt: str) -> str:
+    recommendation = (
+        state_analysis.recommendations[0]
+        if state_analysis and state_analysis.recommendations
+        else "Respond in a clear and grounded way."
+    )
+    return f"""
+КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ:
+- Текущее состояние: {state_analysis.primary_state.value}
+- Эмоциональный тон: {state_analysis.emotional_tone}
+- Глубина вовлечения: {state_analysis.depth}
+
+РЕКОМЕНДАЦИЯ ПО ОТВЕТУ:
+{recommendation}
+
+Адаптируй свой ответ к состоянию пользователя.
+
+РЕЖИМНАЯ ДИРЕКТИВА:
+{mode_prompt}
+"""
+
+
+def _depth_to_phase(depth: str) -> str:
+    normalized = (depth or "").lower()
+    if "deep" in normalized:
+        return "работа"
+    if "intermediate" in normalized or "medium" in normalized:
+        return "осмысление"
+    return "начало контакта"
+
+
+def _mode_to_direction(mode: str) -> str:
+    mapping = {
+        "CLARIFICATION": "уточнение",
+        "VALIDATION": "поддержка",
+        "THINKING": "рефлексия",
+        "INTERVENTION": "действие",
+        "INTEGRATION": "интеграция",
+        "PRESENCE": "диагностика",
+    }
+    return mapping.get((mode or "PRESENCE").upper(), "диагностика")
+
+
+def _derive_defense(state_value: str) -> Optional[str]:
+    state = (state_value or "").lower()
+    if state == "resistant":
+        return "сопротивление"
+    if state == "overwhelmed":
+        return "перегрузка"
+    if state == "confused":
+        return "неясность"
+    return None
+
+
+def _build_working_state(
+    *,
+    state_analysis: StateAnalysis,
+    routing_result,
+    memory,
+) -> WorkingState:
+    return WorkingState(
+        dominant_state=state_analysis.primary_state.value,
+        emotion=state_analysis.emotional_tone or "neutral",
+        defense=_derive_defense(state_analysis.primary_state.value),
+        phase=_depth_to_phase(state_analysis.depth),
+        direction=_mode_to_direction(routing_result.mode),
+        last_updated_turn=len(memory.turns) + 1,
+        confidence_level=routing_result.confidence_level,
+    )
+
+
+def _looks_like_greeting(query: str) -> bool:
+    q = (query or "").strip().lower()
+    greetings = {
+        "привет",
+        "здравствуй",
+        "здравствуйте",
+        "добрый день",
+        "добрый вечер",
+        "доброе утро",
+        "hi",
+        "hello",
+    }
+    return q in greetings
+
+
+def _looks_like_name_intro(query: str) -> bool:
+    q = (query or "").strip().lower()
+    return bool(re.search(r"\b(меня зовут|my name is)\b", q))
+
+
+def _should_use_fast_path(query: str, routing_result) -> bool:
+    if _looks_like_greeting(query) or _looks_like_name_intro(query):
+        return True
+    tokens = [token for token in re.split(r"\s+", query.strip()) if token]
+    if len(tokens) <= 3 and routing_result.mode in {"PRESENCE", "CLARIFICATION"}:
+        return True
+    return False
+
+
+def _build_fast_path_block(
+    *,
+    query: str,
+    conversation_context: str,
+    state_analysis: StateAnalysis,
+) -> Block:
+    return Block(
+        block_id="fast-path-runtime-context",
+        video_id="runtime",
+        start="00:00:00",
+        end="00:00:00",
+        title="Runtime conversational context",
+        summary="Use dialogue context and user message only. No lecture citation required.",
+        content=(
+            "FAST PATH CONTEXT\n"
+            "This user turn should be handled without lecture retrieval.\n\n"
+            f"USER MESSAGE:\n{query}\n\n"
+            f"DIALOGUE CONTEXT:\n{conversation_context[:1500]}\n\n"
+            f"USER STATE:\n{state_analysis.primary_state.value}, "
+            f"{state_analysis.emotional_tone}, depth={state_analysis.depth}\n"
+        ),
+        keywords=["fast-path", "context"],
+        youtube_link="",
+        document_title="Runtime",
+        block_type="dialogue",
+        emotional_tone=state_analysis.emotional_tone or "neutral",
+        conceptual_depth="low",
+        complexity_score=0.1,
+        graph_entities=[],
+    )
 
 
 def answer_question_adaptive(
@@ -157,6 +291,125 @@ def answer_question_adaptive(
                 "depth": state_analysis.depth,
                 "user_stage": user_stage,
             }
+
+        decision_gate = DecisionGate()
+        pre_routing_signals = detect_routing_signals(query, [], state_analysis)
+        pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
+
+        if _should_use_fast_path(query, pre_routing_result):
+            logger.info(
+                "[FAST_PATH] enabled mode=%s reason=%s",
+                pre_routing_result.mode,
+                pre_routing_result.decision.reason,
+            )
+            mode_directive = build_mode_directive(
+                mode=pre_routing_result.mode,
+                confidence_level=pre_routing_result.confidence_level,
+                reason=pre_routing_result.decision.reason,
+                forbid=pre_routing_result.decision.forbid,
+            )
+            fast_block = _build_fast_path_block(
+                query=query,
+                conversation_context=conversation_context,
+                state_analysis=state_analysis,
+            )
+            state_context = _build_state_context(state_analysis, mode_directive.prompt)
+            response_generator = ResponseGenerator()
+            llm_result = response_generator.generate(
+                query,
+                [fast_block],
+                conversation_context=conversation_context,
+                mode=pre_routing_result.mode,
+                confidence_level=pre_routing_result.confidence_level,
+                forbid=pre_routing_result.decision.forbid,
+                user_level_adapter=level_adapter,
+                additional_system_context=state_context,
+                model=config.LLM_MODEL,
+                temperature=config.LLM_TEMPERATURE,
+                max_tokens=config.LLM_MAX_TOKENS,
+            )
+            answer = llm_result.get("answer", "")
+            formatter = ResponseFormatter()
+            answer = formatter.format_answer(
+                answer,
+                mode=pre_routing_result.mode,
+                confidence_level=pre_routing_result.confidence_level,
+            )
+
+            try:
+                memory.set_working_state(
+                    _build_working_state(
+                        state_analysis=state_analysis,
+                        routing_result=pre_routing_result,
+                        memory=memory,
+                    )
+                )
+            except Exception as exc:
+                logger.warning(f"[FAST_PATH] working_state update failed: {exc}")
+
+            memory.add_turn(
+                user_input=query,
+                bot_response=answer,
+                user_state=state_analysis.primary_state.value,
+                blocks_used=0,
+                concepts=[],
+            )
+
+            elapsed_time = (datetime.now() - start_time).total_seconds()
+            feedback_prompt = ""
+            if include_feedback_prompt:
+                feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
+
+            result = {
+                "status": "success",
+                "answer": answer,
+                "state_analysis": {
+                    "primary_state": state_analysis.primary_state.value,
+                    "confidence": state_analysis.confidence,
+                    "secondary_states": [s.value for s in state_analysis.secondary_states],
+                    "emotional_tone": state_analysis.emotional_tone,
+                    "depth": state_analysis.depth,
+                    "recommendations": state_analysis.recommendations,
+                },
+                "path_recommendation": None,
+                "conversation_context": memory.get_adaptive_context_text(query),
+                "feedback_prompt": feedback_prompt,
+                "sources": [],
+                "concepts": [],
+                "metadata": {
+                    "user_id": user_id,
+                    "user_level": user_level,
+                    "blocks_used": 0,
+                    "state": state_analysis.primary_state.value,
+                    "conversation_turns": len(memory.turns),
+                    "recommended_mode": pre_routing_result.mode,
+                    "decision_rule_id": pre_routing_result.decision.rule_id,
+                    "confidence_score": pre_routing_result.confidence_score,
+                    "confidence_level": pre_routing_result.confidence_level,
+                    "mode_reason": mode_directive.reason,
+                    "retrieval_block_cap": 0,
+                    "fast_path": True,
+                },
+                "timestamp": datetime.now().isoformat(),
+                "processing_time_seconds": round(elapsed_time, 2),
+            }
+            if debug_info is not None:
+                debug_info["fast_path"] = True
+                debug_info["routing"] = {
+                    "mode": pre_routing_result.mode,
+                    "rule_id": pre_routing_result.decision.rule_id,
+                    "reason": pre_routing_result.decision.reason,
+                    "confidence_score": pre_routing_result.confidence_score,
+                    "confidence_level": pre_routing_result.confidence_level,
+                    "adjusted_by_stage": pre_routing_result.adjusted_by_stage,
+                }
+                debug_info["memory_summary"] = memory.get_summary()
+                debug_info["total_time"] = elapsed_time
+                debug_info["llm_tokens"] = llm_result.get("tokens_used", 0)
+                result["debug"] = debug_info
+
+            logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
+            return result
         
         # ================================================================
         # ЭТАП 3: Поиск релевантных блоков
@@ -189,9 +442,9 @@ def answer_question_adaptive(
             reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
             if reranked:
                 retrieved_blocks = reranked
-                logger.info("[RETRIEVAL] reranked top_k=%s", rerank_k)
+                voyage_active = bool(config.VOYAGE_ENABLED and config.VOYAGE_API_KEY)
+                logger.info("[RETRIEVAL] reranked top_k=%s (voyage_active=%s)", rerank_k, voyage_active)
 
-        decision_gate = DecisionGate()
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
         stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
@@ -225,6 +478,16 @@ def answer_question_adaptive(
                 start_time,
                 query
             )
+            try:
+                memory.set_working_state(
+                    _build_working_state(
+                        state_analysis=state_analysis,
+                        routing_result=routing_result,
+                        memory=memory,
+                    )
+                )
+            except Exception as exc:
+                logger.warning(f"[ADAPTIVE] working_state update failed (partial): {exc}")
             memory.add_turn(
                 user_input=query,
                 bot_response=response.get("answer", ""),
@@ -299,20 +562,7 @@ def answer_question_adaptive(
         logger.debug("🤖 Этап 4: Генерация ответа...")
         
         # Добавить контекст состояния
-        state_context = f"""
-КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ:
-- Текущее состояние: {state_analysis.primary_state.value}
-- Эмоциональный тон: {state_analysis.emotional_tone}
-- Глубина вовлечения: {state_analysis.depth}
-
-РЕКОМЕНДАЦИЯ ПО ОТВЕТУ:
-{state_analysis.recommendations[0] if state_analysis.recommendations else "Отвечай в своём обычном стиле"}
-
-Адаптируй свой ответ к состоянию пользователя.
-
-РЕЖИМНАЯ ДИРЕКТИВА:
-{mode_directive.prompt}
-"""
+        state_context = _build_state_context(state_analysis, mode_directive.prompt)
 
         # Генерация ответа (с учётом истории диалога)
         response_generator = ResponseGenerator()
@@ -412,6 +662,17 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("💾 Этап 8: Сохранение в память...")
         
+        try:
+            memory.set_working_state(
+                _build_working_state(
+                    state_analysis=state_analysis,
+                    routing_result=routing_result,
+                    memory=memory,
+                )
+            )
+        except Exception as exc:
+            logger.warning(f"[ADAPTIVE] working_state update failed: {exc}")
+
         memory.add_turn(
             user_input=query,
             bot_response=answer,
@@ -578,6 +839,7 @@ def _build_error_response(
         "timestamp": datetime.now().isoformat(),
         "processing_time_seconds": (datetime.now() - start_time).total_seconds()
     }
+
 
 
 

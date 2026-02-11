@@ -23,6 +23,9 @@ class RerankItem:
 class VoyageReranker:
     """Rerank candidate items using Voyage API when available."""
 
+    _logged_disabled_reason: bool = False
+    _logged_enabled: bool = False
+
     def __init__(self, model: str = "rerank-2", enabled: bool = True) -> None:
         self.model = model
         self.enabled = enabled
@@ -32,11 +35,22 @@ class VoyageReranker:
         if not items:
             return []
         if not self.enabled or not self.api_key:
+            if not VoyageReranker._logged_disabled_reason:
+                VoyageReranker._logged_disabled_reason = True
+                logger.info(
+                    "[VOYAGE] rerank disabled (enabled=%s, has_api_key=%s). Using local score sort fallback.",
+                    bool(self.enabled),
+                    bool(self.api_key),
+                )
             # Preserve candidate diversity when Voyage rerank is unavailable.
             return sorted(items, key=lambda x: x.score, reverse=True)
 
         try:
             import voyageai  # type: ignore
+
+            if not VoyageReranker._logged_enabled:
+                VoyageReranker._logged_enabled = True
+                logger.info("[VOYAGE] rerank enabled (model=%s). Calling Voyage API.", self.model)
 
             client = voyageai.Client(api_key=self.api_key)
             texts = [item.text for item in items]
@@ -58,7 +72,7 @@ class VoyageReranker:
                 )
             return reranked
         except Exception as exc:
-            logger.warning(f"Voyage rerank fallback: {exc}")
+            logger.warning("Voyage rerank fallback: %s: %s", type(exc).__name__, exc)
             # Preserve candidate diversity in local fallback.
             return sorted(items, key=lambda x: x.score, reverse=True)
 

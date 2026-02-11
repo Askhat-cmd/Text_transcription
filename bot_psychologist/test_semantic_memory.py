@@ -17,9 +17,9 @@ def test_semantic_memory():
     print("ТЕСТ SEMANTIC MEMORY")
     print("=" * 60)
 
-    print(f"⚙️ Semantic Memory: {'✓ Включена' if config.ENABLE_SEMANTIC_MEMORY else '✗ Выключена'}")
-    print(f"⚙️ Conversation Summary: {'✓ Включена' if config.ENABLE_CONVERSATION_SUMMARY else '✗ Выключена'}")
-    print(f"⚙️ Embedding Model: {config.EMBEDDING_MODEL}")
+    print(f"Semantic Memory: {'ON' if config.ENABLE_SEMANTIC_MEMORY else 'OFF'}")
+    print(f"Conversation Summary: {'ON' if config.ENABLE_CONVERSATION_SUMMARY else 'OFF'}")
+    print(f"Embedding Model: {config.EMBEDDING_MODEL}")
     print()
 
     memory = get_conversation_memory("test_semantic_user")
@@ -33,7 +33,7 @@ def test_semantic_memory():
         ("Как укрепить концентрацию?", "Регулярные короткие практики помогают тренировать внимание."),
     ]
 
-    print("📝 Добавляю тестовые ходы...")
+    print("Adding test turns...")
     for user_input, bot_response in turns:
         memory.add_turn(
             user_input=user_input,
@@ -41,32 +41,32 @@ def test_semantic_memory():
             blocks_used=0,
             concepts=["осознавание", "дыхание", "концентрация"]
         )
-        print(f"  ✓ Добавлен: {user_input[:50]}...")
+        print(f"  OK: {user_input[:50]}...")
 
-    print(f"\n✅ Всего ходов в памяти: {len(memory.turns)}")
+    print(f"\nTotal turns in memory: {len(memory.turns)}")
 
     if memory.semantic_memory:
         stats = memory.semantic_memory.get_stats()
-        print("\n📊 Статистика Semantic Memory:")
+        print("\nSemantic Memory stats:")
         print(f"  • Эмбеддингов создано: {stats.get('total_embeddings')}")
         print(f"  • Модель: {stats.get('model_name')}")
         print(f"  • Размер на диске: {stats.get('embeddings_size_mb', 0):.2f} MB")
 
         query = "Как практиковать осознанность при стрессе?"
-        print(f"\n🔍 Запрос: {query}")
+        print(f"\nQuery: {query}")
         similar = memory.semantic_memory.search_similar_turns(
             query=query,
             top_k=2,
             min_similarity=0.5
         )
         if similar:
-            print("✅ Найдены релевантные прошлые обмены:")
+            print("Found relevant past turns:")
             for turn_emb, score in similar:
                 print(f"  [{score:.3f}] Обмен #{turn_emb.turn_index}: {turn_emb.user_input[:60]}...")
         else:
-            print("⚠️ Релевантных обменов не найдено")
+            print("No relevant turns found")
     else:
-        print("\n⚠️ Semantic memory отключена или не инициализирована")
+        print("\nSemantic memory disabled or not initialized")
 
     print("\n" + "=" * 60)
     print("ПОЛНЫЙ КОНТЕКСТ ДЛЯ LLM")
@@ -74,7 +74,7 @@ def test_semantic_memory():
     test_question = "Как начать практиковать медитацию, если у меня стресс?"
     full_context = memory.get_adaptive_context_for_llm(test_question)
 
-    print("\n📦 Компоненты контекста:")
+    print("\nContext components:")
     print(f"  • Short-term: {len(full_context.get('short_term', ''))} символов")
     print(f"  • Semantic: {len(full_context.get('semantic', ''))} символов")
     print(f"  • Summary: {len(full_context.get('summary', ''))} символов")
@@ -93,13 +93,13 @@ def test_semantic_memory():
         print(full_context["short_term"][:300] + "...")
 
     print("\n" + "=" * 60)
-    print("🗑️ Очистка тестовых данных...")
+    print("Cleaning up test data...")
     memory.clear()
-    print("✅ Тест завершен!")
+    print("Test finished!")
 
 
 if __name__ == "__main__":
     try:
         test_semantic_memory()
     except Exception as exc:
-        print(f"\n❌ ОШИБКА: {exc}")
+        print(f"\nERROR: {exc}")

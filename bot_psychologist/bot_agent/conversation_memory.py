@@ -78,7 +78,7 @@ class ConversationMemory:
                     metadata={"source": "conversation_memory"},
                 )
             except Exception as exc:
-                logger.error(f"❌ Ошибка инициализации SessionManager: {exc}")
+                logger.error(f"SessionManager init error: {exc}")
     
     def load_from_disk(self) -> bool:
         """
@@ -254,7 +254,7 @@ class ConversationMemory:
                         self.working_state.to_dict(),
                     )
             except Exception as exc:
-                logger.error(f"❌ Ошибка синхронизации metadata в SessionManager: {exc}")
+                logger.error(f"SessionManager metadata sync error: {exc}")
 
     def set_working_state(self, working_state: WorkingState) -> None:
         """Обновить рабочее состояние пользователя и синхронизировать хранение."""
@@ -266,7 +266,7 @@ class ConversationMemory:
                     working_state.to_dict(),
                 )
             except Exception as exc:
-                logger.error(f"❌ Ошибка сохранения working_state в SessionManager: {exc}")
+                logger.error(f"SessionManager working_state save error: {exc}")
         self.save_to_disk()
     
     def add_turn(
@@ -419,7 +419,7 @@ class ConversationMemory:
                 user_rating=turn.user_rating,
             )
         except Exception as exc:
-            logger.error(f"❌ Ошибка обновления feedback в SessionManager: {exc}")
+            logger.error(f"SessionManager feedback update error: {exc}")
     
     def get_last_turns(self, n: int = 5) -> List[ConversationTurn]:
         """
@@ -520,7 +520,7 @@ class ConversationMemory:
                     min_similarity=config.SEMANTIC_MIN_SIMILARITY
                 )
             except Exception as e:
-                logger.error(f"❌ Ошибка semantic search: {e}")
+                logger.error(f"Semantic search error: {e}")
 
         if include_summary and config.ENABLE_CONVERSATION_SUMMARY and self.summary:
             context["summary"] = self.summary
@@ -584,7 +584,7 @@ class ConversationMemory:
             logger.warning("⚠️ OPENAI_API_KEY не установлен — summary не обновляется")
             return
 
-        logger.info(f"📝 Обновляю резюме диалога (ход #{len(self.turns)})...")
+        logger.info(f"Updating conversation summary (turn #{len(self.turns)})...")
 
         try:
             recent_turns = self.turns[-10:]
@@ -633,12 +633,12 @@ class ConversationMemory:
             self.summary = summary_text
             self.summary_updated_at = len(self.turns)
 
-            logger.info(f"✅ Резюме обновлено: {len(self.summary)} символов")
+            logger.info(f"Summary updated: {len(self.summary)} chars")
             if self.session_manager and self.summary:
                 self.session_manager.update_summary(self.user_id, self.summary)
             self.save_to_disk()
         except Exception as e:
-            logger.error(f"❌ Ошибка обновления резюме: {e}")
+            logger.error(f"Summary update error: {e}")
 
     def clear(self) -> None:
         """Очистить историю диалога и сохранить пустое состояние."""
@@ -712,7 +712,7 @@ class ConversationMemory:
             for turn in self.turns
         ]
         self.semantic_memory.rebuild_all_embeddings(turns_data)
-        logger.info("✅ Semantic memory пересоздана")
+        logger.info("Semantic memory rebuilt")
 
     def get_primary_interests(self) -> List[str]:
         """

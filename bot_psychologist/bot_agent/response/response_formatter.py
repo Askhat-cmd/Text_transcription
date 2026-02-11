@@ -51,11 +51,10 @@ class ResponseFormatter:
             text = text.rstrip(".! ")
             text += ". Что в этом для вас сейчас главное?"
 
+        # Keep low-confidence tone via prompting/routing only.
+        # Avoid repetitive canned prefixes at the beginning of each reply.
         if confidence == "low":
-            low_confidence_prefix = "Могу ошибаться, поэтому уточню аккуратно. "
-            lowered = text.lower()
-            if not lowered.startswith(("могу ошибаться", "возможно", "похоже")):
-                text = low_confidence_prefix + text
+            pass
 
         char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)
         return self._clip(text, char_limit)
@@ -76,4 +75,3 @@ def format_mode_aware_response(
         confidence_level=confidence_level,
         max_chars=max_chars,
     )
-

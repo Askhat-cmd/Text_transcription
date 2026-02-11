@@ -66,6 +66,20 @@ tail -f logs/error/error.log
 ```
 
 Для защищенных endpoints нужен заголовок `X-API-Key` (например: `dev-key-001`).
+
+## Runtime Update (11.02.2026)
+
+Ключевые изменения в боевой логике адаптивного ответа:
+
+- `answer_adaptive` добавляет fast-path для приветствий, представления имени и очень коротких реплик в режимах `PRESENCE`/`CLARIFICATION`.
+- В fast-path retrieval по лекционным блокам пропускается осознанно; в логах это видно как `[FAST_PATH] enabled ...`.
+- `ResponseFormatter` больше не добавляет шаблонную префиксную фразу низкой уверенности в начале каждого ответа; тон uncertainty управляется роутингом и системной инструкцией.
+- `ConversationMemory` стабильно синхронизирует `working_state` в JSON и SQLite, поэтому состояние пользователя восстанавливается между сессиями.
+- Для Voyage Rerank рабочий признак в логах: `[VOYAGE] rerank enabled ...` и `[RETRIEVAL] reranked top_k=... (voyage_active=True)`.
+- Даже при активном Voyage итоговый `Final blocks to LLM` может быть `1` из-за `stage_filter` и `confidence_cap` (это ожидаемое поведение).
+- Практическая рекомендация: для более содержательных ответов обычно лучше `VOYAGE_TOP_K=3`; значение `1` часто делает контекст слишком узким.
+
+После изменения `.env` обязательно перезапустите API/бота, чтобы новые параметры вступили в силу.
 ## Промпт (System Prompt) и уровни сложности
 
 Системный промпт вынесен в отдельные файлы, чтобы его было проще редактировать без правок кода:
@@ -200,6 +214,7 @@ cp .env.example .env
 ```env
 OPENAI_API_KEY=sk-proj-...
 DATA_ROOT=../voice_bot_pipeline/data
+PRIMARY_MODEL=gpt-4o-mini
 
 # Conversation Memory
 CONVERSATION_HISTORY_DEPTH=3
@@ -216,7 +231,7 @@ EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 # Voyage Rerank (optional)
 VOYAGE_API_KEY=pa-...
 VOYAGE_MODEL=rerank-2
-VOYAGE_TOP_K=1
+VOYAGE_TOP_K=3
 VOYAGE_ENABLED=false
 
 # Conversation Summary
@@ -231,6 +246,14 @@ SESSION_RETENTION_DAYS=90
 ARCHIVE_RETENTION_DAYS=365
 AUTO_CLEANUP_ENABLED=true
 ```
+
+Быстрое переключение модели:
+
+- Для классического режима: `PRIMARY_MODEL=gpt-4o-mini`
+- Для GPT-5: `PRIMARY_MODEL=gpt-5-mini`
+- После изменения `.env` перезапускайте API/бота.
+- Проверка активной модели:
+  - `python -c "from bot_agent.config import config; print(config.LLM_MODEL)"`
 
 ### 3. Проверка данных
 

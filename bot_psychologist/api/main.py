@@ -5,7 +5,6 @@ FastAPI Application for Bot Psychologist API (Phase 5)
 Главный файл приложения с middleware, настройками и запуском.
 """
 
-import logging
 import sys
 import time
 from pathlib import Path
@@ -20,16 +19,12 @@ from fastapi.openapi.utils import get_openapi
 # Добавить путь к bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
+from logging_config import get_logger, setup_logging
 from .routes import router
 
-logger = logging.getLogger(__name__)
-
 # ===== LOGGING =====
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s | %(name)s | %(levelname)s | %(message)s"
-)
+setup_logging()
+logger = get_logger(__name__)
 
 # ===== STARTUP TIME =====
 _startup_time: float = 0.0
@@ -43,11 +38,13 @@ async def lifespan(app: FastAPI):
     global _startup_time
     # Startup
     _startup_time = time.time()
-    logger.info("🚀 Bot Psychologist API v0.5.0 starting...")
-    logger.info("✅ All modules loaded")
+    logger.info("API server starting")
+    logger.info("Version: %s", app.version)
+    logger.info("Docs: http://localhost:8000/api/docs")
     yield
     # Shutdown
-    logger.info("🛑 Bot Psychologist API shutting down...")
+    uptime = time.time() - _startup_time if _startup_time else 0.0
+    logger.info("API server shutting down | uptime=%.2fs", uptime)
 
 
 app = FastAPI(
@@ -107,24 +104,32 @@ app.add_middleware(
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     """Логировать все запросы"""
-    start_time = time.time()
+    start_ts = time.time()
     
     # Получить API ключ (скрыть для логов)
     api_key = request.headers.get("X-API-Key", "none")
     api_key_masked = api_key[:10] + "..." if api_key != "none" and len(api_key) > 10 else api_key
     
-    logger.info(f"→ {request.method} {request.url.path} (key: {api_key_masked})")
+    logger.info("-> %s %s (key: %s)", request.method, request.url.path, api_key_masked)
     
     try:
         response = await call_next(request)
         
-        elapsed_time = time.time() - start_time
-        logger.info(f"← {response.status_code} {request.url.path} ({elapsed_time:.2f}s)")
+        elapsed_time = time.time() - start_ts
+        logger.info("<- %s %s | status=%s | %.3fs", request.method, request.url.path, response.status_code, elapsed_time)
         
         return response
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
+        elapsed_time = time.time() - start_ts
+        logger.error(
+            "❌ Unhandled API error on %s %s after %.3fs: %s",
+            request.method,
+            request.url.path,
+            elapsed_time,
+            e,
+            exc_info=True,
+        )
         return JSONResponse(
             status_code=500,
             content={

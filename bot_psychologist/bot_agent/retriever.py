@@ -44,20 +44,20 @@ class SimpleRetriever:
         Использует символьные n-граммы для лучшей работы с русским языком.
         """
         if self._is_built:
-            logger.info("✓ Индекс уже построен")
+            logger.info("[RETRIEVAL] index already built")
             return
         
         try:
             from sklearn.feature_extraction.text import TfidfVectorizer
         except ImportError:
-            logger.error("❌ scikit-learn не установлен. Установите: pip install scikit-learn")
+            logger.error("[RETRIEVAL] scikit-learn is not installed", exc_info=True)
             raise
         
-        logger.info("🔨 Строю TF-IDF индекс...")
+        logger.info("[RETRIEVAL] building TF-IDF index")
         self.blocks = data_loader.get_all_blocks()
         
         if not self.blocks:
-            logger.warning("⚠️ Нет блоков для индексирования!")
+            logger.warning("[RETRIEVAL] no blocks available for indexing")
             return
         
         # Формируем текст для каждого блока: title + keywords + summary
@@ -75,7 +75,7 @@ class SimpleRetriever:
         self.tfidf_matrix = self.vectorizer.fit_transform(texts)
         self._is_built = True
         
-        logger.info(f"✅ Индекс построен для {len(self.blocks)} блоков")
+        logger.info("[RETRIEVAL] index built for %s blocks", len(self.blocks))
     
     def retrieve(
         self, 
@@ -95,14 +95,14 @@ class SimpleRetriever:
         if top_k is None:
             top_k = config.TOP_K_BLOCKS
 
-        logger.info(f"[CACHE CHECK] Query hash={hash(query)} timestamp={time.time():.6f}")
-        logger.info(f"[RETRIEVER] Query='{query}' top_k={top_k}")
+        logger.info("[RETRIEVAL] cache_check hash=%s ts=%.6f", hash(query), time.time())
+        logger.info("[RETRIEVAL] query='%s' top_k=%s", query, top_k)
         
         if not self._is_built:
             self.build_index()
         
         if not self.blocks or self.tfidf_matrix is None:
-            logger.warning("⚠️ Индекс пуст!")
+            logger.warning("[RETRIEVAL] empty index")
             return []
         
         from sklearn.metrics.pairwise import cosine_similarity
@@ -125,12 +125,10 @@ class SimpleRetriever:
                 if len(results) >= top_k:
                     break
         
-        logger.info(f"[RETRIEVER] TF-IDF found {len(results)} blocks")
+        logger.info("[RETRIEVAL] tfidf found %s blocks", len(results))
         for i, (block, score) in enumerate(results[:10], start=1):
             title = (block.title or "")[:60]
-            logger.info(
-                f"  [{i}] score={score:.4f} block_id={block.block_id} title={title}"
-            )
+            logger.info("[RETRIEVAL]   [%s] score=%.4f block_id=%s title=%s", i, score, block.block_id, title)
         return results
 
 

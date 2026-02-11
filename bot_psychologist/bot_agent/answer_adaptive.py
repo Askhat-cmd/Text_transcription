@@ -39,19 +39,19 @@ logger = logging.getLogger(__name__)
 
 
 def _log_retrieval_pairs(stage: str, pairs, limit: int = 5) -> None:
-    logger.info(f"[DEBUG] {stage}: {len(pairs)} blocks")
+    logger.info(f"[RETRIEVAL] {stage}: {len(pairs)} blocks")
     for i, (block, score) in enumerate(pairs[:limit], start=1):
         title = (block.title or "")[:60]
         logger.info(
-            f"  [{i}] block_id={block.block_id} score={float(score):.4f} title={title}"
+            f"[RETRIEVAL]   [{i}] block_id={block.block_id} score={float(score):.4f} title={title}"
         )
 
 
 def _log_blocks(stage: str, blocks, limit: int = 5) -> None:
-    logger.info(f"[DEBUG] {stage}: {len(blocks)} blocks")
+    logger.info(f"[RETRIEVAL] {stage}: {len(blocks)} blocks")
     for i, block in enumerate(blocks[:limit], start=1):
         title = (block.title or "")[:60]
-        logger.info(f"  [{i}] block_id={block.block_id} title={title}")
+        logger.info(f"[RETRIEVAL]   [{i}] block_id={block.block_id} title={title}")
 
 
 def answer_question_adaptive(
@@ -100,7 +100,7 @@ def answer_question_adaptive(
             - debug: Optional[Dict]
     """
     
-    logger.info(f"🎯 Phase 4: Адаптивный ответ для {user_id} | '{query[:50]}...'")
+    logger.info(f"[ADAPTIVE] new request user_id={user_id} query='{query[:50]}...'")
     
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
@@ -170,6 +170,11 @@ def answer_question_adaptive(
             working_state=memory.working_state,
             short_term_context=conversation_context,
         )
+        logger.info(
+            "[RETRIEVAL] built hybrid_query len=%s (orig_query len=%s)",
+            len(hybrid_query),
+            len(query),
+        )
 
         retriever = get_retriever()
         retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
@@ -184,6 +189,7 @@ def answer_question_adaptive(
             reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
             if reranked:
                 retrieved_blocks = reranked
+                logger.info("[RETRIEVAL] reranked top_k=%s", rerank_k)
 
         decision_gate = DecisionGate()
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
@@ -201,7 +207,7 @@ def answer_question_adaptive(
         retrieved_blocks = stage_filtered_blocks[:block_cap]
         capped_retrieved_blocks = list(retrieved_blocks)
         logger.info(
-            f"[CONFIDENCE_CAP] Capped to {block_cap} blocks (was {stage_count_before_cap})"
+            f"[RETRIEVAL] confidence_cap={block_cap} (before={stage_count_before_cap})"
         )
         _log_retrieval_pairs("After confidence cap", retrieved_blocks, limit=10)
         mode_directive = build_mode_directive(
@@ -325,7 +331,7 @@ def answer_question_adaptive(
         )
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
-            logger.error(f"❌ Ошибка LLM: {llm_result['error']}")
+            logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
             response = _build_error_response(
                 f"Ошибка при генерации ответа: {llm_result['error']}",
                 state_analysis,
@@ -475,12 +481,12 @@ def answer_question_adaptive(
             result["metadata"]["sources"] = sources
             result["debug"] = debug_info
         
-        logger.info(f"✅ Адаптивный ответ готов за {elapsed_time:.2f}с")
+        logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
         
         return result
     
     except Exception as e:
-        logger.error(f"❌ Ошибка: {e}", exc_info=True)
+        logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)
         response = {
             "status": "error",
             "answer": f"Произошла ошибка при обработке запроса: {str(e)}",

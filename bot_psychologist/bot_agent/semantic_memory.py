@@ -105,6 +105,9 @@ class SemanticMemory:
             concepts: Список концептов
             timestamp: Временная метка
         """
+        logger.info(
+            f"[SEMANTIC] add_turn_embedding user_id={self.user_id} turn_index={turn_index}"
+        )
         response_preview = bot_response[:200] if bot_response else ""
         text_to_embed = f"{user_input} {response_preview}"
 
@@ -115,7 +118,7 @@ class SemanticMemory:
                 convert_to_numpy=True,
             )
         except Exception as exc:
-            logger.error(f"❌ Ошибка создания эмбеддинга: {exc}")
+            logger.error(f"[SEMANTIC] embedding creation failed: {exc}", exc_info=True)
             return
 
         turn_emb = TurnEmbedding(
@@ -128,7 +131,7 @@ class SemanticMemory:
             embedding=embedding,
         )
         self.turn_embeddings.append(turn_emb)
-        logger.debug(f"➕ Эмбеддинг добавлен для хода #{turn_index}")
+        logger.info(f"[SEMANTIC] embedding added turn_index={turn_index}")
 
     def search_similar_turns(
         self,
@@ -146,6 +149,9 @@ class SemanticMemory:
             min_similarity: Минимальное косинусное сходство (0-1)
             exclude_last_n: Исключить последние N ходов (они уже в short-term)
         """
+        logger.info(
+            f"[SEMANTIC] search start user_id={self.user_id} top_k={top_k} min_similarity={min_similarity}"
+        )
         if not self.turn_embeddings:
             logger.debug("🔍 Нет эмбеддингов для поиска")
             return []
@@ -157,7 +163,7 @@ class SemanticMemory:
                 convert_to_numpy=True,
             )
         except Exception as exc:
-            logger.error(f"❌ Ошибка создания эмбеддинга запроса: {exc}")
+            logger.error(f"[SEMANTIC] query embedding failed: {exc}", exc_info=True)
             return []
 
         search_pool = (
@@ -173,7 +179,15 @@ class SemanticMemory:
                 similarities.append((turn_emb, float(similarity)))
 
         similarities.sort(key=lambda x: x[1], reverse=True)
-        return similarities[:top_k]
+        top_results = similarities[:top_k]
+        logger.info(
+            f"[SEMANTIC] search done user_id={self.user_id} results={len(top_results)}"
+        )
+        for i, (turn_emb, score) in enumerate(top_results, 1):
+            logger.info(
+                f"[SEMANTIC]   #{i} turn={turn_emb.turn_index} similarity={score:.3f}"
+            )
+        return top_results
 
     def get_context_for_llm(
         self,
@@ -317,7 +331,7 @@ class SemanticMemory:
         if not turns_data:
             return
 
-        logger.info(f"🔨 Пересоздаю {len(turns_data)} эмбеддингов...")
+        logger.info(f"[SEMANTIC] rebuild start user_id={self.user_id} turns={len(turns_data)}")
 
         try:
             texts: List[str] = []
@@ -352,9 +366,9 @@ class SemanticMemory:
                 )
 
             self.save_to_disk()
-            logger.info(f"✅ Эмбеддинги пересозданы: {len(self.turn_embeddings)}")
+            logger.info(f"[SEMANTIC] rebuild done embeddings={len(self.turn_embeddings)}")
         except Exception as exc:
-            logger.error(f"❌ Ошибка пересоздания эмбеддингов: {exc}")
+            logger.error(f"[SEMANTIC] rebuild failed: {exc}", exc_info=True)
 
     def clear(self) -> None:
         """Очистить semantic memory."""

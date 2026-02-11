@@ -102,13 +102,13 @@ class APIKeyManager:
             "rate_limit": rate_limit,
             "active": True
         }
-        logger.info(f"✅ API ключ добавлен: {name}")
+        logger.info(f"API key added: {name}")
     
     def deactivate_api_key(self, key: str) -> bool:
         """Деактивировать API ключ"""
         if key in self.api_keys:
             self.api_keys[key]["active"] = False
-            logger.info(f"⚠️ API ключ деактивирован: {key[:10]}...")
+            logger.info(f"API key deactivated: {key[:10]}...")
             return True
         return False
 
@@ -129,27 +129,27 @@ async def verify_api_key(
     """
     
     if not x_api_key:
-        logger.warning("⚠️ Запрос без API ключа")
+        logger.warning("Request without API key")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="API ключ требуется. Передайте в заголовке X-API-Key"
         )
     
     if not api_key_manager.is_valid(x_api_key):
-        logger.warning(f"⚠️ Невалидный API ключ: {x_api_key[:10]}...")
+        logger.warning(f"Invalid API key: {x_api_key[:10]}...")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Невалидный или деактивированный API ключ"
         )
     
     if not api_key_manager.check_rate_limit(x_api_key):
-        logger.warning(f"⚠️ Rate limit превышен для ключа: {x_api_key[:10]}...")
+        logger.warning(f"Rate limit exceeded for key: {x_api_key[:10]}...")
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="Превышен лимит запросов. Попробуйте позже"
         )
     
-    logger.debug(f"✅ API ключ валиден: {x_api_key[:10]}...")
+    logger.debug(f"API key is valid: {x_api_key[:10]}...")
     return x_api_key
 
 

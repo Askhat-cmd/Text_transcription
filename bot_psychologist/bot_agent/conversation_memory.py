@@ -87,6 +87,7 @@ class ConversationMemory:
         Returns:
             True если загрузка успешна, False если файл не найден
         """
+        logger.info(f"[MEMORY] load_history start user_id={self.user_id}")
         if self._load_from_session_storage():
             return True
 
@@ -113,11 +114,11 @@ class ConversationMemory:
             if isinstance(raw_working_state, dict):
                 self.working_state = WorkingState.from_dict(raw_working_state)
             
-            logger.info(f"✅ Загружена история диалога: {len(self.turns)} оборотов")
+            logger.info(f"[MEMORY] loaded from json turns={len(self.turns)} user_id={self.user_id}")
             return True
         
         except Exception as e:
-            logger.error(f"❌ Ошибка загрузки истории: {e}")
+            logger.error(f"[MEMORY] load_history failed user_id={self.user_id}: {e}", exc_info=True)
             return False
 
     def _load_from_session_storage(self) -> bool:
@@ -168,11 +169,11 @@ class ConversationMemory:
             self._restore_semantic_embeddings_from_session(payload)
 
             logger.info(
-                f"✅ Загружена история из SQLite: {len(self.turns)} оборотов для {self.user_id}"
+                f"[MEMORY] loaded from sqlite turns={len(self.turns)} user_id={self.user_id}"
             )
             return True
         except Exception as exc:
-            logger.error(f"❌ Ошибка загрузки из SessionManager: {exc}")
+            logger.error(f"[MEMORY] sqlite load failed user_id={self.user_id}: {exc}", exc_info=True)
             return False
 
     def _restore_semantic_embeddings_from_session(self, payload: Dict[str, Any]) -> None:
@@ -233,10 +234,10 @@ class ConversationMemory:
                     ),
                 }, f, ensure_ascii=False, indent=2)
             
-            logger.debug(f"💾 История сохранена ({len(self.turns)} оборотов)")
+            logger.info(f"[MEMORY] saved turns={len(self.turns)} user_id={self.user_id}")
         
         except Exception as e:
-            logger.error(f"❌ Ошибка сохранения истории: {e}")
+            logger.error(f"[MEMORY] save failed user_id={self.user_id}: {e}", exc_info=True)
 
         if self.session_manager:
             try:
@@ -289,6 +290,7 @@ class ConversationMemory:
         Returns:
             Созданный ConversationTurn
         """
+        logger.info(f"[MEMORY] add_turn user_id={self.user_id} turns_before={len(self.turns)}")
         turn = ConversationTurn(
             timestamp=datetime.now().isoformat(),
             user_input=user_input,
@@ -300,7 +302,7 @@ class ConversationMemory:
         
         self.turns.append(turn)
         turn_index = len(self.turns)
-        logger.debug(f"➕ Добавлен ход #{len(self.turns)}")
+        logger.info(f"[MEMORY] turn_added user_id={self.user_id} turn_index={turn_index}")
 
         embedding_to_store = None
 
@@ -320,7 +322,7 @@ class ConversationMemory:
                 if self.semantic_memory.turn_embeddings:
                     embedding_to_store = self.semantic_memory.turn_embeddings[-1].embedding
             except Exception as e:
-                logger.error(f"❌ Ошибка добавления эмбеддинга: {e}")
+                logger.error(f"[MEMORY] semantic embedding add failed user_id={self.user_id}: {e}", exc_info=True)
 
         self._persist_turn_to_session_storage(
             turn_index=turn_index,
@@ -366,7 +368,7 @@ class ConversationMemory:
                 embedding=embedding,
             )
         except Exception as exc:
-            logger.error(f"❌ Ошибка сохранения хода в SessionManager: {exc}")
+            logger.error(f"[MEMORY] sqlite save_turn failed user_id={self.user_id}: {exc}", exc_info=True)
     
     def add_feedback(
         self,
@@ -640,6 +642,7 @@ class ConversationMemory:
 
     def clear(self) -> None:
         """Очистить историю диалога и сохранить пустое состояние."""
+        logger.info(f"[MEMORY] clear_history user_id={self.user_id}")
         self.turns = []
         self.metadata["last_updated"] = datetime.now().isoformat()
         self.metadata["total_turns"] = 0
@@ -662,6 +665,7 @@ class ConversationMemory:
             )
 
         self.save_to_disk()
+        logger.info(f"[MEMORY] history_cleared user_id={self.user_id}")
 
     def purge_user_data(self) -> None:
         """

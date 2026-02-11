@@ -29,6 +29,43 @@
 Связанные файлы:
 - Backend: `bot_agent/storage/session_manager.py`, `api/models.py`, `api/routes.py`
 - Frontend: `web_ui/src/pages/ChatPage.tsx`, `web_ui/src/hooks/useChat.ts`, `web_ui/src/services/api.service.ts`
+
+## Production Logging (PRD 10.02.2026)
+
+Минимальный PRD по production logging реализован.
+
+Что добавлено:
+- Централизованная конфигурация: `logging_config.py` (`setup_logging`, `get_logger`).
+- Раздельные лог-файлы:
+  - `logs/app/bot.log` — общий поток INFO+.
+  - `logs/retrieval/retrieval.log` — диагностические retrieval-события (`[RETRIEVAL]`).
+  - `logs/error/error.log` — ошибки ERROR+.
+- Ротация через `TimedRotatingFileHandler`:
+  - `app`/`retrieval`: ежедневно, хранение 30 дней.
+  - `error`: ежедневно, хранение 90 дней.
+- Интеграция в ключевые модули:
+  - `api/main.py`
+  - `bot_agent/retriever.py`
+  - `bot_agent/answer_adaptive.py`
+  - `bot_agent/conversation_memory.py`
+  - `bot_agent/semantic_memory.py`
+- Добавлена структура директорий логов с `.gitkeep`:
+  - `logs/`, `logs/app/`, `logs/retrieval/`, `logs/error/`
+
+Быстрая проверка:
+```bash
+cd bot_psychologist
+python -m uvicorn api.main:app --reload --port 8000
+```
+
+После запуска проверяйте:
+```bash
+tail -f logs/app/bot.log
+tail -f logs/retrieval/retrieval.log
+tail -f logs/error/error.log
+```
+
+Для защищенных endpoints нужен заголовок `X-API-Key` (например: `dev-key-001`).
 ## Промпт (System Prompt) и уровни сложности
 
 Системный промпт вынесен в отдельные файлы, чтобы его было проще редактировать без правок кода:
@@ -412,6 +449,6 @@ Askhat-cmd
 
 Важно:
 
-- Runtime-логи сервера (`uvicorn`/stdout) в файл по умолчанию не пишутся, если отдельно не настроен file handler или редирект вывода.
+- Runtime-логи приложения пишутся через `logging_config.py` в `logs/app`, `logs/retrieval`, `logs/error`.
 - Для HTTP API (кроме health-check) требуется заголовок `X-API-Key`; для `/api/v1/questions/adaptive` поле запроса — `query`.
 

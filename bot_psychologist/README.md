@@ -244,39 +244,39 @@ ls ../voice_bot_pipeline/data/sag_final/
 
 ```bash
 # Phase 1: Базовый QA
-python test_phase1.py
+python tests/test_phase1.py
 
 # Phase 2: SAG-aware QA
-python test_phase2.py
+python tests/test_phase2.py
 
 # Phase 3: Knowledge Graph Powered QA
-python test_phase3.py
+python tests/test_phase3.py
 
 # Phase 4: Adaptive QA
-python test_phase4.py
+python tests/test_phase4.py
 
 # Semantic Memory
-python test_semantic_memory.py
+python tests/test_semantic_memory.py
 
 # SessionManager (SQLite persistence bootstrap)
-python test_session_manager.py
-python test_conversation_memory_persistence.py
-python test_working_state.py
-python test_decision_table.py
-python test_decision_gate.py
-python test_hybrid_query.py
-python test_confidence_scorer.py
-python test_stage_filter.py
-python test_signal_detector.py
-python test_voyage_reranker.py
-python test_prompt_templates.py
-python test_mode_handlers.py
-python test_response_generator.py
-python test_response_formatter.py
-python test_full_dialogue_pipeline.py
+python tests/test_session_manager.py
+python tests/test_conversation_memory_persistence.py
+python tests/test_working_state.py
+python tests/test_decision_table.py
+python tests/test_decision_gate.py
+python tests/test_hybrid_query.py
+python tests/test_confidence_scorer.py
+python tests/test_stage_filter.py
+python tests/test_signal_detector.py
+python tests/test_voyage_reranker.py
+python tests/test_prompt_templates.py
+python tests/test_mode_handlers.py
+python tests/test_response_generator.py
+python tests/test_response_formatter.py
+python tests/test_full_dialogue_pipeline.py
 
 # API тесты
-python test_api.py
+python tests/test_api.py
 ```
 
 Очистка старых сессий (ретеншн):
@@ -359,12 +359,13 @@ bot_psychologist/
 │   └── conversations/      # История диалогов пользователей
 │   └── semantic_memory/    # Эмбеддинги semantic memory
 │
-├── test_phase1.py          # Тесты Phase 1
-├── test_phase2.py          # Тесты Phase 2
-├── test_phase3.py          # Тесты Phase 3
-├── test_phase4.py          # Тесты Phase 4
-├── test_semantic_memory.py # Тесты Semantic Memory
-├── test_api.py             # Тесты API
+├── tests/                 # Все тесты проекта
+│   ├── test_phase1.py     # Тесты Phase 1
+│   ├── test_phase2.py     # Тесты Phase 2
+│   ├── test_phase3.py     # Тесты Phase 3
+│   ├── test_phase4.py     # Тесты Phase 4
+│   ├── test_semantic_memory.py # Тесты Semantic Memory
+│   └── test_api.py        # Тесты API
 │
 ├── requirements_bot.txt    # Python зависимости
 ├── .env.example            # Пример переменных окружения
@@ -451,4 +452,5 @@ Askhat-cmd
 
 - Runtime-логи приложения пишутся через `logging_config.py` в `logs/app`, `logs/retrieval`, `logs/error`.
 - Для HTTP API (кроме health-check) требуется заголовок `X-API-Key`; для `/api/v1/questions/adaptive` поле запроса — `query`.
+
 

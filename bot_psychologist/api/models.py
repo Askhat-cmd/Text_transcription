@@ -149,6 +149,51 @@ class AnswerResponse(BaseModel):
     processing_time_seconds: float
 
 
+class ChunkTraceItem(BaseModel):
+    """Один чанк из ChromaDB с полной информацией для отладки."""
+    block_id: str
+    title: str
+    sd_level: str
+    sd_secondary: str = ""
+    emotional_tone: str = ""
+    score_initial: float
+    score_final: float
+    passed_sd_filter: bool
+    filter_reason: str = ""
+    preview: str
+
+
+class SDClassificationTrace(BaseModel):
+    """Результат классификации SD-уровня пользователя."""
+    method: str
+    primary: str
+    secondary: Optional[str]
+    confidence: float
+    indicator: str
+    allowed_levels: List[str]
+
+
+class LLMCallTrace(BaseModel):
+    """Один вызов LLM в рамках обработки запроса."""
+    step: str
+    model: str
+    system_prompt_preview: str
+    user_prompt_preview: str
+    response_preview: str
+    tokens_used: Optional[int] = None
+    duration_ms: Optional[int] = None
+
+
+class DebugTrace(BaseModel):
+    """Полная цепочка рассуждений бота для одного запроса."""
+    sd_classification: SDClassificationTrace
+    chunks_retrieved: List[ChunkTraceItem]
+    chunks_after_sd_filter: List[ChunkTraceItem]
+    llm_calls: List[LLMCallTrace]
+    context_written_to_memory: str
+    total_duration_ms: int
+
+
 class AdaptiveAnswerResponse(BaseModel):
     """РђРґР°РїС‚РёРІРЅС‹Р№ РѕС‚РІРµС‚ (С„Р°Р·Р° 4)"""
     status: str
@@ -164,6 +209,7 @@ class AdaptiveAnswerResponse(BaseModel):
     confidence_level: Optional[str] = None
     confidence_score: Optional[float] = None
     metadata: Dict[str, Any]
+    trace: Optional[DebugTrace] = None
     timestamp: str
     processing_time_seconds: float
 

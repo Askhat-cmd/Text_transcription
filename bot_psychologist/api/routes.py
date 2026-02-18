@@ -33,9 +33,9 @@ from .models import (
     SessionInfoResponse, ArchiveSessionsResponse,
     ChatSessionInfoResponse, UserSessionsResponse, CreateSessionRequest, DeleteSessionResponse,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
-    ConversationTurnResponse
+    ConversationTurnResponse, DebugTrace, SDClassificationTrace, ChunkTraceItem, LLMCallTrace
 )
-from .auth import verify_api_key
+from .auth import verify_api_key, is_dev_key
 
 logger = logging.getLogger(__name__)
 
@@ -358,6 +358,10 @@ async def ask_adaptive_question(
     try:
         session_key = request.session_id or request.user_id
 
+        # Dev-ключ автоматически включает debug-режим
+        if is_dev_key(api_key):
+            request.debug = True
+
         if request.session_id:
             try:
                 session_manager = SessionManager(str(config.BOT_DB_PATH))
@@ -438,6 +442,30 @@ async def ask_adaptive_question(
         response_metadata["user_id"] = request.user_id
         response_metadata["session_id"] = session_key
 
+        trace = None
+        if request.debug and result.get("debug_trace"):
+            raw = result["debug_trace"]
+            try:
+                trace = DebugTrace(
+                    sd_classification=SDClassificationTrace(
+                        **raw["sd_classification"]
+                    ),
+                    chunks_retrieved=[
+                        ChunkTraceItem(**c) for c in raw.get("chunks_retrieved", [])
+                    ],
+                    chunks_after_sd_filter=[
+                        ChunkTraceItem(**c) for c in raw.get("chunks_after_filter", [])
+                    ],
+                    llm_calls=[
+                        LLMCallTrace(**c) for c in raw.get("llm_calls", [])
+                    ],
+                    context_written_to_memory=raw.get("context_written", ""),
+                    total_duration_ms=raw.get("total_duration_ms", 0),
+                )
+            except Exception as trace_exc:
+                logger.warning(f"[DEBUG_TRACE] Failed to build trace: {trace_exc}")
+                trace = None
+
         return AdaptiveAnswerResponse(
             status=result.get("status", "success"),
             answer=result.get("answer", ""),
@@ -452,6 +480,7 @@ async def ask_adaptive_question(
             confidence_level=result.get("metadata", {}).get("confidence_level"),
             confidence_score=result.get("metadata", {}).get("confidence_score"),
             metadata=response_metadata,
+            trace=trace,
             timestamp=datetime.now().isoformat(),
             processing_time_seconds=result.get("processing_time_seconds", 0)
         )

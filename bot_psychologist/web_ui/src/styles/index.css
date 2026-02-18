@@ -144,7 +144,12 @@
 
   /* Chat message bubbles */
   .message-user {
-    @apply bg-purple-600 text-white rounded-2xl rounded-br-md;
+    background: #F4F4F5;
+    color: #18181B;
+    border-radius: 12px;
+    margin-left: 32px;
+    margin-right: 0;
+    align-self: flex-start;
     @apply p-4 max-w-[85%] md:max-w-2xl;
   }
 

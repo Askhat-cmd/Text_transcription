@@ -45,6 +45,10 @@ class APIKeyManager:
         """Проверить валидность ключа"""
         key_info = self.get_api_key(key)
         return key_info is not None and key_info.get("active", False)
+
+    def is_dev_key(self, key: str) -> bool:
+        """Проверить является ли ключ dev-ключом с расширенными правами."""
+        return key == "dev-key-001"
     
     def check_rate_limit(self, api_key: str) -> bool:
         """Проверить лимит частоты запросов"""
@@ -157,5 +161,10 @@ async def verify_api_key(
 def get_api_key_info(api_key: str) -> dict:
     """Получить информацию об API ключе (с кэшированием)"""
     return api_key_manager.get_api_key(api_key) or {}
+
+
+def is_dev_key(api_key: str) -> bool:
+    """Удобная функция для проверки dev-ключа в routes."""
+    return api_key_manager.is_dev_key(api_key)
 
 

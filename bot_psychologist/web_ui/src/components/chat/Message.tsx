@@ -33,20 +33,17 @@ export const MessageItem: React.FC<MessageItemProps> = ({
   const isUser = message.role === 'user';
 
   return (
-    <div className={clsx('flex', isUser ? 'justify-end' : 'justify-start')}>
+    <div className="flex justify-start">
       <div
         className={clsx(
-          'max-w-[85%] md:max-w-2xl rounded-2xl',
-          compactMode ? 'p-3' : 'p-4',
-          isUser
-            ? 'bg-purple-600 text-white rounded-br-md'
-            : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-bl-md'
+          isUser ? 'message-user' : 'message-bot',
+          compactMode ? 'p-3' : 'p-4'
         )}
       >
         {/* Message Content */}
         <div className={clsx(
           'prose prose-sm max-w-none',
-          isUser ? 'prose-invert' : 'dark:prose-invert'
+          isUser ? 'text-zinc-900' : 'dark:prose-invert'
         )}>
           <ReactMarkdown>{message.content}</ReactMarkdown>
         </div>
@@ -113,7 +110,7 @@ export const MessageItem: React.FC<MessageItemProps> = ({
         {/* Timestamp */}
         <div className={clsx(
           'text-xs mt-2',
-          isUser ? 'text-white/70' : 'text-gray-400 dark:text-gray-500'
+          isUser ? 'text-zinc-500' : 'text-gray-400 dark:text-gray-500'
         )}>
           {formatterService.formatMessageTime(message.timestamp)}
         </div>

@@ -7,6 +7,7 @@
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Message } from '../types';
+import type { AdaptiveAnswerResponse } from '../types';
 import { apiService } from '../services/api.service';
 
 export interface UseChatOptions {
@@ -14,6 +15,7 @@ export interface UseChatOptions {
   includePath?: boolean;
   includeFeedback?: boolean;
   sessionId?: string;
+  onAdaptiveResponse?: (response: AdaptiveAnswerResponse) => void;
 }
 
 export interface UseChatReturn {
@@ -47,6 +49,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     includePath = true,
     includeFeedback = true,
     sessionId,
+    onAdaptiveResponse,
   } = options;
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -98,6 +101,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         includeFeedback,
         sessionId
       );
+      onAdaptiveResponse?.(response);
 
       if (response.state_analysis) {
         setCurrentUserState(response.state_analysis.primary_state);
@@ -121,7 +125,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, [userId, includePath, includeFeedback, sessionId, addMessage]);
+  }, [userId, includePath, includeFeedback, sessionId, addMessage, onAdaptiveResponse]);
 
   const updateMessageFeedback = useCallback((
     messageId: string,

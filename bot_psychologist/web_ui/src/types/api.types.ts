@@ -77,6 +77,47 @@ export interface PathRecommendation {
   first_step?: PathStep;
 }
 
+export interface ChunkTraceItem {
+  block_id: string;
+  title: string;
+  sd_level: string;
+  sd_secondary: string;
+  emotional_tone: string;
+  score_initial: number;
+  score_final: number;
+  passed_sd_filter: boolean;
+  filter_reason: string;
+  preview: string;
+}
+
+export interface SDClassificationTrace {
+  method: string;
+  primary: string;
+  secondary?: string | null;
+  confidence: number;
+  indicator: string;
+  allowed_levels: string[];
+}
+
+export interface LLMCallTrace {
+  step: string;
+  model: string;
+  system_prompt_preview: string;
+  user_prompt_preview: string;
+  response_preview: string;
+  tokens_used?: number | null;
+  duration_ms?: number | null;
+}
+
+export interface DebugTrace {
+  sd_classification: SDClassificationTrace;
+  chunks_retrieved: ChunkTraceItem[];
+  chunks_after_sd_filter: ChunkTraceItem[];
+  llm_calls: LLMCallTrace[];
+  context_written_to_memory: string;
+  total_duration_ms: number;
+}
+
 export interface AnswerResponse {
   status: string;
   answer: string;
@@ -97,6 +138,7 @@ export interface AdaptiveAnswerResponse {
   sources: Source[];
   conversation_context: string;
   metadata: Record<string, unknown>;
+  trace?: DebugTrace | null;
   timestamp: string;
   processing_time_seconds: number;
 }

@@ -51,6 +51,30 @@ _stats = {
 }
 
 
+def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default: bool) -> ChunkTraceItem:
+    score_initial = float(raw_chunk.get("score_initial", raw_chunk.get("score", 0.0) or 0.0))
+    score_final = float(raw_chunk.get("score_final", raw_chunk.get("score", score_initial) or score_initial))
+    passed_sd_filter = bool(raw_chunk.get("passed_sd_filter", passed_default))
+    preview = (
+        raw_chunk.get("preview")
+        or raw_chunk.get("content")
+        or raw_chunk.get("summary")
+        or ""
+    )
+    return ChunkTraceItem(
+        block_id=str(raw_chunk.get("block_id", "")),
+        title=str(raw_chunk.get("title", "")),
+        sd_level=str(raw_chunk.get("sd_level", default_sd_level or "UNKNOWN")),
+        sd_secondary=str(raw_chunk.get("sd_secondary") or ""),
+        emotional_tone=str(raw_chunk.get("emotional_tone") or ""),
+        score_initial=score_initial,
+        score_final=score_final,
+        passed_sd_filter=passed_sd_filter,
+        filter_reason=str(raw_chunk.get("filter_reason") or ""),
+        preview=str(preview)[:120],
+    )
+
+
 # ===== QUESTIONS ENDPOINTS =====
 
 @router.post(
@@ -443,24 +467,94 @@ async def ask_adaptive_question(
         response_metadata["session_id"] = session_key
 
         trace = None
-        if request.debug and result.get("debug_trace"):
-            raw = result["debug_trace"]
+        if request.debug:
+            raw = result.get("debug_trace") or result.get("debug")
             try:
+                metadata = result.get("metadata", {}) or {}
+                sd_raw = raw.get("sd_classification", {}) if isinstance(raw, dict) else {}
+                allowed_levels = (
+                    sd_raw.get("allowed_levels")
+                    or sd_raw.get("allowed_blocks")
+                    or metadata.get("sd_allowed_blocks")
+                    or []
+                )
+                if not isinstance(allowed_levels, list):
+                    allowed_levels = []
+
+                default_sd_level = str(sd_raw.get("primary") or metadata.get("sd_level") or "UNKNOWN")
+
+                chunks_retrieved_raw = []
+                chunks_after_raw = []
+                llm_calls_raw = []
+                context_written = ""
+                total_duration_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
+
+                if isinstance(raw, dict):
+                    retrieval_details = raw.get("retrieval_details", {}) or {}
+                    chunks_retrieved_raw = (
+                        raw.get("chunks_retrieved")
+                        or retrieval_details.get("initial_retrieval")
+                        or []
+                    )
+                    chunks_after_raw = (
+                        raw.get("chunks_after_filter")
+                        or raw.get("chunks_after_sd_filter")
+                        or retrieval_details.get("after_sd_filter")
+                        or []
+                    )
+                    llm_calls_raw = raw.get("llm_calls") or []
+                    context_written = raw.get("context_written") or result.get("conversation_context", "")
+                    total_duration_ms = int(
+                        raw.get("total_duration_ms")
+                        or float(raw.get("total_time", result.get("processing_time_seconds", 0)) or 0) * 1000
+                    )
+
+                chunks_retrieved = [
+                    _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=False)
+                    for c in chunks_retrieved_raw if isinstance(c, dict)
+                ]
+                chunks_after_sd_filter = [
+                    _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
+                    for c in chunks_after_raw if isinstance(c, dict)
+                ]
+
+                # Fallback: если в debug нет чанков, но есть финальные sources — показываем их как прошедшие фильтр.
+                if not chunks_retrieved and not chunks_after_sd_filter:
+                    source_chunks = []
+                    for src in result.get("sources", []) or []:
+                        if isinstance(src, dict):
+                            source_chunks.append(_to_chunk_trace_item(
+                                {
+                                    "block_id": src.get("block_id", ""),
+                                    "title": src.get("title", ""),
+                                    "score": 0.0,
+                                    "sd_level": metadata.get("sd_level", default_sd_level),
+                                    "sd_secondary": metadata.get("sd_secondary", ""),
+                                    "emotional_tone": "",
+                                    "passed_sd_filter": True,
+                                    "preview": "",
+                                },
+                                default_sd_level=default_sd_level,
+                                passed_default=True,
+                            ))
+                    chunks_after_sd_filter = source_chunks
+
                 trace = DebugTrace(
                     sd_classification=SDClassificationTrace(
-                        **raw["sd_classification"]
+                        method=str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
+                        primary=default_sd_level,
+                        secondary=sd_raw.get("secondary", metadata.get("sd_secondary")),
+                        confidence=float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
+                        indicator=str(sd_raw.get("indicator", "metadata_fallback")),
+                        allowed_levels=[str(level) for level in allowed_levels],
                     ),
-                    chunks_retrieved=[
-                        ChunkTraceItem(**c) for c in raw.get("chunks_retrieved", [])
-                    ],
-                    chunks_after_sd_filter=[
-                        ChunkTraceItem(**c) for c in raw.get("chunks_after_filter", [])
-                    ],
+                    chunks_retrieved=chunks_retrieved,
+                    chunks_after_sd_filter=chunks_after_sd_filter,
                     llm_calls=[
-                        LLMCallTrace(**c) for c in raw.get("llm_calls", [])
+                        LLMCallTrace(**c) for c in llm_calls_raw if isinstance(c, dict)
                     ],
-                    context_written_to_memory=raw.get("context_written", ""),
-                    total_duration_ms=raw.get("total_duration_ms", 0),
+                    context_written_to_memory=context_written,
+                    total_duration_ms=total_duration_ms,
                 )
             except Exception as trace_exc:
                 logger.warning(f"[DEBUG_TRACE] Failed to build trace: {trace_exc}")

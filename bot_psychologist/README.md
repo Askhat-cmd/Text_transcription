@@ -15,6 +15,39 @@
 - Генерирует краткое summary диалога и добавляет в контекст
 - Адаптивно формирует контекст (short-term + semantic + summary по длине диалога)
 
+## SD Integration (PRD v3.0)
+
+В проект добавлена SD-интеграция (Спиральная Динамика Клэра Грейвза) в связке с `voice_bot_pipeline`.
+
+Что реализовано:
+- SD-классификатор пользователя: `bot_agent/sd_classifier.py`
+- SD-конфиг: `config/sd_classification.yaml`
+- SD-фильтр retrieval: `bot_agent/retrieval/sd_filter.py`
+- SD-оверлей промты:
+  - `bot_agent/prompt_sd_purple.md`
+  - `bot_agent/prompt_sd_red.md`
+  - `bot_agent/prompt_sd_blue.md`
+  - `bot_agent/prompt_sd_orange.md`
+  - `bot_agent/prompt_sd_green.md`
+  - `bot_agent/prompt_sd_yellow.md`
+- Интеграция в adaptive orchestrator:
+  - SD-классификация пользователя
+  - SD-фильтрация блоков после retrieval
+  - проброс `sd_level` в `ResponseGenerator.generate(...)`
+  - SD-поля в `metadata` ответа
+- Расширение памяти:
+  - `ConversationMemory.get_user_sd_profile()`
+  - `ConversationMemory.update_sd_profile(...)`
+
+Безопасность:
+- При любой SD-ошибке используется fallback `GREEN`, ответ продолжает генерироваться.
+- `prompt_system_base.md` не изменяется; SD-адаптация накладывается через отдельные SD-файлы.
+
+Тесты SD:
+- `tests/test_sd_classifier.py`
+- `tests/test_sd_filter.py`
+- `tests/test_sd_integration.py`
+
 ## Web UI (PRD 09.02.2026)
 
 Ключевые изменения по PRD редизайна Web UI (стиль ChatGPT) и миграции на серверные сессии.

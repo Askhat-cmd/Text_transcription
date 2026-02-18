@@ -1,0 +1,42 @@
+sd_classification:
+  model: gpt-4o-mini
+  temperature: 0.1
+
+  # Пороги
+  heuristic_confidence_threshold: 0.65
+  profile_min_messages: 15
+  profile_min_confidence: 0.80
+  update_profile_every_n_messages: 5
+
+  # Безопасность
+  uncertainty_fallback: "one_level_down"
+  default_level: "GREEN"
+
+  # Матрица (дублирует код, используется для документации и тестов)
+  compatibility_base:
+    BEIGE: ["BEIGE", "PURPLE"]
+    PURPLE: ["PURPLE", "RED"]
+    RED: ["RED", "BLUE"]
+    BLUE: ["BLUE", "ORANGE"]
+    ORANGE: ["ORANGE", "GREEN"]
+    GREEN: ["GREEN", "YELLOW"]
+    YELLOW: ["GREEN", "YELLOW", "TURQUOISE"]
+    TURQUOISE: ["YELLOW", "TURQUOISE"]
+
+  # Кризисные переопределения (дублирует код для документации)
+  crisis_overrides:
+    - condition: [ORANGE, overwhelmed]
+      allowed: [BLUE, ORANGE]
+      reason: "В коллапсе нужна BLUE структура как опора"
+    - condition: [BLUE, overwhelmed]
+      allowed: [GREEN, BLUE]
+      reason: "В перегрузке виной нужна GREEN валидация"
+    - condition: [GREEN, overwhelmed]
+      allowed: [ORANGE, GREEN]
+      reason: "В истощении нужна ORANGE дистанция/границы"
+    - condition: [RED, crisis]
+      allowed: [PURPLE, RED]
+      reason: "В панике нужна PURPLE безопасность"
+    - condition: [YELLOW, overwhelmed]
+      allowed: [GREEN, YELLOW]
+      reason: "В коллапсе систем нужна GREEN земля"

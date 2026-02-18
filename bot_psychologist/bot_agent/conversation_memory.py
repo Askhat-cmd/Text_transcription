@@ -66,6 +66,7 @@ class ConversationMemory:
         self.summary: Optional[str] = None
         self.summary_updated_at: Optional[int] = None  # turn index
         self.working_state: Optional[WorkingState] = None
+        self._sd_profile: Optional[Dict[str, Any]] = None
 
         # === PRD v2.0 bootstrap: SQLite Session Storage ===
         self.session_manager: Optional[SessionManager] = None
@@ -113,6 +114,9 @@ class ConversationMemory:
             raw_working_state = data.get("working_state")
             if isinstance(raw_working_state, dict):
                 self.working_state = WorkingState.from_dict(raw_working_state)
+            self._sd_profile = data.get("sd_profile")
+            if self._sd_profile:
+                self.metadata["sd_profile"] = self._sd_profile
             
             logger.info(f"[MEMORY] loaded from json turns={len(self.turns)} user_id={self.user_id}")
             return True
@@ -140,6 +144,9 @@ class ConversationMemory:
             metadata = session_info.get("metadata")
             if isinstance(metadata, dict):
                 self.metadata.update(metadata)
+                profile = metadata.get("sd_profile")
+                if isinstance(profile, dict):
+                    self._sd_profile = profile
 
             restored_turns: List[ConversationTurn] = []
             for turn in turns_data:
@@ -232,6 +239,7 @@ class ConversationMemory:
                     "working_state": (
                         self.working_state.to_dict() if self.working_state else None
                     ),
+                    "sd_profile": self._sd_profile,
                 }, f, ensure_ascii=False, indent=2)
             
             logger.info(f"[MEMORY] saved turns={len(self.turns)} user_id={self.user_id}")
@@ -432,6 +440,46 @@ class ConversationMemory:
             Список ConversationTurn
         """
         return self.turns[-n:] if self.turns else []
+
+    def get_user_sd_profile(self) -> Optional[dict]:
+        """Получить накопленный SD-профиль пользователя."""
+        return getattr(self, "_sd_profile", None)
+
+    def update_sd_profile(self, level: str, confidence: float) -> None:
+        """
+        Обновить SD-профиль на основе новой классификации.
+        Вызывается каждые N сообщений из answer_adaptive.py.
+        """
+        if not hasattr(self, "_sd_profile") or self._sd_profile is None:
+            self._sd_profile = {
+                "primary": level,
+                "secondary": None,
+                "confidence": confidence,
+                "message_count": 0,
+                "history": [],
+            }
+
+        self._sd_profile["history"].append({"level": level, "confidence": confidence})
+        self._sd_profile["message_count"] = len(self.turns)
+
+        # Пересчитать как наиболее частый за последние 10 классификаций
+        recent = self._sd_profile["history"][-10:]
+        from collections import Counter
+
+        level_counts = Counter(h["level"] for h in recent)
+        most_common = level_counts.most_common(1)[0][0]
+
+        self._sd_profile["primary"] = most_common
+        self._sd_profile["confidence"] = sum(
+            h["confidence"] for h in recent if h["level"] == most_common
+        ) / max(1, level_counts[most_common])
+        self.metadata["sd_profile"] = self._sd_profile
+
+        logger.debug(
+            f"[SD_PROFILE] Updated: {self._sd_profile['primary']} "
+            f"(conf={self._sd_profile['confidence']:.2f}, "
+            f"msgs={self._sd_profile['message_count']})"
+        )
     
     def get_context_for_llm(self, n: int = 3, max_chars: Optional[int] = None) -> str:
         """
@@ -651,6 +699,8 @@ class ConversationMemory:
         self.summary = None
         self.summary_updated_at = None
         self.working_state = None
+        self._sd_profile = None
+        self.metadata.pop("sd_profile", None)
 
         # === НОВОЕ: Очистить semantic memory ===
         if self.semantic_memory:
@@ -676,6 +726,8 @@ class ConversationMemory:
         self.summary = None
         self.summary_updated_at = None
         self.working_state = None
+        self._sd_profile = None
+        self.metadata.pop("sd_profile", None)
         self.metadata["last_updated"] = datetime.now().isoformat()
         self.metadata["total_turns"] = 0
 
@@ -809,6 +861,7 @@ class ConversationMemory:
             "working_state": (
                 self.working_state.to_dict() if self.working_state else None
             ),
+            "sd_profile": self._sd_profile,
         }
 
         if self.semantic_memory:

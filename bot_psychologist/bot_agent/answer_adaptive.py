@@ -34,8 +34,9 @@ from .decision import (
     detect_routing_signals,
     resolve_user_stage,
 )
-from .retrieval import HybridQueryBuilder, VoyageReranker
+from .retrieval import HybridQueryBuilder, VoyageReranker, filter_by_sd_level
 from .response import ResponseFormatter, ResponseGenerator
+from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +57,11 @@ def _log_blocks(stage: str, blocks, limit: int = 5) -> None:
         logger.info(f"[RETRIEVAL]   [{i}] block_id={block.block_id} title={title}")
 
 
-def _build_state_context(state_analysis: StateAnalysis, mode_prompt: str) -> str:
+def _build_state_context(
+    state_analysis: StateAnalysis,
+    mode_prompt: str,
+    sd_level: str = "GREEN",
+) -> str:
     recommendation = (
         state_analysis.recommendations[0]
         if state_analysis and state_analysis.recommendations
@@ -67,11 +72,13 @@ def _build_state_context(state_analysis: StateAnalysis, mode_prompt: str) -> str
 - Текущее состояние: {state_analysis.primary_state.value}
 - Эмоциональный тон: {state_analysis.emotional_tone}
 - Глубина вовлечения: {state_analysis.depth}
+- Уровень развития (СД): {sd_level}
 
 РЕКОМЕНДАЦИЯ ПО ОТВЕТУ:
 {recommendation}
 
-Адаптируй свой ответ к состоянию пользователя.
+Адаптируй стиль ответа к уровню СД пользователя.
+SD-оверлей применяется автоматически через системный промт.
 
 РЕЖИМНАЯ ДИРЕКТИВА:
 {mode_prompt}
@@ -261,6 +268,8 @@ def answer_question_adaptive(
         if debug_info is not None:
             debug_info["user_id"] = user_id
             debug_info["memory_turns"] = len(memory.turns)
+        sd_settings = get_sd_settings()
+        sd_profile_update_every_n = max(1, int(sd_settings.get("update_profile_every_n_messages", 5)))
         
         # ================================================================
         # ЭТАП 2: Анализ состояния пользователя
@@ -292,6 +301,49 @@ def answer_question_adaptive(
                 "user_stage": user_stage,
             }
 
+        # ================================================================
+        # ЭТАП 2б: SD-классификация пользователя (НОВОЕ)
+        # ================================================================
+        logger.debug("🌀 Этап 2б: SD-классификация...")
+        conversation_history_for_sd = [
+            {"role": "user", "content": turn.user_input}
+            for turn in memory.get_last_turns(10)
+        ]
+        try:
+            sd_result: SDClassificationResult = sd_classifier.classify(
+                message=query,
+                conversation_history=conversation_history_for_sd,
+                user_sd_profile=memory.get_user_sd_profile(),
+            )
+            if len(memory.turns) % sd_profile_update_every_n == 0:
+                memory.update_sd_profile(
+                    level=sd_result.primary,
+                    confidence=sd_result.confidence,
+                )
+            logger.info(
+                f"✅ SD уровень: {sd_result.primary} "
+                f"(conf={sd_result.confidence:.2f}, method={sd_result.method})"
+            )
+        except Exception as sd_exc:
+            logger.warning(f"[ADAPTIVE] SD classification failed: {sd_exc}, using GREEN fallback")
+            sd_result = SDClassificationResult(
+                primary="GREEN",
+                secondary=None,
+                confidence=0.5,
+                indicator="fallback_on_error",
+                method="fallback",
+            )
+
+        if debug_info is not None:
+            debug_info["sd_classification"] = {
+                "primary": sd_result.primary,
+                "secondary": sd_result.secondary,
+                "confidence": sd_result.confidence,
+                "indicator": sd_result.indicator,
+                "method": sd_result.method,
+                "allowed_blocks": sd_result.allowed_blocks,
+            }
+
         decision_gate = DecisionGate()
         pre_routing_signals = detect_routing_signals(query, [], state_analysis)
         pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
@@ -313,7 +365,11 @@ def answer_question_adaptive(
                 conversation_context=conversation_context,
                 state_analysis=state_analysis,
             )
-            state_context = _build_state_context(state_analysis, mode_directive.prompt)
+            state_context = _build_state_context(
+                state_analysis,
+                mode_directive.prompt,
+                sd_level=sd_result.primary,
+            )
             response_generator = ResponseGenerator()
             llm_result = response_generator.generate(
                 query,
@@ -324,6 +380,7 @@ def answer_question_adaptive(
                 forbid=pre_routing_result.decision.forbid,
                 user_level_adapter=level_adapter,
                 additional_system_context=state_context,
+                sd_level=sd_result.primary,
                 model=config.LLM_MODEL,
                 temperature=config.LLM_TEMPERATURE,
                 max_tokens=config.LLM_MAX_TOKENS,
@@ -389,6 +446,11 @@ def answer_question_adaptive(
                     "mode_reason": mode_directive.reason,
                     "retrieval_block_cap": 0,
                     "fast_path": True,
+                    "sd_level": sd_result.primary,
+                    "sd_secondary": sd_result.secondary,
+                    "sd_confidence": round(sd_result.confidence, 3),
+                    "sd_method": sd_result.method,
+                    "sd_allowed_blocks": sd_result.allowed_blocks,
                 },
                 "timestamp": datetime.now().isoformat(),
                 "processing_time_seconds": round(elapsed_time, 2),
@@ -430,9 +492,20 @@ def answer_question_adaptive(
         )
 
         retriever = get_retriever()
-        retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
-        _log_retrieval_pairs("Initial retrieval", retrieved_blocks, limit=10)
-        initial_retrieved_blocks = list(retrieved_blocks)
+        raw_retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
+        retrieved_blocks = filter_by_sd_level(
+            blocks_with_scores=raw_retrieved_blocks,
+            user_sd_level=sd_result.primary,
+            user_state=state_analysis.primary_state.value,
+            sd_secondary=sd_result.secondary,
+            sd_confidence=sd_result.confidence,
+            is_first_session=(len(memory.turns) == 0),
+            min_blocks=3,
+        )
+        _log_retrieval_pairs("After SD filter", retrieved_blocks, limit=10)
+        initial_retrieved_blocks = list(raw_retrieved_blocks)
+        sd_filtered_blocks = list(retrieved_blocks)
         reranker = VoyageReranker(
             model=config.VOYAGE_MODEL,
             enabled=config.VOYAGE_ENABLED,
@@ -525,6 +598,14 @@ def answer_question_adaptive(
                     }
                     for block, score in stage_filtered_blocks
                 ],
+                "after_sd_filter": [
+                    {
+                        "block_id": block.block_id,
+                        "score": float(score),
+                        "title": block.title,
+                    }
+                    for block, score in sd_filtered_blocks
+                ],
                 "after_confidence_cap": [
                     {
                         "block_id": block.block_id,
@@ -562,7 +643,11 @@ def answer_question_adaptive(
         logger.debug("🤖 Этап 4: Генерация ответа...")
         
         # Добавить контекст состояния
-        state_context = _build_state_context(state_analysis, mode_directive.prompt)
+        state_context = _build_state_context(
+            state_analysis,
+            mode_directive.prompt,
+            sd_level=sd_result.primary,
+        )
 
         # Генерация ответа (с учётом истории диалога)
         response_generator = ResponseGenerator()
@@ -575,6 +660,7 @@ def answer_question_adaptive(
             forbid=routing_result.decision.forbid,
             user_level_adapter=level_adapter,
             additional_system_context=state_context,
+            sd_level=sd_result.primary,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
             max_tokens=config.LLM_MAX_TOKENS,
@@ -729,6 +815,11 @@ def answer_question_adaptive(
                 "confidence_level": routing_result.confidence_level,
                 "mode_reason": mode_directive.reason,
                 "retrieval_block_cap": block_cap,
+                "sd_level": sd_result.primary,
+                "sd_secondary": sd_result.secondary,
+                "sd_confidence": round(sd_result.confidence, 3),
+                "sd_method": sd_result.method,
+                "sd_allowed_blocks": sd_result.allowed_blocks,
             },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)

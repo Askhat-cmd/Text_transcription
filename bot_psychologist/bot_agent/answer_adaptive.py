@@ -14,8 +14,9 @@ Adaptive Answer Module - Phase 4
 """
 
 import logging
+import json
 import re
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Tuple
 from datetime import datetime
 
 from .data_loader import Block, data_loader
@@ -55,6 +56,153 @@ def _log_blocks(stage: str, blocks, limit: int = 5) -> None:
     for i, block in enumerate(blocks[:limit], start=1):
         title = (block.title or "")[:60]
         logger.info(f"[RETRIEVAL]   [{i}] block_id={block.block_id} title={title}")
+
+
+def _truncate_preview(text: Optional[str], max_len: int = 300) -> str:
+    value = str(text or "")
+    return value[:max_len]
+
+
+def _extract_block_sd(block, default_sd_level: str = "UNKNOWN") -> Tuple[str, str, str]:
+    metadata = getattr(block, "metadata", {}) or {}
+    sd_level = getattr(block, "sd_level", None) or metadata.get("sd_level")
+    sd_secondary = getattr(block, "sd_secondary", None) or metadata.get("sd_secondary")
+    emotional_tone = getattr(block, "emotional_tone", None) or metadata.get("emotional_tone")
+    return (
+        str(sd_level or default_sd_level).upper(),
+        str(sd_secondary or ""),
+        str(emotional_tone or ""),
+    )
+
+
+def _build_chunk_trace_item(
+    *,
+    block,
+    score_initial: float,
+    score_final: float,
+    passed_sd_filter: bool,
+    filter_reason: str,
+    default_sd_level: str = "UNKNOWN",
+) -> Dict:
+    sd_level, sd_secondary, emotional_tone = _extract_block_sd(block, default_sd_level=default_sd_level)
+    preview_source = getattr(block, "content", None) or getattr(block, "summary", None) or ""
+    return {
+        "block_id": str(getattr(block, "block_id", "")),
+        "title": str(getattr(block, "title", "")),
+        "sd_level": sd_level,
+        "sd_secondary": sd_secondary,
+        "emotional_tone": emotional_tone,
+        "score_initial": float(score_initial),
+        "score_final": float(score_final),
+        "passed_sd_filter": bool(passed_sd_filter),
+        "filter_reason": str(filter_reason or ""),
+        "preview": _truncate_preview(preview_source, 120),
+    }
+
+
+def _build_chunk_trace_lists(
+    *,
+    initial_retrieved: List[Tuple],
+    sd_filtered: List[Tuple],
+    reranked: List[Tuple],
+    allowed_levels: List[str],
+) -> Tuple[List[Dict], List[Dict]]:
+    allowed_norm = [str(level).upper() for level in (allowed_levels or [])]
+    passed_ids = {str(getattr(block, "block_id", "")) for block, _ in sd_filtered}
+    reranked_scores = {
+        str(getattr(block, "block_id", "")): float(score)
+        for block, score in reranked
+    }
+
+    chunks_retrieved: List[Dict] = []
+    chunks_after_filter: List[Dict] = []
+
+    for block, initial_score in initial_retrieved:
+        block_id = str(getattr(block, "block_id", ""))
+        raw_metadata = getattr(block, "metadata", {}) or {}
+        raw_sd = getattr(block, "sd_level", None) or raw_metadata.get("sd_level")
+        passed = block_id in passed_ids
+
+        filter_reason = ""
+        if not passed:
+            if not raw_sd:
+                filter_reason = "sd_level_missing"
+            elif allowed_norm and str(raw_sd).upper() not in allowed_norm:
+                filter_reason = f"sd_level_{str(raw_sd).upper()}_not_allowed"
+            else:
+                filter_reason = "filtered_by_sd"
+
+        item = _build_chunk_trace_item(
+            block=block,
+            score_initial=float(initial_score),
+            score_final=reranked_scores.get(block_id, float(initial_score)),
+            passed_sd_filter=passed,
+            filter_reason=filter_reason,
+        )
+        chunks_retrieved.append(item)
+        if passed:
+            chunks_after_filter.append(item)
+
+    return chunks_retrieved, chunks_after_filter
+
+
+def _build_llm_prompt_previews(
+    *,
+    response_generator: ResponseGenerator,
+    query: str,
+    blocks: List[Block],
+    conversation_context: str,
+    user_level_adapter,
+    sd_level: str,
+    mode_prompt: str,
+    additional_system_context: str,
+) -> Tuple[str, str]:
+    try:
+        answerer = response_generator.answerer
+        system_prompt = answerer.build_system_prompt()
+
+        if user_level_adapter is not None:
+            try:
+                system_prompt = user_level_adapter.adapt_system_prompt(system_prompt)
+            except Exception:
+                pass
+
+        sd_overlay = response_generator._load_sd_prompt(sd_level)
+        if sd_overlay:
+            system_prompt = f"{system_prompt}\n\n{sd_overlay}"
+
+        system_chunks = [system_prompt, f"MODE DIRECTIVE:\n{mode_prompt}"]
+        if additional_system_context:
+            system_chunks.append(additional_system_context.strip())
+
+        final_system_prompt = "\n\n".join(chunk for chunk in system_chunks if chunk).strip()
+        user_prompt = answerer.build_context_prompt(
+            blocks,
+            query,
+            conversation_history=conversation_context,
+        )
+        return _truncate_preview(final_system_prompt, 300), _truncate_preview(user_prompt, 300)
+    except Exception as exc:
+        logger.debug(f"[DEBUG_TRACE] Failed to build prompt previews: {exc}")
+        return "", ""
+
+
+def _build_memory_context_snapshot(memory) -> str:
+    try:
+        if not memory.turns:
+            return ""
+        turn = memory.turns[-1]
+        payload = {
+            "timestamp": turn.timestamp,
+            "user_input": turn.user_input,
+            "bot_response": turn.bot_response,
+            "user_state": turn.user_state,
+            "blocks_used": turn.blocks_used,
+            "concepts": turn.concepts,
+        }
+        return _truncate_preview(json.dumps(payload, ensure_ascii=False), 1200)
+    except Exception:
+        return ""
 
 
 def _build_state_context(
@@ -246,6 +394,25 @@ def answer_question_adaptive(
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
     debug_info = {} if debug else None
+    debug_trace = (
+        {
+            "sd_classification": {
+                "method": "fallback",
+                "primary": "GREEN",
+                "secondary": None,
+                "confidence": 0.0,
+                "indicator": "not_set",
+                "allowed_levels": [],
+            },
+            "chunks_retrieved": [],
+            "chunks_after_filter": [],
+            "llm_calls": [],
+            "context_written": "",
+            "total_duration_ms": 0,
+        }
+        if debug
+        else None
+    )
     
     try:
         # ================================================================
@@ -342,6 +509,16 @@ def answer_question_adaptive(
                 "indicator": sd_result.indicator,
                 "method": sd_result.method,
                 "allowed_blocks": sd_result.allowed_blocks,
+                "allowed_levels": sd_result.allowed_blocks,
+            }
+        if debug_trace is not None:
+            debug_trace["sd_classification"] = {
+                "method": sd_result.method,
+                "primary": sd_result.primary,
+                "secondary": sd_result.secondary,
+                "confidence": float(sd_result.confidence),
+                "indicator": sd_result.indicator,
+                "allowed_levels": [str(level) for level in (sd_result.allowed_blocks or [])],
             }
 
         decision_gate = DecisionGate()
@@ -371,20 +548,61 @@ def answer_question_adaptive(
                 sd_level=sd_result.primary,
             )
             response_generator = ResponseGenerator()
-            llm_result = response_generator.generate(
-                query,
-                [fast_block],
-                conversation_context=conversation_context,
-                mode=pre_routing_result.mode,
-                confidence_level=pre_routing_result.confidence_level,
-                forbid=pre_routing_result.decision.forbid,
-                user_level_adapter=level_adapter,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                model=config.LLM_MODEL,
-                temperature=config.LLM_TEMPERATURE,
-                max_tokens=config.LLM_MAX_TOKENS,
-            )
+            llm_system_preview = ""
+            llm_user_preview = ""
+            if debug_trace is not None:
+                llm_system_preview, llm_user_preview = _build_llm_prompt_previews(
+                    response_generator=response_generator,
+                    query=query,
+                    blocks=[fast_block],
+                    conversation_context=conversation_context,
+                    user_level_adapter=level_adapter,
+                    sd_level=sd_result.primary,
+                    mode_prompt=mode_directive.prompt,
+                    additional_system_context=state_context,
+                )
+
+            llm_started = datetime.now()
+            llm_result = {}
+            llm_error = None
+            try:
+                llm_result = response_generator.generate(
+                    query,
+                    [fast_block],
+                    conversation_context=conversation_context,
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                    forbid=pre_routing_result.decision.forbid,
+                    user_level_adapter=level_adapter,
+                    additional_system_context=state_context,
+                    sd_level=sd_result.primary,
+                    model=config.LLM_MODEL,
+                    temperature=config.LLM_TEMPERATURE,
+                    max_tokens=config.LLM_MAX_TOKENS,
+                )
+            except Exception as llm_exc:
+                llm_error = str(llm_exc)
+                raise
+            finally:
+                if debug_trace is not None:
+                    tokens = llm_result.get("tokens_used") if isinstance(llm_result, dict) else None
+                    debug_trace["llm_calls"].append(
+                        {
+                            "step": "main_answer",
+                            "model": str(
+                                (llm_result.get("model_used") if isinstance(llm_result, dict) else None)
+                                or config.LLM_MODEL
+                            ),
+                            "system_prompt_preview": llm_system_preview,
+                            "user_prompt_preview": llm_user_preview,
+                            "response_preview": _truncate_preview(
+                                (llm_result.get("answer") if isinstance(llm_result, dict) else llm_error) or "",
+                                300,
+                            ),
+                            "tokens_used": int(tokens) if isinstance(tokens, (int, float)) and tokens > 0 else None,
+                            "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
+                        }
+                    )
             answer = llm_result.get("answer", "")
             formatter = ResponseFormatter()
             answer = formatter.format_answer(
@@ -469,6 +687,10 @@ def answer_question_adaptive(
                 debug_info["total_time"] = elapsed_time
                 debug_info["llm_tokens"] = llm_result.get("tokens_used", 0)
                 result["debug"] = debug_info
+            if debug_trace is not None:
+                debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+                debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
+                result["debug_trace"] = debug_trace
 
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
             return result
@@ -517,6 +739,7 @@ def answer_question_adaptive(
                 retrieved_blocks = reranked
                 voyage_active = bool(config.VOYAGE_ENABLED and config.VOYAGE_API_KEY)
                 logger.info("[RETRIEVAL] reranked top_k=%s (voyage_active=%s)", rerank_k, voyage_active)
+        reranked_blocks_for_trace = list(retrieved_blocks)
 
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
@@ -568,6 +791,22 @@ def answer_question_adaptive(
                 blocks_used=0,
                 concepts=[]
             )
+            if debug_info is not None:
+                debug_info["memory_summary"] = memory.get_summary()
+                debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
+                response["debug"] = debug_info
+            if debug_trace is not None:
+                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                    initial_retrieved=initial_retrieved_blocks,
+                    sd_filtered=sd_filtered_blocks,
+                    reranked=reranked_blocks_for_trace,
+                    allowed_levels=sd_result.allowed_blocks,
+                )
+                debug_trace["chunks_retrieved"] = chunks_retrieved
+                debug_trace["chunks_after_filter"] = chunks_after_filter
+                debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+                debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
+                response["debug_trace"] = debug_trace
             return response
         
         blocks = [block for block, score in retrieved_blocks]
@@ -636,6 +875,15 @@ def answer_question_adaptive(
                 "confidence_level": routing_result.confidence_level,
                 "adjusted_by_stage": routing_result.adjusted_by_stage,
             }
+        if debug_trace is not None:
+            chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                initial_retrieved=initial_retrieved_blocks,
+                sd_filtered=sd_filtered_blocks,
+                reranked=reranked_blocks_for_trace,
+                allowed_levels=sd_result.allowed_blocks,
+            )
+            debug_trace["chunks_retrieved"] = chunks_retrieved
+            debug_trace["chunks_after_filter"] = chunks_after_filter
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
@@ -651,20 +899,61 @@ def answer_question_adaptive(
 
         # Генерация ответа (с учётом истории диалога)
         response_generator = ResponseGenerator()
-        llm_result = response_generator.generate(
-            query,
-            adapted_blocks,
-            conversation_context=conversation_context,
-            mode=routing_result.mode,
-            confidence_level=routing_result.confidence_level,
-            forbid=routing_result.decision.forbid,
-            user_level_adapter=level_adapter,
-            additional_system_context=state_context,
-            sd_level=sd_result.primary,
-            model=config.LLM_MODEL,
-            temperature=config.LLM_TEMPERATURE,
-            max_tokens=config.LLM_MAX_TOKENS,
-        )
+        llm_system_preview = ""
+        llm_user_preview = ""
+        if debug_trace is not None:
+            llm_system_preview, llm_user_preview = _build_llm_prompt_previews(
+                response_generator=response_generator,
+                query=query,
+                blocks=adapted_blocks,
+                conversation_context=conversation_context,
+                user_level_adapter=level_adapter,
+                sd_level=sd_result.primary,
+                mode_prompt=mode_directive.prompt,
+                additional_system_context=state_context,
+            )
+
+        llm_started = datetime.now()
+        llm_result = {}
+        llm_error = None
+        try:
+            llm_result = response_generator.generate(
+                query,
+                adapted_blocks,
+                conversation_context=conversation_context,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                forbid=routing_result.decision.forbid,
+                user_level_adapter=level_adapter,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                model=config.LLM_MODEL,
+                temperature=config.LLM_TEMPERATURE,
+                max_tokens=config.LLM_MAX_TOKENS,
+            )
+        except Exception as llm_exc:
+            llm_error = str(llm_exc)
+            raise
+        finally:
+            if debug_trace is not None:
+                tokens = llm_result.get("tokens_used") if isinstance(llm_result, dict) else None
+                debug_trace["llm_calls"].append(
+                    {
+                        "step": "main_answer",
+                        "model": str(
+                            (llm_result.get("model_used") if isinstance(llm_result, dict) else None)
+                            or config.LLM_MODEL
+                        ),
+                        "system_prompt_preview": llm_system_preview,
+                        "user_prompt_preview": llm_user_preview,
+                        "response_preview": _truncate_preview(
+                            (llm_result.get("answer") if isinstance(llm_result, dict) else llm_error) or "",
+                            300,
+                        ),
+                        "tokens_used": int(tokens) if isinstance(tokens, (int, float)) and tokens > 0 else None,
+                        "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
+                    }
+                )
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
@@ -683,6 +972,22 @@ def answer_question_adaptive(
                 )
             except Exception:
                 pass
+            if debug_info is not None:
+                debug_info["memory_summary"] = memory.get_summary()
+                debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
+                response["debug"] = debug_info
+            if debug_trace is not None:
+                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                    initial_retrieved=initial_retrieved_blocks,
+                    sd_filtered=sd_filtered_blocks,
+                    reranked=reranked_blocks_for_trace,
+                    allowed_levels=sd_result.allowed_blocks,
+                )
+                debug_trace["chunks_retrieved"] = chunks_retrieved
+                debug_trace["chunks_after_filter"] = chunks_after_filter
+                debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+                debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
+                response["debug_trace"] = debug_trace
             return response
         
         answer = llm_result["answer"]
@@ -832,6 +1137,10 @@ def answer_question_adaptive(
             result["metadata"]["retrieval_details"] = debug_info.get("retrieval_details", {})
             result["metadata"]["sources"] = sources
             result["debug"] = debug_info
+        if debug_trace is not None:
+            debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+            debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
+            result["debug_trace"] = debug_trace
         
         logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
         

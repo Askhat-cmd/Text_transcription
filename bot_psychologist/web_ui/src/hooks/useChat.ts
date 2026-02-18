@@ -101,7 +101,13 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         includeFeedback,
         sessionId
       );
-      onAdaptiveResponse?.(response);
+      if (onAdaptiveResponse) {
+        try {
+          onAdaptiveResponse(response);
+        } catch (callbackError) {
+          console.error('onAdaptiveResponse callback failed', callbackError);
+        }
+      }
 
       if (response.state_analysis) {
         setCurrentUserState(response.state_analysis.primary_state);

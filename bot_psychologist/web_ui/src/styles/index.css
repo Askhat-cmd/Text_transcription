@@ -157,6 +157,8 @@
     @apply bg-gray-100 text-gray-900 rounded-2xl rounded-bl-md;
     @apply dark:bg-gray-800 dark:text-white;
     @apply p-4 max-w-[85%] md:max-w-2xl;
+    height: auto;
+    overflow: visible;
   }
 
   /* Gradient text */

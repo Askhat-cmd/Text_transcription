@@ -23,12 +23,12 @@ function ChunkBadge({ chunk }: ChunkBadgeProps) {
   return (
     <div style={{ background: cardBg, borderRadius: 8, padding: '6px 10px', marginBottom: 6 }}>
       <div>
-        <span style={{ background: sdBg, borderRadius: 4, padding: '1px 6px', fontSize: 11, marginRight: 6 }}>
+        <span style={{ background: sdBg, borderRadius: 4, padding: '1px 6px', fontSize: 13, marginRight: 6 }}>
           {chunk.sd_level}
         </span>
         <b>{chunk.title}</b>
       </div>
-      <div style={{ color: '#71717A', fontSize: 11, marginTop: 2 }}>
+      <div style={{ color: '#71717A', fontSize: 12, marginTop: 2 }}>
         score: {chunk.score_initial.toFixed(3)} -&gt; {chunk.score_final.toFixed(3)}
         {chunk.sd_secondary && <span style={{ marginLeft: 8 }}>2°: {chunk.sd_secondary}</span>}
         {chunk.emotional_tone && <span style={{ marginLeft: 8 }}>tone: {chunk.emotional_tone}</span>}
@@ -38,7 +38,7 @@ function ChunkBadge({ chunk }: ChunkBadgeProps) {
           </span>
         )}
       </div>
-      <div style={{ color: '#A1A1AA', fontSize: 11, marginTop: 2 }}>
+      <div style={{ color: '#A1A1AA', fontSize: 12, marginTop: 2 }}>
         {chunk.preview}
       </div>
     </div>
@@ -61,7 +61,7 @@ function Section({ label, open, onToggle, children }: SectionProps) {
           cursor: 'pointer',
           padding: '6px 0',
           fontWeight: 600,
-          fontSize: 12,
+          fontSize: 14,
           color: '#3F3F46',
           borderBottom: '1px solid #E4E4E7',
           userSelect: 'none',
@@ -99,14 +99,14 @@ export function DebugTrace({ trace }: DebugTraceProps) {
         overflowY: 'auto',
         background: '#FAFAFA',
         fontFamily: "'JetBrains Mono', monospace",
-        fontSize: 12,
+        fontSize: 14,
         padding: 12,
       }}
     >
       <div
         style={{
           fontWeight: 700,
-          fontSize: 13,
+          fontSize: 15,
           marginBottom: 12,
           borderBottom: '1px solid #E4E4E7',
           paddingBottom: 8,
@@ -173,19 +173,19 @@ export function DebugTrace({ trace }: DebugTraceProps) {
             </div>
             <details>
               <summary style={{ color: '#6366F1', cursor: 'pointer' }}>System prompt</summary>
-              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 11, marginTop: 4 }}>
+              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 12, marginTop: 4 }}>
                 {call.system_prompt_preview}
               </pre>
             </details>
             <details>
               <summary style={{ color: '#6366F1', cursor: 'pointer' }}>User prompt</summary>
-              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 11, marginTop: 4 }}>
+              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 12, marginTop: 4 }}>
                 {call.user_prompt_preview}
               </pre>
             </details>
             <details>
               <summary style={{ color: '#059669', cursor: 'pointer' }}>Ответ LLM</summary>
-              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 11, marginTop: 4 }}>
+              <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 12, marginTop: 4 }}>
                 {call.response_preview}
               </pre>
             </details>
@@ -194,7 +194,7 @@ export function DebugTrace({ trace }: DebugTraceProps) {
       </Section>
 
       <Section label="E - Записано в память" open={open.memory} onToggle={() => toggle('memory')}>
-        <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 11 }}>
+        <pre style={{ whiteSpace: 'pre-wrap', color: '#3F3F46', fontSize: 12 }}>
           {trace.context_written_to_memory || '-'}
         </pre>
       </Section>

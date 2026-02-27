@@ -146,6 +146,22 @@ def _build_chunk_trace_lists(
     return chunks_retrieved, chunks_after_filter
 
 
+def _get_memory_trace_metrics(memory, context_turns: int) -> Dict[str, object]:
+    summary_used = bool(
+        config.ENABLE_CONVERSATION_SUMMARY
+        and memory.summary
+        and context_turns > 20
+    )
+    if config.ENABLE_SEMANTIC_MEMORY and memory.semantic_memory and context_turns > 5:
+        semantic_hits = int(getattr(memory.semantic_memory, "last_hits_count", 0) or 0)
+    else:
+        semantic_hits = 0
+    return {
+        "summary_used": summary_used,
+        "semantic_hits": semantic_hits,
+    }
+
+
 def _build_retrieval_detail(block, score: float, stage: str) -> Dict:
     source = str(getattr(block, "document_title", "") or getattr(block, "title", "") or getattr(block, "block_id", ""))
     start = str(getattr(block, "start", "") or "")
@@ -439,6 +455,8 @@ def answer_question_adaptive(
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
         conversation_context = memory.get_adaptive_context_text(query)
+        context_turns = len(memory.turns)
+        memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
         
         # Парсим уровень пользователя
         try:
@@ -646,6 +664,9 @@ def answer_question_adaptive(
                 concepts=[],
             )
 
+            memory_turns = len(memory.turns)
+            summary_length = len(memory.summary) if memory.summary else 0
+            summary_last_turn = memory.summary_updated_at
             elapsed_time = (datetime.now() - start_time).total_seconds()
             feedback_prompt = ""
             if include_feedback_prompt:
@@ -685,6 +706,11 @@ def answer_question_adaptive(
                     "sd_confidence": round(sd_result.confidence, 3),
                     "sd_method": sd_result.method,
                     "sd_allowed_blocks": sd_result.allowed_blocks,
+                    "summary_used": memory_trace_metrics["summary_used"],
+                    "summary_length": summary_length,
+                    "summary_last_turn": summary_last_turn,
+                    "semantic_hits": memory_trace_metrics["semantic_hits"],
+                    "memory_turns": memory_turns,
                 },
                 "timestamp": datetime.now().isoformat(),
                 "processing_time_seconds": round(elapsed_time, 2),
@@ -1147,6 +1173,11 @@ def answer_question_adaptive(
                 "sd_confidence": round(sd_result.confidence, 3),
                 "sd_method": sd_result.method,
                 "sd_allowed_blocks": sd_result.allowed_blocks,
+                "summary_used": memory_trace_metrics["summary_used"],
+                "summary_length": len(memory.summary) if memory.summary else 0,
+                "summary_last_turn": memory.summary_updated_at,
+                "semantic_hits": memory_trace_metrics["semantic_hits"],
+                "memory_turns": len(memory.turns),
             },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)

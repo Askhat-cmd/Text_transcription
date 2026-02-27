@@ -29,6 +29,9 @@ export interface InlineTrace {
   prompt_overlay?: string;
   summary_used?: boolean;
   semantic_hits?: number;
+  memory_turns?: number;
+  summary_length?: number;
+  summary_last_turn?: number | null;
 }
 
 export interface Message {

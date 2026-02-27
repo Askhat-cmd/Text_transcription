@@ -167,6 +167,18 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           </summary>
           <div className="mt-2 grid grid-cols-2 gap-2">
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Memory turns</p>
+              <p className="font-semibold">{trace.memory_turns ?? '—'}</p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary length</p>
+              <p className="font-semibold">{trace.summary_length ?? '—'}</p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary last turn</p>
+              <p className="font-semibold">{trace.summary_last_turn ?? '—'}</p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary</p>
               <p className="font-semibold">{trace.summary_used ? '✓ использован' : '—'}</p>
             </div>

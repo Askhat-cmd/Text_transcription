@@ -46,6 +46,7 @@ class SemanticMemory:
     def __init__(self, user_id: str = "default"):
         self.user_id = user_id
         self.turn_embeddings: List[TurnEmbedding] = []
+        self.last_hits_count: int = 0
 
         self._model = None
         self._model_loaded = False
@@ -173,12 +174,14 @@ class SemanticMemory:
             exclude_last_n: Исключить последние N ходов (они уже в short-term)
         """
         if self.model is None:
+            self.last_hits_count = 0
             return []
         logger.info(
             f"[SEMANTIC] search start user_id={self.user_id} top_k={top_k} min_similarity={min_similarity}"
         )
         if not self.turn_embeddings:
             logger.debug("No embeddings available for search")
+            self.last_hits_count = 0
             return []
 
         try:
@@ -189,6 +192,7 @@ class SemanticMemory:
             )
         except Exception as exc:
             logger.error(f"[SEMANTIC] query embedding failed: {exc}", exc_info=True)
+            self.last_hits_count = 0
             return []
 
         search_pool = (
@@ -205,6 +209,7 @@ class SemanticMemory:
 
         similarities.sort(key=lambda x: x[1], reverse=True)
         top_results = similarities[:top_k]
+        self.last_hits_count = len(top_results)
         logger.info(
             f"[SEMANTIC] search done user_id={self.user_id} results={len(top_results)}"
         )

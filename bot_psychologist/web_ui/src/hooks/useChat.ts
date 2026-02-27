@@ -129,6 +129,14 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         });
       };
 
+      const toNumber = (value: unknown): number | undefined => {
+        if (value === null || value === undefined || value === '') {
+          return undefined;
+        }
+        const num = Number(value);
+        return Number.isFinite(num) ? num : undefined;
+      };
+
       const inlineTrace: InlineTrace | null = (isDevKey && (rawTrace || Object.keys(retrievalDetails).length > 0))
         ? {
           recommended_mode: String(response.metadata?.recommended_mode ?? ''),
@@ -141,7 +149,10 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
           signals: response.metadata?.signals as Record<string, number> | undefined,
           prompt_overlay: String(response.metadata?.prompt_overlay ?? ''),
           summary_used: Boolean(response.metadata?.summary_used),
-          semantic_hits: response.metadata?.semantic_hits as number | undefined,
+          semantic_hits: toNumber(response.metadata?.semantic_hits),
+          memory_turns: toNumber(response.metadata?.memory_turns),
+          summary_length: toNumber(response.metadata?.summary_length),
+          summary_last_turn: toNumber(response.metadata?.summary_last_turn),
           blocks: [
             ...mapBlocks(retrievalDetails.final_blocks, 'final', true),
             ...mapBlocks(retrievalDetails.stage_filtered, 'stage_filter', false, 'stage filter'),

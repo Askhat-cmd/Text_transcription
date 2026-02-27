@@ -145,7 +145,7 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           <div className="mt-2">
             {passedBlocks.length === 0
               ? <p className="text-slate-400 px-2">Нет принятых чанков</p>
-              : passedBlocks.map((b) => <ChunkCard key={b.block_id} block={b} passed={true} />)
+              : passedBlocks.map((b) => <ChunkCard key={`${b.block_id}-${b.stage}`} block={b} passed={true} />)
             }
           </div>
         </details>
@@ -156,7 +156,7 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
               ✕ Отсеянные чанки ({filteredBlocks.length})
             </summary>
             <div className="mt-2">
-              {filteredBlocks.map((b) => <ChunkCard key={b.block_id} block={b} passed={false} />)}
+              {filteredBlocks.map((b) => <ChunkCard key={`${b.block_id}-${b.stage}`} block={b} passed={false} />)}
             </div>
           </details>
         )}

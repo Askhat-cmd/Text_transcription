@@ -102,6 +102,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       const rawTrace = response.trace;
       const retrievalDetails = (response.metadata?.retrieval_details
         ?? (rawTrace as Record<string, unknown> | null)?.retrieval_details
+        ?? (response as unknown as Record<string, unknown>)?.retrieval_details
         ?? {}) as Record<string, unknown>;
 
       const mapBlocks = (

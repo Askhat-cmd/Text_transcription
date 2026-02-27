@@ -16,6 +16,7 @@ import clsx from 'clsx';
 import { StateCardCompact } from '../insights/StateCard';
 import { SourcesList } from '../insights/SourcesList';
 import { PathBuilderCompact } from '../insights/PathBuilder';
+import { InlineDebugTrace } from './InlineDebugTrace';
 
 interface MessageItemProps {
   message: Message;
@@ -51,6 +52,10 @@ export const MessageItem: React.FC<MessageItemProps> = ({
         {/* Bot-specific content */}
         {!isUser && (
           <>
+            {message.trace && (
+              <InlineDebugTrace trace={message.trace} />
+            )}
+
             {/* Processing Time */}
             {message.processingTime !== undefined && (
               <div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400 mt-2">

@@ -26,13 +26,12 @@ import {
 } from 'react-icons/fi';
 import clsx from 'clsx';
 import { ChatWindow } from '../components/chat';
-import { DebugTrace } from '../components/chat/DebugTrace';
 import { useChat } from '../hooks/useChat';
 import { useTheme, type Theme } from '../hooks/useTheme';
 import { formatterService } from '../services/formatter.service';
 import { storageService } from '../services/storage.service';
 import { apiService } from '../services/api.service';
-import type { ChatSessionInfo, ConversationTurn, DebugTrace as DebugTraceData, Message, UserSettings } from '../types';
+import type { ChatSessionInfo, ConversationTurn, Message, UserSettings } from '../types';
 import { DEFAULT_SETTINGS } from '../utils';
 
 type ValidationStatus = 'idle' | 'validating' | 'success' | 'error';
@@ -192,13 +191,6 @@ const ChatPage: React.FC = () => {
   const [validationMessage, setValidationMessage] = useState('');
   const [dataActionStatus, setDataActionStatus] = useState<DataActionStatus>('idle');
   const [dataActionMessage, setDataActionMessage] = useState<string | null>(null);
-  const [traceData, setTraceData] = useState<DebugTraceData | null>(null);
-
-  const isDevKey = useMemo(
-    () => (chatSettings.apiKey || apiService.getAPIKey()) === 'dev-key-001',
-    [chatSettings.apiKey]
-  );
-
   const {
     messages,
     isLoading,
@@ -213,11 +205,6 @@ const ChatPage: React.FC = () => {
     includePath: chatSettings.showPath,
     includeFeedback: chatSettings.includeFeedbackPrompt,
     sessionId: activeChatId || undefined,
-    onAdaptiveResponse: (response) => {
-      if (isDevKey) {
-        setTraceData(response.trace || null);
-      }
-    },
   });
 
   const groupedSessions = useMemo<SessionGroup[]>(() => {
@@ -249,11 +236,9 @@ const ChatPage: React.FC = () => {
       const history = await apiService.getUserHistory(sessionId, 100);
       const loadedMessages = historyToMessages(sessionId, history.turns);
       replaceMessages(loadedMessages);
-      setTraceData(null);
       clearError();
     } catch (historyError) {
       replaceMessages([]);
-      setTraceData(null);
       setSidebarError(historyError instanceof Error ? historyError.message : 'Не удалось загрузить историю чата');
     }
   }, [replaceMessages, clearError]);
@@ -359,18 +344,11 @@ const ChatPage: React.FC = () => {
   useEffect(() => {
     if (!activeChatId) {
       replaceMessages([]);
-      setTraceData(null);
       return;
     }
 
     void loadActiveChatHistory(activeChatId);
   }, [activeChatId, loadActiveChatHistory, replaceMessages]);
-
-  useEffect(() => {
-    if (!isDevKey) {
-      setTraceData(null);
-    }
-  }, [isDevKey]);
 
   useEffect(() => {
     if (!activeChatId) return;
@@ -760,9 +738,6 @@ const ChatPage: React.FC = () => {
           />
         </main>
 
-        {isDevKey && traceData && (
-          <DebugTrace trace={traceData} />
-        )}
       </div>
 
       {isSettingsOpen && (

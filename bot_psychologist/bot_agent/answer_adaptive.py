@@ -146,6 +146,22 @@ def _build_chunk_trace_lists(
     return chunks_retrieved, chunks_after_filter
 
 
+def _build_retrieval_detail(block, score: float, stage: str) -> Dict:
+    source = str(getattr(block, "document_title", "") or getattr(block, "title", "") or getattr(block, "block_id", ""))
+    start = str(getattr(block, "start", "") or "")
+    end = str(getattr(block, "end", "") or "")
+    if start and end:
+        source = f"{source} [{start}-{end}]"
+    return {
+        "block_id": str(getattr(block, "block_id", "")),
+        "score": float(score),
+        "title": str(getattr(block, "title", "")),
+        "text": str(getattr(block, "content", "")),
+        "source": source,
+        "stage": stage,
+    }
+
+
 def _build_llm_prompt_previews(
     *,
     response_generator: ResponseGenerator,
@@ -820,44 +836,50 @@ def answer_question_adaptive(
             debug_info["blocks_found"] = len(retrieved_blocks)
             debug_info["blocks_after_filter"] = len(adapted_blocks)
             debug_info["hybrid_query"] = hybrid_query
+            stage_filtered_ids = {str(block.block_id) for block, _ in stage_filtered_blocks}
+            capped_ids = {str(block.block_id) for block, _ in capped_retrieved_blocks}
+            stage_filtered_out = [
+                (block, score)
+                for block, score in initial_retrieved_blocks
+                if str(block.block_id) not in stage_filtered_ids
+            ]
+            confidence_capped_out = [
+                (block, score)
+                for block, score in stage_filtered_blocks
+                if str(block.block_id) not in capped_ids
+            ]
+            final_score_map = {str(block.block_id): float(score) for block, score in capped_retrieved_blocks}
             debug_info["retrieval_details"] = {
                 "initial_retrieval": [
-                    {
-                        "block_id": block.block_id,
-                        "score": float(score),
-                        "title": block.title,
-                    }
+                    _build_retrieval_detail(block, score, "initial")
                     for block, score in initial_retrieved_blocks
                 ],
                 "after_stage_filter": [
-                    {
-                        "block_id": block.block_id,
-                        "score": float(score),
-                        "title": block.title,
-                    }
+                    _build_retrieval_detail(block, score, "stage_filter")
                     for block, score in stage_filtered_blocks
                 ],
                 "after_sd_filter": [
-                    {
-                        "block_id": block.block_id,
-                        "score": float(score),
-                        "title": block.title,
-                    }
+                    _build_retrieval_detail(block, score, "sd_filter")
                     for block, score in sd_filtered_blocks
                 ],
                 "after_confidence_cap": [
-                    {
-                        "block_id": block.block_id,
-                        "score": float(score),
-                        "title": block.title,
-                    }
+                    _build_retrieval_detail(block, score, "confidence_cap")
                     for block, score in capped_retrieved_blocks
                 ],
+                "stage_filtered": [
+                    _build_retrieval_detail(block, score, "stage_filter")
+                    for block, score in stage_filtered_out
+                ],
+                "confidence_capped": [
+                    _build_retrieval_detail(block, score, "confidence_cap")
+                    for block, score in confidence_capped_out
+                ],
                 "final_blocks": [
-                    {
-                        "block_id": block.block_id,
-                        "title": block.title,
-                    }
+                    _build_retrieval_detail(
+                        block,
+                        final_score_map.get(str(block.block_id), 0.0),
+                        "final",
+                    )
                     for block in adapted_blocks
                 ],
             }

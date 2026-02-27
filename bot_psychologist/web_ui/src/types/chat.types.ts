@@ -6,6 +6,31 @@
 
 import type { Source, PathRecommendation } from './api.types';
 
+export interface TraceBlock {
+  block_id: string;
+  score: number;
+  text: string;
+  source: string;
+  stage: string;
+  passed: boolean;
+  filter_reason?: string;
+}
+
+export interface InlineTrace {
+  recommended_mode: string;
+  decision_rule_id: string;
+  confidence_level: string;
+  confidence_score: number;
+  user_state: string;
+  sd_level?: string;
+  query_hash?: string;
+  blocks: TraceBlock[];
+  signals?: Record<string, number>;
+  prompt_overlay?: string;
+  summary_used?: boolean;
+  semantic_hits?: number;
+}
+
 export interface Message {
   id: string;
   role: 'user' | 'bot';
@@ -20,6 +45,7 @@ export interface Message {
   feedbackPrompt?: string;
   userFeedback?: 'positive' | 'negative' | 'neutral';
   userRating?: number;
+  trace?: InlineTrace | null;
 }
 
 export interface ChatState {

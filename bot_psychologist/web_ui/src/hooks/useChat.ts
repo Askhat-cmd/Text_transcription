@@ -6,8 +6,7 @@
 
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { Message } from '../types';
-import type { AdaptiveAnswerResponse } from '../types';
+import type { InlineTrace, Message, TraceBlock } from '../types';
 import { apiService } from '../services/api.service';
 
 export interface UseChatOptions {
@@ -15,7 +14,6 @@ export interface UseChatOptions {
   includePath?: boolean;
   includeFeedback?: boolean;
   sessionId?: string;
-  onAdaptiveResponse?: (response: AdaptiveAnswerResponse) => void;
 }
 
 export interface UseChatReturn {
@@ -49,7 +47,6 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     includePath = true,
     includeFeedback = true,
     sessionId,
-    onAdaptiveResponse,
   } = options;
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -101,13 +98,56 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         includeFeedback,
         sessionId
       );
-      if (onAdaptiveResponse) {
-        try {
-          onAdaptiveResponse(response);
-        } catch (callbackError) {
-          console.error('onAdaptiveResponse callback failed', callbackError);
+      const isDevKey = apiService.getAPIKey() === 'dev-key-001';
+      const rawTrace = response.trace;
+      const retrievalDetails = (response.metadata?.retrieval_details
+        ?? (rawTrace as Record<string, unknown> | null)?.retrieval_details
+        ?? {}) as Record<string, unknown>;
+
+      const mapBlocks = (
+        items: unknown,
+        stage: string,
+        passed: boolean,
+        filterReason?: string
+      ): TraceBlock[] => {
+        if (!Array.isArray(items)) {
+          return [];
         }
-      }
+        return items.map((item) => {
+          const raw = (item ?? {}) as Record<string, unknown>;
+          const source = String(raw.source ?? raw.block_id ?? '');
+          return {
+            block_id: String(raw.block_id ?? ''),
+            score: Number(raw.score ?? 0),
+            text: String(raw.text ?? ''),
+            source,
+            stage: String(raw.stage ?? stage),
+            passed,
+            filter_reason: passed ? undefined : String(raw.filter_reason ?? filterReason ?? ''),
+          };
+        });
+      };
+
+      const inlineTrace: InlineTrace | null = (isDevKey && (rawTrace || Object.keys(retrievalDetails).length > 0))
+        ? {
+          recommended_mode: String(response.metadata?.recommended_mode ?? ''),
+          decision_rule_id: String(response.metadata?.decision_rule_id ?? ''),
+          confidence_level: String(response.metadata?.confidence_level ?? ''),
+          confidence_score: Number(response.metadata?.confidence_score ?? 0),
+          user_state: response.state_analysis?.primary_state ?? '',
+          sd_level: String(response.metadata?.sd_level ?? ''),
+          query_hash: String(response.metadata?.query_hash ?? ''),
+          signals: response.metadata?.signals as Record<string, number> | undefined,
+          prompt_overlay: String(response.metadata?.prompt_overlay ?? ''),
+          summary_used: Boolean(response.metadata?.summary_used),
+          semantic_hits: response.metadata?.semantic_hits as number | undefined,
+          blocks: [
+            ...mapBlocks(retrievalDetails.final_blocks, 'final', true),
+            ...mapBlocks(retrievalDetails.stage_filtered, 'stage_filter', false, 'stage filter'),
+            ...mapBlocks(retrievalDetails.confidence_capped, 'confidence_cap', false, 'confidence cap'),
+          ],
+        }
+        : null;
 
       if (response.state_analysis) {
         setCurrentUserState(response.state_analysis.primary_state);
@@ -122,6 +162,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         processingTime: response.processing_time_seconds,
         path: response.path_recommendation,
         feedbackPrompt: response.feedback_prompt,
+        trace: inlineTrace,
       });
 
     } catch (err) {
@@ -131,7 +172,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     } finally {
       setIsLoading(false);
     }
-  }, [userId, includePath, includeFeedback, sessionId, addMessage, onAdaptiveResponse]);
+  }, [userId, includePath, includeFeedback, sessionId, addMessage]);
 
   const updateMessageFeedback = useCallback((
     messageId: string,

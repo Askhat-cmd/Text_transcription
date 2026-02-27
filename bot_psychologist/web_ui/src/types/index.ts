@@ -34,6 +34,8 @@ export type {
 // Chat types
 export type {
   Message,
+  TraceBlock,
+  InlineTrace,
   ChatState,
   UserSettings,
   ChatStore,

@@ -241,19 +241,25 @@ Respond ONLY in valid JSON format (no markdown, no explanations):
                 request_params["temperature"] = 0.3
             response = self.llm.client.chat.completions.create(**request_params)
             
-            content = response.choices[0].message.content.strip()
-            
-            # РћС‡РёСЃС‚РєР° РѕС‚ markdown РµСЃР»Рё РµСЃС‚СЊ
-            if content.startswith("```"):
-                content = content.split("```")[1]
-                if content.startswith("json"):
-                    content = content[4:]
-            
+            # Безопасное извлечение контента — GPT-5 может вернуть None
+            raw_content = response.choices[0].message.content
+            content = (raw_content or "").strip()
+
+            # Очистка markdown-обёртки (```json ... ``` или ``` ... ```)
+            if "```" in content:
+                import re
+                content = re.sub(r"```(?:json)?\s*", "", content).strip()
+
+            # Защита от пустого ответа — GPT-5 mini иногда возвращает пустую строку
+            if not content:
+                logger.warning("⚠️ LLM вернул пустой ответ при классификации состояния")
+                return {}
+
             result = json.loads(content)
             return result
-        
+
         except json.JSONDecodeError as e:
-            logger.warning(f"вљ пёЏ РћС€РёР±РєР° РїР°СЂСЃРёРЅРіР° JSON: {e}")
+            logger.debug(f"🔍 JSON parse miss (нормально для коротких сообщений): {e}")
             return {}
         except Exception as e:
             logger.warning(f"вљ пёЏ LLM РєР»Р°СЃСЃРёС„РёРєР°С†РёСЏ РЅРµ СѓРґР°Р»Р°СЃСЊ: {e}")

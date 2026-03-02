@@ -291,8 +291,11 @@ class SDClassifier:
     """Классификатор уровня СД пользователя: эвристика -> LLM -> профиль."""
 
     def __init__(self, model: Optional[str] = None, temperature: Optional[float] = None):
-        self.model = model or str(_SD_SETTINGS.get("model", "gpt-4o-mini"))
+        # Приоритет: явный аргумент → PRIMARY_MODEL из .env → YAML default → hardcoded default
+        # Это гарантирует что SDClassifier всегда использует ту же модель, что и весь бот
+        self.model = model or config.LLM_MODEL or str(_SD_SETTINGS.get("model", "gpt-4o-mini"))
         self.temperature = float(temperature if temperature is not None else _SD_SETTINGS.get("temperature", 0.1))
+        logger.debug(f"[SD_CLASSIFIER] Initialized with model={self.model}")
         self.heuristic_threshold = float(_SD_SETTINGS.get("heuristic_confidence_threshold", 0.65))
         self.profile_min_messages = int(_SD_SETTINGS.get("profile_min_messages", 15))
         self.profile_min_confidence = float(_SD_SETTINGS.get("profile_min_confidence", 0.80))
@@ -406,6 +409,23 @@ class SDClassifier:
 
             response = self.client.chat.completions.create(**request_params)
             raw = (response.choices[0].message.content or "").strip()
+
+            # Очистка markdown-обёртки (```json ... ``` или ``` ... ```)
+            if "```" in raw:
+                import re
+                raw = re.sub(r"```(?:json)?\s*", "", raw).strip()
+
+            # Защита от пустого ответа — GPT-5 mini иногда возвращает пустую строку
+            if not raw:
+                logger.warning("[SD_CLASSIFIER] LLM returned empty content, using fallback")
+                return SDClassificationResult(
+                    primary=self.default_level,
+                    secondary=None,
+                    confidence=0.50,
+                    indicator="llm_empty_response",
+                    method="fallback",
+                )
+
             data = json.loads(raw)
             primary = str(data.get("primary", self.default_level)).upper()
             secondary = data.get("secondary")
@@ -431,5 +451,10 @@ class SDClassifier:
         return SD_LEVELS_ORDER[max(0, idx - 1)]
 
 
-sd_classifier = SDClassifier()
-sd_compatibility_resolver = SDCompatibilityResolver()
+try:
+    sd_classifier = SDClassifier()
+    sd_compatibility_resolver = SDCompatibilityResolver()
+except Exception as _e:
+    logger.warning(f"[SD_CLASSIFIER] Deferred init due to: {_e}")
+    sd_classifier = None  # type: ignore
+    sd_compatibility_resolver = None  # type: ignore

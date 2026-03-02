@@ -235,7 +235,8 @@ Respond ONLY in valid JSON format (no markdown, no explanations):
             request_params = {
                 "model": config.LLM_MODEL,
                 "messages": [{"role": "user", "content": prompt}],
-                token_param: 500,
+                token_param: 4000,
+                "response_format": {"type": "json_object"},
             }
             if config.supports_custom_temperature(config.LLM_MODEL):
                 request_params["temperature"] = 0.3

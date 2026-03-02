@@ -398,11 +398,12 @@ class SDClassifier:
             token_param = config.get_token_param_name(self.model)
             request_params = {
                 "model": self.model,
-                token_param: 150,
+                token_param: 2000,
                 "messages": [
                     {"role": "system", "content": SD_CLASSIFIER_SYSTEM_PROMPT},
                     {"role": "user", "content": user_content},
                 ],
+                "response_format": {"type": "json_object"},
             }
             if config.supports_custom_temperature(self.model):
                 request_params["temperature"] = self.temperature

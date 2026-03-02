@@ -54,7 +54,12 @@ class LLMAnswerer:
         try:
             import openai
             self.client = openai.OpenAI(api_key=self.api_key)
-            logger.info("✓ OpenAI клиент инициализирован")
+            token_param = config.get_token_param_name()
+            logger.info(
+                "✓ OpenAI клиент инициализирован | модель: %s | параметр токенов: %s",
+                config.LLM_MODEL,
+                token_param,
+            )
         except ImportError:
             logger.error("❌ openai не установлен. Установите: pip install openai")
             raise
@@ -162,6 +167,7 @@ class LLMAnswerer:
         model = model or config.LLM_MODEL
         temperature = temperature if temperature is not None else config.LLM_TEMPERATURE
         max_tokens = max_tokens or config.LLM_MAX_TOKENS
+        token_param = config.get_token_param_name(model)
         
         # Промпты
         system_prompt = self.build_system_prompt()
@@ -174,15 +180,21 @@ class LLMAnswerer:
         logger.debug(f"📤 Отправляю запрос к {model}...")
         
         try:
-            response = self.client.chat.completions.create(
-                model=model,
-                messages=[
+            logger.debug("Using token parameter: %s=%s for model %s", token_param, max_tokens, model)
+            request_params = {
+                "model": model,
+                "messages": [
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": context}
+                    {"role": "user", "content": context},
                 ],
-                temperature=temperature,
-                max_tokens=max_tokens,
-            )
+                token_param: max_tokens,
+            }
+            if config.supports_custom_temperature(model):
+                request_params["temperature"] = temperature
+            else:
+                logger.debug("Skipping custom temperature for model %s", model)
+
+            response = self.client.chat.completions.create(**request_params)
             
             answer = response.choices[0].message.content
             tokens = response.usage.total_tokens if response.usage else 0

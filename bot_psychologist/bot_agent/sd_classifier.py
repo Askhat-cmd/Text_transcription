@@ -19,6 +19,7 @@ from typing import Dict, List, Optional
 
 import yaml
 from openai import OpenAI
+from .config import config
 
 logger = logging.getLogger(__name__)
 
@@ -391,15 +392,19 @@ class SDClassifier:
             user_content = f"История:\n{context}\n\n{user_content}"
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                temperature=self.temperature,
-                max_tokens=150,
-                messages=[
+            token_param = config.get_token_param_name(self.model)
+            request_params = {
+                "model": self.model,
+                token_param: 150,
+                "messages": [
                     {"role": "system", "content": SD_CLASSIFIER_SYSTEM_PROMPT},
                     {"role": "user", "content": user_content},
                 ],
-            )
+            }
+            if config.supports_custom_temperature(self.model):
+                request_params["temperature"] = self.temperature
+
+            response = self.client.chat.completions.create(**request_params)
             raw = (response.choices[0].message.content or "").strip()
             data = json.loads(raw)
             primary = str(data.get("primary", self.default_level)).upper()

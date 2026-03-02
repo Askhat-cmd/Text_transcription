@@ -667,12 +667,16 @@ class ConversationMemory:
                 logger.warning("⚠️ LLM клиент недоступен — summary не обновляется")
                 return
 
-            response = answerer.client.chat.completions.create(
-                model=config.LLM_MODEL,
-                messages=[{"role": "user", "content": summary_prompt}],
-                temperature=0.3,
-                max_tokens=200
-            )
+            token_param = config.get_token_param_name(config.LLM_MODEL)
+            request_params = {
+                "model": config.LLM_MODEL,
+                "messages": [{"role": "user", "content": summary_prompt}],
+                token_param: 200,
+            }
+            if config.supports_custom_temperature(config.LLM_MODEL):
+                request_params["temperature"] = 0.3
+
+            response = answerer.client.chat.completions.create(**request_params)
 
             summary_text = response.choices[0].message.content.strip()
             if len(summary_text) > config.SUMMARY_MAX_CHARS:

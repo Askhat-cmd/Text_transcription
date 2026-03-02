@@ -63,6 +63,20 @@
 - Backend: `bot_agent/storage/session_manager.py`, `api/models.py`, `api/routes.py`
 - Frontend: `web_ui/src/pages/ChatPage.tsx`, `web_ui/src/hooks/useChat.ts`, `web_ui/src/services/api.service.ts`
 
+## Inline Debug Trace (PRD v4.2, dev-key-001)
+
+Для разработки добавлена встроенная трассировка прямо под каждым сообщением бота (collapsible панель).
+
+Как включить:
+- В Web UI укажите `X-API-Key = dev-key-001` (в настройках).
+- После этого панель появляется под каждым ответом (если бэкенд вернул trace/`metadata.retrieval_details`).
+
+Что показывает панель:
+- Роутинг: `recommended_mode`, `decision_rule_id`, `confidence_level/confidence_score`, состояние пользователя.
+- Retrieval: список выбранных и отсеянных блоков (с `block_id`, `score`, `source`, `stage`, полным текстом чанка).
+- Память: `memory_turns`, `semantic_hits`, `summary_used`, `summary_length`, `summary_last_turn`.
+- SD: `sd_level` (и SD prompt overlay, если он был применён).
+
 ## Production Logging (PRD 10.02.2026)
 
 Минимальный PRD по production logging реализован.
@@ -174,6 +188,8 @@ API для истории:
 - `recommended_mode` — выбранный режим ответа (`PRESENCE`, `CLARIFICATION`, `VALIDATION`, `THINKING`, `INTERVENTION`, `INTEGRATION`).
 - `decision_rule_id` — сработавшее правило decision table.
 - `confidence_level` и `confidence_score` — уровень/число уверенности роутинга.
+- `sd_level` — определённый SD-уровень пользователя (fallback: `GREEN`).
+- Память (в `metadata`): `memory_turns`, `semantic_hits`, `summary_used`, `summary_length`, `summary_last_turn`.
 - Поле `metadata` сохранено для обратной совместимости и содержит расширенные детали retrieval/decision.
 
 ## Response Layer (PRD v2.0)
@@ -247,6 +263,7 @@ SEMANTIC_MAX_CHARS=1000
 EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 
 # Voyage Rerank (optional)
+# Чтобы включить rerank: установите `VOYAGE_ENABLED=true` и задайте `VOYAGE_API_KEY`
 VOYAGE_API_KEY=pa-...
 VOYAGE_MODEL=rerank-2
 VOYAGE_TOP_K=1
@@ -467,6 +484,7 @@ Askhat-cmd
 - Логи confidence: contribution по сигналам и итоговый cap.
 - Логи stage-filter: вход/выход, fallback-поведение при пустом фильтре.
 - При `debug=true` в ответе API доступно `metadata.retrieval_details` с наборами блоков по каждому этапу.
+- Web UI (dev-key-001) использует `metadata.retrieval_details` для Inline Debug Trace под сообщением бота.
 
 Также исправлено схлопывание источников в fallback-сценариях:
 

@@ -293,7 +293,7 @@ class SDClassifier:
     def __init__(self, model: Optional[str] = None, temperature: Optional[float] = None):
         # Приоритет: явный аргумент → PRIMARY_MODEL из .env → YAML default → hardcoded default
         # Это гарантирует что SDClassifier всегда использует ту же модель, что и весь бот
-        self.model = model or config.LLM_MODEL or str(_SD_SETTINGS.get("model", "gpt-4o-mini"))
+        self.model = model or config.CLASSIFIER_MODEL or str(_SD_SETTINGS.get("model", "gpt-4o-mini"))
         self.temperature = float(temperature if temperature is not None else _SD_SETTINGS.get("temperature", 0.1))
         logger.debug(f"[SD_CLASSIFIER] Initialized with model={self.model}")
         self.heuristic_threshold = float(_SD_SETTINGS.get("heuristic_confidence_threshold", 0.65))

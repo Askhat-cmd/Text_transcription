@@ -231,14 +231,14 @@ Respond ONLY in valid JSON format (no markdown, no explanations):
 }}"""
         
         try:
-            token_param = config.get_token_param_name(config.LLM_MODEL)
+            token_param = config.get_token_param_name(config.CLASSIFIER_MODEL)
             request_params = {
-                "model": config.LLM_MODEL,
+                "model": config.CLASSIFIER_MODEL,
                 "messages": [{"role": "user", "content": prompt}],
                 token_param: 4000,
                 "response_format": {"type": "json_object"},
             }
-            if config.supports_custom_temperature(config.LLM_MODEL):
+            if config.supports_custom_temperature(config.CLASSIFIER_MODEL):
                 request_params["temperature"] = 0.3
             response = self.llm.client.chat.completions.create(**request_params)
             

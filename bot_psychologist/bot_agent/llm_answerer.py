@@ -196,7 +196,21 @@ class LLMAnswerer:
 
             response = self.client.chat.completions.create(**request_params)
             
-            answer = response.choices[0].message.content
+            raw_content = response.choices[0].message.content
+            answer = (raw_content or "").strip()
+            logger.debug(
+                "[LLM_ANSWERER] raw content length=%s model=%s",
+                len(answer),
+                model,
+            )
+            if not answer:
+                logger.warning(
+                    "[LLM_ANSWERER] ⚠️ Empty content returned by model %s, using fallback",
+                    model,
+                )
+                answer = (
+                    "Расскажите подробнее о своём вопросе — я готов помочь разобраться."
+                )
             tokens = response.usage.total_tokens if response.usage else 0
             
             logger.debug(f"✅ Ответ получен ({tokens} токенов)")

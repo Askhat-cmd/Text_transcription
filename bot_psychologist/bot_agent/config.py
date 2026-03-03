@@ -38,6 +38,7 @@ class Config:
 
     # === LLM ===
     LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")
+    CLASSIFIER_MODEL = os.getenv("CLASSIFIER_MODEL", "gpt-4o-mini")
     LLM_TEMPERATURE = 0.7
     LLM_MAX_TOKENS = 1500
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -137,6 +138,11 @@ class Config:
                 f"Unknown model '{cls.LLM_MODEL}' set in PRIMARY_MODEL. "
                 f"Allowed values: {', '.join(cls.SUPPORTED_MODELS)}"
             )
+        if cls.CLASSIFIER_MODEL not in cls.SUPPORTED_MODELS:
+            errors.append(
+                f"Unknown model '{cls.CLASSIFIER_MODEL}' set in CLASSIFIER_MODEL. "
+                f"Allowed values: {', '.join(cls.SUPPORTED_MODELS)}"
+            )
 
         if errors:
             raise ValueError("Configuration errors:\n" + "\n".join(f"  - {error}" for error in errors))
@@ -155,6 +161,7 @@ class Config:
 | DATA_ROOT:    {cls.DATA_ROOT}
 | SAG_FINAL:    {cls.SAG_FINAL_DIR}
 | LLM_MODEL:    {cls.LLM_MODEL}
+| CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}
 | TOP_K:        {cls.TOP_K_BLOCKS}
 | DEBUG:        {cls.DEBUG}

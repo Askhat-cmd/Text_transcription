@@ -26,7 +26,7 @@ export const API_ENDPOINTS = {
   HEALTH: '/health',
 } as const;
 
-export const API_TIMEOUT = 60000; // 60 seconds for LLM responses
+export const API_TIMEOUT = 120000; // 2 minutes for LLM responses
 
 // ===== DEFAULT VALUES =====
 

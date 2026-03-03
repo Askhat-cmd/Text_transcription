@@ -219,6 +219,96 @@ def _build_llm_prompt_previews(
         return "", ""
 
 
+def _build_llm_call_trace(
+    *,
+    llm_result: Dict,
+    step: str,
+    system_prompt_preview: str,
+    user_prompt_preview: str,
+    fallback_error: Optional[str],
+    duration_ms: int,
+) -> Dict:
+    call_info = {}
+    if isinstance(llm_result, dict):
+        raw_info = llm_result.get("llm_call_info")
+        if isinstance(raw_info, dict):
+            call_info.update(raw_info)
+
+    model_used = (
+        call_info.get("model")
+        or (llm_result.get("model_used") if isinstance(llm_result, dict) else None)
+        or config.LLM_MODEL
+    )
+    response_preview = (
+        call_info.get("response_preview")
+        or _truncate_preview(
+            (llm_result.get("answer") if isinstance(llm_result, dict) else fallback_error) or "",
+            300,
+        )
+    )
+    return {
+        "step": call_info.get("step") or step,
+        "model": str(model_used),
+        "system_prompt_preview": call_info.get("system_prompt_preview") or system_prompt_preview,
+        "user_prompt_preview": call_info.get("user_prompt_preview") or user_prompt_preview,
+        "response_preview": response_preview,
+        "tokens_prompt": call_info.get("tokens_prompt"),
+        "tokens_completion": call_info.get("tokens_completion"),
+        "tokens_total": call_info.get("tokens_total"),
+        "tokens_used": llm_result.get("tokens_used") if isinstance(llm_result, dict) else None,
+        "duration_ms": call_info.get("duration_ms") or duration_ms,
+    }
+
+
+def _update_session_token_metrics(
+    *,
+    memory,
+    tokens_prompt: Optional[int],
+    tokens_completion: Optional[int],
+    tokens_total: Optional[int],
+    model_name: str,
+) -> Dict[str, Optional[float]]:
+    previous_total = int(memory.metadata.get("session_tokens_total") or 0)
+    previous_turns = int(memory.metadata.get("session_turns") or 0)
+    previous_cost = memory.metadata.get("session_cost_usd")
+    previous_cost = float(previous_cost) if isinstance(previous_cost, (int, float, str)) else 0.0
+
+    new_total = previous_total + (int(tokens_total) if isinstance(tokens_total, (int, float)) else 0)
+    new_turns = previous_turns + 1
+
+    cost_per_1m = {
+        "gpt-4o-mini": {"input": 0.15, "output": 0.60},
+        "gpt-4o": {"input": 2.50, "output": 10.00},
+        "gpt-4-turbo": {"input": 10.00, "output": 30.00},
+        "gpt-4-turbo-preview": {"input": 10.00, "output": 30.00},
+        "gpt-5-mini": {"input": 0.25, "output": 2.00},
+        "gpt-5-mini-2025-08-07": {"input": 0.25, "output": 2.00},
+        "gpt-5": {"input": 1.25, "output": 10.00},
+        "gpt-5-2025-08-07": {"input": 1.25, "output": 10.00},
+    }
+
+    model_key = (model_name or "").lower()
+    session_cost = None
+    if model_key in cost_per_1m and tokens_prompt is not None and tokens_completion is not None:
+        rates = cost_per_1m[model_key]
+        cost = (
+            (tokens_prompt / 1_000_000 * rates["input"])
+            + (tokens_completion / 1_000_000 * rates["output"])
+        )
+        session_cost = round(previous_cost + cost, 6)
+
+    memory.metadata["session_tokens_total"] = new_total
+    memory.metadata["session_turns"] = new_turns
+    if session_cost is not None:
+        memory.metadata["session_cost_usd"] = session_cost
+
+    return {
+        "session_tokens_total": new_total,
+        "session_turns": new_turns,
+        "session_cost_usd": session_cost,
+    }
+
+
 def _build_memory_context_snapshot(memory) -> str:
     try:
         if not memory.turns:
@@ -619,23 +709,15 @@ def answer_question_adaptive(
                 raise
             finally:
                 if debug_trace is not None:
-                    tokens = llm_result.get("tokens_used") if isinstance(llm_result, dict) else None
                     debug_trace["llm_calls"].append(
-                        {
-                            "step": "main_answer",
-                            "model": str(
-                                (llm_result.get("model_used") if isinstance(llm_result, dict) else None)
-                                or config.LLM_MODEL
-                            ),
-                            "system_prompt_preview": llm_system_preview,
-                            "user_prompt_preview": llm_user_preview,
-                            "response_preview": _truncate_preview(
-                                (llm_result.get("answer") if isinstance(llm_result, dict) else llm_error) or "",
-                                300,
-                            ),
-                            "tokens_used": int(tokens) if isinstance(tokens, (int, float)) and tokens > 0 else None,
-                            "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
-                        }
+                        _build_llm_call_trace(
+                            llm_result=llm_result if isinstance(llm_result, dict) else {},
+                            step="answer",
+                            system_prompt_preview=llm_system_preview,
+                            user_prompt_preview=llm_user_preview,
+                            fallback_error=llm_error,
+                            duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
+                        )
                     )
             answer = llm_result.get("answer", "")
             formatter = ResponseFormatter()
@@ -655,6 +737,18 @@ def answer_question_adaptive(
                 )
             except Exception as exc:
                 logger.warning(f"[FAST_PATH] working_state update failed: {exc}")
+
+            tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
+            tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
+            tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
+            model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else config.LLM_MODEL
+            session_metrics = _update_session_token_metrics(
+                memory=memory,
+                tokens_prompt=tokens_prompt,
+                tokens_completion=tokens_completion,
+                tokens_total=tokens_total,
+                model_name=str(model_used),
+            )
 
             memory.add_turn(
                 user_input=query,
@@ -711,6 +805,12 @@ def answer_question_adaptive(
                     "summary_last_turn": summary_last_turn,
                     "semantic_hits": memory_trace_metrics["semantic_hits"],
                     "memory_turns": memory_turns,
+                    "tokens_prompt": tokens_prompt,
+                    "tokens_completion": tokens_completion,
+                    "tokens_total": tokens_total,
+                    "session_tokens_total": session_metrics.get("session_tokens_total"),
+                    "session_cost_usd": session_metrics.get("session_cost_usd"),
+                    "session_turns": session_metrics.get("session_turns"),
                 },
                 "timestamp": datetime.now().isoformat(),
                 "processing_time_seconds": round(elapsed_time, 2),
@@ -732,6 +832,17 @@ def answer_question_adaptive(
             if debug_trace is not None:
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
+                debug_trace["primary_model"] = config.LLM_MODEL
+                debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
+                debug_trace["embedding_model"] = config.EMBEDDING_MODEL
+                debug_trace["reranker_model"] = config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None
+                debug_trace["reranker_enabled"] = bool(config.VOYAGE_ENABLED)
+                debug_trace["tokens_prompt"] = tokens_prompt
+                debug_trace["tokens_completion"] = tokens_completion
+                debug_trace["tokens_total"] = tokens_total
+                debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
+                debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
+                debug_trace["session_turns"] = session_metrics.get("session_turns")
                 result["debug_trace"] = debug_trace
 
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
@@ -984,23 +1095,15 @@ def answer_question_adaptive(
             raise
         finally:
             if debug_trace is not None:
-                tokens = llm_result.get("tokens_used") if isinstance(llm_result, dict) else None
                 debug_trace["llm_calls"].append(
-                    {
-                        "step": "main_answer",
-                        "model": str(
-                            (llm_result.get("model_used") if isinstance(llm_result, dict) else None)
-                            or config.LLM_MODEL
-                        ),
-                        "system_prompt_preview": llm_system_preview,
-                        "user_prompt_preview": llm_user_preview,
-                        "response_preview": _truncate_preview(
-                            (llm_result.get("answer") if isinstance(llm_result, dict) else llm_error) or "",
-                            300,
-                        ),
-                        "tokens_used": int(tokens) if isinstance(tokens, (int, float)) and tokens > 0 else None,
-                        "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
-                    }
+                    _build_llm_call_trace(
+                        llm_result=llm_result if isinstance(llm_result, dict) else {},
+                        step="answer",
+                        system_prompt_preview=llm_system_preview,
+                        user_prompt_preview=llm_user_preview,
+                        fallback_error=llm_error,
+                        duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
+                    )
                 )
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
@@ -1112,6 +1215,18 @@ def answer_question_adaptive(
         except Exception as exc:
             logger.warning(f"[ADAPTIVE] working_state update failed: {exc}")
 
+        tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
+        tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
+        tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
+        model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else config.LLM_MODEL
+        session_metrics = _update_session_token_metrics(
+            memory=memory,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            tokens_total=tokens_total,
+            model_name=str(model_used),
+        )
+
         memory.add_turn(
             user_input=query,
             bot_response=answer,
@@ -1178,6 +1293,12 @@ def answer_question_adaptive(
                 "summary_last_turn": memory.summary_updated_at,
                 "semantic_hits": memory_trace_metrics["semantic_hits"],
                 "memory_turns": len(memory.turns),
+                "tokens_prompt": tokens_prompt,
+                "tokens_completion": tokens_completion,
+                "tokens_total": tokens_total,
+                "session_tokens_total": session_metrics.get("session_tokens_total"),
+                "session_cost_usd": session_metrics.get("session_cost_usd"),
+                "session_turns": session_metrics.get("session_turns"),
             },
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
@@ -1193,6 +1314,17 @@ def answer_question_adaptive(
         if debug_trace is not None:
             debug_trace["context_written"] = _build_memory_context_snapshot(memory)
             debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
+            debug_trace["primary_model"] = config.LLM_MODEL
+            debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
+            debug_trace["embedding_model"] = config.EMBEDDING_MODEL
+            debug_trace["reranker_model"] = config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None
+            debug_trace["reranker_enabled"] = bool(config.VOYAGE_ENABLED)
+            debug_trace["tokens_prompt"] = tokens_prompt
+            debug_trace["tokens_completion"] = tokens_completion
+            debug_trace["tokens_total"] = tokens_total
+            debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
+            debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
+            debug_trace["session_turns"] = session_metrics.get("session_turns")
             result["debug_trace"] = debug_trace
         
         logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")

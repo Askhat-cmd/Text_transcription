@@ -177,11 +177,14 @@ class LLMCallTrace(BaseModel):
     """Один вызов LLM в рамках обработки запроса."""
     step: str
     model: str
-    system_prompt_preview: str
-    user_prompt_preview: str
-    response_preview: str
-    tokens_used: Optional[int] = None
+    tokens_prompt: Optional[int] = None
+    tokens_completion: Optional[int] = None
+    tokens_total: Optional[int] = None
     duration_ms: Optional[int] = None
+    system_prompt_preview: Optional[str] = None
+    user_prompt_preview: Optional[str] = None
+    response_preview: Optional[str] = None
+    tokens_used: Optional[int] = None
 
 
 class DebugTrace(BaseModel):
@@ -192,6 +195,17 @@ class DebugTrace(BaseModel):
     llm_calls: List[LLMCallTrace]
     context_written_to_memory: str
     total_duration_ms: int
+    primary_model: Optional[str] = None
+    classifier_model: Optional[str] = None
+    embedding_model: Optional[str] = None
+    reranker_model: Optional[str] = None
+    reranker_enabled: bool = False
+    tokens_prompt: Optional[int] = None
+    tokens_completion: Optional[int] = None
+    tokens_total: Optional[int] = None
+    session_tokens_total: Optional[int] = None
+    session_cost_usd: Optional[float] = None
+    session_turns: Optional[int] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

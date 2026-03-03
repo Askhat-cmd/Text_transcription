@@ -161,6 +161,178 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           </details>
         )}
 
+        {trace.llm_calls && trace.llm_calls.length > 0 && (
+          <details>
+            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+              ⚡ LLM Вызовы ({trace.llm_calls.length})
+            </summary>
+            <div className="mt-2 space-y-2">
+              {trace.llm_calls.map((call, idx) => (
+                <details
+                  key={`${call.step}-${idx}`}
+                  className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
+                >
+                  <summary className="cursor-pointer px-3 py-2 flex items-center gap-2 text-xs select-none hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                    <span className="font-mono font-semibold text-slate-700 dark:text-slate-300 w-28 truncate">
+                      {call.step}
+                    </span>
+                    <span className="text-sky-600 dark:text-sky-400 font-medium">
+                      {call.model}
+                    </span>
+                    {call.tokens_total != null && (
+                      <span className="ml-auto text-slate-500">
+                        🪙 {call.tokens_total.toLocaleString()} tok
+                      </span>
+                    )}
+                    {call.duration_ms != null && (
+                      <span className="text-slate-400">
+                        ⏱ {call.duration_ms}ms
+                      </span>
+                    )}
+                  </summary>
+                  <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 space-y-2">
+                    {(call.tokens_prompt != null || call.tokens_completion != null) && (
+                      <div className="flex gap-4 text-[11px]">
+                        <span className="text-slate-400">
+                          prompt: <b className="text-slate-600 dark:text-slate-300">
+                            {call.tokens_prompt ?? '—'}
+                          </b>
+                        </span>
+                        <span className="text-slate-400">
+                          completion: <b className="text-slate-600 dark:text-slate-300">
+                            {call.tokens_completion ?? '—'}
+                          </b>
+                        </span>
+                      </div>
+                    )}
+                    {call.system_prompt_preview && (
+                      <div>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">
+                          System prompt (preview)
+                        </p>
+                        <p className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                          {call.system_prompt_preview}
+                        </p>
+                      </div>
+                    )}
+                    {call.response_preview && (
+                      <div>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">
+                          Response (preview)
+                        </p>
+                        <p className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                          {call.response_preview}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </details>
+        )}
+
+        {(trace.primary_model || trace.classifier_model) && (
+          <details>
+            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+              🤖 Модели пайплайна
+            </summary>
+            <div className="mt-2 grid grid-cols-2 gap-2">
+              {trace.primary_model && (
+                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Primary (ответ)</p>
+                  <p className="font-mono font-semibold text-sky-600 dark:text-sky-400 text-[11px] truncate">
+                    {trace.primary_model}
+                  </p>
+                </div>
+              )}
+              {trace.classifier_model && (
+                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
+                  <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
+                    {trace.classifier_model}
+                  </p>
+                </div>
+              )}
+              {trace.embedding_model && (
+                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Embedding</p>
+                  <p className="font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] truncate">
+                    {trace.embedding_model}
+                  </p>
+                </div>
+              )}
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Reranker</p>
+                <p className="font-mono font-semibold text-[11px] truncate text-slate-700 dark:text-slate-300">
+                  {trace.reranker_enabled ? (trace.reranker_model ?? 'enabled') : 'off'}
+                </p>
+              </div>
+            </div>
+          </details>
+        )}
+
+        {(trace.tokens_total != null || trace.session_tokens_total != null) && (
+          <details>
+            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+              🪙 Токены и стоимость
+            </summary>
+            <div className="mt-2 space-y-2">
+              {trace.tokens_total != null && (
+                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">
+                    Это сообщение
+                  </p>
+                  <div className="flex gap-4 text-xs">
+                    <span className="text-slate-500">
+                      prompt: <b className="text-slate-700 dark:text-slate-200">
+                        {trace.tokens_prompt?.toLocaleString() ?? '—'}
+                      </b>
+                    </span>
+                    <span className="text-slate-500">
+                      completion: <b className="text-slate-700 dark:text-slate-200">
+                        {trace.tokens_completion?.toLocaleString() ?? '—'}
+                      </b>
+                    </span>
+                    <span className="text-slate-500">
+                      total: <b className="text-amber-600 dark:text-amber-400 font-bold">
+                        {trace.tokens_total.toLocaleString()}
+                      </b>
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {trace.session_tokens_total != null && (
+                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                  <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">
+                    Сессия (нарастающий итог)
+                  </p>
+                  <div className="flex gap-4 text-xs items-center">
+                    <span className="text-slate-500">
+                      токены: <b className="text-slate-700 dark:text-slate-200 font-bold">
+                        {trace.session_tokens_total.toLocaleString()}
+                      </b>
+                    </span>
+                    {trace.session_turns != null && (
+                      <span className="text-slate-500">
+                        сообщений: <b className="text-slate-700 dark:text-slate-200">
+                          {trace.session_turns}
+                        </b>
+                      </span>
+                    )}
+                    {trace.session_cost_usd != null && (
+                      <span className="ml-auto font-bold text-emerald-600 dark:text-emerald-400">
+                        ≈ ${trace.session_cost_usd.toFixed(4)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          </details>
+        )}
+
         <details>
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
             🧠 Контекст памяти

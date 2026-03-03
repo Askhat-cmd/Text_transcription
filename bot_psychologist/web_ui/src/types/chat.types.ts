@@ -32,6 +32,29 @@ export interface InlineTrace {
   memory_turns?: number;
   summary_length?: number;
   summary_last_turn?: number | null;
+  llm_calls?: LLMCallInfo[];
+  primary_model?: string;
+  classifier_model?: string;
+  embedding_model?: string;
+  reranker_model?: string | null;
+  reranker_enabled?: boolean;
+  tokens_prompt?: number;
+  tokens_completion?: number;
+  tokens_total?: number;
+  session_tokens_total?: number;
+  session_cost_usd?: number | null;
+  session_turns?: number;
+}
+
+export interface LLMCallInfo {
+  step: string;
+  model: string;
+  tokens_prompt?: number | null;
+  tokens_completion?: number | null;
+  tokens_total?: number | null;
+  duration_ms?: number | null;
+  system_prompt_preview?: string | null;
+  response_preview?: string | null;
 }
 
 export interface Message {

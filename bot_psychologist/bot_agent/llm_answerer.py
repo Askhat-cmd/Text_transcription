@@ -7,7 +7,8 @@ LLM Answerer Module
 """
 
 import logging
-from typing import List, Dict, Optional
+import time
+from typing import List, Dict, Optional, Tuple
 from pathlib import Path
 
 from .data_loader import Block
@@ -125,7 +126,8 @@ class LLMAnswerer:
         conversation_history: Optional[str] = None,
         model: Optional[str] = None,
         temperature: Optional[float] = None,
-        max_tokens: Optional[int] = None
+        max_tokens: Optional[int] = None,
+        step_name: str = "answer",
     ) -> Dict:
         """
         Формирует ответ через OpenAI API.
@@ -181,6 +183,11 @@ class LLMAnswerer:
         
         try:
             logger.debug("Using token parameter: %s=%s for model %s", token_param, max_tokens, model)
+            start_time = time.perf_counter()
+            tokens_prompt = None
+            tokens_completion = None
+            tokens_total = None
+            model_used = model
             if not config.supports_custom_temperature(model):
                 reasoning_effort = config.get_reasoning_effort(model)
                 request_params = {
@@ -193,11 +200,19 @@ class LLMAnswerer:
                 response = self.client.responses.create(**request_params)
                 answer = (getattr(response, "output_text", "") or "").strip()
                 usage = getattr(response, "usage", None)
-                tokens = (
-                    usage.total_tokens
-                    if usage and getattr(usage, "total_tokens", None) is not None
-                    else 0
-                )
+                model_used = str(getattr(response, "model", model))
+                if usage is not None:
+                    tokens_prompt = (
+                        getattr(usage, "prompt_tokens", None)
+                        or getattr(usage, "input_tokens", None)
+                    )
+                    tokens_completion = (
+                        getattr(usage, "completion_tokens", None)
+                        or getattr(usage, "output_tokens", None)
+                    )
+                    tokens_total = getattr(usage, "total_tokens", None)
+                    if tokens_total is None and tokens_prompt is not None and tokens_completion is not None:
+                        tokens_total = int(tokens_prompt) + int(tokens_completion)
             else:
                 messages = [
                     {"role": "system", "content": system_prompt},
@@ -212,7 +227,13 @@ class LLMAnswerer:
                 response = self.client.chat.completions.create(**request_params)
                 raw_content = response.choices[0].message.content
                 answer = (raw_content or "").strip()
-                tokens = response.usage.total_tokens if response.usage else 0
+                model_used = str(getattr(response, "model", model))
+                if response.usage:
+                    tokens_prompt = getattr(response.usage, "prompt_tokens", None)
+                    tokens_completion = getattr(response.usage, "completion_tokens", None)
+                    tokens_total = getattr(response.usage, "total_tokens", None)
+            duration_ms = int((time.perf_counter() - start_time) * 1000)
+            tokens = tokens_total if tokens_total is not None else 0
             logger.debug(
                 "[LLM_ANSWERER] raw content length=%s model=%s",
                 len(answer),
@@ -229,11 +250,28 @@ class LLMAnswerer:
             
             logger.debug(f"✅ Ответ получен ({tokens} токенов)")
             
+            llm_call_info = {
+                "step": step_name,
+                "model": model_used,
+                "tokens_prompt": int(tokens_prompt) if isinstance(tokens_prompt, (int, float)) else None,
+                "tokens_completion": int(tokens_completion) if isinstance(tokens_completion, (int, float)) else None,
+                "tokens_total": int(tokens_total) if isinstance(tokens_total, (int, float)) else None,
+                "duration_ms": duration_ms,
+                "system_prompt_preview": (system_prompt or "")[:200],
+                "user_prompt_preview": (context or "")[:200],
+                "response_preview": (answer or "")[:200],
+            }
+
             return {
                 "answer": answer,
-                "model_used": model,
+                "model_used": model_used,
                 "tokens_used": tokens,
-                "error": None
+                "tokens_prompt": llm_call_info["tokens_prompt"],
+                "tokens_completion": llm_call_info["tokens_completion"],
+                "tokens_total": llm_call_info["tokens_total"],
+                "duration_ms": llm_call_info["duration_ms"],
+                "llm_call_info": llm_call_info,
+                "error": None,
             }
         
         except Exception as e:

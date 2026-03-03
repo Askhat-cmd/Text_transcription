@@ -555,7 +555,48 @@ async def ask_adaptive_question(
                     ],
                     context_written_to_memory=context_written,
                     total_duration_ms=total_duration_ms,
+                    primary_model=config.LLM_MODEL,
+                    classifier_model=config.CLASSIFIER_MODEL,
+                    embedding_model=config.EMBEDDING_MODEL,
+                    reranker_model=config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
+                    reranker_enabled=bool(config.VOYAGE_ENABLED),
+                    tokens_prompt=metadata.get("tokens_prompt"),
+                    tokens_completion=metadata.get("tokens_completion"),
+                    tokens_total=metadata.get("tokens_total"),
+                    session_tokens_total=metadata.get("session_tokens_total"),
+                    session_cost_usd=metadata.get("session_cost_usd"),
+                    session_turns=metadata.get("session_turns"),
                 )
+                if llm_calls_raw:
+                    tokens_total = [
+                        c.get("tokens_total")
+                        for c in llm_calls_raw
+                        if isinstance(c, dict) and c.get("tokens_total")
+                    ]
+                    if tokens_total:
+                        trace.tokens_total = sum(int(t) for t in tokens_total)
+                    answer_call = next(
+                        (c for c in llm_calls_raw if isinstance(c, dict) and c.get("step") == "answer"),
+                        None,
+                    )
+                    if answer_call:
+                        trace.tokens_prompt = answer_call.get("tokens_prompt")
+                        trace.tokens_completion = answer_call.get("tokens_completion")
+                    raw_session_tokens = (
+                        raw.get("session_tokens_total") if isinstance(raw, dict) else None
+                    )
+                    raw_session_cost = (
+                        raw.get("session_cost_usd") if isinstance(raw, dict) else None
+                    )
+                    raw_session_turns = (
+                        raw.get("session_turns") if isinstance(raw, dict) else None
+                    )
+                    if raw_session_tokens is not None:
+                        trace.session_tokens_total = raw_session_tokens
+                    if raw_session_cost is not None:
+                        trace.session_cost_usd = raw_session_cost
+                    if raw_session_turns is not None:
+                        trace.session_turns = raw_session_turns
             except Exception as trace_exc:
                 logger.warning(f"[DEBUG_TRACE] Failed to build trace: {trace_exc}")
                 trace = None

@@ -100,6 +100,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       );
       const isDevKey = apiService.getAPIKey() === 'dev-key-001';
       const rawTrace = response.trace;
+      const traceData = response.trace as Record<string, unknown> | null;
       const retrievalDetails = (response.metadata?.retrieval_details
         ?? (rawTrace as Record<string, unknown> | null)?.retrieval_details
         ?? (response as unknown as Record<string, unknown>)?.retrieval_details
@@ -153,6 +154,18 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
           memory_turns: toNumber(response.metadata?.memory_turns),
           summary_length: toNumber(response.metadata?.summary_length),
           summary_last_turn: toNumber(response.metadata?.summary_last_turn),
+          llm_calls: Array.isArray(traceData?.llm_calls) ? traceData?.llm_calls as InlineTrace['llm_calls'] : undefined,
+          primary_model: String(traceData?.primary_model ?? ''),
+          classifier_model: String(traceData?.classifier_model ?? ''),
+          embedding_model: String(traceData?.embedding_model ?? ''),
+          reranker_model: traceData?.reranker_model === null ? null : String(traceData?.reranker_model ?? ''),
+          reranker_enabled: Boolean(traceData?.reranker_enabled),
+          tokens_prompt: toNumber(traceData?.tokens_prompt),
+          tokens_completion: toNumber(traceData?.tokens_completion),
+          tokens_total: toNumber(traceData?.tokens_total),
+          session_tokens_total: toNumber(traceData?.session_tokens_total),
+          session_cost_usd: toNumber(traceData?.session_cost_usd) ?? null,
+          session_turns: toNumber(traceData?.session_turns),
           blocks: [
             ...mapBlocks(retrievalDetails.final_blocks, 'final', true),
             ...mapBlocks(retrievalDetails.stage_filtered, 'stage_filter', false, 'stage filter'),

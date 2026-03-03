@@ -98,6 +98,7 @@ class ResponseGenerator:
                 model=model_name,
                 temperature=final_temperature,
                 max_tokens=final_max_tokens,
+                step_name="answer",
             )
         finally:
             self.answerer.build_system_prompt = original_build_prompt

@@ -153,6 +153,9 @@ tail -f logs/error/error.log
 
 Настройки через `.env` (см. `bot_psychologist/.env.example`):
 
+- `PRIMARY_MODEL` (default: `gpt-4o-mini`) — основная модель для генерации ответа.
+- `CLASSIFIER_MODEL` (default: `gpt-4o-mini`) — быстрая модель для классификаторов (state + SD), чтобы не тормозить основной ответ.
+- `REASONING_EFFORT` (default: `low`) — только для reasoning-моделей (семейство `gpt-5`, `o1/o3/o4`): `low` / `medium` / `high`.
 - `CONVERSATION_HISTORY_DEPTH` (default: `3`) — сколько последних обменов добавлять в контекст.
 - `MAX_CONTEXT_SIZE` (default: `2000`) — максимальный размер контекста в символах.
 - `MAX_CONVERSATION_TURNS` (default: `1000`) — максимальное число ходов, хранимых для одного пользователя (старые удаляются).
@@ -197,7 +200,7 @@ API для истории:
 Единый слой генерации/форматирования ответов используется во всех `answer_*`:
 
 - `bot_agent/response/response_generator.py` — mode-aware генерация (директива режима + confidence behavior).
-- `bot_agent/response/response_formatter.py` — mode-aware ограничения длины/формата ответа.
+- `bot_agent/response/response_formatter.py` — mode-aware ограничения длины/формата ответа. Если в Web UI видно обрезание текста с `...`, увеличьте `mode_char_limits` в этом файле.
 
 ## Retrieval Policy (PRD v2.0)
 
@@ -249,6 +252,15 @@ cp .env.example .env
 ```env
 OPENAI_API_KEY=sk-proj-...
 DATA_ROOT=../voice_bot_pipeline/data
+
+# Models
+# PRIMARY_MODEL — основная модель ответа. Для GPT-5 (reasoning) используется Responses API
+# и параметр max_output_tokens; system-prompt объединяется с user (system role не используется).
+PRIMARY_MODEL=gpt-4o-mini
+# CLASSIFIER_MODEL — быстрая модель для state + SD классификаторов (рекомендуется gpt-4o-mini).
+CLASSIFIER_MODEL=gpt-4o-mini
+# Только для reasoning моделей (gpt-5, o1/o3/o4): ускорение за счет effort=low/medium/high.
+REASONING_EFFORT=low
 
 # Conversation Memory
 CONVERSATION_HISTORY_DEPTH=3

@@ -16,15 +16,6 @@ logger = logging.getLogger(__name__)
 class ResponseGenerator:
     """Generate LLM answers with shared mode and confidence directives."""
 
-    MODE_TOKEN_LIMITS = {
-        "PRESENCE": 420,
-        "CLARIFICATION": 450,
-        "VALIDATION": 500,
-        "THINKING": 900,
-        "INTERVENTION": 700,
-        "INTEGRATION": 520,
-    }
-
     def __init__(self, answerer: Optional[LLMAnswerer] = None) -> None:
         self.answerer = answerer or LLMAnswerer()
 
@@ -36,10 +27,6 @@ class ResponseGenerator:
         if level == "high":
             return min(1.0, default + 0.05)
         return default
-
-    def _max_tokens_for_mode(self, mode: str, default: int) -> int:
-        mode_cap = self.MODE_TOKEN_LIMITS.get((mode or "PRESENCE").upper(), default)
-        return min(default, mode_cap)
 
     def _load_sd_prompt(self, sd_level: str) -> str:
         """Загрузить SD-оверлей промта для уровня пользователя."""
@@ -99,8 +86,7 @@ class ResponseGenerator:
         model_name = model or config.LLM_MODEL
         base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE
         final_temperature = self._temperature_for_confidence(confidence_level, base_temp)
-        token_budget = max_tokens or config.LLM_MAX_TOKENS
-        final_max_tokens = self._max_tokens_for_mode(mode, token_budget)
+        final_max_tokens = max_tokens if max_tokens is not None else config.get_mode_max_tokens(mode)
 
         original_build_prompt = self.answerer.build_system_prompt
         self.answerer.build_system_prompt = lambda: final_system_prompt

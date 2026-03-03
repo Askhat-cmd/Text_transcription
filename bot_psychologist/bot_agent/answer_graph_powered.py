@@ -237,7 +237,7 @@ def answer_question_graph_powered(
             additional_system_context=graph_context,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
-            max_tokens=config.LLM_MAX_TOKENS,
+            max_tokens=config.get_mode_max_tokens(routing_result.mode),
         )
         
         if debug_info is not None:

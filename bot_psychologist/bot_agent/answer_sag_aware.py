@@ -203,7 +203,7 @@ def answer_question_sag_aware(
             user_level_adapter=level_adapter,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
-            max_tokens=config.LLM_MAX_TOKENS,
+            max_tokens=config.get_mode_max_tokens(routing_result.mode),
         )
         
         if debug_info is not None:

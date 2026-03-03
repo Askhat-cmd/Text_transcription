@@ -202,7 +202,7 @@ def answer_question_basic(
             forbid=routing_result.decision.forbid,
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
-            max_tokens=config.LLM_MAX_TOKENS,
+            max_tokens=config.get_mode_max_tokens(routing_result.mode),
         )
         
         if llm_result.get("error"):

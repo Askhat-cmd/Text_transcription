@@ -612,7 +612,7 @@ def answer_question_adaptive(
                     sd_level=sd_result.primary,
                     model=config.LLM_MODEL,
                     temperature=config.LLM_TEMPERATURE,
-                    max_tokens=config.LLM_MAX_TOKENS,
+                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
                 )
             except Exception as llm_exc:
                 llm_error = str(llm_exc)
@@ -977,7 +977,7 @@ def answer_question_adaptive(
                 sd_level=sd_result.primary,
                 model=config.LLM_MODEL,
                 temperature=config.LLM_TEMPERATURE,
-                max_tokens=config.LLM_MAX_TOKENS,
+                max_tokens=config.get_mode_max_tokens(routing_result.mode),
             )
         except Exception as llm_exc:
             llm_error = str(llm_exc)

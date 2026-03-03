@@ -40,7 +40,17 @@ class Config:
     LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")
     CLASSIFIER_MODEL = os.getenv("CLASSIFIER_MODEL", "gpt-4o-mini")
     LLM_TEMPERATURE = 0.7
-    LLM_MAX_TOKENS = 1500
+    LLM_MAX_TOKENS = 2000
+    # Token limits per response mode (aligned with ResponseFormatter char_limits)
+    # Formula: char_limit × 1.7 (ru tokens/char) × 1.2 (safety margin)
+    MODE_MAX_TOKENS: dict = {
+        "PRESENCE": 3500,
+        "CLARIFICATION": 3500,
+        "VALIDATION": 4200,
+        "THINKING": 7000,
+        "INTERVENTION": 5500,
+        "INTEGRATION": 4200,
+    }
     OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
     SUPPORTED_MODELS: tuple = (
@@ -131,6 +141,18 @@ class Config:
             if target.startswith(prefix):
                 return 16000
         return cls.LLM_MAX_TOKENS
+
+    @classmethod
+    def get_mode_max_tokens(cls, mode: Optional[str] = None) -> int:
+        """Return token limit for given response mode.
+
+        Falls back to LLM_MAX_TOKENS if mode is unknown.
+        For reasoning models, always returns get_effective_max_tokens().
+        """
+        if not cls.supports_custom_temperature():
+            return cls.get_effective_max_tokens()
+        normalized = (mode or "").upper()
+        return cls.MODE_MAX_TOKENS.get(normalized, cls.LLM_MAX_TOKENS)
 
     @classmethod
     def get_reasoning_effort(cls, model: Optional[str] = None) -> Optional[str]:

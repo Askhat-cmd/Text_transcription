@@ -77,6 +77,12 @@
 - Память: `memory_turns`, `semantic_hits`, `summary_used`, `summary_length`, `summary_last_turn`.
 - SD: `sd_level` (и SD prompt overlay, если он был применён).
 
+Дополнительно (PRD v2.0.3):
+- ⚡ LLM вызовы: шаг, модель, токены, длительность, preview промпта и ответа.
+- 🤖 Модели пайплайна: primary/classifier/embedding/reranker и статус Voyage.
+- 🪙 Токены и стоимость: prompt/completion/total за сообщение + накопительный итог по сессии.
+  Стоимость приблизительная и показывается только если модель есть в таблице цен.
+
 ## Production Logging (PRD 10.02.2026)
 
 Минимальный PRD по production logging реализован.
@@ -102,7 +108,7 @@
 Быстрая проверка:
 ```bash
 cd bot_psychologist
-python -m uvicorn api.main:app --reload --port 8000
+python -m uvicorn api.main:app --reload --port 8001
 ```
 
 После запуска проверяйте:
@@ -200,7 +206,11 @@ API для истории:
 Единый слой генерации/форматирования ответов используется во всех `answer_*`:
 
 - `bot_agent/response/response_generator.py` — mode-aware генерация (директива режима + confidence behavior).
-- `bot_agent/response/response_formatter.py` — mode-aware ограничения длины/формата ответа. Если в Web UI видно обрезание текста с `...`, увеличьте `mode_char_limits` в этом файле.
+- `bot_agent/response/response_formatter.py` — mode-aware ограничения длины/формата ответа (char_limit).
+
+Token budget (PRD v2.0.2):
+- Лимит токенов для LLM согласован с `ResponseFormatter` по режимам и задаётся в `bot_agent/config.py` через `MODE_MAX_TOKENS` + `get_mode_max_tokens(mode)`.
+- Это снижает риск обрыва ответа на уровне API (когда генерация обрывается без `...`), а финальная обрезка (если нужна) происходит уже в formatter с `...`.
 
 ## Retrieval Policy (PRD v2.0)
 
@@ -350,11 +360,11 @@ python scripts/cleanup_old_sessions.py --active-days 90 --archive-days 365
 ### 5. Запуск API сервера
 
 ```bash
-cd api
-uvicorn main:app --reload --port 8000
+cd bot_psychologist
+python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8001
 ```
 
-API будет доступен по адресу `http://localhost:8000/api/docs`
+API будет доступен по адресу `http://localhost:8001/api/docs`
 
 ### 6. Запуск Web UI (опционально)
 
@@ -363,7 +373,7 @@ cd web_ui
 npm run dev
 ```
 
-Web UI будет доступен по адресу `http://localhost:5173`
+Web UI будет доступен по адресу `http://localhost:3000`
 
 ## Структура проекта
 

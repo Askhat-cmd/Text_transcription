@@ -181,23 +181,38 @@ class LLMAnswerer:
         
         try:
             logger.debug("Using token parameter: %s=%s for model %s", token_param, max_tokens, model)
-            request_params = {
-                "model": model,
-                "messages": [
+            if not config.supports_custom_temperature(model):
+                reasoning_effort = config.get_reasoning_effort(model)
+                request_params = {
+                    "model": model,
+                    "input": system_prompt + "\n\n" + context,
+                    "max_output_tokens": max_tokens,
+                }
+                if reasoning_effort:
+                    request_params["reasoning"] = {"effort": reasoning_effort}
+                response = self.client.responses.create(**request_params)
+                answer = (getattr(response, "output_text", "") or "").strip()
+                usage = getattr(response, "usage", None)
+                tokens = (
+                    usage.total_tokens
+                    if usage and getattr(usage, "total_tokens", None) is not None
+                    else 0
+                )
+            else:
+                messages = [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": context},
-                ],
-                token_param: max_tokens,
-            }
-            if config.supports_custom_temperature(model):
+                ]
+                request_params = {
+                    "model": model,
+                    "messages": messages,
+                    token_param: max_tokens,
+                }
                 request_params["temperature"] = temperature
-            else:
-                logger.debug("Skipping custom temperature for model %s", model)
-
-            response = self.client.chat.completions.create(**request_params)
-            
-            raw_content = response.choices[0].message.content
-            answer = (raw_content or "").strip()
+                response = self.client.chat.completions.create(**request_params)
+                raw_content = response.choices[0].message.content
+                answer = (raw_content or "").strip()
+                tokens = response.usage.total_tokens if response.usage else 0
             logger.debug(
                 "[LLM_ANSWERER] raw content length=%s model=%s",
                 len(answer),
@@ -211,7 +226,6 @@ class LLMAnswerer:
                 answer = (
                     "Расскажите подробнее о своём вопросе — я готов помочь разобраться."
                 )
-            tokens = response.usage.total_tokens if response.usage else 0
             
             logger.debug(f"✅ Ответ получен ({tokens} токенов)")
             

@@ -10,15 +10,11 @@ import MessageItem from './Message';
 
 interface MessageListProps {
   messages: Message[];
-  showSources?: boolean;
-  showPath?: boolean;
   compactMode?: boolean;
 }
 
 export const MessageList: React.FC<MessageListProps> = ({
   messages,
-  showSources = true,
-  showPath = true,
   compactMode = false,
 }) => {
   return (
@@ -27,8 +23,6 @@ export const MessageList: React.FC<MessageListProps> = ({
         <MessageItem
           key={message.id}
           message={message}
-          showSources={showSources}
-          showPath={showPath}
           compactMode={compactMode}
         />
       ))}

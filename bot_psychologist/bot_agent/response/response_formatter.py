@@ -13,12 +13,12 @@ class ResponseFormatter:
 
     def __init__(self, mode_char_limits: dict | None = None) -> None:
         self.mode_char_limits = mode_char_limits or {
-            "PRESENCE": 520,
-            "CLARIFICATION": 520,
-            "VALIDATION": 620,
-            "THINKING": 1200,
-            "INTERVENTION": 900,
-            "INTEGRATION": 650,
+            "PRESENCE": 2000,
+            "CLARIFICATION": 2000,
+            "VALIDATION": 2400,
+            "THINKING": 4000,
+            "INTERVENTION": 3200,
+            "INTEGRATION": 2400,
         }
 
     @staticmethod

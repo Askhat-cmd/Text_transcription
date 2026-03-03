@@ -731,8 +731,6 @@ const ChatPage: React.FC = () => {
             currentStateConfidence={currentStateConfidence}
             userId={userId}
             chatTitle={activeSession?.title || 'Новый чат'}
-            showSources={chatSettings.showSources}
-            showPath={chatSettings.showPath}
             autoScroll={chatSettings.autoScroll}
             compactMode={chatSettings.compactMode}
           />

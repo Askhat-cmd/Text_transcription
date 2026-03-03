@@ -60,6 +60,7 @@ class Config:
         "o3",
         "o4",
     )
+    REASONING_EFFORT = os.getenv("REASONING_EFFORT", "low")
 
     # === Language ===
     RESPONSE_LANGUAGE = "russian"
@@ -130,6 +131,13 @@ class Config:
             if target.startswith(prefix):
                 return 16000
         return cls.LLM_MAX_TOKENS
+
+    @classmethod
+    def get_reasoning_effort(cls, model: Optional[str] = None) -> Optional[str]:
+        """Return reasoning_effort for reasoning models, else None."""
+        if not cls.supports_custom_temperature(model):
+            return cls.REASONING_EFFORT
+        return None
 
     @classmethod
     def validate(cls) -> bool:

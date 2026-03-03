@@ -25,8 +25,6 @@ interface ChatWindowProps {
   onToggleSidebar?: () => void;
   userId?: string;
   chatTitle?: string;
-  showSources?: boolean;
-  showPath?: boolean;
   autoScroll?: boolean;
   compactMode?: boolean;
 }
@@ -55,8 +53,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   onToggleSidebar,
   userId,
   chatTitle,
-  showSources = true,
-  showPath = true,
   autoScroll = true,
   compactMode = false,
 }) => {
@@ -187,8 +183,6 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           <>
             <MessageList
               messages={messages}
-              showSources={showSources}
-              showPath={showPath}
               compactMode={compactMode}
             />
             {isLoading && <TypingIndicator />}

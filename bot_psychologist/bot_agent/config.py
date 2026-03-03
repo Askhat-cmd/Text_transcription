@@ -123,6 +123,15 @@ class Config:
         return True
 
     @classmethod
+    def get_effective_max_tokens(cls, model: Optional[str] = None) -> int:
+        """Return effective token limit, accounting for reasoning models."""
+        target = (model or cls.LLM_MODEL).lower()
+        for prefix in cls._MAX_COMPLETION_TOKENS_PREFIXES:
+            if target.startswith(prefix):
+                return 16000
+        return cls.LLM_MAX_TOKENS
+
+    @classmethod
     def validate(cls) -> bool:
         """Validate critical runtime config."""
         errors = []

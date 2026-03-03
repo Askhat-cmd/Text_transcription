@@ -166,7 +166,7 @@ class LLMAnswerer:
         # Параметры
         model = model or config.LLM_MODEL
         temperature = temperature if temperature is not None else config.LLM_TEMPERATURE
-        max_tokens = max_tokens or config.LLM_MAX_TOKENS
+        max_tokens = max_tokens or config.get_effective_max_tokens(model)
         token_param = config.get_token_param_name(model)
         
         # Промпты

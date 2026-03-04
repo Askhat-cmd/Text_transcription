@@ -47,6 +47,7 @@ class SemanticMemory:
         self.user_id = user_id
         self.turn_embeddings: List[TurnEmbedding] = []
         self.last_hits_count: int = 0
+        self.last_hits_detail: List[Dict[str, object]] = []
 
         self._model = None
         self._model_loaded = False
@@ -180,6 +181,7 @@ class SemanticMemory:
         """
         if self.model is None:
             self.last_hits_count = 0
+            self.last_hits_detail = []
             return []
         logger.info(
             f"[SEMANTIC] search start user_id={self.user_id} top_k={top_k} min_similarity={min_similarity}"
@@ -187,6 +189,7 @@ class SemanticMemory:
         if not self.turn_embeddings:
             logger.debug("No embeddings available for search")
             self.last_hits_count = 0
+            self.last_hits_detail = []
             return []
 
         try:
@@ -198,6 +201,7 @@ class SemanticMemory:
         except Exception as exc:
             logger.error(f"[SEMANTIC] query embedding failed: {exc}", exc_info=True)
             self.last_hits_count = 0
+            self.last_hits_detail = []
             return []
 
         search_pool = (
@@ -215,6 +219,15 @@ class SemanticMemory:
         similarities.sort(key=lambda x: x[1], reverse=True)
         top_results = similarities[:top_k]
         self.last_hits_count = len(top_results)
+        self.last_hits_detail = [
+            {
+                "block_id": f"turn_{turn_emb.turn_index}",
+                "score": float(score),
+                "text_preview": (turn_emb.bot_response_preview or turn_emb.user_input or "")[:150],
+                "source": "semantic_memory",
+            }
+            for turn_emb, score in top_results
+        ]
         logger.info(
             f"[SEMANTIC] search done user_id={self.user_id} results={len(top_results)}"
         )

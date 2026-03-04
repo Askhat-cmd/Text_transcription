@@ -39,13 +39,28 @@ from bot_agent.user_level_adapter import UserLevelAdapter
 from bot_agent.storage import SessionManager
 from bot_agent.answer_adaptive import (
     _classify_parallel,
+    _fallback_state_analysis,
+    _fallback_sd_result,
     _should_use_fast_path,
     _build_fast_path_block,
     _build_state_context,
     _build_working_state,
-    _build_retrieval_detail,
     _get_memory_trace_metrics,
+    _build_llm_prompts,
+    _build_llm_prompt_previews,
+    _build_llm_call_trace,
+    _build_memory_context_snapshot,
+    _build_config_snapshot,
+    _compute_anomalies,
+    _estimate_cost,
+    _store_blob,
+    _build_state_trajectory,
+    _build_chunk_trace_lists,
+    _detect_fast_path_reason,
+    _truncate_preview,
 )
+from bot_agent.state_classifier import state_classifier
+from bot_agent.sd_classifier import sd_classifier
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
@@ -58,6 +73,7 @@ from .models import (
 )
 from .auth import verify_api_key, is_dev_key
 from .dependencies import get_data_loader, get_graph_client, get_retriever
+from .session_store import get_session_store, SessionStore
 
 logger = logging.getLogger(__name__)
 
@@ -385,6 +401,7 @@ async def ask_adaptive_question(
     _data_loader=Depends(get_data_loader),
     _graph_client=Depends(get_graph_client),
     _retriever=Depends(get_retriever),
+    store: SessionStore = Depends(get_session_store),
 ):
     """
     **Phase 4:** РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РґР°РїС‚РёРІРЅС‹Р№ QA.
@@ -431,7 +448,8 @@ async def ask_adaptive_question(
             user_level=request.user_level.value,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
-            debug=request.debug
+            debug=request.debug,
+            session_store=store,
         )
         
         # РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
@@ -496,7 +514,11 @@ async def ask_adaptive_question(
             raw = result.get("debug_trace") or result.get("debug")
             try:
                 metadata = result.get("metadata", {}) or {}
-                sd_raw = raw.get("sd_classification", {}) if isinstance(raw, dict) else {}
+                raw_dict = raw if isinstance(raw, dict) else {}
+
+                sd_raw = raw_dict.get("sd_classification") or {}
+                if not isinstance(sd_raw, dict):
+                    sd_raw = {}
                 allowed_levels = (
                     sd_raw.get("allowed_levels")
                     or sd_raw.get("allowed_blocks")
@@ -514,34 +536,52 @@ async def ask_adaptive_question(
                 context_written = ""
                 total_duration_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
 
-                if isinstance(raw, dict):
-                    retrieval_details = raw.get("retrieval_details", {}) or {}
-                    chunks_retrieved_raw = (
-                        raw.get("chunks_retrieved")
-                        or retrieval_details.get("initial_retrieval")
-                        or []
-                    )
-                    chunks_after_raw = (
-                        raw.get("chunks_after_filter")
-                        or raw.get("chunks_after_sd_filter")
-                        or retrieval_details.get("after_sd_filter")
-                        or []
-                    )
-                    llm_calls_raw = raw.get("llm_calls") or []
-                    context_written = raw.get("context_written") or result.get("conversation_context", "")
-                    total_duration_ms = int(
-                        raw.get("total_duration_ms")
-                        or float(raw.get("total_time", result.get("processing_time_seconds", 0)) or 0) * 1000
-                    )
+                retrieval_details = raw_dict.get("retrieval_details", {}) or {}
+                chunks_retrieved_raw = (
+                    raw_dict.get("chunks_retrieved")
+                    or retrieval_details.get("initial_retrieval")
+                    or []
+                )
+                chunks_after_raw = (
+                    raw_dict.get("chunks_after_filter")
+                    or raw_dict.get("chunks_after_sd_filter")
+                    or retrieval_details.get("after_sd_filter")
+                    or []
+                )
+                llm_calls_raw = raw_dict.get("llm_calls") or []
+                context_written = raw_dict.get("context_written") or result.get("conversation_context", "")
+                total_duration_ms = int(
+                    raw_dict.get("total_duration_ms")
+                    or float(raw_dict.get("total_time", result.get("processing_time_seconds", 0)) or 0) * 1000
+                )
 
-                chunks_retrieved = [
-                    _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=False)
-                    for c in chunks_retrieved_raw if isinstance(c, dict)
-                ]
-                chunks_after_sd_filter = [
-                    _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
-                    for c in chunks_after_raw if isinstance(c, dict)
-                ]
+                chunks_retrieved = []
+                for c in chunks_retrieved_raw:
+                    if isinstance(c, ChunkTraceItem):
+                        chunks_retrieved.append(c)
+                    elif isinstance(c, dict):
+                        chunks_retrieved.append(
+                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=False)
+                        )
+
+                chunks_after_sd_filter = []
+                for c in chunks_after_raw:
+                    if isinstance(c, ChunkTraceItem):
+                        chunks_after_sd_filter.append(c)
+                    elif isinstance(c, dict):
+                        chunks_after_sd_filter.append(
+                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
+                        )
+
+                chunks_after_filter_raw = raw_dict.get("chunks_after_filter") or chunks_after_raw or []
+                chunks_after_filter = []
+                for c in chunks_after_filter_raw:
+                    if isinstance(c, ChunkTraceItem):
+                        chunks_after_filter.append(c)
+                    elif isinstance(c, dict):
+                        chunks_after_filter.append(
+                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
+                        )
 
                 # Fallback: если в debug нет чанков, но есть финальные sources — показываем их как прошедшие фильтр.
                 if not chunks_retrieved and not chunks_after_sd_filter:
@@ -564,8 +604,17 @@ async def ask_adaptive_question(
                             ))
                     chunks_after_sd_filter = source_chunks
 
-                trace = DebugTrace(
-                    sd_classification=SDClassificationTrace(
+                llm_calls = []
+                for c in llm_calls_raw:
+                    if not isinstance(c, dict):
+                        continue
+                    try:
+                        llm_calls.append(LLMCallTrace(**c))
+                    except Exception as llm_exc:
+                        logger.warning(f"[DEBUG_TRACE] Invalid LLM call trace item skipped: {llm_exc}")
+
+                trace_payload = {
+                    "sd_classification": SDClassificationTrace(
                         method=str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
                         primary=default_sd_level,
                         secondary=sd_raw.get("secondary", metadata.get("sd_secondary")),
@@ -573,26 +622,96 @@ async def ask_adaptive_question(
                         indicator=str(sd_raw.get("indicator", "metadata_fallback")),
                         allowed_levels=[str(level) for level in allowed_levels],
                     ),
-                    chunks_retrieved=chunks_retrieved,
-                    chunks_after_sd_filter=chunks_after_sd_filter,
-                    llm_calls=[
-                        LLMCallTrace(**c) for c in llm_calls_raw if isinstance(c, dict)
-                    ],
-                    context_written_to_memory=context_written,
-                    total_duration_ms=total_duration_ms,
-                    primary_model=config.LLM_MODEL,
-                    classifier_model=config.CLASSIFIER_MODEL,
-                    embedding_model=config.EMBEDDING_MODEL,
-                    reranker_model=config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
-                    reranker_enabled=bool(config.VOYAGE_ENABLED),
-                    tokens_prompt=metadata.get("tokens_prompt"),
-                    tokens_completion=metadata.get("tokens_completion"),
-                    tokens_total=metadata.get("tokens_total"),
-                    session_tokens_total=metadata.get("session_tokens_total"),
-                    session_cost_usd=metadata.get("session_cost_usd"),
-                    session_turns=metadata.get("session_turns"),
-                )
-                if llm_calls_raw:
+                    "chunks_retrieved": chunks_retrieved,
+                    "chunks_after_sd_filter": chunks_after_sd_filter,
+                    "chunks_after_filter": chunks_after_filter or chunks_after_sd_filter,
+                    "llm_calls": llm_calls,
+                    "context_written_to_memory": context_written,
+                    "context_written": raw_dict.get("context_written") or context_written,
+                    "total_duration_ms": total_duration_ms,
+                    "primary_model": config.LLM_MODEL,
+                    "classifier_model": config.CLASSIFIER_MODEL,
+                    "embedding_model": config.EMBEDDING_MODEL,
+                    "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
+                    "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                    "tokens_prompt": metadata.get("tokens_prompt"),
+                    "tokens_completion": metadata.get("tokens_completion"),
+                    "tokens_total": metadata.get("tokens_total"),
+                    "session_tokens_total": metadata.get("session_tokens_total"),
+                    "session_cost_usd": metadata.get("session_cost_usd"),
+                    "session_turns": metadata.get("session_turns"),
+                    "decision_rule_id": (
+                        str(metadata.get("decision_rule_id"))
+                        if metadata.get("decision_rule_id") is not None
+                        else None
+                    ),
+                    "mode_reason": metadata.get("mode_reason"),
+                    "sd_level": metadata.get("sd_level"),
+                    "user_state": state_analysis.primary_state,
+                    "recommended_mode": metadata.get("recommended_mode"),
+                    "confidence_score": metadata.get("confidence_score"),
+                    "confidence_level": metadata.get("confidence_level"),
+                    "session_id": session_key,
+                    "memory_turns": metadata.get("memory_turns"),
+                    "summary_length": metadata.get("summary_length"),
+                    "summary_last_turn": metadata.get("summary_last_turn"),
+                    "summary_used": metadata.get("summary_used"),
+                    "semantic_hits": metadata.get("semantic_hits"),
+                    "sd_detail": raw_dict.get("sd_detail") or {
+                        "method": sd_raw.get("method", metadata.get("sd_method", "fallback")),
+                        "primary": default_sd_level,
+                        "secondary": sd_raw.get("secondary", metadata.get("sd_secondary")),
+                        "confidence": float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
+                        "indicator": sd_raw.get("indicator", "metadata_fallback"),
+                        "allowed_levels": [str(level) for level in allowed_levels],
+                    },
+                }
+
+                # Extensions from debug trace (v2.0.6)
+                for key in [
+                    "fast_path",
+                    "fast_path_reason",
+                    "block_cap",
+                    "blocks_initial",
+                    "blocks_after_sd",
+                    "blocks_after_stage",
+                    "blocks_after_cap",
+                    "hybrid_query_preview",
+                    "sd_detail",
+                    "memory_turns_content",
+                    "summary_text",
+                    "summary_length",
+                    "summary_last_turn",
+                    "summary_used",
+                    "memory_turns",
+                    "semantic_hits",
+                    "semantic_hits_detail",
+                    "state_secondary",
+                    "state_trajectory",
+                    "pipeline_stages",
+                    "anomalies",
+                    "system_prompt_blob_id",
+                    "user_prompt_blob_id",
+                    "memory_snapshot_blob_id",
+                    "config_snapshot",
+                    "estimated_cost_usd",
+                    "pipeline_error",
+                    "turn_number",
+                    "sd_level",
+                    "user_state",
+                    "recommended_mode",
+                    "confidence_score",
+                    "confidence_level",
+                ]:
+                    if key in raw_dict and raw_dict.get(key) is not None:
+                        trace_payload[key] = raw_dict.get(key)
+
+                if trace_payload.get("decision_rule_id") is not None:
+                    trace_payload["decision_rule_id"] = str(trace_payload.get("decision_rule_id"))
+
+                trace = DebugTrace(**trace_payload)
+
+                if llm_calls_raw and trace.tokens_total is None:
                     tokens_total = [
                         c.get("tokens_total")
                         for c in llm_calls_raw
@@ -607,21 +726,21 @@ async def ask_adaptive_question(
                     if answer_call:
                         trace.tokens_prompt = answer_call.get("tokens_prompt")
                         trace.tokens_completion = answer_call.get("tokens_completion")
-                    raw_session_tokens = (
-                        raw.get("session_tokens_total") if isinstance(raw, dict) else None
-                    )
-                    raw_session_cost = (
-                        raw.get("session_cost_usd") if isinstance(raw, dict) else None
-                    )
-                    raw_session_turns = (
-                        raw.get("session_turns") if isinstance(raw, dict) else None
-                    )
-                    if raw_session_tokens is not None:
-                        trace.session_tokens_total = raw_session_tokens
-                    if raw_session_cost is not None:
-                        trace.session_cost_usd = raw_session_cost
-                    if raw_session_turns is not None:
-                        trace.session_turns = raw_session_turns
+
+                raw_session_tokens = raw_dict.get("session_tokens_total")
+                raw_session_cost = raw_dict.get("session_cost_usd")
+                raw_session_turns = raw_dict.get("session_turns")
+                if raw_session_tokens is not None:
+                    trace.session_tokens_total = raw_session_tokens
+                if raw_session_cost is not None:
+                    trace.session_cost_usd = raw_session_cost
+                if raw_session_turns is not None:
+                    trace.session_turns = raw_session_turns
+
+                try:
+                    store.append_trace(session_key, trace.model_dump())
+                except Exception as store_exc:
+                    logger.warning(f"[DEBUG_TRACE] Failed to store trace: {store_exc}")
             except Exception as trace_exc:
                 logger.warning(f"[DEBUG_TRACE] Failed to build trace: {trace_exc}")
                 trace = None
@@ -664,6 +783,7 @@ async def ask_adaptive_question_stream(
     _data_loader=Depends(get_data_loader),
     _graph_client=Depends(get_graph_client),
     retriever_dep=Depends(get_retriever),
+    store: SessionStore = Depends(get_session_store),
 ):
     if not config.ENABLE_STREAMING:
         raise HTTPException(
@@ -694,6 +814,7 @@ async def ask_adaptive_question_stream(
 
     async def event_stream():
         start_ts = time.perf_counter()
+        pipeline_stages = []
         try:
             memory = get_conversation_memory(session_key)
             conversation_context = memory.get_adaptive_context_text(request.query)
@@ -706,12 +827,53 @@ async def ask_adaptive_question_stream(
                 for turn in memory.get_last_turns(10)
             ]
 
-            state_analysis, sd_result = await _classify_parallel(
-                request.query,
-                conversation_history,
-                conversation_history_for_sd,
-                memory.get_user_sd_profile(),
-            )
+            if request.debug:
+                stage_start = time.perf_counter()
+                try:
+                    state_analysis = await state_classifier.classify(
+                        request.query,
+                        conversation_history=conversation_history,
+                    )
+                except Exception as exc:
+                    logger.warning("[STREAM] StateClassifier failed: %s", exc)
+                    state_analysis = _fallback_state_analysis()
+                pipeline_stages.append(
+                    {
+                        "name": "state_classifier",
+                        "label": "Классификатор состояния",
+                        "duration_ms": int((time.perf_counter() - stage_start) * 1000),
+                        "skipped": False,
+                    }
+                )
+
+                stage_start = time.perf_counter()
+                if sd_classifier is None:
+                    sd_result = _fallback_sd_result("sd_classifier_unavailable")
+                else:
+                    try:
+                        sd_result = await sd_classifier.classify_user(
+                            message=request.query,
+                            conversation_history=conversation_history_for_sd,
+                            user_sd_profile=memory.get_user_sd_profile(),
+                        )
+                    except Exception as exc:
+                        logger.warning("[STREAM] SDClassifier failed: %s", exc)
+                        sd_result = _fallback_sd_result("fallback_on_error")
+                pipeline_stages.append(
+                    {
+                        "name": "sd_classifier",
+                        "label": "SD классификатор",
+                        "duration_ms": int((time.perf_counter() - stage_start) * 1000),
+                        "skipped": False,
+                    }
+                )
+            else:
+                state_analysis, sd_result = await _classify_parallel(
+                    request.query,
+                    conversation_history,
+                    conversation_history_for_sd,
+                    memory.get_user_sd_profile(),
+                )
             user_stage = resolve_user_stage(memory, state_analysis)
 
             level_adapter = UserLevelAdapter(request.user_level.value)
@@ -727,6 +889,15 @@ async def ask_adaptive_question_stream(
                     reason=pre_routing_result.decision.reason,
                     forbid=pre_routing_result.decision.forbid,
                 )
+                if request.debug:
+                    pipeline_stages.extend(
+                        [
+                            {"name": "retrieval", "label": "Retrieval", "duration_ms": 0, "skipped": True},
+                            {"name": "sd_filter", "label": "SD фильтр", "duration_ms": 0, "skipped": True},
+                            {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True},
+                            {"name": "stage_filter", "label": "Stage filter", "duration_ms": 0, "skipped": True},
+                        ]
+                    )
                 fast_block = _build_fast_path_block(
                     query=request.query,
                     conversation_context=conversation_context,
@@ -758,12 +929,31 @@ async def ask_adaptive_question_stream(
                     yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 
                 llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
+                if request.debug:
+                    pipeline_stages.append(
+                        {
+                            "name": "llm",
+                            "label": "LLM",
+                            "duration_ms": llm_duration_ms,
+                            "skipped": False,
+                        }
+                    )
                 formatter = ResponseFormatter()
+                format_start_ts = time.perf_counter()
                 formatted = formatter.format_answer(
                     full_answer,
                     mode=pre_routing_result.mode,
                     confidence_level=pre_routing_result.confidence_level,
                 )
+                if request.debug:
+                    pipeline_stages.append(
+                        {
+                            "name": "format",
+                            "label": "Форматирование",
+                            "duration_ms": int((time.perf_counter() - format_start_ts) * 1000),
+                            "skipped": False,
+                        }
+                    )
                 if formatted.startswith(full_answer):
                     extra = formatted[len(full_answer):]
                     if extra:
@@ -800,34 +990,124 @@ async def ask_adaptive_question_stream(
                 }
                 if request.debug:
                     memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                    done_payload["trace"] = {
-                        "recommended_mode": pre_routing_result.mode,
-                        "decision_rule_id": str(pre_routing_result.decision.rule_id),
-                        "confidence_level": pre_routing_result.confidence_level,
-                        "confidence_score": pre_routing_result.confidence_score,
-                        "user_state": state_analysis.primary_state.value,
-                        "sd_level": (sd_result.primary or "").lower(),
-                        "blocks": [],
-                        "signals": pre_routing_signals,
-                        "llm_calls": [
-                            {
-                                "step": "fast_path",
-                                "model": config.LLM_MODEL,
-                                "duration_ms": llm_duration_ms,
-                                "response_preview": full_answer[:300],
-                            }
-                        ],
+                    fast_path_reason = _detect_fast_path_reason(request.query, pre_routing_result)
+
+                    system_preview, user_preview = _build_llm_prompt_previews(
+                        response_generator=response_generator,
+                        query=request.query,
+                        blocks=[fast_block],
+                        conversation_context=conversation_context,
+                        user_level_adapter=level_adapter,
+                        sd_level=sd_result.primary,
+                        mode_prompt=mode_directive.prompt,
+                        additional_system_context=state_context,
+                    )
+                    full_system_prompt, full_user_prompt = _build_llm_prompts(
+                        response_generator=response_generator,
+                        query=request.query,
+                        blocks=[fast_block],
+                        conversation_context=conversation_context,
+                        user_level_adapter=level_adapter,
+                        sd_level=sd_result.primary,
+                        mode_prompt=mode_directive.prompt,
+                        additional_system_context=state_context,
+                    )
+
+                    system_blob_id = _store_blob(store, session_key, full_system_prompt)
+                    user_blob_id = _store_blob(store, session_key, full_user_prompt)
+
+                    llm_calls = [
+                        _build_llm_call_trace(
+                            llm_result={"answer": full_answer},
+                            step="fast_path",
+                            system_prompt_preview=system_preview,
+                            user_prompt_preview=user_preview,
+                            fallback_error=None,
+                            duration_ms=llm_duration_ms,
+                            system_prompt_blob_id=system_blob_id,
+                            user_prompt_blob_id=user_blob_id,
+                        )
+                    ]
+
+                    context_written = _build_memory_context_snapshot(memory)
+                    memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
+
+                    debug_trace = {
+                        "sd_classification": {
+                            "method": sd_result.method,
+                            "primary": sd_result.primary,
+                            "secondary": sd_result.secondary,
+                            "confidence": sd_result.confidence,
+                            "indicator": sd_result.indicator,
+                            "allowed_levels": sd_result.allowed_blocks,
+                        },
+                        "chunks_retrieved": [],
+                        "chunks_after_sd_filter": [],
+                        "chunks_after_filter": [],
+                        "llm_calls": llm_calls,
+                        "context_written_to_memory": context_written,
+                        "context_written": context_written,
+                        "total_duration_ms": latency_ms,
                         "primary_model": config.LLM_MODEL,
                         "classifier_model": config.CLASSIFIER_MODEL,
                         "embedding_model": config.EMBEDDING_MODEL,
                         "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
                         "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                        "tokens_prompt": None,
+                        "tokens_completion": None,
+                        "tokens_total": None,
+                        "session_tokens_total": memory.metadata.get("session_tokens_total"),
+                        "session_cost_usd": memory.metadata.get("session_cost_usd"),
+                        "session_turns": memory.metadata.get("session_turns"),
+                        "fast_path": True,
+                        "fast_path_reason": fast_path_reason,
+                        "decision_rule_id": str(pre_routing_result.decision.rule_id),
+                        "mode_reason": mode_directive.reason,
+                        "block_cap": 0,
+                        "blocks_initial": 0,
+                        "blocks_after_sd": 0,
+                        "blocks_after_stage": 0,
+                        "blocks_after_cap": 0,
+                        "hybrid_query_preview": _truncate_preview(request.query, 400),
+                        "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
                         "memory_turns": len(memory.turns),
+                        "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
+                        "summary_text": memory.summary or None,
                         "summary_length": len(memory.summary) if memory.summary else 0,
                         "summary_last_turn": memory.summary_updated_at,
                         "summary_used": memory_metrics.get("summary_used"),
                         "semantic_hits": memory_metrics.get("semantic_hits"),
+                        "semantic_hits_detail": (
+                            list(memory.semantic_memory.last_hits_detail or [])
+                            if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
+                            else []
+                        ),
+                        "state_secondary": [s.value for s in state_analysis.secondary_states],
+                        "state_trajectory": _build_state_trajectory(memory),
+                        "pipeline_stages": pipeline_stages,
+                        "anomalies": [],
+                        "system_prompt_blob_id": system_blob_id,
+                        "user_prompt_blob_id": user_blob_id,
+                        "memory_snapshot_blob_id": memory_snapshot_blob_id,
+                        "config_snapshot": _build_config_snapshot(config),
+                        "estimated_cost_usd": _estimate_cost(llm_calls, str(config.LLM_MODEL)),
+                        "pipeline_error": None,
+                        "session_id": session_key,
+                        "turn_number": len(memory.turns),
+                        "sd_level": sd_result.primary,
+                        "user_state": state_analysis.primary_state.value,
+                        "recommended_mode": pre_routing_result.mode,
+                        "confidence_score": pre_routing_result.confidence_score,
+                        "confidence_level": pre_routing_result.confidence_level,
                     }
+
+                    debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                    done_payload["trace"] = debug_trace
+                    try:
+                        store.append_trace(session_key, debug_trace)
+                    except Exception as store_exc:
+                        logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
+
                 yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
                 return
 
@@ -839,7 +1119,18 @@ async def ask_adaptive_question_stream(
                 short_term_context=conversation_context,
             )
 
+            retrieval_start_ts = time.perf_counter()
             raw_retrieved_blocks = retriever_dep.retrieve(hybrid_query, top_k=None)
+            if request.debug:
+                pipeline_stages.append(
+                    {
+                        "name": "retrieval",
+                        "label": "Retrieval",
+                        "duration_ms": int((time.perf_counter() - retrieval_start_ts) * 1000),
+                        "skipped": False,
+                    }
+                )
+            sd_filter_start_ts = time.perf_counter()
             retrieved_blocks = filter_by_sd_level(
                 blocks_with_scores=raw_retrieved_blocks,
                 user_sd_level=sd_result.primary,
@@ -850,6 +1141,15 @@ async def ask_adaptive_question_stream(
                 min_blocks=3,
             )
             sd_filtered_blocks = list(retrieved_blocks)
+            if request.debug:
+                pipeline_stages.append(
+                    {
+                        "name": "sd_filter",
+                        "label": "SD фильтр",
+                        "duration_ms": int((time.perf_counter() - sd_filter_start_ts) * 1000),
+                        "skipped": False,
+                    }
+                )
 
             reranker = VoyageReranker(
                 model=config.VOYAGE_MODEL,
@@ -857,17 +1157,41 @@ async def ask_adaptive_question_stream(
             )
             rerank_k = min(len(retrieved_blocks), max(1, min(config.TOP_K_BLOCKS, config.VOYAGE_TOP_K)))
             if rerank_k > 0:
+                rerank_start_ts = time.perf_counter()
                 reranked = reranker.rerank_pairs(request.query, retrieved_blocks, top_k=rerank_k)
+                if request.debug:
+                    pipeline_stages.append(
+                        {
+                            "name": "rerank",
+                            "label": "Rerank",
+                            "duration_ms": int((time.perf_counter() - rerank_start_ts) * 1000),
+                            "skipped": False,
+                        }
+                    )
                 if reranked:
                     retrieved_blocks = reranked
                     sd_filtered_blocks = list(retrieved_blocks)
+            elif request.debug:
+                pipeline_stages.append(
+                    {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
+                )
 
             routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
             routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+            stage_filter_start_ts = time.perf_counter()
             stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
                 user_stage,
                 retrieved_blocks,
             )
+            if request.debug:
+                pipeline_stages.append(
+                    {
+                        "name": "stage_filter",
+                        "label": "Stage filter",
+                        "duration_ms": int((time.perf_counter() - stage_filter_start_ts) * 1000),
+                        "skipped": False,
+                    }
+                )
             block_cap = decision_gate.scorer.suggest_block_cap(
                 len(stage_filtered_blocks),
                 routing_result.confidence_level,
@@ -880,8 +1204,6 @@ async def ask_adaptive_question_stream(
                     "Попробуйте переформулировать вопрос."
                 )
                 yield f"data: {json.dumps({'token': fallback_text}, ensure_ascii=False)}\n\n"
-                latency_ms = int((time.perf_counter() - start_ts) * 1000)
-                yield f"data: {json.dumps({'done': True, 'mode': 'CLARIFICATION', 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
                 memory.add_turn(
                     user_input=request.query,
                     bot_response=fallback_text,
@@ -889,6 +1211,96 @@ async def ask_adaptive_question_stream(
                     blocks_used=0,
                     concepts=[],
                 )
+                if request.debug:
+                    pipeline_stages.append(
+                        {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
+                    )
+                    pipeline_stages.append(
+                        {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": True}
+                    )
+                latency_ms = int((time.perf_counter() - start_ts) * 1000)
+                done_payload = {
+                    "done": True,
+                    "mode": "CLARIFICATION",
+                    "sd_level": sd_result.primary,
+                    "latency_ms": latency_ms,
+                }
+                if request.debug:
+                    memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
+                    chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                        initial_retrieved=raw_retrieved_blocks,
+                        sd_filtered=sd_filtered_blocks,
+                        reranked=sd_filtered_blocks,
+                        allowed_levels=sd_result.allowed_blocks,
+                    )
+                    context_written = _build_memory_context_snapshot(memory)
+                    memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
+                    debug_trace = {
+                        "sd_classification": {
+                            "method": sd_result.method,
+                            "primary": sd_result.primary,
+                            "secondary": sd_result.secondary,
+                            "confidence": sd_result.confidence,
+                            "indicator": sd_result.indicator,
+                            "allowed_levels": sd_result.allowed_blocks,
+                        },
+                        "chunks_retrieved": chunks_retrieved,
+                        "chunks_after_sd_filter": chunks_after_filter,
+                        "chunks_after_filter": chunks_after_filter,
+                        "llm_calls": [],
+                        "context_written_to_memory": context_written,
+                        "context_written": context_written,
+                        "total_duration_ms": latency_ms,
+                        "primary_model": config.LLM_MODEL,
+                        "classifier_model": config.CLASSIFIER_MODEL,
+                        "embedding_model": config.EMBEDDING_MODEL,
+                        "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
+                        "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                        "fast_path": False,
+                        "decision_rule_id": str(routing_result.decision.rule_id),
+                        "mode_reason": routing_result.decision.reason,
+                        "block_cap": block_cap,
+                        "blocks_initial": len(raw_retrieved_blocks),
+                        "blocks_after_sd": len(sd_filtered_blocks),
+                        "blocks_after_stage": len(stage_filtered_blocks),
+                        "blocks_after_cap": 0,
+                        "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
+                        "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
+                        "memory_turns": len(memory.turns),
+                        "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
+                        "summary_text": memory.summary or None,
+                        "summary_length": len(memory.summary) if memory.summary else 0,
+                        "summary_last_turn": memory.summary_updated_at,
+                        "summary_used": memory_metrics.get("summary_used"),
+                        "semantic_hits": memory_metrics.get("semantic_hits"),
+                        "semantic_hits_detail": (
+                            list(memory.semantic_memory.last_hits_detail or [])
+                            if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
+                            else []
+                        ),
+                        "state_secondary": [s.value for s in state_analysis.secondary_states],
+                        "state_trajectory": _build_state_trajectory(memory),
+                        "pipeline_stages": pipeline_stages,
+                        "anomalies": [],
+                        "memory_snapshot_blob_id": memory_snapshot_blob_id,
+                        "config_snapshot": _build_config_snapshot(config),
+                        "estimated_cost_usd": 0,
+                        "pipeline_error": None,
+                        "session_id": session_key,
+                        "turn_number": len(memory.turns),
+                        "sd_level": sd_result.primary,
+                        "user_state": state_analysis.primary_state.value,
+                        "recommended_mode": routing_result.mode,
+                        "confidence_score": routing_result.confidence_score,
+                        "confidence_level": routing_result.confidence_level,
+                    }
+                    debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                    done_payload["trace"] = debug_trace
+                    try:
+                        store.append_trace(session_key, debug_trace)
+                    except Exception as store_exc:
+                        logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
+                yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
                 return
 
             blocks = [block for block, _ in retrieved_blocks]
@@ -929,12 +1341,31 @@ async def ask_adaptive_question_stream(
                 yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 
             llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
+            if request.debug:
+                pipeline_stages.append(
+                    {
+                        "name": "llm",
+                        "label": "LLM",
+                        "duration_ms": llm_duration_ms,
+                        "skipped": False,
+                    }
+                )
             formatter = ResponseFormatter()
+            format_start_ts = time.perf_counter()
             formatted = formatter.format_answer(
                 full_answer,
                 mode=routing_result.mode,
                 confidence_level=routing_result.confidence_level,
             )
+            if request.debug:
+                pipeline_stages.append(
+                    {
+                        "name": "format",
+                        "label": "Форматирование",
+                        "duration_ms": int((time.perf_counter() - format_start_ts) * 1000),
+                        "skipped": False,
+                    }
+                )
             if formatted.startswith(full_answer):
                 extra = formatted[len(full_answer):]
                 if extra:
@@ -970,64 +1401,116 @@ async def ask_adaptive_question_stream(
                 "latency_ms": latency_ms,
             }
             if request.debug:
-                sd_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in sd_filtered_blocks}
-                stage_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in stage_filtered_blocks}
-                cap_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in retrieved_blocks}
-                final_ids = {str(getattr(block, "block_id", "")) for block in adapted_blocks}
-
-                trace_blocks = []
-                for block, score in raw_retrieved_blocks:
-                    block_id = str(getattr(block, "block_id", ""))
-                    filter_reason = ""
-                    if block_id not in sd_pass_ids:
-                        filter_reason = "sd_filter"
-                    elif block_id not in stage_pass_ids:
-                        filter_reason = "stage_filter"
-                    elif block_id not in cap_pass_ids:
-                        filter_reason = "confidence_cap"
-                    elif block_id not in final_ids:
-                        filter_reason = "level_filter"
-
-                    detail = _build_retrieval_detail(block, float(score), user_stage)
-                    trace_blocks.append({
-                        "block_id": detail.get("block_id", ""),
-                        "score": detail.get("score", 0.0),
-                        "text": (detail.get("text") or "")[:400],
-                        "source": detail.get("source", ""),
-                        "stage": detail.get("stage", ""),
-                        "passed": block_id in final_ids,
-                        "filter_reason": filter_reason,
-                    })
-
                 memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                done_payload["trace"] = {
-                    "recommended_mode": routing_result.mode,
-                    "decision_rule_id": str(routing_result.decision.rule_id),
-                    "confidence_level": routing_result.confidence_level,
-                    "confidence_score": routing_result.confidence_score,
-                    "user_state": state_analysis.primary_state.value,
-                    "sd_level": (sd_result.primary or "").lower(),
-                    "blocks": trace_blocks,
-                    "signals": routing_signals,
-                    "llm_calls": [
-                        {
-                            "step": "main_answer",
-                            "model": config.LLM_MODEL,
-                            "duration_ms": llm_duration_ms,
-                            "response_preview": full_answer[:300],
-                        }
-                    ],
+                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                    initial_retrieved=raw_retrieved_blocks,
+                    sd_filtered=sd_filtered_blocks,
+                    reranked=sd_filtered_blocks,
+                    allowed_levels=sd_result.allowed_blocks,
+                )
+                system_preview, user_preview = _build_llm_prompt_previews(
+                    response_generator=response_generator,
+                    query=request.query,
+                    blocks=adapted_blocks,
+                    conversation_context=conversation_context,
+                    user_level_adapter=level_adapter,
+                    sd_level=sd_result.primary,
+                    mode_prompt=mode_directive.prompt,
+                    additional_system_context=state_context,
+                )
+                full_system_prompt, full_user_prompt = _build_llm_prompts(
+                    response_generator=response_generator,
+                    query=request.query,
+                    blocks=adapted_blocks,
+                    conversation_context=conversation_context,
+                    user_level_adapter=level_adapter,
+                    sd_level=sd_result.primary,
+                    mode_prompt=mode_directive.prompt,
+                    additional_system_context=state_context,
+                )
+                system_blob_id = _store_blob(store, session_key, full_system_prompt)
+                user_blob_id = _store_blob(store, session_key, full_user_prompt)
+                llm_calls = [
+                    _build_llm_call_trace(
+                        llm_result={"answer": full_answer},
+                        step="main_answer",
+                        system_prompt_preview=system_preview,
+                        user_prompt_preview=user_preview,
+                        fallback_error=None,
+                        duration_ms=llm_duration_ms,
+                        system_prompt_blob_id=system_blob_id,
+                        user_prompt_blob_id=user_blob_id,
+                    )
+                ]
+                context_written = _build_memory_context_snapshot(memory)
+                memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
+                debug_trace = {
+                    "sd_classification": {
+                        "method": sd_result.method,
+                        "primary": sd_result.primary,
+                        "secondary": sd_result.secondary,
+                        "confidence": sd_result.confidence,
+                        "indicator": sd_result.indicator,
+                        "allowed_levels": sd_result.allowed_blocks,
+                    },
+                    "chunks_retrieved": chunks_retrieved,
+                    "chunks_after_sd_filter": chunks_after_filter,
+                    "chunks_after_filter": chunks_after_filter,
+                    "llm_calls": llm_calls,
+                    "context_written_to_memory": context_written,
+                    "context_written": context_written,
+                    "total_duration_ms": latency_ms,
                     "primary_model": config.LLM_MODEL,
                     "classifier_model": config.CLASSIFIER_MODEL,
                     "embedding_model": config.EMBEDDING_MODEL,
                     "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
                     "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                    "fast_path": False,
+                    "decision_rule_id": str(routing_result.decision.rule_id),
+                    "mode_reason": routing_result.decision.reason,
+                    "block_cap": block_cap,
+                    "blocks_initial": len(raw_retrieved_blocks),
+                    "blocks_after_sd": len(sd_filtered_blocks),
+                    "blocks_after_stage": len(stage_filtered_blocks),
+                    "blocks_after_cap": len(retrieved_blocks),
+                    "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
+                    "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
                     "memory_turns": len(memory.turns),
+                    "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
+                    "summary_text": memory.summary or None,
                     "summary_length": len(memory.summary) if memory.summary else 0,
                     "summary_last_turn": memory.summary_updated_at,
                     "summary_used": memory_metrics.get("summary_used"),
                     "semantic_hits": memory_metrics.get("semantic_hits"),
+                    "semantic_hits_detail": (
+                        list(memory.semantic_memory.last_hits_detail or [])
+                        if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
+                        else []
+                    ),
+                    "state_secondary": [s.value for s in state_analysis.secondary_states],
+                    "state_trajectory": _build_state_trajectory(memory),
+                    "pipeline_stages": pipeline_stages,
+                    "anomalies": [],
+                    "system_prompt_blob_id": system_blob_id,
+                    "user_prompt_blob_id": user_blob_id,
+                    "memory_snapshot_blob_id": memory_snapshot_blob_id,
+                    "config_snapshot": _build_config_snapshot(config),
+                    "estimated_cost_usd": _estimate_cost(llm_calls, str(config.LLM_MODEL)),
+                    "pipeline_error": None,
+                    "session_id": session_key,
+                    "turn_number": len(memory.turns),
+                    "sd_level": sd_result.primary,
+                    "user_state": state_analysis.primary_state.value,
+                    "recommended_mode": routing_result.mode,
+                    "confidence_score": routing_result.confidence_score,
+                    "confidence_level": routing_result.confidence_level,
                 }
+                debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                done_payload["trace"] = debug_trace
+                try:
+                    store.append_trace(session_key, debug_trace)
+                except Exception as store_exc:
+                    logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
         except Exception as exc:

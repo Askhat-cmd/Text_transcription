@@ -6,7 +6,7 @@ Request Рё Response РјРѕРґРµР»Рё РґР»СЏ РІР°Р»РёРґ
 """
 
 from pydantic import BaseModel, Field, field_validator
-from typing import List, Optional, Dict, Any
+from typing import List, Optional, Dict, Any, Literal
 from datetime import datetime
 from enum import Enum
 
@@ -173,6 +173,66 @@ class SDClassificationTrace(BaseModel):
     allowed_levels: List[str]
 
 
+class MemoryTurnPreview(BaseModel):
+    turn_index: int
+    role: str
+    text_preview: str
+    state: Optional[str] = None
+
+
+class SemanticHitDetail(BaseModel):
+    block_id: str
+    score: float
+    text_preview: str
+    source: Optional[str] = None
+
+
+class SDClassificationDetail(BaseModel):
+    method: str
+    primary: str
+    secondary: Optional[str] = None
+    confidence: float
+    indicator: str
+    allowed_levels: List[str]
+
+
+class PipelineStage(BaseModel):
+    name: str
+    label: str
+    duration_ms: int
+    skipped: bool = False
+
+
+class AnomalyFlag(BaseModel):
+    code: str
+    severity: Literal["info", "warn", "error"]
+    message: str
+    target: Optional[str] = None
+
+
+class StateTrajectoryPoint(BaseModel):
+    turn: int
+    state: str
+    confidence: Optional[float] = None
+
+
+class ConfigSnapshot(BaseModel):
+    conversation_history_depth: int
+    max_context_size: int
+    semantic_search_top_k: int
+    sd_confidence_threshold: float
+    fast_path_enabled: bool
+    rerank_enabled: bool
+    model_name: str
+
+
+class PipelineError(BaseModel):
+    stage: str
+    exception_type: str
+    message: str
+    partial_trace_available: bool
+
+
 class LLMCallTrace(BaseModel):
     """Один вызов LLM в рамках обработки запроса."""
     step: str
@@ -185,6 +245,8 @@ class LLMCallTrace(BaseModel):
     user_prompt_preview: Optional[str] = None
     response_preview: Optional[str] = None
     tokens_used: Optional[int] = None
+    system_prompt_blob_id: Optional[str] = None
+    user_prompt_blob_id: Optional[str] = None
 
 
 class DebugTrace(BaseModel):
@@ -192,8 +254,10 @@ class DebugTrace(BaseModel):
     sd_classification: SDClassificationTrace
     chunks_retrieved: List[ChunkTraceItem]
     chunks_after_sd_filter: List[ChunkTraceItem]
+    chunks_after_filter: List[ChunkTraceItem] = Field(default_factory=list)
     llm_calls: List[LLMCallTrace]
     context_written_to_memory: str
+    context_written: Optional[str] = None
     total_duration_ms: int
     primary_model: Optional[str] = None
     classifier_model: Optional[str] = None
@@ -206,6 +270,42 @@ class DebugTrace(BaseModel):
     session_tokens_total: Optional[int] = None
     session_cost_usd: Optional[float] = None
     session_turns: Optional[int] = None
+    fast_path: Optional[bool] = None
+    fast_path_reason: Optional[str] = None
+    decision_rule_id: Optional[str] = None
+    mode_reason: Optional[str] = None
+    block_cap: Optional[int] = None
+    blocks_initial: Optional[int] = None
+    blocks_after_sd: Optional[int] = None
+    blocks_after_stage: Optional[int] = None
+    blocks_after_cap: Optional[int] = None
+    hybrid_query_preview: Optional[str] = None
+    sd_detail: Optional[SDClassificationDetail] = None
+    memory_turns: Optional[int] = None
+    memory_turns_content: List[MemoryTurnPreview] = Field(default_factory=list)
+    summary_text: Optional[str] = None
+    summary_length: Optional[int] = None
+    summary_last_turn: Optional[int] = None
+    summary_used: Optional[bool] = None
+    semantic_hits: Optional[int] = None
+    semantic_hits_detail: List[SemanticHitDetail] = Field(default_factory=list)
+    state_secondary: List[str] = Field(default_factory=list)
+    state_trajectory: List[StateTrajectoryPoint] = Field(default_factory=list)
+    pipeline_stages: List[PipelineStage] = Field(default_factory=list)
+    anomalies: List[AnomalyFlag] = Field(default_factory=list)
+    system_prompt_blob_id: Optional[str] = None
+    user_prompt_blob_id: Optional[str] = None
+    memory_snapshot_blob_id: Optional[str] = None
+    config_snapshot: Optional[ConfigSnapshot] = None
+    estimated_cost_usd: Optional[float] = None
+    pipeline_error: Optional[PipelineError] = None
+    session_id: Optional[str] = None
+    turn_number: Optional[int] = None
+    sd_level: Optional[str] = None
+    user_state: Optional[str] = None
+    recommended_mode: Optional[str] = None
+    confidence_score: Optional[float] = None
+    confidence_level: Optional[str] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

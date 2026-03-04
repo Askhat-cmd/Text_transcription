@@ -17,4 +17,8 @@ export type { UseLocalStorageReturn } from './useLocalStorage';
 export { useWebSocket } from './useWebSocket';
 export type { UseWebSocketOptions, UseWebSocketReturn } from './useWebSocket';
 
+export { useDebugBlob } from './useDebugBlob';
+export { useSessionTrace } from './useSessionTrace';
+export type { SessionMetrics } from './useSessionTrace';
+
 

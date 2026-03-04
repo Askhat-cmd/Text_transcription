@@ -131,6 +131,8 @@ class LLMAnswerer:
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
         step_name: str = "answer",
+        system_prompt_blob_id: Optional[str] = None,
+        user_prompt_blob_id: Optional[str] = None,
     ) -> Dict:
         """
         Формирует ответ через OpenAI API.
@@ -263,6 +265,8 @@ class LLMAnswerer:
                 "system_prompt_preview": (system_prompt or "")[:200],
                 "user_prompt_preview": (context or "")[:200],
                 "response_preview": (answer or "")[:200],
+                "system_prompt_blob_id": system_prompt_blob_id,
+                "user_prompt_blob_id": user_prompt_blob_id,
             }
 
             return {

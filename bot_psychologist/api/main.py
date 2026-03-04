@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logging_config import get_logger, setup_logging
 from .routes import router
+from .debug_routes import router as debug_router
 from .dependencies import set_preloaded_components
 
 from bot_agent.config import config
@@ -182,6 +183,7 @@ async def log_requests(request: Request, call_next):
 # ===== ROUTERS =====
 
 app.include_router(router)
+app.include_router(debug_router)
 
 
 # ===== CUSTOM OPENAPI =====

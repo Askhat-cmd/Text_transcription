@@ -441,6 +441,56 @@ class ConversationMemory:
         """
         return self.turns[-n:] if self.turns else []
 
+    def get_turns_preview(self, max_turns: int = 10, preview_chars: int = 150) -> List[Dict[str, object]]:
+        """
+        Вернуть превью последних ходов (user/bot) для debug trace.
+        """
+        previews: List[Dict[str, object]] = []
+        if max_turns <= 0:
+            return previews
+        turns = self.turns[-max_turns:]
+        start_index = max(1, len(self.turns) - len(turns) + 1)
+        for offset, turn in enumerate(turns):
+            turn_index = start_index + offset
+            if turn.user_input:
+                previews.append(
+                    {
+                        "turn_index": turn_index,
+                        "role": "user",
+                        "text_preview": (turn.user_input or "")[:preview_chars],
+                        "state": turn.user_state,
+                    }
+                )
+            if turn.bot_response:
+                previews.append(
+                    {
+                        "turn_index": turn_index,
+                        "role": "bot",
+                        "text_preview": (turn.bot_response or "")[:preview_chars],
+                        "state": turn.user_state,
+                    }
+                )
+        return previews
+
+    def get_state_trajectory(self, depth: int = 10) -> List[Dict[str, object]]:
+        """
+        Вернуть траекторию состояний из memory.turns.
+        """
+        trajectory: List[Dict[str, object]] = []
+        if depth <= 0:
+            return trajectory
+        turns = self.turns[-depth:]
+        for offset, turn in enumerate(turns, start=1):
+            if turn.user_state:
+                trajectory.append(
+                    {
+                        "turn": offset,
+                        "state": turn.user_state,
+                        "confidence": None,
+                    }
+                )
+        return trajectory
+
     def get_user_sd_profile(self) -> Optional[dict]:
         """Получить накопленный SD-профиль пользователя."""
         return getattr(self, "_sd_profile", None)

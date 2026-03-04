@@ -18,6 +18,8 @@ import concurrent.futures
 import logging
 import json
 import re
+import time
+import uuid
 from typing import Dict, Optional, List, Tuple
 from datetime import datetime
 
@@ -42,6 +44,220 @@ from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 
 logger = logging.getLogger(__name__)
+
+
+def _timed(name: str, label: str, fn, *args, **kwargs):
+    """Обёртка для замера времени этапа пайплайна."""
+    t0 = time.perf_counter()
+    result = fn(*args, **kwargs)
+    ms = int((time.perf_counter() - t0) * 1000)
+    return result, {"name": name, "label": label, "duration_ms": ms, "skipped": False}
+
+
+def _build_config_snapshot(cfg) -> Dict[str, object]:
+    """Снимок конфигурации на момент запроса."""
+    sd_settings = get_sd_settings()
+    return {
+        "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
+        "max_context_size": int(getattr(cfg, "MAX_CONTEXT_SIZE", 0) or 0),
+        "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
+        "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.5)),
+        "fast_path_enabled": True,
+        "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False)),
+        "model_name": str(getattr(cfg, "LLM_MODEL", "")),
+    }
+
+
+def _compute_anomalies(trace: Dict) -> List[Dict]:
+    """
+    Вызывается в конце пайплайна.
+    Бизнес-логика аномалий живёт ТОЛЬКО здесь, фронт не дублирует.
+    """
+    flags: List[Dict] = []
+    sd_detail = trace.get("sd_detail") or {}
+    config_snapshot = trace.get("config_snapshot") or {}
+
+    if sd_detail.get("method") == "fallback":
+        flags.append(
+            {
+                "code": "SD_FALLBACK",
+                "severity": "warn",
+                "message": "SD классификатор использовал fallback — результат ненадёжен",
+                "target": "sd",
+            }
+        )
+
+    if trace.get("pipeline_error"):
+        flags.append(
+            {
+                "code": "PIPELINE_EXCEPTION",
+                "severity": "error",
+                "message": "Pipeline завершился с ошибкой — см. Error View",
+                "target": "error",
+            }
+        )
+
+    if trace.get("blocks_after_cap") == 0 and not trace.get("fast_path"):
+        flags.append(
+            {
+                "code": "NO_BLOCKS_TO_LLM",
+                "severity": "error",
+                "message": "LLM получил 0 блоков — ответ без контекста",
+                "target": "chunks",
+            }
+        )
+
+    if (trace.get("blocks_after_sd") == 0) and (trace.get("blocks_initial") or 0) > 0:
+        flags.append(
+            {
+                "code": "SD_FILTER_TOO_STRICT",
+                "severity": "warn",
+                "message": "SD-фильтр отсёк ВСЕ блоки при наличии retrieval-результатов",
+                "target": "chunks",
+            }
+        )
+
+    if (trace.get("semantic_hits") == 0) and (trace.get("memory_turns") or 0) > 5:
+        flags.append(
+            {
+                "code": "SEMANTIC_NOT_TRIGGERED",
+                "severity": "info",
+                "message": "Семантический поиск вернул 0 результатов при богатой памяти (>5 turns)",
+                "target": "memory",
+            }
+        )
+
+    if trace.get("fast_path"):
+        query_len = len((trace.get("hybrid_query_preview") or "").split())
+        if query_len > 15:
+            flags.append(
+                {
+                    "code": "UNEXPECTED_FAST_PATH",
+                    "severity": "warn",
+                    "message": f"Fast path при длинном запросе ({query_len} слов) — проверь логику",
+                    "target": "sd",
+                }
+            )
+
+    pipeline_stages = trace.get("pipeline_stages") or []
+    if pipeline_stages:
+        total_ms = sum(int(stage.get("duration_ms") or 0) for stage in pipeline_stages) or 1
+        for stage in pipeline_stages:
+            duration_ms = int(stage.get("duration_ms") or 0)
+            if duration_ms > total_ms * 0.5:
+                flags.append(
+                    {
+                        "code": "SLOW_STAGE",
+                        "severity": "warn",
+                        "message": (
+                            f"Этап '{stage.get('label')}' занял {duration_ms}ms "
+                            f"({duration_ms / total_ms * 100:.0f}% общего времени)"
+                        ),
+                        "target": "timeline",
+                    }
+                )
+
+    hybrid_preview = trace.get("hybrid_query_preview") or ""
+    max_context_size = int(config_snapshot.get("max_context_size") or 0)
+    if hybrid_preview and max_context_size and len(hybrid_preview) > max_context_size * 0.9:
+        flags.append(
+            {
+                "code": "CONTEXT_BLOAT_RISK",
+                "severity": "warn",
+                "message": "Hybrid query близок к лимиту MAX_CONTEXT_SIZE",
+                "target": "chunks",
+            }
+        )
+
+    sd_confidence = sd_detail.get("confidence")
+    threshold = config_snapshot.get("sd_confidence_threshold")
+    if isinstance(sd_confidence, (int, float)) and isinstance(threshold, (int, float)):
+        if sd_confidence < threshold:
+            flags.append(
+                {
+                    "code": "SD_LOW_CONFIDENCE",
+                    "severity": "info",
+                    "message": "SD confidence ниже порога, ответ консервативен",
+                    "target": "sd",
+                }
+            )
+
+    if (trace.get("memory_turns") == 0) and (trace.get("turn_number") or 0) > 3:
+        flags.append(
+            {
+                "code": "EMPTY_MEMORY",
+                "severity": "info",
+                "message": "Память пуста после нескольких ходов — проверь storage",
+                "target": "memory",
+            }
+        )
+
+    return flags
+
+
+def _build_state_trajectory(memory, depth: int = 10) -> List[Dict]:
+    """
+    ВАЖНО: читаем из memory.turns (объекты), НЕ из get_last_turns().
+    """
+    result: List[Dict] = []
+    turns = memory.turns[-depth:] if hasattr(memory, "turns") else []
+    for i, turn in enumerate(turns, start=1):
+        state = getattr(turn, "user_state", None) or getattr(turn, "state", None)
+        if state:
+            result.append(
+                {
+                    "turn": i,
+                    "state": str(state),
+                    "confidence": getattr(turn, "state_confidence", None),
+                }
+            )
+    return result
+
+
+def _store_blob(session_store, session_id: str, content: str) -> Optional[str]:
+    """Сохраняет тяжёлый текст и возвращает blob_id."""
+    if not session_store or not session_id or not content:
+        return None
+    blob_id = f"{session_id}:{uuid.uuid4().hex[:8]}"
+    session_store.set_blob(blob_id, content, ttl_seconds=1800)
+    return blob_id
+
+
+COST_PER_1K_TOKENS = {
+    "gpt-4o": {"input": 0.005, "output": 0.015},
+    "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
+    "gpt-5-mini": {"input": 0.00025, "output": 0.002},
+    "gpt-5": {"input": 0.00125, "output": 0.01},
+    "default": {"input": 0.001, "output": 0.002},
+}
+
+
+def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
+    rates = COST_PER_1K_TOKENS.get((model_name or "").lower(), COST_PER_1K_TOKENS["default"])
+    total = 0.0
+    for call in llm_calls or []:
+        input_tokens = call.get("tokens_prompt") or call.get("prompt_tokens") or 0
+        output_tokens = call.get("tokens_completion") or call.get("completion_tokens") or 0
+        try:
+            input_tokens = float(input_tokens)
+            output_tokens = float(output_tokens)
+        except (TypeError, ValueError):
+            input_tokens = 0.0
+            output_tokens = 0.0
+        total += (input_tokens / 1000) * rates["input"]
+        total += (output_tokens / 1000) * rates["output"]
+    return round(total, 6)
+
+
+def _detect_fast_path_reason(query: str, routing_result) -> str:
+    if _looks_like_greeting(query):
+        return "greeting"
+    if _looks_like_name_intro(query):
+        return "name_intro"
+    tokens = [token for token in re.split(r"\s+", query.strip()) if token]
+    if len(tokens) <= 3 and routing_result.mode in {"PRESENCE", "CLARIFICATION"}:
+        return "short_query"
+    return "other"
 
 
 def _run_coroutine_sync(coro):
@@ -260,7 +476,7 @@ def _build_retrieval_detail(block, score: float, stage: str) -> Dict:
     }
 
 
-def _build_llm_prompt_previews(
+def _build_llm_prompts(
     *,
     response_generator: ResponseGenerator,
     query: str,
@@ -295,10 +511,34 @@ def _build_llm_prompt_previews(
             query,
             conversation_history=conversation_context,
         )
-        return _truncate_preview(final_system_prompt, 300), _truncate_preview(user_prompt, 300)
+        return final_system_prompt, user_prompt
     except Exception as exc:
-        logger.debug(f"[DEBUG_TRACE] Failed to build prompt previews: {exc}")
+        logger.debug(f"[DEBUG_TRACE] Failed to build prompts: {exc}")
         return "", ""
+
+
+def _build_llm_prompt_previews(
+    *,
+    response_generator: ResponseGenerator,
+    query: str,
+    blocks: List[Block],
+    conversation_context: str,
+    user_level_adapter,
+    sd_level: str,
+    mode_prompt: str,
+    additional_system_context: str,
+) -> Tuple[str, str]:
+    full_system, full_user = _build_llm_prompts(
+        response_generator=response_generator,
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        user_level_adapter=user_level_adapter,
+        sd_level=sd_level,
+        mode_prompt=mode_prompt,
+        additional_system_context=additional_system_context,
+    )
+    return _truncate_preview(full_system, 300), _truncate_preview(full_user, 300)
 
 
 def _build_llm_call_trace(
@@ -309,6 +549,9 @@ def _build_llm_call_trace(
     user_prompt_preview: str,
     fallback_error: Optional[str],
     duration_ms: int,
+    system_prompt_blob_id: Optional[str] = None,
+    user_prompt_blob_id: Optional[str] = None,
+    memory_snapshot_blob_id: Optional[str] = None,
 ) -> Dict:
     call_info = {}
     if isinstance(llm_result, dict):
@@ -339,6 +582,9 @@ def _build_llm_call_trace(
         "tokens_total": call_info.get("tokens_total"),
         "tokens_used": llm_result.get("tokens_used") if isinstance(llm_result, dict) else None,
         "duration_ms": call_info.get("duration_ms") or duration_ms,
+        "system_prompt_blob_id": system_prompt_blob_id,
+        "user_prompt_blob_id": user_prompt_blob_id,
+        "memory_snapshot_blob_id": memory_snapshot_blob_id,
     }
 
 
@@ -407,6 +653,28 @@ def _build_memory_context_snapshot(memory) -> str:
         return _truncate_preview(json.dumps(payload, ensure_ascii=False), 1200)
     except Exception:
         return ""
+
+
+def _apply_memory_debug_info(
+    debug_trace: Optional[Dict],
+    memory,
+    memory_trace_metrics: Optional[Dict[str, object]] = None,
+) -> None:
+    if debug_trace is None or memory is None:
+        return
+    if memory_trace_metrics is None:
+        memory_trace_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
+    debug_trace["memory_turns"] = len(memory.turns)
+    debug_trace["memory_turns_content"] = (
+        memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else []
+    )
+    debug_trace["summary_text"] = memory.summary or None
+    debug_trace["summary_length"] = len(memory.summary) if memory.summary else 0
+    debug_trace["summary_last_turn"] = memory.summary_updated_at
+    debug_trace["summary_used"] = memory_trace_metrics.get("summary_used")
+    debug_trace["semantic_hits"] = memory_trace_metrics.get("semantic_hits")
+    if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail"):
+        debug_trace["semantic_hits_detail"] = list(memory.semantic_memory.last_hits_detail or [])
 
 
 def _build_state_context(
@@ -554,7 +822,8 @@ def answer_question_adaptive(
     include_path_recommendation: bool = True,
     include_feedback_prompt: bool = True,
     top_k: Optional[int] = None,
-    debug: bool = False
+    debug: bool = False,
+    session_store=None,
 ) -> Dict:
     """
     Phase 4: Адаптивный QA с учетом состояния и истории пользователя.
@@ -598,8 +867,10 @@ def answer_question_adaptive(
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
     debug_info = {} if debug else None
-    debug_trace = (
-        {
+    pipeline_stages: List[Dict] = []
+    debug_trace = None
+    if debug:
+        debug_trace = {
             "sd_classification": {
                 "method": "fallback",
                 "primary": "GREEN",
@@ -608,16 +879,42 @@ def answer_question_adaptive(
                 "indicator": "not_set",
                 "allowed_levels": [],
             },
+            "sd_detail": None,
+            "sd_level": None,
             "chunks_retrieved": [],
             "chunks_after_filter": [],
+            "chunks_after_sd_filter": [],
             "llm_calls": [],
             "context_written": "",
             "total_duration_ms": 0,
+            "fast_path": None,
+            "fast_path_reason": None,
+            "decision_rule_id": None,
+            "mode_reason": None,
+            "block_cap": None,
+            "blocks_initial": None,
+            "blocks_after_sd": None,
+            "blocks_after_stage": None,
+            "blocks_after_cap": None,
+            "hybrid_query_preview": None,
+            "memory_turns_content": [],
+            "summary_text": None,
+            "semantic_hits_detail": [],
+            "state_secondary": [],
+            "state_trajectory": [],
+            "pipeline_stages": pipeline_stages,
+            "anomalies": [],
+            "system_prompt_blob_id": None,
+            "user_prompt_blob_id": None,
+            "memory_snapshot_blob_id": None,
+            "config_snapshot": _build_config_snapshot(config),
+            "estimated_cost_usd": None,
+            "pipeline_error": None,
+            "session_id": user_id,
+            "turn_number": None,
         }
-        if debug
-        else None
-    )
     
+    current_stage = "init"
     try:
         # ================================================================
         # ЭТАП 1: Загрузка данных и памяти
@@ -629,6 +926,9 @@ def answer_question_adaptive(
         conversation_context = memory.get_adaptive_context_text(query)
         context_turns = len(memory.turns)
         memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
+        if debug_trace is not None:
+            debug_trace["turn_number"] = len(memory.turns) + 1
+            _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
         
         # Парсим уровень пользователя
         try:
@@ -660,14 +960,81 @@ def answer_question_adaptive(
             for turn in memory.get_last_turns(10)
         ]
 
-        state_analysis, sd_result = _run_coroutine_sync(
-            _classify_parallel(
-                query,
-                conversation_history,
-                conversation_history_for_sd,
-                memory.get_user_sd_profile(),
+        if debug_trace is not None:
+            current_stage = "state_classifier"
+            try:
+                state_analysis, stage = _timed(
+                    "state_classifier",
+                    "Классификатор состояния",
+                    _run_coroutine_sync,
+                    state_classifier.classify(
+                        query,
+                        conversation_history=conversation_history,
+                    ),
+                )
+                pipeline_stages.append(stage)
+            except Exception as exc:
+                logger.warning(
+                    "[CLASSIFY] StateClassifier failed: %s. Using fallback.",
+                    exc,
+                )
+                state_analysis = _fallback_state_analysis()
+                pipeline_stages.append(
+                    {
+                        "name": "state_classifier",
+                        "label": "Классификатор состояния",
+                        "duration_ms": 0,
+                        "skipped": False,
+                    }
+                )
+
+            current_stage = "sd_classifier"
+            if sd_classifier is None:
+                sd_result = _fallback_sd_result("sd_classifier_unavailable")
+                pipeline_stages.append(
+                    {
+                        "name": "sd_classifier",
+                        "label": "SD классификатор",
+                        "duration_ms": 0,
+                        "skipped": True,
+                    }
+                )
+            else:
+                try:
+                    sd_result, stage = _timed(
+                        "sd_classifier",
+                        "SD классификатор",
+                        _run_coroutine_sync,
+                        sd_classifier.classify_user(
+                            message=query,
+                            conversation_history=conversation_history_for_sd,
+                            user_sd_profile=memory.get_user_sd_profile(),
+                        ),
+                    )
+                    pipeline_stages.append(stage)
+                except Exception as exc:
+                    logger.warning(
+                        "[CLASSIFY] SDClassifier failed: %s. Using GREEN fallback.",
+                        exc,
+                    )
+                    sd_result = _fallback_sd_result("fallback_on_error")
+                    pipeline_stages.append(
+                        {
+                            "name": "sd_classifier",
+                            "label": "SD классификатор",
+                            "duration_ms": 0,
+                            "skipped": False,
+                        }
+                    )
+        else:
+            state_analysis, sd_result = _run_coroutine_sync(
+                _classify_parallel(
+                    query,
+                    conversation_history,
+                    conversation_history_for_sd,
+                    memory.get_user_sd_profile(),
+                )
             )
-        )
         user_stage = resolve_user_stage(memory, state_analysis)
 
         logger.info(
@@ -717,6 +1084,17 @@ def answer_question_adaptive(
                 "indicator": sd_result.indicator,
                 "allowed_levels": [str(level) for level in (sd_result.allowed_blocks or [])],
             }
+            debug_trace["sd_detail"] = {
+                "method": sd_result.method,
+                "primary": sd_result.primary,
+                "secondary": sd_result.secondary,
+                "confidence": float(sd_result.confidence),
+                "indicator": sd_result.indicator,
+                "allowed_levels": [str(level) for level in (sd_result.allowed_blocks or [])],
+            }
+            debug_trace["sd_level"] = sd_result.primary
+            debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
+            debug_trace["user_state"] = state_analysis.primary_state.value
 
         decision_gate = DecisionGate()
         pre_routing_signals = detect_routing_signals(query, [], state_analysis)
@@ -728,6 +1106,30 @@ def answer_question_adaptive(
                 pre_routing_result.mode,
                 pre_routing_result.decision.reason,
             )
+            if debug_trace is not None:
+                debug_trace["fast_path"] = True
+                debug_trace["fast_path_reason"] = _detect_fast_path_reason(query, pre_routing_result)
+                debug_trace["recommended_mode"] = pre_routing_result.mode
+                debug_trace["decision_rule_id"] = pre_routing_result.decision.rule_id
+                debug_trace["confidence_score"] = pre_routing_result.confidence_score
+                debug_trace["confidence_level"] = pre_routing_result.confidence_level
+                debug_trace["mode_reason"] = pre_routing_result.decision.reason
+                debug_trace["block_cap"] = 0
+                debug_trace["blocks_initial"] = 0
+                debug_trace["blocks_after_sd"] = 0
+                debug_trace["blocks_after_stage"] = 0
+                debug_trace["blocks_after_cap"] = 0
+                debug_trace["hybrid_query_preview"] = _truncate_preview(query, 400)
+
+                for stage_name, label in [
+                    ("retrieval", "Retrieval"),
+                    ("sd_filter", "SD фильтр"),
+                    ("stage_filter", "Stage фильтр"),
+                    ("rerank", "Rerank"),
+                ]:
+                    pipeline_stages.append(
+                        {"name": stage_name, "label": label, "duration_ms": 0, "skipped": True}
+                    )
             mode_directive = build_mode_directive(
                 mode=pre_routing_result.mode,
                 confidence_level=pre_routing_result.confidence_level,
@@ -747,8 +1149,10 @@ def answer_question_adaptive(
             response_generator = ResponseGenerator()
             llm_system_preview = ""
             llm_user_preview = ""
+            system_blob_id = None
+            user_blob_id = None
             if debug_trace is not None:
-                llm_system_preview, llm_user_preview = _build_llm_prompt_previews(
+                full_system_prompt, full_user_prompt = _build_llm_prompts(
                     response_generator=response_generator,
                     query=query,
                     blocks=[fast_block],
@@ -758,11 +1162,18 @@ def answer_question_adaptive(
                     mode_prompt=mode_directive.prompt,
                     additional_system_context=state_context,
                 )
+                llm_system_preview = _truncate_preview(full_system_prompt, 300)
+                llm_user_preview = _truncate_preview(full_user_prompt, 300)
+                system_blob_id = _store_blob(session_store, user_id, full_system_prompt)
+                user_blob_id = _store_blob(session_store, user_id, full_user_prompt)
+                debug_trace["system_prompt_blob_id"] = system_blob_id
+                debug_trace["user_prompt_blob_id"] = user_blob_id
 
             llm_started = datetime.now()
             llm_result = {}
             llm_error = None
             try:
+                current_stage = "llm"
                 llm_result = response_generator.generate(
                     query,
                     [fast_block],
@@ -776,12 +1187,22 @@ def answer_question_adaptive(
                     model=config.LLM_MODEL,
                     temperature=config.LLM_TEMPERATURE,
                     max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
+                    system_prompt_blob_id=system_blob_id,
+                    user_prompt_blob_id=user_blob_id,
                 )
             except Exception as llm_exc:
                 llm_error = str(llm_exc)
                 raise
             finally:
                 if debug_trace is not None:
+                    pipeline_stages.append(
+                        {
+                            "name": "llm",
+                            "label": "LLM",
+                            "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
+                            "skipped": False,
+                        }
+                    )
                     debug_trace["llm_calls"].append(
                         _build_llm_call_trace(
                             llm_result=llm_result if isinstance(llm_result, dict) else {},
@@ -790,6 +1211,8 @@ def answer_question_adaptive(
                             user_prompt_preview=llm_user_preview,
                             fallback_error=llm_error,
                             duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
+                            system_prompt_blob_id=system_blob_id,
+                            user_prompt_blob_id=user_blob_id,
                         )
                     )
             answer = llm_result.get("answer", "")
@@ -799,6 +1222,10 @@ def answer_question_adaptive(
                 mode=pre_routing_result.mode,
                 confidence_level=pre_routing_result.confidence_level,
             )
+            if debug_trace is not None:
+                pipeline_stages.append(
+                    {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": False}
+                )
 
             try:
                 memory.set_working_state(
@@ -916,10 +1343,26 @@ def answer_question_adaptive(
                 debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
                 debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
                 debug_trace["session_turns"] = session_metrics.get("session_turns")
+                _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+                debug_trace["state_trajectory"] = _build_state_trajectory(memory)
+                debug_trace["memory_snapshot_blob_id"] = _store_blob(
+                    session_store,
+                    user_id,
+                    debug_trace.get("context_written") or "",
+                )
+                debug_trace["estimated_cost_usd"] = _estimate_cost(
+                    debug_trace.get("llm_calls", []),
+                    str(model_used),
+                )
+                debug_trace["pipeline_stages"] = pipeline_stages
+                debug_trace["anomalies"] = _compute_anomalies(debug_trace)
                 result["debug_trace"] = debug_trace
 
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
             return result
+
+        if debug_trace is not None and debug_trace.get("fast_path") is None:
+            debug_trace["fast_path"] = False
         
         # ================================================================
         # ЭТАП 3: Поиск релевантных блоков
@@ -940,9 +1383,22 @@ def answer_question_adaptive(
         )
 
         retriever = get_retriever()
-        raw_retrieved_blocks = retriever.retrieve(hybrid_query, top_k=top_k)
+        current_stage = "retrieval"
+        raw_retrieved_blocks, stage = _timed(
+            "retrieval",
+            "Retrieval",
+            retriever.retrieve,
+            hybrid_query,
+            top_k=top_k,
+        )
+        if debug_trace is not None:
+            pipeline_stages.append(stage)
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
-        retrieved_blocks = filter_by_sd_level(
+        current_stage = "sd_filter"
+        retrieved_blocks, sd_stage = _timed(
+            "sd_filter",
+            "SD фильтр",
+            filter_by_sd_level,
             blocks_with_scores=raw_retrieved_blocks,
             user_sd_level=sd_result.primary,
             user_state=state_analysis.primary_state.value,
@@ -951,6 +1407,8 @@ def answer_question_adaptive(
             is_first_session=(len(memory.turns) == 0),
             min_blocks=3,
         )
+        if debug_trace is not None:
+            pipeline_stages.append(sd_stage)
         _log_retrieval_pairs("After SD filter", retrieved_blocks, limit=10)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
         sd_filtered_blocks = list(retrieved_blocks)
@@ -960,19 +1418,39 @@ def answer_question_adaptive(
         )
         rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
         if rerank_k > 0:
-            reranked = reranker.rerank_pairs(query, retrieved_blocks, top_k=rerank_k)
+            current_stage = "rerank"
+            reranked, rerank_stage = _timed(
+                "rerank",
+                "Rerank",
+                reranker.rerank_pairs,
+                query,
+                retrieved_blocks,
+                top_k=rerank_k,
+            )
+            if debug_trace is not None:
+                pipeline_stages.append(rerank_stage)
             if reranked:
                 retrieved_blocks = reranked
                 voyage_active = bool(config.VOYAGE_ENABLED and config.VOYAGE_API_KEY)
                 logger.info("[RETRIEVAL] reranked top_k=%s (voyage_active=%s)", rerank_k, voyage_active)
+        elif debug_trace is not None:
+            pipeline_stages.append(
+                {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
+            )
         reranked_blocks_for_trace = list(retrieved_blocks)
 
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
-        stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
+        current_stage = "stage_filter"
+        stage_filtered_blocks, stage_filter_stage = _timed(
+            "stage_filter",
+            "Stage фильтр",
+            decision_gate.stage_filter.filter_retrieval_pairs,
             user_stage,
             retrieved_blocks,
         )
+        if debug_trace is not None:
+            pipeline_stages.append(stage_filter_stage)
         _log_retrieval_pairs("After stage filter", stage_filtered_blocks, limit=10)
         block_cap = decision_gate.scorer.suggest_block_cap(
             len(stage_filtered_blocks),
@@ -991,6 +1469,17 @@ def answer_question_adaptive(
             reason=routing_result.decision.reason,
             forbid=routing_result.decision.forbid,
         )
+        if debug_trace is not None:
+            debug_trace["recommended_mode"] = routing_result.mode
+            debug_trace["decision_rule_id"] = routing_result.decision.rule_id
+            debug_trace["confidence_score"] = routing_result.confidence_score
+            debug_trace["confidence_level"] = routing_result.confidence_level
+            debug_trace["mode_reason"] = mode_directive.reason
+            debug_trace["block_cap"] = block_cap
+            debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
+            debug_trace["blocks_after_sd"] = len(sd_filtered_blocks)
+            debug_trace["blocks_after_stage"] = len(stage_filtered_blocks)
+            debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
 
         if not retrieved_blocks:
             response = _build_partial_response(
@@ -1030,8 +1519,29 @@ def answer_question_adaptive(
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
                 debug_trace["chunks_after_filter"] = chunks_after_filter
+                debug_trace["chunks_after_sd_filter"] = chunks_after_filter
+                debug_trace["blocks_after_cap"] = 0
+                pipeline_stages.append(
+                    {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
+                )
+                pipeline_stages.append(
+                    {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": True}
+                )
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
+                _apply_memory_debug_info(debug_trace, memory)
+                debug_trace["state_trajectory"] = _build_state_trajectory(memory)
+                debug_trace["memory_snapshot_blob_id"] = _store_blob(
+                    session_store,
+                    user_id,
+                    debug_trace.get("context_written") or "",
+                )
+                debug_trace["estimated_cost_usd"] = _estimate_cost(
+                    debug_trace.get("llm_calls", []),
+                    str(config.LLM_MODEL),
+                )
+                debug_trace["pipeline_stages"] = pipeline_stages
+                debug_trace["anomalies"] = _compute_anomalies(debug_trace)
                 response["debug_trace"] = debug_trace
             return response
         
@@ -1041,6 +1551,8 @@ def answer_question_adaptive(
         
         if not adapted_blocks:
             adapted_blocks = blocks[:3]  # fallback
+        if debug_trace is not None:
+            debug_trace["blocks_after_cap"] = len(adapted_blocks)
         
         if debug_info is not None:
             debug_info["blocks_found"] = len(retrieved_blocks)
@@ -1116,6 +1628,7 @@ def answer_question_adaptive(
             )
             debug_trace["chunks_retrieved"] = chunks_retrieved
             debug_trace["chunks_after_filter"] = chunks_after_filter
+            debug_trace["chunks_after_sd_filter"] = chunks_after_filter
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
@@ -1133,8 +1646,10 @@ def answer_question_adaptive(
         response_generator = ResponseGenerator()
         llm_system_preview = ""
         llm_user_preview = ""
+        system_blob_id = None
+        user_blob_id = None
         if debug_trace is not None:
-            llm_system_preview, llm_user_preview = _build_llm_prompt_previews(
+            full_system_prompt, full_user_prompt = _build_llm_prompts(
                 response_generator=response_generator,
                 query=query,
                 blocks=adapted_blocks,
@@ -1144,11 +1659,18 @@ def answer_question_adaptive(
                 mode_prompt=mode_directive.prompt,
                 additional_system_context=state_context,
             )
+            llm_system_preview = _truncate_preview(full_system_prompt, 300)
+            llm_user_preview = _truncate_preview(full_user_prompt, 300)
+            system_blob_id = _store_blob(session_store, user_id, full_system_prompt)
+            user_blob_id = _store_blob(session_store, user_id, full_user_prompt)
+            debug_trace["system_prompt_blob_id"] = system_blob_id
+            debug_trace["user_prompt_blob_id"] = user_blob_id
 
         llm_started = datetime.now()
         llm_result = {}
         llm_error = None
         try:
+            current_stage = "llm"
             llm_result = response_generator.generate(
                 query,
                 adapted_blocks,
@@ -1162,12 +1684,22 @@ def answer_question_adaptive(
                 model=config.LLM_MODEL,
                 temperature=config.LLM_TEMPERATURE,
                 max_tokens=config.get_mode_max_tokens(routing_result.mode),
+                system_prompt_blob_id=system_blob_id,
+                user_prompt_blob_id=user_blob_id,
             )
         except Exception as llm_exc:
             llm_error = str(llm_exc)
             raise
         finally:
             if debug_trace is not None:
+                pipeline_stages.append(
+                    {
+                        "name": "llm",
+                        "label": "LLM",
+                        "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
+                        "skipped": False,
+                    }
+                )
                 debug_trace["llm_calls"].append(
                     _build_llm_call_trace(
                         llm_result=llm_result if isinstance(llm_result, dict) else {},
@@ -1176,6 +1708,8 @@ def answer_question_adaptive(
                         user_prompt_preview=llm_user_preview,
                         fallback_error=llm_error,
                         duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
+                        system_prompt_blob_id=system_blob_id,
+                        user_prompt_blob_id=user_blob_id,
                     )
                 )
         
@@ -1209,8 +1743,22 @@ def answer_question_adaptive(
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
                 debug_trace["chunks_after_filter"] = chunks_after_filter
+                debug_trace["chunks_after_sd_filter"] = chunks_after_filter
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
+                _apply_memory_debug_info(debug_trace, memory)
+                debug_trace["state_trajectory"] = _build_state_trajectory(memory)
+                debug_trace["memory_snapshot_blob_id"] = _store_blob(
+                    session_store,
+                    user_id,
+                    debug_trace.get("context_written") or "",
+                )
+                debug_trace["estimated_cost_usd"] = _estimate_cost(
+                    debug_trace.get("llm_calls", []),
+                    str(config.LLM_MODEL),
+                )
+                debug_trace["pipeline_stages"] = pipeline_stages
+                debug_trace["anomalies"] = _compute_anomalies(debug_trace)
                 response["debug_trace"] = debug_trace
             return response
         
@@ -1221,6 +1769,10 @@ def answer_question_adaptive(
             mode=routing_result.mode,
             confidence_level=routing_result.confidence_level,
         )
+        if debug_trace is not None:
+            pipeline_stages.append(
+                {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": False}
+            )
         
         # ================================================================
         # ЭТАП 5: Семантический анализ и извлечение концептов
@@ -1398,6 +1950,19 @@ def answer_question_adaptive(
             debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
             debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
             debug_trace["session_turns"] = session_metrics.get("session_turns")
+            _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+            debug_trace["state_trajectory"] = _build_state_trajectory(memory)
+            debug_trace["memory_snapshot_blob_id"] = _store_blob(
+                session_store,
+                user_id,
+                debug_trace.get("context_written") or "",
+            )
+            debug_trace["estimated_cost_usd"] = _estimate_cost(
+                debug_trace.get("llm_calls", []),
+                str(model_used),
+            )
+            debug_trace["pipeline_stages"] = pipeline_stages
+            debug_trace["anomalies"] = _compute_anomalies(debug_trace)
             result["debug_trace"] = debug_trace
         
         logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
@@ -1424,6 +1989,28 @@ def answer_question_adaptive(
             memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
         except Exception:
             pass
+        if debug_trace is not None:
+            debug_trace["pipeline_error"] = {
+                "stage": str(current_stage),
+                "exception_type": type(e).__name__,
+                "message": str(e),
+                "partial_trace_available": True,
+            }
+            try:
+                memory = get_conversation_memory(user_id)
+                debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+                _apply_memory_debug_info(debug_trace, memory)
+                debug_trace["state_trajectory"] = _build_state_trajectory(memory)
+                debug_trace["memory_snapshot_blob_id"] = _store_blob(
+                    session_store,
+                    user_id,
+                    debug_trace.get("context_written") or "",
+                )
+            except Exception:
+                pass
+            debug_trace["pipeline_stages"] = pipeline_stages
+            debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+            response["debug_trace"] = debug_trace
         return response
 
 

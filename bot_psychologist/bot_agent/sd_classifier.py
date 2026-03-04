@@ -212,6 +212,16 @@ class SDClassificationResult:
     def __post_init__(self) -> None:
         self.allowed_blocks = SD_COMPATIBILITY_BASE.get(self.primary, [DEFAULT_LEVEL])
 
+    def to_detail(self) -> Dict[str, object]:
+        return {
+            "method": self.method,
+            "primary": self.primary,
+            "secondary": self.secondary,
+            "confidence": float(self.confidence),
+            "indicator": self.indicator,
+            "allowed_levels": [str(level) for level in (self.allowed_blocks or [])],
+        }
+
 
 class SDCompatibilityResolver:
     """Динамическая матрица совместимости уровней СД."""

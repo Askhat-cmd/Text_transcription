@@ -63,6 +63,8 @@ class ResponseGenerator:
         model: Optional[str] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
+        system_prompt_blob_id: Optional[str] = None,
+        user_prompt_blob_id: Optional[str] = None,
     ) -> dict:
         """Generate a response using shared mode-aware prompt composition."""
         base_system_prompt = self.answerer.build_system_prompt()
@@ -100,6 +102,8 @@ class ResponseGenerator:
                     temperature=final_temperature,
                     max_tokens=final_max_tokens,
                     step_name="answer",
+                    system_prompt_blob_id=system_prompt_blob_id,
+                    user_prompt_blob_id=user_prompt_blob_id,
                 )
             except TypeError as exc:
                 if "step_name" not in str(exc):
@@ -111,6 +115,8 @@ class ResponseGenerator:
                     model=model_name,
                     temperature=final_temperature,
                     max_tokens=final_max_tokens,
+                    system_prompt_blob_id=system_prompt_blob_id,
+                    user_prompt_blob_id=user_prompt_blob_id,
                 )
         finally:
             self.answerer.build_system_prompt = original_build_prompt

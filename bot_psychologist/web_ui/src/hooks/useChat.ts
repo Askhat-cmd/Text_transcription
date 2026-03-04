@@ -100,7 +100,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
     try {
       let streamed = '';
-      let doneMeta: { mode?: string; sd_level?: string; latency_ms?: number; trace?: Message['trace'] } | null = null;
+      let doneMeta: any = null;
       let gotToken = false;
 
       await apiService.streamAdaptiveAnswer(

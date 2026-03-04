@@ -1,17 +1,26 @@
-﻿import React from 'react';
-import type { InlineTrace, TraceBlock } from '../../types';
+﻿import React, { useMemo, useState } from 'react';
+import type { InlineTrace } from '../../types';
+import { useDebugBlob } from '../../hooks/useDebugBlob';
+import { StatusBar } from '../debug/StatusBar';
+import { PipelineFunnel } from '../debug/PipelineFunnel';
+import { AnomalyList } from '../debug/AnomalyList';
+import { SessionDashboard } from '../debug/SessionDashboard';
+import { TraceHistory } from '../debug/TraceHistory';
+import { ConfigSnapshot } from '../debug/ConfigSnapshot';
+import { ErrorView } from '../debug/ErrorView';
 
 interface Props {
   trace: InlineTrace;
 }
 
 const SD_COLORS: Record<string, string> = {
-  purple: 'text-purple-600 dark:text-purple-400',
-  red: 'text-red-600 dark:text-red-400',
-  blue: 'text-blue-600 dark:text-blue-400',
-  orange: 'text-orange-500 dark:text-orange-400',
-  green: 'text-emerald-600 dark:text-emerald-400',
-  yellow: 'text-yellow-500 dark:text-yellow-300',
+  PURPLE: 'text-purple-600 dark:text-purple-400',
+  RED: 'text-red-600 dark:text-red-400',
+  BLUE: 'text-blue-600 dark:text-blue-400',
+  ORANGE: 'text-orange-500 dark:text-orange-400',
+  GREEN: 'text-emerald-600 dark:text-emerald-400',
+  YELLOW: 'text-yellow-500 dark:text-yellow-300',
+  TURQUOISE: 'text-teal-500 dark:text-teal-300',
 };
 
 const MODE_COLORS: Record<string, string> = {
@@ -30,70 +39,84 @@ const formatNumber = (value: unknown, digits: number, fallback = '—'): string 
   return value.toFixed(digits);
 };
 
-const ChunkCard: React.FC<{ block: TraceBlock; passed: boolean }> = ({ block, passed }) => (
-  <details className="mb-2 rounded-lg border border-slate-200 dark:border-slate-700">
-    <summary className="cursor-pointer px-3 py-2 flex items-center gap-2 text-xs select-none hover:bg-slate-50 dark:hover:bg-slate-800/50">
-      <span>{passed ? '✓' : '✕'}</span>
-      <code className="font-mono font-semibold text-slate-700 dark:text-slate-300">{block.block_id}</code>
-      <span className={`ml-auto font-semibold ${passed ? 'text-emerald-600' : 'text-rose-500'}`}>
-        {formatNumber(block.score, 3)}
-      </span>
-      <span className="text-slate-400 truncate max-w-[160px]">{block.source}</span>
-      {!passed && block.filter_reason && (
-        <span className="text-rose-400 text-[10px] border border-rose-200 rounded px-1">
-          {block.filter_reason}
+const formatMs = (value?: number | null) => (typeof value === 'number' ? `${value}ms` : '—');
+
+const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed }) => {
+  const sdLevel = (chunk?.sd_level || '').toUpperCase();
+  const sdColor = SD_COLORS[sdLevel] || 'text-slate-500';
+  const isPassed = passed ?? chunk?.passed_sd_filter ?? false;
+  return (
+    <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs space-y-1">
+      <div className="flex items-center gap-2">
+        <span className={isPassed ? 'text-emerald-600' : 'text-rose-500'}>{isPassed ? 'OK' : 'NO'}</span>
+        <code className="font-mono font-semibold text-slate-700 dark:text-slate-300">{chunk?.block_id}</code>
+        <span className={`text-[10px] uppercase ${sdColor}`}>{sdLevel || '—'}</span>
+        <span className="ml-auto text-slate-500 font-mono">
+          {formatNumber(chunk?.score_initial ?? 0, 3)} {'>'} {formatNumber(chunk?.score_final ?? 0, 3)}
         </span>
+      </div>
+      {chunk?.filter_reason && !isPassed && (
+        <div className="text-[10px] text-rose-500">{chunk.filter_reason}</div>
       )}
-    </summary>
-    <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700">
-      <p className="text-[10px] text-slate-400 mb-2 font-mono">
-        📄 {block.source} · stage: {block.stage}
-      </p>
-      <p className="text-xs text-slate-700 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">
-        {block.text}
-      </p>
+      {chunk?.preview && (
+        <p className="text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+          {chunk.preview}
+        </p>
+      )}
     </div>
-  </details>
-);
+  );
+};
 
 export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
-  const blocks = trace.blocks ?? [];
-  const passedBlocks = blocks.filter((b) => b.passed);
-  const filteredBlocks = blocks.filter((b) => !b.passed);
-  const sdLevel = (trace.sd_level || '').toLowerCase();
-  const sdColor = sdLevel ? (SD_COLORS[sdLevel] || '') : '';
+  const { blobs, loading, fetchBlob } = useDebugBlob();
+  const [openAnomalies, setOpenAnomalies] = useState<boolean>((trace.anomalies?.length ?? 0) > 0);
+
   const recommendedMode = trace.recommended_mode || '—';
-  const confidenceScore = Number.isFinite(trace.confidence_score) ? trace.confidence_score : 0;
   const modeColor = MODE_COLORS[recommendedMode] || 'bg-slate-100 text-slate-700';
-  const confColor = confidenceScore >= 0.75
-    ? 'text-emerald-600'
-    : confidenceScore >= 0.5
-      ? 'text-amber-500'
-      : 'text-rose-500';
+  const confidenceScore = typeof trace.confidence_score === 'number' ? trace.confidence_score : undefined;
+  const confColor = confidenceScore != null
+    ? confidenceScore >= 0.75
+      ? 'text-emerald-600'
+      : confidenceScore >= 0.5
+        ? 'text-amber-500'
+        : 'text-rose-500'
+    : 'text-slate-500';
+
+  const sdLevel = (trace.sd_level || trace.sd_classification?.primary || '').toUpperCase();
+  const sdColor = SD_COLORS[sdLevel] || '';
+
+  const chunksRetrieved = trace.chunks_retrieved ?? [];
+  const chunksAfter = trace.chunks_after_filter ?? trace.chunks_after_sd_filter ?? [];
+
+  const memoryTurns = trace.memory_turns ?? trace.memory_turns_content?.length ?? 0;
+  const summaryLength = trace.summary_length ?? (trace.summary_text ? trace.summary_text.length : 0);
+  const semanticHits = trace.semantic_hits ?? trace.semantic_hits_detail?.length ?? 0;
+
+  const llmCalls = trace.llm_calls ?? [];
+  const pipelineStages = trace.pipeline_stages ?? [];
+  const totalStageMs = pipelineStages.reduce((sum, stage) => sum + (stage.duration_ms || 0), 0) || 1;
+
+  const systemBlobId = trace.system_prompt_blob_id;
+  const userBlobId = trace.user_prompt_blob_id;
+
+  const memorySnapshotId = trace.memory_snapshot_blob_id;
+
+  const stateTrajectory = useMemo(() => trace.state_trajectory ?? [], [trace.state_trajectory]);
 
   return (
-    <details className="mt-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-xs">
-      <summary className="cursor-pointer px-4 py-2 flex items-center gap-2 select-none hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-xl">
-        <span>🔍</span>
-        <span className={`px-2 py-0.5 rounded-full font-semibold text-[11px] ${modeColor}`}>
-          {recommendedMode}
-        </span>
-        <span className="text-slate-400">{trace.decision_rule_id || '—'}</span>
-        <span className={`font-bold ${confColor}`}>conf: {formatNumber(confidenceScore, 2, '0.00')}</span>
-        {sdLevel && (
-          <span className={`font-semibold uppercase text-[10px] ${sdColor}`}>
-            SD: {sdLevel}
-          </span>
-        )}
-        <span className="ml-auto text-slate-400">
-          ✓{passedBlocks.length} ✕{filteredBlocks.length}
-        </span>
-      </summary>
+    <div className="mt-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-xs">
+      <StatusBar trace={trace} />
 
-      <div className="px-4 pb-4 pt-2 space-y-3 border-t border-slate-200 dark:border-slate-700">
-        <details open>
+      <div className="px-4 pb-4 pt-2 space-y-4">
+        {trace.pipeline_error && (
+          <div id="debug-error">
+            <ErrorView error={trace.pipeline_error} />
+          </div>
+        )}
+
+        <details open id="debug-routing">
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            📊 Роутинг и оркестрация
+            Роутинг и SD
           </summary>
           <div className="mt-2 grid grid-cols-2 gap-2">
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
@@ -103,286 +126,444 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Правило</p>
               <p className="font-mono font-semibold text-slate-700 dark:text-slate-300">
-                {trace.decision_rule_id || '—'}
+                {trace.decision_rule_id ?? '—'}
               </p>
             </div>
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Confidence</p>
               <p className={`font-bold ${confColor}`}>
-                {formatNumber(confidenceScore, 3, '0.000')} ({trace.confidence_level || '—'})
+                {confidenceScore != null ? formatNumber(confidenceScore, 3, '0.000') : '—'} ({trace.confidence_level ?? '—'})
               </p>
             </div>
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Состояние</p>
-              <p className="font-semibold text-slate-700 dark:text-slate-300">{trace.user_state || '—'}</p>
+              <p className="font-semibold text-slate-700 dark:text-slate-300">{trace.user_state ?? '—'}</p>
             </div>
-            {sdLevel && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">SD уровень</p>
-                <p className={`font-bold uppercase ${sdColor}`}>{sdLevel}</p>
+            <div id="debug-sd" className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">SD уровень</p>
+              <p className={`font-bold uppercase ${sdColor}`}>{sdLevel || '—'}</p>
+              {trace.sd_detail?.confidence != null && (
+                <p className="text-[10px] text-slate-400">conf: {formatNumber(trace.sd_detail.confidence, 2)}</p>
+              )}
+            </div>
+            {trace.fast_path && (
+              <div className="rounded-lg bg-amber-50 dark:bg-amber-900/30 px-3 py-2">
+                <p className="text-[10px] text-amber-700 uppercase tracking-wide">Fast Path</p>
+                <p className="font-semibold text-amber-800 dark:text-amber-200">
+                  {trace.fast_path_reason ?? 'fast'}
+                </p>
               </div>
             )}
-            {trace.query_hash && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Query hash</p>
-                <p className="font-mono text-[10px] text-slate-500 truncate">{trace.query_hash}</p>
-              </div>
-            )}
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Block cap</p>
+              <p className="font-semibold">{trace.block_cap ?? '—'}</p>
+              <p className="text-[10px] text-slate-400">initial: {trace.blocks_initial ?? '—'} {'>'} cap: {trace.blocks_after_cap ?? '—'}</p>
+            </div>
           </div>
 
-          {trace.signals && Object.keys(trace.signals).length > 0 && (
-            <div className="mt-2 rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Вклад сигналов</p>
-              {Object.entries(trace.signals).map(([signal, value]) => {
-                const numericValue = typeof value === 'number' ? value : Number(value);
-                const displayValue = Number.isNaN(numericValue) ? 0 : numericValue;
+          {trace.sd_detail && (
+            <details className="mt-2">
+              <summary className="cursor-pointer text-[10px] text-slate-400 select-none py-0.5">
+                SD Classification Detail {'>'}
+              </summary>
+              <div className="mt-1 rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <div className="text-[11px] text-slate-600 dark:text-slate-300">method: {trace.sd_detail.method}</div>
+                <div className="text-[11px] text-slate-600 dark:text-slate-300">indicator: {trace.sd_detail.indicator}</div>
+                <div className="text-[11px] text-slate-600 dark:text-slate-300">allowed: {(trace.sd_detail.allowed_levels || []).join(', ')}</div>
+              </div>
+            </details>
+          )}
+        </details>
+
+        <details open id="debug-chunks">
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Чанки
+          </summary>
+          <PipelineFunnel trace={trace} />
+
+          <div className="mt-3 space-y-2">
+            <details open>
+              <summary className="cursor-pointer text-slate-500 text-[11px]">Chunks in response ({chunksAfter.length})</summary>
+              <div className="mt-2 space-y-2">
+                {chunksAfter.length === 0 ? (
+                  <p className="text-slate-400">Нет чанков после фильтра</p>
+                ) : (
+                  chunksAfter.map((chunk, idx) => (
+                    <ChunkRow key={`${chunk.block_id}-${idx}`} chunk={chunk} passed={true} />
+                  ))
+                )}
+              </div>
+            </details>
+
+            <details>
+              <summary className="cursor-pointer text-slate-500 text-[11px]">Все чанки ({chunksRetrieved.length})</summary>
+              <div className="mt-2 space-y-2">
+                {chunksRetrieved.length === 0 ? (
+                  <p className="text-slate-400">Нет retrieved чанков</p>
+                ) : (
+                  chunksRetrieved.map((chunk, idx) => (
+                    <ChunkRow key={`${chunk.block_id}-${idx}`} chunk={chunk} passed={chunk.passed_sd_filter} />
+                  ))
+                )}
+              </div>
+            </details>
+          </div>
+        </details>
+
+        {llmCalls.length > 0 && (
+          <details id="debug-llm">
+            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+              LLM Calls ({llmCalls.length})
+            </summary>
+            <div className="mt-2 space-y-2">
+              {llmCalls.map((call, idx) => {
+                const callSystemId = call.system_prompt_blob_id ?? systemBlobId;
+                const callUserId = call.user_prompt_blob_id ?? userBlobId;
                 return (
-                <div key={signal} className="flex items-center gap-2 mb-1">
-                  <span className="text-slate-500 w-40 truncate">{signal}</span>
-                  <div className="flex-1 h-1.5 rounded bg-slate-200 dark:bg-slate-700">
-                    <div
-                      className="h-1.5 rounded bg-emerald-500"
-                      style={{ width: `${Math.min(displayValue * 100, 100)}%` }}
-                    />
+                  <details key={`${call.step}-${idx}`} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <summary className="cursor-pointer px-3 py-2 flex items-center gap-2 text-xs select-none hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                      <span className="font-mono font-semibold text-slate-700 dark:text-slate-300 w-28 truncate">
+                        {call.step}
+                      </span>
+                      <span className="text-sky-600 dark:text-sky-400 font-medium">
+                        {call.model}
+                      </span>
+                      {call.tokens_total != null && (
+                        <span className="ml-auto text-slate-500">tokens {call.tokens_total.toLocaleString()} tok</span>
+                      )}
+                      {call.duration_ms != null && (
+                        <span className="text-slate-400">{call.duration_ms}ms</span>
+                      )}
+                    </summary>
+                    <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 space-y-2">
+                      {(call.tokens_prompt != null || call.tokens_completion != null) && (
+                        <div className="flex gap-4 text-[11px]">
+                          <span className="text-slate-400">prompt: <b className="text-slate-600 dark:text-slate-300">{call.tokens_prompt ?? '—'}</b></span>
+                          <span className="text-slate-400">completion: <b className="text-slate-600 dark:text-slate-300">{call.tokens_completion ?? '—'}</b></span>
+                        </div>
+                      )}
+                      {call.system_prompt_preview && (
+                        <div>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">System prompt (preview)</p>
+                          <pre className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                            {call.system_prompt_preview}
+                          </pre>
+                        </div>
+                      )}
+                      {call.user_prompt_preview && (
+                        <div>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">User prompt (preview)</p>
+                          <pre className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                            {call.user_prompt_preview}
+                          </pre>
+                        </div>
+                      )}
+                      {call.response_preview && (
+                        <div>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">Response (preview)</p>
+                          <pre className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                            {call.response_preview}
+                          </pre>
+                        </div>
+                      )}
+                      {(callSystemId || callUserId) && (
+                        <div className="space-y-2">
+                          {callSystemId && (
+                            <div>
+                              <button
+                                onClick={() => fetchBlob(callSystemId)}
+                                className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                              >
+                                Full system prompt {'>'}
+                              </button>
+                              {loading[callSystemId] && <span className="ml-2 text-[10px] text-slate-400">Loading...</span>}
+                              {blobs[callSystemId] && (
+                                <pre className="mt-1 font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                                  {blobs[callSystemId]}
+                                </pre>
+                              )}
+                            </div>
+                          )}
+                          {callUserId && (
+                            <div>
+                              <button
+                                onClick={() => fetchBlob(callUserId)}
+                                className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                              >
+                                Full user prompt {'>'}
+                              </button>
+                              {loading[callUserId] && <span className="ml-2 text-[10px] text-slate-400">Loading...</span>}
+                              {blobs[callUserId] && (
+                                <pre className="mt-1 font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
+                                  {blobs[callUserId]}
+                                </pre>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </details>
+                );
+              })}
+            </div>
+          </details>
+        )}
+
+        <details id="debug-cost">
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Модели, токены и стоимость
+          </summary>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {trace.primary_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Primary (ответ)</p>
+                <p className="font-mono font-semibold text-sky-600 dark:text-sky-400 text-[11px] truncate">
+                  {trace.primary_model}
+                </p>
+              </div>
+            )}
+            {trace.classifier_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
+                <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
+                  {trace.classifier_model}
+                </p>
+              </div>
+            )}
+            {trace.embedding_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Embedding</p>
+                <p className="font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] truncate">
+                  {trace.embedding_model}
+                </p>
+              </div>
+            )}
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Reranker</p>
+              <p className="font-mono font-semibold text-[11px] truncate text-slate-700 dark:text-slate-300">
+                {trace.reranker_enabled ? (trace.reranker_model ?? 'enabled') : 'off'}
+              </p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2 col-span-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Токены</p>
+              <div className="flex gap-4 text-xs">
+                <span className="text-slate-500">prompt: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_prompt ?? '—'}</b></span>
+                <span className="text-slate-500">completion: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_completion ?? '—'}</b></span>
+                <span className="text-slate-500">total: <b className="text-amber-600 dark:text-amber-400 font-bold">{trace.tokens_total ?? '—'}</b></span>
+              </div>
+              <div className="mt-1 flex gap-4 text-[11px] text-slate-500">
+                <span>session tokens: <b className="text-slate-700 dark:text-slate-200">{trace.session_tokens_total ?? '—'}</b></span>
+                <span>session turns: <b className="text-slate-700 dark:text-slate-200">{trace.session_turns ?? '—'}</b></span>
+                <span className="ml-auto text-emerald-600 dark:text-emerald-400 font-bold">
+                  {trace.estimated_cost_usd != null ? `\$${formatNumber(trace.estimated_cost_usd, 6, '0.000000')}` : '—'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details id="debug-timeline">
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Pipeline Timeline
+          </summary>
+          <div className="mt-2 space-y-2">
+            {pipelineStages.length === 0 ? (
+              <p className="text-slate-400">Нет данных</p>
+            ) : (
+              pipelineStages.map((stage) => {
+                const width = Math.max((stage.duration_ms / totalStageMs) * 100, 2);
+                const isSlow = stage.duration_ms > totalStageMs * 0.5;
+                return (
+                  <div key={stage.name} className="flex items-center gap-2">
+                    <span className="text-[10px] text-slate-500 w-28 truncate">{stage.label}</span>
+                    <div className="flex-1 h-2 rounded bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                      <div
+                        className={`h-2 ${stage.skipped ? 'bg-slate-300' : isSlow ? 'bg-rose-400' : 'bg-emerald-400'}`}
+                        style={{ width: `${width}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-slate-500 w-10 text-right">{stage.skipped ? 'skip' : formatMs(stage.duration_ms)}</span>
                   </div>
-                  <span className="text-slate-600 dark:text-slate-400 w-10 text-right">
-                    {formatNumber(displayValue, 2, '0.00')}
-                  </span>
+                );
+              })
+            )}
+          </div>
+        </details>
+
+        <details id="debug-memory">
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Контекст памяти
+          </summary>
+          <div className="mt-2 grid grid-cols-3 gap-2">
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Turns</p>
+              <p className="font-semibold">{memoryTurns}</p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary length</p>
+              <p className="font-semibold">{summaryLength}</p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Semantic hits</p>
+              <p className="font-semibold">{semanticHits}</p>
+            </div>
+          </div>
+
+          <details className="mt-3">
+            <summary className="cursor-pointer text-[11px] text-slate-500">Turns content</summary>
+            <div className="mt-2 space-y-2">
+              {trace.memory_turns_content && trace.memory_turns_content.length > 0 ? (
+                trace.memory_turns_content.map((turn, idx) => (
+                  <div key={`${turn.turn_index}-${idx}`} className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                      <span>#{turn.turn_index}</span>
+                      <span>{turn.role}</span>
+                      {turn.state && <span className="text-violet-500">{turn.state}</span>}
+                    </div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+                      {turn.text_preview}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-slate-400">Нет данных</p>
+              )}
+            </div>
+          </details>
+
+          <details className="mt-3">
+            <summary className="cursor-pointer text-[11px] text-slate-500">Summary text</summary>
+            <div className="mt-2">
+              {trace.summary_text ? (
+                <pre className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-2 border border-slate-200 dark:border-slate-700">
+                  {trace.summary_text}
+                </pre>
+              ) : (
+                <p className="text-slate-400">Summary отсутствует</p>
+              )}
+            </div>
+          </details>
+
+          <details className="mt-3">
+            <summary className="cursor-pointer text-[11px] text-slate-500">Semantic hits detail</summary>
+            <div className="mt-2 space-y-2">
+              {trace.semantic_hits_detail && trace.semantic_hits_detail.length > 0 ? (
+                trace.semantic_hits_detail.map((hit, idx) => (
+                  <div key={`${hit.block_id}-${idx}`} className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                    <div className="flex items-center gap-2 text-[10px] text-slate-400">
+                      <span>{hit.block_id}</span>
+                      <span className="ml-auto">{formatNumber(hit.score, 3, '0.000')}</span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+                      {hit.text_preview}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-slate-400">Нет semantic hits</p>
+              )}
+            </div>
+          </details>
+
+          <details className="mt-3">
+            <summary className="cursor-pointer text-[11px] text-slate-500">Записано в память</summary>
+            <div className="mt-2 space-y-2">
+              {trace.context_written ? (
+                <pre className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-2 border border-slate-200 dark:border-slate-700">
+                  {trace.context_written}
+                </pre>
+              ) : (
+                <p className="text-slate-400">Нет записи</p>
+              )}
+              {memorySnapshotId && (
+                <div>
+                  <button
+                    onClick={() => fetchBlob(memorySnapshotId)}
+                    className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                  >
+                    Full memory snapshot {'>'}
+                  </button>
+                  {loading[memorySnapshotId] && <span className="ml-2 text-[10px] text-slate-400">Loading...</span>}
+                  {blobs[memorySnapshotId] && (
+                    <pre className="mt-1 font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-2 border border-slate-200 dark:border-slate-700">
+                      {blobs[memorySnapshotId]}
+                    </pre>
+                  )}
                 </div>
-              )})}
+              )}
+            </div>
+          </details>
+
+          {stateTrajectory.length > 0 && (
+            <div className="mt-3">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">State trajectory</p>
+              <div className="mt-1 flex gap-1 flex-wrap">
+                {stateTrajectory.map((point, idx) => (
+                  <span
+                    key={`${point.turn}-${idx}`}
+                    className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                  >
+                    {point.state}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </details>
 
-        <details open>
+        <details id="debug-anomalies" open={openAnomalies} onToggle={(e) => setOpenAnomalies(e.currentTarget.open)}>
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            ✓ Чанки в ответ ({passedBlocks.length})
+            Anomalies
           </summary>
           <div className="mt-2">
-            {passedBlocks.length === 0
-              ? <p className="text-slate-400 px-2">Нет принятых чанков</p>
-              : passedBlocks.map((b) => <ChunkCard key={`${b.block_id}-${b.stage}`} block={b} passed={true} />)
-            }
+            <AnomalyList trace={trace} />
           </div>
         </details>
 
-        {filteredBlocks.length > 0 && (
-          <details>
-            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-              ✕ Отсеянные чанки ({filteredBlocks.length})
-            </summary>
-            <div className="mt-2">
-              {filteredBlocks.map((b) => <ChunkCard key={`${b.block_id}-${b.stage}`} block={b} passed={false} />)}
-            </div>
-          </details>
-        )}
-
-        {trace.llm_calls && trace.llm_calls.length > 0 && (
-          <details>
-            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-              ⚡ LLM Вызовы ({trace.llm_calls.length})
-            </summary>
-            <div className="mt-2 space-y-2">
-              {trace.llm_calls.map((call, idx) => (
-                <details
-                  key={`${call.step}-${idx}`}
-                  className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800"
-                >
-                  <summary className="cursor-pointer px-3 py-2 flex items-center gap-2 text-xs select-none hover:bg-slate-50 dark:hover:bg-slate-700/50">
-                    <span className="font-mono font-semibold text-slate-700 dark:text-slate-300 w-28 truncate">
-                      {call.step}
-                    </span>
-                    <span className="text-sky-600 dark:text-sky-400 font-medium">
-                      {call.model}
-                    </span>
-                    {call.tokens_total != null && (
-                      <span className="ml-auto text-slate-500">
-                        🪙 {call.tokens_total.toLocaleString()} tok
-                      </span>
-                    )}
-                    {call.duration_ms != null && (
-                      <span className="text-slate-400">
-                        ⏱ {call.duration_ms}ms
-                      </span>
-                    )}
-                  </summary>
-                  <div className="px-3 py-2 border-t border-slate-200 dark:border-slate-700 space-y-2">
-                    {(call.tokens_prompt != null || call.tokens_completion != null) && (
-                      <div className="flex gap-4 text-[11px]">
-                        <span className="text-slate-400">
-                          prompt: <b className="text-slate-600 dark:text-slate-300">
-                            {call.tokens_prompt ?? '—'}
-                          </b>
-                        </span>
-                        <span className="text-slate-400">
-                          completion: <b className="text-slate-600 dark:text-slate-300">
-                            {call.tokens_completion ?? '—'}
-                          </b>
-                        </span>
-                      </div>
-                    )}
-                    {call.system_prompt_preview && (
-                      <div>
-                        <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">
-                          System prompt (preview)
-                        </p>
-                        <p className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
-                          {call.system_prompt_preview}
-                        </p>
-                      </div>
-                    )}
-                    {call.response_preview && (
-                      <div>
-                        <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">
-                          Response (preview)
-                        </p>
-                        <p className="font-mono text-[10px] text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-1.5">
-                          {call.response_preview}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </details>
-        )}
-
-        {(trace.primary_model || trace.classifier_model) && (
-          <details>
-            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-              🤖 Модели пайплайна
-            </summary>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {trace.primary_model && (
-                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Primary (ответ)</p>
-                  <p className="font-mono font-semibold text-sky-600 dark:text-sky-400 text-[11px] truncate">
-                    {trace.primary_model}
-                  </p>
-                </div>
-              )}
-              {trace.classifier_model && (
-                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
-                  <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
-                    {trace.classifier_model}
-                  </p>
-                </div>
-              )}
-              {trace.embedding_model && (
-                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide">Embedding</p>
-                  <p className="font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] truncate">
-                    {trace.embedding_model}
-                  </p>
-                </div>
-              )}
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Reranker</p>
-                <p className="font-mono font-semibold text-[11px] truncate text-slate-700 dark:text-slate-300">
-                  {trace.reranker_enabled ? (trace.reranker_model ?? 'enabled') : 'off'}
-                </p>
-              </div>
-            </div>
-          </details>
-        )}
-
-        {(trace.tokens_total != null || trace.session_tokens_total != null) && (
-          <details>
-            <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-              🪙 Токены и стоимость
-            </summary>
-            <div className="mt-2 space-y-2">
-              {trace.tokens_total != null && (
-                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">
-                    Это сообщение
-                  </p>
-                  <div className="flex gap-4 text-xs">
-                    <span className="text-slate-500">
-                      prompt: <b className="text-slate-700 dark:text-slate-200">
-                        {trace.tokens_prompt?.toLocaleString() ?? '—'}
-                      </b>
-                    </span>
-                    <span className="text-slate-500">
-                      completion: <b className="text-slate-700 dark:text-slate-200">
-                        {trace.tokens_completion?.toLocaleString() ?? '—'}
-                      </b>
-                    </span>
-                    <span className="text-slate-500">
-                      total: <b className="text-amber-600 dark:text-amber-400 font-bold">
-                        {trace.tokens_total.toLocaleString()}
-                      </b>
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {trace.session_tokens_total != null && (
-                <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                  <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">
-                    Сессия (нарастающий итог)
-                  </p>
-                  <div className="flex gap-4 text-xs items-center">
-                    <span className="text-slate-500">
-                      токены: <b className="text-slate-700 dark:text-slate-200 font-bold">
-                        {trace.session_tokens_total.toLocaleString()}
-                      </b>
-                    </span>
-                    {trace.session_turns != null && (
-                      <span className="text-slate-500">
-                        сообщений: <b className="text-slate-700 dark:text-slate-200">
-                          {trace.session_turns}
-                        </b>
-                      </span>
-                    )}
-                    {typeof trace.session_cost_usd === 'number' && (
-                      <span className="ml-auto font-bold text-emerald-600 dark:text-emerald-400">
-                        ≈ ${formatNumber(trace.session_cost_usd, 4, '0.0000')}
-                      </span>
-                    )}
-                  </div>
-                </div>
-              )}
-            </div>
-          </details>
-        )}
-
-        <details>
-          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            🧠 Контекст памяти
-          </summary>
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Memory turns</p>
-              <p className="font-semibold">{trace.memory_turns ?? '—'}</p>
-            </div>
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary length</p>
-              <p className="font-semibold">{trace.summary_length ?? '—'}</p>
-            </div>
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary last turn</p>
-              <p className="font-semibold">{trace.summary_last_turn ?? '—'}</p>
-            </div>
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Summary</p>
-              <p className="font-semibold">{trace.summary_used ? '✓ использован' : '—'}</p>
-            </div>
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Semantic hits</p>
-              <p className="font-semibold">{trace.semantic_hits ?? '—'}</p>
-            </div>
-            {trace.prompt_overlay && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2 col-span-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">SD промпт оверлей</p>
-                <p className="font-mono text-slate-700 dark:text-slate-300">{trace.prompt_overlay}</p>
-              </div>
-            )}
+        {trace.session_id && (
+          <div id="debug-session">
+            <SessionDashboard sessionId={trace.session_id} />
           </div>
-        </details>
+        )}
+
+        {trace.session_id && (
+          <div id="debug-history">
+            <TraceHistory sessionId={trace.session_id} />
+          </div>
+        )}
+
+        <div id="debug-config">
+          <ConfigSnapshot trace={trace} />
+        </div>
+
+        <div className="flex justify-end px-3 pb-2">
+          <button
+            onClick={() => {
+              const json = JSON.stringify(trace, null, 2);
+              const blob = new Blob([json], { type: 'application/json' });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `trace_turn${trace.turn_number ?? 'N'}_${Date.now()}.json`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+            className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors select-none"
+          >
+            Export trace JSON
+          </button>
+        </div>
       </div>
-    </details>
+    </div>
   );
 };
+
+
+
+
+
+
+
+
+

@@ -22,13 +22,18 @@ sys.path.insert(0, str(Path(__file__).parent))
 LOG_DIR = Path(__file__).parent.parent / "logs" / "bot_agent"
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 
+try:
+    from logging_config import SafeStreamHandler
+except Exception:  # pragma: no cover - fallback for direct imports
+    SafeStreamHandler = logging.StreamHandler
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(name)s | %(levelname)s | %(message)s",
     handlers=[
         logging.FileHandler(LOG_DIR / "bot_agent.log", encoding='utf-8'),
-        logging.StreamHandler()
+        SafeStreamHandler()
     ]
 )
 
@@ -66,5 +71,4 @@ __all__ = [
     "__version__"
 ]
 
-logger.info(f"🚀 Bot Agent v{__version__} initialized (Phase 1 + Phase 2 + Phase 3 + Phase 4)")
-
+logger.info(f"Bot Agent v{__version__} initialized (Phase 1 + Phase 2 + Phase 3 + Phase 4)")

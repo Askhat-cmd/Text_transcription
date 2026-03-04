@@ -1,4 +1,4 @@
-﻿/**
+/**
  * API Types for Bot Psychologist Web UI
  *
  * Types matching the FastAPI backend models from Phase 5.
@@ -23,7 +23,7 @@ export interface FeedbackRequest {
   user_id: string;
   turn_index: number;
   feedback: FeedbackType;
-  rating?: number;  // 1-5
+  rating?: number; // 1-5
   comment?: string;
 }
 
@@ -47,8 +47,8 @@ export interface Source {
   block_id: string;
   title: string;
   youtube_link: string;
-  start: number | string;  // Can be seconds (int) or timecode string
-  end: number | string;    // Can be seconds (int) or timecode string
+  start: number | string; // Can be seconds (int) or timecode string
+  end: number | string; // Can be seconds (int) or timecode string
   block_type: string;
   complexity_score: number;
 }
@@ -99,23 +99,137 @@ export interface SDClassificationTrace {
   allowed_levels: string[];
 }
 
+export interface MemoryTurnPreview {
+  turn_index: number;
+  role: string;
+  text_preview: string;
+  state?: string | null;
+}
+
+export interface SemanticHitDetail {
+  block_id: string;
+  score: number;
+  text_preview: string;
+  source?: string | null;
+}
+
+export interface SDClassificationDetail {
+  method: string;
+  primary: string;
+  secondary?: string | null;
+  confidence: number;
+  indicator: string;
+  allowed_levels: string[];
+}
+
+export interface PipelineStage {
+  name: string;
+  label: string;
+  duration_ms: number;
+  skipped?: boolean;
+}
+
+export interface AnomalyFlag {
+  code: string;
+  severity: 'info' | 'warn' | 'error';
+  message: string;
+  target?: string | null;
+}
+
+export interface StateTrajectoryPoint {
+  turn: number;
+  state: string;
+  confidence?: number | null;
+}
+
+export interface ConfigSnapshot {
+  conversation_history_depth: number;
+  max_context_size: number;
+  semantic_search_top_k: number;
+  sd_confidence_threshold: number;
+  fast_path_enabled: boolean;
+  rerank_enabled: boolean;
+  model_name: string;
+}
+
+export interface PipelineError {
+  stage: string;
+  exception_type: string;
+  message: string;
+  partial_trace_available: boolean;
+}
+
 export interface LLMCallTrace {
   step: string;
   model: string;
-  system_prompt_preview: string;
-  user_prompt_preview: string;
-  response_preview: string;
-  tokens_used?: number | null;
+  tokens_prompt?: number | null;
+  tokens_completion?: number | null;
+  tokens_total?: number | null;
   duration_ms?: number | null;
+  system_prompt_preview?: string | null;
+  user_prompt_preview?: string | null;
+  response_preview?: string | null;
+  tokens_used?: number | null;
+  system_prompt_blob_id?: string | null;
+  user_prompt_blob_id?: string | null;
 }
 
 export interface DebugTrace {
   sd_classification: SDClassificationTrace;
   chunks_retrieved: ChunkTraceItem[];
   chunks_after_sd_filter: ChunkTraceItem[];
+  chunks_after_filter?: ChunkTraceItem[];
   llm_calls: LLMCallTrace[];
   context_written_to_memory: string;
+  context_written?: string | null;
   total_duration_ms: number;
+  primary_model?: string | null;
+  classifier_model?: string | null;
+  embedding_model?: string | null;
+  reranker_model?: string | null;
+  reranker_enabled?: boolean;
+  tokens_prompt?: number | null;
+  tokens_completion?: number | null;
+  tokens_total?: number | null;
+  session_tokens_total?: number | null;
+  session_cost_usd?: number | null;
+  session_turns?: number | null;
+  fast_path?: boolean | null;
+  fast_path_reason?: string | null;
+  decision_rule_id?: string | null;
+  mode_reason?: string | null;
+  block_cap?: number | null;
+  blocks_initial?: number | null;
+  blocks_after_sd?: number | null;
+  blocks_after_stage?: number | null;
+  blocks_after_cap?: number | null;
+  hybrid_query_preview?: string | null;
+  sd_detail?: SDClassificationDetail | null;
+  memory_turns?: number | null;
+  memory_turns_content?: MemoryTurnPreview[];
+  summary_text?: string | null;
+  summary_length?: number | null;
+  summary_last_turn?: number | null;
+  summary_used?: boolean | null;
+  semantic_hits?: number | null;
+  semantic_hits_detail?: SemanticHitDetail[];
+  state_secondary?: string[];
+  state_trajectory?: StateTrajectoryPoint[];
+  pipeline_stages?: PipelineStage[];
+  anomalies?: AnomalyFlag[];
+  system_prompt_blob_id?: string | null;
+  user_prompt_blob_id?: string | null;
+  memory_snapshot_blob_id?: string | null;
+  config_snapshot?: ConfigSnapshot | null;
+  estimated_cost_usd?: number | null;
+  pipeline_error?: PipelineError | null;
+  session_id?: string | null;
+  turn_number?: number | null;
+  sd_level?: string | null;
+  user_state?: string | null;
+  recommended_mode?: string | null;
+  confidence_score?: number | null;
+  confidence_level?: string | null;
 }
 
 export interface AnswerResponse {

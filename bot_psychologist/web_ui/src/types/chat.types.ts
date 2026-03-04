@@ -1,10 +1,10 @@
-﻿/**
+/**
  * Chat Types for Bot Psychologist Web UI
  *
  * Types for chat state management and UI components.
  */
 
-import type { Source, PathRecommendation } from './api.types';
+import type { Source, PathRecommendation, DebugTrace, LLMCallTrace } from './api.types';
 
 export interface TraceBlock {
   block_id: string;
@@ -16,46 +16,13 @@ export interface TraceBlock {
   filter_reason?: string;
 }
 
-export interface InlineTrace {
-  recommended_mode: string;
-  decision_rule_id: string;
-  confidence_level: string;
-  confidence_score: number;
-  user_state: string;
-  sd_level?: string;
-  query_hash?: string;
-  blocks: TraceBlock[];
+export type LLMCallInfo = LLMCallTrace;
+
+export type InlineTrace = Partial<DebugTrace> & {
+  blocks?: TraceBlock[];
   signals?: Record<string, number>;
   prompt_overlay?: string;
-  summary_used?: boolean;
-  semantic_hits?: number;
-  memory_turns?: number;
-  summary_length?: number;
-  summary_last_turn?: number | null;
-  llm_calls?: LLMCallInfo[];
-  primary_model?: string;
-  classifier_model?: string;
-  embedding_model?: string;
-  reranker_model?: string | null;
-  reranker_enabled?: boolean;
-  tokens_prompt?: number;
-  tokens_completion?: number;
-  tokens_total?: number;
-  session_tokens_total?: number;
-  session_cost_usd?: number | null;
-  session_turns?: number;
-}
-
-export interface LLMCallInfo {
-  step: string;
-  model: string;
-  tokens_prompt?: number | null;
-  tokens_completion?: number | null;
-  tokens_total?: number | null;
-  duration_ms?: number | null;
-  system_prompt_preview?: string | null;
-  response_preview?: string | null;
-}
+};
 
 export interface Message {
   id: string;

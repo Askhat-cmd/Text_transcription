@@ -52,10 +52,12 @@ class SafeStreamHandler(logging.StreamHandler):
 
     def emit(self, record: logging.LogRecord) -> None:
         try:
-            super().emit(record)
+            msg = self.format(record)
+            stream = self.stream
+            stream.write(msg + self.terminator)
+            self.flush()
         except UnicodeEncodeError:
             try:
-                msg = self.format(record)
                 stream = self.stream
                 encoding = getattr(stream, "encoding", None) or "utf-8"
                 safe_msg = msg.encode(encoding, errors="backslashreplace").decode(
@@ -65,6 +67,8 @@ class SafeStreamHandler(logging.StreamHandler):
                 self.flush()
             except Exception:
                 self.handleError(record)
+        except Exception:
+            self.handleError(record)
 
 
 class RetrievalFilter(logging.Filter):

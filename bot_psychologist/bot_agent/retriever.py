@@ -6,15 +6,23 @@ Simple TF-IDF Retriever
 Поиск релевантных блоков на основе TF-IDF + косинусного сходства.
 """
 
+import hashlib
 import logging
-from typing import List, Tuple, Optional
 import time
+from typing import List, Tuple, Optional
+
+import joblib
 import numpy as np
 
 from .data_loader import data_loader, Block
 from .config import config
 
 logger = logging.getLogger(__name__)
+
+CACHE_FORMAT_VERSION = "3.0.2"
+CACHE_DIR = config.CACHE_DIR
+TFIDF_CACHE_PATH = CACHE_DIR / "tfidf_cache.joblib"
+TFIDF_HASH_PATH = CACHE_DIR / "tfidf_cache.hash"
 
 
 class SimpleRetriever:
@@ -46,35 +54,77 @@ class SimpleRetriever:
         if self._is_built:
             logger.info("[RETRIEVAL] index already built")
             return
-        
+        self._build_or_load_tfidf()
+
+    def _compute_data_hash(self) -> str:
+        hasher = hashlib.md5()
+        hasher.update(CACHE_FORMAT_VERSION.encode())
+        for file_path in sorted(config.SAG_FINAL_DIR.glob("**/*.for_vector.json")):
+            hasher.update(file_path.read_bytes())
+        return hasher.hexdigest()
+
+    def _build_or_load_tfidf(self) -> None:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
+        current_hash = self._compute_data_hash()
+
+        if TFIDF_CACHE_PATH.exists() and TFIDF_HASH_PATH.exists():
+            saved_hash = TFIDF_HASH_PATH.read_text(encoding="utf-8").strip()
+            if saved_hash == current_hash:
+                try:
+                    cached = joblib.load(TFIDF_CACHE_PATH)
+                    self.vectorizer = cached.get("vectorizer")
+                    self.tfidf_matrix = cached.get("matrix")
+                    self.blocks = cached.get("blocks", [])
+                    self._is_built = True
+                    logger.info("[RETRIEVAL] TF-IDF loaded from cache (hash match)")
+                    return
+                except Exception as exc:
+                    logger.warning("[RETRIEVAL] cache load failed: %s. Rebuilding.", exc)
+
+        logger.info("[RETRIEVAL] building TF-IDF index")
+        self._build_tfidf()
+
+        try:
+            joblib.dump(
+                {
+                    "vectorizer": self.vectorizer,
+                    "matrix": self.tfidf_matrix,
+                    "blocks": self.blocks,
+                    "cache_version": CACHE_FORMAT_VERSION,
+                },
+                TFIDF_CACHE_PATH,
+                compress=3,
+            )
+            TFIDF_HASH_PATH.write_text(current_hash, encoding="utf-8")
+            logger.info("[RETRIEVER] TF-IDF matrix cached successfully")
+        except Exception as exc:
+            logger.warning("[RETRIEVER] Could not save cache: %s", exc)
+
+    def _build_tfidf(self) -> None:
         try:
             from sklearn.feature_extraction.text import TfidfVectorizer
         except ImportError:
             logger.error("[RETRIEVAL] scikit-learn is not installed", exc_info=True)
             raise
-        
-        logger.info("[RETRIEVAL] building TF-IDF index")
+
         self.blocks = data_loader.get_all_blocks()
-        
+
         if not self.blocks:
             logger.warning("[RETRIEVAL] no blocks available for indexing")
             return
-        
-        # Формируем текст для каждого блока: title + keywords + summary
+
         texts = [block.get_search_text() for block in self.blocks]
-        
-        # TF-IDF с символьными n-граммами (лучше для русского языка)
+
         self.vectorizer = TfidfVectorizer(
-            analyzer='char_wb',      # символьный анализ с word boundaries
-            ngram_range=(2, 4),      # 2-4 символьные n-граммы
-            max_features=10000,      # ограничение размера словаря
+            analyzer='char_wb',
+            ngram_range=(2, 4),
+            max_features=10000,
             lowercase=True,
             strip_accents='unicode'
         )
-        
+
         self.tfidf_matrix = self.vectorizer.fit_transform(texts)
         self._is_built = True
-        
         logger.info("[RETRIEVAL] index built for %s blocks", len(self.blocks))
     
     def retrieve(

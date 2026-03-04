@@ -105,6 +105,97 @@ class APIService {
     }
   }
 
+  async streamAdaptiveAnswer(
+    query: string,
+    userId: string,
+    onToken: (token: string) => void,
+    onDone?: (meta: { mode?: string; sd_level?: string; latency_ms?: number }) => void,
+    onError?: (message: string) => void,
+    options?: {
+      includePath?: boolean;
+      includeFeedback?: boolean;
+      sessionId?: string;
+      maxRetries?: number;
+    }
+  ): Promise<void> {
+    const baseUrl = this.api.defaults.baseURL || '';
+    const endpoint = `${baseUrl.replace(/\/$/, '')}/questions/adaptive-stream`;
+    const maxRetries = options?.maxRetries ?? 3;
+
+    let attempt = 0;
+
+    const attemptStream = async (): Promise<void> => {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(this.apiKey ? { 'X-API-Key': this.apiKey } : {}),
+        },
+        body: JSON.stringify({
+          query,
+          user_id: userId,
+          session_id: options?.sessionId,
+          include_path: options?.includePath ?? true,
+          include_feedback_prompt: options?.includeFeedback ?? true,
+          debug: false,
+        }),
+      });
+
+      if (!response.ok || !response.body) {
+        if (response.status === 403) {
+          this.handleAuthError();
+        }
+        const message = `Streaming error: ${response.status} ${response.statusText}`;
+        onError?.(message);
+        return;
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let buffer = '';
+
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const parts = buffer.split('\n\n');
+          buffer = parts.pop() || '';
+
+          for (const part of parts) {
+            const lines = part.split('\n').filter((line) => line.startsWith('data:'));
+            for (const line of lines) {
+              const data = line.replace(/^data:\s*/, '').trim();
+              if (!data) continue;
+              try {
+                const payload = JSON.parse(data);
+                if (payload.token) {
+                  onToken(payload.token);
+                } else if (payload.done) {
+                  onDone?.(payload);
+                } else if (payload.error) {
+                  onError?.(payload.error);
+                }
+              } catch {
+                continue;
+              }
+            }
+          }
+        }
+      } catch (err) {
+        if (attempt < maxRetries) {
+          attempt += 1;
+          console.warn(`[SSE] Read error, retrying (attempt ${attempt})`);
+          return attemptStream();
+        }
+        const message = err instanceof Error ? err.message : 'Stream read error';
+        onError?.(message);
+      }
+    };
+
+    await attemptStream();
+  }
+
   async askBasicQuestion(query: string): Promise<AnswerResponse> {
     try {
       const response = await this.api.post<AnswerResponse>(

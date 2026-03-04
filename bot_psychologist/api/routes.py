@@ -5,13 +5,16 @@ API Routes for Bot Psychologist API (Phase 5)
 REST endpoints РґР»СЏ РІСЃРµС… С„СѓРЅРєС†РёР№ Phase 1-4.
 """
 
+import json
 import logging
 import sys
+import time
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.responses import StreamingResponse
 
 # Р”РѕР±Р°РІРёС‚СЊ РїСѓС‚СЊ Рє bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -24,7 +27,23 @@ from bot_agent import (
 )
 from bot_agent.config import config
 from bot_agent.conversation_memory import get_conversation_memory
+from bot_agent.decision import (
+    DecisionGate,
+    build_mode_directive,
+    detect_routing_signals,
+    resolve_user_stage,
+)
+from bot_agent.response import ResponseFormatter, ResponseGenerator
+from bot_agent.retrieval import HybridQueryBuilder, VoyageReranker, filter_by_sd_level
+from bot_agent.user_level_adapter import UserLevelAdapter
 from bot_agent.storage import SessionManager
+from bot_agent.answer_adaptive import (
+    _classify_parallel,
+    _should_use_fast_path,
+    _build_fast_path_block,
+    _build_state_context,
+    _build_working_state,
+)
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
@@ -36,6 +55,7 @@ from .models import (
     ConversationTurnResponse, DebugTrace, SDClassificationTrace, ChunkTraceItem, LLMCallTrace
 )
 from .auth import verify_api_key, is_dev_key
+from .dependencies import get_data_loader, get_graph_client, get_retriever
 
 logger = logging.getLogger(__name__)
 
@@ -359,7 +379,10 @@ async def ask_graph_powered_question(
 )
 async def ask_adaptive_question(
     request: AskQuestionRequest,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
+    _data_loader=Depends(get_data_loader),
+    _graph_client=Depends(get_graph_client),
+    _retriever=Depends(get_retriever),
 ):
     """
     **Phase 4:** РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РґР°РїС‚РёРІРЅС‹Р№ QA.
@@ -627,6 +650,289 @@ async def ask_adaptive_question(
             detail=str(e)
         )
 
+
+@router.post(
+    "/questions/adaptive-stream",
+    summary="Phase 4: Adaptive QA (streaming)",
+    description="Streaming SSE endpoint for adaptive answers"
+)
+async def ask_adaptive_question_stream(
+    request: AskQuestionRequest,
+    api_key: str = Depends(verify_api_key),
+    _data_loader=Depends(get_data_loader),
+    _graph_client=Depends(get_graph_client),
+    retriever_dep=Depends(get_retriever),
+):
+    if not config.ENABLE_STREAMING:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Streaming is disabled",
+        )
+
+    logger.info(f"[ADAPTIVE-STREAM] query: {request.query[:50]}... (user: {request.user_id})")
+
+    session_key = request.session_id or request.user_id
+
+    if is_dev_key(api_key):
+        request.debug = True
+
+    if request.session_id:
+        try:
+            session_manager = SessionManager(str(config.BOT_DB_PATH))
+            session_manager.create_session(
+                session_id=session_key,
+                user_id=request.user_id,
+                metadata={
+                    "source": "api",
+                    "owner_user_id": request.user_id,
+                },
+            )
+        except Exception as exc:
+            logger.warning(f"⚠️ Failed to pre-create session {session_key}: {exc}")
+
+    async def event_stream():
+        start_ts = time.perf_counter()
+        try:
+            memory = get_conversation_memory(session_key)
+            conversation_context = memory.get_adaptive_context_text(request.query)
+            conversation_history = [
+                {"role": "user", "content": turn.user_input}
+                for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
+            ]
+            conversation_history_for_sd = [
+                {"role": "user", "content": turn.user_input}
+                for turn in memory.get_last_turns(10)
+            ]
+
+            state_analysis, sd_result = await _classify_parallel(
+                request.query,
+                conversation_history,
+                conversation_history_for_sd,
+                memory.get_user_sd_profile(),
+            )
+            user_stage = resolve_user_stage(memory, state_analysis)
+
+            level_adapter = UserLevelAdapter(request.user_level.value)
+            decision_gate = DecisionGate()
+
+            pre_routing_signals = detect_routing_signals(request.query, [], state_analysis)
+            pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
+
+            if _should_use_fast_path(request.query, pre_routing_result):
+                mode_directive = build_mode_directive(
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                    reason=pre_routing_result.decision.reason,
+                    forbid=pre_routing_result.decision.forbid,
+                )
+                fast_block = _build_fast_path_block(
+                    query=request.query,
+                    conversation_context=conversation_context,
+                    state_analysis=state_analysis,
+                )
+                state_context = _build_state_context(
+                    state_analysis,
+                    mode_directive.prompt,
+                    sd_level=sd_result.primary,
+                )
+                response_generator = ResponseGenerator()
+                full_answer = ""
+                async for token in response_generator.generate_stream(
+                    request.query,
+                    [fast_block],
+                    conversation_context=conversation_context,
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                    forbid=pre_routing_result.decision.forbid,
+                    user_level_adapter=level_adapter,
+                    additional_system_context=state_context,
+                    sd_level=sd_result.primary,
+                    model=config.LLM_MODEL,
+                    temperature=config.LLM_TEMPERATURE,
+                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
+                ):
+                    full_answer += token
+                    yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
+
+                formatter = ResponseFormatter()
+                formatted = formatter.format_answer(
+                    full_answer,
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                )
+                if formatted.startswith(full_answer):
+                    extra = formatted[len(full_answer):]
+                    if extra:
+                        full_answer = formatted
+                        yield f"data: {json.dumps({'token': extra}, ensure_ascii=False)}\n\n"
+                else:
+                    full_answer = formatted
+
+                try:
+                    memory.set_working_state(
+                        _build_working_state(
+                            state_analysis=state_analysis,
+                            routing_result=pre_routing_result,
+                            memory=memory,
+                        )
+                    )
+                except Exception as exc:
+                    logger.warning(f"[FAST_PATH] working_state update failed: {exc}")
+
+                memory.add_turn(
+                    user_input=request.query,
+                    bot_response=full_answer,
+                    user_state=state_analysis.primary_state.value,
+                    blocks_used=0,
+                    concepts=[],
+                )
+
+                latency_ms = int((time.perf_counter() - start_ts) * 1000)
+                yield f"data: {json.dumps({'done': True, 'mode': pre_routing_result.mode, 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
+                return
+
+            query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+            hybrid_query = query_builder.build_query(
+                current_question=request.query,
+                conversation_summary=memory.summary or "",
+                working_state=memory.working_state,
+                short_term_context=conversation_context,
+            )
+
+            raw_retrieved_blocks = retriever_dep.retrieve(hybrid_query, top_k=None)
+            retrieved_blocks = filter_by_sd_level(
+                blocks_with_scores=raw_retrieved_blocks,
+                user_sd_level=sd_result.primary,
+                user_state=state_analysis.primary_state.value,
+                sd_secondary=sd_result.secondary,
+                sd_confidence=sd_result.confidence,
+                is_first_session=(len(memory.turns) == 0),
+                min_blocks=3,
+            )
+
+            reranker = VoyageReranker(
+                model=config.VOYAGE_MODEL,
+                enabled=config.VOYAGE_ENABLED,
+            )
+            rerank_k = min(len(retrieved_blocks), max(1, min(config.TOP_K_BLOCKS, config.VOYAGE_TOP_K)))
+            if rerank_k > 0:
+                reranked = reranker.rerank_pairs(request.query, retrieved_blocks, top_k=rerank_k)
+                if reranked:
+                    retrieved_blocks = reranked
+
+            routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
+            routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+            stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
+                user_stage,
+                retrieved_blocks,
+            )
+            block_cap = decision_gate.scorer.suggest_block_cap(
+                len(stage_filtered_blocks),
+                routing_result.confidence_level,
+            )
+            retrieved_blocks = stage_filtered_blocks[:block_cap]
+
+            if not retrieved_blocks:
+                fallback_text = (
+                    "К сожалению, релевантный материал не найден. "
+                    "Попробуйте переформулировать вопрос."
+                )
+                yield f"data: {json.dumps({'token': fallback_text}, ensure_ascii=False)}\n\n"
+                latency_ms = int((time.perf_counter() - start_ts) * 1000)
+                yield f"data: {json.dumps({'done': True, 'mode': 'CLARIFICATION', 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
+                memory.add_turn(
+                    user_input=request.query,
+                    bot_response=fallback_text,
+                    user_state=state_analysis.primary_state.value,
+                    blocks_used=0,
+                    concepts=[],
+                )
+                return
+
+            blocks = [block for block, _ in retrieved_blocks]
+            adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
+            if not adapted_blocks:
+                adapted_blocks = blocks[:3]
+
+            mode_directive = build_mode_directive(
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                reason=routing_result.decision.reason,
+                forbid=routing_result.decision.forbid,
+            )
+            state_context = _build_state_context(
+                state_analysis,
+                mode_directive.prompt,
+                sd_level=sd_result.primary,
+            )
+
+            response_generator = ResponseGenerator()
+            full_answer = ""
+            async for token in response_generator.generate_stream(
+                request.query,
+                adapted_blocks,
+                conversation_context=conversation_context,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                forbid=routing_result.decision.forbid,
+                user_level_adapter=level_adapter,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                model=config.LLM_MODEL,
+                temperature=config.LLM_TEMPERATURE,
+                max_tokens=config.get_mode_max_tokens(routing_result.mode),
+            ):
+                full_answer += token
+                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
+
+            formatter = ResponseFormatter()
+            formatted = formatter.format_answer(
+                full_answer,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+            )
+            if formatted.startswith(full_answer):
+                extra = formatted[len(full_answer):]
+                if extra:
+                    full_answer = formatted
+                    yield f"data: {json.dumps({'token': extra}, ensure_ascii=False)}\n\n"
+            else:
+                full_answer = formatted
+
+            try:
+                memory.set_working_state(
+                    _build_working_state(
+                        state_analysis=state_analysis,
+                        routing_result=routing_result,
+                        memory=memory,
+                    )
+                )
+            except Exception as exc:
+                logger.warning(f"[ADAPTIVE-STREAM] working_state update failed: {exc}")
+
+            memory.add_turn(
+                user_input=request.query,
+                bot_response=full_answer,
+                user_state=state_analysis.primary_state.value,
+                blocks_used=len(adapted_blocks),
+                concepts=[],
+            )
+
+            latency_ms = int((time.perf_counter() - start_ts) * 1000)
+            yield f"data: {json.dumps({'done': True, 'mode': routing_result.mode, 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
+        except Exception as exc:
+            logger.error("[ADAPTIVE-STREAM] failed: %s", exc, exc_info=True)
+            yield f"data: {json.dumps({'error': str(exc)}, ensure_ascii=False)}\n\n"
+
+    return StreamingResponse(
+        event_stream(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )
 
 
 # ===== USER SESSIONS ENDPOINTS =====

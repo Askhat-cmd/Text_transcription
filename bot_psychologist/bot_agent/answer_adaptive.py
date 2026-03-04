@@ -13,6 +13,8 @@ Adaptive Answer Module - Phase 4
 - Запрос обратной связи
 """
 
+import asyncio
+import concurrent.futures
 import logging
 import json
 import re
@@ -40,6 +42,86 @@ from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 
 logger = logging.getLogger(__name__)
+
+
+def _run_coroutine_sync(coro):
+    """
+    Run coroutine from sync context.
+    If an event loop is already running, run it in a separate thread.
+    """
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(coro)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(asyncio.run, coro)
+        return future.result()
+
+
+def _fallback_state_analysis() -> StateAnalysis:
+    fallback_state = UserState.CURIOUS
+    return StateAnalysis(
+        primary_state=fallback_state,
+        confidence=0.3,
+        secondary_states=[],
+        indicators=[],
+        emotional_tone="neutral",
+        depth="intermediate",
+        recommendations=state_classifier._get_recommendations_for_state(fallback_state),
+    )
+
+
+def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationResult:
+    return SDClassificationResult(
+        primary="GREEN",
+        secondary=None,
+        confidence=0.5,
+        indicator=reason,
+        method="fallback",
+    )
+
+
+async def _classify_parallel(
+    user_message: str,
+    history_state: List[Dict],
+    history_sd: List[Dict],
+    user_sd_profile: Optional[dict],
+) -> Tuple[StateAnalysis, SDClassificationResult]:
+    if sd_classifier is None:
+        state_result = await state_classifier.classify(
+            user_message,
+            conversation_history=history_state,
+        )
+        return state_result, _fallback_sd_result("sd_classifier_unavailable")
+
+    results = await asyncio.gather(
+        state_classifier.classify(user_message, conversation_history=history_state),
+        sd_classifier.classify_user(
+            message=user_message,
+            conversation_history=history_sd,
+            user_sd_profile=user_sd_profile,
+        ),
+        return_exceptions=True,
+    )
+
+    state_result = results[0]
+    sd_result = results[1]
+
+    if isinstance(state_result, Exception):
+        logger.warning(
+            "[CLASSIFY_PARALLEL] StateClassifier failed: %s. Using fallback.",
+            state_result,
+        )
+        state_result = _fallback_state_analysis()
+
+    if isinstance(sd_result, Exception):
+        logger.warning(
+            "[CLASSIFY_PARALLEL] SDClassifier failed: %s. Using GREEN fallback.",
+            sd_result,
+        )
+        sd_result = _fallback_sd_result("fallback_on_error")
+
+    return state_result, sd_result
 
 
 def _log_retrieval_pairs(stage: str, pairs, limit: int = 5) -> None:
@@ -573,15 +655,39 @@ def answer_question_adaptive(
             for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
         ]
         
-        state_analysis = state_classifier.analyze_message(
-            query,
-            conversation_history=conversation_history
+        conversation_history_for_sd = [
+            {"role": "user", "content": turn.user_input}
+            for turn in memory.get_last_turns(10)
+        ]
+
+        state_analysis, sd_result = _run_coroutine_sync(
+            _classify_parallel(
+                query,
+                conversation_history,
+                conversation_history_for_sd,
+                memory.get_user_sd_profile(),
+            )
         )
         user_stage = resolve_user_stage(memory, state_analysis)
 
-        logger.info(f"✅ Состояние: {state_analysis.primary_state.value} "
-                   f"(уверенность: {state_analysis.confidence:.2f})")
-        
+        logger.info(
+            f"✅ Состояние: {state_analysis.primary_state.value} "
+            f"(уверенность: {state_analysis.confidence:.2f})"
+        )
+        logger.info(
+            f"✅ SD уровень: {sd_result.primary} "
+            f"(conf={sd_result.confidence:.2f}, method={sd_result.method})"
+        )
+
+        if len(memory.turns) % sd_profile_update_every_n == 0:
+            try:
+                memory.update_sd_profile(
+                    level=sd_result.primary,
+                    confidence=sd_result.confidence,
+                )
+            except Exception:
+                pass
+
         if debug_info is not None:
             debug_info["state_analysis"] = {
                 "primary": state_analysis.primary_state.value,
@@ -591,39 +697,6 @@ def answer_question_adaptive(
                 "depth": state_analysis.depth,
                 "user_stage": user_stage,
             }
-
-        # ================================================================
-        # ЭТАП 2б: SD-классификация пользователя (НОВОЕ)
-        # ================================================================
-        logger.debug("🌀 Этап 2б: SD-классификация...")
-        conversation_history_for_sd = [
-            {"role": "user", "content": turn.user_input}
-            for turn in memory.get_last_turns(10)
-        ]
-        try:
-            sd_result: SDClassificationResult = sd_classifier.classify(
-                message=query,
-                conversation_history=conversation_history_for_sd,
-                user_sd_profile=memory.get_user_sd_profile(),
-            )
-            if len(memory.turns) % sd_profile_update_every_n == 0:
-                memory.update_sd_profile(
-                    level=sd_result.primary,
-                    confidence=sd_result.confidence,
-                )
-            logger.info(
-                f"✅ SD уровень: {sd_result.primary} "
-                f"(conf={sd_result.confidence:.2f}, method={sd_result.method})"
-            )
-        except Exception as sd_exc:
-            logger.warning(f"[ADAPTIVE] SD classification failed: {sd_exc}, using GREEN fallback")
-            sd_result = SDClassificationResult(
-                primary="GREEN",
-                secondary=None,
-                confidence=0.5,
-                indicator="fallback_on_error",
-                method="fallback",
-            )
 
         if debug_info is not None:
             debug_info["sd_classification"] = {

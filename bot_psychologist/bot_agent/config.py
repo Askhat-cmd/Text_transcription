@@ -79,6 +79,10 @@ class Config:
     ENABLE_CACHING = True
     CACHE_DIR = PROJECT_ROOT / ".cache_bot_agent"
 
+    # === Speed layer ===
+    WARMUP_ON_START = os.getenv("WARMUP_ON_START", "True").lower() == "true"
+    ENABLE_STREAMING = os.getenv("ENABLE_STREAMING", "True").lower() == "true"
+
     # === Conversation memory ===
     CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
     MAX_CONTEXT_SIZE = int(os.getenv("MAX_CONTEXT_SIZE", "2000"))

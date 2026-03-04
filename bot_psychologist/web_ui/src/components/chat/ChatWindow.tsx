@@ -14,6 +14,8 @@ import { FiChevronDown, FiMenu, FiRefreshCw, FiSettings, FiUser } from 'react-ic
 interface ChatWindowProps {
   messages: Message[];
   isLoading: boolean;
+  isThinking?: boolean;
+  streamingText?: string;
   onSendMessage: (message: string) => void;
   onClearChat?: () => void;
   currentUserState?: string;
@@ -42,6 +44,8 @@ function formatConfidence(confidence?: number): string {
 export const ChatWindow: React.FC<ChatWindowProps> = ({
   messages,
   isLoading,
+  isThinking = false,
+  streamingText = '',
   onSendMessage,
   onClearChat,
   currentUserState,
@@ -64,7 +68,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
       return;
     }
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isLoading, autoScroll]);
+  }, [messages, isLoading, streamingText, autoScroll]);
 
   useEffect(() => {
     if (!currentUserState) {
@@ -185,7 +189,22 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               messages={messages}
               compactMode={compactMode}
             />
-            {isLoading && <TypingIndicator />}
+            {isThinking && (
+              <div className="thinking-indicator">
+                <span className="dot" />
+                <span className="dot" />
+                <span className="dot" />
+              </div>
+            )}
+            {streamingText && (
+              <div className="message-bot streaming-message">
+                <div className="prose prose-sm max-w-none dark:prose-invert">
+                  {streamingText}
+                  <span className="cursor-blink" />
+                </div>
+              </div>
+            )}
+            {isLoading && !streamingText && !isThinking && <TypingIndicator />}
             <div ref={messagesEndRef} />
           </>
         )}

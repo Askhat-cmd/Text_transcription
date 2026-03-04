@@ -8,6 +8,7 @@ State Classifier Module (Phase 4.1)
 Keyword + LLM Р°РЅР°Р»РёР· РґР»СЏ С‚РѕС‡РЅРѕСЃС‚Рё РѕРїСЂРµРґРµР»РµРЅРёСЏ.
 """
 
+import asyncio
 import logging
 import json
 from typing import Dict, List, Optional, Tuple
@@ -157,6 +158,18 @@ class StateClassifier:
                    f"(СѓРІРµСЂРµРЅРЅРѕСЃС‚СЊ: {final_analysis.confidence:.2f})")
         
         return final_analysis
+
+    async def classify(
+        self,
+        user_message: str,
+        conversation_history: Optional[List[Dict]] = None,
+    ) -> StateAnalysis:
+        """Async wrapper for parallel classification."""
+        return await asyncio.to_thread(
+            self.analyze_message,
+            user_message,
+            conversation_history,
+        )
     
     def _classify_by_keywords(
         self,

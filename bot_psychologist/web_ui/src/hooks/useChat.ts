@@ -6,7 +6,7 @@
 
 import { useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import type { InlineTrace, Message, TraceBlock } from '../types';
+import type { Message } from '../types';
 import { apiService } from '../services/api.service';
 
 export interface UseChatOptions {
@@ -19,6 +19,8 @@ export interface UseChatOptions {
 export interface UseChatReturn {
   messages: Message[];
   isLoading: boolean;
+  isThinking: boolean;
+  streamingText: string;
   error: string | null;
   currentUserState: string | undefined;
   currentStateConfidence: number | undefined;
@@ -51,6 +53,8 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
+  const [streamingText, setStreamingText] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [currentUserState, setCurrentUserState] = useState<string | undefined>();
   const [currentStateConfidence, setCurrentStateConfidence] = useState<number | undefined>();
@@ -88,114 +92,57 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
     addMessage('user', query);
     setIsLoading(true);
+    setIsThinking(true);
+    setStreamingText('');
+    setCurrentUserState(undefined);
+    setCurrentStateConfidence(undefined);
     setError(null);
 
     try {
-      const response = await apiService.askAdaptiveQuestion(
+      let streamed = '';
+      let doneMeta: { mode?: string; sd_level?: string; latency_ms?: number } | null = null;
+      let gotToken = false;
+
+      await apiService.streamAdaptiveAnswer(
         query,
         userId,
-        includePath,
-        includeFeedback,
-        sessionId
+        (token) => {
+          gotToken = true;
+          setIsThinking(false);
+          streamed += token;
+          setStreamingText(streamed);
+        },
+        (meta) => {
+          doneMeta = meta;
+        },
+        (streamError) => {
+          throw new Error(streamError);
+        },
+        {
+          includePath,
+          includeFeedback,
+          sessionId,
+        }
       );
-      const isDevKey = apiService.getAPIKey() === 'dev-key-001';
-      const rawTrace = response.trace;
-      const traceData = response.trace as Record<string, unknown> | null;
-      const retrievalDetails = (response.metadata?.retrieval_details
-        ?? (rawTrace as Record<string, unknown> | null)?.retrieval_details
-        ?? (response as unknown as Record<string, unknown>)?.retrieval_details
-        ?? {}) as Record<string, unknown>;
 
-      const mapBlocks = (
-        items: unknown,
-        stage: string,
-        passed: boolean,
-        filterReason?: string
-      ): TraceBlock[] => {
-        if (!Array.isArray(items)) {
-          return [];
-        }
-        return items.map((item) => {
-          const raw = (item ?? {}) as Record<string, unknown>;
-          const source = String(raw.source ?? raw.block_id ?? '');
-          return {
-            block_id: String(raw.block_id ?? ''),
-            score: Number(raw.score ?? 0),
-            text: String(raw.text ?? ''),
-            source,
-            stage: String(raw.stage ?? stage),
-            passed,
-            filter_reason: passed ? undefined : String(raw.filter_reason ?? filterReason ?? ''),
-          };
-        });
-      };
-
-      const toNumber = (value: unknown): number | undefined => {
-        if (value === null || value === undefined || value === '') {
-          return undefined;
-        }
-        const num = Number(value);
-        return Number.isFinite(num) ? num : undefined;
-      };
-
-      const inlineTrace: InlineTrace | null = (isDevKey && (rawTrace || Object.keys(retrievalDetails).length > 0))
-        ? {
-          recommended_mode: String(response.metadata?.recommended_mode ?? ''),
-          decision_rule_id: String(response.metadata?.decision_rule_id ?? ''),
-          confidence_level: String(response.metadata?.confidence_level ?? ''),
-          confidence_score: Number(response.metadata?.confidence_score ?? 0),
-          user_state: response.state_analysis?.primary_state ?? '',
-          sd_level: String(response.metadata?.sd_level ?? ''),
-          query_hash: String(response.metadata?.query_hash ?? ''),
-          signals: response.metadata?.signals as Record<string, number> | undefined,
-          prompt_overlay: String(response.metadata?.prompt_overlay ?? ''),
-          summary_used: Boolean(response.metadata?.summary_used),
-          semantic_hits: toNumber(response.metadata?.semantic_hits),
-          memory_turns: toNumber(response.metadata?.memory_turns),
-          summary_length: toNumber(response.metadata?.summary_length),
-          summary_last_turn: toNumber(response.metadata?.summary_last_turn),
-          llm_calls: Array.isArray(traceData?.llm_calls) ? traceData?.llm_calls as InlineTrace['llm_calls'] : undefined,
-          primary_model: String(traceData?.primary_model ?? ''),
-          classifier_model: String(traceData?.classifier_model ?? ''),
-          embedding_model: String(traceData?.embedding_model ?? ''),
-          reranker_model: traceData?.reranker_model === null ? null : String(traceData?.reranker_model ?? ''),
-          reranker_enabled: Boolean(traceData?.reranker_enabled),
-          tokens_prompt: toNumber(traceData?.tokens_prompt),
-          tokens_completion: toNumber(traceData?.tokens_completion),
-          tokens_total: toNumber(traceData?.tokens_total),
-          session_tokens_total: toNumber(traceData?.session_tokens_total),
-          session_cost_usd: toNumber(traceData?.session_cost_usd) ?? null,
-          session_turns: toNumber(traceData?.session_turns),
-          blocks: [
-            ...mapBlocks(retrievalDetails.final_blocks, 'final', true),
-            ...mapBlocks(retrievalDetails.stage_filtered, 'stage_filter', false, 'stage filter'),
-            ...mapBlocks(retrievalDetails.confidence_capped, 'confidence_cap', false, 'confidence cap'),
-          ],
-        }
-        : null;
-
-      if (response.state_analysis) {
-        setCurrentUserState(response.state_analysis.primary_state);
-        setCurrentStateConfidence(response.state_analysis.confidence);
-      }
-
-      addMessage('bot', response.answer, {
-        state: response.state_analysis?.primary_state,
-        confidence: response.state_analysis?.confidence,
-        sources: response.sources,
-        concepts: response.concepts,
-        processingTime: response.processing_time_seconds,
-        path: response.path_recommendation,
-        feedbackPrompt: response.feedback_prompt,
-        trace: inlineTrace,
+      const finalText = streamed.trim() ? streamed : '...';
+      addMessage('bot', finalText, {
+        processingTime: doneMeta?.latency_ms ? doneMeta.latency_ms / 1000 : undefined,
       });
+      setStreamingText('');
+      setIsThinking(false);
+      setIsLoading(false);
 
+      if (!gotToken && doneMeta?.mode) {
+        // no-op placeholder for future metadata updates
+      }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Не удалось получить ответ';
       setError(errorMessage);
       addMessage('bot', `Ошибка: ${errorMessage}`);
-    } finally {
+      setIsThinking(false);
       setIsLoading(false);
+      setStreamingText('');
     }
   }, [userId, includePath, includeFeedback, sessionId, addMessage]);
 
@@ -227,6 +174,8 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
   return {
     messages,
     isLoading,
+    isThinking,
+    streamingText,
     error,
     currentUserState,
     currentStateConfidence,

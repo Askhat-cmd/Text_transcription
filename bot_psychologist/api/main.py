@@ -5,6 +5,7 @@ FastAPI Application for Bot Psychologist API (Phase 5)
 Главный файл приложения с middleware, настройками и запуском.
 """
 
+import asyncio
 import sys
 import time
 from pathlib import Path
@@ -21,6 +22,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logging_config import get_logger, setup_logging
 from .routes import router
+from .dependencies import set_preloaded_components
+
+from bot_agent.config import config
+from bot_agent.data_loader import data_loader
+from bot_agent.graph_client import graph_client
+from bot_agent.retriever import get_retriever
+from bot_agent.semantic_memory import SemanticMemory
 
 # ===== LOGGING =====
 setup_logging()
@@ -41,6 +49,27 @@ async def lifespan(app: FastAPI):
     logger.info("API server starting")
     logger.info("Version: %s", app.version)
     logger.info("Docs: http://localhost:8000/api/docs")
+
+    if config.WARMUP_ON_START:
+        logger.info("[WARMUP] starting warm preload")
+        retriever = get_retriever()
+        tasks = [
+            ("data_loader", asyncio.to_thread(data_loader.load_all_data)),
+            ("semantic_memory", asyncio.to_thread(lambda: SemanticMemory(user_id="__warmup__").ensure_model_loaded())),
+            ("graph_client", asyncio.to_thread(graph_client.load_graphs_from_all_documents)),
+            ("retriever", asyncio.to_thread(retriever.build_index)),
+        ]
+        results = await asyncio.gather(*(task for _, task in tasks), return_exceptions=True)
+        for (label, _), result in zip(tasks, results):
+            if isinstance(result, Exception):
+                logger.warning("[WARMUP] %s failed: %s", label, result)
+        set_preloaded_components(
+            data_loader=data_loader,
+            graph_client=graph_client,
+            retriever=retriever,
+        )
+        logger.info("[WARMUP] completed")
+
     yield
     # Shutdown
     uptime = time.time() - _startup_time if _startup_time else 0.0
@@ -101,6 +130,16 @@ app.add_middleware(
 
 
 # Middleware для логирования
+@app.middleware("http")
+async def add_latency_header(request: Request, call_next):
+    """Add X-Response-Time-Ms header to each response."""
+    start = time.perf_counter()
+    response = await call_next(request)
+    elapsed_ms = int((time.perf_counter() - start) * 1000)
+    response.headers["X-Response-Time-Ms"] = str(elapsed_ms)
+    return response
+
+
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     """Логировать все запросы"""

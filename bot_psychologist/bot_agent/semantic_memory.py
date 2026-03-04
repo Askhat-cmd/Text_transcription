@@ -108,6 +108,11 @@ class SemanticMemory:
             self._model_loaded = True
             self._warn_unavailable_once(f"failed to load model ({type(exc).__name__}: {exc})")
 
+    def ensure_model_loaded(self) -> None:
+        """Public warmup hook for embedding model."""
+        if not self._model_loaded:
+            self._load_model()
+
     def add_turn_embedding(
         self,
         turn_index: int,

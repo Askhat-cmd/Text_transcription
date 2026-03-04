@@ -194,6 +194,8 @@ const ChatPage: React.FC = () => {
   const {
     messages,
     isLoading,
+    isThinking,
+    streamingText,
     error,
     currentUserState,
     currentStateConfidence,
@@ -720,6 +722,8 @@ const ChatPage: React.FC = () => {
           <ChatWindow
             messages={messages}
             isLoading={isLoading}
+            isThinking={isThinking}
+            streamingText={streamingText}
             error={error}
             onSendMessage={handleSendMessage}
             onClearChat={() => { void handleClearChat(); }}

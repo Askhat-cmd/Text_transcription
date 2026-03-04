@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
-from typing import Iterable, Optional
+from typing import AsyncGenerator, Iterable, Optional
 
 from ..config import config
 from ..llm_answerer import LLMAnswerer
@@ -91,18 +91,80 @@ class ResponseGenerator:
         original_build_prompt = self.answerer.build_system_prompt
         self.answerer.build_system_prompt = lambda: final_system_prompt
         try:
-            result = self.answerer.generate_answer(
-                query,
-                blocks,
-                conversation_history=conversation_context,
-                model=model_name,
-                temperature=final_temperature,
-                max_tokens=final_max_tokens,
-                step_name="answer",
-            )
+            try:
+                result = self.answerer.generate_answer(
+                    query,
+                    blocks,
+                    conversation_history=conversation_context,
+                    model=model_name,
+                    temperature=final_temperature,
+                    max_tokens=final_max_tokens,
+                    step_name="answer",
+                )
+            except TypeError as exc:
+                if "step_name" not in str(exc):
+                    raise
+                result = self.answerer.generate_answer(
+                    query,
+                    blocks,
+                    conversation_history=conversation_context,
+                    model=model_name,
+                    temperature=final_temperature,
+                    max_tokens=final_max_tokens,
+                )
         finally:
             self.answerer.build_system_prompt = original_build_prompt
 
         result["mode_prompt"] = mode_prompt
         result["mode"] = (mode or "PRESENCE").upper()
         return result
+
+    async def generate_stream(
+        self,
+        query: str,
+        blocks,
+        *,
+        conversation_context: str = "",
+        mode: str = "PRESENCE",
+        confidence_level: str = "medium",
+        forbid: Optional[Iterable[str]] = None,
+        user_level_adapter=None,
+        additional_system_context: str = "",
+        sd_level: str = "GREEN",
+        model: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+    ) -> AsyncGenerator[str, None]:
+        """Stream a response using shared mode-aware prompt composition."""
+        base_system_prompt = self.answerer.build_system_prompt()
+        if user_level_adapter is not None:
+            try:
+                base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
+            except Exception:
+                pass
+
+        sd_overlay = self._load_sd_prompt(sd_level)
+        if sd_overlay:
+            base_system_prompt = f"{base_system_prompt}\n\n{sd_overlay}"
+
+        mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
+        system_chunks = [base_system_prompt, f"MODE DIRECTIVE:\n{mode_prompt}"]
+        if additional_system_context:
+            system_chunks.append(additional_system_context.strip())
+        final_system_prompt = "\n\n".join(chunk for chunk in system_chunks if chunk).strip()
+
+        model_name = model or config.LLM_MODEL
+        base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE
+        final_temperature = self._temperature_for_confidence(confidence_level, base_temp)
+        final_max_tokens = max_tokens if max_tokens is not None else config.get_mode_max_tokens(mode)
+
+        async for token in self.answerer.answer_stream(
+            query,
+            blocks,
+            conversation_history=conversation_context,
+            model=model_name,
+            temperature=final_temperature,
+            max_tokens=final_max_tokens,
+            system_prompt_override=final_system_prompt,
+        ):
+            yield token

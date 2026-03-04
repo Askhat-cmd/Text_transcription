@@ -51,10 +51,10 @@ class ResponseFormatter:
             text = text.rstrip(".! ")
             text += ". Что в этом для вас сейчас главное?"
 
-        # Keep low-confidence tone via prompting/routing only.
-        # Avoid repetitive canned prefixes at the beginning of each reply.
         if confidence == "low":
-            pass
+            normalized = text.lstrip()
+            if not normalized.lower().startswith("могу ошибаться"):
+                text = f"Могу ошибаться, {normalized}"
 
         char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)
         return self._clip(text, char_limit)

@@ -48,6 +48,18 @@
 - `tests/test_sd_filter.py`
 - `tests/test_sd_integration.py`
 
+## Speed Layer (PRD v3.0.2)
+
+Оптимизация скорости ответов без снижения качества:
+
+- **Warm preload**: DataLoader, SemanticMemory, GraphClient, Retriever загружаются параллельно при старте API.
+  Используется FastAPI DI через `Depends()`; при сбое остаётся lazy-init fallback.
+- **Параллельные классификаторы**: StateClassifier и SDClassifier запускаются через `asyncio.gather`.
+  При ошибке одного — второй продолжает работу, сохранены fallback-значения.
+- **Streaming**: `POST /api/v1/questions/adaptive-stream` (SSE) отдаёт токены сразу, уменьшает perceived latency.
+- **TF-IDF cache**: матрица сохраняется через `joblib` с hash-валидацией.
+- **Latency header**: `X-Response-Time-Ms` в каждом ответе API.
+
 ## Web UI (PRD 09.02.2026)
 
 Ключевые изменения по PRD редизайна Web UI (стиль ChatGPT) и миграции на серверные сессии.
@@ -173,6 +185,8 @@ tail -f logs/error/error.log
 - `ENABLE_CONVERSATION_SUMMARY` (default: `true`) — включить summary диалога.
 - `SUMMARY_UPDATE_INTERVAL` (default: `5`) — обновление summary каждые N ходов.
 - `SUMMARY_MAX_CHARS` (default: `500`) — лимит длины summary.
+- `WARMUP_ON_START` (default: `true`) — прогрев компонентов на старте API.
+- `ENABLE_STREAMING` (default: `true`) — включить SSE endpoint `/api/v1/questions/adaptive-stream`.
 
 Ключевые файлы:
 
@@ -266,7 +280,7 @@ DATA_ROOT=../voice_bot_pipeline/data
 # Models
 # PRIMARY_MODEL — основная модель ответа. Для GPT-5 (reasoning) используется Responses API
 # и параметр max_output_tokens; system-prompt объединяется с user (system role не используется).
-PRIMARY_MODEL=gpt-4o-mini
+PRIMARY_MODEL=gpt-5-mini
 # CLASSIFIER_MODEL — быстрая модель для state + SD классификаторов (рекомендуется gpt-4o-mini).
 CLASSIFIER_MODEL=gpt-4o-mini
 # Только для reasoning моделей (gpt-5, o1/o3/o4): ускорение за счет effort=low/medium/high.
@@ -302,6 +316,10 @@ BOT_DB_PATH=data/bot_sessions.db
 SESSION_RETENTION_DAYS=90
 ARCHIVE_RETENTION_DAYS=365
 AUTO_CLEANUP_ENABLED=true
+
+# Speed Layer
+WARMUP_ON_START=true
+ENABLE_STREAMING=true
 ```
 
 ### 3. Проверка данных

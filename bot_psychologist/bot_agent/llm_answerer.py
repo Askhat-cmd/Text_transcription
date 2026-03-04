@@ -6,9 +6,10 @@ LLM Answerer Module
 Генерация ответов через OpenAI API с системным промптом бота-психолога.
 """
 
+import asyncio
 import logging
 import time
-from typing import List, Dict, Optional, Tuple
+from typing import AsyncGenerator, List, Dict, Optional, Tuple
 from pathlib import Path
 
 from .data_loader import Block
@@ -44,6 +45,7 @@ class LLMAnswerer:
     def __init__(self):
         self.api_key = config.OPENAI_API_KEY
         self.client = None
+        self.async_client = None
         
         if not self.api_key:
             logger.warning("⚠️ OPENAI_API_KEY не установлен. LLM ответы недоступны.")
@@ -55,6 +57,7 @@ class LLMAnswerer:
         try:
             import openai
             self.client = openai.OpenAI(api_key=self.api_key)
+            self.async_client = openai.AsyncOpenAI(api_key=self.api_key)
             token_param = config.get_token_param_name()
             logger.info(
                 "✓ OpenAI клиент инициализирован | модель: %s | параметр токенов: %s",
@@ -282,6 +285,99 @@ class LLMAnswerer:
                 "tokens_used": 0,
                 "error": str(e)
             }
+
+    async def answer_stream(
+        self,
+        user_question: str,
+        blocks: List[Block],
+        conversation_history: Optional[str] = None,
+        model: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        system_prompt_override: Optional[str] = None,
+    ) -> AsyncGenerator[str, None]:
+        """Stream answer tokens from OpenAI."""
+        if not blocks:
+            yield (
+                "К сожалению, я не нашёл релевантного материала для этого вопроса. "
+                "Попробуйте переформулировать."
+            )
+            return
+
+        if not self.async_client:
+            yield "❌ OpenAI API недоступен. Проверьте OPENAI_API_KEY в .env"
+            return
+
+        model = model or config.LLM_MODEL
+        temperature = temperature if temperature is not None else config.LLM_TEMPERATURE
+        max_tokens = max_tokens or config.get_effective_max_tokens(model)
+
+        system_prompt = system_prompt_override or self.build_system_prompt()
+        context = self.build_context_prompt(
+            blocks,
+            user_question,
+            conversation_history=conversation_history,
+        )
+
+        if not config.supports_custom_temperature(model):
+            try:
+                reasoning_effort = config.get_reasoning_effort(model)
+                request_params = {
+                    "model": model,
+                    "input": system_prompt + "\n\n" + context,
+                    "max_output_tokens": max_tokens,
+                    "stream": True,
+                }
+                if reasoning_effort:
+                    request_params["reasoning"] = {"effort": reasoning_effort}
+
+                stream = await self.async_client.responses.create(**request_params)
+                async for event in stream:
+                    token = ""
+                    if hasattr(event, "delta") and event.delta:
+                        token = event.delta
+                    elif hasattr(event, "output_text") and event.output_text:
+                        token = event.output_text
+                    elif isinstance(event, dict):
+                        token = event.get("delta") or event.get("output_text") or ""
+                    if token:
+                        yield token
+                return
+            except Exception as exc:
+                logger.warning("[LLM_ANSWERER] reasoning stream failed: %s", exc)
+                # Fallback to non-streaming generation
+                result = await asyncio.to_thread(
+                    self.generate_answer,
+                    user_question,
+                    blocks,
+                    conversation_history,
+                    model,
+                    temperature,
+                    max_tokens,
+                )
+                answer = (result.get("answer") or "").strip()
+                if answer:
+                    yield answer
+                return
+
+        token_param = config.get_token_param_name(model)
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": context},
+        ]
+        request_params = {
+            "model": model,
+            "messages": messages,
+            token_param: max_tokens,
+            "stream": True,
+            "temperature": temperature,
+        }
+        stream = await self.async_client.chat.completions.create(**request_params)
+        async for chunk in stream:
+            delta = chunk.choices[0].delta if chunk.choices else None
+            token = getattr(delta, "content", None) if delta else None
+            if token:
+                yield token
 
 
 

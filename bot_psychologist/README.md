@@ -81,7 +81,8 @@
 
 Как включить:
 - В Web UI укажите `X-API-Key = dev-key-001` (в настройках).
-- После этого панель появляется под каждым ответом (если бэкенд вернул trace/`metadata.retrieval_details`).
+- Для dev-key debug включается автоматически на бэкенде (не нужно вручную ставить `debug=true`).
+- Панель появляется под каждым ответом, когда бэкенд вернул `trace` (работает и для non-stream, и для SSE-stream).
 
 Что показывает панель:
 - Роутинг: `recommended_mode`, `decision_rule_id`, `confidence_level/confidence_score`, состояние пользователя.
@@ -94,6 +95,19 @@
 - 🤖 Модели пайплайна: primary/classifier/embedding/reranker и статус Voyage.
 - 🪙 Токены и стоимость: prompt/completion/total за сообщение + накопительный итог по сессии.
   Стоимость приблизительная и показывается только если модель есть в таблице цен.
+
+## Developer Command Center (PRD v2.0.6)
+
+В dev-режиме (API key: `dev-key-001`) доступен расширенный набор debug-инструментов для сессии:
+
+- Backend хранит **in-memory** отладочные трейсы и большие куски текста (blobs) с TTL (сбрасывается при перезапуске API).
+- В ответах `/api/v1/questions/adaptive` и `/api/v1/questions/adaptive-stream` возвращается структурированный `trace`.
+- Для больших данных используются blob id, которые можно подгружать отдельным запросом (PII в blob-ответе санитизируется).
+
+Debug endpoints:
+- `GET /api/debug/blob/{blob_id}`
+- `GET /api/debug/session/{session_id}/metrics`
+- `GET /api/debug/session/{session_id}/traces`
 
 ## Production Logging (PRD 10.02.2026)
 
@@ -116,6 +130,7 @@
   - `bot_agent/semantic_memory.py`
 - Добавлена структура директорий логов с `.gitkeep`:
   - `logs/`, `logs/app/`, `logs/retrieval/`, `logs/error/`
+- Для Windows-консоли добавлен безопасный handler (`SafeStreamHandler`): при проблемах кодировки (эмодзи и т.п.) строка логов не ломает процесс, а выводится с экранированием.
 
 Быстрая проверка:
 ```bash
@@ -523,8 +538,8 @@ Askhat-cmd
 - Логи retriever: query hash/timestamp, top TF-IDF кандидаты со score и block_id.
 - Логи confidence: contribution по сигналам и итоговый cap.
 - Логи stage-filter: вход/выход, fallback-поведение при пустом фильтре.
-- При `debug=true` в ответе API доступно `metadata.retrieval_details` с наборами блоков по каждому этапу.
-- Web UI (dev-key-001) использует `metadata.retrieval_details` для Inline Debug Trace под сообщением бота.
+- При debug-режиме в ответе API доступен `trace` (и часть деталей также сохраняется в `metadata.retrieval_details` для обратной совместимости).
+- Web UI (dev-key-001) использует `trace` + `/api/debug/blob/{blob_id}` для Inline Debug Trace и Developer Command Center.
 
 Также исправлено схлопывание источников в fallback-сценариях:
 

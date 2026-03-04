@@ -100,7 +100,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
     try {
       let streamed = '';
-      let doneMeta: { mode?: string; sd_level?: string; latency_ms?: number } | null = null;
+      let doneMeta: { mode?: string; sd_level?: string; latency_ms?: number; trace?: Message['trace'] } | null = null;
       let gotToken = false;
 
       await apiService.streamAdaptiveAnswer(
@@ -128,6 +128,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       const finalText = streamed.trim() ? streamed : '...';
       addMessage('bot', finalText, {
         processingTime: doneMeta?.latency_ms ? doneMeta.latency_ms / 1000 : undefined,
+        trace: doneMeta?.trace ?? undefined,
       });
       setStreamingText('');
       setIsThinking(false);

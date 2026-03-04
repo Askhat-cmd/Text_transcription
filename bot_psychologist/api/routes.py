@@ -43,6 +43,8 @@ from bot_agent.answer_adaptive import (
     _build_fast_path_block,
     _build_state_context,
     _build_working_state,
+    _build_retrieval_detail,
+    _get_memory_trace_metrics,
 )
 
 from .models import (
@@ -736,6 +738,7 @@ async def ask_adaptive_question_stream(
                     sd_level=sd_result.primary,
                 )
                 response_generator = ResponseGenerator()
+                llm_start_ts = time.perf_counter()
                 full_answer = ""
                 async for token in response_generator.generate_stream(
                     request.query,
@@ -754,6 +757,7 @@ async def ask_adaptive_question_stream(
                     full_answer += token
                     yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 
+                llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
                 formatter = ResponseFormatter()
                 formatted = formatter.format_answer(
                     full_answer,
@@ -788,7 +792,43 @@ async def ask_adaptive_question_stream(
                 )
 
                 latency_ms = int((time.perf_counter() - start_ts) * 1000)
-                yield f"data: {json.dumps({'done': True, 'mode': pre_routing_result.mode, 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
+                done_payload = {
+                    "done": True,
+                    "mode": pre_routing_result.mode,
+                    "sd_level": sd_result.primary,
+                    "latency_ms": latency_ms,
+                }
+                if request.debug:
+                    memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
+                    done_payload["trace"] = {
+                        "recommended_mode": pre_routing_result.mode,
+                        "decision_rule_id": str(pre_routing_result.decision.rule_id),
+                        "confidence_level": pre_routing_result.confidence_level,
+                        "confidence_score": pre_routing_result.confidence_score,
+                        "user_state": state_analysis.primary_state.value,
+                        "sd_level": (sd_result.primary or "").lower(),
+                        "blocks": [],
+                        "signals": pre_routing_signals,
+                        "llm_calls": [
+                            {
+                                "step": "fast_path",
+                                "model": config.LLM_MODEL,
+                                "duration_ms": llm_duration_ms,
+                                "response_preview": full_answer[:300],
+                            }
+                        ],
+                        "primary_model": config.LLM_MODEL,
+                        "classifier_model": config.CLASSIFIER_MODEL,
+                        "embedding_model": config.EMBEDDING_MODEL,
+                        "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
+                        "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                        "memory_turns": len(memory.turns),
+                        "summary_length": len(memory.summary) if memory.summary else 0,
+                        "summary_last_turn": memory.summary_updated_at,
+                        "summary_used": memory_metrics.get("summary_used"),
+                        "semantic_hits": memory_metrics.get("semantic_hits"),
+                    }
+                yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
                 return
 
             query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
@@ -809,6 +849,7 @@ async def ask_adaptive_question_stream(
                 is_first_session=(len(memory.turns) == 0),
                 min_blocks=3,
             )
+            sd_filtered_blocks = list(retrieved_blocks)
 
             reranker = VoyageReranker(
                 model=config.VOYAGE_MODEL,
@@ -819,6 +860,7 @@ async def ask_adaptive_question_stream(
                 reranked = reranker.rerank_pairs(request.query, retrieved_blocks, top_k=rerank_k)
                 if reranked:
                     retrieved_blocks = reranked
+                    sd_filtered_blocks = list(retrieved_blocks)
 
             routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
             routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
@@ -867,6 +909,7 @@ async def ask_adaptive_question_stream(
             )
 
             response_generator = ResponseGenerator()
+            llm_start_ts = time.perf_counter()
             full_answer = ""
             async for token in response_generator.generate_stream(
                 request.query,
@@ -885,6 +928,7 @@ async def ask_adaptive_question_stream(
                 full_answer += token
                 yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 
+            llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
             formatter = ResponseFormatter()
             formatted = formatter.format_answer(
                 full_answer,
@@ -919,7 +963,73 @@ async def ask_adaptive_question_stream(
             )
 
             latency_ms = int((time.perf_counter() - start_ts) * 1000)
-            yield f"data: {json.dumps({'done': True, 'mode': routing_result.mode, 'sd_level': sd_result.primary, 'latency_ms': latency_ms}, ensure_ascii=False)}\n\n"
+            done_payload = {
+                "done": True,
+                "mode": routing_result.mode,
+                "sd_level": sd_result.primary,
+                "latency_ms": latency_ms,
+            }
+            if request.debug:
+                sd_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in sd_filtered_blocks}
+                stage_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in stage_filtered_blocks}
+                cap_pass_ids = {str(getattr(block, "block_id", "")) for block, _ in retrieved_blocks}
+                final_ids = {str(getattr(block, "block_id", "")) for block in adapted_blocks}
+
+                trace_blocks = []
+                for block, score in raw_retrieved_blocks:
+                    block_id = str(getattr(block, "block_id", ""))
+                    filter_reason = ""
+                    if block_id not in sd_pass_ids:
+                        filter_reason = "sd_filter"
+                    elif block_id not in stage_pass_ids:
+                        filter_reason = "stage_filter"
+                    elif block_id not in cap_pass_ids:
+                        filter_reason = "confidence_cap"
+                    elif block_id not in final_ids:
+                        filter_reason = "level_filter"
+
+                    detail = _build_retrieval_detail(block, float(score), user_stage)
+                    trace_blocks.append({
+                        "block_id": detail.get("block_id", ""),
+                        "score": detail.get("score", 0.0),
+                        "text": (detail.get("text") or "")[:400],
+                        "source": detail.get("source", ""),
+                        "stage": detail.get("stage", ""),
+                        "passed": block_id in final_ids,
+                        "filter_reason": filter_reason,
+                    })
+
+                memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
+                done_payload["trace"] = {
+                    "recommended_mode": routing_result.mode,
+                    "decision_rule_id": str(routing_result.decision.rule_id),
+                    "confidence_level": routing_result.confidence_level,
+                    "confidence_score": routing_result.confidence_score,
+                    "user_state": state_analysis.primary_state.value,
+                    "sd_level": (sd_result.primary or "").lower(),
+                    "blocks": trace_blocks,
+                    "signals": routing_signals,
+                    "llm_calls": [
+                        {
+                            "step": "main_answer",
+                            "model": config.LLM_MODEL,
+                            "duration_ms": llm_duration_ms,
+                            "response_preview": full_answer[:300],
+                        }
+                    ],
+                    "primary_model": config.LLM_MODEL,
+                    "classifier_model": config.CLASSIFIER_MODEL,
+                    "embedding_model": config.EMBEDDING_MODEL,
+                    "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
+                    "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                    "memory_turns": len(memory.turns),
+                    "summary_length": len(memory.summary) if memory.summary else 0,
+                    "summary_last_turn": memory.summary_updated_at,
+                    "summary_used": memory_metrics.get("summary_used"),
+                    "semantic_hits": memory_metrics.get("semantic_hits"),
+                }
+
+            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
         except Exception as exc:
             logger.error("[ADAPTIVE-STREAM] failed: %s", exc, exc_info=True)
             yield f"data: {json.dumps({'error': str(exc)}, ensure_ascii=False)}\n\n"

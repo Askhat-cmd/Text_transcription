@@ -18,6 +18,7 @@ import type {
   CreateSessionRequest,
   DeleteSessionResponse,
 } from '../types/api.types';
+import type { InlineTrace } from '../types';
 
 class APIService {
   private api: AxiosInstance;
@@ -109,7 +110,7 @@ class APIService {
     query: string,
     userId: string,
     onToken: (token: string) => void,
-    onDone?: (meta: { mode?: string; sd_level?: string; latency_ms?: number }) => void,
+    onDone?: (meta: { mode?: string; sd_level?: string; latency_ms?: number; trace?: InlineTrace }) => void,
     onError?: (message: string) => void,
     options?: {
       includePath?: boolean;
@@ -154,33 +155,42 @@ class APIService {
       const decoder = new TextDecoder('utf-8');
       let buffer = '';
 
+      const flushBuffer = (chunk: string) => {
+        const parts = chunk.split('\n\n');
+        buffer = parts.pop() || '';
+        for (const part of parts) {
+          const lines = part.split('\n').filter((line) => line.startsWith('data:'));
+          for (const line of lines) {
+            const data = line.replace(/^data:\s*/, '').trim();
+            if (!data) continue;
+            try {
+              const payload = JSON.parse(data);
+              if (payload.token) {
+                onToken(payload.token);
+              } else if (payload.done) {
+                onDone?.(payload);
+              } else if (payload.error) {
+                onError?.(payload.error);
+              }
+            } catch {
+              continue;
+            }
+          }
+        }
+      };
+
       try {
         while (true) {
           const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const parts = buffer.split('\n\n');
-          buffer = parts.pop() || '';
-
-          for (const part of parts) {
-            const lines = part.split('\n').filter((line) => line.startsWith('data:'));
-            for (const line of lines) {
-              const data = line.replace(/^data:\s*/, '').trim();
-              if (!data) continue;
-              try {
-                const payload = JSON.parse(data);
-                if (payload.token) {
-                  onToken(payload.token);
-                } else if (payload.done) {
-                  onDone?.(payload);
-                } else if (payload.error) {
-                  onError?.(payload.error);
-                }
-              } catch {
-                continue;
-              }
-            }
+          if (value) {
+            buffer += decoder.decode(value, { stream: !done });
+            flushBuffer(buffer);
           }
+          if (done) break;
+        }
+
+        if (buffer.trim()) {
+          flushBuffer(buffer + '\n\n');
         }
       } catch (err) {
         if (attempt < maxRetries) {

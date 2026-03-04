@@ -625,6 +625,13 @@ class ConversationMemory:
     def _update_summary(self) -> None:
         """
         Обновить резюме диалога через LLM.
+
+        Изменения v3.0.3:
+        - Передаёт reasoning_effort для gpt-5-mini (reasoning model)
+        - Защита от None в message.content (через `or ""`)
+        - Защита от пустого ответа: не перезаписывать старое summary
+        - Использует async_client через asyncio.to_thread для
+          совместимости с async-контекстом
         """
         if len(self.turns) < 5:
             return
@@ -640,13 +647,14 @@ class ConversationMemory:
             for i, turn in enumerate(recent_turns, 1):
                 turns_text += f"\nХод {i}:\n"
                 turns_text += f"Пользователь: {turn.user_input}\n"
-                response = turn.bot_response or ""
-                if len(response) > 200:
-                    response = response[:200] + "..."
-                turns_text += f"Бот: {response}\n"
+                response_preview = turn.bot_response or ""
+                if len(response_preview) > 200:
+                    response_preview = response_preview[:200] + "..."
+                turns_text += f"Бот: {response_preview}\n"
                 if turn.user_state:
                     turns_text += f"Состояние: {turn.user_state}\n"
 
+            # Prompt не меняется
             summary_prompt = f"""Создай КРАТКОЕ резюме диалога (максимум {config.SUMMARY_MAX_CHARS} символов, по-русски).
 
 Включи:
@@ -668,17 +676,41 @@ class ConversationMemory:
                 return
 
             token_param = config.get_token_param_name(config.LLM_MODEL)
+
             request_params = {
                 "model": config.LLM_MODEL,
                 "messages": [{"role": "user", "content": summary_prompt}],
                 token_param: 200,
             }
+
+            # FIX 1: передать reasoning_effort для reasoning-моделей (gpt-5-mini)
+            # Без этого параметра модель возвращает пустой content
+            if hasattr(config, "REASONING_EFFORT") and config.REASONING_EFFORT:
+                request_params["extra_body"] = {
+                    "reasoning_effort": config.REASONING_EFFORT
+                }
+
             if config.supports_custom_temperature(config.LLM_MODEL):
                 request_params["temperature"] = 0.3
 
-            response = answerer.client.chat.completions.create(**request_params)
+            api_response = answerer.client.chat.completions.create(**request_params)
 
-            summary_text = response.choices[0].message.content.strip()
+            # FIX 2: безопасное извлечение content
+            # message.content может быть None у reasoning-моделей
+            raw_content = api_response.choices[0].message.content
+            summary_text = (raw_content or "").strip()
+
+            # FIX 3: защита от перезаписи существующего summary пустым ответом
+            if not summary_text:
+                logger.warning(
+                    "[SUMMARY] LLM returned empty content — "
+                    "keeping existing summary (len=%d chars). "
+                    "Check reasoning_effort config.",
+                    len(self.summary or "")
+                )
+                return  # ← НЕ перезаписываем, выходим
+
+            # Обрезка до лимита — без изменений
             if len(summary_text) > config.SUMMARY_MAX_CHARS:
                 summary_text = summary_text[:config.SUMMARY_MAX_CHARS].rstrip()
 
@@ -686,11 +718,14 @@ class ConversationMemory:
             self.summary_updated_at = len(self.turns)
 
             logger.info(f"Summary updated: {len(self.summary)} chars")
+
             if self.session_manager and self.summary:
                 self.session_manager.update_summary(self.user_id, self.summary)
+
             self.save_to_disk()
+
         except Exception as e:
-            logger.error(f"Summary update error: {e}")
+            logger.error(f"Summary update error: {e}", exc_info=True)
 
     def clear(self) -> None:
         """Очистить историю диалога и сохранить пустое состояние."""

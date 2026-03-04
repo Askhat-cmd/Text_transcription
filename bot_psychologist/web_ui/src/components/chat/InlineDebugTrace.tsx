@@ -23,13 +23,20 @@ const MODE_COLORS: Record<string, string> = {
   INTEGRATION: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-300',
 };
 
+const formatNumber = (value: unknown, digits: number, fallback = '—'): string => {
+  if (typeof value !== 'number' || Number.isNaN(value)) {
+    return fallback;
+  }
+  return value.toFixed(digits);
+};
+
 const ChunkCard: React.FC<{ block: TraceBlock; passed: boolean }> = ({ block, passed }) => (
   <details className="mb-2 rounded-lg border border-slate-200 dark:border-slate-700">
     <summary className="cursor-pointer px-3 py-2 flex items-center gap-2 text-xs select-none hover:bg-slate-50 dark:hover:bg-slate-800/50">
       <span>{passed ? '✓' : '✕'}</span>
       <code className="font-mono font-semibold text-slate-700 dark:text-slate-300">{block.block_id}</code>
       <span className={`ml-auto font-semibold ${passed ? 'text-emerald-600' : 'text-rose-500'}`}>
-        {block.score.toFixed(3)}
+        {formatNumber(block.score, 3)}
       </span>
       <span className="text-slate-400 truncate max-w-[160px]">{block.source}</span>
       {!passed && block.filter_reason && (
@@ -50,13 +57,17 @@ const ChunkCard: React.FC<{ block: TraceBlock; passed: boolean }> = ({ block, pa
 );
 
 export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
-  const passedBlocks = trace.blocks.filter((b) => b.passed);
-  const filteredBlocks = trace.blocks.filter((b) => !b.passed);
-  const sdColor = trace.sd_level ? (SD_COLORS[trace.sd_level] || '') : '';
-  const modeColor = MODE_COLORS[trace.recommended_mode] || 'bg-slate-100 text-slate-700';
-  const confColor = trace.confidence_score >= 0.75
+  const blocks = trace.blocks ?? [];
+  const passedBlocks = blocks.filter((b) => b.passed);
+  const filteredBlocks = blocks.filter((b) => !b.passed);
+  const sdLevel = (trace.sd_level || '').toLowerCase();
+  const sdColor = sdLevel ? (SD_COLORS[sdLevel] || '') : '';
+  const recommendedMode = trace.recommended_mode || '—';
+  const confidenceScore = Number.isFinite(trace.confidence_score) ? trace.confidence_score : 0;
+  const modeColor = MODE_COLORS[recommendedMode] || 'bg-slate-100 text-slate-700';
+  const confColor = confidenceScore >= 0.75
     ? 'text-emerald-600'
-    : trace.confidence_score >= 0.5
+    : confidenceScore >= 0.5
       ? 'text-amber-500'
       : 'text-rose-500';
 
@@ -65,13 +76,13 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
       <summary className="cursor-pointer px-4 py-2 flex items-center gap-2 select-none hover:bg-slate-100 dark:hover:bg-slate-800/50 rounded-xl">
         <span>🔍</span>
         <span className={`px-2 py-0.5 rounded-full font-semibold text-[11px] ${modeColor}`}>
-          {trace.recommended_mode}
+          {recommendedMode}
         </span>
-        <span className="text-slate-400">{trace.decision_rule_id}</span>
-        <span className={`font-bold ${confColor}`}>conf: {trace.confidence_score.toFixed(2)}</span>
-        {trace.sd_level && (
+        <span className="text-slate-400">{trace.decision_rule_id || '—'}</span>
+        <span className={`font-bold ${confColor}`}>conf: {formatNumber(confidenceScore, 2, '0.00')}</span>
+        {sdLevel && (
           <span className={`font-semibold uppercase text-[10px] ${sdColor}`}>
-            SD: {trace.sd_level}
+            SD: {sdLevel}
           </span>
         )}
         <span className="ml-auto text-slate-400">
@@ -87,26 +98,28 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           <div className="mt-2 grid grid-cols-2 gap-2">
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Режим</p>
-              <p className={`font-bold px-1 rounded ${modeColor}`}>{trace.recommended_mode}</p>
+              <p className={`font-bold px-1 rounded ${modeColor}`}>{recommendedMode}</p>
             </div>
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Правило</p>
-              <p className="font-mono font-semibold text-slate-700 dark:text-slate-300">{trace.decision_rule_id}</p>
+              <p className="font-mono font-semibold text-slate-700 dark:text-slate-300">
+                {trace.decision_rule_id || '—'}
+              </p>
             </div>
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Confidence</p>
               <p className={`font-bold ${confColor}`}>
-                {trace.confidence_score.toFixed(3)} ({trace.confidence_level})
+                {formatNumber(confidenceScore, 3, '0.000')} ({trace.confidence_level || '—'})
               </p>
             </div>
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Состояние</p>
               <p className="font-semibold text-slate-700 dark:text-slate-300">{trace.user_state || '—'}</p>
             </div>
-            {trace.sd_level && (
+            {sdLevel && (
               <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
                 <p className="text-[10px] text-slate-400 uppercase tracking-wide">SD уровень</p>
-                <p className={`font-bold uppercase ${sdColor}`}>{trace.sd_level}</p>
+                <p className={`font-bold uppercase ${sdColor}`}>{sdLevel}</p>
               </div>
             )}
             {trace.query_hash && (
@@ -120,20 +133,23 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           {trace.signals && Object.keys(trace.signals).length > 0 && (
             <div className="mt-2 rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Вклад сигналов</p>
-              {Object.entries(trace.signals).map(([signal, value]) => (
+              {Object.entries(trace.signals).map(([signal, value]) => {
+                const numericValue = typeof value === 'number' ? value : Number(value);
+                const displayValue = Number.isNaN(numericValue) ? 0 : numericValue;
+                return (
                 <div key={signal} className="flex items-center gap-2 mb-1">
                   <span className="text-slate-500 w-40 truncate">{signal}</span>
                   <div className="flex-1 h-1.5 rounded bg-slate-200 dark:bg-slate-700">
                     <div
                       className="h-1.5 rounded bg-emerald-500"
-                      style={{ width: `${Math.min(value * 100, 100)}%` }}
+                      style={{ width: `${Math.min(displayValue * 100, 100)}%` }}
                     />
                   </div>
                   <span className="text-slate-600 dark:text-slate-400 w-10 text-right">
-                    {value.toFixed(2)}
+                    {formatNumber(displayValue, 2, '0.00')}
                   </span>
                 </div>
-              ))}
+              )})}
             </div>
           )}
         </details>
@@ -321,9 +337,9 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
                         </b>
                       </span>
                     )}
-                    {trace.session_cost_usd != null && (
+                    {typeof trace.session_cost_usd === 'number' && (
                       <span className="ml-auto font-bold text-emerald-600 dark:text-emerald-400">
-                        ≈ ${trace.session_cost_usd.toFixed(4)}
+                        ≈ ${formatNumber(trace.session_cost_usd, 4, '0.0000')}
                       </span>
                     )}
                   </div>

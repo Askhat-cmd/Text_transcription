@@ -4,7 +4,7 @@
  * Manages chat messages, loading state, and API interactions.
  */
 
-import { useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Message } from '../types';
 import { apiService } from '../services/api.service';
@@ -58,6 +58,11 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
   const [error, setError] = useState<string | null>(null);
   const [currentUserState, setCurrentUserState] = useState<string | undefined>();
   const [currentStateConfidence, setCurrentStateConfidence] = useState<number | undefined>();
+  const messagesRef = useRef<Message[]>([]);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   const addMessage = useCallback((
     role: 'user' | 'bot',
@@ -90,7 +95,11 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
   const sendQuestion = useCallback(async (query: string) => {
     if (!query.trim()) return;
 
-    addMessage('user', query);
+    const turnIndex = Math.floor(messagesRef.current.length / 2);
+    const userMessageId = sessionId ? `${sessionId}-u-${turnIndex}` : uuidv4();
+    const botMessageId = sessionId ? `${sessionId}-b-${turnIndex}` : uuidv4();
+
+    addMessage('user', query, { id: userMessageId });
     setIsLoading(true);
     setIsThinking(true);
     setStreamingText('');
@@ -127,6 +136,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
       const finalText = streamed.trim() ? streamed : '...';
       addMessage('bot', finalText, {
+        id: botMessageId,
         processingTime: doneMeta?.latency_ms ? doneMeta.latency_ms / 1000 : undefined,
         trace: doneMeta?.trace ?? undefined,
       });

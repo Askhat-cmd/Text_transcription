@@ -1,8 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import type { InlineTrace } from '../../types';
 
 interface StatusBarProps {
   trace: InlineTrace;
+  isExpanded?: boolean;
 }
 
 const chipColors: Record<string, string> = {
@@ -24,32 +25,32 @@ function sdColor(level?: string | null) {
   return 'slate';
 }
 
-export const StatusBar: React.FC<StatusBarProps> = ({ trace }) => {
+export const StatusBar: React.FC<StatusBarProps> = ({ trace, isExpanded = false }) => {
   const anomalyCount = trace.anomalies?.length ?? 0;
   const hasError = trace.pipeline_error != null;
-  const sdLevel = trace.sd_level || trace.sd_classification?.primary || '�';
-  const mode = trace.recommended_mode || '�';
+  const sdLevel = trace.sd_level || trace.sd_classification?.primary || '—';
+  const mode = trace.recommended_mode || '—';
   const blocksAfterCap = trace.blocks_after_cap ?? trace.chunks_after_filter?.length ?? trace.chunks_after_sd_filter?.length ?? trace.chunks_retrieved?.length;
-  const blockCap = trace.block_cap ?? '�';
+  const blockCap = trace.block_cap ?? '—';
   const semanticHits = trace.semantic_hits ?? trace.semantic_hits_detail?.length ?? 0;
 
   const chips = [
     trace.fast_path && { label: 'FAST PATH', color: 'amber', anchor: 'routing' },
     { label: `MODE: ${mode}`, color: 'slate', anchor: 'routing' },
-    { label: `STATE: ${trace.user_state ?? '�'}`, color: 'violet', anchor: 'memory' },
+    { label: `STATE: ${trace.user_state ?? '—'}`, color: 'violet', anchor: 'memory' },
     {
-      label: `SD: ${sdLevel} � ${trace.sd_detail?.confidence?.toFixed?.(2) ?? trace.sd_classification?.confidence?.toFixed?.(2) ?? '�'}`,
+      label: `SD: ${sdLevel} · ${trace.sd_detail?.confidence?.toFixed?.(2) ?? trace.sd_classification?.confidence?.toFixed?.(2) ?? '—'}`,
       color: sdColor(sdLevel),
       anchor: 'sd',
     },
     {
-      label: `CHUNKS: ${blocksAfterCap ?? '�'} / cap ${blockCap}`,
+      label: `CHUNKS: ${blocksAfterCap ?? '—'} / cap ${blockCap}`,
       color: 'sky',
       anchor: 'chunks',
     },
     { label: `HITS: ${semanticHits}`, color: 'teal', anchor: 'memory' },
     {
-      label: `LLM: ${trace.total_duration_ms ? `${trace.total_duration_ms}ms` : '�'}`,
+      label: `LLM: ${trace.total_duration_ms ? `${trace.total_duration_ms}ms` : '—'}`,
       color: 'slate',
       anchor: 'llm',
     },
@@ -61,16 +62,18 @@ export const StatusBar: React.FC<StatusBarProps> = ({ trace }) => {
   ].filter(Boolean) as Array<{ label: string; color: string; anchor: string }>;
 
   return (
-    <div className="flex flex-wrap gap-1.5 px-3 py-2 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 rounded-t-lg">
+    <div className="flex flex-wrap gap-1.5 px-3 py-2 bg-slate-50 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 rounded-t-lg hover:bg-slate-100 dark:hover:bg-slate-800/70 transition-colors">
       {chips.map((chip, i) => (
-        <a
+        <span
           key={`${chip.anchor}-${i}`}
-          href={`#debug-${chip.anchor}`}
-          className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full cursor-pointer hover:opacity-80 transition-opacity ${chipColors[chip.color]}`}
+          className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full ${chipColors[chip.color]}`}
         >
           {chip.label}
-        </a>
+        </span>
       ))}
+      <span className="ml-auto text-slate-400 text-[10px] self-center">
+        {isExpanded ? '^ свернуть' : 'v детали'}
+      </span>
     </div>
   );
 };

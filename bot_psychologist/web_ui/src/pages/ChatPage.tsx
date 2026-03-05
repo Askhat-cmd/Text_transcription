@@ -27,6 +27,7 @@ import {
 import clsx from 'clsx';
 import { ChatWindow } from '../components/chat';
 import { useChat } from '../hooks/useChat';
+import { useTraceCache } from '../hooks/useTraceCache';
 import { useTheme, type Theme } from '../hooks/useTheme';
 import { formatterService } from '../services/formatter.service';
 import { storageService } from '../services/storage.service';
@@ -208,6 +209,7 @@ const ChatPage: React.FC = () => {
     includeFeedback: chatSettings.includeFeedbackPrompt,
     sessionId: activeChatId || undefined,
   });
+  const { setTrace, getTrace } = useTraceCache(activeChatId || 'default');
 
   const groupedSessions = useMemo<SessionGroup[]>(() => {
     const groups: Record<SessionGroupKey, ChatSession[]> = {
@@ -237,13 +239,24 @@ const ChatPage: React.FC = () => {
     try {
       const history = await apiService.getUserHistory(sessionId, 100);
       const loadedMessages = historyToMessages(sessionId, history.turns);
-      replaceMessages(loadedMessages);
+      const hydratedMessages = loadedMessages.map((message) => ({
+        ...message,
+        trace: message.trace ?? getTrace(message.id),
+      }));
+      replaceMessages(hydratedMessages);
       clearError();
     } catch (historyError) {
       replaceMessages([]);
       setSidebarError(historyError instanceof Error ? historyError.message : 'Не удалось загрузить историю чата');
     }
-  }, [replaceMessages, clearError]);
+  }, [replaceMessages, clearError, getTrace]);
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage?.role === 'bot' && lastMessage.trace) {
+      setTrace(lastMessage.id, lastMessage.trace);
+    }
+  }, [messages, setTrace]);
 
   const loadSessions = useCallback(async (preferredSessionId?: string) => {
     if (!apiService.hasAPIKey()) {

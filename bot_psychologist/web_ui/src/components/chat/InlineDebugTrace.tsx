@@ -42,9 +42,14 @@ const formatNumber = (value: unknown, digits: number, fallback = '—'): string 
 const formatMs = (value?: number | null) => (typeof value === 'number' ? `${value}ms` : '—');
 
 const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed }) => {
+  const [expanded, setExpanded] = useState(false);
   const sdLevel = (chunk?.sd_level || '').toUpperCase();
   const sdColor = SD_COLORS[sdLevel] || 'text-slate-500';
   const isPassed = passed ?? chunk?.passed_sd_filter ?? false;
+  const fullText: string | undefined = chunk?.text ?? chunk?.full_text;
+  const previewText: string | undefined = chunk?.preview;
+  const hasMore = Boolean(fullText && fullText.length > (previewText?.length ?? 0));
+
   return (
     <div className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs space-y-1">
       <div className="flex items-center gap-2">
@@ -58,10 +63,20 @@ const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed })
       {chunk?.filter_reason && !isPassed && (
         <div className="text-[10px] text-rose-500">{chunk.filter_reason}</div>
       )}
-      {chunk?.preview && (
-        <p className="text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
-          {chunk.preview}
-        </p>
+      {(previewText || fullText) && (
+        <div>
+          <p className="text-[11px] text-slate-600 dark:text-slate-300 whitespace-pre-wrap">
+            {expanded && fullText ? fullText : (previewText ?? fullText)}
+          </p>
+          {hasMore && (
+            <button
+              onClick={() => setExpanded((prev) => !prev)}
+              className="mt-1 text-[10px] text-sky-500 hover:text-sky-700 dark:hover:text-sky-300 transition-colors"
+            >
+              {expanded ? '▲ Свернуть' : `▼ Развернуть (${fullText!.length} символов)`}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
@@ -70,6 +85,7 @@ const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed })
 export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
   const { blobs, loading, fetchBlob } = useDebugBlob();
   const [openAnomalies, setOpenAnomalies] = useState<boolean>((trace.anomalies?.length ?? 0) > 0);
+  const [panelOpen, setPanelOpen] = useState(false);
 
   const recommendedMode = trace.recommended_mode || '—';
   const modeColor = MODE_COLORS[recommendedMode] || 'bg-slate-100 text-slate-700';
@@ -105,18 +121,25 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
 
   return (
     <div className="mt-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 text-xs">
-      <StatusBar trace={trace} />
+      <div
+        className="cursor-pointer select-none"
+        onClick={() => setPanelOpen((prev) => !prev)}
+        title={panelOpen ? 'Свернуть панель отладки' : 'Развернуть панель отладки'}
+      >
+        <StatusBar trace={trace} isExpanded={panelOpen} />
+      </div>
 
-      <div className="px-4 pb-4 pt-2 space-y-4">
+      {panelOpen && (
+        <div className="px-4 pb-4 pt-2 space-y-4">
         {trace.pipeline_error && (
           <div id="debug-error">
             <ErrorView error={trace.pipeline_error} />
           </div>
         )}
 
-        <details open id="debug-routing">
+        <details id="debug-routing">
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            Роутинг и SD
+            Роутинг и классификация
           </summary>
           <div className="mt-2 grid grid-cols-2 gap-2">
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
@@ -175,14 +198,42 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           )}
         </details>
 
-        <details open id="debug-chunks">
+        <details id="debug-timeline">
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            Чанки
+            Pipeline Timeline
+          </summary>
+          <div className="mt-2 space-y-2">
+            {pipelineStages.length === 0 ? (
+              <p className="text-slate-400">Нет данных</p>
+            ) : (
+              pipelineStages.map((stage) => {
+                const width = Math.max((stage.duration_ms / totalStageMs) * 100, 2);
+                const isSlow = stage.duration_ms > totalStageMs * 0.5;
+                return (
+                  <div key={stage.name} className="flex items-center gap-2">
+                    <span className="text-[10px] text-slate-500 w-28 truncate">{stage.label}</span>
+                    <div className="flex-1 h-2 rounded bg-slate-100 dark:bg-slate-700 overflow-hidden">
+                      <div
+                        className={`h-2 ${stage.skipped ? 'bg-slate-300' : isSlow ? 'bg-rose-400' : 'bg-emerald-400'}`}
+                        style={{ width: `${width}%` }}
+                      />
+                    </div>
+                    <span className="text-[10px] text-slate-500 w-10 text-right">{stage.skipped ? 'skip' : formatMs(stage.duration_ms)}</span>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </details>
+
+        <details id="debug-chunks">
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Чанки и retrieval
           </summary>
           <PipelineFunnel trace={trace} />
 
           <div className="mt-3 space-y-2">
-            <details open>
+            <details>
               <summary className="cursor-pointer text-slate-500 text-[11px]">Chunks in response ({chunksAfter.length})</summary>
               <div className="mt-2 space-y-2">
                 {chunksAfter.length === 0 ? (
@@ -310,87 +361,6 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           </details>
         )}
 
-        <details id="debug-cost">
-          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            Модели, токены и стоимость
-          </summary>
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            {trace.primary_model && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Primary (ответ)</p>
-                <p className="font-mono font-semibold text-sky-600 dark:text-sky-400 text-[11px] truncate">
-                  {trace.primary_model}
-                </p>
-              </div>
-            )}
-            {trace.classifier_model && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
-                <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
-                  {trace.classifier_model}
-                </p>
-              </div>
-            )}
-            {trace.embedding_model && (
-              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Embedding</p>
-                <p className="font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] truncate">
-                  {trace.embedding_model}
-                </p>
-              </div>
-            )}
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Reranker</p>
-              <p className="font-mono font-semibold text-[11px] truncate text-slate-700 dark:text-slate-300">
-                {trace.reranker_enabled ? (trace.reranker_model ?? 'enabled') : 'off'}
-              </p>
-            </div>
-            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2 col-span-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Токены</p>
-              <div className="flex gap-4 text-xs">
-                <span className="text-slate-500">prompt: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_prompt ?? '—'}</b></span>
-                <span className="text-slate-500">completion: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_completion ?? '—'}</b></span>
-                <span className="text-slate-500">total: <b className="text-amber-600 dark:text-amber-400 font-bold">{trace.tokens_total ?? '—'}</b></span>
-              </div>
-              <div className="mt-1 flex gap-4 text-[11px] text-slate-500">
-                <span>session tokens: <b className="text-slate-700 dark:text-slate-200">{trace.session_tokens_total ?? '—'}</b></span>
-                <span>session turns: <b className="text-slate-700 dark:text-slate-200">{trace.session_turns ?? '—'}</b></span>
-                <span className="ml-auto text-emerald-600 dark:text-emerald-400 font-bold">
-                  {trace.estimated_cost_usd != null ? `\$${formatNumber(trace.estimated_cost_usd, 6, '0.000000')}` : '—'}
-                </span>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <details id="debug-timeline">
-          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
-            Pipeline Timeline
-          </summary>
-          <div className="mt-2 space-y-2">
-            {pipelineStages.length === 0 ? (
-              <p className="text-slate-400">Нет данных</p>
-            ) : (
-              pipelineStages.map((stage) => {
-                const width = Math.max((stage.duration_ms / totalStageMs) * 100, 2);
-                const isSlow = stage.duration_ms > totalStageMs * 0.5;
-                return (
-                  <div key={stage.name} className="flex items-center gap-2">
-                    <span className="text-[10px] text-slate-500 w-28 truncate">{stage.label}</span>
-                    <div className="flex-1 h-2 rounded bg-slate-100 dark:bg-slate-700 overflow-hidden">
-                      <div
-                        className={`h-2 ${stage.skipped ? 'bg-slate-300' : isSlow ? 'bg-rose-400' : 'bg-emerald-400'}`}
-                        style={{ width: `${width}%` }}
-                      />
-                    </div>
-                    <span className="text-[10px] text-slate-500 w-10 text-right">{stage.skipped ? 'skip' : formatMs(stage.duration_ms)}</span>
-                  </div>
-                );
-              })
-            )}
-          </div>
-        </details>
-
         <details id="debug-memory">
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
             Контекст памяти
@@ -512,6 +482,59 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
           )}
         </details>
 
+        <details id="debug-cost" open>
+          <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
+            Модели, токены и стоимость
+          </summary>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {trace.primary_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Primary (ответ)</p>
+                <p className="font-mono font-semibold text-sky-600 dark:text-sky-400 text-[11px] truncate">
+                  {trace.primary_model}
+                </p>
+              </div>
+            )}
+            {trace.classifier_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
+                <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
+                  {trace.classifier_model}
+                </p>
+              </div>
+            )}
+            {trace.embedding_model && (
+              <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Embedding</p>
+                <p className="font-mono font-semibold text-emerald-600 dark:text-emerald-400 text-[11px] truncate">
+                  {trace.embedding_model}
+                </p>
+              </div>
+            )}
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide">Reranker</p>
+              <p className="font-mono font-semibold text-[11px] truncate text-slate-700 dark:text-slate-300">
+                {trace.reranker_enabled ? (trace.reranker_model ?? 'enabled') : 'off'}
+              </p>
+            </div>
+            <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2 col-span-2">
+              <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Токены</p>
+              <div className="flex gap-4 text-xs">
+                <span className="text-slate-500">prompt: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_prompt ?? '—'}</b></span>
+                <span className="text-slate-500">completion: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_completion ?? '—'}</b></span>
+                <span className="text-slate-500">total: <b className="text-amber-600 dark:text-amber-400 font-bold">{trace.tokens_total ?? '—'}</b></span>
+              </div>
+              <div className="mt-1 flex gap-4 text-[11px] text-slate-500">
+                <span>session tokens: <b className="text-slate-700 dark:text-slate-200">{trace.session_tokens_total ?? '—'}</b></span>
+                <span>session turns: <b className="text-slate-700 dark:text-slate-200">{trace.session_turns ?? '—'}</b></span>
+                <span className="ml-auto text-emerald-600 dark:text-emerald-400 font-bold">
+                  {trace.estimated_cost_usd != null ? `\$${formatNumber(trace.estimated_cost_usd, 6, '0.000000')}` : '—'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </details>
+
         <details id="debug-anomalies" open={openAnomalies} onToggle={(e) => setOpenAnomalies(e.currentTarget.open)}>
           <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
             Anomalies
@@ -554,7 +577,8 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
             Export trace JSON
           </button>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 };

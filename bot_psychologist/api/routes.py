@@ -9,6 +9,7 @@ import json
 import logging
 import sys
 import time
+import asyncio
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
@@ -815,7 +816,7 @@ async def ask_adaptive_question_stream(
     async def event_stream():
         start_ts = time.perf_counter()
         pipeline_stages = []
-        
+
         # Для debug режима используем не-streaming вызов (чтобы получить токены без удвоения запроса)
         if request.debug:
             logger.info("[ADAPTIVE-STREAM] Debug mode detected, using non-streaming call for accurate tokens")
@@ -828,10 +829,17 @@ async def ask_adaptive_question_stream(
                 debug=True,
                 session_store=store,
             )
-            # Вернуть результат как SSE done событие
-            trace = result.get("debug_trace") or result.get("debug")
+            # Стримим ответ по одному токену (эмуляция streaming)
             answer = result.get("answer", "")
+            # Отправляем токены по одному (разбиваем по словам для имитации streaming)
+            words = answer.split(" ")
+            for i, word in enumerate(words):
+                token = word + (" " if i < len(words) - 1 else "")
+                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
+                await asyncio.sleep(0.02)  # Небольшая задержка для имитации streaming
+            
             latency_ms = int(result.get("processing_time_seconds", 0) * 1000)
+            trace = result.get("debug_trace") or result.get("debug")
             
             done_payload = {
                 "done": True,

@@ -241,8 +241,9 @@ def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
     rates = COST_PER_1K_TOKENS.get((model_name or "").lower(), COST_PER_1K_TOKENS["default"])
     total = 0.0
     for call in llm_calls or []:
-        input_tokens = call.get("tokens_prompt") or call.get("prompt_tokens") or 0
-        output_tokens = call.get("tokens_completion") or call.get("completion_tokens") or 0
+        # FIX: используем is not None вместо or для поддержки 0 значений
+        input_tokens = call.get("tokens_prompt") if call.get("tokens_prompt") is not None else call.get("prompt_tokens") if call.get("prompt_tokens") is not None else 0
+        output_tokens = call.get("tokens_completion") if call.get("tokens_completion") is not None else call.get("completion_tokens") if call.get("completion_tokens") is not None else 0
         try:
             input_tokens = float(input_tokens)
             output_tokens = float(output_tokens)

@@ -1,7 +1,7 @@
 // components/admin/ConfigGroupPanel.tsx
-
 import React, { useState, useEffect } from 'react';
 import type { ConfigGroup } from '../../types/admin.types';
+import { ACCENT_CLASSES, type AccentKey } from '../../constants/adminColors';
 
 interface Props {
   groupKey: string;
@@ -9,12 +9,11 @@ interface Props {
   onSave: (key: string, value: unknown) => Promise<void>;
   onReset: (key: string) => Promise<void>;
   isSaving: boolean;
-  currentLLMModel?: string; // для блокировки температуры при reasoning-моделях
+  accentColor?: string; // 'violet' | 'blue' | 'emerald' | 'amber' | 'slate'
 }
 
-// Reasoning-модели не поддерживают температуру
 const REASONING_PREFIXES = ['gpt-5', 'o1', 'o3', 'o4'];
-const isReasoningModel = (model: string) =>
+const isReasoningModel = (model: string): boolean =>
   REASONING_PREFIXES.some((p) => model.startsWith(p));
 
 export const ConfigGroupPanel: React.FC<Props> = ({
@@ -23,10 +22,14 @@ export const ConfigGroupPanel: React.FC<Props> = ({
   onSave,
   onReset,
   isSaving,
-  currentLLMModel = '',
+  accentColor = 'blue',
 }) => {
   const [drafts, setDrafts] = useState<Record<string, unknown>>({});
   const [dirtyKeys, setDirtyKeys] = useState<Set<string>>(new Set());
+
+  const accentKey: AccentKey =
+    accentColor in ACCENT_CLASSES ? (accentColor as AccentKey) : 'blue';
+  const accent = ACCENT_CLASSES[accentKey];
 
   useEffect(() => {
     const init: Record<string, unknown> = {};
@@ -60,14 +63,17 @@ export const ConfigGroupPanel: React.FC<Props> = ({
 
   const renderInput = (key: string, param: ConfigGroup['params'][string]) => {
     const draft = drafts[key];
+
+    // FIX B1: читаем из локального drafts, не из внешнего prop
     const isTemperatureBlocked =
-      key === 'LLM_TEMPERATURE' && isReasoningModel(currentLLMModel);
+      key === 'LLM_TEMPERATURE' &&
+      isReasoningModel(String(drafts['LLM_MODEL'] ?? ''));
 
     const baseClass =
-      'w-full px-3 py-1.5 rounded border text-sm ' +
+      'w-full px-3 py-1.5 rounded border text-sm focus:outline-none focus:ring-2 focus:ring-offset-0 ' +
       (param.is_overridden && !dirtyKeys.has(key)
-        ? 'border-amber-400 bg-amber-50'
-        : 'border-gray-300 bg-white');
+        ? `${accent.override} ${accent.ring}`
+        : `border-gray-200 bg-white ${accent.ring}`);
 
     if (isTemperatureBlocked) {
       return (
@@ -77,7 +83,7 @@ export const ConfigGroupPanel: React.FC<Props> = ({
             value={String(draft)}
             disabled
           />
-          <span className="text-xs text-gray-400 italic">
+          <span className="text-xs text-gray-400 italic whitespace-nowrap">
             н/п для reasoning-модели
           </span>
         </div>
@@ -91,7 +97,7 @@ export const ConfigGroupPanel: React.FC<Props> = ({
             type="checkbox"
             checked={Boolean(draft)}
             onChange={(e) => handleChange(key, e.target.checked)}
-            className="w-4 h-4 rounded accent-blue-600"
+            className="w-4 h-4 rounded"
           />
           <span className="text-sm text-gray-600">
             {Boolean(draft) ? 'Включено' : 'Выключено'}
@@ -108,9 +114,7 @@ export const ConfigGroupPanel: React.FC<Props> = ({
           onChange={(e) => handleChange(key, e.target.value)}
         >
           {param.options.map((opt) => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
+            <option key={opt} value={opt}>{opt}</option>
           ))}
         </select>
       );
@@ -153,16 +157,24 @@ export const ConfigGroupPanel: React.FC<Props> = ({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
-      {/* Заголовок группы */}
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="font-semibold text-gray-800 text-base">{group.label}</h3>
+    <div className={`bg-white rounded-xl border-l-4 ${accent.border} shadow-md overflow-hidden`}>
+      {/* Заголовок карточки */}
+      <div className="flex justify-between items-center px-5 py-4 border-b border-gray-100">
+        <div className="flex items-center gap-3">
+          <span className={`text-lg px-2 py-1 rounded-lg ${accent.icon}`}>
+            {group.label.split(' ')[0]}
+          </span>
+          <h3 className="font-semibold text-gray-800 text-base">
+            {group.label.split(' ').slice(1).join(' ')}
+          </h3>
+        </div>
         <div className="flex gap-2">
           {dirtyKeys.size > 0 && (
             <button
               onClick={handleSaveAll}
               disabled={isSaving}
-              className="px-3 py-1 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50"
+              className={`px-3 py-1 rounded text-sm font-medium
+                         ${accent.saveBtn} disabled:opacity-50 transition-colors`}
             >
               Сохранить все ({dirtyKeys.size})
             </button>
@@ -170,30 +182,31 @@ export const ConfigGroupPanel: React.FC<Props> = ({
           <button
             onClick={() => onReset('__all__')}
             disabled={isSaving}
-            className="px-3 py-1 bg-gray-100 text-gray-600 rounded text-sm hover:bg-gray-200 disabled:opacity-50"
+            className="px-3 py-1 bg-gray-100 text-gray-500 rounded text-sm
+                       hover:bg-gray-200 disabled:opacity-50 transition-colors"
           >
             ↩ Сбросить группу
           </button>
         </div>
       </div>
 
-      {/* Список параметров */}
-      <div className="space-y-4">
+      {/* Параметры */}
+      <div className="px-5 py-4 space-y-5">
         {Object.entries(group.params).map(([key, param]) => (
           <div key={key} className="grid grid-cols-[1fr_auto] gap-x-3 items-start">
-            {/* Левая колонка: лейбл + инпут + подсказки */}
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-1.5">
                 <label className="text-sm font-medium text-gray-700">
                   {param.label}
                 </label>
                 {param.is_overridden && !dirtyKeys.has(key) && (
-                  <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700 rounded text-xs font-medium">
+                  <span className="px-1.5 py-0.5 bg-amber-100 text-amber-700
+                                   rounded text-xs font-medium">
                     override
                   </span>
                 )}
                 {dirtyKeys.has(key) && (
-                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded text-xs font-medium">
+                  <span className={`px-1.5 py-0.5 rounded text-xs font-medium ${accent.badge}`}>
                     изменено
                   </span>
                 )}
@@ -204,19 +217,17 @@ export const ConfigGroupPanel: React.FC<Props> = ({
               )}
               {param.is_overridden && (
                 <p className="text-xs text-gray-400 mt-0.5">
-                  Дефолт:{' '}
-                  <span className="font-mono">{String(param.default)}</span>
+                  Дефолт: <span className="font-mono">{String(param.default)}</span>
                 </p>
               )}
             </div>
-
-            {/* Правая колонка: кнопки */}
             <div className="flex flex-col gap-1 pt-6">
               {dirtyKeys.has(key) && (
                 <button
                   onClick={() => handleSave(key)}
                   disabled={isSaving}
-                  className="px-2 py-1 bg-blue-600 text-white rounded text-xs hover:bg-blue-700 disabled:opacity-50"
+                  className={`px-2 py-1 rounded text-xs
+                             ${accent.checkBtn} disabled:opacity-50 transition-colors`}
                 >
                   ✓
                 </button>
@@ -225,8 +236,9 @@ export const ConfigGroupPanel: React.FC<Props> = ({
                 <button
                   onClick={() => onReset(key)}
                   disabled={isSaving}
-                  className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-xs hover:bg-gray-200 disabled:opacity-50"
                   title="Сбросить к дефолту"
+                  className="px-2 py-1 bg-gray-100 text-gray-500 rounded text-xs
+                             hover:bg-gray-200 disabled:opacity-50 transition-colors"
                 >
                   ↩
                 </button>

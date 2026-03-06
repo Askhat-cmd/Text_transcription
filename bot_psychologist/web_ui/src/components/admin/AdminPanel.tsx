@@ -1,84 +1,60 @@
 // components/admin/AdminPanel.tsx
-// Главный компонент Admin Config Panel. Подключается к роутингу web_ui.
+// Главный компонент Admin Config Panel с новой цветовой схемой
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { ConfigGroupPanel } from './ConfigGroupPanel';
 import { PromptEditorPanel } from './PromptEditorPanel';
 import { HistoryPanel } from './HistoryPanel';
+import { GROUP_COLORS } from '../../constants/adminColors';
 import type { HistoryEntry } from '../../types/admin.types';
 
 type Tab = 'llm' | 'retrieval' | 'memory' | 'storage' | 'runtime' | 'prompts' | 'history';
 
-const TABS: { key: Tab; label: string }[] = [
-  { key: 'llm',       label: '🤖 LLM' },
-  { key: 'retrieval', label: '🔍 Поиск' },
-  { key: 'memory',    label: '🧠 Память' },
-  { key: 'storage',   label: '🗄️ Хранилище' },
-  { key: 'runtime',   label: '⚙️ Runtime' },
-  { key: 'prompts',   label: '📝 Промты' },
-  { key: 'history',   label: '🕐 История' },
+const TABS: { key: Tab; label: string; hoverColor: string }[] = [
+  { key: 'llm',       label: '🤖 LLM',       hoverColor: 'hover:bg-violet-500/20' },
+  { key: 'retrieval', label: '🔍 Поиск',      hoverColor: 'hover:bg-blue-500/20'   },
+  { key: 'memory',    label: '🧠 Память',     hoverColor: 'hover:bg-emerald-500/20'},
+  { key: 'storage',   label: '🗄️ Хранилище', hoverColor: 'hover:bg-amber-500/20'  },
+  { key: 'runtime',   label: '⚙️ Runtime',    hoverColor: 'hover:bg-slate-500/20'  },
+  { key: 'prompts',   label: '📝 Промты',     hoverColor: 'hover:bg-rose-500/20'   },
+  { key: 'history',   label: '🕐 История',    hoverColor: 'hover:bg-indigo-500/20' },
 ];
 
 export const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('llm');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('devApiKey') || '');
+  const [apiKey, setApiKey] = useState<string>(
+    () => localStorage.getItem('devApiKey') || ''
+  );
   const [showApiKey, setShowApiKey] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
-    configData,
-    prompts,
-    selectedPrompt,
-    isLoading,
-    isSaving,
-    error,
-    successMessage,
-    clearError,
-    loadConfig,
-    loadPrompts,
-    loadPromptDetail,
-    saveConfigParam,
-    resetConfigParam,
-    resetAllConfig,
-    savePrompt,
-    resetPrompt,
-    resetAllPrompts,
-    exportOverrides,
-    importOverrides,
+    configData, prompts, selectedPrompt,
+    isLoading, isSaving, error, successMessage,
+    clearError, loadConfig, loadPrompts, loadPromptDetail,
+    saveConfigParam, resetConfigParam, resetAllConfig,
+    savePrompt, resetPrompt, resetAllPrompts,
+    exportOverrides, importOverrides,
   } = useAdminConfig();
 
-  // Сохраняем API ключ при изменении
   useEffect(() => {
-    if (apiKey) {
-      localStorage.setItem('devApiKey', apiKey);
-    }
+    if (apiKey) localStorage.setItem('devApiKey', apiKey);
   }, [apiKey]);
 
-  // Получаем текущее значение LLM_MODEL для блокировки температуры
-  const currentLLMModel =
-    (configData?.groups?.llm?.params?.LLM_MODEL?.value as string) ?? '';
+  useEffect(() => { loadConfig(); loadPrompts(); }, []);
 
   useEffect(() => {
-    loadConfig();
-    loadPrompts();
-  }, []);
-
-  useEffect(() => {
-    if (activeTab === 'history') {
-      import('../../services/adminConfig.service').then(({ adminConfigService }) => {
-        adminConfigService.getHistory().then((data) => setHistory(data.history));
-      });
-    }
+    if (activeTab !== 'history') return;
+    import('../../services/adminConfig.service').then(({ adminConfigService }) => {
+      adminConfigService.getHistory().then((data) => setHistory(data.history));
+    });
   }, [activeTab]);
 
   const handleResetConfigParam = async (key: string) => {
-    if (key === '__all__') {
-      await resetAllConfig();
-    } else {
-      await resetConfigParam(key);
-    }
+    if (key === '__all__') await resetAllConfig();
+    else await resetConfigParam(key);
   };
 
   const handleImportFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,21 +65,22 @@ export const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-4">
+    <div className="min-h-screen bg-slate-100">
+
+      {/* ── Header: тёмный градиент ── */}
+      <div className="bg-gradient-to-r from-slate-900 to-slate-700 px-6 py-4 shadow-lg">
         <div className="max-w-6xl mx-auto">
-          {/* Верхняя строка: заголовок + API ключ */}
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-xl font-bold text-gray-900">
+              <h1 className="text-xl font-bold text-white tracking-tight">
                 ⚙️ Admin Config Panel
               </h1>
-              <p className="text-sm text-gray-500 mt-0.5">
-                Горячее управление параметрами бота без рестарта сервера
+              <p className="text-sm text-slate-400 mt-0.5">
+                Горячее управление параметрами без рестарта сервера
               </p>
             </div>
-            {/* API Key Input */}
+
+            {/* API Key */}
             <div className="flex items-center gap-2">
               <div className="relative">
                 <input
@@ -111,31 +88,38 @@ export const AdminPanel: React.FC = () => {
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
                   placeholder="dev-key-001"
-                  className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  className="w-48 px-3 py-1.5 bg-slate-800 border border-slate-600 rounded
+                             text-sm text-slate-200 placeholder-slate-500
+                             focus:outline-none focus:ring-2 focus:ring-violet-400"
                 />
                 <button
                   onClick={() => setShowApiKey(!showApiKey)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600"
-                  title={showApiKey ? 'Скрыть' : 'Показать'}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-300"
                 >
                   {showApiKey ? '🙈' : '👁️'}
                 </button>
               </div>
-              <span className={`text-xs px-2 py-1 rounded ${apiKey ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <span className={`text-xs px-2 py-1 rounded font-medium ${
+                apiKey
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
+              }`}>
                 {apiKey ? '✓' : '✕'}
               </span>
             </div>
           </div>
 
-          {/* Нижняя строка: кнопки Export/Import/Reset */}
+          {/* Кнопки действий */}
           <div className="flex items-center gap-2">
             <button
               onClick={exportOverrides}
-              className="px-3 py-1.5 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50"
+              className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
+                         hover:bg-slate-600 transition-colors"
             >
               ↓ Экспорт
             </button>
-            <label className="px-3 py-1.5 border border-gray-300 rounded text-sm text-gray-600 hover:bg-gray-50 cursor-pointer">
+            <label className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
+                               hover:bg-slate-600 transition-colors cursor-pointer">
               ↑ Импорт
               <input
                 ref={fileInputRef}
@@ -147,20 +131,14 @@ export const AdminPanel: React.FC = () => {
             </label>
             <button
               onClick={async () => {
-                if (
-                  window.confirm(
-                    'Полный сброс: удалить ВСЕ overrides (и конфиг, и промты)?'
-                  )
-                ) {
-                  const { adminConfigService } = await import(
-                    '../../services/adminConfig.service'
-                  );
-                  await adminConfigService.resetAll();
-                  await loadConfig();
-                  await loadPrompts();
-                }
+                if (!window.confirm('Полный сброс: удалить ВСЕ overrides (конфиг + промты)?')) return;
+                const { adminConfigService } = await import('../../services/adminConfig.service');
+                await adminConfigService.resetAll();
+                await loadConfig();
+                await loadPrompts();
               }}
-              className="px-3 py-1.5 border border-red-200 rounded text-sm text-red-600 hover:bg-red-50"
+              className="px-3 py-1.5 border border-red-500/40 rounded text-sm text-red-400
+                         hover:bg-red-500/20 transition-colors"
             >
               🗑 Полный сброс
             </button>
@@ -168,17 +146,17 @@ export const AdminPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="bg-white border-b border-gray-200 px-6">
+      {/* ── Tabs: тёмная полоса ── */}
+      <div className="bg-slate-800 px-6 shadow-md">
         <div className="max-w-6xl mx-auto flex gap-1">
           {TABS.map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+              className={`px-4 py-3 text-sm font-medium border-b-2 transition-all ${
                 activeTab === tab.key
-                  ? 'border-blue-600 text-blue-700'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  ? 'border-violet-400 text-white bg-white/5'
+                  : `border-transparent text-slate-400 ${tab.hoverColor} hover:text-white`
               }`}
             >
               {tab.label}
@@ -187,37 +165,33 @@ export const AdminPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Notifications */}
+      {/* ── Notifications ── */}
       <div className="max-w-6xl mx-auto px-6 pt-3">
         {error && (
-          <div className="flex items-center justify-between px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 mb-3">
+          <div className="flex items-center justify-between px-4 py-3
+                          bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 mb-3">
             <span>⚠ {error}</span>
-            <button onClick={clearError} className="text-red-400 hover:text-red-600">
-              ✕
-            </button>
+            <button onClick={clearError} className="text-red-400 hover:text-red-600">✕</button>
           </div>
         )}
         {successMessage && (
-          <div className="px-4 py-3 bg-green-50 border border-green-200 rounded-lg text-sm text-green-700 mb-3">
-            {successMessage}
+          <div className="px-4 py-3 bg-emerald-50 border border-emerald-200
+                          rounded-lg text-sm text-emerald-700 mb-3">
+            ✓ {successMessage}
           </div>
         )}
       </div>
 
-      {/* Main content */}
+      {/* ── Main content ── */}
       <div className="max-w-6xl mx-auto px-6 pb-10">
         {isLoading && (
-          <div className="text-center text-gray-400 py-12 text-sm">
-            Загрузка...
-          </div>
+          <div className="text-center text-slate-400 py-12 text-sm">Загрузка...</div>
         )}
 
         {!isLoading && configData && (
           <>
-            {/* ── Config tabs ── */}
-            {(['llm', 'retrieval', 'memory', 'storage', 'runtime'] as const).includes(
-              activeTab as any
-            ) && (
+            {(['llm', 'retrieval', 'memory', 'storage', 'runtime'] as const)
+              .includes(activeTab as any) && (
               <div className="mt-4 space-y-4">
                 {Object.entries(configData.groups)
                   .filter(([groupKey]) => groupKey === activeTab)
@@ -229,15 +203,15 @@ export const AdminPanel: React.FC = () => {
                       onSave={saveConfigParam}
                       onReset={handleResetConfigParam}
                       isSaving={isSaving}
-                      currentLLMModel={currentLLMModel}
+                      accentColor={GROUP_COLORS[groupKey] ?? 'blue'}
                     />
                   ))}
               </div>
             )}
 
-            {/* ── Prompts tab ── */}
             {activeTab === 'prompts' && (
-              <div className="mt-4 bg-white rounded-xl border border-gray-200 p-5 shadow-sm h-[70vh]">
+              <div className="mt-4 bg-white rounded-xl border border-slate-200
+                              p-5 shadow-md h-[70vh]">
                 <PromptEditorPanel
                   prompts={prompts}
                   selectedPrompt={selectedPrompt}
@@ -250,7 +224,6 @@ export const AdminPanel: React.FC = () => {
               </div>
             )}
 
-            {/* ── History tab ── */}
             {activeTab === 'history' && (
               <div className="mt-4">
                 <HistoryPanel history={history} />

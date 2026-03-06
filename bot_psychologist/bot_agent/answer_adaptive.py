@@ -224,11 +224,16 @@ def _store_blob(session_store, session_id: str, content: str) -> Optional[str]:
 
 
 COST_PER_1K_TOKENS = {
-    "gpt-4o": {"input": 0.005, "output": 0.015},
-    "gpt-4o-mini": {"input": 0.00015, "output": 0.0006},
-    "gpt-5-mini": {"input": 0.00025, "output": 0.002},
-    "gpt-5": {"input": 0.00125, "output": 0.01},
-    "default": {"input": 0.001, "output": 0.002},
+    "gpt-5.2":      {"input": 0.00175,  "output": 0.01400},
+    "gpt-5.1":      {"input": 0.00125,  "output": 0.01000},
+    "gpt-5":        {"input": 0.00125,  "output": 0.01000},
+    "gpt-5-mini":   {"input": 0.00025,  "output": 0.00200},
+    "gpt-5-nano":   {"input": 0.00005,  "output": 0.00040},
+    "gpt-4.1":      {"input": 0.00200,  "output": 0.00800},
+    "gpt-4.1-mini": {"input": 0.00040,  "output": 0.00160},
+    "gpt-4.1-nano": {"input": 0.00010,  "output": 0.00040},
+    "gpt-4o-mini":  {"input": 0.00015,  "output": 0.00060},
+    "default":      {"input": 0.00125,  "output": 0.01000},
 }
 
 
@@ -607,14 +612,15 @@ def _update_session_token_metrics(
     new_turns = previous_turns + 1
 
     cost_per_1m = {
-        "gpt-4o-mini": {"input": 0.15, "output": 0.60},
-        "gpt-4o": {"input": 2.50, "output": 10.00},
-        "gpt-4-turbo": {"input": 10.00, "output": 30.00},
-        "gpt-4-turbo-preview": {"input": 10.00, "output": 30.00},
-        "gpt-5-mini": {"input": 0.25, "output": 2.00},
-        "gpt-5-mini-2025-08-07": {"input": 0.25, "output": 2.00},
-        "gpt-5": {"input": 1.25, "output": 10.00},
-        "gpt-5-2025-08-07": {"input": 1.25, "output": 10.00},
+        "gpt-5.2":      {"input": 1.75,  "output": 14.00},
+        "gpt-5.1":      {"input": 1.25,  "output": 10.00},
+        "gpt-5":        {"input": 1.25,  "output": 10.00},
+        "gpt-5-mini":   {"input": 0.25,  "output":  2.00},
+        "gpt-5-nano":   {"input": 0.05,  "output":  0.40},
+        "gpt-4.1":      {"input": 2.00,  "output":  8.00},
+        "gpt-4.1-mini": {"input": 0.40,  "output":  1.60},
+        "gpt-4.1-nano": {"input": 0.10,  "output":  0.40},
+        "gpt-4o-mini":  {"input": 0.15,  "output":  0.60},
     }
 
     model_key = (model_name or "").lower()
@@ -1957,9 +1963,12 @@ def answer_question_adaptive(
             if not debug_trace.get("tokens_total") and (total_prompt or total_completion):
                 debug_trace["tokens_total"] = total_prompt + total_completion
             # Основные значения (имеют приоритет)
-            debug_trace["tokens_prompt"] = debug_trace.get("tokens_prompt") or tokens_prompt
-            debug_trace["tokens_completion"] = debug_trace.get("tokens_completion") or tokens_completion
-            debug_trace["tokens_total"] = debug_trace.get("tokens_total") or tokens_total
+            if debug_trace.get("tokens_prompt") is None:
+                debug_trace["tokens_prompt"] = tokens_prompt
+            if debug_trace.get("tokens_completion") is None:
+                debug_trace["tokens_completion"] = tokens_completion
+            if debug_trace.get("tokens_total") is None:
+                debug_trace["tokens_total"] = tokens_total
             debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
             debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
             debug_trace["session_turns"] = session_metrics.get("session_turns")

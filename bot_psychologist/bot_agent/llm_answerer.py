@@ -207,14 +207,12 @@ class LLMAnswerer:
                 usage = getattr(response, "usage", None)
                 model_used = str(getattr(response, "model", model))
                 if usage is not None:
-                    tokens_prompt = (
-                        getattr(usage, "prompt_tokens", None)
-                        or getattr(usage, "input_tokens", None)
-                    )
-                    tokens_completion = (
-                        getattr(usage, "completion_tokens", None)
-                        or getattr(usage, "output_tokens", None)
-                    )
+                    _tp = getattr(usage, "prompt_tokens", None)
+                    tokens_prompt = _tp if _tp is not None else getattr(usage, "input_tokens", None)
+
+                    _tc = getattr(usage, "completion_tokens", None)
+                    tokens_completion = _tc if _tc is not None else getattr(usage, "output_tokens", None)
+
                     tokens_total = getattr(usage, "total_tokens", None)
                     if tokens_total is None and tokens_prompt is not None and tokens_completion is not None:
                         tokens_total = int(tokens_prompt) + int(tokens_completion)

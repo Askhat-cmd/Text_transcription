@@ -54,14 +54,15 @@ export const PromptEditorPanel: React.FC<Props> = ({
     <div className="flex h-full gap-4">
       {/* Левая панель: список промтов */}
       <div className="w-64 flex-shrink-0">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="font-semibold text-gray-800 text-sm">Промты</h3>
+        <div className="bg-gradient-to-r from-rose-900 to-rose-700 px-4 py-3
+                        rounded-t-lg flex justify-between items-center mb-3 -mx-0">
+          <h3 className="text-white font-semibold text-sm">📝 Промты</h3>
           <button
             onClick={onResetAll}
             disabled={isSaving}
-            className="text-xs text-gray-500 hover:text-red-500 disabled:opacity-50"
+            className="text-xs text-rose-300 hover:text-white transition-colors disabled:opacity-50"
           >
-            ↩ Все к дефолту
+            ⟲ Все к дефолту
           </button>
         </div>
         <div className="space-y-1">
@@ -71,7 +72,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
               onClick={() => onSelect(p.name)}
               className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                 selectedPrompt?.name === p.name
-                  ? 'bg-blue-50 border border-blue-200 text-blue-800'
+                  ? 'bg-rose-50 border border-rose-200 text-rose-800'
                   : 'hover:bg-gray-50 text-gray-700'
               }`}
             >
@@ -118,8 +119,8 @@ export const PromptEditorPanel: React.FC<Props> = ({
                   onClick={() => setShowDiff(!showDiff)}
                   className={`px-3 py-1.5 rounded text-sm border transition-colors ${
                     showDiff
-                      ? 'bg-gray-800 text-white border-gray-800'
-                      : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+                      ? 'bg-rose-800 text-white border-rose-800'
+                      : 'border-rose-200 text-rose-600 hover:bg-rose-50'
                   }`}
                 >
                   {showDiff ? 'Скрыть оригинал' : 'Показать оригинал'}
@@ -128,7 +129,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
                   <button
                     onClick={handleReset}
                     disabled={isSaving}
-                    className="px-3 py-1.5 rounded text-sm border border-amber-300 text-amber-700 hover:bg-amber-50 disabled:opacity-50"
+                    className="px-3 py-1.5 rounded text-sm border border-rose-300 text-rose-700 hover:bg-rose-50 disabled:opacity-50"
                   >
                     ↩ Вернуть оригинал
                   </button>
@@ -136,7 +137,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
                 <button
                   onClick={handleSave}
                   disabled={isSaving || !isDirty}
-                  className="px-3 py-1.5 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50"
+                  className="px-3 py-1.5 bg-rose-600 text-white rounded text-sm hover:bg-rose-700 disabled:opacity-50"
                 >
                   {isSaving ? 'Сохранение...' : '✓ Сохранить'}
                 </button>
@@ -157,7 +158,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
                   />
                 </div>
                 <div className="flex-1 flex flex-col">
-                  <p className="text-xs text-blue-600 mb-1 font-medium">
+                  <p className="text-xs text-rose-600 mb-1 font-medium">
                     Текущая версия (редактирование)
                   </p>
                   <textarea

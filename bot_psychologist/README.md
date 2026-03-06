@@ -146,6 +146,72 @@ tail -f logs/error/error.log
 ```
 
 Для защищенных endpoints нужен заголовок `X-API-Key` (например: `dev-key-001`).
+
+## Admin Config Panel (PRD v2.2)
+
+Веб-интерфейс для горячего управления параметрами бота без рестарта сервера.
+
+### Возможности
+
+- **28 редактируемых параметров** в реальном времени:
+  - 🤖 **LLM:** модель, температура, токены, reasoning effort, streaming
+  - 🔍 **Retrieval:** TOP-K, Voyage rerank, порог релевантности
+  - 🧠 **Memory:** глубина истории, semantic search, summary
+  - 🗄️ **Storage:** ретеншн сессий, авто-очистка
+  - ⚙️ **Runtime:** warmup, кэширование
+
+- **10 промтов для редактирования:**
+  - Системный базовый промт
+  - SD-адаптации (6 уровней: Purple/Red/Blue/Orange/Green/Yellow)
+  - Уровни пользователя (Beginner/Intermediate/Advanced)
+
+- **История изменений:** последние 50 записей с экспортом/импортом JSON
+
+- **Цветовая схема по группам:**
+  - LLM — фиолетовая
+  - Поиск — синяя
+  - Память — зелёная
+  - Хранилище — янтарная
+  - Runtime — серая
+  - Промты — розовая
+  - История — индиго
+
+### Доступ
+
+- **URL:** `http://localhost:3000/admin`
+- **API ключ:** `dev-key-001` (вводится в UI)
+
+### Backend реализация
+
+- `bot_agent/runtime_config.py` — `RuntimeConfig` с override-слоем
+- `bot_agent/config.py` — `config = RuntimeConfig()`
+- `api/admin_routes.py` — 11 API endpoints (`/api/admin/*`)
+- `api/main.py` — регистрация `admin_router`
+
+### Frontend реализация
+
+- `web_ui/src/constants/adminColors.ts` — цветовые константы
+- `web_ui/src/components/admin/AdminPanel.tsx` — главный компонент
+- `web_ui/src/components/admin/ConfigGroupPanel.tsx` — карточки параметров
+- `web_ui/src/components/admin/PromptEditorPanel.tsx` — редактор промтов
+- `web_ui/src/components/admin/HistoryPanel.tsx` — история изменений
+
+### Тесты
+
+```bash
+cd bot_psychologist
+python -m pytest tests/test_runtime_config_reset.py -v
+# test_is_reasoning_model — проверка блокировки температуры для gpt-5*, o1, o3, o4
+```
+
+### Важные исправления
+
+**Bug Fix B2:** `reset_prompt_override` теперь удаляет ключ из JSON, а не записывает `null`
+
+**Bug Fix B1:** Температура реагирует на смену модели мгновенно (из черновика UI), без необходимости сохранять
+
+---
+
 ## Промпт (System Prompt) и уровни сложности
 
 Системный промпт вынесен в отдельные файлы, чтобы его было проще редактировать без правок кода:

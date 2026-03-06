@@ -911,6 +911,41 @@ async def ask_adaptive_question_stream(
                 response_generator = ResponseGenerator()
                 llm_start_ts = time.perf_counter()
                 full_answer = ""
+                tokens_prompt = None
+                tokens_completion = None
+                tokens_total = None
+                
+                # Для debug режима получаем токены через не-streaming вызов
+                if request.debug:
+                    try:
+                        state_context = _build_state_context(
+                            state_analysis,
+                            mode_directive.prompt,
+                            sd_level=sd_result.primary,
+                        )
+                        llm_result = response_generator.generate(
+                            request.query,
+                            [fast_block],
+                            conversation_context=conversation_context,
+                            mode=pre_routing_result.mode,
+                            confidence_level=pre_routing_result.confidence_level,
+                            forbid=pre_routing_result.decision.forbid,
+                            user_level_adapter=level_adapter,
+                            additional_system_context=state_context,
+                            sd_level=sd_result.primary,
+                            model=config.LLM_MODEL,
+                            temperature=config.LLM_TEMPERATURE,
+                            max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
+                            system_prompt_blob_id=None,
+                            user_prompt_blob_id=None,
+                        )
+                        tokens_prompt = llm_result.get("tokens_prompt")
+                        tokens_completion = llm_result.get("tokens_completion")
+                        tokens_total = llm_result.get("tokens_total")
+                    except Exception as token_exc:
+                        logger.warning("[FAST_PATH] Failed to get tokens: %s", token_exc)
+                
+                # Streaming для ответа
                 async for token in response_generator.generate_stream(
                     request.query,
                     [fast_block],
@@ -1018,7 +1053,12 @@ async def ask_adaptive_question_stream(
 
                     llm_calls = [
                         _build_llm_call_trace(
-                            llm_result={"answer": full_answer},
+                            llm_result={
+                                "answer": full_answer,
+                                "tokens_prompt": tokens_prompt,
+                                "tokens_completion": tokens_completion,
+                                "tokens_total": tokens_total,
+                            },
                             step="fast_path",
                             system_prompt_preview=system_preview,
                             user_prompt_preview=user_preview,
@@ -1053,9 +1093,9 @@ async def ask_adaptive_question_stream(
                         "embedding_model": config.EMBEDDING_MODEL,
                         "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
                         "reranker_enabled": bool(config.VOYAGE_ENABLED),
-                        "tokens_prompt": None,
-                        "tokens_completion": None,
-                        "tokens_total": None,
+                        "tokens_prompt": tokens_prompt,
+                        "tokens_completion": tokens_completion,
+                        "tokens_total": tokens_total,
                         "session_tokens_total": memory.metadata.get("session_tokens_total"),
                         "session_cost_usd": memory.metadata.get("session_cost_usd"),
                         "session_turns": memory.metadata.get("session_turns"),
@@ -1323,6 +1363,36 @@ async def ask_adaptive_question_stream(
             response_generator = ResponseGenerator()
             llm_start_ts = time.perf_counter()
             full_answer = ""
+            tokens_prompt = None
+            tokens_completion = None
+            tokens_total = None
+            
+            # Для debug режима получаем токены через не-streaming вызов
+            if request.debug:
+                try:
+                    llm_result = response_generator.generate(
+                        request.query,
+                        adapted_blocks,
+                        conversation_context=conversation_context,
+                        mode=routing_result.mode,
+                        confidence_level=routing_result.confidence_level,
+                        forbid=routing_result.decision.forbid,
+                        user_level_adapter=level_adapter,
+                        additional_system_context=state_context,
+                        sd_level=sd_result.primary,
+                        model=config.LLM_MODEL,
+                        temperature=config.LLM_TEMPERATURE,
+                        max_tokens=config.get_mode_max_tokens(routing_result.mode),
+                        system_prompt_blob_id=None,
+                        user_prompt_blob_id=None,
+                    )
+                    tokens_prompt = llm_result.get("tokens_prompt")
+                    tokens_completion = llm_result.get("tokens_completion")
+                    tokens_total = llm_result.get("tokens_total")
+                except Exception as token_exc:
+                    logger.warning("[MAIN_ANSWER] Failed to get tokens: %s", token_exc)
+            
+            # Streaming для ответа
             async for token in response_generator.generate_stream(
                 request.query,
                 adapted_blocks,
@@ -1432,7 +1502,12 @@ async def ask_adaptive_question_stream(
                 user_blob_id = _store_blob(store, session_key, full_user_prompt)
                 llm_calls = [
                     _build_llm_call_trace(
-                        llm_result={"answer": full_answer},
+                        llm_result={
+                            "answer": full_answer,
+                            "tokens_prompt": tokens_prompt,
+                            "tokens_completion": tokens_completion,
+                            "tokens_total": tokens_total,
+                        },
                         step="main_answer",
                         system_prompt_preview=system_preview,
                         user_prompt_preview=user_preview,
@@ -1465,6 +1540,12 @@ async def ask_adaptive_question_stream(
                     "embedding_model": config.EMBEDDING_MODEL,
                     "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
                     "reranker_enabled": bool(config.VOYAGE_ENABLED),
+                    "tokens_prompt": tokens_prompt,
+                    "tokens_completion": tokens_completion,
+                    "tokens_total": tokens_total,
+                    "session_tokens_total": memory.metadata.get("session_tokens_total"),
+                    "session_cost_usd": memory.metadata.get("session_cost_usd"),
+                    "session_turns": memory.metadata.get("session_turns"),
                     "fast_path": False,
                     "decision_rule_id": str(routing_result.decision.rule_id),
                     "mode_reason": routing_result.decision.reason,

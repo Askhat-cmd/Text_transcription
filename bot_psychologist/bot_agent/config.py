@@ -214,4 +214,9 @@ class Config:
 """
 
 
-config = Config()
+# RuntimeConfig наследует Config и добавляет горячий override-слой.
+# Circular import безопасен: класс Config уже полностью определён выше,
+# runtime_config.py успешно импортирует его из частично загруженного
+# модуля — стандартное поведение Python для взаимных импортов.
+from .runtime_config import RuntimeConfig
+config = RuntimeConfig()

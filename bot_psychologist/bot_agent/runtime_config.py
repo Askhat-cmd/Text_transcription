@@ -622,6 +622,7 @@ class RuntimeConfig(Config):
                 default_text = ""
 
             override_text = overrides.get(name)
+            # FIX B2: None может остаться от старых записей до фикса — игнорируем
             is_overridden = override_text is not None
             active_text = override_text if is_overridden else default_text
 
@@ -656,7 +657,8 @@ class RuntimeConfig(Config):
             raise ValueError(f"Промт '{name}' не является редактируемым")
 
         data = self._load_overrides()
-        data.setdefault("prompts", {})[name] = None
+        # FIX B2: удаляем ключ, не записываем null
+        data.setdefault("prompts", {}).pop(name, None)
         self._append_history(data, name, "prompt_reset", True, False)
         self._save_overrides(data)
         return self.get_prompt(name)

@@ -185,6 +185,9 @@ async def log_requests(request: Request, call_next):
 app.include_router(router)
 app.include_router(debug_router)
 
+from .admin_routes import admin_router  # Admin Config Panel (PRD v2.0.1)
+app.include_router(admin_router)
+
 
 # ===== CUSTOM OPENAPI =====
 

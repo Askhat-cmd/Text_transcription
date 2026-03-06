@@ -70,78 +70,81 @@ export const AdminPanel: React.FC = () => {
       {/* ── Header: тёмный градиент ── */}
       <div className="bg-gradient-to-r from-slate-900 to-slate-700 px-6 py-4 shadow-lg">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-xl font-bold text-white tracking-tight">
-                ⚙️ Admin Config Panel
-              </h1>
-              <p className="text-sm text-slate-400 mt-0.5">
-                Горячее управление параметрами без рестарта сервера
-              </p>
-            </div>
-
-            {/* API Key */}
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <input
-                  type={showApiKey ? 'text' : 'password'}
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="dev-key-001"
-                  className="w-48 px-3 py-1.5 bg-slate-800 border border-slate-600 rounded
-                             text-sm text-slate-200 placeholder-slate-500
-                             focus:outline-none focus:ring-2 focus:ring-violet-400"
-                />
-                <button
-                  onClick={() => setShowApiKey(!showApiKey)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-300"
-                >
-                  {showApiKey ? '🙈' : '👁️'}
-                </button>
+          <div className="flex flex-col gap-3">
+            {/* Верхняя строка: заголовок + API ключ */}
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-xl font-bold text-white tracking-tight">
+                  ⚙️ Admin Config Panel
+                </h1>
+                <p className="text-sm text-slate-400 mt-0.5">
+                  Горячее управление параметрами без рестарта сервера
+                </p>
               </div>
-              <span className={`text-xs px-2 py-1 rounded font-medium ${
-                apiKey
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  : 'bg-red-500/20 text-red-400 border border-red-500/30'
-              }`}>
-                {apiKey ? '✓' : '✕'}
-              </span>
-            </div>
-          </div>
 
-          {/* Кнопки действий */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={exportOverrides}
-              className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
-                         hover:bg-slate-600 transition-colors"
-            >
-              ↓ Экспорт
-            </button>
-            <label className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
-                               hover:bg-slate-600 transition-colors cursor-pointer">
-              ↑ Импорт
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".json"
-                className="hidden"
-                onChange={handleImportFile}
-              />
-            </label>
-            <button
-              onClick={async () => {
-                if (!window.confirm('Полный сброс: удалить ВСЕ overrides (конфиг + промты)?')) return;
-                const { adminConfigService } = await import('../../services/adminConfig.service');
-                await adminConfigService.resetAll();
-                await loadConfig();
-                await loadPrompts();
-              }}
-              className="px-3 py-1.5 border border-red-500/40 rounded text-sm text-red-400
-                         hover:bg-red-500/20 transition-colors"
-            >
-              🗑 Полный сброс
-            </button>
+              {/* API Key */}
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <input
+                    type={showApiKey ? 'text' : 'password'}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="dev-key-001"
+                    className="w-48 px-3 py-1.5 bg-slate-800 border border-slate-600 rounded
+                               text-sm text-slate-200 placeholder-slate-500
+                               focus:outline-none focus:ring-2 focus:ring-violet-400"
+                  />
+                  <button
+                    onClick={() => setShowApiKey(!showApiKey)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-300"
+                  >
+                    {showApiKey ? '🙈' : '👁️'}
+                  </button>
+                </div>
+                <span className={`text-xs px-2 py-1 rounded font-medium ${
+                  apiKey
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                    : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                }`}>
+                  {apiKey ? '✓' : '✕'}
+                </span>
+              </div>
+            </div>
+
+            {/* Нижняя строка: кнопки действий */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={exportOverrides}
+                className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
+                           hover:bg-slate-600 transition-colors"
+              >
+                ↓ Экспорт
+              </button>
+              <label className="px-3 py-1.5 border border-slate-500 rounded text-sm text-slate-300
+                                 hover:bg-slate-600 transition-colors cursor-pointer">
+                ↑ Импорт
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onChange={handleImportFile}
+                />
+              </label>
+              <button
+                onClick={async () => {
+                  if (!window.confirm('Полный сброс: удалить ВСЕ overrides (конфиг + промты)?')) return;
+                  const { adminConfigService } = await import('../../services/adminConfig.service');
+                  await adminConfigService.resetAll();
+                  await loadConfig();
+                  await loadPrompts();
+                }}
+                className="px-3 py-1.5 border border-red-500/40 rounded text-sm text-red-400
+                           hover:bg-red-500/20 transition-colors"
+              >
+                🗑 Полный сброс
+              </button>
+            </div>
           </div>
         </div>
       </div>

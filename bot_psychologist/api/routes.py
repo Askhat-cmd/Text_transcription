@@ -815,6 +815,34 @@ async def ask_adaptive_question_stream(
     async def event_stream():
         start_ts = time.perf_counter()
         pipeline_stages = []
+        
+        # Для debug режима используем не-streaming вызов (чтобы получить токены без удвоения запроса)
+        if request.debug:
+            logger.info("[ADAPTIVE-STREAM] Debug mode detected, using non-streaming call for accurate tokens")
+            result = answer_question_adaptive(
+                request.query,
+                user_id=session_key,
+                user_level=request.user_level.value,
+                include_path_recommendation=request.include_path,
+                include_feedback_prompt=request.include_feedback_prompt,
+                debug=True,
+                session_store=store,
+            )
+            # Вернуть результат как SSE done событие
+            trace = result.get("debug_trace") or result.get("debug")
+            answer = result.get("answer", "")
+            latency_ms = int(result.get("processing_time_seconds", 0) * 1000)
+            
+            done_payload = {
+                "done": True,
+                "answer": answer,
+                "mode": result.get("metadata", {}).get("recommended_mode"),
+                "sd_level": result.get("state_analysis", {}).get("primary_state"),
+                "latency_ms": latency_ms,
+                "trace": trace if isinstance(trace, dict) else None,
+            }
+            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
+            return
         try:
             memory = get_conversation_memory(session_key)
             conversation_context = memory.get_adaptive_context_text(request.query)

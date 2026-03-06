@@ -23,6 +23,8 @@ const TABS: { key: Tab; label: string }[] = [
 export const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('llm');
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [apiKey, setApiKey] = useState<string>(() => localStorage.getItem('devApiKey') || '');
+  const [showApiKey, setShowApiKey] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
@@ -46,6 +48,13 @@ export const AdminPanel: React.FC = () => {
     exportOverrides,
     importOverrides,
   } = useAdminConfig();
+
+  // Сохраняем API ключ при изменении
+  useEffect(() => {
+    if (apiKey) {
+      localStorage.setItem('devApiKey', apiKey);
+    }
+  }, [apiKey]);
 
   // Получаем текущее значение LLM_MODEL для блокировки температуры
   const currentLLMModel =
@@ -83,16 +92,42 @@ export const AdminPanel: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">
-              ⚙️ Admin Config Panel
-            </h1>
-            <p className="text-sm text-gray-500 mt-0.5">
-              Горячее управление параметрами бота без рестарта сервера
-            </p>
+        <div className="max-w-6xl mx-auto">
+          {/* Верхняя строка: заголовок + API ключ */}
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">
+                ⚙️ Admin Config Panel
+              </h1>
+              <p className="text-sm text-gray-500 mt-0.5">
+                Горячее управление параметрами бота без рестарта сервера
+              </p>
+            </div>
+            {/* API Key Input */}
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <input
+                  type={showApiKey ? 'text' : 'password'}
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                  placeholder="dev-key-001"
+                  className="w-48 px-3 py-1.5 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <button
+                  onClick={() => setShowApiKey(!showApiKey)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400 hover:text-gray-600"
+                  title={showApiKey ? 'Скрыть' : 'Показать'}
+                >
+                  {showApiKey ? '🙈' : '👁️'}
+                </button>
+              </div>
+              <span className={`text-xs px-2 py-1 rounded ${apiKey ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                {apiKey ? '✓' : '✕'}
+              </span>
+            </div>
           </div>
-          {/* Export / Import / Full Reset */}
+
+          {/* Нижняя строка: кнопки Export/Import/Reset */}
           <div className="flex items-center gap-2">
             <button
               onClick={exportOverrides}

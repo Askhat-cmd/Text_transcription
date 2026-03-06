@@ -15,13 +15,17 @@ from enum import Enum
 from pathlib import Path
 
 from .data_loader import Block
+from .config import config
 
 logger = logging.getLogger(__name__)
 
-_PROMPT_DIR = Path(__file__).resolve().parent
-
 
 def _read_prompt_text(path: Path) -> str:
+    """
+    Read UTF-8 prompt text from disk.
+    TODO(admin-panel): чтение промта на уровне модуля — не hot-reloadable.
+    Для горячей замены перенести в функцию и использовать config.get_prompt().
+    """
     try:
         text = path.read_text(encoding="utf-8")
     except UnicodeDecodeError:
@@ -106,18 +110,19 @@ class UserLevelAdapter:
     def adapt_system_prompt(self, base_prompt: str) -> str:
         """
         Адаптировать системный промпт под уровень пользователя.
-        
+
         Args:
             base_prompt: Базовый системный промпт
-            
+
         Returns:
             Адаптированный промпт с дополнительными инструкциями
         """
-        prompt_path = _PROMPT_DIR / f"prompt_system_level_{self.level.value}.md"
+        prompt_name = f"prompt_system_level_{self.level.value}"
         try:
-            addition = _read_prompt_text(prompt_path)
-        except FileNotFoundError:
-            logger.warning(f"⚠️ Level prompt file not found: {prompt_path}. Using minimal встроенные правила.")
+            # Используем config.get_prompt() для горячей замены (admin-panel)
+            addition = config.get_prompt(prompt_name)["text"]
+        except (FileNotFoundError, ValueError):
+            logger.warning(f"⚠️ Level prompt not found: {prompt_name}. Using minimal встроенные правила.")
             if self.level == UserLevel.BEGINNER:
                 addition = "Пиши коротко и простыми словами. Если используешь термин — сразу поясняй."
             elif self.level == UserLevel.INTERMEDIATE:

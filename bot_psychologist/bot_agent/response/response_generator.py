@@ -30,22 +30,22 @@ class ResponseGenerator:
 
     def _load_sd_prompt(self, sd_level: str) -> str:
         """Загрузить SD-оверлей промта для уровня пользователя."""
-        sd_file_map = {
-            "BEIGE": "prompt_sd_purple.md",  # BEIGE -> используем PURPLE (ближайший)
-            "PURPLE": "prompt_sd_purple.md",
-            "RED": "prompt_sd_red.md",
-            "BLUE": "prompt_sd_blue.md",
-            "ORANGE": "prompt_sd_orange.md",
-            "GREEN": "prompt_sd_green.md",
-            "YELLOW": "prompt_sd_yellow.md",
-            "TURQUOISE": "prompt_sd_yellow.md",  # TURQUOISE -> используем YELLOW (ближайший)
+        sd_name_map = {
+            "BEIGE": "prompt_sd_purple",  # BEIGE -> используем PURPLE (ближайший)
+            "PURPLE": "prompt_sd_purple",
+            "RED": "prompt_sd_red",
+            "BLUE": "prompt_sd_blue",
+            "ORANGE": "prompt_sd_orange",
+            "GREEN": "prompt_sd_green",
+            "YELLOW": "prompt_sd_yellow",
+            "TURQUOISE": "prompt_sd_yellow",  # TURQUOISE -> используем YELLOW (ближайший)
         }
-        filename = sd_file_map.get((sd_level or "GREEN").upper(), "prompt_sd_green.md")
-        prompt_path = Path(__file__).parent.parent / filename
+        prompt_name = sd_name_map.get((sd_level or "GREEN").upper(), "prompt_sd_green")
         try:
-            return prompt_path.read_text(encoding="utf-8")
-        except FileNotFoundError:
-            logger.warning(f"[RESPONSE_GEN] SD prompt not found: {filename}, using empty")
+            # Используем config.get_prompt() для горячей замены (admin-panel)
+            return config.get_prompt(prompt_name)["text"]
+        except (FileNotFoundError, ValueError):
+            logger.warning(f"[RESPONSE_GEN] SD prompt not found: {prompt_name}, using empty")
             return ""
 
     def generate(

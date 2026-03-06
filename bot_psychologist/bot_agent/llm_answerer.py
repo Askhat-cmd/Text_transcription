@@ -17,13 +17,13 @@ from .config import config
 
 logger = logging.getLogger(__name__)
 
-_PROMPT_BASE_PATH = Path(__file__).resolve().parent / "prompt_system_base.md"
-
 
 def _read_prompt_text(path: Path) -> str:
     """
     Read UTF-8 prompt text from disk.
     We allow BOM so the file can be edited in Windows tools comfortably.
+    TODO(admin-panel): чтение промта на уровне модуля — не hot-reloadable.
+    Для горячей замены перенести в функцию и использовать config.get_prompt().
     """
     try:
         text = path.read_text(encoding="utf-8")
@@ -71,13 +71,14 @@ class LLMAnswerer:
     def build_system_prompt(self) -> str:
         """
         Системный промпт для бота-психолога.
-        
+
         Определяет поведение, тон и ограничения бота.
         """
         try:
-            return _read_prompt_text(_PROMPT_BASE_PATH)
-        except FileNotFoundError:
-            logger.warning(f"⚠️ System prompt file not found: {_PROMPT_BASE_PATH}. Falling back to встроенному промпту.")
+            # Используем config.get_prompt() для горячей замены (admin-panel)
+            return config.get_prompt("prompt_system_base")["text"]
+        except (FileNotFoundError, ValueError):
+            logger.warning("⚠️ prompt_system_base.md not found. Falling back to встроенному промпту.")
             return (
                 "Ты — спокойный и точный помощник.\n"
                 "Отвечай по-русски. Опирайся на материалы, переданные в контексте. "

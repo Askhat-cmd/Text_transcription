@@ -87,6 +87,18 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
   const [openAnomalies, setOpenAnomalies] = useState<boolean>((trace.anomalies?.length ?? 0) > 0);
   const [panelOpen, setPanelOpen] = useState(false);
 
+  const llmCalls = trace.llm_calls ?? [];  // Используется в tokenStats и LLM Calls секции
+  const pipelineStages = trace.pipeline_stages ?? [];
+  const totalStageMs = pipelineStages.reduce((sum, stage) => sum + (stage.duration_ms || 0), 0) || 1;
+
+  // FIX 2b: tokenStats с fallback-агрегацией из llm_calls
+  const tokenStats = useMemo(() => {
+    const p = trace.tokens_prompt ?? (llmCalls.reduce((s, c) => s + (c.tokens_prompt ?? 0), 0) || null);
+    const c = trace.tokens_completion ?? (llmCalls.reduce((s, c) => s + (c.tokens_completion ?? 0), 0) || null);
+    const t = trace.tokens_total ?? ((p != null && c != null) ? p + c : null);
+    return { prompt: p, completion: c, total: t };
+  }, [trace.tokens_prompt, trace.tokens_completion, trace.tokens_total, llmCalls]);
+
   const recommendedMode = trace.recommended_mode || '—';
   const modeColor = MODE_COLORS[recommendedMode] || 'bg-slate-100 text-slate-700';
   const confidenceScore = typeof trace.confidence_score === 'number' ? trace.confidence_score : undefined;
@@ -107,10 +119,6 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
   const memoryTurns = trace.memory_turns ?? trace.memory_turns_content?.length ?? 0;
   const summaryLength = trace.summary_length ?? (trace.summary_text ? trace.summary_text.length : 0);
   const semanticHits = trace.semantic_hits ?? trace.semantic_hits_detail?.length ?? 0;
-
-  const llmCalls = trace.llm_calls ?? [];
-  const pipelineStages = trace.pipeline_stages ?? [];
-  const totalStageMs = pipelineStages.reduce((sum, stage) => sum + (stage.duration_ms || 0), 0) || 1;
 
   const systemBlobId = trace.system_prompt_blob_id;
   const userBlobId = trace.user_prompt_blob_id;
@@ -520,9 +528,9 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
             <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2 col-span-2">
               <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-1">Токены</p>
               <div className="flex gap-4 text-xs">
-                <span className="text-slate-500">prompt: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_prompt ?? '—'}</b></span>
-                <span className="text-slate-500">completion: <b className="text-slate-700 dark:text-slate-200">{trace.tokens_completion ?? '—'}</b></span>
-                <span className="text-slate-500">total: <b className="text-amber-600 dark:text-amber-400 font-bold">{trace.tokens_total ?? '—'}</b></span>
+                <span className="text-slate-500">prompt: <b className="text-slate-700 dark:text-slate-200">{tokenStats.prompt ?? '—'}</b></span>
+                <span className="text-slate-500">completion: <b className="text-slate-700 dark:text-slate-200">{tokenStats.completion ?? '—'}</b></span>
+                <span className="text-slate-500">total: <b className="text-amber-600 dark:text-amber-400 font-bold">{tokenStats.total ?? '—'}</b></span>
               </div>
               <div className="mt-1 flex gap-4 text-[11px] text-slate-500">
                 <span>session tokens: <b className="text-slate-700 dark:text-slate-200">{trace.session_tokens_total ?? '—'}</b></span>

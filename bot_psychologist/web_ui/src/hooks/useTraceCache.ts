@@ -21,7 +21,7 @@ export function useTraceCache(chatId: string) {
     }
     if (memCache.current.size > 0) return;
     try {
-      const raw = sessionStorage.getItem(storageKey);
+      const raw = localStorage.getItem(storageKey);
       if (!raw) return;
       const entries: TraceEntry[] = JSON.parse(raw);
       entries.forEach(({ messageId, trace }) => {
@@ -39,9 +39,9 @@ export function useTraceCache(chatId: string) {
       const entries: TraceEntry[] = Array.from(memCache.current.entries())
         .slice(-MAX_ENTRIES)
         .map(([id, item]) => ({ messageId: id, trace: item }));
-      sessionStorage.setItem(storageKey, JSON.stringify(entries));
+      localStorage.setItem(storageKey, JSON.stringify(entries));
     } catch {
-      // sessionStorage may be full
+      // localStorage may be full
     }
   }, [ensureLoaded, storageKey]);
 

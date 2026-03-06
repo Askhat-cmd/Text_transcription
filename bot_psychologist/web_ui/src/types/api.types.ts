@@ -88,6 +88,7 @@ export interface ChunkTraceItem {
   passed_sd_filter: boolean;
   filter_reason: string;
   preview: string;
+  text?: string | null;  // FIX 1b: полный текст чанка
 }
 
 export interface SDClassificationTrace {

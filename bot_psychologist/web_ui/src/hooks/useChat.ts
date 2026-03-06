@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import type { Message } from '../types';
 import { apiService } from '../services/api.service';
+import { useTraceCache } from './useTraceCache';  // FIX 3b: импорт хука кэширования
 
 export interface UseChatOptions {
   userId: string;
@@ -51,6 +52,10 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
     sessionId,
   } = options;
 
+  // FIX 3b: инициализация trace cache
+  const traceCacheId = sessionId ?? userId ?? 'default';
+  const { setTrace, getTrace } = useTraceCache(traceCacheId);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isThinking, setIsThinking] = useState(false);
@@ -82,15 +87,30 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
 
   const replaceMessages = useCallback((nextMessages: Message[]) => {
     const normalized = nextMessages.map(normalizeMessage);
-    setMessages(normalized);
 
-    const lastBotMessage = getLastBotMessage(normalized);
+    // FIX 3b: Hydration — восстановить трейсы по порядку бот-сообщений
+    let botIndex = 0;
+    const hydrated = normalized.map((msg) => {
+      if (msg.role === 'bot') {
+        const cached = getTrace(`turn:${botIndex}`);
+        botIndex++;
+        // Не перезаписывать если trace уже есть в сообщении
+        if (cached && !msg.trace) {
+          return { ...msg, trace: cached };
+        }
+      }
+      return msg;
+    });
+
+    setMessages(hydrated);
+
+    const lastBotMessage = getLastBotMessage(hydrated);
     setCurrentUserState(lastBotMessage?.state);
     setCurrentStateConfidence(lastBotMessage?.confidence);
 
     setIsLoading(false);
     setError(null);
-  }, []);
+  }, [getTrace]);  // FIX 3b: добавить getTrace в зависимости
 
   const sendQuestion = useCallback(async (query: string) => {
     if (!query.trim()) return;
@@ -135,11 +155,17 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       );
 
       const finalText = streamed.trim() ? streamed : '...';
+      const botTrace = doneMeta?.trace ?? undefined;
+      const botTurnIndex = Math.floor(messagesRef.current.length / 2);  // индекс до добавления сообщения
       addMessage('bot', finalText, {
         id: botMessageId,
         processingTime: doneMeta?.latency_ms ? doneMeta.latency_ms / 1000 : undefined,
-        trace: doneMeta?.trace ?? undefined,
+        trace: botTrace,
       });
+      // FIX 3b: сохранить трейс по позиции (не по ID, т.к. ID из БД не совпадают)
+      if (botTrace) {
+        setTrace(`turn:${botTurnIndex}`, botTrace);
+      }
       setStreamingText('');
       setIsThinking(false);
       setIsLoading(false);

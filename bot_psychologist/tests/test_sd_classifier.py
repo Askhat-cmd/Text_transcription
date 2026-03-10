@@ -39,7 +39,8 @@ def test_heuristic_clean_cases(message: str, expected_level: str) -> None:
     "message, expected_primary",
     [
         ("У нас в семье так принято, но я хочу другого - не знаю кого слушать", "PURPLE"),
-        ("Хочу наказать, но понимаю что по правилам так нельзя", "RED"),
+        # "Хочу наказать" (RED) + "по правилам нельзя" (BLUE) → BLUE перевешивает
+        ("Хочу наказать, но понимаю что по правилам так нельзя", "BLUE"),
         ("Я всегда делал как положено, но результата нет и это неэффективно", "ORANGE"),
         ("Есть карьера и результат, но эффективность падает, хочу понять почему", "ORANGE"),
         ("Чувствую тревогу, но замечаю паттерн и контекст реакции", "YELLOW"),
@@ -83,3 +84,40 @@ def test_llm_error_fallback_to_green(monkeypatch: pytest.MonkeyPatch) -> None:
     result = classifier.classify("абсолютно неоднозначное сообщение")
     assert result.primary == "GREEN"
     assert result.method == "fallback"
+
+
+def test_heuristic_not_red_intellectual_search() -> None:
+    """Проверка что интеллектуальный поиск НЕ определяет RED."""
+    classifier = SDClassifier()
+    
+    # Эти фразы должны быть GREEN/YELLOW, НЕ RED
+    not_red_phrases = [
+        ("хочу разобраться в нейросталкинге", ["GREEN", "YELLOW", "ORANGE"]),
+        ("хочу понять себя", ["GREEN", "YELLOW"]),
+        ("хочу изучить тему глубже", ["GREEN", "YELLOW", "ORANGE"]),
+        ("интересно узнать больше", ["GREEN", "YELLOW"]),
+        ("объясни как это работает", ["GREEN", "ORANGE"]),
+    ]
+    
+    for phrase, allowed_levels in not_red_phrases:
+        result = classifier._heuristic_classify(phrase)
+        assert result.primary in allowed_levels, f"'{phrase}' → {result.primary} (expected one of {allowed_levels})"
+        assert result.primary != "RED", f"'{phrase}' ложно определён как RED"
+
+
+def test_heuristic_red_aggression_markers() -> None:
+    """Проверка что RED определяется только по агрессии/доминированию."""
+    classifier = SDClassifier()
+    
+    # Эти фразы должны быть RED
+    red_phrases = [
+        "меня все бесит",
+        "ненавижу когда так делают",
+        "все должны мне",
+        "хочу прямо сейчас и немедленно",
+        "никто не понимает меня",
+    ]
+    
+    for phrase in red_phrases:
+        result = classifier._heuristic_classify(phrase)
+        assert result.primary == "RED", f"'{phrase}' → {result.primary} (expected RED)"

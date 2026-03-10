@@ -70,6 +70,11 @@ class StageFilter:
 
     @staticmethod
     def _extract_complexity(block: object) -> float:
+        """Извлечь и нормализовать сложность блока.
+        
+        complexity_score в данных: 1.0-10.0 (шкала 1-10)
+        Нормализация: 0.0-1.0 для сравнения с complexity_cap
+        """
         raw = getattr(block, "complexity_score", None)
         if raw is None:
             return 0.5
@@ -77,7 +82,11 @@ class StageFilter:
             value = float(raw)
         except (TypeError, ValueError):
             return 0.5
-        return max(0.0, min(1.0, value))
+        
+        # Нормализация с 1-10 в 0-1
+        # 1.0 -> 0.0, 10.0 -> 1.0, 5.5 -> 0.5
+        normalized = (value - 1.0) / 9.0
+        return max(0.0, min(1.0, normalized))
 
     def filter_retrieval_pairs(
         self,

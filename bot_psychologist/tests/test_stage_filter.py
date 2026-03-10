@@ -26,26 +26,44 @@ def test_stage_filter_filters_candidates() -> None:
 
 class _Block:
     def __init__(self, complexity_score: float) -> None:
+        """Создать блок с complexity_score в шкале 1.0-10.0 (как в реальных данных).
+        
+        Для теста surface stage (complexity_cap=0.45):
+        - complexity_score=2.0 → normalized=(2-1)/9=0.11 ≤ 0.45 ✓ проходит
+        - complexity_score=7.0 → normalized=(7-1)/9=0.67 > 0.45 ✗ отсекается
+        - complexity_score=9.0 → normalized=(9-1)/9=0.89 > 0.45 ✗ отсекается
+        """
         self.complexity_score = complexity_score
 
 
 def test_stage_filter_filters_retrieval_pairs_by_complexity() -> None:
+    """Проверка что complexity_score нормализуется правильно (шкала 1-10 → 0-1)."""
     stage_filter = StageFilter()
     pairs = [
-        (_Block(0.2), 0.91),
-        (_Block(0.7), 0.85),
+        # complexity_score=2.0 → normalized=0.11 ≤ 0.45 (surface cap) → проходит
+        (_Block(2.0), 0.91),
+        # complexity_score=7.0 → normalized=0.67 > 0.45 → отсекается
+        (_Block(7.0), 0.85),
     ]
     filtered = stage_filter.filter_retrieval_pairs("surface", pairs)
-    assert len(filtered) == 1
-    assert filtered[0][0].complexity_score == 0.2
+    # Первый проходит по фильтру, второй отсекается но добавляется fallback (surface min=3, но есть только 2)
+    assert len(filtered) == 2
+    assert filtered[0][0].complexity_score == 2.0
 
 
 def test_stage_filter_keeps_at_least_one_pair() -> None:
+    """Проверка fallback — если все отсеклись, вернуть top-N по score.
+    
+    Для surface/awareness: min 3 блока (но не больше available).
+    """
     stage_filter = StageFilter()
     pairs = [
-        (_Block(0.9), 0.95),
-        (_Block(0.8), 0.88),
+        # complexity_score=9.0 → normalized=0.89 > 0.45 → отсекается
+        (_Block(9.0), 0.95),
+        # complexity_score=8.0 → normalized=0.78 > 0.45 → отсекается
+        (_Block(8.0), 0.88),
     ]
     filtered = stage_filter.filter_retrieval_pairs("surface", pairs)
-    assert len(filtered) == 1
-    assert filtered[0][1] == 0.95
+    # Fallback: вернуть top-2 (surface min=3, но available=2)
+    assert len(filtered) == 2
+    assert filtered[0][1] == 0.95  # top по score

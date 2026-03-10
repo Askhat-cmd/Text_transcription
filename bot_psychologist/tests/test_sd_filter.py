@@ -32,6 +32,13 @@ def test_sd_filter_keeps_allowed_and_backfills_untagged() -> None:
 
 
 def test_sd_filter_critical_fallback_returns_original_slice() -> None:
+    """Тест устарел — критический fallback заменён на мягкий (soft fallback).
+    
+    Новое поведение:
+    1. Сначала пробуем расширить allowed уровни (extended fallback)
+    2. Если всё ещё мало — берём лучшие по score из остатка (soft fallback)
+    3. Возвращаем min_blocks, а не все оригинальные
+    """
     pairs = [
         (_DummyBlock("b1", sd_level="YELLOW"), 0.9),
         (_DummyBlock("b2", sd_level="YELLOW"), 0.8),
@@ -44,4 +51,8 @@ def test_sd_filter_critical_fallback_returns_original_slice() -> None:
         user_state="neutral",
         min_blocks=3,
     )
-    assert [block.block_id for block, _ in filtered] == ["b1", "b2", "b3", "b4"]
+    # RED extended fallback: ["RED", "BLUE", "PURPLE", "ORANGE"]
+    # YELLOW не входит → soft fallback берёт лучшие по score
+    # Ожидаем: b1 (YELLOW), b2 (YELLOW), b3 (TURQUOISE) — top 3 по score
+    assert [block.block_id for block, _ in filtered] == ["b1", "b2", "b3"]
+    assert len(filtered) == 3  # min_blocks, а не все 4

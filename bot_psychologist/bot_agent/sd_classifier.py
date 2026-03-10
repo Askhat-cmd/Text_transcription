@@ -48,16 +48,22 @@ SD_KEYWORDS: Dict[str, List[str]] = {
         "порча",
         "у нас в семье",
     ],
+    # RED — агрессия, доминирование, импульсивность, "я хочу власти/силы"
     "RED": [
-        "хочу",
-        "достали",
-        "накажу",
-        "не буду терпеть",
-        "должны мне",
-        "уважение",
-        "он меня",
-        "они меня",
-        "надоело терпеть",
+        # агрессия и доминирование
+        "бесит", "злит", "ненавижу", "достало", "надоело",
+        "все должны", "я лучше", "никто не понимает меня",
+        "заставить", "подчинить", "контролировать других",
+        "накажу", "не буду терпеть", "должны мне",
+        # импульсивность
+        "хочу прямо сейчас", "немедленно", "не могу ждать",
+        "он меня", "они меня", "надоело терпеть",
+    ],
+    # NOT_RED — интеллектуальный поиск (НЕ RED, это GREEN/YELLOW)
+    "NOT_RED": [
+        "хочу разобраться", "хочу понять", "хочу знать", "хочу изучить",
+        "понять", "разобраться", "изучить", "исследовать",
+        "интересно", "объясни", "расскажи", "научи",
     ],
     "BLUE": [
         "должен",
@@ -105,7 +111,7 @@ SD_KEYWORDS: Dict[str, List[str]] = {
         "откуда это",
         "всегда так реагирую",
     ],
-    "TURQUOISE": ["единство", "целостность бытия", "всё одно", "трансцендентность", "планетарное"],
+    "TURQUOISE": ["единство", "целостность быятия", "всё одно", "трансцендентность", "планетарное"],
 }
 
 SD_CLASSIFIER_SYSTEM_PROMPT = """
@@ -367,11 +373,23 @@ class SDClassifier:
             for turn in history[-5:]:
                 text += " " + str(turn.get("content") or "").lower()
 
+        # Проверка NOT_RED — интеллектуальный поиск (GREEN/YELLOW)
+        # Если найдены NOT_RED маркеры — понижаем RED score до 0
+        not_red_keywords = SD_KEYWORDS.get("NOT_RED", [])
+        is_not_red = any(keyword in text for keyword in not_red_keywords)
+
         scores = {level: 0 for level in SD_LEVELS_ORDER}
         for level, keywords in SD_KEYWORDS.items():
+            # Пропускаем NOT_RED — это не уровень, а фильтр
+            if level == "NOT_RED":
+                continue
             for keyword in keywords:
                 if keyword in text:
                     scores[level] += 1
+
+        # Если обнаружены NOT_RED маркеры — RED не может быть лучшим
+        if is_not_red:
+            scores["RED"] = 0
 
         best_level = max(scores, key=scores.get)
         best_score = scores[best_level]

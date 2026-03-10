@@ -44,7 +44,11 @@ class Block:
     conceptual_depth: Optional[str] = None    # low, medium, high
     complexity_score: Optional[float] = None  # 1.0-10.0
     graph_entities: Optional[List[str]] = None  # до 30 сущностей
-    
+
+    # === SD-РАЗМЕТКА (Spiral Dynamics) ===
+    sd_level: Optional[str] = None            # BEIGE, PURPLE, RED, BLUE, ORANGE, GREEN, YELLOW, TURQUOISE
+    sd_secondary: Optional[str] = None        # вторичный SD-уровень
+
     def __post_init__(self):
         """Инициализация опциональных полей SAG v2.0"""
         if self.graph_entities is None:
@@ -175,6 +179,9 @@ class DataLoader:
                 except (ValueError, TypeError):
                     complexity_score = None
             
+            # === ПАРСИНГ SD-МЕТАДАННЫХ ===
+            sd_meta = block_data.get("sd_metadata", {}) or {}
+            
             block = Block(
                 block_id=block_data.get("block_id", ""),
                 video_id=block_data.get("video_id", video_id),
@@ -191,7 +198,10 @@ class DataLoader:
                 emotional_tone=block_data.get("emotional_tone"),
                 conceptual_depth=block_data.get("conceptual_depth"),
                 complexity_score=complexity_score,
-                graph_entities=block_data.get("graph_entities")
+                graph_entities=block_data.get("graph_entities"),
+                # === SD-РАЗМЕТКА ===
+                sd_level=sd_meta.get("sd_level"),
+                sd_secondary=sd_meta.get("sd_secondary")
             )
             blocks.append(block)
             self._block_id_to_block[block.block_id] = block

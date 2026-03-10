@@ -33,6 +33,75 @@
 - Векторная база данных из `voice_bot_pipeline/data/chromadb/`
 - Knowledge Graph для семантического поиска
 
+---
+
+## 🧬 SD-разметка (Спиральная Динамика)
+
+**SD-разметка** — система автоматической классификации блоков контента по уровням Спиральной Динамики (Spiral Dynamics). Позволяет боту адаптировать ответы под уровень сознания пользователя.
+
+### Уровни SD
+
+| Уровень | Цвет | Описание | Доля в базе |
+|---------|------|----------|-------------|
+| **BEIGE** | 🟤 | Выживание, базовые страхи | 0.5% |
+| **PURPLE** | 🟣 | Традиции, семья, коллектив | 0.5% |
+| **RED** | 🔴 | Сила, власть, эго-центризм | 1.2% |
+| **BLUE** | 🔵 | Правила, долг, дисциплина | 1.4% |
+| **ORANGE** | 🟠 | Успех, цели, эффективность | 1.7% |
+| **GREEN** | 🟢 | Чувства, эмпатия, принятие | 56.1% |
+| **YELLOW** | 🟡 | Паттерны, системы, интеграция | 25.4% |
+| **TURQUOISE** | 🔷 | Единство, холизм | 13.2% |
+
+### Как работает SD-разметка
+
+1. **voice_bot_pipeline** — каждый блок получает `sd_metadata` через LLM-классификацию:
+   ```json
+   {
+     "sd_metadata": {
+       "sd_level": "GREEN",
+       "sd_secondary": "YELLOW",
+       "complexity_score": 6,
+       "emotional_tone": "validating",
+       "requires_prior_concepts": true,
+       "reasoning": "Текст ориентирован на читателя...",
+       "author_id": "salamat",
+       "labeled_by": "sd_labeler_v1"
+     }
+   }
+   ```
+
+2. **bot_psychologist** — при ответе фильтрует блоки по SD-совместимости:
+   - Пользователь с GREEN-уровнем получает GREEN/YELLOW-контент
+   - RED-контент фильтруется для GREEN-пользователя
+
+### Запуск SD-разметки
+
+```bash
+cd voice_bot_pipeline
+
+# Разметка всех файлов
+python scripts/sd_labeler_cli.py --input data/sag_final/
+
+# Тестовый запуск (dry-run)
+python scripts/sd_labeler_cli.py --input data/sag_final/ --limit 3 --dry-run
+
+# Переразметка существующих
+python scripts/sd_labeler_cli.py --input data/sag_final/ --overwrite
+```
+
+### Статистика разметки
+
+- **Всего блоков:** 1280
+- **Процент размеченных:** 100%
+- **Скрипт разметки:** `voice_bot_pipeline/scripts/sd_labeler_cli.py`
+- **Интеграция в боте:** `bot_psychologist/bot_agent/retrieval/sd_filter.py`
+
+### Документация
+
+- PRD: `PRD v2 Фикс SD-разметки и фильтрации.md`
+- SD-классификатор: `bot_psychologist/bot_agent/sd_classifier.py`
+- SD-фильтр: `bot_psychologist/bot_agent/retrieval/sd_filter.py`
+
 ## 🚀 Быстрый старт
 
 ### 1. Настройка voice_bot_pipeline

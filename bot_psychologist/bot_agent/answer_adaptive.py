@@ -452,6 +452,41 @@ def _build_chunk_trace_lists(
     return chunks_retrieved, chunks_after_filter
 
 
+def _build_chunk_trace_lists_after_stage(
+    *,
+    initial_retrieved: List[Tuple],
+    stage_filtered: List[Tuple],
+    reranked: List[Tuple],
+) -> Tuple[List[Dict], List[Dict]]:
+    """Построить списки чанков для trace: все retrieved и после stage filter."""
+    chunks_retrieved: List[Dict] = []
+    chunks_after_stage: List[Dict] = []
+
+    reranked_scores = {
+        str(getattr(block, "block_id", "")): float(score)
+        for block, score in reranked
+    }
+
+    stage_filtered_ids = {str(getattr(block, "block_id", "")) for block, _ in stage_filtered}
+
+    for block, initial_score in initial_retrieved:
+        block_id = str(getattr(block, "block_id", ""))
+        passed = block_id in stage_filtered_ids
+
+        item = _build_chunk_trace_item(
+            block=block,
+            score_initial=float(initial_score),
+            score_final=reranked_scores.get(block_id, float(initial_score)),
+            passed_sd_filter=passed,
+            filter_reason="" if passed else "stage_filter",
+        )
+        chunks_retrieved.append(item)
+        if passed:
+            chunks_after_stage.append(item)
+
+    return chunks_retrieved, chunks_after_stage
+
+
 def _get_memory_trace_metrics(memory, context_turns: int) -> Dict[str, object]:
     summary_used = bool(
         config.ENABLE_CONVERSATION_SUMMARY
@@ -1398,10 +1433,26 @@ def answer_question_adaptive(
             "Retrieval",
             retriever.retrieve,
             hybrid_query,
-            top_k=top_k,
+            top_k=top_k * 2,  # запрашиваем больше для дедупликации
         )
         if debug_trace is not None:
             pipeline_stages.append(stage)
+        
+        # Дедупликация блоков по block_id до SD filter
+        seen_ids = set()
+        deduped_blocks = []
+        for block, score in raw_retrieved_blocks:
+            if block.block_id not in seen_ids:
+                seen_ids.add(block.block_id)
+                deduped_blocks.append((block, score))
+        
+        if len(deduped_blocks) < len(raw_retrieved_blocks):
+            logger.info(
+                f"[RETRIEVAL] Deduped {len(raw_retrieved_blocks) - len(deduped_blocks)} duplicate blocks "
+                f"({len(raw_retrieved_blocks)} -> {len(deduped_blocks)})"
+            )
+        raw_retrieved_blocks = deduped_blocks
+        
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         current_stage = "sd_filter"
         retrieved_blocks, sd_stage = _timed(
@@ -1520,15 +1571,14 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
                     initial_retrieved=initial_retrieved_blocks,
-                    sd_filtered=sd_filtered_blocks,
+                    stage_filtered=stage_filtered_blocks,
                     reranked=reranked_blocks_for_trace,
-                    allowed_levels=sd_result.allowed_blocks,
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_filter
-                debug_trace["chunks_after_sd_filter"] = chunks_after_filter
+                debug_trace["chunks_after_filter"] = chunks_after_stage
+                debug_trace["chunks_after_sd_filter"] = chunks_after_stage
                 debug_trace["blocks_after_cap"] = 0
                 pipeline_stages.append(
                     {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
@@ -1629,15 +1679,14 @@ def answer_question_adaptive(
                 "adjusted_by_stage": routing_result.adjusted_by_stage,
             }
         if debug_trace is not None:
-            chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+            chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
                 initial_retrieved=initial_retrieved_blocks,
-                sd_filtered=sd_filtered_blocks,
+                stage_filtered=stage_filtered_blocks,
                 reranked=reranked_blocks_for_trace,
-                allowed_levels=sd_result.allowed_blocks,
             )
             debug_trace["chunks_retrieved"] = chunks_retrieved
-            debug_trace["chunks_after_filter"] = chunks_after_filter
-            debug_trace["chunks_after_sd_filter"] = chunks_after_filter
+            debug_trace["chunks_after_filter"] = chunks_after_stage
+            debug_trace["chunks_after_sd_filter"] = chunks_after_stage
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
@@ -1744,15 +1793,14 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
                     initial_retrieved=initial_retrieved_blocks,
-                    sd_filtered=sd_filtered_blocks,
+                    stage_filtered=stage_filtered_blocks,
                     reranked=reranked_blocks_for_trace,
-                    allowed_levels=sd_result.allowed_blocks,
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_filter
-                debug_trace["chunks_after_sd_filter"] = chunks_after_filter
+                debug_trace["chunks_after_filter"] = chunks_after_stage
+                debug_trace["chunks_after_sd_filter"] = chunks_after_stage
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
                 _apply_memory_debug_info(debug_trace, memory)

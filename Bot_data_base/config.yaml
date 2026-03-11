@@ -1,0 +1,43 @@
+﻿pipeline:
+  youtube:
+    output_dir: "data/processed/youtube"
+    subtitles_dir: "data/uploads/subtitles"
+  books:
+    output_dir: "data/processed/books"
+    uploads_dir: "data/uploads/books"
+
+chunking:
+  book:
+    target_tokens: 1000
+    min_tokens: 400
+    max_tokens: 1400
+    overlap_tokens: 150
+  youtube:
+    min_tokens: 200
+    max_tokens: 800
+
+sd_labeling:
+  enabled: true
+  model: "gpt-4o-mini"
+  temperature: 0.1
+  max_tokens: 300
+  min_confidence: 0.5
+  batch_size: 5
+
+storage:
+  chroma_db_path: "data/chroma_db"
+  collection_name: "bot_knowledge_base"
+  json_export_dir: "data/processed"
+  registry_path: "data/registry.json"
+
+embedding:
+  model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+
+api:
+  host: "0.0.0.0"
+  port: 8001
+  upload_max_size_mb: 50
+
+logging:
+  level: "INFO"
+  log_file: "logs/pipeline.log"

@@ -1,0 +1,60 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bot_data_base — Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="topbar">
+    <div class="brand">Bot_data_base</div>
+    <nav class="nav">
+      <a href="/youtube">Добавить YouTube</a>
+      <a href="/books">Загрузить книгу</a>
+      <a href="/registry">Реестр</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Панель управления базой знаний</h1>
+      <p>Отслеживайте источники, статистику и состояние индексации.</p>
+      <div class="actions">
+        <a class="btn" href="/youtube">Добавить YouTube</a>
+        <a class="btn secondary" href="/books">Загрузить книгу</a>
+      </div>
+    </section>
+
+    <section class="grid stats" id="stats">
+      <div class="card">
+        <div class="card-label">Источников</div>
+        <div class="card-value" id="stat-sources">—</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Блоков</div>
+        <div class="card-value" id="stat-blocks">—</div>
+      </div>
+      <div class="card">
+        <div class="card-label">ChromaDB</div>
+        <div class="card-value" id="stat-chroma">—</div>
+      </div>
+      <div class="card wide">
+        <div class="card-label">SD‑распределение</div>
+        <div class="sd-bars" id="sd-bars"></div>
+      </div>
+    </section>
+
+    <section class="card list" id="recent">
+      <div class="card-header">
+        <h2>Последние источники</h2>
+        <a class="link" href="/registry">Открыть реестр</a>
+      </div>
+      <ul id="recent-list" class="recent-list"></ul>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

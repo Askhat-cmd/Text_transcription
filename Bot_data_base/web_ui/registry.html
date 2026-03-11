@@ -1,0 +1,50 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Реестр источников</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg"></div>
+  <header class="topbar">
+    <div class="brand">Bot_data_base</div>
+    <nav class="nav">
+      <a href="/">Дашборд</a>
+      <a href="/youtube">Добавить YouTube</a>
+      <a href="/books">Загрузить книгу</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="card-header">
+        <h1>Реестр источников</h1>
+        <button id="export-merged" class="btn secondary">Экспортировать merged JSON</button>
+      </div>
+      <div class="table-wrap">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th>Тип</th>
+              <th>Автор</th>
+              <th>Название</th>
+              <th>Язык</th>
+              <th>Блоков</th>
+              <th>SD</th>
+              <th>Статус</th>
+              <th>Добавлен</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="registry-body"></tbody>
+        </table>
+      </div>
+      <div class="stats-footer" id="registry-stats"></div>
+    </section>
+  </main>
+
+  <script src="/static/registry.js"></script>
+</body>
+</html>

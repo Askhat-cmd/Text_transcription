@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+import logging
 import os
 
 from api.routes.youtube import router as youtube_router
@@ -12,6 +13,12 @@ from api.routes.status import router as status_router
 
 env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".env"))
 load_dotenv(env_path, override=False)
+
+_log_level = os.getenv("LOG_LEVEL", "DEBUG").upper()
+root_logger = logging.getLogger()
+root_logger.setLevel(_log_level)
+for handler in root_logger.handlers:
+    handler.setLevel(_log_level)
 
 app = FastAPI(title="Bot_data_base Admin API", version="1.0.0")
 

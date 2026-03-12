@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from typing import Any, Dict, List
 
 from dotenv import load_dotenv
@@ -40,8 +41,8 @@ SD_LABELER_SYSTEM_PROMPT = """
 Верни ТОЛЬКО JSON-массив объектов — по одному на каждый переданный текст,
 в том же порядке. Пример для 2 текстов:
 [
-  {"sd_level": "GREEN", "sd_secondary": "YELLOW", "sd_confidence": 0.85, "complexity": 0.45, "reasoning": "..."},
-  {"sd_level": "BLUE",  "sd_secondary": null,     "sd_confidence": 0.90, "complexity": 0.30, "reasoning": "..."}
+  {"sd_level": "GREEN", "sd_secondary": "YELLOW", "sd_confidence": 0.85, "complexity": 0.45},
+  {"sd_level": "BLUE",  "sd_secondary": null,     "sd_confidence": 0.90, "complexity": 0.30}
 ]
 Никакого другого текста кроме JSON-массива.
 """
@@ -55,7 +56,7 @@ class SDLabeler:
         self._client = None
         self.model = cfg.get("model", "gpt-4o-mini")
         self.temperature = float(cfg.get("temperature", 0.1))
-        self.max_tokens = int(cfg.get("max_tokens", 800))
+        self.max_tokens = int(cfg.get("max_tokens", 1500))
         self.max_chars = int(cfg.get("max_chars", 1500))
         self.min_confidence = float(cfg.get("min_confidence", 0.5))
         self.batch_size = int(cfg.get("batch_size", 5))
@@ -123,13 +124,14 @@ class SDLabeler:
             model=self.model,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
-            response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": SD_LABELER_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
             ],
         )
         raw = (response.choices[0].message.content or "").strip()
+        if "```" in raw:
+            raw = re.sub(r"```(?:json)?\s*", "", raw).strip()
         logger.debug(f"[SD_LABELER] raw response: {raw[:200]}")
         if not raw:
             logger.warning("[SD_LABELER] empty LLM response, using defaults")

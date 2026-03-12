@@ -18,7 +18,7 @@ sd_labeling:
   enabled: true
   model: gpt-4o-mini
   temperature: 0.1
-  max_tokens: 800
+  max_tokens: 300
   min_confidence: 0.5
   batch_size: 5
 storage:
@@ -33,5 +33,5 @@ api:
   port: 8003
   upload_max_size_mb: 50
 logging:
-  level: INFO
+  level: DEBUG
   log_file: logs/pipeline.log

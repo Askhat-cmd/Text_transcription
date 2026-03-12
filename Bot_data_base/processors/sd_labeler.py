@@ -8,9 +8,12 @@ import json
 import logging
 from typing import Any, Dict, List
 
+from dotenv import load_dotenv
 from openai import OpenAI
 
 from models.universal_block import UniversalBlock
+
+load_dotenv()
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +45,10 @@ SD_LABELER_SYSTEM_PROMPT = """
   "complexity": 0.45,
   "reasoning": "Краткое объяснение"
 }
+
+Если передан массив текстов, верни JSON МАССИВ объектов
+того же размера, в том же порядке:
+[{...}, {...}, {...}]
 """
 
 
@@ -127,6 +134,7 @@ class SDLabeler:
             ],
         )
         raw = (response.choices[0].message.content or "").strip()
+        logger.debug(f"[SD_LABELER] raw response: {raw[:200]}")
         return raw
 
     def _parse_response(self, raw: str, expected_len: int) -> List[Dict[str, Any]]:
@@ -151,7 +159,9 @@ class SDLabeler:
 
     def _get_client(self) -> OpenAI:
         if self._client is None:
-            self._client = OpenAI()
+            import os
+
+            self._client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         return self._client
 
     @staticmethod

@@ -43,7 +43,7 @@ copy .env.example .env
 .\.venv\Scripts\python.exe -m uvicorn api.main:app --reload --port 8001
 ```
 
-**Готово!** Откройте http://localhost:8001
+**Готово!** Откройте http://localhost:8003
 
 ---
 
@@ -92,14 +92,14 @@ API_PORT=8001
 
 ```bash
 .\.venv\Scripts\activate
-python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8001
+python -m uvicorn api.main:app --reload --host 0.0.0.0 --port 8003
 ```
 
 ### Production режим
 
 ```bash
 .\.venv\Scripts\activate
-python -m uvicorn api.main:app --host 0.0.0.0 --port 8001 --workers 4
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8003 --workers 4
 ```
 
 ---
@@ -110,11 +110,11 @@ python -m uvicorn api.main:app --host 0.0.0.0 --port 8001 --workers 4
 
 | Страница | URL | Описание |
 |----------|-----|----------|
-| **Dashboard** | http://localhost:8001/ | Общая статистика, последние источники |
-| **Добавить YouTube** | http://localhost:8001/youtube | Форма для обработки YouTube видео |
-| **Загрузить книгу** | http://localhost:8001/books | Загрузка книг (MD/TXT) |
-| **Реестр источников** | http://localhost:8001/registry | Управление источниками |
-| **API Docs** | http://localhost:8001/docs | Swagger документация |
+| **Dashboard** | http://localhost:8003/ | Общая статистика, последние источники |
+| **Добавить YouTube** | http://localhost:8003/youtube | Форма для обработки YouTube видео |
+| **Загрузить книгу** | http://localhost:8003/books | Загрузка книг (MD/TXT) |
+| **Реестр источников** | http://localhost:8003/registry | Управление источниками |
+| **API Docs** | http://localhost:8003/docs | Swagger документация |
 
 ### Прогресс обработки YouTube
 

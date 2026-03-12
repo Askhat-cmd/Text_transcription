@@ -37,18 +37,13 @@ SD_LABELER_SYSTEM_PROMPT = """
 - complexity 0.4-0.6: средний
 - complexity 0.7-1.0: сложный
 
-Верни JSON:
-{
-  "sd_level": "GREEN",
-  "sd_secondary": "YELLOW",
-  "sd_confidence": 0.85,
-  "complexity": 0.45,
-  "reasoning": "Краткое объяснение"
-}
-
-Если передан массив текстов, верни JSON МАССИВ объектов
-того же размера, в том же порядке:
-[{...}, {...}, {...}]
+Верни ТОЛЬКО JSON-массив объектов — по одному на каждый переданный текст,
+в том же порядке. Пример для 2 текстов:
+[
+  {"sd_level": "GREEN", "sd_secondary": "YELLOW", "sd_confidence": 0.85, "complexity": 0.45, "reasoning": "..."},
+  {"sd_level": "BLUE",  "sd_secondary": null,     "sd_confidence": 0.90, "complexity": 0.30, "reasoning": "..."}
+]
+Никакого другого текста кроме JSON-массива.
 """
 
 
@@ -60,7 +55,7 @@ class SDLabeler:
         self._client = None
         self.model = cfg.get("model", "gpt-4o-mini")
         self.temperature = float(cfg.get("temperature", 0.1))
-        self.max_tokens = int(cfg.get("max_tokens", 300))
+        self.max_tokens = int(cfg.get("max_tokens", 800))
         self.max_chars = int(cfg.get("max_chars", 1500))
         self.min_confidence = float(cfg.get("min_confidence", 0.5))
         self.batch_size = int(cfg.get("batch_size", 5))
@@ -128,6 +123,7 @@ class SDLabeler:
             model=self.model,
             temperature=self.temperature,
             max_tokens=self.max_tokens,
+            response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": SD_LABELER_SYSTEM_PROMPT},
                 {"role": "user", "content": user_content},
@@ -135,6 +131,9 @@ class SDLabeler:
         )
         raw = (response.choices[0].message.content or "").strip()
         logger.debug(f"[SD_LABELER] raw response: {raw[:200]}")
+        if not raw:
+            logger.warning("[SD_LABELER] empty LLM response, using defaults")
+            return json.dumps([self._default_label() for _ in texts])
         return raw
 
     def _parse_response(self, raw: str, expected_len: int) -> List[Dict[str, Any]]:

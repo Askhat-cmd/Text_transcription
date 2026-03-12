@@ -15,10 +15,11 @@ import sys
 import io
 from pathlib import Path
 
-# Fix Windows console encoding
-if sys.platform == 'win32':
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
-    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+def _configure_console_encoding():
+    # Avoid touching sys.std* during pytest collection/capture.
+    if sys.platform == 'win32':
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+        sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Add bot_agent to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -186,6 +187,7 @@ def test_qa_basic():
 
 def main():
     """Главная функция тестирования"""
+    _configure_console_encoding()
     print_separator("═")
     print("🧪 ТЕСТИРОВАНИЕ PHASE 1 - BOT PSYCHOLOGIST QA")
     print_separator("═")

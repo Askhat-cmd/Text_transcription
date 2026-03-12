@@ -22,6 +22,14 @@ node_modules/
 # Environment variables
 .env
 
+# Python caches / venv
+__pycache__/
+.pytest_cache/
+.venv/
+.cache_bot_agent/
+.taskmaster/
+*.db
+
 # Editor directories and files
 .idea
 .vscode

@@ -55,7 +55,7 @@ dropZone.addEventListener('dragover', (e) => {
 
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('active'));
 
-/dropZone.addEventListener('drop', (e) => {
+dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('active');
   const file = e.dataTransfer.files[0];

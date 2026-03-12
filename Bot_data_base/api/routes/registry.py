@@ -1,5 +1,7 @@
 ﻿from fastapi import APIRouter
 
+from pathlib import Path
+
 from api.schemas import RegistryListResponse, StatsResponse
 from pipeline_runner import PipelineRunner
 from storage.json_export import JSONExporter
@@ -40,9 +42,38 @@ async def get_stats():
 @router.delete("/{source_id}")
 async def delete_source(source_id: str):
     runner = _get_runner()
+    source = runner.registry.get_source(source_id)
     deleted = runner.chroma_manager.delete_source(source_id)
     removed = runner.registry.delete_source(source_id)
-    return {"deleted": deleted, "removed": removed}
+    files_deleted: list[str] = []
+
+    if source:
+        file_paths = source.file_paths or {}
+        upload_path = file_paths.get("upload")
+        if upload_path:
+            path = Path(str(upload_path))
+            if path.exists():
+                path.unlink()
+                files_deleted.append(str(path))
+
+        json_path = file_paths.get("json")
+        if json_path:
+            path = Path(str(json_path))
+            if path.exists():
+                path.unlink()
+                files_deleted.append(str(path))
+
+        base_dir = Path(runner.json_exporter.base_dir)
+        for subdir in ("books", "youtube"):
+            dir_path = base_dir / subdir
+            if not dir_path.exists():
+                continue
+            for f in dir_path.glob(f"*{source_id}*"):
+                if f.exists():
+                    f.unlink()
+                    files_deleted.append(str(f))
+
+    return {"deleted": deleted, "removed": removed, "files_deleted": files_deleted}
 
 
 @router.get("/export/merged")

@@ -182,7 +182,7 @@ class PipelineRunner:
             processed_at=None,
             blocks_count=0,
             sd_distribution={},
-            file_paths={},
+            file_paths={"upload": file_path},
             error_message=None,
             pipeline_version="bot_data_base_v1.0",
         )
@@ -220,7 +220,7 @@ class PipelineRunner:
                 processed_at=datetime.utcnow().isoformat(),
                 blocks_count=len(blocks),
                 sd_distribution=sd_dist,
-                file_paths={"json": json_path, "chroma": True},
+                file_paths={"json": json_path, "chroma": True, "upload": file_path},
                 error_message=None,
             )
 

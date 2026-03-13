@@ -32,6 +32,20 @@ class Config:
 
     SAG_FINAL_DIR = DATA_ROOT / "sag_final"
 
+    # === Knowledge Source ===
+    # "json"     → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy режим
+    # "db_json"  → Bot_data_base exported *_blocks.json (без запущенного сервера)
+    # "chromadb" → Bot_data_base через HTTP API (рекомендуется для production)
+    KNOWLEDGE_SOURCE: str = os.getenv("KNOWLEDGE_SOURCE", "json")
+
+    # === Bot_data_base HTTP connection ===
+    CHROMA_API_URL: str = os.getenv("CHROMA_API_URL", "http://localhost:8003")
+    CHROMA_COLLECTION: str = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
+
+    # === db_json mode paths ===
+    DB_JSON_DIR: str = os.getenv("DB_JSON_DIR", "")
+    DB_EXPORT_FILE: str = os.getenv("DB_EXPORT_FILE", "")
+
     # === Retrieval ===
     TOP_K_BLOCKS = 5
     MIN_RELEVANCE_SCORE = 0.1
@@ -174,8 +188,17 @@ class Config:
         if not cls.OPENAI_API_KEY:
             errors.append("OPENAI_API_KEY is not set in .env")
 
-        if not cls.SAG_FINAL_DIR.exists():
-            errors.append(f"Data directory not found: {cls.SAG_FINAL_DIR}")
+        if cls.KNOWLEDGE_SOURCE == "json" and not cls.SAG_FINAL_DIR.exists():
+            errors.append(f"SAG data directory not found: {cls.SAG_FINAL_DIR}")
+        elif cls.KNOWLEDGE_SOURCE == "db_json":
+            db_dir = Path(cls.DB_JSON_DIR) if cls.DB_JSON_DIR else None
+            db_file = Path(cls.DB_EXPORT_FILE) if cls.DB_EXPORT_FILE else None
+            if not (db_dir and db_dir.exists()) and not (db_file and db_file.exists()):
+                errors.append(
+                    f"db_json mode: ни DB_JSON_DIR, ни DB_EXPORT_FILE не заданы или не существуют"
+                )
+        elif cls.KNOWLEDGE_SOURCE == "chromadb":
+            pass  # health check выполняется в ChromaLoader при первом запросе
 
         if cls.LLM_MODEL not in cls.SUPPORTED_MODELS:
             errors.append(
@@ -204,6 +227,9 @@ class Config:
 | PROJECT_ROOT: {cls.PROJECT_ROOT}
 | DATA_ROOT:    {cls.DATA_ROOT}
 | SAG_FINAL:    {cls.SAG_FINAL_DIR}
+| KNOWLEDGE_SOURCE: {cls.KNOWLEDGE_SOURCE}
+| CHROMA_API_URL:   {cls.CHROMA_API_URL}
+| CHROMA_COLLECTION:{cls.CHROMA_COLLECTION}
 | LLM_MODEL:    {cls.LLM_MODEL}
 | CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}

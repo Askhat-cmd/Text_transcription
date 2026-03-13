@@ -9,6 +9,7 @@ Simple TF-IDF Retriever
 import hashlib
 import logging
 import time
+from pathlib import Path
 from typing import List, Tuple, Optional
 
 import joblib
@@ -19,7 +20,7 @@ from .config import config
 
 logger = logging.getLogger(__name__)
 
-CACHE_FORMAT_VERSION = "3.0.2"
+CACHE_FORMAT_VERSION = "4.0.0"  # bumped: universal Block + ChromaDB support
 CACHE_DIR = config.CACHE_DIR
 TFIDF_CACHE_PATH = CACHE_DIR / "tfidf_cache.joblib"
 TFIDF_HASH_PATH = CACHE_DIR / "tfidf_cache.hash"
@@ -57,10 +58,43 @@ class SimpleRetriever:
         self._build_or_load_tfidf()
 
     def _compute_data_hash(self) -> str:
+        """
+        Вычисляет хэш данных для инвалидации TF-IDF кэша.
+        Зависит от KNOWLEDGE_SOURCE и содержимого источников.
+        """
         hasher = hashlib.md5()
         hasher.update(CACHE_FORMAT_VERSION.encode())
-        for file_path in sorted(config.SAG_FINAL_DIR.glob("**/*.for_vector.json")):
-            hasher.update(file_path.read_bytes())
+        hasher.update(config.KNOWLEDGE_SOURCE.encode())
+
+        if config.KNOWLEDGE_SOURCE == "json":
+            for file_path in sorted(
+                config.SAG_FINAL_DIR.glob("**/*.for_vector.json")
+            ):
+                hasher.update(file_path.read_bytes())
+
+        elif config.KNOWLEDGE_SOURCE == "db_json":
+            db_dir = Path(config.DB_JSON_DIR) if config.DB_JSON_DIR else None
+            db_file = Path(config.DB_EXPORT_FILE) if config.DB_EXPORT_FILE else None
+            if db_file and db_file.exists():
+                hasher.update(db_file.read_bytes())
+            elif db_dir and db_dir.exists():
+                for file_path in sorted(db_dir.glob("**/*_blocks.json")):
+                    hasher.update(file_path.read_bytes())
+
+        else:  # chromadb
+            try:
+                from .chroma_loader import chroma_loader
+                resp = chroma_loader._session.get(
+                    f"{chroma_loader.api_url}{chroma_loader.STATS_URL}",
+                    timeout=5,
+                )
+                if resp.status_code == 200:
+                    hasher.update(resp.text.encode())
+                else:
+                    hasher.update(b"chromadb_stats_unavailable")
+            except Exception:
+                hasher.update(b"chromadb_no_connection")
+
         return hasher.hexdigest()
 
     def _build_or_load_tfidf(self) -> None:
@@ -128,44 +162,70 @@ class SimpleRetriever:
         logger.info("[RETRIEVAL] index built for %s blocks", len(self.blocks))
     
     def retrieve(
-        self, 
-        query: str, 
+        self,
+        query: str,
         top_k: Optional[int] = None
     ) -> List[Tuple[Block, float]]:
         """
         Найти top_k релевантных блоков для запроса.
-        
+
         Args:
             query: Текст запроса на русском языке
             top_k: Количество результатов (по умолчанию из config)
-            
+
         Returns:
             Список кортежей (Block, score), отсортированный по убыванию score
         """
         if top_k is None:
             top_k = config.TOP_K_BLOCKS
 
-        logger.info("[RETRIEVAL] cache_check hash=%s ts=%.6f", hash(query), time.time())
-        logger.info("[RETRIEVAL] query='%s' top_k=%s", query, top_k)
-        
+        logger.info(
+            "[RETRIEVAL] query='%s' top_k=%s source=%s",
+            query[:80], top_k, config.KNOWLEDGE_SOURCE
+        )
+
+        # ================================================================
+        # НОВЫЙ БЛОК: ChromaDB семантический поиск (приоритет над TF-IDF)
+        # Активен только при KNOWLEDGE_SOURCE=chromadb
+        # При недоступности /api/query/ — автоматически падает на TF-IDF
+        # ================================================================
+        if config.KNOWLEDGE_SOURCE == "chromadb":
+            try:
+                from .chroma_loader import chroma_loader
+                semantic_results = chroma_loader.query_blocks(query, top_k=top_k)
+                if semantic_results:
+                    logger.info(
+                        "[RETRIEVAL] semantic search: %d блоков (ChromaDB)",
+                        len(semantic_results)
+                    )
+                    return semantic_results
+                logger.info(
+                    "[RETRIEVAL] semantic search вернул 0 результатов → TF-IDF fallback"
+                )
+            except Exception as e:
+                logger.warning(
+                    "[RETRIEVAL] semantic search ошибка: %s → TF-IDF fallback", e
+                )
+        # ================================================================
+
         if not self._is_built:
             self.build_index()
-        
+
         if not self.blocks or self.tfidf_matrix is None:
             logger.warning("[RETRIEVAL] empty index")
             return []
-        
+
         from sklearn.metrics.pairwise import cosine_similarity
-        
+
         # Трансформируем запрос в TF-IDF вектор
         query_vec = self.vectorizer.transform([query])
-        
+
         # Считаем косинусное сходство с каждым блоком
         similarities = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
-        
+
         # Берём top_k индексов с наибольшим сходством
         top_indices = np.argsort(-similarities)[:top_k * 2]  # берём больше для фильтрации
-        
+
         # Фильтруем по минимальному порогу релевантности
         results = []
         for idx in top_indices:
@@ -174,7 +234,7 @@ class SimpleRetriever:
                 results.append((self.blocks[idx], score))
                 if len(results) >= top_k:
                     break
-        
+
         logger.info("[RETRIEVAL] tfidf found %s blocks", len(results))
         for i, (block, score) in enumerate(results[:10], start=1):
             title = (block.title or "")[:60]

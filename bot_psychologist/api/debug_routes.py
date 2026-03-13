@@ -31,7 +31,20 @@ async def get_session_metrics(
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Debug access denied")
     traces = store.get_session_traces(session_id)
     if not traces:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session not found")
+        return {
+            "total_turns": 0,
+            "fast_path_pct": 0,
+            "sd_distribution": {
+                "GREEN": 0,
+                "YELLOW": 0,
+                "RED": 0,
+            },
+            "avg_llm_time_ms": 0,
+            "max_llm_time_ms": 0,
+            "total_cost_usd": 0.0,
+            "turns_with_anomalies": 0,
+            "anomaly_turns_indices": [],
+        }
     return _aggregate_session_metrics(traces)
 
 

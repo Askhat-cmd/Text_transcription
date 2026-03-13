@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import type { InlineTrace } from '../types';
+import { storageService } from '../services/storage.service';
 
 export interface SessionMetrics {
   total_turns: number;
@@ -29,9 +30,11 @@ export function useSessionTrace(sessionId?: string | null) {
     }
     setLoading(true);
     try {
+      const apiKey = storageService.getApiKey();
+      const headers = apiKey ? { 'X-API-Key': apiKey } : undefined;
       const [metricsRes, tracesRes] = await Promise.all([
-        fetch(`/api/debug/session/${sessionId}/metrics`, { credentials: 'include' }),
-        fetch(`/api/debug/session/${sessionId}/traces`, { credentials: 'include' }),
+        fetch(`/api/debug/session/${sessionId}/metrics`, { credentials: 'include', headers }),
+        fetch(`/api/debug/session/${sessionId}/traces`, { credentials: 'include', headers }),
       ]);
 
       if (metricsRes.ok) {

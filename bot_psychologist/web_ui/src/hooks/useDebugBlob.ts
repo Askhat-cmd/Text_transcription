@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+ï»¿import { useState, useCallback } from 'react';
+import { storageService } from '../services/storage.service';
 
 export function useDebugBlob() {
   const [blobs, setBlobs] = useState<Record<string, string>>({});
@@ -8,12 +9,14 @@ export function useDebugBlob() {
     if (!blobId || blobs[blobId] || loading[blobId]) return;
     setLoading((prev) => ({ ...prev, [blobId]: true }));
     try {
-      const res = await fetch(`/api/debug/blob/${blobId}`, { credentials: 'include' });
+      const apiKey = storageService.getApiKey();
+      const headers = apiKey ? { 'X-API-Key': apiKey } : undefined;
+      const res = await fetch(`/api/debug/blob/${blobId}`, { credentials: 'include', headers });
       if (!res.ok) throw new Error('Blob not found');
       const data = await res.json();
       setBlobs((prev) => ({ ...prev, [blobId]: data.content }));
     } catch {
-      setBlobs((prev) => ({ ...prev, [blobId]: '[Îøèáêà çàãðóçêè]' }));
+      setBlobs((prev) => ({ ...prev, [blobId]: '[ÐžÑˆÐ¸Ð±ÐºÐ° Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸]' }));
     } finally {
       setLoading((prev) => ({ ...prev, [blobId]: false }));
     }

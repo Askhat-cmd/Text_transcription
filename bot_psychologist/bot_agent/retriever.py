@@ -83,6 +83,11 @@ class SimpleRetriever:
 
         else:  # chromadb
             try:
+                merged_path = Path(getattr(config, "ALL_BLOCKS_MERGED_PATH", "") or "")
+                if merged_path and merged_path.exists():
+                    hasher.update(merged_path.read_bytes())
+                    return hasher.hexdigest()
+
                 from .chroma_loader import chroma_loader
                 resp = chroma_loader._session.get(
                     f"{chroma_loader.api_url}{chroma_loader.STATS_URL}",
@@ -117,6 +122,10 @@ class SimpleRetriever:
 
         logger.info("[RETRIEVAL] building TF-IDF index")
         self._build_tfidf()
+
+        if not self.blocks or self.tfidf_matrix is None:
+            logger.warning("[RETRIEVAL] no blocks to cache; skipping TF-IDF cache save")
+            return
 
         try:
             joblib.dump(
@@ -260,6 +269,4 @@ def get_retriever() -> SimpleRetriever:
         _retriever_instance = SimpleRetriever()
     
     return _retriever_instance
-
-
 

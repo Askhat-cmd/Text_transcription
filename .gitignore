@@ -123,6 +123,7 @@ desktop.ini
 *.old
 *.tmp
 *.temp
+.git_commit_msg.txt
 
 # TaskMaster (опционально, если не хотите коммитить задачи)
 # .taskmaster/tasks/

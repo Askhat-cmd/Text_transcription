@@ -3,8 +3,9 @@ ChromaLoader — HTTP-клиент к Bot_data_base API
 ===============================================
 
 Конфигурация через .env:
-  CHROMA_API_URL=http://localhost:8003
+  CHROMA_API_URL=http://localhost:8004
   CHROMA_COLLECTION=bot_knowledge
+  ALL_BLOCKS_MERGED_PATH=C:/.../Bot_data_base/data/processed/all_blocks_merged.json
 
 Подтверждённые эндпоинты Bot_data_base:
   GET  /api/registry/         → список всех источников
@@ -23,6 +24,7 @@ ChromaLoader — HTTP-клиент к Bot_data_base API
 """
 
 import logging
+from pathlib import Path
 from typing import List, Optional, Dict, Tuple
 
 import requests
@@ -71,73 +73,81 @@ class ChromaLoader:
         """
         Загрузить все блоки из Bot_data_base.
 
-        Стратегия:
-          1. GET /api/registry/export/merged → читаем файл по пути
-          2. POST /api/query/ с пустым запросом — fallback
-          3. GET /api/registry/ + загрузка по источникам — последний fallback
+        СТРАТЕГИЯ (в порядке приоритета):
+          1. Читать all_blocks_merged.json напрямую с диска
+             (Bot_data_base/data/processed/all_blocks_merged.json)
+          2. GET /api/registry/ + _load_source_blocks() через API — fallback
+             если файл не найден (например, разные машины)
 
-        Результат кэшируется. Вызывать invalidate_cache() при добавлении источников.
+        Результат кэшируется в памяти.
         """
         if self._all_blocks_cache is not None:
             logger.info(f"[CHROMA] Используем кэш: {len(self._all_blocks_cache)} блоков")
             return self._all_blocks_cache
 
-        logger.info(f"[CHROMA] Загрузка всех блоков из {self.api_url}")
+        logger.info(f"[CHROMA] Загрузка всех блоков...")
         blocks: List[Block] = []
 
-        # Попытка 1: /api/registry/export/merged → читаем файл напрямую
-        try:
-            resp = self._session.get(
-                f"{self.api_url}{self.EXPORT_MERGED_URL}",
-                timeout=10,
-            )
-            if resp.status_code == 200:
-                data = resp.json()
-                file_path = data.get("path")
-                if file_path:
-                    import json
-                    with open(file_path, 'r', encoding='utf-8') as f:
-                        merged_data = json.load(f)
-                    raw_list = merged_data.get("blocks", []) if isinstance(merged_data, dict) else merged_data
-                    blocks = [self._parse_block(b, {}) for b in raw_list]
-                    logger.info(f"[CHROMA] Export merged: {len(blocks)} блоков из {file_path}")
-                    self._all_blocks_cache = blocks
-                    return blocks
-                else:
-                    logger.warning(f"[CHROMA] export/merged не вернул path")
-            else:
-                logger.info(f"[CHROMA] /api/registry/export/merged вернул {resp.status_code} → пробуем registry")
-        except requests.RequestException as e:
-            logger.warning(f"[CHROMA] export/merged ошибка: {e} → пробуем registry")
-        except Exception as e:
-            logger.warning(f"[CHROMA] export/merged file read error: {e} → пробуем registry")
+        # ── Стратегия 1: читать merged JSON напрямую с диска ──────────────
+        merged_path = config.ALL_BLOCKS_MERGED_PATH
+        if merged_path and Path(merged_path).exists():
+            try:
+                import json
+                with open(merged_path, 'r', encoding='utf-8') as f:
+                    merged_data = json.load(f)
 
-        # Попытка 2: через registry
+                # Поддержка двух форматов:
+                # {"blocks": [...]}  или  [...]  или  {"sources": [{"blocks": [...]}]}
+                if isinstance(merged_data, list):
+                    raw_blocks = merged_data
+                elif isinstance(merged_data, dict):
+                    raw_blocks = merged_data.get("blocks", [])
+                    if not raw_blocks:
+                        # Формат с вложенными sources
+                        for src in merged_data.get("sources", []):
+                            raw_blocks.extend(src.get("blocks", []))
+                else:
+                    raw_blocks = []
+
+                blocks = [self._parse_block(b, {}) for b in raw_blocks]
+                logger.info(
+                    f"[CHROMA] ✅ Прочитано из merged JSON: "
+                    f"{len(blocks)} блоков из {merged_path}"
+                )
+                self._all_blocks_cache = blocks
+                return blocks
+
+            except Exception as e:
+                logger.warning(
+                    f"[CHROMA] Не удалось прочитать merged JSON ({merged_path}): {e} "
+                    f"→ fallback на API"
+                )
+
+        # ── Стратегия 2: API fallback ─────────────────────────────────────
+        logger.info(f"[CHROMA] Загрузка через API {self.api_url}")
         try:
             registry = self._get_registry()
         except Exception as e:
-            logger.error(f"[CHROMA] Не удалось получить реестр: {e}")
+            logger.error(
+                f"[CHROMA] ❌ Реестр недоступен: {e}. "
+                f"Установите ALL_BLOCKS_MERGED_PATH в .env"
+            )
             return blocks
 
         logger.info(f"[CHROMA] Реестр: {len(registry)} источников")
-
         for entry in registry:
             source_id = entry.get("source_id", "")
             if not source_id:
-                logger.warning(f"[CHROMA] Источник без source_id: {entry}")
                 continue
             try:
                 source_blocks = self._load_source_blocks(source_id, entry)
                 blocks.extend(source_blocks)
-                logger.info(
-                    f"[CHROMA] '{source_id}': {len(source_blocks)} блоков "
-                    f"(SD: {entry.get('sd_distribution', {})})"
-                )
+                logger.info(f"[CHROMA] '{source_id}': {len(source_blocks)} блоков")
             except Exception as e:
-                logger.error(f"[CHROMA] Ошибка загрузки '{source_id}': {e}")
+                logger.error(f"[CHROMA] Ошибка '{source_id}': {e}")
 
         self._all_blocks_cache = blocks
-        logger.info(f"[CHROMA] Итого загружено: {len(blocks)} блоков")
+        logger.info(f"[CHROMA] Итого: {len(blocks)} блоков")
         return blocks
 
     def query_blocks(

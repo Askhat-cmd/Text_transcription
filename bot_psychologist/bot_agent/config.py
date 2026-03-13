@@ -39,8 +39,14 @@ class Config:
     KNOWLEDGE_SOURCE: str = os.getenv("KNOWLEDGE_SOURCE", "json")
 
     # === Bot_data_base HTTP connection ===
-    CHROMA_API_URL: str = os.getenv("CHROMA_API_URL", "http://localhost:8003")
+    CHROMA_API_URL: str = os.getenv("CHROMA_API_URL", "http://localhost:8004")
     CHROMA_COLLECTION: str = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
+
+    # === Direct merged JSON path (CRITICAL for CHUNKS fix) ===
+    # Абсолютный путь к all_blocks_merged.json (Bot_data_base/data/processed/books/)
+    # Если задан — блоки читаются напрямую с диска (быстрее, без HTTP)
+    # Если пустой — используется API fallback
+    ALL_BLOCKS_MERGED_PATH: str = os.getenv("ALL_BLOCKS_MERGED_PATH", "")
 
     # === db_json mode paths ===
     DB_JSON_DIR: str = os.getenv("DB_JSON_DIR", "")
@@ -246,3 +252,11 @@ class Config:
 # модуля — стандартное поведение Python для взаимных импортов.
 from .runtime_config import RuntimeConfig
 config = RuntimeConfig()
+
+# Авто-определение ALL_BLOCKS_MERGED_PATH если не задан явно
+if not config.ALL_BLOCKS_MERGED_PATH:
+    _repo_root = Path(__file__).resolve().parents[3]  # Text_transcription/
+    _candidate = _repo_root / "Bot_data_base" / "data" / "processed" / "all_blocks_merged.json"
+    if _candidate.exists():
+        config.ALL_BLOCKS_MERGED_PATH = str(_candidate)
+        logger.info(f"[CONFIG] Auto-detected ALL_BLOCKS_MERGED_PATH: {_candidate}")

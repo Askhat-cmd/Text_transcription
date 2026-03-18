@@ -36,6 +36,7 @@ class Config:
     # "json"     → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy режим
     # "db_json"  → Bot_data_base exported *_blocks.json (без запущенного сервера)
     # "chromadb" → Bot_data_base через HTTP API (рекомендуется для production)
+    # "api"      → Bot_data_base через HTTP API (явный режим)
     KNOWLEDGE_SOURCE: str = os.getenv("KNOWLEDGE_SOURCE", "json")
 
     # === Bot_data_base HTTP connection ===
@@ -206,7 +207,7 @@ class Config:
                 errors.append(
                     f"db_json mode: ни DB_JSON_DIR, ни DB_EXPORT_FILE не заданы или не существуют"
                 )
-        elif cls.KNOWLEDGE_SOURCE == "chromadb":
+        elif cls.KNOWLEDGE_SOURCE in ("chromadb", "api"):
             pass  # health check выполняется в ChromaLoader при первом запросе
 
         if cls.LLM_MODEL not in cls.SUPPORTED_MODELS:
@@ -239,6 +240,7 @@ class Config:
 | KNOWLEDGE_SOURCE: {cls.KNOWLEDGE_SOURCE}
 | CHROMA_API_URL:   {cls.CHROMA_API_URL}
 | CHROMA_COLLECTION:{cls.CHROMA_COLLECTION}
+| BOT_DB_URL:  {cls.BOT_DB_URL}
 | LLM_MODEL:    {cls.LLM_MODEL}
 | CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}

@@ -84,7 +84,7 @@ class SimpleRetriever:
                 for file_path in sorted(db_dir.glob("**/*_blocks.json")):
                     hasher.update(file_path.read_bytes())
 
-        else:  # chromadb
+        else:  # chromadb/api
             try:
                 merged_path = Path(getattr(config, "ALL_BLOCKS_MERGED_PATH", "") or "")
                 if merged_path and merged_path.exists():
@@ -267,32 +267,34 @@ class SimpleRetriever:
 
         # ================================================================
         # Новый путь: Bot_data_base HTTP API (cascading fallback)
+        # Активируется только для KNOWLEDGE_SOURCE=api|chromadb
         # ================================================================
-        try:
-            api_results = self._api_retrieve(
-                query=query,
-                sd_level=sd_level,
-                top_k=top_k,
-                author_id=author_id,
-            )
-            if api_results:
-                logger.info("[RETRIEVAL] API search: %d блоков", len(api_results))
-                return api_results
-            if sd_level > 0:
-                logger.warning(
-                    "[RETRIEVAL] API 0 результатов с sd_level=%s → повтор без фильтра",
-                    sd_level,
-                )
+        if config.KNOWLEDGE_SOURCE in ("api", "chromadb"):
+            try:
                 api_results = self._api_retrieve(
                     query=query,
-                    sd_level=0,
+                    sd_level=sd_level,
                     top_k=top_k,
                     author_id=author_id,
                 )
-                return api_results
-            logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
-        except DBApiUnavailableError as exc:
-            logger.warning("[RETRIEVAL] API недоступен → TF-IDF fallback: %s", exc)
+                if api_results:
+                    logger.info("[RETRIEVAL] API search: %d блоков", len(api_results))
+                    return api_results
+                if sd_level > 0:
+                    logger.warning(
+                        "[RETRIEVAL] API 0 результатов с sd_level=%s → повтор без фильтра",
+                        sd_level,
+                    )
+                    api_results = self._api_retrieve(
+                        query=query,
+                        sd_level=0,
+                        top_k=top_k,
+                        author_id=author_id,
+                    )
+                    return api_results
+                logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
+            except DBApiUnavailableError as exc:
+                logger.warning("[RETRIEVAL] API недоступен → TF-IDF fallback: %s", exc)
         # ================================================================
 
         return self._tfidf_fallback(query, top_k)

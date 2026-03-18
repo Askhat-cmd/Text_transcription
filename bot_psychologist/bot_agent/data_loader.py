@@ -199,6 +199,7 @@ class DataLoader:
           - "json"     → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy
           - "db_json"  → Bot_data_base exported JSON (без сервера)
           - "chromadb" → Bot_data_base через HTTP API
+          - "api"      → Bot_data_base через HTTP API (явный режим)
 
         Данные кэшируются в памяти. Повторный вызов не перезагружает данные.
         """
@@ -209,7 +210,10 @@ class DataLoader:
         source = config.KNOWLEDGE_SOURCE
         logger.info(f"📂 KNOWLEDGE_SOURCE={source}")
 
-        if source == "chromadb":
+        if source == "api":
+            logger.info(f"DB API url={getattr(config, 'BOT_DB_URL', '')}")
+            self._load_from_chromadb()
+        elif source == "chromadb":
             self._load_from_chromadb()
         elif source == "db_json":
             self._load_from_db_json()
@@ -534,6 +538,4 @@ class DataLoader:
 
 # Глобальный инстанс (синглтон)
 data_loader = DataLoader()
-
-
 

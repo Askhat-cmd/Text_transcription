@@ -10,6 +10,7 @@ from api.routes.youtube import router as youtube_router
 from api.routes.books import router as books_router
 from api.routes.registry import router as registry_router
 from api.routes.status import router as status_router
+from api.routes.query import router as query_router
 
 env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".env"))
 load_dotenv(env_path, override=False)
@@ -35,6 +36,7 @@ app.include_router(youtube_router, prefix="/api/ingest")
 app.include_router(books_router, prefix="/api/ingest")
 app.include_router(registry_router, prefix="/api/registry")
 app.include_router(status_router, prefix="/api/status")
+app.include_router(query_router, prefix="/api/query", tags=["query"])
 
 # Static
 app.mount("/static", StaticFiles(directory="web_ui/static", check_dir=False), name="static")

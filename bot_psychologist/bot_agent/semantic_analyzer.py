@@ -8,7 +8,7 @@ Semantic Analyzer for Phase 2
 """
 
 import logging
-from typing import List, Dict
+from typing import List, Dict, Optional
 from collections import defaultdict
 
 from .data_loader import Block
@@ -246,5 +246,19 @@ class SemanticAnalyzer:
             b for b in blocks
             if concept in (b.graph_entities or [])
         ]
+
+
+def detect_author_intent(query: str, known_authors: List[str]) -> Optional[str]:
+    """
+    Определить, упоминает ли пользователь конкретного автора.
+    Простой эвристический матч по подстроке (без LLM).
+    """
+    if not query or not known_authors:
+        return None
+    q = query.lower()
+    for author in known_authors:
+        if author and author.lower() in q:
+            return author
+    return None
 
 

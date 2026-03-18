@@ -11,7 +11,7 @@ python -m venv .venv
 Запуск сервера:
 
 ```bash
-.\.venv\Scripts\python.exe -m uvicorn api.main:app --reload --port 8001
+.\.venv\Scripts\python.exe -m uvicorn api.main:app --reload --port 8003
 ```
 
 Тесты:

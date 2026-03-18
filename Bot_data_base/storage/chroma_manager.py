@@ -72,10 +72,15 @@ class ChromaManager:
         return {
             "sd_level": block.sd_level,
             "author_id": block.author_id,
+            "author": block.author,
             "source_type": block.source_type,
             "language": block.language,
             "complexity": block.complexity,
             "source_id": block.source_id,
+            "title": block.title,
+            "source_title": block.source_title,
+            "chapter_title": block.chapter_title,
+            "chunk_index": block.chunk_index,
         }
 
     def _init_embedding_model(self) -> SentenceTransformer:

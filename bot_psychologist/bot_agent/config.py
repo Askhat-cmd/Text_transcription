@@ -41,6 +41,8 @@ class Config:
     # === Bot_data_base HTTP connection ===
     CHROMA_API_URL: str = os.getenv("CHROMA_API_URL", "http://localhost:8004")
     CHROMA_COLLECTION: str = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
+    BOT_DB_URL: str = os.getenv("BOT_DB_URL", "http://localhost:8003")
+    BOT_DB_TIMEOUT: float = float(os.getenv("BOT_DB_TIMEOUT", "10.0"))
 
     # === Direct merged JSON path (CRITICAL for CHUNKS fix) ===
     # Абсолютный путь к all_blocks_merged.json (Bot_data_base/data/processed/books/)
@@ -55,6 +57,7 @@ class Config:
     # === Retrieval ===
     TOP_K_BLOCKS = 5
     MIN_RELEVANCE_SCORE = 0.1
+    AUTHOR_BLEND_MODE: str = os.getenv("AUTHOR_BLEND_MODE", "all")
 
     # === LLM ===
     LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")

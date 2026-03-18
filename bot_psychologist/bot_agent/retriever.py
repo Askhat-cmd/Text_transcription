@@ -17,6 +17,8 @@ import numpy as np
 
 from .data_loader import data_loader, Block
 from .config import config
+from .db_api_client import DBApiClient, DBApiUnavailableError, RetrievedChunk
+from .sd_classifier import SD_LEVELS_ORDER
 
 logger = logging.getLogger(__name__)
 
@@ -45,6 +47,7 @@ class SimpleRetriever:
         self.tfidf_matrix = None
         self.blocks: List[Block] = []
         self._is_built = False
+        self.db_client = DBApiClient()
     
     def build_index(self) -> None:
         """
@@ -169,11 +172,80 @@ class SimpleRetriever:
         self.tfidf_matrix = self.vectorizer.fit_transform(texts)
         self._is_built = True
         logger.info("[RETRIEVAL] index built for %s blocks", len(self.blocks))
+
+    @staticmethod
+    def _sd_int_to_name(value: int) -> Optional[str]:
+        if 1 <= int(value) <= len(SD_LEVELS_ORDER):
+            return SD_LEVELS_ORDER[int(value) - 1]
+        return None
+
+    @staticmethod
+    def _format_seconds(value: Optional[int]) -> str:
+        if value is None:
+            return "00:00:00"
+        try:
+            total = int(value)
+            hours = total // 3600
+            minutes = (total % 3600) // 60
+            seconds = total % 60
+            return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+        except Exception:
+            return "00:00:00"
+
+    def _chunk_to_block(self, chunk: RetrievedChunk) -> Block:
+        title = chunk.block_title or (chunk.content[:60] if chunk.content else "Фрагмент")
+        sd_name = self._sd_int_to_name(chunk.sd_level)
+        return Block(
+            block_id=chunk.chunk_id,
+            title=title,
+            content=chunk.content or "",
+            summary=title,
+            video_id="",
+            start=self._format_seconds(chunk.start_time),
+            end=self._format_seconds(chunk.end_time),
+            youtube_link=chunk.youtube_url or "",
+            keywords=chunk.keywords or [],
+            block_type=None,
+            emotional_tone=None,
+            conceptual_depth=None,
+            complexity_score=5.0,
+            graph_entities=[],
+            sd_level=sd_name,
+            sd_secondary=None,
+            sd_confidence=None,
+            source_type=chunk.source_type or "book",
+            author=chunk.author_name or "",
+            author_id=chunk.author_id or "",
+            chunk_index=0,
+            language="ru",
+        )
+
+    def _api_retrieve(
+        self,
+        query: str,
+        sd_level: int,
+        top_k: int,
+        author_id: Optional[str] = None,
+    ) -> List[Tuple[Block, float]]:
+        chunks = self.db_client.query(
+            query=query,
+            sd_level=sd_level,
+            top_k=top_k,
+            author_id=author_id,
+            use_rerank=True,
+            search_mode="hybrid",
+        )
+        results: List[Tuple[Block, float]] = []
+        for chunk in chunks:
+            results.append((self._chunk_to_block(chunk), float(chunk.score)))
+        return results
     
     def retrieve(
         self,
         query: str,
-        top_k: Optional[int] = None
+        top_k: Optional[int] = None,
+        sd_level: int = 0,
+        author_id: Optional[str] = None,
     ) -> List[Tuple[Block, float]]:
         """
         Найти top_k релевантных блоков для запроса.
@@ -194,29 +266,38 @@ class SimpleRetriever:
         )
 
         # ================================================================
-        # НОВЫЙ БЛОК: ChromaDB семантический поиск (приоритет над TF-IDF)
-        # Активен только при KNOWLEDGE_SOURCE=chromadb
-        # При недоступности /api/query/ — автоматически падает на TF-IDF
+        # Новый путь: Bot_data_base HTTP API (cascading fallback)
         # ================================================================
-        if config.KNOWLEDGE_SOURCE == "chromadb":
-            try:
-                from .chroma_loader import chroma_loader
-                semantic_results = chroma_loader.query_blocks(query, top_k=top_k)
-                if semantic_results:
-                    logger.info(
-                        "[RETRIEVAL] semantic search: %d блоков (ChromaDB)",
-                        len(semantic_results)
-                    )
-                    return semantic_results
-                logger.info(
-                    "[RETRIEVAL] semantic search вернул 0 результатов → TF-IDF fallback"
-                )
-            except Exception as e:
+        try:
+            api_results = self._api_retrieve(
+                query=query,
+                sd_level=sd_level,
+                top_k=top_k,
+                author_id=author_id,
+            )
+            if api_results:
+                logger.info("[RETRIEVAL] API search: %d блоков", len(api_results))
+                return api_results
+            if sd_level > 0:
                 logger.warning(
-                    "[RETRIEVAL] semantic search ошибка: %s → TF-IDF fallback", e
+                    "[RETRIEVAL] API 0 результатов с sd_level=%s → повтор без фильтра",
+                    sd_level,
                 )
+                api_results = self._api_retrieve(
+                    query=query,
+                    sd_level=0,
+                    top_k=top_k,
+                    author_id=author_id,
+                )
+                return api_results
+            logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
+        except DBApiUnavailableError as exc:
+            logger.warning("[RETRIEVAL] API недоступен → TF-IDF fallback: %s", exc)
         # ================================================================
 
+        return self._tfidf_fallback(query, top_k)
+
+    def _tfidf_fallback(self, query: str, top_k: int) -> List[Tuple[Block, float]]:
         if not self._is_built:
             self.build_index()
 
@@ -269,4 +350,3 @@ def get_retriever() -> SimpleRetriever:
         _retriever_instance = SimpleRetriever()
     
     return _retriever_instance
-

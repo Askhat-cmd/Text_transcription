@@ -41,7 +41,7 @@ from .decision import (
 )
 from .retrieval import HybridQueryBuilder, VoyageReranker, filter_by_sd_level
 from .response import ResponseFormatter, ResponseGenerator
-from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
+from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
 
 logger = logging.getLogger(__name__)
 
@@ -1428,13 +1428,47 @@ def answer_question_adaptive(
 
         retriever = get_retriever()
         current_stage = "retrieval"
-        raw_retrieved_blocks, stage = _timed(
-            "retrieval",
-            "Retrieval",
-            retriever.retrieve,
-            hybrid_query,
-            top_k=top_k * 2,  # запрашиваем больше для дедупликации
-        )
+        sd_level_int = 0
+        if sd_result.primary in SD_LEVELS_ORDER:
+            sd_level_int = SD_LEVELS_ORDER.index(sd_result.primary) + 1
+
+        author_id_filter = None
+        author_map = {}
+        if config.AUTHOR_BLEND_MODE in {"single", "blend"}:
+            for block in data_loader.get_all_blocks():
+                if block.author and block.author_id:
+                    author_map[block.author] = block.author_id
+
+            if author_map:
+                from .semantic_analyzer import detect_author_intent
+                author_name = detect_author_intent(query, list(author_map.keys()))
+                if author_name:
+                    author_id_filter = author_map.get(author_name)
+                    logger.info("[RETRIEVAL] author intent detected: %s (%s)", author_name, author_id_filter)
+
+        if config.AUTHOR_BLEND_MODE == "blend" and author_map:
+            raw_retrieved_blocks = []
+            for author_id in author_map.values():
+                raw_retrieved_blocks.extend(
+                    retriever.retrieve(
+                        hybrid_query,
+                        top_k=3,
+                        sd_level=sd_level_int,
+                        author_id=author_id,
+                    )
+                )
+            stage = {"name": "retrieval", "label": "Retrieval (blend)", "duration_ms": 0, "skipped": False}
+        else:
+            raw_retrieved_blocks, stage = _timed(
+                "retrieval",
+                "Retrieval",
+                retriever.retrieve,
+                hybrid_query,
+                top_k=top_k * 2,  # запрашиваем больше для дедупликации
+                sd_level=sd_level_int,
+                author_id=author_id_filter,
+            )
+
         if debug_trace is not None:
             pipeline_stages.append(stage)
         

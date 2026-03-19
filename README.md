@@ -2,12 +2,13 @@
 
 Монорепозиторий, содержащий два связанных проекта для работы с транскрипцией и обработкой YouTube-лекций для создания AI-ботов.
 
-## Важные пункты (2026-03-18)
 
-- `bot_psychologist` переведён на HTTP-режим работы с `Bot_data_base`: используйте `KNOWLEDGE_SOURCE=api`, `BOT_DB_URL`, `CHROMA_API_URL`.
-- В логах старта теперь отображаются `KNOWLEDGE_SOURCE=api` и `DB API url=...`.
-- `Bot_data_base /api/query` использует эмбеддинги запроса той же модели, что и коллекция (исключает mismatch размерности).
-- Для реранка в `Bot_data_base` нужен пакет `voyageai` в его venv; без него в логах будет `voyageai не установлен, rerank отключён`.
+## Важные пункты (2026-03-19)
+
+- `bot_psychologist` подключён к `Bot_data_base` по HTTP: используйте `KNOWLEDGE_SOURCE=api` и `BOT_DB_URL=http://localhost:8003`.
+- В логах старта бота должны быть строки `KNOWLEDGE_SOURCE=api` и `DB API url=http://localhost:8003`.
+- `Bot_data_base /api/query` должен использовать эмбеддинги запроса той же модели, что и коллекция (иначе будет mismatch dimension и 503).
+- Voyage rerank зависит от venv конкретного подпроекта: в `Bot_data_base` нужен пакет `voyageai`, иначе в логах будет `voyageai не установлен, rerank отключён`.
 
 ## 📁 Структура проектов
 

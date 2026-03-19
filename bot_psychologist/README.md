@@ -448,6 +448,9 @@ python tests/test_full_dialogue_pipeline.py
 
 # API тесты
 python tests/test_api.py
+
+# Интеграция с Bot_data_base API
+python tests/test_api_integration.py
 ```
 
 Очистка старых сессий (ретеншн):
@@ -543,12 +546,36 @@ bot_psychologist/
 └── README.md               # Этот файл
 ```
 
-## Связь с voice_bot_pipeline
+## Связь с voice_bot_pipeline и Bot_data_base
 
-`bot_psychologist` является потребителем данных, сгенерированных `voice_bot_pipeline`:
+`bot_psychologist` теперь поддерживает **два режима работы с данными**:
 
-- **Данные**: `voice_bot_pipeline/data/sag_final/*.for_vector.json`
-- **Векторная БД** (опционально): `voice_bot_pipeline/data/chromadb/`
+### 🆕 **Режим API (рекомендуемый)**
+- **Источник данных**: `Bot_data_base` через HTTP API
+- **Конфигурация**: `KNOWLEDGE_SOURCE=api` в `.env`
+- **Преимущества**: 
+  - Универсальная база знаний с множеством авторов
+  - Автоматическая SD-разметка всех чанков
+  - Масштабируемость и независимость от `voice_bot_pipeline`
+- **Требования**: Запущенный `Bot_data_base` на порту 8003
+
+### 📁 **Режим Legacy (совместимость)**
+- **Источник данных**: `voice_bot_pipeline/data/sag_final/*.for_vector.json`
+- **Конфигурация**: `KNOWLEDGE_SOURCE=json` или `chromadb` в `.env`
+- **Ограничения**: Только данные Сарсекенова Саламата
+
+### ⚙️ **Настройка режима**
+
+```bash
+# Для работы с Bot_data_base (универсальная БД)
+KNOWLEDGE_SOURCE=api
+BOT_DB_URL=http://localhost:8003
+
+# Для работы с voice_bot_pipeline (legacy)
+KNOWLEDGE_SOURCE=json
+# или
+KNOWLEDGE_SOURCE=chromadb
+```
 
 **Важно**: `bot_psychologist` только читает данные, не изменяет их.
 

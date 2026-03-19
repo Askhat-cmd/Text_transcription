@@ -196,10 +196,10 @@ class DataLoader:
         Загрузить данные из настроенного источника знаний.
 
         Поддерживаемые режимы (KNOWLEDGE_SOURCE):
-          - "json"     → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy
-          - "db_json"  → Bot_data_base exported JSON (без сервера)
-          - "chromadb" → Bot_data_base через HTTP API
-          - "api"      → Bot_data_base через HTTP API (явный режим)
+        - "json" → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy
+        - "db_json" → Bot_data_base exported JSON (без сервера)
+        - "chromadb" → Bot_data_base через HTTP API (через chroma_loader)
+        - "api" → Bot_data_base через HTTP API (через db_api_client)
 
         Данные кэшируются в памяти. Повторный вызов не перезагружает данные.
         """
@@ -212,13 +212,13 @@ class DataLoader:
 
         if source == "api":
             logger.info(f"DB API url={getattr(config, 'BOT_DB_URL', '')}")
-            self._load_from_chromadb()
+            self._load_from_api()
         elif source == "chromadb":
             self._load_from_chromadb()
         elif source == "db_json":
             self._load_from_db_json()
         else:
-            self._load_from_sag_json()  # legacy
+            self._load_from_sag_json() # legacy
 
         self._is_loaded = True
         self.loaded_at = datetime.now()
@@ -462,6 +462,143 @@ class DataLoader:
             self.documents.append(doc)
             self._video_id_to_doc[source_id] = doc
             logger.debug(f"✓ DB_JSON: {source_id} ({len(blocks)} блоков)")
+
+    def _load_from_api(self) -> None:
+        """
+        В режиме api: загружает ВСЕ блоки из Bot_data_base через HTTP API.
+        Использует db_api_client для получения всех блоков для построения TF-IDF индекса.
+        """
+        try:
+            from .db_api_client import DBApiClient
+            
+            client = DBApiClient()
+            logger.info("[API] Загрузка всех блоков из Bot_data_base через HTTP API...")
+            
+            # Получаем все источники из реестра Bot_data_base
+            import requests
+            registry_url = f"{client.base_url}/api/registry/"
+            response = requests.get(registry_url, timeout=client.timeout)
+            response.raise_for_status()
+            
+            sources = response.json()
+            if isinstance(sources, dict):
+                sources = sources.get('sources', [])
+            
+            all_blocks = []
+            logger.info(f"[API] Найдено {len(sources)} источников в реестре")
+            
+            # Загружаем блоки из каждого источника
+            for source_data in sources:
+                source_id = source_data.get('source_id')
+                if not source_id:
+                    continue
+                    
+                try:
+                    # Пытаемся получить блоки через /api/blocks/{source_id}
+                    blocks_url = f"{client.base_url}/api/blocks/{source_id}"
+                    response = requests.get(blocks_url, timeout=client.timeout)
+                    
+                    if response.status_code == 200:
+                        blocks_data = response.json()
+                        if isinstance(blocks_data, dict):
+                            blocks_data = blocks_data.get('blocks', [])
+                        
+                        # Конвертируем данные в объекты Block
+                        for block_data in blocks_data:
+                            block = self._parse_api_block(block_data, source_data)
+                            all_blocks.append(block)
+                        
+                        logger.debug(f"[API] Источник '{source_id}': {len(blocks_data)} блоков")
+                    else:
+                        logger.warning(f"[API] Не удалось загрузить блоки для источника '{source_id}': {response.status_code}")
+                        
+                except Exception as e:
+                    logger.warning(f"[API] Ошибка загрузки источника '{source_id}': {e}")
+            
+            if not all_blocks:
+                logger.error("[API] Не удалось загрузить ни одного блока через API")
+                return
+            
+            self.all_blocks = all_blocks
+            self._block_id_to_block = {b.block_id: b for b in all_blocks}
+
+            # Группируем блоки в Document-объекты по document_title
+            docs_map: Dict[str, List[Block]] = {}
+            for b in all_blocks:
+                key = b.document_title or b.video_id or "unknown"
+                docs_map.setdefault(key, []).append(b)
+
+            for title, doc_blocks in docs_map.items():
+                doc_blocks_sorted = sorted(doc_blocks, key=lambda b: b.chunk_index)
+                doc = Document(
+                    video_id=title,
+                    source_url="",
+                    title=title,
+                    blocks=doc_blocks_sorted,
+                )
+                self.documents.append(doc)
+                self._video_id_to_doc[title] = doc
+
+            logger.info(
+                f"✅ API: {len(all_blocks)} блоков из "
+                f"{len(self.documents)} источников загружено"
+            )
+            
+        except Exception as e:
+            logger.error(f"❌ Ошибка загрузки из API: {e}", exc_info=True)
+
+    def _parse_api_block(self, block_data: Dict, source_data: Dict) -> Block:
+        """
+        Конвертировать JSON-объект из Bot_data_base API в объект Block.
+        
+        Args:
+            block_data: Данные блока из API
+            source_data: Метаданные источника из реестра
+            
+        Returns:
+            Block: Объект Block с нормализованными данными
+        """
+        # Нормализация complexity: 0-1 → 1-10
+        raw_complexity = block_data.get("complexity", block_data.get("complexity_score"))
+        try:
+            raw_val = float(raw_complexity) if raw_complexity is not None else 0.5
+            if 0.0 <= raw_val <= 1.0:
+                complexity = round(raw_val * 10, 1)
+            else:
+                complexity = round(raw_val, 1)
+        except (ValueError, TypeError):
+            complexity = 5.0
+
+        title = block_data.get("title", "")
+        text_content = block_data.get("text", block_data.get("content", ""))
+        
+        # Авто-определение block_type для API блоков
+        block_type = _detect_block_type(title, text_content)
+
+        return Block(
+            block_id=block_data.get("id", block_data.get("block_id", "")),
+            title=title,
+            content=text_content,
+            summary=block_data.get("summary", ""),
+            document_title=source_data.get("source_title", source_data.get("title", "")),
+            sd_level=block_data.get("sd_level"),
+            sd_secondary=block_data.get("sd_secondary"),
+            sd_confidence=block_data.get("sd_confidence"),
+            complexity_score=complexity,
+            block_type=block_type,
+            source_type=source_data.get("source_type", "book"),
+            author=source_data.get("author", ""),
+            author_id=source_data.get("author_id", ""),
+            chunk_index=int(block_data.get("chunk_index", 0)),
+            language=block_data.get("language", "ru"),
+            # YouTube-поля пусты для API блоков
+            video_id="",
+            start="00:00:00",
+            end="00:00:00",
+            youtube_link="",
+            keywords=block_data.get("keywords", []),
+            graph_entities=block_data.get("graph_entities", []),
+        )
 
     def _load_from_chromadb(self) -> None:
         """

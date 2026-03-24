@@ -4,10 +4,28 @@
 - [x] 0.1 Создать PRD_TASKS.md с полным чек‑листом
 - [x] 0.2 Создать ветку `refactor/simplify-retrieval-pipeline`
 - [x] 0.3 Сделать checkpoint‑коммит
-- [ ] 0.4 Запустить тесты baseline: `cd tests && python -m pytest -v --tb=short > tests_before.txt`
-- [ ] 0.5 Сохранить `tests_before.txt` как baseline
-- [ ] 0.6 Найти все упоминания `stage_filter|sd_filter|complexity_cap` (`grep -r ...`)
-- [ ] 0.7 Зафиксировать список затронутых файлов в этом PRD_TASKS
+- [x] 0.4 Запустить тесты baseline: `cd tests && python -m pytest -v --tb=short > tests_before.txt`
+- [x] 0.5 Сохранить `tests_before.txt` как baseline
+- [x] 0.6 Найти все упоминания `stage_filter|sd_filter|complexity_cap` (`grep -r ...`)
+- [x] 0.7 Зафиксировать список затронутых файлов в этом PRD_TASKS
+
+Затронутые файлы (stage/sd/complexity):
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/bot_agent/answer_basic.py`
+- `bot_psychologist/bot_agent/answer_graph_powered.py`
+- `bot_psychologist/bot_agent/answer_sag_aware.py`
+- `bot_psychologist/bot_agent/chroma_loader.py`
+- `bot_psychologist/bot_agent/decision/decision_gate.py`
+- `bot_psychologist/bot_agent/retrieval/__init__.py`
+- `bot_psychologist/bot_agent/retrieval/stage_filter.py`
+- `bot_psychologist/api/models.py`
+- `bot_psychologist/api/routes.py`
+- `bot_psychologist/logging_config.py`
+- `bot_psychologist/tests/test_db_api_client.py`
+- `bot_psychologist/tests/test_decision_gate.py`
+- `bot_psychologist/tests/test_decision_table.py`
+- `bot_psychologist/tests/test_sd_filter.py`
+- `bot_psychologist/tests/test_stage_filter.py`
 
 ## Этап 1 — Удаление Stage‑фильтра
 - [ ] 1.1 Удалить файл `bot_agent/retrieval/stage_filter.py`

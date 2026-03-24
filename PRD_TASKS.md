@@ -28,21 +28,21 @@
 - `bot_psychologist/tests/test_stage_filter.py`
 
 ## Этап 1 — Удаление Stage‑фильтра
-- [ ] 1.1 Удалить файл `bot_agent/retrieval/stage_filter.py`
-- [ ] 1.2 Найти все импорты `stage_filter|StageFilter|complexity_cap`
-- [ ] 1.3 Удалить импорты `stage_filter` из найденных файлов
-- [ ] 1.4 В `answer_adaptive.py` удалить блок вызова stage_filter (после rerank)
-- [ ] 1.5 Убедиться: pipeline = initial → SD → rerank → cap → LLM
-- [ ] 1.6 Найти log‑строки `STAGE_FILTER|complexity_cap|stage_filter`
-- [ ] 1.7 Удалить найденные log‑строки
-- [ ] 1.8 Найти UI‑компоненты `stage|complexity` (frontend/static)
-- [ ] 1.9 Удалить элементы Stage‑фильтра из трасс‑панели (Pipeline Timeline)
-- [ ] 1.10 Удалить из Config Snapshot параметры stage
-- [ ] 1.11 Проверить в трейсе: нет строк "Stage фильтр: skip/active"
-- [ ] 1.12 Прогнать: `python -m pytest tests/ -k "retrieval or filter" -v`
-- [ ] 1.13 Тестовый запрос через API `/api/v1/questions/adaptive-stream`
-- [ ] 1.14 В логах нет `STAGE_FILTER`, пайплайн доходит до LLM
-- [ ] 1.15 Коммит: `feat: remove stage_filter module and all references`
+- [x] 1.1 Удалить файл `bot_agent/retrieval/stage_filter.py`
+- [x] 1.2 Найти все импорты `stage_filter|StageFilter|complexity_cap`
+- [x] 1.3 Удалить импорты `stage_filter` из найденных файлов
+- [x] 1.4 В `answer_adaptive.py` удалить блок вызова stage_filter (после rerank)
+- [x] 1.5 Убедиться: pipeline = initial → SD → rerank → cap → LLM
+- [x] 1.6 Найти log‑строки `STAGE_FILTER|complexity_cap|stage_filter`
+- [x] 1.7 Удалить найденные log‑строки
+- [x] 1.8 Найти UI‑компоненты `stage|complexity` (frontend/static)
+- [x] 1.9 Удалить элементы Stage‑фильтра из трасс‑панели (Pipeline Timeline)
+- [x] 1.10 Удалить из Config Snapshot параметры stage
+- [x] 1.11 Проверить в трейсе: нет строк "Stage фильтр: skip/active"
+- [x] 1.12 Прогнать: `python -m pytest tests/ -k "retrieval or filter" -v`
+- [x] 1.13 Тестовый запрос через API `/api/v1/questions/adaptive-stream`
+- [x] 1.14 В логах нет `STAGE_FILTER`, пайплайн доходит до LLM
+- [x] 1.15 Коммит: `feat: remove stage_filter module and all references`
 
 ## Этап 2 — Рефакторинг SD‑фильтра
 - [ ] 2.1 Найти `sd_filter.py` в `bot_agent/retrieval/`

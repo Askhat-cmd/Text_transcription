@@ -80,7 +80,6 @@ class RetrievalFilter(logging.Filter):
         return (
             "[retrieval]" in msg
             or "retriever" in logger_name
-            or "stage_filter" in logger_name
             or "confidence_scorer" in logger_name
             or "voyage_reranker" in logger_name
             or "hybrid_query_builder" in logger_name

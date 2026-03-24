@@ -11,7 +11,6 @@ export const PipelineFunnel: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
   const stages: FunnelStage[] = [
     { label: 'Initial', count: trace.blocks_initial ?? 0, color: 'bg-sky-400' },
     { label: 'After SD', count: trace.blocks_after_sd ?? 0, color: 'bg-violet-400' },
-    { label: 'After Stage', count: trace.blocks_after_stage ?? 0, color: 'bg-amber-400' },
     { label: 'To LLM', count: trace.blocks_after_cap ?? 0, color: 'bg-emerald-400' },
   ].filter((stage) => stage.count != null);
 

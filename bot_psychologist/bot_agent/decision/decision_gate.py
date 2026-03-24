@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict
 
-from ..retrieval import ConfidenceScorer, StageFilter
+from ..retrieval import ConfidenceScorer
 from .decision_table import DecisionResult, DecisionTable
 
 
@@ -18,19 +18,13 @@ class RoutingResult:
     confidence_score: float
     confidence_level: str
     stage: str
-    adjusted_by_stage: bool
 
 
 class DecisionGate:
-    """Unified router that combines scoring, decision table and stage filter."""
+    """Unified router that combines scoring and decision table."""
 
-    def __init__(
-        self,
-        scorer: ConfidenceScorer | None = None,
-        stage_filter: StageFilter | None = None,
-    ) -> None:
+    def __init__(self, scorer: ConfidenceScorer | None = None) -> None:
         self.scorer = scorer or ConfidenceScorer()
-        self.stage_filter = stage_filter or StageFilter()
 
     def route(self, signals: Dict, user_stage: str = "surface") -> RoutingResult:
         confidence_result = self.scorer.score(signals)
@@ -41,11 +35,6 @@ class DecisionGate:
 
         decision = DecisionTable.evaluate(enriched_signals)
         mode = decision.route
-        adjusted = False
-
-        if not self.stage_filter.allow(user_stage, mode):
-            mode = "CLARIFICATION"
-            adjusted = True
 
         return RoutingResult(
             mode=mode,
@@ -53,5 +42,4 @@ class DecisionGate:
             confidence_score=confidence_result.score,
             confidence_level=confidence_result.level,
             stage=user_stage,
-            adjusted_by_stage=adjusted,
         )

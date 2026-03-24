@@ -202,7 +202,6 @@ export interface DebugTrace {
   block_cap?: number | null;
   blocks_initial?: number | null;
   blocks_after_sd?: number | null;
-  blocks_after_stage?: number | null;
   blocks_after_cap?: number | null;
   hybrid_query_preview?: string | null;
   sd_detail?: SDClassificationDetail | null;

@@ -129,15 +129,11 @@ def answer_question_graph_powered(
         routing_signals = detect_routing_signals(query, retrieved_blocks)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
 
-        stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
-            user_stage,
-            retrieved_blocks,
-        )
         block_cap = decision_gate.scorer.suggest_block_cap(
-            len(stage_filtered_blocks),
+            len(retrieved_blocks),
             routing_result.confidence_level,
         )
-        retrieved_blocks = stage_filtered_blocks[:block_cap]
+        retrieved_blocks = retrieved_blocks[:block_cap]
         
         if debug_info is not None:
             debug_info["blocks_retrieved"] = len(retrieved_blocks)
@@ -166,7 +162,6 @@ def answer_question_graph_powered(
             debug_info["voyage_rerank"] = {
                 "enabled": bool(config.VOYAGE_ENABLED),
                 "top_k": rerank_k,
-                "stage_filter_applied": True,
                 "confidence_block_cap": block_cap,
             }
             debug_info["routing"] = {
@@ -175,7 +170,6 @@ def answer_question_graph_powered(
                 "reason": routing_result.decision.reason,
                 "confidence_score": routing_result.confidence_score,
                 "confidence_level": routing_result.confidence_level,
-                "adjusted_by_stage": routing_result.adjusted_by_stage,
             }
         
         # Адаптация по уровню

@@ -277,7 +277,6 @@ class DebugTrace(BaseModel):
     block_cap: Optional[int] = None
     blocks_initial: Optional[int] = None
     blocks_after_sd: Optional[int] = None
-    blocks_after_stage: Optional[int] = None
     blocks_after_cap: Optional[int] = None
     hybrid_query_preview: Optional[str] = None
     sd_detail: Optional[SDClassificationDetail] = None

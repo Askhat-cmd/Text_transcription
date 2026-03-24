@@ -675,7 +675,6 @@ async def ask_adaptive_question(
                     "block_cap",
                     "blocks_initial",
                     "blocks_after_sd",
-                    "blocks_after_stage",
                     "blocks_after_cap",
                     "hybrid_query_preview",
                     "sd_detail",
@@ -931,7 +930,6 @@ async def ask_adaptive_question_stream(
                             {"name": "retrieval", "label": "Retrieval", "duration_ms": 0, "skipped": True},
                             {"name": "sd_filter", "label": "SD фильтр", "duration_ms": 0, "skipped": True},
                             {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True},
-                            {"name": "stage_filter", "label": "Stage filter", "duration_ms": 0, "skipped": True},
                         ]
                     )
                 fast_block = _build_fast_path_block(
@@ -1102,7 +1100,6 @@ async def ask_adaptive_question_stream(
                         "block_cap": 0,
                         "blocks_initial": 0,
                         "blocks_after_sd": 0,
-                        "blocks_after_stage": 0,
                         "blocks_after_cap": 0,
                         "hybrid_query_preview": _truncate_preview(request.query, 400),
                         "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
@@ -1214,25 +1211,11 @@ async def ask_adaptive_question_stream(
 
             routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
             routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
-            stage_filter_start_ts = time.perf_counter()
-            stage_filtered_blocks = decision_gate.stage_filter.filter_retrieval_pairs(
-                user_stage,
-                retrieved_blocks,
-            )
-            if request.debug:
-                pipeline_stages.append(
-                    {
-                        "name": "stage_filter",
-                        "label": "Stage filter",
-                        "duration_ms": int((time.perf_counter() - stage_filter_start_ts) * 1000),
-                        "skipped": False,
-                    }
-                )
             block_cap = decision_gate.scorer.suggest_block_cap(
-                len(stage_filtered_blocks),
+                len(retrieved_blocks),
                 routing_result.confidence_level,
             )
-            retrieved_blocks = stage_filtered_blocks[:block_cap]
+            retrieved_blocks = retrieved_blocks[:block_cap]
 
             if not retrieved_blocks:
                 fallback_text = (
@@ -1298,7 +1281,6 @@ async def ask_adaptive_question_stream(
                         "block_cap": block_cap,
                         "blocks_initial": len(raw_retrieved_blocks),
                         "blocks_after_sd": len(sd_filtered_blocks),
-                        "blocks_after_stage": len(stage_filtered_blocks),
                         "blocks_after_cap": 0,
                         "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
                         "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
@@ -1507,7 +1489,6 @@ async def ask_adaptive_question_stream(
                     "block_cap": block_cap,
                     "blocks_initial": len(raw_retrieved_blocks),
                     "blocks_after_sd": len(sd_filtered_blocks),
-                    "blocks_after_stage": len(stage_filtered_blocks),
                     "blocks_after_cap": len(retrieved_blocks),
                     "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
                     "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,

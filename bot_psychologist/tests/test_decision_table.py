@@ -34,7 +34,7 @@ def test_decision_table_intervention_signal() -> None:
     assert result.rule_id == 3
 
 
-def test_decision_table_stage_filter_blocks_deep_intervention() -> None:
+def test_decision_table_blocks_deep_intervention_on_surface() -> None:
     signals = {
         "confidence": 0.8,
         "explicit_ask": True,

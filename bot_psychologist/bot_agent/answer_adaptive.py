@@ -452,39 +452,38 @@ def _build_chunk_trace_lists(
     return chunks_retrieved, chunks_after_filter
 
 
-def _build_chunk_trace_lists_after_stage(
+def _build_chunk_trace_lists_after_rerank(
     *,
     initial_retrieved: List[Tuple],
-    stage_filtered: List[Tuple],
     reranked: List[Tuple],
 ) -> Tuple[List[Dict], List[Dict]]:
-    """Построить списки чанков для trace: все retrieved и после stage filter."""
+    """Построить списки чанков для trace: все retrieved и после rerank."""
     chunks_retrieved: List[Dict] = []
-    chunks_after_stage: List[Dict] = []
+    chunks_after_rerank: List[Dict] = []
 
     reranked_scores = {
         str(getattr(block, "block_id", "")): float(score)
         for block, score in reranked
     }
 
-    stage_filtered_ids = {str(getattr(block, "block_id", "")) for block, _ in stage_filtered}
+    reranked_ids = {str(getattr(block, "block_id", "")) for block, _ in reranked}
 
     for block, initial_score in initial_retrieved:
         block_id = str(getattr(block, "block_id", ""))
-        passed = block_id in stage_filtered_ids
+        passed = block_id in reranked_ids
 
         item = _build_chunk_trace_item(
             block=block,
             score_initial=float(initial_score),
             score_final=reranked_scores.get(block_id, float(initial_score)),
             passed_sd_filter=passed,
-            filter_reason="" if passed else "stage_filter",
+            filter_reason="" if passed else "rerank",
         )
         chunks_retrieved.append(item)
         if passed:
-            chunks_after_stage.append(item)
+            chunks_after_rerank.append(item)
 
-    return chunks_retrieved, chunks_after_stage
+    return chunks_retrieved, chunks_after_rerank
 
 
 def _get_memory_trace_metrics(memory, context_turns: int) -> Dict[str, object]:
@@ -938,7 +937,6 @@ def answer_question_adaptive(
             "block_cap": None,
             "blocks_initial": None,
             "blocks_after_sd": None,
-            "blocks_after_stage": None,
             "blocks_after_cap": None,
             "hybrid_query_preview": None,
             "memory_turns_content": [],
@@ -1161,14 +1159,12 @@ def answer_question_adaptive(
                 debug_trace["block_cap"] = 0
                 debug_trace["blocks_initial"] = 0
                 debug_trace["blocks_after_sd"] = 0
-                debug_trace["blocks_after_stage"] = 0
                 debug_trace["blocks_after_cap"] = 0
                 debug_trace["hybrid_query_preview"] = _truncate_preview(query, 400)
 
                 for stage_name, label in [
                     ("retrieval", "Retrieval"),
                     ("sd_filter", "SD фильтр"),
-                    ("stage_filter", "Stage фильтр"),
                     ("rerank", "Rerank"),
                 ]:
                     pipeline_stages.append(
@@ -1367,7 +1363,6 @@ def answer_question_adaptive(
                     "reason": pre_routing_result.decision.reason,
                     "confidence_score": pre_routing_result.confidence_score,
                     "confidence_level": pre_routing_result.confidence_level,
-                    "adjusted_by_stage": pre_routing_result.adjusted_by_stage,
                 }
                 debug_info["memory_summary"] = memory.get_summary()
                 debug_info["total_time"] = elapsed_time
@@ -1535,23 +1530,12 @@ def answer_question_adaptive(
 
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
-        current_stage = "stage_filter"
-        stage_filtered_blocks, stage_filter_stage = _timed(
-            "stage_filter",
-            "Stage фильтр",
-            decision_gate.stage_filter.filter_retrieval_pairs,
-            user_stage,
-            retrieved_blocks,
-        )
-        if debug_trace is not None:
-            pipeline_stages.append(stage_filter_stage)
-        _log_retrieval_pairs("After stage filter", stage_filtered_blocks, limit=10)
         block_cap = decision_gate.scorer.suggest_block_cap(
-            len(stage_filtered_blocks),
+            len(retrieved_blocks),
             routing_result.confidence_level,
         )
-        stage_count_before_cap = len(stage_filtered_blocks)
-        retrieved_blocks = stage_filtered_blocks[:block_cap]
+        stage_count_before_cap = len(retrieved_blocks)
+        retrieved_blocks = retrieved_blocks[:block_cap]
         capped_retrieved_blocks = list(retrieved_blocks)
         logger.info(
             f"[RETRIEVAL] confidence_cap={block_cap} (before={stage_count_before_cap})"
@@ -1572,7 +1556,6 @@ def answer_question_adaptive(
             debug_trace["block_cap"] = block_cap
             debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
             debug_trace["blocks_after_sd"] = len(sd_filtered_blocks)
-            debug_trace["blocks_after_stage"] = len(stage_filtered_blocks)
             debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
 
         if not retrieved_blocks:
@@ -1605,14 +1588,13 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
+                chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
                     initial_retrieved=initial_retrieved_blocks,
-                    stage_filtered=stage_filtered_blocks,
                     reranked=reranked_blocks_for_trace,
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_stage
-                debug_trace["chunks_after_sd_filter"] = chunks_after_stage
+                debug_trace["chunks_after_filter"] = chunks_after_rerank
+                debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
                 debug_trace["blocks_after_cap"] = 0
                 pipeline_stages.append(
                     {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
@@ -1651,16 +1633,16 @@ def answer_question_adaptive(
             debug_info["blocks_found"] = len(retrieved_blocks)
             debug_info["blocks_after_filter"] = len(adapted_blocks)
             debug_info["hybrid_query"] = hybrid_query
-            stage_filtered_ids = {str(block.block_id) for block, _ in stage_filtered_blocks}
+            reranked_ids = {str(block.block_id) for block, _ in reranked_blocks_for_trace}
             capped_ids = {str(block.block_id) for block, _ in capped_retrieved_blocks}
-            stage_filtered_out = [
+            reranked_out = [
                 (block, score)
                 for block, score in initial_retrieved_blocks
-                if str(block.block_id) not in stage_filtered_ids
+                if str(block.block_id) not in reranked_ids
             ]
             confidence_capped_out = [
                 (block, score)
-                for block, score in stage_filtered_blocks
+                for block, score in reranked_blocks_for_trace
                 if str(block.block_id) not in capped_ids
             ]
             final_score_map = {str(block.block_id): float(score) for block, score in capped_retrieved_blocks}
@@ -1669,9 +1651,9 @@ def answer_question_adaptive(
                     _build_retrieval_detail(block, score, "initial")
                     for block, score in initial_retrieved_blocks
                 ],
-                "after_stage_filter": [
-                    _build_retrieval_detail(block, score, "stage_filter")
-                    for block, score in stage_filtered_blocks
+                "after_rerank": [
+                    _build_retrieval_detail(block, score, "rerank")
+                    for block, score in reranked_blocks_for_trace
                 ],
                 "after_sd_filter": [
                     _build_retrieval_detail(block, score, "sd_filter")
@@ -1681,9 +1663,9 @@ def answer_question_adaptive(
                     _build_retrieval_detail(block, score, "confidence_cap")
                     for block, score in capped_retrieved_blocks
                 ],
-                "stage_filtered": [
-                    _build_retrieval_detail(block, score, "stage_filter")
-                    for block, score in stage_filtered_out
+                "reranked_out": [
+                    _build_retrieval_detail(block, score, "rerank")
+                    for block, score in reranked_out
                 ],
                 "confidence_capped": [
                     _build_retrieval_detail(block, score, "confidence_cap")
@@ -1701,7 +1683,6 @@ def answer_question_adaptive(
             debug_info["voyage_rerank"] = {
                 "enabled": bool(config.VOYAGE_ENABLED),
                 "top_k": rerank_k,
-                "stage_filter_applied": True,
                 "confidence_block_cap": block_cap,
             }
             debug_info["routing"] = {
@@ -1710,17 +1691,15 @@ def answer_question_adaptive(
                 "reason": routing_result.decision.reason,
                 "confidence_score": routing_result.confidence_score,
                 "confidence_level": routing_result.confidence_level,
-                "adjusted_by_stage": routing_result.adjusted_by_stage,
             }
         if debug_trace is not None:
-            chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
+            chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
                 initial_retrieved=initial_retrieved_blocks,
-                stage_filtered=stage_filtered_blocks,
                 reranked=reranked_blocks_for_trace,
             )
             debug_trace["chunks_retrieved"] = chunks_retrieved
-            debug_trace["chunks_after_filter"] = chunks_after_stage
-            debug_trace["chunks_after_sd_filter"] = chunks_after_stage
+            debug_trace["chunks_after_filter"] = chunks_after_rerank
+            debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
@@ -1827,14 +1806,13 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_stage = _build_chunk_trace_lists_after_stage(
+                chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
                     initial_retrieved=initial_retrieved_blocks,
-                    stage_filtered=stage_filtered_blocks,
                     reranked=reranked_blocks_for_trace,
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_stage
-                debug_trace["chunks_after_sd_filter"] = chunks_after_stage
+                debug_trace["chunks_after_filter"] = chunks_after_rerank
+                debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
                 _apply_memory_debug_info(debug_trace, memory)

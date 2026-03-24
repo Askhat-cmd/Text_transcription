@@ -311,7 +311,6 @@ Token budget (PRD v2.0.2):
 
 При retrieval используется дополнительная политика:
 
-- Stage filter: ограничивает complexity блоков на ранних стадиях пользователя.
 - Confidence cap: при низкой уверенности уменьшает число блоков, чтобы не «синтезировать лишнее».
 
 ## Архитектурный обзор
@@ -437,7 +436,6 @@ python tests/test_decision_table.py
 python tests/test_decision_gate.py
 python tests/test_hybrid_query.py
 python tests/test_confidence_scorer.py
-python tests/test_stage_filter.py
 python tests/test_signal_detector.py
 python tests/test_voyage_reranker.py
 python tests/test_prompt_templates.py

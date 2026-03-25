@@ -124,7 +124,7 @@ class Config:
     # === Voyage rerank ===
     VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY")
     VOYAGE_MODEL = os.getenv("VOYAGE_MODEL", "rerank-2")
-    VOYAGE_TOP_K = int(os.getenv("VOYAGE_TOP_K", "3"))
+    VOYAGE_TOP_K = int(os.getenv("VOYAGE_TOP_K", "5"))
     VOYAGE_ENABLED = os.getenv("VOYAGE_ENABLED", "False").lower() == "true"
 
     # === Conversation summary ===

@@ -83,13 +83,13 @@
 
 ## Этап 4 — Оптимизация Voyage Reranker
 - [ ] 4.1 Открыть `voyage_reranker.py`
-- [ ] 4.2 TOP‑K после rerank = 5
+- [x] 4.2 TOP‑K после rerank = 5
 - [ ] 4.3 При fallback оставить исходный порядок TF‑IDF, не менять количество
-- [ ] 4.4 Убрать лог "reranked top_k=2..." при ошибке, заменить на `[VOYAGE] fallback...`
-- [ ] 4.5 В конфиге `VOYAGE_TOP_K = 5`
-- [ ] 4.6 В админке "Voyage TOP‑K" = 5
-- [ ] 4.7 Интеграционный тест Voyage (python -c ... test_connection)
-- [ ] 4.8 Тест‑запрос: лог `[VOYAGE] rerank success, top_k=5`
+- [x] 4.4 Убрать лог "reranked top_k=2..." при ошибке, заменить на `[VOYAGE] fallback...`
+- [x] 4.5 В конфиге `VOYAGE_TOP_K = 5`
+- [x] 4.6 В админке "Voyage TOP‑K" = 5
+- [x] 4.7 Интеграционный тест Voyage (python -c ... test_connection)
+- [x] 4.8 Тест‑запрос: лог `[VOYAGE] rerank success, top_k=5`
 - [ ] 4.9 Коммит: `fix: voyage reranker top_k=5, fix fallback logging`
 
 ## Этап 5 — Обновление тестов

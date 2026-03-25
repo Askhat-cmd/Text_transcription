@@ -380,7 +380,7 @@ EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
 # Чтобы включить rerank: установите `VOYAGE_ENABLED=true` и задайте `VOYAGE_API_KEY`
 VOYAGE_API_KEY=pa-...
 VOYAGE_MODEL=rerank-2
-VOYAGE_TOP_K=1
+VOYAGE_TOP_K=5
 VOYAGE_ENABLED=false
 
 # Conversation Summary

@@ -72,7 +72,7 @@ class VoyageReranker:
                 )
             return reranked
         except Exception as exc:
-            logger.warning("Voyage rerank fallback: %s: %s", type(exc).__name__, exc)
+            logger.warning("[VOYAGE] fallback: %s: %s", type(exc).__name__, exc)
             # Preserve candidate diversity in local fallback.
             return sorted(items, key=lambda x: x.score, reverse=True)
 

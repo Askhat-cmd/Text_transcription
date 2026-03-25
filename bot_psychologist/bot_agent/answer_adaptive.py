@@ -1450,7 +1450,10 @@ def answer_question_adaptive(
             if reranked:
                 retrieved_blocks = reranked
                 voyage_active = bool(config.VOYAGE_ENABLED and config.VOYAGE_API_KEY)
-                logger.info("[RETRIEVAL] reranked top_k=%s (voyage_active=%s)", rerank_k, voyage_active)
+                if voyage_active:
+                    logger.info("[VOYAGE] rerank success, top_k=%s", rerank_k)
+                else:
+                    logger.info("[VOYAGE] rerank skipped (disabled)")
         elif debug_trace is not None:
             pipeline_stages.append(
                 {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}

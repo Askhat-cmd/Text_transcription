@@ -112,7 +112,7 @@
 - [x] 6.5 Обновить `README.md` (убрать упоминание Stage/SD фильтров)
 - [x] 6.6 Добавить в README раздел "Архитектура ретривала"
 - [x] 6.7 Обновить `CHANGELOG.md` (v0.6.0)
-- [ ] 6.8 `git add -A`
-- [ ] 6.9 Коммит: `refactor: simplified retrieval pipeline v0.6.0 — remove stage/sd filters`
+- [x] 6.8 `git add -A`
+- [x] 6.9 Коммит: `refactor: simplified retrieval pipeline v0.6.0 — remove stage/sd filters`
 - [x] 6.10 Создать PR `refactor/simplify-retrieval-pipeline → main`
 - [x] 6.11 В PR описать: что удалено/упрощено + ссылка на PRD_TASKS

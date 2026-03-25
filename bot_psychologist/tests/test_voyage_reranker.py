@@ -15,7 +15,7 @@ def test_voyage_reranker_fallback_sorting() -> None:
         RerankItem(text="c", payload=3, score=0.4),
     ]
     top = reranker.rerank("query", items, top_k=2)
-    assert [x.payload for x in top] == [2, 3]
+    assert [x.payload for x in top] == [2, 3, 1]
 
 
 def test_voyage_reranker_pairs_fallback() -> None:
@@ -25,5 +25,5 @@ def test_voyage_reranker_pairs_fallback() -> None:
         (SimpleNamespace(title="y", summary="sy"), 0.8),
     ]
     top = reranker.rerank_pairs("query", candidates, top_k=1)
-    assert len(top) == 1
-    assert top[0][1] == 0.8
+    assert len(top) == 2
+    assert [score for _, score in top] == [0.8, 0.1]

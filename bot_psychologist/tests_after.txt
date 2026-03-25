@@ -1,0 +1,129 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0 -- C:\Python313\python.exe
+cachedir: .pytest_cache
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collecting ... collected 91 items
+
+tests/test_Voyage_api.py::test_voyage_connection PASSED                  [  1%]
+tests/test_api.py::test_health_check SKIPPED (API server is not runn...) [  2%]
+tests/test_api.py::test_root_endpoint SKIPPED (API server is not run...) [  3%]
+tests/test_api.py::test_api_info SKIPPED (API server is not running ...) [  4%]
+tests/test_api.py::test_adaptive_question SKIPPED (API server is not...) [  5%]
+tests/test_api.py::test_basic_question SKIPPED (API server is not ru...) [  6%]
+tests/test_api.py::test_user_history SKIPPED (API server is not runn...) [  7%]
+tests/test_api.py::test_feedback SKIPPED (API server is not running ...) [  8%]
+tests/test_api.py::test_statistics SKIPPED (API server is not runnin...) [  9%]
+tests/test_api.py::test_invalid_api_key SKIPPED (API server is not r...) [ 10%]
+tests/test_api.py::test_missing_api_key SKIPPED (API server is not r...) [ 12%]
+tests/test_api_integration.py::test_api_integration SKIPPED (Bot_dat...) [ 13%]
+tests/test_confidence_scorer.py::test_confidence_scorer_low_level PASSED [ 14%]
+tests/test_confidence_scorer.py::test_confidence_scorer_high_level PASSED [ 15%]
+tests/test_confidence_scorer.py::test_confidence_suggests_block_cap PASSED [ 16%]
+tests/test_confidence_scorer_simple.py::test_voyage_confidence_does_not_affect_score PASSED [ 17%]
+tests/test_confidence_scorer_simple.py::test_fast_path_enabled_for_low_score PASSED [ 18%]
+tests/test_confidence_scorer_simple.py::test_fast_path_not_enabled_for_high_score PASSED [ 19%]
+tests/test_conversation_memory_persistence.py::test_conversation_memory_prefers_sqlite_over_json PASSED [ 20%]
+tests/test_conversation_memory_persistence.py::test_conversation_memory_gdpr_purge PASSED [ 21%]
+tests/test_db_api_client.py::TestDBApiClient::test_successful_query_returns_chunks PASSED [ 23%]
+tests/test_db_api_client.py::TestDBApiClient::test_connect_error_raises_unavailable PASSED [ 24%]
+tests/test_db_api_client.py::TestDBApiClient::test_timeout_raises_unavailable PASSED [ 25%]
+tests/test_db_api_client.py::TestDBApiClient::test_sd_level_passed_in_payload PASSED [ 26%]
+tests/test_decision_gate.py::test_decision_gate_routes_to_intervention_when_allowed PASSED [ 27%]
+tests/test_decision_table.py::test_decision_table_low_confidence PASSED  [ 28%]
+tests/test_decision_table.py::test_decision_table_intervention_signal PASSED [ 29%]
+tests/test_decision_table.py::test_decision_table_blocks_deep_intervention_on_surface PASSED [ 30%]
+tests/test_full_dialogue_pipeline.py::test_full_dialogue_7_turns_pipeline PASSED [ 31%]
+tests/test_hybrid_query.py::test_hybrid_query_preserves_question PASSED  [ 32%]
+tests/test_hybrid_query.py::test_hybrid_query_keeps_anchor_when_trimmed PASSED [ 34%]
+tests/test_mode_handlers.py::test_build_mode_directive_populates_fields PASSED [ 35%]
+tests/test_phase1.py::test_config PASSED                                 [ 36%]
+tests/test_phase1.py::test_data_loader PASSED                            [ 37%]
+tests/test_phase1.py::test_retriever PASSED                              [ 38%]
+tests/test_phase1.py::test_qa_basic PASSED                               [ 39%]
+tests/test_prompt_templates.py::test_build_mode_prompt_contains_mode_and_confidence PASSED [ 40%]
+tests/test_prompt_templates.py::test_build_mode_prompt_defaults_unknown_mode PASSED [ 41%]
+tests/test_response_formatter.py::test_formatter_adds_question_for_clarification_mode PASSED [ 42%]
+tests/test_response_formatter.py::test_formatter_adds_low_confidence_prefix PASSED [ 43%]
+tests/test_response_formatter.py::test_formatter_clips_long_answer PASSED [ 45%]
+tests/test_response_generator.py::test_response_generator_builds_mode_directive_and_context PASSED [ 46%]
+tests/test_retrieval_pipeline_simplified.py::test_pipeline_voyage_enabled_caps_to_five PASSED [ 47%]
+tests/test_retrieval_pipeline_simplified.py::test_pipeline_voyage_disabled_fallback_still_caps PASSED [ 48%]
+tests/test_retrieval_pipeline_simplified.py::test_pipeline_fast_path_skips_blocks PASSED [ 49%]
+tests/test_retrieval_pipeline_simplified.py::test_sd_level_passed_to_retriever_and_prompt PASSED [ 50%]
+tests/test_retriever_fallback.py::TestRetrieverFallback::test_uses_api_when_available PASSED [ 51%]
+tests/test_retriever_fallback.py::TestRetrieverFallback::test_falls_back_to_tfidf_when_api_down PASSED [ 52%]
+tests/test_retriever_fallback.py::TestRetrieverFallback::test_retries_without_sd_when_zero_results PASSED [ 53%]
+tests/test_runtime_config_reset.py::test_is_reasoning_model PASSED       [ 54%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041c\u043d\u0435 \u0441\u0442\u0440\u0430\u0448\u043d\u043e \u0443\u043c\u0435\u0440\u0435\u0442\u044c, \u043d\u0435 \u043c\u043e\u0433\u0443 \u0434\u044b\u0448\u0430\u0442\u044c, \u0444\u0438\u0437\u0438\u0447\u0435\u0441\u043a\u0438 \u043f\u043b\u043e\u0445\u043e-BEIGE] PASSED [ 56%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u042d\u0442\u043e \u0447\u0438\u0441\u0442\u043e\u0435 \u0432\u044b\u0436\u0438\u0432\u0430\u043d\u0438\u0435, \u0442\u0435\u0440\u044f\u044e \u0441\u043e\u0437\u043d\u0430\u043d\u0438\u0435 \u0438 \u043d\u0435 \u043c\u043e\u0433\u0443 \u0434\u044b\u0448\u0430\u0442\u044c-BEIGE] PASSED [ 57%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0423 \u043d\u0430\u0441 \u0432 \u0441\u0435\u043c\u044c\u0435 \u0442\u0430\u043a \u043f\u0440\u0438\u043d\u044f\u0442\u043e, \u043f\u0440\u0435\u0434\u043a\u0438 \u0438 \u0441\u0443\u0434\u044c\u0431\u0430 \u0432\u0430\u0436\u043d\u0435\u0435-PURPLE] PASSED [ 58%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0411\u043e\u044e\u0441\u044c \u0441\u0433\u043b\u0430\u0437\u0438\u0442\u044c, \u043d\u0443\u0436\u0435\u043d \u0440\u0438\u0442\u0443\u0430\u043b \u0438 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 \u0441\u0435\u043c\u044c\u0438-PURPLE] PASSED [ 59%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0412\u0441\u0435 \u0434\u043e\u0441\u0442\u0430\u043b\u0438, \u043d\u0435 \u0431\u0443\u0434\u0443 \u0442\u0435\u0440\u043f\u0435\u0442\u044c, \u0445\u043e\u0447\u0443 \u0443\u0432\u0430\u0436\u0435\u043d\u0438\u044f-RED] PASSED [ 60%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041e\u043d\u0438 \u043c\u0435\u043d\u044f \u043d\u0435 \u0443\u0432\u0430\u0436\u0430\u044e\u0442, \u0434\u043e\u043b\u0436\u043d\u044b \u043c\u043d\u0435, \u044f \u0445\u043e\u0447\u0443 \u0434\u0435\u0439\u0441\u0442\u0432\u043e\u0432\u0430\u0442\u044c-RED] PASSED [ 61%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u042f \u0434\u043e\u043b\u0436\u043d\u0430 \u0431\u044b\u043b\u0430 \u0442\u0430\u043a \u043d\u0435 \u0434\u0435\u043b\u0430\u0442\u044c, \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u044e \u0432\u0438\u043d\u0443 \u0438 \u0434\u043e\u043b\u0433-BLUE] PASSED [ 62%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041a\u0430\u043a \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u043e, \u0434\u0438\u0441\u0446\u0438\u043f\u043b\u0438\u043d\u0430 \u0432\u0430\u0436\u043d\u0430, \u0442\u0430\u043a \u043d\u0435\u043b\u044c\u0437\u044f \u043d\u0430\u0440\u0443\u0448\u0430\u0442\u044c-BLUE] PASSED [ 63%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041d\u0443\u0436\u0435\u043d \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u0438 \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u044c, \u043a\u0430\u043a\u0430\u044f \u0432\u044b\u0433\u043e\u0434\u0430 \u0438 \u0446\u0435\u043b\u044c-ORANGE] PASSED [ 64%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0425\u043e\u0447\u0443 \u0441\u0442\u0440\u0430\u0442\u0435\u0433\u0438\u044e \u0434\u043b\u044f \u043a\u0430\u0440\u044c\u0435\u0440\u044b: \u0447\u0442\u043e \u044d\u0442\u043e \u0434\u0430\u0441\u0442 \u0438 \u043a\u0430\u043a \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e-ORANGE] PASSED [ 65%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041d\u0435 \u043c\u043e\u0433\u0443 \u0441\u043f\u0440\u0430\u0432\u0438\u0442\u044c\u0441\u044f \u0441 \u0442\u0440\u0435\u0432\u043e\u0433\u043e\u0439, \u0445\u043e\u0447\u0443 \u043f\u043e\u043d\u044f\u0442\u044c \u0447\u0442\u043e \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u044e-GREEN] PASSED [ 67%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u041d\u0443\u0436\u043d\u0430 \u043f\u043e\u0434\u0434\u0435\u0440\u0436\u043a\u0430 \u0438 \u044d\u043c\u043f\u0430\u0442\u0438\u044f, \u0432\u0430\u0436\u043d\u043e \u0447\u0443\u0432\u0441\u0442\u0432\u0443\u044e \u0441\u0432\u044f\u0437\u044c-GREEN] PASSED [ 68%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0417\u0430\u043c\u0435\u0447\u0430\u044e \u043f\u0430\u0442\u0442\u0435\u0440\u043d, \u0445\u043e\u0447\u0443 \u0443\u0432\u0438\u0434\u0435\u0442\u044c \u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442 \u0438 \u0441\u0438\u0441\u0442\u0435\u043c\u0443-YELLOW] PASSED [ 69%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u042d\u0442\u043e \u043c\u0435\u0442\u0430\u043d\u0430\u0431\u043b\u044e\u0434\u0435\u043d\u0438\u0435 \u0438 \u0438\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0438\u044f: \u0437\u0430\u043c\u0435\u0447\u0430\u044e \u0447\u0442\u043e \u044f \u043f\u043e\u0432\u0442\u043e\u0440\u044f\u044e\u0441\u044c-YELLOW] PASSED [ 70%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0427\u0443\u0432\u0441\u0442\u0432\u0443\u044e \u0435\u0434\u0438\u043d\u0441\u0442\u0432\u043e, \u0432\u0441\u0451 \u043e\u0434\u043d\u043e, \u044d\u0442\u043e \u043f\u0440\u043e \u0446\u0435\u043b\u043e\u0441\u0442\u043d\u043e\u0441\u0442\u044c \u0431\u044b\u0442\u0438\u044f-TURQUOISE] PASSED [ 71%]
+tests/test_sd_classifier.py::test_heuristic_clean_cases[\u0422\u0440\u0430\u043d\u0441\u0446\u0435\u043d\u0434\u0435\u043d\u0442\u043d\u043e\u0441\u0442\u044c \u0438 \u043f\u043b\u0430\u043d\u0435\u0442\u0430\u0440\u043d\u043e\u0435 \u0435\u0434\u0438\u043d\u0441\u0442\u0432\u043e \u0434\u0430\u044e\u0442 \u043e\u0449\u0443\u0449\u0435\u043d\u0438\u0435 \u0446\u0435\u043b\u043e\u0441\u0442\u043d\u043e\u0441\u0442\u0438-TURQUOISE] PASSED [ 72%]
+tests/test_sd_classifier.py::test_heuristic_boundary_cases[\u0423 \u043d\u0430\u0441 \u0432 \u0441\u0435\u043c\u044c\u0435 \u0442\u0430\u043a \u043f\u0440\u0438\u043d\u044f\u0442\u043e, \u043d\u043e \u044f \u0445\u043e\u0447\u0443 \u0434\u0440\u0443\u0433\u043e\u0433\u043e - \u043d\u0435 \u0437\u043d\u0430\u044e \u043a\u043e\u0433\u043e \u0441\u043b\u0443\u0448\u0430\u0442\u044c-PURPLE] PASSED [ 73%]
+tests/test_sd_classifier.py::test_heuristic_boundary_cases[\u0425\u043e\u0447\u0443 \u043d\u0430\u043a\u0430\u0437\u0430\u0442\u044c, \u043d\u043e \u043f\u043e\u043d\u0438\u043c\u0430\u044e \u0447\u0442\u043e \u043f\u043e \u043f\u0440\u0430\u0432\u0438\u043b\u0430\u043c \u0442\u0430\u043a \u043d\u0435\u043b\u044c\u0437\u044f-BLUE] PASSED [ 74%]
+tests/test_sd_classifier.py::test_heuristic_boundary_cases[\u042f \u0432\u0441\u0435\u0433\u0434\u0430 \u0434\u0435\u043b\u0430\u043b \u043a\u0430\u043a \u043f\u043e\u043b\u043e\u0436\u0435\u043d\u043e, \u043d\u043e \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442\u0430 \u043d\u0435\u0442 \u0438 \u044d\u0442\u043e \u043d\u0435\u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e-ORANGE] PASSED [ 75%]
+tests/test_sd_classifier.py::test_heuristic_boundary_cases[\u0415\u0441\u0442\u044c \u043a\u0430\u0440\u044c\u0435\u0440\u0430 \u0438 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442, \u043d\u043e \u044d\u0444\u0444\u0435\u043a\u0442\u0438\u0432\u043d\u043e\u0441\u0442\u044c \u043f\u0430\u0434\u0430\u0435\u0442, \u0445\u043e\u0447\u0443 \u043f\u043e\u043d\u044f\u0442\u044c \u043f\u043e\u0447\u0435\u043c\u0443-ORANGE] PASSED [ 76%]
+tests/test_sd_classifier.py::test_heuristic_boundary_cases[\u0427\u0443\u0432\u0441\u0442\u0432\u0443\u044e \u0442\u0440\u0435\u0432\u043e\u0433\u0443, \u043d\u043e \u0437\u0430\u043c\u0435\u0447\u0430\u044e \u043f\u0430\u0442\u0442\u0435\u0440\u043d \u0438 \u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442 \u0440\u0435\u0430\u043a\u0446\u0438\u0438-YELLOW] PASSED [ 78%]
+tests/test_sd_classifier.py::test_llm_error_fallback_to_green PASSED     [ 79%]
+tests/test_sd_classifier.py::test_heuristic_not_red_intellectual_search PASSED [ 80%]
+tests/test_sd_classifier.py::test_heuristic_red_aggression_markers PASSED [ 81%]
+tests/test_sd_integration.py::test_sd_red_integration PASSED             [ 82%]
+tests/test_sd_integration.py::test_sd_blue_response_is_structured PASSED [ 83%]
+tests/test_sd_integration.py::test_sd_green_response_validates_feelings PASSED [ 84%]
+tests/test_sd_integration.py::test_sd_yellow_allows_turquoise PASSED     [ 85%]
+tests/test_sd_integration.py::test_sd_safety_no_high_levels_for_low_state PASSED [ 86%]
+tests/test_sd_integration.py::test_sd_crisis_orange_switches_to_blue_support PASSED [ 87%]
+tests/test_sd_integration.py::test_sd_fallback_on_llm_error_and_response_generation PASSED [ 89%]
+tests/test_semantic_memory.py::test_semantic_memory PASSED               [ 90%]
+tests/test_session_manager.py::test_session_persistence PASSED           [ 91%]
+tests/test_session_manager.py::test_session_archiving PASSED             [ 92%]
+tests/test_session_manager.py::test_retention_cleanup_deletes_old_archived PASSED [ 93%]
+tests/test_signal_detector.py::test_detect_routing_signals_explicit_action_ask PASSED [ 94%]
+tests/test_signal_detector.py::test_resolve_user_stage_prefers_working_state PASSED [ 95%]
+tests/test_voyage_reranker.py::test_voyage_reranker_fallback_sorting PASSED [ 96%]
+tests/test_voyage_reranker.py::test_voyage_reranker_pairs_fallback PASSED [ 97%]
+tests/test_working_state.py::test_working_state_stage_mapping PASSED     [ 98%]
+tests/test_working_state.py::test_working_state_serialization_roundtrip PASSED [100%]
+
+============================== warnings summary ===============================
+tests/test_phase1.py::test_config
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_phase1.py::test_config returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+tests/test_phase1.py::test_data_loader
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_phase1.py::test_data_loader returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+tests/test_phase1.py::test_retriever
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_phase1.py::test_retriever
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_phase1.py::test_retriever
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_phase1.py::test_retriever returned True, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+tests/test_phase1.py::test_qa_basic
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\python.py:198: PytestReturnNotNoneWarning: Expected None, but tests/test_phase1.py::test_qa_basic returned False, which will be an error in a future version of pytest.  Did you mean to use `assert` instead of `return`?
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+============ 80 passed, 11 skipped, 6 warnings in 95.78s (0:01:35) ============

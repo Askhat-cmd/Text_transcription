@@ -8,11 +8,19 @@
 """
 
 import requests
+import pytest
 import json
 from datetime import datetime
 
 BASE_URL = "http://localhost:8001"
 API_KEY = "test-key-001"
+
+def _require_server():
+    """Skip tests if API server is not running."""
+    try:
+        requests.get(f"{BASE_URL}/api/v1/health", timeout=2)
+    except requests.exceptions.ConnectionError:
+        pytest.skip("API server is not running (http://localhost:8001)")
 
 
 def get_headers():
@@ -33,6 +41,7 @@ def print_separator(title: str):
 def test_health_check():
     """Проверка здоровья"""
     print_separator("Health Check")
+    _require_server()
     
     response = requests.get(f"{BASE_URL}/api/v1/health")
     result = response.json()
@@ -50,6 +59,7 @@ def test_health_check():
 def test_root_endpoint():
     """Проверка корневого endpoint"""
     print_separator("Root Endpoint")
+    _require_server()
     
     response = requests.get(f"{BASE_URL}/")
     result = response.json()
@@ -68,6 +78,7 @@ def test_root_endpoint():
 def test_api_info():
     """Проверка информации об API"""
     print_separator("API Info")
+    _require_server()
     
     response = requests.get(f"{BASE_URL}/api/v1/info")
     result = response.json()
@@ -87,6 +98,7 @@ def test_api_info():
 def test_adaptive_question():
     """Тест адаптивного вопроса (Phase 4)"""
     print_separator("Adaptive Question (Phase 4)")
+    _require_server()
     
     payload = {
         "query": "Что такое осознавание?",
@@ -126,6 +138,7 @@ def test_adaptive_question():
 def test_basic_question():
     """Тест базового вопроса (Phase 1)"""
     print_separator("Basic Question (Phase 1)")
+    _require_server()
     
     payload = {
         "query": "Как медитировать?",
@@ -158,6 +171,7 @@ def test_basic_question():
 def test_user_history():
     """Тест истории пользователя"""
     print_separator("User History")
+    _require_server()
     
     user_id = "api_test_user_001"
     
@@ -187,6 +201,7 @@ def test_user_history():
 def test_feedback():
     """Тест отправки обратной связи"""
     print_separator("Feedback")
+    _require_server()
     
     payload = {
         "user_id": "api_test_user_001",
@@ -222,6 +237,7 @@ def test_feedback():
 def test_statistics():
     """Тест статистики"""
     print_separator("Statistics")
+    _require_server()
     
     response = requests.get(
         f"{BASE_URL}/api/v1/stats",
@@ -248,6 +264,7 @@ def test_statistics():
 def test_invalid_api_key():
     """Тест с невалидным API ключом"""
     print_separator("Invalid API Key (Expect 403)")
+    _require_server()
     
     headers = {"X-API-Key": "invalid-key-12345"}
     
@@ -271,6 +288,7 @@ def test_invalid_api_key():
 def test_missing_api_key():
     """Тест без API ключа"""
     print_separator("Missing API Key (Expect 403)")
+    _require_server()
     
     response = requests.get(f"{BASE_URL}/api/v1/stats")
     

@@ -5,6 +5,8 @@
 
 import os
 import sys
+import requests
+import pytest
 from pathlib import Path
 
 # Добавляем путь к bot_agent для импортов
@@ -14,6 +16,11 @@ from bot_agent.data_loader import data_loader
 from bot_agent.config import config
 
 def test_api_integration():
+    try:
+        requests.get("http://localhost:8003/api/registry/", timeout=2)
+    except requests.exceptions.ConnectionError:
+        pytest.skip("Bot_data_base API is not running (http://localhost:8003)")
+
     """Проверка работы KNOWLEDGE_SOURCE=api"""
     
     print("🔍 Тестирование интеграции bot_psychologist с Bot_data_base API")

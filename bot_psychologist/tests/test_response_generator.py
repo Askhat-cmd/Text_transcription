@@ -21,6 +21,7 @@ class _DummyAnswerer:
         model=None,
         temperature=None,
         max_tokens=None,
+        **kwargs,
     ):
         self.last_call = {
             "system_prompt": self.build_system_prompt(),
@@ -30,6 +31,7 @@ class _DummyAnswerer:
             "model": model,
             "temperature": temperature,
             "max_tokens": max_tokens,
+            **kwargs,
         }
         return {
             "answer": "test-answer",

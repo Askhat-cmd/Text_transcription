@@ -82,27 +82,27 @@
 - [x] 3.15 Коммит: `feat: simplify confidence scorer, fixed TOP-K=5`
 
 ## Этап 4 — Оптимизация Voyage Reranker
-- [ ] 4.1 Открыть `voyage_reranker.py`
+- [x] 4.1 Открыть `voyage_reranker.py`
 - [x] 4.2 TOP‑K после rerank = 5
-- [ ] 4.3 При fallback оставить исходный порядок TF‑IDF, не менять количество
+- [x] 4.3 При fallback оставить исходный порядок TF‑IDF, не менять количество
 - [x] 4.4 Убрать лог "reranked top_k=2..." при ошибке, заменить на `[VOYAGE] fallback...`
 - [x] 4.5 В конфиге `VOYAGE_TOP_K = 5`
 - [x] 4.6 В админке "Voyage TOP‑K" = 5
 - [x] 4.7 Интеграционный тест Voyage (python -c ... test_connection)
 - [x] 4.8 Тест‑запрос: лог `[VOYAGE] rerank success, top_k=5`
-- [ ] 4.9 Коммит: `fix: voyage reranker top_k=5, fix fallback logging`
+- [x] 4.9 Коммит: `fix: voyage reranker top_k=5, fix fallback logging`
 
 ## Этап 5 — Обновление тестов
-- [ ] 5.1 Запустить все тесты: `python -m pytest tests/ -v --tb=short > tests_after.txt`
-- [ ] 5.2 Сравнить baseline: `diff tests_before.txt tests_after.txt`
-- [ ] 5.3 Удалить/переписать тесты Stage‑фильтра
-- [ ] 5.4 Удалить/переписать тесты SD‑фильтра
-- [ ] 5.5 Обновить тесты confidence_scorer под новую формулу
-- [ ] 5.6 Написать `test_retrieval_pipeline_simplified.py` (4 сценария из PRD)
-- [ ] 5.7 Написать `test_confidence_scorer_simple.py`
-- [ ] 5.8 Финальный прогон: `python -m pytest tests/ -v`
-- [ ] 5.9 Все тесты зелёные или xfail с пояснением
-- [ ] 5.10 Коммит: `test: update tests for simplified retrieval pipeline`
+- [x] 5.1 Запустить все тесты: `python -m pytest tests/ -v --tb=short > tests_after.txt`
+- [x] 5.2 Сравнить baseline: `diff tests_before.txt tests_after.txt`
+- [x] 5.3 Удалить/переписать тесты Stage‑фильтра
+- [x] 5.4 Удалить/переписать тесты SD‑фильтра
+- [x] 5.5 Обновить тесты confidence_scorer под новую формулу
+- [x] 5.6 Написать `test_retrieval_pipeline_simplified.py` (4 сценария из PRD)
+- [x] 5.7 Написать `test_confidence_scorer_simple.py`
+- [x] 5.8 Финальный прогон: `python -m pytest tests/ -v`
+- [x] 5.9 Все тесты зелёные или xfail с пояснением
+- [x] 5.10 Коммит: `test: update tests for simplified retrieval pipeline`
 
 ## Этап 6 — Финальная проверка и документация
 - [ ] 6.1 Запустить `Bot_data_base` на `8003`

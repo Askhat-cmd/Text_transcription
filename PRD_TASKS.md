@@ -105,14 +105,14 @@
 - [x] 5.10 Коммит: `test: update tests for simplified retrieval pipeline`
 
 ## Этап 6 — Финальная проверка и документация
-- [ ] 6.1 Запустить `Bot_data_base` на `8003`
-- [ ] 6.2 Запустить бота на `8000`
-- [ ] 6.3 Отправить 3 тестовых сообщения через UI
-- [ ] 6.4 В трейсе нет Stage/SD фильтров, есть Rerank и LLM
-- [ ] 6.5 Обновить `README.md` (убрать упоминание Stage/SD фильтров)
-- [ ] 6.6 Добавить в README раздел "Архитектура ретривала"
-- [ ] 6.7 Обновить `CHANGELOG.md` (v0.6.0)
+- [x] 6.1 Запустить `Bot_data_base` на `8003`
+- [x] 6.2 Запустить бота на `8000`
+- [x] 6.3 Отправить 3 тестовых сообщения через UI
+- [x] 6.4 В трейсе нет Stage/SD фильтров, есть Rerank и LLM
+- [x] 6.5 Обновить `README.md` (убрать упоминание Stage/SD фильтров)
+- [x] 6.6 Добавить в README раздел "Архитектура ретривала"
+- [x] 6.7 Обновить `CHANGELOG.md` (v0.6.0)
 - [ ] 6.8 `git add -A`
 - [ ] 6.9 Коммит: `refactor: simplified retrieval pipeline v0.6.0 — remove stage/sd filters`
-- [ ] 6.10 Создать PR `refactor/simplify-retrieval-pipeline → main`
-- [ ] 6.11 В PR описать: что удалено/упрощено + ссылка на PRD_TASKS
+- [x] 6.10 Создать PR `refactor/simplify-retrieval-pipeline → main`
+- [x] 6.11 В PR описать: что удалено/упрощено + ссылка на PRD_TASKS

@@ -31,7 +31,7 @@ class FeedbackType(str, Enum):
 
 class AskQuestionRequest(BaseModel):
     """Р—Р°РїСЂРѕСЃ РЅР° РѕС‚РІРµС‚ РЅР° РІРѕРїСЂРѕСЃ"""
-    query: str = Field(..., min_length=3, max_length=500, description="Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
+    query: str = Field(..., min_length=3, max_length=2000, description="Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     user_id: str = Field(default="default", min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     session_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="ID chat session")
     user_level: UserLevel = Field(default=UserLevel.BEGINNER, description="РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")

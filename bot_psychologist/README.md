@@ -31,9 +31,9 @@
   - `bot_agent/prompt_sd_yellow.md`
 - Интеграция в adaptive orchestrator:
   - SD-классификация пользователя
-  - SD-фильтрация блоков после retrieval
   - проброс `sd_level` в `ResponseGenerator.generate(...)`
   - SD-поля в `metadata` ответа
+  - SD-уровень виден в debug trace
 - Расширение памяти:
   - `ConversationMemory.get_user_sd_profile()`
   - `ConversationMemory.update_sd_profile(...)`
@@ -310,6 +310,21 @@ Token budget (PRD v2.0.2):
 При retrieval используется дополнительная политика:
 
 - Confidence cap: при низкой уверенности уменьшает число блоков, чтобы не «синтезировать лишнее».
+
+## Архитектура ретривала
+
+Упрощённый пайплайн ретривала (без Stage/SD фильтров):
+
+1. Построение hybrid‑query (контекст + вопрос).
+2. Retrieval:
+   - `KNOWLEDGE_SOURCE=api|chromadb` → Bot_data_base API
+   - fallback → TF‑IDF
+3. Rerank:
+   - Voyage (top‑k = `VOYAGE_TOP_K`)
+   - fallback: сортировка по score без урезания списка
+4. Confidence cap:
+   - итоговый лимит = `RETRIEVAL_TOP_K`
+5. LLM получает финальные блоки + `sd_level` в системном промпте.
 
 ## Архитектурный обзор
 
@@ -623,17 +638,15 @@ Askhat-cmd
 
 Начиная с текущей версии, adaptive-pipeline поддерживает расширенную диагностику retrieval:
 
-- Логи по этапам: initial retrieval, stage filter, confidence cap, final blocks to LLM, sources.
+- Логи по этапам: initial retrieval, rerank, confidence cap, final blocks to LLM, sources.
 - Логи retriever: query hash/timestamp, top TF-IDF кандидаты со score и block_id.
 - Логи confidence: contribution по сигналам и итоговый cap.
-- Логи stage-filter: вход/выход, fallback-поведение при пустом фильтре.
 - При debug-режиме в ответе API доступен `trace` (и часть деталей также сохраняется в `metadata.retrieval_details` для обратной совместимости).
 - Web UI (dev-key-001) использует `trace` + `/api/debug/blob/{blob_id}` для Inline Debug Trace и Developer Command Center.
 
 Также исправлено схлопывание источников в fallback-сценариях:
 
 - `VoyageReranker` fallback больше не режет кандидатов до `top_k=1`, если Voyage недоступен.
-- `StageFilter` fallback при пустом фильтре возвращает stage-aware `top-N` (с backfill для разнообразия), а не только `top-1`.
 
 ## Session Data Storage
 

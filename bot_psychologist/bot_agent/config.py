@@ -56,7 +56,8 @@ class Config:
     DB_EXPORT_FILE: str = os.getenv("DB_EXPORT_FILE", "")
 
     # === Retrieval ===
-    TOP_K_BLOCKS = 5
+    RETRIEVAL_TOP_K = int(os.getenv("RETRIEVAL_TOP_K", "5"))
+    TOP_K_BLOCKS = RETRIEVAL_TOP_K
     MIN_RELEVANCE_SCORE = 0.1
     AUTHOR_BLEND_MODE: str = os.getenv("AUTHOR_BLEND_MODE", "all")
 

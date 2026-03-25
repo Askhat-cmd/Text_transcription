@@ -158,6 +158,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
         )
 
     sd_confidence = sd_detail.get("confidence")
+    threshold = config_snapshot.get("sd_confidence_threshold")
     if isinstance(sd_confidence, (int, float)) and isinstance(threshold, (int, float)):
         if sd_confidence < threshold:
             flags.append(
@@ -1080,8 +1081,15 @@ def answer_question_adaptive(
         decision_gate = DecisionGate()
         pre_routing_signals = detect_routing_signals(query, [], state_analysis)
         pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
+        fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
+        logger.info(
+            "[CONFIDENCE] score=%.4f level=%s -> FAST_PATH: %s",
+            pre_routing_result.confidence_score,
+            pre_routing_result.confidence_level,
+            "yes" if fast_path_enabled else "no",
+        )
 
-        if _should_use_fast_path(query, pre_routing_result):
+        if fast_path_enabled:
             logger.info(
                 "[FAST_PATH] enabled mode=%s reason=%s",
                 pre_routing_result.mode,

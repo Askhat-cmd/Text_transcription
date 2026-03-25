@@ -10,7 +10,6 @@ def test_decision_gate_routes_to_intervention_when_allowed() -> None:
     result = gate.route(
         signals={
             "local_similarity": 0.8,
-            "voyage_confidence": 0.85,
             "delta_top1_top2": 0.7,
             "state_match": 0.8,
             "question_clarity": 0.8,

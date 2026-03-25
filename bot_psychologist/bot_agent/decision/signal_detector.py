@@ -57,7 +57,6 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None) ->
 
     return {
         "local_similarity": local_similarity,
-        "voyage_confidence": local_similarity,  # placeholder until Voyage reranker integration
         "delta_top1_top2": delta,
         "state_match": max(0.0, min(1.0, state_confidence)),
         "question_clarity": 1.0 if len(query.split()) >= 4 else 0.5,

@@ -65,21 +65,21 @@
 - [x] 2.18 Коммит: `feat: remove sd_filter, pass sd_level to LLM prompt`
 
 ## Этап 3 — Упрощение Confidence Scorer
-- [ ] 3.1 Открыть `confidence_scorer.py`
-- [ ] 3.2 Убрать `voyage_confidence` из формулы
-- [ ] 3.3 Формула: local_similarity + delta_top1_top2 + state_match + question_clarity
-- [ ] 3.4 FAST_PATH порог `low=0.40` остаётся
-- [ ] 3.5 Упростить confidence cap до фиксированного TOP‑K
-- [ ] 3.6 Удалить log‑строки `CONFIDENCE_CAP` с разбивкой уровней
-- [ ] 3.7 Оставить строку `[CONFIDENCE] score=X level=Y → FAST_PATH: yes/no`
-- [ ] 3.8 Убедиться есть `RETRIEVAL_TOP_K` в config/.env (текущее = 3)
-- [ ] 3.9 Поменять `RETRIEVAL_TOP_K` на 5
-- [ ] 3.10 В `answer_adaptive.py`: финальный срез `blocks[:config.RETRIEVAL_TOP_K]`
-- [ ] 3.11 В админке поле TOP‑K = 5
-- [ ] 3.12 `python -m pytest tests/ -k "confidence" -v`
-- [ ] 3.13 Тест: "To LLM" = 5 блоков
-- [ ] 3.14 Тест приветствия: FAST_PATH работает
-- [ ] 3.15 Коммит: `feat: simplify confidence scorer, fixed TOP-K=5`
+- [x] 3.1 Открыть `confidence_scorer.py`
+- [x] 3.2 Убрать `voyage_confidence` из формулы
+- [x] 3.3 Формула: local_similarity + delta_top1_top2 + state_match + question_clarity
+- [x] 3.4 FAST_PATH порог `low=0.40` остаётся
+- [x] 3.5 Упростить confidence cap до фиксированного TOP‑K
+- [x] 3.6 Удалить log‑строки `CONFIDENCE_CAP` с разбивкой уровней
+- [x] 3.7 Оставить строку `[CONFIDENCE] score=X level=Y → FAST_PATH: yes/no`
+- [x] 3.8 Убедиться есть `RETRIEVAL_TOP_K` в config/.env (текущее = 3)
+- [x] 3.9 Поменять `RETRIEVAL_TOP_K` на 5
+- [x] 3.10 В `answer_adaptive.py`: финальный срез `blocks[:config.RETRIEVAL_TOP_K]`
+- [x] 3.11 В админке поле TOP‑K = 5
+- [x] 3.12 `python -m pytest tests/ -k "confidence" -v`
+- [x] 3.13 Тест: "To LLM" = 5 блоков
+- [x] 3.14 Тест приветствия: FAST_PATH работает
+- [x] 3.15 Коммит: `feat: simplify confidence scorer, fixed TOP-K=5`
 
 ## Этап 4 — Оптимизация Voyage Reranker
 - [ ] 4.1 Открыть `voyage_reranker.py`

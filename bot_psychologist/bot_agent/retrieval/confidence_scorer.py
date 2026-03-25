@@ -22,11 +22,10 @@ class ConfidenceScorer:
     """Weighted confidence scorer with configurable thresholds."""
 
     DEFAULT_WEIGHTS = {
-        "local_similarity": 0.3,
-        "voyage_confidence": 0.4,
-        "delta_top1_top2": 0.1,
-        "state_match": 0.1,
-        "question_clarity": 0.1,
+        "local_similarity": 0.25,
+        "delta_top1_top2": 0.25,
+        "state_match": 0.25,
+        "question_clarity": 0.25,
     }
 
     def __init__(
@@ -73,11 +72,7 @@ class ConfidenceScorer:
         else:
             level = "medium"
 
-        logger.info(
-            f"[CONFIDENCE] score={total:.4f} level={level} "
-            f"thresholds(low={self.low_threshold:.2f}, high={self.high_threshold:.2f})"
-        )
-        logger.info(f"[CONFIDENCE] contributions={contributions}")
+        logger.info(f"[CONFIDENCE] score={total:.4f} level={level}")
 
         return ConfidenceResult(
             score=total,
@@ -98,16 +93,8 @@ class ConfidenceScorer:
         count = max(0, int(available_blocks))
         if count <= 1:
             return count
-
-        level = (confidence_level or "medium").lower()
-        if level == "low":
-            cap = min(count, 2)
-        elif level == "medium":
-            cap = min(count, 3)
-        else:
-            cap = count
-
-        logger.info(
-            f"[CONFIDENCE_CAP] level={level} available={count} suggested_cap={cap}"
-        )
-        return cap
+        try:
+            from ..config import config
+            return min(count, int(getattr(config, "RETRIEVAL_TOP_K", 5)))
+        except Exception:
+            return min(count, 5)

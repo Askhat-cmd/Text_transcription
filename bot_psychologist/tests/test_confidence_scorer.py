@@ -10,7 +10,6 @@ def test_confidence_scorer_low_level() -> None:
     result = scorer.score(
         {
             "local_similarity": 0.2,
-            "voyage_confidence": 0.2,
             "delta_top1_top2": 0.1,
             "state_match": 0.2,
             "question_clarity": 0.1,
@@ -25,7 +24,6 @@ def test_confidence_scorer_high_level() -> None:
     result = scorer.score(
         {
             "local_similarity": 0.9,
-            "voyage_confidence": 0.95,
             "delta_top1_top2": 0.8,
             "state_match": 0.85,
             "question_clarity": 0.9,
@@ -37,6 +35,6 @@ def test_confidence_scorer_high_level() -> None:
 
 def test_confidence_suggests_block_cap() -> None:
     scorer = ConfidenceScorer()
-    assert scorer.suggest_block_cap(5, "low") == 2
-    assert scorer.suggest_block_cap(5, "medium") == 3
+    assert scorer.suggest_block_cap(5, "low") == 5
+    assert scorer.suggest_block_cap(5, "medium") == 5
     assert scorer.suggest_block_cap(5, "high") == 5

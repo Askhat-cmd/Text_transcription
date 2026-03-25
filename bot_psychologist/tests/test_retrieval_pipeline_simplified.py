@@ -156,6 +156,12 @@ def _setup_pipeline(monkeypatch, blocks, *, voyage_enabled: bool, fast_path: boo
     monkeypatch.setattr(aa, "VoyageReranker", DummyReranker)
     monkeypatch.setattr(aa, "ResponseGenerator", DummyResponseGenerator)
     monkeypatch.setattr(aa, "_should_use_fast_path", lambda *_args, **_kwargs: fast_path)
+    # В тестах игнорируем реальные admin overrides, чтобы значения были детерминированными
+    monkeypatch.setattr(
+        aa.config,
+        "_load_overrides",
+        lambda: {"config": {}, "prompts": {}, "meta": {}, "history": []},
+    )
     monkeypatch.setattr(aa.config, "VOYAGE_ENABLED", voyage_enabled)
     monkeypatch.setattr(aa.config, "VOYAGE_TOP_K", 5)
     monkeypatch.setattr(aa.config, "TOP_K_BLOCKS", 5)

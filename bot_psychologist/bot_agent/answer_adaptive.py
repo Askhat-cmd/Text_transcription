@@ -1404,7 +1404,7 @@ def answer_question_adaptive(
                 "Retrieval",
                 retriever.retrieve,
                 hybrid_query,
-                top_k=top_k * 2,  # запрашиваем больше для дедупликации
+                top_k=top_k,  # не удваиваем: TOP-K должен совпадать с админкой/трейсом
                 sd_level=sd_level_int,
                 author_id=author_id_filter,
             )

@@ -51,8 +51,9 @@ SD_KEYWORDS: Dict[str, List[str]] = {
     # RED — агрессия, доминирование, импульсивность, "я хочу власти/силы"
     "RED": [
         # агрессия и доминирование
-        "бесит", "злит", "ненавижу", "достало", "надоело",
+        "бесит", "злит", "ненавижу", "достало", "достали", "надоело",
         "все должны", "я лучше", "никто не понимает меня",
+        "никто не уважает меня", "не уважает", "не уважают",
         "заставить", "подчинить", "контролировать других",
         "накажу", "не буду терпеть", "должны мне",
         # импульсивность
@@ -267,7 +268,6 @@ class SDCompatibilityResolver:
             safer_level = self._one_level_down(sd_level)
             allowed = list(self.compatibility_base.get(safer_level, [DEFAULT_LEVEL]))
             logger.info(
-                f"[SD_COMPAT] Low confidence ({sd_confidence:.2f}) -> "
                 f"conservative: {sd_level}->{safer_level}, allowed={allowed}"
             )
             return allowed
@@ -276,12 +276,10 @@ class SDCompatibilityResolver:
         crisis_key = (sd_level, state_norm)
         if crisis_key in self.crisis_overrides:
             allowed = self.crisis_overrides[crisis_key]
-            logger.info(f"[SD_COMPAT] Crisis override ({sd_level},{state_norm}) -> {allowed}")
             return allowed
 
         if is_first_session:
             allowed = list(self.compatibility_base.get(sd_level, [DEFAULT_LEVEL]))
-            logger.info(f"[SD_COMPAT] First session -> strict base: {allowed}")
             return allowed
 
         allowed = list(self.compatibility_base.get(sd_level, [DEFAULT_LEVEL]))
@@ -295,7 +293,6 @@ class SDCompatibilityResolver:
             except ValueError:
                 pass
 
-        logger.info(f"[SD_COMPAT] Final allowed for {sd_level}: {allowed}")
         return allowed
 
     @staticmethod

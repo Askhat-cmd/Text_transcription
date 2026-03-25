@@ -45,24 +45,24 @@
 - [x] 1.15 Коммит: `feat: remove stage_filter module and all references`
 
 ## Этап 2 — Рефакторинг SD‑фильтра
-- [ ] 2.1 Найти `sd_filter.py` в `bot_agent/retrieval/`
-- [ ] 2.2 Удалить `sd_filter.py` (или очистить как deprecated)
-- [ ] 2.3 В `answer_adaptive.py` найти блок `[SD_FILTER]/after_sd_filter`
-- [ ] 2.4 Удалить вызов `sd_filter` (initial → rerank напрямую)
-- [ ] 2.5 Удалить импорт `sd_filter`
-- [ ] 2.6 Удалить log‑строки `SD_FILTER`, `After SD filter`, `SD_COMPAT`
-- [ ] 2.7 `sd_classifier.py` оставить без изменений
-- [ ] 2.8 Найти место формирования контекста LLM
-- [ ] 2.9 Убедиться что `sd_level` и `user_state` передаются в prompt_builder/llm_answerer
-- [ ] 2.10 Добавить в system_prompt секцию с `sd_level` и `user_state`
-- [ ] 2.11 Проверить в трейсе: `sd_level` присутствует в System Prompt
-- [ ] 2.12 В трасс‑панели убрать строку "SD фильтр: skip/active"
-- [ ] 2.13 Оставить отображение SD‑уровня пользователя (SD: BLUE · 0.85)
-- [ ] 2.14 В Config Snapshot убрать `SD_CONFIDENCE_THRESHOLD` если он только для фильтра
-- [ ] 2.15 `python -m pytest tests/ -k "sd or classifier" -v`
-- [ ] 2.16 Тест: блоки с любым SD доходят до LLM
-- [ ] 2.17 В трейсе нет "After SD filter", SD‑уровень виден в промпте
-- [ ] 2.18 Коммит: `feat: remove sd_filter, pass sd_level to LLM prompt`
+- [x] 2.1 Найти `sd_filter.py` в `bot_agent/retrieval/`
+- [x] 2.2 Удалить `sd_filter.py` (или очистить как deprecated)
+- [x] 2.3 В `answer_adaptive.py` найти блок `[SD_FILTER]/after_sd_filter`
+- [x] 2.4 Удалить вызов `sd_filter` (initial → rerank напрямую)
+- [x] 2.5 Удалить импорт `sd_filter`
+- [x] 2.6 Удалить log‑строки `SD_FILTER`, `After SD filter`, `SD_COMPAT`
+- [x] 2.7 `sd_classifier.py` оставить без изменений
+- [x] 2.8 Найти место формирования контекста LLM
+- [x] 2.9 Убедиться что `sd_level` и `user_state` передаются в prompt_builder/llm_answerer
+- [x] 2.10 Добавить в system_prompt секцию с `sd_level` и `user_state`
+- [x] 2.11 Проверить в трейсе: `sd_level` присутствует в System Prompt
+- [x] 2.12 В трасс‑панели убрать строку "SD фильтр: skip/active"
+- [x] 2.13 Оставить отображение SD‑уровня пользователя (SD: BLUE · 0.85)
+- [x] 2.14 В Config Snapshot убрать `SD_CONFIDENCE_THRESHOLD` если он только для фильтра
+- [x] 2.15 `python -m pytest tests/ -k "sd or classifier" -v`
+- [x] 2.16 Тест: блоки с любым SD доходят до LLM
+- [x] 2.17 В трейсе нет "After SD filter", SD‑уровень виден в промпте
+- [x] 2.18 Коммит: `feat: remove sd_filter, pass sd_level to LLM prompt`
 
 ## Этап 3 — Упрощение Confidence Scorer
 - [ ] 3.1 Открыть `confidence_scorer.py`

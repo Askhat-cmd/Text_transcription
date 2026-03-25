@@ -158,7 +158,7 @@ class ChunkTraceItem(BaseModel):
     emotional_tone: str = ""
     score_initial: float
     score_final: float
-    passed_sd_filter: bool
+    passed_filter: bool
     filter_reason: str = ""
     preview: str
 
@@ -253,7 +253,6 @@ class DebugTrace(BaseModel):
     """Полная цепочка рассуждений бота для одного запроса."""
     sd_classification: SDClassificationTrace
     chunks_retrieved: List[ChunkTraceItem]
-    chunks_after_sd_filter: List[ChunkTraceItem]
     chunks_after_filter: List[ChunkTraceItem] = Field(default_factory=list)
     llm_calls: List[LLMCallTrace]
     context_written_to_memory: str
@@ -276,7 +275,6 @@ class DebugTrace(BaseModel):
     mode_reason: Optional[str] = None
     block_cap: Optional[int] = None
     blocks_initial: Optional[int] = None
-    blocks_after_sd: Optional[int] = None
     blocks_after_cap: Optional[int] = None
     hybrid_query_preview: Optional[str] = None
     sd_detail: Optional[SDClassificationDetail] = None

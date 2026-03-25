@@ -45,7 +45,7 @@ const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed })
   const [expanded, setExpanded] = useState(false);
   const sdLevel = (chunk?.sd_level || '').toUpperCase();
   const sdColor = SD_COLORS[sdLevel] || 'text-slate-500';
-  const isPassed = passed ?? chunk?.passed_sd_filter ?? false;
+  const isPassed = passed ?? chunk?.passed_filter ?? false;
   const fullText: string | undefined = chunk?.text ?? chunk?.full_text;
   const previewText: string | undefined = chunk?.preview;
   const hasMore = Boolean(fullText && fullText.length > (previewText?.length ?? 0));
@@ -114,7 +114,7 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
   const sdColor = SD_COLORS[sdLevel] || '';
 
   const chunksRetrieved = trace.chunks_retrieved ?? [];
-  const chunksAfter = trace.chunks_after_filter ?? trace.chunks_after_sd_filter ?? [];
+  const chunksAfter = trace.chunks_after_filter ?? [];
 
   const memoryTurns = trace.memory_turns ?? trace.memory_turns_content?.length ?? 0;
   const summaryLength = trace.summary_length ?? (trace.summary_text ? trace.summary_text.length : 0);
@@ -261,7 +261,7 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
                   <p className="text-slate-400">Нет retrieved чанков</p>
                 ) : (
                   chunksRetrieved.map((chunk, idx) => (
-                    <ChunkRow key={`${chunk.block_id}-${idx}`} chunk={chunk} passed={chunk.passed_sd_filter} />
+                    <ChunkRow key={`${chunk.block_id}-${idx}`} chunk={chunk} passed={chunk.passed_filter} />
                   ))
                 )}
               </div>

@@ -22,7 +22,6 @@
 Что реализовано:
 - SD-классификатор пользователя: `bot_agent/sd_classifier.py`
 - SD-конфиг: `config/sd_classification.yaml`
-- SD-фильтр retrieval: `bot_agent/retrieval/sd_filter.py`
 - SD-оверлей промты:
   - `bot_agent/prompt_sd_purple.md`
   - `bot_agent/prompt_sd_red.md`
@@ -45,7 +44,6 @@
 
 Тесты SD:
 - `tests/test_sd_classifier.py`
-- `tests/test_sd_filter.py`
 - `tests/test_sd_integration.py`
 
 ## Speed Layer (PRD v3.0.2)

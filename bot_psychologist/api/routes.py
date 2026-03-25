@@ -35,7 +35,7 @@ from bot_agent.decision import (
     resolve_user_stage,
 )
 from bot_agent.response import ResponseFormatter, ResponseGenerator
-from bot_agent.retrieval import HybridQueryBuilder, VoyageReranker, filter_by_sd_level
+from bot_agent.retrieval import HybridQueryBuilder, VoyageReranker
 from bot_agent.user_level_adapter import UserLevelAdapter
 from bot_agent.storage import SessionManager
 from bot_agent.answer_adaptive import (
@@ -56,7 +56,7 @@ from bot_agent.answer_adaptive import (
     _estimate_cost,
     _store_blob,
     _build_state_trajectory,
-    _build_chunk_trace_lists,
+    _build_chunk_trace_lists_after_rerank,
     _detect_fast_path_reason,
     _truncate_preview,
 )
@@ -93,7 +93,7 @@ _stats = {
 def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default: bool) -> ChunkTraceItem:
     score_initial = float(raw_chunk.get("score_initial", raw_chunk.get("score", 0.0) or 0.0))
     score_final = float(raw_chunk.get("score_final", raw_chunk.get("score", score_initial) or score_initial))
-    passed_sd_filter = bool(raw_chunk.get("passed_sd_filter", passed_default))
+    passed_filter = bool(raw_chunk.get("passed_filter", passed_default))
     preview = (
         raw_chunk.get("preview")
         or raw_chunk.get("content")
@@ -108,7 +108,7 @@ def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default:
         emotional_tone=str(raw_chunk.get("emotional_tone") or ""),
         score_initial=score_initial,
         score_final=score_final,
-        passed_sd_filter=passed_sd_filter,
+        passed_filter=passed_filter,
         filter_reason=str(raw_chunk.get("filter_reason") or ""),
         preview=str(preview)[:120],
     )
@@ -545,8 +545,7 @@ async def ask_adaptive_question(
                 )
                 chunks_after_raw = (
                     raw_dict.get("chunks_after_filter")
-                    or raw_dict.get("chunks_after_sd_filter")
-                    or retrieval_details.get("after_sd_filter")
+                    or retrieval_details.get("after_rerank")
                     or []
                 )
                 llm_calls_raw = raw_dict.get("llm_calls") or []
@@ -565,15 +564,6 @@ async def ask_adaptive_question(
                             _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=False)
                         )
 
-                chunks_after_sd_filter = []
-                for c in chunks_after_raw:
-                    if isinstance(c, ChunkTraceItem):
-                        chunks_after_sd_filter.append(c)
-                    elif isinstance(c, dict):
-                        chunks_after_sd_filter.append(
-                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
-                        )
-
                 chunks_after_filter_raw = raw_dict.get("chunks_after_filter") or chunks_after_raw or []
                 chunks_after_filter = []
                 for c in chunks_after_filter_raw:
@@ -585,7 +575,7 @@ async def ask_adaptive_question(
                         )
 
                 # Fallback: если в debug нет чанков, но есть финальные sources — показываем их как прошедшие фильтр.
-                if not chunks_retrieved and not chunks_after_sd_filter:
+                if not chunks_retrieved and not chunks_after_filter:
                     source_chunks = []
                     for src in result.get("sources", []) or []:
                         if isinstance(src, dict):
@@ -597,13 +587,13 @@ async def ask_adaptive_question(
                                     "sd_level": metadata.get("sd_level", default_sd_level),
                                     "sd_secondary": metadata.get("sd_secondary", ""),
                                     "emotional_tone": "",
-                                    "passed_sd_filter": True,
+                                    "passed_filter": True,
                                     "preview": "",
                                 },
                                 default_sd_level=default_sd_level,
                                 passed_default=True,
                             ))
-                    chunks_after_sd_filter = source_chunks
+                    chunks_after_filter = source_chunks
 
                 llm_calls = []
                 for c in llm_calls_raw:
@@ -624,8 +614,7 @@ async def ask_adaptive_question(
                         allowed_levels=[str(level) for level in allowed_levels],
                     ),
                     "chunks_retrieved": chunks_retrieved,
-                    "chunks_after_sd_filter": chunks_after_sd_filter,
-                    "chunks_after_filter": chunks_after_filter or chunks_after_sd_filter,
+                    "chunks_after_filter": chunks_after_filter,
                     "llm_calls": llm_calls,
                     "context_written_to_memory": context_written,
                     "context_written": raw_dict.get("context_written") or context_written,
@@ -674,7 +663,6 @@ async def ask_adaptive_question(
                     "fast_path_reason",
                     "block_cap",
                     "blocks_initial",
-                    "blocks_after_sd",
                     "blocks_after_cap",
                     "hybrid_query_preview",
                     "sd_detail",
@@ -928,7 +916,6 @@ async def ask_adaptive_question_stream(
                     pipeline_stages.extend(
                         [
                             {"name": "retrieval", "label": "Retrieval", "duration_ms": 0, "skipped": True},
-                            {"name": "sd_filter", "label": "SD фильтр", "duration_ms": 0, "skipped": True},
                             {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True},
                         ]
                     )
@@ -1076,7 +1063,6 @@ async def ask_adaptive_question_stream(
                             "allowed_levels": sd_result.allowed_blocks,
                         },
                         "chunks_retrieved": [],
-                        "chunks_after_sd_filter": [],
                         "chunks_after_filter": [],
                         "llm_calls": llm_calls,
                         "context_written_to_memory": context_written,
@@ -1099,7 +1085,6 @@ async def ask_adaptive_question_stream(
                         "mode_reason": mode_directive.reason,
                         "block_cap": 0,
                         "blocks_initial": 0,
-                        "blocks_after_sd": 0,
                         "blocks_after_cap": 0,
                         "hybrid_query_preview": _truncate_preview(request.query, 400),
                         "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
@@ -1163,26 +1148,7 @@ async def ask_adaptive_question_stream(
                         "skipped": False,
                     }
                 )
-            sd_filter_start_ts = time.perf_counter()
-            retrieved_blocks = filter_by_sd_level(
-                blocks_with_scores=raw_retrieved_blocks,
-                user_sd_level=sd_result.primary,
-                user_state=state_analysis.primary_state.value,
-                sd_secondary=sd_result.secondary,
-                sd_confidence=sd_result.confidence,
-                is_first_session=(len(memory.turns) == 0),
-                min_blocks=3,
-            )
-            sd_filtered_blocks = list(retrieved_blocks)
-            if request.debug:
-                pipeline_stages.append(
-                    {
-                        "name": "sd_filter",
-                        "label": "SD фильтр",
-                        "duration_ms": int((time.perf_counter() - sd_filter_start_ts) * 1000),
-                        "skipped": False,
-                    }
-                )
+            retrieved_blocks = list(raw_retrieved_blocks)
 
             reranker = VoyageReranker(
                 model=config.VOYAGE_MODEL,
@@ -1203,11 +1169,11 @@ async def ask_adaptive_question_stream(
                     )
                 if reranked:
                     retrieved_blocks = reranked
-                    sd_filtered_blocks = list(retrieved_blocks)
             elif request.debug:
                 pipeline_stages.append(
                     {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
                 )
+            reranked_blocks_for_trace = list(retrieved_blocks)
 
             routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
             routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
@@ -1246,11 +1212,9 @@ async def ask_adaptive_question_stream(
                 }
                 if request.debug:
                     memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                    chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                    chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists_after_rerank(
                         initial_retrieved=raw_retrieved_blocks,
-                        sd_filtered=sd_filtered_blocks,
-                        reranked=sd_filtered_blocks,
-                        allowed_levels=sd_result.allowed_blocks,
+                        reranked=reranked_blocks_for_trace,
                     )
                     context_written = _build_memory_context_snapshot(memory)
                     memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
@@ -1264,7 +1228,6 @@ async def ask_adaptive_question_stream(
                             "allowed_levels": sd_result.allowed_blocks,
                         },
                         "chunks_retrieved": chunks_retrieved,
-                        "chunks_after_sd_filter": chunks_after_filter,
                         "chunks_after_filter": chunks_after_filter,
                         "llm_calls": [],
                         "context_written_to_memory": context_written,
@@ -1280,7 +1243,6 @@ async def ask_adaptive_question_stream(
                         "mode_reason": routing_result.decision.reason,
                         "block_cap": block_cap,
                         "blocks_initial": len(raw_retrieved_blocks),
-                        "blocks_after_sd": len(sd_filtered_blocks),
                         "blocks_after_cap": 0,
                         "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
                         "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
@@ -1420,11 +1382,9 @@ async def ask_adaptive_question_stream(
             }
             if request.debug:
                 memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists(
+                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists_after_rerank(
                     initial_retrieved=raw_retrieved_blocks,
-                    sd_filtered=sd_filtered_blocks,
-                    reranked=sd_filtered_blocks,
-                    allowed_levels=sd_result.allowed_blocks,
+                    reranked=reranked_blocks_for_trace,
                 )
                 system_preview, user_preview = _build_llm_prompt_previews(
                     response_generator=response_generator,
@@ -1472,7 +1432,6 @@ async def ask_adaptive_question_stream(
                         "allowed_levels": sd_result.allowed_blocks,
                     },
                     "chunks_retrieved": chunks_retrieved,
-                    "chunks_after_sd_filter": chunks_after_filter,
                     "chunks_after_filter": chunks_after_filter,
                     "llm_calls": llm_calls,
                     "context_written_to_memory": context_written,
@@ -1488,7 +1447,6 @@ async def ask_adaptive_question_stream(
                     "mode_reason": routing_result.decision.reason,
                     "block_cap": block_cap,
                     "blocks_initial": len(raw_retrieved_blocks),
-                    "blocks_after_sd": len(sd_filtered_blocks),
                     "blocks_after_cap": len(retrieved_blocks),
                     "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
                     "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,

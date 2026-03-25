@@ -30,7 +30,7 @@ export const StatusBar: React.FC<StatusBarProps> = ({ trace, isExpanded = false 
   const hasError = trace.pipeline_error != null;
   const sdLevel = trace.sd_level || trace.sd_classification?.primary || '—';
   const mode = trace.recommended_mode || '—';
-  const blocksAfterCap = trace.blocks_after_cap ?? trace.chunks_after_filter?.length ?? trace.chunks_after_sd_filter?.length ?? trace.chunks_retrieved?.length;
+  const blocksAfterCap = trace.blocks_after_cap ?? trace.chunks_after_filter?.length ?? trace.chunks_retrieved?.length;
   const blockCap = trace.block_cap ?? '—';
   const semanticHits = trace.semantic_hits ?? trace.semantic_hits_detail?.length ?? 0;
 

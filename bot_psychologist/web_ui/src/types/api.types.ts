@@ -85,7 +85,7 @@ export interface ChunkTraceItem {
   emotional_tone: string;
   score_initial: number;
   score_final: number;
-  passed_sd_filter: boolean;
+  passed_filter: boolean;
   filter_reason: string;
   preview: string;
   text?: string | null;  // FIX 1b: полный текст чанка
@@ -178,7 +178,6 @@ export interface LLMCallTrace {
 export interface DebugTrace {
   sd_classification: SDClassificationTrace;
   chunks_retrieved: ChunkTraceItem[];
-  chunks_after_sd_filter: ChunkTraceItem[];
   chunks_after_filter?: ChunkTraceItem[];
   llm_calls: LLMCallTrace[];
   context_written_to_memory: string;
@@ -201,7 +200,6 @@ export interface DebugTrace {
   mode_reason?: string | null;
   block_cap?: number | null;
   blocks_initial?: number | null;
-  blocks_after_sd?: number | null;
   blocks_after_cap?: number | null;
   hybrid_query_preview?: string | null;
   sd_detail?: SDClassificationDetail | null;

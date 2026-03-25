@@ -39,7 +39,7 @@ from .decision import (
     detect_routing_signals,
     resolve_user_stage,
 )
-from .retrieval import HybridQueryBuilder, VoyageReranker, filter_by_sd_level
+from .retrieval import HybridQueryBuilder, VoyageReranker
 from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
 
@@ -56,12 +56,10 @@ def _timed(name: str, label: str, fn, *args, **kwargs):
 
 def _build_config_snapshot(cfg) -> Dict[str, object]:
     """Снимок конфигурации на момент запроса."""
-    sd_settings = get_sd_settings()
     return {
         "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
         "max_context_size": int(getattr(cfg, "MAX_CONTEXT_SIZE", 0) or 0),
         "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
-        "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.5)),
         "fast_path_enabled": True,
         "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False)),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
@@ -103,16 +101,6 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
                 "code": "NO_BLOCKS_TO_LLM",
                 "severity": "error",
                 "message": "LLM получил 0 блоков — ответ без контекста",
-                "target": "chunks",
-            }
-        )
-
-    if (trace.get("blocks_after_sd") == 0) and (trace.get("blocks_initial") or 0) > 0:
-        flags.append(
-            {
-                "code": "SD_FILTER_TOO_STRICT",
-                "severity": "warn",
-                "message": "SD-фильтр отсёк ВСЕ блоки при наличии retrieval-результатов",
                 "target": "chunks",
             }
         )
@@ -170,7 +158,6 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
         )
 
     sd_confidence = sd_detail.get("confidence")
-    threshold = config_snapshot.get("sd_confidence_threshold")
     if isinstance(sd_confidence, (int, float)) and isinstance(threshold, (int, float)):
         if sd_confidence < threshold:
             flags.append(
@@ -384,7 +371,7 @@ def _build_chunk_trace_item(
     block,
     score_initial: float,
     score_final: float,
-    passed_sd_filter: bool,
+    passed_filter: bool,
     filter_reason: str,
     default_sd_level: str = "UNKNOWN",
 ) -> Dict:
@@ -399,57 +386,11 @@ def _build_chunk_trace_item(
         "emotional_tone": emotional_tone,
         "score_initial": float(score_initial),
         "score_final": float(score_final),
-        "passed_sd_filter": bool(passed_sd_filter),
+        "passed_filter": bool(passed_filter),
         "filter_reason": str(filter_reason or ""),
         "preview": _truncate_preview(preview_source, 120),
         "text": full_text,  # FIX 1a: полный текст чанка
     }
-
-
-def _build_chunk_trace_lists(
-    *,
-    initial_retrieved: List[Tuple],
-    sd_filtered: List[Tuple],
-    reranked: List[Tuple],
-    allowed_levels: List[str],
-) -> Tuple[List[Dict], List[Dict]]:
-    allowed_norm = [str(level).upper() for level in (allowed_levels or [])]
-    passed_ids = {str(getattr(block, "block_id", "")) for block, _ in sd_filtered}
-    reranked_scores = {
-        str(getattr(block, "block_id", "")): float(score)
-        for block, score in reranked
-    }
-
-    chunks_retrieved: List[Dict] = []
-    chunks_after_filter: List[Dict] = []
-
-    for block, initial_score in initial_retrieved:
-        block_id = str(getattr(block, "block_id", ""))
-        raw_metadata = getattr(block, "metadata", {}) or {}
-        raw_sd = getattr(block, "sd_level", None) or raw_metadata.get("sd_level")
-        passed = block_id in passed_ids
-
-        filter_reason = ""
-        if not passed:
-            if not raw_sd:
-                filter_reason = "sd_level_missing"
-            elif allowed_norm and str(raw_sd).upper() not in allowed_norm:
-                filter_reason = f"sd_level_{str(raw_sd).upper()}_not_allowed"
-            else:
-                filter_reason = "filtered_by_sd"
-
-        item = _build_chunk_trace_item(
-            block=block,
-            score_initial=float(initial_score),
-            score_final=reranked_scores.get(block_id, float(initial_score)),
-            passed_sd_filter=passed,
-            filter_reason=filter_reason,
-        )
-        chunks_retrieved.append(item)
-        if passed:
-            chunks_after_filter.append(item)
-
-    return chunks_retrieved, chunks_after_filter
 
 
 def _build_chunk_trace_lists_after_rerank(
@@ -476,7 +417,7 @@ def _build_chunk_trace_lists_after_rerank(
             block=block,
             score_initial=float(initial_score),
             score_final=reranked_scores.get(block_id, float(initial_score)),
-            passed_sd_filter=passed,
+            passed_filter=passed,
             filter_reason="" if passed else "rerank",
         )
         chunks_retrieved.append(item)
@@ -926,7 +867,6 @@ def answer_question_adaptive(
             "sd_level": None,
             "chunks_retrieved": [],
             "chunks_after_filter": [],
-            "chunks_after_sd_filter": [],
             "llm_calls": [],
             "context_written": "",
             "total_duration_ms": 0,
@@ -936,7 +876,6 @@ def answer_question_adaptive(
             "mode_reason": None,
             "block_cap": None,
             "blocks_initial": None,
-            "blocks_after_sd": None,
             "blocks_after_cap": None,
             "hybrid_query_preview": None,
             "memory_turns_content": [],
@@ -1158,13 +1097,11 @@ def answer_question_adaptive(
                 debug_trace["mode_reason"] = pre_routing_result.decision.reason
                 debug_trace["block_cap"] = 0
                 debug_trace["blocks_initial"] = 0
-                debug_trace["blocks_after_sd"] = 0
                 debug_trace["blocks_after_cap"] = 0
                 debug_trace["hybrid_query_preview"] = _truncate_preview(query, 400)
 
                 for stage_name, label in [
                     ("retrieval", "Retrieval"),
-                    ("sd_filter", "SD фильтр"),
                     ("rerank", "Rerank"),
                 ]:
                     pipeline_stages.append(
@@ -1483,24 +1420,8 @@ def answer_question_adaptive(
         raw_retrieved_blocks = deduped_blocks
         
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
-        current_stage = "sd_filter"
-        retrieved_blocks, sd_stage = _timed(
-            "sd_filter",
-            "SD фильтр",
-            filter_by_sd_level,
-            blocks_with_scores=raw_retrieved_blocks,
-            user_sd_level=sd_result.primary,
-            user_state=state_analysis.primary_state.value,
-            sd_secondary=sd_result.secondary,
-            sd_confidence=sd_result.confidence,
-            is_first_session=(len(memory.turns) == 0),
-            min_blocks=3,
-        )
-        if debug_trace is not None:
-            pipeline_stages.append(sd_stage)
-        _log_retrieval_pairs("After SD filter", retrieved_blocks, limit=10)
+        retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
-        sd_filtered_blocks = list(retrieved_blocks)
         reranker = VoyageReranker(
             model=config.VOYAGE_MODEL,
             enabled=config.VOYAGE_ENABLED,
@@ -1555,7 +1476,6 @@ def answer_question_adaptive(
             debug_trace["mode_reason"] = mode_directive.reason
             debug_trace["block_cap"] = block_cap
             debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
-            debug_trace["blocks_after_sd"] = len(sd_filtered_blocks)
             debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
 
         if not retrieved_blocks:
@@ -1594,7 +1514,6 @@ def answer_question_adaptive(
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
                 debug_trace["chunks_after_filter"] = chunks_after_rerank
-                debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
                 debug_trace["blocks_after_cap"] = 0
                 pipeline_stages.append(
                     {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
@@ -1655,10 +1574,6 @@ def answer_question_adaptive(
                     _build_retrieval_detail(block, score, "rerank")
                     for block, score in reranked_blocks_for_trace
                 ],
-                "after_sd_filter": [
-                    _build_retrieval_detail(block, score, "sd_filter")
-                    for block, score in sd_filtered_blocks
-                ],
                 "after_confidence_cap": [
                     _build_retrieval_detail(block, score, "confidence_cap")
                     for block, score in capped_retrieved_blocks
@@ -1699,7 +1614,6 @@ def answer_question_adaptive(
             )
             debug_trace["chunks_retrieved"] = chunks_retrieved
             debug_trace["chunks_after_filter"] = chunks_after_rerank
-            debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
         
         # ================================================================
         # ЭТАП 4: Генерация ответа с контекстом состояния
@@ -1812,7 +1726,6 @@ def answer_question_adaptive(
                 )
                 debug_trace["chunks_retrieved"] = chunks_retrieved
                 debug_trace["chunks_after_filter"] = chunks_after_rerank
-                debug_trace["chunks_after_sd_filter"] = chunks_after_rerank
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
                 _apply_memory_debug_info(debug_trace, memory)

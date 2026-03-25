@@ -44,3 +44,4 @@ __pycache__/
 
 # Admin Config Panel runtime overrides
 data/admin_overrides.json
+config_override.json

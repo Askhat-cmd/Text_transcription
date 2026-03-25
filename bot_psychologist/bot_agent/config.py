@@ -58,7 +58,7 @@ class Config:
     # === Retrieval ===
     RETRIEVAL_TOP_K = int(os.getenv("RETRIEVAL_TOP_K", "5"))
     TOP_K_BLOCKS = RETRIEVAL_TOP_K
-    MIN_RELEVANCE_SCORE = 0.1
+    MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.1"))
     AUTHOR_BLEND_MODE: str = os.getenv("AUTHOR_BLEND_MODE", "all")
 
     # === LLM ===

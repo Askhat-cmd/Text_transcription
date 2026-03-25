@@ -95,6 +95,8 @@ class ConfidenceScorer:
             return count
         try:
             from ..config import config
-            return min(count, int(getattr(config, "RETRIEVAL_TOP_K", 5)))
+            # BUG v0.6.0: admin overrides TOP_K_BLOCKS, но cap брал RETRIEVAL_TOP_K
+            # из config.py и не реагировал на hot-reload. Используем TOP_K_BLOCKS.
+            return min(count, int(getattr(config, "TOP_K_BLOCKS", 5)))
         except Exception:
             return min(count, 5)

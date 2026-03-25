@@ -8,45 +8,49 @@
 
 ### Таски
 
-- [ ] 0.1  Создать PRD_TASKS_v0.6.0.md с полным чеклистом всех тасков
-- [ ] 0.2  Создать ветку: git checkout -b fix/v0.6.0-cleanup-trace-behavior
-- [ ] 0.3  Checkpoint-коммит: git commit -m "checkpoint: before v0.6.0"
-- [ ] 0.4  Определить фронтенд-стек:
-- [ ] 0.5  Определить модель хранения конфига:
-- [ ] 0.6  Определить хранение трейса:
-- [ ] 0.7  Определить применяются ли уровни сложности:
-- [ ] 0.8  Запустить baseline тесты и сохранить:
-- [ ] 0.9  Зафиксировать все находки в PRD_TASKS_v0.6.0.md
+- [x] 0.1  Создать PRD_TASKS_v0.6.0.md с полным чеклистом всех тасков
+- [x] 0.2  Создать ветку: git checkout -b fix/v0.6.0-cleanup-trace-behavior
+- [x] 0.3  Checkpoint-коммит: git commit -m "checkpoint: before v0.6.0"
+- [x] 0.4  Определить фронтенд-стек:
+- [x] 0.5  Определить модель хранения конфига:
+- [x] 0.6  Определить хранение трейса:
+- [x] 0.7  Определить применяются ли уровни сложности:
+- [x] 0.8  Запустить baseline тесты и сохранить:
+- [x] 0.9  Зафиксировать все находки в PRD_TASKS_v0.6.0.md
 
-FRONTEND_STACK:
-CONFIG_SOURCE:
-TRACE_STORAGE:
-LEVELS_USED:
+FRONTEND_STACK: React + Vite + TypeScript + Tailwind (bot_psychologist/web_ui/package.json)
+CONFIG_SOURCE: bot_agent/config.py + RuntimeConfig overrides from data/admin_overrides.json (load_dotenv .env)
+TRACE_STORAGE: In-memory TTL store (bot_psychologist/api/session_store.py), default TTL 30 min
+LEVELS_USED: yes (UserLevelAdapter + prompt_system_level_* + api/models.py user_level)
+BASELINE_TESTS: bot_psychologist/tests_v060_before.txt
 ## БЛОК 1 — Диагностика и починка Web Admin (hot-reload конфига)
 
 ### Проблема
 
 ### 1.1 Диагностика — найти разрыв
 
-- [ ] 1.1  Открыть api/admin_routes.py
-- [ ] 1.2  Открыть bot_agent/answer_adaptive.py
-- [ ] 1.3  Задокументировать разрыв прямо в коде комментарием перед правкой:
+- [x] 1.1  Открыть api/admin_routes.py
+- [x] 1.2  Открыть bot_agent/answer_adaptive.py
+- [x] 1.3  Задокументировать разрыв прямо в коде комментарием перед правкой:
 ### 1.2 Починить связку admin → runtime
 
-- [ ] 1.4  Создать или найти singleton runtime-конфиг:
-- [ ] 1.5  В answer_adaptive.py заменить все прямые обращения к config.py
-- [ ] 1.6  В admin_routes.py обновить POST /api/admin/config:
-- [ ] 1.7  Установить правильные дефолтные значения (важно!):
+- [x] 1.4  Создать или найти singleton runtime-конфиг:
+- [x] 1.5  В answer_adaptive.py заменить все прямые обращения к config.py
+- [x] 1.6  В admin_routes.py обновить POST /api/admin/config:
+- [x] 1.7  Установить правильные дефолтные значения (важно!):
 ### 1.3 Персистентность конфига (важно!)
 
-- [ ] 1.8  Решить вопрос сохранения конфига между перезапусками:
-- [ ] 1.9  В RuntimeConfig.__init__ добавить загрузку оверрайда:
-- [ ] 1.10 В RuntimeConfig.update() после изменений — сохранять в файл:
-- [ ] 1.11 Добавить config_override.json в .gitignore
-- [ ] 1.12 В .env.example добавить секцию с комментарием:
+- [x] 1.8  Решить вопрос сохранения конфига между перезапусками:
+- [x] 1.9  В RuntimeConfig.__init__ добавить загрузку оверрайда:
+- [x] 1.10 В RuntimeConfig.update() после изменений — сохранять в файл:
+- [x] 1.11 Добавить config_override.json в .gitignore
+- [x] 1.12 В .env.example добавить секцию с комментарием:
+
+Примечание: persistence реализована через `bot_psychologist/data/admin_overrides.json` (RuntimeConfig уже читает/пишет его),
+отдельный `config_override.json` не создавался.
 ### 1.4 Тест блока
 
-- [ ] 1.13 Написать tests/test_admin_config.py:
+- [x] 1.13 Написать tests/test_admin_config.py:
 - [ ] 1.14 Smoke-тест блока 1:
 - [ ] 1.15 Коммит:
 ## БЛОК 2 — Фикс поведения: бот перестаёт зеркалить вопросы

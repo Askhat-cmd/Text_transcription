@@ -158,7 +158,7 @@ def _setup_pipeline(monkeypatch, blocks, *, voyage_enabled: bool, fast_path: boo
     monkeypatch.setattr(aa, "_should_use_fast_path", lambda *_args, **_kwargs: fast_path)
     monkeypatch.setattr(aa.config, "VOYAGE_ENABLED", voyage_enabled)
     monkeypatch.setattr(aa.config, "VOYAGE_TOP_K", 5)
-    monkeypatch.setattr(aa.config, "RETRIEVAL_TOP_K", 5)
+    monkeypatch.setattr(aa.config, "TOP_K_BLOCKS", 5)
 
     return dummy_retriever
 

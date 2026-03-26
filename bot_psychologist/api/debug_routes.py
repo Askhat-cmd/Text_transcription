@@ -60,6 +60,58 @@ async def get_session_traces(
     return {"session_id": session_id, "traces": traces}
 
 
+@router.get("/session/{session_id}/llm-payload")
+async def get_session_llm_payload(
+    session_id: str,
+    api_key: str = Depends(verify_api_key),
+    store: SessionStore = Depends(get_session_store),
+):
+    if not is_dev_key(api_key):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Debug access denied")
+
+    traces = store.get_session_traces(session_id)
+    if not traces:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session trace not found")
+
+    trace = traces[-1]
+    llm_calls = trace.get("llm_calls") or []
+    if not llm_calls:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No LLM payload for this session")
+
+    payload_calls = []
+    for call in llm_calls:
+        system_blob_id = call.get("system_prompt_blob_id") or trace.get("system_prompt_blob_id")
+        user_blob_id = call.get("user_prompt_blob_id") or trace.get("user_prompt_blob_id")
+        payload_calls.append(
+            {
+                "step": call.get("step"),
+                "model": call.get("model"),
+                "duration_ms": call.get("duration_ms"),
+                "tokens_prompt": call.get("tokens_prompt"),
+                "tokens_completion": call.get("tokens_completion"),
+                "tokens_total": call.get("tokens_total"),
+                "system_prompt": _sanitize_pii(store.get_blob(system_blob_id) or call.get("system_prompt_preview") or ""),
+                "user_prompt": _sanitize_pii(store.get_blob(user_blob_id) or call.get("user_prompt_preview") or ""),
+                "response_preview": _sanitize_pii(call.get("response_preview") or ""),
+            }
+        )
+
+    memory_blob_id = trace.get("memory_snapshot_blob_id")
+    memory_snapshot = _sanitize_pii(store.get_blob(memory_blob_id) or "") if memory_blob_id else ""
+
+    return {
+        "session_id": session_id,
+        "turn_number": trace.get("turn_number"),
+        "recommended_mode": trace.get("recommended_mode"),
+        "sd_level": trace.get("sd_level"),
+        "user_state": trace.get("user_state"),
+        "hybrid_query_preview": trace.get("hybrid_query_preview"),
+        "chunks_count": len(trace.get("chunks_after_filter") or trace.get("chunks_retrieved") or []),
+        "llm_calls": payload_calls,
+        "memory_snapshot": memory_snapshot,
+    }
+
+
 def _sanitize_pii(text: str) -> str:
     import re
 

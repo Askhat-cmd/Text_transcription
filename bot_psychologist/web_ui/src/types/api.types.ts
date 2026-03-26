@@ -232,6 +232,30 @@ export interface DebugTrace {
   confidence_level?: string | null;
 }
 
+export interface LLMPayloadCall {
+  step?: string | null;
+  model?: string | null;
+  duration_ms?: number | null;
+  tokens_prompt?: number | null;
+  tokens_completion?: number | null;
+  tokens_total?: number | null;
+  system_prompt?: string | null;
+  user_prompt?: string | null;
+  response_preview?: string | null;
+}
+
+export interface LLMPayloadTrace {
+  session_id: string;
+  turn_number?: number | null;
+  recommended_mode?: string | null;
+  sd_level?: string | null;
+  user_state?: string | null;
+  hybrid_query_preview?: string | null;
+  chunks_count?: number;
+  llm_calls: LLMPayloadCall[];
+  memory_snapshot?: string | null;
+}
+
 export interface AnswerResponse {
   status: string;
   answer: string;

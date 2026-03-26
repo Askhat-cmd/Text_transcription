@@ -8,6 +8,7 @@ import { SessionDashboard } from '../debug/SessionDashboard';
 import { TraceHistory } from '../debug/TraceHistory';
 import { ConfigSnapshot } from '../debug/ConfigSnapshot';
 import { ErrorView } from '../debug/ErrorView';
+import { LLMPayloadPanel } from '../debug/LLMPayloadPanel';
 
 interface Props {
   trace: InlineTrace;
@@ -567,6 +568,8 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
         <div id="debug-config">
           <ConfigSnapshot trace={trace} />
         </div>
+
+        <LLMPayloadPanel sessionId={trace.session_id} />
 
         <div className="flex justify-end px-3 pb-2">
           <button

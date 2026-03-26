@@ -120,18 +120,19 @@ TRACE_MODEL: используется `DebugTrace` в `bot_psychologist/api/mode
 - [ ] 4.5  В answer_adaptive.py убедиться что retrieved_blocks, sd_level,
 ### 4.3 Бэкенд — новый endpoint
 
-- [ ] 4.6  В api/debug_routes.py добавить endpoint:
-- [ ] 4.7  Убедиться что функция get_trace_by_session существует и корректна.
-- [ ] 4.8  Добавить endpoint в роутер в api/main.py если он там не подключён.
+- [x] 4.6  В api/debug_routes.py добавить endpoint:
+- [x] 4.7  Убедиться что функция get_trace_by_session существует и корректна.
+- [x] 4.8  Добавить endpoint в роутер в api/main.py если он там не подключён.
 ### 4.4 Фронтенд — компонент «Полотно LLM»
 
-- [ ] 4.9  Перед написанием кода — определить используемый стек
-- [ ] 4.10 Реализовать компонент согласно структуре:
-- [ ] 4.11 Реализовать lazy load:
-- [ ] 4.12 Подключить LLMPayloadPanel в конец существующего компонента
+- [x] 4.9  Перед написанием кода — определить используемый стек
+- [x] 4.10 Реализовать компонент согласно структуре:
+- [x] 4.11 Реализовать lazy load:
+- [x] 4.12 Подключить LLMPayloadPanel в конец существующего компонента
+STACK_NOTE: React + TypeScript (`web_ui/src/components/debug/LLMPayloadPanel.tsx`)
 ### 4.5 Тест блока
 
-- [ ] 4.13 Написать тест api: tests/test_llm_payload_endpoint.py:
+- [x] 4.13 Написать тест api: tests/test_llm_payload_endpoint.py:
 - [ ] 4.14 Smoke-тест в UI:
 - [ ] 4.15 Коммит:
 ## БЛОК 5 — Очистка наследия: граф, логи, warmup

@@ -17,6 +17,8 @@ export type {
   ChunkTraceItem,
   SDClassificationTrace,
   LLMCallTrace,
+  LLMPayloadCall,
+  LLMPayloadTrace,
   DebugTrace,
   AnswerResponse,
   AdaptiveAnswerResponse,

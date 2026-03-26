@@ -14,6 +14,7 @@ export interface AskQuestionRequest {
   query: string;
   user_id?: string;
   session_id?: string;
+  user_level?: 'beginner' | 'intermediate' | 'advanced';
   include_path?: boolean;
   include_feedback_prompt?: boolean;
   debug?: boolean;
@@ -151,6 +152,7 @@ export interface ConfigSnapshot {
   fast_path_enabled: boolean;
   rerank_enabled: boolean;
   model_name: string;
+  user_level: string;
 }
 
 export interface PipelineError {

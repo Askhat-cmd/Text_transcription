@@ -13,6 +13,7 @@ export const ConfigSnapshot: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
     ['FAST_PATH_ENABLED', snapshot.fast_path_enabled],
     ['RERANK_ENABLED', snapshot.rerank_enabled],
     ['MODEL_NAME', snapshot.model_name],
+    ['USER_LEVEL', snapshot.user_level],
   ];
 
   return (

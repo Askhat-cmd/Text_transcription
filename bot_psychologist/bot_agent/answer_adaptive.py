@@ -54,7 +54,7 @@ def _timed(name: str, label: str, fn, *args, **kwargs):
     return result, {"name": name, "label": label, "duration_ms": ms, "skipped": False}
 
 
-def _build_config_snapshot(cfg) -> Dict[str, object]:
+def _build_config_snapshot(cfg, user_level: str) -> Dict[str, object]:
     """Снимок конфигурации на момент запроса."""
     return {
         "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
@@ -63,6 +63,7 @@ def _build_config_snapshot(cfg) -> Dict[str, object]:
         "fast_path_enabled": True,
         "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False)),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
+        "user_level": str(user_level or "beginner"),
     }
 
 
@@ -889,7 +890,7 @@ def answer_question_adaptive(
             "system_prompt_blob_id": None,
             "user_prompt_blob_id": None,
             "memory_snapshot_blob_id": None,
-            "config_snapshot": _build_config_snapshot(config),
+            "config_snapshot": _build_config_snapshot(config, user_level),
             "estimated_cost_usd": None,
             "pipeline_error": None,
             "session_id": user_id,

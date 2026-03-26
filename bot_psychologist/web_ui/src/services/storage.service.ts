@@ -168,6 +168,7 @@ class StorageService {
     const defaultSettings: UserSettings = {
       apiKey: this.getApiKey(),
       userId: this.getUserId(),
+      userLevel: 'beginner',
       theme: this.getTheme(),
       showSources: true,
       showPath: true,

@@ -182,6 +182,7 @@ const ChatPage: React.FC = () => {
   const [apiKey, setApiKey] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
   const [settingsUserId, setSettingsUserId] = useState(userId);
+  const [settingsUserLevel, setSettingsUserLevel] = useState<'beginner' | 'intermediate' | 'advanced'>('beginner');
   const [showSources, setShowSources] = useState(true);
   const [showPath, setShowPath] = useState(true);
   const [includeFeedbackPrompt, setIncludeFeedbackPrompt] = useState(true);
@@ -205,6 +206,7 @@ const ChatPage: React.FC = () => {
     clearError,
   } = useChat({
     userId,
+    userLevel: chatSettings.userLevel,
     includePath: chatSettings.showPath,
     includeFeedback: chatSettings.includeFeedbackPrompt,
     sessionId: activeChatId || undefined,
@@ -302,6 +304,7 @@ const ChatPage: React.FC = () => {
     setChatSettings(stored);
     setApiKey(stored.apiKey || storageService.getApiKey());
     setSettingsUserId(stored.userId || userId);
+    setSettingsUserLevel(stored.userLevel || 'beginner');
     setShowSources(stored.showSources);
     setShowPath(stored.showPath);
     setIncludeFeedbackPrompt(stored.includeFeedbackPrompt);
@@ -483,6 +486,7 @@ const ChatPage: React.FC = () => {
   const handleResetSettings = () => {
     setApiKey(DEFAULT_SETTINGS.apiKey);
     setSettingsUserId(DEFAULT_SETTINGS.userId || userId);
+    setSettingsUserLevel(DEFAULT_SETTINGS.userLevel);
     setShowSources(DEFAULT_SETTINGS.showSources);
     setShowPath(DEFAULT_SETTINGS.showPath);
     setIncludeFeedbackPrompt(DEFAULT_SETTINGS.includeFeedbackPrompt);
@@ -599,6 +603,7 @@ const ChatPage: React.FC = () => {
         ...chatSettings,
         apiKey: apiKey.trim(),
         userId: nextUserId,
+        userLevel: settingsUserLevel,
         theme: selectedTheme,
         showSources,
         showPath,
@@ -791,6 +796,10 @@ const ChatPage: React.FC = () => {
                     <p className="text-slate-500 dark:text-slate-400 text-xs">Сессии</p>
                     <p className="text-slate-800 dark:text-slate-100 font-medium">{sessions.length}</p>
                   </div>
+                  <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2">
+                    <p className="text-slate-500 dark:text-slate-400 text-xs">Уровень</p>
+                    <p className="text-slate-800 dark:text-slate-100 font-medium">{settingsUserLevel}</p>
+                  </div>
                   <div className="rounded-lg bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2">
                     <p className="text-slate-500 dark:text-slate-400 text-xs">API URL</p>
                     <p className="text-slate-800 dark:text-slate-100 font-medium break-all">
@@ -884,6 +893,19 @@ const ChatPage: React.FC = () => {
 
               <section className="space-y-3 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
                 <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300">Настройки бота</h3>
+
+                <label className="block text-sm">
+                  <span className="text-slate-600 dark:text-slate-400">Уровень пользователя</span>
+                  <select
+                    value={settingsUserLevel}
+                    onChange={(event) => setSettingsUserLevel(event.target.value as 'beginner' | 'intermediate' | 'advanced')}
+                    className="mt-2 w-full px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                  >
+                    <option value="beginner">beginner</option>
+                    <option value="intermediate">intermediate</option>
+                    <option value="advanced">advanced</option>
+                  </select>
+                </label>
 
                 <label className="flex items-center justify-between cursor-pointer text-sm">
                   <span className="text-slate-600 dark:text-slate-400">Показывать рекомендации пути</span>

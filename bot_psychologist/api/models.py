@@ -224,6 +224,7 @@ class ConfigSnapshot(BaseModel):
     fast_path_enabled: bool
     rerank_enabled: bool
     model_name: str
+    user_level: str
 
 
 class PipelineError(BaseModel):

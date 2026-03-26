@@ -225,6 +225,11 @@ python -m pytest tests/test_runtime_config_reset.py -v
 
 - `bot_agent/llm_answerer.py`: `LLMAnswerer.build_system_prompt()` читает `prompt_system_base.md`
 - `bot_agent/user_level_adapter.py`: `UserLevelAdapter.adapt_system_prompt()` добавляет к базовому промпту текст из `prompt_system_level_{beginner|intermediate|advanced}.md`
+- `api/models.py`: `AskQuestionRequest.user_level` задает уровень пользователя для каждого запроса
+- `api/routes.py`: `request.user_level` передается в `answer_question_adaptive(...)`
+- `web_ui/src/pages/ChatPage.tsx`: уровень выбирается в Настройки -> Настройки бота -> Уровень пользователя
+- `web_ui/src/services/api.service.ts`: `user_level` пробрасывается в `/questions/adaptive-stream`
+- `web_ui/src/components/debug/ConfigSnapshot.tsx`: активный уровень отображается как `USER_LEVEL` в трейсе
 
 Важно: бот должен опираться на материалы, переданные в контексте (блоки/фрагменты). Если в материалах нет ответа, он должен честно сказать об этом и попросить уточнение.
 
@@ -323,7 +328,7 @@ Token budget (PRD v2.0.2):
    - Voyage (top‑k = `VOYAGE_TOP_K`)
    - fallback: сортировка по score без урезания списка
 4. Confidence cap:
-   - итоговый лимит = `RETRIEVAL_TOP_K`
+   - итоговый лимит = `TOP_K_BLOCKS` (из runtime/admin config)
 5. LLM получает финальные блоки + `sd_level` в системном промпте.
 
 ## Архитектурный обзор

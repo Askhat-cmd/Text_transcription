@@ -51,6 +51,7 @@ export interface ChatState {
 export interface UserSettings {
   apiKey: string;
   userId: string;
+  userLevel: 'beginner' | 'intermediate' | 'advanced';
   theme: 'light' | 'dark' | 'system';
   showSources: boolean;
   showPath: boolean;

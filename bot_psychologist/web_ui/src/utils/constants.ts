@@ -36,6 +36,7 @@ export const DEFAULT_HISTORY_TURNS = 10;
 export const DEFAULT_SETTINGS = {
   apiKey: '',
   userId: '',
+  userLevel: 'beginner',
   theme: DEFAULT_THEME,
   showSources: true,
   showPath: true,

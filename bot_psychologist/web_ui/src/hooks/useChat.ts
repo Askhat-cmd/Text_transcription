@@ -12,6 +12,7 @@ import { useTraceCache } from './useTraceCache';  // FIX 3b: импорт хук
 
 export interface UseChatOptions {
   userId: string;
+  userLevel?: 'beginner' | 'intermediate' | 'advanced';
   includePath?: boolean;
   includeFeedback?: boolean;
   sessionId?: string;
@@ -47,6 +48,7 @@ function getLastBotMessage(messages: Message[]): Message | undefined {
 export const useChat = (options: UseChatOptions): UseChatReturn => {
   const {
     userId,
+    userLevel = 'beginner',
     includePath = true,
     includeFeedback = true,
     sessionId,
@@ -148,6 +150,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
           throw new Error(streamError);
         },
         {
+          userLevel,
           includePath,
           includeFeedback,
           sessionId,
@@ -181,7 +184,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       setIsLoading(false);
       setStreamingText('');
     }
-  }, [userId, includePath, includeFeedback, sessionId, addMessage]);
+  }, [userId, userLevel, includePath, includeFeedback, sessionId, addMessage]);
 
   const updateMessageFeedback = useCallback((
     messageId: string,

@@ -88,19 +88,23 @@ NOTE: Found mirroring instruction in bot_psychologist/bot_agent/prompt_sd_green.
 - [ ] 3.6a Проверить что sd_classifier.py НЕ затронут (он нужен!):
 ### 3.2 Сценарий B: уровни применяются (LEVELS_USED = yes)
 
-- [ ] 3.1b Определить точно где и как применяются:
-- [ ] 3.2b Определить как уровень назначается пользователю:
-- [ ] 3.3b Задокументировать механизм в README.md:
+- [x] 3.1b Определить точно где и как применяются:
+- [x] 3.2b Определить как уровень назначается пользователю:
+- [x] 3.3b Задокументировать механизм в README.md:
 ## Уровни сложности пользователя
 
-- [ ] 3.4b Убедиться что в UI есть понятный элемент управления уровнем
-- [ ] 3.5b В Config Snapshot трейса сделать видимым активный уровень:
-- [ ] 3.6b Добавить в CHANGELOG.md:
+- [x] 3.4b Убедиться что в UI есть понятный элемент управления уровнем
+- [x] 3.5b В Config Snapshot трейса сделать видимым активный уровень:
+- [x] 3.6b Добавить в CHANGELOG.md:
+
+LEVELS_FLOW: Chat Settings (userLevel) -> API payload `user_level` -> AskQuestionRequest.user_level -> UserLevelAdapter
 ### 3.3 Очистка трейса от мёртвых полей (оба сценария)
 
-- [ ] 3.7  В api/models.py найти модель TraceData (или аналог)
+- [x] 3.7  В api/models.py найти модель TraceData (или аналог)
 - [ ] 3.8  Проверить в трейсе через UI:
 - [ ] 3.9  Коммит:
+
+TRACE_MODEL: используется `DebugTrace` в `bot_psychologist/api/models.py`; для snapshot добавлен `user_level`.
 ## БЛОК 4 — Трейс 2.0: вкладка «Полотно LLM»
 
 ### Цель

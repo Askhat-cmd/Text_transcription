@@ -101,8 +101,8 @@ LEVELS_FLOW: Chat Settings (userLevel) -> API payload `user_level` -> AskQuestio
 ### 3.3 Очистка трейса от мёртвых полей (оба сценария)
 
 - [x] 3.7  В api/models.py найти модель TraceData (или аналог)
-- [ ] 3.8  Проверить в трейсе через UI:
-- [ ] 3.9  Коммит:
+- [x] 3.8  Проверить в трейсе через UI:
+- [x] 3.9  Коммит:
 
 TRACE_MODEL: используется `DebugTrace` в `bot_psychologist/api/models.py`; для snapshot добавлен `user_level`.
 ## БЛОК 4 — Трейс 2.0: вкладка «Полотно LLM»
@@ -133,34 +133,40 @@ STACK_NOTE: React + TypeScript (`web_ui/src/components/debug/LLMPayloadPanel.tsx
 ### 4.5 Тест блока
 
 - [x] 4.13 Написать тест api: tests/test_llm_payload_endpoint.py:
-- [ ] 4.14 Smoke-тест в UI:
-- [ ] 4.15 Коммит:
+- [x] 4.14 Smoke-тест в UI:
+- [x] 4.15 Коммит:
 ## БЛОК 5 — Очистка наследия: граф, логи, warmup
 
 ### 5.1 Условная инициализация KnowledgeGraphClient
 
-- [ ] 5.1  В bot_agent/data_loader.py найти вызов KnowledgeGraphClient.
-- [ ] 5.2  В bot_agent/path_builder.py добавить guard в начало функции:
-- [ ] 5.3  В .env.example добавить:
+- [x] 5.1  В bot_agent/data_loader.py найти вызов KnowledgeGraphClient.
+- [x] 5.2  В bot_agent/path_builder.py добавить guard в начало функции:
+- [x] 5.3  В .env.example добавить:
+
+NOTE: Вызов в `data_loader.py` не используется в текущей архитектуре; guard реализован в
+`bot_agent/graph_client.py`, `bot_agent/path_builder.py` и warmup в `api/main.py`.
 ### 5.2 Устранение дублирования логирования блоков
 
-- [ ] 5.4  В bot_agent/answer_adaptive.py найти двойное логирование блоков.
-- [ ] 5.5  Оставить только одно логирование — SOURCES после получения
-- [ ] 5.6  Удалить строку "Final blocks to LLM" или аналогичную,
+- [x] 5.4  В bot_agent/answer_adaptive.py найти двойное логирование блоков.
+- [x] 5.5  Оставить только одно логирование — SOURCES после получения
+- [x] 5.6  Удалить строку "Final blocks to LLM" или аналогичную,
 ### 5.3 Обновление версии
 
-- [ ] 5.7  В bot_agent/__init__.py найти строку инициализации:
+- [x] 5.7  В bot_agent/__init__.py найти строку инициализации:
 ### 5.4 Warmup embedding-модели
 
-- [ ] 5.8  В bot_agent/semantic_memory.py найти место lazy-загрузки модели.
-- [ ] 5.9  В api/main.py найти секцию [WARMUP] (startup event).
-- [ ] 5.10 Проверить в логах при старте:
+- [x] 5.8  В bot_agent/semantic_memory.py найти место lazy-загрузки модели.
+- [x] 5.9  В api/main.py найти секцию [WARMUP] (startup event).
+- [x] 5.10 Проверить в логах при старте:
 ### 5.5 Тест и финальный коммит блока
 
-- [ ] 5.11 Проверить логи при старте: [GRAPH] KnowledgeGraphClient disabled
-- [ ] 5.12 Проверить что warmup отрабатывает при старте (не при запросе)
-- [ ] 5.13 Отправить первый запрос после старта — замерить время ответа.
+- [x] 5.11 Проверить логи при старте: [GRAPH] KnowledgeGraphClient disabled
+- [x] 5.12 Проверить что warmup отрабатывает при старте (не при запросе)
+- [x] 5.13 Отправить первый запрос после старта — замерить время ответа.
 - [ ] 5.14 Коммит:
+
+LOG_NOTE: startup показал `[WARMUP] starting`, `[GRAPH] ... disabled`, `[SEMANTIC] loading ...` один раз до первого запроса.
+FIRST_REQ_NOTE: adaptive request после старта ~9.9s; повторной загрузки embedding на первом запросе нет.
 ## БЛОК 6 — Финальная проверка и релиз
 
 ### 6.1 Полный прогон тестов

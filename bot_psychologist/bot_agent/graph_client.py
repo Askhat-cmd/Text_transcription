@@ -135,8 +135,14 @@ class KnowledgeGraphClient:
         
         # Метаданные и статус
         self._is_loaded = False
+        self._enabled = bool(config.ENABLE_KNOWLEDGE_GRAPH)
+        self._disabled_logged = False
         self.metadata: Dict = {}
         self._loaded_files: List[str] = []
+
+    def has_data(self) -> bool:
+        """True, если граф включен и в памяти есть узлы/связи."""
+        return self._enabled and (bool(self.nodes) or bool(self.edges))
     
     def load_graphs_from_all_documents(self) -> None:
         """
@@ -147,6 +153,13 @@ class KnowledgeGraphClient:
             1. Отдельные файлы *.knowledge_graph.json
             2. Поле "knowledge_graph" внутри *.for_vector.json
         """
+        if not self._enabled:
+            if not self._disabled_logged:
+                logger.info("[GRAPH] KnowledgeGraphClient disabled (ENABLE_KNOWLEDGE_GRAPH=false)")
+                self._disabled_logged = True
+            self._is_loaded = True
+            return
+
         if self._is_loaded:
             logger.info("✓ Knowledge Graphs уже загружены")
             return
@@ -664,6 +677,8 @@ class KnowledgeGraphClient:
         self._loaded_files.clear()
         self.metadata.clear()
         self._is_loaded = False
+        self._enabled = bool(config.ENABLE_KNOWLEDGE_GRAPH)
+        self._disabled_logged = False
         logger.info("🔄 Knowledge Graph сброшен")
 
 

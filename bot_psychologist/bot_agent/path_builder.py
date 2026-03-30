@@ -15,6 +15,7 @@ from .state_classifier import UserState, StateAnalysis
 from .conversation_memory import ConversationMemory
 from .graph_client import graph_client
 from .user_level_adapter import UserLevel
+from .config import config
 
 logger = logging.getLogger(__name__)
 
@@ -75,6 +76,11 @@ class PathBuilder:
     
     def _ensure_graphs_loaded(self):
         """Загрузить графы если ещё не загружены"""
+        if not config.ENABLE_KNOWLEDGE_GRAPH:
+            if not self._graphs_loaded:
+                logger.debug("[PATH] graph_client skipped — ENABLE_KNOWLEDGE_GRAPH=false")
+                self._graphs_loaded = True
+            return
         if not self._graphs_loaded:
             graph_client.load_graphs_from_all_documents()
             self._graphs_loaded = True
@@ -222,8 +228,11 @@ class PathBuilder:
         
         # Получить практики из графа
         practices = []
+        graph_enabled = config.ENABLE_KNOWLEDGE_GRAPH and graph_client.has_data()
         for concept in key_concepts[:2]:  # берем макс 2 концепта
-            concept_practices = graph_client.get_practices_for_concept(concept)
+            concept_practices = (
+                graph_client.get_practices_for_concept(concept) if graph_enabled else []
+            )
             practices.extend([p["practice_name"] for p in concept_practices[:2]])
         
         # Убрать дубликаты

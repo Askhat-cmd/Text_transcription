@@ -238,6 +238,12 @@ class RuntimeConfig(Config):
             "label": "Прогрев при старте сервера (warmup)",
             "note": "Применяется только при следующем перезапуске сервера",
         },
+        "ENABLE_KNOWLEDGE_GRAPH": {
+            "type": "bool",
+            "group": "runtime",
+            "label": "Knowledge Graph",
+            "note": "Рекомендуется выключенным; включает графовый слой при следующем рестарте",
+        },
         "ENABLE_CACHING": {
             "type": "bool",
             "group": "runtime",

@@ -5,12 +5,12 @@
 ## Описание
 
 Специализированный AI-бот-психолог, который:
-- Работает поверх готовых данных SAG v2.0 JSON + Knowledge Graph из `voice_bot_pipeline`
+- Работает поверх данных `Bot_data_base` (API/Chroma/JSON-export), с fallback на legacy JSON
 - Использует все слои структуры: блоки, граф-сущности, семантические связи
 - Отвечает на вопросы, опираясь на материалы из `voice_bot_pipeline` (таймкоды в ответе не требуются)
 - Адаптирует ответы по уровню пользователя (beginner/intermediate/advanced)
 - Классифицирует состояние пользователя (10 состояний)
-- Строит персональные пути трансформации через Knowledge Graph
+- Строит персональные пути трансформации (графовый слой опционален, `ENABLE_KNOWLEDGE_GRAPH`)
 - Поддерживает semantic memory: поиск релевантных прошлых обменов по смыслу
 - Генерирует краткое summary диалога и добавляет в контекст
 - Адаптивно формирует контекст (short-term + semantic + summary по длине диалога)
@@ -50,7 +50,8 @@
 
 Оптимизация скорости ответов без снижения качества:
 
-- **Warm preload**: DataLoader, SemanticMemory, GraphClient, Retriever загружаются параллельно при старте API.
+- **Warm preload**: DataLoader, SemanticMemory, Retriever загружаются параллельно при старте API;
+  GraphClient прогревается только при `ENABLE_KNOWLEDGE_GRAPH=true`.
   Используется FastAPI DI через `Depends()`; при сбое остаётся lazy-init fallback.
 - **Параллельные классификаторы**: StateClassifier и SDClassifier запускаются через `asyncio.gather`.
   При ошибке одного — второй продолжает работу, сохранены fallback-значения.
@@ -106,6 +107,7 @@ Debug endpoints:
 - `GET /api/debug/blob/{blob_id}`
 - `GET /api/debug/session/{session_id}/metrics`
 - `GET /api/debug/session/{session_id}/traces`
+- `GET /api/debug/session/{session_id}/llm-payload`
 
 ## Production Logging (PRD 10.02.2026)
 
@@ -417,6 +419,7 @@ AUTO_CLEANUP_ENABLED=true
 
 # Speed Layer
 WARMUP_ON_START=true
+ENABLE_KNOWLEDGE_GRAPH=false
 ENABLE_STREAMING=true
 ```
 

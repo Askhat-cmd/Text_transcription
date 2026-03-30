@@ -10,6 +10,7 @@ Semantic Memory Module
 import logging
 import json
 import sys
+import threading
 from dataclasses import dataclass
 from importlib.util import find_spec
 from pathlib import Path
@@ -43,14 +44,18 @@ class SemanticMemory:
     прошлых обменов и семантического поиска.
     """
 
+    _shared_model = None
+    _shared_model_loaded: bool = False
+    _shared_model_lock = threading.Lock()
+
     def __init__(self, user_id: str = "default"):
         self.user_id = user_id
         self.turn_embeddings: List[TurnEmbedding] = []
         self.last_hits_count: int = 0
         self.last_hits_detail: List[Dict[str, object]] = []
 
-        self._model = None
-        self._model_loaded = False
+        self._model = self.__class__._shared_model
+        self._model_loaded = self.__class__._shared_model_loaded
         self._unavailable_logged = False
 
         # Store per-user to avoid collisions and simplify cleanup.
@@ -81,33 +86,47 @@ class SemanticMemory:
 
     def _load_model(self) -> None:
         """Загрузить модель sentence-transformers."""
-        # If dependencies are missing in the active interpreter/venv, do not crash:
-        # semantic memory becomes a no-op instead of spamming errors.
-        if find_spec("sentence_transformers") is None:
-            self._model = None
-            self._model_loaded = True
-            self._warn_unavailable_once("sentence-transformers not installed")
-            return
-        if find_spec("torch") is None:
-            self._model = None
-            self._model_loaded = True
-            self._warn_unavailable_once("torch not installed (required by sentence-transformers)")
-            return
+        with self.__class__._shared_model_lock:
+            if self.__class__._shared_model_loaded:
+                self._model = self.__class__._shared_model
+                self._model_loaded = True
+                return
 
-        try:
-            from sentence_transformers import SentenceTransformer
+            # If dependencies are missing in the active interpreter/venv, do not crash:
+            # semantic memory becomes a no-op instead of spamming errors.
+            if find_spec("sentence_transformers") is None:
+                self._model = None
+                self._model_loaded = True
+                self.__class__._shared_model = None
+                self.__class__._shared_model_loaded = True
+                self._warn_unavailable_once("sentence-transformers not installed")
+                return
+            if find_spec("torch") is None:
+                self._model = None
+                self._model_loaded = True
+                self.__class__._shared_model = None
+                self.__class__._shared_model_loaded = True
+                self._warn_unavailable_once("torch not installed (required by sentence-transformers)")
+                return
 
-            model_name = config.EMBEDDING_MODEL
-            logger.info("[SEMANTIC] loading embedding model: %s", model_name)
+            try:
+                from sentence_transformers import SentenceTransformer
 
-            self._model = SentenceTransformer(model_name)
-            self._model_loaded = True
+                model_name = config.EMBEDDING_MODEL
+                logger.info("[SEMANTIC] loading embedding model: %s", model_name)
 
-            logger.info("[SEMANTIC] embedding model loaded")
-        except Exception as exc:
-            self._model = None
-            self._model_loaded = True
-            self._warn_unavailable_once(f"failed to load model ({type(exc).__name__}: {exc})")
+                self._model = SentenceTransformer(model_name)
+                self._model_loaded = True
+                self.__class__._shared_model = self._model
+                self.__class__._shared_model_loaded = True
+
+                logger.info("[SEMANTIC] embedding model loaded")
+            except Exception as exc:
+                self._model = None
+                self._model_loaded = True
+                self.__class__._shared_model = None
+                self.__class__._shared_model_loaded = True
+                self._warn_unavailable_once(f"failed to load model ({type(exc).__name__}: {exc})")
 
     def ensure_model_loaded(self) -> None:
         """Public warmup hook for embedding model."""

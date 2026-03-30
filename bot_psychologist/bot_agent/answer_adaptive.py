@@ -56,10 +56,12 @@ def _timed(name: str, label: str, fn, *args, **kwargs):
 
 def _build_config_snapshot(cfg, user_level: str) -> Dict[str, object]:
     """Снимок конфигурации на момент запроса."""
+    sd_settings = get_sd_settings()
     return {
         "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
         "max_context_size": int(getattr(cfg, "MAX_CONTEXT_SIZE", 0) or 0),
         "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
+        "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65),
         "fast_path_enabled": True,
         "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False)),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
@@ -1552,7 +1554,6 @@ def answer_question_adaptive(
             return response
         
         blocks = [block for block, score in retrieved_blocks]
-        _log_blocks("Final blocks to LLM", blocks, limit=10)
         adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
         
         if not adapted_blocks:

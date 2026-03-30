@@ -57,9 +57,12 @@ async def lifespan(app: FastAPI):
         tasks = [
             ("data_loader", asyncio.to_thread(data_loader.load_all_data)),
             ("semantic_memory", asyncio.to_thread(lambda: SemanticMemory(user_id="__warmup__").ensure_model_loaded())),
-            ("graph_client", asyncio.to_thread(graph_client.load_graphs_from_all_documents)),
             ("retriever", asyncio.to_thread(retriever.build_index)),
         ]
+        if config.ENABLE_KNOWLEDGE_GRAPH:
+            tasks.append(("graph_client", asyncio.to_thread(graph_client.load_graphs_from_all_documents)))
+        else:
+            logger.info("[GRAPH] KnowledgeGraphClient disabled (ENABLE_KNOWLEDGE_GRAPH=false)")
         results = await asyncio.gather(*(task for _, task in tasks), return_exceptions=True)
         for (label, _), result in zip(tasks, results):
             if isinstance(result, Exception):
@@ -99,7 +102,7 @@ REST API для взаимодействия с Bot Agent (Phases 1-4).
 
 Лимит запросов зависит от типа API ключа (100-1000 req/min).
     """,
-    version="0.5.0",
+    version="0.6.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
@@ -198,7 +201,7 @@ def custom_openapi():
     
     openapi_schema = get_openapi(
         title="Bot Psychologist API",
-        version="0.5.0",
+        version="0.6.0",
         description="REST API для взаимодействия с Bot Agent (Phase 5)",
         routes=app.routes,
     )
@@ -221,7 +224,7 @@ async def root():
     """Корневой endpoint"""
     return {
         "name": "Bot Psychologist API",
-        "version": "0.5.0",
+        "version": "0.6.0",
         "docs": "/api/docs",
         "status": "online"
     }
@@ -232,7 +235,7 @@ async def api_info():
     """Информация об API"""
     return {
         "name": "Bot Psychologist API",
-        "version": "0.5.0",
+        "version": "0.6.0",
         "phases": {
             "phase_1": "Basic QA (TF-IDF + LLM)",
             "phase_2": "SAG-aware QA (User Level Adaptation)",

@@ -108,6 +108,7 @@ class Config:
     # === Speed layer ===
     WARMUP_ON_START = os.getenv("WARMUP_ON_START", "True").lower() == "true"
     ENABLE_STREAMING = os.getenv("ENABLE_STREAMING", "True").lower() == "true"
+    ENABLE_KNOWLEDGE_GRAPH = os.getenv("ENABLE_KNOWLEDGE_GRAPH", "False").lower() == "true"
 
     # === Conversation memory ===
     CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
@@ -246,6 +247,7 @@ class Config:
 | CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}
 | TOP_K:        {cls.TOP_K_BLOCKS}
+| GRAPH:        {'enabled' if cls.ENABLE_KNOWLEDGE_GRAPH else 'disabled'}
 | DEBUG:        {cls.DEBUG}
 | API_KEY:      {'Set' if cls.OPENAI_API_KEY else 'Missing'}
 +---------------------------------------------+

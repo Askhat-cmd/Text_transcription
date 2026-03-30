@@ -36,6 +36,10 @@ class DecisionTable:
         thinking_due = bool(signals.get("thinking_due", False))
         cooldown_ok = bool(signals.get("intervention_cooldown_ok", True))
         stage = str(signals.get("user_stage", "surface"))
+        is_first_response_on_topic = bool(signals.get("is_first_response_on_topic", False))
+        has_emotional_signal = bool(signals.get("has_emotional_signal", False))
+        current_turn_in_topic = int(signals.get("current_turn_in_topic", 2) or 2)
+        validation_first_enabled = bool(signals.get("validation_first_enabled", True))
 
         rules: List[DecisionResult] = [
             DecisionResult(
@@ -112,6 +116,19 @@ class DecisionTable:
 
         if confidence < 0.4:
             return rules[0]
+        if (
+            validation_first_enabled
+            and is_first_response_on_topic
+            and has_emotional_signal
+            and current_turn_in_topic <= 1
+        ):
+            return DecisionResult(
+                rule_id=100,
+                route="VALIDATION",
+                reason="validation-first on new emotional topic",
+                confidence=confidence,
+                forbid=["direct_advice", "analysis_overload"],
+            )
         if insight_signal:
             return rules[1]
         if explicit_ask and ask_type == "action" and cooldown_ok and stage in {"exploration", "integration"}:

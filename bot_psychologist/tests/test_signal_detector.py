@@ -21,6 +21,31 @@ def test_detect_routing_signals_explicit_action_ask() -> None:
     assert 0.0 <= signals["delta_top1_top2"] <= 1.0
 
 
+def test_detect_routing_signals_marks_first_emotional_topic() -> None:
+    memory = SimpleNamespace(turns=[])
+    signals = detect_routing_signals(
+        query="Мне страшно и тревожно, не знаю что делать",
+        retrieved_blocks=[(object(), 0.82), (object(), 0.61)],
+        state_analysis=None,
+        memory=memory,
+    )
+    assert signals["is_first_response_on_topic"] is True
+    assert signals["current_turn_in_topic"] == 1
+    assert signals["has_emotional_signal"] is True
+
+
+def test_detect_routing_signals_not_first_topic_when_overlap() -> None:
+    memory = SimpleNamespace(turns=[SimpleNamespace(user_input="Мне тревожно и страшно за будущее")])
+    signals = detect_routing_signals(
+        query="Все так же тревожно и страшно, хочу поддержки",
+        retrieved_blocks=[(object(), 0.82), (object(), 0.61)],
+        state_analysis=None,
+        memory=memory,
+    )
+    assert signals["is_first_response_on_topic"] is False
+    assert signals["current_turn_in_topic"] == 2
+
+
 def test_resolve_user_stage_prefers_working_state() -> None:
     memory = SimpleNamespace(
         working_state=WorkingState(

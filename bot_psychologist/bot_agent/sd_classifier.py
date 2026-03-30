@@ -21,6 +21,8 @@ from typing import Dict, List, Optional
 import yaml
 from openai import OpenAI
 from .config import config
+from .fast_detector import detect_sd_level
+from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
 
@@ -338,6 +340,20 @@ class SDClassifier:
                 confidence=float(user_sd_profile["confidence"]),
                 indicator="accumulated_profile",
                 method="profile",
+            )
+
+        fast = detect_sd_level(message) if feature_flags.enabled("ENABLE_FAST_SD_DETECTOR") else None
+        if fast and fast.confidence >= 0.85:
+            logger.info(
+                f"[SD_CLASSIFIER] fast detector hit: {fast.label} "
+                f"(confidence={fast.confidence:.2f}, indicator={fast.indicator})"
+            )
+            return SDClassificationResult(
+                primary=fast.label,
+                secondary=None,
+                confidence=float(fast.confidence),
+                indicator=fast.indicator,
+                method="fast",
             )
 
         heuristic = self._heuristic_classify(message, conversation_history)

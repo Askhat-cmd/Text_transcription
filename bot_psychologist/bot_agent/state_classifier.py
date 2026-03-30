@@ -17,6 +17,8 @@ from enum import Enum
 
 from .llm_answerer import LLMAnswerer
 from .config import config
+from .fast_detector import detect_user_state
+from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
 
@@ -135,6 +137,28 @@ class StateClassifier:
             StateAnalysis СЃ РґРµС‚Р°Р»СЊРЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРµР№
         """
         logger.info(f"рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...")
+
+        # === ЭТАП 0: fast detector для очевидных случаев ===
+        fast = detect_user_state(user_message) if feature_flags.enabled("ENABLE_FAST_STATE_DETECTOR") else None
+        if fast and fast.confidence >= 0.85:
+            try:
+                fast_state = UserState(fast.label.lower())
+            except ValueError:
+                fast_state = UserState.CURIOUS
+            fast_analysis = StateAnalysis(
+                primary_state=fast_state,
+                confidence=float(fast.confidence),
+                secondary_states=[],
+                indicators=[fast.indicator],
+                emotional_tone="neutral",
+                depth="surface",
+                recommendations=self._get_recommendations_for_state(fast_state),
+            )
+            logger.info(
+                f"[STATE_CLASSIFIER] fast detector hit: {fast_state.value} "
+                f"(confidence={fast.confidence:.2f}, indicator={fast.indicator})"
+            )
+            return fast_analysis
         
         # === Р­РўРђРџ 1: РђРЅР°Р»РёР· С‚РµРєСѓС‰РµРіРѕ СЃРѕРѕР±С‰РµРЅРёСЏ РїРѕ РєР»СЋС‡РµРІС‹Рј СЃР»РѕРІР°Рј ===
         primary_state, confidence = self._classify_by_keywords(user_message)

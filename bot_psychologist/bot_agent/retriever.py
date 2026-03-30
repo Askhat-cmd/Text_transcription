@@ -20,6 +20,7 @@ from .config import config
 from .db_api_client import DBApiClient, DBApiUnavailableError, RetrievedChunk
 from .embedding_provider import create_embedding_provider
 from .sd_classifier import SD_LEVELS_ORDER
+from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
 
@@ -210,6 +211,9 @@ class SimpleRetriever:
     def _build_semantic_index(self) -> None:
         self.semantic_matrix = None
         self._semantic_ready = False
+        if not feature_flags.enabled("ENABLE_EMBEDDING_PROVIDER"):
+            logger.info("[RETRIEVAL] semantic index disabled by feature flag")
+            return
         if not self.blocks:
             return
 
@@ -405,9 +409,12 @@ class SimpleRetriever:
                         exc.kind,
                         exc,
                     )
-            semantic_results = self._semantic_fallback(query, top_k)
-            if semantic_results:
-                return semantic_results
+            if feature_flags.enabled("ENABLE_EMBEDDING_PROVIDER"):
+                semantic_results = self._semantic_fallback(query, top_k)
+                if semantic_results:
+                    return semantic_results
+            else:
+                logger.info("[RETRIEVAL] semantic fallback disabled by feature flag")
         # ================================================================
 
         return self._tfidf_fallback(query, top_k)

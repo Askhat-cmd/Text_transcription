@@ -52,9 +52,11 @@ class TestRetrieverFallback:
             "bot_agent.db_api_client.DBApiClient.query",
             side_effect=DBApiUnavailableError("down"),
         ):
-            with patch.object(SimpleRetriever, "_tfidf_fallback", return_value=[MagicMock()]) as mock_tfidf:
-                retriever = SimpleRetriever()
-                result = retriever.retrieve("осознанность")
+            with patch.object(SimpleRetriever, "_semantic_fallback", return_value=[]) as mock_semantic:
+                with patch.object(SimpleRetriever, "_tfidf_fallback", return_value=[MagicMock()]) as mock_tfidf:
+                    retriever = SimpleRetriever()
+                    result = retriever.retrieve("осознанность")
+        mock_semantic.assert_called_once()
         mock_tfidf.assert_called_once()
         assert len(result) == 1
 
@@ -122,5 +124,17 @@ class TestRetrieverFallback:
             with patch.object(SimpleRetriever, "_tfidf_fallback", return_value=[MagicMock()]) as tfidf:
                 results = retriever.retrieve("query", top_k=1)
 
+        tfidf.assert_called_once()
+        assert len(results) == 1
+
+    def test_semantic_fallback_can_be_disabled_by_feature_flag(self, monkeypatch):
+        monkeypatch.setenv("ENABLE_EMBEDDING_PROVIDER", "false")
+        with patch("bot_agent.db_api_client.DBApiClient.query", side_effect=DBApiUnavailableError("down")):
+            with patch.object(SimpleRetriever, "_semantic_fallback", return_value=[MagicMock()]) as semantic:
+                with patch.object(SimpleRetriever, "_tfidf_fallback", return_value=[MagicMock()]) as tfidf:
+                    retriever = SimpleRetriever()
+                    results = retriever.retrieve("query", top_k=1)
+
+        semantic.assert_not_called()
         tfidf.assert_called_once()
         assert len(results) == 1

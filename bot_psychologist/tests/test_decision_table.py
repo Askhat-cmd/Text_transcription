@@ -46,3 +46,21 @@ def test_decision_table_blocks_deep_intervention_on_surface() -> None:
     assert result.route == "CLARIFICATION"
     assert result.rule_id == 8
     assert "deep_intervention" in result.forbid
+
+
+def test_decision_table_validation_first_for_new_emotional_topic() -> None:
+    signals = {
+        "confidence": 0.8,
+        "is_first_response_on_topic": True,
+        "has_emotional_signal": True,
+        "current_turn_in_topic": 1,
+        "validation_first_enabled": True,
+        "insight_signal": False,
+        "explicit_ask": True,
+        "ask_type": "action",
+        "user_stage": "exploration",
+    }
+
+    result = DecisionTable.evaluate(signals)
+    assert result.route == "VALIDATION"
+    assert result.rule_id == 100

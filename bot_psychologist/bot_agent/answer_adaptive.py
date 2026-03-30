@@ -43,6 +43,7 @@ from .retrieval import HybridQueryBuilder, VoyageReranker
 from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
+from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
 
@@ -58,13 +59,17 @@ def _timed(name: str, label: str, fn, *args, **kwargs):
 def _build_config_snapshot(cfg, user_level: str) -> Dict[str, object]:
     """Снимок конфигурации на момент запроса."""
     sd_settings = get_sd_settings()
+    conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
     return {
         "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
         "max_context_size": int(getattr(cfg, "MAX_CONTEXT_SIZE", 0) or 0),
         "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
         "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65),
         "fast_path_enabled": True,
-        "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False) or getattr(cfg, "RERANKER_ENABLED", False)),
+        "rerank_enabled": bool(
+            getattr(cfg, "VOYAGE_ENABLED", False)
+            or (conditional_reranker and getattr(cfg, "RERANKER_ENABLED", False))
+        ),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
         "user_level": str(user_level or "beginner"),
     }
@@ -1083,7 +1088,7 @@ def answer_question_adaptive(
             debug_trace["user_state"] = state_analysis.primary_state.value
 
         decision_gate = DecisionGate()
-        pre_routing_signals = detect_routing_signals(query, [], state_analysis)
+        pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
         pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
         fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
         logger.info(
@@ -1210,6 +1215,8 @@ def answer_question_adaptive(
                 answer,
                 mode=pre_routing_result.mode,
                 confidence_level=pre_routing_result.confidence_level,
+                user_message=query,
+                sd_level=sd_result.primary,
             )
             if debug_trace is not None:
                 pipeline_stages.append(
@@ -1323,7 +1330,10 @@ def answer_question_adaptive(
                 debug_trace["primary_model"] = config.LLM_MODEL
                 debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
                 debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-                reranker_enabled = bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED)
+                reranker_enabled = bool(
+                    config.VOYAGE_ENABLED
+                    or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+                )
                 debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
                 debug_trace["reranker_enabled"] = reranker_enabled
                 debug_trace["tokens_prompt"] = tokens_prompt
@@ -1435,11 +1445,14 @@ def answer_question_adaptive(
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
-        pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
+        pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
         pre_rerank_routing = decision_gate.route(pre_rerank_signals, user_stage=user_stage)
+        conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
         rerank_flags = {
-            "legacy_always_on": bool(config.VOYAGE_ENABLED and not config.RERANKER_ENABLED),
-            "RERANKER_ENABLED": bool(config.RERANKER_ENABLED),
+            "legacy_always_on": bool(
+                config.VOYAGE_ENABLED and (not conditional_reranker or not config.RERANKER_ENABLED)
+            ),
+            "RERANKER_ENABLED": bool(config.RERANKER_ENABLED and conditional_reranker),
             "RERANKER_CONFIDENCE_THRESHOLD": float(config.RERANKER_CONFIDENCE_THRESHOLD),
             "RERANKER_MODE_WHITELIST": str(config.RERANKER_MODE_WHITELIST),
             "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
@@ -1455,7 +1468,7 @@ def answer_question_adaptive(
         if should_run_rerank and rerank_k > 0:
             reranker = VoyageReranker(
                 model=config.VOYAGE_MODEL,
-                enabled=bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED),
+                enabled=bool(config.VOYAGE_ENABLED or (conditional_reranker and config.RERANKER_ENABLED)),
             )
             current_stage = "rerank"
             reranked, rerank_stage = _timed(
@@ -1471,7 +1484,10 @@ def answer_question_adaptive(
                 pipeline_stages.append(rerank_stage)
             if reranked:
                 retrieved_blocks = reranked
-                voyage_active = bool((config.VOYAGE_ENABLED or config.RERANKER_ENABLED) and config.VOYAGE_API_KEY)
+                voyage_active = bool(
+                    (config.VOYAGE_ENABLED or (conditional_reranker and config.RERANKER_ENABLED))
+                    and config.VOYAGE_API_KEY
+                )
                 if voyage_active:
                     logger.info("[VOYAGE] rerank success, top_k=%s", rerank_k)
                 else:
@@ -1484,7 +1500,7 @@ def answer_question_adaptive(
             logger.info("[RERANK] skipped: %s", rerank_reason)
         reranked_blocks_for_trace = list(retrieved_blocks)
 
-        routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
+        routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
         routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
         block_cap = decision_gate.scorer.suggest_block_cap(
             len(retrieved_blocks),
@@ -1633,7 +1649,10 @@ def answer_question_adaptive(
                 ],
             }
             debug_info["voyage_rerank"] = {
-                "enabled": bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED),
+                "enabled": bool(
+                    config.VOYAGE_ENABLED
+                    or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+                ),
                 "top_k": rerank_k,
                 "should_run": bool(should_run_rerank),
                 "reason": rerank_reason,
@@ -1790,6 +1809,8 @@ def answer_question_adaptive(
             answer,
             mode=routing_result.mode,
             confidence_level=routing_result.confidence_level,
+            user_message=query,
+            sd_level=sd_result.primary,
         )
         if debug_trace is not None:
             pipeline_stages.append(
@@ -1964,7 +1985,10 @@ def answer_question_adaptive(
             debug_trace["primary_model"] = config.LLM_MODEL
             debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
             debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-            reranker_enabled = bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED)
+            reranker_enabled = bool(
+                config.VOYAGE_ENABLED
+                or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+            )
             debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
             debug_trace["reranker_enabled"] = reranker_enabled
             # FIX 2a: агрегация токенов из llm_calls для fallback

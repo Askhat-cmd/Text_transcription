@@ -34,3 +34,36 @@ def test_formatter_clips_long_answer() -> None:
     assert len(text) <= 40
     assert text.endswith("...")
 
+
+def test_calculate_target_length_short_validation() -> None:
+    formatter = ResponseFormatter()
+    target = formatter.calculate_target_length(
+        user_message="мне плохо",
+        routing_mode="VALIDATION",
+        sd_level="GREEN",
+    )
+    assert target["max_sentences"] == 2
+
+
+def test_calculate_target_length_long_thinking() -> None:
+    formatter = ResponseFormatter()
+    target = formatter.calculate_target_length(
+        user_message=" ".join(["слово"] * 25),
+        routing_mode="THINKING",
+        sd_level="YELLOW",
+    )
+    assert target["max_sentences"] == 6
+
+
+def test_formatter_applies_sentence_cap_from_user_message() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"VALIDATION": 2000})
+    text = formatter.format_answer(
+        "Первое. Второе. Третье. Четвертое.",
+        mode="VALIDATION",
+        confidence_level="high",
+        user_message="коротко",
+        sd_level="GREEN",
+    )
+    # VALIDATION + short message => максимум 2 предложения
+    assert text.count(".") <= 2
+

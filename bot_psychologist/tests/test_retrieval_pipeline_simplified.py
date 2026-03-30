@@ -180,6 +180,7 @@ def _setup_pipeline(
     monkeypatch.setattr(aa.config, "RERANKER_BLOCK_THRESHOLD", 8)
     monkeypatch.setattr(aa.config, "VOYAGE_TOP_K", 5)
     monkeypatch.setattr(aa.config, "TOP_K_BLOCKS", 5)
+    monkeypatch.setattr(aa.feature_flags, "enabled", lambda _name: True)
     DummyReranker.calls = 0
 
     return dummy_retriever
@@ -269,4 +270,28 @@ def test_pipeline_conditional_reranker_skips_when_conditions_not_met(monkeypatch
     trace = result["debug_trace"]
     assert trace.get("rerank_should_run") is False
     assert trace.get("rerank_reason") == "conditions_not_met"
+    assert DummyReranker.calls == 0
+
+
+def test_pipeline_feature_flag_disables_conditional_reranker(monkeypatch):
+    blocks = _make_blocks(5)
+    _setup_pipeline(
+        monkeypatch,
+        blocks,
+        voyage_enabled=False,
+        reranker_enabled=True,
+        fast_path=False,
+        sd_level="ORANGE",
+    )
+    monkeypatch.setattr(aa.feature_flags, "enabled", lambda name: False if name == "ENABLE_CONDITIONAL_RERANKER" else True)
+
+    result = aa.answer_question_adaptive(
+        query="Нужна краткая справка",
+        user_id="test_user",
+        debug=True,
+    )
+
+    trace = result["debug_trace"]
+    assert trace.get("rerank_should_run") is False
+    assert trace.get("rerank_reason") == "reranker_disabled_by_flag"
     assert DummyReranker.calls == 0

@@ -2,7 +2,76 @@
 
 from __future__ import annotations
 
+import re
 from typing import Dict
+
+
+_EMOTIONAL_PATTERNS = (
+    r"\bстрашно\b",
+    r"\bтревог",
+    r"\bбольно\b",
+    r"\bтяжело\b",
+    r"\bне могу\b",
+    r"\bвина\b",
+    r"\bстыд\b",
+)
+_EMOTIONAL_RE = [re.compile(pattern, flags=re.IGNORECASE) for pattern in _EMOTIONAL_PATTERNS]
+
+
+def _extract_last_user_text(memory) -> str:
+    if memory is None:
+        return ""
+    try:
+        turns = getattr(memory, "turns", []) or []
+        for turn in reversed(turns):
+            content = getattr(turn, "user_input", "") or ""
+            if content:
+                return str(content)
+    except Exception:
+        return ""
+    return ""
+
+
+def _tokenize_topic(text: str) -> set[str]:
+    tokens = re.findall(r"[а-яА-Яa-zA-Z]{4,}", (text or "").lower())
+    return set(tokens)
+
+
+def is_first_response_on_topic(query: str, memory) -> tuple[bool, int]:
+    """
+    Determine if query starts a new topic compared to last user turn.
+
+    Returns:
+        (is_first_response_on_topic, current_turn_in_topic)
+    """
+    prev = _extract_last_user_text(memory)
+    if not prev:
+        return True, 1
+
+    current_tokens = _tokenize_topic(query)
+    prev_tokens = _tokenize_topic(prev)
+    if not current_tokens or not prev_tokens:
+        return False, 2
+
+    overlap = len(current_tokens & prev_tokens) / max(1, len(current_tokens))
+    is_new_topic = overlap < 0.25
+    return (is_new_topic, 1) if is_new_topic else (False, 2)
+
+
+def has_emotional_signal(query: str, state_analysis=None) -> bool:
+    text = (query or "").lower()
+    if any(pattern.search(text) for pattern in _EMOTIONAL_RE):
+        return True
+
+    if state_analysis is None:
+        return False
+
+    tone = (getattr(state_analysis, "emotional_tone", "") or "").lower()
+    primary = getattr(getattr(state_analysis, "primary_state", None), "value", "")
+    return bool(
+        any(token in tone for token in ("anxiety", "panic", "distress", "frustrat", "overwhelm"))
+        or primary in {"overwhelmed", "confused", "resistant", "stagnant"}
+    )
 
 
 def resolve_user_stage(memory, state_analysis=None) -> str:
@@ -24,7 +93,7 @@ def resolve_user_stage(memory, state_analysis=None) -> str:
     return "surface"
 
 
-def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None) -> Dict[str, float]:
+def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, memory=None) -> Dict[str, float]:
     """Prepare normalized signals for DecisionGate routing."""
     top_scores = [float(score) for _, score in (retrieved_blocks or [])[:2]]
     top1 = top_scores[0] if top_scores else 0.0
@@ -55,6 +124,9 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None) ->
     if primary in {"overwhelmed", "resistant", "stagnant"}:
         emotion_load = "high"
 
+    topic_is_first, current_turn_in_topic = is_first_response_on_topic(query, memory)
+    emotional_signal = has_emotional_signal(query, state_analysis=state_analysis)
+
     return {
         "local_similarity": local_similarity,
         "delta_top1_top2": delta,
@@ -68,4 +140,8 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None) ->
         "thinking_due": False,
         "intervention_cooldown_ok": True,
         "insight_signal": primary in {"breakthrough", "integrated"},
+        "is_first_response_on_topic": topic_is_first,
+        "current_turn_in_topic": current_turn_in_topic,
+        "has_emotional_signal": emotional_signal,
+        "validation_first_enabled": True,
     }

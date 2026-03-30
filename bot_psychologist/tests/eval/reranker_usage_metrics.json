@@ -1,0 +1,26 @@
+{
+  "eval_set": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\eval\\retrieval_eval_set.json",
+  "sample_size": 100,
+  "top_k": 5,
+  "reranker_calls": 10,
+  "reranker_ratio": 0.1,
+  "threshold": 0.25,
+  "pass_gate": true,
+  "reasons": {
+    "conditions_not_met": 90,
+    "low_confidence=0.33": 5,
+    "low_confidence=0.32": 5
+  },
+  "modes": {
+    "CLARIFICATION": 25,
+    "PRESENCE": 60,
+    "VALIDATION": 15
+  },
+  "flags": {
+    "legacy_always_on": false,
+    "RERANKER_ENABLED": true,
+    "RERANKER_CONFIDENCE_THRESHOLD": 0.35,
+    "RERANKER_MODE_WHITELIST": "THINKING,INTERVENTION",
+    "RERANKER_BLOCK_THRESHOLD": 8
+  }
+}

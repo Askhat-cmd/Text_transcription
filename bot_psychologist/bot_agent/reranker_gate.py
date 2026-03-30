@@ -23,7 +23,7 @@ def should_rerank(
     if not bool(flags.get("RERANKER_ENABLED", False)):
         return False, "reranker_disabled_by_flag"
 
-    threshold = float(flags.get("RERANKER_CONFIDENCE_THRESHOLD", 0.55) or 0.55)
+    threshold = float(flags.get("RERANKER_CONFIDENCE_THRESHOLD", 0.35) or 0.35)
     block_threshold = int(flags.get("RERANKER_BLOCK_THRESHOLD", 8) or 8)
     whitelist_raw = flags.get("RERANKER_MODE_WHITELIST", ["THINKING", "INTERVENTION"])
 

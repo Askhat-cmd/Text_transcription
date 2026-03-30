@@ -38,27 +38,27 @@
 
 - [x] 2.1 Добавить `bot_psychologist/bot_agent/reranker_gate.py`.
 - [x] 2.2 Подключить gate в retrieval pipeline.
-- [ ] 2.3 Проверить ограничение вызовов reranker (`<= 25%` на eval-наборе).
+- [x] 2.3 Проверить ограничение вызовов reranker (`<= 25%` на eval-наборе).
 - [x] 2.4 Gate: тесты reranker зеленые.
 
 ## Фаза 3 — Level-0 Fast Detector
 
-- [ ] 3.1 Добавить `bot_psychologist/bot_agent/fast_detector.py`.
-- [ ] 3.2 Подключить в `state_classifier.py` перед Level-1.
-- [ ] 3.3 Подключить в `sd_classifier.py` перед Level-1.
-- [ ] 3.4 Gate: classifier-тесты зеленые.
+- [x] 3.1 Добавить `bot_psychologist/bot_agent/fast_detector.py`.
+- [x] 3.2 Подключить в `state_classifier.py` перед Level-1.
+- [x] 3.3 Подключить в `sd_classifier.py` перед Level-1.
+- [x] 3.4 Gate: classifier-тесты зеленые.
 
 ## Фаза 4 — Feature Flags
 
-- [ ] 4.1 Добавить `bot_psychologist/config/feature_flags.py`.
-- [ ] 4.2 Подключить флаги к новым компонентам фаз 1–3.
-- [ ] 4.3 Обновить `bot_psychologist/.env.example`.
-- [ ] 4.4 Gate: каждый флаг переключается независимо.
+- [x] 4.1 Добавить `bot_psychologist/config/feature_flags.py`.
+- [x] 4.2 Подключить флаги к новым компонентам фаз 1–3.
+- [x] 4.3 Обновить `bot_psychologist/.env.example`.
+- [x] 4.4 Gate: каждый флаг переключается независимо.
 
 ## Фаза 5 — Улучшения интеллекта
 
-- [ ] 5.1 Адаптивная длина ответа (`response_formatter.py`).
-- [ ] 5.2 VALIDATION-first в маршрутизации (`decision_table.py`, `signal_detector.py`).
+- [x] 5.1 Адаптивная длина ответа (`response_formatter.py`).
+- [x] 5.2 VALIDATION-first в маршрутизации (`decision_table.py`, `signal_detector.py`).
 - [ ] 5.3 Детектор противоречий (`contradiction_detector.py`).
 - [ ] 5.4 Cross-session summary memory (`conversation_memory.py` расширение).
 - [ ] 5.5 Progressive RAG (`progressive_rag.py`, веса блоков в SQLite).
@@ -77,4 +77,9 @@
 - [x] Фаза 1.5/1.6: `scripts/eval_retrieval.py --compare` выполнен при активном Bot_data_base: `recall@5=1.0`, `mrr=1.0`, gate=PASS.
 - [x] Фаза 2.1/2.2: добавлен `reranker_gate.py`, интегрирован conditional rerank в `answer_adaptive.py`.
 - [x] Фаза 2.4: добавлены тесты `test_reranker_gate.py` и расширен `test_retrieval_pipeline_simplified.py` — зеленые.
-- [ ] Фаза 2.3: нужно прогнать 100 реальных запросов и проверить долю вызовов reranker <= 25%.
+- [x] Фаза 2.3: прогнан `scripts/eval_reranker_usage.py --enforce` (100 запросов), доля reranker = 10%.
+
+- [x] Фаза 3.1/3.2/3.3/3.4: добавлен `fast_detector.py`, интегрирован в `state_classifier.py` и `sd_classifier.py`; тесты зелёные.
+- [x] Фаза 4.1/4.2/4.3/4.4: добавлен `config/feature_flags.py`, флаги подключены в retriever/state/sd/answer_adaptive, gate по независимому переключению пройден.
+- [x] Фаза 5.1: в `response_formatter.py` добавлен `calculate_target_length()` + ограничение ответа по числу предложений.
+- [x] Фаза 5.2: добавлено правило `VALIDATION_FIRST_NEW_TOPIC` (rule_id=100) через новые сигналы в `signal_detector.py`.

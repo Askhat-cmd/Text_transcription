@@ -47,7 +47,10 @@ class SimpleRetriever:
         self.tfidf_matrix = None
         self.blocks: List[Block] = []
         self._is_built = False
-        self.db_client = DBApiClient()
+        self.db_client = DBApiClient(
+            base_url=config.BOT_DB_URL,
+            timeout=float(getattr(config, "BOT_DB_TIMEOUT", 10.0)),
+        )
     
     def build_index(self) -> None:
         """

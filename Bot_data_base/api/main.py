@@ -9,6 +9,7 @@ import os
 from api.routes.youtube import router as youtube_router
 from api.routes.books import router as books_router
 from api.routes.registry import router as registry_router
+from api.routes.blocks import router as blocks_router
 from api.routes.status import router as status_router
 from api.routes.query import router as query_router
 
@@ -35,6 +36,7 @@ app.add_middleware(
 app.include_router(youtube_router, prefix="/api/ingest")
 app.include_router(books_router, prefix="/api/ingest")
 app.include_router(registry_router, prefix="/api/registry")
+app.include_router(blocks_router, prefix="/api/blocks", tags=["blocks"])
 app.include_router(status_router, prefix="/api/status")
 app.include_router(query_router, prefix="/api/query", tags=["query"])
 

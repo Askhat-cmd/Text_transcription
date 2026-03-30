@@ -471,7 +471,10 @@ class DataLoader:
         try:
             from .db_api_client import DBApiClient
             
-            client = DBApiClient()
+            client = DBApiClient(
+                base_url=config.BOT_DB_URL,
+                timeout=float(getattr(config, "BOT_DB_TIMEOUT", 10.0)),
+            )
             logger.info("[API] Загрузка всех блоков из Bot_data_base через HTTP API...")
             
             # Получаем все источники из реестра Bot_data_base
@@ -675,4 +678,3 @@ class DataLoader:
 
 # Глобальный инстанс (синглтон)
 data_loader = DataLoader()
-

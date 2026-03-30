@@ -80,12 +80,14 @@ NOTE: Found mirroring instruction in bot_psychologist/bot_agent/prompt_sd_green.
 
 ### 3.1 Сценарий A: уровни НЕ применяются (LEVELS_USED = no)
 
-- [ ] 3.1a Удалить файлы промптов уровней:
-- [ ] 3.2a В admin_routes.py найти и удалить:
-- [ ] 3.3a В bot_agent/__init__.py и других модулях удалить импорты:
-- [ ] 3.4a В web_ui/ найти и удалить UI-элементы уровней:
-- [ ] 3.5a Добавить комментарий в местах удаления:
-- [ ] 3.6a Проверить что sd_classifier.py НЕ затронут (он нужен!):
+- [x] 3.1a Удалить файлы промптов уровней:
+- [x] 3.2a В admin_routes.py найти и удалить:
+- [x] 3.3a В bot_agent/__init__.py и других модулях удалить импорты:
+- [x] 3.4a В web_ui/ найти и удалить UI-элементы уровней:
+- [x] 3.5a Добавить комментарий в местах удаления:
+- [x] 3.6a Проверить что sd_classifier.py НЕ затронут (он нужен!):
+
+SCENARIO_A_NOTE: помечено как N/A (в проекте `LEVELS_USED: yes`, выбран сценарий B).
 ### 3.2 Сценарий B: уровни применяются (LEVELS_USED = yes)
 
 - [x] 3.1b Определить точно где и как применяются:
@@ -111,13 +113,15 @@ TRACE_MODEL: используется `DebugTrace` в `bot_psychologist/api/mode
 
 ### 4.1 Бэкенд — модель данных
 
-- [ ] 4.1  В api/models.py добавить новые модели:
-- [ ] 4.2  В существующую модель TraceData (или аналог) добавить поле:
+- [x] 4.1  В api/models.py добавить новые модели:
+- [x] 4.2  В существующую модель TraceData (или аналог) добавить поле:
 ### 4.2 Бэкенд — перехват payload
 
-- [ ] 4.3  В bot_agent/llm_answerer.py перед вызовом
-- [ ] 4.4  Убедиться что llm_answerer.py имеет доступ к объекту current_trace.
-- [ ] 4.5  В answer_adaptive.py убедиться что retrieved_blocks, sd_level,
+- [x] 4.3  В bot_agent/llm_answerer.py перед вызовом
+- [x] 4.4  Убедиться что llm_answerer.py имеет доступ к объекту current_trace.
+- [x] 4.5  В answer_adaptive.py убедиться что retrieved_blocks, sd_level,
+
+PAYLOAD_NOTE: функционал реализован в `answer_adaptive.py` + `api/models.py` + `/api/debug/session/{id}/llm-payload` (коммит `39ef32c`).
 ### 4.3 Бэкенд — новый endpoint
 
 - [x] 4.6  В api/debug_routes.py добавить endpoint:

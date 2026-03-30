@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.6.1 - 2026-03-30
+
+### Added
+- `bot_agent/contradiction_detector.py`: детектор расхождений «всё нормально» vs маркеры напряжения.
+- `bot_agent/progressive_rag.py`: SQLite-веса блоков (`block_weights`) + CLI-сброс `--reset-weights`.
+- Cross-session summary слой: SQLite `session_summaries` + методы `save_session_summary()` и `load_cross_session_context()`.
+- Новые тесты: `test_contradiction_detector.py`, `test_progressive_rag.py`, расширения в `test_conversation_memory_persistence.py` и `test_signal_detector.py`.
+
+### Changed
+- `answer_adaptive.py`: 
+  - добавлен contradiction signal в `debug_trace` и `additional_system_context` без изменения routing;
+  - добавлен cross-session context в системный контекст;
+  - Progressive RAG применяется до reranker;
+  - при позитивном сигнале (`это именно`, `в точку`, и т.п.) увеличиваются веса top-блоков.
+- `decision/signal_detector.py`: добавлены сигналы `contradiction_*` и `positive_feedback_signal`.
+- `storage/session_manager.py`: схема расширена таблицей `session_summaries` и методами загрузки/сохранения summary.
+
 ## v0.6.0 - 2026-03-25
 
 ### Changed

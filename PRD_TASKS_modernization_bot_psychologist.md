@@ -86,3 +86,4 @@
 - [x] Фаза 5.3: добавлен `contradiction_detector.py`; сигнал передаётся в `debug_trace` и `additional_system_context` без изменения routing.
 - [x] Фаза 5.4: добавлены `save_session_summary()` и `load_cross_session_context()` в `conversation_memory.py` + SQLite таблица `session_summaries` и тесты персистентности.
 - [x] Фаза 5.5: добавлен `progressive_rag.py` (SQLite `block_weights`), интеграция в retrieval до reranker и буст веса при позитивном сигнале.
+- [x] Обновлены `bot_psychologist/README.md` и `bot_psychologist/CHANGELOG.md` по итогам фаз 5.3–5.5.

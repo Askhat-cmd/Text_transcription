@@ -242,6 +242,7 @@ python -m pytest tests/test_runtime_config_reset.py -v
 Новые уровни памяти:
 - Semantic memory — поиск релевантных прошлых обменов по смыслу, а не по хронологии.
 - Conversation summary — краткое резюме диалога, обновляемое каждые N ходов.
+- Cross-session context — краткий контекст из предыдущих сессий пользователя (SQLite `session_summaries`).
 - Adaptive context — динамическая загрузка контекста в зависимости от длины диалога.
 
 - История хранится на диске в `bot_psychologist/.cache_bot_agent/conversations/{user_id}.json` (папка в git игнорируется).
@@ -273,6 +274,10 @@ python -m pytest tests/test_runtime_config_reset.py -v
 - `SUMMARY_MAX_CHARS` (default: `500`) — лимит длины summary.
 - `WARMUP_ON_START` (default: `true`) — прогрев компонентов на старте API.
 - `ENABLE_STREAMING` (default: `true`) — включить SSE endpoint `/api/v1/questions/adaptive-stream`.
+- `ENABLE_FAST_STATE_DETECTOR` (default: `true`) — быстрый L0 слой для StateClassifier.
+- `ENABLE_FAST_SD_DETECTOR` (default: `true`) — быстрый L0 слой для SDClassifier.
+- `ENABLE_CONDITIONAL_RERANKER` (default: `true`) — условный запуск reranker вместо always-on.
+- `ENABLE_EMBEDDING_PROVIDER` (default: `true`) — семантический fallback через EmbeddingProvider.
 
 Ключевые файлы:
 
@@ -299,6 +304,7 @@ API для истории:
 - `confidence_level` и `confidence_score` — уровень/число уверенности роутинга.
 - `sd_level` — определённый SD-уровень пользователя (fallback: `GREEN`).
 - Память (в `metadata`): `memory_turns`, `semantic_hits`, `summary_used`, `summary_length`, `summary_last_turn`.
+- Дополнительно в `metadata`: `contradiction_detected`, `cross_session_context_used`.
 - Поле `metadata` сохранено для обратной совместимости и содержит расширенные детали retrieval/decision.
 
 ## Response Layer (PRD v2.0)
@@ -324,14 +330,16 @@ Token budget (PRD v2.0.2):
 
 1. Построение hybrid‑query (контекст + вопрос).
 2. Retrieval:
-   - `KNOWLEDGE_SOURCE=api|chromadb` → Bot_data_base API
-   - fallback → TF‑IDF
-3. Rerank:
-   - Voyage (top‑k = `VOYAGE_TOP_K`)
+    - `KNOWLEDGE_SOURCE=api|chromadb` → Bot_data_base API
+    - fallback → TF‑IDF
+3. Progressive RAG:
+   - взвешивание блоков по `block_weights` (SQLite), применяется до rerank.
+4. Rerank:
+   - Voyage (top‑k = `VOYAGE_TOP_K`) в условном режиме (confidence/mode/block-count).
    - fallback: сортировка по score без урезания списка
-4. Confidence cap:
+5. Confidence cap:
    - итоговый лимит = `TOP_K_BLOCKS` (из runtime/admin config)
-5. LLM получает финальные блоки + `sd_level` в системном промпте.
+6. LLM получает финальные блоки + `sd_level` в системном промпте + сигналы противоречий/кросс-сессий.
 
 ## Архитектурный обзор
 

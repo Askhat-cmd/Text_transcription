@@ -50,16 +50,32 @@ class TestDBApiClient:
             mock_http.return_value.__enter__.return_value.post.side_effect = \
                 httpx.ConnectError("Connection refused")
             client = DBApiClient()
-            with pytest.raises(DBApiUnavailableError):
-                client.query("тест")
+            with pytest.raises(DBApiUnavailableError) as exc_info:
+                client.query("test")
+        assert exc_info.value.kind == "connect"
+        assert exc_info.value.status_code is None
 
     def test_timeout_raises_unavailable(self):
         with patch("httpx.Client") as mock_http:
             mock_http.return_value.__enter__.return_value.post.side_effect = \
                 httpx.TimeoutException("Timeout")
             client = DBApiClient()
-            with pytest.raises(DBApiUnavailableError):
-                client.query("тест")
+            with pytest.raises(DBApiUnavailableError) as exc_info:
+                client.query("test")
+        assert exc_info.value.kind == "timeout"
+        assert exc_info.value.status_code is None
+
+    def test_http_status_error_contains_status_code(self):
+        request = httpx.Request("POST", "http://localhost:8003/api/query/")
+        response = httpx.Response(status_code=503, request=request, text="service unavailable")
+        with patch("httpx.Client") as mock_http:
+            mock_http.return_value.__enter__.return_value.post.return_value = response
+            client = DBApiClient(retries=1)
+            with pytest.raises(DBApiUnavailableError) as exc_info:
+                client.query("test")
+        assert exc_info.value.kind == "http_status"
+        assert exc_info.value.status_code == 503
+        assert "503" in str(exc_info.value)
 
     def test_sd_level_passed_in_payload(self):
         with patch("httpx.Client") as mock_http:

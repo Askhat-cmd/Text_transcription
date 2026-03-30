@@ -297,7 +297,19 @@ class SimpleRetriever:
                     return api_results
                 logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
             except DBApiUnavailableError as exc:
-                logger.warning("[RETRIEVAL] API недоступен → TF-IDF fallback: %s", exc)
+                if exc.kind == "http_status":
+                    logger.warning(
+                        "[RETRIEVAL] API fallback: kind=%s status=%s message=%s",
+                        exc.kind,
+                        exc.status_code,
+                        exc,
+                    )
+                else:
+                    logger.warning(
+                        "[RETRIEVAL] API fallback: kind=%s message=%s",
+                        exc.kind,
+                        exc,
+                    )
         # ================================================================
 
         return self._tfidf_fallback(query, top_k)

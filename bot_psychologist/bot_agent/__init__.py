@@ -73,7 +73,7 @@ __all__ = [
 ]
 
 logger.info(
-    "Bot Agent v%s initialized | pipeline: semantic→rerank→topK→llm | graph: %s",
+    "Bot Agent v%s initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: %s",
     __version__,
     "enabled" if config.ENABLE_KNOWLEDGE_GRAPH else "disabled",
 )

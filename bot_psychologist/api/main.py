@@ -62,7 +62,9 @@ async def lifespan(app: FastAPI):
         if config.ENABLE_KNOWLEDGE_GRAPH:
             tasks.append(("graph_client", asyncio.to_thread(graph_client.load_graphs_from_all_documents)))
         else:
-            logger.info("[GRAPH] KnowledgeGraphClient disabled (ENABLE_KNOWLEDGE_GRAPH=false)")
+            logger.info(
+                "[GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API"
+            )
         results = await asyncio.gather(*(task for _, task in tasks), return_exceptions=True)
         for (label, _), result in zip(tasks, results):
             if isinstance(result, Exception):

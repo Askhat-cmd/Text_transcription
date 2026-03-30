@@ -34,7 +34,10 @@ class RetrievedChunk:
 
 
 class DBApiUnavailableError(RuntimeError):
-    pass
+    def __init__(self, message: str, kind: str = "unknown", status_code: int | None = None):
+        super().__init__(message)
+        self.kind = kind
+        self.status_code = status_code
 
 
 class DBApiClient:
@@ -89,13 +92,7 @@ class DBApiClient:
             if attempt < self.retries:
                 time.sleep(0.25 * attempt)
 
-        if isinstance(last_error, httpx.ConnectError):
-            raise DBApiUnavailableError(f"Bot_data_base недоступен: {self.base_url}")
-        if isinstance(last_error, httpx.TimeoutException):
-            raise DBApiUnavailableError(f"Таймаут запроса к Bot_data_base ({self.timeout}s)")
-        if isinstance(last_error, httpx.HTTPError):
-            raise DBApiUnavailableError(f"Ошибка HTTP Bot_data_base: {last_error}")
-        raise DBApiUnavailableError("Bot_data_base unavailable")
+        self._raise_unavailable(last_error)
 
     async def aquery(self, **kwargs) -> List[RetrievedChunk]:
         payload = {
@@ -129,10 +126,31 @@ class DBApiClient:
             if attempt < self.retries:
                 await asyncio.sleep(0.25 * attempt)
 
+        self._raise_unavailable(last_error)
+
+    def _raise_unavailable(self, last_error: Exception | None) -> None:
         if isinstance(last_error, httpx.ConnectError):
-            raise DBApiUnavailableError(f"Bot_data_base недоступен: {self.base_url}")
+            raise DBApiUnavailableError(
+                f"Bot_data_base недоступен: {self.base_url}",
+                kind="connect",
+            )
         if isinstance(last_error, httpx.TimeoutException):
-            raise DBApiUnavailableError(f"Таймаут запроса к Bot_data_base ({self.timeout}s)")
+            raise DBApiUnavailableError(
+                f"Таймаут запроса к Bot_data_base ({self.timeout}s)",
+                kind="timeout",
+            )
+        if isinstance(last_error, httpx.HTTPStatusError):
+            status = int(last_error.response.status_code)
+            body = (last_error.response.text or "").strip()
+            if len(body) > 200:
+                body = body[:200] + "..."
+            msg = f"HTTP {status} from Bot_data_base"
+            if body:
+                msg = f"{msg}: {body}"
+            raise DBApiUnavailableError(msg, kind="http_status", status_code=status)
         if isinstance(last_error, httpx.HTTPError):
-            raise DBApiUnavailableError(f"Ошибка HTTP Bot_data_base: {last_error}")
-        raise DBApiUnavailableError("Bot_data_base unavailable")
+            raise DBApiUnavailableError(
+                f"HTTP client error: {last_error}",
+                kind="http_error",
+            )
+        raise DBApiUnavailableError("Bot_data_base unavailable", kind="unknown")

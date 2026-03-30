@@ -46,6 +46,28 @@ def test_detect_routing_signals_not_first_topic_when_overlap() -> None:
     assert signals["current_turn_in_topic"] == 2
 
 
+def test_detect_routing_signals_reports_contradiction_without_routing_flag() -> None:
+    signals = detect_routing_signals(
+        query="Всё нормально, просто немного устал и раздражаюсь",
+        retrieved_blocks=[(object(), 0.82), (object(), 0.61)],
+        state_analysis=None,
+        memory=SimpleNamespace(turns=[]),
+    )
+    assert signals["contradiction"] is False
+    assert signals["contradiction_detected"] is True
+    assert "напряж" in signals["contradiction_suggestion"].lower()
+
+
+def test_detect_routing_signals_marks_positive_feedback_signal() -> None:
+    signals = detect_routing_signals(
+        query="Да, именно, это в точку, спасибо помогло",
+        retrieved_blocks=[(object(), 0.82), (object(), 0.61)],
+        state_analysis=None,
+        memory=SimpleNamespace(turns=[]),
+    )
+    assert signals["positive_feedback_signal"] is True
+
+
 def test_resolve_user_stage_prefers_working_state() -> None:
     memory = SimpleNamespace(
         working_state=WorkingState(

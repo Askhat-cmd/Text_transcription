@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from typing import Dict
 
+from ..contradiction_detector import detect_contradiction
 
 _EMOTIONAL_PATTERNS = (
     r"\bстрашно\b",
@@ -16,6 +17,17 @@ _EMOTIONAL_PATTERNS = (
     r"\bстыд\b",
 )
 _EMOTIONAL_RE = [re.compile(pattern, flags=re.IGNORECASE) for pattern in _EMOTIONAL_PATTERNS]
+
+_POSITIVE_FEEDBACK_PATTERNS = (
+    r"\bэто\s+именно\b",
+    r"\bименно\s+то\b",
+    r"\bспасибо.*помогло\b",
+    r"\bда.*именно\b",
+    r"\bв\s+точку\b",
+)
+_POSITIVE_FEEDBACK_RE = [
+    re.compile(pattern, flags=re.IGNORECASE) for pattern in _POSITIVE_FEEDBACK_PATTERNS
+]
 
 
 def _extract_last_user_text(memory) -> str:
@@ -74,6 +86,11 @@ def has_emotional_signal(query: str, state_analysis=None) -> bool:
     )
 
 
+def has_positive_feedback_signal(query: str) -> bool:
+    text = query or ""
+    return any(pattern.search(text) for pattern in _POSITIVE_FEEDBACK_RE)
+
+
 def resolve_user_stage(memory, state_analysis=None) -> str:
     """Resolve user stage from working_state first, then from state depth."""
     if getattr(memory, "working_state", None):
@@ -93,7 +110,7 @@ def resolve_user_stage(memory, state_analysis=None) -> str:
     return "surface"
 
 
-def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, memory=None) -> Dict[str, float]:
+def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, memory=None) -> Dict[str, object]:
     """Prepare normalized signals for DecisionGate routing."""
     top_scores = [float(score) for _, score in (retrieved_blocks or [])[:2]]
     top1 = top_scores[0] if top_scores else 0.0
@@ -126,6 +143,9 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, me
 
     topic_is_first, current_turn_in_topic = is_first_response_on_topic(query, memory)
     emotional_signal = has_emotional_signal(query, state_analysis=state_analysis)
+    positive_feedback_signal = has_positive_feedback_signal(query)
+    contradiction_info = detect_contradiction(query)
+    contradiction_detected = bool(contradiction_info.get("has_contradiction", False))
 
     return {
         "local_similarity": local_similarity,
@@ -135,7 +155,12 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, me
         "explicit_ask": explicit_ask,
         "ask_type": "action" if explicit_ask else "reflection",
         "emotion_load": emotion_load,
+        # NOTE: keep routing contradiction disabled to avoid behavior regression.
         "contradiction": False,
+        "contradiction_detected": contradiction_detected,
+        "contradiction_declared": contradiction_info.get("declared"),
+        "contradiction_actual_signal": contradiction_info.get("actual_signal"),
+        "contradiction_suggestion": contradiction_info.get("suggestion", ""),
         "validation_needed": primary in {"confused", "overwhelmed"},
         "thinking_due": False,
         "intervention_cooldown_ok": True,
@@ -143,5 +168,6 @@ def detect_routing_signals(query: str, retrieved_blocks, state_analysis=None, me
         "is_first_response_on_topic": topic_is_first,
         "current_turn_in_topic": current_turn_in_topic,
         "has_emotional_signal": emotional_signal,
+        "positive_feedback_signal": positive_feedback_signal,
         "validation_first_enabled": True,
     }

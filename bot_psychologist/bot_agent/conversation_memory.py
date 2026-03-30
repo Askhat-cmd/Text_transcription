@@ -44,6 +44,7 @@ class ConversationMemory:
     
     def __init__(self, user_id: str = "default"):
         self.user_id = user_id
+        self.owner_user_id = user_id
         self.turns: List[ConversationTurn] = []
         self.metadata: Dict = {
             "created": datetime.now().isoformat(),
@@ -78,6 +79,7 @@ class ConversationMemory:
                     user_id=self.user_id,
                     metadata={"source": "conversation_memory"},
                 )
+                self.owner_user_id = self._resolve_owner_user_id()
             except Exception as exc:
                 logger.error(f"SessionManager init error: {exc}")
     
@@ -147,6 +149,11 @@ class ConversationMemory:
                 profile = metadata.get("sd_profile")
                 if isinstance(profile, dict):
                     self._sd_profile = profile
+                self.owner_user_id = (
+                    metadata.get("owner_user_id")
+                    or session_info.get("user_id")
+                    or self.owner_user_id
+                )
 
             restored_turns: List[ConversationTurn] = []
             for turn in turns_data:
@@ -182,6 +189,20 @@ class ConversationMemory:
         except Exception as exc:
             logger.error(f"[MEMORY] sqlite load failed user_id={self.user_id}: {exc}", exc_info=True)
             return False
+
+    def _resolve_owner_user_id(self) -> str:
+        """Resolve stable user id for cross-session summaries."""
+        if not self.session_manager:
+            return self.user_id
+        try:
+            payload = self.session_manager.load_session(self.user_id)
+            if not payload:
+                return self.user_id
+            info = payload.get("session_info", {}) or {}
+            metadata = info.get("metadata", {}) or {}
+            return str(metadata.get("owner_user_id") or info.get("user_id") or self.user_id)
+        except Exception:
+            return self.user_id
 
     def _restore_semantic_embeddings_from_session(self, payload: Dict[str, Any]) -> None:
         """Восстановить semantic embeddings из SQLite в runtime-кеш."""
@@ -276,6 +297,76 @@ class ConversationMemory:
             except Exception as exc:
                 logger.error(f"SessionManager working_state save error: {exc}")
         self.save_to_disk()
+
+    def save_session_summary(self, user_id: str, summary: dict) -> None:
+        """
+        Persist compact session summary for cross-session bootstrap.
+
+        summary = {
+            "session_id": str,
+            "date": str,
+            "key_themes": List[str],
+            "sd_level_end": str,
+            "state_end": str,
+            "notable_moments": List[str],
+        }
+        """
+        if not self.session_manager:
+            return
+
+        target_user_id = user_id or self.owner_user_id or self.user_id
+        payload = dict(summary or {})
+        payload.setdefault("session_id", self.user_id)
+        payload.setdefault("date", datetime.now().date().isoformat())
+        payload["key_themes"] = list(payload.get("key_themes", []))[:3]
+        payload["notable_moments"] = list(payload.get("notable_moments", []))[:3]
+
+        try:
+            self.session_manager.save_session_summary(target_user_id, payload)
+        except Exception as exc:
+            logger.error(f"[MEMORY] save_session_summary failed: {exc}", exc_info=True)
+
+    def load_cross_session_context(self, user_id: str, limit: int = 3) -> str:
+        """
+        Build text context from summaries of recent sessions.
+
+        Returns empty string when no summaries are available.
+        """
+        if not self.session_manager:
+            return ""
+
+        target_user_id = user_id or self.owner_user_id or self.user_id
+        try:
+            summaries = self.session_manager.load_recent_session_summaries(
+                target_user_id,
+                limit=limit,
+            )
+        except Exception as exc:
+            logger.error(f"[MEMORY] load_cross_session_context failed: {exc}", exc_info=True)
+            return ""
+
+        if not summaries:
+            return ""
+
+        lines: List[str] = []
+        for item in summaries:
+            themes = [str(theme).strip() for theme in (item.get("key_themes") or []) if str(theme).strip()]
+            state_end = str(item.get("state_end") or "").strip()
+            sd_end = str(item.get("sd_level_end") or "").strip()
+            parts: List[str] = []
+            if themes:
+                parts.append("темы: " + ", ".join(themes[:3]))
+            if state_end:
+                parts.append(f"состояние: {state_end}")
+            if sd_end:
+                parts.append(f"SD: {sd_end}")
+            if parts:
+                lines.append("- " + "; ".join(parts))
+
+        if not lines:
+            return ""
+
+        return "Из предыдущих сессий:\n" + "\n".join(lines[: max(1, min(limit, 3))])
     
     def add_turn(
         self,

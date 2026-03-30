@@ -44,6 +44,8 @@ from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
 from .feature_flags import feature_flags
+from .contradiction_detector import detect_contradiction
+from .progressive_rag import get_progressive_rag
 
 logger = logging.getLogger(__name__)
 
@@ -675,12 +677,29 @@ def _build_state_context(
     state_analysis: StateAnalysis,
     mode_prompt: str,
     sd_level: str = "GREEN",
+    contradiction_suggestion: str = "",
+    cross_session_context: str = "",
 ) -> str:
     recommendation = (
         state_analysis.recommendations[0]
         if state_analysis and state_analysis.recommendations
         else "Respond in a clear and grounded way."
     )
+    contradiction_block = ""
+    if contradiction_suggestion:
+        contradiction_block = (
+            "\nСИГНАЛ РАСХОЖДЕНИЯ:\n"
+            f"{contradiction_suggestion}\n"
+            "Отметь это мягко, без давления и без жёстких интерпретаций.\n"
+        )
+
+    cross_session_block = ""
+    if cross_session_context:
+        cross_session_block = (
+            "\nКОНТЕКСТ ИЗ ПРОШЛЫХ СЕССИЙ:\n"
+            f"{cross_session_context}\n"
+        )
+
     return f"""
 КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ:
 - Текущее состояние: {state_analysis.primary_state.value}
@@ -693,6 +712,8 @@ def _build_state_context(
 
 Адаптируй стиль ответа к уровню СД пользователя.
 SD-оверлей применяется автоматически через системный промт.
+{contradiction_block}
+{cross_session_block}
 
 РЕЖИМНАЯ ДИРЕКТИВА:
 {mode_prompt}
@@ -915,10 +936,17 @@ def answer_question_adaptive(
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
         conversation_context = memory.get_adaptive_context_text(query)
+        cross_session_context = ""
+        if hasattr(memory, "load_cross_session_context"):
+            cross_session_context = memory.load_cross_session_context(
+                getattr(memory, "owner_user_id", user_id),
+                limit=3,
+            )
         context_turns = len(memory.turns)
         memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
         if debug_trace is not None:
             debug_trace["turn_number"] = len(memory.turns) + 1
+            debug_trace["cross_session_context"] = _truncate_preview(cross_session_context, 500)
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
         
         # Парсим уровень пользователя
@@ -1087,8 +1115,21 @@ def answer_question_adaptive(
             debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
             debug_trace["user_state"] = state_analysis.primary_state.value
 
+        contradiction_info = detect_contradiction(query)
+        contradiction_hint = (
+            str(contradiction_info.get("suggestion", ""))
+            if contradiction_info.get("has_contradiction")
+            else ""
+        )
+
         decision_gate = DecisionGate()
         pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
+        pre_routing_signals["contradiction_detected"] = bool(
+            contradiction_info.get("has_contradiction", False)
+        )
+        pre_routing_signals["contradiction_suggestion"] = contradiction_hint
+        if debug_trace is not None:
+            debug_trace["contradiction"] = contradiction_info
         pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
         fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
         logger.info(
@@ -1139,6 +1180,8 @@ def answer_question_adaptive(
                 state_analysis,
                 mode_directive.prompt,
                 sd_level=sd_result.primary,
+                contradiction_suggestion=contradiction_hint,
+                cross_session_context=cross_session_context,
             )
             response_generator = ResponseGenerator()
             llm_system_preview = ""
@@ -1441,6 +1484,17 @@ def answer_question_adaptive(
                 f"({len(raw_retrieved_blocks)} -> {len(deduped_blocks)})"
             )
         raw_retrieved_blocks = deduped_blocks
+
+        progressive_rag = get_progressive_rag(str(config.BOT_DB_PATH))
+        try:
+            raw_retrieved_blocks = progressive_rag.rerank_by_weights(raw_retrieved_blocks)
+            if debug_trace is not None:
+                debug_trace["progressive_rag_enabled"] = True
+        except Exception as exc:
+            logger.warning(f"[PROGRESSIVE_RAG] rerank_by_weights failed: {exc}")
+            if debug_trace is not None:
+                debug_trace["progressive_rag_enabled"] = False
+                debug_trace["progressive_rag_error"] = str(exc)
         
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)
@@ -1600,6 +1654,19 @@ def answer_question_adaptive(
             adapted_blocks = blocks[:3]  # fallback
         if debug_trace is not None:
             debug_trace["blocks_after_cap"] = len(adapted_blocks)
+
+        if routing_signals.get("positive_feedback_signal"):
+            boosted_ids: List[str] = []
+            for block in adapted_blocks[:3]:
+                block_id = str(getattr(block, "block_id", "")).strip()
+                if not block_id:
+                    continue
+                progressive_rag.record_positive_feedback(block_id)
+                boosted_ids.append(block_id)
+            if boosted_ids:
+                logger.info("[PROGRESSIVE_RAG] positive feedback -> boosted blocks: %s", boosted_ids)
+            if debug_trace is not None:
+                debug_trace["progressive_rag_feedback_blocks"] = boosted_ids
         
         if debug_info is not None:
             debug_info["blocks_found"] = len(retrieved_blocks)
@@ -1684,6 +1751,8 @@ def answer_question_adaptive(
             state_analysis,
             mode_directive.prompt,
             sd_level=sd_result.primary,
+            contradiction_suggestion=contradiction_hint,
+            cross_session_context=cross_session_context,
         )
 
         # Генерация ответа (с учётом истории диалога)
@@ -1902,6 +1971,30 @@ def answer_question_adaptive(
             blocks_used=len(adapted_blocks),
             concepts=concepts
         )
+        try:
+            primary_interests = memory.get_primary_interests()
+            key_themes = []
+            for item in (concepts or []) + primary_interests:
+                text = str(item).strip()
+                if text and text not in key_themes:
+                    key_themes.append(text)
+            if hasattr(memory, "save_session_summary"):
+                memory.save_session_summary(
+                    user_id=getattr(memory, "owner_user_id", user_id),
+                    summary={
+                        "session_id": user_id,
+                        "date": datetime.now().date().isoformat(),
+                        "key_themes": key_themes[:3],
+                        "sd_level_end": sd_result.primary,
+                        "state_end": state_analysis.primary_state.value,
+                        "notable_moments": [
+                            f"Запрос: {_truncate_preview(query, 140)}",
+                            f"Ответ: {_truncate_preview(answer, 140)}",
+                        ],
+                    },
+                )
+        except Exception as exc:
+            logger.warning(f"[MEMORY] save_session_summary skipped: {exc}")
         
         # ================================================================
         # ФИНАЛЬНЫЙ РЕЗУЛЬТАТ
@@ -1956,6 +2049,8 @@ def answer_question_adaptive(
                 "sd_confidence": round(sd_result.confidence, 3),
                 "sd_method": sd_result.method,
                 "sd_allowed_blocks": sd_result.allowed_blocks,
+                "contradiction_detected": bool(contradiction_info.get("has_contradiction", False)),
+                "cross_session_context_used": bool(cross_session_context),
                 "summary_used": memory_trace_metrics["summary_used"],
                 "summary_length": len(memory.summary) if memory.summary else 0,
                 "summary_last_turn": memory.summary_updated_at,

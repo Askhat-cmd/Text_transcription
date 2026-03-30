@@ -59,9 +59,9 @@
 
 - [x] 5.1 Адаптивная длина ответа (`response_formatter.py`).
 - [x] 5.2 VALIDATION-first в маршрутизации (`decision_table.py`, `signal_detector.py`).
-- [ ] 5.3 Детектор противоречий (`contradiction_detector.py`).
-- [ ] 5.4 Cross-session summary memory (`conversation_memory.py` расширение).
-- [ ] 5.5 Progressive RAG (`progressive_rag.py`, веса блоков в SQLite).
+- [x] 5.3 Детектор противоречий (`contradiction_detector.py`).
+- [x] 5.4 Cross-session summary memory (`conversation_memory.py` расширение).
+- [x] 5.5 Progressive RAG (`progressive_rag.py`, веса блоков в SQLite).
 
 ## Лог выполнения
 
@@ -83,3 +83,6 @@
 - [x] Фаза 4.1/4.2/4.3/4.4: добавлен `config/feature_flags.py`, флаги подключены в retriever/state/sd/answer_adaptive, gate по независимому переключению пройден.
 - [x] Фаза 5.1: в `response_formatter.py` добавлен `calculate_target_length()` + ограничение ответа по числу предложений.
 - [x] Фаза 5.2: добавлено правило `VALIDATION_FIRST_NEW_TOPIC` (rule_id=100) через новые сигналы в `signal_detector.py`.
+- [x] Фаза 5.3: добавлен `contradiction_detector.py`; сигнал передаётся в `debug_trace` и `additional_system_context` без изменения routing.
+- [x] Фаза 5.4: добавлены `save_session_summary()` и `load_cross_session_context()` в `conversation_memory.py` + SQLite таблица `session_summaries` и тесты персистентности.
+- [x] Фаза 5.5: добавлен `progressive_rag.py` (SQLite `block_weights`), интеграция в retrieval до reranker и буст веса при позитивном сигнале.

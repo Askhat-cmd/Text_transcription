@@ -84,3 +84,62 @@ def test_conversation_memory_gdpr_purge(monkeypatch, tmp_path: Path) -> None:
 
     assert not json_path.exists()
     assert memory.session_manager.load_session(user_id) is None
+
+
+def test_load_cross_session_context_returns_empty_for_first_session(monkeypatch, tmp_path: Path) -> None:
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    monkeypatch.setattr(config, "CACHE_DIR", cache_dir)
+    monkeypatch.setattr(config, "ENABLE_SEMANTIC_MEMORY", False)
+    monkeypatch.setattr(config, "ENABLE_CONVERSATION_SUMMARY", False)
+    monkeypatch.setattr(config, "ENABLE_SESSION_STORAGE", True)
+    monkeypatch.setattr(config, "BOT_DB_PATH", tmp_path / "bot_sessions.db")
+
+    memory = ConversationMemory(user_id="session_first")
+    context = memory.load_cross_session_context(user_id="user_alpha", limit=3)
+    assert context == ""
+
+
+def test_cross_session_context_reads_recent_summaries(monkeypatch, tmp_path: Path) -> None:
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir(parents=True, exist_ok=True)
+
+    monkeypatch.setattr(config, "CACHE_DIR", cache_dir)
+    monkeypatch.setattr(config, "ENABLE_SEMANTIC_MEMORY", False)
+    monkeypatch.setattr(config, "ENABLE_CONVERSATION_SUMMARY", False)
+    monkeypatch.setattr(config, "ENABLE_SESSION_STORAGE", True)
+    monkeypatch.setattr(config, "BOT_DB_PATH", tmp_path / "bot_sessions.db")
+
+    owner_user_id = "user_cross"
+    memory_a = ConversationMemory(user_id="session_a")
+    memory_a.save_session_summary(
+        user_id=owner_user_id,
+        summary={
+            "session_id": "session_a",
+            "date": "2026-03-28",
+            "key_themes": ["избегание", "вина"],
+            "sd_level_end": "BLUE",
+            "state_end": "curious",
+            "notable_moments": ["Пользователь увидел триггер избегания"],
+        },
+    )
+
+    memory_b = ConversationMemory(user_id="session_b")
+    memory_b.save_session_summary(
+        user_id=owner_user_id,
+        summary={
+            "session_id": "session_b",
+            "date": "2026-03-29",
+            "key_themes": ["самооценка", "границы"],
+            "sd_level_end": "GREEN",
+            "state_end": "integrated",
+            "notable_moments": ["Зафиксирован рабочий шаг"],
+        },
+    )
+
+    context = memory_b.load_cross_session_context(user_id=owner_user_id, limit=3)
+    assert "Из предыдущих сессий" in context
+    assert "самооценка" in context
+    assert "избегание" in context
+    assert "SD: GREEN" in context

@@ -93,6 +93,23 @@ class SessionManager:
                 )
                 """
             )
+            conn.execute(
+                """
+                CREATE TABLE IF NOT EXISTS session_summaries (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id TEXT NOT NULL,
+                    session_id TEXT NOT NULL,
+                    summary_date TEXT NOT NULL,
+                    key_themes TEXT,
+                    sd_level_end TEXT,
+                    state_end TEXT,
+                    notable_moments TEXT,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL,
+                    UNIQUE (user_id, session_id)
+                )
+                """
+            )
             conn.execute("CREATE INDEX IF NOT EXISTS idx_sessions_user_id ON sessions(user_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_sessions_last_active ON sessions(last_active)")
             conn.execute(
@@ -100,6 +117,9 @@ class SessionManager:
             )
             conn.execute(
                 "CREATE INDEX IF NOT EXISTS idx_embeddings_session_id ON semantic_embeddings(session_id)"
+            )
+            conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_summaries_user_date ON session_summaries(user_id, summary_date DESC)"
             )
             self._migrate_schema(conn)
 
@@ -233,6 +253,85 @@ class SessionManager:
                 """,
                 (summary, self._utc_now_iso(), session_id),
             )
+
+    def save_session_summary(self, user_id: str, summary: Dict[str, Any]) -> None:
+        """Persist compact summary for cross-session context building."""
+        session_id = str(summary.get("session_id") or user_id)
+        summary_date = str(summary.get("date") or self._utc_now_iso()[:10])
+        key_themes = json.dumps(summary.get("key_themes", [])[:3], ensure_ascii=False)
+        notable_moments = json.dumps(summary.get("notable_moments", [])[:3], ensure_ascii=False)
+        sd_level_end = summary.get("sd_level_end")
+        state_end = summary.get("state_end")
+        now = self._utc_now_iso()
+
+        with self._connect() as conn:
+            conn.execute(
+                """
+                INSERT INTO session_summaries (
+                    user_id, session_id, summary_date, key_themes, sd_level_end,
+                    state_end, notable_moments, created_at, updated_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(user_id, session_id) DO UPDATE SET
+                    summary_date = excluded.summary_date,
+                    key_themes = excluded.key_themes,
+                    sd_level_end = excluded.sd_level_end,
+                    state_end = excluded.state_end,
+                    notable_moments = excluded.notable_moments,
+                    updated_at = excluded.updated_at
+                """,
+                (
+                    user_id,
+                    session_id,
+                    summary_date,
+                    key_themes,
+                    sd_level_end,
+                    state_end,
+                    notable_moments,
+                    now,
+                    now,
+                ),
+            )
+
+    def load_recent_session_summaries(self, user_id: str, limit: int = 3) -> List[Dict[str, Any]]:
+        """Load latest summaries for a user ordered by summary date."""
+        safe_limit = max(1, min(limit, 20))
+        with self._connect() as conn:
+            rows = conn.execute(
+                """
+                SELECT
+                    user_id,
+                    session_id,
+                    summary_date,
+                    key_themes,
+                    sd_level_end,
+                    state_end,
+                    notable_moments,
+                    updated_at
+                FROM session_summaries
+                WHERE user_id = ?
+                ORDER BY summary_date DESC, updated_at DESC
+                LIMIT ?
+                """,
+                (user_id, safe_limit),
+            ).fetchall()
+
+        summaries: List[Dict[str, Any]] = []
+        for row in rows:
+            summaries.append(
+                {
+                    "user_id": row["user_id"],
+                    "session_id": row["session_id"],
+                    "date": row["summary_date"],
+                    "key_themes": json.loads(row["key_themes"]) if row["key_themes"] else [],
+                    "sd_level_end": row["sd_level_end"],
+                    "state_end": row["state_end"],
+                    "notable_moments": (
+                        json.loads(row["notable_moments"]) if row["notable_moments"] else []
+                    ),
+                    "updated_at": row["updated_at"],
+                }
+            )
+        return summaries
 
     def load_session(self, session_id: str) -> Optional[Dict[str, Any]]:
         with self._connect() as conn:

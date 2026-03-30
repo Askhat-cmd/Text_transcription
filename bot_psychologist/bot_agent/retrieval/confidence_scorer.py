@@ -91,12 +91,34 @@ class ConfidenceScorer:
         Low confidence -> tighter context to avoid hallucinated synthesis.
         """
         count = max(0, int(available_blocks))
-        if count <= 1:
-            return count
         try:
             from ..config import config
-            # BUG v0.6.0: admin overrides TOP_K_BLOCKS, но cap брал RETRIEVAL_TOP_K
-            # из config.py и не реагировал на hot-reload. Используем TOP_K_BLOCKS.
-            return min(count, int(getattr(config, "TOP_K_BLOCKS", 5)))
+
+            cap_by_level = {
+                "high": int(getattr(config, "CONFIDENCE_CAP_HIGH", 7)),
+                "medium": int(getattr(config, "CONFIDENCE_CAP_MEDIUM", 5)),
+                "low": int(getattr(config, "CONFIDENCE_CAP_LOW", 3)),
+                "zero": int(getattr(config, "CONFIDENCE_CAP_ZERO", 0)),
+            }
+            level = (confidence_level or "medium").lower()
+            cap = max(0, int(cap_by_level.get(level, cap_by_level["medium"])))
+            applied = min(count, cap)
+            logger.info(
+                "[CONFIDENCE] cap applied level=%s cap=%s before=%s after=%s",
+                level,
+                cap,
+                count,
+                applied,
+            )
+            return applied
         except Exception:
-            return min(count, 5)
+            fallback_cap = 5
+            applied = min(count, fallback_cap)
+            logger.info(
+                "[CONFIDENCE] cap applied level=%s cap=%s before=%s after=%s",
+                confidence_level,
+                fallback_cap,
+                count,
+                applied,
+            )
+            return applied

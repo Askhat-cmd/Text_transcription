@@ -27,6 +27,7 @@ from bot_agent import (
     answer_question_adaptive
 )
 from bot_agent.config import config
+from bot_agent.data_loader import data_loader
 from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.decision import (
     DecisionGate,
@@ -2095,17 +2096,38 @@ async def health_check():
     - РЎС‚Р°С‚СѓСЃ РєР°Р¶РґРѕРіРѕ РјРѕРґСѓР»СЏ
     """
     
+    data_source = str(getattr(config, "DATA_SOURCE", "unknown") or "unknown")
+    degraded_mode = bool(getattr(config, "DEGRADED_MODE", False))
+    blocks_loaded = len(getattr(data_loader, "all_blocks", []) or [])
+
+    if degraded_mode:
+        status_value = "degraded"
+    elif data_source == "json_fallback":
+        status_value = "degraded_fallback"
+    else:
+        status_value = "healthy"
+
+    if data_source == "api":
+        bot_db_api_status = "available"
+    elif data_source in {"json_fallback", "degraded"}:
+        bot_db_api_status = "unavailable"
+    else:
+        bot_db_api_status = "unknown"
+
     return {
-        "status": "healthy",
-        "version": "0.5.0",
+        "status": status_value,
+        "version": "0.6.1",
         "timestamp": datetime.now().isoformat(),
+        "data_source": data_source,
+        "blocks_loaded": blocks_loaded,
+        "bot_data_base_api": bot_db_api_status,
         "modules": {
             "bot_agent": True,
             "conversation_memory": True,
             "state_classifier": True,
             "path_builder": True,
-            "api": True
-        }
+            "api": True,
+        },
     }
 
 

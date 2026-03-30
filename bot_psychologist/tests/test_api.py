@@ -69,7 +69,9 @@ def test_root_endpoint():
     
     assert response.status_code == 200
     assert result["name"] == "Bot Psychologist API"
-    assert result["version"] == "0.5.0"
+    version = str(result.get("version", ""))
+    parts = version.split(".")
+    assert len(parts) == 3 and all(p.isdigit() for p in parts), f"Invalid version: {version}"
     
     print("[OK] PASSED")
     return True

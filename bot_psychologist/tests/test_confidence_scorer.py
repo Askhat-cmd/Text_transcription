@@ -35,6 +35,7 @@ def test_confidence_scorer_high_level() -> None:
 
 def test_confidence_suggests_block_cap() -> None:
     scorer = ConfidenceScorer()
-    assert scorer.suggest_block_cap(5, "low") == 5
+    assert scorer.suggest_block_cap(5, "low") == 3
     assert scorer.suggest_block_cap(5, "medium") == 5
     assert scorer.suggest_block_cap(5, "high") == 5
+    assert scorer.suggest_block_cap(5, "zero") == 0

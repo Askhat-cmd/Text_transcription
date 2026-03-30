@@ -8,7 +8,7 @@ Simple TF-IDF Retriever
 
 import hashlib
 import logging
-import time
+from time import sleep
 from pathlib import Path
 from typing import List, Tuple, Optional
 
@@ -341,6 +341,41 @@ class SimpleRetriever:
         for chunk in chunks:
             results.append((self._chunk_to_block(chunk), float(chunk.score)))
         return results
+
+    def _api_retrieve_with_retry(
+        self,
+        query: str,
+        sd_level: int,
+        top_k: int,
+        author_id: Optional[str] = None,
+    ) -> List[Tuple[Block, float]]:
+        """
+        Retry API retrieval for transient connectivity/timeout issues.
+        """
+        max_attempts = 2
+        last_exc: Optional[DBApiUnavailableError] = None
+        for attempt in range(1, max_attempts + 1):
+            try:
+                return self._api_retrieve(
+                    query=query,
+                    sd_level=sd_level,
+                    top_k=top_k,
+                    author_id=author_id,
+                )
+            except DBApiUnavailableError as exc:
+                last_exc = exc
+                if exc.kind not in {"timeout", "connect", "http_status"} or attempt >= max_attempts:
+                    raise
+                logger.warning(
+                    "[RETRIEVAL] API retry %s/%s after transient error kind=%s",
+                    attempt,
+                    max_attempts,
+                    exc.kind,
+                )
+                sleep(0.2 * attempt)
+        if last_exc is not None:
+            raise last_exc
+        return []
     
     def retrieve(
         self,
@@ -367,13 +402,21 @@ class SimpleRetriever:
             query[:80], top_k, config.KNOWLEDGE_SOURCE
         )
 
+        degraded_mode = bool(getattr(config, "DEGRADED_MODE", False))
+        data_source = str(getattr(config, "DATA_SOURCE", "") or "").lower()
+        if degraded_mode and data_source == "degraded":
+            logger.warning(
+                "[RETRIEVER] DEGRADED_MODE active. Retrieval returns 0 blocks. reason=no_data_source"
+            )
+            return []
+
         # ================================================================
         # Новый путь: Bot_data_base HTTP API (cascading fallback)
         # Активируется только для KNOWLEDGE_SOURCE=api|chromadb
         # ================================================================
         if config.KNOWLEDGE_SOURCE in ("api", "chromadb"):
             try:
-                api_results = self._api_retrieve(
+                api_results = self._api_retrieve_with_retry(
                     query=query,
                     sd_level=sd_level,
                     top_k=top_k,
@@ -387,7 +430,7 @@ class SimpleRetriever:
                         "[RETRIEVAL] API 0 результатов с sd_level=%s → повтор без фильтра",
                         sd_level,
                     )
-                    api_results = self._api_retrieve(
+                    api_results = self._api_retrieve_with_retry(
                         query=query,
                         sd_level=0,
                         top_k=top_k,

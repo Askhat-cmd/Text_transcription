@@ -8,6 +8,7 @@ memory, and runtime toggles.
 """
 
 import os
+import logging
 from pathlib import Path
 from typing import Optional
 
@@ -17,6 +18,7 @@ from dotenv import load_dotenv
 _project_root = Path(__file__).parent.parent
 _env_path = _project_root / ".env"
 load_dotenv(_env_path)
+logger = logging.getLogger(__name__)
 
 
 class Config:
@@ -50,6 +52,8 @@ class Config:
     # Если задан — блоки читаются напрямую с диска (быстрее, без HTTP)
     # Если пустой — используется API fallback
     ALL_BLOCKS_MERGED_PATH: str = os.getenv("ALL_BLOCKS_MERGED_PATH", "")
+    DEGRADED_MODE: bool = os.getenv("DEGRADED_MODE", "False").lower() == "true"
+    DATA_SOURCE: str = os.getenv("DATA_SOURCE", "unknown")
 
     # === db_json mode paths ===
     DB_JSON_DIR: str = os.getenv("DB_JSON_DIR", "")
@@ -60,6 +64,10 @@ class Config:
     TOP_K_BLOCKS = RETRIEVAL_TOP_K
     MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.1"))
     AUTHOR_BLEND_MODE: str = os.getenv("AUTHOR_BLEND_MODE", "all")
+    CONFIDENCE_CAP_HIGH = int(os.getenv("CONFIDENCE_CAP_HIGH", "7"))
+    CONFIDENCE_CAP_MEDIUM = int(os.getenv("CONFIDENCE_CAP_MEDIUM", "5"))
+    CONFIDENCE_CAP_LOW = int(os.getenv("CONFIDENCE_CAP_LOW", "3"))
+    CONFIDENCE_CAP_ZERO = int(os.getenv("CONFIDENCE_CAP_ZERO", "0"))
 
     # === LLM ===
     LLM_MODEL = os.getenv("PRIMARY_MODEL", "gpt-4o-mini")

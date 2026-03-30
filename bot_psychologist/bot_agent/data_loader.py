@@ -8,6 +8,7 @@ Data Loader for SAG v2.0 JSON files
 
 import json
 import logging
+import threading
 from pathlib import Path
 from typing import List, Dict, Optional
 from dataclasses import dataclass, field
@@ -190,8 +191,67 @@ class DataLoader:
         
         self.loaded_at: Optional[datetime] = None
         self._is_loaded = False
+        self._load_lock = threading.Lock()
+        self._source = "unknown"
+
+    def _reset_collections(self) -> None:
+        """Очистить in-memory кэши перед полной перезагрузкой."""
+        self.documents = []
+        self.all_blocks = []
+        self._video_id_to_doc = {}
+        self._block_id_to_block = {}
+
+    def load(self) -> List[Block]:
+        """
+        Thread-safe загрузка данных с singleton-guard.
+
+        В параллельных вызовах реальная загрузка выполняется только один раз.
+        """
+        if self._is_loaded:
+            logger.info("[DATA_LOADER] cache_hit blocks=%s", len(self.all_blocks))
+            return self.all_blocks
+
+        with self._load_lock:
+            if self._is_loaded:
+                logger.info("[DATA_LOADER] cache_hit blocks=%s", len(self.all_blocks))
+                return self.all_blocks
+
+            self._reset_collections()
+            self._source = "unknown"
+            setattr(config, "DEGRADED_MODE", False)
+            setattr(config, "DATA_SOURCE", "unknown")
+
+            source = config.KNOWLEDGE_SOURCE
+            logger.info(f"📂 KNOWLEDGE_SOURCE={source}")
+
+            if source == "api":
+                self._load_from_api()
+            elif source == "chromadb":
+                self._load_from_chromadb()
+            elif source == "db_json":
+                self._load_from_db_json()
+                self._source = "db_json"
+            else:
+                self._load_from_sag_json()  # legacy
+                self._source = "json_legacy"
+
+            self._is_loaded = True
+            self.loaded_at = datetime.now()
+
+            if not self._source or self._source == "unknown":
+                self._source = source
+
+            setattr(config, "DATA_SOURCE", self._source)
+            setattr(config, "DEGRADED_MODE", self._source == "degraded")
+
+            logger.info(
+                f"✅ Загружено: {len(self.documents)} документов, "
+                f"{len(self.all_blocks)} блоков "
+                f"[source={self._source}]"
+            )
+            return self.all_blocks
     
-    def load_all_data(self) -> None:
+    def load_all_data(self) -> List[Block]:
         """
         Загрузить данные из настроенного источника знаний.
 
@@ -203,30 +263,18 @@ class DataLoader:
 
         Данные кэшируются в памяти. Повторный вызов не перезагружает данные.
         """
-        if self._is_loaded:
-            logger.info("✓ Данные уже загружены, используем кэш")
-            return
+        return self.load()
 
-        source = config.KNOWLEDGE_SOURCE
-        logger.info(f"📂 KNOWLEDGE_SOURCE={source}")
-
-        if source == "api":
-            logger.info(f"DB API url={getattr(config, 'BOT_DB_URL', '')}")
-            self._load_from_api()
-        elif source == "chromadb":
-            self._load_from_chromadb()
-        elif source == "db_json":
-            self._load_from_db_json()
-        else:
-            self._load_from_sag_json() # legacy
-
-        self._is_loaded = True
-        self.loaded_at = datetime.now()
-        logger.info(
-            f"✅ Загружено: {len(self.documents)} документов, "
-            f"{len(self.all_blocks)} блоков "
-            f"[source={source}]"
-        )
+    def reload(self) -> List[Block]:
+        """Принудительная перезагрузка данных (без рестарта процесса)."""
+        with self._load_lock:
+            self._is_loaded = False
+            self.loaded_at = None
+            self._source = "unknown"
+            setattr(config, "DEGRADED_MODE", False)
+            setattr(config, "DATA_SOURCE", "unknown")
+            self._reset_collections()
+        return self.load()
     
     def _load_single_document(self, json_path: Path) -> None:
         """
@@ -361,6 +409,7 @@ class DataLoader:
         """
         db_export_file = Path(config.DB_EXPORT_FILE) if config.DB_EXPORT_FILE else None
         db_json_dir = Path(config.DB_JSON_DIR) if config.DB_JSON_DIR else None
+        self._source = "db_json"
 
         if db_export_file and db_export_file.exists():
             logger.info(f"📖 DB_JSON: загрузка из файла {db_export_file}")
@@ -468,64 +517,62 @@ class DataLoader:
         В режиме api: загружает ВСЕ блоки из Bot_data_base через HTTP API.
         Использует db_api_client для получения всех блоков для построения TF-IDF индекса.
         """
-        try:
+        import requests
+
+        def _try_api_load() -> bool:
             from .db_api_client import DBApiClient
-            
+
             client = DBApiClient(
                 base_url=config.BOT_DB_URL,
                 timeout=float(getattr(config, "BOT_DB_TIMEOUT", 10.0)),
             )
             logger.info("[API] Загрузка всех блоков из Bot_data_base через HTTP API...")
-            
-            # Получаем все источники из реестра Bot_data_base
-            import requests
+
             registry_url = f"{client.base_url}/api/registry/"
             response = requests.get(registry_url, timeout=client.timeout)
             response.raise_for_status()
-            
+
             sources = response.json()
             if isinstance(sources, dict):
-                sources = sources.get('sources', [])
-            
+                sources = sources.get("sources", [])
+
             all_blocks = []
             logger.info(f"[API] Найдено {len(sources)} источников в реестре")
-            
-            # Загружаем блоки из каждого источника
+
             for source_data in sources:
-                source_id = source_data.get('source_id')
+                source_id = source_data.get("source_id")
                 if not source_id:
                     continue
-                    
+
                 try:
-                    # Пытаемся получить блоки через /api/blocks/{source_id}
                     blocks_url = f"{client.base_url}/api/blocks/{source_id}"
-                    response = requests.get(blocks_url, timeout=client.timeout)
-                    
-                    if response.status_code == 200:
-                        blocks_data = response.json()
+                    source_resp = requests.get(blocks_url, timeout=client.timeout)
+
+                    if source_resp.status_code == 200:
+                        blocks_data = source_resp.json()
                         if isinstance(blocks_data, dict):
-                            blocks_data = blocks_data.get('blocks', [])
-                        
-                        # Конвертируем данные в объекты Block
+                            blocks_data = blocks_data.get("blocks", [])
+
                         for block_data in blocks_data:
                             block = self._parse_api_block(block_data, source_data)
                             all_blocks.append(block)
-                        
+
                         logger.debug(f"[API] Источник '{source_id}': {len(blocks_data)} блоков")
                     else:
-                        logger.warning(f"[API] Не удалось загрузить блоки для источника '{source_id}': {response.status_code}")
-                        
-                except Exception as e:
-                    logger.warning(f"[API] Ошибка загрузки источника '{source_id}': {e}")
-            
+                        logger.warning(
+                            f"[API] Не удалось загрузить блоки для источника "
+                            f"'{source_id}': {source_resp.status_code}"
+                        )
+
+                except Exception as exc:
+                    logger.warning(f"[API] Ошибка загрузки источника '{source_id}': {exc}")
+
             if not all_blocks:
-                logger.error("[API] Не удалось загрузить ни одного блока через API")
-                return
-            
+                return False
+
             self.all_blocks = all_blocks
             self._block_id_to_block = {b.block_id: b for b in all_blocks}
 
-            # Группируем блоки в Document-объекты по document_title
             docs_map: Dict[str, List[Block]] = {}
             for b in all_blocks:
                 key = b.document_title or b.video_id or "unknown"
@@ -543,12 +590,53 @@ class DataLoader:
                 self._video_id_to_doc[title] = doc
 
             logger.info(
-                f"✅ API: {len(all_blocks)} блоков из "
-                f"{len(self.documents)} источников загружено"
+                f"✅ API: {len(all_blocks)} блоков из {len(self.documents)} "
+                f"источников загружено"
             )
-            
-        except Exception as e:
-            logger.error(f"❌ Ошибка загрузки из API: {e}", exc_info=True)
+            return True
+
+        # Уровень 1: API
+        try:
+            if _try_api_load():
+                self._source = "api"
+                logger.info("[DATA_LOADER] source=api blocks=%s", len(self.all_blocks))
+                return
+            logger.warning("[DATA_LOADER] API returned 0 blocks. Trying fallback.")
+        except (
+            requests.exceptions.Timeout,
+            requests.exceptions.ConnectionError,
+            requests.exceptions.RequestException,
+        ) as exc:
+            logger.warning("[DATA_LOADER] API unavailable: %s. Trying fallback.", exc)
+        except Exception as exc:
+            logger.error("[DATA_LOADER] API load failed: %s", exc, exc_info=True)
+
+        # Уровень 2: local merged JSON fallback
+        merged_path_raw = str(getattr(config, "ALL_BLOCKS_MERGED_PATH", "") or "").strip()
+        merged_path = Path(merged_path_raw) if merged_path_raw else None
+        if merged_path and merged_path.exists():
+            try:
+                self._parse_db_json_file(merged_path)
+                if self.all_blocks:
+                    self._source = "json_fallback"
+                    logger.warning(
+                        "[DATA_LOADER] source=json_fallback blocks=%s path=%s",
+                        len(self.all_blocks),
+                        merged_path,
+                    )
+                    return
+                logger.warning("[DATA_LOADER] json fallback returned 0 blocks path=%s", merged_path)
+            except Exception as exc:
+                logger.error("[DATA_LOADER] JSON fallback failed: %s", exc, exc_info=True)
+        else:
+            logger.warning("[DATA_LOADER] JSON fallback path missing: %s", merged_path_raw or "<empty>")
+
+        # Уровень 3: degraded mode
+        self._source = "degraded"
+        self._reset_collections()
+        logger.critical(
+            "[DATA_LOADER] DEGRADED_MODE: no blocks loaded. Bot will answer without context."
+        )
 
     def _parse_api_block(self, block_data: Dict, source_data: Dict) -> Block:
         """
@@ -643,6 +731,7 @@ class DataLoader:
                 f"✅ ChromaDB: {len(blocks)} блоков из "
                 f"{len(self.documents)} источников загружено"
             )
+            self._source = "chromadb"
         except Exception as e:
             logger.error(f"❌ Ошибка загрузки из ChromaDB: {e}", exc_info=True)
 
@@ -671,6 +760,8 @@ class DataLoader:
             "practice_blocks": practice_count,
             "loaded_at": self.loaded_at.isoformat() if self.loaded_at else None,
             "knowledge_source": config.KNOWLEDGE_SOURCE,
+            "data_source": self._source,
+            "degraded_mode": bool(getattr(config, "DEGRADED_MODE", False)),
             "sd_distribution": sd_distribution,
             "source_type_counts": source_type_counts,
         }

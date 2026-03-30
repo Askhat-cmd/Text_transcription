@@ -1,5 +1,21 @@
 # Changelog
 
+## v0.6.1-stability - 2026-03-30
+
+### Fixed
+- `bot_agent/data_loader.py`: добавлен thread-safe singleton guard (`load()`/`reload()`), устранена повторная загрузка при warmup.
+- `bot_agent/data_loader.py`: реализована fallback-цепочка `api -> json_fallback -> degraded` с диагностикой источника данных.
+- `bot_agent/retriever.py`: деградация включается только при реальном `data_source=degraded`; добавлен retry-wrapper для API retrieval.
+- `api/routes.py`: `/api/v1/health` возвращает `status`, `data_source`, `blocks_loaded`, `bot_data_base_api`.
+- `bot_agent/retrieval/confidence_scorer.py`: cap для уровней confidence переведён на runtime-конфиг (`high=7`, `medium=5`, `low=3`, `zero=0`) с логом применения.
+- `bot_agent/runtime_config.py`: добавлен `reload()` для обратной совместимости тестов/утилит.
+
+### Added
+- Новые тесты: `tests/test_data_loader_singleton.py`, `tests/test_data_loader_fallback.py`, `tests/test_confidence_cap.py`.
+
+### Tests
+- Прогнаны целевые и регрессионные наборы тестов для bugfix v0.6.1.
+
 ## v0.6.1 - 2026-03-30
 
 ### Added

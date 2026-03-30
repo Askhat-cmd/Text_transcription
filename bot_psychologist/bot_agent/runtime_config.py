@@ -17,6 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .config import Config
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
 
@@ -120,6 +121,34 @@ class RuntimeConfig(Config):
             "max": 1.0,
             "group": "retrieval",
             "label": "Мин. порог релевантности",
+        },
+        "CONFIDENCE_CAP_HIGH": {
+            "type": "int",
+            "min": 0,
+            "max": 20,
+            "group": "retrieval",
+            "label": "Cap блоков: confidence=high",
+        },
+        "CONFIDENCE_CAP_MEDIUM": {
+            "type": "int",
+            "min": 0,
+            "max": 20,
+            "group": "retrieval",
+            "label": "Cap блоков: confidence=medium",
+        },
+        "CONFIDENCE_CAP_LOW": {
+            "type": "int",
+            "min": 0,
+            "max": 20,
+            "group": "retrieval",
+            "label": "Cap блоков: confidence=low",
+        },
+        "CONFIDENCE_CAP_ZERO": {
+            "type": "int",
+            "min": 0,
+            "max": 20,
+            "group": "retrieval",
+            "label": "Cap блоков: confidence=zero",
         },
         "VOYAGE_ENABLED": {
             "type": "bool",
@@ -684,3 +713,38 @@ class RuntimeConfig(Config):
     def get_history(self) -> list:
         """Последние 50 изменений для отображения в UI."""
         return self._load_overrides().get("history", [])
+
+    def reload(self) -> None:
+        """
+        Backward-compatible config reload for tests/tools.
+
+        Перечитывает .env и обновляет основные runtime-поля без рестарта процесса.
+        """
+        env_path = Config.PROJECT_ROOT / ".env"
+        load_dotenv(env_path, override=True)
+
+        self.KNOWLEDGE_SOURCE = os.getenv("KNOWLEDGE_SOURCE", "json")
+        self.BOT_DB_URL = os.getenv("BOT_DB_URL", "http://localhost:8003")
+        self.BOT_DB_TIMEOUT = float(os.getenv("BOT_DB_TIMEOUT", "10.0"))
+        self.CHROMA_API_URL = os.getenv("CHROMA_API_URL", "http://localhost:8004")
+        self.CHROMA_COLLECTION = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
+        self.ALL_BLOCKS_MERGED_PATH = os.getenv("ALL_BLOCKS_MERGED_PATH", "")
+        self.DB_JSON_DIR = os.getenv("DB_JSON_DIR", "")
+        self.DB_EXPORT_FILE = os.getenv("DB_EXPORT_FILE", "")
+
+        self.RETRIEVAL_TOP_K = int(os.getenv("RETRIEVAL_TOP_K", "5"))
+        self.TOP_K_BLOCKS = self.RETRIEVAL_TOP_K
+        self.MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.1"))
+
+        self.CONFIDENCE_CAP_HIGH = int(os.getenv("CONFIDENCE_CAP_HIGH", "7"))
+        self.CONFIDENCE_CAP_MEDIUM = int(os.getenv("CONFIDENCE_CAP_MEDIUM", "5"))
+        self.CONFIDENCE_CAP_LOW = int(os.getenv("CONFIDENCE_CAP_LOW", "3"))
+        self.CONFIDENCE_CAP_ZERO = int(os.getenv("CONFIDENCE_CAP_ZERO", "0"))
+
+        self.DATA_SOURCE = os.getenv("DATA_SOURCE", "unknown")
+        self.DEGRADED_MODE = os.getenv("DEGRADED_MODE", "false").lower() == "true"
+
+        with self._lock:
+            RuntimeConfig._cache_mtime = 0.0
+
+        logger.info("[RuntimeConfig] reload complete")

@@ -124,6 +124,7 @@ desktop.ini
 *.tmp
 *.temp
 .git_commit_msg.txt
+backups/
 
 # TaskMaster (опционально, если не хотите коммитить задачи)
 # .taskmaster/tasks/

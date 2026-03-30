@@ -66,11 +66,14 @@ class DummyRetriever:
 
 
 class DummyReranker:
+    calls = 0
+
     def __init__(self, model="rerank-2", enabled=True) -> None:
         self.model = model
         self.enabled = enabled
 
     def rerank_pairs(self, _query, candidates, top_k=1):
+        DummyReranker.calls += 1
         if self.enabled:
             return list(candidates)[:top_k]
         return list(candidates)
@@ -112,7 +115,15 @@ def _make_blocks(count: int):
     ]
 
 
-def _setup_pipeline(monkeypatch, blocks, *, voyage_enabled: bool, fast_path: bool, sd_level: str = "ORANGE"):
+def _setup_pipeline(
+    monkeypatch,
+    blocks,
+    *,
+    voyage_enabled: bool,
+    fast_path: bool,
+    sd_level: str = "ORANGE",
+    reranker_enabled: bool = False,
+):
     dummy_memory = DummyMemory()
     dummy_retriever = DummyRetriever(blocks)
 
@@ -163,8 +174,13 @@ def _setup_pipeline(monkeypatch, blocks, *, voyage_enabled: bool, fast_path: boo
         lambda: {"config": {}, "prompts": {}, "meta": {}, "history": []},
     )
     monkeypatch.setattr(aa.config, "VOYAGE_ENABLED", voyage_enabled)
+    monkeypatch.setattr(aa.config, "RERANKER_ENABLED", reranker_enabled)
+    monkeypatch.setattr(aa.config, "RERANKER_CONFIDENCE_THRESHOLD", 0.55)
+    monkeypatch.setattr(aa.config, "RERANKER_MODE_WHITELIST", "THINKING,INTERVENTION")
+    monkeypatch.setattr(aa.config, "RERANKER_BLOCK_THRESHOLD", 8)
     monkeypatch.setattr(aa.config, "VOYAGE_TOP_K", 5)
     monkeypatch.setattr(aa.config, "TOP_K_BLOCKS", 5)
+    DummyReranker.calls = 0
 
     return dummy_retriever
 
@@ -197,6 +213,7 @@ def test_pipeline_voyage_disabled_fallback_still_caps(monkeypatch):
     trace = result["debug_trace"]
     assert trace["blocks_after_cap"] == 5
     assert trace.get("reranker_enabled") is False
+    assert trace.get("rerank_reason") == "reranker_disabled_by_flag"
 
 
 def test_pipeline_fast_path_skips_blocks(monkeypatch):
@@ -229,3 +246,27 @@ def test_sd_level_passed_to_retriever_and_prompt(monkeypatch):
     assert trace["blocks_after_cap"] == 5
     assert DummyResponseGenerator.last_call["sd_level"] == "ORANGE"
     assert retriever.last_sd_level == SD_LEVELS_ORDER.index("ORANGE") + 1
+
+
+def test_pipeline_conditional_reranker_skips_when_conditions_not_met(monkeypatch):
+    blocks = _make_blocks(5)
+    _setup_pipeline(
+        monkeypatch,
+        blocks,
+        voyage_enabled=False,
+        reranker_enabled=True,
+        fast_path=False,
+        sd_level="ORANGE",
+    )
+    monkeypatch.setattr(aa.config, "RERANKER_CONFIDENCE_THRESHOLD", 0.1)
+
+    result = aa.answer_question_adaptive(
+        query="Нужна краткая справка",
+        user_id="test_user",
+        debug=True,
+    )
+
+    trace = result["debug_trace"]
+    assert trace.get("rerank_should_run") is False
+    assert trace.get("rerank_reason") == "conditions_not_met"
+    assert DummyReranker.calls == 0

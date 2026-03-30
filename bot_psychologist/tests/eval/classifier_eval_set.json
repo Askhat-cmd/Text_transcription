@@ -1,0 +1,205 @@
+[
+  {
+    "id": "sd_param_test_heuristic_clean_cases_1",
+    "message": "Мне страшно умереть, не могу дышать, физически плохо",
+    "expected_primary": "BEIGE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_2",
+    "message": "Это чистое выживание, теряю сознание и не могу дышать",
+    "expected_primary": "BEIGE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_3",
+    "message": "У нас в семье так принято, предки и судьба важнее",
+    "expected_primary": "PURPLE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_4",
+    "message": "Боюсь сглазить, нужен ритуал и поддержка семьи",
+    "expected_primary": "PURPLE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_5",
+    "message": "Все достали, не буду терпеть, хочу уважения",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_6",
+    "message": "Они меня не уважают, должны мне, я хочу действовать",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_7",
+    "message": "Я должна была так не делать, чувствую вину и долг",
+    "expected_primary": "BLUE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_8",
+    "message": "Как положено, дисциплина важна, так нельзя нарушать",
+    "expected_primary": "BLUE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_9",
+    "message": "Нужен результат и эффективность, какая выгода и цель",
+    "expected_primary": "ORANGE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_10",
+    "message": "Хочу стратегию для карьеры: что это даст и как эффективно",
+    "expected_primary": "ORANGE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_11",
+    "message": "Не могу справиться с тревогой, хочу понять что чувствую",
+    "expected_primary": "GREEN",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_12",
+    "message": "Нужна поддержка и эмпатия, важно чувствую связь",
+    "expected_primary": "GREEN",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_13",
+    "message": "Замечаю паттерн, хочу увидеть контекст и систему",
+    "expected_primary": "YELLOW",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_14",
+    "message": "Это метанаблюдение и интеграция: замечаю что я повторяюсь",
+    "expected_primary": "YELLOW",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_15",
+    "message": "Чувствую единство, всё одно, это про целостность бытия",
+    "expected_primary": "TURQUOISE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_clean_cases_16",
+    "message": "Трансцендентность и планетарное единство дают ощущение целостности",
+    "expected_primary": "TURQUOISE",
+    "source": "test_sd_classifier.py::test_heuristic_clean_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_boundary_cases_1",
+    "message": "У нас в семье так принято, но я хочу другого - не знаю кого слушать",
+    "expected_primary": "PURPLE",
+    "source": "test_sd_classifier.py::test_heuristic_boundary_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_boundary_cases_2",
+    "message": "Хочу наказать, но понимаю что по правилам так нельзя",
+    "expected_primary": "BLUE",
+    "source": "test_sd_classifier.py::test_heuristic_boundary_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_boundary_cases_3",
+    "message": "Я всегда делал как положено, но результата нет и это неэффективно",
+    "expected_primary": "ORANGE",
+    "source": "test_sd_classifier.py::test_heuristic_boundary_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_boundary_cases_4",
+    "message": "Есть карьера и результат, но эффективность падает, хочу понять почему",
+    "expected_primary": "ORANGE",
+    "source": "test_sd_classifier.py::test_heuristic_boundary_cases"
+  },
+  {
+    "id": "sd_param_test_heuristic_boundary_cases_5",
+    "message": "Чувствую тревогу, но замечаю паттерн и контекст реакции",
+    "expected_primary": "YELLOW",
+    "source": "test_sd_classifier.py::test_heuristic_boundary_cases"
+  },
+  {
+    "id": "sd_not_red_1",
+    "message": "хочу разобраться в нейросталкинге",
+    "expected_any_of": [
+      "GREEN",
+      "YELLOW",
+      "ORANGE"
+    ],
+    "source": "test_sd_classifier.py::test_heuristic_not_red_intellectual_search"
+  },
+  {
+    "id": "sd_not_red_2",
+    "message": "хочу понять себя",
+    "expected_any_of": [
+      "GREEN",
+      "YELLOW"
+    ],
+    "source": "test_sd_classifier.py::test_heuristic_not_red_intellectual_search"
+  },
+  {
+    "id": "sd_not_red_3",
+    "message": "хочу изучить тему глубже",
+    "expected_any_of": [
+      "GREEN",
+      "YELLOW",
+      "ORANGE"
+    ],
+    "source": "test_sd_classifier.py::test_heuristic_not_red_intellectual_search"
+  },
+  {
+    "id": "sd_not_red_4",
+    "message": "интересно узнать больше",
+    "expected_any_of": [
+      "GREEN",
+      "YELLOW"
+    ],
+    "source": "test_sd_classifier.py::test_heuristic_not_red_intellectual_search"
+  },
+  {
+    "id": "sd_not_red_5",
+    "message": "объясни как это работает",
+    "expected_any_of": [
+      "GREEN",
+      "ORANGE"
+    ],
+    "source": "test_sd_classifier.py::test_heuristic_not_red_intellectual_search"
+  },
+  {
+    "id": "sd_red_1",
+    "message": "меня все бесит",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_red_aggression_markers"
+  },
+  {
+    "id": "sd_red_2",
+    "message": "ненавижу когда так делают",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_red_aggression_markers"
+  },
+  {
+    "id": "sd_red_3",
+    "message": "все должны мне",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_red_aggression_markers"
+  },
+  {
+    "id": "sd_red_4",
+    "message": "хочу прямо сейчас и немедленно",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_red_aggression_markers"
+  },
+  {
+    "id": "sd_red_5",
+    "message": "никто не понимает меня",
+    "expected_primary": "RED",
+    "source": "test_sd_classifier.py::test_heuristic_red_aggression_markers"
+  }
+]

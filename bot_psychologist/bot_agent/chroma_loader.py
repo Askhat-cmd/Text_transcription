@@ -24,13 +24,16 @@ ChromaLoader — HTTP-клиент к Bot_data_base API
 """
 
 import logging
+import re
+from datetime import datetime
 from pathlib import Path
-from typing import List, Optional, Dict, Tuple
+from typing import List, Optional, Dict, Tuple, Any
 
 import requests
 
 from .data_loader import Block, _detect_block_type
 from .config import config
+from .embedding_provider import create_embedding_provider
 
 logger = logging.getLogger(__name__)
 
@@ -244,6 +247,106 @@ class ChromaLoader:
         self._query_endpoint_available = None
         self._blocks_endpoint_available = None
         logger.info("[CHROMA] Кэш блоков и endpoint-проверок сброшен")
+
+    def rebuild_parallel_collection(
+        self,
+        *,
+        confirm: bool = False,
+        backup_tag: str = "pre-migration",
+        collection_prefix: str = "psychologist",
+        persist_path: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """
+        Безопасная переиндексация блоков в отдельную локальную Chroma-коллекцию.
+
+        - Запуск только с confirm=True.
+        - Проверяет, что в корне mono-репозитория есть backup с указанным тегом.
+        - Создает новую коллекцию psychologist_<model_tag> (или *_timestamp, если имя занято).
+        - Старые коллекции не удаляются.
+        """
+        if not confirm:
+            raise ValueError(
+                "Переиндексация заблокирована: сначала сделайте backup и затем повторите с --confirm."
+            )
+
+        repo_root = Path(__file__).resolve().parents[2]
+        backups_dir = repo_root / "backups"
+        backup_candidates = sorted(backups_dir.glob(f"chroma_{backup_tag}_*")) if backups_dir.exists() else []
+        if not backup_candidates:
+            raise ValueError(
+                f"Не найден backup с тегом '{backup_tag}' в {backups_dir}. "
+                "Без backup переиндексация запрещена."
+            )
+
+        blocks = self.get_all_blocks()
+        if not blocks:
+            raise RuntimeError("Нет блоков для переиндексации")
+
+        provider = create_embedding_provider(
+            model_name=str(getattr(config, "EMBEDDING_MODEL", "")),
+            device=str(getattr(config, "EMBEDDING_DEVICE", "auto")),
+        )
+        model_tag = re.sub(r"[^a-zA-Z0-9_-]+", "-", provider.model_name().split("/")[-1]).strip("-").lower()
+        if not model_tag:
+            model_tag = "embedding"
+
+        base_collection_name = f"{collection_prefix}_{model_tag}"
+        chroma_path = Path(persist_path) if persist_path else (Path(config.PROJECT_ROOT) / "data" / "chroma_rebuild")
+        chroma_path.mkdir(parents=True, exist_ok=True)
+
+        try:
+            import chromadb
+            from chromadb.config import Settings
+        except Exception as exc:
+            raise RuntimeError("Для rebuild нужен пакет chromadb в окружении bot_psychologist") from exc
+
+        client = chromadb.PersistentClient(path=str(chroma_path), settings=Settings(anonymized_telemetry=False))
+        collection = client.get_or_create_collection(name=base_collection_name)
+        collection_name = base_collection_name
+        if collection.count() > 0:
+            collection_name = f"{base_collection_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            collection = client.get_or_create_collection(name=collection_name)
+
+        batch_size = 128
+        indexed = 0
+        seen_ids: set[str] = set()
+        for start in range(0, len(blocks), batch_size):
+            batch = blocks[start : start + batch_size]
+            texts = [b.content or b.summary or b.title for b in batch]
+            embeddings = provider.embed_passages(texts)
+            ids: List[str] = []
+            metadatas = []
+            for i, b in enumerate(batch):
+                block_id = b.block_id or f"{collection_name}:{start + i}"
+                if block_id in seen_ids:
+                    block_id = f"{block_id}:{start + i}"
+                seen_ids.add(block_id)
+                ids.append(block_id)
+                metadatas.append(
+                    {
+                        "block_id": block_id,
+                        "title": b.title,
+                        "source_type": b.source_type,
+                        "author_id": b.author_id,
+                        "author": b.author,
+                        "sd_level": b.sd_level,
+                        "source_title": b.document_title,
+                        "chunk_index": int(b.chunk_index or 0),
+                        "language": b.language,
+                    }
+                )
+            collection.add(ids=ids, documents=texts, embeddings=embeddings, metadatas=metadatas)
+            indexed += len(batch)
+
+        result = {
+            "collection_name": collection_name,
+            "model_name": provider.model_name(),
+            "indexed_blocks": indexed,
+            "persist_path": str(chroma_path),
+            "backup_used": str(backup_candidates[-1]),
+        }
+        logger.info("[CHROMA] rebuild complete: %s", result)
+        return result
 
     # ------------------------------------------------------------------ #
     #  Internal helpers                                                    #

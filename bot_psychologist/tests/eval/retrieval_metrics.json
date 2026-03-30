@@ -1,0 +1,181 @@
+{
+  "timestamp": "2026-03-30T08:23:57.285921Z",
+  "eval_set": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\eval\\retrieval_eval_set.json",
+  "total_queries": 20,
+  "top_k": 5,
+  "recall_at_k": 1.0,
+  "mrr": 1.0,
+  "note": "coverage proxy metric (non-empty retrieval), replace with relevance labels for strict IR eval",
+  "details": [
+    {
+      "id": "retrieval_001",
+      "query": "Что такое осознавание?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_api.py:103"
+    },
+    {
+      "id": "retrieval_002",
+      "query": "Как медитировать?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_api.py:143"
+    },
+    {
+      "id": "retrieval_003",
+      "query": "Как интегрировать инсайт в повседневную жизнь?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_phase4.py:50"
+    },
+    {
+      "id": "retrieval_004",
+      "query": "Почему я застрял в практике? Ничего не меняется, топчусь на месте.",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_phase4.py:56"
+    },
+    {
+      "id": "retrieval_005",
+      "query": "Я внезапно понял связь между паттернами и сознанием! Это был настоящий инсайт.",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_phase4.py:62"
+    },
+    {
+      "id": "retrieval_006",
+      "query": "Что такое осознанность?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_retrieval_pipeline_simplified.py:176"
+    },
+    {
+      "id": "retrieval_007",
+      "query": "Почему так происходит?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_retrieval_pipeline_simplified.py:191"
+    },
+    {
+      "id": "retrieval_008",
+      "query": "привет",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_retrieval_pipeline_simplified.py:206"
+    },
+    {
+      "id": "retrieval_009",
+      "query": "Хочу понять свои паттерны избегания.",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_retrieval_pipeline_simplified.py:222"
+    },
+    {
+      "id": "retrieval_010",
+      "query": "Мне страшно, всё плохо, не знаю что делать",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_sd_integration.py:148"
+    },
+    {
+      "id": "retrieval_011",
+      "query": "Но что мне делать дальше?",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "test_signal_detector.py:12"
+    },
+    {
+      "id": "retrieval_012",
+      "query": "Мне страшно умереть, не могу дышать, физически плохо",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_013",
+      "query": "Это чистое выживание, теряю сознание и не могу дышать",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_014",
+      "query": "У нас в семье так принято, предки и судьба важнее",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_015",
+      "query": "Боюсь сглазить, нужен ритуал и поддержка семьи",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_016",
+      "query": "Все достали, не буду терпеть, хочу уважения",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_017",
+      "query": "Они меня не уважают, должны мне, я хочу действовать",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_018",
+      "query": "Я должна была так не делать, чувствую вину и долг",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_019",
+      "query": "Как положено, дисциплина важна, так нельзя нарушать",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    },
+    {
+      "id": "retrieval_020",
+      "query": "Нужен результат и эффективность, какая выгода и цель",
+      "found": 5,
+      "min_results": 1,
+      "hit": true,
+      "source": "classifier_eval_set"
+    }
+  ],
+  "comparison": {
+    "baseline_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\eval\\baseline.json",
+    "baseline_recall_at_5": 1.0,
+    "baseline_mrr": 1.0,
+    "current_recall_at_k": 1.0,
+    "current_mrr": 1.0,
+    "delta_recall": 0.0,
+    "delta_mrr": 0.0,
+    "pass_gate": true
+  }
+}

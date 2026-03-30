@@ -18,11 +18,12 @@ import numpy as np
 from .data_loader import data_loader, Block
 from .config import config
 from .db_api_client import DBApiClient, DBApiUnavailableError, RetrievedChunk
+from .embedding_provider import create_embedding_provider
 from .sd_classifier import SD_LEVELS_ORDER
 
 logger = logging.getLogger(__name__)
 
-CACHE_FORMAT_VERSION = "4.0.0"  # bumped: universal Block + ChromaDB support
+CACHE_FORMAT_VERSION = "4.1.0"  # semantic fallback embeddings + model-aware cache
 CACHE_DIR = config.CACHE_DIR
 TFIDF_CACHE_PATH = CACHE_DIR / "tfidf_cache.joblib"
 TFIDF_HASH_PATH = CACHE_DIR / "tfidf_cache.hash"
@@ -45,7 +46,10 @@ class SimpleRetriever:
     def __init__(self):
         self.vectorizer = None
         self.tfidf_matrix = None
+        self.semantic_matrix = None
         self.blocks: List[Block] = []
+        self._embedding_provider = None
+        self._semantic_ready = False
         self._is_built = False
         self.db_client = DBApiClient(
             base_url=config.BOT_DB_URL,
@@ -71,6 +75,7 @@ class SimpleRetriever:
         hasher = hashlib.md5()
         hasher.update(CACHE_FORMAT_VERSION.encode())
         hasher.update(config.KNOWLEDGE_SOURCE.encode())
+        hasher.update(str(getattr(config, "EMBEDDING_MODEL", "")).encode())
 
         if config.KNOWLEDGE_SOURCE == "json":
             for file_path in sorted(
@@ -120,6 +125,15 @@ class SimpleRetriever:
                     self.vectorizer = cached.get("vectorizer")
                     self.tfidf_matrix = cached.get("matrix")
                     self.blocks = cached.get("blocks", [])
+                    cached_model = cached.get("embedding_model")
+                    if cached_model == str(getattr(config, "EMBEDDING_MODEL", "")):
+                        semantic = cached.get("semantic_matrix")
+                        if semantic is not None:
+                            self.semantic_matrix = np.asarray(semantic, dtype=np.float32)
+                            self._semantic_ready = bool(self.semantic_matrix.size)
+                    else:
+                        self.semantic_matrix = None
+                        self._semantic_ready = False
                     self._is_built = True
                     logger.info("[RETRIEVAL] TF-IDF loaded from cache (hash match)")
                     return
@@ -128,6 +142,7 @@ class SimpleRetriever:
 
         logger.info("[RETRIEVAL] building TF-IDF index")
         self._build_tfidf()
+        self._build_semantic_index()
 
         if not self.blocks or self.tfidf_matrix is None:
             logger.warning("[RETRIEVAL] no blocks to cache; skipping TF-IDF cache save")
@@ -139,6 +154,8 @@ class SimpleRetriever:
                     "vectorizer": self.vectorizer,
                     "matrix": self.tfidf_matrix,
                     "blocks": self.blocks,
+                    "semantic_matrix": self.semantic_matrix,
+                    "embedding_model": str(getattr(config, "EMBEDDING_MODEL", "")),
                     "cache_version": CACHE_FORMAT_VERSION,
                 },
                 TFIDF_CACHE_PATH,
@@ -175,6 +192,84 @@ class SimpleRetriever:
         self.tfidf_matrix = self.vectorizer.fit_transform(texts)
         self._is_built = True
         logger.info("[RETRIEVAL] index built for %s blocks", len(self.blocks))
+
+    @staticmethod
+    def _normalize_vectors(vectors: np.ndarray) -> np.ndarray:
+        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        norms[norms == 0.0] = 1.0
+        return vectors / norms
+
+    def _get_embedding_provider(self):
+        if self._embedding_provider is None:
+            self._embedding_provider = create_embedding_provider(
+                model_name=str(getattr(config, "EMBEDDING_MODEL", "")),
+                device=str(getattr(config, "EMBEDDING_DEVICE", "auto")),
+            )
+        return self._embedding_provider
+
+    def _build_semantic_index(self) -> None:
+        self.semantic_matrix = None
+        self._semantic_ready = False
+        if not self.blocks:
+            return
+
+        try:
+            provider = self._get_embedding_provider()
+            texts = [b.get_search_text() for b in self.blocks]
+            vectors = provider.embed_passages(texts)
+            matrix = np.asarray(vectors, dtype=np.float32)
+            if matrix.ndim != 2 or matrix.shape[0] != len(self.blocks):
+                logger.warning("[RETRIEVAL] semantic index skipped: invalid embedding shape=%s", getattr(matrix, "shape", None))
+                return
+            self.semantic_matrix = self._normalize_vectors(matrix)
+            self._semantic_ready = True
+            logger.info(
+                "[RETRIEVAL] semantic index built: model=%s dim=%s blocks=%s",
+                provider.model_name(),
+                self.semantic_matrix.shape[1],
+                self.semantic_matrix.shape[0],
+            )
+        except Exception as exc:
+            logger.warning("[RETRIEVAL] semantic index unavailable, fallback to TF-IDF only: %s", exc)
+
+    def _semantic_fallback(self, query: str, top_k: int) -> List[Tuple[Block, float]]:
+        if not self._is_built:
+            self.build_index()
+        if not self._semantic_ready or self.semantic_matrix is None:
+            return []
+        try:
+            provider = self._get_embedding_provider()
+            query_vec = np.asarray(provider.embed_query(query), dtype=np.float32)
+            if query_vec.ndim != 1:
+                query_vec = query_vec.reshape(-1)
+            norm = np.linalg.norm(query_vec)
+            if norm == 0.0:
+                return []
+            query_vec = query_vec / norm
+            similarities = self.semantic_matrix @ query_vec
+            top_indices = np.argsort(-similarities)[: top_k * 2]
+            results: List[Tuple[Block, float]] = []
+            for idx in top_indices:
+                score = float(similarities[idx])
+                if score >= config.MIN_RELEVANCE_SCORE:
+                    results.append((self.blocks[idx], score))
+                if len(results) >= top_k:
+                    break
+            if results:
+                logger.info("[RETRIEVAL] semantic fallback found %s blocks", len(results))
+                for i, (block, score) in enumerate(results[:10], start=1):
+                    title = (block.title or "")[:60]
+                    logger.info(
+                        "[RETRIEVAL]   [%s] score=%.4f block_id=%s title=%s",
+                        i,
+                        score,
+                        block.block_id,
+                        title,
+                    )
+            return results
+        except Exception as exc:
+            logger.warning("[RETRIEVAL] semantic fallback failed: %s", exc)
+            return []
 
     @staticmethod
     def _sd_int_to_name(value: int) -> Optional[str]:
@@ -310,6 +405,9 @@ class SimpleRetriever:
                         exc.kind,
                         exc,
                     )
+            semantic_results = self._semantic_fallback(query, top_k)
+            if semantic_results:
+                return semantic_results
         # ================================================================
 
         return self._tfidf_fallback(query, top_k)

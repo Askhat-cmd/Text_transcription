@@ -40,6 +40,7 @@ from .decision import (
     resolve_user_stage,
 )
 from .retrieval import HybridQueryBuilder, VoyageReranker
+from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
 
@@ -63,7 +64,7 @@ def _build_config_snapshot(cfg, user_level: str) -> Dict[str, object]:
         "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
         "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65),
         "fast_path_enabled": True,
-        "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False)),
+        "rerank_enabled": bool(getattr(cfg, "VOYAGE_ENABLED", False) or getattr(cfg, "RERANKER_ENABLED", False)),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
         "user_level": str(user_level or "beginner"),
     }
@@ -1322,8 +1323,9 @@ def answer_question_adaptive(
                 debug_trace["primary_model"] = config.LLM_MODEL
                 debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
                 debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-                debug_trace["reranker_model"] = config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None
-                debug_trace["reranker_enabled"] = bool(config.VOYAGE_ENABLED)
+                reranker_enabled = bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED)
+                debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
+                debug_trace["reranker_enabled"] = reranker_enabled
                 debug_trace["tokens_prompt"] = tokens_prompt
                 debug_trace["tokens_completion"] = tokens_completion
                 debug_trace["tokens_total"] = tokens_total
@@ -1433,12 +1435,28 @@ def answer_question_adaptive(
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
-        reranker = VoyageReranker(
-            model=config.VOYAGE_MODEL,
-            enabled=config.VOYAGE_ENABLED,
+        pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
+        pre_rerank_routing = decision_gate.route(pre_rerank_signals, user_stage=user_stage)
+        rerank_flags = {
+            "legacy_always_on": bool(config.VOYAGE_ENABLED and not config.RERANKER_ENABLED),
+            "RERANKER_ENABLED": bool(config.RERANKER_ENABLED),
+            "RERANKER_CONFIDENCE_THRESHOLD": float(config.RERANKER_CONFIDENCE_THRESHOLD),
+            "RERANKER_MODE_WHITELIST": str(config.RERANKER_MODE_WHITELIST),
+            "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
+        }
+        should_run_rerank, rerank_reason = should_rerank(
+            confidence_score=pre_rerank_routing.confidence_score,
+            routing_mode=pre_rerank_routing.mode,
+            retrieved_block_count=len(retrieved_blocks),
+            flags=rerank_flags,
         )
         rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
-        if rerank_k > 0:
+        rerank_applied = False
+        if should_run_rerank and rerank_k > 0:
+            reranker = VoyageReranker(
+                model=config.VOYAGE_MODEL,
+                enabled=bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED),
+            )
             current_stage = "rerank"
             reranked, rerank_stage = _timed(
                 "rerank",
@@ -1448,19 +1466,22 @@ def answer_question_adaptive(
                 retrieved_blocks,
                 top_k=rerank_k,
             )
+            rerank_applied = True
             if debug_trace is not None:
                 pipeline_stages.append(rerank_stage)
             if reranked:
                 retrieved_blocks = reranked
-                voyage_active = bool(config.VOYAGE_ENABLED and config.VOYAGE_API_KEY)
+                voyage_active = bool((config.VOYAGE_ENABLED or config.RERANKER_ENABLED) and config.VOYAGE_API_KEY)
                 if voyage_active:
                     logger.info("[VOYAGE] rerank success, top_k=%s", rerank_k)
                 else:
                     logger.info("[VOYAGE] rerank skipped (disabled)")
-        elif debug_trace is not None:
-            pipeline_stages.append(
-                {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
-            )
+        else:
+            if debug_trace is not None:
+                pipeline_stages.append(
+                    {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
+                )
+            logger.info("[RERANK] skipped: %s", rerank_reason)
         reranked_blocks_for_trace = list(retrieved_blocks)
 
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis)
@@ -1491,6 +1512,9 @@ def answer_question_adaptive(
             debug_trace["block_cap"] = block_cap
             debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
             debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
+            debug_trace["rerank_should_run"] = bool(should_run_rerank)
+            debug_trace["rerank_reason"] = rerank_reason
+            debug_trace["rerank_applied"] = bool(rerank_applied)
 
         if not retrieved_blocks:
             response = _build_partial_response(
@@ -1609,8 +1633,11 @@ def answer_question_adaptive(
                 ],
             }
             debug_info["voyage_rerank"] = {
-                "enabled": bool(config.VOYAGE_ENABLED),
+                "enabled": bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED),
                 "top_k": rerank_k,
+                "should_run": bool(should_run_rerank),
+                "reason": rerank_reason,
+                "applied": bool(rerank_applied),
                 "confidence_block_cap": block_cap,
             }
             debug_info["routing"] = {
@@ -1937,8 +1964,9 @@ def answer_question_adaptive(
             debug_trace["primary_model"] = config.LLM_MODEL
             debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
             debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-            debug_trace["reranker_model"] = config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None
-            debug_trace["reranker_enabled"] = bool(config.VOYAGE_ENABLED)
+            reranker_enabled = bool(config.VOYAGE_ENABLED or config.RERANKER_ENABLED)
+            debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
+            debug_trace["reranker_enabled"] = reranker_enabled
             # FIX 2a: агрегация токенов из llm_calls для fallback
             llm_calls_list = debug_trace.get("llm_calls", [])
             total_prompt = sum(c.get("tokens_prompt") or 0 for c in llm_calls_list)

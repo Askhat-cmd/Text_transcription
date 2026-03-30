@@ -1,0 +1,21 @@
+{
+  "date": "2026-03-30",
+  "embedding_model": "paraphrase-multilingual-MiniLM-L12-v2",
+  "retrieval": {
+    "recall_at_5": 1.0,
+    "mrr": 1.0,
+    "note": "proxy metric: non-empty top-5 retrieval coverage on eval queries",
+    "sample_size": 20
+  },
+  "classifiers": {
+    "sd_classifier_accuracy_at_1": 1.0,
+    "state_classifier_accuracy_at_1": 1.0,
+    "note": "state metric proxy from routing test-cases",
+    "sample_size_sd": 31,
+    "sample_size_state_proxy": 4
+  },
+  "routing": {
+    "mode_accuracy": 1.0,
+    "sample_size": 4
+  }
+}

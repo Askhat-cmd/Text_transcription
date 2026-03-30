@@ -1,0 +1,162 @@
+[
+  {
+    "id": "retrieval_001",
+    "query": "Что такое осознавание?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_api.py:103"
+  },
+  {
+    "id": "retrieval_002",
+    "query": "Как медитировать?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_api.py:143"
+  },
+  {
+    "id": "retrieval_003",
+    "query": "Как интегрировать инсайт в повседневную жизнь?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_phase4.py:50"
+  },
+  {
+    "id": "retrieval_004",
+    "query": "Почему я застрял в практике? Ничего не меняется, топчусь на месте.",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_phase4.py:56"
+  },
+  {
+    "id": "retrieval_005",
+    "query": "Я внезапно понял связь между паттернами и сознанием! Это был настоящий инсайт.",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_phase4.py:62"
+  },
+  {
+    "id": "retrieval_006",
+    "query": "Что такое осознанность?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_retrieval_pipeline_simplified.py:176"
+  },
+  {
+    "id": "retrieval_007",
+    "query": "Почему так происходит?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_retrieval_pipeline_simplified.py:191"
+  },
+  {
+    "id": "retrieval_008",
+    "query": "привет",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_retrieval_pipeline_simplified.py:206"
+  },
+  {
+    "id": "retrieval_009",
+    "query": "Хочу понять свои паттерны избегания.",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_retrieval_pipeline_simplified.py:222"
+  },
+  {
+    "id": "retrieval_010",
+    "query": "Мне страшно, всё плохо, не знаю что делать",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_sd_integration.py:148"
+  },
+  {
+    "id": "retrieval_011",
+    "query": "Но что мне делать дальше?",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "test_signal_detector.py:12"
+  },
+  {
+    "id": "retrieval_012",
+    "query": "Мне страшно умереть, не могу дышать, физически плохо",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_013",
+    "query": "Это чистое выживание, теряю сознание и не могу дышать",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_014",
+    "query": "У нас в семье так принято, предки и судьба важнее",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_015",
+    "query": "Боюсь сглазить, нужен ритуал и поддержка семьи",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_016",
+    "query": "Все достали, не буду терпеть, хочу уважения",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_017",
+    "query": "Они меня не уважают, должны мне, я хочу действовать",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_018",
+    "query": "Я должна была так не делать, чувствую вину и долг",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_019",
+    "query": "Как положено, дисциплина важна, так нельзя нарушать",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  },
+  {
+    "id": "retrieval_020",
+    "query": "Нужен результат и эффективность, какая выгода и цель",
+    "expected": {
+      "min_results": 1
+    },
+    "source": "classifier_eval_set"
+  }
+]

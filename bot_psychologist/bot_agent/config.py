@@ -120,13 +120,18 @@ class Config:
     SEMANTIC_SEARCH_TOP_K = int(os.getenv("SEMANTIC_SEARCH_TOP_K", "3"))
     SEMANTIC_MIN_SIMILARITY = float(os.getenv("SEMANTIC_MIN_SIMILARITY", "0.7"))
     SEMANTIC_MAX_CHARS = int(os.getenv("SEMANTIC_MAX_CHARS", "1000"))
-    EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "paraphrase-multilingual-MiniLM-L12-v2")
+    EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
+    EMBEDDING_DEVICE = os.getenv("EMBEDDING_DEVICE", "auto")
 
     # === Voyage rerank ===
     VOYAGE_API_KEY = os.getenv("VOYAGE_API_KEY")
     VOYAGE_MODEL = os.getenv("VOYAGE_MODEL", "rerank-2")
     VOYAGE_TOP_K = int(os.getenv("VOYAGE_TOP_K", "5"))
     VOYAGE_ENABLED = os.getenv("VOYAGE_ENABLED", "False").lower() == "true"
+    RERANKER_ENABLED = os.getenv("RERANKER_ENABLED", "False").lower() == "true"
+    RERANKER_CONFIDENCE_THRESHOLD = float(os.getenv("RERANKER_CONFIDENCE_THRESHOLD", "0.55"))
+    RERANKER_MODE_WHITELIST = os.getenv("RERANKER_MODE_WHITELIST", "THINKING,INTERVENTION")
+    RERANKER_BLOCK_THRESHOLD = int(os.getenv("RERANKER_BLOCK_THRESHOLD", "8"))
 
     # === Conversation summary ===
     ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"

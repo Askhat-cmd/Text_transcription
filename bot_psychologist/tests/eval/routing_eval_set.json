@@ -1,0 +1,57 @@
+[
+  {
+    "id": "routing_test_decision_table_low_confidence",
+    "kind": "decision_table",
+    "signals": {
+      "confidence": 0.3,
+      "emotion_load": "low",
+      "contradiction": false
+    },
+    "expected_mode": "CLARIFICATION",
+    "expected_rule_id": 1,
+    "source": "test_decision_table.py::test_decision_table_low_confidence"
+  },
+  {
+    "id": "routing_test_decision_table_intervention_signal",
+    "kind": "decision_table",
+    "signals": {
+      "confidence": 0.65,
+      "explicit_ask": true,
+      "ask_type": "action",
+      "user_stage": "exploration",
+      "intervention_cooldown_ok": true
+    },
+    "expected_mode": "INTERVENTION",
+    "expected_rule_id": 3,
+    "source": "test_decision_table.py::test_decision_table_intervention_signal"
+  },
+  {
+    "id": "routing_test_decision_table_blocks_deep_intervention_on_surface",
+    "kind": "decision_table",
+    "signals": {
+      "confidence": 0.8,
+      "explicit_ask": true,
+      "ask_type": "action",
+      "user_stage": "surface"
+    },
+    "expected_mode": "CLARIFICATION",
+    "expected_rule_id": 8,
+    "source": "test_decision_table.py::test_decision_table_blocks_deep_intervention_on_surface"
+  },
+  {
+    "id": "routing_test_decision_gate_routes_to_intervention_when_allowed",
+    "kind": "decision_gate",
+    "signals": {
+      "local_similarity": 0.8,
+      "delta_top1_top2": 0.7,
+      "state_match": 0.8,
+      "question_clarity": 0.8,
+      "explicit_ask": true,
+      "ask_type": "action",
+      "intervention_cooldown_ok": true
+    },
+    "user_stage": "exploration",
+    "expected_mode": "INTERVENTION",
+    "source": "test_decision_gate.py::test_decision_gate_routes_to_intervention_when_allowed"
+  }
+]

@@ -19,6 +19,7 @@ from typing import Dict, List, Optional, Tuple
 import numpy as np
 
 from .config import config
+from .embedding_provider import create_embedding_provider
 
 logger = logging.getLogger(__name__)
 
@@ -110,12 +111,14 @@ class SemanticMemory:
                 return
 
             try:
-                from sentence_transformers import SentenceTransformer
-
                 model_name = config.EMBEDDING_MODEL
+                model_device = getattr(config, "EMBEDDING_DEVICE", "auto")
                 logger.info("[SEMANTIC] loading embedding model: %s", model_name)
 
-                self._model = SentenceTransformer(model_name)
+                self._model = create_embedding_provider(
+                    model_name=model_name,
+                    device=model_device,
+                )
                 self._model_loaded = True
                 self.__class__._shared_model = self._model
                 self.__class__._shared_model_loaded = True
@@ -127,6 +130,36 @@ class SemanticMemory:
                 self.__class__._shared_model = None
                 self.__class__._shared_model_loaded = True
                 self._warn_unavailable_once(f"failed to load model ({type(exc).__name__}: {exc})")
+
+
+    @staticmethod
+    def _encode_query(model, text: str) -> np.ndarray:
+        if hasattr(model, "embed_query"):
+            return np.asarray(model.embed_query(text), dtype=np.float32)
+        # Legacy fallback for direct SentenceTransformer object.
+        return np.asarray(
+            model.encode(
+                text,
+                show_progress_bar=False,
+                convert_to_numpy=True,
+            ),
+            dtype=np.float32,
+        )
+
+    @staticmethod
+    def _encode_passages(model, texts: List[str]) -> np.ndarray:
+        if hasattr(model, "embed_passages"):
+            vectors = model.embed_passages(texts)
+            return np.asarray(vectors, dtype=np.float32)
+        # Legacy fallback for direct SentenceTransformer object.
+        return np.asarray(
+            model.encode(
+                texts,
+                show_progress_bar=False,
+                convert_to_numpy=True,
+            ),
+            dtype=np.float32,
+        )
 
     def ensure_model_loaded(self) -> None:
         """Public warmup hook for embedding model."""
@@ -161,11 +194,7 @@ class SemanticMemory:
         text_to_embed = f"{user_input} {response_preview}"
 
         try:
-            embedding = self.model.encode(
-                text_to_embed,
-                show_progress_bar=False,
-                convert_to_numpy=True,
-            )
+            embedding = self._encode_passages(self.model, [text_to_embed])[0]
         except Exception as exc:
             logger.error(f"[SEMANTIC] embedding creation failed: {exc}", exc_info=True)
             return
@@ -212,11 +241,7 @@ class SemanticMemory:
             return []
 
         try:
-            query_embedding = self.model.encode(
-                query,
-                show_progress_bar=False,
-                convert_to_numpy=True,
-            )
+            query_embedding = self._encode_query(self.model, query)
         except Exception as exc:
             logger.error(f"[SEMANTIC] query embedding failed: {exc}", exc_info=True)
             self.last_hits_count = 0
@@ -446,12 +471,7 @@ class SemanticMemory:
                 )
                 texts.append(f"{turn['user_input']} {response_preview}")
 
-            embeddings = self.model.encode(
-                texts,
-                batch_size=32,
-                show_progress_bar=True,
-                convert_to_numpy=True,
-            )
+            embeddings = self._encode_passages(self.model, texts)
 
             self.turn_embeddings = []
             for i, turn in enumerate(turns_data):
@@ -486,10 +506,17 @@ class SemanticMemory:
 
     def get_stats(self) -> Dict:
         """Получить статистику semantic memory."""
+        model_name = config.EMBEDDING_MODEL
+        if self._model is not None and hasattr(self._model, "model_name"):
+            try:
+                model_name = self._model.model_name()
+            except Exception:
+                model_name = config.EMBEDDING_MODEL
+
         return {
             "total_embeddings": len(self.turn_embeddings),
             "model_loaded": self._model_loaded,
-            "model_name": config.EMBEDDING_MODEL,
+            "model_name": model_name,
             "cache_dir": str(self.cache_dir),
             "embeddings_size_mb": (
                 self.embeddings_file.stat().st_size / (1024 * 1024)

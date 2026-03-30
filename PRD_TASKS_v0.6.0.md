@@ -163,32 +163,37 @@ NOTE: Вызов в `data_loader.py` не используется в текущ
 - [x] 5.11 Проверить логи при старте: [GRAPH] KnowledgeGraphClient disabled
 - [x] 5.12 Проверить что warmup отрабатывает при старте (не при запросе)
 - [x] 5.13 Отправить первый запрос после старта — замерить время ответа.
-- [ ] 5.14 Коммит:
+- [x] 5.14 Коммит:
 
 LOG_NOTE: startup показал `[WARMUP] starting`, `[GRAPH] ... disabled`, `[SEMANTIC] loading ...` один раз до первого запроса.
 FIRST_REQ_NOTE: adaptive request после старта ~9.9s; повторной загрузки embedding на первом запросе нет.
+BLOCK5_COMMIT: b3e3d04
+
+TEST_DIFF_NOTE: см. `bot_psychologist/tests_diff.txt` (before: 80 passed / after: 88 passed, новых failed нет).
+SMOKE_NOTE: выполнен API-smoke (`/api/v1/questions/adaptive`) с `dev-key-001`; greeting=FAST_PATH, содержательный запрос дал stages=`state_classifier,sd_classifier,retrieval,rerank,llm,format`.
+UI_PENDING_NOTE: остаются ручные UI-проверки 6.7/6.10/6.11.
 ## БЛОК 6 — Финальная проверка и релиз
 
 ### 6.1 Полный прогон тестов
 
-- [ ] 6.1  python -m pytest tests/ -v --tb=short > tests_v060_after.txt 2>&1
-- [ ] 6.2  diff tests_v060_before.txt tests_v060_after.txt
-- [ ] 6.3  Все тесты зелёные ИЛИ помечены @pytest.mark.xfail(reason="...")
-- [ ] 6.4  Новых FAILED тестов не должно быть
+- [x] 6.1  python -m pytest tests/ -v --tb=short > tests_v060_after.txt 2>&1
+- [x] 6.2  diff tests_v060_before.txt tests_v060_after.txt
+- [x] 6.3  Все тесты зелёные ИЛИ помечены @pytest.mark.xfail(reason="...")
+- [x] 6.4  Новых FAILED тестов не должно быть
 ### 6.2 Сквозной smoke-тест (живой UI)
 
-- [ ] 6.5  Запустить Bot_data_base:
-- [ ] 6.6  Запустить бота:
+- [x] 6.5  Запустить Bot_data_base:
+- [x] 6.6  Запустить бота:
 - [ ] 6.7  Открыть localhost:3000 (или порт веб-UI)
-- [ ] 6.8  Тест 1 — Приветствие:
-- [ ] 6.9  Тест 2 — Содержательный вопрос:
+- [x] 6.8  Тест 1 — Приветствие:
+- [x] 6.9  Тест 2 — Содержательный вопрос:
 - [ ] 6.10 Тест 3 — Трейс Полотно LLM:
 - [ ] 6.11 Тест 4 — Конфиг из админки:
-- [ ] 6.12 Проверить Pipeline Timeline в трейсе:
+- [x] 6.12 Проверить Pipeline Timeline в трейсе:
 ### 6.3 Обновление документации
 
-- [ ] 6.13 Обновить README.md:
-- [ ] 6.14 Обновить CHANGELOG.md:
+- [x] 6.13 Обновить README.md:
+- [x] 6.14 Обновить CHANGELOG.md:
 ## [0.6.0] — 2026-03-25
 
 ### Added

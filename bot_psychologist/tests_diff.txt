@@ -1,0 +1,3 @@
+before: passed=80 skipped=11 warnings=6
+after:  passed=88 skipped=11 warnings=6
+delta:  passed=+8 skipped=+0 warnings=+0

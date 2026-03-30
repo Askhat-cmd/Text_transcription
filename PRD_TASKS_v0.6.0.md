@@ -171,7 +171,8 @@ BLOCK5_COMMIT: b3e3d04
 
 TEST_DIFF_NOTE: см. `bot_psychologist/tests_diff.txt` (before: 80 passed / after: 88 passed, новых failed нет).
 SMOKE_NOTE: выполнен API-smoke (`/api/v1/questions/adaptive`) с `dev-key-001`; greeting=FAST_PATH, содержательный запрос дал stages=`state_classifier,sd_classifier,retrieval,rerank,llm,format`.
-UI_PENDING_NOTE: остаются ручные UI-проверки 6.7/6.10/6.11.
+ADMIN_NOTE: через `/api/admin/config` TOP_K_BLOCKS переключен 9→7 и восстановлен 7→9; в логах retrieval пошёл с `top_k=7`.
+UI_PENDING_NOTE: остаются ручные UI-проверки 6.7/6.10.
 ## БЛОК 6 — Финальная проверка и релиз
 
 ### 6.1 Полный прогон тестов
@@ -188,7 +189,7 @@ UI_PENDING_NOTE: остаются ручные UI-проверки 6.7/6.10/6.11
 - [x] 6.8  Тест 1 — Приветствие:
 - [x] 6.9  Тест 2 — Содержательный вопрос:
 - [ ] 6.10 Тест 3 — Трейс Полотно LLM:
-- [ ] 6.11 Тест 4 — Конфиг из админки:
+- [x] 6.11 Тест 4 — Конфиг из админки:
 - [x] 6.12 Проверить Pipeline Timeline в трейсе:
 ### 6.3 Обновление документации
 

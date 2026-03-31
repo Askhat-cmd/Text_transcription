@@ -107,7 +107,8 @@ class ResponseGenerator:
         """Compose final prompt with configurable priority order."""
         base = base_prompt.strip()
         sd = (sd_overlay or "").strip()
-        mode_directive = f"MODE DIRECTIVE:\n{mode_prompt}".strip()
+        mode_prompt_clean = (mode_prompt or "").strip()
+        mode_directive = f"MODE DIRECTIVE:\n{mode_prompt_clean}" if mode_prompt_clean else ""
 
         if config.PROMPT_SD_OVERRIDES_BASE:
             chunks = [base, sd]
@@ -144,6 +145,10 @@ class ResponseGenerator:
         max_tokens: Optional[int] = None,
         system_prompt_blob_id: Optional[str] = None,
         user_prompt_blob_id: Optional[str] = None,
+        session_store=None,
+        session_id: Optional[str] = None,
+        mode_prompt_override: Optional[str] = None,
+        mode_overrides_sd: bool = False,
     ) -> dict:
         """Generate a response using shared mode-aware prompt composition."""
         base_system_prompt = self.answerer.build_system_prompt()
@@ -156,6 +161,12 @@ class ResponseGenerator:
 
         sd_overlay = self._load_sd_prompt(sd_level)
         mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
+        if mode_prompt_override:
+            if mode_overrides_sd:
+                sd_overlay = mode_prompt_override
+                mode_prompt = ""
+            else:
+                mode_prompt = mode_prompt_override
         if config.FREE_CONVERSATION_MODE:
             final_system_prompt = self._build_free_mode_prompt(
                 base_prompt=base_system_prompt,
@@ -192,6 +203,8 @@ class ResponseGenerator:
                     step_name="answer",
                     system_prompt_blob_id=system_prompt_blob_id,
                     user_prompt_blob_id=user_prompt_blob_id,
+                    session_store=session_store,
+                    session_id=session_id,
                 )
             except TypeError as exc:
                 if "step_name" not in str(exc):
@@ -205,6 +218,8 @@ class ResponseGenerator:
                     max_tokens=final_max_tokens,
                     system_prompt_blob_id=system_prompt_blob_id,
                     user_prompt_blob_id=user_prompt_blob_id,
+                    session_store=session_store,
+                    session_id=session_id,
                 )
         finally:
             self.answerer.build_system_prompt = original_build_prompt

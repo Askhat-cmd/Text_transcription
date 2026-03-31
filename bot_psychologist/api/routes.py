@@ -330,7 +330,8 @@ async def ask_sag_aware_question(
 )
 async def ask_graph_powered_question(
     request: AskQuestionRequest,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
+    store: SessionStore = Depends(get_session_store),
 ):
     """
     **Phase 3:** Graph-powered QA СЃ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРµРј Knowledge Graph.
@@ -349,8 +350,18 @@ async def ask_graph_powered_question(
             request.query,
             user_id=request.user_id,
             user_level=request.user_level.value,
-            debug=request.debug
+            debug=request.debug,
+            session_store=store,
         )
+
+        if request.debug:
+            trace = result.get("debug_trace") or result.get("debug")
+            if isinstance(trace, dict):
+                session_key = request.session_id or request.user_id
+                try:
+                    store.append_trace(session_key, trace)
+                except Exception as store_exc:
+                    logger.warning(f"[GRAPH_DEBUG_TRACE] Failed to store trace: {store_exc}")
         
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
@@ -642,6 +653,8 @@ async def ask_adaptive_question(
                     "recommended_mode": metadata.get("recommended_mode"),
                     "confidence_score": metadata.get("confidence_score"),
                     "confidence_level": metadata.get("confidence_level"),
+                    "informational_mode": metadata.get("informational_mode"),
+                    "applied_mode_prompt": metadata.get("applied_mode_prompt"),
                     "session_id": session_key,
                     "memory_turns": metadata.get("memory_turns"),
                     "summary_length": metadata.get("summary_length"),
@@ -691,6 +704,8 @@ async def ask_adaptive_question(
                     "recommended_mode",
                     "confidence_score",
                     "confidence_level",
+                    "informational_mode",
+                    "applied_mode_prompt",
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         trace_payload[key] = raw_dict.get(key)

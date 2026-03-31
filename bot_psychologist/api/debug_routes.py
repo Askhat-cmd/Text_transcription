@@ -93,6 +93,7 @@ async def get_session_llm_payload(
                 "system_prompt": _sanitize_pii(store.get_blob(system_blob_id) or call.get("system_prompt_preview") or ""),
                 "user_prompt": _sanitize_pii(store.get_blob(user_blob_id) or call.get("user_prompt_preview") or ""),
                 "response_preview": _sanitize_pii(call.get("response_preview") or ""),
+                "blob_error": call.get("blob_error"),
             }
         )
 

@@ -245,6 +245,7 @@ class LLMCallTrace(BaseModel):
     system_prompt_preview: Optional[str] = None
     user_prompt_preview: Optional[str] = None
     response_preview: Optional[str] = None
+    blob_error: Optional[str] = None
     tokens_used: Optional[int] = None
     system_prompt_blob_id: Optional[str] = None
     user_prompt_blob_id: Optional[str] = None
@@ -304,6 +305,8 @@ class DebugTrace(BaseModel):
     recommended_mode: Optional[str] = None
     confidence_score: Optional[float] = None
     confidence_level: Optional[str] = None
+    informational_mode: Optional[bool] = None
+    applied_mode_prompt: Optional[str] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

@@ -369,6 +369,7 @@ class RuntimeConfig(Config):
         "prompt_system_level_beginner",
         "prompt_system_level_intermediate",
         "prompt_system_level_advanced",
+        "prompt_mode_informational",
     ]
 
     # Читабельные имена промтов для UI
@@ -383,6 +384,7 @@ class RuntimeConfig(Config):
         "prompt_system_level_beginner":     "📗 Уровень пользователя: Начальный",
         "prompt_system_level_intermediate": "📘 Уровень пользователя: Средний",
         "prompt_system_level_advanced":     "📙 Уровень пользователя: Продвинутый",
+        "prompt_mode_informational":        "Mode: Informational (curious)",
     }
 
     # ── Атрибуты ПОЛНОСТЬЮ исключённые из перехвата ──

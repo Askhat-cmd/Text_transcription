@@ -70,3 +70,38 @@ def test_response_generator_builds_mode_directive_and_context() -> None:
     assert "LEVEL_ADAPTER" in answerer.last_call["system_prompt"]
     assert answerer.last_call["temperature"] < config.LLM_TEMPERATURE
 
+
+def test_response_generator_mode_override_replaces_sd_layer() -> None:
+    answerer = _DummyAnswerer()
+    generator = ResponseGenerator(answerer=answerer)
+
+    result = generator.generate(
+        "Что такое нейросталкинг?",
+        blocks=[object()],
+        mode="PRESENCE",
+        confidence_level="medium",
+        mode_prompt_override="INFORMATIONAL MODE PROMPT",
+        mode_overrides_sd=True,
+    )
+
+    assert result["error"] is None
+    system_prompt = answerer.last_call["system_prompt"]
+    assert "INFORMATIONAL MODE PROMPT" in system_prompt
+    assert "MODE DIRECTIVE" not in system_prompt
+
+
+def test_response_generator_forwards_session_store_params() -> None:
+    answerer = _DummyAnswerer()
+    generator = ResponseGenerator(answerer=answerer)
+    dummy_store = object()
+
+    generator.generate(
+        "Тест",
+        blocks=[object()],
+        session_store=dummy_store,
+        session_id="session-1",
+    )
+
+    assert answerer.last_call["session_store"] is dummy_store
+    assert answerer.last_call["session_id"] == "session-1"
+

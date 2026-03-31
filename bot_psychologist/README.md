@@ -109,6 +109,24 @@ Debug endpoints:
 - `GET /api/debug/session/{session_id}/traces`
 - `GET /api/debug/session/{session_id}/llm-payload`
 
+## LLM Payload + Curious Mode (PRD v5.2)
+
+Что добавлено:
+- `llm_calls` стабильно заполняется в обоих путях ответа: adaptive и graph-powered.
+- Для каждого вызова LLM пишутся:
+  - `system_prompt_blob_id`, `user_prompt_blob_id`
+  - `system_prompt_preview`, `user_prompt_preview`
+  - `blob_error` (если blob сохранить не удалось).
+- Эндпоинт `GET /api/debug/session/{session_id}/llm-payload` теперь отдает полезные данные даже при проблемах с blob-хранилищем (через preview + `blob_error`).
+
+Curious-mode override:
+- Добавлен отдельный промт `bot_agent/prompt_mode_informational.md`.
+- Для `user_state=curious` применяется mode-переопределение (информационный ответ), которое перекрывает SD-слой.
+- В debug trace пишутся поля:
+  - `informational_mode`
+  - `applied_mode_prompt`
+  - `user_state`
+
 ## Production Logging (PRD 10.02.2026)
 
 Минимальный PRD по production logging реализован.
@@ -160,10 +178,11 @@ tail -f logs/error/error.log
   - 🗄️ **Storage:** ретеншн сессий, авто-очистка
   - ⚙️ **Runtime:** warmup, кэширование
 
-- **10 промтов для редактирования:**
+- **11 промтов для редактирования:**
   - Системный базовый промт
   - SD-адаптации (6 уровней: Purple/Red/Blue/Orange/Green/Yellow)
   - Уровни пользователя (Beginner/Intermediate/Advanced)
+  - Режимный промт для `curious`: `prompt_mode_informational`
 
 - **История изменений:** последние 50 записей с экспортом/импортом JSON
 

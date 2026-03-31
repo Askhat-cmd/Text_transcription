@@ -9,7 +9,8 @@ LLM Answerer Module
 import asyncio
 import logging
 import time
-from typing import AsyncGenerator, List, Dict, Optional, Tuple
+import uuid
+from typing import Any, AsyncGenerator, List, Dict, Optional, Tuple
 from pathlib import Path
 
 from .data_loader import Block
@@ -137,6 +138,36 @@ class LLMAnswerer:
         if stream:
             request_params["stream"] = True
         return request_params
+
+    @staticmethod
+    def _save_blob_compat(
+        session_store: Any,
+        *,
+        text: str,
+        session_id: Optional[str],
+    ) -> Optional[str]:
+        """
+        Save prompt text to session storage and return blob id.
+
+        Supports both APIs:
+        - save_blob(text, session_id=...)
+        - set_blob(blob_id, text)
+        """
+        if not session_store or not text:
+            return None
+
+        save_blob = getattr(session_store, "save_blob", None)
+        if callable(save_blob):
+            return str(save_blob(text, session_id=session_id))
+
+        set_blob = getattr(session_store, "set_blob", None)
+        if callable(set_blob):
+            prefix = (session_id or "blob").strip() or "blob"
+            blob_id = f"{prefix}:{uuid.uuid4().hex[:8]}"
+            set_blob(blob_id, text, ttl_seconds=1800)
+            return blob_id
+
+        return None
     
     def build_system_prompt(self) -> str:
         """
@@ -204,6 +235,8 @@ class LLMAnswerer:
         step_name: str = "answer",
         system_prompt_blob_id: Optional[str] = None,
         user_prompt_blob_id: Optional[str] = None,
+        session_store: Optional[Any] = None,
+        session_id: Optional[str] = None,
     ) -> Dict:
         """
         Формирует ответ через OpenAI API.
@@ -254,9 +287,42 @@ class LLMAnswerer:
             user_question,
             conversation_history=conversation_history
         )
-        
-        logger.debug(f"📤 Отправляю запрос к {model}...")
-        
+
+        blob_error = None
+        if session_store is not None:
+            try:
+                system_prompt_blob_id = self._save_blob_compat(
+                    session_store,
+                    text=system_prompt,
+                    session_id=session_id,
+                )
+                user_prompt_blob_id = self._save_blob_compat(
+                    session_store,
+                    text=context,
+                    session_id=session_id,
+                )
+            except Exception as exc:
+                blob_error = f"blob_save_failed: {exc}"
+                system_prompt_blob_id = None
+                user_prompt_blob_id = None
+
+        llm_call_info = {
+            "step": step_name,
+            "model": str(model),
+            "tokens_prompt": None,
+            "tokens_completion": None,
+            "tokens_total": None,
+            "duration_ms": 0,
+            "system_prompt_preview": (system_prompt or "")[:300],
+            "user_prompt_preview": (context or "")[:300],
+            "response_preview": "",
+            "system_prompt_blob_id": system_prompt_blob_id,
+            "user_prompt_blob_id": user_prompt_blob_id,
+            "blob_error": blob_error,
+        }
+
+        logger.debug("[LLM_ANSWERER] sending request to %s", model)
+
         try:
             logger.debug(
                 "Using token parameter: %s=%s for model %s (free_mode=%s)",
@@ -327,19 +393,16 @@ class LLMAnswerer:
             
             logger.debug(f"✅ Ответ получен ({tokens} токенов)")
             
-            llm_call_info = {
-                "step": step_name,
-                "model": model_used,
-                "tokens_prompt": int(tokens_prompt) if isinstance(tokens_prompt, (int, float)) else None,
-                "tokens_completion": int(tokens_completion) if isinstance(tokens_completion, (int, float)) else None,
-                "tokens_total": int(tokens_total) if isinstance(tokens_total, (int, float)) else None,
-                "duration_ms": duration_ms,
-                "system_prompt_preview": (system_prompt or "")[:200],
-                "user_prompt_preview": (context or "")[:200],
-                "response_preview": (answer or "")[:200],
-                "system_prompt_blob_id": system_prompt_blob_id,
-                "user_prompt_blob_id": user_prompt_blob_id,
-            }
+            llm_call_info.update(
+                {
+                    "model": model_used,
+                    "tokens_prompt": int(tokens_prompt) if isinstance(tokens_prompt, (int, float)) else None,
+                    "tokens_completion": int(tokens_completion) if isinstance(tokens_completion, (int, float)) else None,
+                    "tokens_total": int(tokens_total) if isinstance(tokens_total, (int, float)) else None,
+                    "duration_ms": duration_ms,
+                    "response_preview": (answer or "")[:300],
+                }
+            )
 
             return {
                 "answer": answer,
@@ -354,11 +417,14 @@ class LLMAnswerer:
             }
         
         except Exception as e:
-            logger.error(f"❌ Ошибка при вызове OpenAI API: {e}")
+            logger.error("[LLM_ANSWERER] OpenAI API error: %s", e)
+            llm_call_info["duration_ms"] = int((time.perf_counter() - start_time) * 1000) if "start_time" in locals() else 0
+            llm_call_info["response_preview"] = ""
             return {
                 "answer": f"Ошибка при формировании ответа: {str(e)}",
                 "model_used": model,
                 "tokens_used": 0,
+                "llm_call_info": llm_call_info,
                 "error": str(e)
             }
 

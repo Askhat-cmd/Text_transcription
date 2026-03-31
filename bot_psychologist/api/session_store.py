@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import time
+import uuid
 from dataclasses import dataclass, field
 from threading import Lock
 from typing import Any, Dict, List, Optional
@@ -108,6 +109,24 @@ class SessionStore:
                 "content": content,
                 "timestamp": time.time(),
             }
+
+    def save_blob(
+        self,
+        content: str,
+        *,
+        session_id: Optional[str] = None,
+        ttl_seconds: Optional[int] = None,
+    ) -> str:
+        """
+        Save blob content and return generated blob id.
+
+        Kept as a thin wrapper over ``set_blob`` for compatibility with modules
+        that should not manually compose blob ids.
+        """
+        prefix = (session_id or "blob").strip() or "blob"
+        blob_id = f"{prefix}:{uuid.uuid4().hex[:8]}"
+        self.set_blob(blob_id, content, ttl_seconds=ttl_seconds)
+        return blob_id
 
     def get_blob(self, blob_id: str) -> Optional[str]:
         if not blob_id:

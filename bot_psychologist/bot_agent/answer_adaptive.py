@@ -222,6 +222,30 @@ def _store_blob(session_store, session_id: str, content: str) -> Optional[str]:
     return blob_id
 
 
+MODE_PROMPT_MAP: dict[str, str] = {
+    "curious": "prompt_mode_informational",
+}
+
+
+def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[str]]:
+    """
+    Resolve mode prompt key and text by user state.
+    Returns (None, None) if override is not defined.
+    """
+    prompt_key = MODE_PROMPT_MAP.get((user_state or "").strip().lower())
+    if not prompt_key:
+        return None, None
+    try:
+        prompt_payload = cfg.get_prompt(prompt_key)
+        prompt_text = str((prompt_payload or {}).get("text") or "").strip()
+        if not prompt_text:
+            return None, None
+        return prompt_key, prompt_text
+    except Exception as exc:
+        logger.warning("[MODE_PROMPT] failed to load '%s': %s", prompt_key, exc)
+        return None, None
+
+
 COST_PER_1K_TOKENS = {
     "gpt-5.2":      {"input": 0.00175,  "output": 0.01400},
     "gpt-5.1":      {"input": 0.00125,  "output": 0.01000},
@@ -481,6 +505,8 @@ def _build_llm_prompts(
     sd_level: str,
     mode_prompt: str,
     additional_system_context: str,
+    mode_prompt_override: Optional[str] = None,
+    mode_overrides_sd: bool = False,
 ) -> Tuple[str, str]:
     try:
         answerer = response_generator.answerer
@@ -493,14 +519,22 @@ def _build_llm_prompts(
                 pass
 
         sd_overlay = response_generator._load_sd_prompt(sd_level)
-        if sd_overlay:
-            system_prompt = f"{system_prompt}\n\n{sd_overlay}"
+        mode_directive = mode_prompt
 
-        system_chunks = [system_prompt, f"MODE DIRECTIVE:\n{mode_prompt}"]
-        if additional_system_context:
-            system_chunks.append(additional_system_context.strip())
+        if mode_prompt_override:
+            if mode_overrides_sd:
+                sd_overlay = mode_prompt_override
+                mode_directive = ""
+            else:
+                mode_directive = mode_prompt_override
 
-        final_system_prompt = "\n\n".join(chunk for chunk in system_chunks if chunk).strip()
+        final_system_prompt = response_generator._compose_system_prompt(
+            base_prompt=system_prompt,
+            sd_overlay=sd_overlay,
+            mode_prompt=mode_directive,
+            additional_system_context=additional_system_context,
+            mode="INFORMATIONAL" if mode_overrides_sd else "PRESENCE",
+        )
         user_prompt = answerer.build_context_prompt(
             blocks,
             query,
@@ -522,6 +556,8 @@ def _build_llm_prompt_previews(
     sd_level: str,
     mode_prompt: str,
     additional_system_context: str,
+    mode_prompt_override: Optional[str] = None,
+    mode_overrides_sd: bool = False,
 ) -> Tuple[str, str]:
     full_system, full_user = _build_llm_prompts(
         response_generator=response_generator,
@@ -532,6 +568,8 @@ def _build_llm_prompt_previews(
         sd_level=sd_level,
         mode_prompt=mode_prompt,
         additional_system_context=additional_system_context,
+        mode_prompt_override=mode_prompt_override,
+        mode_overrides_sd=mode_overrides_sd,
     )
     return _truncate_preview(full_system, 300), _truncate_preview(full_user, 300)
 
@@ -577,9 +615,10 @@ def _build_llm_call_trace(
         "tokens_total": call_info.get("tokens_total"),
         "tokens_used": llm_result.get("tokens_used") if isinstance(llm_result, dict) else None,
         "duration_ms": call_info.get("duration_ms") or duration_ms,
-        "system_prompt_blob_id": system_prompt_blob_id,
-        "user_prompt_blob_id": user_prompt_blob_id,
+        "system_prompt_blob_id": system_prompt_blob_id or call_info.get("system_prompt_blob_id"),
+        "user_prompt_blob_id": user_prompt_blob_id or call_info.get("user_prompt_blob_id"),
         "memory_snapshot_blob_id": memory_snapshot_blob_id,
+        "blob_error": call_info.get("blob_error"),
     }
 
 
@@ -1055,6 +1094,11 @@ def answer_question_adaptive(
                 )
             )
         user_stage = resolve_user_stage(memory, state_analysis)
+        mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
+            state_analysis.primary_state.value,
+            config,
+        )
+        informational_mode = bool(mode_prompt_override)
 
         logger.info(
             f"✅ Состояние: {state_analysis.primary_state.value} "
@@ -1114,6 +1158,8 @@ def answer_question_adaptive(
             debug_trace["sd_level"] = sd_result.primary
             debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
             debug_trace["user_state"] = state_analysis.primary_state.value
+            debug_trace["informational_mode"] = informational_mode
+            debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
 
         contradiction_info = detect_contradiction(query)
         contradiction_hint = (
@@ -1171,6 +1217,11 @@ def answer_question_adaptive(
                 reason=pre_routing_result.decision.reason,
                 forbid=pre_routing_result.decision.forbid,
             )
+            state_context_mode_prompt = (
+                "РЕЖИМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
+                if informational_mode
+                else mode_directive.prompt
+            )
             fast_block = _build_fast_path_block(
                 query=query,
                 conversation_context=conversation_context,
@@ -1178,7 +1229,7 @@ def answer_question_adaptive(
             )
             state_context = _build_state_context(
                 state_analysis,
-                mode_directive.prompt,
+                state_context_mode_prompt,
                 sd_level=sd_result.primary,
                 contradiction_suggestion=contradiction_hint,
                 cross_session_context=cross_session_context,
@@ -1198,13 +1249,11 @@ def answer_question_adaptive(
                     sd_level=sd_result.primary,
                     mode_prompt=mode_directive.prompt,
                     additional_system_context=state_context,
+                    mode_prompt_override=mode_prompt_override,
+                    mode_overrides_sd=informational_mode,
                 )
                 llm_system_preview = _truncate_preview(full_system_prompt, 300)
                 llm_user_preview = _truncate_preview(full_user_prompt, 300)
-                system_blob_id = _store_blob(session_store, user_id, full_system_prompt)
-                user_blob_id = _store_blob(session_store, user_id, full_user_prompt)
-                debug_trace["system_prompt_blob_id"] = system_blob_id
-                debug_trace["user_prompt_blob_id"] = user_blob_id
 
             llm_started = datetime.now()
             llm_result = {}
@@ -1226,12 +1275,23 @@ def answer_question_adaptive(
                     max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
                     system_prompt_blob_id=system_blob_id,
                     user_prompt_blob_id=user_blob_id,
+                    session_store=session_store,
+                    session_id=user_id,
+                    mode_prompt_override=mode_prompt_override,
+                    mode_overrides_sd=informational_mode,
                 )
             except Exception as llm_exc:
                 llm_error = str(llm_exc)
                 raise
             finally:
                 if debug_trace is not None:
+                    call_info = (
+                        llm_result.get("llm_call_info")
+                        if isinstance(llm_result, dict) and isinstance(llm_result.get("llm_call_info"), dict)
+                        else {}
+                    )
+                    debug_trace["system_prompt_blob_id"] = call_info.get("system_prompt_blob_id")
+                    debug_trace["user_prompt_blob_id"] = call_info.get("user_prompt_blob_id")
                     pipeline_stages.append(
                         {
                             "name": "llm",
@@ -1334,6 +1394,8 @@ def answer_question_adaptive(
                     "mode_reason": mode_directive.reason,
                     "retrieval_block_cap": 0,
                     "fast_path": True,
+                    "informational_mode": informational_mode,
+                    "applied_mode_prompt": mode_prompt_key if informational_mode else None,
                     "sd_level": sd_result.primary,
                     "sd_secondary": sd_result.secondary,
                     "sd_confidence": round(sd_result.confidence, 3),
@@ -1573,6 +1635,11 @@ def answer_question_adaptive(
             reason=routing_result.decision.reason,
             forbid=routing_result.decision.forbid,
         )
+        state_context_mode_prompt = (
+            "РЕЖИМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
+            if informational_mode
+            else mode_directive.prompt
+        )
         if debug_trace is not None:
             debug_trace["recommended_mode"] = routing_result.mode
             debug_trace["decision_rule_id"] = routing_result.decision.rule_id
@@ -1749,7 +1816,7 @@ def answer_question_adaptive(
         # Добавить контекст состояния
         state_context = _build_state_context(
             state_analysis,
-            mode_directive.prompt,
+            state_context_mode_prompt,
             sd_level=sd_result.primary,
             contradiction_suggestion=contradiction_hint,
             cross_session_context=cross_session_context,
@@ -1771,13 +1838,11 @@ def answer_question_adaptive(
                 sd_level=sd_result.primary,
                 mode_prompt=mode_directive.prompt,
                 additional_system_context=state_context,
+                mode_prompt_override=mode_prompt_override,
+                mode_overrides_sd=informational_mode,
             )
             llm_system_preview = _truncate_preview(full_system_prompt, 300)
             llm_user_preview = _truncate_preview(full_user_prompt, 300)
-            system_blob_id = _store_blob(session_store, user_id, full_system_prompt)
-            user_blob_id = _store_blob(session_store, user_id, full_user_prompt)
-            debug_trace["system_prompt_blob_id"] = system_blob_id
-            debug_trace["user_prompt_blob_id"] = user_blob_id
 
         llm_started = datetime.now()
         llm_result = {}
@@ -1799,12 +1864,23 @@ def answer_question_adaptive(
                 max_tokens=config.get_mode_max_tokens(routing_result.mode),
                 system_prompt_blob_id=system_blob_id,
                 user_prompt_blob_id=user_blob_id,
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
+                mode_overrides_sd=informational_mode,
             )
         except Exception as llm_exc:
             llm_error = str(llm_exc)
             raise
         finally:
             if debug_trace is not None:
+                call_info = (
+                    llm_result.get("llm_call_info")
+                    if isinstance(llm_result, dict) and isinstance(llm_result.get("llm_call_info"), dict)
+                    else {}
+                )
+                debug_trace["system_prompt_blob_id"] = call_info.get("system_prompt_blob_id")
+                debug_trace["user_prompt_blob_id"] = call_info.get("user_prompt_blob_id")
                 pipeline_stages.append(
                     {
                         "name": "llm",
@@ -2044,6 +2120,8 @@ def answer_question_adaptive(
                 "confidence_level": routing_result.confidence_level,
                 "mode_reason": mode_directive.reason,
                 "retrieval_block_cap": block_cap,
+                "informational_mode": informational_mode,
+                "applied_mode_prompt": mode_prompt_key if informational_mode else None,
                 "sd_level": sd_result.primary,
                 "sd_secondary": sd_result.secondary,
                 "sd_confidence": round(sd_result.confidence, 3),

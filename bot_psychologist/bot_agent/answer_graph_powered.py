@@ -14,7 +14,7 @@ Graph-Powered Answer Module - Phase 3
 """
 
 import logging
-from typing import Dict, Optional, List
+from typing import Any, Dict, Optional, List
 from datetime import datetime
 
 from .data_loader import data_loader, Block
@@ -39,7 +39,8 @@ def answer_question_graph_powered(
     include_practices: bool = True,
     include_chain: bool = True,
     top_k: Optional[int] = None,
-    debug: bool = False
+    debug: bool = False,
+    session_store: Optional[Any] = None,
 ) -> Dict:
     """
     Phase 3: QA с полной поддержкой Knowledge Graph.
@@ -232,13 +233,16 @@ def answer_question_graph_powered(
             model=config.LLM_MODEL,
             temperature=config.LLM_TEMPERATURE,
             max_tokens=config.get_mode_max_tokens(routing_result.mode),
+            session_store=session_store,
+            session_id=user_id,
         )
         
         if debug_info is not None:
             debug_info["llm_result"] = {
                 "model_used": llm_result.get("model_used"),
                 "tokens_used": llm_result.get("tokens_used"),
-                "error": llm_result.get("error")
+                "error": llm_result.get("error"),
+                "llm_call_info": llm_result.get("llm_call_info"),
             }
         
         # Проверяем ошибки LLM
@@ -348,6 +352,20 @@ def answer_question_graph_powered(
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
         }
+
+        if debug_info is not None:
+            llm_call = llm_result.get("llm_call_info") if isinstance(llm_result, dict) else None
+            if not isinstance(llm_call, dict):
+                llm_call = {}
+            result["debug_trace"] = {
+                "turn_number": len(memory.turns) + 1,
+                "recommended_mode": routing_result.mode,
+                "sd_level": None,
+                "user_state": None,
+                "hybrid_query_preview": hybrid_query[:400],
+                "chunks_after_filter": [],
+                "llm_calls": [llm_call] if llm_call else [],
+            }
 
         memory.add_turn(
             user_input=query,

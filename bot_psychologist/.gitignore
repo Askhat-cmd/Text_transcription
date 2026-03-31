@@ -45,3 +45,6 @@ __pycache__/
 # Admin Config Panel runtime overrides
 data/admin_overrides.json
 config_override.json
+
+# Prompt snapshots generated at startup
+bot_agent/*.default.md

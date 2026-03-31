@@ -852,6 +852,11 @@ async def ask_adaptive_question_stream(
                 "latency_ms": latency_ms,
                 "trace": trace if isinstance(trace, dict) else None,
             }
+            if isinstance(trace, dict):
+                try:
+                    store.append_trace(session_key, trace)
+                except Exception as store_exc:
+                    logger.warning("[STREAM] Failed to store debug trace (non-stream branch): %s", store_exc)
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             return
         try:

@@ -89,6 +89,7 @@ class ResponseFormatter:
         max_chars: int | None = None,
         user_message: str | None = None,
         sd_level: str | None = None,
+        informational_mode: bool = False,
     ) -> str:
         """Normalize answer and enforce light mode-driven limits."""
         text = self._normalize(answer)
@@ -104,12 +105,13 @@ class ResponseFormatter:
             if not normalized.lower().startswith("могу ошибаться"):
                 text = f"Могу ошибаться, {normalized}"
 
-        target = self.calculate_target_length(
-            user_message=user_message or "",
-            routing_mode=normalized_mode,
-            sd_level=sd_level,
-        )
-        text = self._take_sentences(text, int(target["max_sentences"]))
+        if not informational_mode:
+            target = self.calculate_target_length(
+                user_message=user_message or "",
+                routing_mode=normalized_mode,
+                sd_level=sd_level,
+            )
+            text = self._take_sentences(text, int(target["max_sentences"]))
 
         char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)
         return self._clip(text, char_limit)

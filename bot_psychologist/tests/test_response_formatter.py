@@ -67,3 +67,17 @@ def test_formatter_applies_sentence_cap_from_user_message() -> None:
     # VALIDATION + short message => максимум 2 предложения
     assert text.count(".") <= 2
 
+
+
+
+def test_formatter_skips_sentence_cap_for_informational_mode() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 2000})
+    text = formatter.format_answer(
+        "??????. ??????. ??????. ?????????.",
+        mode="PRESENCE",
+        confidence_level="high",
+        user_message="???????",
+        sd_level="GREEN",
+        informational_mode=True,
+    )
+    assert text.count(".") >= 3

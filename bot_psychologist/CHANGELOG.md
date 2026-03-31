@@ -1,5 +1,63 @@
 # Changelog
 
+## v0.7.0 - 2026-03-31
+
+### Added
+- Новый task-файл реализации PRD v5.0: `PRD_TASKS_v5.0_smart_interlocutor.md`.
+- Новые тесты:
+  - `tests/test_llm_answerer.py`
+  - `tests/test_path_builder.py`
+  - `tests/test_routing_config.py`
+  - `tests/test_admin_api.py`
+- Новый backend router alias: `/api/v1/admin/*` (параллельно legacy `/api/admin/*`).
+- Новые admin endpoints:
+  - `GET /api/v1/admin/config/schema`
+  - `GET /api/v1/admin/status`
+  - `POST /api/v1/admin/reload-data`
+- Автосоздание prompt snapshot-файлов `*.default.md` при старте API.
+- Новый UI-компонент: `web_ui/src/components/admin/RoutingTab.tsx`.
+
+### Changed
+- `llm_answerer.py`:
+  - добавлен единый builder API-параметров для chat/responses API;
+  - логика токенов переведена на runtime-флаги:
+    - `FREE_CONVERSATION_MODE`
+    - `MAX_TOKENS`
+    - `MAX_TOKENS_SOFT_CAP`
+- `response_generator.py`:
+  - добавлена FREE-ветка системного промпта;
+  - добавлена иерархия приоритетов промптов через флаги:
+    - `PROMPT_SD_OVERRIDES_BASE`
+    - `PROMPT_MODE_OVERRIDES_SD`
+  - фильтрация конфликтующих ограничивающих директив для расширяющих режимов.
+- `runtime_config.py`/`config.py`:
+  - добавлены routing-флаги и пороги:
+    - `FAST_DETECTOR_ENABLED`
+    - `FAST_DETECTOR_CONFIDENCE_THRESHOLD`
+    - `STATE_CLASSIFIER_ENABLED`
+    - `STATE_CLASSIFIER_CONFIDENCE_THRESHOLD`
+    - `SD_CLASSIFIER_ENABLED`
+    - `SD_CLASSIFIER_CONFIDENCE_THRESHOLD`
+    - `DECISION_GATE_RULE_THRESHOLD`
+    - `DECISION_GATE_LLM_ROUTER_ENABLED`
+  - добавлены токенные параметры FREE-режима;
+  - добавлены editable-поля для новых параметров в Admin config.
+- `fast_detector.py`:
+  - подключён глобальный runtime toggle `FAST_DETECTOR_ENABLED`;
+  - добавлен runtime-порог `FAST_DETECTOR_CONFIDENCE_THRESHOLD`.
+- `api/admin_routes.py`:
+  - grouped payload для `POST /config`;
+  - поддержка `MAX_TOKENS: null`;
+  - prompt endpoints расширены alias-полем `content` и reset-роутом `POST /prompts/{name}/reset`.
+- `web_ui`:
+  - добавлена вкладка «Маршрутизация»;
+  - runtime-вкладка дополнена статусом системы и кнопкой перезагрузки базы;
+  - поддержка `int_or_null` в редакторе параметров (`MAX_TOKENS` как nullable).
+
+### Tests
+- `pytest tests --tb=short`: **168 passed, 11 skipped, 0 failed**.
+- `npm run build` в `web_ui`: успешная сборка.
+
 ## v0.6.1-stability - 2026-03-30
 
 ### Fixed

@@ -7,6 +7,7 @@ import type {
   PromptDetail,
   HistoryEntry,
   AdminOverridesExport,
+  AdminStatusResponse,
 } from '../types/admin.types';
 
 // Получаем API-ключ из localStorage (так же как и остальные запросы приложения)
@@ -77,4 +78,13 @@ export const adminConfigService = {
   // Full reset
   resetAll: () =>
     request<{ status: string }>('POST', '/reset-all'),
+
+  // Runtime status
+  getStatus: () =>
+    request<AdminStatusResponse>('GET', '/status'),
+  reloadData: () =>
+    request<{ status: string; blocks_loaded: number; data_source: string; degraded_mode: boolean }>(
+      'POST',
+      '/reload-data'
+    ),
 };

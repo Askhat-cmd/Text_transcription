@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Header, status
 from typing import Any
 
 from bot_agent.config import config
+from bot_agent.data_loader import data_loader
 from .auth import is_dev_key
 
 
@@ -33,6 +34,12 @@ admin_router = APIRouter(
     dependencies=[Depends(require_dev_key)],
 )
 
+admin_router_v1 = APIRouter(
+    prefix="/api/v1/admin",
+    tags=["⚙️ Admin Config v1"],
+    dependencies=[Depends(require_dev_key)],
+)
+
 
 # ══════════════════════════════════════════════════════════════════════
 # CONFIG ENDPOINTS
@@ -43,6 +50,10 @@ admin_router = APIRouter(
     summary="Все параметры конфига (сгруппированные)",
     response_description="Параметры разбиты по группам: llm, retrieval, memory, storage, runtime",
 )
+@admin_router_v1.get(
+    "/config",
+    summary="Все параметры конфига (v1)",
+)
 async def admin_get_config():
     """
     Возвращает все редактируемые параметры конфига с метаданными.
@@ -51,9 +62,62 @@ async def admin_get_config():
     return config.get_all_config()
 
 
+@admin_router.get(
+    "/config/schema",
+    summary="Схема параметров конфига",
+)
+@admin_router_v1.get(
+    "/config/schema",
+    summary="Схема параметров конфига (v1)",
+)
+async def admin_get_config_schema():
+    """
+    Возвращает схему редактируемых параметров по группам.
+    Используется фронтендом для динамического рендера форм.
+    """
+    schema: dict[str, dict[str, Any]] = {}
+    editable = getattr(config, "EDITABLE_CONFIG", {})
+    for key, meta in editable.items():
+        group = str(meta.get("group", "runtime"))
+        schema.setdefault(group, {})
+        schema[group][key] = {
+            "type": meta.get("type"),
+            "min": meta.get("min"),
+            "max": meta.get("max"),
+            "default": getattr(config.__class__, key, None),
+            "nullable": False,
+            "label": meta.get("label", key),
+            "options": meta.get("options"),
+        }
+    # Специальное поле c nullable-интом для нового режима токенов.
+    if "llm" in schema:
+        schema["llm"]["MAX_TOKENS"] = {
+            "type": "int_or_null",
+            "min": 256,
+            "max": 16000,
+            "default": None,
+            "nullable": True,
+            "label": "Лимит токенов (null = без ограничения)",
+            "options": None,
+        }
+    return schema
+
+
 @admin_router.put(
     "/config",
     summary="Сохранить значение одного параметра",
+)
+@admin_router.post(
+    "/config",
+    summary="Сохранить параметры конфига (single/group payload)",
+)
+@admin_router_v1.put(
+    "/config",
+    summary="Сохранить параметры конфига (v1)",
+)
+@admin_router_v1.post(
+    "/config",
+    summary="Сохранить параметры конфига (v1, grouped)",
 )
 async def admin_set_config(body: dict):
     """
@@ -64,21 +128,47 @@ async def admin_set_config(body: dict):
     Валидирует тип и диапазон перед сохранением.
     Изменение применяется к следующему запросу бота без рестарта.
     """
+    # Legacy single-key payload: {"key": "...", "value": ...}
     key = body.get("key")
     value = body.get("value")
-    if not key:
-        raise HTTPException(status_code=422, detail="Поле 'key' обязательно")
-    if value is None:
-        raise HTTPException(status_code=422, detail="Поле 'value' обязательно")
-    try:
-        return config.set_config_override(key, value)
-    except ValueError as e:
-        raise HTTPException(status_code=422, detail=str(e))
+    if key is not None:
+        if value is None:
+            raise HTTPException(status_code=422, detail="Поле 'value' обязательно")
+        try:
+            return config.set_config_override(key, value)
+        except ValueError as e:
+            raise HTTPException(status_code=422, detail=str(e))
+
+    # New grouped payload:
+    # {"llm": {"MAX_TOKENS": null}, "routing": {"FREE_CONVERSATION_MODE": true}}
+    updated: dict[str, Any] = {}
+    errors: dict[str, str] = {}
+    for group_name, params in body.items():
+        if not isinstance(params, dict):
+            continue
+        for param_key, param_value in params.items():
+            try:
+                if param_key == "MAX_TOKENS":
+                    setattr(config, "MAX_TOKENS", None if param_value is None else int(param_value))
+                    updated[param_key] = getattr(config, "MAX_TOKENS")
+                else:
+                    result = config.set_config_override(param_key, param_value)
+                    updated[param_key] = result.get("value")
+            except Exception as exc:  # noqa: BLE001
+                errors[param_key] = str(exc)
+
+    if not updated and not errors:
+        raise HTTPException(status_code=422, detail="Payload не содержит параметров для обновления")
+    return {"status": "ok", "updated": updated, "errors": errors}
 
 
 @admin_router.delete(
     "/config/{key}",
     summary="Сбросить один параметр к дефолту",
+)
+@admin_router_v1.delete(
+    "/config/{key}",
+    summary="Сбросить один параметр к дефолту (v1)",
 )
 async def admin_reset_config_param(key: str):
     """Удаляет override параметра. Параметр вернётся к дефолту из config.py."""
@@ -92,10 +182,52 @@ async def admin_reset_config_param(key: str):
     "/config/reset-all",
     summary="Сбросить ВСЕ параметры конфига к дефолтам",
 )
+@admin_router_v1.post(
+    "/config/reset-all",
+    summary="Сбросить все параметры конфига к дефолтам (v1)",
+)
 async def admin_reset_all_config():
     """Удаляет все config-overrides. Промты не затрагивает."""
     config.reset_all_config_overrides()
     return {"status": "ok", "message": "Все параметры конфига сброшены к дефолтам"}
+
+
+@admin_router.get(
+    "/status",
+    summary="Runtime-статус источника данных",
+)
+@admin_router_v1.get(
+    "/status",
+    summary="Runtime-статус источника данных (v1)",
+)
+async def admin_status():
+    stats = data_loader.get_stats()
+    return {
+        "degraded_mode": bool(stats.get("degraded_mode", False)),
+        "data_source": stats.get("data_source", "unknown"),
+        "blocks_loaded": int(stats.get("total_blocks", 0)),
+        "version": "0.7.0",
+    }
+
+
+@admin_router.post(
+    "/reload-data",
+    summary="Перезагрузить базу знаний в data_loader",
+)
+@admin_router_v1.post(
+    "/reload-data",
+    summary="Перезагрузить базу знаний в data_loader (v1)",
+)
+async def admin_reload_data():
+    blocks = data_loader.reload()
+    stats = data_loader.get_stats()
+    return {
+        "status": "ok",
+        "message": "Data loader reloaded",
+        "blocks_loaded": len(blocks),
+        "data_source": stats.get("data_source", "unknown"),
+        "degraded_mode": bool(stats.get("degraded_mode", False)),
+    }
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -105,6 +237,10 @@ async def admin_reset_all_config():
 @admin_router.get(
     "/prompts",
     summary="Список всех промтов с превью",
+)
+@admin_router_v1.get(
+    "/prompts",
+    summary="Список всех промтов (v1)",
 )
 async def admin_get_prompts():
     """
@@ -118,12 +254,19 @@ async def admin_get_prompts():
     "/prompts/{name}",
     summary="Полный текст промта",
 )
+@admin_router_v1.get(
+    "/prompts/{name}",
+    summary="Полный текст промта (v1)",
+)
 async def admin_get_prompt(name: str):
     """
     Возвращает полный текст промта: актуальный (с override) и дефолтный (из .md).
     """
     try:
-        return config.get_prompt(name)
+        data = config.get_prompt(name)
+        # Alias for web-ui versions expecting "content".
+        data["content"] = data.get("text", "")
+        return data
     except (ValueError, FileNotFoundError) as e:
         raise HTTPException(status_code=404, detail=str(e))
 
@@ -131,6 +274,10 @@ async def admin_get_prompt(name: str):
 @admin_router.put(
     "/prompts/{name}",
     summary="Сохранить новый текст промта",
+)
+@admin_router_v1.put(
+    "/prompts/{name}",
+    summary="Сохранить новый текст промта (v1)",
 )
 async def admin_set_prompt(name: str, body: dict):
     """
@@ -141,9 +288,11 @@ async def admin_set_prompt(name: str, body: dict):
     Изменение применяется к следующему запросу бота без рестарта
     (только если промт читается внутри функции, а не на уровне модуля).
     """
-    text = body.get("text", "")
+    text = body.get("text", body.get("content", ""))
     try:
-        return config.set_prompt_override(name, text)
+        result = config.set_prompt_override(name, text)
+        result["content"] = result.get("text", "")
+        return result
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
@@ -152,10 +301,24 @@ async def admin_set_prompt(name: str, body: dict):
     "/prompts/{name}",
     summary="Сбросить промт к дефолту (из .md файла)",
 )
+@admin_router_v1.delete(
+    "/prompts/{name}",
+    summary="Сбросить промт к дефолту (v1)",
+)
+@admin_router.post(
+    "/prompts/{name}/reset",
+    summary="Сбросить промт к дефолту",
+)
+@admin_router_v1.post(
+    "/prompts/{name}/reset",
+    summary="Сбросить промт к дефолту (v1)",
+)
 async def admin_reset_prompt(name: str):
     """Удаляет override промта. Бот вернётся к тексту из .md файла."""
     try:
-        return config.reset_prompt_override(name)
+        result = config.reset_prompt_override(name)
+        result["content"] = result.get("text", "")
+        return result
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
 

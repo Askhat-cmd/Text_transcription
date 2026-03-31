@@ -48,6 +48,85 @@ class ResponseGenerator:
             logger.warning(f"[RESPONSE_GEN] SD prompt not found: {prompt_name}, using empty")
             return ""
 
+    @staticmethod
+    def _conflicts_with_mode(level_text: str, mode: str) -> bool:
+        """Detect restrictive level directives that conflict with expanding modes."""
+        expanding_modes = {"THINKING", "INTEGRATION", "VALIDATION"}
+        restricting_keywords = ("кратко", "упрощай", "не перегружай", "один точный вопрос")
+        if (mode or "").upper() not in expanding_modes:
+            return False
+        text = (level_text or "").lower()
+        return any(keyword in text for keyword in restricting_keywords)
+
+    @staticmethod
+    def _strip_restricting_lines(text: str) -> str:
+        """Remove explicitly restrictive lines from composed prompt."""
+        restricting_keywords = ("кратко", "упрощай", "не перегружай", "один точный вопрос")
+        kept_lines = []
+        for line in (text or "").splitlines():
+            low = line.lower()
+            if any(keyword in low for keyword in restricting_keywords):
+                continue
+            kept_lines.append(line)
+        return "\n".join(kept_lines).strip()
+
+    def _build_free_mode_prompt(
+        self,
+        base_prompt: str,
+        sd_level: str,
+        blocks,
+    ) -> str:
+        """Compose non-restrictive system prompt for FREE conversation mode."""
+        normalized_base = self._strip_restricting_lines(base_prompt)
+        sd_context = f"SD_LEVEL={sd_level or 'GREEN'}"
+        context_parts = []
+        for idx, block in enumerate(blocks[:5], start=1):
+            title = getattr(block, "title", "") or getattr(block, "document_title", "")
+            summary = getattr(block, "summary", "")
+            content = (getattr(block, "content", "") or "")[:240]
+            preview = summary or content
+            if preview:
+                context_parts.append(f"[{idx}] {title}: {preview}")
+        knowledge = "\n".join(context_parts) if context_parts else "Нет дополнительных блоков."
+        return (
+            f"{normalized_base}\n\n"
+            f"## Контекст SD (для понимания, не для ограничения):\n{sd_context}\n\n"
+            f"## Контекст знаний:\n{knowledge}\n\n"
+            "Отвечай полно, развёрнуто и по делу. Не ограничивай длину искусственно, "
+            "если запрос требует деталей."
+        )
+
+    def _compose_system_prompt(
+        self,
+        base_prompt: str,
+        sd_overlay: str,
+        mode_prompt: str,
+        additional_system_context: str,
+        mode: str,
+    ) -> str:
+        """Compose final prompt with configurable priority order."""
+        base = base_prompt.strip()
+        sd = (sd_overlay or "").strip()
+        mode_directive = f"MODE DIRECTIVE:\n{mode_prompt}".strip()
+
+        if config.PROMPT_SD_OVERRIDES_BASE:
+            chunks = [base, sd]
+        else:
+            chunks = [sd, base]
+
+        if config.PROMPT_MODE_OVERRIDES_SD:
+            chunks.append(mode_directive)
+        else:
+            chunks.insert(1, mode_directive)
+
+        if additional_system_context:
+            chunks.append(additional_system_context.strip())
+
+        final_prompt = "\n\n".join(chunk for chunk in chunks if chunk).strip()
+        if self._conflicts_with_mode(final_prompt, mode):
+            final_prompt = self._strip_restricting_lines(final_prompt)
+        return final_prompt
+
     def generate(
         self,
         query: str,
@@ -76,19 +155,28 @@ class ResponseGenerator:
                 pass
 
         sd_overlay = self._load_sd_prompt(sd_level)
-        if sd_overlay:
-            base_system_prompt = f"{base_system_prompt}\n\n{sd_overlay}"
-
         mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
-        system_chunks = [base_system_prompt, f"MODE DIRECTIVE:\n{mode_prompt}"]
-        if additional_system_context:
-            system_chunks.append(additional_system_context.strip())
-        final_system_prompt = "\n\n".join(chunk for chunk in system_chunks if chunk).strip()
+        if config.FREE_CONVERSATION_MODE:
+            final_system_prompt = self._build_free_mode_prompt(
+                base_prompt=base_system_prompt,
+                sd_level=sd_level,
+                blocks=blocks,
+            )
+        else:
+            final_system_prompt = self._compose_system_prompt(
+                base_prompt=base_system_prompt,
+                sd_overlay=sd_overlay,
+                mode_prompt=mode_prompt,
+                additional_system_context=additional_system_context,
+                mode=mode,
+            )
 
         model_name = model or config.LLM_MODEL
         base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE
         final_temperature = self._temperature_for_confidence(confidence_level, base_temp)
         final_max_tokens = max_tokens if max_tokens is not None else config.get_mode_max_tokens(mode)
+        if config.FREE_CONVERSATION_MODE:
+            final_max_tokens = None
 
         original_build_prompt = self.answerer.build_system_prompt
         self.answerer.build_system_prompt = lambda: final_system_prompt
@@ -150,19 +238,28 @@ class ResponseGenerator:
                 pass
 
         sd_overlay = self._load_sd_prompt(sd_level)
-        if sd_overlay:
-            base_system_prompt = f"{base_system_prompt}\n\n{sd_overlay}"
-
         mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
-        system_chunks = [base_system_prompt, f"MODE DIRECTIVE:\n{mode_prompt}"]
-        if additional_system_context:
-            system_chunks.append(additional_system_context.strip())
-        final_system_prompt = "\n\n".join(chunk for chunk in system_chunks if chunk).strip()
+        if config.FREE_CONVERSATION_MODE:
+            final_system_prompt = self._build_free_mode_prompt(
+                base_prompt=base_system_prompt,
+                sd_level=sd_level,
+                blocks=blocks,
+            )
+        else:
+            final_system_prompt = self._compose_system_prompt(
+                base_prompt=base_system_prompt,
+                sd_overlay=sd_overlay,
+                mode_prompt=mode_prompt,
+                additional_system_context=additional_system_context,
+                mode=mode,
+            )
 
         model_name = model or config.LLM_MODEL
         base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE
         final_temperature = self._temperature_for_confidence(confidence_level, base_temp)
         final_max_tokens = max_tokens if max_tokens is not None else config.get_mode_max_tokens(mode)
+        if config.FREE_CONVERSATION_MODE:
+            final_max_tokens = None
 
         async for token in self.answerer.answer_stream(
             query,

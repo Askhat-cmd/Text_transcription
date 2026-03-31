@@ -5,6 +5,7 @@
 export const GROUP_COLORS: Record<string, string> = {
   llm: 'violet',
   retrieval: 'blue',
+  routing: 'indigo',
   memory: 'emerald',
   storage: 'amber',
   runtime: 'slate',

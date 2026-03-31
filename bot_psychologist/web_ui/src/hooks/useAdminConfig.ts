@@ -6,6 +6,7 @@ import type {
   AdminConfigResponse,
   PromptMeta,
   PromptDetail,
+  AdminStatusResponse,
 } from '../types/admin.types';
 
 export const useAdminConfig = () => {
@@ -16,6 +17,7 @@ export const useAdminConfig = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [statusData, setStatusData] = useState<AdminStatusResponse | null>(null);
 
   const clearError = useCallback(() => setError(null), []);
 
@@ -82,6 +84,19 @@ export const useAdminConfig = () => {
     await loadConfig();
     showSuccess('↩ Все параметры конфига сброшены');
   }, [loadConfig, showSuccess]);
+
+  const loadStatus = useCallback(async () => {
+    const data = await withLoading(() => adminConfigService.getStatus());
+    if (data) setStatusData(data);
+  }, []);
+
+  const reloadKnowledgeBase = useCallback(async () => {
+    const result = await withSaving(() => adminConfigService.reloadData());
+    if (result) {
+      await loadStatus();
+      showSuccess('✓ База знаний перезагружена');
+    }
+  }, [loadStatus, showSuccess]);
 
   // ── Prompts ─────────────────────────────────────────────────────────
 
@@ -162,6 +177,7 @@ export const useAdminConfig = () => {
 
   return {
     configData,
+    statusData,
     prompts,
     selectedPrompt,
     isLoading,
@@ -175,6 +191,8 @@ export const useAdminConfig = () => {
     saveConfigParam,
     resetConfigParam,
     resetAllConfig,
+    loadStatus,
+    reloadKnowledgeBase,
     savePrompt,
     resetPrompt,
     resetAllPrompts,

@@ -6,14 +6,16 @@ import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { ConfigGroupPanel } from './ConfigGroupPanel';
 import { PromptEditorPanel } from './PromptEditorPanel';
 import { HistoryPanel } from './HistoryPanel';
+import { RoutingTab } from './RoutingTab';
 import { GROUP_COLORS } from '../../constants/adminColors';
 import type { HistoryEntry } from '../../types/admin.types';
 
-type Tab = 'llm' | 'retrieval' | 'memory' | 'storage' | 'runtime' | 'prompts' | 'history';
+type Tab = 'llm' | 'retrieval' | 'routing' | 'memory' | 'storage' | 'runtime' | 'prompts' | 'history';
 
 const TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'llm',       label: '🤖 LLM',       hoverColor: 'hover:bg-violet-500/20' },
   { key: 'retrieval', label: '🔍 Поиск',      hoverColor: 'hover:bg-blue-500/20'   },
+  { key: 'routing',   label: '🧭 Маршрутизация', hoverColor: 'hover:bg-cyan-500/20'  },
   { key: 'memory',    label: '🧠 Память',     hoverColor: 'hover:bg-emerald-500/20'},
   { key: 'storage',   label: '🗄️ Хранилище', hoverColor: 'hover:bg-amber-500/20'  },
   { key: 'runtime',   label: '⚙️ Runtime',    hoverColor: 'hover:bg-slate-500/20'  },
@@ -32,8 +34,10 @@ export const AdminPanel: React.FC = () => {
 
   const {
     configData, prompts, selectedPrompt,
+    statusData,
     isLoading, isSaving, error, successMessage,
     clearError, loadConfig, loadPrompts, loadPromptDetail,
+    loadStatus, reloadKnowledgeBase,
     saveConfigParam, resetConfigParam, resetAllConfig,
     savePrompt, resetPrompt, resetAllPrompts,
     exportOverrides, importOverrides,
@@ -43,7 +47,7 @@ export const AdminPanel: React.FC = () => {
     if (apiKey) localStorage.setItem('devApiKey', apiKey);
   }, [apiKey]);
 
-  useEffect(() => { loadConfig(); loadPrompts(); }, []);
+  useEffect(() => { loadConfig(); loadPrompts(); loadStatus(); }, []);
 
   useEffect(() => {
     if (activeTab !== 'history') return;
@@ -196,6 +200,26 @@ export const AdminPanel: React.FC = () => {
             {(['llm', 'retrieval', 'memory', 'storage', 'runtime'] as const)
               .includes(activeTab as any) && (
               <div className="mt-4 space-y-4">
+                {activeTab === 'runtime' && statusData && (
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
+                    <h3 className="font-semibold text-slate-800 mb-3">Статус системы</h3>
+                    <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
+                      <div>Режим данных: <span className="font-medium">{statusData.data_source}</span></div>
+                      <div>Блоков в памяти: <span className="font-medium">{statusData.blocks_loaded}</span></div>
+                      <div>DEGRADED_MODE: <span className="font-medium">{statusData.degraded_mode ? 'Активен' : 'ОК'}</span></div>
+                      <div>Версия: <span className="font-medium">{statusData.version}</span></div>
+                    </div>
+                    <div className="mt-3">
+                      <button
+                        onClick={reloadKnowledgeBase}
+                        disabled={isSaving}
+                        className="px-3 py-1.5 rounded bg-slate-700 text-white text-sm hover:bg-slate-800 disabled:opacity-50"
+                      >
+                        🔄 Перезагрузить базу знаний
+                      </button>
+                    </div>
+                  </div>
+                )}
                 {Object.entries(configData.groups)
                   .filter(([groupKey]) => groupKey === activeTab)
                   .map(([groupKey, group]) => (
@@ -210,6 +234,14 @@ export const AdminPanel: React.FC = () => {
                     />
                   ))}
               </div>
+            )}
+
+            {activeTab === 'routing' && configData.groups.routing && (
+              <RoutingTab
+                group={configData.groups.routing}
+                onSave={saveConfigParam}
+                isSaving={isSaving}
+              />
             )}
 
             {activeTab === 'prompts' && (

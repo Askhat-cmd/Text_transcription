@@ -95,6 +95,20 @@ class RuntimeConfig(Config):
             "group": "llm",
             "label": "Макс. токенов в ответе",
         },
+        "MAX_TOKENS": {
+            "type": "int_or_null",
+            "min": 256,
+            "max": 16000,
+            "group": "llm",
+            "label": "Лимит токенов (null = без ограничений)",
+        },
+        "MAX_TOKENS_SOFT_CAP": {
+            "type": "int",
+            "min": 256,
+            "max": 16000,
+            "group": "llm",
+            "label": "Мягкий лимит токенов (FREE mode)",
+        },
         "REASONING_EFFORT": {
             "type": "select",
             "options": ["low", "medium", "high"],
@@ -267,6 +281,69 @@ class RuntimeConfig(Config):
             "label": "Прогрев при старте сервера (warmup)",
             "note": "Применяется только при следующем перезапуске сервера",
         },
+        "FREE_CONVERSATION_MODE": {
+            "type": "bool",
+            "group": "routing",
+            "label": "Режим свободного собеседника",
+        },
+        "FAST_DETECTOR_ENABLED": {
+            "type": "bool",
+            "group": "routing",
+            "label": "Fast detector включен",
+        },
+        "FAST_DETECTOR_CONFIDENCE_THRESHOLD": {
+            "type": "float",
+            "min": 0.0,
+            "max": 1.0,
+            "group": "routing",
+            "label": "Порог fast detector",
+        },
+        "STATE_CLASSIFIER_ENABLED": {
+            "type": "bool",
+            "group": "routing",
+            "label": "State classifier включен",
+        },
+        "STATE_CLASSIFIER_CONFIDENCE_THRESHOLD": {
+            "type": "float",
+            "min": 0.0,
+            "max": 1.0,
+            "group": "routing",
+            "label": "Порог state classifier",
+        },
+        "SD_CLASSIFIER_ENABLED": {
+            "type": "bool",
+            "group": "routing",
+            "label": "SD classifier включен",
+        },
+        "SD_CLASSIFIER_CONFIDENCE_THRESHOLD": {
+            "type": "float",
+            "min": 0.0,
+            "max": 1.0,
+            "group": "routing",
+            "label": "Порог SD classifier",
+        },
+        "DECISION_GATE_RULE_THRESHOLD": {
+            "type": "float",
+            "min": 0.0,
+            "max": 1.0,
+            "group": "routing",
+            "label": "Порог Decision Gate",
+        },
+        "DECISION_GATE_LLM_ROUTER_ENABLED": {
+            "type": "bool",
+            "group": "routing",
+            "label": "Decision Gate LLM Router",
+        },
+        "PROMPT_SD_OVERRIDES_BASE": {
+            "type": "bool",
+            "group": "routing",
+            "label": "SD перекрывает base",
+        },
+        "PROMPT_MODE_OVERRIDES_SD": {
+            "type": "bool",
+            "group": "routing",
+            "label": "Mode перекрывает SD",
+        },
         "ENABLE_KNOWLEDGE_GRAPH": {
             "type": "bool",
             "group": "runtime",
@@ -357,6 +434,8 @@ class RuntimeConfig(Config):
                     t = meta["type"]
                     if t == "int":
                         return int(raw)
+                    elif t == "int_or_null":
+                        return None if raw is None else int(raw)
                     elif t == "float":
                         return float(raw)
                     elif t == "bool":
@@ -488,6 +567,7 @@ class RuntimeConfig(Config):
         group_labels = {
             "llm":       "🤖 LLM",
             "retrieval": "🔍 Поиск и ретривал",
+            "routing":   "🧭 Маршрутизация",
             "memory":    "🧠 Память и контекст",
             "storage":   "🗄️ Хранилище сессий",
             "runtime":   "⚙️ Runtime-параметры",
@@ -534,6 +614,15 @@ class RuntimeConfig(Config):
                 raise ValueError(
                     f"'{key}' должен быть в [{meta['min']}, {meta['max']}], получено {value}"
                 )
+        elif t == "int_or_null":
+            if value is None or (isinstance(value, str) and value.strip().lower() in ("", "null", "none")):
+                value = None
+            else:
+                value = int(value)
+                if not (meta["min"] <= value <= meta["max"]):
+                    raise ValueError(
+                        f"'{key}' должен быть в [{meta['min']}, {meta['max']}] или null, получено {value}"
+                    )
         elif t == "float":
             value = float(value)
             if not (meta["min"] <= value <= meta["max"]):
@@ -735,11 +824,37 @@ class RuntimeConfig(Config):
         self.RETRIEVAL_TOP_K = int(os.getenv("RETRIEVAL_TOP_K", "5"))
         self.TOP_K_BLOCKS = self.RETRIEVAL_TOP_K
         self.MIN_RELEVANCE_SCORE = float(os.getenv("MIN_RELEVANCE_SCORE", "0.1"))
+        max_tokens_raw = os.getenv("MAX_TOKENS", "").strip().lower()
+        self.MAX_TOKENS = None if max_tokens_raw in ("", "none", "null") else int(max_tokens_raw)
+        self.MAX_TOKENS_SOFT_CAP = int(os.getenv("MAX_TOKENS_SOFT_CAP", "8192"))
+        self.FREE_CONVERSATION_MODE = os.getenv("FREE_CONVERSATION_MODE", "false").lower() == "true"
 
         self.CONFIDENCE_CAP_HIGH = int(os.getenv("CONFIDENCE_CAP_HIGH", "7"))
         self.CONFIDENCE_CAP_MEDIUM = int(os.getenv("CONFIDENCE_CAP_MEDIUM", "5"))
         self.CONFIDENCE_CAP_LOW = int(os.getenv("CONFIDENCE_CAP_LOW", "3"))
         self.CONFIDENCE_CAP_ZERO = int(os.getenv("CONFIDENCE_CAP_ZERO", "0"))
+
+        self.FAST_DETECTOR_ENABLED = os.getenv("FAST_DETECTOR_ENABLED", "true").lower() == "true"
+        self.FAST_DETECTOR_CONFIDENCE_THRESHOLD = float(
+            os.getenv("FAST_DETECTOR_CONFIDENCE_THRESHOLD", "0.80")
+        )
+        self.FAST_DETECTOR_SKIP_DOWNSTREAM = os.getenv(
+            "FAST_DETECTOR_SKIP_DOWNSTREAM", "true"
+        ).lower() == "true"
+        self.STATE_CLASSIFIER_ENABLED = os.getenv("STATE_CLASSIFIER_ENABLED", "true").lower() == "true"
+        self.STATE_CLASSIFIER_CONFIDENCE_THRESHOLD = float(
+            os.getenv("STATE_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
+        )
+        self.SD_CLASSIFIER_ENABLED = os.getenv("SD_CLASSIFIER_ENABLED", "true").lower() == "true"
+        self.SD_CLASSIFIER_CONFIDENCE_THRESHOLD = float(
+            os.getenv("SD_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
+        )
+        self.DECISION_GATE_RULE_THRESHOLD = float(os.getenv("DECISION_GATE_RULE_THRESHOLD", "0.75"))
+        self.DECISION_GATE_LLM_ROUTER_ENABLED = os.getenv(
+            "DECISION_GATE_LLM_ROUTER_ENABLED", "true"
+        ).lower() == "true"
+        self.PROMPT_SD_OVERRIDES_BASE = os.getenv("PROMPT_SD_OVERRIDES_BASE", "true").lower() == "true"
+        self.PROMPT_MODE_OVERRIDES_SD = os.getenv("PROMPT_MODE_OVERRIDES_SD", "true").lower() == "true"
 
         self.DATA_SOURCE = os.getenv("DATA_SOURCE", "unknown")
         self.DEGRADED_MODE = os.getenv("DEGRADED_MODE", "false").lower() == "true"

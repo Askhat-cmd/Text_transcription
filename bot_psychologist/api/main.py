@@ -6,6 +6,7 @@ FastAPI Application for Bot Psychologist API (Phase 5)
 """
 
 import asyncio
+import shutil
 import sys
 import time
 from pathlib import Path
@@ -39,6 +40,29 @@ logger = get_logger(__name__)
 _startup_time: float = 0.0
 
 
+def _ensure_prompt_default_snapshots() -> None:
+    """Create *.default.md snapshots for editable prompts on first startup."""
+    prompt_names = [
+        "prompt_system_base",
+        "prompt_sd_green",
+        "prompt_sd_yellow",
+        "prompt_sd_orange",
+        "prompt_sd_red",
+        "prompt_sd_blue",
+        "prompt_sd_purple",
+        "prompt_system_level_beginner",
+        "prompt_system_level_intermediate",
+        "prompt_system_level_advanced",
+    ]
+    prompts_dir = config.BOT_AGENT_ROOT
+    for name in prompt_names:
+        src = prompts_dir / f"{name}.md"
+        dst = prompts_dir / f"{name}.default.md"
+        if src.exists() and not dst.exists():
+            shutil.copy2(src, dst)
+            logger.info("[STARTUP] Created default snapshot: %s.default.md", name)
+
+
 # ===== APP INITIALIZATION =====
 
 @asynccontextmanager
@@ -50,6 +74,7 @@ async def lifespan(app: FastAPI):
     logger.info("API server starting")
     logger.info("Version: %s", app.version)
     logger.info("Docs: http://localhost:8000/api/docs")
+    _ensure_prompt_default_snapshots()
 
     if config.WARMUP_ON_START:
         logger.info("[WARMUP] starting warm preload")
@@ -190,8 +215,9 @@ async def log_requests(request: Request, call_next):
 app.include_router(router)
 app.include_router(debug_router)
 
-from .admin_routes import admin_router  # Admin Config Panel (PRD v2.0.1)
+from .admin_routes import admin_router, admin_router_v1  # Admin Config Panel (legacy + v1)
 app.include_router(admin_router)
+app.include_router(admin_router_v1)
 
 
 # ===== CUSTOM OPENAPI =====

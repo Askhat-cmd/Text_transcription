@@ -13,6 +13,8 @@ import re
 from dataclasses import dataclass
 from typing import Iterable
 
+from .config import config
+
 
 @dataclass(frozen=True)
 class FastDetection:
@@ -189,6 +191,9 @@ def _build_confidence(base: float, hits: int) -> float:
 
 
 def detect_sd_level(text: str) -> FastDetection | None:
+    if not config.FAST_DETECTOR_ENABLED:
+        return None
+
     message = (text or "").strip().lower()
     if not message:
         return None
@@ -209,6 +214,8 @@ def detect_sd_level(text: str) -> FastDetection | None:
     best_label = sorted(scores.items(), key=lambda item: (-item[1], _SD_ORDER.index(item[0])))[0][0]
     best_hits = scores[best_label]
     confidence = _build_confidence(_SD_BASE_CONFIDENCE[best_label], best_hits)
+    if confidence < float(config.FAST_DETECTOR_CONFIDENCE_THRESHOLD):
+        return None
     return FastDetection(
         label=best_label,
         confidence=confidence,
@@ -218,6 +225,9 @@ def detect_sd_level(text: str) -> FastDetection | None:
 
 
 def detect_user_state(text: str) -> FastDetection | None:
+    if not config.FAST_DETECTOR_ENABLED:
+        return None
+
     message = (text or "").strip().lower()
     if not message:
         return None
@@ -234,6 +244,8 @@ def detect_user_state(text: str) -> FastDetection | None:
     best_label = max(scores.items(), key=lambda item: item[1])[0]
     best_hits = scores[best_label]
     confidence = _build_confidence(_STATE_BASE_CONFIDENCE[best_label], best_hits)
+    if confidence < float(config.FAST_DETECTOR_CONFIDENCE_THRESHOLD):
+        return None
     return FastDetection(
         label=best_label,
         confidence=confidence,

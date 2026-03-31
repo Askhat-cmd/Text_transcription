@@ -120,6 +120,41 @@ export const ConfigGroupPanel: React.FC<Props> = ({
       );
     }
 
+    if (param.type === 'int_or_null') {
+      const isUnlimited = draft === null;
+      const fallbackValue = Number(param.default ?? param.min ?? 1024);
+      return (
+        <div className="space-y-2">
+          <label className="flex items-center gap-2 text-sm text-gray-600">
+            <input
+              type="checkbox"
+              checked={isUnlimited}
+              onChange={(e) =>
+                handleChange(key, e.target.checked ? null : (typeof param.default === 'number' ? param.default : fallbackValue))
+              }
+              className="w-4 h-4 rounded"
+            />
+            Без ограничений токенов
+          </label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              className={`${baseClass} ${isUnlimited ? 'opacity-40 cursor-not-allowed' : ''}`}
+              value={String(isUnlimited ? '' : draft ?? '')}
+              min={param.min}
+              max={param.max}
+              step={1}
+              disabled={isUnlimited}
+              onChange={(e) => handleChange(key, parseInt(e.target.value, 10))}
+            />
+            <span className="text-xs text-gray-400 whitespace-nowrap">
+              [{param.min} – {param.max}] / null
+            </span>
+          </div>
+        </div>
+      );
+    }
+
     if (param.type === 'int' || param.type === 'float') {
       return (
         <div className="flex items-center gap-2">

@@ -1,10 +1,10 @@
 // types/admin.types.ts
 
-export type ParamType = 'int' | 'float' | 'bool' | 'select' | 'string';
+export type ParamType = 'int' | 'int_or_null' | 'float' | 'bool' | 'select' | 'string';
 
 export interface ConfigParam {
-  value: number | boolean | string;
-  default: number | boolean | string;
+  value: number | boolean | string | null;
+  default: number | boolean | string | null;
   is_overridden: boolean;
   type: ParamType;
   min?: number;
@@ -56,4 +56,11 @@ export interface AdminOverridesExport {
   prompts: Record<string, string | null>;
   meta: { last_modified: string; modified_by: string };
   history: HistoryEntry[];
+}
+
+export interface AdminStatusResponse {
+  degraded_mode: boolean;
+  data_source: string;
+  blocks_loaded: number;
+  version: string;
 }

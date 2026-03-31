@@ -21,6 +21,17 @@ load_dotenv(_env_path)
 logger = logging.getLogger(__name__)
 
 
+def _parse_optional_int_env(name: str, default: Optional[int] = None) -> Optional[int]:
+    """Parse optional int env var supporting '', 'null', 'none'."""
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    value = str(raw).strip().lower()
+    if value in ("", "none", "null"):
+        return None
+    return int(value)
+
+
 class Config:
     """Application config."""
 
@@ -74,6 +85,9 @@ class Config:
     CLASSIFIER_MODEL = os.getenv("CLASSIFIER_MODEL", "gpt-4o-mini")
     LLM_TEMPERATURE = 0.7
     LLM_MAX_TOKENS = 2000
+    MAX_TOKENS: Optional[int] = _parse_optional_int_env("MAX_TOKENS", None)
+    MAX_TOKENS_SOFT_CAP: int = int(os.getenv("MAX_TOKENS_SOFT_CAP", "8192"))
+    FREE_CONVERSATION_MODE: bool = os.getenv("FREE_CONVERSATION_MODE", "False").lower() == "true"
     # Token limits per response mode (aligned with ResponseFormatter char_limits)
     # Formula: char_limit × 1.7 (ru tokens/char) × 1.2 (safety margin)
     MODE_MAX_TOKENS: dict = {
@@ -117,6 +131,29 @@ class Config:
     WARMUP_ON_START = os.getenv("WARMUP_ON_START", "True").lower() == "true"
     ENABLE_STREAMING = os.getenv("ENABLE_STREAMING", "True").lower() == "true"
     ENABLE_KNOWLEDGE_GRAPH = os.getenv("ENABLE_KNOWLEDGE_GRAPH", "False").lower() == "true"
+
+    # === Routing pipeline controls ===
+    FAST_DETECTOR_ENABLED: bool = os.getenv("FAST_DETECTOR_ENABLED", "True").lower() == "true"
+    FAST_DETECTOR_CONFIDENCE_THRESHOLD: float = float(
+        os.getenv("FAST_DETECTOR_CONFIDENCE_THRESHOLD", "0.80")
+    )
+    FAST_DETECTOR_SKIP_DOWNSTREAM: bool = os.getenv(
+        "FAST_DETECTOR_SKIP_DOWNSTREAM", "True"
+    ).lower() == "true"
+    STATE_CLASSIFIER_ENABLED: bool = os.getenv("STATE_CLASSIFIER_ENABLED", "True").lower() == "true"
+    STATE_CLASSIFIER_CONFIDENCE_THRESHOLD: float = float(
+        os.getenv("STATE_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
+    )
+    SD_CLASSIFIER_ENABLED: bool = os.getenv("SD_CLASSIFIER_ENABLED", "True").lower() == "true"
+    SD_CLASSIFIER_CONFIDENCE_THRESHOLD: float = float(
+        os.getenv("SD_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
+    )
+    DECISION_GATE_RULE_THRESHOLD: float = float(os.getenv("DECISION_GATE_RULE_THRESHOLD", "0.75"))
+    DECISION_GATE_LLM_ROUTER_ENABLED: bool = os.getenv(
+        "DECISION_GATE_LLM_ROUTER_ENABLED", "True"
+    ).lower() == "true"
+    PROMPT_SD_OVERRIDES_BASE: bool = os.getenv("PROMPT_SD_OVERRIDES_BASE", "True").lower() == "true"
+    PROMPT_MODE_OVERRIDES_SD: bool = os.getenv("PROMPT_MODE_OVERRIDES_SD", "True").lower() == "true"
 
     # === Conversation memory ===
     CONVERSATION_HISTORY_DEPTH = int(os.getenv("CONVERSATION_HISTORY_DEPTH", "3"))
@@ -235,6 +272,8 @@ class Config:
                 f"Unknown model '{cls.CLASSIFIER_MODEL}' set in CLASSIFIER_MODEL. "
                 f"Allowed values: {', '.join(cls.SUPPORTED_MODELS)}"
             )
+        if cls.MAX_TOKENS_SOFT_CAP < 256:
+            errors.append("MAX_TOKENS_SOFT_CAP must be >= 256")
 
         if errors:
             raise ValueError("Configuration errors:\n" + "\n".join(f"  - {error}" for error in errors))
@@ -259,6 +298,9 @@ class Config:
 | LLM_MODEL:    {cls.LLM_MODEL}
 | CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}
+| FREE_MODE:    {cls.FREE_CONVERSATION_MODE}
+| MAX_TOKENS:   {cls.MAX_TOKENS}
+| SOFT_CAP:     {cls.MAX_TOKENS_SOFT_CAP}
 | TOP_K:        {cls.TOP_K_BLOCKS}
 | GRAPH:        {'enabled' if cls.ENABLE_KNOWLEDGE_GRAPH else 'disabled'}
 | DEBUG:        {cls.DEBUG}

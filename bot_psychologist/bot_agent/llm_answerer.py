@@ -67,6 +67,76 @@ class LLMAnswerer:
         except ImportError:
             logger.error("❌ openai не установлен. Установите: pip install openai")
             raise
+
+    @staticmethod
+    def _messages_to_input(messages: List[Dict]) -> str:
+        """Convert chat messages into a plain text payload for Responses API."""
+        chunks = []
+        for msg in messages or []:
+            role = str(msg.get("role", "user")).upper()
+            content = str(msg.get("content", ""))
+            if content:
+                chunks.append(f"{role}:\n{content}")
+        return "\n\n".join(chunks).strip()
+
+    def _resolve_max_tokens(self, model: str, explicit_max_tokens: Optional[int]) -> Optional[int]:
+        """
+        Resolve token budget with FREE mode priority.
+
+        Priority:
+        1) FREE_CONVERSATION_MODE -> MAX_TOKENS_SOFT_CAP
+        2) explicit max_tokens argument
+        3) config.MAX_TOKENS (can be None)
+        """
+        if config.FREE_CONVERSATION_MODE:
+            return int(config.MAX_TOKENS_SOFT_CAP)
+        if explicit_max_tokens is not None:
+            return int(explicit_max_tokens)
+        configured = getattr(config, "MAX_TOKENS", None)
+        if configured is None:
+            return None
+        return int(configured)
+
+    def _build_api_params(
+        self,
+        messages: List[Dict],
+        model: Optional[str] = None,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+        stream: bool = False,
+    ) -> Dict:
+        """Build OpenAI request params for either chat-completions or responses API."""
+        model_name = model or config.LLM_MODEL
+        resolved_max_tokens = self._resolve_max_tokens(model_name, max_tokens)
+        token_param = config.get_token_param_name(model_name)
+
+        if not config.supports_custom_temperature(model_name):
+            request_params: Dict = {
+                "model": model_name,
+                "input": self._messages_to_input(messages),
+            }
+            if resolved_max_tokens is not None:
+                request_params["max_output_tokens"] = resolved_max_tokens
+            if stream:
+                request_params["stream"] = True
+            reasoning_effort = config.get_reasoning_effort(model_name)
+            if reasoning_effort:
+                request_params["reasoning"] = {"effort": reasoning_effort}
+            return request_params
+
+        final_temperature = (
+            temperature if temperature is not None else config.LLM_TEMPERATURE
+        )
+        request_params = {
+            "model": model_name,
+            "messages": messages,
+            "temperature": final_temperature,
+        }
+        if resolved_max_tokens is not None:
+            request_params[token_param] = resolved_max_tokens
+        if stream:
+            request_params["stream"] = True
+        return request_params
     
     def build_system_prompt(self) -> str:
         """
@@ -174,7 +244,7 @@ class LLMAnswerer:
         # Параметры
         model = model or config.LLM_MODEL
         temperature = temperature if temperature is not None else config.LLM_TEMPERATURE
-        max_tokens = max_tokens or config.get_effective_max_tokens(model)
+        resolved_max_tokens = self._resolve_max_tokens(model, max_tokens)
         token_param = config.get_token_param_name(model)
         
         # Промпты
@@ -188,21 +258,28 @@ class LLMAnswerer:
         logger.debug(f"📤 Отправляю запрос к {model}...")
         
         try:
-            logger.debug("Using token parameter: %s=%s for model %s", token_param, max_tokens, model)
+            logger.debug(
+                "Using token parameter: %s=%s for model %s (free_mode=%s)",
+                token_param,
+                resolved_max_tokens,
+                model,
+                config.FREE_CONVERSATION_MODE,
+            )
             start_time = time.perf_counter()
             tokens_prompt = None
             tokens_completion = None
             tokens_total = None
             model_used = model
+            messages = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": context},
+            ]
             if not config.supports_custom_temperature(model):
-                reasoning_effort = config.get_reasoning_effort(model)
-                request_params = {
-                    "model": model,
-                    "input": system_prompt + "\n\n" + context,
-                    "max_output_tokens": max_tokens,
-                }
-                if reasoning_effort:
-                    request_params["reasoning"] = {"effort": reasoning_effort}
+                request_params = self._build_api_params(
+                    messages=messages,
+                    model=model,
+                    max_tokens=max_tokens,
+                )
                 response = self.client.responses.create(**request_params)
                 answer = (getattr(response, "output_text", "") or "").strip()
                 usage = getattr(response, "usage", None)
@@ -218,16 +295,12 @@ class LLMAnswerer:
                     if tokens_total is None and tokens_prompt is not None and tokens_completion is not None:
                         tokens_total = int(tokens_prompt) + int(tokens_completion)
             else:
-                messages = [
-                    {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": context},
-                ]
-                request_params = {
-                    "model": model,
-                    "messages": messages,
-                    token_param: max_tokens,
-                }
-                request_params["temperature"] = temperature
+                request_params = self._build_api_params(
+                    messages=messages,
+                    model=model,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                )
                 response = self.client.chat.completions.create(**request_params)
                 raw_content = response.choices[0].message.content
                 answer = (raw_content or "").strip()
@@ -313,7 +386,7 @@ class LLMAnswerer:
 
         model = model or config.LLM_MODEL
         temperature = temperature if temperature is not None else config.LLM_TEMPERATURE
-        max_tokens = max_tokens or config.get_effective_max_tokens(model)
+        resolved_max_tokens = self._resolve_max_tokens(model, max_tokens)
 
         system_prompt = system_prompt_override or self.build_system_prompt()
         context = self.build_context_prompt(
@@ -321,18 +394,19 @@ class LLMAnswerer:
             user_question,
             conversation_history=conversation_history,
         )
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": context},
+        ]
 
         if not config.supports_custom_temperature(model):
             try:
-                reasoning_effort = config.get_reasoning_effort(model)
-                request_params = {
-                    "model": model,
-                    "input": system_prompt + "\n\n" + context,
-                    "max_output_tokens": max_tokens,
-                    "stream": True,
-                }
-                if reasoning_effort:
-                    request_params["reasoning"] = {"effort": reasoning_effort}
+                request_params = self._build_api_params(
+                    messages=messages,
+                    model=model,
+                    max_tokens=max_tokens,
+                    stream=True,
+                )
 
                 stream = await self.async_client.responses.create(**request_params)
                 async for event in stream:
@@ -356,25 +430,20 @@ class LLMAnswerer:
                     conversation_history,
                     model,
                     temperature,
-                    max_tokens,
+                    resolved_max_tokens,
                 )
                 answer = (result.get("answer") or "").strip()
                 if answer:
                     yield answer
                 return
 
-        token_param = config.get_token_param_name(model)
-        messages = [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": context},
-        ]
-        request_params = {
-            "model": model,
-            "messages": messages,
-            token_param: max_tokens,
-            "stream": True,
-            "temperature": temperature,
-        }
+        request_params = self._build_api_params(
+            messages=messages,
+            model=model,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            stream=True,
+        )
         stream = await self.async_client.chat.completions.create(**request_params)
         async for chunk in stream:
             delta = chunk.choices[0].delta if chunk.choices else None

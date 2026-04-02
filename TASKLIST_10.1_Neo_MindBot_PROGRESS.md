@@ -339,6 +339,10 @@
   - `tests/e2e/neo_e2e_support.py`.
 - Расширен phase8 runtime helper:
   - `build_diagnostics(...)` теперь поддерживает `nervous_system_state` и отдельную confidence для state.
+- Обновлена документация Neo runtime:
+  - `docs/neo_runtime_v101.md` (актуальный runtime-контур v10.1);
+  - `docs/release_checklist_v101.md` (pre-release checklist);
+  - `README.md` получил ссылочный блок на актуальные Neo-артефакты.
 
 ### Files changed
 - `bot_psychologist/tests/e2e/neo_e2e_support.py`
@@ -355,6 +359,9 @@
 - `bot_psychologist/tests/e2e/test_degraded_retrieval_case.py`
 - `bot_psychologist/tests/e2e/test_legacy_fallback_when_flag_off.py`
 - `bot_psychologist/tests/phase8_runtime_support.py`
+- `bot_psychologist/docs/neo_runtime_v101.md`
+- `bot_psychologist/docs/release_checklist_v101.md`
+- `bot_psychologist/README.md`
 
 ### Tests run
 - `python -m pytest bot_psychologist/tests/e2e -v`

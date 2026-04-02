@@ -39,13 +39,15 @@ from .decision import (
     detect_routing_signals,
     resolve_user_stage,
 )
-from .retrieval import HybridQueryBuilder, VoyageReranker
+from .retrieval import ConfidenceScorer, HybridQueryBuilder, VoyageReranker
 from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
 from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
 from .progressive_rag import get_progressive_rag
+from .diagnostics_classifier import diagnostics_classifier
+from .route_resolver import route_resolver
 
 logger = logging.getLogger(__name__)
 
@@ -329,6 +331,14 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
 def _sd_runtime_disabled() -> bool:
     """Return True when SD classifier is disabled for live runtime."""
     return feature_flags.enabled("DISABLE_SD_RUNTIME")
+
+
+def _diagnostics_v1_enabled() -> bool:
+    return feature_flags.enabled("USE_NEW_DIAGNOSTICS_V1")
+
+
+def _deterministic_route_resolver_enabled() -> bool:
+    return feature_flags.enabled("USE_DETERMINISTIC_ROUTE_RESOLVER")
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1184,6 +1194,28 @@ def answer_question_adaptive(
             debug_trace["informational_mode"] = informational_mode
             debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
 
+        use_new_diagnostics_v1 = _diagnostics_v1_enabled()
+        use_deterministic_router = (
+            _deterministic_route_resolver_enabled() and use_new_diagnostics_v1
+        )
+        confidence_scorer = ConfidenceScorer()
+        route_resolution_count = 0
+
+        diagnostics_v1 = None
+        if use_new_diagnostics_v1:
+            diagnostics_v1 = diagnostics_classifier.classify(
+                query=query,
+                state_analysis=state_analysis,
+                informational_mode_hint=informational_mode,
+            )
+            if debug_trace is not None:
+                debug_trace["diagnostics_v1"] = diagnostics_v1.as_dict()
+                debug_trace["route_strategy"] = (
+                    "deterministic_v1" if use_deterministic_router else "legacy_decision_gate"
+                )
+            if debug_info is not None:
+                debug_info["diagnostics_v1"] = diagnostics_v1.as_dict()
+
         contradiction_info = detect_contradiction(query)
         contradiction_hint = (
             str(contradiction_info.get("suggestion", ""))
@@ -1191,29 +1223,36 @@ def answer_question_adaptive(
             else ""
         )
 
-        decision_gate = DecisionGate()
-        pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
-        pre_routing_signals["contradiction_detected"] = bool(
-            contradiction_info.get("has_contradiction", False)
-        )
-        pre_routing_signals["contradiction_suggestion"] = contradiction_hint
         if debug_trace is not None:
             debug_trace["contradiction"] = contradiction_info
-        pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
-        fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
-        if informational_mode and fast_path_enabled:
-            # For curious/informational flow we prefer full retrieval context over compact fast-path.
+
+        decision_gate = None if use_deterministic_router else DecisionGate()
+        pre_routing_result = None
+        if use_deterministic_router:
+            # Phase 4: one deterministic route per turn; fast path is disabled.
             fast_path_enabled = False
-            logger.info(
-                "[FAST_PATH] disabled for informational_mode (user_state=%s)",
-                state_analysis.primary_state.value,
+            logger.info("[ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled")
+        else:
+            pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
+            pre_routing_signals["contradiction_detected"] = bool(
+                contradiction_info.get("has_contradiction", False)
             )
-        logger.info(
-            "[CONFIDENCE] score=%.4f level=%s -> FAST_PATH: %s",
-            pre_routing_result.confidence_score,
-            pre_routing_result.confidence_level,
-            "yes" if fast_path_enabled else "no",
-        )
+            pre_routing_signals["contradiction_suggestion"] = contradiction_hint
+            pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
+            fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
+            if informational_mode and fast_path_enabled:
+                # For curious/informational flow we prefer full retrieval context over compact fast-path.
+                fast_path_enabled = False
+                logger.info(
+                    "[FAST_PATH] disabled for informational_mode (user_state=%s)",
+                    state_analysis.primary_state.value,
+                )
+            logger.info(
+                "[CONFIDENCE] score=%.4f level=%s -> FAST_PATH: %s",
+                pre_routing_result.confidence_score,
+                pre_routing_result.confidence_level,
+                "yes" if fast_path_enabled else "no",
+            )
 
         if fast_path_enabled:
             logger.info(
@@ -1587,8 +1626,20 @@ def answer_question_adaptive(
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
-        pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
-        pre_rerank_routing = decision_gate.route(pre_rerank_signals, user_stage=user_stage)
+        if use_deterministic_router and diagnostics_v1 is not None:
+            pre_rerank_mode = (
+                "CLARIFICATION" if diagnostics_v1.interaction_mode == "informational" else "PRESENCE"
+            )
+            pre_rerank_confidence = (
+                float(diagnostics_v1.confidence.interaction_mode)
+                + float(diagnostics_v1.confidence.nervous_system_state)
+                + float(diagnostics_v1.confidence.request_function)
+            ) / 3.0
+        else:
+            pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
+            pre_rerank_routing = decision_gate.route(pre_rerank_signals, user_stage=user_stage)
+            pre_rerank_mode = pre_rerank_routing.mode
+            pre_rerank_confidence = pre_rerank_routing.confidence_score
         conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
         rerank_flags = {
             "legacy_always_on": bool(
@@ -1600,8 +1651,8 @@ def answer_question_adaptive(
             "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
         }
         should_run_rerank, rerank_reason = should_rerank(
-            confidence_score=pre_rerank_routing.confidence_score,
-            routing_mode=pre_rerank_routing.mode,
+            confidence_score=pre_rerank_confidence,
+            routing_mode=pre_rerank_mode,
             retrieved_block_count=len(retrieved_blocks),
             flags=rerank_flags,
         )
@@ -1643,11 +1694,25 @@ def answer_question_adaptive(
         reranked_blocks_for_trace = list(retrieved_blocks)
 
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
-        routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
-        block_cap = decision_gate.scorer.suggest_block_cap(
-            len(retrieved_blocks),
-            routing_result.confidence_level,
-        )
+        if use_deterministic_router and diagnostics_v1 is not None:
+            practice_candidate_score = 0.75 if diagnostics_v1.request_function == "directive" else 0.0
+            routing_result = route_resolver.resolve(
+                diagnostics=diagnostics_v1,
+                safety_override=False,
+                practice_candidate_score=practice_candidate_score,
+                user_stage=user_stage,
+            )
+            route_resolution_count += 1
+            block_cap = confidence_scorer.suggest_block_cap(
+                len(retrieved_blocks),
+                routing_result.confidence_level,
+            )
+        else:
+            routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+            block_cap = decision_gate.scorer.suggest_block_cap(
+                len(retrieved_blocks),
+                routing_result.confidence_level,
+            )
         stage_count_before_cap = len(retrieved_blocks)
         retrieved_blocks = retrieved_blocks[:block_cap]
         capped_retrieved_blocks = list(retrieved_blocks)
@@ -1668,6 +1733,7 @@ def answer_question_adaptive(
         )
         if debug_trace is not None:
             debug_trace["recommended_mode"] = routing_result.mode
+            debug_trace["resolved_route"] = getattr(routing_result, "route", None)
             debug_trace["decision_rule_id"] = routing_result.decision.rule_id
             debug_trace["confidence_score"] = routing_result.confidence_score
             debug_trace["confidence_level"] = routing_result.confidence_level
@@ -1678,6 +1744,7 @@ def answer_question_adaptive(
             debug_trace["rerank_should_run"] = bool(should_run_rerank)
             debug_trace["rerank_reason"] = rerank_reason
             debug_trace["rerank_applied"] = bool(rerank_applied)
+            debug_trace["route_resolution_count"] = route_resolution_count
 
         if not retrieved_blocks:
             response = _build_partial_response(
@@ -1741,8 +1808,11 @@ def answer_question_adaptive(
             return response
         
         blocks = [block for block, score in retrieved_blocks]
-        adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
-        
+        if level_adapter is not None:
+            adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
+        else:
+            adapted_blocks = list(blocks)
+
         if not adapted_blocks:
             adapted_blocks = blocks[:3]  # fallback
         if debug_trace is not None:
@@ -1821,10 +1891,12 @@ def answer_question_adaptive(
             }
             debug_info["routing"] = {
                 "mode": routing_result.mode,
+                "route": getattr(routing_result, "route", None),
                 "rule_id": routing_result.decision.rule_id,
                 "reason": routing_result.decision.reason,
                 "confidence_score": routing_result.confidence_score,
                 "confidence_level": routing_result.confidence_level,
+                "route_resolution_count": route_resolution_count,
             }
         if debug_trace is not None:
             chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
@@ -2143,13 +2215,16 @@ def answer_question_adaptive(
                 "state": state_analysis.primary_state.value,
                 "conversation_turns": len(memory.turns),
                 "recommended_mode": routing_result.mode,
+                "resolved_route": getattr(routing_result, "route", None),
                 "decision_rule_id": routing_result.decision.rule_id,
                 "confidence_score": routing_result.confidence_score,
                 "confidence_level": routing_result.confidence_level,
                 "mode_reason": mode_directive.reason,
+                "route_resolution_count": route_resolution_count,
                 "retrieval_block_cap": block_cap,
                 "informational_mode": informational_mode,
                 "applied_mode_prompt": mode_prompt_key if informational_mode else None,
+                "diagnostics_v1": diagnostics_v1.as_dict() if diagnostics_v1 else None,
                 "sd_level": sd_result.primary,
                 "sd_secondary": sd_result.secondary,
                 "sd_confidence": round(sd_result.confidence, 3),

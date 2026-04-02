@@ -7,7 +7,7 @@
 - [x] Phase 1 — Remove SD Runtime Dependency
 - [x] Phase 2 — Remove SD Retrieval Filtering
 - [x] Phase 3 — Remove UserLevelAdapter
-- [ ] Phase 4 — Diagnostics v1 + Deterministic RouteResolver
+- [x] Phase 4 — Diagnostics v1 + Deterministic RouteResolver
 - [ ] Phase 5 — Memory v1.1
 - [ ] Phase 6 — Prompt Stack v2 + Output Validation
 - [ ] Phase 7 — Practice Engine v1
@@ -95,7 +95,43 @@
 - `python -m pytest tests/test_path_builder.py tests/test_response_generator.py -v` (workdir: `bot_psychologist/`)
 - Result: passed.
 
-## Сводный прогон (Phase 0-3)
+## Phase 4 — Diagnostics v1 + Deterministic RouteResolver
+### Done
+- Добавлен `diagnostics_classifier.py` с runtime-контрактом обязательных полей:
+  - `interaction_mode`
+  - `nervous_system_state`
+  - `request_function`
+  - `core_theme`
+- Добавлена confidence policy + sanitize/default fallback для битых/частичных payload.
+- Добавлен `route_resolver.py` с детерминированной route taxonomy:
+  - `safe_override`, `regulate`, `reflect`, `practice`, `inform`, `contact_hold`
+- Интеграция в adaptive pipeline под flags:
+  - `USE_NEW_DIAGNOSTICS_V1`
+  - `USE_DETERMINISTIC_ROUTE_RESOLVER`
+- При включенных flags:
+  - используется Diagnostics v1
+  - применяется детерминированный resolver
+  - fast-path отключен (один route на turn)
+  - в trace/metadata добавлены `diagnostics_v1`, `resolved_route`, `route_resolution_count`.
+- Исправлен runtime баг после Phase 3:
+  - при `level_adapter=None` убран вызов `filter_blocks_by_level` для `None`.
+
+### Files changed
+- `bot_psychologist/bot_agent/diagnostics_classifier.py`
+- `bot_psychologist/bot_agent/route_resolver.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/tests/unit/test_diagnostics_required_fields.py`
+- `bot_psychologist/tests/unit/test_diagnostics_confidence_policy.py`
+- `bot_psychologist/tests/unit/test_route_resolver_rules.py`
+- `bot_psychologist/tests/contract/test_diagnostics_schema_v101.py`
+- `bot_psychologist/tests/golden/test_diagnostics_examples.py`
+- `bot_psychologist/tests/integration/test_single_route_per_turn.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/unit/test_diagnostics_required_fields.py bot_psychologist/tests/unit/test_diagnostics_confidence_policy.py bot_psychologist/tests/unit/test_route_resolver_rules.py bot_psychologist/tests/contract/test_diagnostics_schema_v101.py bot_psychologist/tests/golden/test_diagnostics_examples.py bot_psychologist/tests/integration/test_single_route_per_turn.py -v`
+- Result: passed.
+
+## Сводный прогон (Phase 0-4)
 ```bash
 python -m pytest \
   bot_psychologist/tests/smoke/test_app_boot.py \
@@ -108,10 +144,19 @@ python -m pytest \
   bot_psychologist/tests/unit/test_retriever_no_sd_filter.py \
   bot_psychologist/tests/integration/test_full_knowledge_access.py \
   bot_psychologist/tests/regression/test_no_hidden_sd_filtering.py \
-  bot_psychologist/tests/contract/test_retrieval_contract_v101.py -v
+  bot_psychologist/tests/contract/test_retrieval_contract_v101.py \
+  bot_psychologist/tests/unit/test_user_level_adapter_removed.py \
+  bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py \
+  bot_psychologist/tests/regression/test_no_level_based_prompting.py \
+  bot_psychologist/tests/unit/test_diagnostics_required_fields.py \
+  bot_psychologist/tests/unit/test_diagnostics_confidence_policy.py \
+  bot_psychologist/tests/unit/test_route_resolver_rules.py \
+  bot_psychologist/tests/contract/test_diagnostics_schema_v101.py \
+  bot_psychologist/tests/golden/test_diagnostics_examples.py \
+  bot_psychologist/tests/integration/test_single_route_per_turn.py -v
 ```
 
-Результат: 15 passed.
+Результат: 31 passed.
 
 ## Next
-- Следующий шаг: `Phase 3 — Remove UserLevelAdapter`.
+- Следующий шаг: `Phase 5 — Memory v1.1`.

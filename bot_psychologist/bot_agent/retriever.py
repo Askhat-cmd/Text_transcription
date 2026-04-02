@@ -19,7 +19,6 @@ from .data_loader import data_loader, Block
 from .config import config
 from .db_api_client import DBApiClient, DBApiUnavailableError, RetrievedChunk
 from .embedding_provider import create_embedding_provider
-from .sd_classifier import SD_LEVELS_ORDER
 from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
@@ -277,9 +276,18 @@ class SimpleRetriever:
 
     @staticmethod
     def _sd_int_to_name(value: int) -> Optional[str]:
-        if 1 <= int(value) <= len(SD_LEVELS_ORDER):
-            return SD_LEVELS_ORDER[int(value) - 1]
-        return None
+        # Legacy compatibility: Bot_data_base still может возвращать int SD.
+        mapping = {
+            1: "BEIGE",
+            2: "PURPLE",
+            3: "RED",
+            4: "BLUE",
+            5: "ORANGE",
+            6: "GREEN",
+            7: "YELLOW",
+            8: "TURQUOISE",
+        }
+        return mapping.get(int(value))
 
     @staticmethod
     def _format_seconds(value: Optional[int]) -> str:
@@ -325,13 +333,11 @@ class SimpleRetriever:
     def _api_retrieve(
         self,
         query: str,
-        sd_level: int,
         top_k: int,
         author_id: Optional[str] = None,
     ) -> List[Tuple[Block, float]]:
         chunks = self.db_client.query(
             query=query,
-            sd_level=sd_level,
             top_k=top_k,
             author_id=author_id,
             use_rerank=True,
@@ -345,7 +351,6 @@ class SimpleRetriever:
     def _api_retrieve_with_retry(
         self,
         query: str,
-        sd_level: int,
         top_k: int,
         author_id: Optional[str] = None,
     ) -> List[Tuple[Block, float]]:
@@ -358,7 +363,6 @@ class SimpleRetriever:
             try:
                 return self._api_retrieve(
                     query=query,
-                    sd_level=sd_level,
                     top_k=top_k,
                     author_id=author_id,
                 )
@@ -381,7 +385,7 @@ class SimpleRetriever:
         self,
         query: str,
         top_k: Optional[int] = None,
-        sd_level: int = 0,
+        sd_level: Optional[int] = None,
         author_id: Optional[str] = None,
     ) -> List[Tuple[Block, float]]:
         """
@@ -401,6 +405,8 @@ class SimpleRetriever:
             "[RETRIEVAL] query='%s' top_k=%s source=%s",
             query[:80], top_k, config.KNOWLEDGE_SOURCE
         )
+        if sd_level not in (None, 0):
+            logger.info("[RETRIEVAL] legacy sd_level=%s ignored (v10.1 contract)", sd_level)
 
         degraded_mode = bool(getattr(config, "DEGRADED_MODE", False))
         data_source = str(getattr(config, "DATA_SOURCE", "") or "").lower()
@@ -418,24 +424,11 @@ class SimpleRetriever:
             try:
                 api_results = self._api_retrieve_with_retry(
                     query=query,
-                    sd_level=sd_level,
                     top_k=top_k,
                     author_id=author_id,
                 )
                 if api_results:
                     logger.info("[RETRIEVAL] API search: %d блоков", len(api_results))
-                    return api_results
-                if sd_level > 0:
-                    logger.warning(
-                        "[RETRIEVAL] API 0 результатов с sd_level=%s → повтор без фильтра",
-                        sd_level,
-                    )
-                    api_results = self._api_retrieve_with_retry(
-                        query=query,
-                        sd_level=0,
-                        top_k=top_k,
-                        author_id=author_id,
-                    )
                     return api_results
                 logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
             except DBApiUnavailableError as exc:

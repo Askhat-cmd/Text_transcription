@@ -1,0 +1,51 @@
+﻿{
+  "schema_version": "1.0",
+  "captured_for": "PRD_10.1 PHASE 0",
+  "entrypoints": [
+    {
+      "name": "api.v1.questions.adaptive",
+      "file": "bot_psychologist/api/routes.py",
+      "symbol": "ask_adaptive_question",
+      "route": "/questions/adaptive"
+    },
+    {
+      "name": "api.v1.questions.adaptive_stream",
+      "file": "bot_psychologist/api/routes.py",
+      "symbol": "ask_adaptive_question_stream",
+      "route": "/questions/adaptive-stream"
+    },
+    {
+      "name": "bot_agent.answer_question_adaptive",
+      "file": "bot_psychologist/bot_agent/__init__.py",
+      "symbol": "answer_question_adaptive"
+    },
+    {
+      "name": "bot_agent.answer_adaptive_pipeline",
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "symbol": "answer_question_adaptive"
+    }
+  ],
+  "legacy_runtime_dependencies": {
+    "sd_classifier": [
+      "bot_psychologist/api/routes.py",
+      "bot_psychologist/bot_agent/answer_adaptive.py"
+    ],
+    "sd_level": [
+      "bot_psychologist/bot_agent/answer_adaptive.py",
+      "bot_psychologist/bot_agent/response/response_generator.py"
+    ],
+    "user_level_adapter": [
+      "bot_psychologist/api/routes.py",
+      "bot_psychologist/bot_agent/answer_adaptive.py",
+      "bot_psychologist/bot_agent/response/response_generator.py"
+    ],
+    "decision_gate": [
+      "bot_psychologist/api/routes.py",
+      "bot_psychologist/bot_agent/answer_adaptive.py"
+    ],
+    "prompt_overlays": [
+      "bot_psychologist/bot_agent/answer_adaptive.py",
+      "bot_psychologist/bot_agent/response/response_generator.py"
+    ]
+  }
+}

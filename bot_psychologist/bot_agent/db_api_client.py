@@ -8,6 +8,7 @@ from __future__ import annotations
 import os
 import time
 import asyncio
+import logging
 from dataclasses import dataclass
 from typing import List, Optional
 
@@ -15,6 +16,7 @@ import httpx
 
 BOT_DB_URL = os.getenv("BOT_DB_URL", "http://localhost:8003")
 QUERY_TIMEOUT = float(os.getenv("BOT_DB_TIMEOUT", "10.0"))
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -54,15 +56,16 @@ class DBApiClient:
     def query(
         self,
         query: str,
-        sd_level: int = 0,
+        sd_level: Optional[int] = None,
         top_k: int = 5,
         author_id: Optional[str] = None,
         use_rerank: bool = True,
         search_mode: str = "hybrid",
     ) -> List[RetrievedChunk]:
+        if sd_level not in (None, 0):
+            logger.info("[DB_API] sd_level=%s ignored by retrieval contract v10.1", sd_level)
         payload = {
             "query": query,
-            "sd_level": sd_level,
             "top_k": top_k,
             "author_id": author_id,
             "use_rerank": use_rerank,
@@ -95,9 +98,11 @@ class DBApiClient:
         self._raise_unavailable(last_error)
 
     async def aquery(self, **kwargs) -> List[RetrievedChunk]:
+        sd_level = kwargs.get("sd_level")
+        if sd_level not in (None, 0):
+            logger.info("[DB_API] sd_level=%s ignored by async retrieval contract v10.1", sd_level)
         payload = {
             "query": kwargs.get("query"),
-            "sd_level": kwargs.get("sd_level", 0),
             "top_k": kwargs.get("top_k", 5),
             "author_id": kwargs.get("author_id"),
             "use_rerank": kwargs.get("use_rerank", True),

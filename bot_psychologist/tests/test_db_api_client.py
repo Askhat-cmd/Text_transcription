@@ -77,7 +77,7 @@ class TestDBApiClient:
         assert exc_info.value.status_code == 503
         assert "503" in str(exc_info.value)
 
-    def test_sd_level_passed_in_payload(self):
+    def test_sd_level_is_ignored_in_payload_v101(self):
         with patch("httpx.Client") as mock_http:
             mock_post = MagicMock(status_code=200, json=lambda: MOCK_RESPONSE)
             mock_http.return_value.__enter__.return_value.post.return_value = mock_post
@@ -85,4 +85,4 @@ class TestDBApiClient:
             client.query("тест", sd_level=5)
             call_kwargs = mock_http.return_value.__enter__.return_value.post.call_args
             payload = call_kwargs[1]["json"]
-            assert payload["sd_level"] == 5
+            assert "sd_level" not in payload

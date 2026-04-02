@@ -60,36 +60,24 @@ class TestRetrieverFallback:
         mock_tfidf.assert_called_once()
         assert len(result) == 1
 
-    def test_retries_without_sd_when_zero_results(self):
+    def test_no_legacy_retry_without_sd_filter(self):
         call_count = 0
+        payloads = []
 
         def mock_query(**kwargs):
             nonlocal call_count
             call_count += 1
-            if kwargs.get("sd_level", 0) > 0:
-                return []
-            return [
-                MagicMock(
-                    score=0.5,
-                    chunk_id="c2",
-                    content="x",
-                    sd_level=2,
-                    author_id="",
-                    author_name="",
-                    source_type="book",
-                    youtube_url=None,
-                    start_time=None,
-                    end_time=None,
-                    block_title=None,
-                    keywords=[],
-                )
-            ]
+            payloads.append(kwargs)
+            return []
 
         with patch("bot_agent.db_api_client.DBApiClient.query", side_effect=mock_query):
-            retriever = SimpleRetriever()
-            result = retriever.retrieve("практики", sd_level=7)
-        assert call_count == 2
-        assert len(result) == 1
+            with patch.object(SimpleRetriever, "_semantic_fallback", return_value=[]):
+                with patch.object(SimpleRetriever, "_tfidf_fallback", return_value=[]):
+                    retriever = SimpleRetriever()
+                    result = retriever.retrieve("praktiki", sd_level=7)
+        assert call_count == 1
+        assert "sd_level" not in payloads[0]
+        assert result == []
 
     def test_uses_semantic_fallback_before_tfidf(self, monkeypatch):
         retriever = SimpleRetriever()

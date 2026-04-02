@@ -42,7 +42,7 @@ from .decision import (
 from .retrieval import HybridQueryBuilder, VoyageReranker
 from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
-from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier, SD_LEVELS_ORDER
+from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
 from .progressive_rag import get_progressive_rag
@@ -326,12 +326,24 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
     )
 
 
+def _sd_runtime_disabled() -> bool:
+    """Return True when SD classifier is disabled for live runtime."""
+    return feature_flags.enabled("DISABLE_SD_RUNTIME")
+
+
 async def _classify_parallel(
     user_message: str,
     history_state: List[Dict],
     history_sd: List[Dict],
     user_sd_profile: Optional[dict],
 ) -> Tuple[StateAnalysis, SDClassificationResult]:
+    if _sd_runtime_disabled():
+        state_result = await state_classifier.classify(
+            user_message,
+            conversation_history=history_state,
+        )
+        return state_result, _fallback_sd_result("disabled_by_flag")
+
     if sd_classifier is None:
         state_result = await state_classifier.classify(
             user_message,
@@ -1047,7 +1059,17 @@ def answer_question_adaptive(
                 )
 
             current_stage = "sd_classifier"
-            if sd_classifier is None:
+            if _sd_runtime_disabled():
+                sd_result = _fallback_sd_result("disabled_by_flag")
+                pipeline_stages.append(
+                    {
+                        "name": "sd_classifier",
+                        "label": "SD классификатор",
+                        "duration_ms": 0,
+                        "skipped": True,
+                    }
+                )
+            elif sd_classifier is None:
                 sd_result = _fallback_sd_result("sd_classifier_unavailable")
                 pipeline_stages.append(
                     {
@@ -1496,9 +1518,6 @@ def answer_question_adaptive(
 
         retriever = get_retriever()
         current_stage = "retrieval"
-        sd_level_int = 0
-        if sd_result.primary in SD_LEVELS_ORDER:
-            sd_level_int = SD_LEVELS_ORDER.index(sd_result.primary) + 1
 
         author_id_filter = None
         author_map = {}
@@ -1521,7 +1540,6 @@ def answer_question_adaptive(
                     retriever.retrieve(
                         hybrid_query,
                         top_k=3,
-                        sd_level=sd_level_int,
                         author_id=author_id,
                     )
                 )
@@ -1533,7 +1551,6 @@ def answer_question_adaptive(
                 retriever.retrieve,
                 hybrid_query,
                 top_k=top_k,  # не удваиваем: TOP-K должен совпадать с админкой/трейсом
-                sd_level=sd_level_int,
                 author_id=author_id_filter,
             )
 

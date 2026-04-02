@@ -13,6 +13,13 @@ load_dotenv(_PROJECT_ROOT / ".env")
 
 
 _DEFAULTS: Dict[str, bool] = {
+    # Phase 0 (Neo MindBot migration safety net)
+    "NEO_MINDBOT_ENABLED": False,
+    "LEGACY_PIPELINE_ENABLED": True,
+    "DISABLE_SD_RUNTIME": False,
+    "DISABLE_USER_LEVEL_ADAPTER": False,
+    "USE_NEW_DIAGNOSTICS_V1": False,
+    "USE_DETERMINISTIC_ROUTE_RESOLVER": False,
     # Phase 1
     "ENABLE_EMBEDDING_PROVIDER": True,
     # Phase 2
@@ -44,4 +51,3 @@ class FeatureFlags:
 
 
 feature_flags = FeatureFlags()
-

@@ -63,6 +63,7 @@ from bot_agent.answer_adaptive import (
 )
 from bot_agent.state_classifier import state_classifier
 from bot_agent.sd_classifier import sd_classifier
+from bot_agent.feature_flags import feature_flags
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
@@ -891,7 +892,9 @@ async def ask_adaptive_question_stream(
                 )
 
                 stage_start = time.perf_counter()
-                if sd_classifier is None:
+                if feature_flags.enabled("DISABLE_SD_RUNTIME"):
+                    sd_result = _fallback_sd_result("disabled_by_flag")
+                elif sd_classifier is None:
                     sd_result = _fallback_sd_result("sd_classifier_unavailable")
                 else:
                     try:
@@ -908,7 +911,7 @@ async def ask_adaptive_question_stream(
                         "name": "sd_classifier",
                         "label": "SD классификатор",
                         "duration_ms": int((time.perf_counter() - stage_start) * 1000),
-                        "skipped": False,
+                        "skipped": bool(feature_flags.enabled("DISABLE_SD_RUNTIME") or sd_classifier is None),
                     }
                 )
             else:

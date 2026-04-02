@@ -13,7 +13,7 @@
 - [x] Phase 7 — Practice Engine v1
 - [x] Phase 8 — Informational Branch + Onboarding
 - [x] Phase 9 — Observability + Failure Hardening
-- [ ] Phase 10 — E2E Hardening and Cleanup
+- [x] Phase 10 — E2E Hardening and Cleanup
 
 ## Phase 0 — Baseline and Safety Net
 ### Done
@@ -320,8 +320,8 @@
 - `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py -q`
 - Result: passed.
 
-## Phase 10 — E2E Hardening and Cleanup (in progress)
-### Done so far
+## Phase 10 — E2E Hardening and Cleanup
+### Done
 - Добавлен e2e smoke-pack из PRD:
   - `test_full_pipeline_hyper_case.py`
   - `test_full_pipeline_window_case.py`
@@ -343,6 +343,9 @@
   - `docs/neo_runtime_v101.md` (актуальный runtime-контур v10.1);
   - `docs/release_checklist_v101.md` (pre-release checklist);
   - `README.md` получил ссылочный блок на актуальные Neo-артефакты.
+- Проведен полный целевой regression + e2e прогон по всем фазам (0-10).
+- Проверено сохранение controlled legacy fallback при отключенных Neo-флагах:
+  - `test_legacy_fallback_when_flag_off.py`.
 
 ### Files changed
 - `bot_psychologist/tests/e2e/neo_e2e_support.py`
@@ -367,6 +370,9 @@
 - `python -m pytest bot_psychologist/tests/e2e -v`
 - `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py bot_psychologist/tests/e2e/test_full_pipeline_hyper_case.py bot_psychologist/tests/e2e/test_full_pipeline_window_case.py bot_psychologist/tests/e2e/test_full_pipeline_hypo_case.py bot_psychologist/tests/e2e/test_safe_override_case.py bot_psychologist/tests/e2e/test_directive_relationship_boundary_case.py bot_psychologist/tests/e2e/test_informational_case.py bot_psychologist/tests/e2e/test_mixed_query_case.py bot_psychologist/tests/e2e/test_returning_user_stale_summary_case.py bot_psychologist/tests/e2e/test_user_correction_case.py bot_psychologist/tests/e2e/test_practice_alternative_case.py bot_psychologist/tests/e2e/test_degraded_retrieval_case.py bot_psychologist/tests/e2e/test_legacy_fallback_when_flag_off.py -q`
 - Result: passed (26 tests).
+- Full suite:
+  - `python -m pytest bot_psychologist/tests/smoke/test_app_boot.py bot_psychologist/tests/smoke/test_pipeline_entrypoints.py bot_psychologist/tests/inventory/test_legacy_runtime_map.py bot_psychologist/tests/config/test_feature_flags_baseline.py bot_psychologist/tests/unit/test_sd_runtime_disabled.py bot_psychologist/tests/integration/test_pipeline_without_sd.py bot_psychologist/tests/regression/test_no_sd_required_by_response_flow.py bot_psychologist/tests/unit/test_retriever_no_sd_filter.py bot_psychologist/tests/integration/test_full_knowledge_access.py bot_psychologist/tests/regression/test_no_hidden_sd_filtering.py bot_psychologist/tests/contract/test_retrieval_contract_v101.py bot_psychologist/tests/unit/test_user_level_adapter_removed.py bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py bot_psychologist/tests/regression/test_no_level_based_prompting.py bot_psychologist/tests/unit/test_diagnostics_required_fields.py bot_psychologist/tests/unit/test_diagnostics_confidence_policy.py bot_psychologist/tests/unit/test_route_resolver_rules.py bot_psychologist/tests/contract/test_diagnostics_schema_v101.py bot_psychologist/tests/golden/test_diagnostics_examples.py bot_psychologist/tests/integration/test_single_route_per_turn.py bot_psychologist/tests/unit/test_snapshot_schema_v11.py bot_psychologist/tests/unit/test_memory_fallback_chain.py bot_psychologist/tests/unit/test_summary_staleness_policy.py bot_psychologist/tests/contract/test_memory_contract_v11.py bot_psychologist/tests/integration/test_context_continuity_between_sessions.py bot_psychologist/tests/regression/test_memory_does_not_require_full_raw_history.py bot_psychologist/tests/unit/test_prompt_stack_order.py bot_psychologist/tests/unit/test_prompt_registry_versioning.py bot_psychologist/tests/unit/test_output_validator_rules.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/integration/test_generation_validation_separation.py bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py bot_psychologist/tests/unit/test_practice_schema_v1.py bot_psychologist/tests/unit/test_practice_selector_filters.py bot_psychologist/tests/unit/test_practice_channel_rotation.py bot_psychologist/tests/golden/test_practice_selection_scenarios.py bot_psychologist/tests/integration/test_practice_selection_in_pipeline.py bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py bot_psychologist/tests/e2e/test_full_pipeline_hyper_case.py bot_psychologist/tests/e2e/test_full_pipeline_window_case.py bot_psychologist/tests/e2e/test_full_pipeline_hypo_case.py bot_psychologist/tests/e2e/test_safe_override_case.py bot_psychologist/tests/e2e/test_directive_relationship_boundary_case.py bot_psychologist/tests/e2e/test_informational_case.py bot_psychologist/tests/e2e/test_mixed_query_case.py bot_psychologist/tests/e2e/test_returning_user_stale_summary_case.py bot_psychologist/tests/e2e/test_user_correction_case.py bot_psychologist/tests/e2e/test_practice_alternative_case.py bot_psychologist/tests/e2e/test_degraded_retrieval_case.py bot_psychologist/tests/e2e/test_legacy_fallback_when_flag_off.py -q`
+  - Result: passed (85 tests).
 
 ## Сводный прогон (Phase 0-5; targeted)
 ```bash
@@ -402,4 +408,4 @@ python -m pytest \
 Результат: 42 passed (targeted suites).
 
 ## Next
-- Продолжить `Phase 10`: cleanup/dead-code и обновление архитектурной документации под итоговый Neo runtime.
+- Релизный шаг: собрать аккуратный commit/push с финализацией Phase 10 и заархивировать PRD/TASKLIST v10.1 при подтверждении.

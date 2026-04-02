@@ -52,6 +52,14 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
+from .onboarding_flow import (
+    detect_phase8_signals,
+    build_start_message,
+    build_first_turn_instruction,
+    build_mixed_query_instruction,
+    build_user_correction_instruction,
+    build_informational_guardrail_instruction,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -353,6 +361,10 @@ def _output_validation_enabled() -> bool:
     return feature_flags.enabled("USE_OUTPUT_VALIDATION")
 
 
+def _informational_branch_enabled() -> bool:
+    return feature_flags.enabled("INFORMATIONAL_BRANCH_ENABLED")
+
+
 def _apply_output_validation_policy(
     *,
     answer: str,
@@ -413,6 +425,60 @@ def _apply_output_validation_policy(
         "final_valid": final_valid,
     }
     return final_text, meta, retry_llm_result
+
+
+def _build_start_command_response(
+    *,
+    user_id: str,
+    user_level: str,
+    query: str,
+    memory,
+    start_time: datetime,
+) -> Dict[str, Any]:
+    fallback_state = _fallback_state_analysis()
+    answer = build_start_message()
+    try:
+        memory.add_turn(
+            user_input=query,
+            bot_response=answer,
+            user_state=fallback_state.primary_state.value,
+            blocks_used=0,
+            concepts=[],
+        )
+    except Exception as exc:
+        logger.warning("[ONBOARDING] failed to persist /start turn: %s", exc)
+
+    elapsed_time = (datetime.now() - start_time).total_seconds()
+    return {
+        "status": "success",
+        "answer": answer,
+        "state_analysis": {
+            "primary_state": fallback_state.primary_state.value,
+            "confidence": fallback_state.confidence,
+            "secondary_states": [s.value for s in fallback_state.secondary_states],
+            "emotional_tone": fallback_state.emotional_tone,
+            "depth": fallback_state.depth,
+            "recommendations": fallback_state.recommendations,
+        },
+        "path_recommendation": None,
+        "conversation_context": "",
+        "feedback_prompt": "",
+        "sources": [],
+        "concepts": [],
+        "metadata": {
+            "user_id": user_id,
+            "user_level": user_level,
+            "onboarding_start_command": True,
+            "first_turn": True,
+            "resolved_route": "contact_hold",
+            "recommended_mode": "PRESENCE",
+            "route_resolution_count": 1,
+            "informational_mode": False,
+            "applied_mode_prompt": None,
+        },
+        "timestamp": datetime.now().isoformat(),
+        "processing_time_seconds": round(elapsed_time, 2),
+    }
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1067,6 +1133,7 @@ def answer_question_adaptive(
         }
     conversation_context = ""
     memory_context_bundle = None
+    phase8_signals = None
     
     current_stage = "init"
     try:
@@ -1105,6 +1172,18 @@ def answer_question_adaptive(
                 memory_context_bundle.staleness if memory_context_bundle else None
             )
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+
+        phase8_signals = detect_phase8_signals(query=query, turns_count=len(memory.turns))
+        if debug_trace is not None:
+            debug_trace["phase8_signals"] = phase8_signals.as_dict()
+        if _informational_branch_enabled() and phase8_signals.start_command:
+            return _build_start_command_response(
+                user_id=user_id,
+                user_level=user_level,
+                query=query,
+                memory=memory,
+                start_time=start_time,
+            )
         
         # Phase 3: user level adapter removed from active runtime.
         level_adapter = None
@@ -1223,6 +1302,11 @@ def answer_question_adaptive(
             config,
         )
         informational_mode = bool(mode_prompt_override)
+        informational_mode_hint = bool(
+            phase8_signals.informational_intent if phase8_signals else informational_mode
+        )
+        if not _informational_branch_enabled():
+            informational_mode_hint = informational_mode
 
         logger.info(
             f"✅ Состояние: {state_analysis.primary_state.value} "
@@ -1293,17 +1377,38 @@ def answer_question_adaptive(
         route_resolution_count = 0
 
         diagnostics_v1 = None
+        correction_protocol_active = False
         if use_new_diagnostics_v1:
             diagnostics_v1 = diagnostics_classifier.classify(
                 query=query,
                 state_analysis=state_analysis,
-                informational_mode_hint=informational_mode,
+                informational_mode_hint=informational_mode_hint,
             )
+            correction_protocol_active = bool(
+                _informational_branch_enabled()
+                and phase8_signals is not None
+                and phase8_signals.user_correction
+            )
+            if correction_protocol_active:
+                recalibrated = diagnostics_v1.as_dict()
+                confidence = dict(recalibrated.get("confidence") or {})
+                confidence["interaction_mode"] = min(
+                    float(confidence.get("interaction_mode", 0.6) or 0.6),
+                    0.6,
+                )
+                confidence["request_function"] = min(
+                    float(confidence.get("request_function", 0.6) or 0.6),
+                    0.6,
+                )
+                recalibrated["confidence"] = confidence
+                recalibrated["request_function"] = "validation"
+                diagnostics_v1 = diagnostics_classifier.sanitize(recalibrated)
             if debug_trace is not None:
                 debug_trace["diagnostics_v1"] = diagnostics_v1.as_dict()
                 debug_trace["route_strategy"] = (
                     "deterministic_v1" if use_deterministic_router else "legacy_decision_gate"
                 )
+                debug_trace["user_correction_protocol"] = correction_protocol_active
             if debug_info is not None:
                 debug_info["diagnostics_v1"] = diagnostics_v1.as_dict()
 
@@ -1394,6 +1499,19 @@ def answer_question_adaptive(
                 contradiction_suggestion=contradiction_hint,
                 cross_session_context=cross_session_context,
             )
+            fast_phase8_parts: List[str] = []
+            if _informational_branch_enabled():
+                if phase8_signals is not None and phase8_signals.first_turn:
+                    fast_phase8_parts.append(build_first_turn_instruction())
+                if phase8_signals is not None and phase8_signals.mixed_query:
+                    fast_phase8_parts.append(build_mixed_query_instruction())
+                if correction_protocol_active:
+                    fast_phase8_parts.append(build_user_correction_instruction())
+                if informational_mode:
+                    fast_phase8_parts.append(build_informational_guardrail_instruction())
+            fast_phase8_suffix = "\n\n".join(part for part in fast_phase8_parts if part.strip())
+            if fast_phase8_suffix:
+                state_context = f"{state_context}\n\n{fast_phase8_suffix}"
             response_generator = ResponseGenerator()
             prompt_stack_meta: Dict[str, Any] = {"enabled": False}
             system_prompt_override: Optional[str] = None
@@ -1407,6 +1525,9 @@ def answer_question_adaptive(
                     mode=pre_routing_result.mode if pre_routing_result else "PRESENCE",
                     diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
                     mode_prompt_override=mode_prompt_override if informational_mode else None,
+                    first_turn=bool(phase8_signals.first_turn) if phase8_signals else False,
+                    mixed_query_bridge=bool(phase8_signals.mixed_query) if phase8_signals else False,
+                    user_correction_protocol=bool(correction_protocol_active),
                 )
                 system_prompt_override = prompt_build.system_prompt
                 prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
@@ -1875,6 +1996,8 @@ def answer_question_adaptive(
                 len(retrieved_blocks),
                 routing_result.confidence_level,
             )
+        if _informational_branch_enabled():
+            informational_mode = str(getattr(routing_result, "route", "") or "").lower() == "inform"
         stage_count_before_cap = len(retrieved_blocks)
         retrieved_blocks = retrieved_blocks[:block_cap]
         capped_retrieved_blocks = list(retrieved_blocks)
@@ -1893,6 +2016,17 @@ def answer_question_adaptive(
             if informational_mode
             else mode_directive.prompt
         )
+        phase8_context_parts: List[str] = []
+        if _informational_branch_enabled():
+            if phase8_signals is not None and phase8_signals.first_turn:
+                phase8_context_parts.append(build_first_turn_instruction())
+            if phase8_signals is not None and phase8_signals.mixed_query:
+                phase8_context_parts.append(build_mixed_query_instruction())
+            if correction_protocol_active:
+                phase8_context_parts.append(build_user_correction_instruction())
+            if informational_mode:
+                phase8_context_parts.append(build_informational_guardrail_instruction())
+        phase8_context_suffix = "\n\n".join(part for part in phase8_context_parts if part.strip())
         selected_practice: Optional[Dict[str, Any]] = None
         practice_alternatives: List[Dict[str, Any]] = []
         practice_context_suffix = ""
@@ -1942,6 +2076,10 @@ def answer_question_adaptive(
             debug_trace["rerank_reason"] = rerank_reason
             debug_trace["rerank_applied"] = bool(rerank_applied)
             debug_trace["route_resolution_count"] = route_resolution_count
+            debug_trace["informational_mode"] = informational_mode
+            debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
+            debug_trace["phase8_context_suffix"] = phase8_context_suffix
+            debug_trace["user_correction_protocol"] = correction_protocol_active
             debug_trace["selected_practice"] = selected_practice
             debug_trace["practice_alternatives"] = practice_alternatives
 
@@ -2131,6 +2269,8 @@ def answer_question_adaptive(
             contradiction_suggestion=contradiction_hint,
             cross_session_context=cross_session_context,
         )
+        if phase8_context_suffix:
+            state_context = f"{state_context}\n\n{phase8_context_suffix}"
         if practice_context_suffix:
             state_context = f"{state_context}{practice_context_suffix}"
 
@@ -2148,6 +2288,9 @@ def answer_question_adaptive(
                 mode=routing_result.mode,
                 diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
                 mode_prompt_override=mode_prompt_override if informational_mode else None,
+                first_turn=bool(phase8_signals.first_turn) if phase8_signals else False,
+                mixed_query_bridge=bool(phase8_signals.mixed_query) if phase8_signals else False,
+                user_correction_protocol=bool(correction_protocol_active),
             )
             system_prompt_override = prompt_build.system_prompt
             prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}

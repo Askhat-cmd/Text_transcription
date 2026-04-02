@@ -128,8 +128,11 @@ class PromptRegistryV2:
         mode: str,
         query: str,
         mode_prompt_override: Optional[str],
+        first_turn: bool = False,
+        mixed_query_bridge: bool = False,
+        user_correction_protocol: bool = False,
     ) -> str:
-        route_text = route or "reflect"
+        route_text = (route or "reflect").strip().lower() or "reflect"
         mode_text = mode or "PRESENCE"
         parts = [
             "Задача ответа:",
@@ -141,6 +144,29 @@ class PromptRegistryV2:
         ]
         if mode_prompt_override:
             parts.append(f"- Доп. директива режима: {self._clip(mode_prompt_override, 260)}")
+        if route_text == "inform":
+            parts.extend(
+                [
+                    "- INFORMATIONAL_BRANCH: объясни концепт по запросу, без навязанной практики.",
+                    "- Не разворачивай полный coaching-цикл, если пользователь явно не попросил.",
+                ]
+            )
+        if first_turn:
+            parts.append("- FIRST_TURN: не перегружай. Коротко, ясно и с одним рабочим вопросом.")
+        if mixed_query_bridge:
+            parts.extend(
+                [
+                    "- MIXED_QUERY: сначала короткое объяснение, затем мягкий мост к опыту пользователя.",
+                    "- Добавь один вопрос-мост для перехода в coaching.",
+                ]
+            )
+        if user_correction_protocol:
+            parts.extend(
+                [
+                    "- USER_CORRECTION_PROTOCOL: признай возможный промах, не спорь с пользователем.",
+                    "- Перекалибруй ответ по последнему сообщению и задай 1 уточняющий вопрос.",
+                ]
+            )
         return "\n".join(parts)
 
     def build(
@@ -154,6 +180,9 @@ class PromptRegistryV2:
         mode: str,
         diagnostics: Optional[Dict[str, object]] = None,
         mode_prompt_override: Optional[str] = None,
+        first_turn: bool = False,
+        mixed_query_bridge: bool = False,
+        user_correction_protocol: bool = False,
     ) -> PromptStackBuild:
         sections: Dict[str, str] = {
             "AA_SAFETY": (
@@ -172,6 +201,9 @@ class PromptRegistryV2:
                 mode=mode,
                 query=query,
                 mode_prompt_override=mode_prompt_override,
+                first_turn=first_turn,
+                mixed_query_bridge=mixed_query_bridge,
+                user_correction_protocol=user_correction_protocol,
             ),
         }
         if additional_system_context and additional_system_context.strip():
@@ -193,4 +225,3 @@ class PromptRegistryV2:
 
 
 prompt_registry_v2 = PromptRegistryV2()
-

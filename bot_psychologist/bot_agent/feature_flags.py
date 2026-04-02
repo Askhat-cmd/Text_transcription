@@ -22,6 +22,7 @@ _DEFAULTS: Dict[str, bool] = {
     "USE_DETERMINISTIC_ROUTE_RESOLVER": False,
     "USE_PROMPT_STACK_V2": False,
     "USE_OUTPUT_VALIDATION": False,
+    "INFORMATIONAL_BRANCH_ENABLED": False,
     # Phase 1
     "ENABLE_EMBEDDING_PROVIDER": True,
     # Phase 2

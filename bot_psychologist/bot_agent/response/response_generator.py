@@ -149,38 +149,42 @@ class ResponseGenerator:
         session_id: Optional[str] = None,
         mode_prompt_override: Optional[str] = None,
         mode_overrides_sd: bool = False,
+        system_prompt_override: Optional[str] = None,
     ) -> dict:
         """Generate a response using shared mode-aware prompt composition."""
-        base_system_prompt = self.answerer.build_system_prompt()
-        if user_level_adapter is not None:
-            try:
-                base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
-            except Exception:
-                # Keep base prompt when adapter is unavailable or incompatible.
-                pass
-
-        sd_overlay = self._load_sd_prompt(sd_level)
         mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
-        if mode_prompt_override:
-            if mode_overrides_sd:
-                sd_overlay = mode_prompt_override
-                mode_prompt = ""
-            else:
-                mode_prompt = mode_prompt_override
-        if config.FREE_CONVERSATION_MODE:
-            final_system_prompt = self._build_free_mode_prompt(
-                base_prompt=base_system_prompt,
-                sd_level=sd_level,
-                blocks=blocks,
-            )
+        if system_prompt_override:
+            final_system_prompt = str(system_prompt_override).strip()
         else:
-            final_system_prompt = self._compose_system_prompt(
-                base_prompt=base_system_prompt,
-                sd_overlay=sd_overlay,
-                mode_prompt=mode_prompt,
-                additional_system_context=additional_system_context,
-                mode=mode,
-            )
+            base_system_prompt = self.answerer.build_system_prompt()
+            if user_level_adapter is not None:
+                try:
+                    base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
+                except Exception:
+                    # Keep base prompt when adapter is unavailable or incompatible.
+                    pass
+
+            sd_overlay = self._load_sd_prompt(sd_level)
+            if mode_prompt_override:
+                if mode_overrides_sd:
+                    sd_overlay = mode_prompt_override
+                    mode_prompt = ""
+                else:
+                    mode_prompt = mode_prompt_override
+            if config.FREE_CONVERSATION_MODE:
+                final_system_prompt = self._build_free_mode_prompt(
+                    base_prompt=base_system_prompt,
+                    sd_level=sd_level,
+                    blocks=blocks,
+                )
+            else:
+                final_system_prompt = self._compose_system_prompt(
+                    base_prompt=base_system_prompt,
+                    sd_overlay=sd_overlay,
+                    mode_prompt=mode_prompt,
+                    additional_system_context=additional_system_context,
+                    mode=mode,
+                )
 
         model_name = model or config.LLM_MODEL
         base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE
@@ -243,31 +247,35 @@ class ResponseGenerator:
         model: Optional[str] = None,
         temperature: Optional[float] = None,
         max_tokens: Optional[int] = None,
+        system_prompt_override: Optional[str] = None,
     ) -> AsyncGenerator[str, None]:
         """Stream a response using shared mode-aware prompt composition."""
-        base_system_prompt = self.answerer.build_system_prompt()
-        if user_level_adapter is not None:
-            try:
-                base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
-            except Exception:
-                pass
-
-        sd_overlay = self._load_sd_prompt(sd_level)
-        mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
-        if config.FREE_CONVERSATION_MODE:
-            final_system_prompt = self._build_free_mode_prompt(
-                base_prompt=base_system_prompt,
-                sd_level=sd_level,
-                blocks=blocks,
-            )
+        if system_prompt_override:
+            final_system_prompt = str(system_prompt_override).strip()
         else:
-            final_system_prompt = self._compose_system_prompt(
-                base_prompt=base_system_prompt,
-                sd_overlay=sd_overlay,
-                mode_prompt=mode_prompt,
-                additional_system_context=additional_system_context,
-                mode=mode,
-            )
+            base_system_prompt = self.answerer.build_system_prompt()
+            if user_level_adapter is not None:
+                try:
+                    base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
+                except Exception:
+                    pass
+
+            sd_overlay = self._load_sd_prompt(sd_level)
+            mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
+            if config.FREE_CONVERSATION_MODE:
+                final_system_prompt = self._build_free_mode_prompt(
+                    base_prompt=base_system_prompt,
+                    sd_level=sd_level,
+                    blocks=blocks,
+                )
+            else:
+                final_system_prompt = self._compose_system_prompt(
+                    base_prompt=base_system_prompt,
+                    sd_overlay=sd_overlay,
+                    mode_prompt=mode_prompt,
+                    additional_system_context=additional_system_context,
+                    mode=mode,
+                )
 
         model_name = model or config.LLM_MODEL
         base_temp = temperature if temperature is not None else config.LLM_TEMPERATURE

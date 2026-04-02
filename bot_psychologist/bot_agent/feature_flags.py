@@ -20,6 +20,8 @@ _DEFAULTS: Dict[str, bool] = {
     "DISABLE_USER_LEVEL_ADAPTER": False,
     "USE_NEW_DIAGNOSTICS_V1": False,
     "USE_DETERMINISTIC_ROUTE_RESOLVER": False,
+    "USE_PROMPT_STACK_V2": False,
+    "USE_OUTPUT_VALIDATION": False,
     # Phase 1
     "ENABLE_EMBEDDING_PROVIDER": True,
     # Phase 2

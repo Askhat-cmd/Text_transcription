@@ -20,7 +20,7 @@ import json
 import re
 import time
 import uuid
-from typing import Dict, Optional, List, Tuple
+from typing import Any, Dict, Optional, List, Tuple
 from datetime import datetime
 
 from .data_loader import Block, data_loader
@@ -49,6 +49,9 @@ from .progressive_rag import get_progressive_rag
 from .diagnostics_classifier import diagnostics_classifier
 from .route_resolver import route_resolver
 from .memory_updater import memory_updater
+from .prompt_registry_v2 import prompt_registry_v2
+from .output_validator import output_validator
+from .practice_selector import practice_selector
 
 logger = logging.getLogger(__name__)
 
@@ -340,6 +343,76 @@ def _diagnostics_v1_enabled() -> bool:
 
 def _deterministic_route_resolver_enabled() -> bool:
     return feature_flags.enabled("USE_DETERMINISTIC_ROUTE_RESOLVER")
+
+
+def _prompt_stack_v2_enabled() -> bool:
+    return feature_flags.enabled("USE_PROMPT_STACK_V2")
+
+
+def _output_validation_enabled() -> bool:
+    return feature_flags.enabled("USE_OUTPUT_VALIDATION")
+
+
+def _apply_output_validation_policy(
+    *,
+    answer: str,
+    route: str,
+    mode: str,
+    generate_retry_fn=None,
+) -> Tuple[str, Dict[str, Any], Optional[Dict[str, Any]]]:
+    """Validate output, optionally retry generation once, then fallback safely."""
+    if not _output_validation_enabled():
+        return answer, {"enabled": False}, None
+
+    attempts: List[Dict[str, Any]] = []
+    fallback_used = False
+    retry_llm_result: Optional[Dict[str, Any]] = None
+    safety_override = (route or "").strip().lower() == "safe_override"
+
+    first = output_validator.validate(
+        answer,
+        route=route,
+        mode=mode,
+        safety_override=safety_override,
+    )
+    attempts.append(first.as_dict())
+    final_text = first.text
+    final_valid = bool(first.valid)
+
+    if first.needs_regeneration and callable(generate_retry_fn):
+        hint = output_validator.build_regeneration_hint(first.errors, route=route, mode=mode)
+        try:
+            retry_llm_result = generate_retry_fn(hint)
+        except Exception as exc:
+            logger.warning("[OUTPUT_VALIDATOR] retry generation failed: %s", exc)
+            retry_llm_result = {"error": str(exc), "answer": ""}
+
+        retry_answer = str((retry_llm_result or {}).get("answer") or "")
+        second = output_validator.validate(
+            retry_answer,
+            route=route,
+            mode=mode,
+            safety_override=safety_override,
+        )
+        attempts.append(second.as_dict())
+        final_text = second.text
+        final_valid = bool(second.valid)
+        if second.needs_regeneration:
+            fallback_used = True
+            final_valid = False
+            final_text = output_validator.safe_fallback(route=route)
+    elif first.needs_regeneration:
+        fallback_used = True
+        final_valid = False
+        final_text = output_validator.safe_fallback(route=route)
+
+    meta = {
+        "enabled": True,
+        "attempts": attempts,
+        "fallback_used": fallback_used,
+        "final_valid": final_valid,
+    }
+    return final_text, meta, retry_llm_result
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1322,25 +1395,49 @@ def answer_question_adaptive(
                 cross_session_context=cross_session_context,
             )
             response_generator = ResponseGenerator()
+            prompt_stack_meta: Dict[str, Any] = {"enabled": False}
+            system_prompt_override: Optional[str] = None
+            if _prompt_stack_v2_enabled():
+                prompt_build = prompt_registry_v2.build(
+                    query=query,
+                    blocks=[fast_block],
+                    conversation_context=conversation_context,
+                    additional_system_context=state_context,
+                    route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
+                    mode=pre_routing_result.mode if pre_routing_result else "PRESENCE",
+                    diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                    mode_prompt_override=mode_prompt_override if informational_mode else None,
+                )
+                system_prompt_override = prompt_build.system_prompt
+                prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
             llm_system_preview = ""
             llm_user_preview = ""
             system_blob_id = None
             user_blob_id = None
             if debug_trace is not None:
-                full_system_prompt, full_user_prompt = _build_llm_prompts(
-                    response_generator=response_generator,
-                    query=query,
-                    blocks=[fast_block],
-                    conversation_context=conversation_context,
-                    user_level_adapter=level_adapter,
-                    sd_level=sd_result.primary,
-                    mode_prompt=mode_directive.prompt,
-                    additional_system_context=state_context,
-                    mode_prompt_override=mode_prompt_override,
-                    mode_overrides_sd=informational_mode,
-                )
+                if system_prompt_override is not None:
+                    full_system_prompt = system_prompt_override
+                    full_user_prompt = response_generator.answerer.build_context_prompt(
+                        [fast_block],
+                        query,
+                        conversation_history=conversation_context,
+                    )
+                else:
+                    full_system_prompt, full_user_prompt = _build_llm_prompts(
+                        response_generator=response_generator,
+                        query=query,
+                        blocks=[fast_block],
+                        conversation_context=conversation_context,
+                        user_level_adapter=level_adapter,
+                        sd_level=sd_result.primary,
+                        mode_prompt=mode_directive.prompt,
+                        additional_system_context=state_context,
+                        mode_prompt_override=mode_prompt_override,
+                        mode_overrides_sd=informational_mode,
+                    )
                 llm_system_preview = _truncate_preview(full_system_prompt, 300)
                 llm_user_preview = _truncate_preview(full_user_prompt, 300)
+                debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
             llm_started = datetime.now()
             llm_result = {}
@@ -1366,6 +1463,7 @@ def answer_question_adaptive(
                     session_id=user_id,
                     mode_prompt_override=mode_prompt_override,
                     mode_overrides_sd=informational_mode,
+                    system_prompt_override=system_prompt_override,
                 )
             except Exception as llm_exc:
                 llm_error = str(llm_exc)
@@ -1409,9 +1507,53 @@ def answer_question_adaptive(
                 sd_level=sd_result.primary,
                 informational_mode=informational_mode,
             )
+
+            def _retry_fast_validation(hint: str) -> Dict[str, Any]:
+                retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
+                retry_result = response_generator.generate(
+                    retry_query,
+                    [fast_block],
+                    conversation_context=conversation_context,
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                    forbid=pre_routing_result.decision.forbid,
+                    user_level_adapter=level_adapter,
+                    additional_system_context=state_context,
+                    sd_level=sd_result.primary,
+                    model=config.LLM_MODEL,
+                    temperature=config.LLM_TEMPERATURE,
+                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
+                    session_store=session_store,
+                    session_id=user_id,
+                    mode_prompt_override=mode_prompt_override,
+                    mode_overrides_sd=informational_mode,
+                    system_prompt_override=system_prompt_override,
+                )
+                retry_result["answer"] = formatter.format_answer(
+                    str(retry_result.get("answer") or ""),
+                    mode=pre_routing_result.mode,
+                    confidence_level=pre_routing_result.confidence_level,
+                    user_message=query,
+                    sd_level=sd_result.primary,
+                    informational_mode=informational_mode,
+                )
+                return retry_result
+
+            answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
+                answer=answer,
+                route=getattr(pre_routing_result, "route", ""),
+                mode=pre_routing_result.mode,
+                generate_retry_fn=_retry_fast_validation,
+            )
+            if isinstance(validation_retry_result, dict):
+                llm_result["validation_retry_llm"] = validation_retry_result.get("llm_call_info")
             if debug_trace is not None:
+                debug_trace["output_validation"] = validation_meta
                 pipeline_stages.append(
-                    {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": False}
+                    {"name": "format", "label": "Formatting", "duration_ms": 0, "skipped": False}
+                )
+                pipeline_stages.append(
+                    {"name": "validate", "label": "Validation", "duration_ms": 0, "skipped": False}
                 )
 
             try:
@@ -1480,6 +1622,8 @@ def answer_question_adaptive(
                     "confidence_score": pre_routing_result.confidence_score,
                     "confidence_level": pre_routing_result.confidence_level,
                     "mode_reason": mode_directive.reason,
+                    "prompt_stack_v2_enabled": _prompt_stack_v2_enabled(),
+                    "output_validation_enabled": _output_validation_enabled(),
                     "retrieval_block_cap": 0,
                     "fast_path": True,
                     "informational_mode": informational_mode,
@@ -1749,6 +1893,41 @@ def answer_question_adaptive(
             if informational_mode
             else mode_directive.prompt
         )
+        selected_practice: Optional[Dict[str, Any]] = None
+        practice_alternatives: List[Dict[str, Any]] = []
+        practice_context_suffix = ""
+        try:
+            diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
+            selection = practice_selector.select(
+                route=str(getattr(routing_result, "route", "") or ""),
+                nervous_system_state=str(
+                    diagnostics_payload.get("nervous_system_state")
+                    or "window"
+                ),
+                request_function=str(
+                    diagnostics_payload.get("request_function")
+                    or "understand"
+                ),
+                core_theme=str(diagnostics_payload.get("core_theme") or query),
+                last_practice_channel=str(memory.metadata.get("last_practice_channel") or ""),
+                safety_flags=[],
+            )
+            if selection.primary is not None:
+                selected_practice = selection.primary.as_dict()
+                practice_alternatives = [item.as_dict() for item in selection.alternatives]
+                memory.metadata["last_practice_channel"] = selection.primary.entry.channel
+                practice_context_suffix = (
+                    "\n\nPRACTICE_SUGGESTION:\n"
+                    f"- title: {selection.primary.entry.title}\n"
+                    f"- channel: {selection.primary.entry.channel}\n"
+                    f"- instruction: {selection.primary.entry.instruction}\n"
+                    f"- micro_tuning: {selection.primary.entry.micro_tuning}\n"
+                    f"- closure: {selection.primary.entry.closure}\n"
+                    f"- time_limit_minutes: {selection.primary.entry.time_limit_minutes}"
+                )
+        except Exception as exc:
+            logger.warning("[PRACTICE] selection skipped: %s", exc)
+
         if debug_trace is not None:
             debug_trace["recommended_mode"] = routing_result.mode
             debug_trace["resolved_route"] = getattr(routing_result, "route", None)
@@ -1763,6 +1942,8 @@ def answer_question_adaptive(
             debug_trace["rerank_reason"] = rerank_reason
             debug_trace["rerank_applied"] = bool(rerank_applied)
             debug_trace["route_resolution_count"] = route_resolution_count
+            debug_trace["selected_practice"] = selected_practice
+            debug_trace["practice_alternatives"] = practice_alternatives
 
         try:
             snapshot_update = memory_updater.build_runtime_context(
@@ -1950,28 +2131,54 @@ def answer_question_adaptive(
             contradiction_suggestion=contradiction_hint,
             cross_session_context=cross_session_context,
         )
+        if practice_context_suffix:
+            state_context = f"{state_context}{practice_context_suffix}"
 
         # Генерация ответа (с учётом истории диалога)
         response_generator = ResponseGenerator()
+        prompt_stack_meta: Dict[str, Any] = {"enabled": False}
+        system_prompt_override: Optional[str] = None
+        if _prompt_stack_v2_enabled():
+            prompt_build = prompt_registry_v2.build(
+                query=query,
+                blocks=adapted_blocks,
+                conversation_context=conversation_context,
+                additional_system_context=state_context,
+                route=getattr(routing_result, "route", ""),
+                mode=routing_result.mode,
+                diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                mode_prompt_override=mode_prompt_override if informational_mode else None,
+            )
+            system_prompt_override = prompt_build.system_prompt
+            prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
         llm_system_preview = ""
         llm_user_preview = ""
         system_blob_id = None
         user_blob_id = None
         if debug_trace is not None:
-            full_system_prompt, full_user_prompt = _build_llm_prompts(
-                response_generator=response_generator,
-                query=query,
-                blocks=adapted_blocks,
-                conversation_context=conversation_context,
-                user_level_adapter=level_adapter,
-                sd_level=sd_result.primary,
-                mode_prompt=mode_directive.prompt,
-                additional_system_context=state_context,
-                mode_prompt_override=mode_prompt_override,
-                mode_overrides_sd=informational_mode,
-            )
+            if system_prompt_override is not None:
+                full_system_prompt = system_prompt_override
+                full_user_prompt = response_generator.answerer.build_context_prompt(
+                    adapted_blocks,
+                    query,
+                    conversation_history=conversation_context,
+                )
+            else:
+                full_system_prompt, full_user_prompt = _build_llm_prompts(
+                    response_generator=response_generator,
+                    query=query,
+                    blocks=adapted_blocks,
+                    conversation_context=conversation_context,
+                    user_level_adapter=level_adapter,
+                    sd_level=sd_result.primary,
+                    mode_prompt=mode_directive.prompt,
+                    additional_system_context=state_context,
+                    mode_prompt_override=mode_prompt_override,
+                    mode_overrides_sd=informational_mode,
+                )
             llm_system_preview = _truncate_preview(full_system_prompt, 300)
             llm_user_preview = _truncate_preview(full_user_prompt, 300)
+            debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
         llm_started = datetime.now()
         llm_result = {}
@@ -1997,6 +2204,7 @@ def answer_question_adaptive(
                 session_id=user_id,
                 mode_prompt_override=mode_prompt_override,
                 mode_overrides_sd=informational_mode,
+                system_prompt_override=system_prompt_override,
             )
         except Exception as llm_exc:
             llm_error = str(llm_exc)
@@ -2087,11 +2295,74 @@ def answer_question_adaptive(
             sd_level=sd_result.primary,
             informational_mode=informational_mode,
         )
-        if debug_trace is not None:
-            pipeline_stages.append(
-                {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": False}
+
+        def _retry_validation(hint: str) -> Dict[str, Any]:
+            retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
+            retry_result = response_generator.generate(
+                retry_query,
+                adapted_blocks,
+                conversation_context=conversation_context,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                forbid=routing_result.decision.forbid,
+                user_level_adapter=level_adapter,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                model=config.LLM_MODEL,
+                temperature=config.LLM_TEMPERATURE,
+                max_tokens=config.get_mode_max_tokens(routing_result.mode),
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
+                mode_overrides_sd=informational_mode,
+                system_prompt_override=system_prompt_override,
             )
-        
+            retry_result["answer"] = formatter.format_answer(
+                str(retry_result.get("answer") or ""),
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                user_message=query,
+                sd_level=sd_result.primary,
+                informational_mode=informational_mode,
+            )
+            return retry_result
+
+        answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
+            answer=answer,
+            route=getattr(routing_result, "route", ""),
+            mode=routing_result.mode,
+            generate_retry_fn=_retry_validation,
+        )
+        if isinstance(validation_retry_result, dict):
+            llm_result["validation_retry_llm"] = validation_retry_result.get("llm_call_info")
+            retry_call_info = validation_retry_result.get("llm_call_info")
+            if debug_trace is not None and isinstance(retry_call_info, dict):
+                debug_trace.setdefault("llm_calls", []).append(
+                    {
+                        "step": "answer_retry",
+                        "model": retry_call_info.get("model", config.LLM_MODEL),
+                        "system_prompt_preview": retry_call_info.get("system_prompt_preview"),
+                        "user_prompt_preview": retry_call_info.get("user_prompt_preview"),
+                        "response_preview": retry_call_info.get("response_preview"),
+                        "tokens_prompt": retry_call_info.get("tokens_prompt"),
+                        "tokens_completion": retry_call_info.get("tokens_completion"),
+                        "tokens_total": retry_call_info.get("tokens_total"),
+                        "duration_ms": retry_call_info.get("duration_ms"),
+                        "system_prompt_blob_id": retry_call_info.get("system_prompt_blob_id"),
+                        "user_prompt_blob_id": retry_call_info.get("user_prompt_blob_id"),
+                        "memory_snapshot_blob_id": None,
+                        "blob_error": retry_call_info.get("blob_error"),
+                    }
+                )
+        if debug_trace is not None:
+            debug_trace["output_validation"] = validation_meta
+            pipeline_stages.append(
+                {"name": "format", "label": "Formatting", "duration_ms": 0, "skipped": False}
+            )
+            pipeline_stages.append(
+                {"name": "validate", "label": "Validation", "duration_ms": 0, "skipped": False}
+            )
+
         # ================================================================
         # ЭТАП 5: Семантический анализ и извлечение концептов
         # ================================================================
@@ -2252,6 +2523,10 @@ def answer_question_adaptive(
                 "confidence_level": routing_result.confidence_level,
                 "mode_reason": mode_directive.reason,
                 "route_resolution_count": route_resolution_count,
+                "prompt_stack_v2_enabled": _prompt_stack_v2_enabled(),
+                "output_validation_enabled": _output_validation_enabled(),
+                "selected_practice": selected_practice,
+                "practice_alternatives": practice_alternatives,
                 "retrieval_block_cap": block_cap,
                 "informational_mode": informational_mode,
                 "applied_mode_prompt": mode_prompt_key if informational_mode else None,

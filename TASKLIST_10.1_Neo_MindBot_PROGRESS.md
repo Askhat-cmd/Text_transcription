@@ -9,8 +9,8 @@
 - [x] Phase 3 — Remove UserLevelAdapter
 - [x] Phase 4 — Diagnostics v1 + Deterministic RouteResolver
 - [x] Phase 5 — Memory v1.1
-- [ ] Phase 6 — Prompt Stack v2 + Output Validation
-- [ ] Phase 7 — Practice Engine v1
+- [x] Phase 6 — Prompt Stack v2 + Output Validation
+- [x] Phase 7 — Practice Engine v1
 - [ ] Phase 8 — Informational Branch + Onboarding
 - [ ] Phase 9 — Observability + Failure Hardening
 - [ ] Phase 10 — E2E Hardening and Cleanup
@@ -168,6 +168,74 @@
 - `python -m pytest bot_psychologist/tests/unit/test_user_level_adapter_removed.py bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
 - Result: passed.
 
+## Phase 6 — Prompt Stack v2 + Output Validation
+### Done
+- Добавлен `prompt_registry_v2.py` с фиксированным порядком prompt stack:
+  - `AA_SAFETY`
+  - `A_STYLE_POLICY`
+  - `CORE_IDENTITY`
+  - `CONTEXT_MEMORY`
+  - `DIAGNOSTIC_CONTEXT`
+  - `RETRIEVED_CONTEXT`
+  - `TASK_INSTRUCTION`
+- Добавлен `output_validator.py`:
+  - правила валидации safety/route/mode/format;
+  - local repair для markdown leakage + certainty softening;
+  - policy: validate → retry once → safe fallback.
+- Интеграция в adaptive runtime:
+  - feature flags `USE_PROMPT_STACK_V2`, `USE_OUTPUT_VALIDATION`;
+  - для Prompt Stack v2 добавлен `system_prompt_override` в `ResponseGenerator.generate(...)`;
+  - в trace добавлены `prompt_stack_v2` и `output_validation`.
+- Legacy SD prompt overlays в runtime обходятся при включенном Prompt Stack v2 (через system prompt override).
+
+### Files changed
+- `bot_psychologist/bot_agent/prompt_registry_v2.py`
+- `bot_psychologist/bot_agent/output_validator.py`
+- `bot_psychologist/bot_agent/response/response_generator.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/bot_agent/feature_flags.py`
+- `bot_psychologist/.env.example`
+- `bot_psychologist/tests/unit/test_prompt_stack_order.py`
+- `bot_psychologist/tests/unit/test_prompt_registry_versioning.py`
+- `bot_psychologist/tests/unit/test_output_validator_rules.py`
+- `bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py`
+- `bot_psychologist/tests/integration/test_generation_validation_separation.py`
+- `bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/unit/test_prompt_stack_order.py bot_psychologist/tests/unit/test_prompt_registry_versioning.py bot_psychologist/tests/unit/test_output_validator_rules.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/integration/test_generation_validation_separation.py bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py bot_psychologist/tests/test_response_generator.py -v`
+- `python -m pytest bot_psychologist/tests/integration/test_single_route_per_turn.py bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
+- `python -m pytest bot_psychologist/tests/test_llm_payload_endpoint.py -v`
+- Result: passed.
+
+## Phase 7 — Practice Engine v1
+### Done
+- Добавлены схема и валидатор практик:
+  - `practice_schema.py`
+  - обязательные поля и строгая проверка malformed entry.
+- Добавлена библиотека практик `practices_db.json` (детерминированный v1 seed набор).
+- Добавлен `practice_selector.py`:
+  - фильтры: safety/contraindications, state, route, request_function;
+  - scoring по route/state/function/theme overlap;
+  - rotation policy через `last_practice_channel`;
+  - alternative policy (`max 2 alternatives`).
+- Интеграция в adaptive pipeline:
+  - после route resolution выбирается primary practice;
+  - в state context добавляется `PRACTICE_SUGGESTION`;
+  - в trace/metadata добавлены `selected_practice` и `practice_alternatives`;
+  - в memory metadata обновляется `last_practice_channel`.
+
+### Files changed
+- `bot_psychologist/bot_agent/practice_schema.py`
+- `bot_psychologist/bot_agent/practices_db.json`
+- `bot_psychologist/bot_agent/practice_selector.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/unit/test_practice_schema_v1.py bot_psychologist/tests/unit/test_practice_selector_filters.py bot_psychologist/tests/unit/test_practice_channel_rotation.py bot_psychologist/tests/golden/test_practice_selection_scenarios.py bot_psychologist/tests/integration/test_practice_selection_in_pipeline.py bot_psychologist/tests/unit/test_prompt_stack_order.py bot_psychologist/tests/unit/test_prompt_registry_versioning.py bot_psychologist/tests/unit/test_output_validator_rules.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/integration/test_generation_validation_separation.py bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py -v`
+- `python -m pytest bot_psychologist/tests/test_llm_payload_endpoint.py bot_psychologist/tests/integration/test_single_route_per_turn.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
+- Result: passed.
+
 ## Сводный прогон (Phase 0-5; targeted)
 ```bash
 python -m pytest \
@@ -202,4 +270,4 @@ python -m pytest \
 Результат: 42 passed (targeted suites).
 
 ## Next
-- Следующий шаг: `Phase 6 — Prompt Stack v2 + Output Validation`.
+- Следующий шаг: `Phase 8 — Informational Branch + Onboarding`.

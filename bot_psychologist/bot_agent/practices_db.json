@@ -1,0 +1,78 @@
+[
+  {
+    "id": "body_3x_breath",
+    "title": "Три цикла медленного выдоха",
+    "channel": "body",
+    "scientific_basis": "polyvagal",
+    "triggers": ["regulate", "practice"],
+    "nervous_system_states": ["hyper"],
+    "request_functions": ["discharge", "directive", "validation"],
+    "core_themes": ["тревога", "напряжение", "паника"],
+    "instruction": "Сделай 3 цикла: вдох на 4, выдох на 6-8. Внимание на опору стоп.",
+    "micro_tuning": "Если сложно считать, просто удлиняй выдох.",
+    "closure": "Отметь, стало ли чуть больше пространства внутри.",
+    "time_limit_minutes": 2,
+    "contraindications": ["acute_self_harm_plan"]
+  },
+  {
+    "id": "body_soft_contact",
+    "title": "Мягкий телесный контакт",
+    "channel": "body",
+    "scientific_basis": "somatic_grounding",
+    "triggers": ["contact_hold", "regulate"],
+    "nervous_system_states": ["hypo", "window"],
+    "request_functions": ["contact", "discharge"],
+    "core_themes": ["пустота", "отключение", "апатия"],
+    "instruction": "Положи ладонь на грудь или живот, 90 секунд наблюдай дыхание без оценки.",
+    "micro_tuning": "Если контакт неприятен — положи ладонь на стол и почувствуй поверхность.",
+    "closure": "Назови одно ощущение в теле прямо сейчас.",
+    "time_limit_minutes": 3,
+    "contraindications": ["acute_psychosis"]
+  },
+  {
+    "id": "cognitive_trigger_map",
+    "title": "Карта триггер → мысль → реакция",
+    "channel": "thinking",
+    "scientific_basis": "metacognitive",
+    "triggers": ["reflect", "practice"],
+    "nervous_system_states": ["window"],
+    "request_functions": ["understand", "explore"],
+    "core_themes": ["избегание", "вина", "самокритика"],
+    "instruction": "Запиши один эпизод по схеме: триггер, автоматическая мысль, реакция, цена реакции.",
+    "micro_tuning": "Держись одного примера, не уходи в обобщения.",
+    "closure": "Выдели самую частую мысль в этом цикле.",
+    "time_limit_minutes": 7,
+    "contraindications": []
+  },
+  {
+    "id": "action_micro_step",
+    "title": "Один микрошаг действия",
+    "channel": "action",
+    "scientific_basis": "act",
+    "triggers": ["practice"],
+    "nervous_system_states": ["window"],
+    "request_functions": ["directive", "validation"],
+    "core_themes": ["прокрастинация", "ступор", "дисциплина"],
+    "instruction": "Выбери шаг на 5-10 минут, который можно сделать сегодня до конца дня.",
+    "micro_tuning": "Шаг должен быть настолько маленьким, чтобы не спорить с ним.",
+    "closure": "Назови время старта шага в формате ЧЧ:ММ.",
+    "time_limit_minutes": 5,
+    "contraindications": []
+  },
+  {
+    "id": "reflective_question",
+    "title": "Один уточняющий вопрос к себе",
+    "channel": "reflection",
+    "scientific_basis": "ifs",
+    "triggers": ["reflect", "contact_hold"],
+    "nervous_system_states": ["window"],
+    "request_functions": ["explore", "understand", "contact"],
+    "core_themes": ["конфликт", "страх", "стыд"],
+    "instruction": "Спроси себя: «Чего я сейчас пытаюсь избежать?». Ответ — в 1-2 честных фразах.",
+    "micro_tuning": "Если вопрос тяжёлый, начни с «возможно…».",
+    "closure": "Отметь, что изменилось в ощущении ясности.",
+    "time_limit_minutes": 4,
+    "contraindications": []
+  }
+]
+

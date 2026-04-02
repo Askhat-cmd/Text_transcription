@@ -8,7 +8,7 @@
 - [x] Phase 2 — Remove SD Retrieval Filtering
 - [x] Phase 3 — Remove UserLevelAdapter
 - [x] Phase 4 — Diagnostics v1 + Deterministic RouteResolver
-- [ ] Phase 5 — Memory v1.1
+- [x] Phase 5 — Memory v1.1
 - [ ] Phase 6 — Prompt Stack v2 + Output Validation
 - [ ] Phase 7 — Practice Engine v1
 - [ ] Phase 8 — Informational Branch + Onboarding
@@ -131,7 +131,44 @@
 - `python -m pytest bot_psychologist/tests/unit/test_diagnostics_required_fields.py bot_psychologist/tests/unit/test_diagnostics_confidence_policy.py bot_psychologist/tests/unit/test_route_resolver_rules.py bot_psychologist/tests/contract/test_diagnostics_schema_v101.py bot_psychologist/tests/golden/test_diagnostics_examples.py bot_psychologist/tests/integration/test_single_route_per_turn.py -v`
 - Result: passed.
 
-## Сводный прогон (Phase 0-4)
+## Phase 5 — Memory v1.1
+### Done
+- Добавлен модуль `memory_v11.py`:
+  - snapshot schema `1.1`
+  - snapshot validation
+  - summary staleness policy (`fresh`, `stale`, `missing`)
+  - fallback chain для контекста:
+    - `fresh_summary_small_window`
+    - `stale_summary_large_window`
+    - `missing_summary_snapshot_plus_recent`
+    - `corrupted_snapshot_recent_dialog`
+- Добавлен `summary_manager.py` (normalization + staleness policy).
+- Добавлен `memory_updater.py`:
+  - сбор runtime context через Memory v1.1
+  - сохранение `last_state_snapshot_v11` в metadata/memory.
+- Интеграция в adaptive pipeline:
+  - контекст строится через `memory_updater.build_runtime_context(...)`
+  - в trace добавлены `memory_strategy`, `summary_staleness`
+  - snapshot v1.1 сохраняется после выбора route.
+
+### Files changed
+- `bot_psychologist/bot_agent/memory_v11.py`
+- `bot_psychologist/bot_agent/summary_manager.py`
+- `bot_psychologist/bot_agent/memory_updater.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/tests/unit/test_snapshot_schema_v11.py`
+- `bot_psychologist/tests/unit/test_memory_fallback_chain.py`
+- `bot_psychologist/tests/unit/test_summary_staleness_policy.py`
+- `bot_psychologist/tests/contract/test_memory_contract_v11.py`
+- `bot_psychologist/tests/integration/test_context_continuity_between_sessions.py`
+- `bot_psychologist/tests/regression/test_memory_does_not_require_full_raw_history.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/unit/test_snapshot_schema_v11.py bot_psychologist/tests/unit/test_memory_fallback_chain.py bot_psychologist/tests/unit/test_summary_staleness_policy.py bot_psychologist/tests/contract/test_memory_contract_v11.py bot_psychologist/tests/integration/test_context_continuity_between_sessions.py bot_psychologist/tests/regression/test_memory_does_not_require_full_raw_history.py -v`
+- `python -m pytest bot_psychologist/tests/unit/test_user_level_adapter_removed.py bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
+- Result: passed.
+
+## Сводный прогон (Phase 0-5; targeted)
 ```bash
 python -m pytest \
   bot_psychologist/tests/smoke/test_app_boot.py \
@@ -153,10 +190,16 @@ python -m pytest \
   bot_psychologist/tests/unit/test_route_resolver_rules.py \
   bot_psychologist/tests/contract/test_diagnostics_schema_v101.py \
   bot_psychologist/tests/golden/test_diagnostics_examples.py \
-  bot_psychologist/tests/integration/test_single_route_per_turn.py -v
+  bot_psychologist/tests/integration/test_single_route_per_turn.py \
+  bot_psychologist/tests/unit/test_snapshot_schema_v11.py \
+  bot_psychologist/tests/unit/test_memory_fallback_chain.py \
+  bot_psychologist/tests/unit/test_summary_staleness_policy.py \
+  bot_psychologist/tests/contract/test_memory_contract_v11.py \
+  bot_psychologist/tests/integration/test_context_continuity_between_sessions.py \
+  bot_psychologist/tests/regression/test_memory_does_not_require_full_raw_history.py -v
 ```
 
-Результат: 31 passed.
+Результат: 42 passed (targeted suites).
 
 ## Next
-- Следующий шаг: `Phase 5 — Memory v1.1`.
+- Следующий шаг: `Phase 6 — Prompt Stack v2 + Output Validation`.

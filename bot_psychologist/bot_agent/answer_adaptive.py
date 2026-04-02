@@ -48,6 +48,7 @@ from .contradiction_detector import detect_contradiction
 from .progressive_rag import get_progressive_rag
 from .diagnostics_classifier import diagnostics_classifier
 from .route_resolver import route_resolver
+from .memory_updater import memory_updater
 
 logger = logging.getLogger(__name__)
 
@@ -991,6 +992,8 @@ def answer_question_adaptive(
             "session_id": user_id,
             "turn_number": None,
         }
+    conversation_context = ""
+    memory_context_bundle = None
     
     current_stage = "init"
     try:
@@ -1001,7 +1004,14 @@ def answer_question_adaptive(
         
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
-        conversation_context = memory.get_adaptive_context_text(query)
+        memory_update = memory_updater.build_runtime_context(
+            memory=memory,
+            diagnostics=None,
+            route=None,
+            max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
+        )
+        memory_context_bundle = memory_update.context
+        conversation_context = memory_context_bundle.context_text or memory.get_adaptive_context_text(query)
         cross_session_context = ""
         if hasattr(memory, "load_cross_session_context"):
             cross_session_context = memory.load_cross_session_context(
@@ -1010,9 +1020,17 @@ def answer_question_adaptive(
             )
         context_turns = len(memory.turns)
         memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
+        if memory_context_bundle is not None:
+            memory_trace_metrics["summary_used"] = bool(memory_context_bundle.summary_used)
+            memory_trace_metrics["summary_staleness"] = memory_context_bundle.staleness
+            memory_trace_metrics["memory_strategy"] = memory_context_bundle.strategy
         if debug_trace is not None:
             debug_trace["turn_number"] = len(memory.turns) + 1
             debug_trace["cross_session_context"] = _truncate_preview(cross_session_context, 500)
+            debug_trace["memory_strategy"] = memory_context_bundle.strategy if memory_context_bundle else None
+            debug_trace["summary_staleness"] = (
+                memory_context_bundle.staleness if memory_context_bundle else None
+            )
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
         
         # Phase 3: user level adapter removed from active runtime.
@@ -1447,7 +1465,7 @@ def answer_question_adaptive(
                     "recommendations": state_analysis.recommendations,
                 },
                 "path_recommendation": None,
-                "conversation_context": memory.get_adaptive_context_text(query),
+                "conversation_context": conversation_context,
                 "feedback_prompt": feedback_prompt,
                 "sources": [],
                 "concepts": [],
@@ -1745,6 +1763,19 @@ def answer_question_adaptive(
             debug_trace["rerank_reason"] = rerank_reason
             debug_trace["rerank_applied"] = bool(rerank_applied)
             debug_trace["route_resolution_count"] = route_resolution_count
+
+        try:
+            snapshot_update = memory_updater.build_runtime_context(
+                memory=memory,
+                diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                route=getattr(routing_result, "route", None),
+                max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
+            )
+            memory_updater.save_snapshot(memory, snapshot_update.snapshot)
+            if debug_trace is not None:
+                debug_trace["snapshot_v11"] = snapshot_update.snapshot
+        except Exception as exc:
+            logger.warning("[MEMORY_V11] snapshot update skipped: %s", exc)
 
         if not retrieved_blocks:
             response = _build_partial_response(
@@ -2203,7 +2234,7 @@ def answer_question_adaptive(
                 "recommendations": state_analysis.recommendations
             },
             "path_recommendation": path_recommendation,
-            "conversation_context": memory.get_adaptive_context_text(query),
+            "conversation_context": conversation_context,
             "feedback_prompt": feedback_prompt,
             "sources": sources,
             "concepts": concepts,

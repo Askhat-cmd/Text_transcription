@@ -52,6 +52,7 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
+from .trace_schema import attach_trace_schema_status
 from .onboarding_flow import (
     detect_phase8_signals,
     build_start_message,
@@ -1813,6 +1814,7 @@ def answer_question_adaptive(
                 )
                 debug_trace["pipeline_stages"] = pipeline_stages
                 debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                debug_trace = attach_trace_schema_status(debug_trace)
                 result["debug_trace"] = debug_trace
 
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
@@ -1839,7 +1841,13 @@ def answer_question_adaptive(
             len(query),
         )
 
-        retriever = get_retriever()
+        retrieval_degraded_reason = None
+        try:
+            retriever = get_retriever()
+        except Exception as exc:
+            logger.warning("[RETRIEVAL] get_retriever failed, degraded mode enabled: %s", exc)
+            retriever = None
+            retrieval_degraded_reason = "retriever_init_failed"
         current_stage = "retrieval"
 
         author_id_filter = None
@@ -1856,29 +1864,42 @@ def answer_question_adaptive(
                     author_id_filter = author_map.get(author_name)
                     logger.info("[RETRIEVAL] author intent detected: %s (%s)", author_name, author_id_filter)
 
-        if config.AUTHOR_BLEND_MODE == "blend" and author_map:
+
+        if retriever is None:
             raw_retrieved_blocks = []
-            for author_id in author_map.values():
-                raw_retrieved_blocks.extend(
-                    retriever.retrieve(
-                        hybrid_query,
-                        top_k=3,
-                        author_id=author_id,
-                    )
-                )
-            stage = {"name": "retrieval", "label": "Retrieval (blend)", "duration_ms": 0, "skipped": False}
+            stage = {"name": "retrieval", "label": "Retrieval (degraded)", "duration_ms": 0, "skipped": True}
         else:
-            raw_retrieved_blocks, stage = _timed(
-                "retrieval",
-                "Retrieval",
-                retriever.retrieve,
-                hybrid_query,
-                top_k=top_k,  # не удваиваем: TOP-K должен совпадать с админкой/трейсом
-                author_id=author_id_filter,
-            )
+            try:
+                if config.AUTHOR_BLEND_MODE == "blend" and author_map:
+                    raw_retrieved_blocks = []
+                    for author_id in author_map.values():
+                        raw_retrieved_blocks.extend(
+                            retriever.retrieve(
+                                hybrid_query,
+                                top_k=3,
+                                author_id=author_id,
+                            )
+                        )
+                    stage = {"name": "retrieval", "label": "Retrieval (blend)", "duration_ms": 0, "skipped": False}
+                else:
+                    raw_retrieved_blocks, stage = _timed(
+                        "retrieval",
+                        "Retrieval",
+                        retriever.retrieve,
+                        hybrid_query,
+                        top_k=top_k,
+                        author_id=author_id_filter,
+                    )
+            except Exception as exc:
+                logger.warning("[RETRIEVAL] retrieve failed, degraded mode enabled: %s", exc)
+                raw_retrieved_blocks = []
+                retrieval_degraded_reason = "retrieval_failed"
+                stage = {"name": "retrieval", "label": "Retrieval (degraded)", "duration_ms": 0, "skipped": True}
 
         if debug_trace is not None:
             pipeline_stages.append(stage)
+            if retrieval_degraded_reason:
+                debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
         
         # Дедупликация блоков по block_id до SD filter
         seen_ids = set()
@@ -2030,37 +2051,42 @@ def answer_question_adaptive(
         selected_practice: Optional[Dict[str, Any]] = None
         practice_alternatives: List[Dict[str, Any]] = []
         practice_context_suffix = ""
-        try:
-            diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
-            selection = practice_selector.select(
-                route=str(getattr(routing_result, "route", "") or ""),
-                nervous_system_state=str(
-                    diagnostics_payload.get("nervous_system_state")
-                    or "window"
-                ),
-                request_function=str(
-                    diagnostics_payload.get("request_function")
-                    or "understand"
-                ),
-                core_theme=str(diagnostics_payload.get("core_theme") or query),
-                last_practice_channel=str(memory.metadata.get("last_practice_channel") or ""),
-                safety_flags=[],
-            )
-            if selection.primary is not None:
-                selected_practice = selection.primary.as_dict()
-                practice_alternatives = [item.as_dict() for item in selection.alternatives]
-                memory.metadata["last_practice_channel"] = selection.primary.entry.channel
-                practice_context_suffix = (
-                    "\n\nPRACTICE_SUGGESTION:\n"
-                    f"- title: {selection.primary.entry.title}\n"
-                    f"- channel: {selection.primary.entry.channel}\n"
-                    f"- instruction: {selection.primary.entry.instruction}\n"
-                    f"- micro_tuning: {selection.primary.entry.micro_tuning}\n"
-                    f"- closure: {selection.primary.entry.closure}\n"
-                    f"- time_limit_minutes: {selection.primary.entry.time_limit_minutes}"
+        resolved_route = str(getattr(routing_result, "route", "") or "").strip().lower()
+        practice_routing_enabled = resolved_route in {"practice", "reflect", "regulate"}
+        if practice_routing_enabled:
+            try:
+                diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
+                selection = practice_selector.select(
+                    route=resolved_route,
+                    nervous_system_state=str(
+                        diagnostics_payload.get("nervous_system_state")
+                        or "window"
+                    ),
+                    request_function=str(
+                        diagnostics_payload.get("request_function")
+                        or "understand"
+                    ),
+                    core_theme=str(diagnostics_payload.get("core_theme") or query),
+                    last_practice_channel=str(memory.metadata.get("last_practice_channel") or ""),
+                    safety_flags=[],
                 )
-        except Exception as exc:
-            logger.warning("[PRACTICE] selection skipped: %s", exc)
+                if selection.primary is not None:
+                    selected_practice = selection.primary.as_dict()
+                    practice_alternatives = [item.as_dict() for item in selection.alternatives]
+                    memory.metadata["last_practice_channel"] = selection.primary.entry.channel
+                    practice_context_suffix = (
+                        "\n\nPRACTICE_SUGGESTION:\n"
+                        f"- title: {selection.primary.entry.title}\n"
+                        f"- channel: {selection.primary.entry.channel}\n"
+                        f"- instruction: {selection.primary.entry.instruction}\n"
+                        f"- micro_tuning: {selection.primary.entry.micro_tuning}\n"
+                        f"- closure: {selection.primary.entry.closure}\n"
+                        f"- time_limit_minutes: {selection.primary.entry.time_limit_minutes}"
+                    )
+            except Exception as exc:
+                logger.warning("[PRACTICE] selection skipped: %s", exc)
+        else:
+            logger.info("[PRACTICE] skipped for route=%s", resolved_route or "unknown")
 
         if debug_trace is not None:
             debug_trace["recommended_mode"] = routing_result.mode
@@ -2154,6 +2180,7 @@ def answer_question_adaptive(
                 )
                 debug_trace["pipeline_stages"] = pipeline_stages
                 debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                debug_trace = attach_trace_schema_status(debug_trace)
                 response["debug_trace"] = debug_trace
             return response
         
@@ -2425,6 +2452,7 @@ def answer_question_adaptive(
                 )
                 debug_trace["pipeline_stages"] = pipeline_stages
                 debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                debug_trace = attach_trace_schema_status(debug_trace)
                 response["debug_trace"] = debug_trace
             return response
         
@@ -2749,6 +2777,7 @@ def answer_question_adaptive(
             )
             debug_trace["pipeline_stages"] = pipeline_stages
             debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+            debug_trace = attach_trace_schema_status(debug_trace)
             result["debug_trace"] = debug_trace
         
         logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
@@ -2796,6 +2825,7 @@ def answer_question_adaptive(
                 pass
             debug_trace["pipeline_stages"] = pipeline_stages
             debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+            debug_trace = attach_trace_schema_status(debug_trace)
             response["debug_trace"] = debug_trace
         return response
 

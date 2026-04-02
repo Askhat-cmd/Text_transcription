@@ -27,6 +27,7 @@ from .debug_routes import router as debug_router
 from .dependencies import set_preloaded_components
 
 from bot_agent.config import config
+from bot_agent.config_validation import assert_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.graph_client import graph_client
 from bot_agent.retriever import get_retriever
@@ -74,6 +75,8 @@ async def lifespan(app: FastAPI):
     logger.info("API server starting")
     logger.info("Version: %s", app.version)
     logger.info("Docs: http://localhost:8000/api/docs")
+    assert_runtime_config(config)
+    logger.info("[STARTUP] runtime config validation: OK")
     _ensure_prompt_default_snapshots()
 
     if config.WARMUP_ON_START:

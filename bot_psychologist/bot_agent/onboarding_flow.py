@@ -1,4 +1,4 @@
-"""Phase 8 helpers: onboarding, informational branch, and correction protocol."""
+﻿"""Phase 8 helpers: onboarding, informational branch, and correction protocol."""
 
 from __future__ import annotations
 
@@ -7,17 +7,49 @@ import re
 
 
 _START_COMMAND_RE = re.compile(r"^\s*/?(start|старт)\s*$", flags=re.IGNORECASE)
-_USER_CORRECTION_RE = re.compile(
-    r"(нет,\s*не\s*то|ты\s+меня\s+не\s+понял|я\s+не\s+об\s+этом|не\s+об\s+этом|это\s+не\s+то|не\s+совсем\s+так)",
-    flags=re.IGNORECASE,
+
+_USER_CORRECTION_PATTERNS = (
+    "нет, не то",
+    "нет не то",
+    "ты меня не понял",
+    "я не об этом",
+    "не об этом",
+    "это не то",
+    "не совсем так",
+    "you misunderstood me",
+    "not what i meant",
 )
-_INFORMATIONAL_RE = re.compile(
-    r"(что\s+такое|объясни|расскажи|в\s+чем|как\s+работает|термин|концепц|система)",
-    flags=re.IGNORECASE,
+
+_INFORMATIONAL_PATTERNS = (
+    "что такое",
+    "объясни",
+    "расскажи",
+    "в чем",
+    "как работает",
+    "термин",
+    "концепц",
+    "система",
+    "what is",
+    "explain",
 )
-_PERSONAL_RE = re.compile(
-    r"(\bя\b|\bмне\b|\bменя\b|\bмой\b|чувств|боюсь|тревог|стыд|вина|со\s+мной)",
-    flags=re.IGNORECASE,
+
+_PERSONAL_PATTERNS = (
+    " я ",
+    " мне ",
+    " меня ",
+    " мой ",
+    " моя ",
+    " мои ",
+    " чувств",
+    " боюсь",
+    " тревог",
+    " стыд",
+    " вина",
+    " со мной",
+    " i ",
+    " me ",
+    " my ",
+    " feel ",
 )
 
 
@@ -43,12 +75,15 @@ class Phase8Signals:
 
 def detect_phase8_signals(query: str, turns_count: int) -> Phase8Signals:
     text = (query or "").strip()
-    informational_intent = bool(_INFORMATIONAL_RE.search(text))
-    personal_disclosure = bool(_PERSONAL_RE.search(text))
+    lowered = f" {text.lower()} "
+    informational_intent = any(pattern in lowered for pattern in _INFORMATIONAL_PATTERNS)
+    personal_disclosure = any(pattern in lowered for pattern in _PERSONAL_PATTERNS)
+    user_correction = any(pattern in lowered for pattern in _USER_CORRECTION_PATTERNS)
+
     return Phase8Signals(
         first_turn=turns_count <= 0,
         start_command=bool(_START_COMMAND_RE.match(text)),
-        user_correction=bool(_USER_CORRECTION_RE.search(text)),
+        user_correction=user_correction,
         informational_intent=informational_intent,
         personal_disclosure=personal_disclosure,
         mixed_query=informational_intent and personal_disclosure,
@@ -75,7 +110,7 @@ def build_first_turn_instruction() -> str:
 def build_mixed_query_instruction() -> str:
     return (
         "MIXED_QUERY_POLICY:\n"
-        "- Сначала кратко объясни концепт (2-4 предложения).\n"
+        "- Сначала краткое объяснение концепта (2-4 предложения).\n"
         "- Затем мягко свяжи объяснение с текущей ситуацией пользователя.\n"
         "- Заверши одним вопросом-мостом в coaching."
     )

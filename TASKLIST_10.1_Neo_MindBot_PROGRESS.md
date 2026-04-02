@@ -11,7 +11,7 @@
 - [x] Phase 5 — Memory v1.1
 - [x] Phase 6 — Prompt Stack v2 + Output Validation
 - [x] Phase 7 — Practice Engine v1
-- [ ] Phase 8 — Informational Branch + Onboarding
+- [x] Phase 8 — Informational Branch + Onboarding
 - [ ] Phase 9 — Observability + Failure Hardening
 - [ ] Phase 10 — E2E Hardening and Cleanup
 
@@ -234,6 +234,79 @@
 ### Tests run
 - `python -m pytest bot_psychologist/tests/unit/test_practice_schema_v1.py bot_psychologist/tests/unit/test_practice_selector_filters.py bot_psychologist/tests/unit/test_practice_channel_rotation.py bot_psychologist/tests/golden/test_practice_selection_scenarios.py bot_psychologist/tests/integration/test_practice_selection_in_pipeline.py bot_psychologist/tests/unit/test_prompt_stack_order.py bot_psychologist/tests/unit/test_prompt_registry_versioning.py bot_psychologist/tests/unit/test_output_validator_rules.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/integration/test_generation_validation_separation.py bot_psychologist/tests/regression/test_no_legacy_prompt_overlays.py -v`
 - `python -m pytest bot_psychologist/tests/test_llm_payload_endpoint.py bot_psychologist/tests/integration/test_single_route_per_turn.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
+- Result: passed.
+
+## Phase 8 — Informational Branch + Onboarding
+### Done
+- Добавлен модуль `onboarding_flow.py` с детекцией сигналов:
+  - `first_turn`
+  - `start_command`
+  - `user_correction`
+  - `informational_intent`
+  - `mixed_query`
+- Добавлен runtime feature flag:
+  - `INFORMATIONAL_BRANCH_ENABLED` (в `feature_flags.py` и `.env.example`).
+- Интегрирован `/start` onboarding flow в `answer_adaptive.py`:
+  - ранний безопасный ответ без запуска полной генерации;
+  - запись turn в память.
+- Интегрированы phase8-инструкции в prompt/runtime context:
+  - `FIRST_TURN_POLICY`
+  - `MIXED_QUERY_POLICY`
+  - `USER_CORRECTION_PROTOCOL`
+  - `INFORMATIONAL_GUARDRAIL`
+- Расширен `prompt_registry_v2.py`:
+  - новые флаги сборки `first_turn`, `mixed_query_bridge`, `user_correction_protocol`;
+  - route-aware правила для `inform`.
+- Реализована логика `UserCorrectionProtocol`:
+  - при сигнале коррекции снижается confidence;
+  - `request_function` переводится в `validation`.
+- Исправлена логика practice selection:
+  - для informational route практика не подмешивается (`selected_practice=None`), чтобы не ломать informational ветку.
+
+### Files changed
+- `bot_psychologist/bot_agent/onboarding_flow.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/bot_agent/prompt_registry_v2.py`
+- `bot_psychologist/bot_agent/feature_flags.py`
+- `bot_psychologist/.env.example`
+- `bot_psychologist/tests/phase8_runtime_support.py`
+- `bot_psychologist/tests/integration/test_onboarding_first_session.py`
+- `bot_psychologist/tests/integration/test_informational_branch.py`
+- `bot_psychologist/tests/integration/test_mixed_query_bridge.py`
+- `bot_psychologist/tests/golden/test_user_correction_protocol.py`
+- `bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py -q`
+- `python -m pytest bot_psychologist/tests/test_feature_flags.py bot_psychologist/tests/config/test_feature_flags_baseline.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/unit/test_prompt_stack_order.py -q`
+- Result: passed.
+
+## Phase 9 — Observability + Failure Hardening (in progress)
+### Done so far
+- Добавлен `trace_schema.py`:
+  - runtime-проверка структуры trace payload;
+  - флаги `trace_schema_valid` и `trace_schema_errors`.
+- Интегрирована проверка trace schema в `answer_adaptive.py` перед возвратом `debug_trace`.
+- Добавлен `config_validation.py`:
+  - валидация критичных runtime-параметров;
+  - fail-fast через `assert_runtime_config(...)`.
+- В `api/main.py` на startup добавлена проверка runtime config с логированием результата.
+- В `answer_adaptive.py` добавлен degraded retrieval mode:
+  - fallback при падении `get_retriever()` или retrieval вызова;
+  - trace поле `retrieval_degraded_reason`.
+
+### Files changed
+- `bot_psychologist/bot_agent/trace_schema.py`
+- `bot_psychologist/bot_agent/config_validation.py`
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/api/main.py`
+- `bot_psychologist/tests/unit/test_trace_payload_schema.py`
+- `bot_psychologist/tests/unit/test_config_validation.py`
+- `bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py -q`
+- `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/test_feature_flags.py bot_psychologist/tests/config/test_feature_flags_baseline.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/unit/test_prompt_stack_order.py -q`
 - Result: passed.
 
 ## Сводный прогон (Phase 0-5; targeted)

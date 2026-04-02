@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Header, status
 from typing import Any
 
 from bot_agent.config import config
+from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from .auth import is_dev_key
 
@@ -39,6 +40,52 @@ admin_router_v1 = APIRouter(
     tags=["⚙️ Admin Config v1"],
     dependencies=[Depends(require_dev_key)],
 )
+
+
+def _validate_import_overrides_payload(body: dict) -> dict:
+    if not isinstance(body.get("config"), dict):
+        raise HTTPException(
+            status_code=422, detail="Поле 'config' должно быть объектом"
+        )
+    if not isinstance(body.get("prompts"), dict):
+        raise HTTPException(
+            status_code=422, detail="Поле 'prompts' должно быть объектом"
+        )
+
+    editable = getattr(config, "EDITABLE_CONFIG", {})
+    for key in body["config"].keys():
+        if key not in editable:
+            raise HTTPException(status_code=422, detail=f"Unknown config key: {key}")
+
+    editable_prompts = set(getattr(config, "EDITABLE_PROMPTS", []))
+    for key, value in body["prompts"].items():
+        if key not in editable_prompts:
+            raise HTTPException(status_code=422, detail=f"Unknown prompt key: {key}")
+        if value is not None and not isinstance(value, str):
+            raise HTTPException(status_code=422, detail=f"Prompt '{key}' must be string or null")
+
+    # Validate critical runtime constraints against effective values after import.
+    effective = {
+        "TOP_K_BLOCKS": body["config"].get("TOP_K_BLOCKS", getattr(config, "TOP_K_BLOCKS", 5)),
+        "MIN_RELEVANCE_SCORE": body["config"].get("MIN_RELEVANCE_SCORE", getattr(config, "MIN_RELEVANCE_SCORE", 0.1)),
+        "VOYAGE_TOP_K": body["config"].get("VOYAGE_TOP_K", getattr(config, "VOYAGE_TOP_K", 5)),
+        "MAX_CONTEXT_SIZE": body["config"].get("MAX_CONTEXT_SIZE", getattr(config, "MAX_CONTEXT_SIZE", 2200)),
+        "LLM_MODEL": body["config"].get("LLM_MODEL", getattr(config, "LLM_MODEL", "")),
+    }
+    validation = validate_runtime_config(type("Cfg", (), effective)())
+    if not validation.valid:
+        raise HTTPException(
+            status_code=422,
+            detail={"message": "Invalid runtime config in import payload", "errors": validation.errors},
+        )
+
+    normalized = {
+        "config": dict(body.get("config", {})),
+        "prompts": dict(body.get("prompts", {})),
+        "history": list(body.get("history", [])) if isinstance(body.get("history"), list) else [],
+        "meta": dict(body.get("meta", {})) if isinstance(body.get("meta"), dict) else {},
+    }
+    return normalized
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -377,25 +424,26 @@ async def admin_import_overrides(body: dict):
 
     Body: содержимое admin_overrides.json (полученное через /export).
     """
-    if not isinstance(body.get("config"), dict):
-        raise HTTPException(
-            status_code=422, detail="Поле 'config' должно быть объектом"
-        )
-    if not isinstance(body.get("prompts"), dict):
-        raise HTTPException(
-            status_code=422, detail="Поле 'prompts' должно быть объектом"
-        )
+    normalized = _validate_import_overrides_payload(body)
+    previous = config._load_overrides()
     try:
-        config._save_overrides(body)
+        config._save_overrides(normalized)
         return {
             "status": "ok",
-            "config_keys": len(body.get("config", {})),
+            "config_keys": len(normalized.get("config", {})),
             "prompt_overrides": sum(
-                1 for v in body.get("prompts", {}).values() if v is not None
+                1 for v in normalized.get("prompts", {}).values() if v is not None
             ),
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        try:
+            config._save_overrides(previous)
+        except Exception:
+            pass
+        raise HTTPException(
+            status_code=500,
+            detail={"message": str(e), "rollback_applied": True},
+        )
 
 
 # ══════════════════════════════════════════════════════════════════════

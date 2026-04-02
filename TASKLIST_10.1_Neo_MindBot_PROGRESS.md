@@ -12,7 +12,7 @@
 - [x] Phase 6 — Prompt Stack v2 + Output Validation
 - [x] Phase 7 — Practice Engine v1
 - [x] Phase 8 — Informational Branch + Onboarding
-- [ ] Phase 9 — Observability + Failure Hardening
+- [x] Phase 9 — Observability + Failure Hardening
 - [ ] Phase 10 — E2E Hardening and Cleanup
 
 ## Phase 0 — Baseline and Safety Net
@@ -281,8 +281,8 @@
 - `python -m pytest bot_psychologist/tests/test_feature_flags.py bot_psychologist/tests/config/test_feature_flags_baseline.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/unit/test_prompt_stack_order.py -q`
 - Result: passed.
 
-## Phase 9 — Observability + Failure Hardening (in progress)
-### Done so far
+## Phase 9 — Observability + Failure Hardening
+### Done
 - Добавлен `trace_schema.py`:
   - runtime-проверка структуры trace payload;
   - флаги `trace_schema_valid` и `trace_schema_errors`.
@@ -294,20 +294,72 @@
 - В `answer_adaptive.py` добавлен degraded retrieval mode:
   - fallback при падении `get_retriever()` или retrieval вызова;
   - trace поле `retrieval_degraded_reason`.
+- Реализован rollback admin overrides в `admin_routes.py`:
+  - входящий payload валидируется;
+  - критичные runtime-поля проверяются до сохранения;
+  - при ошибке применяется rollback к последней валидной версии.
+- Добавлен regression-контур для частичных сбоев:
+  - падение retrieval не валит pipeline;
+  - падение LLM subsystem возвращает controlled error/partial response.
 
 ### Files changed
 - `bot_psychologist/bot_agent/trace_schema.py`
 - `bot_psychologist/bot_agent/config_validation.py`
 - `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/api/admin_routes.py`
 - `bot_psychologist/api/main.py`
 - `bot_psychologist/tests/unit/test_trace_payload_schema.py`
 - `bot_psychologist/tests/unit/test_config_validation.py`
 - `bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py`
+- `bot_psychologist/tests/integration/test_admin_config_rollback.py`
+- `bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py`
 
 ### Tests run
 - `python -m pytest bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py -q`
-- `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/test_feature_flags.py bot_psychologist/tests/config/test_feature_flags_baseline.py bot_psychologist/tests/contract/test_prompt_stack_contract_v2.py bot_psychologist/tests/unit/test_prompt_stack_order.py -q`
+- `python -m pytest bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py -q`
+- `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py -q`
 - Result: passed.
+
+## Phase 10 — E2E Hardening and Cleanup (in progress)
+### Done so far
+- Добавлен e2e smoke-pack из PRD:
+  - `test_full_pipeline_hyper_case.py`
+  - `test_full_pipeline_window_case.py`
+  - `test_full_pipeline_hypo_case.py`
+  - `test_safe_override_case.py`
+  - `test_directive_relationship_boundary_case.py`
+  - `test_informational_case.py`
+  - `test_mixed_query_case.py`
+  - `test_returning_user_stale_summary_case.py`
+  - `test_user_correction_case.py`
+  - `test_practice_alternative_case.py`
+  - `test_degraded_retrieval_case.py`
+  - `test_legacy_fallback_when_flag_off.py`
+- Добавлен общий e2e runtime helper:
+  - `tests/e2e/neo_e2e_support.py`.
+- Расширен phase8 runtime helper:
+  - `build_diagnostics(...)` теперь поддерживает `nervous_system_state` и отдельную confidence для state.
+
+### Files changed
+- `bot_psychologist/tests/e2e/neo_e2e_support.py`
+- `bot_psychologist/tests/e2e/test_full_pipeline_hyper_case.py`
+- `bot_psychologist/tests/e2e/test_full_pipeline_window_case.py`
+- `bot_psychologist/tests/e2e/test_full_pipeline_hypo_case.py`
+- `bot_psychologist/tests/e2e/test_safe_override_case.py`
+- `bot_psychologist/tests/e2e/test_directive_relationship_boundary_case.py`
+- `bot_psychologist/tests/e2e/test_informational_case.py`
+- `bot_psychologist/tests/e2e/test_mixed_query_case.py`
+- `bot_psychologist/tests/e2e/test_returning_user_stale_summary_case.py`
+- `bot_psychologist/tests/e2e/test_user_correction_case.py`
+- `bot_psychologist/tests/e2e/test_practice_alternative_case.py`
+- `bot_psychologist/tests/e2e/test_degraded_retrieval_case.py`
+- `bot_psychologist/tests/e2e/test_legacy_fallback_when_flag_off.py`
+- `bot_psychologist/tests/phase8_runtime_support.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/e2e -v`
+- `python -m pytest bot_psychologist/tests/integration/test_onboarding_first_session.py bot_psychologist/tests/integration/test_informational_branch.py bot_psychologist/tests/integration/test_mixed_query_bridge.py bot_psychologist/tests/golden/test_user_correction_protocol.py bot_psychologist/tests/regression/test_informational_branch_does_not_force_coaching.py bot_psychologist/tests/integration/test_degraded_mode_without_retrieval.py bot_psychologist/tests/unit/test_trace_payload_schema.py bot_psychologist/tests/unit/test_config_validation.py bot_psychologist/tests/integration/test_admin_config_rollback.py bot_psychologist/tests/regression/test_partial_outage_does_not_crash_pipeline.py bot_psychologist/tests/e2e/test_full_pipeline_hyper_case.py bot_psychologist/tests/e2e/test_full_pipeline_window_case.py bot_psychologist/tests/e2e/test_full_pipeline_hypo_case.py bot_psychologist/tests/e2e/test_safe_override_case.py bot_psychologist/tests/e2e/test_directive_relationship_boundary_case.py bot_psychologist/tests/e2e/test_informational_case.py bot_psychologist/tests/e2e/test_mixed_query_case.py bot_psychologist/tests/e2e/test_returning_user_stale_summary_case.py bot_psychologist/tests/e2e/test_user_correction_case.py bot_psychologist/tests/e2e/test_practice_alternative_case.py bot_psychologist/tests/e2e/test_degraded_retrieval_case.py bot_psychologist/tests/e2e/test_legacy_fallback_when_flag_off.py -q`
+- Result: passed (26 tests).
 
 ## Сводный прогон (Phase 0-5; targeted)
 ```bash
@@ -343,4 +395,4 @@ python -m pytest \
 Результат: 42 passed (targeted suites).
 
 ## Next
-- Следующий шаг: `Phase 8 — Informational Branch + Onboarding`.
+- Продолжить `Phase 10`: cleanup/dead-code и обновление архитектурной документации под итоговый Neo runtime.

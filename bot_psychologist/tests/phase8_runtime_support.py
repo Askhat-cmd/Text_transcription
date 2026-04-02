@@ -136,19 +136,21 @@ def build_sd_result() -> SDClassificationResult:
 def build_diagnostics(
     *,
     interaction_mode: str = "coaching",
+    nervous_system_state: str = "window",
     request_function: str = "understand",
     core_theme: str = "core_theme",
     interaction_conf: float = 0.9,
+    nervous_conf: float = 0.8,
     request_conf: float = 0.9,
 ) -> DiagnosticsV1:
     return DiagnosticsV1(
         interaction_mode=interaction_mode,
-        nervous_system_state="window",
+        nervous_system_state=nervous_system_state,
         request_function=request_function,
         core_theme=core_theme,
         confidence=DiagnosticsConfidence(
             interaction_mode=interaction_conf,
-            nervous_system_state=0.8,
+            nervous_system_state=nervous_conf,
             request_function=request_conf,
             core_theme=0.7,
         ),

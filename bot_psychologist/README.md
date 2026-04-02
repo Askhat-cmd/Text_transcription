@@ -1,6 +1,13 @@
 ﻿# Bot Psychologist
 
 **Супер-Умный Бот-Психолог** — AI-ассистент на базе данных `voice_bot_pipeline`.
+## Neo MindBot v10.1 (current runtime status)
+
+- Runtime migration follows `PRD_10.1_Neo_MindBot.md`.
+- Phase progress log: `../TASKLIST_10.1_Neo_MindBot_PROGRESS.md`.
+- Runtime architecture note: `docs/neo_runtime_v101.md`.
+- Release checklist: `docs/release_checklist_v101.md`.
+- E2E smoke pack: `tests/e2e/`.
 
 ## Описание
 

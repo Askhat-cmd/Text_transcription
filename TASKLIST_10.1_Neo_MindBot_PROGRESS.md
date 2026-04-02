@@ -6,7 +6,7 @@
 - [x] Phase 0 — Baseline and Safety Net
 - [x] Phase 1 — Remove SD Runtime Dependency
 - [x] Phase 2 — Remove SD Retrieval Filtering
-- [ ] Phase 3 — Remove UserLevelAdapter
+- [x] Phase 3 — Remove UserLevelAdapter
 - [ ] Phase 4 — Diagnostics v1 + Deterministic RouteResolver
 - [ ] Phase 5 — Memory v1.1
 - [ ] Phase 6 — Prompt Stack v2 + Output Validation
@@ -76,7 +76,26 @@
 - `python -m pytest bot_psychologist/tests/test_db_api_client.py bot_psychologist/tests/test_retriever_fallback.py -v`
 - Result: passed.
 
-## Сводный прогон (Phase 0-2)
+## Phase 3 — Remove UserLevelAdapter
+### Done
+- Удален `UserLevelAdapter` из активного adaptive runtime-пайплайна.
+- В streaming adaptive-ветке API удалено создание `UserLevelAdapter`; в runtime передается `None`.
+- Для path recommendation введен нейтральный уровень (`INTERMEDIATE`) через `_resolve_path_user_level`, независимо от входного `user_level`.
+- Сохранена backward compatibility: поле `user_level` в API request/metadata остается, но не влияет на runtime-адаптацию.
+
+### Files changed
+- `bot_psychologist/bot_agent/answer_adaptive.py`
+- `bot_psychologist/api/routes.py`
+- `bot_psychologist/tests/unit/test_user_level_adapter_removed.py`
+- `bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py`
+- `bot_psychologist/tests/regression/test_no_level_based_prompting.py`
+
+### Tests run
+- `python -m pytest bot_psychologist/tests/unit/test_user_level_adapter_removed.py bot_psychologist/tests/integration/test_pipeline_without_level_adapter.py bot_psychologist/tests/regression/test_no_level_based_prompting.py -v`
+- `python -m pytest tests/test_path_builder.py tests/test_response_generator.py -v` (workdir: `bot_psychologist/`)
+- Result: passed.
+
+## Сводный прогон (Phase 0-3)
 ```bash
 python -m pytest \
   bot_psychologist/tests/smoke/test_app_boot.py \

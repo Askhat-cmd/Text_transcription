@@ -37,7 +37,6 @@ from bot_agent.decision import (
 )
 from bot_agent.response import ResponseFormatter, ResponseGenerator
 from bot_agent.retrieval import HybridQueryBuilder, VoyageReranker
-from bot_agent.user_level_adapter import UserLevelAdapter
 from bot_agent.storage import SessionManager
 from bot_agent.answer_adaptive import (
     _classify_parallel,
@@ -923,7 +922,8 @@ async def ask_adaptive_question_stream(
                 )
             user_stage = resolve_user_stage(memory, state_analysis)
 
-            level_adapter = UserLevelAdapter(request.user_level.value)
+            # Phase 3: user level adapter removed from active runtime.
+            level_adapter = None
             decision_gate = DecisionGate()
 
             pre_routing_signals = detect_routing_signals(request.query, [], state_analysis)

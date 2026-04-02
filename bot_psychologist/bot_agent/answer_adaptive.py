@@ -25,7 +25,7 @@ from datetime import datetime
 
 from .data_loader import Block, data_loader
 from .retriever import get_retriever
-from .user_level_adapter import UserLevelAdapter, UserLevel
+from .user_level_adapter import UserLevel
 from .semantic_analyzer import SemanticAnalyzer
 from .graph_client import graph_client
 from .state_classifier import state_classifier, StateAnalysis, UserState
@@ -329,6 +329,11 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
 def _sd_runtime_disabled() -> bool:
     """Return True when SD classifier is disabled for live runtime."""
     return feature_flags.enabled("DISABLE_SD_RUNTIME")
+
+
+def _resolve_path_user_level(_user_level: str) -> UserLevel:
+    """Phase 3: path recommendations use neutral level only."""
+    return UserLevel.INTERMEDIATE
 
 
 async def _classify_parallel(
@@ -1000,13 +1005,9 @@ def answer_question_adaptive(
             debug_trace["cross_session_context"] = _truncate_preview(cross_session_context, 500)
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
         
-        # Парсим уровень пользователя
-        try:
-            level_enum = UserLevel(user_level.lower())
-        except ValueError:
-            level_enum = UserLevel.BEGINNER
-        
-        level_adapter = UserLevelAdapter(user_level)
+        # Phase 3: user level adapter removed from active runtime.
+        level_adapter = None
+        path_level_enum = _resolve_path_user_level(user_level)
         
         if debug_info is not None:
             debug_info["user_id"] = user_id
@@ -2008,7 +2009,7 @@ def answer_question_adaptive(
                 personal_path = path_builder.build_path(
                     user_id=user_id,
                     state_analysis=state_analysis,
-                    user_level=level_enum,
+                    user_level=path_level_enum,
                     memory=memory
                 )
                 
@@ -2137,6 +2138,7 @@ def answer_question_adaptive(
             "metadata": {
                 "user_id": user_id,
                 "user_level": user_level,
+                "user_level_adapter_applied": False,
                 "blocks_used": len(adapted_blocks),
                 "state": state_analysis.primary_state.value,
                 "conversation_turns": len(memory.turns),

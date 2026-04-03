@@ -65,7 +65,7 @@ class DiagnosticsClassifier:
     """Deterministic diagnostics classifier with safe defaults."""
 
     _INFORMATIONAL_RE = re.compile(
-        r"\b(что такое|объясни|объяснение|расскажи|в чем|как работает|термин|концепц)\b",
+        r"\b(что такое|объясни|объяснение|в чем разниц|чем отлича|разница между|как работает|термин|поняти|концепц|definition|difference|vs\.?)\b",
         flags=re.IGNORECASE,
     )
     _PERSONAL_RE = re.compile(

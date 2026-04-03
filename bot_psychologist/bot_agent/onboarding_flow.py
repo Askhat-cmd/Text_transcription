@@ -23,14 +23,24 @@ _USER_CORRECTION_PATTERNS = (
 _INFORMATIONAL_PATTERNS = (
     "что такое",
     "объясни",
-    "расскажи",
-    "в чем",
+    "в чем разница",
+    "чем отличается",
+    "разница между",
     "как работает",
     "термин",
+    "поняти",
     "концепц",
-    "система",
     "what is",
     "explain",
+    "difference between",
+)
+
+_PRACTICE_PATTERNS = (
+    "как начать",
+    "как практиковать",
+    "как применить",
+    "с чего начать",
+    "что делать дальше",
 )
 
 _PERSONAL_PATTERNS = (
@@ -82,6 +92,7 @@ def detect_phase8_signals(query: str, turns_count: int) -> Phase8Signals:
     lowered = f" {text.lower()} "
     informational_intent = any(pattern in lowered for pattern in _INFORMATIONAL_PATTERNS)
     personal_disclosure = any(pattern in lowered for pattern in _PERSONAL_PATTERNS)
+    practice_intent = any(pattern in lowered for pattern in _PRACTICE_PATTERNS)
     user_correction = any(pattern in lowered for pattern in _USER_CORRECTION_PATTERNS)
 
     return Phase8Signals(
@@ -90,7 +101,7 @@ def detect_phase8_signals(query: str, turns_count: int) -> Phase8Signals:
         user_correction=user_correction,
         informational_intent=informational_intent,
         personal_disclosure=personal_disclosure,
-        mixed_query=informational_intent and personal_disclosure,
+        mixed_query=informational_intent and (personal_disclosure or practice_intent),
     )
 
 

@@ -1525,10 +1525,10 @@ def answer_question_adaptive(
             pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
             fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
             if informational_mode and fast_path_enabled:
-                # For curious/informational flow we prefer full retrieval context over compact fast-path.
+                # For true informational route we prefer full retrieval context over compact fast-path.
                 fast_path_enabled = False
                 logger.info(
-                    "[FAST_PATH] disabled for informational_mode (user_state=%s)",
+                    "[FAST_PATH] disabled for informational route (user_state=%s)",
                     state_analysis.primary_state.value,
                 )
             logger.info(

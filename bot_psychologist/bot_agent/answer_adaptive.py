@@ -73,23 +73,26 @@ def _timed(name: str, label: str, fn, *args, **kwargs):
     return result, {"name": name, "label": label, "duration_ms": ms, "skipped": False}
 
 
-def _build_config_snapshot(cfg, user_level: str) -> Dict[str, object]:
-    """Снимок конфигурации на момент запроса."""
-    sd_settings = get_sd_settings()
+def _build_config_snapshot(cfg, _user_level: str) -> Dict[str, object]:
+    """???????????? ???????????????????????? ???? ???????????? ??????????????."""
     conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
-    return {
+    snapshot: Dict[str, object] = {
         "conversation_history_depth": int(getattr(cfg, "CONVERSATION_HISTORY_DEPTH", 0) or 0),
         "max_context_size": int(getattr(cfg, "MAX_CONTEXT_SIZE", 0) or 0),
         "semantic_search_top_k": int(getattr(cfg, "SEMANTIC_SEARCH_TOP_K", 0) or 0),
-        "sd_confidence_threshold": float(sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65),
         "fast_path_enabled": True,
         "rerank_enabled": bool(
             getattr(cfg, "VOYAGE_ENABLED", False)
             or (conditional_reranker and getattr(cfg, "RERANKER_ENABLED", False))
         ),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
-        "user_level": str(user_level or "beginner"),
     }
+    if not feature_flags.enabled("DISABLE_SD_RUNTIME"):
+        sd_settings = get_sd_settings()
+        snapshot["sd_confidence_threshold"] = float(
+            sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65
+        )
+    return snapshot
 
 
 def _compute_anomalies(trace: Dict) -> List[Dict]:
@@ -101,7 +104,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
     sd_detail = trace.get("sd_detail") or {}
     config_snapshot = trace.get("config_snapshot") or {}
 
-    if sd_detail.get("method") == "fallback":
+    if not _sd_runtime_disabled() and sd_detail.get("method") == "fallback":
         flags.append(
             {
                 "code": "SD_FALLBACK",
@@ -183,18 +186,19 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             }
         )
 
-    sd_confidence = sd_detail.get("confidence")
-    threshold = config_snapshot.get("sd_confidence_threshold")
-    if isinstance(sd_confidence, (int, float)) and isinstance(threshold, (int, float)):
-        if sd_confidence < threshold:
-            flags.append(
-                {
-                    "code": "SD_LOW_CONFIDENCE",
-                    "severity": "info",
-                    "message": "SD confidence ниже порога, ответ консервативен",
-                    "target": "sd",
-                }
-            )
+    if not _sd_runtime_disabled():
+        sd_confidence = sd_detail.get("confidence")
+        threshold = config_snapshot.get("sd_confidence_threshold")
+        if isinstance(sd_confidence, (int, float)) and isinstance(threshold, (int, float)):
+            if sd_confidence < threshold:
+                flags.append(
+                    {
+                        "code": "SD_LOW_CONFIDENCE",
+                        "severity": "info",
+                        "message": "SD confidence is below threshold; response may be conservative",
+                        "target": "sd",
+                    }
+                )
 
     if (trace.get("memory_turns") == 0) and (trace.get("turn_number") or 0) > 3:
         flags.append(
@@ -468,7 +472,6 @@ def _build_start_command_response(
         "concepts": [],
         "metadata": {
             "user_id": user_id,
-            "user_level": user_level,
             "onboarding_start_command": True,
             "first_turn": True,
             "resolved_route": "contact_hold",
@@ -485,6 +488,53 @@ def _build_start_command_response(
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
     """Phase 3: path recommendations use neutral level only."""
     return UserLevel.INTERMEDIATE
+
+
+LEGACY_RUNTIME_METADATA_KEYS = (
+    "user_level",
+    "user_level_adapter_applied",
+)
+LEGACY_SD_METADATA_KEYS = (
+    "sd_level",
+    "sd_secondary",
+    "sd_confidence",
+    "sd_method",
+    "sd_allowed_blocks",
+)
+
+
+def _strip_legacy_runtime_metadata(metadata: Dict[str, Any]) -> Dict[str, Any]:
+    cleaned = dict(metadata or {})
+    for key in LEGACY_RUNTIME_METADATA_KEYS:
+        cleaned.pop(key, None)
+    if _sd_runtime_disabled():
+        for key in LEGACY_SD_METADATA_KEYS:
+            cleaned.pop(key, None)
+    return cleaned
+
+
+def _strip_legacy_trace_fields(debug_trace: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    if not isinstance(debug_trace, dict):
+        return debug_trace
+
+    cleaned = dict(debug_trace)
+    for key in LEGACY_RUNTIME_METADATA_KEYS:
+        cleaned.pop(key, None)
+
+    cfg_snapshot = cleaned.get("config_snapshot")
+    if isinstance(cfg_snapshot, dict):
+        snapshot_cleaned = dict(cfg_snapshot)
+        snapshot_cleaned.pop("user_level", None)
+        if _sd_runtime_disabled():
+            snapshot_cleaned.pop("sd_confidence_threshold", None)
+        cleaned["config_snapshot"] = snapshot_cleaned
+
+    if _sd_runtime_disabled():
+        cleaned.pop("sd_classification", None)
+        cleaned.pop("sd_detail", None)
+        cleaned.pop("sd_level", None)
+
+    return cleaned
 
 
 async def _classify_parallel(
@@ -1737,7 +1787,6 @@ def answer_question_adaptive(
                 "concepts": [],
                 "metadata": {
                     "user_id": user_id,
-                    "user_level": user_level,
                     "blocks_used": 0,
                     "state": state_analysis.primary_state.value,
                     "conversation_turns": len(memory.turns),
@@ -1816,9 +1865,11 @@ def answer_question_adaptive(
                 )
                 debug_trace["pipeline_stages"] = pipeline_stages
                 debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+                debug_trace = _strip_legacy_trace_fields(debug_trace)
                 debug_trace = attach_trace_schema_status(debug_trace)
                 result["debug_trace"] = debug_trace
 
+            result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
             return result
 
@@ -2691,8 +2742,6 @@ def answer_question_adaptive(
             "concepts": concepts,
             "metadata": {
                 "user_id": user_id,
-                "user_level": user_level,
-                "user_level_adapter_applied": False,
                 "blocks_used": len(adapted_blocks),
                 "state": state_analysis.primary_state.value,
                 "conversation_turns": len(memory.turns),
@@ -2734,21 +2783,9 @@ def answer_question_adaptive(
             "processing_time_seconds": round(elapsed_time, 2)
         }
 
-        if _sd_runtime_disabled():
-            for key in (
-                "sd_level",
-                "sd_secondary",
-                "sd_confidence",
-                "sd_method",
-                "sd_allowed_blocks",
-            ):
-                result["metadata"].pop(key, None)
-            if debug_info is not None:
-                debug_info.pop("sd_classification", None)
-            if debug_trace is not None:
-                debug_trace.pop("sd_classification", None)
-                debug_trace.pop("sd_detail", None)
-                debug_trace.pop("sd_level", None)
+        result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
+        if _sd_runtime_disabled() and debug_info is not None:
+            debug_info.pop("sd_classification", None)
         
         if debug_info is not None:
             debug_info["memory_summary"] = memory.get_summary()
@@ -2802,6 +2839,7 @@ def answer_question_adaptive(
             )
             debug_trace["pipeline_stages"] = pipeline_stages
             debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+            debug_trace = _strip_legacy_trace_fields(debug_trace)
             debug_trace = attach_trace_schema_status(debug_trace)
             result["debug_trace"] = debug_trace
         
@@ -2820,7 +2858,7 @@ def answer_question_adaptive(
             "feedback_prompt": "",
             "sources": [],
             "concepts": [],
-            "metadata": {"user_id": user_id, "user_level": user_level},
+            "metadata": {"user_id": user_id},
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": (datetime.now() - start_time).total_seconds()
         }
@@ -2850,6 +2888,7 @@ def answer_question_adaptive(
                 pass
             debug_trace["pipeline_stages"] = pipeline_stages
             debug_trace["anomalies"] = _compute_anomalies(debug_trace)
+            debug_trace = _strip_legacy_trace_fields(debug_trace)
             debug_trace = attach_trace_schema_status(debug_trace)
             response["debug_trace"] = debug_trace
         return response

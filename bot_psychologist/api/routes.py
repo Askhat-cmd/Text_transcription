@@ -83,6 +83,27 @@ def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default:
     )
 
 
+def _strip_legacy_trace_fields(raw_trace: dict, *, sd_runtime_disabled: bool) -> dict:
+    trace = dict(raw_trace or {})
+    for key in ("user_level", "user_level_adapter_applied"):
+        trace.pop(key, None)
+
+    cfg_snapshot = trace.get("config_snapshot")
+    if isinstance(cfg_snapshot, dict):
+        cfg_clean = dict(cfg_snapshot)
+        cfg_clean.pop("user_level", None)
+        if sd_runtime_disabled:
+            cfg_clean.pop("sd_confidence_threshold", None)
+        trace["config_snapshot"] = cfg_clean
+
+    if sd_runtime_disabled:
+        trace.pop("sd_classification", None)
+        trace.pop("sd_detail", None)
+        trace.pop("sd_level", None)
+
+    return trace
+
+
 # ===== QUESTIONS ENDPOINTS =====
 
 @router.post(
@@ -373,6 +394,7 @@ async def ask_graph_powered_question(
 @router.post(
     "/questions/adaptive",
     response_model=AdaptiveAnswerResponse,
+    response_model_exclude_none=True,
     summary="Phase 4: Adaptive QA",
     description="РџРѕР»РЅРѕСЃС‚СЊСЋ Р°РґР°РїС‚РёРІРЅС‹Р№ QA СЃ Р°РЅР°Р»РёР·РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ Рё РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹РјРё РїСѓС‚СЏРјРё"
 )
@@ -489,6 +511,8 @@ async def ask_adaptive_question(
         response_metadata = dict(result.get("metadata", {}))
         response_metadata["user_id"] = request.user_id
         response_metadata["session_id"] = session_key
+        for key in ("user_level", "user_level_adapter_applied"):
+            response_metadata.pop(key, None)
         if feature_flags.enabled("DISABLE_SD_RUNTIME"):
             for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
                 response_metadata.pop(key, None)
@@ -591,14 +615,6 @@ async def ask_adaptive_question(
                         logger.warning(f"[DEBUG_TRACE] Invalid LLM call trace item skipped: {llm_exc}")
 
                 trace_payload = {
-                    "sd_classification": SDClassificationTrace(
-                        method="disabled" if sd_runtime_disabled else str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
-                        primary=default_sd_level,
-                        secondary=None if sd_runtime_disabled else sd_raw.get("secondary", metadata.get("sd_secondary")),
-                        confidence=0.0 if sd_runtime_disabled else float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
-                        indicator="disabled_by_flag" if sd_runtime_disabled else str(sd_raw.get("indicator", "metadata_fallback")),
-                        allowed_levels=[] if sd_runtime_disabled else [str(level) for level in allowed_levels],
-                    ),
                     "chunks_retrieved": chunks_retrieved,
                     "chunks_after_filter": chunks_after_filter,
                     "llm_calls": llm_calls,
@@ -622,7 +638,6 @@ async def ask_adaptive_question(
                         else None
                     ),
                     "mode_reason": metadata.get("mode_reason"),
-                    "sd_level": None if sd_runtime_disabled else metadata.get("sd_level"),
                     "user_state": state_analysis.primary_state,
                     "recommended_mode": metadata.get("recommended_mode"),
                     "confidence_score": metadata.get("confidence_score"),
@@ -635,8 +650,20 @@ async def ask_adaptive_question(
                     "summary_last_turn": metadata.get("summary_last_turn"),
                     "summary_used": metadata.get("summary_used"),
                     "semantic_hits": metadata.get("semantic_hits"),
-                    "sd_detail": None if sd_runtime_disabled else (
-                        raw_dict.get("sd_detail") or {
+                }
+                if not sd_runtime_disabled:
+                    trace_payload["sd_level"] = metadata.get("sd_level")
+                    trace_payload["sd_classification"] = SDClassificationTrace(
+                        method=str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
+                        primary=default_sd_level,
+                        secondary=sd_raw.get("secondary", metadata.get("sd_secondary")),
+                        confidence=float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
+                        indicator=str(sd_raw.get("indicator", "metadata_fallback")),
+                        allowed_levels=[str(level) for level in allowed_levels],
+                    )
+                    trace_payload["sd_detail"] = (
+                        raw_dict.get("sd_detail")
+                        or {
                             "method": sd_raw.get("method", metadata.get("sd_method", "fallback")),
                             "primary": default_sd_level,
                             "secondary": sd_raw.get("secondary", metadata.get("sd_secondary")),
@@ -644,8 +671,7 @@ async def ask_adaptive_question(
                             "indicator": sd_raw.get("indicator", "metadata_fallback"),
                             "allowed_levels": [str(level) for level in allowed_levels],
                         }
-                    ),
-                }
+                    )
 
                 # Extensions from debug trace (v2.0.6)
                 for key in [
@@ -682,11 +708,18 @@ async def ask_adaptive_question(
                     "confidence_level",
                     "informational_mode",
                     "applied_mode_prompt",
+                    "sd_classification",
                 ]:
-                    if sd_runtime_disabled and key in {"sd_detail", "sd_level"}:
+                    if sd_runtime_disabled and key in {"sd_detail", "sd_level", "sd_classification"}:
                         continue
                     if key in raw_dict and raw_dict.get(key) is not None:
-                        trace_payload[key] = raw_dict.get(key)
+                        if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):
+                            trace_payload[key] = _strip_legacy_trace_fields(
+                                {"config_snapshot": raw_dict.get(key)},
+                                sd_runtime_disabled=sd_runtime_disabled,
+                            ).get("config_snapshot")
+                        else:
+                            trace_payload[key] = raw_dict.get(key)
 
                 if trace_payload.get("decision_rule_id") is not None:
                     trace_payload["decision_rule_id"] = str(trace_payload.get("decision_rule_id"))
@@ -720,7 +753,7 @@ async def ask_adaptive_question(
                     trace.session_turns = raw_session_turns
 
                 try:
-                    store.append_trace(session_key, trace.model_dump())
+                    store.append_trace(session_key, trace.model_dump(exclude_none=True))
                 except Exception as store_exc:
                     logger.warning(f"[DEBUG_TRACE] Failed to store trace: {store_exc}")
             except Exception as trace_exc:
@@ -818,11 +851,8 @@ async def ask_adaptive_question_stream(
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
             trace_raw = result.get("debug_trace") or result.get("debug")
             trace = trace_raw if isinstance(trace_raw, dict) else None
-            if trace is not None and sd_runtime_disabled:
-                trace = dict(trace)
-                trace.pop("sd_classification", None)
-                trace.pop("sd_detail", None)
-                trace.pop("sd_level", None)
+            if trace is not None:
+                trace = _strip_legacy_trace_fields(trace, sd_runtime_disabled=sd_runtime_disabled)
 
             done_payload = {
                 "done": True,

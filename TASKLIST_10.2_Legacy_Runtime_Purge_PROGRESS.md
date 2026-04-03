@@ -15,7 +15,7 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 - [x] Phase 1 - SD Runtime Purge
 - [x] Phase 2 - Path Builder Purge
 - [x] Phase 3 - Streaming Neo Alignment
-- [ ] Phase 4 - Metadata and Trace Cleanup
+- [x] Phase 4 - Metadata and Trace Cleanup
 - [ ] Phase 5 - Regression Hardening and Runtime Proof
 
 ## Phase Details
@@ -56,10 +56,10 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 
 ### Phase 4 - Metadata and Trace Cleanup
 
-- [ ] Final cleanup of legacy SD/user_level fields in live metadata.
-- [ ] Final cleanup of misleading trace sections from disabled modules.
-- [ ] Update metadata/trace contract tests.
-- [ ] Run phase tests.
+- [x] Final cleanup of legacy SD/user_level fields in live metadata.
+- [x] Final cleanup of misleading trace sections from disabled modules.
+- [x] Update metadata/trace contract tests.
+- [x] Run phase tests.
 
 ### Phase 5 - Regression Hardening and Runtime Proof
 
@@ -76,3 +76,4 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 - `2026-04-03`: Phase 1 done. Added `tests/regression/test_streaming_sd_runtime_disabled_contract.py`; target run: `10 passed`.
 - `2026-04-03`: Phase 2 done. Removed automatic path-builder side effect in default flow; added `tests/regression/test_default_adaptive_path_builder_purge.py`; target run: `10 passed`.
 - `2026-04-03`: Phase 3 done. Reworked `/questions/adaptive-stream` to delegate to `answer_question_adaptive` (single route truth); added `tests/integration/test_streaming_neo_alignment_v102.py`; target run: `14 passed`.
+- `2026-04-03`: Phase 4 done. Removed legacy `user_level`/SD runtime metadata leakage and cleaned trace contract (`response_model_exclude_none`, config snapshot sanitization, optional SD trace fields). Added tests: `test_live_metadata_contract_after_purge.py`, `test_trace_contract_after_purge.py`, `test_no_user_level_runtime_metadata.py`, `test_no_sd_runtime_metadata_fields.py`, `test_trace_reflects_real_execution_only.py`; target run: `17 passed`.

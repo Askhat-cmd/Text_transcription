@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from .auth import verify_api_key, is_dev_key
 from .session_store import SessionStore, get_session_store
+from bot_agent.feature_flags import feature_flags
 
 router = APIRouter(prefix="/api/debug", tags=["debug"])
 
@@ -100,17 +101,20 @@ async def get_session_llm_payload(
     memory_blob_id = trace.get("memory_snapshot_blob_id")
     memory_snapshot = _sanitize_pii(store.get_blob(memory_blob_id) or "") if memory_blob_id else ""
 
-    return {
+    sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
+    payload = {
         "session_id": session_id,
         "turn_number": trace.get("turn_number"),
         "recommended_mode": trace.get("recommended_mode"),
-        "sd_level": trace.get("sd_level"),
         "user_state": trace.get("user_state"),
         "hybrid_query_preview": trace.get("hybrid_query_preview"),
         "chunks_count": len(trace.get("chunks_after_filter") or trace.get("chunks_retrieved") or []),
         "llm_calls": payload_calls,
         "memory_snapshot": memory_snapshot,
     }
+    if not sd_runtime_disabled:
+        payload["sd_level"] = trace.get("sd_level")
+    return payload
 
 
 def _sanitize_pii(text: str) -> str:

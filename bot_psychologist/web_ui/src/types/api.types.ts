@@ -148,11 +148,11 @@ export interface ConfigSnapshot {
   conversation_history_depth: number;
   max_context_size: number;
   semantic_search_top_k: number;
-  sd_confidence_threshold: number;
+  sd_confidence_threshold?: number | null;
   fast_path_enabled: boolean;
   rerank_enabled: boolean;
   model_name: string;
-  user_level: string;
+  user_level?: string | null;
 }
 
 export interface PipelineError {
@@ -178,7 +178,7 @@ export interface LLMCallTrace {
 }
 
 export interface DebugTrace {
-  sd_classification: SDClassificationTrace;
+  sd_classification?: SDClassificationTrace | null;
   chunks_retrieved: ChunkTraceItem[];
   chunks_after_filter?: ChunkTraceItem[];
   llm_calls: LLMCallTrace[];

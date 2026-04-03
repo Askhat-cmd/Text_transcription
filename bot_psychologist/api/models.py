@@ -220,11 +220,11 @@ class ConfigSnapshot(BaseModel):
     conversation_history_depth: int
     max_context_size: int
     semantic_search_top_k: int
-    sd_confidence_threshold: float
+    sd_confidence_threshold: Optional[float] = None
     fast_path_enabled: bool
     rerank_enabled: bool
     model_name: str
-    user_level: str
+    user_level: Optional[str] = None
 
 
 class PipelineError(BaseModel):
@@ -253,7 +253,7 @@ class LLMCallTrace(BaseModel):
 
 class DebugTrace(BaseModel):
     """Полная цепочка рассуждений бота для одного запроса."""
-    sd_classification: SDClassificationTrace
+    sd_classification: Optional[SDClassificationTrace] = None
     chunks_retrieved: List[ChunkTraceItem]
     chunks_after_filter: List[ChunkTraceItem] = Field(default_factory=list)
     llm_calls: List[LLMCallTrace]

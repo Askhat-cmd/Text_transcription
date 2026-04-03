@@ -57,4 +57,5 @@ def test_pipeline_without_level_adapter_accepts_legacy_user_level(monkeypatch) -
     assert response.status_code == 200
     body = response.json()
     assert body["status"] == "success"
-    assert body["metadata"]["user_level_adapter_applied"] is False
+    assert "user_level_adapter_applied" not in body["metadata"]
+    assert "user_level" not in body["metadata"]

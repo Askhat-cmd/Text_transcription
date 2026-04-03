@@ -1,30 +1,50 @@
 ﻿# Bot Psychologist
 
-**Супер-Умный Бот-Психолог** — AI-ассистент на базе данных `voice_bot_pipeline`.
-## Neo MindBot v10.1 (current runtime status)
+**Bot Psychologist** — AI-бот для честного самоисследования и поддерживающего диалога.
+Основная база знаний: `Bot_data_base` (через HTTP API) с контролируемыми fallback-путями.
 
-- Runtime migration follows `PRD_10.1_Neo_MindBot.md`.
-- Phase progress log: `../TASKLIST_10.1_Neo_MindBot_PROGRESS.md`.
+## Neo MindBot v10.1 (актуальная архитектура)
+
+- Архив PRD: `../АРХИВ_отработано/PRD_10.1_Neo_MindBot.md`.
+- Архив tasklist: `../АРХИВ_отработано/TASKLIST_10.1_Neo_MindBot.md`.
+- Архив прогресса: `../АРХИВ_отработано/TASKLIST_10.1_Neo_MindBot_PROGRESS.md`.
 - Runtime architecture note: `docs/neo_runtime_v101.md`.
 - Release checklist: `docs/release_checklist_v101.md`.
 - E2E smoke pack: `tests/e2e/`.
 
+## Быстрая проверка Neo runtime
+
+Чтобы бот работал по Neo MindBot v10.1, в `bot_psychologist/.env` должны быть включены флаги:
+- `NEO_MINDBOT_ENABLED=true`
+- `LEGACY_PIPELINE_ENABLED=false`
+- `DISABLE_SD_RUNTIME=true`
+- `DISABLE_USER_LEVEL_ADAPTER=true`
+- `USE_NEW_DIAGNOSTICS_V1=true`
+- `USE_DETERMINISTIC_ROUTE_RESOLVER=true`
+- `USE_PROMPT_STACK_V2=true`
+- `USE_OUTPUT_VALIDATION=true`
+- `INFORMATIONAL_BRANCH_ENABLED=true`
+
+Признаки Neo в debug trace (UI dev-key / `debug=true`):
+- `resolved_route` присутствует
+- `route_resolution_count=1`
+- `prompt_stack_v2_enabled=true`
+- `output_validation_enabled=true`
+
 ## Описание
 
-Специализированный AI-бот-психолог, который:
-- Работает поверх данных `Bot_data_base` (API/Chroma/JSON-export), с fallback на legacy JSON
-- Использует все слои структуры: блоки, граф-сущности, семантические связи
-- Отвечает на вопросы, опираясь на материалы из `voice_bot_pipeline` (таймкоды в ответе не требуются)
-- Адаптирует ответы по уровню пользователя (beginner/intermediate/advanced)
-- Классифицирует состояние пользователя (10 состояний)
-- Строит персональные пути трансформации (графовый слой опционален, `ENABLE_KNOWLEDGE_GRAPH`)
-- Поддерживает semantic memory: поиск релевантных прошлых обменов по смыслу
-- Генерирует краткое summary диалога и добавляет в контекст
-- Адаптивно формирует контекст (short-term + semantic + summary по длине диалога)
+В текущем runtime (Neo MindBot v10.1) бот:
+- Делает лёгкую диагностику (Diagnostics v1) и выбирает один детерминированный маршрут на ход (RouteResolver).
+- Достаёт контекст из `Bot_data_base` без SD/level-гейтинга; при сбоях работает в degraded mode.
+- Собирает единый системный промпт через Prompt Stack v2 и применяет Output Validation (валидация отделена от генерации).
+- Подбирает практику детерминированно (Practice Engine v1) только для релевантных маршрутов.
+- Поддерживает Memory v1.1: short-term + semantic + summary с fallback chain и schema validation.
+- Пишет расширенный debug trace (включая schema validation) и поддерживает rollback при ошибочных admin overrides.
 
-## SD Integration (PRD v3.0)
+## Legacy: SD Integration (не используется в Neo runtime)
 
-В проект добавлена SD-интеграция (Спиральная Динамика Клэра Грейвза) в связке с `voice_bot_pipeline`.
+Секция ниже описывает legacy-слой SD, который был добавлен ранее.
+В Neo MindBot v10.1 этот слой не должен участвовать в live runtime (см. feature flags в `bot_psychologist/.env.example`).
 
 Что реализовано:
 - SD-классификатор пользователя: `bot_agent/sd_classifier.py`
@@ -365,7 +385,7 @@ Token budget (PRD v2.0.2):
    - fallback: сортировка по score без урезания списка
 5. Confidence cap:
    - итоговый лимит = `TOP_K_BLOCKS` (из runtime/admin config)
-6. LLM получает финальные блоки + `sd_level` в системном промпте + сигналы противоречий/кросс-сессий.
+6. LLM получает финальные блоки + диагностический контекст (Diagnostics v1) + сигналы противоречий/кросс-сессий.
 
 ## Архитектурный обзор
 
@@ -387,6 +407,10 @@ Token budget (PRD v2.0.2):
 ```bash
 cd bot_psychologist
 
+# Рекомендуется отдельная venv внутри подпроекта
+python -m venv .venv
+.\\.venv\\Scripts\\Activate.ps1
+
 # Python зависимости
 pip install -r requirements_bot.txt
 pip install -r api/requirements.txt
@@ -405,11 +429,14 @@ cd ..
 cp .env.example .env
 ```
 
-Заполните обязательные переменные:
+Заполните обязательные переменные (Neo runtime по умолчанию):
 
 ```env
 OPENAI_API_KEY=sk-proj-...
-DATA_ROOT=../voice_bot_pipeline/data
+
+# Основной источник базы знаний (рекомендуется)
+KNOWLEDGE_SOURCE=api
+BOT_DB_URL=http://localhost:8003
 
 # Models
 # PRIMARY_MODEL — основная модель ответа. Для GPT-5 (reasoning) используется Responses API
@@ -430,7 +457,7 @@ ENABLE_SEMANTIC_MEMORY=true
 SEMANTIC_SEARCH_TOP_K=3
 SEMANTIC_MIN_SIMILARITY=0.7
 SEMANTIC_MAX_CHARS=1000
-EMBEDDING_MODEL=paraphrase-multilingual-MiniLM-L12-v2
+EMBEDDING_MODEL=intfloat/multilingual-e5-base
 
 # Voyage Rerank (optional)
 # Чтобы включить rerank: установите `VOYAGE_ENABLED=true` и задайте `VOYAGE_API_KEY`
@@ -455,55 +482,39 @@ AUTO_CLEANUP_ENABLED=true
 WARMUP_ON_START=true
 ENABLE_KNOWLEDGE_GRAPH=false
 ENABLE_STREAMING=true
+
+# Neo MindBot v10.1 feature flags (должны быть включены)
+NEO_MINDBOT_ENABLED=true
+LEGACY_PIPELINE_ENABLED=false
+DISABLE_SD_RUNTIME=true
+DISABLE_USER_LEVEL_ADAPTER=true
+USE_NEW_DIAGNOSTICS_V1=true
+USE_DETERMINISTIC_ROUTE_RESOLVER=true
+USE_PROMPT_STACK_V2=true
+USE_OUTPUT_VALIDATION=true
+INFORMATIONAL_BRANCH_ENABLED=true
 ```
 
-### 3. Проверка данных
+### 3. Проверка базы знаний
 
-Убедитесь, что данные из `voice_bot_pipeline` доступны:
+В режиме `KNOWLEDGE_SOURCE=api` бот читает знания из `Bot_data_base` по HTTP.
+Убедитесь, что сервис `Bot_data_base` запущен на `BOT_DB_URL` и отвечает:
 
 ```bash
-ls ../voice_bot_pipeline/data/sag_final/
+curl http://127.0.0.1:8003/api/registry/
 ```
 
 ### 4. Тестирование
 
 ```bash
-# Phase 1: Базовый QA
-python tests/test_phase1.py
+# Unit/Integration (рекомендуется)
+pytest -q
 
-# Phase 2: SAG-aware QA
-python tests/test_phase2.py
+# Минимальная проверка интеграции с Bot_data_base API
+pytest -q tests/test_db_api_client.py
 
-# Phase 3: Knowledge Graph Powered QA
-python tests/test_phase3.py
-
-# Phase 4: Adaptive QA
-python tests/test_phase4.py
-
-# Semantic Memory
-python tests/test_semantic_memory.py
-
-# SessionManager (SQLite persistence bootstrap)
-python tests/test_session_manager.py
-python tests/test_conversation_memory_persistence.py
-python tests/test_working_state.py
-python tests/test_decision_table.py
-python tests/test_decision_gate.py
-python tests/test_hybrid_query.py
-python tests/test_confidence_scorer.py
-python tests/test_signal_detector.py
-python tests/test_voyage_reranker.py
-python tests/test_prompt_templates.py
-python tests/test_mode_handlers.py
-python tests/test_response_generator.py
-python tests/test_response_formatter.py
-python tests/test_full_dialogue_pipeline.py
-
-# API тесты
-python tests/test_api.py
-
-# Интеграция с Bot_data_base API
-python tests/test_api_integration.py
+# E2E smoke pack (опционально)
+pytest -q tests/e2e
 ```
 
 Очистка старых сессий (ретеншн):
@@ -529,6 +540,15 @@ npm run dev
 ```
 
 Web UI будет доступен по адресу `http://localhost:3000`
+
+## Legacy режим (совместимость)
+
+Если `Bot_data_base` недоступен, можно использовать legacy-источники:
+
+- `KNOWLEDGE_SOURCE=db_json` — заранее экспортированный JSON из `Bot_data_base` (без сервера).
+- `KNOWLEDGE_SOURCE=json` — SAG v2.0 JSON из `voice_bot_pipeline` (исторический режим).
+
+Для legacy-режимов могут понадобиться дополнительные переменные (например `DATA_ROOT`) — см. `bot_psychologist/.env.example`.
 
 ## Структура проекта
 
@@ -601,20 +621,25 @@ bot_psychologist/
 
 ## Связь с voice_bot_pipeline и Bot_data_base
 
-`bot_psychologist` теперь поддерживает **два режима работы с данными**:
+`bot_psychologist` поддерживает несколько источников базы знаний (через `KNOWLEDGE_SOURCE`):
 
 ### 🆕 **Режим API (рекомендуемый)**
 - **Источник данных**: `Bot_data_base` через HTTP API
 - **Конфигурация**: `KNOWLEDGE_SOURCE=api` в `.env`
 - **Преимущества**: 
   - Универсальная база знаний с множеством авторов
-  - Автоматическая SD-разметка всех чанков
+  - SD-метаданные могут присутствовать в блоках, но в Neo runtime не используются для гейтинга
   - Масштабируемость и независимость от `voice_bot_pipeline`
-- **Требования**: Запущенный `Bot_data_base` на порту 8003
+- **Требования**: Запущенный `Bot_data_base` на `BOT_DB_URL` (по умолчанию `http://localhost:8003`)
+
+### 🧾 **Режим Offline (без сервера)**
+- **Источник данных**: экспортированный JSON из `Bot_data_base`
+- **Конфигурация**: `KNOWLEDGE_SOURCE=db_json`
+- **Когда нужно**: если вы не хотите/не можете запускать `Bot_data_base` как сервис, но хотите сохранить доступ к базе знаний
 
 ### 📁 **Режим Legacy (совместимость)**
 - **Источник данных**: `voice_bot_pipeline/data/sag_final/*.for_vector.json`
-- **Конфигурация**: `KNOWLEDGE_SOURCE=json` или `chromadb` в `.env`
+- **Конфигурация**: `KNOWLEDGE_SOURCE=json` в `.env`
 - **Ограничения**: Только данные Сарсекенова Саламата
 
 ### ⚙️ **Настройка режима**
@@ -624,10 +649,11 @@ bot_psychologist/
 KNOWLEDGE_SOURCE=api
 BOT_DB_URL=http://localhost:8003
 
-# Для работы с voice_bot_pipeline (legacy)
+# Для работы с Bot_data_base без сервера (offline export)
+KNOWLEDGE_SOURCE=db_json
+
+# Для работы с voice_bot_pipeline (legacy SAG JSON)
 KNOWLEDGE_SOURCE=json
-# или
-KNOWLEDGE_SOURCE=chromadb
 ```
 
 **Важно**: `bot_psychologist` только читает данные, не изменяет их.
@@ -638,11 +664,14 @@ KNOWLEDGE_SOURCE=chromadb
 
 Полная документация проекта находится в папке [`docs/`](docs/):
 
+- [Neo runtime v10.1](docs/neo_runtime_v101.md) — актуальная карта runtime Neo MindBot
+- [Release checklist v10.1](docs/release_checklist_v101.md) — чек-лист релиза/проверок
 - [Обзор проекта](docs/overview.md) — общее описание проекта
 - [Архитектура](docs/architecture.md) — архитектура Phase 1-6
-- [Поток данных](docs/data_flow.md) — как данные поступают от voice_bot_pipeline
+- [Поток данных](docs/data_flow.md) — как знания поступают в бот (Bot_data_base + legacy)
 - [SAG v2.0](docs/sag_v2.md) — использование SAG v2.0 данных
-- [Knowledge Graph](docs/knowledge_graph.md) — работа с графом знаний
+- [Legacy runtime map](docs/legacy_runtime_map.md) — карта legacy-слоёв/фичей (исторически)
+- [Knowledge Graph](docs/knowledge_graph.md) — legacy: работа с графом знаний (в Neo по умолчанию выключен)
 - [Bot Agent](docs/bot_agent.md) — компоненты бота, состояния, логика
 - [REST API](docs/api.md) — описание API endpoints
 - [Web UI](docs/web_ui.md) — описание Web UI
@@ -655,16 +684,17 @@ KNOWLEDGE_SOURCE=chromadb
 
 - **Python 3.10+**
 - **Node.js 18+** (для Web UI, опционально)
-- **OpenAI API Key** (обязательно)
-- **Данные из voice_bot_pipeline** (SAG v2.0 JSON файлы)
-- **sentence-transformers + torch** (для semantic memory)
+- **LLM API Key** (минимум: `OPENAI_API_KEY` для дефолтного провайдера)
+- **Bot_data_base** (рекомендуется): запущенный HTTP API на `BOT_DB_URL` или экспорт `db_json` (offline)
+- **sentence-transformers + torch** (для semantic memory / embeddings)
 
 ## Проект является частью монорепозитория
 
 Этот проект является частью монорепозитория `Text_transcription`, который содержит:
 
-1. **voice_bot_pipeline** — пайплайн подготовки данных из YouTube-лекций
-2. **bot_psychologist** — AI-бот, использующий эти данные
+1. **Bot_data_base** — универсальная база знаний (книги/YouTube) + ChromaDB + UI загрузки
+2. **bot_psychologist** — AI-бот (Neo MindBot runtime) с Admin UI и расширенным trace
+3. **voice_bot_pipeline** — legacy-пайплайн подготовки данных (исторически)
 
 См. корневой [README.md](../README.md) для общей информации о монорепозитории.
 

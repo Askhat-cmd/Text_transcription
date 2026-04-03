@@ -46,6 +46,33 @@
 - prompt richness + anti-sparse: `tests/unit/test_prompt_style_policy_inform_rich.py`, `tests/unit/test_output_validator_anti_sparse_rules.py`, `tests/integration/test_sparse_output_triggers_regeneration_hint.py`;
 - runtime richness E2E: `tests/e2e/test_informational_richness_runtime.py`, `tests/e2e/test_mixed_query_richness_runtime.py`, `tests/e2e/test_first_turn_richness_runtime.py`, `tests/e2e/test_practice_start_richness_runtime.py`, `tests/e2e/test_richness_does_not_break_safety_runtime.py`.
 
+## Neo MindBot v10.3.1 (Curious/Inform Decoupling)
+
+Итерация `PRD_10.3.1_Curious_Inform_Decoupling` отделяет любопытство (curious) от informational-ветки:
+- `state=curious` больше не является причиной переключаться в informational;
+- informational оставлен для действительно concept-first вопросов, а exploratory/personal идут по своим маршрутам;
+- логика маршрутов стала более предсказуемой и наблюдаемой через debug trace.
+
+Ключевые тесты v10.3.1:
+- `tests/unit/test_curious_not_auto_informational.py`
+- `tests/unit/test_informational_mode_narrowing.py`
+
+## Neo MindBot v10.4 (Admin Panel Neo Realignment)
+
+Итерация `PRD_10.4_Admin_Panel_Neo_Realignment` выравнивает веб-админку под Neo runtime truth (10.1–10.3.1):
+- primary UI больше не транслирует legacy-модель (SD / decision-gate / layer-stack) как «активную реальность»;
+- tabs/секции админки отражают реальный пайплайн: diagnostics v1, deterministic routing, retrieval, prompts (prompt stack v2), memory (summary/snapshot), runtime flags;
+- исправлено получение промптов и состояние ошибки/ретрая в админке;
+- добавлены безопасные механики export/import/versioning/rollback для admin config;
+- legacy/compatibility секция скрыта по умолчанию, чтобы не путать оператора.
+
+Контрактные/инвентарные тесты v10.4:
+- `tests/contract/test_admin_config_schema_v104.py`
+- `tests/contract/test_prompt_admin_api_matches_prompt_stack_v2.py`
+- `tests/e2e/test_prompt_fetch_and_retry_flow.py`
+- `tests/e2e/test_runtime_status_and_flags_visible_in_admin.py`
+- `tests/ui/test_primary_admin_tabs_match_neo_runtime_ia.py`
+
 ## Быстрая проверка Neo runtime
 
 Чтобы бот работал по Neo MindBot v10.1, в `bot_psychologist/.env` должны быть включены флаги:

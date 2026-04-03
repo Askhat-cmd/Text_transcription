@@ -29,39 +29,7 @@ from bot_agent import (
 from bot_agent.config import config
 from bot_agent.data_loader import data_loader
 from bot_agent.conversation_memory import get_conversation_memory
-from bot_agent.decision import (
-    DecisionGate,
-    build_mode_directive,
-    detect_routing_signals,
-    resolve_user_stage,
-)
-from bot_agent.response import ResponseFormatter, ResponseGenerator
-from bot_agent.retrieval import HybridQueryBuilder, VoyageReranker
 from bot_agent.storage import SessionManager
-from bot_agent.answer_adaptive import (
-    _classify_parallel,
-    _fallback_state_analysis,
-    _fallback_sd_result,
-    _should_use_fast_path,
-    _build_fast_path_block,
-    _build_state_context,
-    _build_working_state,
-    _get_memory_trace_metrics,
-    _build_llm_prompts,
-    _build_llm_prompt_previews,
-    _build_llm_call_trace,
-    _build_memory_context_snapshot,
-    _build_config_snapshot,
-    _compute_anomalies,
-    _estimate_cost,
-    _store_blob,
-    _build_state_trajectory,
-    _build_chunk_trace_lists_after_rerank,
-    _detect_fast_path_reason,
-    _truncate_preview,
-)
-from bot_agent.state_classifier import state_classifier
-from bot_agent.sd_classifier import sd_classifier
 from bot_agent.feature_flags import feature_flags
 
 from .models import (
@@ -521,6 +489,9 @@ async def ask_adaptive_question(
         response_metadata = dict(result.get("metadata", {}))
         response_metadata["user_id"] = request.user_id
         response_metadata["session_id"] = session_key
+        if feature_flags.enabled("DISABLE_SD_RUNTIME"):
+            for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
+                response_metadata.pop(key, None)
 
         trace = None
         if request.debug:
@@ -532,6 +503,7 @@ async def ask_adaptive_question(
                 sd_raw = raw_dict.get("sd_classification") or {}
                 if not isinstance(sd_raw, dict):
                     sd_raw = {}
+                sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
                 allowed_levels = (
                     sd_raw.get("allowed_levels")
                     or sd_raw.get("allowed_blocks")
@@ -541,7 +513,9 @@ async def ask_adaptive_question(
                 if not isinstance(allowed_levels, list):
                     allowed_levels = []
 
-                default_sd_level = str(sd_raw.get("primary") or metadata.get("sd_level") or "UNKNOWN")
+                default_sd_level = "NONE" if sd_runtime_disabled else str(
+                    sd_raw.get("primary") or metadata.get("sd_level") or "UNKNOWN"
+                )
 
                 chunks_retrieved_raw = []
                 chunks_after_raw = []
@@ -596,8 +570,8 @@ async def ask_adaptive_question(
                                     "block_id": src.get("block_id", ""),
                                     "title": src.get("title", ""),
                                     "score": 0.0,
-                                    "sd_level": metadata.get("sd_level", default_sd_level),
-                                    "sd_secondary": metadata.get("sd_secondary", ""),
+                                    "sd_level": default_sd_level,
+                                    "sd_secondary": "",
                                     "emotional_tone": "",
                                     "passed_filter": True,
                                     "preview": "",
@@ -618,12 +592,12 @@ async def ask_adaptive_question(
 
                 trace_payload = {
                     "sd_classification": SDClassificationTrace(
-                        method=str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
+                        method="disabled" if sd_runtime_disabled else str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
                         primary=default_sd_level,
-                        secondary=sd_raw.get("secondary", metadata.get("sd_secondary")),
-                        confidence=float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
-                        indicator=str(sd_raw.get("indicator", "metadata_fallback")),
-                        allowed_levels=[str(level) for level in allowed_levels],
+                        secondary=None if sd_runtime_disabled else sd_raw.get("secondary", metadata.get("sd_secondary")),
+                        confidence=0.0 if sd_runtime_disabled else float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
+                        indicator="disabled_by_flag" if sd_runtime_disabled else str(sd_raw.get("indicator", "metadata_fallback")),
+                        allowed_levels=[] if sd_runtime_disabled else [str(level) for level in allowed_levels],
                     ),
                     "chunks_retrieved": chunks_retrieved,
                     "chunks_after_filter": chunks_after_filter,
@@ -648,7 +622,7 @@ async def ask_adaptive_question(
                         else None
                     ),
                     "mode_reason": metadata.get("mode_reason"),
-                    "sd_level": metadata.get("sd_level"),
+                    "sd_level": None if sd_runtime_disabled else metadata.get("sd_level"),
                     "user_state": state_analysis.primary_state,
                     "recommended_mode": metadata.get("recommended_mode"),
                     "confidence_score": metadata.get("confidence_score"),
@@ -661,14 +635,16 @@ async def ask_adaptive_question(
                     "summary_last_turn": metadata.get("summary_last_turn"),
                     "summary_used": metadata.get("summary_used"),
                     "semantic_hits": metadata.get("semantic_hits"),
-                    "sd_detail": raw_dict.get("sd_detail") or {
-                        "method": sd_raw.get("method", metadata.get("sd_method", "fallback")),
-                        "primary": default_sd_level,
-                        "secondary": sd_raw.get("secondary", metadata.get("sd_secondary")),
-                        "confidence": float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
-                        "indicator": sd_raw.get("indicator", "metadata_fallback"),
-                        "allowed_levels": [str(level) for level in allowed_levels],
-                    },
+                    "sd_detail": None if sd_runtime_disabled else (
+                        raw_dict.get("sd_detail") or {
+                            "method": sd_raw.get("method", metadata.get("sd_method", "fallback")),
+                            "primary": default_sd_level,
+                            "secondary": sd_raw.get("secondary", metadata.get("sd_secondary")),
+                            "confidence": float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
+                            "indicator": sd_raw.get("indicator", "metadata_fallback"),
+                            "allowed_levels": [str(level) for level in allowed_levels],
+                        }
+                    ),
                 }
 
                 # Extensions from debug trace (v2.0.6)
@@ -707,6 +683,8 @@ async def ask_adaptive_question(
                     "informational_mode",
                     "applied_mode_prompt",
                 ]:
+                    if sd_runtime_disabled and key in {"sd_detail", "sd_level"}:
+                        continue
                     if key in raw_dict and raw_dict.get(key) is not None:
                         trace_payload[key] = raw_dict.get(key)
 
@@ -786,7 +764,6 @@ async def ask_adaptive_question_stream(
     api_key: str = Depends(verify_api_key),
     _data_loader=Depends(get_data_loader),
     _graph_client=Depends(get_graph_client),
-    retriever_dep=Depends(get_retriever),
     store: SessionStore = Depends(get_session_store),
 ):
     if not config.ENABLE_STREAMING:
@@ -817,701 +794,55 @@ async def ask_adaptive_question_stream(
             logger.warning(f"⚠️ Failed to pre-create session {session_key}: {exc}")
 
     async def event_stream():
-        start_ts = time.perf_counter()
-        pipeline_stages = []
+        sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
 
-        # Для debug режима используем не-streaming вызов (чтобы получить токены без удвоения запроса)
-        if request.debug:
-            logger.info("[ADAPTIVE-STREAM] Debug mode detected, using non-streaming call for accurate tokens")
+        try:
             result = answer_question_adaptive(
                 request.query,
                 user_id=session_key,
                 user_level=request.user_level.value,
                 include_path_recommendation=request.include_path,
                 include_feedback_prompt=request.include_feedback_prompt,
-                debug=True,
+                debug=request.debug,
                 session_store=store,
             )
-            # Стримим ответ по одному токену (эмуляция streaming)
-            answer = result.get("answer", "")
-            # Отправляем токены по одному (разбиваем по словам для имитации streaming)
-            words = answer.split(" ")
+
+            answer = str(result.get("answer", "") or "")
+            words = answer.split(" ") if answer else []
             for i, word in enumerate(words):
                 token = word + (" " if i < len(words) - 1 else "")
-                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-                await asyncio.sleep(0.02)  # Небольшая задержка для имитации streaming
-            
-            latency_ms = int(result.get("processing_time_seconds", 0) * 1000)
-            trace = result.get("debug_trace") or result.get("debug")
-            
+                if token:
+                    yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
+                    await asyncio.sleep(0.01)
+
+            latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
+            trace_raw = result.get("debug_trace") or result.get("debug")
+            trace = trace_raw if isinstance(trace_raw, dict) else None
+            if trace is not None and sd_runtime_disabled:
+                trace = dict(trace)
+                trace.pop("sd_classification", None)
+                trace.pop("sd_detail", None)
+                trace.pop("sd_level", None)
+
             done_payload = {
                 "done": True,
                 "answer": answer,
-                "mode": result.get("metadata", {}).get("recommended_mode"),
-                "sd_level": result.get("state_analysis", {}).get("primary_state"),
+                "mode": (result.get("metadata") or {}).get("recommended_mode"),
                 "latency_ms": latency_ms,
-                "trace": trace if isinstance(trace, dict) else None,
             }
-            if isinstance(trace, dict):
+            if not sd_runtime_disabled:
+                sd_level = (result.get("metadata") or {}).get("sd_level")
+                if sd_level is not None:
+                    done_payload["sd_level"] = sd_level
+            if trace is not None:
+                done_payload["trace"] = trace
                 try:
                     store.append_trace(session_key, trace)
                 except Exception as store_exc:
-                    logger.warning("[STREAM] Failed to store debug trace (non-stream branch): %s", store_exc)
-            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
-            return
-        try:
-            memory = get_conversation_memory(session_key)
-            conversation_context = memory.get_adaptive_context_text(request.query)
-            conversation_history = [
-                {"role": "user", "content": turn.user_input}
-                for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
-            ]
-            conversation_history_for_sd = [
-                {"role": "user", "content": turn.user_input}
-                for turn in memory.get_last_turns(10)
-            ]
-
-            if request.debug:
-                stage_start = time.perf_counter()
-                try:
-                    state_analysis = await state_classifier.classify(
-                        request.query,
-                        conversation_history=conversation_history,
-                    )
-                except Exception as exc:
-                    logger.warning("[STREAM] StateClassifier failed: %s", exc)
-                    state_analysis = _fallback_state_analysis()
-                pipeline_stages.append(
-                    {
-                        "name": "state_classifier",
-                        "label": "Классификатор состояния",
-                        "duration_ms": int((time.perf_counter() - stage_start) * 1000),
-                        "skipped": False,
-                    }
-                )
-
-                stage_start = time.perf_counter()
-                if feature_flags.enabled("DISABLE_SD_RUNTIME"):
-                    sd_result = _fallback_sd_result("disabled_by_flag")
-                elif sd_classifier is None:
-                    sd_result = _fallback_sd_result("sd_classifier_unavailable")
-                else:
-                    try:
-                        sd_result = await sd_classifier.classify_user(
-                            message=request.query,
-                            conversation_history=conversation_history_for_sd,
-                            user_sd_profile=memory.get_user_sd_profile(),
-                        )
-                    except Exception as exc:
-                        logger.warning("[STREAM] SDClassifier failed: %s", exc)
-                        sd_result = _fallback_sd_result("fallback_on_error")
-                pipeline_stages.append(
-                    {
-                        "name": "sd_classifier",
-                        "label": "SD классификатор",
-                        "duration_ms": int((time.perf_counter() - stage_start) * 1000),
-                        "skipped": bool(feature_flags.enabled("DISABLE_SD_RUNTIME") or sd_classifier is None),
-                    }
-                )
-            else:
-                state_analysis, sd_result = await _classify_parallel(
-                    request.query,
-                    conversation_history,
-                    conversation_history_for_sd,
-                    memory.get_user_sd_profile(),
-                )
-            user_stage = resolve_user_stage(memory, state_analysis)
-
-            # Phase 3: user level adapter removed from active runtime.
-            level_adapter = None
-            decision_gate = DecisionGate()
-
-            pre_routing_signals = detect_routing_signals(request.query, [], state_analysis)
-            pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
-
-            if _should_use_fast_path(request.query, pre_routing_result):
-                mode_directive = build_mode_directive(
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                    reason=pre_routing_result.decision.reason,
-                    forbid=pre_routing_result.decision.forbid,
-                )
-                if request.debug:
-                    pipeline_stages.extend(
-                        [
-                            {"name": "retrieval", "label": "Retrieval", "duration_ms": 0, "skipped": True},
-                            {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True},
-                        ]
-                    )
-                fast_block = _build_fast_path_block(
-                    query=request.query,
-                    conversation_context=conversation_context,
-                    state_analysis=state_analysis,
-                )
-                state_context = _build_state_context(
-                    state_analysis,
-                    mode_directive.prompt,
-                    sd_level=sd_result.primary,
-                )
-                response_generator = ResponseGenerator()
-                llm_start_ts = time.perf_counter()
-                full_answer = ""
-                async for token in response_generator.generate_stream(
-                    request.query,
-                    [fast_block],
-                    conversation_context=conversation_context,
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                    forbid=pre_routing_result.decision.forbid,
-                    user_level_adapter=level_adapter,
-                    additional_system_context=state_context,
-                    sd_level=sd_result.primary,
-                    model=config.LLM_MODEL,
-                    temperature=config.LLM_TEMPERATURE,
-                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
-                ):
-                    full_answer += token
-                    yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-
-                llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
-                if request.debug:
-                    pipeline_stages.append(
-                        {
-                            "name": "llm",
-                            "label": "LLM",
-                            "duration_ms": llm_duration_ms,
-                            "skipped": False,
-                        }
-                    )
-                formatter = ResponseFormatter()
-                format_start_ts = time.perf_counter()
-                formatted = formatter.format_answer(
-                    full_answer,
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                )
-                if request.debug:
-                    pipeline_stages.append(
-                        {
-                            "name": "format",
-                            "label": "Форматирование",
-                            "duration_ms": int((time.perf_counter() - format_start_ts) * 1000),
-                            "skipped": False,
-                        }
-                    )
-                if formatted.startswith(full_answer):
-                    extra = formatted[len(full_answer):]
-                    if extra:
-                        full_answer = formatted
-                        yield f"data: {json.dumps({'token': extra}, ensure_ascii=False)}\n\n"
-                else:
-                    full_answer = formatted
-
-                try:
-                    memory.set_working_state(
-                        _build_working_state(
-                            state_analysis=state_analysis,
-                            routing_result=pre_routing_result,
-                            memory=memory,
-                        )
-                    )
-                except Exception as exc:
-                    logger.warning(f"[FAST_PATH] working_state update failed: {exc}")
-
-                memory.add_turn(
-                    user_input=request.query,
-                    bot_response=full_answer,
-                    user_state=state_analysis.primary_state.value,
-                    blocks_used=0,
-                    concepts=[],
-                )
-
-                latency_ms = int((time.perf_counter() - start_ts) * 1000)
-                done_payload = {
-                    "done": True,
-                    "mode": pre_routing_result.mode,
-                    "sd_level": sd_result.primary,
-                    "latency_ms": latency_ms,
-                }
-                if request.debug:
-                    memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                    fast_path_reason = _detect_fast_path_reason(request.query, pre_routing_result)
-
-                    system_preview, user_preview = _build_llm_prompt_previews(
-                        response_generator=response_generator,
-                        query=request.query,
-                        blocks=[fast_block],
-                        conversation_context=conversation_context,
-                        user_level_adapter=level_adapter,
-                        sd_level=sd_result.primary,
-                        mode_prompt=mode_directive.prompt,
-                        additional_system_context=state_context,
-                    )
-                    full_system_prompt, full_user_prompt = _build_llm_prompts(
-                        response_generator=response_generator,
-                        query=request.query,
-                        blocks=[fast_block],
-                        conversation_context=conversation_context,
-                        user_level_adapter=level_adapter,
-                        sd_level=sd_result.primary,
-                        mode_prompt=mode_directive.prompt,
-                        additional_system_context=state_context,
-                    )
-
-                    system_blob_id = _store_blob(store, session_key, full_system_prompt)
-                    user_blob_id = _store_blob(store, session_key, full_user_prompt)
-
-                    llm_calls = [
-                        _build_llm_call_trace(
-                            llm_result={"answer": full_answer},
-                            step="fast_path",
-                            system_prompt_preview=system_preview,
-                            user_prompt_preview=user_preview,
-                            fallback_error=None,
-                            duration_ms=llm_duration_ms,
-                            system_prompt_blob_id=system_blob_id,
-                            user_prompt_blob_id=user_blob_id,
-                        )
-                    ]
-
-                    context_written = _build_memory_context_snapshot(memory)
-                    memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
-
-                    debug_trace = {
-                        "sd_classification": {
-                            "method": sd_result.method,
-                            "primary": sd_result.primary,
-                            "secondary": sd_result.secondary,
-                            "confidence": sd_result.confidence,
-                            "indicator": sd_result.indicator,
-                            "allowed_levels": sd_result.allowed_blocks,
-                        },
-                        "chunks_retrieved": [],
-                        "chunks_after_filter": [],
-                        "llm_calls": llm_calls,
-                        "context_written_to_memory": context_written,
-                        "context_written": context_written,
-                        "total_duration_ms": latency_ms,
-                        "primary_model": config.LLM_MODEL,
-                        "classifier_model": config.CLASSIFIER_MODEL,
-                        "embedding_model": config.EMBEDDING_MODEL,
-                        "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
-                        "reranker_enabled": bool(config.VOYAGE_ENABLED),
-                        "tokens_prompt": None,
-                        "tokens_completion": None,
-                        "tokens_total": None,
-                        "session_tokens_total": memory.metadata.get("session_tokens_total"),
-                        "session_cost_usd": memory.metadata.get("session_cost_usd"),
-                        "session_turns": memory.metadata.get("session_turns"),
-                        "fast_path": True,
-                        "fast_path_reason": fast_path_reason,
-                        "decision_rule_id": str(pre_routing_result.decision.rule_id),
-                        "mode_reason": mode_directive.reason,
-                        "block_cap": 0,
-                        "blocks_initial": 0,
-                        "blocks_after_cap": 0,
-                        "hybrid_query_preview": _truncate_preview(request.query, 400),
-                        "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
-                        "memory_turns": len(memory.turns),
-                        "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
-                        "summary_text": memory.summary or None,
-                        "summary_length": len(memory.summary) if memory.summary else 0,
-                        "summary_last_turn": memory.summary_updated_at,
-                        "summary_used": memory_metrics.get("summary_used"),
-                        "semantic_hits": memory_metrics.get("semantic_hits"),
-                        "semantic_hits_detail": (
-                            list(memory.semantic_memory.last_hits_detail or [])
-                            if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
-                            else []
-                        ),
-                        "state_secondary": [s.value for s in state_analysis.secondary_states],
-                        "state_trajectory": _build_state_trajectory(memory),
-                        "pipeline_stages": pipeline_stages,
-                        "anomalies": [],
-                        "system_prompt_blob_id": system_blob_id,
-                        "user_prompt_blob_id": user_blob_id,
-                        "memory_snapshot_blob_id": memory_snapshot_blob_id,
-                        "config_snapshot": _build_config_snapshot(config, request.user_level.value),
-                        "estimated_cost_usd": _estimate_cost(llm_calls, str(config.LLM_MODEL)),
-                        "pipeline_error": None,
-                        "session_id": session_key,
-                        "turn_number": len(memory.turns),
-                        "sd_level": sd_result.primary,
-                        "user_state": state_analysis.primary_state.value,
-                        "recommended_mode": pre_routing_result.mode,
-                        "confidence_score": pre_routing_result.confidence_score,
-                        "confidence_level": pre_routing_result.confidence_level,
-                    }
-
-                    debug_trace["anomalies"] = _compute_anomalies(debug_trace)
-                    done_payload["trace"] = debug_trace
-                    try:
-                        store.append_trace(session_key, debug_trace)
-                    except Exception as store_exc:
-                        logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
-
-                yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
-                return
-
-            query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
-            hybrid_query = query_builder.build_query(
-                current_question=request.query,
-                conversation_summary=memory.summary or "",
-                working_state=memory.working_state,
-                short_term_context=conversation_context,
-            )
-
-            retrieval_start_ts = time.perf_counter()
-            raw_retrieved_blocks = retriever_dep.retrieve(hybrid_query, top_k=None)
-            if request.debug:
-                pipeline_stages.append(
-                    {
-                        "name": "retrieval",
-                        "label": "Retrieval",
-                        "duration_ms": int((time.perf_counter() - retrieval_start_ts) * 1000),
-                        "skipped": False,
-                    }
-                )
-            retrieved_blocks = list(raw_retrieved_blocks)
-
-            reranker = VoyageReranker(
-                model=config.VOYAGE_MODEL,
-                enabled=config.VOYAGE_ENABLED,
-            )
-            rerank_k = min(len(retrieved_blocks), max(1, min(config.TOP_K_BLOCKS, config.VOYAGE_TOP_K)))
-            if rerank_k > 0:
-                rerank_start_ts = time.perf_counter()
-                reranked = reranker.rerank_pairs(request.query, retrieved_blocks, top_k=rerank_k)
-                if request.debug:
-                    pipeline_stages.append(
-                        {
-                            "name": "rerank",
-                            "label": "Rerank",
-                            "duration_ms": int((time.perf_counter() - rerank_start_ts) * 1000),
-                            "skipped": False,
-                        }
-                    )
-                if reranked:
-                    retrieved_blocks = reranked
-            elif request.debug:
-                pipeline_stages.append(
-                    {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
-                )
-            reranked_blocks_for_trace = list(retrieved_blocks)
-
-            routing_signals = detect_routing_signals(request.query, retrieved_blocks, state_analysis)
-            routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
-            block_cap = decision_gate.scorer.suggest_block_cap(
-                len(retrieved_blocks),
-                routing_result.confidence_level,
-            )
-            retrieved_blocks = retrieved_blocks[:block_cap]
-
-            if not retrieved_blocks:
-                fallback_text = (
-                    "К сожалению, релевантный материал не найден. "
-                    "Попробуйте переформулировать вопрос."
-                )
-                yield f"data: {json.dumps({'token': fallback_text}, ensure_ascii=False)}\n\n"
-                memory.add_turn(
-                    user_input=request.query,
-                    bot_response=fallback_text,
-                    user_state=state_analysis.primary_state.value,
-                    blocks_used=0,
-                    concepts=[],
-                )
-                if request.debug:
-                    pipeline_stages.append(
-                        {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
-                    )
-                    pipeline_stages.append(
-                        {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": True}
-                    )
-                latency_ms = int((time.perf_counter() - start_ts) * 1000)
-                done_payload = {
-                    "done": True,
-                    "mode": "CLARIFICATION",
-                    "sd_level": sd_result.primary,
-                    "latency_ms": latency_ms,
-                }
-                if request.debug:
-                    memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                    chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists_after_rerank(
-                        initial_retrieved=raw_retrieved_blocks,
-                        reranked=reranked_blocks_for_trace,
-                    )
-                    context_written = _build_memory_context_snapshot(memory)
-                    memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
-                    debug_trace = {
-                        "sd_classification": {
-                            "method": sd_result.method,
-                            "primary": sd_result.primary,
-                            "secondary": sd_result.secondary,
-                            "confidence": sd_result.confidence,
-                            "indicator": sd_result.indicator,
-                            "allowed_levels": sd_result.allowed_blocks,
-                        },
-                        "chunks_retrieved": chunks_retrieved,
-                        "chunks_after_filter": chunks_after_filter,
-                        "llm_calls": [],
-                        "context_written_to_memory": context_written,
-                        "context_written": context_written,
-                        "total_duration_ms": latency_ms,
-                        "primary_model": config.LLM_MODEL,
-                        "classifier_model": config.CLASSIFIER_MODEL,
-                        "embedding_model": config.EMBEDDING_MODEL,
-                        "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
-                        "reranker_enabled": bool(config.VOYAGE_ENABLED),
-                        "fast_path": False,
-                        "decision_rule_id": str(routing_result.decision.rule_id),
-                        "mode_reason": routing_result.decision.reason,
-                        "block_cap": block_cap,
-                        "blocks_initial": len(raw_retrieved_blocks),
-                        "blocks_after_cap": 0,
-                        "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
-                        "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
-                        "memory_turns": len(memory.turns),
-                        "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
-                        "summary_text": memory.summary or None,
-                        "summary_length": len(memory.summary) if memory.summary else 0,
-                        "summary_last_turn": memory.summary_updated_at,
-                        "summary_used": memory_metrics.get("summary_used"),
-                        "semantic_hits": memory_metrics.get("semantic_hits"),
-                        "semantic_hits_detail": (
-                            list(memory.semantic_memory.last_hits_detail or [])
-                            if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
-                            else []
-                        ),
-                        "state_secondary": [s.value for s in state_analysis.secondary_states],
-                        "state_trajectory": _build_state_trajectory(memory),
-                        "pipeline_stages": pipeline_stages,
-                        "anomalies": [],
-                        "memory_snapshot_blob_id": memory_snapshot_blob_id,
-                        "config_snapshot": _build_config_snapshot(config, request.user_level.value),
-                        "estimated_cost_usd": 0,
-                        "pipeline_error": None,
-                        "session_id": session_key,
-                        "turn_number": len(memory.turns),
-                        "sd_level": sd_result.primary,
-                        "user_state": state_analysis.primary_state.value,
-                        "recommended_mode": routing_result.mode,
-                        "confidence_score": routing_result.confidence_score,
-                        "confidence_level": routing_result.confidence_level,
-                    }
-                    debug_trace["anomalies"] = _compute_anomalies(debug_trace)
-                    done_payload["trace"] = debug_trace
-                    try:
-                        store.append_trace(session_key, debug_trace)
-                    except Exception as store_exc:
-                        logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
-                yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
-                return
-
-            blocks = [block for block, _ in retrieved_blocks]
-            adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
-            if not adapted_blocks:
-                adapted_blocks = blocks[:3]
-
-            mode_directive = build_mode_directive(
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-                reason=routing_result.decision.reason,
-                forbid=routing_result.decision.forbid,
-            )
-            state_context = _build_state_context(
-                state_analysis,
-                mode_directive.prompt,
-                sd_level=sd_result.primary,
-            )
-
-            response_generator = ResponseGenerator()
-            llm_start_ts = time.perf_counter()
-            full_answer = ""
-            async for token in response_generator.generate_stream(
-                request.query,
-                adapted_blocks,
-                conversation_context=conversation_context,
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-                forbid=routing_result.decision.forbid,
-                user_level_adapter=level_adapter,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                model=config.LLM_MODEL,
-                temperature=config.LLM_TEMPERATURE,
-                max_tokens=config.get_mode_max_tokens(routing_result.mode),
-            ):
-                full_answer += token
-                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-
-            llm_duration_ms = int((time.perf_counter() - llm_start_ts) * 1000)
-            if request.debug:
-                pipeline_stages.append(
-                    {
-                        "name": "llm",
-                        "label": "LLM",
-                        "duration_ms": llm_duration_ms,
-                        "skipped": False,
-                    }
-                )
-            formatter = ResponseFormatter()
-            format_start_ts = time.perf_counter()
-            formatted = formatter.format_answer(
-                full_answer,
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-            )
-            if request.debug:
-                pipeline_stages.append(
-                    {
-                        "name": "format",
-                        "label": "Форматирование",
-                        "duration_ms": int((time.perf_counter() - format_start_ts) * 1000),
-                        "skipped": False,
-                    }
-                )
-            if formatted.startswith(full_answer):
-                extra = formatted[len(full_answer):]
-                if extra:
-                    full_answer = formatted
-                    yield f"data: {json.dumps({'token': extra}, ensure_ascii=False)}\n\n"
-            else:
-                full_answer = formatted
-
-            try:
-                memory.set_working_state(
-                    _build_working_state(
-                        state_analysis=state_analysis,
-                        routing_result=routing_result,
-                        memory=memory,
-                    )
-                )
-            except Exception as exc:
-                logger.warning(f"[ADAPTIVE-STREAM] working_state update failed: {exc}")
-
-            memory.add_turn(
-                user_input=request.query,
-                bot_response=full_answer,
-                user_state=state_analysis.primary_state.value,
-                blocks_used=len(adapted_blocks),
-                concepts=[],
-            )
-
-            latency_ms = int((time.perf_counter() - start_ts) * 1000)
-            done_payload = {
-                "done": True,
-                "mode": routing_result.mode,
-                "sd_level": sd_result.primary,
-                "latency_ms": latency_ms,
-            }
-            if request.debug:
-                memory_metrics = _get_memory_trace_metrics(memory, len(memory.turns))
-                chunks_retrieved, chunks_after_filter = _build_chunk_trace_lists_after_rerank(
-                    initial_retrieved=raw_retrieved_blocks,
-                    reranked=reranked_blocks_for_trace,
-                )
-                system_preview, user_preview = _build_llm_prompt_previews(
-                    response_generator=response_generator,
-                    query=request.query,
-                    blocks=adapted_blocks,
-                    conversation_context=conversation_context,
-                    user_level_adapter=level_adapter,
-                    sd_level=sd_result.primary,
-                    mode_prompt=mode_directive.prompt,
-                    additional_system_context=state_context,
-                )
-                full_system_prompt, full_user_prompt = _build_llm_prompts(
-                    response_generator=response_generator,
-                    query=request.query,
-                    blocks=adapted_blocks,
-                    conversation_context=conversation_context,
-                    user_level_adapter=level_adapter,
-                    sd_level=sd_result.primary,
-                    mode_prompt=mode_directive.prompt,
-                    additional_system_context=state_context,
-                )
-                system_blob_id = _store_blob(store, session_key, full_system_prompt)
-                user_blob_id = _store_blob(store, session_key, full_user_prompt)
-                llm_calls = [
-                    _build_llm_call_trace(
-                        llm_result={"answer": full_answer},
-                        step="main_answer",
-                        system_prompt_preview=system_preview,
-                        user_prompt_preview=user_preview,
-                        fallback_error=None,
-                        duration_ms=llm_duration_ms,
-                        system_prompt_blob_id=system_blob_id,
-                        user_prompt_blob_id=user_blob_id,
-                    )
-                ]
-                context_written = _build_memory_context_snapshot(memory)
-                memory_snapshot_blob_id = _store_blob(store, session_key, context_written)
-                debug_trace = {
-                    "sd_classification": {
-                        "method": sd_result.method,
-                        "primary": sd_result.primary,
-                        "secondary": sd_result.secondary,
-                        "confidence": sd_result.confidence,
-                        "indicator": sd_result.indicator,
-                        "allowed_levels": sd_result.allowed_blocks,
-                    },
-                    "chunks_retrieved": chunks_retrieved,
-                    "chunks_after_filter": chunks_after_filter,
-                    "llm_calls": llm_calls,
-                    "context_written_to_memory": context_written,
-                    "context_written": context_written,
-                    "total_duration_ms": latency_ms,
-                    "primary_model": config.LLM_MODEL,
-                    "classifier_model": config.CLASSIFIER_MODEL,
-                    "embedding_model": config.EMBEDDING_MODEL,
-                    "reranker_model": config.VOYAGE_MODEL if config.VOYAGE_ENABLED else None,
-                    "reranker_enabled": bool(config.VOYAGE_ENABLED),
-                    "fast_path": False,
-                    "decision_rule_id": str(routing_result.decision.rule_id),
-                    "mode_reason": routing_result.decision.reason,
-                    "block_cap": block_cap,
-                    "blocks_initial": len(raw_retrieved_blocks),
-                    "blocks_after_cap": len(retrieved_blocks),
-                    "hybrid_query_preview": _truncate_preview(hybrid_query, 400),
-                    "sd_detail": sd_result.to_detail() if hasattr(sd_result, "to_detail") else None,
-                    "memory_turns": len(memory.turns),
-                    "memory_turns_content": memory.get_turns_preview() if hasattr(memory, "get_turns_preview") else [],
-                    "summary_text": memory.summary or None,
-                    "summary_length": len(memory.summary) if memory.summary else 0,
-                    "summary_last_turn": memory.summary_updated_at,
-                    "summary_used": memory_metrics.get("summary_used"),
-                    "semantic_hits": memory_metrics.get("semantic_hits"),
-                    "semantic_hits_detail": (
-                        list(memory.semantic_memory.last_hits_detail or [])
-                        if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail")
-                        else []
-                    ),
-                    "state_secondary": [s.value for s in state_analysis.secondary_states],
-                    "state_trajectory": _build_state_trajectory(memory),
-                    "pipeline_stages": pipeline_stages,
-                    "anomalies": [],
-                    "system_prompt_blob_id": system_blob_id,
-                    "user_prompt_blob_id": user_blob_id,
-                    "memory_snapshot_blob_id": memory_snapshot_blob_id,
-                    "config_snapshot": _build_config_snapshot(config, request.user_level.value),
-                    "estimated_cost_usd": _estimate_cost(llm_calls, str(config.LLM_MODEL)),
-                    "pipeline_error": None,
-                    "session_id": session_key,
-                    "turn_number": len(memory.turns),
-                    "sd_level": sd_result.primary,
-                    "user_state": state_analysis.primary_state.value,
-                    "recommended_mode": routing_result.mode,
-                    "confidence_score": routing_result.confidence_score,
-                    "confidence_level": routing_result.confidence_level,
-                }
-                debug_trace["anomalies"] = _compute_anomalies(debug_trace)
-                done_payload["trace"] = debug_trace
-                try:
-                    store.append_trace(session_key, debug_trace)
-                except Exception as store_exc:
-                    logger.warning("[STREAM] Failed to store debug trace: %s", store_exc)
+                    logger.warning("[STREAM] Failed to store trace: %s", store_exc)
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
+
         except Exception as exc:
             logger.error("[ADAPTIVE-STREAM] failed: %s", exc, exc_info=True)
             yield f"data: {json.dumps({'error': str(exc)}, ensure_ascii=False)}\n\n"

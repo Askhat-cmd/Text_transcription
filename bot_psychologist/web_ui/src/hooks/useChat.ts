@@ -49,7 +49,7 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
   const {
     userId,
     userLevel = 'beginner',
-    includePath = true,
+    includePath = false,
     includeFeedback = true,
     sessionId,
   } = options;

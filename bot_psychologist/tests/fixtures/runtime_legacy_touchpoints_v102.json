@@ -1,0 +1,68 @@
+{
+  "schema_version": "10.2-phase0",
+  "captured_for": "PRD_10.2 legacy runtime purge baseline",
+  "entrypoints": [
+    {
+      "name": "adaptive_http",
+      "file": "bot_psychologist/api/routes.py",
+      "symbol": "ask_adaptive_question",
+      "route": "/questions/adaptive"
+    },
+    {
+      "name": "adaptive_stream",
+      "file": "bot_psychologist/api/routes.py",
+      "symbol": "ask_adaptive_question_stream",
+      "route": "/questions/adaptive-stream"
+    },
+    {
+      "name": "adaptive_core",
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "symbol": "answer_question_adaptive"
+    }
+  ],
+  "legacy_touchpoints": {
+    "sd_runtime": {
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "patterns": [
+        "sd_classifier",
+        "_fallback_sd_result",
+        "\"sd_classification\"",
+        "\"sd_level\""
+      ]
+    },
+    "path_builder_runtime": {
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "patterns": [
+        "path_builder.build_path("
+      ]
+    },
+    "user_level_runtime": {
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "patterns": [
+        "\"user_level\"",
+        "user_level_adapter"
+      ]
+    },
+    "streaming_divergence_markers": {
+      "file": "bot_psychologist/api/routes.py",
+      "patterns": [
+        "_classify_parallel(",
+        "sd_classifier",
+        "user_level_adapter",
+        "\"sd_classification\"",
+        "\"sd_detail\""
+      ]
+    }
+  },
+  "legacy_metadata_fields": [
+    "sd_level",
+    "sd_secondary",
+    "sd_confidence",
+    "sd_method",
+    "sd_allowed_blocks",
+    "sd_classification",
+    "sd_detail",
+    "user_level",
+    "user_level_adapter_applied"
+  ]
+}

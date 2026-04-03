@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import AsyncGenerator, Iterable, Optional
 
 from ..config import config
+from ..feature_flags import feature_flags
 from ..llm_answerer import LLMAnswerer
 from .prompt_templates import build_mode_prompt
 
@@ -27,6 +28,10 @@ class ResponseGenerator:
         if level == "high":
             return min(1.0, default + 0.05)
         return default
+
+    @staticmethod
+    def _sd_runtime_disabled() -> bool:
+        return feature_flags.enabled("DISABLE_SD_RUNTIME")
 
     def _load_sd_prompt(self, sd_level: str) -> str:
         """Загрузить SD-оверлей промта для уровня пользователя."""
@@ -78,7 +83,7 @@ class ResponseGenerator:
     ) -> str:
         """Compose non-restrictive system prompt for FREE conversation mode."""
         normalized_base = self._strip_restricting_lines(base_prompt)
-        sd_context = f"SD_LEVEL={sd_level or 'GREEN'}"
+        sd_context = "SD_RUNTIME=DISABLED" if self._sd_runtime_disabled() else f"SD_LEVEL={sd_level or 'GREEN'}"
         context_parts = []
         for idx, block in enumerate(blocks[:5], start=1):
             title = getattr(block, "title", "") or getattr(block, "document_title", "")
@@ -157,14 +162,16 @@ class ResponseGenerator:
             final_system_prompt = str(system_prompt_override).strip()
         else:
             base_system_prompt = self.answerer.build_system_prompt()
-            if user_level_adapter is not None:
+            if user_level_adapter is not None and not feature_flags.enabled("DISABLE_USER_LEVEL_ADAPTER"):
                 try:
                     base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
                 except Exception:
                     # Keep base prompt when adapter is unavailable or incompatible.
                     pass
 
-            sd_overlay = self._load_sd_prompt(sd_level)
+            sd_overlay = ""
+            if not self._sd_runtime_disabled():
+                sd_overlay = self._load_sd_prompt(sd_level)
             if mode_prompt_override:
                 if mode_overrides_sd:
                     sd_overlay = mode_prompt_override
@@ -254,13 +261,15 @@ class ResponseGenerator:
             final_system_prompt = str(system_prompt_override).strip()
         else:
             base_system_prompt = self.answerer.build_system_prompt()
-            if user_level_adapter is not None:
+            if user_level_adapter is not None and not feature_flags.enabled("DISABLE_USER_LEVEL_ADAPTER"):
                 try:
                     base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
                 except Exception:
                     pass
 
-            sd_overlay = self._load_sd_prompt(sd_level)
+            sd_overlay = ""
+            if not self._sd_runtime_disabled():
+                sd_overlay = self._load_sd_prompt(sd_level)
             mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
             if config.FREE_CONVERSATION_MODE:
                 final_system_prompt = self._build_free_mode_prompt(

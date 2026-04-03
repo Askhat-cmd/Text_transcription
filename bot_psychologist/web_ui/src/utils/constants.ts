@@ -39,7 +39,7 @@ export const DEFAULT_SETTINGS = {
   userLevel: 'beginner',
   theme: DEFAULT_THEME,
   showSources: true,
-  showPath: true,
+  showPath: false,
   includeFeedbackPrompt: true,
   autoScroll: true,
   compactMode: false,

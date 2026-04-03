@@ -35,7 +35,7 @@ class AskQuestionRequest(BaseModel):
     user_id: str = Field(default="default", min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     session_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="ID chat session")
     user_level: UserLevel = Field(default=UserLevel.BEGINNER, description="РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
-    include_path: bool = Field(default=True, description="Р’РєР»СЋС‡РёС‚СЊ СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё")
+    include_path: bool = Field(default=False, description="Р’РєР»СЋС‡РёС‚СЊ СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё")
     include_feedback_prompt: bool = Field(default=True, description="Р’РєР»СЋС‡РёС‚СЊ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё")
     debug: bool = Field(default=False, description="РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ")
     
@@ -53,7 +53,7 @@ class AskQuestionRequest(BaseModel):
                 "user_id": "user_123",
                 "session_id": "chat_abc",
                 "user_level": "beginner",
-                "include_path": True,
+                "include_path": False,
                 "include_feedback_prompt": True,
                 "debug": False
             }

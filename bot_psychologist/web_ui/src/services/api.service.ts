@@ -85,7 +85,7 @@ class APIService {
     query: string,
     userId: string,
     userLevel: 'beginner' | 'intermediate' | 'advanced' = 'beginner',
-    includePath: boolean = true,
+    includePath: boolean = false,
     includeFeedback: boolean = true,
     sessionId?: string
   ): Promise<AdaptiveAnswerResponse> {
@@ -140,7 +140,7 @@ class APIService {
           user_id: userId,
           session_id: options?.sessionId,
           user_level: options?.userLevel ?? 'beginner',
-          include_path: options?.includePath ?? true,
+          include_path: options?.includePath ?? false,
           include_feedback_prompt: options?.includeFeedback ?? true,
           debug: false,
         }),

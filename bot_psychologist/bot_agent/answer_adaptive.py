@@ -686,7 +686,9 @@ def _build_llm_prompts(
             except Exception:
                 pass
 
-        sd_overlay = response_generator._load_sd_prompt(sd_level)
+        sd_overlay = ""
+        if not _sd_runtime_disabled():
+            sd_overlay = response_generator._load_sd_prompt(sd_level)
         mode_directive = mode_prompt
 
         if mode_prompt_override:
@@ -1041,7 +1043,7 @@ def answer_question_adaptive(
     query: str,
     user_id: str = "default",
     user_level: str = "beginner",
-    include_path_recommendation: bool = True,
+    include_path_recommendation: bool = False,
     include_feedback_prompt: bool = True,
     top_k: Optional[int] = None,
     debug: bool = False,
@@ -1337,7 +1339,7 @@ def answer_question_adaptive(
                 "user_stage": user_stage,
             }
 
-        if debug_info is not None:
+        if debug_info is not None and not _sd_runtime_disabled():
             debug_info["sd_classification"] = {
                 "primary": sd_result.primary,
                 "secondary": sd_result.secondary,
@@ -1347,7 +1349,7 @@ def answer_question_adaptive(
                 "allowed_blocks": sd_result.allowed_blocks,
                 "allowed_levels": sd_result.allowed_blocks,
             }
-        if debug_trace is not None:
+        if debug_trace is not None and not _sd_runtime_disabled():
             debug_trace["sd_classification"] = {
                 "method": sd_result.method,
                 "primary": sd_result.primary,
@@ -2549,7 +2551,14 @@ def answer_question_adaptive(
         logger.debug("🛤️ Этап 6: Рекомендация пути...")
         
         path_recommendation = None
-        if include_path_recommendation and state_analysis.primary_state != UserState.INTEGRATED:
+        route_name = str(getattr(routing_result, "route", "") or "").lower()
+        path_builder_blocked_routes = {"inform", "reflect", "contact_hold", "regulate"}
+        should_build_path = (
+            include_path_recommendation
+            and state_analysis.primary_state != UserState.INTEGRATED
+            and route_name not in path_builder_blocked_routes
+        )
+        if should_build_path:
             try:
                 personal_path = path_builder.build_path(
                     user_id=user_id,
@@ -2633,7 +2642,7 @@ def answer_question_adaptive(
                         "session_id": user_id,
                         "date": datetime.now().date().isoformat(),
                         "key_themes": key_themes[:3],
-                        "sd_level_end": sd_result.primary,
+                        "sd_level_end": None if _sd_runtime_disabled() else sd_result.primary,
                         "state_end": state_analysis.primary_state.value,
                         "notable_moments": [
                             f"Запрос: {_truncate_preview(query, 140)}",
@@ -2724,6 +2733,22 @@ def answer_question_adaptive(
             "timestamp": datetime.now().isoformat(),
             "processing_time_seconds": round(elapsed_time, 2)
         }
+
+        if _sd_runtime_disabled():
+            for key in (
+                "sd_level",
+                "sd_secondary",
+                "sd_confidence",
+                "sd_method",
+                "sd_allowed_blocks",
+            ):
+                result["metadata"].pop(key, None)
+            if debug_info is not None:
+                debug_info.pop("sd_classification", None)
+            if debug_trace is not None:
+                debug_trace.pop("sd_classification", None)
+                debug_trace.pop("sd_detail", None)
+                debug_trace.pop("sd_level", None)
         
         if debug_info is not None:
             debug_info["memory_summary"] = memory.get_summary()

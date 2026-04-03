@@ -16,7 +16,7 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 - [x] Phase 2 - Path Builder Purge
 - [x] Phase 3 - Streaming Neo Alignment
 - [x] Phase 4 - Metadata and Trace Cleanup
-- [ ] Phase 5 - Regression Hardening and Runtime Proof
+- [x] Phase 5 - Regression Hardening and Runtime Proof
 
 ## Phase Details
 
@@ -63,10 +63,10 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 
 ### Phase 5 - Regression Hardening and Runtime Proof
 
-- [ ] Run extended regression/e2e set for purge iteration.
-- [ ] Confirm with runtime logs: no routine legacy execution.
-- [ ] Verify degraded fallback behavior.
-- [ ] Update post-purge documentation.
+- [x] Run extended regression/e2e set for purge iteration.
+- [x] Confirm with runtime logs: no routine legacy execution.
+- [x] Verify degraded fallback behavior.
+- [x] Update post-purge documentation.
 
 ## Execution Journal
 
@@ -77,3 +77,4 @@ Execution progress for `PRD_10.2_Legacy_Runtime_Purge.md`.
 - `2026-04-03`: Phase 2 done. Removed automatic path-builder side effect in default flow; added `tests/regression/test_default_adaptive_path_builder_purge.py`; target run: `10 passed`.
 - `2026-04-03`: Phase 3 done. Reworked `/questions/adaptive-stream` to delegate to `answer_question_adaptive` (single route truth); added `tests/integration/test_streaming_neo_alignment_v102.py`; target run: `14 passed`.
 - `2026-04-03`: Phase 4 done. Removed legacy `user_level`/SD runtime metadata leakage and cleaned trace contract (`response_model_exclude_none`, config snapshot sanitization, optional SD trace fields). Added tests: `test_live_metadata_contract_after_purge.py`, `test_trace_contract_after_purge.py`, `test_no_user_level_runtime_metadata.py`, `test_no_sd_runtime_metadata_fields.py`, `test_trace_reflects_real_execution_only.py`; target run: `17 passed`.
+- `2026-04-03`: Phase 5 done. Ran extended purge pack (E2E + integration + regression + contract): `19 passed`. Confirmed no routine SD/path_builder/user_level legacy execution in active runtime contracts and preserved degraded fallback path. Updated docs (`README.md`, `docs/neo_runtime_v101.md`) with post-purge runtime proof notes.

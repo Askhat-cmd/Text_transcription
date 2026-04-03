@@ -50,3 +50,39 @@
 - `tests/e2e/test_degraded_retrieval_case.py`
 - `tests/e2e/test_legacy_fallback_when_flag_off.py`
 
+
+## v10.2 Legacy Runtime Purge (post-purge proof)
+
+После итерации `PRD_10.2_Legacy_Runtime_Purge` зафиксированы runtime-контракты:
+
+- Live metadata очищен от `user_level` runtime-хвоста.
+- Trace не содержит fake-участия отключенных legacy-модулей.
+- Streaming и non-stream выровнены по одному adaptive runtime-path.
+- SD-runtime influence отключен в healthy path при `DISABLE_SD_RUNTIME=true`.
+- Degraded retrieval fallback сохранен и остается рабочим.
+
+Рекомендуемый post-purge regression pack:
+
+- `tests/e2e/test_informational_case.py`
+- `tests/e2e/test_mixed_query_case.py`
+- `tests/e2e/test_returning_user_stale_summary_case.py`
+- `tests/e2e/test_degraded_retrieval_case.py`
+- `tests/e2e/test_directive_relationship_boundary_case.py`
+- `tests/e2e/test_legacy_fallback_when_flag_off.py`
+- `tests/integration/test_streaming_neo_alignment_v102.py`
+- `tests/regression/test_default_adaptive_path_builder_purge.py`
+- `tests/regression/test_streaming_sd_runtime_disabled_contract.py`
+- `tests/regression/test_no_user_level_runtime_metadata.py`
+- `tests/regression/test_no_sd_runtime_metadata_fields.py`
+- `tests/regression/test_trace_reflects_real_execution_only.py`
+- `tests/contract/test_live_metadata_contract_after_purge.py`
+- `tests/contract/test_trace_contract_after_purge.py`
+
+## v10.2 Purge Notes (ASCII)
+
+Runtime proof after PRD_10.2:
+- live metadata no longer includes `user_level` runtime fields;
+- trace excludes legacy module participation when modules are disabled;
+- streaming and non-stream adaptive endpoints use the same runtime path;
+- SD runtime influence is disabled for healthy turns when `DISABLE_SD_RUNTIME=true`;
+- degraded retrieval fallback remains operational.

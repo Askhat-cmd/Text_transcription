@@ -12,6 +12,25 @@
 - Release checklist: `docs/release_checklist_v101.md`.
 - E2E smoke pack: `tests/e2e/`.
 
+## Neo MindBot v10.2 (Legacy Runtime Purge)
+
+Итерация `PRD_10.2_Legacy_Runtime_Purge` завершила зачистку legacy-влияния в live runtime.
+
+Что зафиксировано:
+- В live `metadata` больше нет `user_level` и `user_level_adapter_applied`.
+- SD-runtime поля не попадают в healthy trace/metadata при `DISABLE_SD_RUNTIME=true`.
+- Streaming и non-stream используют один runtime truth и одинаковые контракты trace.
+- Path-builder не запускается автоматически в дефолтном adaptive-flow.
+- Degraded fallback сохранен (покрыт отдельным E2E тестом).
+
+Ключевые post-purge тесты:
+- `tests/contract/test_live_metadata_contract_after_purge.py`
+- `tests/contract/test_trace_contract_after_purge.py`
+- `tests/regression/test_no_user_level_runtime_metadata.py`
+- `tests/regression/test_no_sd_runtime_metadata_fields.py`
+- `tests/regression/test_trace_reflects_real_execution_only.py`
+- `tests/e2e/test_degraded_retrieval_case.py`
+
 ## Быстрая проверка Neo runtime
 
 Чтобы бот работал по Neo MindBot v10.1, в `bot_psychologist/.env` должны быть включены флаги:

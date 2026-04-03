@@ -12,6 +12,8 @@ from typing import Any
 from bot_agent.config import config
 from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
+from bot_agent.feature_flags import feature_flags
+from bot_agent.prompt_registry_v2 import PROMPT_STACK_ORDER, PROMPT_STACK_VERSION, prompt_registry_v2
 from .auth import is_dev_key
 
 
@@ -41,6 +43,250 @@ admin_router_v1 = APIRouter(
     dependencies=[Depends(require_dev_key)],
 )
 
+ADMIN_SCHEMA_VERSION = "10.4"
+
+LEGACY_CONFIG_KEY_MAP = {
+    "RETRIEVAL_TOP_K": "TOP_K_BLOCKS",
+    "RERANK_TOP_K": "VOYAGE_TOP_K",
+}
+
+DEPRECATED_CONFIG_KEYS = {
+    "SD_CLASSIFIER_ENABLED",
+    "SD_CLASSIFIER_CONFIDENCE_THRESHOLD",
+    "DECISION_GATE_RULE_THRESHOLD",
+    "DECISION_GATE_LLM_ROUTER_ENABLED",
+    "PROMPT_SD_OVERRIDES_BASE",
+    "PROMPT_MODE_OVERRIDES_SD",
+}
+
+COMPATIBILITY_ONLY_CONFIG_KEYS = set(DEPRECATED_CONFIG_KEYS)
+
+DEPRECATED_PROMPT_KEYS = {
+    "prompt_sd_green",
+    "prompt_sd_blue",
+    "prompt_sd_red",
+    "prompt_sd_orange",
+    "prompt_sd_yellow",
+    "prompt_sd_purple",
+    "prompt_system_level_beginner",
+    "prompt_system_level_intermediate",
+    "prompt_system_level_advanced",
+    "prompt_mode_informational",
+}
+
+PROMPT_STACK_V2_VARIANTS = [
+    "inform-rich",
+    "mixed-query",
+    "first-turn",
+    "user-correction",
+    "safe-override",
+]
+
+PROMPT_STACK_V2_EDITABLE_MAP = {
+    "CORE_IDENTITY": "prompt_system_base",
+}
+
+
+def _status_snapshot() -> dict[str, Any]:
+    stats = data_loader.get_stats()
+    return {
+        "degraded_mode": bool(stats.get("degraded_mode", False)),
+        "data_source": stats.get("data_source", "unknown"),
+        "blocks_loaded": int(stats.get("total_blocks", 0)),
+        "version": "0.7.0",
+        "feature_flags": feature_flags.snapshot(),
+    }
+
+
+def _prompt_stack_v2_sections_baseline() -> dict[str, str]:
+    build = prompt_registry_v2.build(
+        query="baseline",
+        blocks=[],
+        conversation_context="",
+        additional_system_context="",
+        route="inform",
+        mode="CLARIFICATION",
+        diagnostics={
+            "interaction_mode": "informational",
+            "nervous_system_state": "window",
+            "request_function": "understand",
+            "core_theme": "baseline",
+        },
+    )
+    return dict(build.sections)
+
+
+def _prompt_history_metadata(prompt_name: str | None) -> dict[str, Any]:
+    if not prompt_name:
+        return {"version": "v2.0.0", "updated_at": None}
+    history = list(config.get_history() or [])
+    related = [entry for entry in history if entry.get("key") == prompt_name and str(entry.get("type", "")).startswith("prompt")]
+    if not related:
+        return {"version": "v2.0.0", "updated_at": None}
+    latest = related[-1]
+    return {
+        "version": f"v2.0.{len(related)}",
+        "updated_at": latest.get("timestamp"),
+    }
+
+
+def _build_prompt_stack_v2_meta() -> list[dict[str, Any]]:
+    baseline_sections = _prompt_stack_v2_sections_baseline()
+    result: list[dict[str, Any]] = []
+    for section in PROMPT_STACK_ORDER:
+        editable_prompt_name = PROMPT_STACK_V2_EDITABLE_MAP.get(section)
+        editable = editable_prompt_name is not None
+        if editable:
+            prompt_payload = config.get_prompt(editable_prompt_name)
+            active_text = prompt_payload.get("text", "")
+            is_overridden = bool(prompt_payload.get("is_overridden", False))
+        else:
+            active_text = baseline_sections.get(section, "")
+            is_overridden = False
+        history_meta = _prompt_history_metadata(editable_prompt_name)
+        result.append(
+            {
+                "name": section,
+                "label": section,
+                "preview": str(active_text).replace("\n", " ")[:150],
+                "is_overridden": is_overridden,
+                "char_count": len(str(active_text)),
+                "editable": editable,
+                "is_legacy": False,
+                "source": "config_prompt" if editable else "runtime_derived",
+                "stack_version": PROMPT_STACK_VERSION,
+                "variants": list(PROMPT_STACK_V2_VARIANTS),
+                "version": history_meta["version"],
+                "updated_at": history_meta["updated_at"],
+                "legacy_prompt_name": editable_prompt_name,
+            }
+        )
+    return result
+
+
+def _build_prompt_stack_v2_detail(section_name: str) -> dict[str, Any]:
+    sections = _prompt_stack_v2_sections_baseline()
+    if section_name not in PROMPT_STACK_ORDER:
+        raise HTTPException(status_code=404, detail=f"Unknown prompt stack section: {section_name}")
+
+    editable_prompt_name = PROMPT_STACK_V2_EDITABLE_MAP.get(section_name)
+    editable = editable_prompt_name is not None
+    if editable:
+        base = config.get_prompt(editable_prompt_name)
+        text = str(base.get("text", ""))
+        default_text = str(base.get("default_text", ""))
+        is_overridden = bool(base.get("is_overridden", False))
+    else:
+        text = str(sections.get(section_name, ""))
+        default_text = text
+        is_overridden = False
+
+    history_meta = _prompt_history_metadata(editable_prompt_name)
+    return {
+        "name": section_name,
+        "label": section_name,
+        "preview": text.replace("\n", " ")[:150],
+        "is_overridden": is_overridden,
+        "char_count": len(text),
+        "text": text,
+        "default_text": default_text,
+        "editable": editable,
+        "is_legacy": False,
+        "source": "config_prompt" if editable else "runtime_derived",
+        "stack_version": PROMPT_STACK_VERSION,
+        "variants": list(PROMPT_STACK_V2_VARIANTS),
+        "version": history_meta["version"],
+        "updated_at": history_meta["updated_at"],
+        "legacy_prompt_name": editable_prompt_name,
+    }
+
+
+def _build_config_schema_v104() -> dict[str, Any]:
+    current = config.get_all_config()
+    groups = current.get("groups", {})
+    schema_groups: dict[str, dict[str, Any]] = {}
+
+    for group_key, group in groups.items():
+        params = group.get("params", {})
+        schema_params: dict[str, dict[str, Any]] = {}
+        for key, payload in params.items():
+            schema_params[key] = {
+                **payload,
+                "editable": True,
+                "read_only": False,
+                "deprecated": key in DEPRECATED_CONFIG_KEYS,
+                "compatibility_only": key in COMPATIBILITY_ONLY_CONFIG_KEYS,
+            }
+        schema_groups[group_key] = {
+            "label": group.get("label", group_key),
+            "params": schema_params,
+        }
+
+    status = _status_snapshot()
+    read_only = {
+        "runtime_status": {
+            "degraded_mode": {
+                "value": status["degraded_mode"],
+                "editable": False,
+                "read_only": True,
+                "deprecated": False,
+                "compatibility_only": False,
+                "type": "bool",
+                "label": "DEGRADED_MODE",
+            },
+            "data_source": {
+                "value": status["data_source"],
+                "editable": False,
+                "read_only": True,
+                "deprecated": False,
+                "compatibility_only": False,
+                "type": "string",
+                "label": "Источник данных",
+            },
+            "blocks_loaded": {
+                "value": status["blocks_loaded"],
+                "editable": False,
+                "read_only": True,
+                "deprecated": False,
+                "compatibility_only": False,
+                "type": "int",
+                "label": "Загружено блоков",
+            },
+            "version": {
+                "value": status["version"],
+                "editable": False,
+                "read_only": True,
+                "deprecated": False,
+                "compatibility_only": False,
+                "type": "string",
+                "label": "Версия runtime",
+            },
+        },
+        "feature_flags": {
+            key: {
+                "value": value,
+                "editable": False,
+                "read_only": True,
+                "deprecated": False,
+                "compatibility_only": False,
+                "type": "bool",
+                "label": key,
+            }
+            for key, value in status["feature_flags"].items()
+        },
+    }
+
+    return {
+        "schema_version": ADMIN_SCHEMA_VERSION,
+        "editable": {"groups": schema_groups},
+        "read_only": read_only,
+        "deprecated": {
+            "config_keys": sorted(DEPRECATED_CONFIG_KEYS),
+            "prompt_keys": sorted(DEPRECATED_PROMPT_KEYS),
+        },
+        "compatibility_only": {"config_keys": sorted(COMPATIBILITY_ONLY_CONFIG_KEYS)},
+    }
+
 
 def _validate_import_overrides_payload(body: dict) -> dict:
     if not isinstance(body.get("config"), dict):
@@ -53,24 +299,33 @@ def _validate_import_overrides_payload(body: dict) -> dict:
         )
 
     editable = getattr(config, "EDITABLE_CONFIG", {})
-    for key in body["config"].keys():
+    normalized_config: dict[str, Any] = {}
+    ignored_config_keys: list[str] = []
+    for raw_key, value in body["config"].items():
+        key = LEGACY_CONFIG_KEY_MAP.get(raw_key, raw_key)
         if key not in editable:
-            raise HTTPException(status_code=422, detail=f"Unknown config key: {key}")
+            ignored_config_keys.append(raw_key)
+            continue
+        normalized_config[key] = value
 
     editable_prompts = set(getattr(config, "EDITABLE_PROMPTS", []))
+    normalized_prompts: dict[str, str | None] = {}
+    ignored_prompt_keys: list[str] = []
     for key, value in body["prompts"].items():
         if key not in editable_prompts:
-            raise HTTPException(status_code=422, detail=f"Unknown prompt key: {key}")
+            ignored_prompt_keys.append(key)
+            continue
         if value is not None and not isinstance(value, str):
             raise HTTPException(status_code=422, detail=f"Prompt '{key}' must be string or null")
+        normalized_prompts[key] = value
 
     # Validate critical runtime constraints against effective values after import.
     effective = {
-        "TOP_K_BLOCKS": body["config"].get("TOP_K_BLOCKS", getattr(config, "TOP_K_BLOCKS", 5)),
-        "MIN_RELEVANCE_SCORE": body["config"].get("MIN_RELEVANCE_SCORE", getattr(config, "MIN_RELEVANCE_SCORE", 0.1)),
-        "VOYAGE_TOP_K": body["config"].get("VOYAGE_TOP_K", getattr(config, "VOYAGE_TOP_K", 5)),
-        "MAX_CONTEXT_SIZE": body["config"].get("MAX_CONTEXT_SIZE", getattr(config, "MAX_CONTEXT_SIZE", 2200)),
-        "LLM_MODEL": body["config"].get("LLM_MODEL", getattr(config, "LLM_MODEL", "")),
+        "TOP_K_BLOCKS": normalized_config.get("TOP_K_BLOCKS", getattr(config, "TOP_K_BLOCKS", 5)),
+        "MIN_RELEVANCE_SCORE": normalized_config.get("MIN_RELEVANCE_SCORE", getattr(config, "MIN_RELEVANCE_SCORE", 0.1)),
+        "VOYAGE_TOP_K": normalized_config.get("VOYAGE_TOP_K", getattr(config, "VOYAGE_TOP_K", 5)),
+        "MAX_CONTEXT_SIZE": normalized_config.get("MAX_CONTEXT_SIZE", getattr(config, "MAX_CONTEXT_SIZE", 2200)),
+        "LLM_MODEL": normalized_config.get("LLM_MODEL", getattr(config, "LLM_MODEL", "")),
     }
     validation = validate_runtime_config(type("Cfg", (), effective)())
     if not validation.valid:
@@ -79,11 +334,19 @@ def _validate_import_overrides_payload(body: dict) -> dict:
             detail={"message": "Invalid runtime config in import payload", "errors": validation.errors},
         )
 
+    meta = dict(body.get("meta", {})) if isinstance(body.get("meta"), dict) else {}
+    incoming_version = str(meta.get("schema_version", "legacy-v1"))
     normalized = {
-        "config": dict(body.get("config", {})),
-        "prompts": dict(body.get("prompts", {})),
+        "config": normalized_config,
+        "prompts": normalized_prompts,
         "history": list(body.get("history", [])) if isinstance(body.get("history"), list) else [],
-        "meta": dict(body.get("meta", {})) if isinstance(body.get("meta"), dict) else {},
+        "meta": {
+            **meta,
+            "imported_schema_version": incoming_version,
+            "schema_version": ADMIN_SCHEMA_VERSION,
+            "ignored_config_keys": ignored_config_keys,
+            "ignored_prompt_keys": ignored_prompt_keys,
+        },
     }
     return normalized
 
@@ -148,6 +411,18 @@ async def admin_get_config_schema():
             "options": None,
         }
     return schema
+
+
+@admin_router.get(
+    "/config/schema-v104",
+    summary="Schema v10.4 для admin surface (editable/read-only/deprecated)",
+)
+@admin_router_v1.get(
+    "/config/schema-v104",
+    summary="Schema v10.4 для admin surface (v1 route)",
+)
+async def admin_get_config_schema_v104():
+    return _build_config_schema_v104()
 
 
 @admin_router.put(
@@ -248,12 +523,13 @@ async def admin_reset_all_config():
     summary="Runtime-статус источника данных (v1)",
 )
 async def admin_status():
-    stats = data_loader.get_stats()
+    status_payload = _status_snapshot()
     return {
-        "degraded_mode": bool(stats.get("degraded_mode", False)),
-        "data_source": stats.get("data_source", "unknown"),
-        "blocks_loaded": int(stats.get("total_blocks", 0)),
-        "version": "0.7.0",
+        "degraded_mode": status_payload["degraded_mode"],
+        "data_source": status_payload["data_source"],
+        "blocks_loaded": status_payload["blocks_loaded"],
+        "version": status_payload["version"],
+        "feature_flags": status_payload["feature_flags"],
     }
 
 
@@ -298,6 +574,18 @@ async def admin_get_prompts():
 
 
 @admin_router.get(
+    "/prompts/stack-v2",
+    summary="Prompt stack v2 surface для Neo runtime",
+)
+@admin_router_v1.get(
+    "/prompts/stack-v2",
+    summary="Prompt stack v2 surface (v1 route)",
+)
+async def admin_get_prompts_stack_v2():
+    return _build_prompt_stack_v2_meta()
+
+
+@admin_router.get(
     "/prompts/{name}",
     summary="Полный текст промта",
 )
@@ -316,6 +604,18 @@ async def admin_get_prompt(name: str):
         return data
     except (ValueError, FileNotFoundError) as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+
+@admin_router.get(
+    "/prompts/stack-v2/{name}",
+    summary="Детали секции prompt stack v2",
+)
+@admin_router_v1.get(
+    "/prompts/stack-v2/{name}",
+    summary="Детали секции prompt stack v2 (v1 route)",
+)
+async def admin_get_prompt_stack_v2(name: str):
+    return _build_prompt_stack_v2_detail(name)
 
 
 @admin_router.put(
@@ -344,6 +644,30 @@ async def admin_set_prompt(name: str, body: dict):
         raise HTTPException(status_code=422, detail=str(e))
 
 
+@admin_router.put(
+    "/prompts/stack-v2/{name}",
+    summary="Сохранить editable секцию prompt stack v2",
+)
+@admin_router_v1.put(
+    "/prompts/stack-v2/{name}",
+    summary="Сохранить editable секцию prompt stack v2 (v1 route)",
+)
+async def admin_set_prompt_stack_v2(name: str, body: dict):
+    detail = _build_prompt_stack_v2_detail(name)
+    if not detail.get("editable"):
+        raise HTTPException(status_code=422, detail=f"Section '{name}' is read-only")
+    text = str(body.get("text", body.get("content", ""))).strip()
+    if len(text) < 20:
+        raise HTTPException(status_code=422, detail="Prompt text too short (min 20 chars)")
+    prompt_name = detail.get("legacy_prompt_name")
+    assert prompt_name
+    updated = config.set_prompt_override(prompt_name, text)
+    payload = _build_prompt_stack_v2_detail(name)
+    payload["content"] = payload.get("text", "")
+    payload["legacy_updated"] = updated.get("name")
+    return payload
+
+
 @admin_router.delete(
     "/prompts/{name}",
     summary="Сбросить промт к дефолту (из .md файла)",
@@ -368,6 +692,26 @@ async def admin_reset_prompt(name: str):
         return result
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+
+
+@admin_router.post(
+    "/prompts/stack-v2/{name}/reset",
+    summary="Сбросить editable секцию prompt stack v2",
+)
+@admin_router_v1.post(
+    "/prompts/stack-v2/{name}/reset",
+    summary="Сбросить editable секцию prompt stack v2 (v1 route)",
+)
+async def admin_reset_prompt_stack_v2(name: str):
+    detail = _build_prompt_stack_v2_detail(name)
+    if not detail.get("editable"):
+        raise HTTPException(status_code=422, detail=f"Section '{name}' is read-only")
+    prompt_name = detail.get("legacy_prompt_name")
+    assert prompt_name
+    config.reset_prompt_override(prompt_name)
+    payload = _build_prompt_stack_v2_detail(name)
+    payload["content"] = payload.get("text", "")
+    return payload
 
 
 @admin_router.post(
@@ -404,17 +748,33 @@ async def admin_get_history():
     "/export",
     summary="Экспортировать все overrides (backup)",
 )
+@admin_router_v1.get(
+    "/export",
+    summary="Экспортировать все overrides (backup, v1)",
+)
 async def admin_export_overrides():
     """
     Возвращает полный JSON-файл admin_overrides.json.
     Используется для резервного копирования или переноса между окружениями.
     """
-    return config._load_overrides()
+    payload = config._load_overrides()
+    payload.setdefault("config", {})
+    payload.setdefault("prompts", {})
+    payload.setdefault("history", [])
+    meta = dict(payload.get("meta", {}))
+    meta.setdefault("schema_family", "admin_overrides")
+    meta.setdefault("schema_version", ADMIN_SCHEMA_VERSION)
+    payload["meta"] = meta
+    return payload
 
 
 @admin_router.post(
     "/import",
     summary="Импортировать overrides из JSON (restore)",
+)
+@admin_router_v1.post(
+    "/import",
+    summary="Импортировать overrides из JSON (restore, v1)",
 )
 async def admin_import_overrides(body: dict):
     """
@@ -430,10 +790,14 @@ async def admin_import_overrides(body: dict):
         config._save_overrides(normalized)
         return {
             "status": "ok",
+            "schema_version": ADMIN_SCHEMA_VERSION,
+            "imported_schema_version": normalized.get("meta", {}).get("imported_schema_version"),
             "config_keys": len(normalized.get("config", {})),
             "prompt_overrides": sum(
                 1 for v in normalized.get("prompts", {}).values() if v is not None
             ),
+            "ignored_config_keys": normalized.get("meta", {}).get("ignored_config_keys", []),
+            "ignored_prompt_keys": normalized.get("meta", {}).get("ignored_prompt_keys", []),
         }
     except Exception as e:
         try:

@@ -53,13 +53,13 @@ export const adminConfigService = {
 
   // Prompts
   getPrompts: () =>
-    request<PromptMeta[]>('GET', '/prompts'),
+    request<PromptMeta[]>('GET', '/prompts/stack-v2'),
   getPrompt: (name: string) =>
-    request<PromptDetail>('GET', `/prompts/${name}`),
+    request<PromptDetail>('GET', `/prompts/stack-v2/${name}`),
   setPrompt: (name: string, text: string) =>
-    request<PromptDetail>('PUT', `/prompts/${name}`, { text }),
+    request<PromptDetail>('PUT', `/prompts/stack-v2/${name}`, { text }),
   resetPrompt: (name: string) =>
-    request<PromptDetail>('DELETE', `/prompts/${name}`),
+    request<PromptDetail>('POST', `/prompts/stack-v2/${name}/reset`),
   resetAllPrompts: () =>
     request<{ status: string }>('POST', '/prompts/reset-all'),
 

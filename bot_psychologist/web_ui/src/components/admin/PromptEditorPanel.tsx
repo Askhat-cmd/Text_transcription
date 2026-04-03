@@ -6,7 +6,9 @@ import type { PromptDetail, PromptMeta } from '../../types/admin.types';
 interface Props {
   prompts: PromptMeta[];
   selectedPrompt: PromptDetail | null;
+  promptError?: string | null;
   onSelect: (name: string) => void;
+  onRetryLoad: () => void;
   onSave: (name: string, text: string) => Promise<void>;
   onReset: (name: string) => Promise<void>;
   onResetAll: () => Promise<void>;
@@ -16,7 +18,9 @@ interface Props {
 export const PromptEditorPanel: React.FC<Props> = ({
   prompts,
   selectedPrompt,
+  promptError,
   onSelect,
+  onRetryLoad,
   onSave,
   onReset,
   onResetAll,
@@ -25,22 +29,30 @@ export const PromptEditorPanel: React.FC<Props> = ({
   const [draftText, setDraftText] = useState('');
   const [isDirty, setIsDirty] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   useEffect(() => {
     if (selectedPrompt) {
       setDraftText(selectedPrompt.text);
       setIsDirty(false);
       setShowDiff(false);
+      setValidationError(null);
     }
   }, [selectedPrompt]);
 
   const handleTextChange = (value: string) => {
     setDraftText(value);
     setIsDirty(value !== selectedPrompt?.text);
+    setValidationError(null);
   };
 
   const handleSave = async () => {
     if (!selectedPrompt) return;
+    if (selectedPrompt.editable === false) return;
+    if (draftText.trim().length < 20) {
+      setValidationError('Слишком короткий текст (минимум 20 символов).');
+      return;
+    }
     await onSave(selectedPrompt.name, draftText);
     setIsDirty(false);
   };
@@ -78,12 +90,19 @@ export const PromptEditorPanel: React.FC<Props> = ({
             >
               <div className="flex items-center justify-between">
                 <span className="font-medium truncate">{p.label}</span>
-                {p.is_overridden && (
-                  <span className="ml-1 w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
-                )}
+                <div className="flex items-center gap-1">
+                  {p.editable === false && (
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">
+                      RO
+                    </span>
+                  )}
+                  {p.is_overridden && (
+                    <span className="ml-1 w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
+                  )}
+                </div>
               </div>
               <div className="text-xs text-gray-400 truncate mt-0.5">
-                {p.char_count} симв.
+                {p.char_count} симв. • {p.version ?? 'v2'}
               </div>
             </button>
           ))}
@@ -92,6 +111,17 @@ export const PromptEditorPanel: React.FC<Props> = ({
 
       {/* Правая панель: редактор */}
       <div className="flex-1 flex flex-col">
+        {promptError && (
+          <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700 flex items-center justify-between">
+            <span>{promptError}</span>
+            <button
+              onClick={onRetryLoad}
+              className="ml-3 px-2 py-1 rounded border border-amber-300 text-amber-700 hover:bg-amber-100"
+            >
+              Повторить
+            </button>
+          </div>
+        )}
         {selectedPrompt ? (
           <>
             {/* Заголовок редактора */}
@@ -112,6 +142,10 @@ export const PromptEditorPanel: React.FC<Props> = ({
                       • не сохранено
                     </span>
                   )}
+                  <span className="ml-2 text-slate-500">• {selectedPrompt.version ?? 'v2'}</span>
+                  {selectedPrompt.editable === false && (
+                    <span className="ml-2 text-slate-500 font-medium">• read-only runtime section</span>
+                  )}
                 </p>
               </div>
               <div className="flex gap-2">
@@ -125,7 +159,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
                 >
                   {showDiff ? 'Скрыть оригинал' : 'Показать оригинал'}
                 </button>
-                {selectedPrompt.is_overridden && (
+                {selectedPrompt.is_overridden && selectedPrompt.editable !== false && (
                   <button
                     onClick={handleReset}
                     disabled={isSaving}
@@ -136,13 +170,19 @@ export const PromptEditorPanel: React.FC<Props> = ({
                 )}
                 <button
                   onClick={handleSave}
-                  disabled={isSaving || !isDirty}
+                  disabled={isSaving || !isDirty || selectedPrompt.editable === false}
                   className="px-3 py-1.5 bg-rose-600 text-white rounded text-sm hover:bg-rose-700 disabled:opacity-50"
                 >
                   {isSaving ? 'Сохранение...' : '✓ Сохранить'}
                 </button>
               </div>
             </div>
+
+            {validationError && (
+              <div className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                {validationError}
+              </div>
+            )}
 
             {/* Режим diff: два блока рядом */}
             {showDiff ? (
@@ -164,6 +204,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
                   <textarea
                     value={draftText}
                     onChange={(e) => handleTextChange(e.target.value)}
+                    readOnly={selectedPrompt.editable === false}
                     className="flex-1 w-full px-3 py-2 border border-blue-300 rounded-lg text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </div>
@@ -173,6 +214,7 @@ export const PromptEditorPanel: React.FC<Props> = ({
               <textarea
                 value={draftText}
                 onChange={(e) => handleTextChange(e.target.value)}
+                readOnly={selectedPrompt.editable === false}
                 className="flex-1 w-full px-3 py-2 border border-gray-300 rounded-lg text-sm font-mono resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Текст промта..."
               />

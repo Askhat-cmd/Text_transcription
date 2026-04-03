@@ -494,10 +494,12 @@ class RuntimeConfig(Config):
         data.setdefault("config", {})
         data.setdefault("prompts", {})
         data.setdefault("history", [])
-        data["meta"] = {
-            "last_modified": datetime.now().isoformat(),
-            "modified_by": "dev",
-        }
+        meta = dict(data.get("meta", {}))
+        meta["last_modified"] = datetime.now().isoformat()
+        meta["modified_by"] = "dev"
+        meta.setdefault("schema_family", "admin_overrides")
+        meta.setdefault("schema_version", "10.4")
+        data["meta"] = meta
 
         # Атомарная запись: пишем во временный файл рядом с целевым
         tmp_fd, tmp_path = tempfile.mkstemp(

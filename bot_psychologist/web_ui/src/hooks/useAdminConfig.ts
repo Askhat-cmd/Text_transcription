@@ -16,10 +16,15 @@ export const useAdminConfig = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [promptError, setPromptError] = useState<string | null>(null);
+  const [lastPromptName, setLastPromptName] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [statusData, setStatusData] = useState<AdminStatusResponse | null>(null);
 
-  const clearError = useCallback(() => setError(null), []);
+  const clearError = useCallback(() => {
+    setError(null);
+    setPromptError(null);
+  }, []);
 
   const showSuccess = useCallback((msg: string) => {
     setSuccessMessage(msg);
@@ -102,13 +107,29 @@ export const useAdminConfig = () => {
 
   const loadPrompts = useCallback(async () => {
     const data = await withLoading(() => adminConfigService.getPrompts());
-    if (data) setPrompts(data);
+    if (data) {
+      setPrompts(data);
+      setPromptError(null);
+    }
   }, []);
 
   const loadPromptDetail = useCallback(async (name: string) => {
+    setLastPromptName(name);
+    setPromptError(null);
     const data = await withLoading(() => adminConfigService.getPrompt(name));
-    if (data) setSelectedPrompt(data);
+    if (data) {
+      setSelectedPrompt(data);
+      setPromptError(null);
+      return;
+    }
+    setSelectedPrompt(null);
+    setPromptError('Не удалось загрузить секцию prompt stack v2. Проверь backend и нажми «Повторить».');
   }, []);
+
+  const retryPromptDetailLoad = useCallback(async () => {
+    if (!lastPromptName) return;
+    await loadPromptDetail(lastPromptName);
+  }, [lastPromptName, loadPromptDetail]);
 
   const savePrompt = useCallback(
     async (name: string, text: string) => {
@@ -183,11 +204,13 @@ export const useAdminConfig = () => {
     isLoading,
     isSaving,
     error,
+    promptError,
     successMessage,
     clearError,
     loadConfig,
     loadPrompts,
     loadPromptDetail,
+    retryPromptDetailLoad,
     saveConfigParam,
     resetConfigParam,
     resetAllConfig,

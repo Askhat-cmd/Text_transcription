@@ -30,6 +30,14 @@ export interface PromptMeta {
   preview: string;
   is_overridden: boolean;
   char_count: number;
+  editable?: boolean;
+  is_legacy?: boolean;
+  source?: string;
+  stack_version?: string;
+  variants?: string[];
+  version?: string;
+  updated_at?: string | null;
+  legacy_prompt_name?: string | null;
 }
 
 export interface PromptDetail extends PromptMeta {
@@ -63,4 +71,5 @@ export interface AdminStatusResponse {
   data_source: string;
   blocks_loaded: number;
   version: string;
+  feature_flags?: Record<string, boolean>;
 }

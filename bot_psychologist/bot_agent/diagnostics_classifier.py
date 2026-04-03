@@ -72,6 +72,14 @@ class DiagnosticsClassifier:
         r"\b(я|мне|меня|мой|чувств|пережив|боюсь|тревог|стыд|вина)\b",
         flags=re.IGNORECASE,
     )
+    _APPLICATION_RE = re.compile(
+        r"\b(у себя|в моей жизни|в реальной жизни|про меня|со мной|для меня)\b",
+        flags=re.IGNORECASE,
+    )
+    _PRACTICE_ENTRY_RE = re.compile(
+        r"\b(как начать|как практиковать|как применять|с чего начать|что делать дальше)\b",
+        flags=re.IGNORECASE,
+    )
     _DIRECTIVE_RE = re.compile(
         r"\b(что делать|как поступить|скажи,? что делать|дай шаги|план действий)\b",
         flags=re.IGNORECASE,
@@ -215,12 +223,18 @@ class DiagnosticsClassifier:
         informational_mode_hint: bool,
     ) -> tuple[str, float]:
         lowered = text.lower()
-        if informational_mode_hint:
-            return "informational", 0.9
         informational_match = bool(self._INFORMATIONAL_RE.search(lowered))
         personal_match = bool(self._PERSONAL_RE.search(lowered))
-        if informational_match and not personal_match:
+        application_match = bool(self._APPLICATION_RE.search(lowered))
+        practice_match = bool(self._PRACTICE_ENTRY_RE.search(lowered))
+
+        has_personal_context = personal_match or application_match or practice_match
+        if informational_mode_hint and informational_match and not has_personal_context:
+            return "informational", 0.88
+        if informational_match and not has_personal_context:
             return "informational", 0.82
+        if informational_match and has_personal_context:
+            return "coaching", 0.78
         return "coaching", 0.74
 
     def _detect_nervous_system_state(
@@ -302,4 +316,3 @@ class DiagnosticsClassifier:
 
 
 diagnostics_classifier = DiagnosticsClassifier()
-

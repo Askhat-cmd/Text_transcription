@@ -242,8 +242,17 @@ def _store_blob(session_store, session_id: str, content: str) -> Optional[str]:
 
 
 MODE_PROMPT_MAP: dict[str, str] = {
-    "curious": "prompt_mode_informational",
+    "informational": "prompt_mode_informational",
 }
+
+_PRACTICE_START_RE = re.compile(
+    r"\b(как начать|как практиковать|как применить|что делать дальше|практиковать|в жизни)\b",
+    flags=re.IGNORECASE,
+)
+_PERSONAL_APPLICATION_RE = re.compile(
+    r"\b(у себя|в реальной жизни|в моей жизни|для меня|про меня|со мной|на моем примере)\b",
+    flags=re.IGNORECASE,
+)
 
 
 def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[str]]:
@@ -263,6 +272,27 @@ def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[s
     except Exception as exc:
         logger.warning("[MODE_PROMPT] failed to load '%s': %s", prompt_key, exc)
         return None, None
+
+
+def _derive_informational_mode_hint(phase8_signals, query: str) -> bool:
+    """Narrow informational hint to concept-first requests only."""
+    if not _informational_branch_enabled() or phase8_signals is None:
+        return False
+
+    informational_intent = bool(getattr(phase8_signals, "informational_intent", False))
+    personal_disclosure = bool(getattr(phase8_signals, "personal_disclosure", False))
+    mixed_query = bool(getattr(phase8_signals, "mixed_query", False))
+    if not informational_intent or personal_disclosure or mixed_query:
+        return False
+
+    text = (query or "").strip().lower()
+    if not text:
+        return False
+    if _PERSONAL_APPLICATION_RE.search(text):
+        return False
+    if _PRACTICE_START_RE.search(text):
+        return False
+    return True
 
 
 COST_PER_1K_TOKENS = {
@@ -373,6 +403,7 @@ def _informational_branch_enabled() -> bool:
 def _apply_output_validation_policy(
     *,
     answer: str,
+    query: str,
     route: str,
     mode: str,
     generate_retry_fn=None,
@@ -391,13 +422,19 @@ def _apply_output_validation_policy(
         route=route,
         mode=mode,
         safety_override=safety_override,
+        query=query,
     )
     attempts.append(first.as_dict())
     final_text = first.text
     final_valid = bool(first.valid)
 
     if first.needs_regeneration and callable(generate_retry_fn):
-        hint = output_validator.build_regeneration_hint(first.errors, route=route, mode=mode)
+        hint = output_validator.build_regeneration_hint(
+            first.errors,
+            route=route,
+            mode=mode,
+            query=query,
+        )
         try:
             retry_llm_result = generate_retry_fn(hint)
         except Exception as exc:
@@ -410,6 +447,7 @@ def _apply_output_validation_policy(
             route=route,
             mode=mode,
             safety_override=safety_override,
+            query=query,
         )
         attempts.append(second.as_dict())
         final_text = second.text
@@ -1350,16 +1388,12 @@ def answer_question_adaptive(
                 )
             )
         user_stage = resolve_user_stage(memory, state_analysis)
+        informational_mode_hint = _derive_informational_mode_hint(phase8_signals, query)
+        informational_mode = informational_mode_hint
         mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
-            state_analysis.primary_state.value,
+            "informational" if informational_mode else "",
             config,
         )
-        informational_mode = bool(mode_prompt_override)
-        informational_mode_hint = bool(
-            phase8_signals.informational_intent if phase8_signals else informational_mode
-        )
-        if not _informational_branch_enabled():
-            informational_mode_hint = informational_mode
 
         logger.info(
             f"✅ Состояние: {state_analysis.primary_state.value} "
@@ -1419,6 +1453,7 @@ def answer_question_adaptive(
             debug_trace["sd_level"] = sd_result.primary
             debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
             debug_trace["user_state"] = state_analysis.primary_state.value
+            debug_trace["informational_mode_hint"] = informational_mode_hint
             debug_trace["informational_mode"] = informational_mode
             debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
 
@@ -1715,6 +1750,7 @@ def answer_question_adaptive(
 
             answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
                 answer=answer,
+                query=query,
                 route=getattr(pre_routing_result, "route", ""),
                 mode=pre_routing_result.mode,
                 generate_retry_fn=_retry_fast_validation,
@@ -2072,6 +2108,12 @@ def answer_question_adaptive(
             )
         if _informational_branch_enabled():
             informational_mode = str(getattr(routing_result, "route", "") or "").lower() == "inform"
+        else:
+            informational_mode = False
+        mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
+            "informational" if informational_mode else "",
+            config,
+        )
         stage_count_before_cap = len(retrieved_blocks)
         retrieved_blocks = retrieved_blocks[:block_cap]
         capped_retrieved_blocks = list(retrieved_blocks)
@@ -2553,6 +2595,7 @@ def answer_question_adaptive(
 
         answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
             answer=answer,
+            query=query,
             route=getattr(routing_result, "route", ""),
             mode=routing_result.mode,
             generate_retry_fn=_retry_validation,

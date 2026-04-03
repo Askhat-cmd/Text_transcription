@@ -86,3 +86,12 @@ Runtime proof after PRD_10.2:
 - streaming and non-stream adaptive endpoints use the same runtime path;
 - SD runtime influence is disabled for healthy turns when `DISABLE_SD_RUNTIME=true`;
 - degraded retrieval fallback remains operational.
+
+## v10.3 Response Richness Recalibration
+
+Behavior tuning updates after PRD 10.3:
+- informational routing is narrowed to concept-first queries;
+- `curious` no longer forces informational prompt override;
+- mixed/personal queries keep richer coaching-biased handling;
+- prompt stack policy for `inform`, `mixed_query`, and `first_turn` is richer;
+- output validator adds anti-sparse detection (`underfilled_inform_answer`) and richer regeneration hints.

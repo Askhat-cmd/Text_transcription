@@ -31,6 +31,21 @@
 - `tests/regression/test_trace_reflects_real_execution_only.py`
 - `tests/e2e/test_degraded_retrieval_case.py`
 
+## Neo MindBot v10.3 (Response Richness Recalibration)
+
+Итерация `PRD_10.3_Response_Richness_Recalibration` фокусируется на поведенческой калибровке ответов:
+- убрана жёсткая связка `curious -> informational override`;
+- informational route стал уже для действительно concept-first запросов;
+- mixed/personal запросы больше не скатываются в сухой glossary-style по умолчанию;
+- prompt policy для `inform`, `mixed_query` и `first_turn` стала богаче (смысл, различия, примеры, практический ракурс);
+- в `output_validator` добавлена anti-sparse проверка (`underfilled_inform_answer`) и richer regeneration hint.
+
+Новые тестовые слои v10.3:
+- inventory baseline: `tests/inventory/test_sparse_output_fixture_inventory.py`, `tests/inventory/test_informational_routing_baseline_map.py`, `tests/inventory/test_prompt_richness_bottlenecks_map.py`;
+- routing recalibration: `tests/unit/test_curious_not_auto_informational.py`, `tests/unit/test_informational_mode_narrowing.py`, `tests/integration/test_routing_recalibration_for_exploratory_queries.py`;
+- prompt richness + anti-sparse: `tests/unit/test_prompt_style_policy_inform_rich.py`, `tests/unit/test_output_validator_anti_sparse_rules.py`, `tests/integration/test_sparse_output_triggers_regeneration_hint.py`;
+- runtime richness E2E: `tests/e2e/test_informational_richness_runtime.py`, `tests/e2e/test_mixed_query_richness_runtime.py`, `tests/e2e/test_first_turn_richness_runtime.py`, `tests/e2e/test_practice_start_richness_runtime.py`, `tests/e2e/test_richness_does_not_break_safety_runtime.py`.
+
 ## Быстрая проверка Neo runtime
 
 Чтобы бот работал по Neo MindBot v10.1, в `bot_psychologist/.env` должны быть включены флаги:

@@ -1,0 +1,74 @@
+﻿{
+  "schema_version": "10.3-phase0",
+  "queries": [
+    {
+      "id": "inform_difference",
+      "query": "Что такое самоосознание и чем оно отличается от самонаблюдения?",
+      "class": "pure_inform",
+      "sparse_risk": "definition_plus_bridge"
+    },
+    {
+      "id": "mixed_personal",
+      "query": "Объясни избегание, потому что мне кажется это про меня.",
+      "class": "mixed_inform_personal",
+      "sparse_risk": "glossary_like_mixed"
+    },
+    {
+      "id": "first_turn_explore",
+      "query": "Привет, помоги понять что со мной происходит в последние недели.",
+      "class": "first_turn_exploratory",
+      "sparse_risk": "underfilled_first_turn"
+    },
+    {
+      "id": "practice_entry",
+      "query": "Как начать это практиковать без перегруза?",
+      "class": "practice_start",
+      "sparse_risk": "named_practice_without_entry_logic"
+    },
+    {
+      "id": "concept_application",
+      "query": "Что такое нейросталкинг и как это увидеть у себя в реальной жизни?",
+      "class": "mixed_concept_application",
+      "sparse_risk": "concept_without_application"
+    }
+  ],
+  "routing_touchpoints": [
+    {
+      "name": "mode_prompt_map",
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "symbols": ["MODE_PROMPT_MAP", "resolve_mode_prompt"]
+    },
+    {
+      "name": "phase8_signals",
+      "file": "bot_psychologist/bot_agent/onboarding_flow.py",
+      "symbols": ["detect_phase8_signals", "mixed_query", "informational_intent"]
+    },
+    {
+      "name": "diagnostics_interaction_mode",
+      "file": "bot_psychologist/bot_agent/diagnostics_classifier.py",
+      "symbols": ["_detect_interaction_mode", "informational_mode_hint"]
+    }
+  ],
+  "prompt_bottlenecks": [
+    {
+      "name": "inform_style_policy",
+      "file": "bot_psychologist/bot_agent/prompt_registry_v2.py",
+      "symbol": "_build_style_policy"
+    },
+    {
+      "name": "task_instruction_policy",
+      "file": "bot_psychologist/bot_agent/prompt_registry_v2.py",
+      "symbol": "_build_task_instruction"
+    },
+    {
+      "name": "first_turn_instruction",
+      "file": "bot_psychologist/bot_agent/onboarding_flow.py",
+      "symbol": "build_first_turn_instruction"
+    },
+    {
+      "name": "mixed_query_instruction",
+      "file": "bot_psychologist/bot_agent/onboarding_flow.py",
+      "symbol": "build_mixed_query_instruction"
+    }
+  ]
+}

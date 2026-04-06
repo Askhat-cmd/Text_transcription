@@ -23,12 +23,16 @@ def admin_client(tmp_path, monkeypatch):
         yield client
 
 
-def test_admin_trace_last_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/last", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+def test_admin_export_import_metadata_uses_105_family(admin_client) -> None:
+    exported = admin_client.get("/api/admin/export", headers=ADMIN_HEADERS)
+    assert exported.status_code == 200
+    exported_payload = exported.json()
+    assert exported_payload["meta"]["schema_family"] == "admin_overrides"
+    assert exported_payload["meta"]["schema_version"] == "10.5"
 
-
-def test_admin_trace_recent_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/recent?limit=2", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+    imported = admin_client.post("/api/admin/import", headers=ADMIN_HEADERS, json=exported_payload)
+    assert imported.status_code == 200
+    imported_payload = imported.json()
+    assert imported_payload["schema_version"] == "10.5"
+    assert imported_payload["imported_schema_version"] == "10.5"
 

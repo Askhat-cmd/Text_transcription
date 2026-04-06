@@ -28,7 +28,7 @@ def test_admin_export_has_schema_version(admin_client):
     assert response.status_code == 200
     payload = response.json()
     assert "meta" in payload
-    assert payload["meta"]["schema_version"] == "10.4"
+    assert payload["meta"]["schema_version"] == "10.5"
     assert payload["meta"]["schema_family"] == "admin_overrides"
 
 
@@ -51,7 +51,7 @@ def test_admin_import_accepts_legacy_payload_and_maps_known_keys(admin_client):
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["schema_version"] == "10.4"
+    assert payload["schema_version"] == "10.5"
     assert payload["imported_schema_version"] == "legacy-v1"
     assert "UNKNOWN_DEPRECATED_FIELD" in payload["ignored_config_keys"]
     assert "unknown_prompt_key" in payload["ignored_prompt_keys"]

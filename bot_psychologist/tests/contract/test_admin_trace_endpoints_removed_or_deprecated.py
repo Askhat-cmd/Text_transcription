@@ -23,12 +23,19 @@ def admin_client(tmp_path, monkeypatch):
         yield client
 
 
-def test_admin_trace_last_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/last", headers=ADMIN_HEADERS)
+@pytest.mark.parametrize(
+    "path",
+    [
+        "/api/admin/trace/last",
+        "/api/admin/trace/recent?limit=5",
+        "/api/admin/prompts/stack-v2/usage",
+    ],
+)
+def test_admin_trace_endpoints_removed_or_deprecated(admin_client, path: str) -> None:
+    response = admin_client.get(path, headers=ADMIN_HEADERS)
     assert response.status_code in {404, 410}
-
-
-def test_admin_trace_recent_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/recent?limit=2", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+    if response.status_code == 410:
+        payload = response.json()
+        assert "detail" in payload
+        assert "deprecated" in str(payload["detail"]).lower()
 

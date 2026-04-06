@@ -34,8 +34,8 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert response.status_code == 200
     payload = response.json()
 
-    assert payload["schema_version"] == "10.4.1"
-    assert payload["admin_schema_version"] == "10.4"
+    assert payload["schema_version"] == "10.5.1"
+    assert payload["admin_schema_version"] == "10.5"
     assert "prompt_stack_version" in payload
 
     assert "status" in payload
@@ -46,8 +46,9 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert "routing" in payload
     assert "validation" in payload
     assert "trace" in payload
+    assert payload["trace"]["developer_trace_supported"] is True
+    assert payload["trace"]["developer_trace_enabled"] is True
 
     assert "config_validation_status" in payload["validation"]
     assert isinstance(payload["validation"]["config_validation_status"]["valid"], bool)
     assert isinstance(payload["validation"]["config_validation_status"]["errors"], list)
-

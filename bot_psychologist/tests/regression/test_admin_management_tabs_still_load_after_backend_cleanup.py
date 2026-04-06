@@ -23,12 +23,16 @@ def admin_client(tmp_path, monkeypatch):
         yield client
 
 
-def test_admin_trace_last_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/last", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+def test_admin_management_tabs_still_load_after_backend_cleanup(admin_client) -> None:
+    endpoints = [
+        "/api/admin/config",
+        "/api/admin/prompts/stack-v2",
+        "/api/admin/status",
+        "/api/admin/runtime/effective",
+        "/api/admin/diagnostics/effective",
+    ]
 
-
-def test_admin_trace_recent_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/recent?limit=2", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+    for endpoint in endpoints:
+        response = admin_client.get(endpoint, headers=ADMIN_HEADERS)
+        assert response.status_code == 200, f"{endpoint} should stay operational"
 

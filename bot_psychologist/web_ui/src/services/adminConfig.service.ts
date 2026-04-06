@@ -10,9 +10,6 @@ import type {
   AdminStatusResponse,
   AdminRuntimeEffectiveResponse,
   AdminDiagnosticsEffectiveResponse,
-  AdminTraceLastResponse,
-  AdminTraceRecentResponse,
-  PromptStackUsageResponse,
 } from '../types/admin.types';
 
 // Получаем API-ключ из localStorage (так же как и остальные запросы приложения)
@@ -61,8 +58,6 @@ export const adminConfigService = {
     request<PromptMeta[]>('GET', '/prompts/stack-v2'),
   getPrompt: (name: string) =>
     request<PromptDetail>('GET', `/prompts/stack-v2/${name}`),
-  getPromptStackUsage: () =>
-    request<PromptStackUsageResponse>('GET', '/prompts/stack-v2/usage'),
   setPrompt: (name: string, text: string) =>
     request<PromptDetail>('PUT', `/prompts/stack-v2/${name}`, { text }),
   resetPrompt: (name: string) =>
@@ -93,10 +88,6 @@ export const adminConfigService = {
     request<AdminRuntimeEffectiveResponse>('GET', '/runtime/effective'),
   getDiagnosticsEffective: () =>
     request<AdminDiagnosticsEffectiveResponse>('GET', '/diagnostics/effective'),
-  getTraceLast: () =>
-    request<AdminTraceLastResponse>('GET', '/trace/last'),
-  getTraceRecent: (limit = 10) =>
-    request<AdminTraceRecentResponse>('GET', `/trace/recent?limit=${limit}`),
   reloadData: () =>
     request<{ status: string; blocks_loaded: number; data_source: string; degraded_mode: boolean }>(
       'POST',

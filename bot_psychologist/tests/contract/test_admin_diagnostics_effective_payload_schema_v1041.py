@@ -49,7 +49,7 @@ def test_admin_diagnostics_effective_payload_shape(admin_client):
     assert response.status_code == 200
     payload = response.json()
 
-    assert payload["schema_version"] == "10.4.1"
+    assert payload["schema_version"] == "10.5.1"
     assert payload["contract"] == "diagnostics-v1"
     assert isinstance(payload["policies"], dict)
     assert "informational_narrowing_enabled" in payload["policies"]

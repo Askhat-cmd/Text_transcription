@@ -1,0 +1,23 @@
+{
+  "schema_version": "10.5.1-phase0",
+  "residual_boundary_inventory": {
+    "trace_related_admin_endpoints": [
+      "/api/admin/trace/last",
+      "/api/admin/trace/recent",
+      "/api/admin/prompts/stack-v2/usage"
+    ],
+    "trace_related_backend_builders": [
+      "_build_trace_turn_payload",
+      "_build_prompt_stack_usage_payload",
+      "_extract_prompt_usage_from_trace"
+    ],
+    "runtime_trace_dependency_markers": [
+      "store.get_last_trace(session_id=session_id)",
+      "\"available\": bool(last_trace)"
+    ],
+    "schema_markers_before_alignment": {
+      "admin_schema_version": "10.4",
+      "admin_effective_schema_version": "10.4.1"
+    }
+  }
+}

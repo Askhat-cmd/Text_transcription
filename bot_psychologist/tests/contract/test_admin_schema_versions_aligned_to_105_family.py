@@ -23,12 +23,17 @@ def admin_client(tmp_path, monkeypatch):
         yield client
 
 
-def test_admin_trace_last_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/last", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+def test_admin_schema_versions_aligned_to_105_family(admin_client) -> None:
+    runtime = admin_client.get("/api/v1/admin/runtime/effective", headers=ADMIN_HEADERS)
+    diagnostics = admin_client.get("/api/v1/admin/diagnostics/effective", headers=ADMIN_HEADERS)
+    config_schema = admin_client.get("/api/v1/admin/config/schema-v104", headers=ADMIN_HEADERS)
 
+    assert runtime.status_code == 200
+    assert diagnostics.status_code == 200
+    assert config_schema.status_code == 200
 
-def test_admin_trace_recent_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/recent?limit=2", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+    assert runtime.json()["schema_version"] == "10.5.1"
+    assert runtime.json()["admin_schema_version"] == "10.5"
+    assert diagnostics.json()["schema_version"] == "10.5.1"
+    assert config_schema.json()["schema_version"] == "10.5"
 

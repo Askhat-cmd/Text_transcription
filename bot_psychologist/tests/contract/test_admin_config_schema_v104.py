@@ -28,7 +28,7 @@ def test_admin_config_schema_v104_exists_and_contains_markers(admin_client):
     assert response.status_code == 200
     payload = response.json()
 
-    assert payload["schema_version"] == "10.4"
+    assert payload["schema_version"] == "10.5"
     assert "editable" in payload
     assert "read_only" in payload
     assert "deprecated" in payload
@@ -45,4 +45,3 @@ def test_admin_config_schema_v104_exists_and_contains_markers(admin_client):
 
     assert "runtime_status" in payload["read_only"]
     assert "feature_flags" in payload["read_only"]
-

@@ -15,7 +15,8 @@ def _read(path: Path) -> str:
 def test_runtime_tab_system_level_only() -> None:
     text = _read(ADMIN_PANEL_PATH)
     assert "Effective Runtime Truth" in text
-    assert "trace available:" in text
+    assert "developer trace supported:" in text
+    assert "developer trace enabled:" in text
     assert "last session id" not in text
     assert "last turn #" not in text
 
@@ -23,6 +24,8 @@ def test_runtime_tab_system_level_only() -> None:
 def test_runtime_effective_payload_no_turn_identity_fields() -> None:
     text = _read(ADMIN_ROUTES_PATH)
     function_body = text.split("def _build_runtime_effective_payload", 1)[1].split("def ", 1)[0]
-    assert '"available": bool(last_trace)' in function_body
+    assert "last_trace" not in function_body
+    assert '"developer_trace_supported": True' in function_body
+    assert '"developer_trace_enabled": True' in function_body
     assert '"last_turn_number"' not in function_body
     assert '"session_id"' not in function_body

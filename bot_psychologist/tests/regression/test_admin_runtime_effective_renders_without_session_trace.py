@@ -4,6 +4,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 from api.main import app
+from api.session_store import get_session_store
 from bot_agent.config import config
 from bot_agent.runtime_config import RuntimeConfig
 
@@ -19,16 +20,21 @@ def admin_client(tmp_path, monkeypatch):
     monkeypatch.setattr(RuntimeConfig, "_cache", {}, raising=False)
     monkeypatch.setattr(config, "OVERRIDES_PATH", override_path, raising=False)
     monkeypatch.setattr(config, "WARMUP_ON_START", False, raising=False)
+
+    store = get_session_store()
+    monkeypatch.setattr(store, "_sessions", {}, raising=False)
+    monkeypatch.setattr(store, "_blobs", {}, raising=False)
+
     with TestClient(app, base_url="http://localhost") as client:
         yield client
 
 
-def test_admin_trace_last_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/last", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+def test_admin_runtime_effective_renders_without_session_trace(admin_client) -> None:
+    response = admin_client.get("/api/admin/runtime/effective", headers=ADMIN_HEADERS)
+    assert response.status_code == 200
+    payload = response.json()
 
-
-def test_admin_trace_recent_endpoint_deprecated(admin_client):
-    response = admin_client.get("/api/v1/admin/trace/recent?limit=2", headers=ADMIN_HEADERS)
-    assert response.status_code in {404, 410}
+    assert payload["trace"]["developer_trace_supported"] is True
+    assert payload["trace"]["developer_trace_enabled"] is True
+    assert payload["trace"]["developer_trace_mode_available"] is True
 

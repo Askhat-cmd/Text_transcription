@@ -50,18 +50,6 @@ export interface PromptDetail extends PromptMeta {
   default_text: string;
 }
 
-export interface PromptStackUsageResponse {
-  schema_version: string;
-  prompt_stack_version: string;
-  last_turn_available: boolean;
-  last_turn: {
-    session_id?: string | null;
-    turn_number?: number | null;
-    used_sections: string[];
-  };
-  sections: PromptMeta[];
-}
-
 export type HistoryEntryType =
   | 'config'
   | 'config_reset'
@@ -128,35 +116,8 @@ export interface AdminRuntimeEffectiveResponse {
   };
   trace: {
     available: boolean;
+    developer_trace_supported?: boolean;
+    developer_trace_enabled?: boolean;
+    developer_trace_mode_available?: boolean;
   };
-}
-
-export interface AdminTraceTurnPayload {
-  turn_id?: string | number | null;
-  turn_number?: number | null;
-  timestamp?: string | null;
-  query?: string | null;
-  diagnostics?: Record<string, unknown>;
-  routing?: Record<string, unknown>;
-  retrieval?: Record<string, unknown>;
-  prompt_stack?: Record<string, unknown>;
-  validation?: Record<string, unknown>;
-  memory?: Record<string, unknown>;
-  flags?: Record<string, unknown>;
-  anomalies?: unknown[];
-  degraded_mode?: boolean;
-}
-
-export interface AdminTraceLastResponse {
-  schema_version: string;
-  available: boolean;
-  reason?: string;
-  trace: AdminTraceTurnPayload | null;
-}
-
-export interface AdminTraceRecentResponse {
-  schema_version: string;
-  available: boolean;
-  count: number;
-  traces: AdminTraceTurnPayload[];
 }

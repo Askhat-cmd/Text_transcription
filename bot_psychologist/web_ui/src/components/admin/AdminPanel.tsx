@@ -366,7 +366,8 @@ export const AdminPanel: React.FC = () => {
                         </div>
                         <div className="rounded border border-slate-200 p-3">
                           <div className="font-medium text-slate-700 mb-1">Trace / Validation</div>
-                          <div>trace available: <span className="font-medium">{runtimeEffectiveData?.trace?.available ? 'yes' : 'no'}</span></div>
+                          <div>developer trace supported: <span className="font-medium">{runtimeEffectiveData?.trace?.developer_trace_supported ? 'yes' : 'no'}</span></div>
+                          <div>developer trace enabled: <span className="font-medium">{runtimeEffectiveData?.trace?.developer_trace_enabled ? 'yes' : 'no'}</span></div>
                           <div>config valid: <span className="font-medium">{runtimeEffectiveData?.validation?.config_validation_status?.valid ? 'true' : 'false'}</span></div>
                           <div className="text-xs text-slate-500 mt-1">
                             Deep message-level diagnostics are available in developer trace inside chat.

@@ -19,8 +19,8 @@ def test_prompt_tab_hides_last_turn_section_usage() -> None:
     assert "used_sections.join" not in text
 
 
-def test_prompt_usage_response_type_has_last_turn_schema() -> None:
+def test_prompt_usage_response_type_removed_from_admin_contract() -> None:
     text = _read(TYPES_PATH)
-    assert "export interface PromptStackUsageResponse" in text
-    assert "last_turn_available: boolean;" in text
-    assert "used_sections: string[];" in text
+    assert "export interface PromptStackUsageResponse" not in text
+    assert "last_turn_available: boolean;" not in text
+    assert "used_sections: string[];" not in text

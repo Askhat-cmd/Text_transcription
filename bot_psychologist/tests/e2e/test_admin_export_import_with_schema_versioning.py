@@ -25,9 +25,9 @@ def admin_client(tmp_path, monkeypatch):
 
 def test_admin_export_import_roundtrip_has_schema_version(admin_client):
     exported = admin_client.get("/api/admin/export", headers=ADMIN_HEADERS).json()
-    assert exported["meta"]["schema_version"] == "10.4"
+    assert exported["meta"]["schema_version"] == "10.5"
 
     imported = admin_client.post("/api/admin/import", headers=ADMIN_HEADERS, json=exported)
     assert imported.status_code == 200
     payload = imported.json()
-    assert payload["schema_version"] == "10.4"
+    assert payload["schema_version"] == "10.5"

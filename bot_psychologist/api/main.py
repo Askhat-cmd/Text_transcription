@@ -43,18 +43,7 @@ _startup_time: float = 0.0
 
 def _ensure_prompt_default_snapshots() -> None:
     """Create *.default.md snapshots for editable prompts on first startup."""
-    prompt_names = [
-        "prompt_system_base",
-        "prompt_sd_green",
-        "prompt_sd_yellow",
-        "prompt_sd_orange",
-        "prompt_sd_red",
-        "prompt_sd_blue",
-        "prompt_sd_purple",
-        "prompt_system_level_beginner",
-        "prompt_system_level_intermediate",
-        "prompt_system_level_advanced",
-    ]
+    prompt_names = list(getattr(config, "EDITABLE_PROMPTS", []))
     prompts_dir = config.BOT_AGENT_ROOT
     for name in prompt_names:
         src = prompts_dir / f"{name}.md"

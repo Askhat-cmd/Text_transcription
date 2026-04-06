@@ -92,25 +92,25 @@ def test_prompts_endpoints_roundtrip(admin_client):
     list_res = client.get("/api/v1/admin/prompts", headers=ADMIN_HEADERS)
     assert list_res.status_code == 200
     names = [item["name"] for item in list_res.json()]
-    assert "prompt_sd_green" in names
+    assert "prompt_system_base" in names
 
-    get_res = client.get("/api/v1/admin/prompts/prompt_sd_green", headers=ADMIN_HEADERS)
+    get_res = client.get("/api/v1/admin/prompts/prompt_system_base", headers=ADMIN_HEADERS)
     assert get_res.status_code == 200
     original = get_res.json()["content"]
     assert original
 
     new_content = "# Test\nСвободный развёрнутый ответ."
     put_res = client.put(
-        "/api/v1/admin/prompts/prompt_sd_green",
+        "/api/v1/admin/prompts/prompt_system_base",
         headers=ADMIN_HEADERS,
         json={"content": new_content},
     )
     assert put_res.status_code == 200
 
-    changed = client.get("/api/v1/admin/prompts/prompt_sd_green", headers=ADMIN_HEADERS).json()["content"]
+    changed = client.get("/api/v1/admin/prompts/prompt_system_base", headers=ADMIN_HEADERS).json()["content"]
     assert changed == new_content
 
-    reset_res = client.post("/api/v1/admin/prompts/prompt_sd_green/reset", headers=ADMIN_HEADERS)
+    reset_res = client.post("/api/v1/admin/prompts/prompt_system_base/reset", headers=ADMIN_HEADERS)
     assert reset_res.status_code == 200
-    restored = client.get("/api/v1/admin/prompts/prompt_sd_green", headers=ADMIN_HEADERS).json()["content"]
+    restored = client.get("/api/v1/admin/prompts/prompt_system_base", headers=ADMIN_HEADERS).json()["content"]
     assert restored != new_content

@@ -21,6 +21,28 @@ def test_no_legacy_runtime_markers_in_active_neo_paths() -> None:
             "prompt_system_level_intermediate",
             "prompt_system_level_advanced",
         ],
+        "bot_agent/runtime_config.py": [
+            "prompt_sd_green",
+            "prompt_sd_blue",
+            "prompt_sd_red",
+            "prompt_sd_orange",
+            "prompt_sd_yellow",
+            "prompt_sd_purple",
+            "prompt_system_level_beginner",
+            "prompt_system_level_intermediate",
+            "prompt_system_level_advanced",
+        ],
+        "api/main.py": [
+            "prompt_sd_green",
+            "prompt_sd_blue",
+            "prompt_sd_red",
+            "prompt_sd_orange",
+            "prompt_sd_yellow",
+            "prompt_sd_purple",
+            "prompt_system_level_beginner",
+            "prompt_system_level_intermediate",
+            "prompt_system_level_advanced",
+        ],
         "bot_agent/response/response_generator.py": [
             "_load_sd_prompt",
             "sd_overlay",
@@ -41,3 +63,22 @@ def test_no_legacy_runtime_markers_in_active_neo_paths() -> None:
         text = _read(rel_path)
         for marker in forbidden_markers:
             assert marker not in text, f"legacy marker '{marker}' found in {rel_path}"
+
+
+def test_sd_and_level_prompt_files_moved_to_legacy_folder() -> None:
+    legacy_prompt_names = [
+        "prompt_sd_green.md",
+        "prompt_sd_blue.md",
+        "prompt_sd_red.md",
+        "prompt_sd_orange.md",
+        "prompt_sd_yellow.md",
+        "prompt_sd_purple.md",
+        "prompt_system_level_beginner.md",
+        "prompt_system_level_intermediate.md",
+        "prompt_system_level_advanced.md",
+    ]
+    for filename in legacy_prompt_names:
+        root_path = REPO_ROOT / "bot_agent" / filename
+        legacy_path = REPO_ROOT / "bot_agent" / "legacy" / "prompts" / filename
+        assert not root_path.exists(), f"legacy prompt still located in active root: {root_path}"
+        assert legacy_path.exists(), f"legacy prompt missing in archive folder: {legacy_path}"

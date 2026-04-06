@@ -72,7 +72,6 @@ DEPRECATED_PROMPT_KEYS = {
     "prompt_system_level_beginner",
     "prompt_system_level_intermediate",
     "prompt_system_level_advanced",
-    "prompt_mode_informational",
 }
 
 PROMPT_STACK_V2_VARIANTS = [

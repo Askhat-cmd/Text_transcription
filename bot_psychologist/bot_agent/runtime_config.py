@@ -360,30 +360,12 @@ class RuntimeConfig(Config):
     # Список промтов доступных для редактирования
     EDITABLE_PROMPTS: list = [
         "prompt_system_base",
-        "prompt_sd_green",
-        "prompt_sd_blue",
-        "prompt_sd_red",
-        "prompt_sd_orange",
-        "prompt_sd_yellow",
-        "prompt_sd_purple",
-        "prompt_system_level_beginner",
-        "prompt_system_level_intermediate",
-        "prompt_system_level_advanced",
         "prompt_mode_informational",
     ]
 
     # Читабельные имена промтов для UI
     PROMPT_LABELS: dict = {
         "prompt_system_base":               "🧠 Системный базовый",
-        "prompt_sd_green":                  "🟢 Спиральная динамика: Green",
-        "prompt_sd_blue":                   "🔵 Спиральная динамика: Blue",
-        "prompt_sd_red":                    "🔴 Спиральная динамика: Red",
-        "prompt_sd_orange":                 "🟠 Спиральная динамика: Orange",
-        "prompt_sd_yellow":                 "🟡 Спиральная динамика: Yellow",
-        "prompt_sd_purple":                 "🟣 Спиральная динамика: Purple",
-        "prompt_system_level_beginner":     "📗 Уровень пользователя: Начальный",
-        "prompt_system_level_intermediate": "📘 Уровень пользователя: Средний",
-        "prompt_system_level_advanced":     "📙 Уровень пользователя: Продвинутый",
         "prompt_mode_informational":        "Mode: Informational (curious)",
     }
 

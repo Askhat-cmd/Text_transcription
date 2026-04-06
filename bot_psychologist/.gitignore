@@ -48,3 +48,4 @@ config_override.json
 
 # Prompt snapshots generated at startup
 bot_agent/*.default.md
+bot_agent/legacy/prompts/*.default.md

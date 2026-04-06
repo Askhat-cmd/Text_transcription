@@ -41,6 +41,13 @@ const DEPRECATED_ROUTING_KEYS = new Set([
   'PROMPT_MODE_OVERRIDES_SD',
 ]);
 
+const ROUTING_ADVANCED_KEYS = new Set([
+  'FAST_DETECTOR_ENABLED',
+  'FAST_DETECTOR_CONFIDENCE_THRESHOLD',
+  'STATE_CLASSIFIER_ENABLED',
+  'STATE_CLASSIFIER_CONFIDENCE_THRESHOLD',
+]);
+
 const ROUTE_TAXONOMY = [
   'safe_override',
   'regulate',
@@ -63,9 +70,19 @@ export const AdminPanel: React.FC = () => {
   const {
     configData, prompts, selectedPrompt,
     statusData,
+    runtimeEffectiveData,
+    diagnosticsEffectiveData,
+    traceLastData,
+    traceRecentData,
+    promptUsageData,
     isLoading, isSaving, error, promptError, successMessage,
     clearError, loadConfig, loadPrompts, loadPromptDetail,
     retryPromptDetailLoad,
+    loadRuntimeEffective,
+    loadDiagnosticsEffective,
+    loadTraceLast,
+    loadTraceRecent,
+    loadPromptUsage,
     loadStatus, reloadKnowledgeBase,
     saveConfigParam, resetConfigParam, resetAllConfig,
     savePrompt, resetPrompt, resetAllPrompts,
@@ -76,7 +93,16 @@ export const AdminPanel: React.FC = () => {
     if (apiKey) localStorage.setItem('devApiKey', apiKey);
   }, [apiKey]);
 
-  useEffect(() => { loadConfig(); loadPrompts(); loadStatus(); }, []);
+  useEffect(() => {
+    loadConfig();
+    loadPrompts();
+    loadStatus();
+    loadRuntimeEffective();
+    loadDiagnosticsEffective();
+    loadTraceLast();
+    loadTraceRecent(10);
+    loadPromptUsage();
+  }, []);
 
   useEffect(() => {
     if (activeTab !== 'compatibility') return;
@@ -84,6 +110,17 @@ export const AdminPanel: React.FC = () => {
       adminConfigService.getHistory().then((data) => setHistory(data.history));
     });
   }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab !== 'trace') return;
+    loadTraceLast();
+    loadTraceRecent(10);
+  }, [activeTab, loadTraceLast, loadTraceRecent]);
+
+  useEffect(() => {
+    if (activeTab !== 'prompts') return;
+    loadPromptUsage();
+  }, [activeTab, loadPromptUsage]);
 
   useEffect(() => {
     if (!showCompatibility && activeTab === 'compatibility') {
@@ -114,6 +151,23 @@ export const AdminPanel: React.FC = () => {
         ),
       }
     : null;
+  const routingPolicyGroup = filteredRoutingGroup
+    ? {
+        ...filteredRoutingGroup,
+        params: Object.fromEntries(
+          Object.entries(filteredRoutingGroup.params).filter(([key]) => !ROUTING_ADVANCED_KEYS.has(key))
+        ),
+      }
+    : null;
+  const routingAdvancedGroup = filteredRoutingGroup
+    ? {
+        ...filteredRoutingGroup,
+        label: '⚙️ Advanced Routing Controls',
+        params: Object.fromEntries(
+          Object.entries(filteredRoutingGroup.params).filter(([key]) => ROUTING_ADVANCED_KEYS.has(key))
+        ),
+      }
+    : null;
 
   const paramValue = (group: any, key: string): string => {
     if (!group?.params?.[key]) return 'n/a';
@@ -121,9 +175,23 @@ export const AdminPanel: React.FC = () => {
     if (typeof value === 'boolean') return value ? 'on' : 'off';
     return String(value);
   };
+  const routingValue = (key: string, fallback = 'n/a'): string => {
+    const value = runtimeEffectiveData?.routing?.[key];
+    if (typeof value === 'boolean') return value ? 'on' : 'off';
+    if (value === undefined || value === null) return fallback;
+    return String(value);
+  };
+  const diagnosticsValue = (key: string, fallback = 'n/a'): string => {
+    const value = diagnosticsEffectiveData?.active_contract?.[key];
+    if (typeof value === 'boolean') return value ? 'true' : 'false';
+    if (value === undefined || value === null) return fallback;
+    return String(value);
+  };
   const visibleTabs = showCompatibility
     ? TABS
     : TABS.filter((tab) => tab.key !== 'compatibility');
+  const tracePayload = traceLastData?.trace;
+  const traceRecentItems = traceRecentData?.traces ?? [];
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -205,16 +273,6 @@ export const AdminPanel: React.FC = () => {
               >
                 🗑 Полный сброс
               </button>
-              <button
-                onClick={() => setShowCompatibility((prev) => !prev)}
-                className={`px-3 py-1.5 border rounded text-sm transition-colors ${
-                  showCompatibility
-                    ? 'border-amber-400 text-amber-300 hover:bg-amber-500/20'
-                    : 'border-slate-500 text-slate-300 hover:bg-slate-600'
-                }`}
-              >
-                {showCompatibility ? 'Скрыть Compatibility' : 'Показать Compatibility'}
-              </button>
             </div>
           </div>
         </div>
@@ -222,20 +280,35 @@ export const AdminPanel: React.FC = () => {
 
       {/* ── Tabs: тёмная полоса ── */}
       <div className="bg-slate-800 px-6 shadow-md">
-        <div className="max-w-6xl mx-auto flex gap-1">
-          {visibleTabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-3 text-sm font-medium border-b-2 transition-all ${
-                activeTab === tab.key
-                  ? 'border-violet-400 text-white bg-white/5'
-                  : `border-transparent text-slate-400 ${tab.hoverColor} hover:text-white`
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-3">
+          <div className="flex gap-1">
+            {visibleTabs.map((tab) => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`px-4 py-3 text-sm font-medium border-b-2 transition-all ${
+                  activeTab === tab.key
+                    ? 'border-violet-400 text-white bg-white/5'
+                    : `border-transparent text-slate-400 ${tab.hoverColor} hover:text-white`
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+          <details className="relative">
+            <summary className="list-none cursor-pointer px-3 py-1.5 text-xs border border-slate-600 rounded text-slate-300 hover:bg-slate-700">
+              Advanced
+            </summary>
+            <div className="absolute right-0 mt-1 w-52 rounded border border-slate-700 bg-slate-900 p-2 shadow-lg z-20">
+              <button
+                onClick={() => setShowCompatibility((prev) => !prev)}
+                className="w-full text-left text-xs text-slate-200 hover:bg-slate-800 rounded px-2 py-1"
+              >
+                {showCompatibility ? 'Hide Compatibility tab' : 'Show Compatibility tab'}
+              </button>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -305,34 +378,74 @@ export const AdminPanel: React.FC = () => {
                   </div>
                 )}
                 {activeTab === 'runtime' && statusData && (
-                  <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
-                    <h3 className="font-semibold text-slate-800 mb-3">Статус системы</h3>
-                    <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
-                      <div>Режим данных: <span className="font-medium">{statusData.data_source}</span></div>
-                      <div>Блоков в памяти: <span className="font-medium">{statusData.blocks_loaded}</span></div>
-                      <div>DEGRADED_MODE: <span className="font-medium">{statusData.degraded_mode ? 'Активен' : 'ОК'}</span></div>
-                      <div>Версия: <span className="font-medium">{statusData.version}</span></div>
-                    </div>
-                    {statusData.feature_flags && (
-                      <div className="mt-3 border-t border-slate-200 pt-3">
-                        <h4 className="font-medium text-slate-700 mb-2">Feature Flags</h4>
-                        <div className="grid grid-cols-2 gap-1 text-xs text-slate-600">
-                          {Object.entries(statusData.feature_flags).map(([flag, enabled]) => (
-                            <div key={flag}>
-                              {flag}: <span className="font-medium">{enabled ? 'on' : 'off'}</span>
-                            </div>
-                          ))}
+                  <div className="space-y-4">
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
+                      <h3 className="font-semibold text-slate-800 mb-3">Effective Runtime Truth</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-600">
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700 mb-1">Schema / Versions</div>
+                          <div>schema_version: <span className="font-medium">{runtimeEffectiveData?.schema_version ?? 'n/a'}</span></div>
+                          <div>admin_schema_version: <span className="font-medium">{runtimeEffectiveData?.admin_schema_version ?? 'n/a'}</span></div>
+                          <div>prompt_stack_version: <span className="font-medium">{runtimeEffectiveData?.prompt_stack_version ?? 'n/a'}</span></div>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700 mb-1">Diagnostics / Routing</div>
+                          <div>diagnostics contract: <span className="font-medium">{String(runtimeEffectiveData?.diagnostics?.contract ?? 'n/a')}</span></div>
+                          <div>diagnostics enabled: <span className="font-medium">{String(runtimeEffectiveData?.diagnostics?.enabled ?? 'n/a')}</span></div>
+                          <div>deterministic resolver: <span className="font-medium">{routingValue('deterministic_resolver_enabled')}</span></div>
+                          <div>false-inform protection: <span className="font-medium">{routingValue('false_inform_protection_enabled')}</span></div>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700 mb-1">Trace / Validation</div>
+                          <div>trace available: <span className="font-medium">{runtimeEffectiveData?.trace?.available ? 'yes' : 'no'}</span></div>
+                          <div>last session id: <span className="font-medium">{runtimeEffectiveData?.trace?.session_id ?? 'n/a'}</span></div>
+                          <div>last turn #: <span className="font-medium">{String(runtimeEffectiveData?.trace?.last_turn_number ?? 'n/a')}</span></div>
+                          <div>config valid: <span className="font-medium">{runtimeEffectiveData?.validation?.config_validation_status?.valid ? 'true' : 'false'}</span></div>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700 mb-1">Grouped Feature Flags</div>
+                          <div className="space-y-1">
+                            {Object.entries(runtimeEffectiveData?.feature_flags?.groups ?? {}).map(([groupName, flags]) => (
+                              <div key={groupName}>
+                                <span className="font-medium">{groupName}</span>: {Object.entries(flags).map(([flag, enabled]) => `${flag}=${enabled ? 'on' : 'off'}`).join(', ')}
+                              </div>
+                            ))}
+                            {Object.keys(runtimeEffectiveData?.feature_flags?.groups ?? {}).length === 0 && (
+                              <div>n/a</div>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    )}
-                    <div className="mt-3">
-                      <button
-                        onClick={reloadKnowledgeBase}
-                        disabled={isSaving}
-                        className="px-3 py-1.5 rounded bg-slate-700 text-white text-sm hover:bg-slate-800 disabled:opacity-50"
-                      >
-                        🔄 Перезагрузить базу знаний
-                      </button>
+                    </div>
+                    <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
+                      <h3 className="font-semibold text-slate-800 mb-3">Системный статус</h3>
+                      <div className="grid grid-cols-2 gap-2 text-sm text-slate-600">
+                        <div>Режим данных: <span className="font-medium">{statusData.data_source}</span></div>
+                        <div>Блоков в памяти: <span className="font-medium">{statusData.blocks_loaded}</span></div>
+                        <div>DEGRADED_MODE: <span className="font-medium">{statusData.degraded_mode ? 'Активен' : 'ОК'}</span></div>
+                        <div>Версия: <span className="font-medium">{statusData.version}</span></div>
+                      </div>
+                      {statusData.feature_flags && (
+                        <div className="mt-3 border-t border-slate-200 pt-3">
+                          <h4 className="font-medium text-slate-700 mb-2">Raw Feature Flags</h4>
+                          <div className="grid grid-cols-2 gap-1 text-xs text-slate-600">
+                            {Object.entries(statusData.feature_flags).map(([flag, enabled]) => (
+                              <div key={flag}>
+                                {flag}: <span className="font-medium">{enabled ? 'on' : 'off'}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div className="mt-3">
+                        <button
+                          onClick={reloadKnowledgeBase}
+                          disabled={isSaving}
+                          className="px-3 py-1.5 rounded bg-slate-700 text-white text-sm hover:bg-slate-800 disabled:opacity-50"
+                        >
+                          🔄 Перезагрузить базу знаний
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -356,17 +469,43 @@ export const AdminPanel: React.FC = () => {
               <div className="mt-4 bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-3">
                 <h3 className="text-lg font-semibold text-slate-800">Diagnostics v1</h3>
                 <p className="text-sm text-slate-600">
-                  Операционная поверхность для диагностики поведения Neo runtime.
-                  SD/user-level legacy контролы убраны из primary tabs.
+                  Операционная поверхность для диагностики поведения Neo runtime:
+                  active contract, policy states и last runtime snapshot.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="rounded border border-slate-200 p-3">
-                    <div className="font-medium text-slate-700">Interaction Model</div>
-                    <div className="text-slate-600 mt-1">nervous_system_state • request_function • informational narrowing</div>
+                    <div className="font-medium text-slate-700">Active Diagnostics Contract</div>
+                    <div className="text-slate-600 mt-1 space-y-1">
+                      <div>interaction_mode: <span className="font-medium">{diagnosticsValue('interaction_mode')}</span></div>
+                      <div>nervous_system_state: <span className="font-medium">{diagnosticsValue('nervous_system_state')}</span></div>
+                      <div>request_function: <span className="font-medium">{diagnosticsValue('request_function')}</span></div>
+                      <div>core_theme: <span className="font-medium">{diagnosticsValue('core_theme')}</span></div>
+                    </div>
                   </div>
                   <div className="rounded border border-slate-200 p-3">
-                    <div className="font-medium text-slate-700">Routing Taxonomy</div>
-                    <div className="text-slate-600 mt-1">{ROUTE_TAXONOMY.join(' • ')}</div>
+                    <div className="font-medium text-slate-700">Current Behavior Policies</div>
+                    <div className="text-slate-600 mt-1 space-y-1">
+                      <div>informational narrowing: <span className="font-medium">{diagnosticsEffectiveData?.policies?.informational_narrowing_enabled ? 'on' : 'off'}</span></div>
+                      <div>mixed query handling: <span className="font-medium">{diagnosticsEffectiveData?.policies?.mixed_query_handling_enabled ? 'on' : 'off'}</span></div>
+                      <div>user correction protocol: <span className="font-medium">{diagnosticsEffectiveData?.policies?.user_correction_protocol_enabled ? 'on' : 'off'}</span></div>
+                      <div>first-turn richness: <span className="font-medium">{diagnosticsEffectiveData?.policies?.first_turn_richness_policy_enabled ? 'on' : 'off'}</span></div>
+                    </div>
+                  </div>
+                  <div className="rounded border border-slate-200 p-3">
+                    <div className="font-medium text-slate-700">Last Diagnostics Snapshot</div>
+                    <div className="text-slate-600 mt-1 space-y-1">
+                      <div>trace available: <span className="font-medium">{diagnosticsEffectiveData?.trace_available ? 'yes' : 'no'}</span></div>
+                      <div>informational_mode_hint: <span className="font-medium">{diagnosticsValue('informational_mode_hint')}</span></div>
+                      <div>mixed_query: <span className="font-medium">{diagnosticsValue('mixed_query')}</span></div>
+                      <div>confidence: <span className="font-medium">{diagnosticsValue('confidence')}</span></div>
+                    </div>
+                  </div>
+                  <div className="rounded border border-slate-200 p-3">
+                    <div className="font-medium text-slate-700">Inform/Mixed/User Correction</div>
+                    <div className="text-slate-600 mt-1">
+                      Policy influence: informational narrowing, mixed-query bridge и user correction
+                      протокол участвуют в route decision и shaping final response style.
+                    </div>
                   </div>
                 </div>
               </div>
@@ -381,14 +520,68 @@ export const AdminPanel: React.FC = () => {
                     Legacy Decision Gate and SD routing controls are moved out of primary routing surface.
                   </p>
                 </div>
-                <ConfigGroupPanel
-                  groupKey="routing"
-                  group={filteredRoutingGroup}
-                  onSave={saveConfigParam}
-                  onReset={handleResetConfigParam}
-                  isSaving={isSaving}
-                  accentColor={GROUP_COLORS.routing ?? 'cyan'}
-                />
+                <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
+                  <h3 className="font-semibold text-slate-800 mb-2">Current Routing Policy</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-slate-600">
+                    <div>deterministic resolver: <span className="font-medium">{routingValue('deterministic_resolver_enabled')}</span></div>
+                    <div>false-inform protection: <span className="font-medium">{routingValue('false_inform_protection_enabled')}</span></div>
+                    <div>curiosity decoupling: <span className="font-medium">{routingValue('curiosity_decoupling_enabled')}</span></div>
+                    <div>practice trigger guard: <span className="font-medium">{routingValue('practice_trigger_guard_enabled')}</span></div>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-3 text-sm text-slate-600">
+                    <div className="font-medium text-slate-700">False-Inform Protection</div>
+                    <div className="mt-1">
+                      Защита от неверного перехода в informational ветку: <span className="font-medium">{routingValue('false_inform_protection_enabled')}</span>
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-3 text-sm text-slate-600">
+                    <div className="font-medium text-slate-700">Curiosity Decoupling</div>
+                    <div className="mt-1">
+                      `curious` больше не принуждает informational override.
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-3 text-sm text-slate-600">
+                    <div className="font-medium text-slate-700">Practice Trigger Rules</div>
+                    <div className="mt-1">
+                      Practice route включается только при валидных диагностических сигналах и safety-приоритете.
+                    </div>
+                  </div>
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-3 text-sm text-slate-600">
+                    <div className="font-medium text-slate-700">Safety Override Priority</div>
+                    <div className="mt-1">
+                      `safe_override` имеет приоритет над остальными route-ветками.
+                    </div>
+                  </div>
+                </div>
+                {routingPolicyGroup && Object.keys(routingPolicyGroup.params).length > 0 && (
+                  <ConfigGroupPanel
+                    groupKey="routing"
+                    group={routingPolicyGroup}
+                    onSave={saveConfigParam}
+                    onReset={handleResetConfigParam}
+                    isSaving={isSaving}
+                    accentColor={GROUP_COLORS.routing ?? 'cyan'}
+                  />
+                )}
+                {routingAdvancedGroup && Object.keys(routingAdvancedGroup.params).length > 0 && (
+                  <details className="bg-white rounded-xl border border-slate-200 shadow-sm">
+                    <summary className="cursor-pointer select-none px-4 py-3 text-sm font-medium text-slate-700">
+                      Advanced Routing Controls
+                    </summary>
+                    <div className="px-4 pb-4">
+                      <ConfigGroupPanel
+                        groupKey="routing-advanced"
+                        group={routingAdvancedGroup}
+                        onSave={saveConfigParam}
+                        onReset={handleResetConfigParam}
+                        isSaving={isSaving}
+                        accentColor={GROUP_COLORS.routing ?? 'cyan'}
+                      />
+                    </div>
+                  </details>
+                )}
               </div>
             )}
 
@@ -398,6 +591,7 @@ export const AdminPanel: React.FC = () => {
                 <PromptEditorPanel
                   prompts={prompts}
                   selectedPrompt={selectedPrompt}
+                  promptUsage={promptUsageData}
                   promptError={promptError}
                   onSelect={loadPromptDetail}
                   onRetryLoad={retryPromptDetailLoad}
@@ -411,15 +605,91 @@ export const AdminPanel: React.FC = () => {
 
             {activeTab === 'trace' && (
               <div className="mt-4">
-                <div className="bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-2">
+                <div className="bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-4">
                   <h3 className="text-lg font-semibold text-slate-800">Trace / Debug</h3>
-                  <p className="text-sm text-slate-600">
-                    Трейс запроса показывается в карточке ответа веб-UI. Здесь фиксируется
-                    диагностический срез по runtime/status для операторской проверки.
-                  </p>
-                  <div className="text-sm text-slate-700">
-                    Последний status: {statusData ? `${statusData.version} • ${statusData.data_source}` : 'n/a'}
-                  </div>
+                  {traceLastData?.available === false && (
+                    <div className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
+                      Trace disabled/unavailable. Причина: {traceLastData.reason ?? 'no trace yet'}.
+                    </div>
+                  )}
+                  {!traceLastData && (
+                    <div className="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600">
+                      No trace yet. Открой диалоговый turn и нажми вкладку повторно.
+                    </div>
+                  )}
+                  {tracePayload && (
+                    <>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Turn header</div>
+                          <div className="text-slate-600 mt-1">turn: {String(tracePayload.turn_number ?? 'n/a')}</div>
+                          <div className="text-slate-600">query: {String(tracePayload.query ?? 'n/a')}</div>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Diagnostics snapshot</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.diagnostics ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Routing decision</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.routing ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Retrieval pipeline</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.retrieval ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Prompt stack summary</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.prompt_stack ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Output validation</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.validation ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Memory / summary update</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(tracePayload.memory ?? {}, null, 2)}
+                          </pre>
+                        </div>
+                        <div className="rounded border border-slate-200 p-3">
+                          <div className="font-medium text-slate-700">Flags / degraded / anomalies</div>
+                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
+                            {JSON.stringify(
+                              {
+                                degraded_mode: tracePayload.degraded_mode ?? false,
+                                anomalies: tracePayload.anomalies ?? [],
+                              },
+                              null,
+                              2
+                            )}
+                          </pre>
+                        </div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3 text-sm text-slate-600">
+                        <div className="font-medium text-slate-700 mb-2">Recent traces list</div>
+                        {traceRecentItems.length === 0 && <div>No recent traces available.</div>}
+                        {traceRecentItems.length > 0 && (
+                          <ul className="space-y-1">
+                            {traceRecentItems.map((item, idx) => (
+                              <li key={`${item.turn_number ?? idx}-${idx}`}>
+                                turn {String(item.turn_number ?? 'n/a')} • route {String((item.routing && typeof item.routing === 'object' ? (item.routing as Record<string, unknown>).resolved_route : 'n/a') ?? 'n/a')} • query {String(item.query ?? 'n/a')}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             )}

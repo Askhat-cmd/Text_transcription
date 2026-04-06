@@ -1,0 +1,145 @@
+﻿{
+  "schema_version": "10.4.1-phase0",
+  "ui_operational_gaps": {
+    "sections": [
+      {
+        "name": "diagnostics_surface_too_summary",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+        "before_markers": [
+          "Diagnostics v1",
+          "Interaction Model",
+          "Routing Taxonomy"
+        ],
+        "missing_markers": [
+          "Active Diagnostics Contract",
+          "Current Behavior Policies",
+          "Last Diagnostics Snapshot",
+          "Informational Narrowing",
+          "Mixed Query Handling",
+          "User Correction Protocol"
+        ]
+      },
+      {
+        "name": "routing_surface_not_policy_first",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+        "before_markers": [
+          "Neo Route Taxonomy",
+          "ConfigGroupPanel",
+          "filteredRoutingGroup"
+        ],
+        "missing_markers": [
+          "Current Routing Policy",
+          "False-Inform Protection",
+          "Curiosity Decoupling",
+          "Practice Trigger Rules",
+          "Safety Override Priority",
+          "Advanced Controls"
+        ]
+      },
+      {
+        "name": "trace_viewer_placeholder",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+        "before_markers": [
+          "Trace / Debug",
+          "Последний status"
+        ],
+        "missing_markers": [
+          "Turn header",
+          "Diagnostics snapshot",
+          "Routing decision",
+          "Retrieval pipeline",
+          "Prompt stack summary",
+          "Output validation",
+          "Memory / summary update",
+          "Flags / anomalies / degraded"
+        ]
+      },
+      {
+        "name": "prompt_operations_not_turn_aware",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/PromptEditorPanel.tsx",
+        "before_markers": [
+          "read-only runtime section",
+          "Показать оригинал",
+          "Повторить"
+        ],
+        "missing_markers": [
+          "Effective Assembly Preview",
+          "Last Turn Usage",
+          "Section Participation",
+          "read_only_reason",
+          "derived_from",
+          "variants/modifiers"
+        ]
+      },
+      {
+        "name": "runtime_truth_not_deep_enough",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+        "before_markers": [
+          "Статус системы",
+          "Feature Flags"
+        ],
+        "missing_markers": [
+          "active_diagnostics_state",
+          "active_routing_state",
+          "prompt_stack_version",
+          "admin_schema_version",
+          "trace_availability",
+          "config_validation_status"
+        ]
+      },
+      {
+        "name": "compatibility_too_visible",
+        "status": "gap",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+        "before_markers": [
+          "Показать Compatibility",
+          "Скрыть Compatibility"
+        ],
+        "missing_markers": [
+          "advanced utility menu",
+          "secondary placement",
+          "de-emphasized compatibility action"
+        ]
+      }
+    ]
+  },
+  "api_operational_gaps": {
+    "file": "bot_psychologist/api/admin_routes.py",
+    "present_markers": [
+      "\"/status\"",
+      "\"/prompts/stack-v2\"",
+      "ADMIN_SCHEMA_VERSION = \"10.4\""
+    ],
+    "missing_endpoints": [
+      "/runtime/effective",
+      "/diagnostics/effective",
+      "/trace/last",
+      "/trace/recent",
+      "/prompts/stack-v2/usage"
+    ],
+    "missing_prompt_usage_fields": [
+      "read_only_reason",
+      "derived_from",
+      "usage_markers",
+      "last_turn_sections"
+    ]
+  },
+  "trace_surface_baseline": {
+    "status": "placeholder",
+    "required_blocks": [
+      "turn_header",
+      "diagnostics_snapshot",
+      "routing_decision",
+      "retrieval_pipeline",
+      "prompt_stack_summary",
+      "output_validation",
+      "memory_update",
+      "flags_anomalies"
+    ]
+  }
+}

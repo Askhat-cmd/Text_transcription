@@ -6,7 +6,7 @@ Admin Config Panel — API endpoints.
 Роутер регистрируется в main.py через app.include_router(admin_router).
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Header, status
+from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
 from typing import Any
 
 from bot_agent.config import config
@@ -14,6 +14,7 @@ from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.prompt_registry_v2 import PROMPT_STACK_ORDER, PROMPT_STACK_VERSION, prompt_registry_v2
+from .session_store import get_session_store
 from .auth import is_dev_key
 
 
@@ -44,6 +45,7 @@ admin_router_v1 = APIRouter(
 )
 
 ADMIN_SCHEMA_VERSION = "10.4"
+ADMIN_EFFECTIVE_SCHEMA_VERSION = "10.4.1"
 
 LEGACY_CONFIG_KEY_MAP = {
     "RETRIEVAL_TOP_K": "TOP_K_BLOCKS",
@@ -159,6 +161,9 @@ def _build_prompt_stack_v2_meta() -> list[dict[str, Any]]:
                 "version": history_meta["version"],
                 "updated_at": history_meta["updated_at"],
                 "legacy_prompt_name": editable_prompt_name,
+                "derived_from": editable_prompt_name if editable else "prompt_registry_v2",
+                "read_only_reason": None if editable else "runtime_derived_section_not_editable_via_admin",
+                "usage_markers": {"used_in_last_turn": False},
             }
         )
     return result
@@ -198,6 +203,219 @@ def _build_prompt_stack_v2_detail(section_name: str) -> dict[str, Any]:
         "version": history_meta["version"],
         "updated_at": history_meta["updated_at"],
         "legacy_prompt_name": editable_prompt_name,
+        "derived_from": editable_prompt_name if editable else "prompt_registry_v2",
+        "read_only_reason": None if editable else "runtime_derived_section_not_editable_via_admin",
+        "usage_markers": {"used_in_last_turn": False},
+    }
+
+
+def _group_feature_flags(snapshot: dict[str, bool]) -> dict[str, dict[str, bool]]:
+    groups = {
+        "neo_runtime": (
+            "NEO_MINDBOT_ENABLED",
+            "LEGACY_PIPELINE_ENABLED",
+            "DISABLE_SD_RUNTIME",
+            "DISABLE_USER_LEVEL_ADAPTER",
+        ),
+        "pipeline": (
+            "USE_NEW_DIAGNOSTICS_V1",
+            "USE_DETERMINISTIC_ROUTE_RESOLVER",
+            "USE_PROMPT_STACK_V2",
+            "USE_OUTPUT_VALIDATION",
+            "INFORMATIONAL_BRANCH_ENABLED",
+        ),
+        "quality": (
+            "ENABLE_CONDITIONAL_RERANKER",
+            "ENABLE_EMBEDDING_PROVIDER",
+        ),
+    }
+    return {
+        group: {flag: snapshot.get(flag, False) for flag in flags}
+        for group, flags in groups.items()
+    }
+
+
+def _group_param_value(group_name: str, key: str, default: Any = None) -> Any:
+    all_groups = config.get_all_config().get("groups", {})
+    group = all_groups.get(group_name, {})
+    params = group.get("params", {})
+    if key not in params:
+        return default
+    return params[key].get("value", default)
+
+
+def _extract_prompt_usage_from_trace(trace: dict[str, Any] | None) -> list[str]:
+    if not isinstance(trace, dict):
+        return []
+    prompt_stack = trace.get("prompt_stack_v2")
+    if not isinstance(prompt_stack, dict):
+        return []
+    sections = prompt_stack.get("sections")
+    if isinstance(sections, dict):
+        return [name for name, size in sections.items() if isinstance(size, int) and size > 0]
+    return []
+
+
+def _build_trace_turn_payload(raw_trace: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(raw_trace, dict):
+        return None
+
+    diagnostics = raw_trace.get("diagnostics_v1") or {}
+    retrieval = {
+        "initial_top_k": raw_trace.get("blocks_initial"),
+        "rerank_enabled": bool(raw_trace.get("reranker_enabled", False)),
+        "rerank_top_k": (raw_trace.get("config_snapshot") or {}).get("VOYAGE_TOP_K"),
+        "before_filter_count": len(raw_trace.get("chunks_retrieved") or []),
+        "after_filter_count": len(raw_trace.get("chunks_after_filter") or []),
+        "final_cap": raw_trace.get("block_cap"),
+        "to_llm_count": raw_trace.get("blocks_after_cap"),
+    }
+    prompt_stack = raw_trace.get("prompt_stack_v2") or {}
+    validation = raw_trace.get("output_validation") or {}
+    memory = {
+        "summary_used": raw_trace.get("summary_used"),
+        "summary_length": raw_trace.get("summary_length"),
+        "summary_last_turn": raw_trace.get("summary_last_turn"),
+        "snapshot_updated": bool(raw_trace.get("context_written")),
+        "semantic_hits": raw_trace.get("semantic_hits"),
+        "memory_strategy": raw_trace.get("memory_strategy"),
+    }
+
+    return {
+        "turn_id": raw_trace.get("turn_id") or raw_trace.get("turn_number"),
+        "turn_number": raw_trace.get("turn_number"),
+        "timestamp": raw_trace.get("timestamp"),
+        "query": raw_trace.get("hybrid_query_preview"),
+        "diagnostics": diagnostics,
+        "routing": {
+            "resolved_route": raw_trace.get("resolved_route"),
+            "recommended_mode": raw_trace.get("recommended_mode"),
+            "confidence_score": raw_trace.get("confidence_score"),
+            "confidence_level": raw_trace.get("confidence_level"),
+            "decision_rule_id": raw_trace.get("decision_rule_id"),
+        },
+        "retrieval": retrieval,
+        "prompt_stack": {
+            "enabled": bool(prompt_stack.get("enabled")),
+            "version": prompt_stack.get("version"),
+            "order": prompt_stack.get("order") or [],
+            "sections": prompt_stack.get("sections") or {},
+            "used_sections": _extract_prompt_usage_from_trace(raw_trace),
+        },
+        "validation": validation,
+        "memory": memory,
+        "flags": raw_trace.get("config_snapshot") or {},
+        "anomalies": raw_trace.get("anomalies") or [],
+        "degraded_mode": bool(raw_trace.get("retrieval_degraded_reason")),
+    }
+
+
+def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
+    status_payload = _status_snapshot()
+    flags_snapshot = feature_flags.snapshot()
+    store = get_session_store()
+    last_trace = store.get_last_trace(session_id=session_id)
+    validation = validate_runtime_config(config)
+
+    return {
+        "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+        "admin_schema_version": ADMIN_SCHEMA_VERSION,
+        "prompt_stack_version": PROMPT_STACK_VERSION,
+        "status": status_payload,
+        "feature_flags": {
+            "all": flags_snapshot,
+            "groups": _group_feature_flags(flags_snapshot),
+        },
+        "diagnostics": {
+            "contract": "v1",
+            "enabled": bool(flags_snapshot.get("USE_NEW_DIAGNOSTICS_V1")),
+            "informational_branch_enabled": bool(flags_snapshot.get("INFORMATIONAL_BRANCH_ENABLED")),
+        },
+        "routing": {
+            "deterministic_resolver_enabled": bool(flags_snapshot.get("USE_DETERMINISTIC_ROUTE_RESOLVER")),
+            "curiosity_decoupling_enabled": True,
+            "false_inform_protection_enabled": bool(flags_snapshot.get("USE_OUTPUT_VALIDATION")),
+            "practice_trigger_guard_enabled": bool(_group_param_value("routing", "FREE_CONVERSATION_MODE", True)),
+        },
+        "validation": {
+            "enabled": bool(flags_snapshot.get("USE_OUTPUT_VALIDATION")),
+            "config_validation_status": {
+                "valid": validation.valid,
+                "errors": list(validation.errors),
+            },
+        },
+        "trace": {
+            "available": bool(last_trace),
+            "session_id": (last_trace or {}).get("session_id"),
+            "last_turn_number": (last_trace or {}).get("turn_number"),
+        },
+    }
+
+
+def _build_diagnostics_effective_payload(session_id: str | None = None) -> dict[str, Any]:
+    flags_snapshot = feature_flags.snapshot()
+    store = get_session_store()
+    last_trace = store.get_last_trace(session_id=session_id)
+    diagnostics = (last_trace or {}).get("diagnostics_v1") if isinstance(last_trace, dict) else {}
+    diagnostics = diagnostics if isinstance(diagnostics, dict) else {}
+
+    return {
+        "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+        "contract": "diagnostics-v1",
+        "policies": {
+            "informational_narrowing_enabled": bool(flags_snapshot.get("INFORMATIONAL_BRANCH_ENABLED")),
+            "mixed_query_handling_enabled": bool(flags_snapshot.get("USE_NEW_DIAGNOSTICS_V1")),
+            "user_correction_protocol_enabled": bool(_group_param_value("routing", "STATE_CLASSIFIER_ENABLED", True)),
+            "first_turn_richness_policy_enabled": bool(flags_snapshot.get("USE_OUTPUT_VALIDATION")),
+            "curiosity_decoupling_enabled": True,
+        },
+        "active_contract": {
+            "interaction_mode": diagnostics.get("interaction_mode"),
+            "nervous_system_state": diagnostics.get("nervous_system_state"),
+            "request_function": diagnostics.get("request_function"),
+            "core_theme": diagnostics.get("core_theme"),
+            "informational_mode_hint": diagnostics.get("informational_mode_hint"),
+            "mixed_query": diagnostics.get("mixed_query"),
+            "confidence": diagnostics.get("confidence"),
+        },
+        "last_snapshot": diagnostics,
+        "trace_available": bool(last_trace),
+    }
+
+
+def _build_prompt_stack_usage_payload(session_id: str | None = None) -> dict[str, Any]:
+    store = get_session_store()
+    last_trace = store.get_last_trace(session_id=session_id)
+    used_sections = set(_extract_prompt_usage_from_trace(last_trace))
+    sections_payload: list[dict[str, Any]] = []
+
+    for section in PROMPT_STACK_ORDER:
+        detail = _build_prompt_stack_v2_detail(section)
+        editable = bool(detail.get("editable"))
+        sections_payload.append(
+            {
+                "name": section,
+                "editable": editable,
+                "source": detail.get("source"),
+                "derived_from": detail.get("legacy_prompt_name") if editable else "prompt_registry_v2",
+                "read_only_reason": None if editable else "runtime_derived_section_not_editable_via_admin",
+                "variants": detail.get("variants") or [],
+                "usage_markers": {
+                    "used_in_last_turn": section in used_sections,
+                },
+            }
+        )
+
+    return {
+        "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+        "prompt_stack_version": PROMPT_STACK_VERSION,
+        "last_turn_available": bool(last_trace),
+        "last_turn": {
+            "session_id": (last_trace or {}).get("session_id"),
+            "turn_number": (last_trace or {}).get("turn_number"),
+            "used_sections": sorted(used_sections),
+        },
+        "sections": sections_payload,
     }
 
 
@@ -533,6 +751,79 @@ async def admin_status():
     }
 
 
+@admin_router.get(
+    "/runtime/effective",
+    summary="Effective runtime truth payload for operational admin surface",
+)
+@admin_router_v1.get(
+    "/runtime/effective",
+    summary="Effective runtime truth payload (v1 route)",
+)
+async def admin_runtime_effective(session_id: str | None = Query(default=None)):
+    return _build_runtime_effective_payload(session_id=session_id)
+
+
+@admin_router.get(
+    "/diagnostics/effective",
+    summary="Effective diagnostics payload for operational admin surface",
+)
+@admin_router_v1.get(
+    "/diagnostics/effective",
+    summary="Effective diagnostics payload (v1 route)",
+)
+async def admin_diagnostics_effective(session_id: str | None = Query(default=None)):
+    return _build_diagnostics_effective_payload(session_id=session_id)
+
+
+@admin_router.get(
+    "/trace/last",
+    summary="Last available turn trace for admin inspection",
+)
+@admin_router_v1.get(
+    "/trace/last",
+    summary="Last available turn trace for admin inspection (v1 route)",
+)
+async def admin_trace_last(session_id: str | None = Query(default=None)):
+    store = get_session_store()
+    last_trace = store.get_last_trace(session_id=session_id)
+    payload = _build_trace_turn_payload(last_trace)
+    if payload is None:
+        return {
+            "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+            "available": False,
+            "reason": "trace_unavailable",
+            "trace": None,
+        }
+    return {
+        "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+        "available": True,
+        "trace": payload,
+    }
+
+
+@admin_router.get(
+    "/trace/recent",
+    summary="Recent traces for admin inspection",
+)
+@admin_router_v1.get(
+    "/trace/recent",
+    summary="Recent traces for admin inspection (v1 route)",
+)
+async def admin_trace_recent(
+    session_id: str | None = Query(default=None),
+    limit: int = Query(default=10, ge=1, le=50),
+):
+    store = get_session_store()
+    traces = store.get_recent_traces(session_id=session_id, limit=limit)
+    normalized = [item for item in (_build_trace_turn_payload(t) for t in traces) if item is not None]
+    return {
+        "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
+        "available": bool(normalized),
+        "count": len(normalized),
+        "traces": normalized,
+    }
+
+
 @admin_router.post(
     "/reload-data",
     summary="Перезагрузить базу знаний в data_loader",
@@ -583,6 +874,18 @@ async def admin_get_prompts():
 )
 async def admin_get_prompts_stack_v2():
     return _build_prompt_stack_v2_meta()
+
+
+@admin_router.get(
+    "/prompts/stack-v2/usage",
+    summary="Prompt stack v2 usage metadata for last trace",
+)
+@admin_router_v1.get(
+    "/prompts/stack-v2/usage",
+    summary="Prompt stack v2 usage metadata for last trace (v1 route)",
+)
+async def admin_get_prompts_stack_v2_usage(session_id: str | None = Query(default=None)):
+    return _build_prompt_stack_usage_payload(session_id=session_id)
 
 
 @admin_router.get(

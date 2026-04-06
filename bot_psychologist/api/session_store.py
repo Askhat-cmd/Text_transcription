@@ -60,6 +60,46 @@ class SessionStore:
                 return []
             return list(session.traces)
 
+    def get_last_session_id(self) -> Optional[str]:
+        with self._lock:
+            if not self._sessions:
+                return None
+            session_id, _ = max(
+                self._sessions.items(),
+                key=lambda item: item[1].last_updated,
+            )
+            return session_id
+
+    def get_last_trace(self, session_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
+        target_session = session_id or self.get_last_session_id()
+        if not target_session:
+            return None
+        traces = self.get_session_traces(target_session)
+        if not traces:
+            return None
+        payload = dict(traces[-1])
+        payload["session_id"] = target_session
+        return payload
+
+    def get_recent_traces(
+        self,
+        session_id: Optional[str] = None,
+        limit: int = 10,
+    ) -> List[Dict[str, Any]]:
+        target_session = session_id or self.get_last_session_id()
+        if not target_session:
+            return []
+        traces = self.get_session_traces(target_session)
+        if not traces:
+            return []
+        clipped = traces[-max(1, limit):]
+        result: List[Dict[str, Any]] = []
+        for item in clipped:
+            payload = dict(item)
+            payload["session_id"] = target_session
+            result.append(payload)
+        return result
+
     def get_session_metrics(self, session_id: str) -> Optional[Dict[str, Any]]:
         traces = self.get_session_traces(session_id)
         if not traces:

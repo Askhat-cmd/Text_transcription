@@ -22,5 +22,6 @@ def test_prompt_registry_v2_version_metadata() -> None:
     assert payload["version"] == PROMPT_STACK_VERSION
     assert payload["version"] == "2.0"
     assert "AA_SAFETY" in payload["order"]
-    assert "TASK_INSTRUCTION" in payload["sections"]
-
+    assert "A_SEASONAL" in payload["sections"]
+    assert "OUTPUT_LAYER" in payload["sections"]
+    assert len(payload["order"]) == 7

@@ -1,4 +1,4 @@
-from bot_agent.config import config
+﻿from bot_agent.config import config
 from bot_agent.response import ResponseGenerator
 
 
@@ -27,11 +27,10 @@ class _DummyAnswerer:
         return {"answer": "ok", "error": None}
 
 
-class _RestrictiveLevelAdapter:
-    @staticmethod
-    def adapt_system_prompt(prompt: str) -> str:
+class _RestrictiveAnswerer(_DummyAnswerer):
+    def build_system_prompt(self) -> str:
         return (
-            f"{prompt}\n"
+            "BASE_PROMPT\n"
             "Отвечай кратко.\n"
             "Не перегружай пользователя.\n"
             "Задай один точный вопрос."
@@ -41,7 +40,6 @@ class _RestrictiveLevelAdapter:
 def _snapshot():
     return {
         "FREE_CONVERSATION_MODE": config.FREE_CONVERSATION_MODE,
-        "PROMPT_SD_OVERRIDES_BASE": config.PROMPT_SD_OVERRIDES_BASE,
         "PROMPT_MODE_OVERRIDES_SD": config.PROMPT_MODE_OVERRIDES_SD,
     }
 
@@ -55,13 +53,13 @@ def test_free_mode_no_restricting_directives() -> None:
     snapshot = _snapshot()
     try:
         config.FREE_CONVERSATION_MODE = True
-        answerer = _DummyAnswerer()
+        answerer = _RestrictiveAnswerer()
         generator = ResponseGenerator(answerer=answerer)
         generator.generate(
             "Что такое самоосознание?",
             blocks=[],
             mode="THINKING",
-            user_level_adapter=_RestrictiveLevelAdapter(),
+            user_level_adapter=object(),
             sd_level="GREEN",
         )
         prompt = answerer.last_call["system_prompt"].lower()
@@ -73,11 +71,10 @@ def test_free_mode_no_restricting_directives() -> None:
         _restore(snapshot)
 
 
-def test_mode_directive_after_sd_when_enabled() -> None:
+def test_mode_directive_is_composed_in_system_prompt() -> None:
     snapshot = _snapshot()
     try:
         config.FREE_CONVERSATION_MODE = False
-        config.PROMPT_SD_OVERRIDES_BASE = True
         config.PROMPT_MODE_OVERRIDES_SD = True
         answerer = _DummyAnswerer()
         generator = ResponseGenerator(answerer=answerer)
@@ -89,11 +86,9 @@ def test_mode_directive_after_sd_when_enabled() -> None:
             sd_level="GREEN",
         )
         prompt = answerer.last_call["system_prompt"]
-        sd_preview = config.get_prompt("prompt_sd_green")["text"][:20]
         mode_preview = "MODE DIRECTIVE"
-        assert sd_preview in prompt
         assert mode_preview in prompt
-        assert prompt.index(mode_preview) > prompt.index(sd_preview)
+        assert prompt.index(mode_preview) > prompt.index("BASE_PROMPT")
     finally:
         _restore(snapshot)
 

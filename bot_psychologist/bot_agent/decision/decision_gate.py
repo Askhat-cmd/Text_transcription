@@ -14,6 +14,8 @@ class RoutingResult:
     """Final routing output for response mode selection."""
 
     mode: str
+    track: str
+    tone: str
     decision: DecisionResult
     confidence_score: float
     confidence_level: str
@@ -26,6 +28,17 @@ class DecisionGate:
     def __init__(self, scorer: ConfidenceScorer | None = None) -> None:
         self.scorer = scorer or ConfidenceScorer()
 
+    @staticmethod
+    def _derive_track_tone(mode: str) -> tuple[str, str]:
+        mode_norm = str(mode or "").upper()
+        if mode_norm in {"CLARIFICATION", "THINKING"}:
+            return "reflective", "technical"
+        if mode_norm == "INTERVENTION":
+            return "practice", "empathic"
+        if mode_norm in {"VALIDATION", "PRESENCE"}:
+            return "direct", "empathic"
+        return "direct", "minimal"
+
     def route(self, signals: Dict, user_stage: str = "surface") -> RoutingResult:
         confidence_result = self.scorer.score(signals)
 
@@ -35,9 +48,12 @@ class DecisionGate:
 
         decision = DecisionTable.evaluate(enriched_signals)
         mode = decision.route
+        track, tone = self._derive_track_tone(mode)
 
         return RoutingResult(
             mode=mode,
+            track=track,
+            tone=tone,
             decision=decision,
             confidence_score=confidence_result.score,
             confidence_level=confidence_result.level,

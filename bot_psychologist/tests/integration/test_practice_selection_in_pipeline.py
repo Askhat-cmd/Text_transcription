@@ -15,7 +15,7 @@ def test_practice_selection_pipeline_contract() -> None:
         {
             "interaction_mode": "coaching",
             "nervous_system_state": "window",
-            "request_function": "directive",
+            "request_function": "solution",
             "core_theme": "прокрастинация и вина",
             "confidence": {
                 "interaction_mode": 0.8,
@@ -39,4 +39,3 @@ def test_practice_selection_pipeline_contract() -> None:
     assert route.route in {"practice", "reflect", "regulate", "contact_hold", "inform", "safe_override"}
     if route.route in {"practice", "regulate", "reflect", "contact_hold"}:
         assert selection.primary is not None
-

@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import sys
 from pathlib import Path
@@ -15,7 +15,7 @@ def test_practice_start_richness_runtime(monkeypatch) -> None:
         return build_diagnostics(
             interaction_mode=mode,
             nervous_system_state="window",
-            request_function="directive",
+            request_function="solution",
             core_theme="practice_start",
         )
 

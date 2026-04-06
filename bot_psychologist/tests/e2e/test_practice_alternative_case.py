@@ -14,7 +14,7 @@ def test_practice_alternative_case(monkeypatch) -> None:
         return build_diagnostics(
             interaction_mode="coaching",
             nervous_system_state="window",
-            request_function="directive",
+            request_function="solution",
             core_theme="action_needed",
         )
 
@@ -28,4 +28,3 @@ def test_practice_alternative_case(monkeypatch) -> None:
     assert result["status"] == "success"
     assert result["debug_trace"]["resolved_route"] == "practice"
     assert len(result["debug_trace"]["practice_alternatives"]) <= 2
-

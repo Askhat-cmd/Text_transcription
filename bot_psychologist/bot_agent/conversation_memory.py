@@ -306,7 +306,6 @@ class ConversationMemory:
             "session_id": str,
             "date": str,
             "key_themes": List[str],
-            "sd_level_end": str,
             "state_end": str,
             "notable_moments": List[str],
         }
@@ -352,14 +351,11 @@ class ConversationMemory:
         for item in summaries:
             themes = [str(theme).strip() for theme in (item.get("key_themes") or []) if str(theme).strip()]
             state_end = str(item.get("state_end") or "").strip()
-            sd_end = str(item.get("sd_level_end") or "").strip()
             parts: List[str] = []
             if themes:
                 parts.append("темы: " + ", ".join(themes[:3]))
             if state_end:
                 parts.append(f"состояние: {state_end}")
-            if sd_end:
-                parts.append(f"SD: {sd_end}")
             if parts:
                 lines.append("- " + "; ".join(parts))
 

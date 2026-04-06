@@ -75,5 +75,9 @@ def test_live_metadata_contract_after_purge(monkeypatch) -> None:
         "sd_confidence",
         "sd_method",
         "sd_allowed_blocks",
+        "decision_rule_id",
+        "mode_reason",
+        "confidence_level",
+        "confidence_score",
     ):
         assert key not in metadata

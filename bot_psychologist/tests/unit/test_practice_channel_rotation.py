@@ -19,7 +19,7 @@ def test_practice_channel_rotation_prefers_alternative_channel(tmp_path: Path) -
             "scientific_basis": "polyvagal",
             "triggers": ["practice"],
             "nervous_system_states": ["window"],
-            "request_functions": ["directive"],
+            "request_functions": ["solution"],
             "core_themes": ["прокрастинация"],
             "instruction": "i1",
             "micro_tuning": "m1",
@@ -34,7 +34,7 @@ def test_practice_channel_rotation_prefers_alternative_channel(tmp_path: Path) -
             "scientific_basis": "act",
             "triggers": ["practice"],
             "nervous_system_states": ["window"],
-            "request_functions": ["directive"],
+            "request_functions": ["solution"],
             "core_themes": ["прокрастинация"],
             "instruction": "i2",
             "micro_tuning": "m2",
@@ -48,10 +48,9 @@ def test_practice_channel_rotation_prefers_alternative_channel(tmp_path: Path) -
     selection = selector.select(
         route="practice",
         nervous_system_state="window",
-        request_function="directive",
+        request_function="solution",
         core_theme="прокрастинация",
         last_practice_channel="body",
     )
     assert selection.primary is not None
     assert selection.primary.entry.channel == "action"
-

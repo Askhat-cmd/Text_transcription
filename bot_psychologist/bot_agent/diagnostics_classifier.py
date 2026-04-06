@@ -18,10 +18,13 @@ NERVOUS_SYSTEM_STATES = {"hyper", "window", "hypo"}
 REQUEST_FUNCTIONS = {
     "discharge",
     "understand",
-    "directive",
+    "solution",
     "validation",
     "explore",
     "contact",
+}
+LEGACY_REQUEST_FUNCTION_ALIASES = {
+    "directive": "solution",
 }
 
 
@@ -177,6 +180,7 @@ class DiagnosticsClassifier:
         request_function = str(
             payload.get("request_function") or defaults.request_function
         ).lower()
+        request_function = LEGACY_REQUEST_FUNCTION_ALIASES.get(request_function, request_function)
         if request_function not in REQUEST_FUNCTIONS:
             request_function = defaults.request_function
 
@@ -269,7 +273,7 @@ class DiagnosticsClassifier:
         if self._DISCHARGE_RE.search(lowered):
             return "discharge", 0.82
         if self._DIRECTIVE_RE.search(lowered):
-            return "directive", 0.84
+            return "solution", 0.84
         if self._VALIDATION_RE.search(lowered):
             return "validation", 0.8
         if self._CONTACT_RE.search(lowered):

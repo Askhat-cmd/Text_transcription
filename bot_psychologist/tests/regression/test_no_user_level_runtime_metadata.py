@@ -85,6 +85,8 @@ def test_no_user_level_fields_in_adaptive_metadata_and_stream_trace(monkeypatch)
     metadata = adaptive.json()["metadata"]
     assert "user_level" not in metadata
     assert "user_level_adapter_applied" not in metadata
+    for key in ("decision_rule_id", "mode_reason", "confidence_level", "confidence_score"):
+        assert key not in metadata
 
     done = _extract_done_payload(stream.text)
     assert done["done"] is True

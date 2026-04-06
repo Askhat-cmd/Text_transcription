@@ -1,8 +1,9 @@
-"""Prompt Stack v2 builder for Neo MindBot Phase 6."""
+﻿"""Prompt Stack v2 builder for Neo MindBot."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
 from .config import config
@@ -11,13 +12,14 @@ from .config import config
 PROMPT_STACK_VERSION = "2.0"
 PROMPT_STACK_ORDER = (
     "AA_SAFETY",
-    "A_STYLE_POLICY",
+    "A_SEASONAL",
     "CORE_IDENTITY",
-    "CONTEXT_MEMORY",
-    "DIAGNOSTIC_CONTEXT",
-    "RETRIEVED_CONTEXT",
-    "TASK_INSTRUCTION",
+    "DIAG_ALGORITHM",
+    "REFLECTIVE_METHOD",
+    "PROCEDURAL_SCRIPTS",
+    "OUTPUT_LAYER",
 )
+PROMPTS_DIR = Path(__file__).resolve().with_name("prompts")
 
 
 @dataclass(frozen=True)
@@ -52,13 +54,29 @@ class PromptRegistryV2:
     def _join_parts(parts: Iterable[str]) -> str:
         return "\n\n".join(part for part in parts if part and part.strip()).strip()
 
+    def _load_prompt_asset(self, filename: str, fallback: str) -> str:
+        path = PROMPTS_DIR / filename
+        try:
+            if path.exists():
+                return path.read_text(encoding="utf-8").strip()
+        except Exception:
+            pass
+        return fallback.strip()
+
+    @staticmethod
+    def _render_template(template: str, **values: str) -> str:
+        try:
+            return (template or "").format(**values)
+        except Exception:
+            return template or ""
+
     def _load_core_identity(self) -> str:
         try:
             return str(config.get_prompt("prompt_system_base")["text"]).strip()
         except Exception:
             return (
-                "Ты помогаешь человеку уточнять внутренний процесс без давления, "
-                "диагнозов и псевдо-уверенности."
+                "You are a reflective assistant. "
+                "Your role is to help the user clarify internal process without pressure."
             )
 
     def _build_style_policy(self, route: str, mode: str) -> str:
@@ -66,30 +84,29 @@ class PromptRegistryV2:
         normalized_mode = (mode or "").strip().upper()
         if normalized_route == "safe_override":
             return (
-                "Стиль: коротко, тепло, без поэтики и без директив. "
-                "Не давай рискованные инструкции. Приоритет — стабилизация."
+                "Style policy: short, calm, de-escalating. "
+                "No risky directives, no deep interpretation."
             )
         if normalized_route == "inform" or normalized_mode == "CLARIFICATION":
             return (
-                "Стиль: ясно, структурно и живо, без сухого FAQ-тона. "
-                "Раскрывай суть, различия и практический смысл; где уместно, добавляй 2-4 коротких примера. "
-                "Избегай лекционности и пустой риторики."
+                "Style policy: explain clearly and concretely. "
+                "Use practical distinctions and 2-4 short examples when useful."
             )
         if normalized_route == "regulate":
             return (
-                "Стиль: бережно и замедляюще. "
-                "Сначала контейнируй состояние, затем один небольшой шаг."
+                "Style policy: stabilizing and supportive first, "
+                "then one small step."
             )
         return (
-            "Стиль: coaching-first, живой диалог, без пустых обобщений. "
-            "Сохраняй ясность, конкретику и уважение к опыту пользователя."
+            "Style policy: coaching-first dialogue, concrete and respectful, "
+            "without empty generalities."
         )
 
     def _build_memory_context(self, conversation_context: str) -> str:
         context = self._clip(conversation_context or "", 1200)
         if not context:
-            return "История диалога: нет релевантного контекста."
-        return f"История диалога (сжатая):\n{context}"
+            return "Conversation context: none."
+        return f"Conversation context:\n{context}"
 
     def _build_diagnostic_context(
         self,
@@ -103,7 +120,7 @@ class PromptRegistryV2:
         request_function = str(payload.get("request_function") or "understand")
         core_theme = str(payload.get("core_theme") or "unspecified_current_issue")
         return (
-            "Диагностический контекст:\n"
+            "Diagnostics context:\n"
             f"- interaction_mode: {interaction_mode}\n"
             f"- nervous_system_state: {nervous_state}\n"
             f"- request_function: {request_function}\n"
@@ -114,13 +131,13 @@ class PromptRegistryV2:
 
     def _build_retrieved_context(self, blocks: List[object]) -> str:
         if not blocks:
-            return "Контекст знаний: релевантные блоки не найдены."
+            return "Knowledge context: no retrieved blocks."
         lines: List[str] = []
         for idx, block in enumerate(blocks[:6], start=1):
             title = str(getattr(block, "title", "") or getattr(block, "document_title", "")).strip()
             content = str(getattr(block, "summary", "") or getattr(block, "content", "")).strip()
-            lines.append(f"[{idx}] {self._clip(title or 'Без названия', 90)}: {self._clip(content, 260)}")
-        return "Контекст знаний:\n" + "\n".join(lines)
+            lines.append(f"[{idx}] {self._clip(title or 'Untitled', 90)}: {self._clip(content, 260)}")
+        return "Knowledge context:\n" + "\n".join(lines)
 
     def _build_task_instruction(
         self,
@@ -136,48 +153,35 @@ class PromptRegistryV2:
         route_text = (route or "reflect").strip().lower() or "reflect"
         mode_text = mode or "PRESENCE"
         parts = [
-            "Задача ответа:",
-            f"- Маршрут: {route_text}",
-            f"- Режим генерации: {mode_text}",
-            f"- Ответь на запрос пользователя: {self._clip(query, 700)}",
-            "- Не используй markdown-блоки кода и HTML-теги.",
-            "- Не выдавай запрещающие/опасные директивы.",
-            "- Дай содержательно полный ответ для текущего класса запроса; избегай смысловой скупости.",
+            "Task instruction:",
+            f"- Route: {route_text}",
+            f"- Mode: {mode_text}",
+            f"- User request: {self._clip(query, 700)}",
+            "- Do not use code blocks or HTML tags.",
+            "- Provide a complete, useful answer; avoid vague filler.",
         ]
         if mode_prompt_override:
-            parts.append(f"- Доп. директива режима: {self._clip(mode_prompt_override, 260)}")
+            parts.append(f"- Mode override: {self._clip(mode_prompt_override, 260)}")
         if route_text == "inform":
             parts.extend(
                 [
-                    "- INFORMATIONAL_BRANCH: объясни концепт полно и по существу, без навязанной практики.",
-                    "- Добавь различия/нюансы и 2-4 примера, если это помогает понять тему.",
-                    "- Не своди ответ к формату: определение + общая фраза + вопрос-мост.",
-                    "- Если запрос просит различия, сравни по минимум 2-3 критериям.",
+                    "- Inform branch: explain the concept in depth with practical distinctions.",
+                    "- Add 2-4 concise examples where useful.",
+                    "- Do not replace content with a generic bridge question.",
                 ]
             )
         if first_turn:
-            parts.extend(
-                [
-                    "- FIRST_TURN: не перегружай, но дай полноценный смысловой каркас (что это, как проявляется, зачем важно).",
-                    "- Допустим один уточняющий вопрос в конце, но не вместо основной части ответа.",
-                ]
-            )
+            parts.append("- First turn: include minimal but complete conceptual frame.")
         if mixed_query_bridge:
-            parts.extend(
-                [
-                    "- MIXED_QUERY: сначала коротко обозначь концепт, затем свяжи его с запросом пользователя.",
-                    "- Добавь один практический угол (как это увидеть/проверить в опыте).",
-                    "- В конце можно добавить мягкий вопрос-мост, но только после содержательного раскрытия.",
-                ]
-            )
+            parts.append("- Mixed query: bridge concept explanation with user context.")
         if user_correction_protocol:
-            parts.extend(
-                [
-                    "- USER_CORRECTION_PROTOCOL: признай возможный промах, не спорь с пользователем.",
-                    "- Перекалибруй ответ по последнему сообщению и задай 1 уточняющий вопрос.",
-                ]
-            )
+            parts.append("- User correction protocol: acknowledge mismatch and recalibrate.")
         return "\n".join(parts)
+
+    def _resolve_interaction_mode(self, diagnostics: Optional[Dict[str, object]]) -> str:
+        payload = diagnostics or {}
+        mode = str(payload.get("interaction_mode") or "").strip().lower()
+        return mode if mode in {"informational", "coaching", "crisis"} else "coaching"
 
     def build(
         self,
@@ -194,33 +198,64 @@ class PromptRegistryV2:
         mixed_query_bridge: bool = False,
         user_correction_protocol: bool = False,
     ) -> PromptStackBuild:
+        interaction_mode = self._resolve_interaction_mode(diagnostics)
+        season = "neutral"
+
+        aa_safety = self._load_prompt_asset(
+            "aa_safety.md",
+            "Safety Rules: no diagnosis, no treatment claims, no guarantees."
+        )
+        seasonal = self._load_prompt_asset(
+            "a_seasonal.md",
+            "Seasonal policy: season={season}, interaction_mode={interaction_mode}."
+        )
+        core_identity_static = self._load_prompt_asset("core_identity.md", "")
+        diag_algorithm = self._load_prompt_asset("diag_algorithm.md", "Diagnostic algorithm: classify state and function.")
+        reflective_method = self._load_prompt_asset("reflective_method.md", "Reflective Method: mirror, structure, clarify, next-step.")
+        procedural_scripts = self._load_prompt_asset("procedural_scripts.md", "Procedural scripts: clear sequencing and correction protocol.")
+        output_layer = self._load_prompt_asset("output_layer.md", "Output layer: Telegram-safe, clear, concise, concrete.")
+
+        diagnostics_context = self._build_diagnostic_context(
+            diagnostics=diagnostics,
+            route=route,
+            mode=mode,
+        )
+        memory_context = self._build_memory_context(conversation_context)
+        retrieved_context = self._build_retrieved_context(blocks)
+        task_instruction = self._build_task_instruction(
+            route=route,
+            mode=mode,
+            query=query,
+            mode_prompt_override=mode_prompt_override,
+            first_turn=first_turn,
+            mixed_query_bridge=mixed_query_bridge,
+            user_correction_protocol=user_correction_protocol,
+        )
+
         sections: Dict[str, str] = {
-            "AA_SAFETY": (
-                "Safety policy: не диагностируй, не лечи, не обещай гарантии. "
-                "При признаках риска — приоритет безопасности и мягкая деэскалация."
-            ),
-            "A_STYLE_POLICY": self._build_style_policy(route=route, mode=mode),
-            "CORE_IDENTITY": self._load_core_identity(),
-            "CONTEXT_MEMORY": self._build_memory_context(conversation_context),
-            "DIAGNOSTIC_CONTEXT": self._build_diagnostic_context(
-                diagnostics=diagnostics, route=route, mode=mode
-            ),
-            "RETRIEVED_CONTEXT": self._build_retrieved_context(blocks),
-            "TASK_INSTRUCTION": self._build_task_instruction(
-                route=route,
-                mode=mode,
-                query=query,
-                mode_prompt_override=mode_prompt_override,
-                first_turn=first_turn,
-                mixed_query_bridge=mixed_query_bridge,
-                user_correction_protocol=user_correction_protocol,
-            ),
-        }
-        if additional_system_context and additional_system_context.strip():
-            sections["DIAGNOSTIC_CONTEXT"] = self._join_parts(
+            "AA_SAFETY": aa_safety,
+            "A_SEASONAL": self._join_parts(
                 [
-                    sections["DIAGNOSTIC_CONTEXT"],
-                    f"Дополнительный runtime-контекст:\n{self._clip(additional_system_context, 1200)}",
+                    self._render_template(
+                        seasonal,
+                        season=season,
+                        interaction_mode=interaction_mode,
+                    ),
+                    self._build_style_policy(route=route, mode=mode),
+                ]
+            ),
+            "CORE_IDENTITY": self._join_parts([core_identity_static, self._load_core_identity()]),
+            "DIAG_ALGORITHM": self._join_parts([diag_algorithm, diagnostics_context]),
+            "REFLECTIVE_METHOD": self._join_parts([reflective_method, memory_context]),
+            "PROCEDURAL_SCRIPTS": self._join_parts([procedural_scripts, retrieved_context]),
+            "OUTPUT_LAYER": self._join_parts([output_layer, task_instruction]),
+        }
+
+        if additional_system_context and additional_system_context.strip():
+            sections["DIAG_ALGORITHM"] = self._join_parts(
+                [
+                    sections["DIAG_ALGORITHM"],
+                    f"Runtime context:\n{self._clip(additional_system_context, 1200)}",
                 ]
             )
 

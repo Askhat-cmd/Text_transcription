@@ -1,9 +1,8 @@
-"""Unified mode-aware response generation."""
+﻿"""Unified mode-aware response generation."""
 
 from __future__ import annotations
 
 import logging
-from pathlib import Path
 from typing import AsyncGenerator, Iterable, Optional
 
 from ..config import config
@@ -33,29 +32,9 @@ class ResponseGenerator:
     def _sd_runtime_disabled() -> bool:
         return feature_flags.enabled("DISABLE_SD_RUNTIME")
 
-    def _load_sd_prompt(self, sd_level: str) -> str:
-        """Загрузить SD-оверлей промта для уровня пользователя."""
-        sd_name_map = {
-            "BEIGE": "prompt_sd_purple",  # BEIGE -> используем PURPLE (ближайший)
-            "PURPLE": "prompt_sd_purple",
-            "RED": "prompt_sd_red",
-            "BLUE": "prompt_sd_blue",
-            "ORANGE": "prompt_sd_orange",
-            "GREEN": "prompt_sd_green",
-            "YELLOW": "prompt_sd_yellow",
-            "TURQUOISE": "prompt_sd_yellow",  # TURQUOISE -> используем YELLOW (ближайший)
-        }
-        prompt_name = sd_name_map.get((sd_level or "GREEN").upper(), "prompt_sd_green")
-        try:
-            # Используем config.get_prompt() для горячей замены (admin-panel)
-            return config.get_prompt(prompt_name)["text"]
-        except (FileNotFoundError, ValueError):
-            logger.warning(f"[RESPONSE_GEN] SD prompt not found: {prompt_name}, using empty")
-            return ""
-
     @staticmethod
     def _conflicts_with_mode(level_text: str, mode: str) -> bool:
-        """Detect restrictive level directives that conflict with expanding modes."""
+        """Detect restrictive directives that conflict with expanding modes."""
         expanding_modes = {"THINKING", "INTEGRATION", "VALIDATION"}
         restricting_keywords = ("кратко", "упрощай", "не перегружай", "один точный вопрос")
         if (mode or "").upper() not in expanding_modes:
@@ -78,12 +57,10 @@ class ResponseGenerator:
     def _build_free_mode_prompt(
         self,
         base_prompt: str,
-        sd_level: str,
         blocks,
     ) -> str:
         """Compose non-restrictive system prompt for FREE conversation mode."""
         normalized_base = self._strip_restricting_lines(base_prompt)
-        sd_context = "SD_RUNTIME=DISABLED" if self._sd_runtime_disabled() else f"SD_LEVEL={sd_level or 'GREEN'}"
         context_parts = []
         for idx, block in enumerate(blocks[:5], start=1):
             title = getattr(block, "title", "") or getattr(block, "document_title", "")
@@ -95,7 +72,6 @@ class ResponseGenerator:
         knowledge = "\n".join(context_parts) if context_parts else "Нет дополнительных блоков."
         return (
             f"{normalized_base}\n\n"
-            f"## Контекст SD (для понимания, не для ограничения):\n{sd_context}\n\n"
             f"## Контекст знаний:\n{knowledge}\n\n"
             "Отвечай полно, развёрнуто и по делу. Не ограничивай длину искусственно, "
             "если запрос требует деталей."
@@ -104,23 +80,22 @@ class ResponseGenerator:
     def _compose_system_prompt(
         self,
         base_prompt: str,
-        sd_overlay: str,
         mode_prompt: str,
         additional_system_context: str,
         mode: str,
+        raw_mode_override: str = "",
     ) -> str:
         """Compose final prompt with configurable priority order."""
         base = base_prompt.strip()
-        sd = (sd_overlay or "").strip()
         mode_prompt_clean = (mode_prompt or "").strip()
+        mode_override = (raw_mode_override or "").strip()
         mode_directive = f"MODE DIRECTIVE:\n{mode_prompt_clean}" if mode_prompt_clean else ""
 
-        if config.PROMPT_SD_OVERRIDES_BASE:
-            chunks = [base, sd]
-        else:
-            chunks = [sd, base]
+        chunks = [base]
 
-        if config.PROMPT_MODE_OVERRIDES_SD:
+        if mode_override:
+            chunks.append(mode_override)
+        elif config.PROMPT_MODE_OVERRIDES_SD:
             chunks.append(mode_directive)
         else:
             chunks.insert(1, mode_directive)
@@ -157,40 +132,34 @@ class ResponseGenerator:
         system_prompt_override: Optional[str] = None,
     ) -> dict:
         """Generate a response using shared mode-aware prompt composition."""
+        _ = user_level_adapter  # compatibility: accepted but intentionally ignored in Neo runtime
+        _ = sd_level  # compatibility only
+
         mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
+        raw_mode_override = ""
         if system_prompt_override:
             final_system_prompt = str(system_prompt_override).strip()
         else:
             base_system_prompt = self.answerer.build_system_prompt()
-            if user_level_adapter is not None and not feature_flags.enabled("DISABLE_USER_LEVEL_ADAPTER"):
-                try:
-                    base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
-                except Exception:
-                    # Keep base prompt when adapter is unavailable or incompatible.
-                    pass
 
-            sd_overlay = ""
-            if not self._sd_runtime_disabled():
-                sd_overlay = self._load_sd_prompt(sd_level)
             if mode_prompt_override:
                 if mode_overrides_sd:
-                    sd_overlay = mode_prompt_override
+                    raw_mode_override = mode_prompt_override
                     mode_prompt = ""
                 else:
                     mode_prompt = mode_prompt_override
             if config.FREE_CONVERSATION_MODE:
                 final_system_prompt = self._build_free_mode_prompt(
                     base_prompt=base_system_prompt,
-                    sd_level=sd_level,
                     blocks=blocks,
                 )
             else:
                 final_system_prompt = self._compose_system_prompt(
                     base_prompt=base_system_prompt,
-                    sd_overlay=sd_overlay,
                     mode_prompt=mode_prompt,
                     additional_system_context=additional_system_context,
                     mode=mode,
+                    raw_mode_override=raw_mode_override,
                 )
 
         model_name = model or config.LLM_MODEL
@@ -257,30 +226,22 @@ class ResponseGenerator:
         system_prompt_override: Optional[str] = None,
     ) -> AsyncGenerator[str, None]:
         """Stream a response using shared mode-aware prompt composition."""
+        _ = user_level_adapter  # compatibility: accepted but intentionally ignored in Neo runtime
+        _ = sd_level  # compatibility only
+
         if system_prompt_override:
             final_system_prompt = str(system_prompt_override).strip()
         else:
             base_system_prompt = self.answerer.build_system_prompt()
-            if user_level_adapter is not None and not feature_flags.enabled("DISABLE_USER_LEVEL_ADAPTER"):
-                try:
-                    base_system_prompt = user_level_adapter.adapt_system_prompt(base_system_prompt)
-                except Exception:
-                    pass
-
-            sd_overlay = ""
-            if not self._sd_runtime_disabled():
-                sd_overlay = self._load_sd_prompt(sd_level)
             mode_prompt = build_mode_prompt(mode, confidence_level, forbid or [])
             if config.FREE_CONVERSATION_MODE:
                 final_system_prompt = self._build_free_mode_prompt(
                     base_prompt=base_system_prompt,
-                    sd_level=sd_level,
                     blocks=blocks,
                 )
             else:
                 final_system_prompt = self._compose_system_prompt(
                     base_prompt=base_system_prompt,
-                    sd_overlay=sd_overlay,
                     mode_prompt=mode_prompt,
                     additional_system_context=additional_system_context,
                     mode=mode,

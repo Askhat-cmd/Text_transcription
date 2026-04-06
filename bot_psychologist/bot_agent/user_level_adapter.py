@@ -11,11 +11,11 @@ User Level Adapter for Phase 2
 
 import logging
 from typing import List, Optional
-from enum import Enum
 from pathlib import Path
 
 from .data_loader import Block
 from .config import config
+from .user_level_types import UserLevel
 
 logger = logging.getLogger(__name__)
 
@@ -31,13 +31,6 @@ def _read_prompt_text(path: Path) -> str:
     except UnicodeDecodeError:
         text = path.read_text(encoding="utf-8-sig")
     return text.lstrip("\ufeff").strip()
-
-
-class UserLevel(Enum):
-    """Уровни подготовки пользователя"""
-    BEGINNER = "beginner"
-    INTERMEDIATE = "intermediate"
-    ADVANCED = "advanced"
 
 
 class UserLevelAdapter:

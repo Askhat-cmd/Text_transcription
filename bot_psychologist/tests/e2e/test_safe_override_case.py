@@ -15,7 +15,7 @@ def test_safe_override_case(monkeypatch) -> None:
         return build_diagnostics(
             interaction_mode="coaching",
             nervous_system_state="window",
-            request_function="directive",
+            request_function="solution",
             core_theme="crisis",
         )
 
@@ -44,4 +44,3 @@ def test_safe_override_case(monkeypatch) -> None:
 
     assert result["status"] == "success"
     assert result["debug_trace"]["resolved_route"] == "safe_override"
-

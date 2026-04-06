@@ -66,3 +66,5 @@ def test_no_sd_runtime_metadata_fields_when_sd_disabled(monkeypatch) -> None:
     metadata = response.json()["metadata"]
     for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
         assert key not in metadata
+    for key in ("decision_rule_id", "mode_reason", "confidence_level", "confidence_score"):
+        assert key not in metadata

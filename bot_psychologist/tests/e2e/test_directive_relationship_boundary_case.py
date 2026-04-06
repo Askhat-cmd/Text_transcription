@@ -14,7 +14,7 @@ def test_directive_relationship_boundary_case(monkeypatch) -> None:
         return build_diagnostics(
             interaction_mode="coaching",
             nervous_system_state="window",
-            request_function="directive",
+            request_function="solution",
             core_theme="relationship_conflict",
         )
 
@@ -28,4 +28,3 @@ def test_directive_relationship_boundary_case(monkeypatch) -> None:
     assert result["status"] == "success"
     assert result["debug_trace"]["resolved_route"] == "practice"
     assert result["debug_trace"]["selected_practice"] is not None
-

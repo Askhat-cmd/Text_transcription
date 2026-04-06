@@ -56,14 +56,17 @@ class DBApiClient:
     def query(
         self,
         query: str,
-        sd_level: Optional[int] = None,
         top_k: int = 5,
         author_id: Optional[str] = None,
         use_rerank: bool = True,
         search_mode: str = "hybrid",
+        **legacy_kwargs,
     ) -> List[RetrievedChunk]:
+        sd_level = legacy_kwargs.pop("sd_level", None)
         if sd_level not in (None, 0):
-            logger.info("[DB_API] sd_level=%s ignored by retrieval contract v10.1", sd_level)
+            logger.info("[DB_API] sd_level=%s ignored by retrieval contract v11.0", sd_level)
+        if legacy_kwargs:
+            logger.debug("[DB_API] ignored legacy kwargs in query(): %s", sorted(legacy_kwargs.keys()))
         payload = {
             "query": query,
             "top_k": top_k,
@@ -97,16 +100,27 @@ class DBApiClient:
 
         self._raise_unavailable(last_error)
 
-    async def aquery(self, **kwargs) -> List[RetrievedChunk]:
-        sd_level = kwargs.get("sd_level")
+    async def aquery(
+        self,
+        *,
+        query: str,
+        top_k: int = 5,
+        author_id: Optional[str] = None,
+        use_rerank: bool = True,
+        search_mode: str = "hybrid",
+        **legacy_kwargs,
+    ) -> List[RetrievedChunk]:
+        sd_level = legacy_kwargs.pop("sd_level", None)
         if sd_level not in (None, 0):
-            logger.info("[DB_API] sd_level=%s ignored by async retrieval contract v10.1", sd_level)
+            logger.info("[DB_API] sd_level=%s ignored by async retrieval contract v11.0", sd_level)
+        if legacy_kwargs:
+            logger.debug("[DB_API] ignored legacy kwargs in aquery(): %s", sorted(legacy_kwargs.keys()))
         payload = {
-            "query": kwargs.get("query"),
-            "top_k": kwargs.get("top_k", 5),
-            "author_id": kwargs.get("author_id"),
-            "use_rerank": kwargs.get("use_rerank", True),
-            "search_mode": kwargs.get("search_mode", "hybrid"),
+            "query": query,
+            "top_k": top_k,
+            "author_id": author_id,
+            "use_rerank": use_rerank,
+            "search_mode": search_mode,
         }
         last_error: Exception | None = None
         for attempt in range(1, self.retries + 1):

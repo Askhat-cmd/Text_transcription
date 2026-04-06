@@ -30,7 +30,9 @@ def test_prompt_stack_order_is_fixed() -> None:
         },
     )
     assert tuple(build.order) == PROMPT_STACK_ORDER
-    assert build.system_prompt.index("## AA_SAFETY") < build.system_prompt.index("## A_STYLE_POLICY")
-    assert build.system_prompt.index("## A_STYLE_POLICY") < build.system_prompt.index("## CORE_IDENTITY")
-    assert build.system_prompt.index("## CORE_IDENTITY") < build.system_prompt.index("## CONTEXT_MEMORY")
-
+    assert build.system_prompt.index("## AA_SAFETY") < build.system_prompt.index("## A_SEASONAL")
+    assert build.system_prompt.index("## A_SEASONAL") < build.system_prompt.index("## CORE_IDENTITY")
+    assert build.system_prompt.index("## CORE_IDENTITY") < build.system_prompt.index("## DIAG_ALGORITHM")
+    assert build.system_prompt.index("## DIAG_ALGORITHM") < build.system_prompt.index("## REFLECTIVE_METHOD")
+    assert build.system_prompt.index("## REFLECTIVE_METHOD") < build.system_prompt.index("## PROCEDURAL_SCRIPTS")
+    assert build.system_prompt.index("## PROCEDURAL_SCRIPTS") < build.system_prompt.index("## OUTPUT_LAYER")

@@ -13,16 +13,22 @@ load_dotenv(_PROJECT_ROOT / ".env")
 
 
 _DEFAULTS: Dict[str, bool] = {
-    # Phase 0 (Neo MindBot migration safety net)
-    "NEO_MINDBOT_ENABLED": False,
-    "LEGACY_PIPELINE_ENABLED": True,
-    "DISABLE_SD_RUNTIME": False,
-    "DISABLE_USER_LEVEL_ADAPTER": False,
-    "USE_NEW_DIAGNOSTICS_V1": False,
-    "USE_DETERMINISTIC_ROUTE_RESOLVER": False,
-    "USE_PROMPT_STACK_V2": False,
-    "USE_OUTPUT_VALIDATION": False,
-    "INFORMATIONAL_BRANCH_ENABLED": False,
+    # PRD 11.0 Wave 1 (Soft Freeze): Neo runtime is default.
+    "NEO_MINDBOT_ENABLED": True,
+    "LEGACY_PIPELINE_ENABLED": False,
+    # Compatibility runtime switches used by current code paths.
+    "DISABLE_SD_RUNTIME": True,
+    "DISABLE_USER_LEVEL_ADAPTER": True,
+    # Explicit migration flags (PRD terminology).
+    "SD_CLASSIFIER_ENABLED": False,
+    "USER_LEVEL_ADAPTER_ENABLED": False,
+    "PRE_ROUTING_ENABLED": False,
+    # Neo runtime feature flags.
+    "USE_NEW_DIAGNOSTICS_V1": True,
+    "USE_DETERMINISTIC_ROUTE_RESOLVER": True,
+    "USE_PROMPT_STACK_V2": True,
+    "USE_OUTPUT_VALIDATION": True,
+    "INFORMATIONAL_BRANCH_ENABLED": True,
     # Phase 1
     "ENABLE_EMBEDDING_PROVIDER": True,
     # Phase 2

@@ -26,6 +26,14 @@ from .feature_flags import feature_flags
 
 logger = logging.getLogger(__name__)
 
+# PRD 11.0 Wave 1 protective barrier:
+# SD classifier is frozen out of active Neo runtime.
+SD_CLASSIFIER_ENABLED = feature_flags.enabled("SD_CLASSIFIER_ENABLED")
+assert not SD_CLASSIFIER_ENABLED, (
+    "SD classifier is disabled in Neo runtime (PRD 11.0 soft freeze). "
+    "Do not enable SD_CLASSIFIER_ENABLED in active runtime."
+)
+
 SD_LEVELS_ORDER = [
     "BEIGE",
     "PURPLE",

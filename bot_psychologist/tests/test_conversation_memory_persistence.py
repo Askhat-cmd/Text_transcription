@@ -142,4 +142,5 @@ def test_cross_session_context_reads_recent_summaries(monkeypatch, tmp_path: Pat
     assert "Из предыдущих сессий" in context
     assert "самооценка" in context
     assert "избегание" in context
-    assert "SD: GREEN" in context
+    assert "состояние: integrated" in context
+    assert "SD:" not in context

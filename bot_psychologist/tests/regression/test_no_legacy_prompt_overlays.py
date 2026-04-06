@@ -33,10 +33,10 @@ def test_system_prompt_override_bypasses_legacy_sd_overlay(monkeypatch) -> None:
     answerer = _FakeAnswerer()
     generator = ResponseGenerator(answerer=answerer)
 
-    def _boom(_sd_level: str) -> str:
-        raise AssertionError("legacy SD overlay must not be called")
+    def _boom(*_args, **_kwargs):
+        raise AssertionError("prompt composition must be bypassed when system_prompt_override is provided")
 
-    monkeypatch.setattr(generator, "_load_sd_prompt", _boom)
+    monkeypatch.setattr(generator, "_compose_system_prompt", _boom)
 
     result = generator.generate(
         "Что делать?",
@@ -47,4 +47,3 @@ def test_system_prompt_override_bypasses_legacy_sd_overlay(monkeypatch) -> None:
     )
     assert result["error"] is None
     assert answerer.last_system_prompt == "STACK_V2_PROMPT"
-

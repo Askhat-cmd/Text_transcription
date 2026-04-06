@@ -97,6 +97,7 @@ class PracticeSelector:
         safety_flags: Optional[List[str]] = None,
         max_alternatives: int = 2,
     ) -> PracticeSelection:
+        request_fn = "directive" if request_function == "solution" else request_function
         entries = self._load_entries()
         if not entries:
             return PracticeSelection(
@@ -125,7 +126,7 @@ class PracticeSelector:
             if route in entry.triggers:
                 score += 2.0
                 reasons.append("route_match")
-            if request_function in entry.request_functions:
+            if request_fn in entry.request_functions or request_function in entry.request_functions:
                 score += 2.0
                 reasons.append("request_function_match")
             if nervous_system_state in entry.nervous_system_states:
@@ -185,4 +186,3 @@ class PracticeSelector:
 
 
 practice_selector = PracticeSelector()
-

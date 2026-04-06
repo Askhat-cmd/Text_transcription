@@ -20,6 +20,8 @@ def test_route_resolver_safety_override_has_top_priority() -> None:
     route = route_resolver.resolve(diagnostics, safety_override=True)
     assert route.route == "safe_override"
     assert route.mode == "VALIDATION"
+    assert route.track == "direct"
+    assert route.tone == "empathic"
 
 
 def test_route_resolver_informational_route() -> None:
@@ -27,6 +29,8 @@ def test_route_resolver_informational_route() -> None:
     route = route_resolver.resolve(diagnostics)
     assert route.route == "inform"
     assert route.mode == "CLARIFICATION"
+    assert route.track == "reflective"
+    assert route.tone == "technical"
 
 
 def test_route_resolver_regulate_for_hyper_state() -> None:
@@ -34,14 +38,18 @@ def test_route_resolver_regulate_for_hyper_state() -> None:
     route = route_resolver.resolve(diagnostics)
     assert route.route == "regulate"
     assert route.mode == "VALIDATION"
+    assert route.track == "direct"
+    assert route.tone == "empathic"
 
 
-def test_route_resolver_practice_for_directive_request() -> None:
+def test_route_resolver_practice_for_solution_request() -> None:
     diagnostics = _diag(
         interaction_mode="coaching",
         nervous_system_state="window",
-        request_function="directive",
+        request_function="solution",
     )
     route = route_resolver.resolve(diagnostics)
     assert route.route == "practice"
     assert route.mode == "INTERVENTION"
+    assert route.track == "practice"
+    assert route.tone == "empathic"

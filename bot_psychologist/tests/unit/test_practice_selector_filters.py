@@ -73,7 +73,7 @@ def test_practice_selector_respects_contraindications(tmp_path: Path) -> None:
                 "scientific_basis": "none",
                 "triggers": ["practice"],
                 "nervous_system_states": ["window"],
-                "request_functions": ["directive"],
+                "request_functions": ["solution"],
                 "core_themes": ["кризис"],
                 "instruction": "Инструкция",
                 "micro_tuning": "Тюнинг",
@@ -87,9 +87,8 @@ def test_practice_selector_respects_contraindications(tmp_path: Path) -> None:
     selection = selector.select(
         route="practice",
         nervous_system_state="window",
-        request_function="directive",
+        request_function="solution",
         core_theme="кризис",
         safety_flags=["acute_self_harm_plan"],
     )
     assert selection.primary is None
-

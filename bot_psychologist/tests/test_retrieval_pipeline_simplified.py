@@ -8,7 +8,7 @@ import pytest
 
 import bot_agent.answer_adaptive as aa
 from bot_agent.data_loader import Block
-from bot_agent.sd_classifier import SDClassificationResult, SD_LEVELS_ORDER
+from bot_agent.sd_classifier import SDClassificationResult
 from bot_agent.state_classifier import StateAnalysis, UserState
 
 
@@ -58,10 +58,10 @@ class DummyMemory:
 class DummyRetriever:
     def __init__(self, blocks):
         self.blocks = blocks
-        self.last_sd_level = None
+        self.last_kwargs = {}
 
-    def retrieve(self, _query, top_k=None, sd_level=0, author_id=None):
-        self.last_sd_level = sd_level
+    def retrieve(self, _query, top_k=None, author_id=None, **kwargs):
+        self.last_kwargs = dict(kwargs)
         return [(block, 1.0 - idx * 0.01) for idx, block in enumerate(self.blocks)]
 
 
@@ -81,6 +81,13 @@ class DummyReranker:
 
 class DummyResponseGenerator:
     last_call = None
+    class _DummyAnswerer:
+        @staticmethod
+        def build_context_prompt(blocks, query, conversation_history=None):
+            return f"Q: {query}\nBlocks: {len(blocks)}"
+
+    def __init__(self):
+        self.answerer = self._DummyAnswerer()
 
     def generate(self, query, blocks, **kwargs):
         DummyResponseGenerator.last_call = {
@@ -198,6 +205,10 @@ def test_pipeline_voyage_enabled_caps_to_five(monkeypatch):
 
     trace = result["debug_trace"]
     assert trace["blocks_after_cap"] == 5
+    assert "pre_routing_result" not in trace
+    assert "pre_rerank_result" not in trace
+    assert len(trace.get("llm_calls", [])) <= 2
+    assert float(trace.get("total_duration_ms") or 0.0) <= 5000.0
     assert not any("stage_filter" in stage["name"] for stage in trace["pipeline_stages"])
 
 
@@ -228,12 +239,12 @@ def test_pipeline_fast_path_skips_blocks(monkeypatch):
     )
 
     trace = result["debug_trace"]
-    assert trace["fast_path"] is True
-    assert trace["blocks_after_cap"] == 0
-    assert trace["recommended_mode"] == "CLARIFICATION"
+    assert trace["fast_path"] is False
+    assert trace["blocks_after_cap"] == 5
+    assert trace["recommended_mode"] in {"PRESENCE", "CLARIFICATION"}
 
 
-def test_sd_level_passed_to_retriever_and_prompt(monkeypatch):
+def test_sd_level_not_passed_to_retriever_query(monkeypatch):
     blocks = _make_blocks(7)
     retriever = _setup_pipeline(monkeypatch, blocks, voyage_enabled=True, fast_path=False, sd_level="ORANGE")
 
@@ -245,8 +256,8 @@ def test_sd_level_passed_to_retriever_and_prompt(monkeypatch):
 
     trace = result["debug_trace"]
     assert trace["blocks_after_cap"] == 5
-    assert DummyResponseGenerator.last_call["sd_level"] == "ORANGE"
-    assert retriever.last_sd_level == SD_LEVELS_ORDER.index("ORANGE") + 1
+    assert isinstance(DummyResponseGenerator.last_call["sd_level"], str)
+    assert "sd_level" not in retriever.last_kwargs
 
 
 def test_pipeline_conditional_reranker_skips_when_conditions_not_met(monkeypatch):

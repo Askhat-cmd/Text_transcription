@@ -25,7 +25,7 @@ from datetime import datetime
 
 from .data_loader import Block, data_loader
 from .retriever import get_retriever
-from .user_level_adapter import UserLevel
+from .user_level_types import UserLevel
 from .semantic_analyzer import SemanticAnalyzer
 from .graph_client import graph_client
 from .state_classifier import state_classifier, StateAnalysis, UserState
@@ -377,6 +377,10 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
 
 def _sd_runtime_disabled() -> bool:
     """Return True when SD classifier is disabled for live runtime."""
+    if not feature_flags.enabled("NEO_MINDBOT_ENABLED"):
+        return True
+    if not feature_flags.enabled("SD_CLASSIFIER_ENABLED"):
+        return True
     return feature_flags.enabled("DISABLE_SD_RUNTIME")
 
 
@@ -531,6 +535,10 @@ def _resolve_path_user_level(_user_level: str) -> UserLevel:
 LEGACY_RUNTIME_METADATA_KEYS = (
     "user_level",
     "user_level_adapter_applied",
+    "decision_rule_id",
+    "mode_reason",
+    "confidence_level",
+    "confidence_score",
 )
 LEGACY_SD_METADATA_KEYS = (
     "sd_level",
@@ -757,7 +765,6 @@ def _build_llm_prompts(
     query: str,
     blocks: List[Block],
     conversation_context: str,
-    user_level_adapter,
     sd_level: str,
     mode_prompt: str,
     additional_system_context: str,
@@ -767,31 +774,23 @@ def _build_llm_prompts(
     try:
         answerer = response_generator.answerer
         system_prompt = answerer.build_system_prompt()
-
-        if user_level_adapter is not None:
-            try:
-                system_prompt = user_level_adapter.adapt_system_prompt(system_prompt)
-            except Exception:
-                pass
-
-        sd_overlay = ""
-        if not _sd_runtime_disabled():
-            sd_overlay = response_generator._load_sd_prompt(sd_level)
+        _ = sd_level  # compatibility only; SD overlay disabled in Neo runtime
         mode_directive = mode_prompt
+        raw_mode_override = ""
 
         if mode_prompt_override:
             if mode_overrides_sd:
-                sd_overlay = mode_prompt_override
+                raw_mode_override = mode_prompt_override
                 mode_directive = ""
             else:
                 mode_directive = mode_prompt_override
 
         final_system_prompt = response_generator._compose_system_prompt(
             base_prompt=system_prompt,
-            sd_overlay=sd_overlay,
             mode_prompt=mode_directive,
             additional_system_context=additional_system_context,
             mode="INFORMATIONAL" if mode_overrides_sd else "PRESENCE",
+            raw_mode_override=raw_mode_override,
         )
         user_prompt = answerer.build_context_prompt(
             blocks,
@@ -810,7 +809,6 @@ def _build_llm_prompt_previews(
     query: str,
     blocks: List[Block],
     conversation_context: str,
-    user_level_adapter,
     sd_level: str,
     mode_prompt: str,
     additional_system_context: str,
@@ -822,7 +820,6 @@ def _build_llm_prompt_previews(
         query=query,
         blocks=blocks,
         conversation_context=conversation_context,
-        user_level_adapter=user_level_adapter,
         sd_level=sd_level,
         mode_prompt=mode_prompt,
         additional_system_context=additional_system_context,
@@ -1277,7 +1274,6 @@ def answer_question_adaptive(
             )
         
         # Phase 3: user level adapter removed from active runtime.
-        level_adapter = None
         path_level_enum = _resolve_path_user_level(user_level)
         
         if debug_info is not None:
@@ -1548,6 +1544,13 @@ def answer_question_adaptive(
                 debug_trace["fast_path"] = True
                 debug_trace["fast_path_reason"] = _detect_fast_path_reason(query, pre_routing_result)
                 debug_trace["recommended_mode"] = pre_routing_result.mode
+                debug_trace["route_track"] = getattr(pre_routing_result, "track", "direct")
+                debug_trace["route_tone"] = getattr(pre_routing_result, "tone", "minimal")
+                debug_trace["routing_result"] = {
+                    "mode": pre_routing_result.mode,
+                    "track": getattr(pre_routing_result, "track", "direct"),
+                    "tone": getattr(pre_routing_result, "tone", "minimal"),
+                }
                 debug_trace["decision_rule_id"] = pre_routing_result.decision.rule_id
                 debug_trace["confidence_score"] = pre_routing_result.confidence_score
                 debug_trace["confidence_level"] = pre_routing_result.confidence_level
@@ -1637,7 +1640,6 @@ def answer_question_adaptive(
                         query=query,
                         blocks=[fast_block],
                         conversation_context=conversation_context,
-                        user_level_adapter=level_adapter,
                         sd_level=sd_result.primary,
                         mode_prompt=mode_directive.prompt,
                         additional_system_context=state_context,
@@ -1660,7 +1662,6 @@ def answer_question_adaptive(
                     mode=pre_routing_result.mode,
                     confidence_level=pre_routing_result.confidence_level,
                     forbid=pre_routing_result.decision.forbid,
-                    user_level_adapter=level_adapter,
                     additional_system_context=state_context,
                     sd_level=sd_result.primary,
                     model=config.LLM_MODEL,
@@ -1726,7 +1727,6 @@ def answer_question_adaptive(
                     mode=pre_routing_result.mode,
                     confidence_level=pre_routing_result.confidence_level,
                     forbid=pre_routing_result.decision.forbid,
-                    user_level_adapter=level_adapter,
                     additional_system_context=state_context,
                     sd_level=sd_result.primary,
                     model=config.LLM_MODEL,
@@ -1827,6 +1827,8 @@ def answer_question_adaptive(
                     "state": state_analysis.primary_state.value,
                     "conversation_turns": len(memory.turns),
                     "recommended_mode": pre_routing_result.mode,
+                    "route_track": getattr(pre_routing_result, "track", "direct"),
+                    "route_tone": getattr(pre_routing_result, "tone", "minimal"),
                     "decision_rule_id": pre_routing_result.decision.rule_id,
                     "confidence_score": pre_routing_result.confidence_score,
                     "confidence_level": pre_routing_result.confidence_level,
@@ -1861,6 +1863,8 @@ def answer_question_adaptive(
                 debug_info["fast_path"] = True
                 debug_info["routing"] = {
                     "mode": pre_routing_result.mode,
+                    "track": getattr(pre_routing_result, "track", "direct"),
+                    "tone": getattr(pre_routing_result, "tone", "minimal"),
                     "rule_id": pre_routing_result.decision.rule_id,
                     "reason": pre_routing_result.decision.reason,
                     "confidence_score": pre_routing_result.confidence_score,
@@ -2020,19 +2024,22 @@ def answer_question_adaptive(
         retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
         if use_deterministic_router and diagnostics_v1 is not None:
-            pre_rerank_mode = (
+            rerank_mode = (
                 "CLARIFICATION" if diagnostics_v1.interaction_mode == "informational" else "PRESENCE"
             )
-            pre_rerank_confidence = (
+            rerank_confidence = (
                 float(diagnostics_v1.confidence.interaction_mode)
                 + float(diagnostics_v1.confidence.nervous_system_state)
                 + float(diagnostics_v1.confidence.request_function)
             ) / 3.0
         else:
-            pre_rerank_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
-            pre_rerank_routing = decision_gate.route(pre_rerank_signals, user_stage=user_stage)
-            pre_rerank_mode = pre_rerank_routing.mode
-            pre_rerank_confidence = pre_rerank_routing.confidence_score
+            # Wave 4 migration step: for rerank gating reuse already-computed pre-routing result.
+            rerank_mode = pre_routing_result.mode if pre_routing_result is not None else "PRESENCE"
+            rerank_confidence = (
+                float(pre_routing_result.confidence_score)
+                if pre_routing_result is not None
+                else 0.5
+            )
         conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
         rerank_flags = {
             "legacy_always_on": bool(
@@ -2044,8 +2051,8 @@ def answer_question_adaptive(
             "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
         }
         should_run_rerank, rerank_reason = should_rerank(
-            confidence_score=pre_rerank_confidence,
-            routing_mode=pre_rerank_mode,
+            confidence_score=rerank_confidence,
+            routing_mode=rerank_mode,
             retrieved_block_count=len(retrieved_blocks),
             flags=rerank_flags,
         )
@@ -2085,10 +2092,12 @@ def answer_question_adaptive(
                 )
             logger.info("[RERANK] skipped: %s", rerank_reason)
         reranked_blocks_for_trace = list(retrieved_blocks)
-
         routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
+
         if use_deterministic_router and diagnostics_v1 is not None:
-            practice_candidate_score = 0.75 if diagnostics_v1.request_function == "directive" else 0.0
+            practice_candidate_score = (
+                0.75 if diagnostics_v1.request_function == "solution" else 0.0
+            )
             routing_result = route_resolver.resolve(
                 diagnostics=diagnostics_v1,
                 safety_override=False,
@@ -2101,7 +2110,10 @@ def answer_question_adaptive(
                 routing_result.confidence_level,
             )
         else:
-            routing_result = decision_gate.route(routing_signals, user_stage=user_stage)
+            # Wave 4 contract: non-deterministic path uses one DecisionGate result per turn.
+            if pre_routing_result is None:
+                raise RuntimeError("pre_routing_result is missing in non-deterministic routing flow")
+            routing_result = pre_routing_result
             block_cap = decision_gate.scorer.suggest_block_cap(
                 len(retrieved_blocks),
                 routing_result.confidence_level,
@@ -2185,6 +2197,13 @@ def answer_question_adaptive(
 
         if debug_trace is not None:
             debug_trace["recommended_mode"] = routing_result.mode
+            debug_trace["route_track"] = getattr(routing_result, "track", "direct")
+            debug_trace["route_tone"] = getattr(routing_result, "tone", "minimal")
+            debug_trace["routing_result"] = {
+                "mode": routing_result.mode,
+                "track": getattr(routing_result, "track", "direct"),
+                "tone": getattr(routing_result, "tone", "minimal"),
+            }
             debug_trace["resolved_route"] = getattr(routing_result, "route", None)
             debug_trace["decision_rule_id"] = routing_result.decision.rule_id
             debug_trace["confidence_score"] = routing_result.confidence_score
@@ -2280,10 +2299,7 @@ def answer_question_adaptive(
             return response
         
         blocks = [block for block, score in retrieved_blocks]
-        if level_adapter is not None:
-            adapted_blocks = level_adapter.filter_blocks_by_level(blocks)
-        else:
-            adapted_blocks = list(blocks)
+        adapted_blocks = list(blocks)
 
         if not adapted_blocks:
             adapted_blocks = blocks[:3]  # fallback
@@ -2363,6 +2379,8 @@ def answer_question_adaptive(
             }
             debug_info["routing"] = {
                 "mode": routing_result.mode,
+                "track": getattr(routing_result, "track", "direct"),
+                "tone": getattr(routing_result, "tone", "minimal"),
                 "route": getattr(routing_result, "route", None),
                 "rule_id": routing_result.decision.rule_id,
                 "reason": routing_result.decision.reason,
@@ -2434,7 +2452,6 @@ def answer_question_adaptive(
                     query=query,
                     blocks=adapted_blocks,
                     conversation_context=conversation_context,
-                    user_level_adapter=level_adapter,
                     sd_level=sd_result.primary,
                     mode_prompt=mode_directive.prompt,
                     additional_system_context=state_context,
@@ -2457,7 +2474,6 @@ def answer_question_adaptive(
                 mode=routing_result.mode,
                 confidence_level=routing_result.confidence_level,
                 forbid=routing_result.decision.forbid,
-                user_level_adapter=level_adapter,
                 additional_system_context=state_context,
                 sd_level=sd_result.primary,
                 model=config.LLM_MODEL,
@@ -2571,7 +2587,6 @@ def answer_question_adaptive(
                 mode=routing_result.mode,
                 confidence_level=routing_result.confidence_level,
                 forbid=routing_result.decision.forbid,
-                user_level_adapter=level_adapter,
                 additional_system_context=state_context,
                 sd_level=sd_result.primary,
                 model=config.LLM_MODEL,
@@ -2736,7 +2751,6 @@ def answer_question_adaptive(
                         "session_id": user_id,
                         "date": datetime.now().date().isoformat(),
                         "key_themes": key_themes[:3],
-                        "sd_level_end": None if _sd_runtime_disabled() else sd_result.primary,
                         "state_end": state_analysis.primary_state.value,
                         "notable_moments": [
                             f"Запрос: {_truncate_preview(query, 140)}",
@@ -2789,6 +2803,8 @@ def answer_question_adaptive(
                 "state": state_analysis.primary_state.value,
                 "conversation_turns": len(memory.turns),
                 "recommended_mode": routing_result.mode,
+                "route_track": getattr(routing_result, "track", "direct"),
+                "route_tone": getattr(routing_result, "tone", "minimal"),
                 "resolved_route": getattr(routing_result, "route", None),
                 "decision_rule_id": routing_result.decision.rule_id,
                 "confidence_score": routing_result.confidence_score,

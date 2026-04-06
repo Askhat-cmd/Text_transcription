@@ -21,4 +21,6 @@ def test_decision_gate_routes_to_intervention_when_allowed() -> None:
     )
 
     assert result.mode == "INTERVENTION"
+    assert result.track == "practice"
+    assert result.tone == "empathic"
     assert result.confidence_level in {"medium", "high"}

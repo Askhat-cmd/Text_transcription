@@ -41,12 +41,6 @@ class _DummyAnswerer:
         }
 
 
-class _DummyLevelAdapter:
-    @staticmethod
-    def adapt_system_prompt(prompt: str) -> str:
-        return prompt + "\nLEVEL_ADAPTER"
-
-
 def test_response_generator_builds_mode_directive_and_context() -> None:
     answerer = _DummyAnswerer()
     generator = ResponseGenerator(answerer=answerer)
@@ -58,7 +52,7 @@ def test_response_generator_builds_mode_directive_and_context() -> None:
         mode="INTERVENTION",
         confidence_level="low",
         forbid=["lecture"],
-        user_level_adapter=_DummyLevelAdapter(),
+        user_level_adapter=object(),  # backward-compatible arg; ignored in Neo runtime
         additional_system_context="STATE_CONTEXT",
     )
 
@@ -67,7 +61,7 @@ def test_response_generator_builds_mode_directive_and_context() -> None:
     assert "MODE DIRECTIVE" in answerer.last_call["system_prompt"]
     assert "INTERVENTION" in answerer.last_call["system_prompt"]
     assert "STATE_CONTEXT" in answerer.last_call["system_prompt"]
-    assert "LEVEL_ADAPTER" in answerer.last_call["system_prompt"]
+    assert "LEVEL_ADAPTER" not in answerer.last_call["system_prompt"]
     assert answerer.last_call["temperature"] < config.LLM_TEMPERATURE
 
 

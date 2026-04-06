@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 from .state_classifier import UserState, StateAnalysis
 from .conversation_memory import ConversationMemory
 from .graph_client import graph_client
-from .user_level_adapter import UserLevel
+from .user_level_types import UserLevel
 from .config import config
 
 logger = logging.getLogger(__name__)

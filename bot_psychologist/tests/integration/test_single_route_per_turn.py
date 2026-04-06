@@ -26,3 +26,5 @@ def test_single_route_per_turn_contract() -> None:
         "inform",
         "contact_hold",
     }
+    assert resolution.track in {"practice", "reflective", "direct"}
+    assert resolution.tone in {"empathic", "technical", "minimal"}

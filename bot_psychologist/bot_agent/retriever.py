@@ -385,8 +385,8 @@ class SimpleRetriever:
         self,
         query: str,
         top_k: Optional[int] = None,
-        sd_level: Optional[int] = None,
         author_id: Optional[str] = None,
+        **legacy_kwargs,
     ) -> List[Tuple[Block, float]]:
         """
         Найти top_k релевантных блоков для запроса.
@@ -405,8 +405,11 @@ class SimpleRetriever:
             "[RETRIEVAL] query='%s' top_k=%s source=%s",
             query[:80], top_k, config.KNOWLEDGE_SOURCE
         )
+        sd_level = legacy_kwargs.pop("sd_level", None)
         if sd_level not in (None, 0):
-            logger.info("[RETRIEVAL] legacy sd_level=%s ignored (v10.1 contract)", sd_level)
+            logger.info("[RETRIEVAL] legacy sd_level=%s ignored (v11.0 contract)", sd_level)
+        if legacy_kwargs:
+            logger.debug("[RETRIEVAL] ignored legacy kwargs in retrieve(): %s", sorted(legacy_kwargs.keys()))
 
         degraded_mode = bool(getattr(config, "DEGRADED_MODE", False))
         data_source = str(getattr(config, "DATA_SOURCE", "") or "").lower()

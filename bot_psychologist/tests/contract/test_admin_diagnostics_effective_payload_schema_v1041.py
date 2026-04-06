@@ -60,7 +60,7 @@ def test_admin_diagnostics_effective_payload_shape(admin_client):
     assert isinstance(payload["active_contract"], dict)
     assert payload["active_contract"]["contract_version"] == "diagnostics-v1"
     assert payload["active_contract"]["interaction_mode_policy"] == "system-level"
-    assert payload["active_contract"]["nervous_system_taxonomy"] == "window|activation|shutdown"
-    assert payload["active_contract"]["request_function_taxonomy"] == "understand|practice|regulate|contact"
+    assert payload["active_contract"]["nervous_system_taxonomy"] == "hyper|window|hypo"
+    assert payload["active_contract"]["request_function_taxonomy"] == "discharge|understand|solution|validation|explore|contact"
     assert payload["last_snapshot"] == {}
     assert payload["trace_available"] is False

@@ -157,7 +157,6 @@ class ChromaLoader:
         self,
         query_text: str,
         top_k: int = 5,
-        sd_filter: Optional[str] = None,
         source_type_filter: Optional[str] = None,
     ) -> List[Tuple[Block, float]]:
         """
@@ -167,7 +166,6 @@ class ChromaLoader:
         Args:
             query_text:          текст запроса
             top_k:               кол-во результатов
-            sd_filter:           фильтр по SD-уровню ("GREEN", "YELLOW", ...)
             source_type_filter:  фильтр по типу источника ("book", "youtube")
 
         Returns:
@@ -179,8 +177,6 @@ class ChromaLoader:
             return []
 
         payload: Dict = {"query": query_text, "n_results": top_k}
-        if sd_filter:
-            payload["sd_level"] = sd_filter
         if source_type_filter:
             payload["source_type"] = source_type_filter
 
@@ -329,7 +325,6 @@ class ChromaLoader:
                         "source_type": b.source_type,
                         "author_id": b.author_id,
                         "author": b.author,
-                        "sd_level": b.sd_level,
                         "source_title": b.document_title,
                         "chunk_index": int(b.chunk_index or 0),
                         "language": b.language,

@@ -29,6 +29,8 @@ class RouteDecision:
 class RouteResolution:
     route: str
     mode: str
+    track: str
+    tone: str
     decision: RouteDecision
     confidence_score: float
     confidence_level: str
@@ -36,14 +38,9 @@ class RouteResolution:
 
     def as_dict(self) -> dict:
         return {
-            "route": self.route,
             "mode": self.mode,
-            "rule_id": self.decision.rule_id,
-            "reason": self.decision.reason,
-            "forbid": list(self.decision.forbid),
-            "confidence_score": round(float(self.confidence_score), 3),
-            "confidence_level": self.confidence_level,
-            "stage": self.stage,
+            "track": self.track,
+            "tone": self.tone,
         }
 
 
@@ -53,6 +50,25 @@ def _confidence_level(score: float) -> str:
     if score >= 0.5:
         return "medium"
     return "low"
+
+
+def _route_to_track_tone(route: str, mode: str) -> tuple[str, str]:
+    """Return Neo routing package (`track`, `tone`) for a resolved route."""
+    route_norm = str(route or "").strip().lower()
+
+    if route_norm == "practice":
+        return "practice", "empathic"
+    if route_norm in {"reflect", "inform"}:
+        return "reflective", "technical"
+    if route_norm in {"safe_override", "regulate", "contact_hold"}:
+        return "direct", "empathic"
+
+    mode_norm = str(mode or "").strip().upper()
+    if mode_norm in {"CLARIFICATION", "THINKING"}:
+        return "reflective", "technical"
+    if mode_norm in {"INTERVENTION"}:
+        return "practice", "empathic"
+    return "direct", "minimal"
 
 
 class RouteResolver:
@@ -69,9 +85,12 @@ class RouteResolver:
         score = self._base_confidence(diagnostics)
 
         if safety_override:
+            track, tone = _route_to_track_tone("safe_override", "VALIDATION")
             return RouteResolution(
                 route="safe_override",
                 mode="VALIDATION",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=1,
                     reason="safety override active",
@@ -83,9 +102,12 @@ class RouteResolver:
             )
 
         if diagnostics.interaction_mode == "informational":
+            track, tone = _route_to_track_tone("inform", "CLARIFICATION")
             return RouteResolution(
                 route="inform",
                 mode="CLARIFICATION",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=2,
                     reason="interaction mode informational",
@@ -97,9 +119,12 @@ class RouteResolver:
             )
 
         if diagnostics.nervous_system_state in {"hyper", "hypo"}:
+            track, tone = _route_to_track_tone("regulate", "VALIDATION")
             return RouteResolution(
                 route="regulate",
                 mode="VALIDATION",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=3,
                     reason=f"nervous system state={diagnostics.nervous_system_state}",
@@ -111,9 +136,12 @@ class RouteResolver:
             )
 
         if diagnostics.request_function == "contact":
+            track, tone = _route_to_track_tone("contact_hold", "PRESENCE")
             return RouteResolution(
                 route="contact_hold",
                 mode="PRESENCE",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=4,
                     reason="request function contact",
@@ -124,13 +152,16 @@ class RouteResolver:
                 stage=user_stage,
             )
 
-        if diagnostics.request_function in {"directive"} or practice_candidate_score >= 0.62:
+        if diagnostics.request_function == "solution" or practice_candidate_score >= 0.62:
+            track, tone = _route_to_track_tone("practice", "INTERVENTION")
             return RouteResolution(
                 route="practice",
                 mode="INTERVENTION",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=5,
-                    reason="explicit directive or strong practice candidate",
+                    reason="explicit solution request or strong practice candidate",
                     forbid=["too_many_options"],
                 ),
                 confidence_score=max(score, 0.66),
@@ -142,9 +173,12 @@ class RouteResolver:
             diagnostics.request_function in {"understand", "explore", "validation"}
             and diagnostics.nervous_system_state == "window"
         ):
+            track, tone = _route_to_track_tone("reflect", "THINKING")
             return RouteResolution(
                 route="reflect",
                 mode="THINKING",
+                track=track,
+                tone=tone,
                 decision=RouteDecision(
                     rule_id=6,
                     reason="window + understanding/exploration request",
@@ -155,9 +189,12 @@ class RouteResolver:
                 stage=user_stage,
             )
 
+        track, tone = _route_to_track_tone("reflect", "PRESENCE")
         return RouteResolution(
             route="reflect",
             mode="PRESENCE",
+            track=track,
+            tone=tone,
             decision=RouteDecision(
                 rule_id=7,
                 reason="safe fallback route",
@@ -180,4 +217,3 @@ class RouteResolver:
 
 
 route_resolver = RouteResolver()
-

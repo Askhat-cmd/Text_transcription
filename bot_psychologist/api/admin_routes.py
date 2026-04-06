@@ -291,8 +291,8 @@ def _build_diagnostics_effective_payload(session_id: str | None = None) -> dict[
     active_contract = {
         "contract_version": "diagnostics-v1",
         "interaction_mode_policy": "system-level",
-        "nervous_system_taxonomy": "window|activation|shutdown",
-        "request_function_taxonomy": "understand|practice|regulate|contact",
+        "nervous_system_taxonomy": "hyper|window|hypo",
+        "request_function_taxonomy": "discharge|understand|solution|validation|explore|contact",
         "core_theme_extraction": "enabled",
     }
 

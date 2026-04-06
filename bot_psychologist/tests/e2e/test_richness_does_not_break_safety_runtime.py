@@ -1,4 +1,4 @@
-﻿from __future__ import annotations
+from __future__ import annotations
 
 import sys
 from pathlib import Path
@@ -15,7 +15,7 @@ def test_richness_does_not_break_safety_runtime(monkeypatch) -> None:
         return build_diagnostics(
             interaction_mode="coaching",
             nervous_system_state="window",
-            request_function="directive",
+            request_function="solution",
             core_theme="crisis",
         )
 

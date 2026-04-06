@@ -104,6 +104,26 @@ def _strip_legacy_trace_fields(raw_trace: dict, *, sd_runtime_disabled: bool) ->
     return trace
 
 
+_LEGACY_RUNTIME_METADATA_KEYS = (
+    "user_level",
+    "user_level_adapter_applied",
+    "decision_rule_id",
+    "mode_reason",
+    "confidence_level",
+    "confidence_score",
+)
+
+
+def _strip_legacy_runtime_metadata(raw_metadata: dict, *, sd_runtime_disabled: bool) -> dict:
+    metadata = dict(raw_metadata or {})
+    for key in _LEGACY_RUNTIME_METADATA_KEYS:
+        metadata.pop(key, None)
+    if sd_runtime_disabled:
+        for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
+            metadata.pop(key, None)
+    return metadata
+
+
 # ===== QUESTIONS ENDPOINTS =====
 
 @router.post(
@@ -508,14 +528,12 @@ async def ask_adaptive_question(
                 first_step=first_step_response
             )
         
-        response_metadata = dict(result.get("metadata", {}))
+        response_metadata = _strip_legacy_runtime_metadata(
+            result.get("metadata", {}),
+            sd_runtime_disabled=feature_flags.enabled("DISABLE_SD_RUNTIME"),
+        )
         response_metadata["user_id"] = request.user_id
         response_metadata["session_id"] = session_key
-        for key in ("user_level", "user_level_adapter_applied"):
-            response_metadata.pop(key, None)
-        if feature_flags.enabled("DISABLE_SD_RUNTIME"):
-            for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
-                response_metadata.pop(key, None)
 
         trace = None
         if request.debug:
@@ -769,10 +787,10 @@ async def ask_adaptive_question(
             concepts=result.get("concepts", []),
             sources=sources,
             conversation_context=result.get("conversation_context", ""),
-            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
-            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
-            confidence_level=result.get("metadata", {}).get("confidence_level"),
-            confidence_score=result.get("metadata", {}).get("confidence_score"),
+            recommended_mode=response_metadata.get("recommended_mode"),
+            decision_rule_id=response_metadata.get("decision_rule_id"),
+            confidence_level=response_metadata.get("confidence_level"),
+            confidence_score=response_metadata.get("confidence_score"),
             metadata=response_metadata,
             trace=trace,
             timestamp=datetime.now().isoformat(),

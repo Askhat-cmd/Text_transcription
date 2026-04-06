@@ -14,6 +14,6 @@ def _read() -> str:
 def test_diagnostics_panel_mentions_v1_contract_fields() -> None:
     text = _read()
     assert "Diagnostics v1" in text
-    assert "nervous_system_state" in text
-    assert "request_function" in text
+    assert "nervous system taxonomy" in text
+    assert "request function taxonomy" in text
     assert "informational narrowing" in text

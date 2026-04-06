@@ -1,0 +1,50 @@
+﻿{
+  "schema_version": "10.5-phase0",
+  "boundary_inventory": {
+    "admin_management_surfaces": [
+      "llm",
+      "retrieval",
+      "diagnostics",
+      "routing",
+      "memory",
+      "prompts",
+      "runtime"
+    ],
+    "message_level_debug_surfaces": [
+      "trace_debug_tab",
+      "last_diagnostics_snapshot",
+      "recent_traces",
+      "turn_retrieval_breakdown",
+      "turn_validation_breakdown",
+      "turn_memory_update",
+      "turn_prompt_participation",
+      "turn_anomalies"
+    ],
+    "sections": [
+      {
+        "name": "Diagnostics",
+        "classification": "mixed",
+        "target": "management_only",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+      },
+      {
+        "name": "Runtime",
+        "classification": "mixed",
+        "target": "management_only",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+      },
+      {
+        "name": "Trace / Debug",
+        "classification": "message_level_debug",
+        "target": "remove_from_primary_admin",
+        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+      },
+      {
+        "name": "Prompts",
+        "classification": "management_with_runtime_metadata",
+        "target": "remove_last_turn_usage_surface",
+        "file": "bot_psychologist/web_ui/src/components/admin/PromptEditorPanel.tsx"
+      }
+    ]
+  }
+}

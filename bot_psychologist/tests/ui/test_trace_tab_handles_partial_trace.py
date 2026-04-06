@@ -11,10 +11,9 @@ def _read_admin_panel() -> str:
     return ADMIN_PANEL_PATH.read_text(encoding="utf-8", errors="ignore")
 
 
-def test_trace_tab_handles_partial_trace() -> None:
+def test_runtime_surface_has_no_turn_trace_payload_rendering() -> None:
     text = _read_admin_panel()
-    assert "tracePayload.diagnostics ?? {}" in text
-    assert "tracePayload.retrieval ?? {}" in text
-    assert "tracePayload.validation ?? {}" in text
-    assert "tracePayload.memory ?? {}" in text
-
+    assert "tracePayload.diagnostics ?? {}" not in text
+    assert "tracePayload.retrieval ?? {}" not in text
+    assert "tracePayload.validation ?? {}" not in text
+    assert "tracePayload.memory ?? {}" not in text

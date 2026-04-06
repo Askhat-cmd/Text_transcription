@@ -17,7 +17,7 @@ def test_diagnostics_tab_present_in_primary_ia() -> None:
     assert "Diagnostics v1" in text
 
 
-def test_trace_tab_present_in_primary_ia() -> None:
+def test_trace_tab_removed_from_primary_ia() -> None:
     text = _read_admin_panel()
-    assert "key: 'trace'" in text
-    assert "Trace / Debug" in text
+    assert "key: 'trace'" not in text
+    assert "Trace / Debug" not in text

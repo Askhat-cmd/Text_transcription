@@ -1,12 +1,11 @@
 // components/admin/PromptEditorPanel.tsx
 
 import React, { useState, useEffect } from 'react';
-import type { PromptDetail, PromptMeta, PromptStackUsageResponse } from '../../types/admin.types';
+import type { PromptDetail, PromptMeta } from '../../types/admin.types';
 
 interface Props {
   prompts: PromptMeta[];
   selectedPrompt: PromptDetail | null;
-  promptUsage: PromptStackUsageResponse | null;
   promptError?: string | null;
   onSelect: (name: string) => void;
   onRetryLoad: () => void;
@@ -19,7 +18,6 @@ interface Props {
 export const PromptEditorPanel: React.FC<Props> = ({
   prompts,
   selectedPrompt,
-  promptUsage,
   promptError,
   onSelect,
   onRetryLoad,
@@ -32,10 +30,6 @@ export const PromptEditorPanel: React.FC<Props> = ({
   const [isDirty, setIsDirty] = useState(false);
   const [showDiff, setShowDiff] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
-  const selectedUsage = selectedPrompt
-    ? (promptUsage?.sections ?? []).find((section) => section.name === selectedPrompt.name)
-    : null;
-  const selectedUsedInLastTurn = Boolean(selectedUsage?.usage_markers?.used_in_last_turn);
 
   useEffect(() => {
     if (selectedPrompt) {
@@ -152,9 +146,6 @@ export const PromptEditorPanel: React.FC<Props> = ({
                   {selectedPrompt.editable === false && (
                     <span className="ml-2 text-slate-500 font-medium">• read-only runtime section</span>
                   )}
-                  <span className={`ml-2 font-medium ${selectedUsedInLastTurn ? 'text-emerald-600' : 'text-slate-500'}`}>
-                    • {selectedUsedInLastTurn ? 'used in last turn' : 'not used in last turn'}
-                  </span>
                 </p>
               </div>
               <div className="flex gap-2">
@@ -193,33 +184,6 @@ export const PromptEditorPanel: React.FC<Props> = ({
               </div>
             )}
 
-            <div className="mb-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                <p className="text-xs font-semibold text-slate-700 mb-1">Effective Assembly Preview</p>
-                <div className="text-xs text-slate-600 space-y-1 max-h-28 overflow-auto">
-                  {(promptUsage?.sections ?? []).map((section) => (
-                    <div key={section.name} className="flex items-center justify-between gap-2">
-                      <span className="truncate">{section.name}</span>
-                      <span className={section.usage_markers?.used_in_last_turn ? 'text-emerald-600' : 'text-slate-400'}>
-                        {section.usage_markers?.used_in_last_turn ? 'used' : 'idle'}
-                      </span>
-                    </div>
-                  ))}
-                  {!promptUsage?.sections?.length && <div>Нет данных по секциям.</div>}
-                </div>
-              </div>
-              <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
-                <p className="text-xs font-semibold text-slate-700 mb-1">Last Turn Section Usage</p>
-                <div className="text-xs text-slate-600">
-                  turn: {String(promptUsage?.last_turn?.turn_number ?? 'n/a')}
-                </div>
-                <div className="text-xs text-slate-600 mt-1 break-all">
-                  {promptUsage?.last_turn?.used_sections?.length
-                    ? promptUsage?.last_turn?.used_sections.join(' • ')
-                    : 'Нет usage-данных для последнего turn.'}
-                </div>
-              </div>
-            </div>
             <div className="mb-3 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
               <p className="font-semibold text-slate-700 mb-1">Section Metadata</p>
               <div>source: {selectedPrompt.source ?? 'n/a'}</div>

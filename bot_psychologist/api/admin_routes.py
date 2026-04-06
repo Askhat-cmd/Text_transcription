@@ -346,18 +346,19 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
         },
         "trace": {
             "available": bool(last_trace),
-            "session_id": (last_trace or {}).get("session_id"),
-            "last_turn_number": (last_trace or {}).get("turn_number"),
         },
     }
 
 
 def _build_diagnostics_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     flags_snapshot = feature_flags.snapshot()
-    store = get_session_store()
-    last_trace = store.get_last_trace(session_id=session_id)
-    diagnostics = (last_trace or {}).get("diagnostics_v1") if isinstance(last_trace, dict) else {}
-    diagnostics = diagnostics if isinstance(diagnostics, dict) else {}
+    active_contract = {
+        "contract_version": "diagnostics-v1",
+        "interaction_mode_policy": "system-level",
+        "nervous_system_taxonomy": "window|activation|shutdown",
+        "request_function_taxonomy": "understand|practice|regulate|contact",
+        "core_theme_extraction": "enabled",
+    }
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -369,17 +370,9 @@ def _build_diagnostics_effective_payload(session_id: str | None = None) -> dict[
             "first_turn_richness_policy_enabled": bool(flags_snapshot.get("USE_OUTPUT_VALIDATION")),
             "curiosity_decoupling_enabled": True,
         },
-        "active_contract": {
-            "interaction_mode": diagnostics.get("interaction_mode"),
-            "nervous_system_state": diagnostics.get("nervous_system_state"),
-            "request_function": diagnostics.get("request_function"),
-            "core_theme": diagnostics.get("core_theme"),
-            "informational_mode_hint": diagnostics.get("informational_mode_hint"),
-            "mixed_query": diagnostics.get("mixed_query"),
-            "confidence": diagnostics.get("confidence"),
-        },
-        "last_snapshot": diagnostics,
-        "trace_available": bool(last_trace),
+        "active_contract": active_contract,
+        "last_snapshot": {},
+        "trace_available": False,
     }
 
 

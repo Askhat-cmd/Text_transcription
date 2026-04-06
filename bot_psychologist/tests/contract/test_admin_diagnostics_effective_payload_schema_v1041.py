@@ -58,8 +58,9 @@ def test_admin_diagnostics_effective_payload_shape(admin_client):
     assert "curiosity_decoupling_enabled" in payload["policies"]
 
     assert isinstance(payload["active_contract"], dict)
-    assert payload["active_contract"]["interaction_mode"] == "curious"
-    assert payload["active_contract"]["nervous_system_state"] == "window"
-    assert payload["active_contract"]["request_function"] == "understand"
-    assert payload["trace_available"] is True
-
+    assert payload["active_contract"]["contract_version"] == "diagnostics-v1"
+    assert payload["active_contract"]["interaction_mode_policy"] == "system-level"
+    assert payload["active_contract"]["nervous_system_taxonomy"] == "window|activation|shutdown"
+    assert payload["active_contract"]["request_function_taxonomy"] == "understand|practice|regulate|contact"
+    assert payload["last_snapshot"] == {}
+    assert payload["trace_available"] is False

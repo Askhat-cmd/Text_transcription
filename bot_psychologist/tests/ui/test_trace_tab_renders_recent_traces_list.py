@@ -11,8 +11,7 @@ def _read_admin_panel() -> str:
     return ADMIN_PANEL_PATH.read_text(encoding="utf-8", errors="ignore")
 
 
-def test_trace_tab_renders_recent_traces_list() -> None:
+def test_admin_surface_has_no_recent_traces_list() -> None:
     text = _read_admin_panel()
-    assert "Recent traces list" in text
-    assert "No recent traces available." in text
-
+    assert "Recent traces list" not in text
+    assert "No recent traces available." not in text

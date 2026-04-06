@@ -12,15 +12,15 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
 
 
-def test_prompt_tab_shows_effective_assembly_preview() -> None:
+def test_prompt_tab_keeps_section_metadata_and_no_turn_usage_surface() -> None:
     text = _read(PROMPT_EDITOR_PATH)
-    assert "Effective Assembly Preview" in text
     assert "Section Metadata" in text
-    assert "used in last turn" in text
+    assert "Effective Assembly Preview" not in text
+    assert "used in last turn" not in text
 
 
-def test_prompt_tab_passes_prompt_usage_payload_to_editor() -> None:
+def test_prompt_tab_does_not_depend_on_prompt_usage_payload() -> None:
     text = _read(ADMIN_PANEL_PATH)
-    assert "promptUsageData" in text
-    assert "loadPromptUsage" in text
-    assert "promptUsage={promptUsageData}" in text
+    assert "promptUsageData" not in text
+    assert "loadPromptUsage" not in text
+    assert "promptUsage={promptUsageData}" not in text

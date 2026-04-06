@@ -11,10 +11,9 @@ def _read_admin_panel() -> str:
     return ADMIN_PANEL_PATH.read_text(encoding="utf-8", errors="ignore")
 
 
-def test_diagnostics_tab_can_render_last_snapshot() -> None:
+def test_diagnostics_tab_policy_surface_has_no_last_snapshot() -> None:
     text = _read_admin_panel()
-    assert "Last Diagnostics Snapshot" in text
-    assert "trace available" in text
-    assert "informational_mode_hint" in text
-    assert "mixed_query" in text
-
+    assert "Current Behavior Policies" in text
+    assert "Last Diagnostics Snapshot" not in text
+    assert "informational_mode_hint" not in text
+    assert "mixed_query_snapshot" not in text

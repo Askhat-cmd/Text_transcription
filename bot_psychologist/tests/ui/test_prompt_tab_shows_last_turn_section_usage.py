@@ -12,11 +12,11 @@ def _read(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
 
 
-def test_prompt_tab_shows_last_turn_section_usage() -> None:
+def test_prompt_tab_hides_last_turn_section_usage() -> None:
     text = _read(PROMPT_EDITOR_PATH)
-    assert "Last Turn Section Usage" in text
-    assert "last_turn?.used_sections" in text
-    assert "used_sections.join" in text
+    assert "Last Turn Section Usage" not in text
+    assert "last_turn?.used_sections" not in text
+    assert "used_sections.join" not in text
 
 
 def test_prompt_usage_response_type_has_last_turn_schema() -> None:

@@ -17,7 +17,6 @@ type Tab =
   | 'memory'
   | 'prompts'
   | 'runtime'
-  | 'trace'
   | 'compatibility';
 
 const TABS: { key: Tab; label: string; hoverColor: string }[] = [
@@ -28,7 +27,6 @@ const TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'memory',    label: '🧠 Память',     hoverColor: 'hover:bg-emerald-500/20'},
   { key: 'prompts',   label: '🧩 Prompts',     hoverColor: 'hover:bg-rose-500/20'   },
   { key: 'runtime',   label: '⚙️ Runtime',    hoverColor: 'hover:bg-slate-500/20'  },
-  { key: 'trace',   label: '🧪 Trace / Debug',    hoverColor: 'hover:bg-indigo-500/20' },
   { key: 'compatibility',   label: '🧰 Compatibility',    hoverColor: 'hover:bg-amber-500/20' },
 ];
 
@@ -72,17 +70,11 @@ export const AdminPanel: React.FC = () => {
     statusData,
     runtimeEffectiveData,
     diagnosticsEffectiveData,
-    traceLastData,
-    traceRecentData,
-    promptUsageData,
     isLoading, isSaving, error, promptError, successMessage,
     clearError, loadConfig, loadPrompts, loadPromptDetail,
     retryPromptDetailLoad,
     loadRuntimeEffective,
     loadDiagnosticsEffective,
-    loadTraceLast,
-    loadTraceRecent,
-    loadPromptUsage,
     loadStatus, reloadKnowledgeBase,
     saveConfigParam, resetConfigParam, resetAllConfig,
     savePrompt, resetPrompt, resetAllPrompts,
@@ -99,9 +91,6 @@ export const AdminPanel: React.FC = () => {
     loadStatus();
     loadRuntimeEffective();
     loadDiagnosticsEffective();
-    loadTraceLast();
-    loadTraceRecent(10);
-    loadPromptUsage();
   }, []);
 
   useEffect(() => {
@@ -110,17 +99,6 @@ export const AdminPanel: React.FC = () => {
       adminConfigService.getHistory().then((data) => setHistory(data.history));
     });
   }, [activeTab]);
-
-  useEffect(() => {
-    if (activeTab !== 'trace') return;
-    loadTraceLast();
-    loadTraceRecent(10);
-  }, [activeTab, loadTraceLast, loadTraceRecent]);
-
-  useEffect(() => {
-    if (activeTab !== 'prompts') return;
-    loadPromptUsage();
-  }, [activeTab, loadPromptUsage]);
 
   useEffect(() => {
     if (!showCompatibility && activeTab === 'compatibility') {
@@ -181,18 +159,9 @@ export const AdminPanel: React.FC = () => {
     if (value === undefined || value === null) return fallback;
     return String(value);
   };
-  const diagnosticsValue = (key: string, fallback = 'n/a'): string => {
-    const value = diagnosticsEffectiveData?.active_contract?.[key];
-    if (typeof value === 'boolean') return value ? 'true' : 'false';
-    if (value === undefined || value === null) return fallback;
-    return String(value);
-  };
   const visibleTabs = showCompatibility
     ? TABS
     : TABS.filter((tab) => tab.key !== 'compatibility');
-  const tracePayload = traceLastData?.trace;
-  const traceRecentItems = traceRecentData?.traces ?? [];
-
   return (
     <div className="min-h-screen bg-slate-100">
 
@@ -398,9 +367,10 @@ export const AdminPanel: React.FC = () => {
                         <div className="rounded border border-slate-200 p-3">
                           <div className="font-medium text-slate-700 mb-1">Trace / Validation</div>
                           <div>trace available: <span className="font-medium">{runtimeEffectiveData?.trace?.available ? 'yes' : 'no'}</span></div>
-                          <div>last session id: <span className="font-medium">{runtimeEffectiveData?.trace?.session_id ?? 'n/a'}</span></div>
-                          <div>last turn #: <span className="font-medium">{String(runtimeEffectiveData?.trace?.last_turn_number ?? 'n/a')}</span></div>
                           <div>config valid: <span className="font-medium">{runtimeEffectiveData?.validation?.config_validation_status?.valid ? 'true' : 'false'}</span></div>
+                          <div className="text-xs text-slate-500 mt-1">
+                            Deep message-level diagnostics are available in developer trace inside chat.
+                          </div>
                         </div>
                         <div className="rounded border border-slate-200 p-3">
                           <div className="font-medium text-slate-700 mb-1">Grouped Feature Flags</div>
@@ -465,21 +435,21 @@ export const AdminPanel: React.FC = () => {
               </div>
             )}
 
+
             {activeTab === 'diagnostics' && (
               <div className="mt-4 bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-3">
                 <h3 className="text-lg font-semibold text-slate-800">Diagnostics v1</h3>
                 <p className="text-sm text-slate-600">
-                  Операционная поверхность для диагностики поведения Neo runtime:
-                  active contract, policy states и last runtime snapshot.
+                  System-level policy surface for diagnostics contract. No per-message snapshots are shown here.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                   <div className="rounded border border-slate-200 p-3">
                     <div className="font-medium text-slate-700">Active Diagnostics Contract</div>
                     <div className="text-slate-600 mt-1 space-y-1">
-                      <div>interaction_mode: <span className="font-medium">{diagnosticsValue('interaction_mode')}</span></div>
-                      <div>nervous_system_state: <span className="font-medium">{diagnosticsValue('nervous_system_state')}</span></div>
-                      <div>request_function: <span className="font-medium">{diagnosticsValue('request_function')}</span></div>
-                      <div>core_theme: <span className="font-medium">{diagnosticsValue('core_theme')}</span></div>
+                      <div>contract: <span className="font-medium">{String(diagnosticsEffectiveData?.active_contract?.contract_version ?? 'diagnostics-v1')}</span></div>
+                      <div>interaction policy: <span className="font-medium">{String(diagnosticsEffectiveData?.active_contract?.interaction_mode_policy ?? 'system-level')}</span></div>
+                      <div>nervous system taxonomy: <span className="font-medium">{String(diagnosticsEffectiveData?.active_contract?.nervous_system_taxonomy ?? 'n/a')}</span></div>
+                      <div>request function taxonomy: <span className="font-medium">{String(diagnosticsEffectiveData?.active_contract?.request_function_taxonomy ?? 'n/a')}</span></div>
                     </div>
                   </div>
                   <div className="rounded border border-slate-200 p-3">
@@ -492,19 +462,10 @@ export const AdminPanel: React.FC = () => {
                     </div>
                   </div>
                   <div className="rounded border border-slate-200 p-3">
-                    <div className="font-medium text-slate-700">Last Diagnostics Snapshot</div>
-                    <div className="text-slate-600 mt-1 space-y-1">
-                      <div>trace available: <span className="font-medium">{diagnosticsEffectiveData?.trace_available ? 'yes' : 'no'}</span></div>
-                      <div>informational_mode_hint: <span className="font-medium">{diagnosticsValue('informational_mode_hint')}</span></div>
-                      <div>mixed_query: <span className="font-medium">{diagnosticsValue('mixed_query')}</span></div>
-                      <div>confidence: <span className="font-medium">{diagnosticsValue('confidence')}</span></div>
-                    </div>
-                  </div>
-                  <div className="rounded border border-slate-200 p-3">
                     <div className="font-medium text-slate-700">Inform/Mixed/User Correction</div>
                     <div className="text-slate-600 mt-1">
-                      Policy influence: informational narrowing, mixed-query bridge и user correction
-                      протокол участвуют в route decision и shaping final response style.
+                      Policies below are system-level controls. Detailed per-turn diagnostics are delegated
+                      to developer trace in chat mode.
                     </div>
                   </div>
                 </div>
@@ -591,7 +552,6 @@ export const AdminPanel: React.FC = () => {
                 <PromptEditorPanel
                   prompts={prompts}
                   selectedPrompt={selectedPrompt}
-                  promptUsage={promptUsageData}
                   promptError={promptError}
                   onSelect={loadPromptDetail}
                   onRetryLoad={retryPromptDetailLoad}
@@ -600,97 +560,6 @@ export const AdminPanel: React.FC = () => {
                   onResetAll={resetAllPrompts}
                   isSaving={isSaving}
                 />
-              </div>
-            )}
-
-            {activeTab === 'trace' && (
-              <div className="mt-4">
-                <div className="bg-white rounded-xl border border-slate-200 shadow-md p-5 space-y-4">
-                  <h3 className="text-lg font-semibold text-slate-800">Trace / Debug</h3>
-                  {traceLastData?.available === false && (
-                    <div className="rounded border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-700">
-                      Trace disabled/unavailable. Причина: {traceLastData.reason ?? 'no trace yet'}.
-                    </div>
-                  )}
-                  {!traceLastData && (
-                    <div className="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-600">
-                      No trace yet. Открой диалоговый turn и нажми вкладку повторно.
-                    </div>
-                  )}
-                  {tracePayload && (
-                    <>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Turn header</div>
-                          <div className="text-slate-600 mt-1">turn: {String(tracePayload.turn_number ?? 'n/a')}</div>
-                          <div className="text-slate-600">query: {String(tracePayload.query ?? 'n/a')}</div>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Diagnostics snapshot</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.diagnostics ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Routing decision</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.routing ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Retrieval pipeline</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.retrieval ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Prompt stack summary</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.prompt_stack ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Output validation</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.validation ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Memory / summary update</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(tracePayload.memory ?? {}, null, 2)}
-                          </pre>
-                        </div>
-                        <div className="rounded border border-slate-200 p-3">
-                          <div className="font-medium text-slate-700">Flags / degraded / anomalies</div>
-                          <pre className="mt-1 text-xs text-slate-600 whitespace-pre-wrap">
-                            {JSON.stringify(
-                              {
-                                degraded_mode: tracePayload.degraded_mode ?? false,
-                                anomalies: tracePayload.anomalies ?? [],
-                              },
-                              null,
-                              2
-                            )}
-                          </pre>
-                        </div>
-                      </div>
-                      <div className="rounded border border-slate-200 p-3 text-sm text-slate-600">
-                        <div className="font-medium text-slate-700 mb-2">Recent traces list</div>
-                        {traceRecentItems.length === 0 && <div>No recent traces available.</div>}
-                        {traceRecentItems.length > 0 && (
-                          <ul className="space-y-1">
-                            {traceRecentItems.map((item, idx) => (
-                              <li key={`${item.turn_number ?? idx}-${idx}`}>
-                                turn {String(item.turn_number ?? 'n/a')} • route {String((item.routing && typeof item.routing === 'object' ? (item.routing as Record<string, unknown>).resolved_route : 'n/a') ?? 'n/a')} • query {String(item.query ?? 'n/a')}
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
               </div>
             )}
 

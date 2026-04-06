@@ -21,7 +21,6 @@ def test_primary_admin_tabs_match_neo_runtime_ia() -> None:
         "key: 'memory'",
         "key: 'prompts'",
         "key: 'runtime'",
-        "key: 'trace'",
         "key: 'compatibility'",
     ]
     for marker in expected_tabs:

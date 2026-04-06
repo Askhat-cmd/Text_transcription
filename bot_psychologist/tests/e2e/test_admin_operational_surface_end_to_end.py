@@ -72,7 +72,8 @@ def test_admin_operational_surface_end_to_end(admin_client):
 
     diagnostics_payload = diagnostics.json()
     assert diagnostics_payload["contract"] == "diagnostics-v1"
-    assert diagnostics_payload["trace_available"] is True
+    assert diagnostics_payload["trace_available"] is False
+    assert diagnostics_payload["last_snapshot"] == {}
 
     last_payload = trace_last.json()
     assert last_payload["available"] is True

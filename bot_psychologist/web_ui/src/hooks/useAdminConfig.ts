@@ -9,9 +9,6 @@ import type {
   AdminStatusResponse,
   AdminRuntimeEffectiveResponse,
   AdminDiagnosticsEffectiveResponse,
-  AdminTraceLastResponse,
-  AdminTraceRecentResponse,
-  PromptStackUsageResponse,
 } from '../types/admin.types';
 
 export const useAdminConfig = () => {
@@ -29,9 +26,6 @@ export const useAdminConfig = () => {
     useState<AdminRuntimeEffectiveResponse | null>(null);
   const [diagnosticsEffectiveData, setDiagnosticsEffectiveData] =
     useState<AdminDiagnosticsEffectiveResponse | null>(null);
-  const [traceLastData, setTraceLastData] = useState<AdminTraceLastResponse | null>(null);
-  const [traceRecentData, setTraceRecentData] = useState<AdminTraceRecentResponse | null>(null);
-  const [promptUsageData, setPromptUsageData] = useState<PromptStackUsageResponse | null>(null);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -117,20 +111,8 @@ export const useAdminConfig = () => {
     if (data) setDiagnosticsEffectiveData(data);
   }, []);
 
-  const loadTraceLast = useCallback(async () => {
-    const data = await withLoading(() => adminConfigService.getTraceLast());
-    if (data) setTraceLastData(data);
-  }, []);
 
-  const loadTraceRecent = useCallback(async (limit = 10) => {
-    const data = await withLoading(() => adminConfigService.getTraceRecent(limit));
-    if (data) setTraceRecentData(data);
-  }, []);
 
-  const loadPromptUsage = useCallback(async () => {
-    const data = await withLoading(() => adminConfigService.getPromptStackUsage());
-    if (data) setPromptUsageData(data);
-  }, []);
 
   const reloadKnowledgeBase = useCallback(async () => {
     const result = await withSaving(() => adminConfigService.reloadData());
@@ -138,20 +120,9 @@ export const useAdminConfig = () => {
       await loadStatus();
       await loadRuntimeEffective();
       await loadDiagnosticsEffective();
-      await loadTraceLast();
-      await loadTraceRecent(10);
-      await loadPromptUsage();
       showSuccess('✓ База знаний перезагружена');
     }
-  }, [
-    loadDiagnosticsEffective,
-    loadPromptUsage,
-    loadRuntimeEffective,
-    loadStatus,
-    loadTraceLast,
-    loadTraceRecent,
-    showSuccess,
-  ]);
+  }, [loadDiagnosticsEffective, loadRuntimeEffective, loadStatus, showSuccess]);
 
   // ── Prompts ─────────────────────────────────────────────────────────
 
@@ -251,9 +222,6 @@ export const useAdminConfig = () => {
     statusData,
     runtimeEffectiveData,
     diagnosticsEffectiveData,
-    traceLastData,
-    traceRecentData,
-    promptUsageData,
     prompts,
     selectedPrompt,
     isLoading,
@@ -272,9 +240,6 @@ export const useAdminConfig = () => {
     loadStatus,
     loadRuntimeEffective,
     loadDiagnosticsEffective,
-    loadTraceLast,
-    loadTraceRecent,
-    loadPromptUsage,
     reloadKnowledgeBase,
     savePrompt,
     resetPrompt,

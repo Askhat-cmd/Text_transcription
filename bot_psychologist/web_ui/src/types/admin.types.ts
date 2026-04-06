@@ -128,8 +128,6 @@ export interface AdminRuntimeEffectiveResponse {
   };
   trace: {
     available: boolean;
-    session_id?: string | null;
-    last_turn_number?: number | null;
   };
 }
 

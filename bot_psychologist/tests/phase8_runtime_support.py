@@ -1,13 +1,22 @@
 ﻿from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from types import SimpleNamespace
 from typing import Callable, Dict, Optional
 
 from bot_agent.data_loader import Block
 from bot_agent.diagnostics_classifier import DiagnosticsConfidence, DiagnosticsV1
-from bot_agent.sd_classifier import SDClassificationResult
 from bot_agent.state_classifier import StateAnalysis, UserState
+
+
+@dataclass(frozen=True)
+class SDClassificationResult:
+    primary: str
+    secondary: Optional[str] = None
+    confidence: float = 0.0
+    indicator: str = "disabled_by_design"
+    method: str = "disabled"
+    allowed_blocks: list[str] = field(default_factory=list)
 
 
 class DummyMemory:

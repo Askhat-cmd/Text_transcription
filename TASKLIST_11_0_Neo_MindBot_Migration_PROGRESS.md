@@ -23,7 +23,7 @@
 - [x] Runtime guardrails включены:
   - [x] `DISABLE_SD_RUNTIME = True`
   - [x] `DISABLE_USER_LEVEL_ADAPTER = True`
-- [x] Добавлен защитный runtime-барьер в `bot_psychologist/bot_agent/sd_classifier.py`
+- [x] Добавлен защитный runtime-барьер в SD-контур (позже модуль архивирован в `bot_psychologist/bot_agent/legacy/python/sd_classifier.py`)
 - [x] `answer_adaptive` использует fallback при отключённом SD (`_sd_runtime_disabled()`)
 - [x] Тесты Wave 1 зелёные:
   - [x] `tests/config/test_feature_flags_baseline.py`
@@ -122,7 +122,7 @@
   - [x] Startup snapshot creation в `api/main.py` переведён на динамический список `config.EDITABLE_PROMPTS`
   - [x] Legacy Python modules архивированы в `bot_agent/legacy/python/`
   - [x] Active runtime отвязан от legacy-модулей (`bot_agent/__init__.py`, `api/routes.py`, `answer_adaptive.py`)
-  - [x] В активных путях оставлены только совместимые stub-файлы (удаление исходных файлов ограничено ACL на текущем ПК)
+  - [x] Выполнен “жесткий вариант”: stub-файлы удалены из active path, legacy-модули оставлены только в `bot_agent/legacy/python/`
 - [x] Финальный acceptance + regression suite
 
 ---
@@ -197,6 +197,6 @@
 
 `python -m pytest tests/config/test_feature_flags_baseline.py tests/unit/test_sd_runtime_disabled.py tests/regression/test_streaming_sd_runtime_disabled_contract.py tests/test_db_api_client.py tests/unit/test_retriever_no_sd_filter.py tests/regression/test_no_hidden_sd_filtering.py tests/test_retriever_fallback.py tests/contract/test_retrieval_contract_v101.py tests/test_conversation_memory_persistence.py tests/unit/test_user_level_adapter_removed.py tests/regression/test_no_user_level_runtime_metadata.py tests/integration/test_pipeline_without_level_adapter.py tests/contract/test_live_metadata_contract_after_purge.py tests/test_response_generator.py tests/test_path_builder.py tests/integration/test_single_route_per_turn.py tests/contract/test_trace_contract_after_purge.py tests/e2e/test_legacy_fallback_when_flag_off.py tests/test_retrieval_pipeline_simplified.py tests/unit/test_prompt_registry_versioning.py tests/regression/test_no_legacy_prompt_overlays.py tests/integration/test_informational_branch.py tests/regression/test_informational_branch_does_not_force_coaching.py tests/integration/test_runtime_curious_inform_decoupling_v1031.py tests/contract/test_no_legacy.py tests/test_decision_gate.py tests/unit/test_route_resolver_rules.py -v`
 
-Результат: `53 passed, 4 skipped`.
+Результат: `57 passed`.
 
-Примечание по skip: `tests/test_conversation_memory_persistence.py` в этом окружении не выполняет SQLite disk-writes (`WinError 5 / disk I/O`), тесты помечены `skipif` для инфраструктурной несовместимости среды.
+Примечание: после восстановления ACL и выполнения “жесткого” варианта пакет проходит полностью без skip.

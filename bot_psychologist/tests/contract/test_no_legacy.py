@@ -94,7 +94,7 @@ def test_sd_and_level_prompt_files_moved_to_legacy_folder() -> None:
         assert legacy_path.exists(), f"legacy prompt missing in archive folder: {legacy_path}"
 
 
-def test_legacy_python_modules_archived_and_stubbed() -> None:
+def test_legacy_python_modules_archived_and_removed_from_active() -> None:
     legacy_python_modules = [
         "answer_basic.py",
         "answer_sag_aware.py",
@@ -107,6 +107,4 @@ def test_legacy_python_modules_archived_and_stubbed() -> None:
         active_path = REPO_ROOT / "bot_agent" / filename
         archived_path = REPO_ROOT / "bot_agent" / "legacy" / "python" / filename
         assert archived_path.exists(), f"archived legacy module missing: {archived_path}"
-        assert active_path.exists(), f"compatibility stub missing: {active_path}"
-        active_text = active_path.read_text(encoding="utf-8", errors="ignore")
-        assert "Legacy stub" in active_text, f"active file is not a stub: {active_path}"
+        assert not active_path.exists(), f"legacy module still exists in active path: {active_path}"

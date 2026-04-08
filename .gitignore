@@ -95,6 +95,10 @@ bot_psychologist/data/
 !bot_psychologist/data/.gitkeep
 bot_psychologist/.cache_bot_agent/tfidf_cache.joblib
 bot_psychologist/.cache_bot_agent/tfidf_cache.hash
+bot_psychologist/.tmp_pytest/
+bot_psychologist/tests/_tmp_memory_persistence/
+bot_psychologist/tests/_tmp_memory_probe/
+bot_psychologist/tests/test_sqlite.db*
 
 # ========================================
 # ЗАВИСИМОСТИ

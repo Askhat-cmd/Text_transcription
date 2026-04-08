@@ -15,6 +15,16 @@ def test_no_legacy_runtime_markers_in_active_neo_paths() -> None:
         "bot_agent/retriever.py": [
             "sd_filter=",
         ],
+        "bot_agent/__init__.py": [
+            "from .answer_basic",
+            "from .answer_sag_aware",
+            "from .answer_graph_powered",
+        ],
+        "api/routes.py": [
+            "answer_question_basic(",
+            "answer_question_sag_aware(",
+            "answer_question_graph_powered(",
+        ],
         "bot_agent/prompt_registry_v2.py": [
             "prompt_sd_",
             "prompt_system_level_beginner",
@@ -82,3 +92,21 @@ def test_sd_and_level_prompt_files_moved_to_legacy_folder() -> None:
         legacy_path = REPO_ROOT / "bot_agent" / "legacy" / "prompts" / filename
         assert not root_path.exists(), f"legacy prompt still located in active root: {root_path}"
         assert legacy_path.exists(), f"legacy prompt missing in archive folder: {legacy_path}"
+
+
+def test_legacy_python_modules_archived_and_stubbed() -> None:
+    legacy_python_modules = [
+        "answer_basic.py",
+        "answer_sag_aware.py",
+        "answer_graph_powered.py",
+        "sd_classifier.py",
+        "user_level_adapter.py",
+    ]
+
+    for filename in legacy_python_modules:
+        active_path = REPO_ROOT / "bot_agent" / filename
+        archived_path = REPO_ROOT / "bot_agent" / "legacy" / "python" / filename
+        assert archived_path.exists(), f"archived legacy module missing: {archived_path}"
+        assert active_path.exists(), f"compatibility stub missing: {active_path}"
+        active_text = active_path.read_text(encoding="utf-8", errors="ignore")
+        assert "Legacy stub" in active_text, f"active file is not a stub: {active_path}"

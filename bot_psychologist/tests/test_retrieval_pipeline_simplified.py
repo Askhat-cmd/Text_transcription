@@ -8,7 +8,6 @@ import pytest
 
 import bot_agent.answer_adaptive as aa
 from bot_agent.data_loader import Block
-from bot_agent.sd_classifier import SDClassificationResult
 from bot_agent.state_classifier import StateAnalysis, UserState
 
 
@@ -145,15 +144,6 @@ def _setup_pipeline(
             recommendations=["respond calmly"],
         )
 
-    async def fake_sd_classifier(*_args, **_kwargs):
-        return SDClassificationResult(
-            primary=sd_level,
-            secondary=None,
-            confidence=0.7,
-            indicator="test",
-            method="mock",
-        )
-
     decision = SimpleNamespace(route="CLARIFICATION", reason="test", forbid=[], rule_id="R1")
     routing = SimpleNamespace(
         mode="CLARIFICATION",
@@ -167,7 +157,6 @@ def _setup_pipeline(
     monkeypatch.setattr(aa.data_loader, "load_all_data", lambda: None)
     monkeypatch.setattr(aa, "get_conversation_memory", lambda _user_id: dummy_memory)
     monkeypatch.setattr(aa.state_classifier, "classify", fake_state_classifier)
-    monkeypatch.setattr(aa, "sd_classifier", SimpleNamespace(classify_user=fake_sd_classifier))
     monkeypatch.setattr(aa, "DecisionGate", DummyDecisionGate)
     monkeypatch.setattr(aa, "detect_routing_signals", lambda *_args, **_kwargs: {})
     monkeypatch.setattr(aa, "get_retriever", lambda: dummy_retriever)

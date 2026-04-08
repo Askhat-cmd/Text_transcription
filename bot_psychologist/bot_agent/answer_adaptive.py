@@ -22,6 +22,7 @@ import time
 import uuid
 from typing import Any, Dict, Optional, List, Tuple
 from datetime import datetime
+from dataclasses import dataclass, field
 
 from .data_loader import Block, data_loader
 from .retriever import get_retriever
@@ -42,7 +43,6 @@ from .decision import (
 from .retrieval import ConfidenceScorer, HybridQueryBuilder, VoyageReranker
 from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
-from .sd_classifier import SDClassificationResult, get_sd_settings, sd_classifier
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
 from .progressive_rag import get_progressive_rag
@@ -63,6 +63,18 @@ from .onboarding_flow import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass(frozen=True)
+class SDClassificationResult:
+    """Neo-совместимый SD-слот без активной SD-классификации runtime."""
+
+    primary: str = "NONE"
+    secondary: Optional[str] = None
+    confidence: float = 0.0
+    indicator: str = "disabled_by_design"
+    method: str = "disabled"
+    allowed_blocks: List[str] = field(default_factory=list)
 
 
 def _timed(name: str, label: str, fn, *args, **kwargs):
@@ -87,11 +99,6 @@ def _build_config_snapshot(cfg, _user_level: str) -> Dict[str, object]:
         ),
         "model_name": str(getattr(cfg, "LLM_MODEL", "")),
     }
-    if not feature_flags.enabled("DISABLE_SD_RUNTIME"):
-        sd_settings = get_sd_settings()
-        snapshot["sd_confidence_threshold"] = float(
-            sd_settings.get("heuristic_confidence_threshold", 0.65) or 0.65
-        )
     return snapshot
 
 
@@ -367,21 +374,18 @@ def _fallback_state_analysis() -> StateAnalysis:
 
 def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationResult:
     return SDClassificationResult(
-        primary="GREEN",
+        primary="NONE",
         secondary=None,
-        confidence=0.5,
+        confidence=0.0,
         indicator=reason,
-        method="fallback",
+        method="disabled",
+        allowed_blocks=[],
     )
 
 
 def _sd_runtime_disabled() -> bool:
-    """Return True when SD classifier is disabled for live runtime."""
-    if not feature_flags.enabled("NEO_MINDBOT_ENABLED"):
-        return True
-    if not feature_flags.enabled("SD_CLASSIFIER_ENABLED"):
-        return True
-    return feature_flags.enabled("DISABLE_SD_RUNTIME")
+    """SD-runtime окончательно выведен из active pipeline (PRD 11.0)."""
+    return True
 
 
 def _diagnostics_v1_enabled() -> bool:
@@ -586,51 +590,19 @@ def _strip_legacy_trace_fields(debug_trace: Optional[Dict[str, Any]]) -> Optiona
 async def _classify_parallel(
     user_message: str,
     history_state: List[Dict],
-    history_sd: List[Dict],
-    user_sd_profile: Optional[dict],
 ) -> Tuple[StateAnalysis, SDClassificationResult]:
-    if _sd_runtime_disabled():
+    try:
         state_result = await state_classifier.classify(
             user_message,
             conversation_history=history_state,
         )
-        return state_result, _fallback_sd_result("disabled_by_flag")
-
-    if sd_classifier is None:
-        state_result = await state_classifier.classify(
-            user_message,
-            conversation_history=history_state,
-        )
-        return state_result, _fallback_sd_result("sd_classifier_unavailable")
-
-    results = await asyncio.gather(
-        state_classifier.classify(user_message, conversation_history=history_state),
-        sd_classifier.classify_user(
-            message=user_message,
-            conversation_history=history_sd,
-            user_sd_profile=user_sd_profile,
-        ),
-        return_exceptions=True,
-    )
-
-    state_result = results[0]
-    sd_result = results[1]
-
-    if isinstance(state_result, Exception):
+    except Exception as exc:
         logger.warning(
             "[CLASSIFY_PARALLEL] StateClassifier failed: %s. Using fallback.",
-            state_result,
+            exc,
         )
         state_result = _fallback_state_analysis()
-
-    if isinstance(sd_result, Exception):
-        logger.warning(
-            "[CLASSIFY_PARALLEL] SDClassifier failed: %s. Using GREEN fallback.",
-            sd_result,
-        )
-        sd_result = _fallback_sd_result("fallback_on_error")
-
-    return state_result, sd_result
+    return state_result, _fallback_sd_result("disabled_by_flag")
 
 
 def _log_retrieval_pairs(stage: str, pairs, limit: int = 5) -> None:
@@ -1279,8 +1251,6 @@ def answer_question_adaptive(
         if debug_info is not None:
             debug_info["user_id"] = user_id
             debug_info["memory_turns"] = len(memory.turns)
-        sd_settings = get_sd_settings()
-        sd_profile_update_every_n = max(1, int(sd_settings.get("update_profile_every_n_messages", 5)))
         
         # ================================================================
         # ЭТАП 2: Анализ состояния пользователя
@@ -1293,11 +1263,6 @@ def answer_question_adaptive(
             for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
         ]
         
-        conversation_history_for_sd = [
-            {"role": "user", "content": turn.user_input}
-            for turn in memory.get_last_turns(10)
-        ]
-
         if debug_trace is not None:
             current_stage = "state_classifier"
             try:
@@ -1327,60 +1292,20 @@ def answer_question_adaptive(
                 )
 
             current_stage = "sd_classifier"
-            if _sd_runtime_disabled():
-                sd_result = _fallback_sd_result("disabled_by_flag")
-                pipeline_stages.append(
-                    {
-                        "name": "sd_classifier",
-                        "label": "SD классификатор",
-                        "duration_ms": 0,
-                        "skipped": True,
-                    }
-                )
-            elif sd_classifier is None:
-                sd_result = _fallback_sd_result("sd_classifier_unavailable")
-                pipeline_stages.append(
-                    {
-                        "name": "sd_classifier",
-                        "label": "SD классификатор",
-                        "duration_ms": 0,
-                        "skipped": True,
-                    }
-                )
-            else:
-                try:
-                    sd_result, stage = _timed(
-                        "sd_classifier",
-                        "SD классификатор",
-                        _run_coroutine_sync,
-                        sd_classifier.classify_user(
-                            message=query,
-                            conversation_history=conversation_history_for_sd,
-                            user_sd_profile=memory.get_user_sd_profile(),
-                        ),
-                    )
-                    pipeline_stages.append(stage)
-                except Exception as exc:
-                    logger.warning(
-                        "[CLASSIFY] SDClassifier failed: %s. Using GREEN fallback.",
-                        exc,
-                    )
-                    sd_result = _fallback_sd_result("fallback_on_error")
-                    pipeline_stages.append(
-                        {
-                            "name": "sd_classifier",
-                            "label": "SD классификатор",
-                            "duration_ms": 0,
-                            "skipped": False,
-                        }
-                    )
+            sd_result = _fallback_sd_result("disabled_by_design")
+            pipeline_stages.append(
+                {
+                    "name": "sd_classifier",
+                    "label": "SD классификатор",
+                    "duration_ms": 0,
+                    "skipped": True,
+                }
+            )
         else:
             state_analysis, sd_result = _run_coroutine_sync(
                 _classify_parallel(
                     query,
                     conversation_history,
-                    conversation_history_for_sd,
-                    memory.get_user_sd_profile(),
                 )
             )
         user_stage = resolve_user_stage(memory, state_analysis)
@@ -1395,19 +1320,7 @@ def answer_question_adaptive(
             f"✅ Состояние: {state_analysis.primary_state.value} "
             f"(уверенность: {state_analysis.confidence:.2f})"
         )
-        logger.info(
-            f"✅ SD уровень: {sd_result.primary} "
-            f"(conf={sd_result.confidence:.2f}, method={sd_result.method})"
-        )
-
-        if len(memory.turns) % sd_profile_update_every_n == 0:
-            try:
-                memory.update_sd_profile(
-                    level=sd_result.primary,
-                    confidence=sd_result.confidence,
-                )
-            except Exception:
-                pass
+        logger.info("✅ SD runtime disabled in Neo v11 pipeline")
 
         if debug_info is not None:
             debug_info["state_analysis"] = {

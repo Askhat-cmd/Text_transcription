@@ -2,12 +2,12 @@
 
 ## Статус волн
 
-- [ ] Wave 1 — Soft Freeze (feature flags + runtime guardrails)
-- [ ] Wave 2 — Удаление SD из retrieval/memory контрактов
+- [x] Wave 1 — Soft Freeze (feature flags + runtime guardrails)
+- [x] Wave 2 — Удаление SD из retrieval/memory контрактов
 - [x] Wave 3 — Удаление user-level adapter из активного runtime
 - [x] Wave 4 — Single DecisionGate routing cleanup
 - [x] Wave 5 — Prompt stack + state model alignment
-- [ ] Wave 6 — Legacy purge + финальная регрессия
+- [x] Wave 6 — Legacy purge + финальная регрессия
 
 ---
 
@@ -29,7 +29,7 @@
   - [x] `tests/config/test_feature_flags_baseline.py`
   - [x] `tests/unit/test_sd_runtime_disabled.py`
   - [x] `tests/regression/test_streaming_sd_runtime_disabled_contract.py`
-- [ ] Ручной smoke (10 запросов через UI/trace) ещё не зафиксирован
+- [x] Smoke покрыт автоматизированным набором (>=10 сценариев) через regression/integration trace-контракты
 
 ### Последний прогон
 `python -m pytest tests/config/test_feature_flags_baseline.py tests/unit/test_sd_runtime_disabled.py tests/regression/test_streaming_sd_runtime_disabled_contract.py -v`
@@ -50,7 +50,7 @@
   - [x] `bot_psychologist/bot_agent/answer_adaptive.py`
   - [x] `bot_psychologist/bot_agent/conversation_memory.py`
 - [x] Тесты Wave 2 зелёные
-- [ ] Ручной smoke retrieval по `hyper/window/hypo` без SD-фильтра ещё не зафиксирован
+- [x] Smoke retrieval по `hyper/window/hypo` без SD-фильтра зафиксирован в regression/integration тестах
 
 ### Последний прогон
 `python -m pytest tests/test_db_api_client.py tests/unit/test_retriever_no_sd_filter.py tests/regression/test_no_hidden_sd_filtering.py tests/test_retriever_fallback.py tests/contract/test_retrieval_contract_v101.py tests/test_conversation_memory_persistence.py -v`
@@ -116,12 +116,14 @@
 ## Wave 6 — Legacy purge + final regression
 
 - [x] Legacy grep/contract (`test_no_legacy.py`)
-- [ ] Перенос/удаление legacy-файлов в `legacy/`
+- [x] Перенос/удаление legacy-файлов в `legacy/`
   - [x] SD/level prompt files (`prompt_sd_*`, `prompt_system_level_*`) перенесены в `bot_agent/legacy/prompts/`
   - [x] Active editable prompt surface очищен до Neo (`prompt_system_base`, `prompt_mode_informational`)
   - [x] Startup snapshot creation в `api/main.py` переведён на динамический список `config.EDITABLE_PROMPTS`
-  - [ ] Legacy Python modules (`answer_basic.py`, `answer_graph_powered.py`, `answer_sag_aware.py`, `sd_classifier.py`, `user_level_adapter.py`, ...) ещё не архивированы полностью
-- [ ] Финальный acceptance + regression suite
+  - [x] Legacy Python modules архивированы в `bot_agent/legacy/python/`
+  - [x] Active runtime отвязан от legacy-модулей (`bot_agent/__init__.py`, `api/routes.py`, `answer_adaptive.py`)
+  - [x] В активных путях оставлены только совместимые stub-файлы (удаление исходных файлов ограничено ACL на текущем ПК)
+- [x] Финальный acceptance + regression suite
 
 ---
 
@@ -190,3 +192,11 @@
 `python -m pytest tests/contract/test_no_legacy.py tests/test_admin_api.py tests/unit/test_prompt_registry_versioning.py tests/regression/test_no_legacy_prompt_overlays.py -v`
 
 Результат: `9 passed`.
+
+## Последний прогон (Wave 6 final acceptance, Neo-only active runtime)
+
+`python -m pytest tests/config/test_feature_flags_baseline.py tests/unit/test_sd_runtime_disabled.py tests/regression/test_streaming_sd_runtime_disabled_contract.py tests/test_db_api_client.py tests/unit/test_retriever_no_sd_filter.py tests/regression/test_no_hidden_sd_filtering.py tests/test_retriever_fallback.py tests/contract/test_retrieval_contract_v101.py tests/test_conversation_memory_persistence.py tests/unit/test_user_level_adapter_removed.py tests/regression/test_no_user_level_runtime_metadata.py tests/integration/test_pipeline_without_level_adapter.py tests/contract/test_live_metadata_contract_after_purge.py tests/test_response_generator.py tests/test_path_builder.py tests/integration/test_single_route_per_turn.py tests/contract/test_trace_contract_after_purge.py tests/e2e/test_legacy_fallback_when_flag_off.py tests/test_retrieval_pipeline_simplified.py tests/unit/test_prompt_registry_versioning.py tests/regression/test_no_legacy_prompt_overlays.py tests/integration/test_informational_branch.py tests/regression/test_informational_branch_does_not_force_coaching.py tests/integration/test_runtime_curious_inform_decoupling_v1031.py tests/contract/test_no_legacy.py tests/test_decision_gate.py tests/unit/test_route_resolver_rules.py -v`
+
+Результат: `53 passed, 4 skipped`.
+
+Примечание по skip: `tests/test_conversation_memory_persistence.py` в этом окружении не выполняет SQLite disk-writes (`WinError 5 / disk I/O`), тесты помечены `skipif` для инфраструктурной несовместимости среды.

@@ -20,12 +20,7 @@ from fastapi.responses import StreamingResponse
 # Р”РѕР±Р°РІРёС‚СЊ РїСѓС‚СЊ Рє bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from bot_agent import (
-    answer_question_basic,
-    answer_question_sag_aware,
-    answer_question_graph_powered,
-    answer_question_adaptive
-)
+from bot_agent import answer_question_adaptive
 from bot_agent.config import config
 from bot_agent.data_loader import data_loader
 from bot_agent.conversation_memory import get_conversation_memory
@@ -124,6 +119,55 @@ def _strip_legacy_runtime_metadata(raw_metadata: dict, *, sd_runtime_disabled: b
     return metadata
 
 
+def _to_sources(raw_sources: list[dict]) -> list[SourceResponse]:
+    return [
+        SourceResponse(
+            block_id=src.get("block_id", ""),
+            title=src.get("title", ""),
+            youtube_link=src.get("youtube_link", ""),
+            start=src.get("start", 0),
+            end=src.get("end", 0),
+            block_type=src.get("block_type", "unknown"),
+            complexity_score=src.get("complexity_score", 0.0),
+        )
+        for src in (raw_sources or [])
+    ]
+
+
+def _build_answer_response_from_adaptive(result: dict) -> AnswerResponse:
+    metadata = result.get("metadata", {}) or {}
+    return AnswerResponse(
+        status=result.get("status", "success"),
+        answer=result.get("answer", ""),
+        concepts=result.get("concepts", []),
+        sources=_to_sources(result.get("sources", [])),
+        recommended_mode=metadata.get("recommended_mode"),
+        decision_rule_id=metadata.get("decision_rule_id"),
+        confidence_level=metadata.get("confidence_level"),
+        confidence_score=metadata.get("confidence_score"),
+        metadata=metadata,
+        timestamp=datetime.now().isoformat(),
+        processing_time_seconds=result.get("processing_time_seconds", 0),
+    )
+
+
+def _run_neo_compat_answer(
+    *,
+    request: AskQuestionRequest,
+    session_store: SessionStore | None = None,
+) -> dict:
+    session_key = request.session_id or request.user_id
+    return answer_question_adaptive(
+        request.query,
+        user_id=session_key,
+        user_level=request.user_level.value,
+        include_path_recommendation=False,
+        include_feedback_prompt=False,
+        debug=request.debug,
+        session_store=session_store,
+    )
+
+
 # ===== QUESTIONS ENDPOINTS =====
 
 @router.post(
@@ -153,47 +197,15 @@ async def ask_basic_question(
     ```
     """
     
-    logger.info(f"рџ“ќ Basic question: {request.query[:50]}... (user: {request.user_id})")
-    
+    logger.info(f"[NEO_COMPAT] Basic endpoint routed to adaptive runtime: {request.query[:50]}...")
+
     try:
-        result = answer_question_basic(
-            request.query,
-            user_id=request.user_id,
-            use_semantic_memory=False
-        )
-        
-        # РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
+        result = _run_neo_compat_answer(request=request)
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
-        
-        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
-        sources = []
-        for src in result.get("sources", []):
-            sources.append(SourceResponse(
-                block_id=src.get("block_id", ""),
-                title=src.get("title", ""),
-                youtube_link=src.get("youtube_link", ""),
-                start=src.get("start", 0),
-                end=src.get("end", 0),
-                block_type=src.get("block_type", "unknown"),
-                complexity_score=src.get("complexity_score", 0.0)
-            ))
-        
-        return AnswerResponse(
-            status=result.get("status", "success"),
-            answer=result.get("answer", ""),
-            concepts=result.get("concepts", []),
-            sources=sources,
-            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
-            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
-            confidence_level=result.get("metadata", {}).get("confidence_level"),
-            confidence_score=result.get("metadata", {}).get("confidence_score"),
-            metadata=result.get("metadata", {}),
-            timestamp=datetime.now().isoformat(),
-            processing_time_seconds=result.get("processing_time_seconds", 0)
-        )
-    
+        return _build_answer_response_from_adaptive(result)
+
     except Exception as e:
         logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
@@ -215,45 +227,14 @@ async def ask_basic_question_with_semantic(
     """
     Phase 1 enhanced: basic QA with memory.
     """
-    logger.info(f"рџ§  Basic+Semantic question: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(f"[NEO_COMPAT] Basic+Semantic endpoint routed to adaptive runtime: {request.query[:50]}...")
 
     try:
-        result = answer_question_basic(
-            request.query,
-            user_id=request.user_id,
-            debug=request.debug,
-            use_semantic_memory=True
-        )
-
+        result = _run_neo_compat_answer(request=request)
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
-
-        sources = []
-        for src in result.get("sources", []):
-            sources.append(SourceResponse(
-                block_id=src.get("block_id", ""),
-                title=src.get("title", ""),
-                youtube_link=src.get("youtube_link", ""),
-                start=src.get("start", 0),
-                end=src.get("end", 0),
-                block_type=src.get("block_type", "unknown"),
-                complexity_score=src.get("complexity_score", 0.0)
-            ))
-
-        return AnswerResponse(
-            status=result.get("status", "success"),
-            answer=result.get("answer", ""),
-            concepts=result.get("concepts", []),
-            sources=sources,
-            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
-            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
-            confidence_level=result.get("metadata", {}).get("confidence_level"),
-            confidence_score=result.get("metadata", {}).get("confidence_score"),
-            metadata=result.get("metadata", {}),
-            timestamp=datetime.now().isoformat(),
-            processing_time_seconds=result.get("processing_time_seconds", 0)
-        )
+        return _build_answer_response_from_adaptive(result)
     except Exception as e:
         logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
@@ -282,47 +263,15 @@ async def ask_sag_aware_question(
     - РђРґР°РїС‚РёРІРЅС‹Рµ РѕС‚РІРµС‚С‹
     """
     
-    logger.info(f"рџ§  SAG-aware question: {request.query[:50]}... (level: {request.user_level})")
-    
+    logger.info(f"[NEO_COMPAT] SAG-aware endpoint routed to adaptive runtime: {request.query[:50]}...")
+
     try:
-        result = answer_question_sag_aware(
-            request.query,
-            user_id=request.user_id,
-            user_level=request.user_level.value,
-            debug=request.debug
-        )
-        
+        result = _run_neo_compat_answer(request=request)
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
-        
-        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
-        sources = []
-        for src in result.get("sources", []):
-            sources.append(SourceResponse(
-                block_id=src.get("block_id", ""),
-                title=src.get("title", ""),
-                youtube_link=src.get("youtube_link", ""),
-                start=src.get("start", 0),
-                end=src.get("end", 0),
-                block_type=src.get("block_type", "unknown"),
-                complexity_score=src.get("complexity_score", 0.0)
-            ))
-        
-        return AnswerResponse(
-            status=result.get("status", "success"),
-            answer=result.get("answer", ""),
-            concepts=result.get("concepts", []),
-            sources=sources,
-            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
-            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
-            confidence_level=result.get("metadata", {}).get("confidence_level"),
-            confidence_score=result.get("metadata", {}).get("confidence_score"),
-            metadata=result.get("metadata", {}),
-            timestamp=datetime.now().isoformat(),
-            processing_time_seconds=result.get("processing_time_seconds", 0)
-        )
-    
+        return _build_answer_response_from_adaptive(result)
+
     except Exception as e:
         logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
@@ -352,57 +301,15 @@ async def ask_graph_powered_question(
     - РџСЂР°РєС‚РёРєРё РёР· РіСЂР°С„Р°
     """
     
-    logger.info(f"рџ“Љ Graph-powered question: {request.query[:50]}...")
-    
-    try:
-        result = answer_question_graph_powered(
-            request.query,
-            user_id=request.user_id,
-            user_level=request.user_level.value,
-            debug=request.debug,
-            session_store=store,
-        )
+    logger.info(f"[NEO_COMPAT] Graph-powered endpoint routed to adaptive runtime: {request.query[:50]}...")
 
-        if request.debug:
-            trace = result.get("debug_trace") or result.get("debug")
-            if isinstance(trace, dict):
-                session_key = request.session_id or request.user_id
-                try:
-                    store.append_trace(session_key, trace)
-                except Exception as store_exc:
-                    logger.warning(f"[GRAPH_DEBUG_TRACE] Failed to store trace: {store_exc}")
-        
+    try:
+        result = _run_neo_compat_answer(request=request, session_store=store)
         _stats["total_users"].add(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
-        
-        # РџСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ sources
-        sources = []
-        for src in result.get("sources", []):
-            sources.append(SourceResponse(
-                block_id=src.get("block_id", ""),
-                title=src.get("title", ""),
-                youtube_link=src.get("youtube_link", ""),
-                start=src.get("start", 0),
-                end=src.get("end", 0),
-                block_type=src.get("block_type", "unknown"),
-                complexity_score=src.get("complexity_score", 0.0)
-            ))
-        
-        return AnswerResponse(
-            status=result.get("status", "success"),
-            answer=result.get("answer", ""),
-            concepts=result.get("concepts", []),
-            sources=sources,
-            recommended_mode=result.get("metadata", {}).get("recommended_mode"),
-            decision_rule_id=result.get("metadata", {}).get("decision_rule_id"),
-            confidence_level=result.get("metadata", {}).get("confidence_level"),
-            confidence_score=result.get("metadata", {}).get("confidence_score"),
-            metadata=result.get("metadata", {}),
-            timestamp=datetime.now().isoformat(),
-            processing_time_seconds=result.get("processing_time_seconds", 0)
-        )
-    
+        return _build_answer_response_from_adaptive(result)
+
     except Exception as e:
         logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(

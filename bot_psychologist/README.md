@@ -3,6 +3,22 @@
 **Bot Psychologist** — AI-бот для честного самоисследования и поддерживающего диалога.
 Основная база знаний: `Bot_data_base` (через HTTP API) с контролируемыми fallback-путями.
 
+## Neo MindBot v11.0 (текущее состояние, 08.04.2026)
+
+PRD `PRD_11_0_Neo_MindBot_Migration` завершает переход на Neo runtime как единственный активный pipeline:
+
+- активный боевой вход: `answer_question_adaptive` (`/api/v1/questions/adaptive`);
+- legacy Python pipelines архивированы в `bot_agent/legacy/python/`:
+  `answer_basic.py`, `answer_sag_aware.py`, `answer_graph_powered.py`, `sd_classifier.py`, `user_level_adapter.py`;
+- legacy API endpoints `/questions/basic`, `/questions/basic-with-semantic`, `/questions/sag-aware`, `/questions/graph-powered`
+  сохранены как Neo-compat маршруты и проксируют запрос в adaptive runtime;
+- prompt stack работает через 7-блочную Neo-схему в `bot_agent/prompts/`;
+- SD/level prompt files вынесены в `bot_agent/legacy/prompts/`.
+
+Важно:
+- подпроект `voice_bot_pipeline` считается legacy-историей и не используется в active runtime;
+- нижеследующие секции README содержат исторический контекст версий 10.x и более ранних итераций.
+
 ## Neo MindBot v10.1 (актуальная архитектура)
 
 - Архив PRD: `../АРХИВ_отработано/PRD_10.1_Neo_MindBot.md`.

@@ -17,15 +17,13 @@ def test_streaming_entrypoint_exists() -> None:
     assert "/questions/adaptive-stream" in text
 
 
-def test_streaming_phase0_divergence_markers_exist() -> None:
+def test_streaming_runtime_legacy_markers_are_sanitized() -> None:
     text = _read_text(API_ROUTES)
-    # Phase 0 baseline: stream path still contains legacy-aligned markers.
-    patterns = [
-        "_classify_parallel(",
-        "sd_classifier",
-        "user_level_adapter",
-        "\"sd_classification\"",
-        "\"sd_detail\"",
-    ]
-    for pattern in patterns:
-        assert pattern in text, f"Expected baseline streaming marker missing: {pattern}"
+    # Active runtime should not contain legacy streaming classifier split.
+    assert "_classify_parallel(" not in text
+    assert "sd_classifier" not in text
+
+    # Active runtime keeps explicit sanitization of legacy trace fields.
+    assert "trace.pop(\"sd_classification\", None)" in text
+    assert "trace.pop(\"sd_detail\", None)" in text
+    assert "user_level_adapter_applied" in text

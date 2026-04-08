@@ -29,11 +29,11 @@ class RouteDecision:
 class RouteResolution:
     route: str
     mode: str
-    track: str
-    tone: str
     decision: RouteDecision
     confidence_score: float
     confidence_level: str
+    track: str = "direct"
+    tone: str = "minimal"
     stage: str = "runtime"
 
     def as_dict(self) -> dict:

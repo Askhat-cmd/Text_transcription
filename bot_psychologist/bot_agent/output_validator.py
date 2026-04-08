@@ -37,6 +37,10 @@ _BRIDGE_ONLY_RE = re.compile(
     r"(что из этого тебе ближе|хочешь разобрать твой случай|хочешь разобрать это глубже|что из этого откликается)",
     flags=re.IGNORECASE,
 )
+_USER_CORRECTION_QUERY_RE = re.compile(
+    r"(непонят|не ясно|неясно|объясни проще|слишком сложно|что это значит|ты меня не понял|нет,?\s*не то|not what i meant|you misunderstood)",
+    flags=re.IGNORECASE,
+)
 
 
 @dataclass(frozen=True)
@@ -173,6 +177,13 @@ class OutputValidator:
         if normalized_mode == "CLARIFICATION" and "?" not in repaired:
             warnings.append("clarification_without_question")
 
+        if _USER_CORRECTION_QUERY_RE.search((query or "").strip().lower()):
+            sentences = self._split_sentences(repaired)
+            if len(sentences) < 3:
+                errors.append("user_correction_too_short")
+            if "?" not in repaired:
+                errors.append("user_correction_missing_question")
+
         needs_regeneration = bool(errors)
         valid = not errors
         return OutputValidationResult(
@@ -202,6 +213,15 @@ class OutputValidator:
                     "- Добавь 2-4 коротких примера там, где это усиливает понимание.",
                 ]
             )
+        if "user_correction_too_short" in (errors or []):
+            extra_lines.extend(
+                [
+                    "- Это режим User Correction: дай минимум 3 предложения.",
+                    "- Короткое признание + простое объяснение + пример.",
+                ]
+            )
+        if "user_correction_missing_question" in (errors or []):
+            extra_lines.append("- Заверши ответ одним уточняющим вопросом.")
         if query:
             extra_lines.append(f"- Фокусируйся на исходном запросе: {query.strip()[:240]}")
         return (

@@ -33,9 +33,13 @@ def test_admin_schema_v105_management_only(admin_client) -> None:
     assert diagnostics_resp.status_code == 200
 
     runtime_payload = runtime_resp.json()
-    assert runtime_payload["trace"] == {"available": runtime_payload["trace"]["available"]}
-    assert "session_id" not in runtime_payload["trace"]
-    assert "last_turn_number" not in runtime_payload["trace"]
+    trace = runtime_payload["trace"]
+    assert "available" in trace
+    assert trace["developer_trace_supported"] is True
+    assert trace["developer_trace_enabled"] is True
+    assert trace["developer_trace_mode_available"] is True
+    assert "session_id" not in trace
+    assert "last_turn_number" not in trace
 
     diagnostics_payload = diagnostics_resp.json()
     assert diagnostics_payload["last_snapshot"] == {}

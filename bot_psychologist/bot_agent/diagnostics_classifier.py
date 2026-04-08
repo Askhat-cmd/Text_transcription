@@ -7,6 +7,7 @@ contract that RouteResolver can use deterministically.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+import logging
 import re
 from typing import Any, Dict
 
@@ -26,6 +27,27 @@ REQUEST_FUNCTIONS = {
 LEGACY_REQUEST_FUNCTION_ALIASES = {
     "directive": "solution",
 }
+LEGACY_STATE_MAP = {
+    "curious": "window",
+    "committed": "window",
+    "calm": "window",
+    "engaged": "window",
+    "unaware": "window",
+    "practicing": "window",
+    "integrated": "window",
+    "confused": "hyper",
+    "overwhelmed": "hyper",
+    "frustrated": "hyper",
+    "resistant": "hyper",
+    "anxious": "hyper",
+    "stagnant": "hypo",
+    "flat": "hypo",
+    "detached": "hypo",
+    "numb": "hypo",
+    "exhausted": "hypo",
+}
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -257,6 +279,14 @@ class DiagnosticsClassifier:
         primary_state = getattr(getattr(state_analysis, "primary_state", None), "value", "")
         tone = (getattr(state_analysis, "emotional_tone", "") or "").lower()
         state_conf = float(getattr(state_analysis, "confidence", 0.5) or 0.5)
+
+        if primary_state in NERVOUS_SYSTEM_STATES:
+            return primary_state, max(0.6, min(0.95, state_conf))
+        if primary_state:
+            mapped = LEGACY_STATE_MAP.get(primary_state)
+            if mapped:
+                logger.warning("[DIAG] state legacy term '%s' -> '%s'", primary_state, mapped)
+                return mapped, max(0.6, min(0.95, state_conf))
 
         if primary_state in {"overwhelmed", "resistant"} or any(
             token in tone for token in ("panic", "anxiety", "distress", "frustrat")

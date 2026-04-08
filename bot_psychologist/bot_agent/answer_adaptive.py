@@ -64,6 +64,9 @@ from .onboarding_flow import (
 
 logger = logging.getLogger(__name__)
 
+PRACTICE_ALLOWED_ROUTES = {"practice", "reflect", "regulate"}
+PRACTICE_SKIP_ROUTES = {"contact_hold", "contacthold", "presence", "crisis_hold"}
+
 
 @dataclass(frozen=True)
 class SDClassificationResult:
@@ -141,12 +144,12 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             }
         )
 
-    if (trace.get("semantic_hits") == 0) and (trace.get("memory_turns") or 0) > 5:
+    if (trace.get("semantic_hits") == 0) and (trace.get("memory_turns") or 0) >= 3:
         flags.append(
             {
                 "code": "SEMANTIC_NOT_TRIGGERED",
                 "severity": "info",
-                "message": "Семантический поиск вернул 0 результатов при богатой памяти (>5 turns)",
+                "message": "Семантический поиск вернул 0 результатов при памяти >= 3 turns",
                 "target": "memory",
             }
         )
@@ -411,7 +414,7 @@ def _informational_branch_enabled() -> bool:
 def _apply_output_validation_policy(
     *,
     answer: str,
-    query: str,
+    query: str = "",
     route: str,
     mode: str,
     generate_retry_fn=None,
@@ -430,7 +433,7 @@ def _apply_output_validation_policy(
         route=route,
         mode=mode,
         safety_override=safety_override,
-        query=query,
+        query=query or "",
     )
     attempts.append(first.as_dict())
     final_text = first.text
@@ -441,7 +444,7 @@ def _apply_output_validation_policy(
             first.errors,
             route=route,
             mode=mode,
-            query=query,
+            query=query or "",
         )
         try:
             retry_llm_result = generate_retry_fn(hint)
@@ -455,7 +458,7 @@ def _apply_output_validation_policy(
             route=route,
             mode=mode,
             safety_override=safety_override,
-            query=query,
+            query=query or "",
         )
         attempts.append(second.as_dict())
         final_text = second.text
@@ -705,7 +708,7 @@ def _get_memory_trace_metrics(memory, context_turns: int) -> Dict[str, object]:
         and memory.summary
         and context_turns > 20
     )
-    if config.ENABLE_SEMANTIC_MEMORY and memory.semantic_memory and context_turns > 5:
+    if config.ENABLE_SEMANTIC_MEMORY and memory.semantic_memory and context_turns >= 3:
         semantic_hits = int(getattr(memory.semantic_memory, "last_hits_count", 0) or 0)
     else:
         semantic_hits = 0
@@ -737,6 +740,7 @@ def _build_llm_prompts(
     query: str,
     blocks: List[Block],
     conversation_context: str,
+    user_level_adapter: Optional[object] = None,
     sd_level: str,
     mode_prompt: str,
     additional_system_context: str,
@@ -746,6 +750,7 @@ def _build_llm_prompts(
     try:
         answerer = response_generator.answerer
         system_prompt = answerer.build_system_prompt()
+        _ = user_level_adapter  # compatibility only; level adapter removed from active runtime
         _ = sd_level  # compatibility only; SD overlay disabled in Neo runtime
         mode_directive = mode_prompt
         raw_mode_override = ""
@@ -901,6 +906,15 @@ def _update_session_token_metrics(
 
 def _build_memory_context_snapshot(memory) -> str:
     try:
+        metadata = getattr(memory, "metadata", {})
+        if isinstance(metadata, dict):
+            snapshot = (
+                metadata.get("laststatesnapshot")
+                or metadata.get("last_state_snapshot_v12")
+                or metadata.get("last_state_snapshot_v11")
+            )
+            if isinstance(snapshot, dict):
+                return _truncate_preview(json.dumps(snapshot, ensure_ascii=False), 1200)
         if not memory.turns:
             return ""
         turn = memory.turns[-1]
@@ -908,13 +922,34 @@ def _build_memory_context_snapshot(memory) -> str:
             "timestamp": turn.timestamp,
             "user_input": turn.user_input,
             "bot_response": turn.bot_response,
-            "user_state": turn.user_state,
+            "nervous_system_state": None,
             "blocks_used": turn.blocks_used,
             "concepts": turn.concepts,
         }
         return _truncate_preview(json.dumps(payload, ensure_ascii=False), 1200)
     except Exception:
         return ""
+
+
+def _refresh_runtime_memory_snapshot(
+    *,
+    memory,
+    diagnostics_payload: Optional[Dict[str, Any]],
+    route: Optional[str],
+) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
+    try:
+        update = memory_updater.build_runtime_context(
+            memory=memory,
+            diagnostics=diagnostics_payload,
+            route=route,
+            max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
+        )
+        memory_updater.save_snapshot(memory, update.snapshot)
+        context_text = getattr(getattr(update, "context", None), "context_text", None)
+        return context_text, update.snapshot
+    except Exception as exc:
+        logger.warning("[MEMORY_V12] snapshot refresh skipped: %s", exc)
+        return None, None
 
 
 def _apply_memory_debug_info(
@@ -1194,6 +1229,7 @@ def answer_question_adaptive(
     conversation_context = ""
     memory_context_bundle = None
     phase8_signals = None
+    level_adapter = None  # legacy compatibility marker: level-based prompting is disabled
     
     current_stage = "init"
     try:
@@ -1246,6 +1282,7 @@ def answer_question_adaptive(
             )
         
         # Phase 3: user level adapter removed from active runtime.
+        _ = level_adapter
         path_level_enum = _resolve_path_user_level(user_level)
         
         if debug_info is not None:
@@ -1491,6 +1528,16 @@ def answer_question_adaptive(
                 if informational_mode
                 else mode_directive.prompt
             )
+            refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
+                memory=memory,
+                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                route=getattr(pre_routing_result, "route", None) if pre_routing_result else None,
+            )
+            if refreshed_context:
+                conversation_context = refreshed_context
+            if debug_trace is not None and isinstance(snapshot_payload, dict):
+                debug_trace["snapshot_v12"] = snapshot_payload
+                debug_trace["snapshot_v11"] = snapshot_payload
             fast_block = _build_fast_path_block(
                 query=query,
                 conversation_context=conversation_context,
@@ -2072,7 +2119,10 @@ def answer_question_adaptive(
         practice_alternatives: List[Dict[str, Any]] = []
         practice_context_suffix = ""
         resolved_route = str(getattr(routing_result, "route", "") or "").strip().lower()
-        practice_routing_enabled = resolved_route in {"practice", "reflect", "regulate"}
+        practice_routing_enabled = (
+            resolved_route in PRACTICE_ALLOWED_ROUTES
+            and resolved_route not in PRACTICE_SKIP_ROUTES
+        )
         if practice_routing_enabled:
             try:
                 diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
@@ -2105,6 +2155,8 @@ def answer_question_adaptive(
                     )
             except Exception as exc:
                 logger.warning("[PRACTICE] selection skipped: %s", exc)
+        elif resolved_route in PRACTICE_SKIP_ROUTES:
+            logger.info("[PRACTICE] skipped by route policy for route=%s", resolved_route)
         else:
             logger.info("[PRACTICE] skipped for route=%s", resolved_route or "unknown")
 
@@ -2136,18 +2188,16 @@ def answer_question_adaptive(
             debug_trace["selected_practice"] = selected_practice
             debug_trace["practice_alternatives"] = practice_alternatives
 
-        try:
-            snapshot_update = memory_updater.build_runtime_context(
-                memory=memory,
-                diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                route=getattr(routing_result, "route", None),
-                max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
-            )
-            memory_updater.save_snapshot(memory, snapshot_update.snapshot)
-            if debug_trace is not None:
-                debug_trace["snapshot_v11"] = snapshot_update.snapshot
-        except Exception as exc:
-            logger.warning("[MEMORY_V11] snapshot update skipped: %s", exc)
+        refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
+            memory=memory,
+            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+            route=getattr(routing_result, "route", None),
+        )
+        if refreshed_context:
+            conversation_context = refreshed_context
+        if debug_trace is not None and isinstance(snapshot_payload, dict):
+            debug_trace["snapshot_v12"] = snapshot_payload
+            debug_trace["snapshot_v11"] = snapshot_payload
 
         if not retrieved_blocks:
             response = _build_partial_response(

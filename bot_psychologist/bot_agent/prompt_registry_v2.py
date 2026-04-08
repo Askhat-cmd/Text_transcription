@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from typing import Dict, Iterable, List, Optional
 
 from .config import config
@@ -33,7 +34,7 @@ class PromptStackBuild:
         return {
             "version": self.version,
             "order": list(self.order),
-            "sections": {k: len(v) for k, v in self.sections.items()},
+            "sections": {k: len(self.sections.get(k, "")) for k in self.order},
         }
 
 
@@ -84,29 +85,57 @@ class PromptRegistryV2:
         normalized_mode = (mode or "").strip().upper()
         if normalized_route == "safe_override":
             return (
-                "Style policy: short, calm, de-escalating. "
-                "No risky directives, no deep interpretation."
+                "Стиль: коротко, спокойно, деэскалирующе. "
+                "Без рискованных директив и без глубокой интерпретации."
             )
         if normalized_route == "inform" or normalized_mode == "CLARIFICATION":
             return (
-                "Style policy: explain clearly and concretely. "
-                "Use practical distinctions and 2-4 short examples when useful."
+                "Объясняй живо и по существу: раскрывай смысл, а не только термин. "
+                "Добавляй 2-4 коротких примера и показывай практический смысл. "
+                "Избегай сухого FAQ и канцелярита."
             )
         if normalized_route == "regulate":
             return (
-                "Style policy: stabilizing and supportive first, "
-                "then one small step."
+                "Стиль: сначала стабилизация и поддержка, "
+                "потом один посильный шаг."
             )
         return (
-            "Style policy: coaching-first dialogue, concrete and respectful, "
-            "without empty generalities."
+            "Стиль: диалог с опорой на коучинговую точность, "
+            "уважительно и без пустых обобщений."
         )
 
     def _build_memory_context(self, conversation_context: str) -> str:
-        context = self._clip(conversation_context or "", 1200)
+        context = self._clip(self._sanitize_memory_context(conversation_context or ""), 1200)
         if not context:
             return "Conversation context: none."
         return f"Conversation context:\n{context}"
+
+    @staticmethod
+    def _sanitize_memory_context(context: str) -> str:
+        """Drop snapshot block to avoid duplicate diagnostics in final prompt."""
+        lines = []
+        skipping_snapshot_block = False
+        for line in (context or "").splitlines():
+            normalized = line.strip().lower()
+            if normalized == "snapshot:":
+                skipping_snapshot_block = True
+                continue
+            if skipping_snapshot_block:
+                if not normalized:
+                    skipping_snapshot_block = False
+                continue
+            lines.append(line)
+        return "\n".join(lines).strip()
+
+    @staticmethod
+    def _validate_prompt_consistency(system_prompt: str) -> None:
+        values = re.findall(r"nervous_system_state[:\s]+([a-z_]+)", (system_prompt or "").lower())
+        unique_values = sorted(set(values))
+        if len(unique_values) > 1:
+            raise ValueError(
+                "PROMPT CONFLICT: nervous_system_state has multiple values: "
+                + ", ".join(unique_values)
+            )
 
     def _build_diagnostic_context(
         self,
@@ -153,29 +182,47 @@ class PromptRegistryV2:
         route_text = (route or "reflect").strip().lower() or "reflect"
         mode_text = mode or "PRESENCE"
         parts = [
-            "Task instruction:",
+            "TASK_INSTRUCTION:",
             f"- Route: {route_text}",
             f"- Mode: {mode_text}",
             f"- User request: {self._clip(query, 700)}",
-            "- Do not use code blocks or HTML tags.",
-            "- Provide a complete, useful answer; avoid vague filler.",
+            "- Дай содержательный ответ без HTML/кода.",
+            "- Избегай смысловой скупости.",
+            "- Не своди ответ к формату «одна мысль + один вопрос».",
         ]
         if mode_prompt_override:
             parts.append(f"- Mode override: {self._clip(mode_prompt_override, 260)}")
         if route_text == "inform":
             parts.extend(
                 [
-                    "- Inform branch: explain the concept in depth with practical distinctions.",
-                    "- Add 2-4 concise examples where useful.",
-                    "- Do not replace content with a generic bridge question.",
+                    "- Раскрывай понятие в глубину и показывай практический смысл.",
+                    "- Если запрос просит различия, сравни по 2-3 критериям.",
+                    "- Не подменяй объяснение общим вопросом-мостом.",
                 ]
             )
         if first_turn:
-            parts.append("- First turn: include minimal but complete conceptual frame.")
+            parts.extend(
+                [
+                    "- Для первого хода дай полноценный смысловой каркас, не вместо основной части ответа, а как основу.",
+                    "- Допустим один уточняющий вопрос в конце, если он реально помогает.",
+                    "- Не перегружай деталями, но оставь опорную ясность.",
+                ]
+            )
         if mixed_query_bridge:
-            parts.append("- Mixed query: bridge concept explanation with user context.")
+            parts.extend(
+                [
+                    "- Сначала коротко обозначь концепт, затем свяжи его с запросом пользователя.",
+                    "- Добавь практический угол и мягкий вопрос-мост.",
+                ]
+            )
         if user_correction_protocol:
-            parts.append("- User correction protocol: acknowledge mismatch and recalibrate.")
+            parts.extend(
+                [
+                    "- Протокол коррекции: признай несоответствие и откалибруй ответ.",
+                    "- Корректирующий ответ должен содержать не менее 3 предложений.",
+                    "- Заверши корректирующий ответ одним уточняющим вопросом.",
+                ]
+            )
         return "\n".join(parts)
 
     def _resolve_interaction_mode(self, diagnostics: Optional[Dict[str, object]]) -> str:
@@ -231,6 +278,7 @@ class PromptRegistryV2:
             mixed_query_bridge=mixed_query_bridge,
             user_correction_protocol=user_correction_protocol,
         )
+        style_policy = self._build_style_policy(route=route, mode=mode)
 
         sections: Dict[str, str] = {
             "AA_SAFETY": aa_safety,
@@ -241,7 +289,7 @@ class PromptRegistryV2:
                         season=season,
                         interaction_mode=interaction_mode,
                     ),
-                    self._build_style_policy(route=route, mode=mode),
+                    style_policy,
                 ]
             ),
             "CORE_IDENTITY": self._join_parts([core_identity_static, self._load_core_identity()]),
@@ -249,6 +297,8 @@ class PromptRegistryV2:
             "REFLECTIVE_METHOD": self._join_parts([reflective_method, memory_context]),
             "PROCEDURAL_SCRIPTS": self._join_parts([procedural_scripts, retrieved_context]),
             "OUTPUT_LAYER": self._join_parts([output_layer, task_instruction]),
+            "A_STYLE_POLICY": style_policy,
+            "TASK_INSTRUCTION": task_instruction,
         }
 
         if additional_system_context and additional_system_context.strip():
@@ -261,6 +311,7 @@ class PromptRegistryV2:
 
         ordered_parts = [f"## {key}\n{sections.get(key, '').strip()}" for key in self.order]
         system_prompt = self._join_parts(ordered_parts)
+        self._validate_prompt_consistency(system_prompt)
         return PromptStackBuild(
             version=self.version,
             order=list(self.order),

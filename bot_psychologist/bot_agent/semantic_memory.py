@@ -211,12 +211,20 @@ class SemanticMemory:
         self.turn_embeddings.append(turn_emb)
         logger.info(f"[SEMANTIC] embedding added turn_index={turn_index}")
 
+    def _resolve_exclude_window(self, requested: int) -> int:
+        """Keep at least one candidate in the semantic pool."""
+        requested = max(0, int(requested))
+        total = len(self.turn_embeddings)
+        if total <= 2:
+            return 0
+        return min(requested, max(0, total - 1))
+
     def search_similar_turns(
         self,
         query: str,
         top_k: int = 3,
-        min_similarity: float = 0.7,
-        exclude_last_n: int = 5,
+        min_similarity: float = 0.6,
+        exclude_last_n: int = 1,
     ) -> List[Tuple[TurnEmbedding, float]]:
         """
         Найти похожие прошлые обмены по семантике.
@@ -231,8 +239,15 @@ class SemanticMemory:
             self.last_hits_count = 0
             self.last_hits_detail = []
             return []
+        effective_exclude = self._resolve_exclude_window(exclude_last_n)
         logger.info(
-            f"[SEMANTIC] search start user_id={self.user_id} top_k={top_k} min_similarity={min_similarity}"
+            "[SEMANTIC] search start user_id=%s top_k=%s min_similarity=%.3f total_embeddings=%s exclude_last_n=%s effective_exclude=%s",
+            self.user_id,
+            top_k,
+            float(min_similarity),
+            len(self.turn_embeddings),
+            int(exclude_last_n),
+            effective_exclude,
         )
         if not self.turn_embeddings:
             logger.debug("No embeddings available for search")
@@ -249,14 +264,19 @@ class SemanticMemory:
             return []
 
         search_pool = (
-            self.turn_embeddings[:-exclude_last_n]
-            if exclude_last_n > 0
+            self.turn_embeddings[:-effective_exclude]
+            if effective_exclude > 0
             else self.turn_embeddings
         )
+        if not search_pool:
+            search_pool = self.turn_embeddings
+        logger.info("[SEMANTIC] search_pool_size=%s", len(search_pool))
 
         similarities: List[Tuple[TurnEmbedding, float]] = []
+        inspected_scores: List[float] = []
         for turn_emb in search_pool:
             similarity = self._cosine_similarity(query_embedding, turn_emb.embedding)
+            inspected_scores.append(float(similarity))
             if similarity >= min_similarity:
                 similarities.append((turn_emb, float(similarity)))
 
@@ -273,7 +293,11 @@ class SemanticMemory:
             for turn_emb, score in top_results
         ]
         logger.info(
-            f"[SEMANTIC] search done user_id={self.user_id} results={len(top_results)}"
+            "[SEMANTIC] search done user_id=%s results=%s threshold=%.3f max_similarity=%.3f",
+            self.user_id,
+            len(top_results),
+            float(min_similarity),
+            max(inspected_scores) if inspected_scores else 0.0,
         )
         for i, (turn_emb, score) in enumerate(top_results, 1):
             logger.info(
@@ -286,7 +310,7 @@ class SemanticMemory:
         query: str,
         max_chars: int = 1000,
         top_k: int = 3,
-        min_similarity: float = 0.7,
+        min_similarity: float = 0.6,
     ) -> str:
         """
         Получить отформатированный контекст релевантных прошлых обменов.

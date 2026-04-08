@@ -121,7 +121,7 @@ REST API для взаимодействия с Bot Agent (Phases 1-4).
 
 Лимит запросов зависит от типа API ключа (100-1000 req/min).
     """,
-    version="0.6.0",
+    version="0.12.0",
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",

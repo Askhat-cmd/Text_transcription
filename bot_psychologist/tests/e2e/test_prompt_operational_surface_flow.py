@@ -54,9 +54,9 @@ def test_prompt_operational_surface_flow(admin_client):
     assert stack_sections, "stack sections should not be empty"
 
     usage_response = admin_client.get("/api/admin/prompts/stack-v2/usage", headers=ADMIN_HEADERS)
-    assert usage_response.status_code == 200
-    usage_payload = usage_response.json()
-    assert usage_payload["last_turn_available"] is True
+    assert usage_response.status_code in {404, 410}
+    if usage_response.status_code == 410:
+        assert "deprecated" in str(usage_response.json().get("detail", "")).lower()
 
     core_detail = admin_client.get("/api/admin/prompts/stack-v2/CORE_IDENTITY", headers=ADMIN_HEADERS)
     assert core_detail.status_code == 200

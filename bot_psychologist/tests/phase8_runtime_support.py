@@ -237,7 +237,7 @@ def setup_phase8_runtime(
                 staleness="fresh",
                 strategy="fresh_summary_small_window",
             ),
-            snapshot={"schema_version": "1.1"},
+            snapshot={"_schema_version": "1.2"},
         ),
     )
     monkeypatch.setattr(aa_module.memory_updater, "save_snapshot", lambda *_args, **_kwargs: None)

@@ -163,7 +163,7 @@ class Config:
     # === Semantic memory ===
     ENABLE_SEMANTIC_MEMORY = os.getenv("ENABLE_SEMANTIC_MEMORY", "True").lower() == "true"
     SEMANTIC_SEARCH_TOP_K = int(os.getenv("SEMANTIC_SEARCH_TOP_K", "3"))
-    SEMANTIC_MIN_SIMILARITY = float(os.getenv("SEMANTIC_MIN_SIMILARITY", "0.7"))
+    SEMANTIC_MIN_SIMILARITY = float(os.getenv("SEMANTIC_MIN_SIMILARITY", "0.6"))
     SEMANTIC_MAX_CHARS = int(os.getenv("SEMANTIC_MAX_CHARS", "1000"))
     EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "intfloat/multilingual-e5-base")
     EMBEDDING_DEVICE = os.getenv("EMBEDDING_DEVICE", "auto")
@@ -180,8 +180,13 @@ class Config:
 
     # === Conversation summary ===
     ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"
-    SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "5"))
-    SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "500"))
+    SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "3"))
+    SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "300"))
+    SUMMARIZER_MODEL = os.getenv("SUMMARIZER_MODEL", "gpt-4o-mini")
+    SUMMARIZER_REASONING_EFFORT = os.getenv("SUMMARIZER_REASONING_EFFORT", "low")
+    SUMMARIZER_MIN_TURNS = int(os.getenv("SUMMARIZER_MIN_TURNS", "3"))
+    SUMMARIZER_FALLBACK_ON_EMPTY = os.getenv("SUMMARIZER_FALLBACK_ON_EMPTY", "True").lower() == "true"
+    SUMMARIZER_FALLBACK_RETRIES = int(os.getenv("SUMMARIZER_FALLBACK_RETRIES", "2"))
 
     # === Session storage ===
     ENABLE_SESSION_STORAGE = os.getenv("ENABLE_SESSION_STORAGE", "True").lower() == "true"

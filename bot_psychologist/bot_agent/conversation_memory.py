@@ -718,7 +718,7 @@ class ConversationMemory:
         """
         total_turns = len(self.turns)
 
-        if total_turns <= 5:
+        if total_turns <= 2:
             return {
                 "short_term": self.get_context_for_llm(n=total_turns),
                 "semantic": "",
@@ -759,18 +759,106 @@ class ConversationMemory:
         context = self.get_adaptive_context_for_llm(current_question)
         return self.format_context_for_llm(context)
 
+    def _load_summarizer_template(self) -> str:
+        prompt_path = Path(__file__).resolve().with_name("prompts") / "summarizer_prompt.md"
+        default_template = (
+            "Summarize the following therapy coaching session in 2-4 sentences.\n"
+            "Focus on: (1) main emotional theme, (2) user's core concern, "
+            "(3) last discussed direction or practice.\n"
+            "Output: plain text, no headers, no lists. Russian language.\n"
+            "Session:\n{session_text}"
+        )
+        try:
+            if prompt_path.exists():
+                raw = prompt_path.read_text(encoding="utf-8").lstrip("\ufeff").strip()
+                if raw:
+                    return raw
+        except Exception as exc:
+            logger.warning("[SUMMARY] failed to load summarizer template: %s", exc)
+        return default_template
+
+    def _build_summarizer_prompt(self, session_text: str) -> str:
+        template = self._load_summarizer_template()
+        try:
+            return template.format(session_text=session_text)
+        except Exception:
+            return f"{template}\n\nSession:\n{session_text}"
+
+    @staticmethod
+    def _build_minimal_summary_fallback(session_text: str) -> str:
+        lines = [line.strip() for line in (session_text or "").splitlines() if line.strip()]
+        if not lines:
+            return ""
+        return " | ".join(lines[-4:])
+
+    def _generate_summary(self, session_text: str, retries: Optional[int] = None) -> str:
+        from .llm_answerer import LLMAnswerer
+
+        answerer = LLMAnswerer()
+        if not answerer.client:
+            logger.warning("[SUMMARY] LLM client unavailable")
+            return ""
+
+        model_name = str(getattr(config, "SUMMARIZER_MODEL", "") or config.LLM_MODEL)
+        retries_total = int(
+            getattr(config, "SUMMARIZER_FALLBACK_RETRIES", 2)
+            if retries is None
+            else retries
+        )
+        max_chars = int(getattr(config, "SUMMARY_MAX_CHARS", 300) or 300)
+        prompt = self._build_summarizer_prompt(session_text)
+        messages = [{"role": "user", "content": prompt}]
+
+        for attempt in range(retries_total + 1):
+            try:
+                request_params = answerer._build_api_params(
+                    messages=messages,
+                    model=model_name,
+                    temperature=0.2,
+                    max_tokens=max_chars,
+                )
+                if not config.supports_custom_temperature(model_name):
+                    reasoning_effort = str(
+                        getattr(config, "SUMMARIZER_REASONING_EFFORT", "") or ""
+                    ).strip()
+                    if reasoning_effort:
+                        request_params["reasoning"] = {"effort": reasoning_effort}
+                if config.supports_custom_temperature(model_name):
+                    response = answerer.client.chat.completions.create(**request_params)
+                    raw_content = response.choices[0].message.content
+                    summary_text = (raw_content or "").strip()
+                else:
+                    response = answerer.client.responses.create(**request_params)
+                    summary_text = (getattr(response, "output_text", "") or "").strip()
+            except Exception as exc:
+                logger.warning(
+                    "[SUMMARY] generation attempt %d/%d failed: %s",
+                    attempt + 1,
+                    retries_total + 1,
+                    exc,
+                )
+                summary_text = ""
+
+            if len(summary_text) > 10:
+                return summary_text[:max_chars].rstrip()
+
+            logger.warning(
+                "[SUMMARY] empty/short result on attempt %d/%d",
+                attempt + 1,
+                retries_total + 1,
+            )
+
+        if bool(getattr(config, "SUMMARIZER_FALLBACK_ON_EMPTY", True)):
+            fallback = self._build_minimal_summary_fallback(session_text)
+            return fallback[:max_chars].rstrip()
+        return ""
+
     def _update_summary(self) -> None:
         """
         Обновить резюме диалога через LLM.
-
-        Изменения v3.0.3:
-        - Передаёт reasoning_effort для gpt-5-mini (reasoning model)
-        - Защита от None в message.content (через `or ""`)
-        - Защита от пустого ответа: не перезаписывать старое summary
-        - Использует async_client через asyncio.to_thread для
-          совместимости с async-контекстом
         """
-        if len(self.turns) < 5:
+        min_turns = int(getattr(config, "SUMMARIZER_MIN_TURNS", 3) or 3)
+        if len(self.turns) < min_turns:
             return
         if not config.OPENAI_API_KEY:
             logger.warning("⚠️ OPENAI_API_KEY не установлен — summary не обновляется")
@@ -791,70 +879,23 @@ class ConversationMemory:
                 if turn.user_state:
                     turns_text += f"Состояние: {turn.user_state}\n"
 
-            # Prompt не меняется
-            summary_prompt = f"""Создай КРАТКОЕ резюме диалога (максимум {config.SUMMARY_MAX_CHARS} символов, по-русски).
-
-Включи:
-- Ключевые темы, которые обсуждались
-- Прогресс пользователя в понимании
-- Важные инсайты или прорывы (если были)
-- Текущий фокус диалога
-
-ДИАЛОГ (последние 10 ходов):
-{turns_text}
-
-РЕЗЮМЕ (кратко, одним параграфом, без заголовков):"""
-
-            from .llm_answerer import LLMAnswerer
-
-            answerer = LLMAnswerer()
-            if not answerer.client:
-                logger.warning("⚠️ LLM клиент недоступен — summary не обновляется")
-                return
-
-            token_param = config.get_token_param_name(config.LLM_MODEL)
-
-            request_params = {
-                "model": config.LLM_MODEL,
-                "messages": [{"role": "user", "content": summary_prompt}],
-                token_param: 200,
-            }
-
-            # FIX 1: передать reasoning_effort для reasoning-моделей (gpt-5-mini)
-            # Без этого параметра модель возвращает пустой content
-            if hasattr(config, "REASONING_EFFORT") and config.REASONING_EFFORT:
-                request_params["extra_body"] = {
-                    "reasoning_effort": config.REASONING_EFFORT
-                }
-
-            if config.supports_custom_temperature(config.LLM_MODEL):
-                request_params["temperature"] = 0.3
-
-            api_response = answerer.client.chat.completions.create(**request_params)
-
-            # FIX 2: безопасное извлечение content
-            # message.content может быть None у reasoning-моделей
-            raw_content = api_response.choices[0].message.content
-            summary_text = (raw_content or "").strip()
-
-            # FIX 3: защита от перезаписи существующего summary пустым ответом
+            summary_text = self._generate_summary(turns_text)
             if not summary_text:
                 logger.warning(
-                    "[SUMMARY] LLM returned empty content — "
-                    "keeping existing summary (len=%d chars). "
-                    "Check reasoning_effort config.",
-                    len(self.summary or "")
+                    "[SUMMARY] generation failed after retries (turn=%d), keeping previous len=%d",
+                    len(self.turns),
+                    len(self.summary or ""),
                 )
-                return  # ← НЕ перезаписываем, выходим
-
-            # Обрезка до лимита — без изменений
-            if len(summary_text) > config.SUMMARY_MAX_CHARS:
-                summary_text = summary_text[:config.SUMMARY_MAX_CHARS].rstrip()
+                return
 
             self.summary = summary_text
             self.summary_updated_at = len(self.turns)
 
-            logger.info(f"Summary updated: {len(self.summary)} chars")
+            logger.info(
+                "[SUMMARY] generated len=%d chars turn=%d",
+                len(self.summary),
+                len(self.turns),
+            )
 
             if self.session_manager and self.summary:
                 self.session_manager.update_summary(self.user_id, self.summary)

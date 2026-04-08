@@ -35,6 +35,10 @@ def test_admin_payloads_no_message_level_trace_dependency(admin_client_without_t
 
     assert runtime.status_code == 200
     assert diagnostics.status_code == 200
-    assert runtime.json()["trace"]["available"] is False
+    trace = runtime.json()["trace"]
+    assert "available" in trace
+    assert trace["developer_trace_supported"] is True
+    assert "session_id" not in trace
+    assert "last_turn_number" not in trace
     assert diagnostics.json()["last_snapshot"] == {}
     assert diagnostics.json()["trace_available"] is False

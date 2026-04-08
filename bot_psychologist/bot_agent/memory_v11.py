@@ -15,6 +15,7 @@ VALID_REQUEST_FUNCTIONS = {
     "discharge",
     "understand",
     "directive",
+    "solution",
     "validation",
     "explore",
     "contact",
@@ -263,4 +264,3 @@ def _trim_context(text: str, *, max_chars: int) -> str:
     if len(normalized) <= max_chars:
         return normalized
     return normalized[:max_chars].rstrip()
-

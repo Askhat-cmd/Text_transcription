@@ -53,6 +53,27 @@ class StateAnalysis:
     recommendations: List[str]  # С‡С‚Рѕ РґРµР»Р°С‚СЊ РІ СЌС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёРё
 
 
+@dataclass(frozen=True)
+class StateClassifierResult:
+    """Runtime-facing Neo output contract for routing/diagnostics."""
+
+    nervous_system_state: str
+    request_function: str
+    confidence: float
+    raw_label: str
+
+
+VALID_NSS = {"hyper", "window", "hypo"}
+VALID_REQUEST_FUNCTIONS = {
+    "discharge",
+    "understand",
+    "solution",
+    "validation",
+    "explore",
+    "contact",
+}
+
+
 class StateClassifier:
     """
     РљР»Р°СЃСЃРёС„РёС†РёСЂСѓРµС‚ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° РѕСЃРЅРѕРІРµ:
@@ -120,6 +141,47 @@ class StateClassifier:
                 "Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё", "Р±РµР· СѓСЃРёР»РёР№", "СЃР°РјРѕ СЃРѕР±РѕР№", "Р¶РёРІСѓ СЌС‚РёРј"
             ]
         }
+
+    def _map_state_to_nss(self, state: UserState, tone: str = "") -> str:
+        state_value = str(getattr(state, "value", "") or "").lower()
+        tone_value = str(tone or "").lower()
+        if state_value in {"overwhelmed", "resistant"}:
+            return "hyper"
+        if state_value in {"stagnant"}:
+            return "hypo"
+        if any(token in tone_value for token in ("panic", "anxiety", "frustrat", "urgent")):
+            return "hyper"
+        if any(token in tone_value for token in ("numb", "shutdown", "flat", "apathy")):
+            return "hypo"
+        return "window"
+
+    def _detect_request_function(self, text: str) -> str:
+        lowered = (text or "").lower()
+        if any(token in lowered for token in ("выговориться", "выплеснуть", "просто сказать")):
+            return "discharge"
+        if any(token in lowered for token in ("что делать", "как поступить", "дай шаги", "план")):
+            return "solution"
+        if any(token in lowered for token in ("я прав", "подтверди", "нормально ли")):
+            return "validation"
+        if any(token in lowered for token in ("побудь со мной", "ты рядом", "нужна поддержка")):
+            return "contact"
+        if any(token in lowered for token in ("почему", "что со мной", "как это связано")):
+            return "explore"
+        return "understand"
+
+    def _to_runtime_result(self, analysis: StateAnalysis, text: str) -> StateClassifierResult:
+        nss = self._map_state_to_nss(analysis.primary_state, analysis.emotional_tone)
+        request_function = self._detect_request_function(text)
+        if nss not in VALID_NSS:
+            nss = "window"
+        if request_function not in VALID_REQUEST_FUNCTIONS:
+            request_function = "understand"
+        return StateClassifierResult(
+            nervous_system_state=nss,
+            request_function=request_function,
+            confidence=max(0.0, min(1.0, float(analysis.confidence))),
+            raw_label=analysis.primary_state.value,
+        )
     
     def analyze_message(
         self,
@@ -154,9 +216,12 @@ class StateClassifier:
                 depth="surface",
                 recommendations=self._get_recommendations_for_state(fast_state),
             )
+            fast_runtime = self._to_runtime_result(fast_analysis, user_message)
             logger.info(
-                f"[STATE_CLASSIFIER] fast detector hit: {fast_state.value} "
-                f"(confidence={fast.confidence:.2f}, indicator={fast.indicator})"
+                "STATE nss=%s fn=%s conf=%.2f",
+                fast_runtime.nervous_system_state,
+                fast_runtime.request_function,
+                fast_runtime.confidence,
             )
             return fast_analysis
         
@@ -177,9 +242,14 @@ class StateClassifier:
         final_analysis.recommendations = self._get_recommendations_for_state(
             final_analysis.primary_state
         )
-        
-        logger.info(f"вњ… РЎРѕСЃС‚РѕСЏРЅРёРµ РѕРїСЂРµРґРµР»РµРЅРѕ: {final_analysis.primary_state.value} "
-                   f"(СѓРІРµСЂРµРЅРЅРѕСЃС‚СЊ: {final_analysis.confidence:.2f})")
+
+        runtime_result = self._to_runtime_result(final_analysis, user_message)
+        logger.info(
+            "STATE nss=%s fn=%s conf=%.2f",
+            runtime_result.nervous_system_state,
+            runtime_result.request_function,
+            runtime_result.confidence,
+        )
         
         return final_analysis
 
@@ -194,6 +264,17 @@ class StateClassifier:
             user_message,
             conversation_history,
         )
+
+    async def classify_runtime(
+        self,
+        user_message: str,
+        conversation_history: Optional[List[Dict]] = None,
+    ) -> StateClassifierResult:
+        analysis = await self.classify(
+            user_message=user_message,
+            conversation_history=conversation_history,
+        )
+        return self._to_runtime_result(analysis, user_message)
     
     def _classify_by_keywords(
         self,

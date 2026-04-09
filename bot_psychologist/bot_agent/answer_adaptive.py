@@ -977,7 +977,8 @@ def _apply_memory_debug_info(
 def _build_state_context(
     state_analysis: StateAnalysis,
     mode_prompt: str,
-    sd_level: str = "GREEN",
+    nervous_system_state: str = "window",
+    request_function: str = "understand",
     contradiction_suggestion: str = "",
     cross_session_context: str = "",
 ) -> str:
@@ -1003,16 +1004,14 @@ def _build_state_context(
 
     return f"""
 КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ:
-- Текущее состояние: {state_analysis.primary_state.value}
+- nervous_system_state: {nervous_system_state}
+- request_function: {request_function}
 - Эмоциональный тон: {state_analysis.emotional_tone}
 - Глубина вовлечения: {state_analysis.depth}
-- Уровень развития (СД): {sd_level}
 
 РЕКОМЕНДАЦИЯ ПО ОТВЕТУ:
 {recommendation}
 
-Адаптируй стиль ответа к уровню СД пользователя.
-SD-оверлей применяется автоматически через системный промт.
 {contradiction_block}
 {cross_session_block}
 
@@ -1353,11 +1352,7 @@ def answer_question_adaptive(
             config,
         )
 
-        logger.info(
-            f"✅ Состояние: {state_analysis.primary_state.value} "
-            f"(уверенность: {state_analysis.confidence:.2f})"
-        )
-        logger.info("✅ SD runtime disabled in Neo v11 pipeline")
+        logger.info("STATE ANALYSIS ready conf=%.2f", float(state_analysis.confidence))
 
         if debug_info is not None:
             debug_info["state_analysis"] = {
@@ -1546,7 +1541,12 @@ def answer_question_adaptive(
             state_context = _build_state_context(
                 state_analysis,
                 state_context_mode_prompt,
-                sd_level=sd_result.primary,
+                nervous_system_state=(
+                    diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
+                ),
+                request_function=(
+                    diagnostics_v1.request_function if diagnostics_v1 else "understand"
+                ),
                 contradiction_suggestion=contradiction_hint,
                 cross_session_context=cross_session_context,
             )
@@ -2099,6 +2099,12 @@ def answer_question_adaptive(
             reason=routing_result.decision.reason,
             forbid=routing_result.decision.forbid,
         )
+        logger.info(
+            "ROUTING nss=%s fn=%s route=%s",
+            diagnostics_v1.nervous_system_state if diagnostics_v1 else "window",
+            diagnostics_v1.request_function if diagnostics_v1 else "understand",
+            getattr(routing_result, "route", "reflect"),
+        )
         state_context_mode_prompt = (
             "РЕЖИМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
             if informational_mode
@@ -2368,7 +2374,12 @@ def answer_question_adaptive(
         state_context = _build_state_context(
             state_analysis,
             state_context_mode_prompt,
-            sd_level=sd_result.primary,
+            nervous_system_state=(
+                diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
+            ),
+            request_function=(
+                diagnostics_v1.request_function if diagnostics_v1 else "understand"
+            ),
             contradiction_suggestion=contradiction_hint,
             cross_session_context=cross_session_context,
         )

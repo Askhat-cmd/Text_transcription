@@ -11,7 +11,7 @@ import logging
 import re
 from typing import Any, Dict
 
-from .state_classifier import StateAnalysis
+from .state_classifier import StateAnalysis, StateClassifierResult
 
 
 INTERACTION_MODES = {"coaching", "informational"}
@@ -26,25 +26,6 @@ REQUEST_FUNCTIONS = {
 }
 LEGACY_REQUEST_FUNCTION_ALIASES = {
     "directive": "solution",
-}
-LEGACY_STATE_MAP = {
-    "curious": "window",
-    "committed": "window",
-    "calm": "window",
-    "engaged": "window",
-    "unaware": "window",
-    "practicing": "window",
-    "integrated": "window",
-    "confused": "hyper",
-    "overwhelmed": "hyper",
-    "frustrated": "hyper",
-    "resistant": "hyper",
-    "anxious": "hyper",
-    "stagnant": "hypo",
-    "flat": "hypo",
-    "detached": "hypo",
-    "numb": "hypo",
-    "exhausted": "hypo",
 }
 
 logger = logging.getLogger(__name__)
@@ -243,6 +224,27 @@ class DiagnosticsClassifier:
             },
         )
 
+    def validate(self, result: StateClassifierResult) -> StateClassifierResult:
+        """Validate Neo state-classifier result without legacy remapping."""
+        nss = str(getattr(result, "nervous_system_state", "") or "").lower()
+        request_function = str(getattr(result, "request_function", "") or "").lower()
+        confidence = float(getattr(result, "confidence", 0.0) or 0.0)
+        raw_label = str(getattr(result, "raw_label", "") or "")
+
+        if nss not in NERVOUS_SYSTEM_STATES:
+            logger.error("DIAG invalid nss=%s, fallback to window", nss)
+            nss = "window"
+        if request_function not in REQUEST_FUNCTIONS:
+            logger.error("DIAG invalid fn=%s, fallback to understand", request_function)
+            request_function = "understand"
+
+        return StateClassifierResult(
+            nervous_system_state=nss,
+            request_function=request_function,
+            confidence=max(0.0, min(1.0, confidence)),
+            raw_label=raw_label,
+        )
+
     def _detect_interaction_mode(
         self,
         text: str,
@@ -282,11 +284,6 @@ class DiagnosticsClassifier:
 
         if primary_state in NERVOUS_SYSTEM_STATES:
             return primary_state, max(0.6, min(0.95, state_conf))
-        if primary_state:
-            mapped = LEGACY_STATE_MAP.get(primary_state)
-            if mapped:
-                logger.warning("[DIAG] state legacy term '%s' -> '%s'", primary_state, mapped)
-                return mapped, max(0.6, min(0.95, state_conf))
 
         if primary_state in {"overwhelmed", "resistant"} or any(
             token in tone for token in ("panic", "anxiety", "distress", "frustrat")

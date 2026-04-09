@@ -71,3 +71,27 @@ def test_save_snapshot_v12_writes_active_keys() -> None:
     assert memory.metadata["laststatesnapshot"] == result.snapshot
     assert memory.metadata["last_state_snapshot_v12"] == result.snapshot
     assert "last_state_snapshot_v11" not in memory.metadata
+
+
+def test_save_snapshot_v12_uses_checkpoint_without_persist() -> None:
+    checkpoint_calls = []
+
+    def _checkpoint(**kwargs):
+        checkpoint_calls.append(kwargs)
+
+    memory = SimpleNamespace(
+        summary="summary",
+        summary_updated_at=1,
+        turns=[],
+        metadata={},
+        checkpoint=_checkpoint,
+        save_to_disk=lambda: (_ for _ in ()).throw(AssertionError("save_to_disk must not be called")),
+    )
+    result = memory_updater.build_runtime_context(
+        memory=memory,
+        diagnostics={"nervous_system_state": "window"},
+        route="reflect",
+    )
+
+    memory_updater.save_snapshot(memory, result.snapshot)
+    assert checkpoint_calls == [{"reason": "checkpoint", "persist": False}]

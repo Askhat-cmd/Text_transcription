@@ -488,6 +488,7 @@ def _build_start_command_response(
     query: str,
     memory,
     start_time: datetime,
+    schedule_summary_task: bool = True,
 ) -> Dict[str, Any]:
     fallback_state = _fallback_state_analysis()
     answer = build_start_message()
@@ -498,6 +499,7 @@ def _build_start_command_response(
             user_state=fallback_state.primary_state.value,
             blocks_used=0,
             concepts=[],
+            schedule_summary_task=schedule_summary_task,
         )
     except Exception as exc:
         logger.warning("[ONBOARDING] failed to persist /start turn: %s", exc)
@@ -716,6 +718,39 @@ def _get_memory_trace_metrics(memory, context_turns: int) -> Dict[str, object]:
         "summary_used": summary_used,
         "semantic_hits": semantic_hits,
     }
+
+
+def _recent_user_turns(memory, limit: int = 2) -> List[str]:
+    turns = list(getattr(memory, "turns", []) or [])
+    user_turns = []
+    for turn in reversed(turns):
+        text = str(getattr(turn, "user_input", "") or "").strip()
+        if text:
+            user_turns.append(text)
+        if len(user_turns) >= max(1, limit):
+            break
+    user_turns.reverse()
+    return user_turns
+
+
+def _log_context_build(memory, conversation_context: str, memory_context_bundle) -> None:
+    mode = "summary" if bool(getattr(memory_context_bundle, "summary_used", False)) else "full"
+    summary_len = len(getattr(memory, "summary", "") or "")
+    total_turns = len(getattr(memory, "turns", []) or [])
+    if mode == "summary":
+        recent_turns = min(
+            total_turns,
+            int(getattr(config, "RECENT_WINDOW", 4) or 4),
+        )
+    else:
+        recent_turns = total_turns
+    logger.info(
+        "CONTEXT_BUILD mode=%s summary_len=%d recent_turns=%d total_prompt_chars=%d",
+        mode,
+        summary_len,
+        recent_turns,
+        len(conversation_context or ""),
+    )
 
 
 def _build_retrieval_detail(block, score: float, stage: str) -> Dict:
@@ -1139,6 +1174,7 @@ def answer_question_adaptive(
     top_k: Optional[int] = None,
     debug: bool = False,
     session_store=None,
+    schedule_summary_task: bool = True,
 ) -> Dict:
     """
     Phase 4: Адаптивный QA с учетом состояния и истории пользователя.
@@ -1278,6 +1314,7 @@ def answer_question_adaptive(
                 query=query,
                 memory=memory,
                 start_time=start_time,
+                schedule_summary_task=schedule_summary_task,
             )
         
         # Phase 3: user level adapter removed from active runtime.
@@ -1504,6 +1541,12 @@ def answer_question_adaptive(
                 debug_trace["blocks_initial"] = 0
                 debug_trace["blocks_after_cap"] = 0
                 debug_trace["hybrid_query_preview"] = _truncate_preview(query, 400)
+                debug_trace["hybrid_query_len"] = len(query or "")
+                debug_trace["hybrid_query_text"] = (
+                    query
+                    if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True))
+                    else _truncate_preview(query, 1200)
+                )
 
                 for stage_name, label in [
                     ("retrieval", "Retrieval"),
@@ -1533,6 +1576,13 @@ def answer_question_adaptive(
             if debug_trace is not None and isinstance(snapshot_payload, dict):
                 debug_trace["snapshot_v12"] = snapshot_payload
                 debug_trace["snapshot_v11"] = snapshot_payload
+            _log_context_build(memory, conversation_context, memory_context_bundle)
+            if debug_trace is not None:
+                debug_trace["context_mode"] = (
+                    "summary"
+                    if bool(getattr(memory_context_bundle, "summary_used", False))
+                    else "full"
+                )
             fast_block = _build_fast_path_block(
                 query=query,
                 conversation_context=conversation_context,
@@ -1755,6 +1805,7 @@ def answer_question_adaptive(
                 user_state=state_analysis.primary_state.value,
                 blocks_used=0,
                 concepts=[],
+                schedule_summary_task=schedule_summary_task,
             )
 
             memory_turns = len(memory.turns)
@@ -1807,8 +1858,15 @@ def answer_question_adaptive(
                     "summary_used": memory_trace_metrics["summary_used"],
                     "summary_length": summary_length,
                     "summary_last_turn": summary_last_turn,
+                    "context_mode": (
+                        "summary"
+                        if bool(getattr(memory_context_bundle, "summary_used", False))
+                        else "full"
+                    ),
+                    "summary_pending_turn": memory.metadata.get("summary_pending_turn"),
                     "semantic_hits": memory_trace_metrics["semantic_hits"],
                     "memory_turns": memory_turns,
+                    "hybrid_query_len": len(query or ""),
                     "tokens_prompt": tokens_prompt,
                     "tokens_completion": tokens_completion,
                     "tokens_total": tokens_total,
@@ -1853,6 +1911,7 @@ def answer_question_adaptive(
                 debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
                 debug_trace["session_turns"] = session_metrics.get("session_turns")
                 _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+                debug_trace["summary_pending_turn"] = memory.metadata.get("summary_pending_turn")
                 debug_trace["state_trajectory"] = _build_state_trajectory(memory)
                 debug_trace["memory_snapshot_blob_id"] = _store_blob(
                     session_store,
@@ -1895,11 +1954,13 @@ def answer_question_adaptive(
             "confidence": float(getattr(state_analysis, "confidence", 0.0) or 0.0),
         }
         query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+        recent_user_turns = _recent_user_turns(memory, limit=2)
         hybrid_query = query_builder.build_query(
             current_question=query,
             conversation_summary=memory.summary or "",
             working_state=retrieval_working_state,
             short_term_context=conversation_context,
+            latest_user_turns=recent_user_turns,
         )
         logger.info(
             "[RETRIEVAL] built hybrid_query len=%s (orig_query len=%s)",
@@ -2196,6 +2257,12 @@ def answer_question_adaptive(
             debug_trace["block_cap"] = block_cap
             debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
             debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
+            debug_trace["hybrid_query_len"] = len(hybrid_query)
+            debug_trace["hybrid_query_text"] = (
+                hybrid_query
+                if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True))
+                else _truncate_preview(hybrid_query, 1200)
+            )
             debug_trace["rerank_should_run"] = bool(should_run_rerank)
             debug_trace["rerank_reason"] = rerank_reason
             debug_trace["rerank_applied"] = bool(rerank_applied)
@@ -2217,6 +2284,13 @@ def answer_question_adaptive(
         if debug_trace is not None and isinstance(snapshot_payload, dict):
             debug_trace["snapshot_v12"] = snapshot_payload
             debug_trace["snapshot_v11"] = snapshot_payload
+        _log_context_build(memory, conversation_context, memory_context_bundle)
+        if debug_trace is not None:
+            debug_trace["context_mode"] = (
+                "summary"
+                if bool(getattr(memory_context_bundle, "summary_used", False))
+                else "full"
+            )
 
         if not retrieved_blocks:
             response = _build_partial_response(
@@ -2241,7 +2315,8 @@ def answer_question_adaptive(
                 bot_response=response.get("answer", ""),
                 user_state=state_analysis.primary_state.value if state_analysis else None,
                 blocks_used=0,
-                concepts=[]
+                concepts=[],
+                schedule_summary_task=schedule_summary_task,
             )
             if debug_info is not None:
                 debug_info["memory_summary"] = memory.get_summary()
@@ -2520,7 +2595,8 @@ def answer_question_adaptive(
                     bot_response=response.get("answer", ""),
                     user_state=state_analysis.primary_state.value if state_analysis else None,
                     blocks_used=0,
-                    concepts=[]
+                    concepts=[],
+                    schedule_summary_task=schedule_summary_task,
                 )
             except Exception:
                 pass
@@ -2722,7 +2798,8 @@ def answer_question_adaptive(
             bot_response=answer,
             user_state=state_analysis.primary_state.value,
             blocks_used=len(adapted_blocks),
-            concepts=concepts
+            concepts=concepts,
+            schedule_summary_task=schedule_summary_task,
         )
         try:
             primary_interests = memory.get_primary_interests()
@@ -2816,8 +2893,15 @@ def answer_question_adaptive(
                 "summary_used": memory_trace_metrics["summary_used"],
                 "summary_length": len(memory.summary) if memory.summary else 0,
                 "summary_last_turn": memory.summary_updated_at,
+                "context_mode": (
+                    "summary"
+                    if bool(getattr(memory_context_bundle, "summary_used", False))
+                    else "full"
+                ),
+                "summary_pending_turn": memory.metadata.get("summary_pending_turn"),
                 "semantic_hits": memory_trace_metrics["semantic_hits"],
                 "memory_turns": len(memory.turns),
+                "hybrid_query_len": len(hybrid_query),
                 "tokens_prompt": tokens_prompt,
                 "tokens_completion": tokens_completion,
                 "tokens_total": tokens_total,
@@ -2873,6 +2957,7 @@ def answer_question_adaptive(
             debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
             debug_trace["session_turns"] = session_metrics.get("session_turns")
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+            debug_trace["summary_pending_turn"] = memory.metadata.get("summary_pending_turn")
             debug_trace["state_trajectory"] = _build_state_trajectory(memory)
             debug_trace["memory_snapshot_blob_id"] = _store_blob(
                 session_store,
@@ -2910,7 +2995,12 @@ def answer_question_adaptive(
         }
         try:
             memory = get_conversation_memory(user_id)
-            memory.add_turn(user_input=query, bot_response=response["answer"], blocks_used=0)
+            memory.add_turn(
+                user_input=query,
+                bot_response=response["answer"],
+                blocks_used=0,
+                schedule_summary_task=schedule_summary_task,
+            )
         except Exception:
             pass
         if debug_trace is not None:

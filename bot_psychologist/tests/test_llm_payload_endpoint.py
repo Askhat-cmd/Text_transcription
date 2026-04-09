@@ -1,4 +1,4 @@
-from pathlib import Path
+﻿from pathlib import Path
 import sys
 
 from fastapi.testclient import TestClient
@@ -22,60 +22,90 @@ def _reset_store() -> None:
         store._blobs.clear()  # type: ignore[attr-defined]
 
 
-def test_llm_payload_endpoint_returns_latest_trace_payload():
-    _reset_store()
+def _seed_trace(session_id: str, *, user_prompt: str, turn_number: int = 3, summary_pending_turn=None) -> None:
     store = get_session_store()
+    store.set_blob(f"{session_id}:sys", "SYSTEM PROMPT TEXT")
+    store.set_blob(f"{session_id}:user", user_prompt)
+    store.set_blob(f"{session_id}:mem", "MEMORY SNAPSHOT TEXT")
 
-    store.set_blob("s1:sys", "SYSTEM PROMPT TEXT")
-    store.set_blob("s1:user", "USER PROMPT TEXT")
-    store.set_blob("s1:mem", "MEMORY SNAPSHOT TEXT")
+    trace = {
+        "turn_number": turn_number,
+        "recommended_mode": "PRESENCE",
+        "user_state": "curious",
+        "hybrid_query_preview": "query preview",
+        "hybrid_query_text": "query preview full",
+        "hybrid_query_len": 18,
+        "context_mode": "summary",
+        "summary_used": True,
+        "summary_text": "summary from trace",
+        "summary_pending_turn": summary_pending_turn,
+        "chunks_after_filter": [
+            {"block_id": "b1", "title": "Block 1", "score_final": 0.77},
+        ],
+        "memory_snapshot_blob_id": f"{session_id}:mem",
+        "llm_calls": [
+            {
+                "step": "answer",
+                "model": "gpt-5-mini",
+                "tokens_prompt": 10,
+                "tokens_completion": 20,
+                "tokens_total": 30,
+                "duration_ms": 123,
+                "system_prompt_blob_id": f"{session_id}:sys",
+                "user_prompt_blob_id": f"{session_id}:user",
+                "response_preview": "response preview",
+            }
+        ],
+    }
+    store.append_trace(session_id, trace)
 
-    store.append_trace(
-        "s1",
-        {
-            "turn_number": 3,
-            "recommended_mode": "PRESENCE",
-            "sd_level": "GREEN",
-            "user_state": "curious",
-            "hybrid_query_preview": "query preview",
-            "chunks_after_filter": [{"block_id": "b1"}],
-            "memory_snapshot_blob_id": "s1:mem",
-            "llm_calls": [
-                {
-                    "step": "answer",
-                    "model": "gpt-5-mini",
-                    "tokens_prompt": 10,
-                    "tokens_completion": 20,
-                    "tokens_total": 30,
-                    "duration_ms": 123,
-                    "system_prompt_blob_id": "s1:sys",
-                    "user_prompt_blob_id": "s1:user",
-                    "response_preview": "response preview",
-                }
-            ],
-        },
-    )
+
+def test_llm_payload_endpoint_returns_structured_payload_by_default() -> None:
+    _reset_store()
+    user_prompt = """[CONVERSATION SUMMARY]\nsummary in prompt\n\n[RECENT DIALOG]\n- user: hi\n- bot: hello\n\nМАТЕРИАЛ ИЗ ЛЕКЦИЙ:\n--- BLOCK 1 ---\ncontent\n\nВОПРОС ПОЛЬЗОВАТЕЛЯ:\nwhat now?\n"""
+    _seed_trace("s1", user_prompt=user_prompt, turn_number=5)
 
     with TestClient(app, base_url="http://localhost") as client:
         response = client.get("/api/debug/session/s1/llm-payload", headers=DEV_HEADERS)
 
     assert response.status_code == 200
-    payload = response.json()
-    assert payload["session_id"] == "s1"
-    assert payload["turn_number"] == 3
-    assert payload["chunks_count"] == 1
-    assert payload["llm_calls"][0]["system_prompt"] == "SYSTEM PROMPT TEXT"
-    assert payload["llm_calls"][0]["user_prompt"] == "USER PROMPT TEXT"
-    assert payload["memory_snapshot"] == "MEMORY SNAPSHOT TEXT"
+    data = response.json()
+    assert data["session_id"] == "s1"
+    assert data["turn_index"] == 5
+    assert data["context_mode"] in {"summary", "full"}
+    assert isinstance(data["sections"], list)
+    names = {section["name"] for section in data["sections"]}
+    assert "CORE_IDENTITY" in names
+    assert "RECENT_DIALOG" in names
+    assert "TASK_INSTRUCTION" in names
+    assert "diagnostics" in data
+    assert data["diagnostics"]["hybridquery_len"] >= 0
 
 
-def test_llm_payload_endpoint_404_when_no_llm_calls():
+def test_llm_payload_endpoint_supports_flat_format() -> None:
     _reset_store()
-    store = get_session_store()
-    store.append_trace("s2", {"turn_number": 1, "llm_calls": []})
+    user_prompt = "ВОПРОС ПОЛЬЗОВАТЕЛЯ:\nflat"
+    _seed_trace("s2", user_prompt=user_prompt, turn_number=2)
 
     with TestClient(app, base_url="http://localhost") as client:
-        response = client.get("/api/debug/session/s2/llm-payload", headers=DEV_HEADERS)
+        response = client.get("/api/debug/session/s2/llm-payload?format=flat", headers=DEV_HEADERS)
 
-    assert response.status_code == 404
-    assert response.json()["detail"] == "No LLM payload for this session"
+    assert response.status_code == 200
+    data = response.json()
+    assert data["session_id"] == "s2"
+    assert "llm_calls" in data
+    assert data["llm_calls"][0]["system_prompt"] == "SYSTEM PROMPT TEXT"
+    assert data["llm_calls"][0]["user_prompt"].startswith("ВОПРОС")
+
+
+def test_llm_payload_diagnostics_summary_lag_when_pending_turn_matches() -> None:
+    _reset_store()
+    user_prompt = """[RECENT DIALOG]\n- user: hi\n\nМАТЕРИАЛ ИЗ ЛЕКЦИЙ:\nblock\n\nВОПРОС ПОЛЬЗОВАТЕЛЯ:\nq"""
+    _seed_trace("s3", user_prompt=user_prompt, turn_number=7, summary_pending_turn=7)
+
+    with TestClient(app, base_url="http://localhost") as client:
+        response = client.get("/api/debug/session/s3/llm-payload", headers=DEV_HEADERS)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["diagnostics"]["summary_lag"] is True

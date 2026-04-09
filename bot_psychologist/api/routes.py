@@ -573,8 +573,11 @@ async def ask_adaptive_question(
                     "memory_turns": metadata.get("memory_turns"),
                     "summary_length": metadata.get("summary_length"),
                     "summary_last_turn": metadata.get("summary_last_turn"),
+                    "summary_pending_turn": metadata.get("summary_pending_turn"),
                     "summary_used": metadata.get("summary_used"),
                     "semantic_hits": metadata.get("semantic_hits"),
+                    "context_mode": metadata.get("context_mode"),
+                    "hybrid_query_len": metadata.get("hybrid_query_len"),
                 }
                 if not sd_runtime_disabled:
                     trace_payload["sd_level"] = metadata.get("sd_level")
@@ -606,11 +609,15 @@ async def ask_adaptive_question(
                     "blocks_initial",
                     "blocks_after_cap",
                     "hybrid_query_preview",
+                    "hybrid_query_text",
+                    "hybrid_query_len",
+                    "context_mode",
                     "sd_detail",
                     "memory_turns_content",
                     "summary_text",
                     "summary_length",
                     "summary_last_turn",
+                    "summary_pending_turn",
                     "summary_used",
                     "memory_turns",
                     "semantic_hits",
@@ -763,6 +770,7 @@ async def ask_adaptive_question_stream(
                 include_feedback_prompt=request.include_feedback_prompt,
                 debug=request.debug,
                 session_store=store,
+                schedule_summary_task=False,
             )
 
             answer = str(result.get("answer", "") or "")
@@ -797,6 +805,13 @@ async def ask_adaptive_question_stream(
                     logger.warning("[STREAM] Failed to store trace: %s", store_exc)
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
+            try:
+                memory = get_conversation_memory(session_key)
+                schedule_fn = getattr(memory, "schedule_summary_task_if_due", None)
+                if callable(schedule_fn):
+                    schedule_fn()
+            except Exception as summary_exc:
+                logger.warning("[STREAM] Failed to schedule summary task: %s", summary_exc)
 
         except Exception as exc:
             logger.error("[ADAPTIVE-STREAM] failed: %s", exc, exc_info=True)

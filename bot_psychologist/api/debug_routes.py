@@ -1,10 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+import logging
+from typing import Any, Dict, List
+
+from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from .auth import verify_api_key, is_dev_key
 from .session_store import SessionStore, get_session_store
+from bot_agent.config import config
 from bot_agent.feature_flags import feature_flags
 
 router = APIRouter(prefix="/api/debug", tags=["debug"])
+logger = logging.getLogger(__name__)
 
 
 @router.get("/blob/{blob_id}")
@@ -64,6 +69,7 @@ async def get_session_traces(
 @router.get("/session/{session_id}/llm-payload")
 async def get_session_llm_payload(
     session_id: str,
+    format: str = Query(default="structured"),
     api_key: str = Depends(verify_api_key),
     store: SessionStore = Depends(get_session_store),
 ):
@@ -79,6 +85,72 @@ async def get_session_llm_payload(
     if not llm_calls:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No LLM payload for this session")
 
+    flat_payload = _build_flat_payload(
+        session_id=session_id,
+        trace=trace,
+        llm_calls=llm_calls,
+        store=store,
+    )
+    if (format or "").strip().lower() == "flat":
+        return flat_payload
+    return _build_structured_payload(trace=trace, flat_payload=flat_payload)
+
+
+def _sanitize_pii(text: str) -> str:
+    import re
+
+    text = re.sub(r"\b[\w.+-]+@[\w-]+\.[\w]{2,}\b", "[email]", text)
+    text = re.sub(r"\b\+?[\d\s\-()]{10,15}\b", "[phone]", text)
+    return text
+
+
+def _estimate_tokens(text: str) -> int:
+    return max(0, len(text or "") // 4)
+
+
+def _clip_for_payload(text: str) -> str:
+    value = _sanitize_pii(text or "")
+    if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)):
+        return value
+    return value[:1200]
+
+
+def _extract_section(text: str, start_marker: str, *end_markers: str) -> str:
+    source = str(text or "")
+    if not source:
+        return ""
+    start_idx = source.find(start_marker)
+    if start_idx < 0:
+        return ""
+    start_idx += len(start_marker)
+    end_candidates = []
+    for marker in end_markers:
+        idx = source.find(marker, start_idx)
+        if idx >= 0:
+            end_candidates.append(idx)
+    end_idx = min(end_candidates) if end_candidates else len(source)
+    return source[start_idx:end_idx].strip()
+
+
+def _section_payload(name: str, content: str, **extra: Any) -> Dict[str, Any]:
+    text = _clip_for_payload(content)
+    payload: Dict[str, Any] = {
+        "name": name,
+        "chars": len(text),
+        "tokens_est": _estimate_tokens(text),
+        "content": text,
+    }
+    payload.update(extra)
+    return payload
+
+
+def _build_flat_payload(
+    *,
+    session_id: str,
+    trace: Dict[str, Any],
+    llm_calls: List[Dict[str, Any]],
+    store: SessionStore,
+) -> Dict[str, Any]:
     payload_calls = []
     for call in llm_calls:
         system_blob_id = call.get("system_prompt_blob_id") or trace.get("system_prompt_blob_id")
@@ -91,16 +163,19 @@ async def get_session_llm_payload(
                 "tokens_prompt": call.get("tokens_prompt"),
                 "tokens_completion": call.get("tokens_completion"),
                 "tokens_total": call.get("tokens_total"),
-                "system_prompt": _sanitize_pii(store.get_blob(system_blob_id) or call.get("system_prompt_preview") or ""),
-                "user_prompt": _sanitize_pii(store.get_blob(user_blob_id) or call.get("user_prompt_preview") or ""),
-                "response_preview": _sanitize_pii(call.get("response_preview") or ""),
+                "system_prompt": _clip_for_payload(
+                    store.get_blob(system_blob_id) or call.get("system_prompt_preview") or ""
+                ),
+                "user_prompt": _clip_for_payload(
+                    store.get_blob(user_blob_id) or call.get("user_prompt_preview") or ""
+                ),
+                "response_preview": _clip_for_payload(call.get("response_preview") or ""),
                 "blob_error": call.get("blob_error"),
             }
         )
 
     memory_blob_id = trace.get("memory_snapshot_blob_id")
-    memory_snapshot = _sanitize_pii(store.get_blob(memory_blob_id) or "") if memory_blob_id else ""
-
+    memory_snapshot = _clip_for_payload(store.get_blob(memory_blob_id) or "") if memory_blob_id else ""
     sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
     payload = {
         "session_id": session_id,
@@ -117,12 +192,119 @@ async def get_session_llm_payload(
     return payload
 
 
-def _sanitize_pii(text: str) -> str:
-    import re
+def _build_retrieval_blocks(trace: Dict[str, Any]) -> List[Dict[str, Any]]:
+    result: List[Dict[str, Any]] = []
+    blocks = trace.get("chunks_after_filter") or trace.get("chunks_retrieved") or []
+    for item in blocks:
+        if not isinstance(item, dict):
+            continue
+        result.append(
+            {
+                "block_id": item.get("block_id"),
+                "title": item.get("title"),
+                "score": item.get("score_final") or item.get("score"),
+            }
+        )
+    return result
 
-    text = re.sub(r"\b[\w.+-]+@[\w-]+\.[\w]{2,}\b", "[email]", text)
-    text = re.sub(r"\b\+?[\d\s\-()]{10,15}\b", "[phone]", text)
-    return text
+
+def _build_structured_payload(*, trace: Dict[str, Any], flat_payload: Dict[str, Any]) -> Dict[str, Any]:
+    calls = flat_payload.get("llm_calls") or []
+    preferred = next((c for c in calls if str(c.get("step") or "").lower() == "answer"), calls[0] if calls else {})
+    system_prompt = str(preferred.get("system_prompt") or "")
+    user_prompt = str(preferred.get("user_prompt") or "")
+
+    summary_in_prompt = _extract_section(
+        user_prompt,
+        "[CONVERSATION SUMMARY]",
+        "[RECENT DIALOG]",
+        "МАТЕРИАЛ ИЗ ЛЕКЦИЙ:",
+    )
+    summary_content = summary_in_prompt or str(trace.get("summary_text") or "")
+
+    recent_content = _extract_section(
+        user_prompt,
+        "[RECENT DIALOG]",
+        "МАТЕРИАЛ ИЗ ЛЕКЦИЙ:",
+    )
+    knowledge_content = _extract_section(
+        user_prompt,
+        "МАТЕРИАЛ ИЗ ЛЕКЦИЙ:",
+        "ВОПРОС ПОЛЬЗОВАТЕЛЯ:",
+    )
+    task_content = _extract_section(user_prompt, "ВОПРОС ПОЛЬЗОВАТЕЛЯ:")
+
+    recent_turns_count = recent_content.count("- user:")
+    knowledge_blocks_count = knowledge_content.count("---")
+    summary_present = bool(summary_in_prompt.strip())
+    turn_index = trace.get("turn_number")
+    summary_pending_turn = trace.get("summary_pending_turn")
+    summary_lag = bool(
+        summary_pending_turn
+        and turn_index
+        and int(summary_pending_turn) == int(turn_index)
+        and not summary_present
+    )
+    if summary_lag:
+        logger.warning(
+            "[LLM_PAYLOAD] summary_lag=true session=%s turn=%s",
+            flat_payload.get("session_id"),
+            turn_index,
+        )
+
+    hybridquery_text = str(trace.get("hybrid_query_text") or trace.get("hybrid_query_preview") or "")
+    hybridquery_text = _clip_for_payload(hybridquery_text)
+    hybridquery_len = trace.get("hybrid_query_len")
+    if hybridquery_len is None:
+        hybridquery_len = len(hybridquery_text)
+    try:
+        hybridquery_len_value = int(hybridquery_len)
+    except (TypeError, ValueError):
+        hybridquery_len_value = len(hybridquery_text)
+
+    sections = [
+        _section_payload("CORE_IDENTITY", system_prompt),
+        _section_payload(
+            "CONVERSATION_SUMMARY",
+            summary_content,
+            present=summary_present,
+        ),
+        _section_payload(
+            "RECENT_DIALOG",
+            recent_content,
+            turns_count=recent_turns_count,
+        ),
+        _section_payload(
+            "KNOWLEDGE_CONTEXT",
+            knowledge_content,
+            blocks_count=knowledge_blocks_count,
+        ),
+        _section_payload("TASK_INSTRUCTION", task_content),
+    ]
+
+    total_chars = sum(int(item.get("chars") or 0) for item in sections)
+    total_tokens_est = sum(int(item.get("tokens_est") or 0) for item in sections)
+    context_mode = str(
+        trace.get("context_mode")
+        or ("summary" if bool(trace.get("summary_used")) else "full")
+    )
+
+    return {
+        "session_id": flat_payload.get("session_id"),
+        "turn_index": turn_index,
+        "context_mode": context_mode,
+        "total_chars": total_chars,
+        "total_tokens_est": total_tokens_est,
+        "sections": sections,
+        "retrieval_blocks": _build_retrieval_blocks(trace),
+        "diagnostics": {
+            "summary_present": summary_present,
+            "summary_lag": summary_lag,
+            "recent_dialog_turns": recent_turns_count,
+            "hybridquery_len": hybridquery_len_value,
+            "hybridquery_text": hybridquery_text,
+        },
+    }
 
 
 def _aggregate_session_metrics(traces: list) -> dict:

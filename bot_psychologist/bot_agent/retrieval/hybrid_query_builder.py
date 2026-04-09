@@ -1,8 +1,8 @@
-"""Hybrid query builder where user question remains the anchor."""
+﻿"""Hybrid query builder where user question remains the anchor."""
 
 from __future__ import annotations
 
-from typing import Dict, Optional, Union
+from typing import Dict, Iterable, Optional, Union
 
 from ..working_state import WorkingState
 
@@ -81,32 +81,57 @@ class HybridQueryBuilder:
 
         return f"nss={nss} fn={request_function} conf={conf_text}"
 
+    def _format_latest_user_turns(
+        self,
+        latest_user_turns: Optional[Iterable[str]],
+        *,
+        limit: int = 2,
+    ) -> str:
+        if not latest_user_turns:
+            return ""
+        cleaned: list[str] = []
+        for item in latest_user_turns:
+            value = self._clean(str(item or ""))
+            if value:
+                cleaned.append(value)
+        if not cleaned:
+            return ""
+        tail = cleaned[-max(1, limit):]
+        return " | ".join(f"u{i + 1}: {text}" for i, text in enumerate(tail))
+
     def build_query(
         self,
         current_question: str,
         conversation_summary: str = "",
         working_state: Optional[Union[WorkingState, Dict]] = None,
         short_term_context: str = "",
+        latest_user_turns: Optional[Iterable[str]] = None,
     ) -> str:
         question = self._clean(current_question)
         if not question:
             raise ValueError("current_question must not be empty")
 
         summary = self._clip(conversation_summary, self.summary_chars)
+        summary_excerpt = self._clip((conversation_summary or "")[:200], 200)
         short_term = self._clip(short_term_context, self.short_term_chars)
         working_state_text = self._format_working_state(working_state)
+        latest_user_text = self._format_latest_user_turns(latest_user_turns, limit=2)
 
-        parts = [f"ВОПРОС-ЯКОРЬ: {question}"]
+        parts = [f"QUESTION_ANCHOR: {question}"]
 
         if working_state_text:
-            parts.append(f"РАБОЧЕЕ СОСТОЯНИЕ: {working_state_text}")
+            parts.append(f"WORKING_STATE: {working_state_text}")
+        if summary_excerpt:
+            parts.append(f"SUMMARY_EXCERPT_200: {summary_excerpt}")
         if summary:
-            parts.append(f"РЕЗЮМЕ ДИАЛОГА: {summary}")
+            parts.append(f"DIALOG_SUMMARY: {summary}")
+        if latest_user_text:
+            parts.append(f"LATEST_USER_TURNS: {latest_user_text}")
         if short_term:
-            parts.append(f"КОРОТКИЙ КОНТЕКСТ: {short_term}")
+            parts.append(f"SHORT_TERM_CONTEXT: {short_term}")
 
         # Repeat the question at the end to preserve anchor dominance.
-        parts.append(f"СНОВА ВОПРОС-ЯКОРЬ: {question}")
+        parts.append(f"QUESTION_ANCHOR_REPEAT: {question}")
 
         query = "\n".join(parts)
         if len(query) <= self.max_chars:

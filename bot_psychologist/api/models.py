@@ -279,12 +279,16 @@ class DebugTrace(BaseModel):
     blocks_initial: Optional[int] = None
     blocks_after_cap: Optional[int] = None
     hybrid_query_preview: Optional[str] = None
+    hybrid_query_text: Optional[str] = None
+    hybrid_query_len: Optional[int] = None
+    context_mode: Optional[str] = None
     sd_detail: Optional[SDClassificationDetail] = None
     memory_turns: Optional[int] = None
     memory_turns_content: List[MemoryTurnPreview] = Field(default_factory=list)
     summary_text: Optional[str] = None
     summary_length: Optional[int] = None
     summary_last_turn: Optional[int] = None
+    summary_pending_turn: Optional[int] = None
     summary_used: Optional[bool] = None
     semantic_hits: Optional[int] = None
     semantic_hits_detail: List[SemanticHitDetail] = Field(default_factory=list)

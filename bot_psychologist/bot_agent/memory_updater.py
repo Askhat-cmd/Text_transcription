@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, Iterable
 
+from .config import config
 from .memory_v11 import build_snapshot_v11, compose_memory_context_v11, MemoryContextBundle
 from .memory_v12 import build_snapshot_v12
 from .summary_manager import summary_manager
@@ -52,6 +53,8 @@ class MemoryUpdater:
             total_turns=total_turns,
             snapshot=legacy_snapshot,
             recent_turns=list(recent_turns) if recent_turns is not None else list(getattr(memory, "turns", [])),
+            summary_window_size=int(getattr(config, "SUMMARY_WINDOW_SIZE", 5) or 5),
+            recent_window=int(getattr(config, "RECENT_WINDOW", 4) or 4),
             max_chars=max_context_chars,
         )
         return MemoryUpdateResult(snapshot=snapshot, context=context)
@@ -64,9 +67,9 @@ class MemoryUpdater:
             metadata.pop("last_state_snapshot_v11", None)
         setattr(memory, "last_state_snapshot_v12", snapshot)
         setattr(memory, "laststatesnapshot", snapshot)
-        save_fn = getattr(memory, "save_to_disk", None)
-        if callable(save_fn):
-            save_fn()
+        checkpoint_fn = getattr(memory, "checkpoint", None)
+        if callable(checkpoint_fn):
+            checkpoint_fn(reason="checkpoint", persist=False)
 
     @staticmethod
     def _extract_engagement(memory: Any) -> Dict[str, Any]:

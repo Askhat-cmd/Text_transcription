@@ -204,12 +204,16 @@ export interface DebugTrace {
   blocks_initial?: number | null;
   blocks_after_cap?: number | null;
   hybrid_query_preview?: string | null;
+  hybrid_query_text?: string | null;
+  hybrid_query_len?: number | null;
+  context_mode?: string | null;
   sd_detail?: SDClassificationDetail | null;
   memory_turns?: number | null;
   memory_turns_content?: MemoryTurnPreview[];
   summary_text?: string | null;
   summary_length?: number | null;
   summary_last_turn?: number | null;
+  summary_pending_turn?: number | null;
   summary_used?: boolean | null;
   semantic_hits?: number | null;
   semantic_hits_detail?: SemanticHitDetail[];

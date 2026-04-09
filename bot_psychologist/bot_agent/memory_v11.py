@@ -141,6 +141,8 @@ def compose_memory_context_v11(
     recent_turns: Iterable[Any],
     small_window: int = 3,
     large_window: int = 8,
+    summary_window_size: int = 5,
+    recent_window: int = 4,
     max_chars: int = 2200,
 ) -> MemoryContextBundle:
     staleness = resolve_summary_staleness(
@@ -167,46 +169,32 @@ def compose_memory_context_v11(
         )
 
     snapshot_text = _render_snapshot_subset(snapshot if snapshot_valid else None)
-    if staleness == "fresh":
-        recent = _render_recent_turns(recent_turns, limit=small_window)
-        text = _join_non_empty(
-            [
-                f"SUMMARY:\n{summary}" if summary else "",
-                snapshot_text,
-                recent,
-            ]
+    summary_mode = bool(summary and total_turns >= max(1, int(summary_window_size)))
+    if summary_mode:
+        recent = _render_recent_turns(recent_turns, limit=max(1, int(recent_window)))
+        summary_block = f"[CONVERSATION SUMMARY]\n{summary}" if summary else ""
+        text = _join_non_empty([summary_block, recent])
+        strategy = (
+            "fresh_summary_small_window"
+            if staleness == "fresh"
+            else "stale_summary_large_window"
         )
         return MemoryContextBundle(
-            strategy="fresh_summary_small_window",
+            strategy=strategy,
             staleness=staleness,
             context_text=_trim_context(text, max_chars=max_chars),
-            summary_used=bool(summary),
-            snapshot_used=bool(snapshot_text),
+            summary_used=True,
+            snapshot_used=False,
             recent_window_used=bool(recent),
         )
 
-    if staleness == "stale":
-        recent = _render_recent_turns(recent_turns, limit=large_window)
-        text = _join_non_empty(
-            [
-                f"SUMMARY (stale):\n{summary}" if summary else "",
-                snapshot_text,
-                recent,
-            ]
-        )
-        return MemoryContextBundle(
-            strategy="stale_summary_large_window",
-            staleness=staleness,
-            context_text=_trim_context(text, max_chars=max_chars),
-            summary_used=bool(summary),
-            snapshot_used=bool(snapshot_text),
-            recent_window_used=bool(recent),
-        )
-
-    recent = _render_recent_turns(recent_turns, limit=large_window)
+    # Full mode: keep all known turns in context when summary mode is not active.
+    full_limit = max(1, int(total_turns or 0))
+    recent = _render_recent_turns(recent_turns, limit=full_limit)
     text = _join_non_empty([snapshot_text, recent])
+    strategy = "missing_summary_snapshot_plus_recent" if not summary else "full_recent_dialog"
     return MemoryContextBundle(
-        strategy="missing_summary_snapshot_plus_recent",
+        strategy=strategy,
         staleness=staleness,
         context_text=_trim_context(text, max_chars=max_chars),
         summary_used=False,
@@ -224,7 +212,7 @@ def _render_recent_turns(recent_turns: Iterable[Any], *, limit: int) -> str:
     items = list(recent_turns or [])[-max(1, limit) :]
     if not items:
         return ""
-    lines: List[str] = ["RECENT DIALOG:"]
+    lines: List[str] = ["[RECENT DIALOG]"]
     for turn in items:
         user_text = str(getattr(turn, "user_input", "") or "").strip()
         bot_text = str(getattr(turn, "bot_response", "") or "").strip()

@@ -181,6 +181,8 @@ class Config:
     # === Conversation summary ===
     ENABLE_CONVERSATION_SUMMARY = os.getenv("ENABLE_CONVERSATION_SUMMARY", "True").lower() == "true"
     SUMMARY_UPDATE_INTERVAL = int(os.getenv("SUMMARY_UPDATE_INTERVAL", "3"))
+    SUMMARY_WINDOW_SIZE = int(os.getenv("SUMMARY_WINDOW_SIZE", "5"))
+    RECENT_WINDOW = int(os.getenv("RECENT_WINDOW", "4"))
     SUMMARY_MAX_CHARS = int(os.getenv("SUMMARY_MAX_CHARS", "300"))
     SUMMARIZER_MODEL = os.getenv("SUMMARIZER_MODEL", "gpt-4o-mini")
     SUMMARIZER_REASONING_EFFORT = os.getenv("SUMMARIZER_REASONING_EFFORT", "low")
@@ -200,6 +202,10 @@ class Config:
     # === Debug/logging ===
     DEBUG = os.getenv("DEBUG", "False").lower() == "true"
     LOG_DIR = PROJECT_ROOT / "logs" / "bot_agent"
+    LLM_PAYLOAD_INCLUDE_FULL_CONTENT = os.getenv(
+        "LLM_PAYLOAD_INCLUDE_FULL_CONTENT",
+        "True",
+    ).lower() == "true"
 
     @classmethod
     def get_token_param_name(cls, model: Optional[str] = None) -> str:

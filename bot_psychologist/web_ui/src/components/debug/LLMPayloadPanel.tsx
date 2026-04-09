@@ -19,7 +19,7 @@ export const LLMPayloadPanel: React.FC<Props> = ({ sessionId }) => {
     try {
       const apiKey = storageService.getApiKey();
       const headers = apiKey ? { 'X-API-Key': apiKey } : undefined;
-      const res = await fetch(`/api/debug/session/${sessionId}/llm-payload`, {
+      const res = await fetch(`/api/debug/session/${sessionId}/llm-payload?format=flat`, {
         credentials: 'include',
         headers,
       });
@@ -139,4 +139,3 @@ export const LLMPayloadPanel: React.FC<Props> = ({ sessionId }) => {
     </details>
   );
 };
-

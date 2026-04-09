@@ -46,20 +46,40 @@ class HybridQueryBuilder:
         else:
             data = dict(working_state)
 
-        fields = [
-            ("dominant_state", "состояние"),
-            ("emotion", "эмоция"),
-            ("defense", "защита"),
-            ("phase", "фаза"),
-            ("direction", "направление"),
-            ("confidence_level", "уверенность"),
-        ]
-        parts = []
-        for key, label in fields:
-            value = data.get(key)
-            if value:
-                parts.append(f"{label}: {value}")
-        return "; ".join(parts)
+        nss = self._clean(
+            str(
+                data.get("nss")
+                or data.get("nervous_system_state")
+                or data.get("nervous_state")
+                or ""
+            )
+        )
+        request_function = self._clean(
+            str(data.get("request_function") or data.get("fn") or "")
+        )
+        confidence = data.get("confidence")
+        if confidence is None:
+            confidence = data.get("confidence_score")
+
+        conf_text = ""
+        if isinstance(confidence, (int, float)):
+            conf_text = f"{float(confidence):.2f}"
+        else:
+            fallback_conf = data.get("confidence_level")
+            if isinstance(fallback_conf, str) and fallback_conf.strip():
+                conf_text = fallback_conf.strip()
+
+        if not nss and not request_function and not conf_text:
+            return ""
+
+        if not nss:
+            nss = "window"
+        if not request_function:
+            request_function = "understand"
+        if not conf_text:
+            conf_text = "0.00"
+
+        return f"nss={nss} fn={request_function} conf={conf_text}"
 
     def build_query(
         self,

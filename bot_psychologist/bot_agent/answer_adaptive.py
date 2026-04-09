@@ -1881,11 +1881,24 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("🔍 Этап 3: Поиск блоков...")
 
+        retrieval_working_state = {
+            "nss": (
+                diagnostics_v1.nervous_system_state
+                if diagnostics_v1
+                else "window"
+            ),
+            "request_function": (
+                diagnostics_v1.request_function
+                if diagnostics_v1
+                else "understand"
+            ),
+            "confidence": float(getattr(state_analysis, "confidence", 0.0) or 0.0),
+        }
         query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
         hybrid_query = query_builder.build_query(
             current_question=query,
             conversation_summary=memory.summary or "",
-            working_state=memory.working_state,
+            working_state=retrieval_working_state,
             short_term_context=conversation_context,
         )
         logger.info(

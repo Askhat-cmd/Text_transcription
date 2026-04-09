@@ -50,3 +50,14 @@ Started: 2026-04-09
 - Do not touch `voice_bot_pipeline` (excluded by user).
 - Focused SD cleanup tests: `9 passed`.
 - Full regression after cleanup: `421 passed, 13 skipped`.
+
+## Post-Done Micro Fix (2026-04-09)
+- [x] Read `MICRO-PRD FIX-2 — Убрать SD-термины из hybrid_query.md`.
+- [x] Replace legacy working-state serialization in retrieval query builder.
+- [x] Enforce runtime retrieval state format: `nss=... fn=... conf=...`.
+- [x] Update adaptive retrieval call to pass diagnostics runtime state instead of legacy memory working state.
+- [x] Add regression tests for runtime state contract and legacy-label absence.
+- [x] Validation:
+- [x] `rg` in `bot_psychologist/bot_agent/retrieval/hybrid_query_builder.py` for `состояние:|эмоция:|sd_level|spiral|curious|committed|confused` -> `NO_MATCHES`
+- [x] `rg` in `bot_psychologist/bot_agent/answer_adaptive.py` for `состояние:|эмоция:` -> `NO_MATCHES`
+- [x] `.venv\Scripts\python -m pytest -q tests/test_hybrid_query.py` -> `4 passed`

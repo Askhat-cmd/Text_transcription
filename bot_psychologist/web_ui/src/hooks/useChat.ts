@@ -137,14 +137,18 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       await apiService.streamAdaptiveAnswer(
         query,
         userId,
-        (token) => {
+        (accumulatedText) => {
           gotToken = true;
           setIsThinking(false);
-          streamed += token;
-          setStreamingText(streamed);
+          streamed = accumulatedText;
+          setStreamingText(accumulatedText);
         },
         (meta) => {
           doneMeta = meta;
+          if (typeof meta?.answer === 'string' && meta.answer.trim()) {
+            streamed = meta.answer;
+            setStreamingText(meta.answer);
+          }
         },
         (streamError) => {
           throw new Error(streamError);
@@ -157,7 +161,9 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
         }
       );
 
-      const finalText = streamed.trim() ? streamed : '...';
+      const finalText = streamed.trim()
+        ? streamed
+        : (doneMeta?.answer?.trim() ? doneMeta.answer : '...');
       const botTrace = doneMeta?.trace ?? undefined;
       const botTurnIndex = Math.floor(messagesRef.current.length / 2);  // индекс до добавления сообщения
       addMessage('bot', finalText, {

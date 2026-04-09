@@ -8,7 +8,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@types/react": "^19.2.7",
@@ -18,7 +20,9 @@
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",
     "typescript": "~5.9.3",
-    "vite": "^6.4.1"
+    "vite": "^6.4.1",
+    "vitest": "^2.1.9",
+    "jsdom": "^25.0.1"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",

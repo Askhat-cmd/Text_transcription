@@ -112,7 +112,7 @@ class APIService {
     query: string,
     userId: string,
     onToken: (token: string) => void,
-    onDone?: (meta: { mode?: string; sd_level?: string; latency_ms?: number; trace?: InlineTrace }) => void,
+    onDone?: (meta: { mode?: string; sd_level?: string; latency_ms?: number; trace?: InlineTrace; answer?: string }) => void,
     onError?: (message: string) => void,
     options?: {
       includePath?: boolean;
@@ -125,78 +125,155 @@ class APIService {
     const baseUrl = this.api.defaults.baseURL || '';
     const endpoint = `${baseUrl.replace(/\/$/, '')}/questions/adaptive-stream`;
     const maxRetries = options?.maxRetries ?? 3;
+    const timeoutFromEnv = Number(import.meta.env.VITE_STREAM_TIMEOUT_MS ?? 60000);
+    const streamTimeoutMs = Number.isFinite(timeoutFromEnv) && timeoutFromEnv > 0
+      ? timeoutFromEnv
+      : 60000;
 
     let attempt = 0;
 
     const attemptStream = async (): Promise<void> => {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(this.apiKey ? { 'X-API-Key': this.apiKey } : {}),
-        },
-        body: JSON.stringify({
-          query,
-          user_id: userId,
-          session_id: options?.sessionId,
-          user_level: options?.userLevel ?? 'beginner',
-          include_path: options?.includePath ?? false,
-          include_feedback_prompt: options?.includeFeedback ?? true,
-          debug: false,
-        }),
-      });
-
-      if (!response.ok || !response.body) {
-        if (response.status === 403) {
-          this.handleAuthError();
-        }
-        const message = `Streaming error: ${response.status} ${response.statusText}`;
-        onError?.(message);
-        return;
-      }
-
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder('utf-8');
-      let buffer = '';
-
-      const flushBuffer = (chunk: string) => {
-        const parts = chunk.split('\n\n');
-        buffer = parts.pop() || '';
-        for (const part of parts) {
-          const lines = part.split('\n').filter((line) => line.startsWith('data:'));
-          for (const line of lines) {
-            const data = line.replace(/^data:\s*/, '').trim();
-            if (!data) continue;
-            try {
-              const payload = JSON.parse(data);
-              if (payload.token) {
-                onToken(payload.token);
-              } else if (payload.done) {
-                onDone?.(payload);
-              } else if (payload.error) {
-                onError?.(payload.error);
-              }
-            } catch {
-              continue;
-            }
-          }
-        }
-      };
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), streamTimeoutMs);
 
       try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(this.apiKey ? { 'X-API-Key': this.apiKey } : {}),
+          },
+          body: JSON.stringify({
+            query,
+            user_id: userId,
+            session_id: options?.sessionId,
+            user_level: options?.userLevel ?? 'beginner',
+            include_path: options?.includePath ?? false,
+            include_feedback_prompt: options?.includeFeedback ?? true,
+            debug: false,
+          }),
+          signal: controller.signal,
+        });
+
+        if (!response.ok || !response.body) {
+          if (response.status === 403) {
+            this.handleAuthError();
+          }
+          const message = `Streaming error: ${response.status} ${response.statusText}`;
+          onError?.(message);
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let buffer = '';
+        let fullText = '';
+        let doneReceived = false;
+
+        const processLine = (line: string): void => {
+          const noCR = line.replace(/\r$/, '');
+          if (!noCR.trim() || noCR.startsWith(':') || !noCR.startsWith('data:')) {
+            return;
+          }
+
+          let data = noCR.slice(5);
+          if (data.startsWith(' ')) {
+            data = data.slice(1);
+          }
+          if (!data.trim()) {
+            return;
+          }
+
+          const doneMarker = data.trim().toLowerCase();
+          if (doneMarker === '[done]' || doneMarker === 'done') {
+            if (!doneReceived) {
+              doneReceived = true;
+              onDone?.({ answer: fullText });
+            }
+            return;
+          }
+
+          type StreamPayload = {
+            token?: string;
+            text?: string;
+            content?: string;
+            delta?: string;
+            done?: boolean;
+            error?: string;
+            answer?: string;
+            mode?: string;
+            sd_level?: string;
+            latency_ms?: number;
+            trace?: InlineTrace;
+          };
+          let payload: StreamPayload | null = null;
+
+          try {
+            payload = JSON.parse(data) as StreamPayload;
+          } catch {
+            fullText += data;
+            onToken(fullText);
+            return;
+          }
+
+          if (payload && payload.error) {
+            throw new Error(payload.error);
+          }
+
+          if (!payload) {
+            return;
+          }
+
+          const delta = payload.token ?? payload.text ?? payload.content ?? payload.delta ?? '';
+          if (delta) {
+            fullText += String(delta);
+            onToken(fullText);
+          }
+
+          if (payload.done) {
+            if (typeof payload.answer === 'string' && payload.answer.trim() && !fullText.trim()) {
+              fullText = payload.answer;
+              onToken(fullText);
+            }
+            if (!doneReceived) {
+              doneReceived = true;
+              onDone?.({
+                mode: payload.mode,
+                sd_level: payload.sd_level,
+                latency_ms: payload.latency_ms,
+                trace: payload.trace,
+                answer: fullText || payload.answer,
+              });
+            }
+          }
+        };
+
         while (true) {
           const { done, value } = await reader.read();
           if (value) {
-            buffer += decoder.decode(value, { stream: !done });
-            flushBuffer(buffer);
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+            for (const line of lines) {
+              processLine(line);
+            }
           }
           if (done) break;
         }
 
         if (buffer.trim()) {
-          flushBuffer(buffer + '\n\n');
+          processLine(buffer);
+        }
+
+        if (!doneReceived) {
+          onDone?.({ answer: fullText });
         }
       } catch (err) {
+        window.clearTimeout(timeoutId);
+        if (err instanceof Error && err.name === 'AbortError') {
+          onError?.('Превышено время ожидания ответа. Попробуйте ещё раз.');
+          return;
+        }
         if (attempt < maxRetries) {
           attempt += 1;
           console.warn(`[SSE] Read error, retrying (attempt ${attempt})`);
@@ -204,6 +281,8 @@ class APIService {
         }
         const message = err instanceof Error ? err.message : 'Stream read error';
         onError?.(message);
+      } finally {
+        window.clearTimeout(timeoutId);
       }
     };
 

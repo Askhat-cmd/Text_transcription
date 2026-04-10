@@ -196,5 +196,58 @@ describe('APIService.streamAdaptiveAnswer', () => {
 
     expect(errorMessage.toLowerCase()).toContain('время ожидания');
   });
+
+  it('uses done.answer as final source of truth when tokens are partial', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        buildResponseFromLines([
+          'data: {"token":"partial"}',
+          'data: {"done":true,"answer":"final complete answer"}',
+        ])
+      )
+    );
+
+    let result = '';
+    await apiService.streamAdaptiveAnswer(
+      'test',
+      'u1',
+      () => undefined,
+      (meta) => {
+        result = meta.answer ?? '';
+      }
+    );
+
+    expect(result).toBe('final complete answer');
+  });
+
+  it('parses trace from separate SSE event and attaches it to done meta', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        buildResponseFromLines([
+          'data: {"token":"answer"}',
+          'data: {"done":true,"answer":"answer","mode":"PRESENCE","latency_ms":123}',
+          'event: trace',
+          'data: {"recommended_mode":"PRESENCE","turn_number":7}',
+        ])
+      )
+    );
+
+    let doneMeta: any = null;
+    await apiService.streamAdaptiveAnswer(
+      'test',
+      'u1',
+      () => undefined,
+      (meta) => {
+        doneMeta = meta;
+      }
+    );
+
+    expect(doneMeta?.mode).toBe('PRESENCE');
+    expect(doneMeta?.latency_ms).toBe(123);
+    expect(doneMeta?.trace?.turn_number).toBe(7);
+  });
+
 });
 

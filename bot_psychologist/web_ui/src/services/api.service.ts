@@ -169,26 +169,35 @@ class APIService {
         let buffer = '';
         let fullText = '';
         let doneReceived = false;
+        let tracePayload: InlineTrace | undefined;
+        let doneMetaPayload: { mode?: string; sd_level?: string; latency_ms?: number; answer?: string } | null = null;
 
-        const processLine = (line: string): void => {
-          const noCR = line.replace(/\r$/, '');
-          if (!noCR.trim() || noCR.startsWith(':') || !noCR.startsWith('data:')) {
+        const finalizeDone = (): void => {
+          if (!doneReceived) {
             return;
           }
+          const finalAnswer = doneMetaPayload?.answer?.trim()
+            ? doneMetaPayload.answer
+            : fullText;
+          onDone?.({
+            mode: doneMetaPayload?.mode,
+            sd_level: doneMetaPayload?.sd_level,
+            latency_ms: doneMetaPayload?.latency_ms,
+            trace: tracePayload,
+            answer: finalAnswer,
+          });
+        };
 
-          let data = noCR.slice(5);
-          if (data.startsWith(' ')) {
-            data = data.slice(1);
-          }
+        const processEventPayload = (eventType: string, data: string): void => {
           if (!data.trim()) {
             return;
           }
 
           const doneMarker = data.trim().toLowerCase();
           if (doneMarker === '[done]' || doneMarker === 'done') {
-            if (!doneReceived) {
-              doneReceived = true;
-              onDone?.({ answer: fullText });
+            doneReceived = true;
+            if (!doneMetaPayload) {
+              doneMetaPayload = { answer: fullText };
             }
             return;
           }
@@ -211,6 +220,9 @@ class APIService {
           try {
             payload = JSON.parse(data) as StreamPayload;
           } catch {
+            if (eventType === 'trace') {
+              return;
+            }
             fullText += data;
             onToken(fullText);
             return;
@@ -224,6 +236,11 @@ class APIService {
             return;
           }
 
+          if (eventType === 'trace') {
+            tracePayload = (payload as InlineTrace) ?? tracePayload;
+            return;
+          }
+
           const delta = payload.token ?? payload.text ?? payload.content ?? payload.delta ?? '';
           if (delta) {
             fullText += String(delta);
@@ -231,20 +248,62 @@ class APIService {
           }
 
           if (payload.done) {
-            if (typeof payload.answer === 'string' && payload.answer.trim() && !fullText.trim()) {
+            if (typeof payload.answer === 'string' && payload.answer.trim()) {
               fullText = payload.answer;
               onToken(fullText);
             }
-            if (!doneReceived) {
-              doneReceived = true;
-              onDone?.({
-                mode: payload.mode,
-                sd_level: payload.sd_level,
-                latency_ms: payload.latency_ms,
-                trace: payload.trace,
-                answer: fullText || payload.answer,
-              });
+            doneMetaPayload = {
+              mode: payload.mode,
+              sd_level: payload.sd_level,
+              latency_ms: payload.latency_ms,
+              answer: typeof payload.answer === 'string' ? payload.answer : fullText,
+            };
+            if (payload.trace) {
+              tracePayload = payload.trace;
             }
+            doneReceived = true;
+          }
+        };
+        let currentEventType = 'message';
+        let currentDataLines: string[] = [];
+
+        const flushEvent = (): void => {
+          if (currentDataLines.length === 0) {
+            currentEventType = 'message';
+            return;
+          }
+          const payload = currentDataLines.join('\n');
+          processEventPayload(currentEventType, payload);
+          currentEventType = 'message';
+          currentDataLines = [];
+        };
+
+        const processRawLine = (rawLine: string): void => {
+          const line = rawLine.replace(/\r$/, '');
+          if (line.length === 0) {
+            flushEvent();
+            return;
+          }
+          if (line.startsWith(':')) {
+            return;
+          }
+          if (line.startsWith('event:')) {
+            if (currentDataLines.length > 0) {
+              flushEvent();
+            }
+            const type = line.slice(6).trim();
+            currentEventType = type || 'message';
+            return;
+          }
+          if (line.startsWith('data:')) {
+            if (currentDataLines.length > 0) {
+              flushEvent();
+            }
+            let data = line.slice(5);
+            if (data.startsWith(' ')) {
+              data = data.slice(1);
+            }
+            currentDataLines.push(data);
           }
         };
 
@@ -255,18 +314,21 @@ class APIService {
             const lines = buffer.split('\n');
             buffer = lines.pop() || '';
             for (const line of lines) {
-              processLine(line);
+              processRawLine(line);
             }
           }
           if (done) break;
         }
 
-        if (buffer.trim()) {
-          processLine(buffer);
+        if (buffer.length > 0) {
+          processRawLine(buffer);
         }
+        flushEvent();
 
-        if (!doneReceived) {
-          onDone?.({ answer: fullText });
+        if (doneReceived) {
+          finalizeDone();
+        } else {
+          onDone?.({ trace: tracePayload, answer: fullText });
         }
       } catch (err) {
         window.clearTimeout(timeoutId);

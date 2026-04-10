@@ -1,443 +1,238 @@
-2026-04-10 15:02:55 | INFO     | root                                | ======================================================================
-2026-04-10 15:02:55 | INFO     | root                                | Logging initialized
-2026-04-10 15:02:55 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
-2026-04-10 15:02:55 | INFO     | root                                | App log: logs/app/bot.log
-2026-04-10 15:02:55 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
-2026-04-10 15:02:55 | INFO     | root                                | Error log: logs/error/error.log
-2026-04-10 15:02:55 | INFO     | root                                | ======================================================================
-2026-04-10 15:02:55 | INFO     | api.main                            | API server starting
-2026-04-10 15:02:55 | INFO     | api.main                            | Version: 0.12.0
-2026-04-10 15:02:55 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
-2026-04-10 15:02:55 | INFO     | api.main                            | [STARTUP] runtime config validation: OK
-2026-04-10 15:02:55 | INFO     | api.main                            | [WARMUP] starting warm preload
-2026-04-10 15:02:55 | INFO     | api.main                            | [GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API
-2026-04-10 15:02:55 | INFO     | bot_agent.data_loader               | 📂 KNOWLEDGE_SOURCE=api
-2026-04-10 15:02:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: intfloat/multilingual-e5-base
-2026-04-10 15:02:55 | INFO     | bot_agent.data_loader               | [API] Загрузка всех блоков из Bot_data_base через HTTP API...
-2026-04-10 15:02:56 | INFO     | bot_agent.retriever                 | [RETRIEVAL] TF-IDF loaded from cache (hash match)
-2026-04-10 15:03:00 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-2026-04-10 15:03:02 | INFO     | bot_agent.data_loader               | [API] Найдено 1 источников в реестре
-2026-04-10 15:03:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
-2026-04-10 15:03:09 | INFO     | bot_agent.data_loader               | ✅ API: 229 блоков из 1 источников загружено
-2026-04-10 15:03:09 | INFO     | bot_agent.data_loader               | [DATA_LOADER] source=api blocks=229
-2026-04-10 15:03:09 | INFO     | bot_agent.data_loader               | ✅ Загружено: 1 документов, 229 блоков [source=api]
-2026-04-10 15:03:09 | INFO     | api.main                            | [WARMUP] completed
-2026-04-10 15:03:13 | INFO     | api.main                            | -> GET /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
-2026-04-10 15:03:13 | INFO     | api.main                            | <- GET /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.006s
-2026-04-10 15:03:13 | INFO     | api.main                            | -> GET /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
-2026-04-10 15:03:13 | INFO     | api.main                            | <- GET /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.002s
-2026-04-10 15:03:13 | INFO     | api.main                            | -> GET /api/v1/users/54f5d482-f562-47ef-a77c-0ff97769ff83/history (key: dev-key-00...)
-2026-04-10 15:03:13 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ 54f5d482-f562-47ef-a77c-0ff97769ff83
-2026-04-10 15:03:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=54f5d482-f562-47ef-a77c-0ff97769ff83
-2026-04-10 15:03:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=54f5d482-f562-47ef-a77c-0ff97769ff83
-2026-04-10 15:03:13 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 1 embeddings
-2026-04-10 15:03:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=54f5d482-f562-47ef-a77c-0ff97769ff83
-2026-04-10 15:03:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=1 user_id=54f5d482-f562-47ef-a77c-0ff97769ff83
-2026-04-10 15:03:13 | INFO     | api.main                            | <- GET /api/v1/users/54f5d482-f562-47ef-a77c-0ff97769ff83/history | status=200 | 0.026s
-2026-04-10 15:03:18 | INFO     | api.main                            | -> POST /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
-2026-04-10 15:03:18 | INFO     | api.main                            | <- POST /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.033s
-2026-04-10 15:03:18 | INFO     | api.main                            | -> OPTIONS /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history (key: none)
-2026-04-10 15:03:18 | INFO     | api.main                            | <- OPTIONS /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history | status=200 | 0.001s
-2026-04-10 15:03:18 | INFO     | api.main                            | -> GET /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history (key: dev-key-00...)
-2026-04-10 15:03:18 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ 59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
-2026-04-10 15:03:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
-2026-04-10 15:03:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
-2026-04-10 15:03:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
-2026-04-10 15:03:18 | INFO     | api.main                            | <- GET /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history | status=200 | 0.014s
-2026-04-10 15:03:23 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:03:23 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Привет! У меня тревога перед важной встречей.... (user: user_1775560385441_804udu3)
-2026-04-10 15:03:23 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.030s
-2026-04-10 15:03:23 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Привет! У меня тревога перед важной встречей....'
-2026-04-10 15:03:23 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:03:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=0
-2026-04-10 15:03:23 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:03:28 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.85
-2026-04-10 15:03:28 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.85
-2026-04-10 15:03:28 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:03:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=361 (orig_query len=45)
-2026-04-10 15:03:28 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Привет! У меня тревога перед важной встречей.
+2026-04-10 18:47:44 | INFO     | root                                | ======================================================================
+2026-04-10 18:47:44 | INFO     | root                                | Logging initialized
+2026-04-10 18:47:44 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
+2026-04-10 18:47:44 | INFO     | root                                | App log: logs/app/bot.log
+2026-04-10 18:47:44 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
+2026-04-10 18:47:44 | INFO     | root                                | Error log: logs/error/error.log
+2026-04-10 18:47:44 | INFO     | root                                | ======================================================================
+2026-04-10 18:47:45 | INFO     | api.main                            | API server starting
+2026-04-10 18:47:45 | INFO     | api.main                            | Version: 0.12.0
+2026-04-10 18:47:45 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
+2026-04-10 18:47:45 | INFO     | api.main                            | [STARTUP] runtime config validation: OK
+2026-04-10 18:47:45 | INFO     | api.main                            | [WARMUP] starting warm preload
+2026-04-10 18:47:45 | INFO     | api.main                            | [GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API
+2026-04-10 18:47:45 | INFO     | bot_agent.data_loader               | 📂 KNOWLEDGE_SOURCE=api
+2026-04-10 18:47:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: intfloat/multilingual-e5-base
+2026-04-10 18:47:45 | INFO     | bot_agent.data_loader               | [API] Загрузка всех блоков из Bot_data_base через HTTP API...
+2026-04-10 18:47:46 | INFO     | bot_agent.retriever                 | [RETRIEVAL] TF-IDF loaded from cache (hash match)
+2026-04-10 18:47:50 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-10 18:47:53 | INFO     | bot_agent.data_loader               | [API] Найдено 1 источников в реестре
+2026-04-10 18:47:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+2026-04-10 18:48:01 | INFO     | bot_agent.data_loader               | ✅ API: 229 блоков из 1 источников загружено
+2026-04-10 18:48:01 | INFO     | bot_agent.data_loader               | [DATA_LOADER] source=api blocks=229
+2026-04-10 18:48:01 | INFO     | bot_agent.data_loader               | ✅ Загружено: 1 документов, 229 блоков [source=api]
+2026-04-10 18:48:01 | INFO     | api.main                            | [WARMUP] completed
+2026-04-10 18:48:39 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions (key: none)
+2026-04-10 18:48:39 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions (key: none)
+2026-04-10 18:48:39 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.002s
+2026-04-10 18:48:39 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.001s
+2026-04-10 18:48:39 | INFO     | api.main                            | -> GET /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
+2026-04-10 18:48:39 | INFO     | api.main                            | <- GET /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.003s
+2026-04-10 18:48:39 | INFO     | api.main                            | -> GET /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
+2026-04-10 18:48:39 | INFO     | api.main                            | <- GET /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.002s
+2026-04-10 18:48:40 | INFO     | api.main                            | -> OPTIONS /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history (key: none)
+2026-04-10 18:48:40 | INFO     | api.main                            | <- OPTIONS /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history | status=200 | 0.000s
+2026-04-10 18:48:40 | INFO     | api.main                            | -> GET /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history (key: dev-key-00...)
+2026-04-10 18:48:40 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ 59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
+2026-04-10 18:48:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
+2026-04-10 18:48:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
+2026-04-10 18:48:40 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 7 embeddings
+2026-04-10 18:48:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
+2026-04-10 18:48:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=7 user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde
+2026-04-10 18:48:40 | INFO     | api.main                            | <- GET /api/v1/users/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/history | status=200 | 0.032s
+2026-04-10 18:48:52 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions (key: none)
+2026-04-10 18:48:52 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.001s
+2026-04-10 18:48:52 | INFO     | api.main                            | -> POST /api/v1/users/user_1775560385441_804udu3/sessions (key: dev-key-00...)
+2026-04-10 18:48:52 | INFO     | api.main                            | <- POST /api/v1/users/user_1775560385441_804udu3/sessions | status=200 | 0.041s
+2026-04-10 18:48:52 | INFO     | api.main                            | -> OPTIONS /api/v1/users/4d927485-9251-415f-a579-44bca8b766fd/history (key: none)
+2026-04-10 18:48:52 | INFO     | api.main                            | <- OPTIONS /api/v1/users/4d927485-9251-415f-a579-44bca8b766fd/history | status=200 | 0.001s
+2026-04-10 18:48:52 | INFO     | api.main                            | -> GET /api/v1/users/4d927485-9251-415f-a579-44bca8b766fd/history (key: dev-key-00...)
+2026-04-10 18:48:52 | INFO     | api.routes                          | рџ“‹ РСЃС‚РѕСЂРёСЏ РґР»СЏ 4d927485-9251-415f-a579-44bca8b766fd
+2026-04-10 18:48:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=4d927485-9251-415f-a579-44bca8b766fd
+2026-04-10 18:48:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=4d927485-9251-415f-a579-44bca8b766fd
+2026-04-10 18:48:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=4d927485-9251-415f-a579-44bca8b766fd
+2026-04-10 18:48:52 | INFO     | api.main                            | <- GET /api/v1/users/4d927485-9251-415f-a579-44bca8b766fd/history | status=200 | 0.015s
+2026-04-10 18:48:58 | INFO     | api.main                            | -> OPTIONS /api/v1/questions/adaptive-stream (key: none)
+2026-04-10 18:48:58 | INFO     | api.main                            | <- OPTIONS /api/v1/questions/adaptive-stream | status=200 | 0.001s
+2026-04-10 18:48:58 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+2026-04-10 18:48:58 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Привет! У меня тревога перед важной встречей.... (user: user_1775560385441_804udu3)
+2026-04-10 18:48:58 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.009s
+2026-04-10 18:48:58 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=4d927485-9251-415f-a579-44bca8b766fd query='Привет! У меня тревога перед важной встречей....'
+2026-04-10 18:48:58 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
+2026-04-10 18:48:58 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=0
+2026-04-10 18:48:58 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
+2026-04-10 18:49:04 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.85
+2026-04-10 18:49:04 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.85
+2026-04-10 18:49:04 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
+2026-04-10 18:49:04 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=361 (orig_query len=45)
+2026-04-10 18:49:04 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Привет! У меня тревога перед важной встречей.
 WORKING_STATE: ns' top_k=9 source=api
-2026-04-10 15:03:37 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f score=0.5517 title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=afc3ac8b-ee18-4c56-99cd-ef8fc467b411 score=0.5442 title=**Цель:** Создание зазора между триггером и ответом
+2026-04-10 18:49:13 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f score=0.5517 title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=afc3ac8b-ee18-4c56-99cd-ef8fc467b411 score=0.5442 title=**Цель:** Создание зазора между триггером и ответом
 **Время:
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.5388 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=bba83f03-01fa-4040-a796-9b75128656b0 score=0.5221 title=**Цель:** определить, к какому слою принадлежит переживание 
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=56f469a5-7720-432c-9457-88157141a9f2 score=0.5202 title=**Цель:** начать обновлять нейронную оценку угрозы через мал
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=36a311ce-9c7d-4b93-b107-4334b60691be score=0.5166 title=**Цель:** поймать программу в действии — до того как реакция
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=68fde1a1-9e8e-4c9d-98a8-b75dedd530b5 score=0.5131 title=**Цель:** переварить застрявшую ситуацию с другим человеком.
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5124 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
-2026-04-10 15:03:37 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a score=0.5062 title=**Цель:** НейроСталкинг в коммуникации
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.5388 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=bba83f03-01fa-4040-a796-9b75128656b0 score=0.5221 title=**Цель:** определить, к какому слою принадлежит переживание 
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=56f469a5-7720-432c-9457-88157141a9f2 score=0.5202 title=**Цель:** начать обновлять нейронную оценку угрозы через мал
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=36a311ce-9c7d-4b93-b107-4334b60691be score=0.5166 title=**Цель:** поймать программу в действии — до того как реакция
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=68fde1a1-9e8e-4c9d-98a8-b75dedd530b5 score=0.5131 title=**Цель:** переварить застрявшую ситуацию с другим человеком.
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5124 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
+2026-04-10 18:49:13 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a score=0.5062 title=**Цель:** НейроСталкинг в коммуникации
 **Время:** 15–20 мину
-2026-04-10 15:03:37 | INFO     | bot_agent.retrieval.voyage_reranker | [VOYAGE] rerank enabled (model=rerank-2). Calling Voyage API.
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:03:38 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=high cap=7 before=3 after=3
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6602 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a score=0.5703 title=**Цель:** НейроСталкинг в коммуникации
+2026-04-10 18:49:14 | INFO     | bot_agent.retrieval.voyage_reranker | [VOYAGE] rerank enabled (model=rerank-2). Calling Voyage API.
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
+2026-04-10 18:49:14 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=high cap=7 before=3 after=3
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6602 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a score=0.5703 title=**Цель:** НейроСталкинг в коммуникации
 **Время:** 15–20 мину
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5312 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=contact route=regulate
-2026-04-10 15:03:38 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=0 reason=checkpoint persist=false
-2026-04-10 15:03:38 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=0 total_prompt_chars=154
-2026-04-10 15:03:38 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:03:38 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:03:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=0 reason=checkpoint persist=false
-2026-04-10 15:03:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=0
-2026-04-10 15:03:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=1
-2026-04-10 15:03:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=1
-2026-04-10 15:03:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
-2026-04-10 15:03:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=1 reason=addturn
-2026-04-10 15:03:48 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:03:48 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:03:48 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a title=**Цель:** НейроСталкинг в коммуникации
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5312 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=contact route=regulate
+2026-04-10 18:49:14 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=0 reason=checkpoint persist=false
+2026-04-10 18:49:14 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=0 total_prompt_chars=154
+2026-04-10 18:49:15 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
+2026-04-10 18:49:15 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
+2026-04-10 18:49:15 | INFO     | bot_agent.llm_answerer              | [CONFIG] FREE_CONVERSATION_MODE=False | MAX_TOKENS=None
+2026-04-10 18:49:23 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=0 reason=checkpoint persist=false
+2026-04-10 18:49:23 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=4d927485-9251-415f-a579-44bca8b766fd turns_before=0
+2026-04-10 18:49:23 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=1
+2026-04-10 18:49:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=1
+2026-04-10 18:49:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+2026-04-10 18:49:23 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=1 reason=addturn
+2026-04-10 18:49:23 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
+2026-04-10 18:49:23 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:49:23 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a2792e0-9aa1-412c-a76c-1d0262e6d44a title=**Цель:** НейроСталкинг в коммуникации
 **Время:** 15–20 мину
-2026-04-10 15:03:48 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=de59f267-816a-4386-b288-e5283f68c86c title=**Цель:** создать паузу между инстинктивной реакцией и дейст
-2026-04-10 15:03:48 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 25.40s
-2026-04-10 15:03:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=1
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics | status=200 | 0.003s
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces | status=200 | 0.002s
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics | status=200 | 0.003s
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces | status=200 | 0.004s
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces | status=200 | 0.012s
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics | status=200 | 0.003s
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics (key: dev-key-00...)
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/metrics | status=200 | 0.002s
-2026-04-10 15:03:51 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/traces | status=200 | 0.003s
-2026-04-10 15:03:52 | INFO     | api.main                            | -> GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/llm-payload (key: dev-key-00...)
-2026-04-10 15:03:52 | INFO     | api.main                            | <- GET /api/debug/session/59d99d82-d39c-4c0d-8cbe-aae6f0c15fde/llm-payload | status=200 | 0.002s
-2026-04-10 15:04:22 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:04:22 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Это повторяется уже третий раз.... (user: user_1775560385441_804udu3)
-2026-04-10 15:04:22 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.042s
-2026-04-10 15:04:22 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Это повторяется уже третий раз....'
-2026-04-10 15:04:22 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:04:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=1
-2026-04-10 15:04:22 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:04:25 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.75
-2026-04-10 15:04:25 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.75
-2026-04-10 15:04:25 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:04:25 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=663 (orig_query len=31)
-2026-04-10 15:04:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Это повторяется уже третий раз.
+2026-04-10 18:49:23 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=de59f267-816a-4386-b288-e5283f68c86c title=**Цель:** создать паузу между инстинктивной реакцией и дейст
+2026-04-10 18:49:23 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 24.87s
+2026-04-10 18:49:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=1
+2026-04-10 18:50:42 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+2026-04-10 18:50:42 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Это повторяется уже третий раз.... (user: user_1775560385441_804udu3)
+2026-04-10 18:50:42 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.021s
+2026-04-10 18:50:42 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=4d927485-9251-415f-a579-44bca8b766fd query='Это повторяется уже третий раз....'
+2026-04-10 18:50:42 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
+2026-04-10 18:50:42 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=1
+2026-04-10 18:50:42 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
+2026-04-10 18:50:52 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.75
+2026-04-10 18:50:52 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.75
+2026-04-10 18:50:52 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
+2026-04-10 18:50:52 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=616 (orig_query len=31)
+2026-04-10 18:50:52 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Это повторяется уже третий раз.
 WORKING_STATE: nss=hyper fn=und' top_k=9 source=api
-2026-04-10 15:04:28 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6618 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a68a977-7d9c-4775-b088-7e9cedf0e273 score=0.6370 title=Есть ещё один механизм, о котором говорят реже — но он работ
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=88d99ba5-ee12-4681-ae38-698b811cb517 score=0.6320 title=Когда говорят о страхе, обычно упоминают два состояния: «бей
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6254 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=cadc2c71-83fe-4a3b-91c2-413fccfe9264 score=0.6218 title=Каждую секунду твоя нервная система получает колоссальный по
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.6183 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6122 title=> **Из сессии**
+2026-04-10 18:50:56 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6415 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a68a977-7d9c-4775-b088-7e9cedf0e273 score=0.6331 title=Есть ещё один механизм, о котором говорят реже — но он работ
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=88d99ba5-ee12-4681-ae38-698b811cb517 score=0.6148 title=Когда говорят о страхе, обычно упоминают два состояния: «бей
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.6125 title=Здесь — важная оговорка. Потому что знание о спиральной дина
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6104 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=1c942f2a-99ab-4848-b354-219a7b66030b score=0.6039 title=Три причины, по которым программа «несовершенное Я» держится
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6038 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=36a311ce-9c7d-4b93-b107-4334b60691be score=0.5816 title=**Цель:** поймать программу в действии — до того как реакция
-2026-04-10 15:04:28 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5646 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:04:29 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4961 title=> **Из сессии**
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f score=0.6030 title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
+2026-04-10 18:50:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=e8ef0a3d-3908-466c-93a1-d176546db87e score=0.5864 title=**Базовый вопрос:** «Достаточно ли у меня ресурсов, чтобы вы
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
+2026-04-10 18:50:57 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4961 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.4883 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.4531 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
-2026-04-10 15:04:29 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=1 reason=checkpoint persist=false
-2026-04-10 15:04:29 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=1 total_prompt_chars=414
-2026-04-10 15:04:29 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:04:29 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:04:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=1 reason=checkpoint persist=false
-2026-04-10 15:04:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=1
-2026-04-10 15:04:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=2
-2026-04-10 15:04:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=2
-2026-04-10 15:04:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
-2026-04-10 15:04:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=2 reason=addturn
-2026-04-10 15:04:40 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:04:40 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.4883 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f score=0.4707 title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
+2026-04-10 18:50:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=1 reason=checkpoint persist=false
+2026-04-10 18:50:57 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=1 total_prompt_chars=367
+2026-04-10 18:50:57 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
+2026-04-10 18:50:57 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
+2026-04-10 18:50:57 | INFO     | bot_agent.llm_answerer              | [CONFIG] FREE_CONVERSATION_MODE=False | MAX_TOKENS=None
+2026-04-10 18:51:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=1 reason=checkpoint persist=false
+2026-04-10 18:51:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=4d927485-9251-415f-a579-44bca8b766fd turns_before=1
+2026-04-10 18:51:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=2
+2026-04-10 18:51:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=2
+2026-04-10 18:51:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+2026-04-10 18:51:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=2 reason=addturn
+2026-04-10 18:51:07 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
+2026-04-10 18:51:07 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:40 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:40 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:40 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 18.16s
-2026-04-10 15:04:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=2
-2026-04-10 15:04:43 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:04:43 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Что ты можешь посоветовать?... (user: user_1775560385441_804udu3)
-2026-04-10 15:04:43 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.051s
-2026-04-10 15:04:43 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Что ты можешь посоветовать?...'
-2026-04-10 15:04:43 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:04:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=2
-2026-04-10 15:04:43 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:04:47 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.60
-2026-04-10 15:04:47 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.60
-2026-04-10 15:04:47 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:04:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=888 (orig_query len=27)
-2026-04-10 15:04:47 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Что ты можешь посоветовать?
+2026-04-10 18:51:07 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:51:07 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
+2026-04-10 18:51:07 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 25.28s
+2026-04-10 18:51:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=2
+2026-04-10 18:51:35 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+2026-04-10 18:51:35 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Что ты можешь посоветовать?... (user: user_1775560385441_804udu3)
+2026-04-10 18:51:35 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.023s
+2026-04-10 18:51:35 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=4d927485-9251-415f-a579-44bca8b766fd query='Что ты можешь посоветовать?...'
+2026-04-10 18:51:35 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
+2026-04-10 18:51:35 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=2
+2026-04-10 18:51:35 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
+2026-04-10 18:51:43 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.60
+2026-04-10 18:51:43 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.60
+2026-04-10 18:51:43 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
+2026-04-10 18:51:43 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=860 (orig_query len=27)
+2026-04-10 18:51:43 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Что ты можешь посоветовать?
 WORKING_STATE: nss=hyper fn=underst' top_k=9 source=api
-2026-04-10 15:04:50 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6644 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b score=0.6480 title=*Это реальные вопросы участников сессий. Они возникают почти
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.6318 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6248 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=cdac4aca-6757-41c6-a66c-2e92153d1b6f score=0.6209 title=**Цель:** дать нейронной сети по умолчанию паузу — и заметит
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6144 title=> **Из сессии**
+2026-04-10 18:51:47 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6580 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a68a977-7d9c-4775-b088-7e9cedf0e273 score=0.6496 title=Есть ещё один механизм, о котором говорят реже — но он работ
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b score=0.6409 title=*Это реальные вопросы участников сессий. Они возникают почти
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.6372 title=Здесь — важная оговорка. Потому что знание о спиральной дина
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6304 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=946e3be5-cdbe-4fbc-a858-c351c45bfad7 score=0.6119 title=**Цель:** улучшить коммуникацию с важным человеком через пон
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=86cbc667-e531-4013-a5df-3200e77d3f7f score=0.6048 title=**Цель:** определить, в каком «костюме» сейчас ходит твоя пр
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5620 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:04:50 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.5234 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4980 title=> **Из сессии**
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6288 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=cdac4aca-6757-41c6-a66c-2e92153d1b6f score=0.6211 title=**Цель:** дать нейронной сети по умолчанию паузу — и заметит
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=76dd0013-9907-4ce5-98c8-260d5e6ad5cd score=0.6058 title=Здесь принципиальный момент: цель не в том, чтобы подавить и
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5688 title=**Цель:** начать замечать, какие голоса программы включаются
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
+2026-04-10 18:51:47 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.5234 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4980 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.4766 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
-2026-04-10 15:04:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=2 reason=checkpoint persist=false
-2026-04-10 15:04:50 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=2 total_prompt_chars=603
-2026-04-10 15:04:51 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:04:51 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:04:58 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=2 reason=checkpoint persist=false
-2026-04-10 15:04:58 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=2
-2026-04-10 15:04:58 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=3
-2026-04-10 15:04:58 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=3
-2026-04-10 15:04:58 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=3
-2026-04-10 15:04:58 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=3 reason=addturn
-2026-04-10 15:04:58 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:04:58 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:04:58 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 score=0.4766 title=Здесь — важная оговорка. Потому что знание о спиральной дина
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
+2026-04-10 18:51:47 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=2 reason=checkpoint persist=false
+2026-04-10 18:51:47 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=2 total_prompt_chars=575
+2026-04-10 18:51:47 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
+2026-04-10 18:51:47 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
+2026-04-10 18:51:47 | INFO     | bot_agent.llm_answerer              | [CONFIG] FREE_CONVERSATION_MODE=False | MAX_TOKENS=None
+2026-04-10 18:51:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=2 reason=checkpoint persist=false
+2026-04-10 18:51:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=4d927485-9251-415f-a579-44bca8b766fd turns_before=2
+2026-04-10 18:51:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=3
+2026-04-10 18:51:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=4d927485-9251-415f-a579-44bca8b766fd turn_index=3
+2026-04-10 18:51:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=3
+2026-04-10 18:51:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=4d927485-9251-415f-a579-44bca8b766fd turns=3 reason=addturn
+2026-04-10 18:51:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
+2026-04-10 18:51:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
+2026-04-10 18:51:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
 >
 > **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:04:58 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 title=Здесь — важная оговорка. Потому что знание о спиральной дина
-2026-04-10 15:04:58 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 15.56s
-2026-04-10 15:04:58 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=3
-2026-04-10 15:05:03 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:05:03 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Как мне успокоиться прямо сейчас?... (user: user_1775560385441_804udu3)
-2026-04-10 15:05:03 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.043s
-2026-04-10 15:05:03 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Как мне успокоиться прямо сейчас?...'
-2026-04-10 15:05:03 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:05:03 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=3
-2026-04-10 15:05:03 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:05:06 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.70
-2026-04-10 15:05:06 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.70
-2026-04-10 15:05:06 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:05:06 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=967 (orig_query len=33)
-2026-04-10 15:05:06 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Как мне успокоиться прямо сейчас?
-WORKING_STATE: nss=hyper fn=u' top_k=9 source=api
-2026-04-10 15:05:09 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6508 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6343 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6002 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=76dd0013-9907-4ce5-98c8-260d5e6ad5cd score=0.6001 title=Здесь принципиальный момент: цель не в том, чтобы подавить и
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5965 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=bc8d66d8-9e17-478e-9627-53779ebfa9e1 score=0.5875 title=**Цель:** научиться слышать страх как информацию, а не как к
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=afc3ac8b-ee18-4c56-99cd-ef8fc467b411 score=0.5799 title=**Цель:** Создание зазора между триггером и ответом
-**Время:
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=36a311ce-9c7d-4b93-b107-4334b60691be score=0.5709 title=**Цель:** поймать программу в действии — до того как реакция
-2026-04-10 15:05:09 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5511 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:05:10 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=bc8d66d8-9e17-478e-9627-53779ebfa9e1 score=0.5352 title=**Цель:** научиться слышать страх как информацию, а не как к
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=76dd0013-9907-4ce5-98c8-260d5e6ad5cd score=0.5117 title=Здесь принципиальный момент: цель не в том, чтобы подавить и
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.4980 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
-2026-04-10 15:05:10 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=3 reason=checkpoint persist=false
-2026-04-10 15:05:10 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=3 total_prompt_chars=848
-2026-04-10 15:05:10 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:05:10 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:05:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=3 reason=checkpoint persist=false
-2026-04-10 15:05:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=3
-2026-04-10 15:05:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=4
-2026-04-10 15:05:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=4
-2026-04-10 15:05:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=4
-2026-04-10 15:05:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=4 reason=addturn
-2026-04-10 15:05:19 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:05:19 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=bc8d66d8-9e17-478e-9627-53779ebfa9e1 title=**Цель:** научиться слышать страх как информацию, а не как к
-2026-04-10 15:05:19 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=76dd0013-9907-4ce5-98c8-260d5e6ad5cd title=Здесь принципиальный момент: цель не в том, чтобы подавить и
-2026-04-10 15:05:19 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:19 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 15.58s
-2026-04-10 15:05:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=4
-2026-04-10 15:05:23 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:05:23 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Можешь объяснить про дыхание подробнее?... (user: user_1775560385441_804udu3)
-2026-04-10 15:05:23 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.013s
-2026-04-10 15:05:23 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Можешь объяснить про дыхание подробнее?...'
-2026-04-10 15:05:23 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:05:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=4
-2026-04-10 15:05:23 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:05:27 | INFO     | bot_agent.state_classifier          | STATE nss=window fn=understand conf=0.75
-2026-04-10 15:05:27 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.75
-2026-04-10 15:05:27 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:05:27 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=982 (orig_query len=39)
-2026-04-10 15:05:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Можешь объяснить про дыхание подробнее?
-WORKING_STATE: nss=wind' top_k=9 source=api
-2026-04-10 15:05:30 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6538 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=5a68a977-7d9c-4775-b088-7e9cedf0e273 score=0.6365 title=Есть ещё один механизм, о котором говорят реже — но он работ
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6317 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6120 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=cadc2c71-83fe-4a3b-91c2-413fccfe9264 score=0.6089 title=Каждую секунду твоя нервная система получает колоссальный по
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=15a45077-4aeb-45f3-a449-51ea3c3533fb score=0.6009 title=Вытесненное содержание тени хранится не только в психике — о
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=de59f267-816a-4386-b288-e5283f68c86c score=0.5874 title=**Цель:** создать паузу между инстинктивной реакцией и дейст
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=afc3ac8b-ee18-4c56-99cd-ef8fc467b411 score=0.5787 title=**Цель:** Создание зазора между триггером и ответом
-**Время:
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5581 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:05:30 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=cadc2c71-83fe-4a3b-91c2-413fccfe9264 score=0.5117 title=Каждую секунду твоя нервная система получает колоссальный по
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4473 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.4219 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=window fn=understand route=reflect
-2026-04-10 15:05:30 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=4 reason=checkpoint persist=false
-2026-04-10 15:05:30 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=full summary_len=0 recent_turns=4 total_prompt_chars=1014
-2026-04-10 15:05:31 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:05:31 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=4 reason=checkpoint persist=false
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=4
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=5
-2026-04-10 15:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=5
-2026-04-10 15:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5 reason=addturn
-2026-04-10 15:05:44 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:05:44 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=cadc2c71-83fe-4a3b-91c2-413fccfe9264 title=Каждую секунду твоя нервная система получает колоссальный по
-2026-04-10 15:05:44 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:05:44 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:05:44 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 21.35s
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5
-2026-04-10 15:05:44 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde (background)
-2026-04-10 15:05:44 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:05:44 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:05:48 | INFO     | bot_agent.conversation_memory       | [SUMMARY] generated len=363 chars turn=5
-2026-04-10 15:05:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5 reason=checkpoint persist=false
-2026-04-10 15:05:48 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] done turn=5 len=363 elapsed=4048ms
-2026-04-10 15:05:48 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:05:48 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: А если не помогает?... (user: user_1775560385441_804udu3)
-2026-04-10 15:05:48 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.020s
-2026-04-10 15:05:48 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='А если не помогает?...'
-2026-04-10 15:05:48 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:05:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5
-2026-04-10 15:05:48 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:05:51 | INFO     | bot_agent.state_classifier          | STATE nss=hyper fn=understand conf=0.50
-2026-04-10 15:05:51 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.50
-2026-04-10 15:05:51 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:05:51 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=1555 (orig_query len=19)
-2026-04-10 15:05:51 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: А если не помогает?
-WORKING_STATE: nss=hyper fn=understand conf' top_k=9 source=api
-2026-04-10 15:05:55 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6530 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6522 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b score=0.6509 title=*Это реальные вопросы участников сессий. Они возникают почти
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=3b853a90-4c73-4243-b021-647a41f8051e score=0.6449 title=**Цель:** увидеть, в чём именно твоя программа черпает «топл
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=57db9c78-4cdb-4767-8bae-d0f2687d1e18 score=0.6376 title=**Цель:** научиться слышать внутренний нарратив — и отделять
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6 score=0.6370 title=И ещё один момент: если ты ждёшь «результата» — спроси себя,
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=7819c7cf-adb9-4b60-8d52-6b81dfe68dda score=0.6363 title=Теперь самый неудобный вывод из всего вышесказанного.
-
-Когда
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=cdac4aca-6757-41c6-a66c-2e92153d1b6f score=0.6186 title=**Цель:** дать нейронной сети по умолчанию паузу — и заметит
-2026-04-10 15:05:55 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5694 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:05:56 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=57db9c78-4cdb-4767-8bae-d0f2687d1e18 score=0.5039 title=**Цель:** научиться слышать внутренний нарратив — и отделять
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.4922 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6 score=0.4824 title=И ещё один момент: если ты ждёшь «результата» — спроси себя,
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=hyper fn=understand route=regulate
-2026-04-10 15:05:56 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5 reason=checkpoint persist=false
-2026-04-10 15:05:56 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=summary summary_len=363 recent_turns=4 total_prompt_chars=1153
-2026-04-10 15:05:56 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:05:56 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=5 reason=checkpoint persist=false
-2026-04-10 15:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=5
-2026-04-10 15:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=6
-2026-04-10 15:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=6
-2026-04-10 15:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=6
-2026-04-10 15:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=6 reason=addturn
-2026-04-10 15:06:06 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:06:06 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=57db9c78-4cdb-4767-8bae-d0f2687d1e18 title=**Цель:** научиться слышать внутренний нарратив — и отделять
-2026-04-10 15:06:06 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:06:06 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6 title=И ещё один момент: если ты ждёшь «результата» — спроси себя,
-2026-04-10 15:06:06 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 17.73s
-2026-04-10 15:06:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=6
-2026-04-10 15:06:13 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
-2026-04-10 15:06:13 | INFO     | api.routes                          | [ADAPTIVE-STREAM] query: Спасибо, попробую применить... (user: user_1775560385441_804udu3)
-2026-04-10 15:06:13 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.008s
-2026-04-10 15:06:13 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] new request user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde query='Спасибо, попробую применить...'
-2026-04-10 15:06:13 | INFO     | bot_agent.data_loader               | [DATA_LOADER] cache_hit blocks=229
-2026-04-10 15:06:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=6
-2026-04-10 15:06:13 | INFO     | bot_agent.state_classifier          | рџЋЇ РђРЅР°Р»РёР·РёСЂСѓСЋ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ...
-2026-04-10 15:06:17 | INFO     | bot_agent.state_classifier          | STATE nss=window fn=understand conf=0.85
-2026-04-10 15:06:17 | INFO     | bot_agent.answer_adaptive           | STATE ANALYSIS ready conf=0.85
-2026-04-10 15:06:17 | INFO     | bot_agent.answer_adaptive           | [ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled
-2026-04-10 15:06:17 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] built hybrid_query len=1558 (orig_query len=27)
-2026-04-10 15:06:17 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='QUESTION_ANCHOR: Спасибо, попробую применить
-WORKING_STATE: nss=window fn=unders' top_k=9 source=api
-2026-04-10 15:06:20 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 9 блоков
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] Initial retrieval: 9 blocks
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.6607 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=f06fe924-0d2f-438a-b2b6-fd704ed275c5 score=0.6598 title=**В: Я всё понимаю про непереваренный опыт — но как его «пер
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=00e93996-a59a-4364-8720-970e6a34035b score=0.6580 title=**Цель:** установить осознанный контакт с программой — не ка
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [4] block_id=3b853a90-4c73-4243-b021-647a41f8051e score=0.6444 title=**Цель:** увидеть, в чём именно твоя программа черпает «топл
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [5] block_id=7819c7cf-adb9-4b60-8d52-6b81dfe68dda score=0.6410 title=Теперь самый неудобный вывод из всего вышесказанного.
-
-Когда
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [6] block_id=a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6 score=0.6348 title=И ещё один момент: если ты ждёшь «результата» — спроси себя,
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [7] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.6227 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [8] block_id=36a311ce-9c7d-4b93-b107-4334b60691be score=0.5808 title=**Цель:** поймать программу в действии — до того как реакция
-2026-04-10 15:06:20 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [9] block_id=37834309-c18e-4e1e-ac24-02cc329c21e5 score=0.5775 title=**Цель:** начать замечать, какие голоса программы включаются
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [VOYAGE] rerank success, top_k=3
-2026-04-10 15:06:21 | INFO     | bot_agent.retrieval.confidence_scorer | [CONFIDENCE] cap applied level=medium cap=5 before=3 after=3
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] confidence_cap=3 (before=3)
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] After confidence cap: 3 blocks
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f score=0.5156 title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=00e93996-a59a-4364-8720-970e6a34035b score=0.4844 title=**Цель:** установить осознанный контакт с программой — не ка
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 score=0.4590 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | ROUTING nss=window fn=understand route=reflect
-2026-04-10 15:06:21 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=6 reason=checkpoint persist=false
-2026-04-10 15:06:21 | INFO     | bot_agent.answer_adaptive           | CONTEXT_BUILD mode=summary summary_len=363 recent_turns=4 total_prompt_chars=1119
-2026-04-10 15:06:21 | INFO     | bot_agent.llm_answerer              | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:06:21 | INFO     | bot_agent.llm_answerer              | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:06:33 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=6 reason=checkpoint persist=false
-2026-04-10 15:06:33 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns_before=6
-2026-04-10 15:06:33 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=7
-2026-04-10 15:06:33 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turn_index=7
-2026-04-10 15:06:33 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=7
-2026-04-10 15:06:33 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=7 reason=addturn
-2026-04-10 15:06:33 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL] SOURCES: 3 blocks
-2026-04-10 15:06:33 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [1] block_id=92a7a24b-5ff2-4a1c-a60b-b61061179f0f title=**Цель:** создать быстрый якорь — короткое телесное упражнен
-2026-04-10 15:06:33 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [2] block_id=00e93996-a59a-4364-8720-970e6a34035b title=**Цель:** установить осознанный контакт с программой — не ка
-2026-04-10 15:06:33 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=766d3526-14b1-4adb-9e08-74c21ae2d4a9 title=> **Из сессии**
->
-> **Алексей, 41 год:** Я понял, что у меня
-2026-04-10 15:06:33 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 20.15s
-2026-04-10 15:06:33 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=59d99d82-d39c-4c0d-8cbe-aae6f0c15fde turns=7
+2026-04-10 18:51:57 | INFO     | bot_agent.answer_adaptive           | [RETRIEVAL]   [3] block_id=50d4a2a5-2af7-4709-b61e-c040934c1326 title=Здесь — важная оговорка. Потому что знание о спиральной дина
+2026-04-10 18:51:57 | INFO     | bot_agent.answer_adaptive           | [ADAPTIVE] response ready in 21.72s
+2026-04-10 18:51:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=4d927485-9251-415f-a579-44bca8b766fd turns=3
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics | status=200 | 0.003s
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces | status=200 | 0.003s
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics | status=200 | 0.007s
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces | status=200 | 0.007s
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics | status=200 | 0.002s
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces | status=200 | 0.003s
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces (key: dev-key-00...)
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/traces | status=200 | 0.003s
+2026-04-10 18:52:42 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/metrics | status=200 | 0.005s
+2026-04-10 18:52:44 | INFO     | api.main                            | -> GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/llm-payload (key: dev-key-00...)
+2026-04-10 18:52:44 | INFO     | api.main                            | <- GET /api/debug/session/4d927485-9251-415f-a579-44bca8b766fd/llm-payload | status=200 | 0.002s

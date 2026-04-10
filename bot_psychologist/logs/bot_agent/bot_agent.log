@@ -1,3 +1,4 @@
-2026-04-10 15:02:55,308 | bot_agent.llm_answerer | INFO | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
-2026-04-10 15:02:55,309 | bot_agent.llm_answerer | INFO | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
-2026-04-10 15:02:55,341 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+2026-04-10 18:47:44,866 | bot_agent.llm_answerer | INFO | ✓ OpenAI клиент инициализирован | модель: gpt-5-mini | параметр токенов: max_completion_tokens
+2026-04-10 18:47:44,867 | bot_agent.llm_answerer | INFO | [LLM_ANSWERER] token limit resolved | model=gpt-5-mini | token_param=max_completion_tokens | token_limit=None
+2026-04-10 18:47:44,867 | bot_agent.llm_answerer | INFO | [CONFIG] FREE_CONVERSATION_MODE=False | MAX_TOKENS=None
+2026-04-10 18:47:44,908 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled

@@ -9,7 +9,6 @@ import json
 import logging
 import sys
 import time
-import asyncio
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
@@ -21,6 +20,7 @@ from fastapi.responses import StreamingResponse
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from bot_agent import answer_question_adaptive
+from bot_agent.llm_streaming import stream_answer_tokens
 from bot_agent.config import config
 from bot_agent.data_loader import data_loader
 from bot_agent.conversation_memory import get_conversation_memory
@@ -46,12 +46,23 @@ router = APIRouter(prefix="/api/v1", tags=["bot"])
 
 # Р“Р»РѕР±Р°Р»СЊРЅР°СЏ СЃС‚Р°С‚РёСЃС‚РёРєР° (РІ production РёСЃРїРѕР»СЊР·СѓР№ Р‘Р”)
 _stats = {
-    "total_users": set(),
+    "total_users_approx": 0,
     "total_questions": 0,
     "total_processing_time": 0.0,
     "states_count": {},
     "interests_count": {}
 }
+_STATS_USER_LIMIT = 10_000
+_seen_users: set[str] = set()
+
+
+def _record_user(user_id: str) -> None:
+    if user_id in _seen_users:
+        return
+    if len(_seen_users) >= _STATS_USER_LIMIT:
+        _seen_users.clear()
+    _seen_users.add(user_id)
+    _stats["total_users_approx"] += 1
 
 
 def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default: bool) -> ChunkTraceItem:
@@ -201,7 +212,7 @@ async def ask_basic_question(
 
     try:
         result = _run_neo_compat_answer(request=request)
-        _stats["total_users"].add(request.user_id)
+        _record_user(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -231,7 +242,7 @@ async def ask_basic_question_with_semantic(
 
     try:
         result = _run_neo_compat_answer(request=request)
-        _stats["total_users"].add(request.user_id)
+        _record_user(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -267,7 +278,7 @@ async def ask_sag_aware_question(
 
     try:
         result = _run_neo_compat_answer(request=request)
-        _stats["total_users"].add(request.user_id)
+        _record_user(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -305,7 +316,7 @@ async def ask_graph_powered_question(
 
     try:
         result = _run_neo_compat_answer(request=request, session_store=store)
-        _stats["total_users"].add(request.user_id)
+        _record_user(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -383,7 +394,7 @@ async def ask_adaptive_question(
         )
         
         # РћР±РЅРѕРІРёС‚СЊ СЃС‚Р°С‚РёСЃС‚РёРєСѓ
-        _stats["total_users"].add(request.user_id)
+        _record_user(request.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         
@@ -728,7 +739,6 @@ async def ask_adaptive_question_stream(
     request: AskQuestionRequest,
     api_key: str = Depends(verify_api_key),
     _data_loader=Depends(get_data_loader),
-    _graph_client=Depends(get_graph_client),
     store: SessionStore = Depends(get_session_store),
 ):
     if not config.ENABLE_STREAMING:
@@ -758,28 +768,30 @@ async def ask_adaptive_question_stream(
         except Exception as exc:
             logger.warning(f"⚠️ Failed to pre-create session {session_key}: {exc}")
 
+    _result_holder: dict = {}
+
+    def _on_complete(result: dict) -> None:
+        _result_holder.update(result)
+
     async def event_stream():
         sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
 
         try:
-            result = answer_question_adaptive(
+            async for token in stream_answer_tokens(
                 request.query,
                 user_id=session_key,
                 user_level=request.user_level.value,
-                include_path_recommendation=request.include_path,
+                session_store=store,
+                include_path=request.include_path,
                 include_feedback_prompt=request.include_feedback_prompt,
                 debug=request.debug,
-                session_store=store,
-                schedule_summary_task=False,
-            )
+                on_complete=_on_complete,
+                answer_fn=answer_question_adaptive,
+            ):
+                yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 
+            result = dict(_result_holder)
             answer = str(result.get("answer", "") or "")
-            words = answer.split(" ") if answer else []
-            for i, word in enumerate(words):
-                token = word + (" " if i < len(words) - 1 else "")
-                if token:
-                    yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
-                    await asyncio.sleep(0.01)
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
             trace_raw = result.get("debug_trace") or result.get("debug")
@@ -797,14 +809,15 @@ async def ask_adaptive_question_stream(
                 sd_level = (result.get("metadata") or {}).get("sd_level")
                 if sd_level is not None:
                     done_payload["sd_level"] = sd_level
-            if trace is not None:
-                done_payload["trace"] = trace
+
+            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
+            if request.debug and trace is not None:
                 try:
                     store.append_trace(session_key, trace)
                 except Exception as store_exc:
                     logger.warning("[STREAM] Failed to store trace: %s", store_exc)
-
-            yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
+                yield "event: trace\n"
+                yield f"data: {json.dumps(trace, ensure_ascii=False)}\n\n"
             try:
                 memory = get_conversation_memory(session_key)
                 schedule_fn = getattr(memory, "schedule_summary_task_if_due", None)
@@ -1393,7 +1406,7 @@ async def get_statistics(
     )
     
     return StatsResponse(
-        total_users=len(_stats["total_users"]),
+        total_users=_stats["total_users_approx"],
         total_questions=_stats["total_questions"],
         average_processing_time=round(avg_time, 2),
         top_states=_stats["states_count"],

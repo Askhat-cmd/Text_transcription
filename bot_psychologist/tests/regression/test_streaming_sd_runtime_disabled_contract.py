@@ -32,6 +32,26 @@ def _extract_done_payload(sse_text: str) -> dict:
     raise AssertionError("SSE done payload not found")
 
 
+def _extract_trace_payload(sse_text: str) -> dict | None:
+    events = [chunk for chunk in sse_text.split("\n\n") if chunk.strip()]
+    for event in events:
+        event_type = "message"
+        payload: dict | None = None
+        for line in event.splitlines():
+            if line.startswith("event:"):
+                event_type = line.replace("event:", "", 1).strip() or "message"
+                continue
+            if not line.startswith("data:"):
+                continue
+            data = line.replace("data:", "", 1).strip()
+            if not data:
+                continue
+            payload = json.loads(data)
+        if event_type == "trace" and isinstance(payload, dict):
+            return payload
+    return None
+
+
 def _reset_store() -> None:
     store = get_session_store()
     with store._lock:  # type: ignore[attr-defined]
@@ -72,7 +92,8 @@ def test_stream_debug_contract_omits_sd_when_runtime_disabled(monkeypatch) -> No
     done = _extract_done_payload(response.text)
     assert done["done"] is True
     assert "sd_level" not in done
-    trace = done.get("trace")
+    assert "trace" not in done
+    trace = _extract_trace_payload(response.text)
     assert isinstance(trace, dict)
     assert "sd_classification" not in trace
     assert "sd_detail" not in trace

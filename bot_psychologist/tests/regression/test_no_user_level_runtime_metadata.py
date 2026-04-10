@@ -26,6 +26,25 @@ def _extract_done_payload(sse_text: str) -> dict:
     raise AssertionError("SSE done payload not found")
 
 
+def _extract_trace_payload(sse_text: str) -> dict | None:
+    for event in [chunk for chunk in sse_text.split("\n\n") if chunk.strip()]:
+        event_type = "message"
+        payload: dict | None = None
+        for line in event.splitlines():
+            if line.startswith("event:"):
+                event_type = line.replace("event:", "", 1).strip() or "message"
+                continue
+            if not line.startswith("data:"):
+                continue
+            raw = line.replace("data:", "", 1).strip()
+            if not raw:
+                continue
+            payload = json.loads(raw)
+        if event_type == "trace" and isinstance(payload, dict):
+            return payload
+    return None
+
+
 def _stub_adaptive_result(*_args, **_kwargs):
     return {
         "status": "success",
@@ -90,6 +109,7 @@ def test_no_user_level_fields_in_adaptive_metadata_and_stream_trace(monkeypatch)
 
     done = _extract_done_payload(stream.text)
     assert done["done"] is True
-    trace = done.get("trace") or {}
+    assert "trace" not in done
+    trace = _extract_trace_payload(stream.text) or {}
     assert "user_level" not in trace
     assert "user_level_adapter_applied" not in trace

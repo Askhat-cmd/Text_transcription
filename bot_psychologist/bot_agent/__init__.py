@@ -36,9 +36,11 @@ __author__ = "Bot Psychologist Team"
 
 # Neo runtime entrypoint
 from .answer_adaptive import answer_question_adaptive
+from .llm_streaming import stream_answer_tokens
 
 __all__ = [
     "answer_question_adaptive",
+    "stream_answer_tokens",
     "__version__"
 ]
 

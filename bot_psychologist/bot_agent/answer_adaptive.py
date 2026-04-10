@@ -411,6 +411,9 @@ def _informational_branch_enabled() -> bool:
     return feature_flags.enabled("INFORMATIONAL_BRANCH_ENABLED")
 
 
+NEO_PRESERVE_ROUTES = {"reflect", "inform", "presence", "intervention", "safe_override"}
+
+
 def _apply_output_validation_policy(
     *,
     answer: str,
@@ -426,7 +429,12 @@ def _apply_output_validation_policy(
     attempts: List[Dict[str, Any]] = []
     fallback_used = False
     retry_llm_result: Optional[Dict[str, Any]] = None
-    safety_override = (route or "").strip().lower() == "safe_override"
+    normalized_route = (route or "").strip().lower()
+    normalized_mode = (mode or "").strip().lower()
+    safety_override = normalized_route == "safe_override"
+    preserve_structure = (
+        normalized_route in NEO_PRESERVE_ROUTES or normalized_mode in NEO_PRESERVE_ROUTES
+    )
 
     first = output_validator.validate(
         answer,
@@ -434,6 +442,7 @@ def _apply_output_validation_policy(
         mode=mode,
         safety_override=safety_override,
         query=query or "",
+        preserve_structure=preserve_structure,
     )
     attempts.append(first.as_dict())
     final_text = first.text
@@ -459,6 +468,7 @@ def _apply_output_validation_policy(
             mode=mode,
             safety_override=safety_override,
             query=query or "",
+            preserve_structure=preserve_structure,
         )
         attempts.append(second.as_dict())
         final_text = second.text

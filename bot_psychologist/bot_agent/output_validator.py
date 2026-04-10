@@ -103,7 +103,9 @@ class OutputValidator:
         sentences = self._split_sentences(body)
         reasons: List[str] = []
 
-        if len(sentences) <= 2 and len(body) < 260:
+        # Neo-answers can start with one short reflective sentence and then continue
+        # as structured blocks. Old 260-char threshold was too aggressive.
+        if len(sentences) <= 1 and len(body) < 80:
             reasons.append("thin_body")
 
         asks_difference = bool(_COMPARISON_QUERY_RE.search(query_text))
@@ -125,6 +127,7 @@ class OutputValidator:
         mode: str,
         safety_override: bool = False,
         query: str = "",
+        preserve_structure: bool = False,
     ) -> OutputValidationResult:
         errors: List[str] = []
         warnings: List[str] = []
@@ -143,9 +146,12 @@ class OutputValidator:
             )
 
         if _MARKDOWN_LEAK_RE.search(repaired):
-            warnings.append("markdown_leakage")
-            repaired = self._strip_markdown(repaired)
-            repair_applied = True
+            if preserve_structure:
+                warnings.append("markdown_structure_preserved")
+            else:
+                warnings.append("markdown_leakage")
+                repaired = self._strip_markdown(repaired)
+                repair_applied = True
 
         if _BROKEN_HTML_RE.search(repaired):
             errors.append("broken_html_tail")
@@ -211,6 +217,7 @@ class OutputValidator:
                     "- Углуби объяснение: раскрой суть и практический смысл без воды.",
                     "- Если вопрос про различия, сравни по 2-3 критериям.",
                     "- Добавь 2-4 коротких примера там, где это усиливает понимание.",
+                    "- Сохрани полный объём ответа. Не сокращай структурированные блоки Neo-ответа.",
                 ]
             )
         if "user_correction_too_short" in (errors or []):

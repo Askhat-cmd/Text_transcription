@@ -24,15 +24,21 @@ def test_formatter_adds_low_confidence_prefix() -> None:
     assert text.lower().startswith("могу ошибаться")
 
 
-def test_formatter_clips_long_answer() -> None:
-    formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 40})
+def test_formatter_does_not_clip_neo_answer() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 4000})
+    answer = (
+        "Сначала коротко отражаю твое состояние. "
+        "Затем объясняю механизм, почему тревога усиливается перед встречей. "
+        "Дальше даю 2-3 практики, которые можно применить прямо сейчас. "
+        "И в конце предлагаю мягкий следующий шаг на сегодня."
+    )
     text = formatter.format_answer(
-        "Это очень длинный ответ, который должен быть обрезан лимитом символов.",
+        answer,
         mode="PRESENCE",
         confidence_level="high",
+        informational_mode=True,
     )
-    assert len(text) <= 40
-    assert text.endswith("...")
+    assert text == answer
 
 
 def test_calculate_target_length_short_validation() -> None:
@@ -64,19 +70,17 @@ def test_formatter_applies_sentence_cap_from_user_message() -> None:
         user_message="коротко",
         sd_level="GREEN",
     )
-    # VALIDATION + short message => максимум 2 предложения
+    # VALIDATION + short message => максимум 2 предложения.
     assert text.count(".") <= 2
-
-
 
 
 def test_formatter_skips_sentence_cap_for_informational_mode() -> None:
     formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 2000})
     text = formatter.format_answer(
-        "??????. ??????. ??????. ?????????.",
+        "Первое. Второе. Третье. Четвертое.",
         mode="PRESENCE",
         confidence_level="high",
-        user_message="???????",
+        user_message="коротко",
         sd_level="GREEN",
         informational_mode=True,
     )

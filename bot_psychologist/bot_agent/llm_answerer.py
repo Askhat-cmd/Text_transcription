@@ -72,6 +72,16 @@ class LLMAnswerer:
                 token_param,
                 resolved_max_tokens,
             )
+            if config.FREE_CONVERSATION_MODE:
+                logger.info(
+                    "[CONFIG] FREE_CONVERSATION_MODE=True | MAX_TOKENS_SOFT_CAP=%s",
+                    getattr(config, "MAX_TOKENS_SOFT_CAP", "NOT SET"),
+                )
+            else:
+                logger.info(
+                    "[CONFIG] FREE_CONVERSATION_MODE=False | MAX_TOKENS=%s",
+                    getattr(config, "MAX_TOKENS", None),
+                )
         except ImportError:
             logger.error("❌ openai не установлен. Установите: pip install openai")
             raise
@@ -482,6 +492,9 @@ class LLMAnswerer:
                 )
 
                 stream = await self.async_client.responses.create(**request_params)
+                token_count = 0
+                usage_prompt = None
+                usage_completion = None
                 async for event in stream:
                     token = ""
                     if hasattr(event, "delta") and event.delta:
@@ -491,7 +504,29 @@ class LLMAnswerer:
                     elif isinstance(event, dict):
                         token = event.get("delta") or event.get("output_text") or ""
                     if token:
+                        token_count += 1
                         yield token
+                    usage = getattr(event, "usage", None)
+                    if isinstance(event, dict):
+                        usage = usage or event.get("usage")
+                    if usage is not None:
+                        usage_prompt = getattr(usage, "prompt_tokens", None)
+                        if usage_prompt is None:
+                            usage_prompt = getattr(usage, "input_tokens", None)
+                        usage_completion = getattr(usage, "completion_tokens", None)
+                        if usage_completion is None:
+                            usage_completion = getattr(usage, "output_tokens", None)
+                logger.info(
+                    "[LLM_ANSWERER] reasoning stream done | model=%s | tokens_yielded=%d",
+                    model,
+                    token_count,
+                )
+                logger.info(
+                    "[LLM_ANSWERER] stream usage | model=%s | prompt_tokens=%s | completion_tokens=%s",
+                    model,
+                    usage_prompt,
+                    usage_completion,
+                )
                 return
             except Exception as exc:
                 logger.warning("[LLM_ANSWERER] reasoning stream failed: %s", exc)
@@ -518,11 +553,58 @@ class LLMAnswerer:
             stream=True,
         )
         stream = await self.async_client.chat.completions.create(**request_params)
+        finish_reason: Optional[str] = None
+        token_count = 0
+        usage_prompt = None
+        usage_completion = None
         async for chunk in stream:
-            delta = chunk.choices[0].delta if chunk.choices else None
+            choice = chunk.choices[0] if chunk.choices else None
+            delta = choice.delta if choice else None
             token = getattr(delta, "content", None) if delta else None
             if token:
+                token_count += 1
                 yield token
+            if choice is not None:
+                fr = getattr(choice, "finish_reason", None)
+                if fr:
+                    finish_reason = fr
+            usage = getattr(chunk, "usage", None)
+            if usage is not None:
+                usage_prompt = getattr(usage, "prompt_tokens", None)
+                usage_completion = getattr(usage, "completion_tokens", None)
+
+        if finish_reason == "length":
+            logger.warning(
+                "[LLM_ANSWERER] STREAM CUT BY TOKEN LIMIT | finish_reason=length | model=%s | tokens_yielded=%d | max_tokens=%s",
+                model,
+                token_count,
+                resolved_max_tokens,
+            )
+        elif finish_reason == "stop":
+            logger.info(
+                "[LLM_ANSWERER] stream complete | finish_reason=stop | model=%s | tokens_yielded=%d",
+                model,
+                token_count,
+            )
+        elif finish_reason is None:
+            logger.warning(
+                "[LLM_ANSWERER] stream ended without finish_reason | model=%s | tokens_yielded=%d",
+                model,
+                token_count,
+            )
+        else:
+            logger.info(
+                "[LLM_ANSWERER] stream ended | finish_reason=%s | model=%s | tokens_yielded=%d",
+                finish_reason,
+                model,
+                token_count,
+            )
+        logger.info(
+            "[LLM_ANSWERER] stream usage | model=%s | prompt_tokens=%s | completion_tokens=%s",
+            model,
+            usage_prompt,
+            usage_completion,
+        )
 
 
 

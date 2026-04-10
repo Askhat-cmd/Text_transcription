@@ -33,6 +33,7 @@ def test_runtime_validation_receives_original_query(monkeypatch) -> None:
         mode: str,
         safety_override: bool = False,
         query: str = "",
+        preserve_structure: bool = False,
     ) -> OutputValidationResult:
         observed_queries.append(query)
         return OutputValidationResult(
@@ -56,4 +57,3 @@ def test_runtime_validation_receives_original_query(monkeypatch) -> None:
     assert result["status"] == "success"
     assert observed_queries
     assert all(item == query for item in observed_queries)
-

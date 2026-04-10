@@ -11,6 +11,7 @@ from bot_agent.output_validator import OutputValidationResult
 
 def test_query_is_passed_to_output_validation_policy(monkeypatch) -> None:
     observed_queries: list[str] = []
+    observed_preserve: list[bool] = []
 
     monkeypatch.setattr(adaptive, "_output_validation_enabled", lambda: True)
 
@@ -21,8 +22,10 @@ def test_query_is_passed_to_output_validation_policy(monkeypatch) -> None:
         mode: str,
         safety_override: bool = False,
         query: str = "",
+        preserve_structure: bool = False,
     ) -> OutputValidationResult:
         observed_queries.append(query)
+        observed_preserve.append(bool(preserve_structure))
         if len(observed_queries) == 1:
             return OutputValidationResult(
                 valid=False,
@@ -61,7 +64,7 @@ def test_query_is_passed_to_output_validation_policy(monkeypatch) -> None:
     )
 
     assert observed_queries == ["мой вопрос про сравнение", "мой вопрос про сравнение"]
+    assert observed_preserve == [True, True]
     assert meta["enabled"] is True
     assert meta["final_valid"] is True
     assert answer == "перегенерированный ответ"
-

@@ -179,6 +179,11 @@ class APIService {
           const finalAnswer = doneMetaPayload?.answer?.trim()
             ? doneMetaPayload.answer
             : fullText;
+          if (!doneMetaPayload?.answer?.trim() && import.meta.env.DEV) {
+            console.warn('[SSE] finalizeDone fallback to accumulated fullText', {
+              accumulated_length: fullText.length,
+            });
+          }
           onDone?.({
             mode: doneMetaPayload?.mode,
             sd_level: doneMetaPayload?.sd_level,
@@ -190,6 +195,17 @@ class APIService {
 
         const processEventPayload = (eventType: string, data: string): void => {
           if (!data.trim()) {
+            return;
+          }
+
+          if (eventType === 'trace') {
+            try {
+              tracePayload = JSON.parse(data) as InlineTrace;
+            } catch {
+              if (import.meta.env.DEV) {
+                console.warn('[SSE] failed to parse trace payload', data);
+              }
+            }
             return;
           }
 
@@ -236,11 +252,6 @@ class APIService {
             return;
           }
 
-          if (eventType === 'trace') {
-            tracePayload = (payload as InlineTrace) ?? tracePayload;
-            return;
-          }
-
           const delta = payload.token ?? payload.text ?? payload.content ?? payload.delta ?? '';
           if (delta) {
             fullText += String(delta);
@@ -281,24 +292,20 @@ class APIService {
         const processRawLine = (rawLine: string): void => {
           const line = rawLine.replace(/\r$/, '');
           if (line.length === 0) {
-            flushEvent();
+            if (currentDataLines.length > 0) {
+              flushEvent();
+            }
             return;
           }
           if (line.startsWith(':')) {
             return;
           }
           if (line.startsWith('event:')) {
-            if (currentDataLines.length > 0) {
-              flushEvent();
-            }
             const type = line.slice(6).trim();
             currentEventType = type || 'message';
             return;
           }
           if (line.startsWith('data:')) {
-            if (currentDataLines.length > 0) {
-              flushEvent();
-            }
             let data = line.slice(5);
             if (data.startsWith(' ')) {
               data = data.slice(1);
@@ -323,12 +330,27 @@ class APIService {
         if (buffer.length > 0) {
           processRawLine(buffer);
         }
-        flushEvent();
+        if (currentDataLines.length > 0) {
+          if (import.meta.env.DEV) {
+            console.warn('[SSE] EOF flush: stream ended without trailing blank line');
+          }
+          flushEvent();
+        }
 
         if (doneReceived) {
           finalizeDone();
-        } else {
+        } else if (fullText.length > 0) {
+          if (import.meta.env.DEV) {
+            console.warn('[SSE] completed without done marker, fallback to accumulated fullText', {
+              accumulated_length: fullText.length,
+            });
+          }
           onDone?.({ trace: tracePayload, answer: fullText });
+        } else {
+          if (import.meta.env.DEV) {
+            console.warn('[SSE] empty final answer: no done marker and no accumulated text');
+          }
+          onError?.('Empty stream: no response received');
         }
       } catch (err) {
         window.clearTimeout(timeoutId);

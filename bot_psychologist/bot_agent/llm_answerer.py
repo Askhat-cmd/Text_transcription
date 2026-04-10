@@ -59,11 +59,18 @@ class LLMAnswerer:
             import openai
             self.client = openai.OpenAI(api_key=self.api_key)
             self.async_client = openai.AsyncOpenAI(api_key=self.api_key)
-            token_param = config.get_token_param_name()
+            token_param = config.get_token_param_name(config.LLM_MODEL)
             logger.info(
                 "✓ OpenAI клиент инициализирован | модель: %s | параметр токенов: %s",
                 config.LLM_MODEL,
                 token_param,
+            )
+            resolved_max_tokens = self._resolve_max_tokens(config.LLM_MODEL, explicit_max_tokens=None)
+            logger.info(
+                "[LLM_ANSWERER] token limit resolved | model=%s | token_param=%s | token_limit=%s",
+                config.LLM_MODEL,
+                token_param,
+                resolved_max_tokens,
             )
         except ImportError:
             logger.error("❌ openai не установлен. Установите: pip install openai")

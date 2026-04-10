@@ -164,6 +164,9 @@ export const useChat = (options: UseChatOptions): UseChatReturn => {
       const finalText = streamed.trim()
         ? streamed
         : (doneMeta?.answer?.trim() ? doneMeta.answer : '...');
+      if (!doneMeta?.answer?.trim() && streamed.trim() && import.meta.env.DEV) {
+        console.warn('[useChat] finalized without done.answer, using degraded streamed fallback');
+      }
       const botTrace = doneMeta?.trace ?? undefined;
       const botTurnIndex = Math.floor(messagesRef.current.length / 2);  // индекс до добавления сообщения
       addMessage('bot', finalText, {

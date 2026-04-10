@@ -99,6 +99,12 @@ bot_psychologist/.tmp_pytest/
 bot_psychologist/tests/_tmp_memory_persistence/
 bot_psychologist/tests/_tmp_memory_probe/
 bot_psychologist/tests/test_sqlite.db*
+
+# Временно разрешаем коммит логов бота для удаленной диагностики агентами
+!bot_psychologist/logs/
+!bot_psychologist/logs/**
+!bot_psychologist/logs/**/*.log
+!bot_psychologist/logs/**/*.log.*
 telegram_adapter/telegram_sessions.db
 
 # ========================================

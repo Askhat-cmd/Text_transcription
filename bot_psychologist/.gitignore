@@ -16,6 +16,12 @@ yarn-debug.log*
 yarn-error.log*
 dev-debug.log
 
+# Временно разрешаем коммит логов в репозиторий
+!logs/
+!logs/**
+!logs/**/*.log
+!logs/**/*.log.*
+
 # Dependency directories
 node_modules/
 

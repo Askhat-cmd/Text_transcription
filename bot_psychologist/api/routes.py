@@ -65,6 +65,25 @@ def _record_user(user_id: str) -> None:
     _stats["total_users_approx"] += 1
 
 
+def _append_trace_with_resolved_session(
+    *,
+    store: SessionStore,
+    default_session_key: str,
+    trace_payload: dict,
+) -> None:
+    """
+    Persist trace under runtime session id when available.
+
+    In Neo runtime the effective session id can differ from request user_id.
+    UI debug surfaces use trace.session_id, so we keep both keys for
+    backward compatibility.
+    """
+    resolved_session_key = str(trace_payload.get("session_id") or "").strip() or default_session_key
+    store.append_trace(resolved_session_key, trace_payload)
+    if resolved_session_key != default_session_key:
+        store.append_trace(default_session_key, trace_payload)
+
+
 def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default: bool) -> ChunkTraceItem:
     score_initial = float(raw_chunk.get("score_initial", raw_chunk.get("score", 0.0) or 0.0))
     score_final = float(raw_chunk.get("score_final", raw_chunk.get("score", score_initial) or score_initial))
@@ -696,7 +715,11 @@ async def ask_adaptive_question(
                     trace.session_turns = raw_session_turns
 
                 try:
-                    store.append_trace(session_key, trace.model_dump(exclude_none=True))
+                    _append_trace_with_resolved_session(
+                        store=store,
+                        default_session_key=session_key,
+                        trace_payload=trace.model_dump(exclude_none=True),
+                    )
                 except Exception as store_exc:
                     logger.warning(f"[DEBUG_TRACE] Failed to store trace: {store_exc}")
             except Exception as trace_exc:
@@ -813,7 +836,11 @@ async def ask_adaptive_question_stream(
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             if request.debug and trace is not None:
                 try:
-                    store.append_trace(session_key, trace)
+                    _append_trace_with_resolved_session(
+                        store=store,
+                        default_session_key=session_key,
+                        trace_payload=trace,
+                    )
                 except Exception as store_exc:
                     logger.warning("[STREAM] Failed to store trace: %s", store_exc)
                 yield "event: trace\n"

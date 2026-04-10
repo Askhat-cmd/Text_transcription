@@ -109,3 +109,51 @@ def test_trace_sent_as_separate_event_when_debug(monkeypatch) -> None:
     assert "trace" not in done_events[0]["data"]
     assert len(trace_events) == 1
     assert "done" not in trace_events[0]["data"]
+
+
+def test_trace_persisted_under_trace_session_id_for_llm_payload(monkeypatch) -> None:
+    trace_session_id = "trace-session-xyz"
+
+    def _fake_result(*_args, **_kwargs) -> dict:
+        return {
+            "answer": "ok",
+            "processing_time_seconds": 0.01,
+            "metadata": {"recommended_mode": "PRESENCE"},
+            "status": "success",
+            "debug_trace": {
+                "session_id": trace_session_id,
+                "turn_number": 1,
+                "recommended_mode": "PRESENCE",
+                "llm_calls": [
+                    {
+                        "step": "answer",
+                        "model": "gpt-5-mini",
+                        "duration_ms": 50,
+                        "system_prompt_preview": "sys",
+                        "user_prompt_preview": "usr",
+                    }
+                ],
+            },
+        }
+
+    monkeypatch.setattr(routes, "answer_question_adaptive", _fake_result)
+    monkeypatch.setattr(routes.config, "ENABLE_STREAMING", True, raising=False)
+
+    with TestClient(app, base_url="http://localhost") as client:
+        stream_resp = client.post(
+            "/api/v1/questions/adaptive-stream",
+            json={"query": "Тест", "user_id": "request_user", "debug": True},
+            headers={"X-API-Key": "dev-key-001"},
+        )
+        assert stream_resp.status_code == 200
+
+        payload_resp = client.get(
+            f"/api/debug/session/{trace_session_id}/llm-payload?format=flat",
+            headers={"X-API-Key": "dev-key-001"},
+        )
+
+    assert payload_resp.status_code == 200
+    data = payload_resp.json()
+    assert data.get("session_id") == trace_session_id
+    assert isinstance(data.get("llm_calls"), list)
+    assert len(data["llm_calls"]) == 1

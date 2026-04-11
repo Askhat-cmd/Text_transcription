@@ -5,6 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
+_EXPLICIT_BREVITY_RE = re.compile(
+    r"\b(кратко|коротко|сжато|в двух словах|briefly|short answer)\b",
+    flags=re.IGNORECASE,
+)
+
 
 @dataclass
 class ResponseFormatter:
@@ -54,6 +59,10 @@ class ResponseFormatter:
         if not trimmed.endswith(("...", ".", "!", "?")):
             trimmed += "..."
         return trimmed
+
+    @staticmethod
+    def _is_explicit_brevity_request(user_message: str) -> bool:
+        return bool(_EXPLICIT_BREVITY_RE.search((user_message or "").strip()))
 
     def calculate_target_length(self, user_message: str, routing_mode: str, sd_level: str | None = None) -> dict:
         """
@@ -105,7 +114,9 @@ class ResponseFormatter:
             if not normalized.lower().startswith("могу ошибаться"):
                 text = f"Могу ошибаться, {normalized}"
 
-        if not informational_mode:
+        # Do not auto-shorten coaching replies by default.
+        # Apply sentence cap only when user explicitly asked for brevity.
+        if not informational_mode and self._is_explicit_brevity_request(user_message or ""):
             target = self.calculate_target_length(
                 user_message=user_message or "",
                 routing_mode=normalized_mode,

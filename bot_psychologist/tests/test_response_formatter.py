@@ -85,3 +85,15 @@ def test_formatter_skips_sentence_cap_for_informational_mode() -> None:
         informational_mode=True,
     )
     assert text.count(".") >= 3
+
+def test_formatter_does_not_apply_sentence_cap_without_explicit_brevity() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"VALIDATION": 4000})
+    source = "First sentence. Second sentence. Third sentence. Fourth sentence."
+    text = formatter.format_answer(
+        source,
+        mode="VALIDATION",
+        confidence_level="high",
+        user_message="I feel anxious before a meeting",
+        sd_level="GREEN",
+    )
+    assert text == source

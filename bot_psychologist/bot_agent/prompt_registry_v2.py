@@ -1,4 +1,4 @@
-﻿"""Prompt Stack v2 builder for Neo MindBot."""
+"""Prompt Stack v2 builder for Neo MindBot."""
 
 from __future__ import annotations
 
@@ -96,8 +96,24 @@ class PromptRegistryV2:
             )
         if normalized_route == "regulate":
             return (
-                "Стиль: сначала стабилизация и поддержка, "
-                "потом один посильный шаг."
+                "Стиль: сначала признание состояния — покажи, что слышишь и понимаешь. "
+                "Затем раскрой контекст: что стоит за этим переживанием. "
+                "Потом один конкретный посильный шаг. "
+                "Минимум 3 содержательных предложения. "
+                "Не сводить ответ к одному отражению + вопросу."
+            )
+        if normalized_route in ("contact_hold", "contact"):
+            return (
+                "Стиль: живой отклик на переживание пользователя, "
+                "затем его контекст и смысл, затем практический ориентир. "
+                "Минимум 3 содержательных предложения. "
+                "Не сводить ответ к одному отражению + вопросу."
+            )
+        if normalized_route == "stabilize":
+            return (
+                "Стиль: спокойствие и опора. Сначала стабилизация присутствием, "
+                "затем ориентир — что сейчас можно сделать. "
+                "Минимум 3 содержательных предложения."
             )
         return (
             "Стиль: диалог с опорой на коучинговую точность, "
@@ -112,7 +128,16 @@ class PromptRegistryV2:
 
     @staticmethod
     def _sanitize_memory_context(context: str) -> str:
-        """Drop snapshot block to avoid duplicate diagnostics in final prompt."""
+        """Fix mojibake (UTF-8 bytes read as latin-1) and drop snapshot block."""
+        # --- encoding guard: fix UTF-8 bytes misread as latin-1 ---
+        if isinstance(context, bytes):
+            context = context.decode("utf-8", errors="replace")
+        else:
+            try:
+                context = context.encode("latin-1").decode("utf-8")
+            except (UnicodeDecodeError, UnicodeEncodeError):
+                pass  # already valid unicode, no action needed
+        # --- drop snapshot block to avoid duplicate diagnostics ---
         lines = []
         skipping_snapshot_block = False
         for line in (context or "").splitlines():
@@ -203,7 +228,8 @@ class PromptRegistryV2:
         if first_turn:
             parts.extend(
                 [
-                    "- Для первого хода дай полноценный смысловой каркас, не вместо основной части ответа, а как основу.",
+                    "- Это первый ход: дай полноценный смысловой каркас как основу ответа.",
+                    "- Warmup: не экономь на объёме — у модели пока нет контекста сессии.",
                     "- Допустим один уточняющий вопрос в конце, если он реально помогает.",
                     "- Не перегружай деталями, но оставь опорную ясность.",
                 ]
@@ -260,7 +286,10 @@ class PromptRegistryV2:
         diag_algorithm = self._load_prompt_asset("diag_algorithm.md", "Diagnostic algorithm: classify state and function.")
         reflective_method = self._load_prompt_asset("reflective_method.md", "Reflective Method: mirror, structure, clarify, next-step.")
         procedural_scripts = self._load_prompt_asset("procedural_scripts.md", "Procedural scripts: clear sequencing and correction protocol.")
-        output_layer = self._load_prompt_asset("output_layer.md", "Output layer: Telegram-safe, clear, concise, concrete.")
+        output_layer = self._load_prompt_asset(
+            "output_layer.md",
+            "Output layer: web-safe rich text. Minimum 3 substantive sentences. Avoid messenger-style brevity."
+        )
 
         diagnostics_context = self._build_diagnostic_context(
             diagnostics=diagnostics,

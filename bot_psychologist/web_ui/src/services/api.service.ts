@@ -226,6 +226,7 @@ class APIService {
             done?: boolean;
             error?: string;
             answer?: string;
+            answer_fallback?: string;
             mode?: string;
             sd_level?: string;
             latency_ms?: number;
@@ -259,15 +260,16 @@ class APIService {
           }
 
           if (payload.done) {
-            if (typeof payload.answer === 'string' && payload.answer.trim()) {
-              fullText = payload.answer;
+            const fallback = payload.answer_fallback ?? payload.answer ?? '';
+            if (!fullText.trim() && typeof fallback === 'string' && fallback.trim()) {
+              fullText = fallback;
               onToken(fullText);
             }
             doneMetaPayload = {
               mode: payload.mode,
               sd_level: payload.sd_level,
               latency_ms: payload.latency_ms,
-              answer: typeof payload.answer === 'string' ? payload.answer : fullText,
+              answer: fullText,
             };
             if (payload.trace) {
               tracePayload = payload.trace;

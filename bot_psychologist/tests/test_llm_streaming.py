@@ -102,3 +102,52 @@ async def test_stream_answer_tokens_callback_failure_does_not_break_stream() -> 
     ]
 
     assert "".join(tokens) == "safe output"
+
+
+@pytest.mark.asyncio
+async def test_stream_answer_tokens_calls_on_complete_before_first_token() -> None:
+    seen_tokens: list[str] = []
+    callback_calls = 0
+
+    def _fake_answer(*_args, **_kwargs) -> dict:
+        return {"answer": "first second"}
+
+    def _on_complete(_result: dict) -> None:
+        nonlocal callback_calls
+        callback_calls += 1
+        assert seen_tokens == []
+
+    async for token in stream_answer_tokens(
+        "q",
+        user_id="u4",
+        on_complete=_on_complete,
+        answer_fn=_fake_answer,
+    ):
+        seen_tokens.append(token)
+
+    assert callback_calls == 1
+    assert "".join(seen_tokens) == "first second"
+
+
+@pytest.mark.asyncio
+async def test_stream_answer_tokens_uses_1ms_sleep_between_tokens(monkeypatch: pytest.MonkeyPatch) -> None:
+    sleep_calls: list[float] = []
+
+    async def _fake_sleep(delay: float) -> None:
+        sleep_calls.append(delay)
+
+    monkeypatch.setattr("bot_agent.llm_streaming.asyncio.sleep", _fake_sleep)
+
+    def _fake_answer(*_args, **_kwargs) -> dict:
+        return {"answer": "a b c"}
+
+    _ = [
+        token
+        async for token in stream_answer_tokens(
+            "q",
+            user_id="u5",
+            answer_fn=_fake_answer,
+        )
+    ]
+
+    assert sleep_calls == [0.001, 0.001, 0.001]

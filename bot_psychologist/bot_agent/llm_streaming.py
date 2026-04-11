@@ -62,5 +62,4 @@ async def stream_answer_tokens(
         token = word + (" " if idx < len(words) - 1 else "")
         if token:
             yield token
-            await asyncio.sleep(0.005)
-
+            await asyncio.sleep(0.001)

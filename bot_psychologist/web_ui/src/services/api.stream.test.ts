@@ -237,14 +237,16 @@ describe('APIService.streamAdaptiveAnswer', () => {
     expect(errorMessage.toLowerCase()).toContain('время ожидания');
   });
 
-  it('uses done.answer as final source of truth when tokens are partial', async () => {
+  it('does NOT overwrite accumulated fullText with done.answer when tokens already exist', async () => {
     vi.stubGlobal(
       'fetch',
       vi.fn().mockResolvedValue(
         buildResponseFromSSE(
           buildSSEStream([
-            { dataLines: ['{"token":"partial"}'] },
-            { dataLines: ['{"done":true,"answer":"final complete answer"}'] },
+            { dataLines: ['{"token":"partial "}'] },
+            { dataLines: ['{"token":"stream "}'] },
+            { dataLines: ['{"token":"answer"}'] },
+            { dataLines: ['{"done":true,"answer":"TRUNCATED"}'] },
           ])
         )
       )
@@ -260,7 +262,53 @@ describe('APIService.streamAdaptiveAnswer', () => {
       }
     );
 
-    expect(result).toBe('final complete answer');
+    expect(result).toBe('partial stream answer');
+  });
+
+  it('uses done.answer_fallback when no tokens were received', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        buildResponseFromSSE(
+          buildSSEStream([{ dataLines: ['{"done":true,"answer_fallback":"fallback answer"}'] }])
+        )
+      )
+    );
+
+    let result = '';
+    await apiService.streamAdaptiveAnswer(
+      'test',
+      'u1',
+      () => undefined,
+      (meta) => {
+        result = meta.answer ?? '';
+      }
+    );
+
+    expect(result).toBe('fallback answer');
+  });
+
+  it('uses legacy done.answer as fallback only when stream tokens are absent', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(
+        buildResponseFromSSE(
+          buildSSEStream([{ dataLines: ['{"done":true,"answer":"legacy fallback"}'] }])
+        )
+      )
+    );
+
+    let result = '';
+    await apiService.streamAdaptiveAnswer(
+      'test',
+      'u1',
+      () => undefined,
+      (meta) => {
+        result = meta.answer ?? '';
+      }
+    );
+
+    expect(result).toBe('legacy fallback');
   });
 
   it('parses trace from separate SSE event and attaches it to done meta', async () => {
@@ -270,7 +318,7 @@ describe('APIService.streamAdaptiveAnswer', () => {
         buildResponseFromSSE(
           buildSSEStream([
             { dataLines: ['{"token":"answer"}'] },
-            { dataLines: ['{"done":true,"answer":"answer","mode":"PRESENCE","latency_ms":123}'] },
+            { dataLines: ['{"done":true,"mode":"PRESENCE","latency_ms":123}'] },
             { event: 'trace', dataLines: ['{"recommended_mode":"PRESENCE","turn_number":7}'] },
           ])
         )
@@ -299,7 +347,7 @@ describe('APIService.streamAdaptiveAnswer', () => {
       vi.fn().mockResolvedValue(
         buildResponseFromSSE(
           buildSSEStream(
-            [{ dataLines: ['{"done":true,"answer":"eof answer"}'] }],
+            [{ dataLines: ['{"done":true,"answer_fallback":"eof answer"}'] }],
             { terminateWithBlankLine: false }
           )
         )

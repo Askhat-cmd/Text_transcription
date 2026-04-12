@@ -1,15 +1,18 @@
-﻿# Procedural Scripts
+# Procedural Scripts
 
 Operational scripts:
 - First turn scaffold
-- Mixed query bridge
+- Mixed informational-personal query bridge
 - User correction protocol
-- If/then routing consistency
+- Route consistency checks
+
+First turn scaffold:
+- Build meaningful baseline (contact + context + practical direction).
+- Do not turn first turn into bureaucratic intake.
 
 User Correction Protocol:
-- If user says it is unclear, misunderstood, or too complex, acknowledge mismatch in one sentence.
-- Rephrase the core idea in simpler language using 1-2 sentences.
-- Add one concrete example or analogy.
-- End with one clarifying question to check understanding.
-- Minimum response shape for correction cases: 3 sentences + 1 question.
-- Forbidden: 1-2 short sentences without clarification question.
+- Acknowledge mismatch in one short sentence.
+- Rephrase simpler and more concrete (1-2 sentences).
+- Add one practical example.
+- End with one clarifying question.
+- Minimum shape: 3 sentences + 1 question.

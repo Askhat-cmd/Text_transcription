@@ -16,8 +16,9 @@ class ResponseFormatter:
     """Apply compact, mode-aware output shaping."""
 
     mode_char_limits: dict
+    hard_max_chars: int
 
-    def __init__(self, mode_char_limits: dict | None = None) -> None:
+    def __init__(self, mode_char_limits: dict | None = None, hard_max_chars: int = 12000) -> None:
         self.mode_char_limits = mode_char_limits or {
             "PRESENCE": 2000,
             "CLARIFICATION": 2000,
@@ -26,6 +27,7 @@ class ResponseFormatter:
             "INTERVENTION": 3200,
             "INTEGRATION": 2400,
         }
+        self.hard_max_chars = max(120, int(hard_max_chars or 12000))
         self.mode_sentence_limits = {
             "VALIDATION": 2,
             "PRESENCE": 3,
@@ -116,16 +118,26 @@ class ResponseFormatter:
 
         # Do not auto-shorten coaching replies by default.
         # Apply sentence cap only when user explicitly asked for brevity.
-        if not informational_mode and self._is_explicit_brevity_request(user_message or ""):
+        explicit_brevity = (
+            not informational_mode and self._is_explicit_brevity_request(user_message or "")
+        )
+        if explicit_brevity:
             target = self.calculate_target_length(
                 user_message=user_message or "",
                 routing_mode=normalized_mode,
                 sd_level=sd_level,
             )
             text = self._take_sentences(text, int(target["max_sentences"]))
+            char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)
+            return self._clip(text, char_limit)
 
-        char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)
-        return self._clip(text, char_limit)
+        # Respect explicit caller-provided limit, but avoid silent mode-based truncation
+        # for regular coaching/informational answers.
+        if isinstance(max_chars, int) and max_chars > 0:
+            return self._clip(text, max_chars)
+        if len(text) > self.hard_max_chars:
+            return self._clip(text, self.hard_max_chars)
+        return text
 
 
 def format_mode_aware_response(

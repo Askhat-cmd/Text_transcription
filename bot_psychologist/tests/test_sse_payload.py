@@ -69,6 +69,8 @@ def test_done_event_has_no_trace_field(monkeypatch) -> None:
     done_data = done_events[0]["data"]
     assert "trace" not in done_data
     assert "answer" in done_data
+    assert "answer_fallback" in done_data
+    assert done_data["answer"] == done_data["answer_fallback"]
     assert "latency_ms" in done_data
 
 

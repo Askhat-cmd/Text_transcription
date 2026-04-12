@@ -97,3 +97,36 @@ def test_formatter_does_not_apply_sentence_cap_without_explicit_brevity() -> Non
         sd_level="GREEN",
     )
     assert text == source
+
+
+def test_formatter_does_not_clip_regular_answer_by_mode_limit() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 200})
+    source = (
+        "Первый абзац с объяснением контекста. "
+        "Второй абзац с уточнением механизма и причин. "
+        "Третий абзац с практическим применением в реальной ситуации. "
+        "Четвертый абзац с понятным и выполнимым следующим шагом."
+    )
+    text = formatter.format_answer(
+        source,
+        mode="PRESENCE",
+        confidence_level="high",
+        user_message="Расскажи подробно, пожалуйста",
+        sd_level="GREEN",
+        informational_mode=False,
+    )
+    assert text == source
+
+
+def test_formatter_applies_hard_cap_for_extreme_output() -> None:
+    formatter = ResponseFormatter(mode_char_limits={"PRESENCE": 2000}, hard_max_chars=120)
+    source = "Очень длинный текст. " * 20
+    text = formatter.format_answer(
+        source,
+        mode="PRESENCE",
+        confidence_level="high",
+        user_message="Расскажи подробно",
+        sd_level="GREEN",
+    )
+    assert len(text) <= 120
+    assert text.endswith("...")

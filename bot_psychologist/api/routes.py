@@ -824,6 +824,7 @@ async def ask_adaptive_question_stream(
 
             done_payload = {
                 "done": True,
+                "answer": answer,
                 "answer_fallback": answer,
                 "mode": (result.get("metadata") or {}).get("recommended_mode"),
                 "latency_ms": latency_ms,

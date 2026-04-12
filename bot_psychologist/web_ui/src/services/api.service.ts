@@ -260,7 +260,7 @@ class APIService {
           }
 
           if (payload.done) {
-            const fallback = payload.answer_fallback ?? payload.answer ?? '';
+            const fallback = payload.answer ?? payload.answer_fallback ?? '';
             if (!fullText.trim() && typeof fallback === 'string' && fallback.trim()) {
               fullText = fallback;
               onToken(fullText);

@@ -9,11 +9,9 @@ export const ConfigSnapshot: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
     ['CONVERSATION_HISTORY_DEPTH', snapshot.conversation_history_depth],
     ['MAX_CONTEXT_SIZE', snapshot.max_context_size],
     ['SEMANTIC_SEARCH_TOP_K', snapshot.semantic_search_top_k],
-    ['SD_CONFIDENCE_THRESHOLD', snapshot.sd_confidence_threshold ?? '—'],
     ['FAST_PATH_ENABLED', snapshot.fast_path_enabled],
     ['RERANK_ENABLED', snapshot.rerank_enabled],
     ['MODEL_NAME', snapshot.model_name],
-    ['USER_LEVEL', snapshot.user_level ?? '—'],
   ];
 
   return (

@@ -1,30 +1,11 @@
-﻿# Legacy Runtime Map (Phase 0 Baseline)
+# Runtime Map Pointer
 
-Этот файл фиксирует baseline-карту legacy runtime перед миграцией на Neo MindBot (PRD_10.1, PHASE 0).
+This document name is preserved only as a historical pointer.
 
-Источник для автопроверок:
-- `bot_psychologist/tests/fixtures/legacy_runtime_map.json`
-- `bot_psychologist/tests/inventory/test_legacy_runtime_map.py`
+Active runtime mapping is maintained in:
 
-## Pipeline entrypoints
-- `api/routes.py::ask_adaptive_question` (`/api/v1/questions/adaptive`)
-- `api/routes.py::ask_adaptive_question_stream` (`/api/v1/questions/adaptive-stream`)
-- `bot_agent.__init__::answer_question_adaptive`
-- `bot_agent/answer_adaptive.py::answer_question_adaptive`
+- `docs/overview.md`
+- `docs/architecture.md`
+- `docs/bot_agent.md`
 
-## Legacy runtime dependencies (зафиксированы для поэтапного удаления)
-- `sd_classifier`
-- `sd_level`
-- `user_level_adapter`
-- `decision_gate`
-- `prompt_overlays`
-
-## Feature flags (Phase 0 safety net)
-- `NEO_MINDBOT_ENABLED`
-- `LEGACY_PIPELINE_ENABLED`
-- `DISABLE_SD_RUNTIME`
-- `DISABLE_USER_LEVEL_ADAPTER`
-- `USE_NEW_DIAGNOSTICS_V1`
-- `USE_DETERMINISTIC_ROUTE_RESOLVER`
-
-Правило: флагами управляем постепенной миграцией, без «слепого» rewrite.
+If you are validating current behavior, use trace contract `v2` and the latest PRD tasklists in project root.

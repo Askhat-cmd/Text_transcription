@@ -40,7 +40,7 @@ def evaluate_retrieval(eval_set_path: Path, top_k: int = 5) -> dict[str, Any]:
     api_available = True
     if hasattr(retriever, "_api_retrieve"):
         try:
-            retriever._api_retrieve(query="healthcheck", sd_level=0, top_k=1, author_id=None)
+            retriever._api_retrieve(query="healthcheck", top_k=1, author_id=None)
         except Exception:
             api_available = False
 
@@ -60,7 +60,7 @@ def evaluate_retrieval(eval_set_path: Path, top_k: int = 5) -> dict[str, Any]:
         total += 1
         expected = item.get("expected") or {}
         min_results = int(expected.get("min_results", 1))
-        results = retriever.retrieve(query=query, top_k=top_k, sd_level=0)
+        results = retriever.retrieve(query=query, top_k=top_k)
         found = len(results)
         hit = found >= min_results
         if hit:

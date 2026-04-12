@@ -51,28 +51,11 @@ LEGACY_CONFIG_KEY_MAP = {
     "RERANK_TOP_K": "VOYAGE_TOP_K",
 }
 
-DEPRECATED_CONFIG_KEYS = {
-    "SD_CLASSIFIER_ENABLED",
-    "SD_CLASSIFIER_CONFIDENCE_THRESHOLD",
-    "DECISION_GATE_RULE_THRESHOLD",
-    "DECISION_GATE_LLM_ROUTER_ENABLED",
-    "PROMPT_SD_OVERRIDES_BASE",
-    "PROMPT_MODE_OVERRIDES_SD",
-}
+DEPRECATED_CONFIG_KEYS: set[str] = set()
 
-COMPATIBILITY_ONLY_CONFIG_KEYS = set(DEPRECATED_CONFIG_KEYS)
+COMPATIBILITY_ONLY_CONFIG_KEYS: set[str] = set()
 
-DEPRECATED_PROMPT_KEYS = {
-    "prompt_sd_green",
-    "prompt_sd_blue",
-    "prompt_sd_red",
-    "prompt_sd_orange",
-    "prompt_sd_yellow",
-    "prompt_sd_purple",
-    "prompt_system_level_beginner",
-    "prompt_system_level_intermediate",
-    "prompt_system_level_advanced",
-}
+DEPRECATED_PROMPT_KEYS: set[str] = set()
 
 PROMPT_STACK_V2_VARIANTS = [
     "inform-rich",
@@ -87,14 +70,23 @@ PROMPT_STACK_V2_EDITABLE_MAP = {
 }
 
 
+def _filter_operational_flags(snapshot: dict[str, bool]) -> dict[str, bool]:
+    return {
+        key: value
+        for key, value in (snapshot or {}).items()
+        if not key.startswith("DISABLE_SD_")
+    }
+
+
 def _status_snapshot() -> dict[str, Any]:
     stats = data_loader.get_stats()
+    flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
     return {
         "degraded_mode": bool(stats.get("degraded_mode", False)),
         "data_source": stats.get("data_source", "unknown"),
         "blocks_loaded": int(stats.get("total_blocks", 0)),
         "version": "0.7.0",
-        "feature_flags": feature_flags.snapshot(),
+        "feature_flags": flags_snapshot,
     }
 
 
@@ -212,7 +204,6 @@ def _group_feature_flags(snapshot: dict[str, bool]) -> dict[str, dict[str, bool]
         "neo_runtime": (
             "NEO_MINDBOT_ENABLED",
             "LEGACY_PIPELINE_ENABLED",
-            "DISABLE_SD_RUNTIME",
             "DISABLE_USER_LEVEL_ADAPTER",
         ),
         "pipeline": (
@@ -244,7 +235,7 @@ def _group_param_value(group_name: str, key: str, default: Any = None) -> Any:
 
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
-    flags_snapshot = feature_flags.snapshot()
+    flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
     validation = validate_runtime_config(config)
     # session_id retained only for route-level backward compatibility.
     _ = session_id

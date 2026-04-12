@@ -15,7 +15,6 @@ export type {
   PathStep,
   PathRecommendation,
   ChunkTraceItem,
-  SDClassificationTrace,
   LLMCallTrace,
   LLMPayloadCall,
   LLMPayloadTrace,

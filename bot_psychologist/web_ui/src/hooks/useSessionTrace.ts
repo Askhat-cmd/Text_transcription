@@ -5,11 +5,6 @@ import { storageService } from '../services/storage.service';
 export interface SessionMetrics {
   total_turns: number;
   fast_path_pct: number;
-  sd_distribution: {
-    GREEN: number;
-    YELLOW: number;
-    RED: number;
-  };
   avg_llm_time_ms: number;
   max_llm_time_ms: number;
   total_cost_usd: number;

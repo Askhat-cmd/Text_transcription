@@ -84,8 +84,8 @@ export const LLMPayloadPanel: React.FC<Props> = ({ sessionId }) => {
             <div className="grid grid-cols-2 gap-2 text-[11px]">
               <div className="rounded bg-slate-50 dark:bg-slate-900 p-2">turn: {payload.turn_number ?? '—'}</div>
               <div className="rounded bg-slate-50 dark:bg-slate-900 p-2">mode: {payload.recommended_mode ?? '—'}</div>
-              <div className="rounded bg-slate-50 dark:bg-slate-900 p-2">sd: {payload.sd_level ?? '—'}</div>
               <div className="rounded bg-slate-50 dark:bg-slate-900 p-2">state: {payload.user_state ?? '—'}</div>
+              <div className="rounded bg-slate-50 dark:bg-slate-900 p-2">chunks: {payload.chunks_count ?? '—'}</div>
             </div>
 
             {payload.hybrid_query_preview && (
@@ -139,3 +139,4 @@ export const LLMPayloadPanel: React.FC<Props> = ({ sessionId }) => {
     </details>
   );
 };
+

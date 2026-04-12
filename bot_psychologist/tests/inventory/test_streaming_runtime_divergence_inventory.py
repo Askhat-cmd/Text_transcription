@@ -24,6 +24,7 @@ def test_streaming_runtime_legacy_markers_are_sanitized() -> None:
     assert "sd_classifier" not in text
 
     # Active runtime keeps explicit sanitization of legacy trace fields.
-    assert "trace.pop(\"sd_classification\", None)" in text
-    assert "trace.pop(\"sd_detail\", None)" in text
+    assert "_strip_legacy_trace_fields(" in text
+    assert "\"sd_classification\"" in text
+    assert "\"sd_detail\"" in text
     assert "user_level_adapter_applied" in text

@@ -118,16 +118,6 @@ class SessionStore:
             if isinstance(cost, (int, float)):
                 total_cost_usd += float(cost)
 
-        sd_distribution = {
-            "GREEN": 0,
-            "YELLOW": 0,
-            "RED": 0,
-        }
-        for t in traces:
-            sd_level = t.get("sd_level") or (t.get("sd_classification") or {}).get("primary")
-            if sd_level in sd_distribution:
-                sd_distribution[sd_level] += 1
-
         turns_with_anomalies = sum(1 for t in traces if (t.get("anomalies") or []))
 
         return {
@@ -135,7 +125,6 @@ class SessionStore:
             "fast_path_pct": fast_path_pct,
             "avg_llm_time_ms": avg_llm_time_ms,
             "total_cost_usd": round(total_cost_usd, 6),
-            "sd_distribution": sd_distribution,
             "turns_with_anomalies": turns_with_anomalies,
         }
 

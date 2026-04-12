@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.7.1 - 2026-04-12
+
+### Changed
+- Trace contract aligned to `v2` across API debug and stream payloads.
+- Runtime trace sanitization hardened to strip outdated fields on read.
+- Web inline trace updated to Neo-only status chips and deep sections.
+- Admin routing surface reduced to active Neo controls only.
+- Runtime config editable surface cleaned from outdated routing keys.
+- Retrieval evaluation scripts aligned to Neo retrieval signature.
+
+### Added
+- UI regression guard: `tests/ui/test_trace_statusbar_neo_contract.py`.
+
+### Documentation
+- Reworked `README.md` and core docs to Neo-only runtime description.
+- Updated `.env.example` comments and removed outdated runtime flags from sample config.
+- Added PRD-012 before/after cleanup report.
+
+### Verification
+- `pytest tests/contract tests/ui tests/inventory tests/regression/test_no_sd_runtime_metadata_fields.py tests/regression/test_trace_reflects_real_execution_only.py tests/regression/test_streaming_sd_runtime_disabled_contract.py tests/test_llm_payload_endpoint.py tests/test_sse_payload.py -q`
+- `npm run lint` and `npm run build` in `web_ui/`
+
 ## v0.7.0 - 2026-03-31
 
 ### Added

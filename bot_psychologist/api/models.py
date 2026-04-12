@@ -153,24 +153,13 @@ class ChunkTraceItem(BaseModel):
     """Один чанк из ChromaDB с полной информацией для отладки."""
     block_id: str
     title: str
-    sd_level: str
-    sd_secondary: str = ""
     emotional_tone: str = ""
     score_initial: float
     score_final: float
     passed_filter: bool
     filter_reason: str = ""
     preview: str
-
-
-class SDClassificationTrace(BaseModel):
-    """Результат классификации SD-уровня пользователя."""
-    method: str
-    primary: str
-    secondary: Optional[str]
-    confidence: float
-    indicator: str
-    allowed_levels: List[str]
+    text: Optional[str] = None
 
 
 class MemoryTurnPreview(BaseModel):
@@ -185,15 +174,6 @@ class SemanticHitDetail(BaseModel):
     score: float
     text_preview: str
     source: Optional[str] = None
-
-
-class SDClassificationDetail(BaseModel):
-    method: str
-    primary: str
-    secondary: Optional[str] = None
-    confidence: float
-    indicator: str
-    allowed_levels: List[str]
 
 
 class PipelineStage(BaseModel):
@@ -220,11 +200,9 @@ class ConfigSnapshot(BaseModel):
     conversation_history_depth: int
     max_context_size: int
     semantic_search_top_k: int
-    sd_confidence_threshold: Optional[float] = None
     fast_path_enabled: bool
     rerank_enabled: bool
     model_name: str
-    user_level: Optional[str] = None
 
 
 class PipelineError(BaseModel):
@@ -253,7 +231,7 @@ class LLMCallTrace(BaseModel):
 
 class DebugTrace(BaseModel):
     """Полная цепочка рассуждений бота для одного запроса."""
-    sd_classification: Optional[SDClassificationTrace] = None
+    trace_contract_version: str = "v2"
     chunks_retrieved: List[ChunkTraceItem]
     chunks_after_filter: List[ChunkTraceItem] = Field(default_factory=list)
     llm_calls: List[LLMCallTrace]
@@ -282,7 +260,6 @@ class DebugTrace(BaseModel):
     hybrid_query_text: Optional[str] = None
     hybrid_query_len: Optional[int] = None
     context_mode: Optional[str] = None
-    sd_detail: Optional[SDClassificationDetail] = None
     memory_turns: Optional[int] = None
     memory_turns_content: List[MemoryTurnPreview] = Field(default_factory=list)
     summary_text: Optional[str] = None
@@ -304,7 +281,6 @@ class DebugTrace(BaseModel):
     pipeline_error: Optional[PipelineError] = None
     session_id: Optional[str] = None
     turn_number: Optional[int] = None
-    sd_level: Optional[str] = None
     user_state: Optional[str] = None
     recommended_mode: Optional[str] = None
     confidence_score: Optional[float] = None

@@ -30,15 +30,6 @@ const TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'compatibility',   label: '🧰 Compatibility',    hoverColor: 'hover:bg-amber-500/20' },
 ];
 
-const DEPRECATED_ROUTING_KEYS = new Set([
-  'SD_CLASSIFIER_ENABLED',
-  'SD_CLASSIFIER_CONFIDENCE_THRESHOLD',
-  'DECISION_GATE_RULE_THRESHOLD',
-  'DECISION_GATE_LLM_ROUTER_ENABLED',
-  'PROMPT_SD_OVERRIDES_BASE',
-  'PROMPT_MODE_OVERRIDES_SD',
-]);
-
 const ROUTING_ADVANCED_KEYS = new Set([
   'FAST_DETECTOR_ENABLED',
   'FAST_DETECTOR_CONFIDENCE_THRESHOLD',
@@ -121,14 +112,7 @@ export const AdminPanel: React.FC = () => {
   const routingGroup = configData?.groups?.routing;
   const retrievalGroup = configData?.groups?.retrieval;
   const memoryGroup = configData?.groups?.memory;
-  const filteredRoutingGroup = routingGroup
-    ? {
-        ...routingGroup,
-        params: Object.fromEntries(
-          Object.entries(routingGroup.params).filter(([key]) => !DEPRECATED_ROUTING_KEYS.has(key))
-        ),
-      }
-    : null;
+  const filteredRoutingGroup = routingGroup ?? null;
   const routingPolicyGroup = filteredRoutingGroup
     ? {
         ...filteredRoutingGroup,
@@ -479,7 +463,7 @@ export const AdminPanel: React.FC = () => {
                   <h3 className="font-semibold text-slate-800 mb-2">Neo Route Taxonomy</h3>
                   <div className="text-sm text-slate-600">{ROUTE_TAXONOMY.join(' • ')}</div>
                   <p className="mt-2 text-xs text-slate-500">
-                    Legacy Decision Gate and SD routing controls are moved out of primary routing surface.
+                    Routing surface reflects active Neo controls only.
                   </p>
                 </div>
                 <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">

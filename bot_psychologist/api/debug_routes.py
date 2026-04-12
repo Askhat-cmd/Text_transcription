@@ -6,10 +6,23 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from .auth import verify_api_key, is_dev_key
 from .session_store import SessionStore, get_session_store
 from bot_agent.config import config
-from bot_agent.feature_flags import feature_flags
 
 router = APIRouter(prefix="/api/debug", tags=["debug"])
 logger = logging.getLogger(__name__)
+
+
+def _sanitize_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
+    trace = dict(raw_trace or {})
+    for key in ("sd_level", "sd_classification", "sd_detail"):
+        trace.pop(key, None)
+    cfg = trace.get("config_snapshot")
+    if isinstance(cfg, dict):
+        cfg_clean = dict(cfg)
+        cfg_clean.pop("sd_confidence_threshold", None)
+        cfg_clean.pop("user_level", None)
+        trace["config_snapshot"] = cfg_clean
+    trace["trace_contract_version"] = "v2"
+    return trace
 
 
 @router.get("/blob/{blob_id}")
@@ -40,18 +53,14 @@ async def get_session_metrics(
         return {
             "total_turns": 0,
             "fast_path_pct": 0,
-            "sd_distribution": {
-                "GREEN": 0,
-                "YELLOW": 0,
-                "RED": 0,
-            },
             "avg_llm_time_ms": 0,
             "max_llm_time_ms": 0,
             "total_cost_usd": 0.0,
             "turns_with_anomalies": 0,
             "anomaly_turns_indices": [],
         }
-    return _aggregate_session_metrics(traces)
+    sanitized = [_sanitize_trace_payload(t) for t in traces if isinstance(t, dict)]
+    return _aggregate_session_metrics(sanitized)
 
 
 @router.get("/session/{session_id}/traces")
@@ -63,7 +72,8 @@ async def get_session_traces(
     if not is_dev_key(api_key):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Debug access denied")
     traces = store.get_session_traces(session_id)
-    return {"session_id": session_id, "traces": traces}
+    sanitized = [_sanitize_trace_payload(t) for t in traces if isinstance(t, dict)]
+    return {"session_id": session_id, "traces": sanitized}
 
 
 @router.get("/session/{session_id}/llm-payload")
@@ -80,7 +90,7 @@ async def get_session_llm_payload(
     if not traces:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session trace not found")
 
-    trace = traces[-1]
+    trace = _sanitize_trace_payload(traces[-1])
     llm_calls = trace.get("llm_calls") or []
     if not llm_calls:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No LLM payload for this session")
@@ -176,7 +186,6 @@ def _build_flat_payload(
 
     memory_blob_id = trace.get("memory_snapshot_blob_id")
     memory_snapshot = _clip_for_payload(store.get_blob(memory_blob_id) or "") if memory_blob_id else ""
-    sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
     payload = {
         "session_id": session_id,
         "turn_number": trace.get("turn_number"),
@@ -187,8 +196,6 @@ def _build_flat_payload(
         "llm_calls": payload_calls,
         "memory_snapshot": memory_snapshot,
     }
-    if not sd_runtime_disabled:
-        payload["sd_level"] = trace.get("sd_level")
     return payload
 
 
@@ -310,7 +317,6 @@ def _build_structured_payload(*, trace: Dict[str, Any], flat_payload: Dict[str, 
 def _aggregate_session_metrics(traces: list) -> dict:
     total = len(traces)
     fast_path_count = sum(1 for t in traces if t.get("fast_path"))
-    sd_levels = [t.get("sd_level", "unknown") for t in traces]
     llm_times = [t.get("total_duration_ms", 0) for t in traces]
     costs = [t.get("estimated_cost_usd", 0) or 0 for t in traces]
     anomaly_counts = [len(t.get("anomalies", [])) for t in traces]
@@ -318,11 +324,6 @@ def _aggregate_session_metrics(traces: list) -> dict:
     return {
         "total_turns": total,
         "fast_path_pct": round(fast_path_count / total * 100, 1) if total else 0,
-        "sd_distribution": {
-            "GREEN": sd_levels.count("GREEN"),
-            "YELLOW": sd_levels.count("YELLOW"),
-            "RED": sd_levels.count("RED"),
-        },
         "avg_llm_time_ms": round(sum(llm_times) / total) if total else 0,
         "max_llm_time_ms": max(llm_times) if llm_times else 0,
         "total_cost_usd": round(sum(costs), 6),

@@ -17,8 +17,9 @@ def test_legacy_routing_tab_component_not_used_in_primary_surface() -> None:
     assert "<RoutingTab" not in text
 
 
-def test_deprecated_routing_controls_are_filtered_from_primary_routing_panel() -> None:
+def test_primary_routing_panel_is_neo_only() -> None:
     text = _read_admin_panel()
-    assert "DEPRECATED_ROUTING_KEYS" in text
-    assert "DECISION_GATE_RULE_THRESHOLD" in text
-    assert "SD_CLASSIFIER_ENABLED" in text
+    assert "DEPRECATED_ROUTING_KEYS" not in text
+    assert "SD_CLASSIFIER_ENABLED" not in text
+    assert "SD_CLASSIFIER_CONFIDENCE_THRESHOLD" not in text
+    assert "PROMPT_SD_OVERRIDES_BASE" not in text

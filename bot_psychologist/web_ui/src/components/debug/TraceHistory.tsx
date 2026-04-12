@@ -7,8 +7,8 @@ const formatMs = (value?: number | null) => (typeof value === 'number' ? `${valu
 const traceLabel = (trace: InlineTrace) => {
   const turn = trace.turn_number ?? '—';
   const mode = trace.recommended_mode ?? '—';
-  const sd = trace.sd_level ?? trace.sd_classification?.primary ?? '—';
-  return `#${turn} · ${mode} · ${sd}`;
+  const state = trace.user_state ?? '—';
+  return `#${turn} · ${mode} · ${state}`;
 };
 
 export const TraceHistory: React.FC<{ sessionId: string }> = ({ sessionId }) => {

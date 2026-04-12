@@ -25,7 +25,6 @@ from bot_agent.config import config
 from bot_agent.data_loader import data_loader
 from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.storage import SessionManager
-from bot_agent.feature_flags import feature_flags
 
 from .models import (
     AskQuestionRequest, FeedbackRequest,
@@ -34,7 +33,7 @@ from .models import (
     SessionInfoResponse, ArchiveSessionsResponse,
     ChatSessionInfoResponse, UserSessionsResponse, CreateSessionRequest, DeleteSessionResponse,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
-    ConversationTurnResponse, DebugTrace, SDClassificationTrace, ChunkTraceItem, LLMCallTrace
+    ConversationTurnResponse, DebugTrace, ChunkTraceItem, LLMCallTrace
 )
 from .auth import verify_api_key, is_dev_key
 from .dependencies import get_data_loader, get_graph_client, get_retriever
@@ -84,10 +83,11 @@ def _append_trace_with_resolved_session(
         store.append_trace(default_session_key, trace_payload)
 
 
-def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default: bool) -> ChunkTraceItem:
+def _to_chunk_trace_item(raw_chunk: dict, passed_default: bool) -> ChunkTraceItem:
     score_initial = float(raw_chunk.get("score_initial", raw_chunk.get("score", 0.0) or 0.0))
     score_final = float(raw_chunk.get("score_final", raw_chunk.get("score", score_initial) or score_initial))
     passed_filter = bool(raw_chunk.get("passed_filter", passed_default))
+    chunk_text = raw_chunk.get("text") or raw_chunk.get("full_text")
     preview = (
         raw_chunk.get("preview")
         or raw_chunk.get("content")
@@ -97,34 +97,35 @@ def _to_chunk_trace_item(raw_chunk: dict, default_sd_level: str, passed_default:
     return ChunkTraceItem(
         block_id=str(raw_chunk.get("block_id", "")),
         title=str(raw_chunk.get("title", "")),
-        sd_level=str(raw_chunk.get("sd_level", default_sd_level or "UNKNOWN")),
-        sd_secondary=str(raw_chunk.get("sd_secondary") or ""),
         emotional_tone=str(raw_chunk.get("emotional_tone") or ""),
         score_initial=score_initial,
         score_final=score_final,
         passed_filter=passed_filter,
         filter_reason=str(raw_chunk.get("filter_reason") or ""),
         preview=str(preview)[:120],
+        text=str(chunk_text) if chunk_text is not None else None,
     )
 
 
-def _strip_legacy_trace_fields(raw_trace: dict, *, sd_runtime_disabled: bool) -> dict:
+def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
     trace = dict(raw_trace or {})
-    for key in ("user_level", "user_level_adapter_applied"):
+    for key in (
+        "user_level",
+        "user_level_adapter_applied",
+        "sd_classification",
+        "sd_detail",
+        "sd_level",
+    ):
         trace.pop(key, None)
 
     cfg_snapshot = trace.get("config_snapshot")
     if isinstance(cfg_snapshot, dict):
         cfg_clean = dict(cfg_snapshot)
         cfg_clean.pop("user_level", None)
-        if sd_runtime_disabled:
-            cfg_clean.pop("sd_confidence_threshold", None)
+        cfg_clean.pop("sd_confidence_threshold", None)
         trace["config_snapshot"] = cfg_clean
 
-    if sd_runtime_disabled:
-        trace.pop("sd_classification", None)
-        trace.pop("sd_detail", None)
-        trace.pop("sd_level", None)
+    trace["trace_contract_version"] = "v2"
 
     return trace
 
@@ -139,13 +140,12 @@ _LEGACY_RUNTIME_METADATA_KEYS = (
 )
 
 
-def _strip_legacy_runtime_metadata(raw_metadata: dict, *, sd_runtime_disabled: bool) -> dict:
+def _strip_legacy_runtime_metadata(raw_metadata: dict) -> dict:
     metadata = dict(raw_metadata or {})
     for key in _LEGACY_RUNTIME_METADATA_KEYS:
         metadata.pop(key, None)
-    if sd_runtime_disabled:
-        for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
-            metadata.pop(key, None)
+    for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
+        metadata.pop(key, None)
     return metadata
 
 
@@ -465,10 +465,7 @@ async def ask_adaptive_question(
                 first_step=first_step_response
             )
         
-        response_metadata = _strip_legacy_runtime_metadata(
-            result.get("metadata", {}),
-            sd_runtime_disabled=feature_flags.enabled("DISABLE_SD_RUNTIME"),
-        )
+        response_metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}))
         response_metadata["user_id"] = request.user_id
         response_metadata["session_id"] = session_key
 
@@ -478,23 +475,6 @@ async def ask_adaptive_question(
             try:
                 metadata = result.get("metadata", {}) or {}
                 raw_dict = raw if isinstance(raw, dict) else {}
-
-                sd_raw = raw_dict.get("sd_classification") or {}
-                if not isinstance(sd_raw, dict):
-                    sd_raw = {}
-                sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
-                allowed_levels = (
-                    sd_raw.get("allowed_levels")
-                    or sd_raw.get("allowed_blocks")
-                    or metadata.get("sd_allowed_blocks")
-                    or []
-                )
-                if not isinstance(allowed_levels, list):
-                    allowed_levels = []
-
-                default_sd_level = "NONE" if sd_runtime_disabled else str(
-                    sd_raw.get("primary") or metadata.get("sd_level") or "UNKNOWN"
-                )
 
                 chunks_retrieved_raw = []
                 chunks_after_raw = []
@@ -525,9 +505,7 @@ async def ask_adaptive_question(
                     if isinstance(c, ChunkTraceItem):
                         chunks_retrieved.append(c)
                     elif isinstance(c, dict):
-                        chunks_retrieved.append(
-                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=False)
-                        )
+                        chunks_retrieved.append(_to_chunk_trace_item(c, passed_default=False))
 
                 chunks_after_filter_raw = raw_dict.get("chunks_after_filter") or chunks_after_raw or []
                 chunks_after_filter = []
@@ -535,9 +513,7 @@ async def ask_adaptive_question(
                     if isinstance(c, ChunkTraceItem):
                         chunks_after_filter.append(c)
                     elif isinstance(c, dict):
-                        chunks_after_filter.append(
-                            _to_chunk_trace_item(c, default_sd_level=default_sd_level, passed_default=True)
-                        )
+                        chunks_after_filter.append(_to_chunk_trace_item(c, passed_default=True))
 
                 # Fallback: если в debug нет чанков, но есть финальные sources — показываем их как прошедшие фильтр.
                 if not chunks_retrieved and not chunks_after_filter:
@@ -549,13 +525,10 @@ async def ask_adaptive_question(
                                     "block_id": src.get("block_id", ""),
                                     "title": src.get("title", ""),
                                     "score": 0.0,
-                                    "sd_level": default_sd_level,
-                                    "sd_secondary": "",
                                     "emotional_tone": "",
                                     "passed_filter": True,
                                     "preview": "",
                                 },
-                                default_sd_level=default_sd_level,
                                 passed_default=True,
                             ))
                     chunks_after_filter = source_chunks
@@ -570,6 +543,7 @@ async def ask_adaptive_question(
                         logger.warning(f"[DEBUG_TRACE] Invalid LLM call trace item skipped: {llm_exc}")
 
                 trace_payload = {
+                    "trace_contract_version": "v2",
                     "chunks_retrieved": chunks_retrieved,
                     "chunks_after_filter": chunks_after_filter,
                     "llm_calls": llm_calls,
@@ -609,27 +583,6 @@ async def ask_adaptive_question(
                     "context_mode": metadata.get("context_mode"),
                     "hybrid_query_len": metadata.get("hybrid_query_len"),
                 }
-                if not sd_runtime_disabled:
-                    trace_payload["sd_level"] = metadata.get("sd_level")
-                    trace_payload["sd_classification"] = SDClassificationTrace(
-                        method=str(sd_raw.get("method", metadata.get("sd_method", "fallback"))),
-                        primary=default_sd_level,
-                        secondary=sd_raw.get("secondary", metadata.get("sd_secondary")),
-                        confidence=float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
-                        indicator=str(sd_raw.get("indicator", "metadata_fallback")),
-                        allowed_levels=[str(level) for level in allowed_levels],
-                    )
-                    trace_payload["sd_detail"] = (
-                        raw_dict.get("sd_detail")
-                        or {
-                            "method": sd_raw.get("method", metadata.get("sd_method", "fallback")),
-                            "primary": default_sd_level,
-                            "secondary": sd_raw.get("secondary", metadata.get("sd_secondary")),
-                            "confidence": float(sd_raw.get("confidence", metadata.get("sd_confidence", 0.0) or 0.0)),
-                            "indicator": sd_raw.get("indicator", "metadata_fallback"),
-                            "allowed_levels": [str(level) for level in allowed_levels],
-                        }
-                    )
 
                 # Extensions from debug trace (v2.0.6)
                 for key in [
@@ -642,7 +595,6 @@ async def ask_adaptive_question(
                     "hybrid_query_text",
                     "hybrid_query_len",
                     "context_mode",
-                    "sd_detail",
                     "memory_turns_content",
                     "summary_text",
                     "summary_length",
@@ -663,28 +615,25 @@ async def ask_adaptive_question(
                     "estimated_cost_usd",
                     "pipeline_error",
                     "turn_number",
-                    "sd_level",
                     "user_state",
                     "recommended_mode",
                     "confidence_score",
                     "confidence_level",
                     "informational_mode",
                     "applied_mode_prompt",
-                    "sd_classification",
                 ]:
-                    if sd_runtime_disabled and key in {"sd_detail", "sd_level", "sd_classification"}:
-                        continue
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):
                             trace_payload[key] = _strip_legacy_trace_fields(
                                 {"config_snapshot": raw_dict.get(key)},
-                                sd_runtime_disabled=sd_runtime_disabled,
                             ).get("config_snapshot")
                         else:
                             trace_payload[key] = raw_dict.get(key)
 
                 if trace_payload.get("decision_rule_id") is not None:
                     trace_payload["decision_rule_id"] = str(trace_payload.get("decision_rule_id"))
+
+                trace_payload = _strip_legacy_trace_fields(trace_payload)
 
                 trace = DebugTrace(**trace_payload)
 
@@ -797,8 +746,6 @@ async def ask_adaptive_question_stream(
         _result_holder.update(result)
 
     async def event_stream():
-        sd_runtime_disabled = feature_flags.enabled("DISABLE_SD_RUNTIME")
-
         try:
             async for token in stream_answer_tokens(
                 request.query,
@@ -820,7 +767,7 @@ async def ask_adaptive_question_stream(
             trace_raw = result.get("debug_trace") or result.get("debug")
             trace = trace_raw if isinstance(trace_raw, dict) else None
             if trace is not None:
-                trace = _strip_legacy_trace_fields(trace, sd_runtime_disabled=sd_runtime_disabled)
+                trace = _strip_legacy_trace_fields(trace)
 
             done_payload = {
                 "done": True,
@@ -829,10 +776,6 @@ async def ask_adaptive_question_stream(
                 "mode": (result.get("metadata") or {}).get("recommended_mode"),
                 "latency_ms": latency_ms,
             }
-            if not sd_runtime_disabled:
-                sd_level = (result.get("metadata") or {}).get("sd_level")
-                if sd_level is not None:
-                    done_payload["sd_level"] = sd_level
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             if request.debug and trace is not None:

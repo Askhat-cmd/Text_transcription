@@ -1,4 +1,4 @@
-/**
+﻿/**
  * API Types for Bot Psychologist Web UI
  *
  * Types matching the FastAPI backend models from Phase 5.
@@ -81,24 +81,13 @@ export interface PathRecommendation {
 export interface ChunkTraceItem {
   block_id: string;
   title: string;
-  sd_level: string;
-  sd_secondary: string;
   emotional_tone: string;
   score_initial: number;
   score_final: number;
   passed_filter: boolean;
   filter_reason: string;
   preview: string;
-  text?: string | null;  // FIX 1b: полный текст чанка
-}
-
-export interface SDClassificationTrace {
-  method: string;
-  primary: string;
-  secondary?: string | null;
-  confidence: number;
-  indicator: string;
-  allowed_levels: string[];
+  text?: string | null;
 }
 
 export interface MemoryTurnPreview {
@@ -113,15 +102,6 @@ export interface SemanticHitDetail {
   score: number;
   text_preview: string;
   source?: string | null;
-}
-
-export interface SDClassificationDetail {
-  method: string;
-  primary: string;
-  secondary?: string | null;
-  confidence: number;
-  indicator: string;
-  allowed_levels: string[];
 }
 
 export interface PipelineStage {
@@ -148,11 +128,9 @@ export interface ConfigSnapshot {
   conversation_history_depth: number;
   max_context_size: number;
   semantic_search_top_k: number;
-  sd_confidence_threshold?: number | null;
   fast_path_enabled: boolean;
   rerank_enabled: boolean;
   model_name: string;
-  user_level?: string | null;
 }
 
 export interface PipelineError {
@@ -178,7 +156,7 @@ export interface LLMCallTrace {
 }
 
 export interface DebugTrace {
-  sd_classification?: SDClassificationTrace | null;
+  trace_contract_version?: string | null;
   chunks_retrieved: ChunkTraceItem[];
   chunks_after_filter?: ChunkTraceItem[];
   llm_calls: LLMCallTrace[];
@@ -207,7 +185,6 @@ export interface DebugTrace {
   hybrid_query_text?: string | null;
   hybrid_query_len?: number | null;
   context_mode?: string | null;
-  sd_detail?: SDClassificationDetail | null;
   memory_turns?: number | null;
   memory_turns_content?: MemoryTurnPreview[];
   summary_text?: string | null;
@@ -229,7 +206,6 @@ export interface DebugTrace {
   pipeline_error?: PipelineError | null;
   session_id?: string | null;
   turn_number?: number | null;
-  sd_level?: string | null;
   user_state?: string | null;
   recommended_mode?: string | null;
   confidence_score?: number | null;
@@ -252,7 +228,6 @@ export interface LLMPayloadTrace {
   session_id: string;
   turn_number?: number | null;
   recommended_mode?: string | null;
-  sd_level?: string | null;
   user_state?: string | null;
   hybrid_query_preview?: string | null;
   chunks_count?: number;
@@ -362,3 +337,5 @@ export interface StatsResponse {
   feedback_stats: Record<string, number>;
   timestamp: string;
 }
+
+

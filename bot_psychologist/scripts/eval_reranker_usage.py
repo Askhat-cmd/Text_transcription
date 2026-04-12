@@ -53,7 +53,7 @@ def evaluate_reranker_usage(
     api_available = True
     if hasattr(retriever, "_api_retrieve"):
         try:
-            retriever._api_retrieve(query="healthcheck", sd_level=0, top_k=1, author_id=None)
+            retriever._api_retrieve(query="healthcheck", top_k=1, author_id=None)
         except Exception:
             api_available = False
     if not api_available and hasattr(retriever, "_api_retrieve"):
@@ -76,7 +76,7 @@ def evaluate_reranker_usage(
     }
 
     for query in queries:
-        retrieved = retriever.retrieve(query=query, top_k=effective_top_k, sd_level=0)
+        retrieved = retriever.retrieve(query=query, top_k=effective_top_k)
         signals = detect_routing_signals(query, retrieved, state_analysis)
         routing = decision_gate.route(signals, user_stage="intermediate")
         run, reason = should_rerank(

@@ -14,16 +14,6 @@ interface Props {
   trace: InlineTrace;
 }
 
-const SD_COLORS: Record<string, string> = {
-  PURPLE: 'text-purple-600 dark:text-purple-400',
-  RED: 'text-red-600 dark:text-red-400',
-  BLUE: 'text-blue-600 dark:text-blue-400',
-  ORANGE: 'text-orange-500 dark:text-orange-400',
-  GREEN: 'text-emerald-600 dark:text-emerald-400',
-  YELLOW: 'text-yellow-500 dark:text-yellow-300',
-  TURQUOISE: 'text-teal-500 dark:text-teal-300',
-};
-
 const MODE_COLORS: Record<string, string> = {
   PRESENCE: 'bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-300',
   CLARIFICATION: 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300',
@@ -44,8 +34,6 @@ const formatMs = (value?: number | null) => (typeof value === 'number' ? `${valu
 
 const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed }) => {
   const [expanded, setExpanded] = useState(false);
-  const sdLevel = (chunk?.sd_level || '').toUpperCase();
-  const sdColor = SD_COLORS[sdLevel] || 'text-slate-500';
   const isPassed = passed ?? chunk?.passed_filter ?? false;
   const fullText: string | undefined = chunk?.text ?? chunk?.full_text;
   const previewText: string | undefined = chunk?.preview;
@@ -56,7 +44,6 @@ const ChunkRow: React.FC<{ chunk: any; passed?: boolean }> = ({ chunk, passed })
       <div className="flex items-center gap-2">
         <span className={isPassed ? 'text-emerald-600' : 'text-rose-500'}>{isPassed ? 'OK' : 'NO'}</span>
         <code className="font-mono font-semibold text-slate-700 dark:text-slate-300">{chunk?.block_id}</code>
-        <span className={`text-[10px] uppercase ${sdColor}`}>{sdLevel || '—'}</span>
         <span className="ml-auto text-slate-500 font-mono">
           {formatNumber(chunk?.score_initial ?? 0, 3)} {'>'} {formatNumber(chunk?.score_final ?? 0, 3)}
         </span>
@@ -110,9 +97,6 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
         ? 'text-amber-500'
         : 'text-rose-500'
     : 'text-slate-500';
-
-  const sdLevel = (trace.sd_level || trace.sd_classification?.primary || '').toUpperCase();
-  const sdColor = SD_COLORS[sdLevel] || '';
 
   const chunksRetrieved = trace.chunks_retrieved ?? [];
   const chunksAfter = trace.chunks_after_filter ?? [];
@@ -171,13 +155,6 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
               <p className="text-[10px] text-slate-400 uppercase tracking-wide">Состояние</p>
               <p className="font-semibold text-slate-700 dark:text-slate-300">{trace.user_state ?? '—'}</p>
             </div>
-            <div id="debug-sd" className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-              <p className="text-[10px] text-slate-400 uppercase tracking-wide">SD уровень</p>
-              <p className={`font-bold uppercase ${sdColor}`}>{sdLevel || '—'}</p>
-              {trace.sd_detail?.confidence != null && (
-                <p className="text-[10px] text-slate-400">conf: {formatNumber(trace.sd_detail.confidence, 2)}</p>
-              )}
-            </div>
             {trace.fast_path && (
               <div className="rounded-lg bg-amber-50 dark:bg-amber-900/30 px-3 py-2">
                 <p className="text-[10px] text-amber-700 uppercase tracking-wide">Fast Path</p>
@@ -192,19 +169,6 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
               <p className="text-[10px] text-slate-400">initial: {trace.blocks_initial ?? '—'} {'>'} cap: {trace.blocks_after_cap ?? '—'}</p>
             </div>
           </div>
-
-          {trace.sd_detail && (
-            <details className="mt-2">
-              <summary className="cursor-pointer text-[10px] text-slate-400 select-none py-0.5">
-                SD Classification Detail {'>'}
-              </summary>
-              <div className="mt-1 rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <div className="text-[11px] text-slate-600 dark:text-slate-300">method: {trace.sd_detail.method}</div>
-                <div className="text-[11px] text-slate-600 dark:text-slate-300">indicator: {trace.sd_detail.indicator}</div>
-                <div className="text-[11px] text-slate-600 dark:text-slate-300">allowed: {(trace.sd_detail.allowed_levels || []).join(', ')}</div>
-              </div>
-            </details>
-          )}
         </details>
 
         <details id="debug-timeline">
@@ -506,7 +470,7 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
             )}
             {trace.classifier_model && (
               <div className="rounded-lg bg-white dark:bg-slate-800 px-3 py-2">
-                <p className="text-[10px] text-slate-400 uppercase tracking-wide">Classifier</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-wide">State Router Model</p>
                 <p className="font-mono font-semibold text-violet-600 dark:text-violet-400 text-[11px] truncate">
                   {trace.classifier_model}
                 </p>

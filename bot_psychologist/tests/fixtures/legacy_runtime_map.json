@@ -27,7 +27,6 @@
   ],
   "legacy_runtime_dependencies": {
     "sd_classifier": [
-      "bot_psychologist/api/routes.py",
       "bot_psychologist/bot_agent/answer_adaptive.py"
     ],
     "sd_level": [
@@ -40,7 +39,6 @@
       "bot_psychologist/bot_agent/response/response_generator.py"
     ],
     "decision_gate": [
-      "bot_psychologist/api/routes.py",
       "bot_psychologist/bot_agent/answer_adaptive.py"
     ],
     "prompt_overlays": [

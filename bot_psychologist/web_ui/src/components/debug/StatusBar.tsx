@@ -14,48 +14,37 @@ const chipColors: Record<string, string> = {
   teal: 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
   red: 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300',
   orange: 'bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300',
-  green: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
 };
-
-function sdColor(level?: string | null) {
-  const normalized = (level || '').toUpperCase();
-  if (normalized === 'GREEN') return 'green';
-  if (normalized === 'YELLOW') return 'amber';
-  if (normalized === 'RED') return 'red';
-  return 'slate';
-}
 
 export const StatusBar: React.FC<StatusBarProps> = ({ trace, isExpanded = false }) => {
   const anomalyCount = trace.anomalies?.length ?? 0;
   const hasError = trace.pipeline_error != null;
-  const sdLevel = trace.sd_level || trace.sd_classification?.primary || '—';
   const mode = trace.recommended_mode || '—';
   const blocksAfterCap = trace.blocks_after_cap ?? trace.chunks_after_filter?.length ?? trace.chunks_retrieved?.length;
   const blockCap = trace.block_cap ?? '—';
   const semanticHits = trace.semantic_hits ?? trace.semantic_hits_detail?.length ?? 0;
+  const rule = trace.decision_rule_id ?? '—';
+  const tokens = trace.tokens_total != null ? String(trace.tokens_total) : '—';
+  const llmMs = trace.total_duration_ms ? `${trace.total_duration_ms}ms` : '—';
 
   const chips = [
-    trace.fast_path && { label: 'FAST PATH', color: 'amber', anchor: 'routing' },
     { label: `MODE: ${mode}`, color: 'slate', anchor: 'routing' },
     { label: `STATE: ${trace.user_state ?? '—'}`, color: 'violet', anchor: 'memory' },
-    {
-      label: `SD: ${sdLevel} · ${trace.sd_detail?.confidence?.toFixed?.(2) ?? trace.sd_classification?.confidence?.toFixed?.(2) ?? '—'}`,
-      color: sdColor(sdLevel),
-      anchor: 'sd',
-    },
+    { label: `RULE: ${rule}`, color: 'amber', anchor: 'routing' },
     {
       label: `CHUNKS: ${blocksAfterCap ?? '—'} / cap ${blockCap}`,
       color: 'sky',
       anchor: 'chunks',
     },
     { label: `HITS: ${semanticHits}`, color: 'teal', anchor: 'memory' },
+    { label: `TOKENS: ${tokens}`, color: 'slate', anchor: 'cost' },
     {
-      label: `LLM: ${trace.total_duration_ms ? `${trace.total_duration_ms}ms` : '—'}`,
+      label: `LLM: ${llmMs}`,
       color: 'slate',
       anchor: 'llm',
     },
-    anomalyCount > 0 && {
-      label: `WARN ${anomalyCount}`,
+    {
+      label: `WARN: ${anomalyCount}`,
       color: hasError ? 'red' : 'orange',
       anchor: 'anomalies',
     },

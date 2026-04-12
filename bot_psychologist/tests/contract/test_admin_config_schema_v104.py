@@ -39,9 +39,9 @@ def test_admin_config_schema_v104_exists_and_contains_markers(admin_client):
     assert "routing" in editable_groups
 
     routing_params = editable_groups["routing"]["params"]
-    assert "DECISION_GATE_RULE_THRESHOLD" in routing_params
-    assert routing_params["DECISION_GATE_RULE_THRESHOLD"]["deprecated"] is True
-    assert routing_params["DECISION_GATE_RULE_THRESHOLD"]["compatibility_only"] is True
+    assert "STATE_CLASSIFIER_ENABLED" in routing_params
+    assert routing_params["STATE_CLASSIFIER_ENABLED"]["deprecated"] is False
+    assert routing_params["STATE_CLASSIFIER_ENABLED"]["compatibility_only"] is False
 
     assert "runtime_status" in payload["read_only"]
     assert "feature_flags" in payload["read_only"]

@@ -310,40 +310,6 @@ class RuntimeConfig(Config):
             "group": "routing",
             "label": "Порог state classifier",
         },
-        "SD_CLASSIFIER_ENABLED": {
-            "type": "bool",
-            "group": "routing",
-            "label": "SD classifier включен",
-        },
-        "SD_CLASSIFIER_CONFIDENCE_THRESHOLD": {
-            "type": "float",
-            "min": 0.0,
-            "max": 1.0,
-            "group": "routing",
-            "label": "Порог SD classifier",
-        },
-        "DECISION_GATE_RULE_THRESHOLD": {
-            "type": "float",
-            "min": 0.0,
-            "max": 1.0,
-            "group": "routing",
-            "label": "Порог Decision Gate",
-        },
-        "DECISION_GATE_LLM_ROUTER_ENABLED": {
-            "type": "bool",
-            "group": "routing",
-            "label": "Decision Gate LLM Router",
-        },
-        "PROMPT_SD_OVERRIDES_BASE": {
-            "type": "bool",
-            "group": "routing",
-            "label": "SD перекрывает base",
-        },
-        "PROMPT_MODE_OVERRIDES_SD": {
-            "type": "bool",
-            "group": "routing",
-            "label": "Mode перекрывает SD",
-        },
         "ENABLE_KNOWLEDGE_GRAPH": {
             "type": "bool",
             "group": "runtime",
@@ -831,16 +797,10 @@ class RuntimeConfig(Config):
         self.STATE_CLASSIFIER_CONFIDENCE_THRESHOLD = float(
             os.getenv("STATE_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
         )
-        self.SD_CLASSIFIER_ENABLED = os.getenv("SD_CLASSIFIER_ENABLED", "true").lower() == "true"
-        self.SD_CLASSIFIER_CONFIDENCE_THRESHOLD = float(
-            os.getenv("SD_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
-        )
         self.DECISION_GATE_RULE_THRESHOLD = float(os.getenv("DECISION_GATE_RULE_THRESHOLD", "0.75"))
         self.DECISION_GATE_LLM_ROUTER_ENABLED = os.getenv(
             "DECISION_GATE_LLM_ROUTER_ENABLED", "true"
         ).lower() == "true"
-        self.PROMPT_SD_OVERRIDES_BASE = os.getenv("PROMPT_SD_OVERRIDES_BASE", "true").lower() == "true"
-        self.PROMPT_MODE_OVERRIDES_SD = os.getenv("PROMPT_MODE_OVERRIDES_SD", "true").lower() == "true"
 
         self.DATA_SOURCE = os.getenv("DATA_SOURCE", "unknown")
         self.DEGRADED_MODE = os.getenv("DEGRADED_MODE", "false").lower() == "true"
@@ -849,3 +809,4 @@ class RuntimeConfig(Config):
             RuntimeConfig._cache_mtime = 0.0
 
         logger.info("[RuntimeConfig] reload complete")
+

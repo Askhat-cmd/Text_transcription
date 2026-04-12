@@ -16,62 +16,32 @@ type LayerField = {
 
 const LAYERS: Array<{ title: string; fields: LayerField[] }> = [
   {
-    title: '🧠 Режим свободного собеседника',
+    title: 'Neo Conversation Mode',
     fields: [
-      { key: 'FREE_CONVERSATION_MODE', label: 'Включить FREE_CONVERSATION_MODE', kind: 'bool' },
+      { key: 'FREE_CONVERSATION_MODE', label: 'Enable free conversation mode', kind: 'bool' },
     ],
   },
   {
-    title: '⚡ Слой 1: Fast Detector',
+    title: 'Layer 1: Fast Detector',
     fields: [
-      { key: 'FAST_DETECTOR_ENABLED', label: 'Fast detector включен', kind: 'bool' },
-      { key: 'FAST_DETECTOR_CONFIDENCE_THRESHOLD', label: 'Порог уверенности', kind: 'float' },
+      { key: 'FAST_DETECTOR_ENABLED', label: 'Fast detector enabled', kind: 'bool' },
+      { key: 'FAST_DETECTOR_CONFIDENCE_THRESHOLD', label: 'Fast detector confidence threshold', kind: 'float' },
     ],
   },
   {
-    title: '🟢 Слой 2: State Classifier',
+    title: 'Layer 2: State Router',
     fields: [
       {
         key: 'STATE_CLASSIFIER_ENABLED',
-        label: 'State classifier включен',
+        label: 'State router enabled',
         kind: 'bool',
         warningOnDisable: true,
       },
       {
         key: 'STATE_CLASSIFIER_CONFIDENCE_THRESHOLD',
-        label: 'Порог уверенности',
+        label: 'State router confidence threshold',
         kind: 'float',
       },
-    ],
-  },
-  {
-    title: '🟡 Слой 3: SD Classifier',
-    fields: [
-      {
-        key: 'SD_CLASSIFIER_ENABLED',
-        label: 'SD classifier включен',
-        kind: 'bool',
-        warningOnDisable: true,
-      },
-      {
-        key: 'SD_CLASSIFIER_CONFIDENCE_THRESHOLD',
-        label: 'Порог уверенности',
-        kind: 'float',
-      },
-    ],
-  },
-  {
-    title: '🟠 Слой 4: Decision Gate',
-    fields: [
-      { key: 'DECISION_GATE_RULE_THRESHOLD', label: 'Rule threshold', kind: 'float' },
-      { key: 'DECISION_GATE_LLM_ROUTER_ENABLED', label: 'LLM Router при конфликте', kind: 'bool' },
-    ],
-  },
-  {
-    title: '🔴 Слой 5: Path/Prompt Priority',
-    fields: [
-      { key: 'PROMPT_SD_OVERRIDES_BASE', label: 'SD-промпт перекрывает base', kind: 'bool' },
-      { key: 'PROMPT_MODE_OVERRIDES_SD', label: 'Mode-директива перекрывает SD', kind: 'bool' },
     ],
   },
 ];
@@ -121,7 +91,7 @@ export const RoutingTab: React.FC<RoutingTabProps> = ({ group, onSave, isSaving 
   const handleBoolChange = (field: LayerField, checked: boolean) => {
     if (field.warningOnDisable && !checked) {
       const ok = window.confirm(
-        'Отключение этого слоя снижает качество психологической поддержки. Продолжить?'
+        'Отключение state router может ухудшить качество маршрутизации. Продолжить?'
       );
       if (!ok) return;
     }
@@ -137,7 +107,7 @@ export const RoutingTab: React.FC<RoutingTabProps> = ({ group, onSave, isSaving 
             disabled={isSaving}
             className="px-3 py-1.5 rounded bg-indigo-600 text-white text-sm hover:bg-indigo-700 disabled:opacity-50"
           >
-            Сохранить все ({dirty.size})
+            Save all ({dirty.size})
           </button>
         </div>
       )}
@@ -182,7 +152,7 @@ export const RoutingTab: React.FC<RoutingTabProps> = ({ group, onSave, isSaving 
                         disabled={isSaving}
                         className="px-2 py-1 rounded bg-indigo-600 text-white text-xs hover:bg-indigo-700 disabled:opacity-50"
                       >
-                        ✓
+                        Save
                       </button>
                     )}
                   </div>
@@ -195,3 +165,4 @@ export const RoutingTab: React.FC<RoutingTabProps> = ({ group, onSave, isSaving 
     </div>
   );
 };
+

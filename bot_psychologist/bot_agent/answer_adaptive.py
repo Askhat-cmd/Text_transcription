@@ -67,6 +67,7 @@ from .adaptive_runtime.response_utils import (
     _get_feedback_prompt_for_state,
     _build_partial_response,
     _build_error_response,
+    _build_success_response,
 )
 from .adaptive_runtime.trace_helpers import (
     _strip_legacy_runtime_metadata,
@@ -902,23 +903,15 @@ def answer_question_adaptive(
             if include_feedback_prompt:
                 feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
 
-            result = {
-                "status": "success",
-                "answer": answer,
-                "state_analysis": {
-                    "primary_state": state_analysis.primary_state.value,
-                    "confidence": state_analysis.confidence,
-                    "secondary_states": [s.value for s in state_analysis.secondary_states],
-                    "emotional_tone": state_analysis.emotional_tone,
-                    "depth": state_analysis.depth,
-                    "recommendations": state_analysis.recommendations,
-                },
-                "path_recommendation": None,
-                "conversation_context": conversation_context,
-                "feedback_prompt": feedback_prompt,
-                "sources": [],
-                "concepts": [],
-                "metadata": {
+            result = _build_success_response(
+                answer=answer,
+                state_analysis=state_analysis,
+                path_recommendation=None,
+                conversation_context=conversation_context,
+                feedback_prompt=feedback_prompt,
+                sources=[],
+                concepts=[],
+                metadata={
                     "user_id": user_id,
                     "blocks_used": 0,
                     "state": state_analysis.primary_state.value,
@@ -957,9 +950,8 @@ def answer_question_adaptive(
                     "session_cost_usd": session_metrics.get("session_cost_usd"),
                     "session_turns": session_metrics.get("session_turns"),
                 },
-                "timestamp": datetime.now().isoformat(),
-                "processing_time_seconds": round(elapsed_time, 2),
-            }
+                elapsed_time=elapsed_time,
+            )
             if debug_info is not None:
                 debug_info["fast_path"] = True
                 debug_info["routing"] = {
@@ -1919,23 +1911,15 @@ def answer_question_adaptive(
         ]
         _log_blocks("SOURCES", adapted_blocks, limit=10)
         
-        result = {
-            "status": "success",
-            "answer": answer,
-            "state_analysis": {
-                "primary_state": state_analysis.primary_state.value,
-                "confidence": state_analysis.confidence,
-                "secondary_states": [s.value for s in state_analysis.secondary_states],
-                "emotional_tone": state_analysis.emotional_tone,
-                "depth": state_analysis.depth,
-                "recommendations": state_analysis.recommendations
-            },
-            "path_recommendation": path_recommendation,
-            "conversation_context": conversation_context,
-            "feedback_prompt": feedback_prompt,
-            "sources": sources,
-            "concepts": concepts,
-            "metadata": {
+        result = _build_success_response(
+            answer=answer,
+            state_analysis=state_analysis,
+            path_recommendation=path_recommendation,
+            conversation_context=conversation_context,
+            feedback_prompt=feedback_prompt,
+            sources=sources,
+            concepts=concepts,
+            metadata={
                 "user_id": user_id,
                 "blocks_used": len(adapted_blocks),
                 "state": state_analysis.primary_state.value,
@@ -1980,9 +1964,8 @@ def answer_question_adaptive(
                 "session_cost_usd": session_metrics.get("session_cost_usd"),
                 "session_turns": session_metrics.get("session_turns"),
             },
-            "timestamp": datetime.now().isoformat(),
-            "processing_time_seconds": round(elapsed_time, 2)
-        }
+            elapsed_time=elapsed_time,
+        )
 
         result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
         

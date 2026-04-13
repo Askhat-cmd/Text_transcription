@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Dict
+from typing import Any, Dict, List, Optional
 
 from ..state_classifier import StateAnalysis, UserState
 
@@ -80,3 +80,42 @@ def _build_error_response(
         "processing_time_seconds": (datetime.now() - start_time).total_seconds(),
     }
 
+
+def _serialize_state_analysis(state_analysis: Optional[StateAnalysis]) -> Optional[Dict[str, Any]]:
+    if state_analysis is None:
+        return None
+    return {
+        "primary_state": state_analysis.primary_state.value,
+        "confidence": state_analysis.confidence,
+        "secondary_states": [s.value for s in state_analysis.secondary_states],
+        "emotional_tone": state_analysis.emotional_tone,
+        "depth": state_analysis.depth,
+        "recommendations": state_analysis.recommendations,
+    }
+
+
+def _build_success_response(
+    *,
+    answer: str,
+    state_analysis: StateAnalysis,
+    path_recommendation: Optional[Dict[str, Any]],
+    conversation_context: str,
+    feedback_prompt: str,
+    sources: List[Dict[str, Any]],
+    concepts: List[str],
+    metadata: Dict[str, Any],
+    elapsed_time: float,
+) -> Dict[str, Any]:
+    return {
+        "status": "success",
+        "answer": answer,
+        "state_analysis": _serialize_state_analysis(state_analysis),
+        "path_recommendation": path_recommendation,
+        "conversation_context": conversation_context,
+        "feedback_prompt": feedback_prompt,
+        "sources": sources,
+        "concepts": concepts,
+        "metadata": metadata,
+        "timestamp": datetime.now().isoformat(),
+        "processing_time_seconds": round(elapsed_time, 2),
+    }

@@ -50,7 +50,6 @@ from .practice_selector import practice_selector
 from .trace_schema import attach_trace_schema_status
 from .onboarding_flow import (
     detect_phase8_signals,
-    build_start_message,
     build_first_turn_instruction,
     build_mixed_query_instruction,
     build_user_correction_instruction,
@@ -118,6 +117,11 @@ from .adaptive_runtime.mode_policy_helpers import (
     _informational_branch_enabled as _runtime_informational_branch_enabled,
     _apply_output_validation_policy as _runtime_apply_output_validation_policy,
 )
+from .adaptive_runtime.runtime_misc_helpers import (
+    _estimate_cost as _runtime_estimate_cost,
+    _sd_runtime_disabled as _runtime_sd_runtime_disabled,
+    _build_start_command_response as _runtime_build_start_command_response,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -138,36 +142,8 @@ def _derive_informational_mode_hint(phase8_signals, query: str) -> bool:
     return _runtime_derive_informational_mode_hint(phase8_signals, query)
 
 
-COST_PER_1K_TOKENS = {
-    "gpt-5.2":      {"input": 0.00175,  "output": 0.01400},
-    "gpt-5.1":      {"input": 0.00125,  "output": 0.01000},
-    "gpt-5":        {"input": 0.00125,  "output": 0.01000},
-    "gpt-5-mini":   {"input": 0.00025,  "output": 0.00200},
-    "gpt-5-nano":   {"input": 0.00005,  "output": 0.00040},
-    "gpt-4.1":      {"input": 0.00200,  "output": 0.00800},
-    "gpt-4.1-mini": {"input": 0.00040,  "output": 0.00160},
-    "gpt-4.1-nano": {"input": 0.00010,  "output": 0.00040},
-    "gpt-4o-mini":  {"input": 0.00015,  "output": 0.00060},
-    "default":      {"input": 0.00125,  "output": 0.01000},
-}
-
-
 def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
-    rates = COST_PER_1K_TOKENS.get((model_name or "").lower(), COST_PER_1K_TOKENS["default"])
-    total = 0.0
-    for call in llm_calls or []:
-        # FIX: используем is not None вместо or для поддержки 0 значений
-        input_tokens = call.get("tokens_prompt") if call.get("tokens_prompt") is not None else call.get("prompt_tokens") if call.get("prompt_tokens") is not None else 0
-        output_tokens = call.get("tokens_completion") if call.get("tokens_completion") is not None else call.get("completion_tokens") if call.get("completion_tokens") is not None else 0
-        try:
-            input_tokens = float(input_tokens)
-            output_tokens = float(output_tokens)
-        except (TypeError, ValueError):
-            input_tokens = 0.0
-            output_tokens = 0.0
-        total += (input_tokens / 1000) * rates["input"]
-        total += (output_tokens / 1000) * rates["output"]
-    return round(total, 6)
+    return _runtime_estimate_cost(llm_calls, model_name)
 
 
 def _detect_fast_path_reason(query: str, routing_result) -> str:
@@ -183,8 +159,7 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
 
 
 def _sd_runtime_disabled() -> bool:
-    """SD-runtime окончательно выведен из active pipeline (PRD 11.0)."""
-    return True
+    return _runtime_sd_runtime_disabled()
 
 
 def _diagnostics_v1_enabled() -> bool:
@@ -237,50 +212,15 @@ def _build_start_command_response(
     start_time: datetime,
     schedule_summary_task: bool = True,
 ) -> Dict[str, Any]:
-    fallback_state = _fallback_state_analysis()
-    answer = build_start_message()
-    try:
-        memory.add_turn(
-            user_input=query,
-            bot_response=answer,
-            user_state=fallback_state.primary_state.value,
-            blocks_used=0,
-            concepts=[],
-            schedule_summary_task=schedule_summary_task,
-        )
-    except Exception as exc:
-        logger.warning("[ONBOARDING] failed to persist /start turn: %s", exc)
-
-    elapsed_time = (datetime.now() - start_time).total_seconds()
-    return {
-        "status": "success",
-        "answer": answer,
-        "state_analysis": {
-            "primary_state": fallback_state.primary_state.value,
-            "confidence": fallback_state.confidence,
-            "secondary_states": [s.value for s in fallback_state.secondary_states],
-            "emotional_tone": fallback_state.emotional_tone,
-            "depth": fallback_state.depth,
-            "recommendations": fallback_state.recommendations,
-        },
-        "path_recommendation": None,
-        "conversation_context": "",
-        "feedback_prompt": "",
-        "sources": [],
-        "concepts": [],
-        "metadata": {
-            "user_id": user_id,
-            "onboarding_start_command": True,
-            "first_turn": True,
-            "resolved_route": "contact_hold",
-            "recommended_mode": "PRESENCE",
-            "route_resolution_count": 1,
-            "informational_mode": False,
-            "applied_mode_prompt": None,
-        },
-        "timestamp": datetime.now().isoformat(),
-        "processing_time_seconds": round(elapsed_time, 2),
-    }
+    return _runtime_build_start_command_response(
+        user_id=user_id,
+        user_level=user_level,
+        query=query,
+        memory=memory,
+        start_time=start_time,
+        schedule_summary_task=schedule_summary_task,
+        logger=logger,
+    )
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:

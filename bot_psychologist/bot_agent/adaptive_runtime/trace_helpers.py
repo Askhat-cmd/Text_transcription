@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
 from ..config import config
@@ -447,6 +448,56 @@ def _apply_memory_debug_info(
     debug_trace["semantic_hits"] = memory_trace_metrics.get("semantic_hits")
     if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail"):
         debug_trace["semantic_hits_detail"] = list(memory.semantic_memory.last_hits_detail or [])
+
+
+def _apply_trace_memory_snapshot(
+    debug_trace: Optional[Dict[str, Any]],
+    *,
+    memory,
+    start_time: datetime,
+    session_store,
+    user_id: str,
+    build_state_trajectory_fn,
+    store_blob_fn,
+    memory_trace_metrics: Optional[Dict[str, object]] = None,
+    include_total_duration: bool = True,
+    include_summary_pending: bool = False,
+) -> None:
+    if debug_trace is None or memory is None:
+        return
+
+    debug_trace["context_written"] = _build_memory_context_snapshot(memory)
+    if include_total_duration:
+        debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
+
+    _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
+    debug_trace["state_trajectory"] = build_state_trajectory_fn(memory)
+    debug_trace["memory_snapshot_blob_id"] = store_blob_fn(
+        session_store,
+        user_id,
+        debug_trace.get("context_written") or "",
+    )
+    if include_summary_pending:
+        debug_trace["summary_pending_turn"] = memory.metadata.get("summary_pending_turn")
+
+
+def _finalize_trace_payload(
+    debug_trace: Optional[Dict[str, Any]],
+    *,
+    pipeline_stages: List[Dict[str, Any]],
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    strip_legacy_trace_fields_fn=None,
+) -> Optional[Dict[str, Any]]:
+    if debug_trace is None:
+        return None
+
+    debug_trace["pipeline_stages"] = pipeline_stages
+    debug_trace["anomalies"] = compute_anomalies_fn(debug_trace)
+    if strip_legacy_trace_fields_fn is not None:
+        debug_trace = strip_legacy_trace_fields_fn(debug_trace)
+    debug_trace = attach_trace_schema_fn(debug_trace)
+    return debug_trace
 
 
 def _apply_trace_model_info(debug_trace: Optional[Dict[str, Any]]) -> None:

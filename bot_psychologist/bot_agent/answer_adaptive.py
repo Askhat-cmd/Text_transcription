@@ -16,7 +16,6 @@ Adaptive Answer Module - Phase 4
 import asyncio
 import logging
 import json
-import re
 from typing import Any, Dict, Optional, List, Tuple
 from datetime import datetime
 
@@ -108,66 +107,35 @@ from .adaptive_runtime.state_helpers import (
     _detect_fast_path_reason as _runtime_detect_fast_path_reason,
     _build_fast_path_block as _runtime_build_fast_path_block,
 )
+from .adaptive_runtime.mode_policy_helpers import (
+    MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
+    resolve_mode_prompt as _runtime_resolve_mode_prompt,
+    _derive_informational_mode_hint as _runtime_derive_informational_mode_hint,
+    _diagnostics_v1_enabled as _runtime_diagnostics_v1_enabled,
+    _deterministic_route_resolver_enabled as _runtime_deterministic_route_resolver_enabled,
+    _prompt_stack_v2_enabled as _runtime_prompt_stack_v2_enabled,
+    _output_validation_enabled as _runtime_output_validation_enabled,
+    _informational_branch_enabled as _runtime_informational_branch_enabled,
+    _apply_output_validation_policy as _runtime_apply_output_validation_policy,
+)
 
 logger = logging.getLogger(__name__)
 
 PRACTICE_ALLOWED_ROUTES = {"practice", "reflect", "regulate"}
 PRACTICE_SKIP_ROUTES = {"contact_hold", "contacthold", "presence", "crisis_hold"}
 
+# Compatibility touchpoint for inventory tests/documentation.
+MODE_PROMPT_MAP = _RUNTIME_MODE_PROMPT_MAP
 
 
-MODE_PROMPT_MAP: dict[str, str] = {
-    "informational": "prompt_mode_informational",
-}
-
-_PRACTICE_START_RE = re.compile(
-    r"\b(как начать|как практиковать|как применить|что делать дальше|практиковать|в жизни)\b",
-    flags=re.IGNORECASE,
-)
-_PERSONAL_APPLICATION_RE = re.compile(
-    r"\b(у себя|в реальной жизни|в моей жизни|для меня|про меня|со мной|на моем примере)\b",
-    flags=re.IGNORECASE,
-)
 
 
 def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[str]]:
-    """
-    Resolve mode prompt key and text by user state.
-    Returns (None, None) if override is not defined.
-    """
-    prompt_key = MODE_PROMPT_MAP.get((user_state or "").strip().lower())
-    if not prompt_key:
-        return None, None
-    try:
-        prompt_payload = cfg.get_prompt(prompt_key)
-        prompt_text = str((prompt_payload or {}).get("text") or "").strip()
-        if not prompt_text:
-            return None, None
-        return prompt_key, prompt_text
-    except Exception as exc:
-        logger.warning("[MODE_PROMPT] failed to load '%s': %s", prompt_key, exc)
-        return None, None
+    return _runtime_resolve_mode_prompt(user_state, cfg)
 
 
 def _derive_informational_mode_hint(phase8_signals, query: str) -> bool:
-    """Narrow informational hint to concept-first requests only."""
-    if not _informational_branch_enabled() or phase8_signals is None:
-        return False
-
-    informational_intent = bool(getattr(phase8_signals, "informational_intent", False))
-    personal_disclosure = bool(getattr(phase8_signals, "personal_disclosure", False))
-    mixed_query = bool(getattr(phase8_signals, "mixed_query", False))
-    if not informational_intent or personal_disclosure or mixed_query:
-        return False
-
-    text = (query or "").strip().lower()
-    if not text:
-        return False
-    if _PERSONAL_APPLICATION_RE.search(text):
-        return False
-    if _PRACTICE_START_RE.search(text):
-        return False
-    return True
+    return _runtime_derive_informational_mode_hint(phase8_signals, query)
 
 
 COST_PER_1K_TOKENS = {
@@ -220,26 +188,25 @@ def _sd_runtime_disabled() -> bool:
 
 
 def _diagnostics_v1_enabled() -> bool:
-    return feature_flags.enabled("USE_NEW_DIAGNOSTICS_V1")
+    return _runtime_diagnostics_v1_enabled()
 
 
 def _deterministic_route_resolver_enabled() -> bool:
-    return feature_flags.enabled("USE_DETERMINISTIC_ROUTE_RESOLVER")
+    return _runtime_deterministic_route_resolver_enabled()
 
 
 def _prompt_stack_v2_enabled() -> bool:
-    return feature_flags.enabled("USE_PROMPT_STACK_V2")
+    return _runtime_prompt_stack_v2_enabled()
 
 
 def _output_validation_enabled() -> bool:
-    return feature_flags.enabled("USE_OUTPUT_VALIDATION")
+    return _runtime_output_validation_enabled()
 
 
 def _informational_branch_enabled() -> bool:
-    return feature_flags.enabled("INFORMATIONAL_BRANCH_ENABLED")
+    return _runtime_informational_branch_enabled()
 
 
-NEO_PRESERVE_ROUTES = {"reflect", "inform", "presence", "intervention", "safe_override"}
 
 
 def _apply_output_validation_policy(
@@ -250,73 +217,15 @@ def _apply_output_validation_policy(
     mode: str,
     generate_retry_fn=None,
 ) -> Tuple[str, Dict[str, Any], Optional[Dict[str, Any]]]:
-    """Validate output, optionally retry generation once, then fallback safely."""
-    if not _output_validation_enabled():
-        return answer, {"enabled": False}, None
-
-    attempts: List[Dict[str, Any]] = []
-    fallback_used = False
-    retry_llm_result: Optional[Dict[str, Any]] = None
-    normalized_route = (route or "").strip().lower()
-    normalized_mode = (mode or "").strip().lower()
-    safety_override = normalized_route == "safe_override"
-    preserve_structure = (
-        normalized_route in NEO_PRESERVE_ROUTES or normalized_mode in NEO_PRESERVE_ROUTES
-    )
-
-    first = output_validator.validate(
-        answer,
+    return _runtime_apply_output_validation_policy(
+        answer=answer,
+        query=query,
         route=route,
         mode=mode,
-        safety_override=safety_override,
-        query=query or "",
-        preserve_structure=preserve_structure,
+        validator=output_validator,
+        force_enabled=_output_validation_enabled(),
+        generate_retry_fn=generate_retry_fn,
     )
-    attempts.append(first.as_dict())
-    final_text = first.text
-    final_valid = bool(first.valid)
-
-    if first.needs_regeneration and callable(generate_retry_fn):
-        hint = output_validator.build_regeneration_hint(
-            first.errors,
-            route=route,
-            mode=mode,
-            query=query or "",
-        )
-        try:
-            retry_llm_result = generate_retry_fn(hint)
-        except Exception as exc:
-            logger.warning("[OUTPUT_VALIDATOR] retry generation failed: %s", exc)
-            retry_llm_result = {"error": str(exc), "answer": ""}
-
-        retry_answer = str((retry_llm_result or {}).get("answer") or "")
-        second = output_validator.validate(
-            retry_answer,
-            route=route,
-            mode=mode,
-            safety_override=safety_override,
-            query=query or "",
-            preserve_structure=preserve_structure,
-        )
-        attempts.append(second.as_dict())
-        final_text = second.text
-        final_valid = bool(second.valid)
-        if second.needs_regeneration:
-            fallback_used = True
-            final_valid = False
-            final_text = output_validator.safe_fallback(route=route)
-    elif first.needs_regeneration:
-        fallback_used = True
-        final_valid = False
-        final_text = output_validator.safe_fallback(route=route)
-
-    meta = {
-        "enabled": True,
-        "attempts": attempts,
-        "fallback_used": fallback_used,
-        "final_valid": final_valid,
-    }
-    return final_text, meta, retry_llm_result
 
 
 def _build_start_command_response(

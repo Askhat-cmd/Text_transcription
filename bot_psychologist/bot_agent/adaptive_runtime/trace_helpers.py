@@ -7,6 +7,7 @@ import logging
 from typing import Any, Dict, List, Optional, Tuple
 
 from ..config import config
+from ..feature_flags import feature_flags
 from ..data_loader import Block
 from ..memory_updater import memory_updater
 from ..response import ResponseGenerator
@@ -447,3 +448,54 @@ def _apply_memory_debug_info(
     if memory.semantic_memory and hasattr(memory.semantic_memory, "last_hits_detail"):
         debug_trace["semantic_hits_detail"] = list(memory.semantic_memory.last_hits_detail or [])
 
+
+def _apply_trace_model_info(debug_trace: Optional[Dict[str, Any]]) -> None:
+    if debug_trace is None:
+        return
+    debug_trace["primary_model"] = config.LLM_MODEL
+    debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
+    debug_trace["embedding_model"] = config.EMBEDDING_MODEL
+    reranker_enabled = bool(
+        config.VOYAGE_ENABLED
+        or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+    )
+    debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
+    debug_trace["reranker_enabled"] = reranker_enabled
+
+
+def _apply_trace_token_metrics(
+    debug_trace: Optional[Dict[str, Any]],
+    *,
+    tokens_prompt: Optional[int],
+    tokens_completion: Optional[int],
+    tokens_total: Optional[int],
+    session_metrics: Optional[Dict[str, Any]],
+    aggregate_from_llm_calls: bool = False,
+) -> None:
+    if debug_trace is None:
+        return
+
+    if aggregate_from_llm_calls:
+        llm_calls_list = debug_trace.get("llm_calls", []) or []
+        total_prompt = sum(c.get("tokens_prompt") or 0 for c in llm_calls_list)
+        total_completion = sum(c.get("tokens_completion") or 0 for c in llm_calls_list)
+        if not debug_trace.get("tokens_prompt") and total_prompt:
+            debug_trace["tokens_prompt"] = total_prompt
+        if not debug_trace.get("tokens_completion") and total_completion:
+            debug_trace["tokens_completion"] = total_completion
+        if not debug_trace.get("tokens_total") and (total_prompt or total_completion):
+            debug_trace["tokens_total"] = total_prompt + total_completion
+
+    if debug_trace.get("tokens_prompt") is None:
+        debug_trace["tokens_prompt"] = tokens_prompt
+    if debug_trace.get("tokens_completion") is None:
+        debug_trace["tokens_completion"] = tokens_completion
+    if debug_trace.get("tokens_total") is None:
+        debug_trace["tokens_total"] = tokens_total
+
+    session_metrics = session_metrics or {}
+    debug_trace["session_tokens_prompt"] = session_metrics.get("session_tokens_prompt")
+    debug_trace["session_tokens_completion"] = session_metrics.get("session_tokens_completion")
+    debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
+    debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
+    debug_trace["session_turns"] = session_metrics.get("session_turns")

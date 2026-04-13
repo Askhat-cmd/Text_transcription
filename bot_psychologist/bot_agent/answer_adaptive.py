@@ -88,6 +88,8 @@ from .adaptive_runtime.trace_helpers import (
     _build_memory_context_snapshot,
     _refresh_runtime_memory_snapshot,
     _apply_memory_debug_info,
+    _apply_trace_model_info,
+    _apply_trace_token_metrics,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
@@ -976,23 +978,14 @@ def answer_question_adaptive(
             if debug_trace is not None:
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
-                debug_trace["primary_model"] = config.LLM_MODEL
-                debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
-                debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-                reranker_enabled = bool(
-                    config.VOYAGE_ENABLED
-                    or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+                _apply_trace_model_info(debug_trace)
+                _apply_trace_token_metrics(
+                    debug_trace,
+                    tokens_prompt=tokens_prompt,
+                    tokens_completion=tokens_completion,
+                    tokens_total=tokens_total,
+                    session_metrics=session_metrics,
                 )
-                debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
-                debug_trace["reranker_enabled"] = reranker_enabled
-                debug_trace["tokens_prompt"] = tokens_prompt
-                debug_trace["tokens_completion"] = tokens_completion
-                debug_trace["tokens_total"] = tokens_total
-                debug_trace["session_tokens_prompt"] = session_metrics.get("session_tokens_prompt")
-                debug_trace["session_tokens_completion"] = session_metrics.get("session_tokens_completion")
-                debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
-                debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
-                debug_trace["session_turns"] = session_metrics.get("session_turns")
                 _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
                 debug_trace["summary_pending_turn"] = memory.metadata.get("summary_pending_turn")
                 debug_trace["state_trajectory"] = _build_state_trajectory(memory)
@@ -2003,37 +1996,15 @@ def answer_question_adaptive(
         if debug_trace is not None:
             debug_trace["context_written"] = _build_memory_context_snapshot(memory)
             debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
-            debug_trace["primary_model"] = config.LLM_MODEL
-            debug_trace["classifier_model"] = config.CLASSIFIER_MODEL
-            debug_trace["embedding_model"] = config.EMBEDDING_MODEL
-            reranker_enabled = bool(
-                config.VOYAGE_ENABLED
-                or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+            _apply_trace_model_info(debug_trace)
+            _apply_trace_token_metrics(
+                debug_trace,
+                tokens_prompt=tokens_prompt,
+                tokens_completion=tokens_completion,
+                tokens_total=tokens_total,
+                session_metrics=session_metrics,
+                aggregate_from_llm_calls=True,
             )
-            debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
-            debug_trace["reranker_enabled"] = reranker_enabled
-            # FIX 2a: агрегация токенов из llm_calls для fallback
-            llm_calls_list = debug_trace.get("llm_calls", [])
-            total_prompt = sum(c.get("tokens_prompt") or 0 for c in llm_calls_list)
-            total_completion = sum(c.get("tokens_completion") or 0 for c in llm_calls_list)
-            if not debug_trace.get("tokens_prompt") and total_prompt:
-                debug_trace["tokens_prompt"] = total_prompt
-            if not debug_trace.get("tokens_completion") and total_completion:
-                debug_trace["tokens_completion"] = total_completion
-            if not debug_trace.get("tokens_total") and (total_prompt or total_completion):
-                debug_trace["tokens_total"] = total_prompt + total_completion
-            # Основные значения (имеют приоритет)
-            if debug_trace.get("tokens_prompt") is None:
-                debug_trace["tokens_prompt"] = tokens_prompt
-            if debug_trace.get("tokens_completion") is None:
-                debug_trace["tokens_completion"] = tokens_completion
-            if debug_trace.get("tokens_total") is None:
-                debug_trace["tokens_total"] = tokens_total
-            debug_trace["session_tokens_prompt"] = session_metrics.get("session_tokens_prompt")
-            debug_trace["session_tokens_completion"] = session_metrics.get("session_tokens_completion")
-            debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
-            debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
-            debug_trace["session_turns"] = session_metrics.get("session_turns")
             _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
             debug_trace["summary_pending_turn"] = memory.metadata.get("summary_pending_turn")
             debug_trace["state_trajectory"] = _build_state_trajectory(memory)

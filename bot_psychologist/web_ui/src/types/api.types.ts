@@ -155,6 +155,19 @@ export interface LLMCallTrace {
   user_prompt_blob_id?: string | null;
 }
 
+export interface TurnDiffMemoryDelta {
+  turns_added: number;
+  summary_changed: boolean;
+  semantic_hits_delta: number;
+}
+
+export interface TurnDiff {
+  route_changed: boolean;
+  state_changed: boolean;
+  config_changed_keys: string[];
+  memory_delta: TurnDiffMemoryDelta;
+}
+
 export interface DebugTrace {
   trace_contract_version?: string | null;
   chunks_retrieved: ChunkTraceItem[];
@@ -171,6 +184,8 @@ export interface DebugTrace {
   tokens_prompt?: number | null;
   tokens_completion?: number | null;
   tokens_total?: number | null;
+  session_tokens_prompt?: number | null;
+  session_tokens_completion?: number | null;
   session_tokens_total?: number | null;
   session_cost_usd?: number | null;
   session_turns?: number | null;
@@ -210,6 +225,7 @@ export interface DebugTrace {
   recommended_mode?: string | null;
   confidence_score?: number | null;
   confidence_level?: string | null;
+  turn_diff?: TurnDiff | null;
 }
 
 export interface LLMPayloadCall {

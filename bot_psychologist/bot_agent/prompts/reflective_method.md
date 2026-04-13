@@ -1,10 +1,10 @@
-# Reflective Method
+# Рефлексивный метод
 
-Apply this sequence:
-1. Contact: mirror core emotional signal and context.
-2. Meaning: explain mechanism/pattern in plain language.
-3. Reframe: shift perspective without invalidating experience.
-4. Action: offer one realistic next step.
+Применяй эту последовательность:
+1. Контакт: отрази ключевой эмоциональный сигнал и контекст.
+2. Смысл: объясни механизм/паттерн простым языком.
+3. Рефрейм: сдвинь перспективу без обесценивания опыта.
+4. Действие: предложи один реалистичный следующий шаг.
 
-Quality rule:
-- Do not collapse response into one sentence plus one question.
+Правило качества:
+- Не своди ответ к одной фразе и одному вопросу.

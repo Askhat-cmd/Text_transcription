@@ -59,7 +59,7 @@ class PromptRegistryV2:
         path = PROMPTS_DIR / filename
         try:
             if path.exists():
-                return path.read_text(encoding="utf-8").strip()
+                return path.read_text(encoding="utf-8").lstrip("\ufeff").strip()
         except Exception:
             pass
         return fallback.strip()
@@ -76,18 +76,20 @@ class PromptRegistryV2:
             return str(config.get_prompt("prompt_system_base")["text"]).strip()
         except Exception:
             return (
-                "You are a reflective assistant. "
-                "Your role is to help the user clarify internal process without pressure."
+                "Ты рефлексивный ассистент. "
+                "Твоя роль — помогать пользователю прояснять внутренний процесс без давления."
             )
 
     def _build_style_policy(self, route: str, mode: str) -> str:
         normalized_route = (route or "").strip().lower()
         normalized_mode = (mode or "").strip().upper()
+
         if normalized_route == "safe_override":
             return (
                 "Стиль: коротко, спокойно, деэскалирующе. "
                 "Без рискованных директив и без глубокой интерпретации."
             )
+
         if normalized_route == "inform" or normalized_mode == "CLARIFICATION":
             return (
                 "Объясняй живо и по существу: раскрывай смысл, а не только термин. "
@@ -95,6 +97,7 @@ class PromptRegistryV2:
                 "Избегай сухого FAQ и канцелярита. "
                 "Не сокращай ответ искусственно."
             )
+
         if normalized_route == "regulate":
             return (
                 "Стиль: сначала признание состояния — покажи, что слышишь и понимаешь. "
@@ -103,48 +106,49 @@ class PromptRegistryV2:
                 "Минимум 3 содержательных предложения. "
                 "Не сводить ответ к одному отражению + вопросу."
             )
+
         if normalized_route in ("contact_hold", "contact"):
             return (
-                "Стиль: живой отклик на переживание пользователя, "
-                "затем его контекст и смысл, затем практический ориентир. "
+                "Стиль: живой отклик на переживание пользователя, затем его контекст и смысл, "
+                "затем практический ориентир. "
                 "Минимум 3 содержательных предложения. "
                 "Не сводить ответ к одному отражению + вопросу."
             )
+
         if normalized_route == "stabilize":
             return (
                 "Стиль: спокойствие и опора. Сначала стабилизация присутствием, "
                 "затем ориентир — что сейчас можно сделать. "
                 "Минимум 3 содержательных предложения."
             )
+
         return (
-            "Стиль: диалог с опорой на коучинговую точность, "
-            "уважительно и без пустых обобщений. "
+            "Стиль: диалог с опорой на коучинговую точность, уважительно и без пустых обобщений. "
             "Минимум 3 содержательных предложения по существу."
         )
 
     def _build_memory_context(self, conversation_context: str) -> str:
         context = self._clip(self._sanitize_memory_context(conversation_context or ""), 1200)
         if not context:
-            return "Conversation context: none."
-        return f"Conversation context:\n{context}"
+            return "Контекст диалога: отсутствует."
+        return f"Контекст диалога:\n{context}"
 
     @staticmethod
     def _sanitize_memory_context(context: str) -> str:
-        """Fix mojibake (UTF-8 bytes read as latin-1) and drop snapshot block."""
-        # --- encoding guard: fix UTF-8 bytes misread as latin-1 ---
+        """Fix mojibake when possible and drop snapshot block to avoid duplicate diagnostics."""
         if isinstance(context, bytes):
             context = context.decode("utf-8", errors="replace")
         else:
             try:
                 context = context.encode("latin-1").decode("utf-8")
             except (UnicodeDecodeError, UnicodeEncodeError):
-                pass  # already valid unicode, no action needed
-        # --- drop snapshot block to avoid duplicate diagnostics ---
-        lines = []
+                pass
+
+        lines: List[str] = []
         skipping_snapshot_block = False
         for line in (context or "").splitlines():
             normalized = line.strip().lower()
-            if normalized == "snapshot:":
+            if normalized in {"snapshot:", "снимок:", "снимок контекста:"}:
                 skipping_snapshot_block = True
                 continue
             if skipping_snapshot_block:
@@ -175,8 +179,9 @@ class PromptRegistryV2:
         nervous_state = str(payload.get("nervous_system_state") or "window")
         request_function = str(payload.get("request_function") or "understand")
         core_theme = str(payload.get("core_theme") or "unspecified_current_issue")
+
         return (
-            "Diagnostics context:\n"
+            "Диагностический контекст:\n"
             f"- interaction_mode: {interaction_mode}\n"
             f"- nervous_system_state: {nervous_state}\n"
             f"- request_function: {request_function}\n"
@@ -187,13 +192,14 @@ class PromptRegistryV2:
 
     def _build_retrieved_context(self, blocks: List[object]) -> str:
         if not blocks:
-            return "Knowledge context: no retrieved blocks."
+            return "Контекст знаний: извлеченные блоки отсутствуют."
+
         lines: List[str] = []
         for idx, block in enumerate(blocks[:6], start=1):
             title = str(getattr(block, "title", "") or getattr(block, "document_title", "")).strip()
             content = str(getattr(block, "summary", "") or getattr(block, "content", "")).strip()
-            lines.append(f"[{idx}] {self._clip(title or 'Untitled', 90)}: {self._clip(content, 260)}")
-        return "Knowledge context:\n" + "\n".join(lines)
+            lines.append(f"[{idx}] {self._clip(title or 'Без названия', 90)}: {self._clip(content, 260)}")
+        return "Контекст знаний:\n" + "\n".join(lines)
 
     def _build_task_instruction(
         self,
@@ -209,17 +215,19 @@ class PromptRegistryV2:
         route_text = (route or "reflect").strip().lower() or "reflect"
         mode_text = mode or "PRESENCE"
         parts = [
-            "TASK_INSTRUCTION:",
-            f"- Route: {route_text}",
-            f"- Mode: {mode_text}",
-            f"- User request: {self._clip(query, 700)}",
+            "ИНСТРУКЦИЯ ЗАДАЧИ:",
+            f"- Маршрут: {route_text}",
+            f"- Режим: {mode_text}",
+            f"- Запрос пользователя: {self._clip(query, 700)}",
             "- Дай содержательный ответ без HTML/кода.",
             "- Для обычного запроса дай минимум 3 содержательных предложения.",
             "- Избегай смысловой скупости.",
             "- Не своди ответ к формату «одна мысль + один вопрос».",
         ]
+
         if mode_prompt_override:
             parts.append(f"- Mode override: {self._clip(mode_prompt_override, 260)}")
+
         if route_text == "inform":
             parts.extend(
                 [
@@ -228,15 +236,17 @@ class PromptRegistryV2:
                     "- Не подменяй объяснение общим вопросом-мостом.",
                 ]
             )
+
         if first_turn:
             parts.extend(
                 [
                     "- Это первый ход: дай полноценный смысловой каркас как основу ответа.",
-                    "- Warmup: не экономь на объёме — у модели пока нет контекста сессии.",
-                    "- Допустим один уточняющий вопрос в конце, если он реально помогает.",
+                    "- Warmup: не экономь на объеме — у модели пока нет контекста сессии.",
+                    "- Допустим один уточняющий вопрос в конце, если он реально помогает, не вместо основной части ответа.",
                     "- Не перегружай деталями, но оставь опорную ясность.",
                 ]
             )
+
         if mixed_query_bridge:
             parts.extend(
                 [
@@ -244,6 +254,7 @@ class PromptRegistryV2:
                     "- Добавь практический угол и мягкий вопрос-мост.",
                 ]
             )
+
         if user_correction_protocol:
             parts.extend(
                 [
@@ -252,6 +263,7 @@ class PromptRegistryV2:
                     "- Заверши корректирующий ответ одним уточняющим вопросом.",
                 ]
             )
+
         return "\n".join(parts)
 
     def _resolve_interaction_mode(self, diagnostics: Optional[Dict[str, object]]) -> str:
@@ -279,19 +291,19 @@ class PromptRegistryV2:
 
         aa_safety = self._load_prompt_asset(
             "aa_safety.md",
-            "Safety Rules: no diagnosis, no treatment claims, no guarantees."
+            "Правила безопасности: без диагноза, без терапевтических обещаний и гарантий.",
         )
         seasonal = self._load_prompt_asset(
             "a_seasonal.md",
-            "Seasonal policy: season={season}, interaction_mode={interaction_mode}."
+            "Сезонная политика: season={season}, interaction_mode={interaction_mode}.",
         )
         core_identity_static = self._load_prompt_asset("core_identity.md", "")
-        diag_algorithm = self._load_prompt_asset("diag_algorithm.md", "Diagnostic algorithm: classify state and function.")
-        reflective_method = self._load_prompt_asset("reflective_method.md", "Reflective Method: mirror, structure, clarify, next-step.")
-        procedural_scripts = self._load_prompt_asset("procedural_scripts.md", "Procedural scripts: clear sequencing and correction protocol.")
+        diag_algorithm = self._load_prompt_asset("diag_algorithm.md", "Диагностический алгоритм: состояние и функция запроса.")
+        reflective_method = self._load_prompt_asset("reflective_method.md", "Рефлексивный метод: контакт, структура, прояснение, следующий шаг.")
+        procedural_scripts = self._load_prompt_asset("procedural_scripts.md", "Процедурные скрипты: последовательность и протокол коррекции.")
         output_layer = self._load_prompt_asset(
             "output_layer.md",
-            "Output layer: web-safe rich text. Minimum 3 substantive sentences. Avoid messenger-style brevity."
+            "Выходной слой: semantically complete rich text. Минимум 3 содержательных предложения.",
         )
 
         diagnostics_context = self._build_diagnostic_context(
@@ -337,7 +349,7 @@ class PromptRegistryV2:
             sections["DIAG_ALGORITHM"] = self._join_parts(
                 [
                     sections["DIAG_ALGORITHM"],
-                    f"Runtime context:\n{self._clip(additional_system_context, 1200)}",
+                    f"Контекст рантайма:\n{self._clip(additional_system_context, 1200)}",
                 ]
             )
 

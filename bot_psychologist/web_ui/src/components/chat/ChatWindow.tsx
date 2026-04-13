@@ -9,6 +9,7 @@ import type { Message } from '../../types';
 import MessageList from './MessageList';
 import InputBox from './InputBox';
 import TypingIndicator from './TypingIndicator';
+import { SessionTracePanel } from '../debug/SessionTracePanel';
 import { FiChevronDown, FiMenu, FiRefreshCw, FiSettings, FiUser } from 'react-icons/fi';
 
 interface ChatWindowProps {
@@ -27,6 +28,7 @@ interface ChatWindowProps {
   onToggleSidebar?: () => void;
   userId?: string;
   chatTitle?: string;
+  sessionId?: string;
   autoScroll?: boolean;
   compactMode?: boolean;
 }
@@ -57,6 +59,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
   onToggleSidebar,
   userId,
   chatTitle,
+  sessionId,
   autoScroll = true,
   compactMode = false,
 }) => {
@@ -205,6 +208,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               </div>
             )}
             {isLoading && !streamingText && !isThinking && <TypingIndicator />}
+            <SessionTracePanel sessionId={sessionId} />
             <div ref={messagesEndRef} />
           </>
         )}

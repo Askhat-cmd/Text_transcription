@@ -382,16 +382,16 @@ class ConversationMemory:
             state_end = str(item.get("state_end") or "").strip()
             parts: List[str] = []
             if themes:
-                parts.append("С‚РµРјС‹: " + ", ".join(themes[:3]))
+                parts.append("темы: " + ", ".join(themes[:3]))
             if state_end:
-                parts.append(f"СЃРѕСЃС‚РѕСЏРЅРёРµ: {state_end}")
+                parts.append(f"состояние: {state_end}")
             if parts:
                 lines.append("- " + "; ".join(parts))
 
         if not lines:
             return ""
 
-        return "РР· РїСЂРµРґС‹РґСѓС‰РёС… СЃРµСЃСЃРёР№:\n" + "\n".join(lines[: max(1, min(limit, 3))])
+        return "Из предыдущих сессий:\n" + "\n".join(lines[: max(1, min(limit, 3))])
     
     def add_turn(
         self,

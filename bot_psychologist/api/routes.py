@@ -11,7 +11,7 @@ import sys
 import time
 from pathlib import Path
 from datetime import datetime
-from typing import Optional
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
@@ -64,12 +64,101 @@ def _record_user(user_id: str) -> None:
     _stats["total_users_approx"] += 1
 
 
+def _coerce_int(value: Any, default: int = 0) -> int:
+    if isinstance(value, bool):
+        return default
+    try:
+        if value is None:
+            return default
+        return int(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def _extract_token_triplet(trace_payload: Dict[str, Any]) -> tuple[int, int, int]:
+    llm_calls = trace_payload.get("llm_calls") if isinstance(trace_payload.get("llm_calls"), list) else []
+    prompt = trace_payload.get("tokens_prompt")
+    completion = trace_payload.get("tokens_completion")
+    total = trace_payload.get("tokens_total")
+
+    if prompt is None and llm_calls:
+        prompt = sum(_coerce_int(call.get("tokens_prompt")) for call in llm_calls if isinstance(call, dict))
+    if completion is None and llm_calls:
+        completion = sum(_coerce_int(call.get("tokens_completion")) for call in llm_calls if isinstance(call, dict))
+    if total is None and llm_calls:
+        total = sum(_coerce_int(call.get("tokens_total")) for call in llm_calls if isinstance(call, dict))
+
+    prompt_value = _coerce_int(prompt, 0)
+    completion_value = _coerce_int(completion, 0)
+    total_value = _coerce_int(total, prompt_value + completion_value)
+    return prompt_value, completion_value, total_value
+
+
+def _build_turn_diff(previous_trace: Optional[Dict[str, Any]], current_trace: Dict[str, Any]) -> Dict[str, Any]:
+    if not isinstance(previous_trace, dict):
+        return {
+            "route_changed": False,
+            "state_changed": False,
+            "config_changed_keys": [],
+            "memory_delta": {
+                "turns_added": 0,
+                "summary_changed": False,
+                "semantic_hits_delta": 0,
+            },
+        }
+
+    prev_config = previous_trace.get("config_snapshot") if isinstance(previous_trace.get("config_snapshot"), dict) else {}
+    curr_config = current_trace.get("config_snapshot") if isinstance(current_trace.get("config_snapshot"), dict) else {}
+    config_keys = sorted(set(prev_config.keys()) | set(curr_config.keys()))
+    config_changed_keys = [
+        key for key in config_keys if prev_config.get(key) != curr_config.get(key)
+    ]
+
+    prev_memory_turns = _coerce_int(previous_trace.get("memory_turns"), 0)
+    curr_memory_turns = _coerce_int(current_trace.get("memory_turns"), 0)
+    prev_semantic_hits = _coerce_int(previous_trace.get("semantic_hits"), 0)
+    curr_semantic_hits = _coerce_int(current_trace.get("semantic_hits"), 0)
+
+    summary_changed = (
+        previous_trace.get("summary_text") != current_trace.get("summary_text")
+        or previous_trace.get("summary_last_turn") != current_trace.get("summary_last_turn")
+    )
+
+    return {
+        "route_changed": previous_trace.get("recommended_mode") != current_trace.get("recommended_mode"),
+        "state_changed": previous_trace.get("user_state") != current_trace.get("user_state"),
+        "config_changed_keys": config_changed_keys,
+        "memory_delta": {
+            "turns_added": curr_memory_turns - prev_memory_turns,
+            "summary_changed": bool(summary_changed),
+            "semantic_hits_delta": curr_semantic_hits - prev_semantic_hits,
+        },
+    }
+
+
+def _enrich_trace_for_storage(
+    *,
+    previous_trace: Optional[Dict[str, Any]],
+    trace_payload: Dict[str, Any],
+) -> Dict[str, Any]:
+    enriched = _strip_legacy_trace_fields(trace_payload)
+    prompt, completion, total = _extract_token_triplet(enriched)
+    if enriched.get("tokens_prompt") is None:
+        enriched["tokens_prompt"] = prompt
+    if enriched.get("tokens_completion") is None:
+        enriched["tokens_completion"] = completion
+    if enriched.get("tokens_total") is None:
+        enriched["tokens_total"] = total
+    enriched["turn_diff"] = _build_turn_diff(previous_trace, enriched)
+    return enriched
+
+
 def _append_trace_with_resolved_session(
     *,
     store: SessionStore,
     default_session_key: str,
     trace_payload: dict,
-) -> None:
+) -> dict:
     """
     Persist trace under runtime session id when available.
 
@@ -78,9 +167,15 @@ def _append_trace_with_resolved_session(
     backward compatibility.
     """
     resolved_session_key = str(trace_payload.get("session_id") or "").strip() or default_session_key
-    store.append_trace(resolved_session_key, trace_payload)
+    previous = store.get_session_traces(resolved_session_key)
+    previous_trace = previous[-1] if previous else None
+    trace_enriched = _enrich_trace_for_storage(previous_trace=previous_trace, trace_payload=trace_payload)
+
+    store.append_trace(resolved_session_key, trace_enriched)
     if resolved_session_key != default_session_key:
-        store.append_trace(default_session_key, trace_payload)
+        store.append_trace(default_session_key, trace_enriched)
+
+    return trace_enriched
 
 
 def _to_chunk_trace_item(raw_chunk: dict, passed_default: bool) -> ChunkTraceItem:
@@ -558,6 +653,8 @@ async def ask_adaptive_question(
                     "tokens_prompt": metadata.get("tokens_prompt"),
                     "tokens_completion": metadata.get("tokens_completion"),
                     "tokens_total": metadata.get("tokens_total"),
+                    "session_tokens_prompt": metadata.get("session_tokens_prompt"),
+                    "session_tokens_completion": metadata.get("session_tokens_completion"),
                     "session_tokens_total": metadata.get("session_tokens_total"),
                     "session_cost_usd": metadata.get("session_cost_usd"),
                     "session_turns": metadata.get("session_turns"),
@@ -621,6 +718,7 @@ async def ask_adaptive_question(
                     "confidence_level",
                     "informational_mode",
                     "applied_mode_prompt",
+                    "turn_diff",
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):
@@ -654,21 +752,28 @@ async def ask_adaptive_question(
                         trace.tokens_completion = answer_call.get("tokens_completion")
 
                 raw_session_tokens = raw_dict.get("session_tokens_total")
+                raw_session_tokens_prompt = raw_dict.get("session_tokens_prompt")
+                raw_session_tokens_completion = raw_dict.get("session_tokens_completion")
                 raw_session_cost = raw_dict.get("session_cost_usd")
                 raw_session_turns = raw_dict.get("session_turns")
                 if raw_session_tokens is not None:
                     trace.session_tokens_total = raw_session_tokens
+                if raw_session_tokens_prompt is not None:
+                    trace.session_tokens_prompt = raw_session_tokens_prompt
+                if raw_session_tokens_completion is not None:
+                    trace.session_tokens_completion = raw_session_tokens_completion
                 if raw_session_cost is not None:
                     trace.session_cost_usd = raw_session_cost
                 if raw_session_turns is not None:
                     trace.session_turns = raw_session_turns
 
                 try:
-                    _append_trace_with_resolved_session(
+                    trace_payload_stored = _append_trace_with_resolved_session(
                         store=store,
                         default_session_key=session_key,
                         trace_payload=trace.model_dump(exclude_none=True),
                     )
+                    trace = DebugTrace(**trace_payload_stored)
                 except Exception as store_exc:
                     logger.warning(f"[DEBUG_TRACE] Failed to store trace: {store_exc}")
             except Exception as trace_exc:
@@ -780,7 +885,7 @@ async def ask_adaptive_question_stream(
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"
             if request.debug and trace is not None:
                 try:
-                    _append_trace_with_resolved_session(
+                    trace = _append_trace_with_resolved_session(
                         store=store,
                         default_session_key=session_key,
                         trace_payload=trace,

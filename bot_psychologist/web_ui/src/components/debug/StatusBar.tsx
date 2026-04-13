@@ -17,7 +17,7 @@ const chipColors: Record<string, string> = {
 };
 
 export const StatusBar: React.FC<StatusBarProps> = ({ trace, isExpanded = false }) => {
-  const anomalyCount = trace.anomalies?.length ?? 0;
+  const anomalyCount = (trace.anomalies ?? []).filter((item) => item.severity !== 'info').length;
   const hasError = trace.pipeline_error != null;
   const mode = trace.recommended_mode || '—';
   const blocksAfterCap = trace.blocks_after_cap ?? trace.chunks_after_filter?.length ?? trace.chunks_retrieved?.length;

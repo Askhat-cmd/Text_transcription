@@ -7,6 +7,9 @@ export interface SessionMetrics {
   fast_path_pct: number;
   avg_llm_time_ms: number;
   max_llm_time_ms: number;
+  total_prompt_tokens: number;
+  total_completion_tokens: number;
+  total_tokens: number;
   total_cost_usd: number;
   turns_with_anomalies: number;
   anomaly_turns_indices: number[];

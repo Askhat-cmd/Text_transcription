@@ -1,8 +1,8 @@
-﻿# Summarizer Prompt
+# Промпт суммаризации
 
-Summarize the following therapy coaching session in 2-4 sentences.
-Focus on: (1) main emotional theme, (2) user's core concern, (3) last discussed direction or practice.
-Output: plain text, no headers, no lists. Russian language.
+Суммаризируй сессию коучингового диалога в 2-4 предложениях.
+Фокус: (1) главная эмоциональная тема, (2) ключевая забота пользователя, (3) последнее обсужденное направление или практика.
+Формат вывода: обычный текст, без заголовков и списков. Язык: русский.
 
-Session:
+Сессия:
 {session_text}

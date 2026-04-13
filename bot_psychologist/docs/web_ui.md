@@ -6,6 +6,7 @@
 - [Обзор проекта](./overview.md)
 - [Архитектура](./architecture.md)
 - [REST API](./api.md)
+- [Trace Runtime Guide](./trace_runtime.md)
 
 ---
 

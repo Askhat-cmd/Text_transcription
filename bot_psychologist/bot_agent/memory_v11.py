@@ -172,7 +172,7 @@ def compose_memory_context_v11(
     summary_mode = bool(summary and total_turns >= max(1, int(summary_window_size)))
     if summary_mode:
         recent = _render_recent_turns(recent_turns, limit=max(1, int(recent_window)))
-        summary_block = f"[CONVERSATION SUMMARY]\n{summary}" if summary else ""
+        summary_block = f"[СВОДКА ДИАЛОГА / CONVERSATION SUMMARY]\n{summary}" if summary else ""
         text = _join_non_empty([summary_block, recent])
         strategy = (
             "fresh_summary_small_window"
@@ -212,7 +212,7 @@ def _render_recent_turns(recent_turns: Iterable[Any], *, limit: int) -> str:
     items = list(recent_turns or [])[-max(1, limit) :]
     if not items:
         return ""
-    lines: List[str] = ["[RECENT DIALOG]"]
+    lines: List[str] = ["[ПОСЛЕДНИЙ ДИАЛОГ / RECENT DIALOG]"]
     for turn in items:
         user_text = str(getattr(turn, "user_input", "") or "").strip()
         bot_text = str(getattr(turn, "bot_response", "") or "").strip()
@@ -231,7 +231,7 @@ def _render_snapshot_subset(snapshot: Dict[str, Any] | None) -> str:
     engagement = snapshot.get("engagement") or {}
 
     lines = [
-        "SNAPSHOT:",
+        "СНИМОК КОНТЕКСТА:",
         f"- interaction_mode: {diagnostics.get('interaction_mode')}",
         f"- nervous_system_state: {diagnostics.get('nervous_system_state')}",
         f"- request_function: {diagnostics.get('request_function')}",

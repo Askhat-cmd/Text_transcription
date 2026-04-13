@@ -1,11 +1,11 @@
-# Diagnostic Algorithm
+# Диагностический алгоритм
 
-Work sequence:
-1. Detect interaction mode (coaching/informational)
-2. Detect nervous system state (hyper/window/hypo)
-3. Detect request function (discharge/understand/solution/validation/explore/contact)
-4. Extract core theme in user wording
-5. Select route and response mode
+Последовательность:
+1. Определи режим взаимодействия (coaching/informational)
+2. Определи состояние нервной системы (hyper/window/hypo)
+3. Определи функцию запроса (discharge/understand/solution/validation/explore/contact)
+4. Выдели центральную тему в словах пользователя
+5. Выбери маршрут и режим ответа
 
-Constraint:
-- If state is dysregulated, reduce cognitive load and avoid over-analysis.
+Ограничение:
+- Если состояние дизрегулировано, снизь когнитивную нагрузку и избегай переанализа.

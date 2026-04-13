@@ -212,6 +212,19 @@ class PipelineError(BaseModel):
     partial_trace_available: bool
 
 
+class TurnDiffMemoryDelta(BaseModel):
+    turns_added: int = 0
+    summary_changed: bool = False
+    semantic_hits_delta: int = 0
+
+
+class TurnDiff(BaseModel):
+    route_changed: bool = False
+    state_changed: bool = False
+    config_changed_keys: List[str] = Field(default_factory=list)
+    memory_delta: TurnDiffMemoryDelta = Field(default_factory=TurnDiffMemoryDelta)
+
+
 class LLMCallTrace(BaseModel):
     """Один вызов LLM в рамках обработки запроса."""
     step: str
@@ -246,6 +259,8 @@ class DebugTrace(BaseModel):
     tokens_prompt: Optional[int] = None
     tokens_completion: Optional[int] = None
     tokens_total: Optional[int] = None
+    session_tokens_prompt: Optional[int] = None
+    session_tokens_completion: Optional[int] = None
     session_tokens_total: Optional[int] = None
     session_cost_usd: Optional[float] = None
     session_turns: Optional[int] = None
@@ -287,6 +302,7 @@ class DebugTrace(BaseModel):
     confidence_level: Optional[str] = None
     informational_mode: Optional[bool] = None
     applied_mode_prompt: Optional[str] = None
+    turn_diff: Optional[TurnDiff] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

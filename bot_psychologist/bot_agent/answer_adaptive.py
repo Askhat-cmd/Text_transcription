@@ -906,13 +906,19 @@ def _update_session_token_metrics(
     tokens_completion: Optional[int],
     tokens_total: Optional[int],
     model_name: str,
-) -> Dict[str, Optional[float]]:
+) -> Dict[str, Optional[float] | int]:
+    previous_prompt = int(memory.metadata.get("session_tokens_prompt") or 0)
+    previous_completion = int(memory.metadata.get("session_tokens_completion") or 0)
     previous_total = int(memory.metadata.get("session_tokens_total") or 0)
     previous_turns = int(memory.metadata.get("session_turns") or 0)
     previous_cost = memory.metadata.get("session_cost_usd")
     previous_cost = float(previous_cost) if isinstance(previous_cost, (int, float, str)) else 0.0
 
+    new_prompt = previous_prompt + (int(tokens_prompt) if isinstance(tokens_prompt, (int, float)) else 0)
+    new_completion = previous_completion + (int(tokens_completion) if isinstance(tokens_completion, (int, float)) else 0)
     new_total = previous_total + (int(tokens_total) if isinstance(tokens_total, (int, float)) else 0)
+    if not isinstance(tokens_total, (int, float)):
+        new_total = new_prompt + new_completion
     new_turns = previous_turns + 1
 
     cost_per_1m = {
@@ -937,12 +943,16 @@ def _update_session_token_metrics(
         )
         session_cost = round(previous_cost + cost, 6)
 
+    memory.metadata["session_tokens_prompt"] = new_prompt
+    memory.metadata["session_tokens_completion"] = new_completion
     memory.metadata["session_tokens_total"] = new_total
     memory.metadata["session_turns"] = new_turns
     if session_cost is not None:
         memory.metadata["session_cost_usd"] = session_cost
 
     return {
+        "session_tokens_prompt": new_prompt,
+        "session_tokens_completion": new_completion,
         "session_tokens_total": new_total,
         "session_turns": new_turns,
         "session_cost_usd": session_cost,
@@ -1030,7 +1040,7 @@ def _build_state_context(
     recommendation = (
         state_analysis.recommendations[0]
         if state_analysis and state_analysis.recommendations
-        else "Respond in a clear and grounded way."
+        else "Ответь ясно, спокойно и с опорой на контекст пользователя."
     )
     contradiction_block = ""
     if contradiction_suggestion:
@@ -1373,17 +1383,7 @@ def answer_question_adaptive(
                         "skipped": False,
                     }
                 )
-
-            current_stage = "sd_classifier"
             sd_result = _fallback_sd_result("disabled_by_design")
-            pipeline_stages.append(
-                {
-                    "name": "sd_classifier",
-                    "label": "SD классификатор",
-                    "duration_ms": 0,
-                    "skipped": True,
-                }
-            )
         else:
             state_analysis, sd_result = _run_coroutine_sync(
                 _classify_parallel(
@@ -1880,6 +1880,8 @@ def answer_question_adaptive(
                     "tokens_prompt": tokens_prompt,
                     "tokens_completion": tokens_completion,
                     "tokens_total": tokens_total,
+                    "session_tokens_prompt": session_metrics.get("session_tokens_prompt"),
+                    "session_tokens_completion": session_metrics.get("session_tokens_completion"),
                     "session_tokens_total": session_metrics.get("session_tokens_total"),
                     "session_cost_usd": session_metrics.get("session_cost_usd"),
                     "session_turns": session_metrics.get("session_turns"),
@@ -1917,6 +1919,8 @@ def answer_question_adaptive(
                 debug_trace["tokens_prompt"] = tokens_prompt
                 debug_trace["tokens_completion"] = tokens_completion
                 debug_trace["tokens_total"] = tokens_total
+                debug_trace["session_tokens_prompt"] = session_metrics.get("session_tokens_prompt")
+                debug_trace["session_tokens_completion"] = session_metrics.get("session_tokens_completion")
                 debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
                 debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
                 debug_trace["session_turns"] = session_metrics.get("session_turns")
@@ -2915,6 +2919,8 @@ def answer_question_adaptive(
                 "tokens_prompt": tokens_prompt,
                 "tokens_completion": tokens_completion,
                 "tokens_total": tokens_total,
+                "session_tokens_prompt": session_metrics.get("session_tokens_prompt"),
+                "session_tokens_completion": session_metrics.get("session_tokens_completion"),
                 "session_tokens_total": session_metrics.get("session_tokens_total"),
                 "session_cost_usd": session_metrics.get("session_cost_usd"),
                 "session_turns": session_metrics.get("session_turns"),
@@ -2963,6 +2969,8 @@ def answer_question_adaptive(
                 debug_trace["tokens_completion"] = tokens_completion
             if debug_trace.get("tokens_total") is None:
                 debug_trace["tokens_total"] = tokens_total
+            debug_trace["session_tokens_prompt"] = session_metrics.get("session_tokens_prompt")
+            debug_trace["session_tokens_completion"] = session_metrics.get("session_tokens_completion")
             debug_trace["session_tokens_total"] = session_metrics.get("session_tokens_total")
             debug_trace["session_cost_usd"] = session_metrics.get("session_cost_usd")
             debug_trace["session_turns"] = session_metrics.get("session_turns")

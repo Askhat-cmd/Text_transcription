@@ -1,16 +1,16 @@
-# bot_agent/answer_adaptive.py
+﻿# bot_agent/answer_adaptive.py
 """
 Adaptive Answer Module - Phase 4
 ================================
 
-Главная функция Phase 4: answer_question_adaptive.
+Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ Phase 4: answer_question_adaptive.
 
-Расширяет Phase 3 полноценным сопровождением пользователя:
-- Классификация состояния пользователя (10 состояний)
-- Долгосрочная память диалога
-- Построение персональных путей трансформации
-- Адаптивные рекомендации по состоянию
-- Запрос обратной связи
+Р Р°СЃС€РёСЂСЏРµС‚ Phase 3 РїРѕР»РЅРѕС†РµРЅРЅС‹Рј СЃРѕРїСЂРѕРІРѕР¶РґРµРЅРёРµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:
+- РљР»Р°СЃСЃРёС„РёРєР°С†РёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (10 СЃРѕСЃС‚РѕСЏРЅРёР№)
+- Р”РѕР»РіРѕСЃСЂРѕС‡РЅР°СЏ РїР°РјСЏС‚СЊ РґРёР°Р»РѕРіР°
+- РџРѕСЃС‚СЂРѕРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹С… РїСѓС‚РµР№ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё
+- РђРґР°РїС‚РёРІРЅС‹Рµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїРѕ СЃРѕСЃС‚РѕСЏРЅРёСЋ
+- Р—Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
 """
 
 import asyncio
@@ -68,6 +68,9 @@ from .adaptive_runtime.response_utils import (
     _build_partial_response,
     _build_error_response,
     _build_success_response,
+    _build_fast_success_metadata,
+    _build_full_success_metadata,
+    _persist_turn_best_effort,
 )
 from .adaptive_runtime.trace_helpers import (
     _strip_legacy_runtime_metadata,
@@ -315,34 +318,34 @@ def answer_question_adaptive(
     schedule_summary_task: bool = True,
 ) -> Dict:
     """
-    Phase 4: Адаптивный QA с учетом состояния и истории пользователя.
+    Phase 4: РђРґР°РїС‚РёРІРЅС‹Р№ QA СЃ СѓС‡РµС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ Рё РёСЃС‚РѕСЂРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
     
-    Этапы обработки:
-        1. Загрузка данных и памяти пользователя
-        2. Анализ состояния пользователя
-        3. Поиск релевантных блоков
-        4. Генерация ответа с контекстом состояния
-        5. Построение рекомендации пути
-        6. Подготовка запроса обратной связи
-        7. Сохранение в память
+    Р­С‚Р°РїС‹ РѕР±СЂР°Р±РѕС‚РєРё:
+        1. Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        2. РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        3. РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
+        4. Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
+        5. РџРѕСЃС‚СЂРѕРµРЅРёРµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїСѓС‚Рё
+        6. РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
+        7. РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
     
     Args:
-        query: Вопрос пользователя
-        user_id: ID пользователя (для памяти)
-        user_level: Уровень пользователя (beginner/intermediate/advanced)
-        include_path_recommendation: Включать ли рекомендацию пути
-        include_feedback_prompt: Запрашивать ли обратную связь
-        top_k: Количество блоков для поиска
-        debug: Отладочная информация
+        query: Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        user_id: ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РґР»СЏ РїР°РјСЏС‚Рё)
+        user_level: РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (beginner/intermediate/advanced)
+        include_path_recommendation: Р’РєР»СЋС‡Р°С‚СЊ Р»Рё СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё
+        include_feedback_prompt: Р—Р°РїСЂР°С€РёРІР°С‚СЊ Р»Рё РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ
+        top_k: РљРѕР»РёС‡РµСЃС‚РІРѕ Р±Р»РѕРєРѕРІ РґР»СЏ РїРѕРёСЃРєР°
+        debug: РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
     
     Returns:
-        Dict с расширенными полями Phase 4:
+        Dict СЃ СЂР°СЃС€РёСЂРµРЅРЅС‹РјРё РїРѕР»СЏРјРё Phase 4:
             - status: "success" | "error" | "partial"
-            - answer: str — ответ
-            - state_analysis: Dict — анализ состояния
-            - path_recommendation: Optional[Dict] — рекомендуемый путь
-            - conversation_context: str — контекст истории
-            - feedback_prompt: str — запрос обратной связи
+            - answer: str вЂ” РѕС‚РІРµС‚
+            - state_analysis: Dict вЂ” Р°РЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ
+            - path_recommendation: Optional[Dict] вЂ” СЂРµРєРѕРјРµРЅРґСѓРµРјС‹Р№ РїСѓС‚СЊ
+            - conversation_context: str вЂ” РєРѕРЅС‚РµРєСЃС‚ РёСЃС‚РѕСЂРёРё
+            - feedback_prompt: str вЂ” Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
             - sources: List[Dict]
             - concepts: List[str]
             - metadata: Dict
@@ -397,9 +400,9 @@ def answer_question_adaptive(
     current_stage = "init"
     try:
         # ================================================================
-        # ЭТАП 1: Загрузка данных и памяти
+        # Р­РўРђРџ 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё
         # ================================================================
-        logger.debug("📚 Этап 1: Загрузка данных и памяти...")
+        logger.debug("рџ“љ Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё...")
         
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
@@ -454,11 +457,11 @@ def answer_question_adaptive(
             debug_info["memory_turns"] = len(memory.turns)
         
         # ================================================================
-        # ЭТАП 2: Анализ состояния пользователя
+        # Р­РўРђРџ 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
         # ================================================================
-        logger.debug("🎯 Этап 2: Анализ состояния...")
+        logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
         
-        # Получить историю для контекста анализа
+        # РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґР»СЏ РєРѕРЅС‚РµРєСЃС‚Р° Р°РЅР°Р»РёР·Р°
         conversation_history = [
             {"role": "user", "content": turn.user_input}
             for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
@@ -469,7 +472,7 @@ def answer_question_adaptive(
             try:
                 state_analysis, stage = _timed(
                     "state_classifier",
-                    "Классификатор состояния",
+                    "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
                     _run_coroutine_sync,
                     state_classifier.classify(
                         query,
@@ -486,7 +489,7 @@ def answer_question_adaptive(
                 pipeline_stages.append(
                     {
                         "name": "state_classifier",
-                        "label": "Классификатор состояния",
+                        "label": "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
                         "duration_ms": 0,
                         "skipped": False,
                     }
@@ -653,7 +656,7 @@ def answer_question_adaptive(
                 forbid=pre_routing_result.decision.forbid,
             )
             state_context_mode_prompt = (
-                "РЕЖМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
+                "Р Р•Р–Рњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
                 if informational_mode
                 else mode_directive.prompt
             )
@@ -913,45 +916,31 @@ def answer_question_adaptive(
                 feedback_prompt=feedback_prompt,
                 sources=[],
                 concepts=[],
-                metadata={
-                    "user_id": user_id,
-                    "blocks_used": 0,
-                    "state": state_analysis.primary_state.value,
-                    "conversation_turns": len(memory.turns),
-                    "recommended_mode": pre_routing_result.mode,
-                    "route_track": getattr(pre_routing_result, "track", "direct"),
-                    "route_tone": getattr(pre_routing_result, "tone", "minimal"),
-                    "decision_rule_id": pre_routing_result.decision.rule_id,
-                    "confidence_score": pre_routing_result.confidence_score,
-                    "confidence_level": pre_routing_result.confidence_level,
-                    "mode_reason": mode_directive.reason,
-                    "prompt_stack_v2_enabled": _prompt_stack_v2_enabled(),
-                    "output_validation_enabled": _output_validation_enabled(),
-                    "retrieval_block_cap": 0,
-                    "fast_path": True,
-                    "informational_mode": informational_mode,
-                    "applied_mode_prompt": mode_prompt_key if informational_mode else None,
-                    "summary_used": memory_trace_metrics["summary_used"],
-                    "summary_length": summary_length,
-                    "summary_last_turn": summary_last_turn,
-                    "context_mode": (
+                metadata=_build_fast_success_metadata(
+                    user_id=user_id,
+                    state_analysis=state_analysis,
+                    routing_result=pre_routing_result,
+                    mode_reason=mode_directive.reason,
+                    informational_mode=informational_mode,
+                    mode_prompt_key=mode_prompt_key,
+                    prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
+                    output_validation_enabled=_output_validation_enabled(),
+                    memory_context_mode=(
                         "summary"
                         if bool(getattr(memory_context_bundle, "summary_used", False))
                         else "full"
                     ),
-                    "summary_pending_turn": memory.metadata.get("summary_pending_turn"),
-                    "semantic_hits": memory_trace_metrics["semantic_hits"],
-                    "memory_turns": memory_turns,
-                    "hybrid_query_len": len(query or ""),
-                    "tokens_prompt": tokens_prompt,
-                    "tokens_completion": tokens_completion,
-                    "tokens_total": tokens_total,
-                    "session_tokens_prompt": session_metrics.get("session_tokens_prompt"),
-                    "session_tokens_completion": session_metrics.get("session_tokens_completion"),
-                    "session_tokens_total": session_metrics.get("session_tokens_total"),
-                    "session_cost_usd": session_metrics.get("session_cost_usd"),
-                    "session_turns": session_metrics.get("session_turns"),
-                },
+                    memory_trace_metrics=memory_trace_metrics,
+                    summary_length=summary_length,
+                    summary_last_turn=summary_last_turn,
+                    summary_pending_turn=memory.metadata.get("summary_pending_turn"),
+                    memory_turns=memory_turns,
+                    hybrid_query_len=len(query or ""),
+                    tokens_prompt=tokens_prompt,
+                    tokens_completion=tokens_completion,
+                    tokens_total=tokens_total,
+                    session_metrics=session_metrics,
+                ),
                 elapsed_time=elapsed_time,
             )
             if debug_info is not None:
@@ -1012,9 +1001,9 @@ def answer_question_adaptive(
             debug_trace["fast_path"] = False
         
         # ================================================================
-        # ЭТАП 3: Поиск релевантных блоков
+        # Р­РўРђРџ 3: РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
         # ================================================================
-        logger.debug("🔍 Этап 3: Поиск блоков...")
+        logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
 
         retrieval_working_state = {
             "nss": (
@@ -1104,7 +1093,7 @@ def answer_question_adaptive(
             if retrieval_degraded_reason:
                 debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
         
-        # Дедупликация блоков по block_id до SD filter
+        # Р”РµРґСѓРїР»РёРєР°С†РёСЏ Р±Р»РѕРєРѕРІ РїРѕ block_id РґРѕ SD filter
         seen_ids = set()
         deduped_blocks = []
         for block, score in raw_retrieved_blocks:
@@ -1256,7 +1245,7 @@ def answer_question_adaptive(
             getattr(routing_result, "route", "reflect"),
         )
         state_context_mode_prompt = (
-            "РЕЖМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
+            "Р Р•Р–Рњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
             if informational_mode
             else mode_directive.prompt
         )
@@ -1370,7 +1359,7 @@ def answer_question_adaptive(
 
         if not retrieved_blocks:
             response = _build_partial_response(
-                "К сожалению, релевантный материал не найден. Попробуйте переформулировать вопрос.",
+                "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ РІРѕРїСЂРѕСЃ.",
                 state_analysis,
                 memory,
                 start_time,
@@ -1410,7 +1399,7 @@ def answer_question_adaptive(
                     {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
                 )
                 pipeline_stages.append(
-                    {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": True}
+                    {"name": "format", "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ", "duration_ms": 0, "skipped": True}
                 )
                 _apply_trace_memory_snapshot(
                     debug_trace,
@@ -1533,11 +1522,11 @@ def answer_question_adaptive(
             debug_trace["chunks_after_filter"] = chunks_after_rerank
         
         # ================================================================
-        # ЭТАП 4: Генерация ответа с контекстом состояния
+        # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
         # ================================================================
-        logger.debug("🤖 Этап 4: Генерация ответа...")
+        logger.debug("рџ¤– Р­С‚Р°Рї 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р°...")
         
-        # Добавить контекст состояния
+        # Р”РѕР±Р°РІРёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ
         state_context = _build_state_context(
             state_analysis,
             state_context_mode_prompt,
@@ -1555,7 +1544,7 @@ def answer_question_adaptive(
         if practice_context_suffix:
             state_context = f"{state_context}{practice_context_suffix}"
 
-        # Генерация ответа (с учётом истории диалога)
+        # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
         response_generator = ResponseGenerator()
         prompt_stack_meta: Dict[str, Any] = {"enabled": False}
         system_prompt_override: Optional[str] = None
@@ -1664,21 +1653,19 @@ def answer_question_adaptive(
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
             response = _build_error_response(
-                f"Ошибка при генерации ответа: {llm_result['error']}",
+                f"РћС€РёР±РєР° РїСЂРё РіРµРЅРµСЂР°С†РёРё РѕС‚РІРµС‚Р°: {llm_result['error']}",
                 state_analysis,
                 start_time
             )
-            try:
-                memory.add_turn(
-                    user_input=query,
-                    bot_response=response.get("answer", ""),
-                    user_state=state_analysis.primary_state.value if state_analysis else None,
-                    blocks_used=0,
-                    concepts=[],
-                    schedule_summary_task=schedule_summary_task,
-                )
-            except Exception:
-                pass
+            _persist_turn_best_effort(
+                memory=memory,
+                user_input=query,
+                bot_response=response.get("answer", ""),
+                user_state=state_analysis.primary_state.value if state_analysis else None,
+                blocks_used=0,
+                concepts=[],
+                schedule_summary_task=schedule_summary_task,
+            )
             if debug_info is not None:
                 debug_info["memory_summary"] = memory.get_summary()
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
@@ -1789,18 +1776,18 @@ def answer_question_adaptive(
             )
 
         # ================================================================
-        # ЭТАП 5: Семантический анализ и извлечение концептов
+        # Р­РўРђРџ 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР· Рё РёР·РІР»РµС‡РµРЅРёРµ РєРѕРЅС†РµРїС‚РѕРІ
         # ================================================================
-        logger.debug("🔬 Этап 5: Семантический анализ...")
+        logger.debug("рџ”¬ Р­С‚Р°Рї 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·...")
         
         semantic_analyzer = SemanticAnalyzer()
         semantic_data = semantic_analyzer.analyze_relations(adapted_blocks)
         concepts = semantic_data.get("primary_concepts", [])
         
         # ================================================================
-        # ЭТАП 6: Рекомендация пути (опционально)
+        # Р­РўРђРџ 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
         # ================================================================
-        logger.debug("🛤️ Этап 6: Рекомендация пути...")
+        logger.debug("рџ›¤пёЏ Р­С‚Р°Рї 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё...")
         
         path_recommendation = None
         route_name = str(getattr(routing_result, "route", "") or "").lower()
@@ -1833,22 +1820,22 @@ def answer_question_adaptive(
                     } if personal_path.path_steps else None
                 }
             except Exception as e:
-                logger.warning(f"⚠️ Ошибка построения пути: {e}")
+                logger.warning(f"вљ пёЏ РћС€РёР±РєР° РїРѕСЃС‚СЂРѕРµРЅРёСЏ РїСѓС‚Рё: {e}")
                 path_recommendation = None
         
         # ================================================================
-        # ЭТАП 7: Подготовка запроса обратной связи
+        # Р­РўРђРџ 7: РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
         # ================================================================
-        logger.debug("📝 Этап 7: Подготовка обратной связи...")
+        logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
         
         feedback_prompt = ""
         if include_feedback_prompt:
             feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
         
         # ================================================================
-        # ЭТАП 8: Сохранение в память
+        # Р­РўРђРџ 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
         # ================================================================
-        logger.debug("💾 Этап 8: Сохранение в память...")
+        logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
         
         try:
             memory.set_working_state(
@@ -1897,8 +1884,8 @@ def answer_question_adaptive(
                         "key_themes": key_themes[:3],
                         "state_end": state_analysis.primary_state.value,
                         "notable_moments": [
-                            f"Запрос: {_truncate_preview(query, 140)}",
-                            f"Ответ: {_truncate_preview(answer, 140)}",
+                            f"Р—Р°РїСЂРѕСЃ: {_truncate_preview(query, 140)}",
+                            f"РћС‚РІРµС‚: {_truncate_preview(answer, 140)}",
                         ],
                     },
                 )
@@ -1906,7 +1893,7 @@ def answer_question_adaptive(
             logger.warning(f"[MEMORY] save_session_summary skipped: {exc}")
         
         # ================================================================
-        # ФНАЛЬНЫЙ РЕЗУЛЬТАТ
+        # Р¤РќРђР›Р¬РќР«Р™ Р Р•Р—РЈР›Р¬РўРђРў
         # ================================================================
         elapsed_time = (datetime.now() - start_time).total_seconds()
         
@@ -1933,51 +1920,39 @@ def answer_question_adaptive(
             feedback_prompt=feedback_prompt,
             sources=sources,
             concepts=concepts,
-            metadata={
-                "user_id": user_id,
-                "blocks_used": len(adapted_blocks),
-                "state": state_analysis.primary_state.value,
-                "conversation_turns": len(memory.turns),
-                "recommended_mode": routing_result.mode,
-                "route_track": getattr(routing_result, "track", "direct"),
-                "route_tone": getattr(routing_result, "tone", "minimal"),
-                "resolved_route": getattr(routing_result, "route", None),
-                "decision_rule_id": routing_result.decision.rule_id,
-                "confidence_score": routing_result.confidence_score,
-                "confidence_level": routing_result.confidence_level,
-                "mode_reason": mode_directive.reason,
-                "route_resolution_count": route_resolution_count,
-                "prompt_stack_v2_enabled": _prompt_stack_v2_enabled(),
-                "output_validation_enabled": _output_validation_enabled(),
-                "selected_practice": selected_practice,
-                "practice_alternatives": practice_alternatives,
-                "retrieval_block_cap": block_cap,
-                "informational_mode": informational_mode,
-                "applied_mode_prompt": mode_prompt_key if informational_mode else None,
-                "diagnostics_v1": diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                "contradiction_detected": bool(contradiction_info.get("has_contradiction", False)),
-                "cross_session_context_used": bool(cross_session_context),
-                "summary_used": memory_trace_metrics["summary_used"],
-                "summary_length": len(memory.summary) if memory.summary else 0,
-                "summary_last_turn": memory.summary_updated_at,
-                "context_mode": (
+            metadata=_build_full_success_metadata(
+                user_id=user_id,
+                state_analysis=state_analysis,
+                routing_result=routing_result,
+                mode_reason=mode_directive.reason,
+                route_resolution_count=route_resolution_count,
+                blocks_used=len(adapted_blocks),
+                selected_practice=selected_practice,
+                practice_alternatives=practice_alternatives,
+                retrieval_block_cap=block_cap,
+                informational_mode=informational_mode,
+                mode_prompt_key=mode_prompt_key,
+                prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
+                output_validation_enabled=_output_validation_enabled(),
+                diagnostics_v1_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                contradiction_detected=bool(contradiction_info.get("has_contradiction", False)),
+                cross_session_context_used=bool(cross_session_context),
+                memory_context_mode=(
                     "summary"
                     if bool(getattr(memory_context_bundle, "summary_used", False))
                     else "full"
                 ),
-                "summary_pending_turn": memory.metadata.get("summary_pending_turn"),
-                "semantic_hits": memory_trace_metrics["semantic_hits"],
-                "memory_turns": len(memory.turns),
-                "hybrid_query_len": len(hybrid_query),
-                "tokens_prompt": tokens_prompt,
-                "tokens_completion": tokens_completion,
-                "tokens_total": tokens_total,
-                "session_tokens_prompt": session_metrics.get("session_tokens_prompt"),
-                "session_tokens_completion": session_metrics.get("session_tokens_completion"),
-                "session_tokens_total": session_metrics.get("session_tokens_total"),
-                "session_cost_usd": session_metrics.get("session_cost_usd"),
-                "session_turns": session_metrics.get("session_turns"),
-            },
+                memory_trace_metrics=memory_trace_metrics,
+                summary_length=len(memory.summary) if memory.summary else 0,
+                summary_last_turn=memory.summary_updated_at,
+                summary_pending_turn=memory.metadata.get("summary_pending_turn"),
+                memory_turns=len(memory.turns),
+                hybrid_query_len=len(hybrid_query),
+                tokens_prompt=tokens_prompt,
+                tokens_completion=tokens_completion,
+                tokens_total=tokens_total,
+                session_metrics=session_metrics,
+            ),
             elapsed_time=elapsed_time,
         )
 
@@ -2032,22 +2007,16 @@ def answer_question_adaptive(
     
     except Exception as e:
         logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)
-        response = {
-            "status": "error",
-            "answer": f"Произошла ошибка при обработке запроса: {str(e)}",
-            "state_analysis": None,
-            "path_recommendation": None,
-            "conversation_context": "",
-            "feedback_prompt": "",
-            "sources": [],
-            "concepts": [],
-            "metadata": {"user_id": user_id},
-            "timestamp": datetime.now().isoformat(),
-            "processing_time_seconds": (datetime.now() - start_time).total_seconds()
-        }
+        response = _build_error_response(
+            f"Произошла ошибка при обработке запроса: {str(e)}",
+            state_analysis,
+            start_time,
+        )
+        response["metadata"] = {"user_id": user_id}
         try:
             memory = get_conversation_memory(user_id)
-            memory.add_turn(
+            _persist_turn_best_effort(
+                memory=memory,
                 user_input=query,
                 bot_response=response["answer"],
                 blocks_used=0,

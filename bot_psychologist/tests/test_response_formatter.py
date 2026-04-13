@@ -46,7 +46,6 @@ def test_calculate_target_length_short_validation() -> None:
     target = formatter.calculate_target_length(
         user_message="мне плохо",
         routing_mode="VALIDATION",
-        sd_level="GREEN",
     )
     assert target["max_sentences"] == 2
 
@@ -56,7 +55,6 @@ def test_calculate_target_length_long_thinking() -> None:
     target = formatter.calculate_target_length(
         user_message=" ".join(["слово"] * 25),
         routing_mode="THINKING",
-        sd_level="YELLOW",
     )
     assert target["max_sentences"] == 6
 
@@ -68,7 +66,6 @@ def test_formatter_applies_sentence_cap_from_user_message() -> None:
         mode="VALIDATION",
         confidence_level="high",
         user_message="коротко",
-        sd_level="GREEN",
     )
     # VALIDATION + short message => максимум 2 предложения.
     assert text.count(".") <= 2
@@ -81,7 +78,6 @@ def test_formatter_skips_sentence_cap_for_informational_mode() -> None:
         mode="PRESENCE",
         confidence_level="high",
         user_message="коротко",
-        sd_level="GREEN",
         informational_mode=True,
     )
     assert text.count(".") >= 3
@@ -94,7 +90,6 @@ def test_formatter_does_not_apply_sentence_cap_without_explicit_brevity() -> Non
         mode="VALIDATION",
         confidence_level="high",
         user_message="I feel anxious before a meeting",
-        sd_level="GREEN",
     )
     assert text == source
 
@@ -112,7 +107,6 @@ def test_formatter_does_not_clip_regular_answer_by_mode_limit() -> None:
         mode="PRESENCE",
         confidence_level="high",
         user_message="Расскажи подробно, пожалуйста",
-        sd_level="GREEN",
         informational_mode=False,
     )
     assert text == source
@@ -126,7 +120,6 @@ def test_formatter_applies_hard_cap_for_extreme_output() -> None:
         mode="PRESENCE",
         confidence_level="high",
         user_message="Расскажи подробно",
-        sd_level="GREEN",
     )
     assert len(text) <= 120
     assert text.endswith("...")

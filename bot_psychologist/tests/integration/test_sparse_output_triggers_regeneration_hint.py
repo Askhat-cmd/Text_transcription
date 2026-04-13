@@ -9,6 +9,8 @@ import bot_agent.answer_adaptive as adaptive
 
 
 def test_sparse_output_triggers_regeneration_hint() -> None:
+    original_enabled = adaptive.feature_flags.enabled
+    adaptive.feature_flags.enabled = lambda name: True if name == "USE_OUTPUT_VALIDATION" else original_enabled(name)  # type: ignore[method-assign]
     captured: dict[str, str] = {}
 
     def _retry_generate(hint: str) -> dict:
@@ -21,17 +23,20 @@ def test_sparse_output_triggers_regeneration_hint() -> None:
             )
         }
 
-    answer, meta, _retry_payload = adaptive._apply_output_validation_policy(
-        answer="Избегание — это уход от сложного. Что из этого тебе ближе?",
-        query="Объясни избегание и чем оно отличается от осознанной паузы",
-        route="inform",
-        mode="CLARIFICATION",
-        generate_retry_fn=_retry_generate,
-    )
+    try:
+        answer, meta, _retry_payload = adaptive._apply_output_validation_policy(
+            answer="Избегание — это уход от сложного. Что из этого тебе ближе?",
+            query="Объясни избегание и чем оно отличается от осознанной паузы",
+            route="inform",
+            mode="CLARIFICATION",
+            generate_retry_fn=_retry_generate,
+        )
 
-    assert "hint" in captured
-    assert "сравни по 2-3 критериям" in captured["hint"].lower()
-    assert meta["enabled"] is True
-    assert len(meta["attempts"]) == 2
-    assert meta["final_valid"] is True
-    assert "в отличие" in answer.lower()
+        assert "hint" in captured
+        assert "сравни по 2-3 критериям" in captured["hint"].lower()
+        assert meta["enabled"] is True
+        assert len(meta["attempts"]) == 2
+        assert meta["final_valid"] is True
+        assert "в отличие" in answer.lower()
+    finally:
+        adaptive.feature_flags.enabled = original_enabled  # type: ignore[method-assign]

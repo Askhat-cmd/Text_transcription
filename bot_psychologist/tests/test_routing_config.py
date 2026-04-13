@@ -9,9 +9,6 @@ def _snapshot():
         "FAST_DETECTOR_CONFIDENCE_THRESHOLD",
         "STATE_CLASSIFIER_ENABLED",
         "STATE_CLASSIFIER_CONFIDENCE_THRESHOLD",
-        "SD_CLASSIFIER_ENABLED",
-        "SD_CLASSIFIER_CONFIDENCE_THRESHOLD",
-        "PROMPT_SD_OVERRIDES_BASE",
         "PROMPT_MODE_OVERRIDES_SD",
         "MAX_TOKENS_SOFT_CAP",
     ]
@@ -60,9 +57,6 @@ def test_all_routing_params_have_defaults():
     assert isinstance(config.FAST_DETECTOR_CONFIDENCE_THRESHOLD, float)
     assert isinstance(config.STATE_CLASSIFIER_ENABLED, bool)
     assert isinstance(config.STATE_CLASSIFIER_CONFIDENCE_THRESHOLD, float)
-    assert isinstance(config.SD_CLASSIFIER_ENABLED, bool)
-    assert isinstance(config.SD_CLASSIFIER_CONFIDENCE_THRESHOLD, float)
-    assert isinstance(config.PROMPT_SD_OVERRIDES_BASE, bool)
     assert isinstance(config.PROMPT_MODE_OVERRIDES_SD, bool)
     assert isinstance(config.FREE_CONVERSATION_MODE, bool)
     assert isinstance(config.MAX_TOKENS_SOFT_CAP, int)

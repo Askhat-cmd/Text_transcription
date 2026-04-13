@@ -1,73 +1,73 @@
-﻿# РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ
+# Тестирование
 
-## РќР°РІРёРіР°С†РёСЏ
+## Навигация
 
-- [РќР°Р·Р°Рґ Рє README](../README.md)
-- [РћР±Р·РѕСЂ РїСЂРѕРµРєС‚Р°](./overview.md)
-- [Р Р°Р·РІС‘СЂС‚С‹РІР°РЅРёРµ](./deployment.md)
-
----
-
-## РћРїРёСЃР°РЅРёРµ Рё РЅР°Р·РЅР°С‡РµРЅРёРµ
-
-**РќР°Р·РЅР°С‡РµРЅРёРµ РґРѕРєСѓРјРµРЅС‚Р°**: РћРїРёСЃР°С‚СЊ РїСЂРѕС†РµСЃСЃ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ РІСЃРµС… Phase РїСЂРѕРµРєС‚Р° Bot Psychologist.
-
-**Р”Р»СЏ РєРѕРіРѕ**: Р Р°Р·СЂР°Р±РѕС‚С‡РёРєРё, QA РёРЅР¶РµРЅРµСЂС‹.
-
-**Р§С‚Рѕ СЃРѕРґРµСЂР¶РёС‚**:
-- РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ Phase 1-4
-- РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ API (Phase 5)
-- РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ Web UI (Phase 6)
-- РџСЂРёРјРµСЂС‹ С‚РµСЃС‚РѕРІ
+- [Назад к README](../README.md)
+- [Обзор проекта](./overview.md)
+- [Развёртывание](./deployment.md)
 
 ---
 
-## РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ Phase 1-4
+## Описание и назначение
 
-### Phase 1: Р‘Р°Р·РѕРІС‹Р№ QA
+**Назначение документа**: Описать процесс тестирования всех Phase проекта Bot Psychologist.
 
-**Р¤Р°Р№Р»**: `tests/test_phase1.py`
+**Для кого**: Разработчики, QA инженеры.
 
-**РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
+**Что содержит**:
+- Тестирование Phase 1-4
+- Тестирование API (Phase 5)
+- Тестирование Web UI (Phase 6)
+- Примеры тестов
+
+---
+
+## Тестирование Phase 1-4
+
+### Phase 1: Базовый QA
+
+**Файл**: `tests/test_phase1.py`
+
+**Тестируемые функции**:
 - `answer_question_basic(query: str)`
 
-**РџСЂРёРјРµСЂ С‚РµСЃС‚Р°**:
+**Пример теста**:
 ```python
 from bot_agent import answer_question_basic
 
-result = answer_question_basic("Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?")
+result = answer_question_basic("Что такое осознавание?")
 assert result["status"] == "success"
 assert len(result["answer"]) > 0
 assert len(result["sources"]) > 0
 ```
 
-**Р—Р°РїСѓСЃРє**:
+**Запуск**:
 ```bash
 python tests/test_phase1.py
 ```
 
 ---
 
-### Legacy (архив): SAG-aware QA
+### Legacy (): SAG-aware QA
 
-**Р¤Р°Р№Р»**: `tests/test_phase2.py` (только для исторической совместимости, не active runtime)
+**Файл**: `tests/test_phase2.py` (   ,  active runtime)
 
-**РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
+**Тестируемые функции**:
 - `answer_question_sag_aware(query: str, user_level: str)`
 
-**РџСЂРёРјРµСЂ С‚РµСЃС‚Р°**:
+**Пример теста**:
 ```python
 from bot_agent import answer_question_sag_aware
 
 result = answer_question_sag_aware(
-    "РљР°Рє СЂР°Р·РІРёС‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
+    "Как развить осознавание?",
     user_level="beginner"
 )
 assert result["status"] == "success"
 assert result["user_level"] == "beginner"
 ```
 
-**Р—Р°РїСѓСЃРє**:
+**Запуск**:
 ```bash
 python tests/test_phase2.py
 ```
@@ -76,24 +76,24 @@ python tests/test_phase2.py
 
 ### Phase 3: Knowledge Graph Powered QA
 
-**Р¤Р°Р№Р»**: `tests/test_phase3.py`
+**Файл**: `tests/test_phase3.py`
 
-**РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
+**Тестируемые функции**:
 - `answer_question_graph_powered(query: str, user_level: str)`
 
-**РџСЂРёРјРµСЂ С‚РµСЃС‚Р°**:
+**Пример теста**:
 ```python
 from bot_agent import answer_question_graph_powered
 
 result = answer_question_graph_powered(
-    "РљР°РєРёРµ РїСЂР°РєС‚РёРєРё РїРѕРјРѕРіР°СЋС‚ СЂР°Р·РІРёС‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
+    "Какие практики помогают развить осознавание?",
     user_level="intermediate"
 )
 assert result["status"] == "success"
 assert "practices" in result.get("metadata", {})
 ```
 
-**Р—Р°РїСѓСЃРє**:
+**Запуск**:
 ```bash
 python tests/test_phase3.py
 ```
@@ -102,17 +102,17 @@ python tests/test_phase3.py
 
 ### Phase 4: Adaptive QA
 
-**Р¤Р°Р№Р»**: `tests/test_phase4.py`
+**Файл**: `tests/test_phase4.py`
 
-**РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
+**Тестируемые функции**:
 - `answer_question_adaptive(query: str, user_id: str)`
 
-**РџСЂРёРјРµСЂ С‚РµСЃС‚Р°**:
+**Пример теста**:
 ```python
 from bot_agent import answer_question_adaptive
 
 result = answer_question_adaptive(
-    "РҐРѕС‡Сѓ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ",
+    "Хочу начать практиковать осознавание",
     user_id="test_user_001"
 )
 assert result["status"] == "success"
@@ -120,24 +120,24 @@ assert "state_analysis" in result
 assert "path_recommendation" in result
 ```
 
-**Р—Р°РїСѓСЃРє**:
+**Запуск**:
 ```bash
 python tests/test_phase4.py
 ```
 
 ---
 
-## РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ API (Phase 5)
+## Тестирование API (Phase 5)
 
-### РўРµСЃС‚РѕРІС‹Р№ С„Р°Р№Р»
+### Тестовый файл
 
-**Р¤Р°Р№Р»**: `tests/test_api.py`
+**Файл**: `tests/test_api.py`
 
-**РСЃРїРѕР»СЊР·СѓРµРјС‹Рµ Р±РёР±Р»РёРѕС‚РµРєРё**:
-- `requests` вЂ” HTTP РєР»РёРµРЅС‚
-- `json` вЂ” СЂР°Р±РѕС‚Р° СЃ JSON
+**спользуемые библиотеки**:
+- `requests` — HTTP клиент
+- `json` — работа с JSON
 
-### РџСЂРёРјРµСЂС‹ С‚РµСЃС‚РѕРІ
+### Примеры тестов
 
 #### Basic QA Endpoint
 
@@ -156,7 +156,7 @@ response = requests.post(
     f"{API_URL}/questions/basic",
     headers=headers,
     json={
-        "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
+        "query": "Что такое осознавание?",
         "user_id": "test_user_001"
     }
 )
@@ -174,7 +174,7 @@ response = requests.post(
     f"{API_URL}/questions/adaptive",
     headers=headers,
     json={
-        "query": "РҐРѕС‡Сѓ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ",
+        "query": "Хочу начать практиковать осознавание",
         "user_id": "test_user_001",
         "include_path": True
     }
@@ -228,24 +228,24 @@ data = response.json()
 assert data["status"] == "healthy"
 ```
 
-### Р—Р°РїСѓСЃРє С‚РµСЃС‚РѕРІ API
+### Запуск тестов API
 
-**РџРµСЂРµРґ Р·Р°РїСѓСЃРєРѕРј**:
-1. Р—Р°РїСѓСЃС‚РёС‚Рµ API СЃРµСЂРІРµСЂ: `uvicorn api.main:app --reload`
-2. РЈР±РµРґРёС‚РµСЃСЊ, С‡С‚Рѕ API РґРѕСЃС‚СѓРїРµРЅ: `http://localhost:8000/api/v1/health`
+**Перед запуском**:
+1. Запустите API сервер: `uvicorn api.main:app --reload`
+2. Убедитесь, что API доступен: `http://localhost:8000/api/v1/health`
 
-**Р—Р°РїСѓСЃРє**:
+**Запуск**:
 ```bash
 python tests/test_api.py
 ```
 
 ---
 
-## РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ Web UI (Phase 6)
+## Тестирование Web UI (Phase 6)
 
-### Unit С‚РµСЃС‚С‹ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ
+### Unit тесты компонентов
 
-**РџСЂРёРјРµСЂ С‚РµСЃС‚Р° React РєРѕРјРїРѕРЅРµРЅС‚Р°**:
+**Пример теста React компонента**:
 
 ```typescript
 import { render, screen } from '@testing-library/react';
@@ -253,14 +253,14 @@ import { ChatWindow } from './ChatWindow';
 
 test('renders chat window', () => {
   render(<ChatWindow />);
-  const inputElement = screen.getByPlaceholderText(/РІРІРµРґРёС‚Рµ РІРѕРїСЂРѕСЃ/i);
+  const inputElement = screen.getByPlaceholderText(/введите вопрос/i);
   expect(inputElement).toBeInTheDocument();
 });
 ```
 
-### E2E С‚РµСЃС‚С‹
+### E2E тесты
 
-**РџСЂРёРјРµСЂ E2E С‚РµСЃС‚Р°**:
+**Пример E2E теста**:
 
 ```typescript
 import { test, expect } from '@playwright/test';
@@ -268,14 +268,14 @@ import { test, expect } from '@playwright/test';
 test('user can ask question and get answer', async ({ page }) => {
   await page.goto('http://localhost:5173');
   
-  // Р’РІРµСЃС‚Рё РІРѕРїСЂРѕСЃ
-  await page.fill('[data-testid="chat-input"]', 'Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?');
+  // Ввести вопрос
+  await page.fill('[data-testid="chat-input"]', 'Что такое осознавание?');
   await page.click('[data-testid="send-button"]');
   
-  // Р”РѕР¶РґР°С‚СЊСЃСЏ РѕС‚РІРµС‚Р°
+  // Дождаться ответа
   await page.waitForSelector('[data-testid="bot-message"]');
   
-  // РџСЂРѕРІРµСЂРёС‚СЊ РЅР°Р»РёС‡РёРµ РѕС‚РІРµС‚Р°
+  // Проверить наличие ответа
   const answer = await page.textContent('[data-testid="bot-message"]');
   expect(answer).toBeTruthy();
 });
@@ -283,29 +283,29 @@ test('user can ask question and get answer', async ({ page }) => {
 
 ---
 
-## РРЅС‚РµРіСЂР°С†РёРѕРЅРЅС‹Рµ С‚РµСЃС‚С‹
+## нтеграционные тесты
 
-### РўРµСЃС‚ РїРѕР»РЅРѕРіРѕ РїРѕС‚РѕРєР°
+### Тест полного потока
 
 ```python
 def test_full_flow():
-    # 1. Р—Р°РґР°С‚СЊ РІРѕРїСЂРѕСЃ С‡РµСЂРµР· API
+    # 1. Задать вопрос через API
     response = requests.post(
         f"{API_URL}/questions/adaptive",
         headers=headers,
         json={
-            "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
+            "query": "Что такое осознавание?",
             "user_id": "test_user_001",
             "include_path": True
         }
     )
     assert response.status_code == 200
     
-    # 2. РџСЂРѕРІРµСЂРёС‚СЊ РѕС‚РІРµС‚
+    # 2. Проверить ответ
     data = response.json()
     assert data["status"] == "success"
     
-    # 3. РћС‚РїСЂР°РІРёС‚СЊ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ
+    # 3. Отправить обратную связь
     feedback_response = requests.post(
         f"{API_URL}/feedback",
         headers=headers,
@@ -318,7 +318,7 @@ def test_full_flow():
     )
     assert feedback_response.status_code == 200
     
-    # 4. РџСЂРѕРІРµСЂРёС‚СЊ РёСЃС‚РѕСЂРёСЋ
+    # 4. Проверить историю
     history_response = requests.post(
         f"{API_URL}/users/test_user_001/history",
         headers=headers
@@ -330,9 +330,9 @@ def test_full_flow():
 
 ---
 
-## РўРµСЃС‚РёСЂРѕРІР°РЅРёРµ РєРѕРјРїРѕРЅРµРЅС‚РѕРІ Bot Agent
+## Тестирование компонентов Bot Agent
 
-### РўРµСЃС‚ DataLoader
+### Тест DataLoader
 
 ```python
 from bot_agent.data_loader import data_loader
@@ -343,7 +343,7 @@ def test_data_loader():
     assert len(data_loader.all_blocks) > 0
 ```
 
-### РўРµСЃС‚ Retriever
+### Тест Retriever
 
 ```python
 from bot_agent.retriever import get_retriever
@@ -351,12 +351,12 @@ from bot_agent.retriever import get_retriever
 def test_retriever():
     retriever = get_retriever()
     retriever.build_index()
-    results = retriever.retrieve("Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?")
+    results = retriever.retrieve("Что такое осознавание?")
     assert len(results) > 0
     assert all(score >= 0.1 for _, score in results)
 ```
 
-### РўРµСЃС‚ GraphClient
+### Тест GraphClient
 
 ```python
 from bot_agent.graph_client import graph_client
@@ -366,23 +366,23 @@ def test_graph_client():
     assert len(graph_client.nodes) > 0
     assert len(graph_client.edges) > 0
     
-    # РџРѕРёСЃРє СѓР·Р»Р°
-    nodes = graph_client.find_nodes_by_name("РѕСЃРѕР·РЅР°РІР°РЅРёРµ")
+    # Поиск узла
+    nodes = graph_client.find_nodes_by_name("осознавание")
     assert len(nodes) > 0
     
-    # РџРѕРёСЃРє РїСЂР°РєС‚РёРє
-    practices = graph_client.find_practices_for_concept("РѕСЃРѕР·РЅР°РІР°РЅРёРµ")
+    # Поиск практик
+    practices = graph_client.find_practices_for_concept("осознавание")
     assert len(practices) > 0
 ```
 
-### РўРµСЃС‚ StateClassifier
+### Тест StateClassifier
 
 ```python
 from bot_agent.state_classifier import state_classifier
 
 def test_state_classifier():
     analysis = state_classifier.classify_state(
-        "РҐРѕС‡Сѓ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ",
+        "Хочу начать практиковать осознавание",
         conversation_history=[]
     )
     assert analysis.primary_state in UserState
@@ -391,9 +391,9 @@ def test_state_classifier():
 
 ---
 
-## РќР°РІРёРіР°С†РёСЏ
+## Навигация
 
-- [РћР±Р·РѕСЂ РїСЂРѕРµРєС‚Р°](./overview.md)
-- [Р Р°Р·РІС‘СЂС‚С‹РІР°РЅРёРµ](./deployment.md)
-- [РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ](./configuration.md)
+- [Обзор проекта](./overview.md)
+- [Развёртывание](./deployment.md)
+- [Конфигурация](./configuration.md)
 

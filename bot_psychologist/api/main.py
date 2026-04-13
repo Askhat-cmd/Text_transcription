@@ -1,8 +1,8 @@
-﻿# api/main.py
+# api/main.py
 """
 FastAPI Application for Bot Psychologist API (Phase 5)
 
-Р“Р»Р°РІРЅС‹Р№ С„Р°Р№Р» РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ middleware, РЅР°СЃС‚СЂРѕР№РєР°РјРё Рё Р·Р°РїСѓСЃРєРѕРј.
+Главный файл приложения с middleware, настройками и запуском.
 """
 
 import asyncio
@@ -18,7 +18,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.openapi.utils import get_openapi
 
-# Р”РѕР±Р°РІРёС‚СЊ РїСѓС‚СЊ Рє bot_agent
+# Добавить путь к bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logging_config import get_logger, setup_logging
@@ -57,7 +57,7 @@ def _ensure_prompt_default_snapshots() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Р–РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїСЂРёР»РѕР¶РµРЅРёСЏ"""
+    """Жизненный цикл приложения"""
     global _startup_time
     # Startup
     _startup_time = time.time()
@@ -104,22 +104,22 @@ app = FastAPI(
     description="""
 # Bot Psychologist API
 
-REST API РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ Bot Agent (Phases 1-4).
+REST API для взаимодействия с Bot Agent (Phases 1-4).
 
-## Р’РѕР·РјРѕР¶РЅРѕСЃС‚Рё
+## Возможности
 
-- рџ§  **Phase 1:** Р‘Р°Р·РѕРІС‹Р№ QA (TF-IDF + LLM)
-- рџ“Љ **Phase 2:** NEO diagnostics QA
-- рџ”— **Phase 3:** Graph-powered QA (Knowledge Graph)
-- рџЋЇ **Phase 4:** Adaptive QA (СЃРѕСЃС‚РѕСЏРЅРёРµ + РїР°РјСЏС‚СЊ + РїСѓС‚Рё)
+- 🧠 **Phase 1:** Базовый QA (TF-IDF + LLM)
+- 📊 **Phase 2:** NEO diagnostics QA
+- 🔗 **Phase 3:** Graph-powered QA (Knowledge Graph)
+- 🎯 **Phase 4:** Adaptive QA (состояние + память + пути)
 
-## РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ
+## Аутентификация
 
-Р’СЃРµ endpoints (РєСЂРѕРјРµ health check) С‚СЂРµР±СѓСЋС‚ API РєР»СЋС‡ РІ Р·Р°РіРѕР»РѕРІРєРµ `X-API-Key`.
+Все endpoints (кроме health check) требуют API ключ в заголовке `X-API-Key`.
 
 ## Rate Limiting
 
-Р›РёРјРёС‚ Р·Р°РїСЂРѕСЃРѕРІ Р·Р°РІРёСЃРёС‚ РѕС‚ С‚РёРїР° API РєР»СЋС‡Р° (100-1000 req/min).
+Лимит запросов зависит от типа API ключа (100-1000 req/min).
     """,
     version="0.12.0",
     docs_url="/api/docs",
@@ -130,7 +130,7 @@ REST API РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ
 
 # ===== MIDDLEWARE =====
 
-# CORS РґР»СЏ РІРµР±-РёРЅС‚РµРіСЂР°С†РёРё
+# CORS для веб-интеграции
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -138,7 +138,7 @@ app.add_middleware(
         "http://localhost:8080",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:8080",
-        "*"  # TODO: РІ production РѕРіСЂР°РЅРёС‡РёС‚СЊ
+        "*"  # TODO: в production ограничить
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -152,7 +152,7 @@ app.add_middleware(
 )
 
 
-# Middleware РґР»СЏ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ
+# Middleware для логирования
 @app.middleware("http")
 async def add_latency_header(request: Request, call_next):
     """Add X-Response-Time-Ms header to each response."""
@@ -165,10 +165,10 @@ async def add_latency_header(request: Request, call_next):
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    """Р›РѕРіРёСЂРѕРІР°С‚СЊ РІСЃРµ Р·Р°РїСЂРѕСЃС‹"""
+    """Логировать все запросы"""
     start_ts = time.time()
     
-    # РџРѕР»СѓС‡РёС‚СЊ API РєР»СЋС‡ (СЃРєСЂС‹С‚СЊ РґР»СЏ Р»РѕРіРѕРІ)
+    # Получить API ключ (скрыть для логов)
     api_key = request.headers.get("X-API-Key", "none")
     api_key_masked = api_key[:10] + "..." if api_key != "none" and len(api_key) > 10 else api_key
     
@@ -185,7 +185,7 @@ async def log_requests(request: Request, call_next):
     except Exception as e:
         elapsed_time = time.time() - start_ts
         logger.error(
-            "вќЊ Unhandled API error on %s %s after %.3fs: %s",
+            "❌ Unhandled API error on %s %s after %.3fs: %s",
             request.method,
             request.url.path,
             elapsed_time,
@@ -215,14 +215,14 @@ app.include_router(admin_router_v1)
 # ===== CUSTOM OPENAPI =====
 
 def custom_openapi():
-    """РљР°СЃС‚РѕРјРЅР°СЏ OpenAPI СЃС…РµРјР°"""
+    """Кастомная OpenAPI схема"""
     if app.openapi_schema:
         return app.openapi_schema
     
     openapi_schema = get_openapi(
         title="Bot Psychologist API",
         version="0.6.0",
-        description="REST API РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ Bot Agent (Phase 5)",
+        description="REST API для взаимодействия с Bot Agent (Phase 5)",
         routes=app.routes,
     )
     
@@ -241,7 +241,7 @@ app.openapi = custom_openapi
 
 @app.get("/", tags=["root"])
 async def root():
-    """РљРѕСЂРЅРµРІРѕР№ endpoint"""
+    """Корневой endpoint"""
     return {
         "name": "Bot Psychologist API",
         "version": "0.6.0",
@@ -252,7 +252,7 @@ async def root():
 
 @app.get("/api/v1/info", tags=["info"])
 async def api_info():
-    """РРЅС„РѕСЂРјР°С†РёСЏ РѕР± API"""
+    """нформация об API"""
     return {
         "name": "Bot Psychologist API",
         "version": "0.6.0",

@@ -1,16 +1,16 @@
-﻿# bot_agent/answer_adaptive.py
+# bot_agent/answer_adaptive.py
 """
 Adaptive Answer Module - Phase 4
 ================================
 
-Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ Phase 4: answer_question_adaptive.
+Главная функция Phase 4: answer_question_adaptive.
 
-Р Р°СЃС€РёСЂСЏРµС‚ Phase 3 РїРѕР»РЅРѕС†РµРЅРЅС‹Рј СЃРѕРїСЂРѕРІРѕР¶РґРµРЅРёРµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:
-- РљР»Р°СЃСЃРёС„РёРєР°С†РёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (10 СЃРѕСЃС‚РѕСЏРЅРёР№)
-- Р”РѕР»РіРѕСЃСЂРѕС‡РЅР°СЏ РїР°РјСЏС‚СЊ РґРёР°Р»РѕРіР°
-- РџРѕСЃС‚СЂРѕРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹С… РїСѓС‚РµР№ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё
-- РђРґР°РїС‚РёРІРЅС‹Рµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїРѕ СЃРѕСЃС‚РѕСЏРЅРёСЋ
-- Р—Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
+Расширяет Phase 3 полноценным сопровождением пользователя:
+- Классификация состояния пользователя (10 состояний)
+- Долгосрочная память диалога
+- Построение персональных путей трансформации
+- Адаптивные рекомендации по состоянию
+- Запрос обратной связи
 """
 
 import asyncio
@@ -70,7 +70,7 @@ PRACTICE_SKIP_ROUTES = {"contact_hold", "contacthold", "presence", "crisis_hold"
 
 @dataclass(frozen=True)
 class SDClassificationResult:
-    """Neo-СЃРѕРІРјРµСЃС‚РёРјС‹Р№ SD-СЃР»РѕС‚ Р±РµР· Р°РєС‚РёРІРЅРѕР№ SD-РєР»Р°СЃСЃРёС„РёРєР°С†РёРё runtime."""
+    """Neo-совместимый SD-слот без активной SD-классификации runtime."""
 
     primary: str = "NONE"
     secondary: Optional[str] = None
@@ -81,7 +81,7 @@ class SDClassificationResult:
 
 
 def _timed(name: str, label: str, fn, *args, **kwargs):
-    """РћР±С‘СЂС‚РєР° РґР»СЏ Р·Р°РјРµСЂР° РІСЂРµРјРµРЅРё СЌС‚Р°РїР° РїР°Р№РїР»Р°Р№РЅР°."""
+    """Обёртка для замера времени этапа пайплайна."""
     t0 = time.perf_counter()
     result = fn(*args, **kwargs)
     ms = int((time.perf_counter() - t0) * 1000)
@@ -107,8 +107,8 @@ def _build_config_snapshot(cfg) -> Dict[str, object]:
 
 def _compute_anomalies(trace: Dict) -> List[Dict]:
     """
-    Р’С‹Р·С‹РІР°РµС‚СЃСЏ РІ РєРѕРЅС†Рµ РїР°Р№РїР»Р°Р№РЅР°.
-    Р‘РёР·РЅРµСЃ-Р»РѕРіРёРєР° Р°РЅРѕРјР°Р»РёР№ Р¶РёРІС‘С‚ РўРћР›Р¬РљРћ Р·РґРµСЃСЊ, С„СЂРѕРЅС‚ РЅРµ РґСѓР±Р»РёСЂСѓРµС‚.
+    Вызывается в конце пайплайна.
+    Бизнес-логика аномалий живёт ТОЛЬКО здесь, фронт не дублирует.
     """
     flags: List[Dict] = []
     config_snapshot = trace.get("config_snapshot") or {}
@@ -117,7 +117,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             {
                 "code": "PIPELINE_EXCEPTION",
                 "severity": "error",
-                "message": "Pipeline Р·Р°РІРµСЂС€РёР»СЃСЏ СЃ РѕС€РёР±РєРѕР№ вЂ” СЃРј. Error View",
+                "message": "Pipeline завершился с ошибкой — см. Error View",
                 "target": "error",
             }
         )
@@ -127,7 +127,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             {
                 "code": "NO_BLOCKS_TO_LLM",
                 "severity": "error",
-                "message": "LLM РїРѕР»СѓС‡РёР» 0 Р±Р»РѕРєРѕРІ вЂ” РѕС‚РІРµС‚ Р±РµР· РєРѕРЅС‚РµРєСЃС‚Р°",
+                "message": "LLM получил 0 блоков — ответ без контекста",
                 "target": "chunks",
             }
         )
@@ -137,7 +137,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             {
                 "code": "SEMANTIC_NOT_TRIGGERED",
                 "severity": "info",
-                "message": "РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ РїРѕРёСЃРє РІРµСЂРЅСѓР» 0 СЂРµР·СѓР»СЊС‚Р°С‚РѕРІ РїСЂРё РїР°РјСЏС‚Рё >= 3 turns",
+                "message": "Семантический поиск вернул 0 результатов при памяти >= 3 turns",
                 "target": "memory",
             }
         )
@@ -149,7 +149,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
                 {
                     "code": "UNEXPECTED_FAST_PATH",
                     "severity": "warn",
-                    "message": f"Fast path РїСЂРё РґР»РёРЅРЅРѕРј Р·Р°РїСЂРѕСЃРµ ({query_len} СЃР»РѕРІ) вЂ” РїСЂРѕРІРµСЂСЊ Р»РѕРіРёРєСѓ",
+                    "message": f"Fast path при длинном запросе ({query_len} слов) — проверь логику",
                     "target": "routing",
                 }
             )
@@ -165,8 +165,8 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
                         "code": "SLOW_STAGE",
                         "severity": "warn",
                         "message": (
-                            f"Р­С‚Р°Рї '{stage.get('label')}' Р·Р°РЅСЏР» {duration_ms}ms "
-                            f"({duration_ms / total_ms * 100:.0f}% РѕР±С‰РµРіРѕ РІСЂРµРјРµРЅРё)"
+                            f"Этап '{stage.get('label')}' занял {duration_ms}ms "
+                            f"({duration_ms / total_ms * 100:.0f}% общего времени)"
                         ),
                         "target": "timeline",
                     }
@@ -179,16 +179,17 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
             {
                 "code": "CONTEXT_BLOAT_RISK",
                 "severity": "warn",
-                "message": "Hybrid query Р±Р»РёР·РѕРє Рє Р»РёРјРёС‚Сѓ MAX_CONTEXT_SIZE",
+                "message": "Hybrid query близок к лимиту MAX_CONTEXT_SIZE",
                 "target": "chunks",
             }
-        )
+        )
+
     if (trace.get("memory_turns") == 0) and (trace.get("turn_number") or 0) > 3:
         flags.append(
             {
                 "code": "EMPTY_MEMORY",
                 "severity": "info",
-                "message": "РџР°РјСЏС‚СЊ РїСѓСЃС‚Р° РїРѕСЃР»Рµ РЅРµСЃРєРѕР»СЊРєРёС… С…РѕРґРѕРІ вЂ” РїСЂРѕРІРµСЂСЊ storage",
+                "message": "Память пуста после нескольких ходов — проверь storage",
                 "target": "memory",
             }
         )
@@ -198,7 +199,7 @@ def _compute_anomalies(trace: Dict) -> List[Dict]:
 
 def _build_state_trajectory(memory, depth: int = 10) -> List[Dict]:
     """
-    Р’РђР–РќРћ: С‡РёС‚Р°РµРј РёР· memory.turns (РѕР±СЉРµРєС‚С‹), РќР• РёР· get_last_turns().
+    ВАЖНО: читаем из memory.turns (объекты), НЕ из get_last_turns().
     """
     result: List[Dict] = []
     turns = memory.turns[-depth:] if hasattr(memory, "turns") else []
@@ -216,7 +217,7 @@ def _build_state_trajectory(memory, depth: int = 10) -> List[Dict]:
 
 
 def _store_blob(session_store, session_id: str, content: str) -> Optional[str]:
-    """РЎРѕС…СЂР°РЅСЏРµС‚ С‚СЏР¶С‘Р»С‹Р№ С‚РµРєСЃС‚ Рё РІРѕР·РІСЂР°С‰Р°РµС‚ blob_id."""
+    """Сохраняет тяжёлый текст и возвращает blob_id."""
     if not session_store or not session_id or not content:
         return None
     blob_id = f"{session_id}:{uuid.uuid4().hex[:8]}"
@@ -229,11 +230,11 @@ MODE_PROMPT_MAP: dict[str, str] = {
 }
 
 _PRACTICE_START_RE = re.compile(
-    r"\b(РєР°Рє РЅР°С‡Р°С‚СЊ|РєР°Рє РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ|РєР°Рє РїСЂРёРјРµРЅРёС‚СЊ|С‡С‚Рѕ РґРµР»Р°С‚СЊ РґР°Р»СЊС€Рµ|РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ|РІ Р¶РёР·РЅРё)\b",
+    r"\b(как начать|как практиковать|как применить|что делать дальше|практиковать|в жизни)\b",
     flags=re.IGNORECASE,
 )
 _PERSONAL_APPLICATION_RE = re.compile(
-    r"\b(Сѓ СЃРµР±СЏ|РІ СЂРµР°Р»СЊРЅРѕР№ Р¶РёР·РЅРё|РІ РјРѕРµР№ Р¶РёР·РЅРё|РґР»СЏ РјРµРЅСЏ|РїСЂРѕ РјРµРЅСЏ|СЃРѕ РјРЅРѕР№|РЅР° РјРѕРµРј РїСЂРёРјРµСЂРµ)\b",
+    r"\b(у себя|в реальной жизни|в моей жизни|для меня|про меня|со мной|на моем примере)\b",
     flags=re.IGNORECASE,
 )
 
@@ -296,7 +297,7 @@ def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
     rates = COST_PER_1K_TOKENS.get((model_name or "").lower(), COST_PER_1K_TOKENS["default"])
     total = 0.0
     for call in llm_calls or []:
-        # FIX: РёСЃРїРѕР»СЊР·СѓРµРј is not None РІРјРµСЃС‚Рѕ or РґР»СЏ РїРѕРґРґРµСЂР¶РєРё 0 Р·РЅР°С‡РµРЅРёР№
+        # FIX: используем is not None вместо or для поддержки 0 значений
         input_tokens = call.get("tokens_prompt") if call.get("tokens_prompt") is not None else call.get("prompt_tokens") if call.get("prompt_tokens") is not None else 0
         output_tokens = call.get("tokens_completion") if call.get("tokens_completion") is not None else call.get("completion_tokens") if call.get("completion_tokens") is not None else 0
         try:
@@ -360,7 +361,7 @@ def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationRe
 
 
 def _sd_runtime_disabled() -> bool:
-    """SD-runtime РѕРєРѕРЅС‡Р°С‚РµР»СЊРЅРѕ РІС‹РІРµРґРµРЅ РёР· active pipeline (PRD 11.0)."""
+    """SD-runtime окончательно выведен из active pipeline (PRD 11.0)."""
     return True
 
 
@@ -624,7 +625,7 @@ def _build_chunk_trace_item(
         "passed_filter": bool(passed_filter),
         "filter_reason": str(filter_reason or ""),
         "preview": _truncate_preview(preview_source, 120),
-        "text": full_text,  # FIX 1a: РїРѕР»РЅС‹Р№ С‚РµРєСЃС‚ С‡Р°РЅРєР°
+        "text": full_text,  # FIX 1a: полный текст чанка
     }
 
 
@@ -633,7 +634,7 @@ def _build_chunk_trace_lists_after_rerank(
     initial_retrieved: List[Tuple],
     reranked: List[Tuple],
 ) -> Tuple[List[Dict], List[Dict]]:
-    """РџРѕСЃС‚СЂРѕРёС‚СЊ СЃРїРёСЃРєРё С‡Р°РЅРєРѕРІ РґР»СЏ trace: РІСЃРµ retrieved Рё РїРѕСЃР»Рµ rerank."""
+    """Построить списки чанков для trace: все retrieved и после rerank."""
     chunks_retrieved: List[Dict] = []
     chunks_after_rerank: List[Dict] = []
 
@@ -988,37 +989,37 @@ def _build_state_context(
     recommendation = (
         state_analysis.recommendations[0]
         if state_analysis and state_analysis.recommendations
-        else "РћС‚РІРµС‚СЊ СЏСЃРЅРѕ, СЃРїРѕРєРѕР№РЅРѕ Рё СЃ РѕРїРѕСЂРѕР№ РЅР° РєРѕРЅС‚РµРєСЃС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ."
+        else "Ответь ясно, спокойно и с опорой на контекст пользователя."
     )
     contradiction_block = ""
     if contradiction_suggestion:
         contradiction_block = (
-            "\nРЎРР“РќРђР› Р РђРЎРҐРћР–Р”Р•РќРРЇ:\n"
+            "\nСГНАЛ РАСХОЖДЕНЯ:\n"
             f"{contradiction_suggestion}\n"
-            "РћС‚РјРµС‚СЊ СЌС‚Рѕ РјСЏРіРєРѕ, Р±РµР· РґР°РІР»РµРЅРёСЏ Рё Р±РµР· Р¶С‘СЃС‚РєРёС… РёРЅС‚РµСЂРїСЂРµС‚Р°С†РёР№.\n"
+            "Отметь это мягко, без давления и без жёстких интерпретаций.\n"
         )
 
     cross_session_block = ""
     if cross_session_context:
         cross_session_block = (
-            "\nРљРћРќРўР•РљРЎРў РР— РџР РћРЁР›Р«РҐ РЎР•РЎРЎРР™:\n"
+            "\nКОНТЕКСТ З ПРОШЛЫХ СЕССЙ:\n"
             f"{cross_session_context}\n"
         )
 
     return f"""
-РљРћРќРўР•РљРЎРў РџРћР›Р¬Р—РћР’РђРўР•Р›РЇ:
+КОНТЕКСТ ПОЛЬЗОВАТЕЛЯ:
 - nervous_system_state: {nervous_system_state}
 - request_function: {request_function}
-- Р­РјРѕС†РёРѕРЅР°Р»СЊРЅС‹Р№ С‚РѕРЅ: {state_analysis.emotional_tone}
-- Р“Р»СѓР±РёРЅР° РІРѕРІР»РµС‡РµРЅРёСЏ: {state_analysis.depth}
+- Эмоциональный тон: {state_analysis.emotional_tone}
+- Глубина вовлечения: {state_analysis.depth}
 
-Р Р•РљРћРњР•РќР”РђР¦РРЇ РџРћ РћРўР’Р•РўРЈ:
+РЕКОМЕНДАЦЯ ПО ОТВЕТУ:
 {recommendation}
 
 {contradiction_block}
 {cross_session_block}
 
-Р Р•Р–РРњРќРђРЇ Р”РР Р•РљРўРР’Рђ:
+РЕЖМНАЯ ДРЕКТВА:
 {mode_prompt}
 """
 
@@ -1026,32 +1027,32 @@ def _build_state_context(
 def _depth_to_phase(depth: str) -> str:
     normalized = (depth or "").lower()
     if "deep" in normalized:
-        return "СЂР°Р±РѕС‚Р°"
+        return "работа"
     if "intermediate" in normalized or "medium" in normalized:
-        return "РѕСЃРјС‹СЃР»РµРЅРёРµ"
-    return "РЅР°С‡Р°Р»Рѕ РєРѕРЅС‚Р°РєС‚Р°"
+        return "осмысление"
+    return "начало контакта"
 
 
 def _mode_to_direction(mode: str) -> str:
     mapping = {
-        "CLARIFICATION": "СѓС‚РѕС‡РЅРµРЅРёРµ",
-        "VALIDATION": "РїРѕРґРґРµСЂР¶РєР°",
-        "THINKING": "СЂРµС„Р»РµРєСЃРёСЏ",
-        "INTERVENTION": "РґРµР№СЃС‚РІРёРµ",
-        "INTEGRATION": "РёРЅС‚РµРіСЂР°С†РёСЏ",
-        "PRESENCE": "РґРёР°РіРЅРѕСЃС‚РёРєР°",
+        "CLARIFICATION": "уточнение",
+        "VALIDATION": "поддержка",
+        "THINKING": "рефлексия",
+        "INTERVENTION": "действие",
+        "INTEGRATION": "интеграция",
+        "PRESENCE": "диагностика",
     }
-    return mapping.get((mode or "PRESENCE").upper(), "РґРёР°РіРЅРѕСЃС‚РёРєР°")
+    return mapping.get((mode or "PRESENCE").upper(), "диагностика")
 
 
 def _derive_defense(state_value: str) -> Optional[str]:
     state = (state_value or "").lower()
     if state == "resistant":
-        return "СЃРѕРїСЂРѕС‚РёРІР»РµРЅРёРµ"
+        return "сопротивление"
     if state == "overwhelmed":
-        return "РїРµСЂРµРіСЂСѓР·РєР°"
+        return "перегрузка"
     if state == "confused":
-        return "РЅРµСЏСЃРЅРѕСЃС‚СЊ"
+        return "неясность"
     return None
 
 
@@ -1075,12 +1076,12 @@ def _build_working_state(
 def _looks_like_greeting(query: str) -> bool:
     q = (query or "").strip().lower()
     greetings = {
-        "РїСЂРёРІРµС‚",
-        "Р·РґСЂР°РІСЃС‚РІСѓР№",
-        "Р·РґСЂР°РІСЃС‚РІСѓР№С‚Рµ",
-        "РґРѕР±СЂС‹Р№ РґРµРЅСЊ",
-        "РґРѕР±СЂС‹Р№ РІРµС‡РµСЂ",
-        "РґРѕР±СЂРѕРµ СѓС‚СЂРѕ",
+        "привет",
+        "здравствуй",
+        "здравствуйте",
+        "добрый день",
+        "добрый вечер",
+        "доброе утро",
         "hi",
         "hello",
     }
@@ -1089,7 +1090,7 @@ def _looks_like_greeting(query: str) -> bool:
 
 def _looks_like_name_intro(query: str) -> bool:
     q = (query or "").strip().lower()
-    return bool(re.search(r"\b(РјРµРЅСЏ Р·РѕРІСѓС‚|my name is)\b", q))
+    return bool(re.search(r"\b(меня зовут|my name is)\b", q))
 
 
 def _should_use_fast_path(query: str, routing_result) -> bool:
@@ -1145,34 +1146,34 @@ def answer_question_adaptive(
     schedule_summary_task: bool = True,
 ) -> Dict:
     """
-    Phase 4: РђРґР°РїС‚РёРІРЅС‹Р№ QA СЃ СѓС‡РµС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ Рё РёСЃС‚РѕСЂРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+    Phase 4: Адаптивный QA с учетом состояния и истории пользователя.
     
-    Р­С‚Р°РїС‹ РѕР±СЂР°Р±РѕС‚РєРё:
-        1. Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        2. РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        3. РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
-        4. Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        5. РџРѕСЃС‚СЂРѕРµРЅРёРµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїСѓС‚Рё
-        6. РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
-        7. РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
+    Этапы обработки:
+        1. Загрузка данных и памяти пользователя
+        2. Анализ состояния пользователя
+        3. Поиск релевантных блоков
+        4. Генерация ответа с контекстом состояния
+        5. Построение рекомендации пути
+        6. Подготовка запроса обратной связи
+        7. Сохранение в память
     
     Args:
-        query: Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        user_id: ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РґР»СЏ РїР°РјСЏС‚Рё)
-        user_level: РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (beginner/intermediate/advanced)
-        include_path_recommendation: Р’РєР»СЋС‡Р°С‚СЊ Р»Рё СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё
-        include_feedback_prompt: Р—Р°РїСЂР°С€РёРІР°С‚СЊ Р»Рё РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ
-        top_k: РљРѕР»РёС‡РµСЃС‚РІРѕ Р±Р»РѕРєРѕРІ РґР»СЏ РїРѕРёСЃРєР°
-        debug: РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
+        query: Вопрос пользователя
+        user_id: ID пользователя (для памяти)
+        user_level: Уровень пользователя (beginner/intermediate/advanced)
+        include_path_recommendation: Включать ли рекомендацию пути
+        include_feedback_prompt: Запрашивать ли обратную связь
+        top_k: Количество блоков для поиска
+        debug: Отладочная информация
     
     Returns:
-        Dict СЃ СЂР°СЃС€РёСЂРµРЅРЅС‹РјРё РїРѕР»СЏРјРё Phase 4:
+        Dict с расширенными полями Phase 4:
             - status: "success" | "error" | "partial"
-            - answer: str вЂ” РѕС‚РІРµС‚
-            - state_analysis: Dict вЂ” Р°РЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ
-            - path_recommendation: Optional[Dict] вЂ” СЂРµРєРѕРјРµРЅРґСѓРµРјС‹Р№ РїСѓС‚СЊ
-            - conversation_context: str вЂ” РєРѕРЅС‚РµРєСЃС‚ РёСЃС‚РѕСЂРёРё
-            - feedback_prompt: str вЂ” Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
+            - answer: str — ответ
+            - state_analysis: Dict — анализ состояния
+            - path_recommendation: Optional[Dict] — рекомендуемый путь
+            - conversation_context: str — контекст истории
+            - feedback_prompt: str — запрос обратной связи
             - sources: List[Dict]
             - concepts: List[str]
             - metadata: Dict
@@ -1227,9 +1228,9 @@ def answer_question_adaptive(
     current_stage = "init"
     try:
         # ================================================================
-        # Р­РўРђРџ 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё
+        # ЭТАП 1: Загрузка данных и памяти
         # ================================================================
-        logger.debug("рџ“љ Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё...")
+        logger.debug("📚 Этап 1: Загрузка данных и памяти...")
         
         data_loader.load_all_data()
         memory = get_conversation_memory(user_id)
@@ -1284,11 +1285,11 @@ def answer_question_adaptive(
             debug_info["memory_turns"] = len(memory.turns)
         
         # ================================================================
-        # Р­РўРђРџ 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        # ЭТАП 2: Анализ состояния пользователя
         # ================================================================
-        logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
+        logger.debug("🎯 Этап 2: Анализ состояния...")
         
-        # РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґР»СЏ РєРѕРЅС‚РµРєСЃС‚Р° Р°РЅР°Р»РёР·Р°
+        # Получить историю для контекста анализа
         conversation_history = [
             {"role": "user", "content": turn.user_input}
             for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
@@ -1299,7 +1300,7 @@ def answer_question_adaptive(
             try:
                 state_analysis, stage = _timed(
                     "state_classifier",
-                    "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
+                    "Классификатор состояния",
                     _run_coroutine_sync,
                     state_classifier.classify(
                         query,
@@ -1316,7 +1317,7 @@ def answer_question_adaptive(
                 pipeline_stages.append(
                     {
                         "name": "state_classifier",
-                        "label": "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
+                        "label": "Классификатор состояния",
                         "duration_ms": 0,
                         "skipped": False,
                     }
@@ -1483,7 +1484,7 @@ def answer_question_adaptive(
                 forbid=pre_routing_result.decision.forbid,
             )
             state_context_mode_prompt = (
-                "Р Р•Р–РРњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
+                "РЕЖМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
                 if informational_mode
                 else mode_directive.prompt
             )
@@ -1854,9 +1855,9 @@ def answer_question_adaptive(
             debug_trace["fast_path"] = False
         
         # ================================================================
-        # Р­РўРђРџ 3: РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
+        # ЭТАП 3: Поиск релевантных блоков
         # ================================================================
-        logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
+        logger.debug("🔍 Этап 3: Поиск блоков...")
 
         retrieval_working_state = {
             "nss": (
@@ -1946,7 +1947,7 @@ def answer_question_adaptive(
             if retrieval_degraded_reason:
                 debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
         
-        # Р”РµРґСѓРїР»РёРєР°С†РёСЏ Р±Р»РѕРєРѕРІ РїРѕ block_id РґРѕ SD filter
+        # Дедупликация блоков по block_id до SD filter
         seen_ids = set()
         deduped_blocks = []
         for block, score in raw_retrieved_blocks:
@@ -2098,7 +2099,7 @@ def answer_question_adaptive(
             getattr(routing_result, "route", "reflect"),
         )
         state_context_mode_prompt = (
-            "Р Р•Р–РРњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
+            "РЕЖМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
             if informational_mode
             else mode_directive.prompt
         )
@@ -2212,7 +2213,7 @@ def answer_question_adaptive(
 
         if not retrieved_blocks:
             response = _build_partial_response(
-                "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ РІРѕРїСЂРѕСЃ.",
+                "К сожалению, релевантный материал не найден. Попробуйте переформулировать вопрос.",
                 state_analysis,
                 memory,
                 start_time,
@@ -2252,7 +2253,7 @@ def answer_question_adaptive(
                     {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
                 )
                 pipeline_stages.append(
-                    {"name": "format", "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ", "duration_ms": 0, "skipped": True}
+                    {"name": "format", "label": "Форматирование", "duration_ms": 0, "skipped": True}
                 )
                 debug_trace["context_written"] = _build_memory_context_snapshot(memory)
                 debug_trace["total_duration_ms"] = int((datetime.now() - start_time).total_seconds() * 1000)
@@ -2372,11 +2373,11 @@ def answer_question_adaptive(
             debug_trace["chunks_after_filter"] = chunks_after_rerank
         
         # ================================================================
-        # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
+        # ЭТАП 4: Генерация ответа с контекстом состояния
         # ================================================================
-        logger.debug("рџ¤– Р­С‚Р°Рї 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р°...")
+        logger.debug("🤖 Этап 4: Генерация ответа...")
         
-        # Р”РѕР±Р°РІРёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ
+        # Добавить контекст состояния
         state_context = _build_state_context(
             state_analysis,
             state_context_mode_prompt,
@@ -2394,7 +2395,7 @@ def answer_question_adaptive(
         if practice_context_suffix:
             state_context = f"{state_context}{practice_context_suffix}"
 
-        # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
+        # Генерация ответа (с учётом истории диалога)
         response_generator = ResponseGenerator()
         prompt_stack_meta: Dict[str, Any] = {"enabled": False}
         system_prompt_override: Optional[str] = None
@@ -2503,7 +2504,7 @@ def answer_question_adaptive(
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
             response = _build_error_response(
-                f"РћС€РёР±РєР° РїСЂРё РіРµРЅРµСЂР°С†РёРё РѕС‚РІРµС‚Р°: {llm_result['error']}",
+                f"Ошибка при генерации ответа: {llm_result['error']}",
                 state_analysis,
                 start_time
             )
@@ -2625,18 +2626,18 @@ def answer_question_adaptive(
             )
 
         # ================================================================
-        # Р­РўРђРџ 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР· Рё РёР·РІР»РµС‡РµРЅРёРµ РєРѕРЅС†РµРїС‚РѕРІ
+        # ЭТАП 5: Семантический анализ и извлечение концептов
         # ================================================================
-        logger.debug("рџ”¬ Р­С‚Р°Рї 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·...")
+        logger.debug("🔬 Этап 5: Семантический анализ...")
         
         semantic_analyzer = SemanticAnalyzer()
         semantic_data = semantic_analyzer.analyze_relations(adapted_blocks)
         concepts = semantic_data.get("primary_concepts", [])
         
         # ================================================================
-        # Р­РўРђРџ 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
+        # ЭТАП 6: Рекомендация пути (опционально)
         # ================================================================
-        logger.debug("рџ›¤пёЏ Р­С‚Р°Рї 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё...")
+        logger.debug("🛤️ Этап 6: Рекомендация пути...")
         
         path_recommendation = None
         route_name = str(getattr(routing_result, "route", "") or "").lower()
@@ -2669,22 +2670,22 @@ def answer_question_adaptive(
                     } if personal_path.path_steps else None
                 }
             except Exception as e:
-                logger.warning(f"вљ пёЏ РћС€РёР±РєР° РїРѕСЃС‚СЂРѕРµРЅРёСЏ РїСѓС‚Рё: {e}")
+                logger.warning(f"⚠️ Ошибка построения пути: {e}")
                 path_recommendation = None
         
         # ================================================================
-        # Р­РўРђРџ 7: РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
+        # ЭТАП 7: Подготовка запроса обратной связи
         # ================================================================
-        logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
+        logger.debug("📝 Этап 7: Подготовка обратной связи...")
         
         feedback_prompt = ""
         if include_feedback_prompt:
             feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
         
         # ================================================================
-        # Р­РўРђРџ 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
+        # ЭТАП 8: Сохранение в память
         # ================================================================
-        logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
+        logger.debug("💾 Этап 8: Сохранение в память...")
         
         try:
             memory.set_working_state(
@@ -2733,8 +2734,8 @@ def answer_question_adaptive(
                         "key_themes": key_themes[:3],
                         "state_end": state_analysis.primary_state.value,
                         "notable_moments": [
-                            f"Р—Р°РїСЂРѕСЃ: {_truncate_preview(query, 140)}",
-                            f"РћС‚РІРµС‚: {_truncate_preview(answer, 140)}",
+                            f"Запрос: {_truncate_preview(query, 140)}",
+                            f"Ответ: {_truncate_preview(answer, 140)}",
                         ],
                     },
                 )
@@ -2742,7 +2743,7 @@ def answer_question_adaptive(
             logger.warning(f"[MEMORY] save_session_summary skipped: {exc}")
         
         # ================================================================
-        # Р¤РРќРђР›Р¬РќР«Р™ Р Р•Р—РЈР›Р¬РўРђРў
+        # ФНАЛЬНЫЙ РЕЗУЛЬТАТ
         # ================================================================
         elapsed_time = (datetime.now() - start_time).total_seconds()
         
@@ -2847,7 +2848,7 @@ def answer_question_adaptive(
             )
             debug_trace["reranker_model"] = config.VOYAGE_MODEL if reranker_enabled else None
             debug_trace["reranker_enabled"] = reranker_enabled
-            # FIX 2a: Р°РіСЂРµРіР°С†РёСЏ С‚РѕРєРµРЅРѕРІ РёР· llm_calls РґР»СЏ fallback
+            # FIX 2a: агрегация токенов из llm_calls для fallback
             llm_calls_list = debug_trace.get("llm_calls", [])
             total_prompt = sum(c.get("tokens_prompt") or 0 for c in llm_calls_list)
             total_completion = sum(c.get("tokens_completion") or 0 for c in llm_calls_list)
@@ -2857,7 +2858,7 @@ def answer_question_adaptive(
                 debug_trace["tokens_completion"] = total_completion
             if not debug_trace.get("tokens_total") and (total_prompt or total_completion):
                 debug_trace["tokens_total"] = total_prompt + total_completion
-            # РћСЃРЅРѕРІРЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ (РёРјРµСЋС‚ РїСЂРёРѕСЂРёС‚РµС‚)
+            # Основные значения (имеют приоритет)
             if debug_trace.get("tokens_prompt") is None:
                 debug_trace["tokens_prompt"] = tokens_prompt
             if debug_trace.get("tokens_completion") is None:
@@ -2895,7 +2896,7 @@ def answer_question_adaptive(
         logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)
         response = {
             "status": "error",
-            "answer": f"РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РѕР±СЂР°Р±РѕС‚РєРµ Р·Р°РїСЂРѕСЃР°: {str(e)}",
+            "answer": f"Произошла ошибка при обработке запроса: {str(e)}",
             "state_analysis": None,
             "path_recommendation": None,
             "conversation_context": "",
@@ -2945,22 +2946,22 @@ def answer_question_adaptive(
 
 def _get_feedback_prompt_for_state(state: UserState) -> str:
     """
-    РџРѕР»СѓС‡РёС‚СЊ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ.
+    Получить запрос обратной связи в зависимости от состояния.
     """
     prompts = {
-        UserState.UNAWARE: "РЎС‚Р°Р»Рѕ Р»Рё РїРѕРЅСЏС‚РЅРµРµ, Рѕ С‡С‘Рј СЂРµС‡СЊ? Р§С‚Рѕ РѕСЃС‚Р°Р»РѕСЃСЊ РЅРµРїРѕРЅСЏС‚РЅС‹Рј?",
-        UserState.CURIOUS: "РҐРѕС‚РёС‚Рµ СѓР·РЅР°С‚СЊ С‡С‚Рѕ-С‚Рѕ РµС‰С‘ РїРѕ СЌС‚РѕР№ С‚РµРјРµ?",
-        UserState.OVERWHELMED: "РќРµ СЃР»РёС€РєРѕРј Р»Рё РјРЅРѕРіРѕ РёРЅС„РѕСЂРјР°С†РёРё? РќСѓР¶РЅРѕ Р»Рё СѓРїСЂРѕСЃС‚РёС‚СЊ?",
-        UserState.RESISTANT: "Р•СЃС‚СЊ Р»Рё С‡С‚Рѕ-С‚Рѕ, СЃ С‡РµРј РІС‹ РЅРµ СЃРѕРіР»Р°СЃРЅС‹? Р”Р°РІР°Р№С‚Рµ РѕР±СЃСѓРґРёРј.",
-        UserState.CONFUSED: "РџСЂРѕСЏСЃРЅРёР»РѕСЃСЊ Р»Рё РѕР±СЉСЏСЃРЅРµРЅРёРµ? Р•СЃР»Рё РЅРµС‚, РєР°РєР°СЏ С‡Р°СЃС‚СЊ РІСЃС‘ РµС‰С‘ РЅРµРїРѕРЅСЏС‚РЅР°?",
-        UserState.COMMITTED: "Р“РѕС‚РѕРІС‹ Р»Рё РІС‹ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєСѓ? РљР°РєР°СЏ РїРѕРґРґРµСЂР¶РєР° РЅСѓР¶РЅР°?",
-        UserState.PRACTICING: "РљР°Рє РёРґС‘С‚ РїСЂР°РєС‚РёРєР°? Р•СЃС‚СЊ Р»Рё СЃР»РѕР¶РЅРѕСЃС‚Рё?",
-        UserState.STAGNANT: "Р§С‚Рѕ, РїРѕ-РІР°С€РµРјСѓ, РјРµС€Р°РµС‚ РїСЂРѕРґРІРёР¶РµРЅРёСЋ? РџРѕРїСЂРѕР±СѓРµРј РЅР°Р№С‚Рё РЅРѕРІС‹Р№ РїРѕРґС…РѕРґ?",
-        UserState.BREAKTHROUGH: "РџРѕР·РґСЂР°РІР»СЏСЋ СЃ РёРЅСЃР°Р№С‚РѕРј! РљР°Рє РїР»Р°РЅРёСЂСѓРµС‚Рµ РїСЂРёРјРµРЅРёС‚СЊ СЌС‚Рѕ РїРѕРЅРёРјР°РЅРёРµ?",
-        UserState.INTEGRATED: "РљР°Рє СЌС‚Рѕ Р·РЅР°РЅРёРµ РїСЂРѕСЏРІР»СЏРµС‚СЃСЏ РІ РІР°С€РµР№ Р¶РёР·РЅРё?"
+        UserState.UNAWARE: "Стало ли понятнее, о чём речь? Что осталось непонятным?",
+        UserState.CURIOUS: "Хотите узнать что-то ещё по этой теме?",
+        UserState.OVERWHELMED: "Не слишком ли много информации? Нужно ли упростить?",
+        UserState.RESISTANT: "Есть ли что-то, с чем вы не согласны? Давайте обсудим.",
+        UserState.CONFUSED: "Прояснилось ли объяснение? Если нет, какая часть всё ещё непонятна?",
+        UserState.COMMITTED: "Готовы ли вы начать практику? Какая поддержка нужна?",
+        UserState.PRACTICING: "Как идёт практика? Есть ли сложности?",
+        UserState.STAGNANT: "Что, по-вашему, мешает продвижению? Попробуем найти новый подход?",
+        UserState.BREAKTHROUGH: "Поздравляю с инсайтом! Как планируете применить это понимание?",
+        UserState.INTEGRATED: "Как это знание проявляется в вашей жизни?"
     }
     
-    return prompts.get(state, "Р‘С‹Р» Р»Рё СЌС‚РѕС‚ РѕС‚РІРµС‚ РїРѕР»РµР·РµРЅ? РћС†РµРЅРёС‚Рµ РѕС‚ 1 РґРѕ 5.")
+    return prompts.get(state, "Был ли этот ответ полезен? Оцените от 1 до 5.")
 
 
 def _build_partial_response(
@@ -2970,7 +2971,7 @@ def _build_partial_response(
     start_time: datetime,
     query: str
 ) -> Dict:
-    """РџРѕСЃС‚СЂРѕРёС‚СЊ С‡Р°СЃС‚РёС‡РЅС‹Р№ РѕС‚РІРµС‚ (РЅРµС‚ Р±Р»РѕРєРѕРІ)"""
+    """Построить частичный ответ (нет блоков)"""
     return {
         "status": "partial",
         "answer": message,
@@ -2982,7 +2983,7 @@ def _build_partial_response(
         } if state_analysis else None,
         "path_recommendation": None,
         "conversation_context": memory.get_adaptive_context_text(query) if memory else "",
-        "feedback_prompt": "РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ РІРѕРїСЂРѕСЃ.",
+        "feedback_prompt": "Попробуйте переформулировать вопрос.",
         "sources": [],
         "concepts": [],
         "metadata": {"conversation_turns": len(memory.turns) if memory else 0},
@@ -2996,7 +2997,7 @@ def _build_error_response(
     state_analysis: StateAnalysis,
     start_time: datetime
 ) -> Dict:
-    """РџРѕСЃС‚СЂРѕРёС‚СЊ РѕС‚РІРµС‚ СЃ РѕС€РёР±РєРѕР№"""
+    """Построить ответ с ошибкой"""
     return {
         "status": "error",
         "answer": message,

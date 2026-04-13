@@ -1,10 +1,10 @@
-﻿# bot_agent/conversation_memory.py
+# bot_agent/conversation_memory.py
 """
 Conversation Memory Module (Phase 4.2)
 ======================================
 
-Р”РѕР»РіРѕСЃСЂРѕС‡РЅР°СЏ РїР°РјСЏС‚СЊ РґРёР°Р»РѕРіР° СЃ РїРµСЂСЃРёСЃС‚РµРЅС‚РЅС‹Рј С…СЂР°РЅРµРЅРёРµРј.
-РћС‚СЃР»РµР¶РёРІР°РЅРёРµ РёРЅС‚РµСЂРµСЃРѕРІ, РІС‹Р·РѕРІРѕРІ Рё РїСЂРѕСЂС‹РІРѕРІ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
+Долгосрочная память диалога с персистентным хранением.
+Отслеживание интересов, вызовов и прорывов пользователя.
 """
 
 import logging
@@ -27,10 +27,10 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversationTurn:
-    """РћРґРёРЅ С…РѕРґ РІ РґРёР°Р»РѕРіРµ"""
+    """Один ход в диалоге"""
     timestamp: str
     user_input: str
-    user_state: Optional[str] = None  # СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+    user_state: Optional[str] = None  # состояние пользователя
     bot_response: Optional[str] = None
     blocks_used: int = 0
     concepts: List[str] = field(default_factory=list)
@@ -40,8 +40,8 @@ class ConversationTurn:
 
 class ConversationMemory:
     """
-    РҐСЂР°РЅРёС‚ Рё СѓРїСЂР°РІР»СЏРµС‚ РёСЃС‚РѕСЂРёРµР№ РґРёР°Р»РѕРіР° РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
-    РџРѕРґРґРµСЂР¶РёРІР°РµС‚ РїРµСЂСЃРёСЃС‚РµРЅС‚РЅРѕРµ С…СЂР°РЅРёР»РёС‰Рµ.
+    Хранит и управляет историей диалога пользователя.
+    Поддерживает персистентное хранилище.
     """
     
     def __init__(self, user_id: str = "default"):
@@ -52,19 +52,19 @@ class ConversationMemory:
             "created": datetime.now().isoformat(),
             "last_updated": datetime.now().isoformat(),
             "total_turns": 0,
-            "primary_interests": [],  # С‚РµРјС‹, РєРѕС‚РѕСЂС‹Рµ РёРЅС‚РµСЂРµСЃСѓСЋС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-            "challenges": [],  # СЃ С‡РµРј Р±РѕСЂРµС‚СЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
-            "breakthroughs": []  # РёРЅСЃР°Р№С‚С‹ Рё РїСЂРѕСЂС‹РІС‹
+            "primary_interests": [],  # темы, которые интересуют пользователя
+            "challenges": [],  # с чем борется пользователь
+            "breakthroughs": []  # инсайты и прорывы
         }
         self.memory_dir = config.CACHE_DIR / "conversations"
         self.memory_dir.mkdir(parents=True, exist_ok=True)
 
-        # === РќРћР’РћР•: Semantic Memory ===
+        # === НОВОЕ: Semantic Memory ===
         self.semantic_memory: Optional[SemanticMemory] = None
         if config.ENABLE_SEMANTIC_MEMORY:
             self.semantic_memory = get_semantic_memory(user_id)
 
-        # === РќРћР’РћР•: Conversation Summary ===
+        # === НОВОЕ: Conversation Summary ===
         self.summary: Optional[str] = None
         self.summary_updated_at: Optional[int] = None  # turn index
         self.working_state: Optional[WorkingState] = None
@@ -88,10 +88,10 @@ class ConversationMemory:
     
     def load_from_disk(self) -> bool:
         """
-        Р—Р°РіСЂСѓР·РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° СЃ РґРёСЃРєР°.
+        Загрузить историю диалога с диска.
         
         Returns:
-            True РµСЃР»Рё Р·Р°РіСЂСѓР·РєР° СѓСЃРїРµС€РЅР°, False РµСЃР»Рё С„Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ
+            True если загрузка успешна, False если файл не найден
         """
         logger.info(f"[MEMORY] load_history start user_id={self.user_id}")
         if self._load_from_session_storage():
@@ -100,7 +100,7 @@ class ConversationMemory:
         filepath = self.memory_dir / f"{self.user_id}.json"
         
         if not filepath.exists():
-            logger.debug(f"рџ“‹ РќРѕРІР°СЏ РёСЃС‚РѕСЂРёСЏ РґРёР°Р»РѕРіР° РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ {self.user_id}")
+            logger.debug(f"📋 Новая история диалога для пользователя {self.user_id}")
             return False
         
         try:
@@ -113,7 +113,7 @@ class ConversationMemory:
                 for turn_data in data.get("turns", [])
             ]
 
-            # === РќРћР’РћР•: Р—Р°РіСЂСѓР·РёС‚СЊ summary ===
+            # === НОВОЕ: Загрузить summary ===
             self.summary = data.get("summary")
             self.summary_updated_at = data.get("summary_updated_at")
             raw_working_state = data.get("working_state")
@@ -129,7 +129,7 @@ class ConversationMemory:
             return False
 
     def _load_from_session_storage(self) -> bool:
-        """Р—Р°РіСЂСѓР·РёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ РёР· SQLite SessionManager."""
+        """Загрузить состояние из SQLite SessionManager."""
         if not self.session_manager:
             return False
 
@@ -204,7 +204,7 @@ class ConversationMemory:
             return self.user_id
 
     def _restore_semantic_embeddings_from_session(self, payload: Dict[str, Any]) -> None:
-        """Р’РѕСЃСЃС‚Р°РЅРѕРІРёС‚СЊ semantic embeddings РёР· SQLite РІ runtime-РєРµС€."""
+        """Восстановить semantic embeddings из SQLite в runtime-кеш."""
         if not self.semantic_memory:
             return
 
@@ -241,7 +241,7 @@ class ConversationMemory:
     
     def save_to_disk(self, *, reason: str = "checkpoint") -> None:
         """
-        РЎРѕС…СЂР°РЅРёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° РЅР° РґРёСЃРє.
+        Сохранить историю диалога на диск.
         """
         filepath = self.memory_dir / f"{self.user_id}.json"
         
@@ -253,7 +253,7 @@ class ConversationMemory:
                 json.dump({
                     "metadata": self.metadata,
                     "turns": [asdict(turn) for turn in self.turns],
-                    # === РќРћР’РћР•: РЎРѕС…СЂР°РЅРёС‚СЊ summary ===
+                    # === НОВОЕ: Сохранить summary ===
                     "summary": self.summary,
                     "summary_updated_at": self.summary_updated_at,
                     "working_state": (
@@ -308,7 +308,7 @@ class ConversationMemory:
             self.save_to_disk(reason=reason)
 
     def set_working_state(self, working_state: WorkingState) -> None:
-        """РћР±РЅРѕРІРёС‚СЊ СЂР°Р±РѕС‡РµРµ СЃРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ Рё СЃРёРЅС…СЂРѕРЅРёР·РёСЂРѕРІР°С‚СЊ С…СЂР°РЅРµРЅРёРµ."""
+        """Обновить рабочее состояние пользователя и синхронизировать хранение."""
         self.working_state = working_state
         if self.session_manager:
             try:
@@ -396,17 +396,17 @@ class ConversationMemory:
         schedule_summary_task: bool = True
     ) -> ConversationTurn:
         """
-        Р”РѕР±Р°РІРёС‚СЊ С…РѕРґ РІ РёСЃС‚РѕСЂРёСЋ.
+        Добавить ход в историю.
         
         Args:
-            user_input: Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-            bot_response: РћС‚РІРµС‚ Р±РѕС‚Р°
-            user_state: РЎРѕСЃС‚РѕСЏРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РёР· StateClassifier)
-            blocks_used: РљРѕР»РёС‡РµСЃС‚РІРѕ РёСЃРїРѕР»СЊР·РѕРІР°РЅРЅС‹С… Р±Р»РѕРєРѕРІ
-            concepts: РЎРїРёСЃРѕРє РєРѕРЅС†РµРїС‚РѕРІ РІ РѕС‚РІРµС‚Рµ
+            user_input: Вопрос пользователя
+            bot_response: Ответ бота
+            user_state: Состояние пользователя (из StateClassifier)
+            blocks_used: Количество использованных блоков
+            concepts: Список концептов в ответе
             
         Returns:
-            РЎРѕР·РґР°РЅРЅС‹Р№ ConversationTurn
+            Созданный ConversationTurn
         """
         logger.info(f"[MEMORY] add_turn user_id={self.user_id} turns_before={len(self.turns)}")
         turn = ConversationTurn(
@@ -424,8 +424,8 @@ class ConversationMemory:
 
         embedding_to_store = None
 
-        # РћРіСЂР°РЅРёС‡РёРІР°РµРј РѕР±С‰РµРµ С‡РёСЃР»Рѕ С…РѕРґРѕРІ (Р°РІС‚РѕСЂРѕС‚Р°С†РёСЏ)
-        # === РќРћР’РћР•: Р”РѕР±Р°РІРёС‚СЊ СЌРјР±РµРґРґРёРЅРі РІ semantic memory ===
+        # Ограничиваем общее число ходов (авторотация)
+        # === НОВОЕ: Добавить эмбеддинг в semantic memory ===
         if self.semantic_memory and config.ENABLE_SEMANTIC_MEMORY:
             try:
                 self.semantic_memory.add_turn_embedding(
@@ -448,7 +448,7 @@ class ConversationMemory:
             embedding=embedding_to_store,
         )
 
-        # === РќРћР’РћР•: РћР±РЅРѕРІРёС‚СЊ summary РєР°Р¶РґС‹Рµ N С…РѕРґРѕРІ ===
+        # === НОВОЕ: Обновить summary каждые N ходов ===
         if config.ENABLE_CONVERSATION_SUMMARY and config.SUMMARY_UPDATE_INTERVAL > 0:
             if turn_index % config.SUMMARY_UPDATE_INTERVAL == 0:
                 self._summary_due_turn = turn_index
@@ -469,7 +469,7 @@ class ConversationMemory:
         turn: ConversationTurn,
         embedding: Optional[object] = None,
     ) -> None:
-        """РЎРѕС…СЂР°РЅРёС‚СЊ С…РѕРґ РІ SQLite, РµСЃР»Рё SessionManager РІРєР»СЋС‡С‘РЅ."""
+        """Сохранить ход в SQLite, если SessionManager включён."""
         if not self.session_manager:
             return
 
@@ -497,12 +497,12 @@ class ConversationMemory:
         rating: Optional[int] = None  # 1-5
     ) -> None:
         """
-        Р”РѕР±Р°РІРёС‚СЊ РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ Рє С…РѕРґСѓ.
+        Добавить обратную связь к ходу.
         
         Args:
-            turn_index: РРЅРґРµРєСЃ С…РѕРґР° (0-based) РёР»Рё -1 РґР»СЏ РїРѕСЃР»РµРґРЅРµРіРѕ
-            feedback: РўРёРї РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё (positive/negative/neutral)
-            rating: Р РµР№С‚РёРЅРі РѕС‚ 1 РґРѕ 5
+            turn_index: ндекс хода (0-based) или -1 для последнего
+            feedback: Тип обратной связи (positive/negative/neutral)
+            rating: Рейтинг от 1 до 5
         """
         if turn_index == -1:
             turn_index = len(self.turns) - 1
@@ -511,14 +511,14 @@ class ConversationMemory:
             self.turns[turn_index].user_feedback = feedback
             self.turns[turn_index].user_rating = rating
             
-            logger.debug(f"рџ‘Ќ РћР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ РґРѕР±Р°РІР»РµРЅР°: {feedback} (СЂРµР№С‚РёРЅРі: {rating})")
+            logger.debug(f"👍 Обратная связь добавлена: {feedback} (рейтинг: {rating})")
             self._sync_feedback_to_session_storage(turn_index)
             self.save_to_disk(reason="checkpoint")
         else:
-            logger.warning(f"вљ пёЏ РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РёРЅРґРµРєСЃ С…РѕРґР°: {turn_index}")
+            logger.warning(f"⚠️ Некорректный индекс хода: {turn_index}")
 
     def _sync_feedback_to_session_storage(self, turn_index: int) -> None:
-        """РћР±РЅРѕРІРёС‚СЊ feedback/rating РІ SQLite РґР»СЏ СѓР¶Рµ СЃРѕС…СЂР°РЅС‘РЅРЅРѕРіРѕ С…РѕРґР°."""
+        """Обновить feedback/rating в SQLite для уже сохранённого хода."""
         if not self.session_manager:
             return
         if not (0 <= turn_index < len(self.turns)):
@@ -543,19 +543,19 @@ class ConversationMemory:
     
     def get_last_turns(self, n: int = 5) -> List[ConversationTurn]:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РїРѕСЃР»РµРґРЅРёРµ N РѕР±РѕСЂРѕС‚РѕРІ.
+        Получить последние N оборотов.
         
         Args:
-            n: РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃР»РµРґРЅРёС… С…РѕРґРѕРІ
+            n: Количество последних ходов
             
         Returns:
-            РЎРїРёСЃРѕРє ConversationTurn
+            Список ConversationTurn
         """
         return self.turns[-n:] if self.turns else []
 
     def get_turns_preview(self, max_turns: int = 10, preview_chars: int = 150) -> List[Dict[str, object]]:
         """
-        Р’РµСЂРЅСѓС‚СЊ РїСЂРµРІСЊСЋ РїРѕСЃР»РµРґРЅРёС… С…РѕРґРѕРІ (user/bot) РґР»СЏ debug trace.
+        Вернуть превью последних ходов (user/bot) для debug trace.
         """
         previews: List[Dict[str, object]] = []
         if max_turns <= 0:
@@ -586,7 +586,7 @@ class ConversationMemory:
 
     def get_state_trajectory(self, depth: int = 10) -> List[Dict[str, object]]:
         """
-        Р’РµСЂРЅСѓС‚СЊ С‚СЂР°РµРєС‚РѕСЂРёСЋ СЃРѕСЃС‚РѕСЏРЅРёР№ РёР· memory.turns.
+        Вернуть траекторию состояний из memory.turns.
         """
         trajectory: List[Dict[str, object]] = []
         if depth <= 0:
@@ -605,15 +605,15 @@ class ConversationMemory:
 
     def get_context_for_llm(self, n: int = 3, max_chars: Optional[int] = None) -> str:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ РїРѕСЃР»РµРґРЅРёС… РѕР±РѕСЂРѕС‚РѕРІ РґР»СЏ LLM.
-        РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ СѓС‡РµС‚Р° РёСЃС‚РѕСЂРёРё РІ РѕС‚РІРµС‚Рµ.
+        Получить контекст последних оборотов для LLM.
+        спользуется для учета истории в ответе.
         
         Args:
-            n: РљРѕР»РёС‡РµСЃС‚РІРѕ РїРѕСЃР»РµРґРЅРёС… С…РѕРґРѕРІ РґР»СЏ РєРѕРЅС‚РµРєСЃС‚Р°
-            max_chars: РњР°РєСЃРёРјР°Р»СЊРЅС‹Р№ СЂР°Р·РјРµСЂ РєРѕРЅС‚РµРєСЃС‚Р° (СЃРёРјРІРѕР»С‹)
+            n: Количество последних ходов для контекста
+            max_chars: Максимальный размер контекста (символы)
             
         Returns:
-            РћС‚С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРЅР°СЏ СЃС‚СЂРѕРєР° СЃ РёСЃС‚РѕСЂРёРµР№
+            Отформатированная строка с историей
         """
         last_turns = self.get_last_turns(n)
         
@@ -623,9 +623,9 @@ class ConversationMemory:
         if max_chars is None:
             max_chars = config.MAX_CONTEXT_SIZE
         
-        context = "РРЎРўРћР РРЇ Р”РРђР›РћР“Рђ (РїРѕСЃР»РµРґРЅРёРµ РѕР±РѕСЂРѕС‚С‹):\n\n"
+        context = "СТОРЯ ДАЛОГА (последние обороты):\n\n"
 
-        # Р”РѕР±Р°РІР»СЏРµРј РїРѕСЃР»РµРґРЅРёРµ С…РѕРґС‹ СЃ СѓС‡РµС‚РѕРј Р»РёРјРёС‚Р°
+        # Добавляем последние ходы с учетом лимита
         entries: List[str] = []
         current_len = len(context)
 
@@ -638,18 +638,18 @@ class ConversationMemory:
             )
 
             entry = (
-                f"РћР±РјРµРЅ #{turn_num}:\n"
-                f"  РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ: {turn.user_input}\n"
-                f"  Р‘РѕС‚: {response_preview}\n"
+                f"Обмен #{turn_num}:\n"
+                f"  Пользователь: {turn.user_input}\n"
+                f"  Бот: {response_preview}\n"
             )
             if turn.user_state:
-                entry += f"  РЎРѕСЃС‚РѕСЏРЅРёРµ: {turn.user_state}\n"
+                entry += f"  Состояние: {turn.user_state}\n"
             entry += "\n"
 
-            # РџСЂРѕРІРµСЂСЏРµРј Р»РёРјРёС‚
+            # Проверяем лимит
             if max_chars and current_len + len(entry) > max_chars:
                 if not entries:
-                    # Р•СЃР»Рё РґР°Р¶Рµ РѕРґРёРЅ С…РѕРґ СЃР»РёС€РєРѕРј Р±РѕР»СЊС€РѕР№, РѕР±СЂРµР¶РµРј РµРіРѕ
+                    # Если даже один ход слишком большой, обрежем его
                     allowed = max(0, max_chars - current_len)
                     entry = (entry[:max(0, allowed - 3)] + "...") if allowed > 0 else ""
                     if entry:
@@ -659,7 +659,7 @@ class ConversationMemory:
             entries.append(entry)
             current_len += len(entry)
 
-        # Р’РѕР·РІСЂР°С‰Р°РµРј РІ С…СЂРѕРЅРѕР»РѕРіРёС‡РµСЃРєРѕРј РїРѕСЂСЏРґРєРµ
+        # Возвращаем в хронологическом порядке
         for entry in reversed(entries):
             context += entry
 
@@ -672,7 +672,7 @@ class ConversationMemory:
         include_summary: bool = True
     ) -> Dict[str, str]:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РїРѕР»РЅС‹Р№ РєРѕРЅС‚РµРєСЃС‚ РґР»СЏ LLM СЃРѕ РІСЃРµРјРё С‚РёРїР°РјРё РїР°РјСЏС‚Рё.
+        Получить полный контекст для LLM со всеми типами памяти.
         """
         context = {"short_term": "", "semantic": "", "summary": ""}
 
@@ -699,7 +699,7 @@ class ConversationMemory:
 
     def get_adaptive_context_for_llm(self, current_question: str) -> Dict[str, str]:
         """
-        РђРґР°РїС‚РёРІРЅР°СЏ Р·Р°РіСЂСѓР·РєР° РєРѕРЅС‚РµРєСЃС‚Р° РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РґР»РёРЅС‹ РґРёР°Р»РѕРіР°.
+        Адаптивная загрузка контекста в зависимости от длины диалога.
         """
         total_turns = len(self.turns)
 
@@ -722,12 +722,12 @@ class ConversationMemory:
         )
 
     def format_context_for_llm(self, context: Dict[str, str]) -> str:
-        """РЎС„РѕСЂРјРёСЂРѕРІР°С‚СЊ РµРґРёРЅС‹Р№ С‚РµРєСЃС‚РѕРІС‹Р№ РєРѕРЅС‚РµРєСЃС‚ РґР»СЏ LLM."""
+        """Сформировать единый текстовый контекст для LLM."""
         parts: List[str] = []
 
         if context.get("summary"):
             parts.append(
-                "РљР РђРўРљРћР• Р Р•Р—Р®РњР• Р”РРђР›РћР“Рђ:\n"
+                "КРАТКОЕ РЕЗЮМЕ ДАЛОГА:\n"
                 f"{context['summary']}\n\n---\n"
             )
 
@@ -740,7 +740,7 @@ class ConversationMemory:
         return "".join(parts).strip()
 
     def get_adaptive_context_text(self, current_question: str) -> str:
-        """РџРѕР»СѓС‡РёС‚СЊ РіРѕС‚РѕРІС‹Р№ С‚РµРєСЃС‚ РєРѕРЅС‚РµРєСЃС‚Р° (short-term + semantic + summary)."""
+        """Получить готовый текст контекста (short-term + semantic + summary)."""
         context = self.get_adaptive_context_for_llm(current_question)
         return self.format_context_for_llm(context)
 
@@ -962,13 +962,13 @@ class ConversationMemory:
 
     def _update_summary(self) -> None:
         """
-        РћР±РЅРѕРІРёС‚СЊ СЂРµР·СЋРјРµ РґРёР°Р»РѕРіР° С‡РµСЂРµР· LLM.
+        Обновить резюме диалога через LLM.
         """
         min_turns = int(getattr(config, "SUMMARIZER_MIN_TURNS", 3) or 3)
         if len(self.turns) < min_turns:
             return
         if not config.OPENAI_API_KEY:
-            logger.warning("вљ пёЏ OPENAI_API_KEY РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅ вЂ” summary РЅРµ РѕР±РЅРѕРІР»СЏРµС‚СЃСЏ")
+            logger.warning("⚠️ OPENAI_API_KEY не установлен — summary не обновляется")
             return
 
         logger.info(f"Updating conversation summary (turn #{len(self.turns)})...")
@@ -977,14 +977,14 @@ class ConversationMemory:
             recent_turns = self.turns[-10:]
             turns_text = ""
             for i, turn in enumerate(recent_turns, 1):
-                turns_text += f"\nРҐРѕРґ {i}:\n"
-                turns_text += f"РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ: {turn.user_input}\n"
+                turns_text += f"\nХод {i}:\n"
+                turns_text += f"Пользователь: {turn.user_input}\n"
                 response_preview = turn.bot_response or ""
                 if len(response_preview) > 200:
                     response_preview = response_preview[:200] + "..."
-                turns_text += f"Р‘РѕС‚: {response_preview}\n"
+                turns_text += f"Бот: {response_preview}\n"
                 if turn.user_state:
-                    turns_text += f"РЎРѕСЃС‚РѕСЏРЅРёРµ: {turn.user_state}\n"
+                    turns_text += f"Состояние: {turn.user_state}\n"
 
             summary_text = self._generate_summary(turns_text)
             if not summary_text:
@@ -1013,19 +1013,19 @@ class ConversationMemory:
             logger.error(f"Summary update error: {e}", exc_info=True)
 
     def clear(self) -> None:
-        """РћС‡РёСЃС‚РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґРёР°Р»РѕРіР° Рё СЃРѕС…СЂР°РЅРёС‚СЊ РїСѓСЃС‚РѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ."""
+        """Очистить историю диалога и сохранить пустое состояние."""
         logger.info(f"[MEMORY] clear_history user_id={self.user_id}")
         self.turns = []
         self.metadata["last_updated"] = datetime.now().isoformat()
         self.metadata["total_turns"] = 0
 
-        # === РќРћР’РћР•: РћС‡РёСЃС‚РёС‚СЊ summary ===
+        # === НОВОЕ: Очистить summary ===
         self.summary = None
         self.summary_updated_at = None
         self.working_state = None
         self.metadata.pop("sd_profile", None)
 
-        # === РќРћР’РћР•: РћС‡РёСЃС‚РёС‚СЊ semantic memory ===
+        # === НОВОЕ: Очистить semantic memory ===
         if self.semantic_memory:
             self.semantic_memory.clear()
 
@@ -1042,8 +1042,8 @@ class ConversationMemory:
 
     def purge_user_data(self) -> None:
         """
-        РџРѕР»РЅРѕСЃС‚СЊСЋ СѓРґР°Р»РёС‚СЊ РґР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (GDPR):
-        JSON, semantic cache Рё SQLite-СЃРµСЃСЃРёСЋ Р±РµР· Р°РІС‚Рѕ-РІРѕСЃСЃРѕР·РґР°РЅРёСЏ.
+        Полностью удалить данные пользователя (GDPR):
+        JSON, semantic cache и SQLite-сессию без авто-воссоздания.
         """
         self.turns = []
         self.summary = None
@@ -1065,16 +1065,16 @@ class ConversationMemory:
     
     def rebuild_semantic_memory(self) -> None:
         """
-        РџРµСЂРµСЃРѕР·РґР°С‚СЊ semantic memory РЅР° РѕСЃРЅРѕРІРµ С‚РµРєСѓС‰РµР№ РёСЃС‚РѕСЂРёРё.
+        Пересоздать semantic memory на основе текущей истории.
         """
         if not self.semantic_memory:
-            logger.warning("вљ пёЏ Semantic memory РЅРµ РІРєР»СЋС‡РµРЅР°")
+            logger.warning("⚠️ Semantic memory не включена")
             return
         if not self.turns:
-            logger.warning("вљ пёЏ РќРµС‚ С…РѕРґРѕРІ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ СЌРјР±РµРґРґРёРЅРіРѕРІ")
+            logger.warning("⚠️ Нет ходов для создания эмбеддингов")
             return
 
-        logger.info(f"рџ”Ё РџРµСЂРµСЃРѕР·РґР°СЋ semantic memory РґР»СЏ {len(self.turns)} С…РѕРґРѕРІ...")
+        logger.info(f"🔨 Пересоздаю semantic memory для {len(self.turns)} ходов...")
         turns_data = [
             {
                 "user_input": turn.user_input,
@@ -1090,11 +1090,11 @@ class ConversationMemory:
 
     def get_primary_interests(self) -> List[str]:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РѕСЃРЅРѕРІРЅС‹Рµ РёРЅС‚РµСЂРµСЃС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РЅР° РѕСЃРЅРѕРІРµ РёСЃС‚РѕСЂРёРё.
-        РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ С‡Р°СЃС‚РѕС‚Рµ СѓРїРѕРјРёРЅР°РЅРёСЏ РєРѕРЅС†РµРїС‚РѕРІ.
+        Получить основные интересы пользователя на основе истории.
+        Сортировка по частоте упоминания концептов.
         
         Returns:
-            РЎРїРёСЃРѕРє С‚РѕРї-5 РєРѕРЅС†РµРїС‚РѕРІ
+            Список топ-5 концептов
         """
         interests: Dict[str, int] = {}
         
@@ -1102,7 +1102,7 @@ class ConversationMemory:
             for concept in turn.concepts:
                 interests[concept] = interests.get(concept, 0) + 1
         
-        # РЎРѕСЂС‚РёСЂСѓРµРј РїРѕ С‡Р°СЃС‚РѕС‚Рµ
+        # Сортируем по частоте
         sorted_interests = sorted(
             interests.items(),
             key=lambda x: x[1],
@@ -1113,10 +1113,10 @@ class ConversationMemory:
     
     def get_challenges(self) -> List[Dict]:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РѕСЃРЅРѕРІРЅС‹Рµ РІС‹Р·РѕРІС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РѕС‚СЂРёС†Р°С‚РµР»СЊРЅР°СЏ РѕР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ).
+        Получить основные вызовы пользователя (отрицательная обратная связь).
         
         Returns:
-            РЎРїРёСЃРѕРє С…РѕРґРѕРІ СЃ РЅРµРіР°С‚РёРІРЅРѕР№ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·СЊСЋ
+            Список ходов с негативной обратной связью
         """
         challenges = []
         
@@ -1133,10 +1133,10 @@ class ConversationMemory:
     
     def get_breakthroughs(self) -> List[Dict]:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РёРЅСЃР°Р№С‚С‹ Рё РїСЂРѕСЂС‹РІС‹ (РїРѕР»РѕР¶РёС‚РµР»СЊРЅР°СЏ РѕР±СЂР°С‚РЅР°СЏ СЃРІСЏР·СЊ СЃ РІС‹СЃРѕРєРёРј СЂРµР№С‚РёРЅРіРѕРј).
+        Получить инсайты и прорывы (положительная обратная связь с высоким рейтингом).
         
         Returns:
-            РЎРїРёСЃРѕРє С…РѕРґРѕРІ СЃ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕР№ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·СЊСЋ Рё СЂРµР№С‚РёРЅРіРѕРј >= 4
+            Список ходов с положительной обратной связью и рейтингом >= 4
         """
         breakthroughs = []
         
@@ -1154,16 +1154,16 @@ class ConversationMemory:
     
     def get_summary(self) -> Dict:
         """
-        РџРѕР»СѓС‡РёС‚СЊ РєСЂР°С‚РєРѕРµ СЂРµР·СЋРјРµ РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°.
+        Получить краткое резюме истории диалога.
         
         Returns:
-            Dict СЃ РєР»СЋС‡РµРІС‹РјРё РјРµС‚СЂРёРєР°РјРё
+            Dict с ключевыми метриками
         """
         interests = self.get_primary_interests()
         challenges = self.get_challenges()
         breakthroughs = self.get_breakthroughs()
         
-        # РЎСЂРµРґРЅРёР№ СЂРµР№С‚РёРЅРі
+        # Средний рейтинг
         avg_rating = 0.0
         if self.turns:
             ratings = [t.user_rating for t in self.turns if t.user_rating]
@@ -1176,7 +1176,7 @@ class ConversationMemory:
             "num_breakthroughs": len(breakthroughs),
             "average_rating": round(avg_rating, 2),
             "last_interaction": self.turns[-1].timestamp if self.turns else None,
-            # === РќРћР’РћР•: Summary РґР°РЅРЅС‹Рµ ===
+            # === НОВОЕ: Summary данные ===
             "conversation_summary": self.summary,
             "summary_updated_at_turn": self.summary_updated_at,
             "working_state": (
@@ -1189,20 +1189,20 @@ class ConversationMemory:
 
         return result
     
-# Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РєСЌС€ РёРЅСЃС‚Р°РЅСЃРѕРІ РїР°РјСЏС‚Рё
+# Глобальный кэш инстансов памяти
 _memory_instances: Dict[str, ConversationMemory] = {}
 
 
 def get_conversation_memory(user_id: str = "default") -> ConversationMemory:
     """
-    РџРѕР»СѓС‡РёС‚СЊ СЌРєР·РµРјРїР»СЏСЂ РїР°РјСЏС‚Рё РґРёР°Р»РѕРіР° РґР»СЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
-    РСЃРїРѕР»СЊР·СѓРµС‚ РєСЌС€ РґР»СЏ РѕРїС‚РёРјРёР·Р°С†РёРё.
+    Получить экземпляр памяти диалога для пользователя.
+    спользует кэш для оптимизации.
     
     Args:
-        user_id: ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        user_id: ID пользователя
         
     Returns:
-        ConversationMemory РґР»СЏ РґР°РЅРЅРѕРіРѕ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+        ConversationMemory для данного пользователя
     """
     if user_id not in _memory_instances:
         logger.info(f"[CONV_MEMORY] cache_miss user_id={user_id}")
@@ -1215,5 +1215,4 @@ def get_conversation_memory(user_id: str = "default") -> ConversationMemory:
         )
     
     return _memory_instances[user_id]
-
 

@@ -52,7 +52,6 @@ class ConversationMemory:
             "created": datetime.now().isoformat(),
             "last_updated": datetime.now().isoformat(),
             "total_turns": 0,
-            "user_level": "beginner",
             "primary_interests": [],  # С‚РµРјС‹, РєРѕС‚РѕСЂС‹Рµ РёРЅС‚РµСЂРµСЃСѓСЋС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
             "challenges": [],  # СЃ С‡РµРј Р±РѕСЂРµС‚СЃСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ
             "breakthroughs": []  # РёРЅСЃР°Р№С‚С‹ Рё РїСЂРѕСЂС‹РІС‹
@@ -69,7 +68,6 @@ class ConversationMemory:
         self.summary: Optional[str] = None
         self.summary_updated_at: Optional[int] = None  # turn index
         self.working_state: Optional[WorkingState] = None
-        self._sd_profile: Optional[Dict[str, Any]] = None
         self._summary_due_turn: Optional[int] = None
         self._summary_task: Optional[asyncio.Task[Any]] = None
         self._summary_task_turn: Optional[int] = None
@@ -121,9 +119,7 @@ class ConversationMemory:
             raw_working_state = data.get("working_state")
             if isinstance(raw_working_state, dict):
                 self.working_state = WorkingState.from_dict(raw_working_state)
-            self._sd_profile = data.get("sd_profile")
-            if self._sd_profile:
-                self.metadata["sd_profile"] = self._sd_profile
+            # Backward-compatible read: legacy sd_profile is ignored in active NEO runtime.
             
             logger.info(f"[MEMORY] loaded from json turns={len(self.turns)} user_id={self.user_id}")
             return True
@@ -151,9 +147,7 @@ class ConversationMemory:
             metadata = session_info.get("metadata")
             if isinstance(metadata, dict):
                 self.metadata.update(metadata)
-                profile = metadata.get("sd_profile")
-                if isinstance(profile, dict):
-                    self._sd_profile = profile
+                self.metadata.pop("sd_profile", None)
                 self.owner_user_id = (
                     metadata.get("owner_user_id")
                     or session_info.get("user_id")
@@ -265,7 +259,6 @@ class ConversationMemory:
                     "working_state": (
                         self.working_state.to_dict() if self.working_state else None
                     ),
-                    "sd_profile": self._sd_profile,
                 }, f, ensure_ascii=False, indent=2)
             
             logger.info(
@@ -610,46 +603,6 @@ class ConversationMemory:
                 )
         return trajectory
 
-    def get_user_sd_profile(self) -> Optional[dict]:
-        """РџРѕР»СѓС‡РёС‚СЊ РЅР°РєРѕРїР»РµРЅРЅС‹Р№ SD-РїСЂРѕС„РёР»СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ."""
-        return getattr(self, "_sd_profile", None)
-
-    def update_sd_profile(self, level: str, confidence: float) -> None:
-        """
-        РћР±РЅРѕРІРёС‚СЊ SD-РїСЂРѕС„РёР»СЊ РЅР° РѕСЃРЅРѕРІРµ РЅРѕРІРѕР№ РєР»Р°СЃСЃРёС„РёРєР°С†РёРё.
-        Р’С‹Р·С‹РІР°РµС‚СЃСЏ РєР°Р¶РґС‹Рµ N СЃРѕРѕР±С‰РµРЅРёР№ РёР· answer_adaptive.py.
-        """
-        if not hasattr(self, "_sd_profile") or self._sd_profile is None:
-            self._sd_profile = {
-                "primary": level,
-                "secondary": None,
-                "confidence": confidence,
-                "message_count": 0,
-                "history": [],
-            }
-
-        self._sd_profile["history"].append({"level": level, "confidence": confidence})
-        self._sd_profile["message_count"] = len(self.turns)
-
-        # РџРµСЂРµСЃС‡РёС‚Р°С‚СЊ РєР°Рє РЅР°РёР±РѕР»РµРµ С‡Р°СЃС‚С‹Р№ Р·Р° РїРѕСЃР»РµРґРЅРёРµ 10 РєР»Р°СЃСЃРёС„РёРєР°С†РёР№
-        recent = self._sd_profile["history"][-10:]
-        from collections import Counter
-
-        level_counts = Counter(h["level"] for h in recent)
-        most_common = level_counts.most_common(1)[0][0]
-
-        self._sd_profile["primary"] = most_common
-        self._sd_profile["confidence"] = sum(
-            h["confidence"] for h in recent if h["level"] == most_common
-        ) / max(1, level_counts[most_common])
-        self.metadata["sd_profile"] = self._sd_profile
-
-        logger.debug(
-            f"[SD_PROFILE] Updated: {self._sd_profile['primary']} "
-            f"(conf={self._sd_profile['confidence']:.2f}, "
-            f"msgs={self._sd_profile['message_count']})"
-        )
-    
     def get_context_for_llm(self, n: int = 3, max_chars: Optional[int] = None) -> str:
         """
         РџРѕР»СѓС‡РёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ РїРѕСЃР»РµРґРЅРёС… РѕР±РѕСЂРѕС‚РѕРІ РґР»СЏ LLM.
@@ -1070,7 +1023,6 @@ class ConversationMemory:
         self.summary = None
         self.summary_updated_at = None
         self.working_state = None
-        self._sd_profile = None
         self.metadata.pop("sd_profile", None)
 
         # === РќРћР’РћР•: РћС‡РёСЃС‚РёС‚СЊ semantic memory ===
@@ -1097,7 +1049,6 @@ class ConversationMemory:
         self.summary = None
         self.summary_updated_at = None
         self.working_state = None
-        self._sd_profile = None
         self.metadata.pop("sd_profile", None)
         self.metadata["last_updated"] = datetime.now().isoformat()
         self.metadata["total_turns"] = 0
@@ -1224,7 +1175,6 @@ class ConversationMemory:
             "num_challenges": len(challenges),
             "num_breakthroughs": len(breakthroughs),
             "average_rating": round(avg_rating, 2),
-            "user_level": self.metadata.get("user_level", "beginner"),
             "last_interaction": self.turns[-1].timestamp if self.turns else None,
             # === РќРћР’РћР•: Summary РґР°РЅРЅС‹Рµ ===
             "conversation_summary": self.summary,
@@ -1232,7 +1182,6 @@ class ConversationMemory:
             "working_state": (
                 self.working_state.to_dict() if self.working_state else None
             ),
-            "sd_profile": self._sd_profile,
         }
 
         if self.semantic_memory:
@@ -1240,17 +1189,6 @@ class ConversationMemory:
 
         return result
     
-    def set_user_level(self, level: str) -> None:
-        """
-        РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СѓСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
-        
-        Args:
-            level: beginner / intermediate / advanced
-        """
-        self.metadata["user_level"] = level
-        self.save_to_disk(reason="checkpoint")
-
-
 # Р“Р»РѕР±Р°Р»СЊРЅС‹Р№ РєСЌС€ РёРЅСЃС‚Р°РЅСЃРѕРІ РїР°РјСЏС‚Рё
 _memory_instances: Dict[str, ConversationMemory] = {}
 

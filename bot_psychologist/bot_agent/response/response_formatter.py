@@ -66,7 +66,7 @@ class ResponseFormatter:
     def _is_explicit_brevity_request(user_message: str) -> bool:
         return bool(_EXPLICIT_BREVITY_RE.search((user_message or "").strip()))
 
-    def calculate_target_length(self, user_message: str, routing_mode: str, sd_level: str | None = None) -> dict:
+    def calculate_target_length(self, user_message: str, routing_mode: str) -> dict:
         """
         Adaptive answer length based on user message size + routing mode.
 
@@ -84,11 +84,6 @@ class ResponseFormatter:
         else:
             max_sentences = base + 1
 
-        # More direct/compact output for acute SD levels.
-        sd = (sd_level or "").upper()
-        if sd in {"BEIGE", "RED"} and max_sentences > 2:
-            max_sentences -= 1
-
         return {"max_sentences": max(1, max_sentences), "mode": mode}
 
     def format_answer(
@@ -99,7 +94,6 @@ class ResponseFormatter:
         confidence_level: str,
         max_chars: int | None = None,
         user_message: str | None = None,
-        sd_level: str | None = None,
         informational_mode: bool = False,
     ) -> str:
         """Normalize answer and enforce light mode-driven limits."""
@@ -125,7 +119,6 @@ class ResponseFormatter:
             target = self.calculate_target_length(
                 user_message=user_message or "",
                 routing_mode=normalized_mode,
-                sd_level=sd_level,
             )
             text = self._take_sentences(text, int(target["max_sentences"]))
             char_limit = max_chars or self.mode_char_limits.get(normalized_mode, 900)

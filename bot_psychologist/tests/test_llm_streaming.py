@@ -49,7 +49,6 @@ async def test_stream_answer_tokens_forwards_runtime_arguments() -> None:
         async for token in stream_answer_tokens(
             "query text",
             user_id="session_42",
-            user_level="advanced",
             session_store=object(),
             include_path=True,
             include_feedback_prompt=True,
@@ -59,7 +58,6 @@ async def test_stream_answer_tokens_forwards_runtime_arguments() -> None:
     ]
 
     assert captured_kwargs["user_id"] == "session_42"
-    assert captured_kwargs["user_level"] == "advanced"
     assert captured_kwargs["include_path_recommendation"] is True
     assert captured_kwargs["include_feedback_prompt"] is True
     assert captured_kwargs["debug"] is True

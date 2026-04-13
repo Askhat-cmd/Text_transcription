@@ -13,13 +13,6 @@ from enum import Enum
 
 # ===== ENUMS =====
 
-class UserLevel(str, Enum):
-    """РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РґР»СЏ Р°РґР°РїС‚Р°С†РёРё РѕС‚РІРµС‚РѕРІ"""
-    BEGINNER = "beginner"
-    INTERMEDIATE = "intermediate"
-    ADVANCED = "advanced"
-
-
 class FeedbackType(str, Enum):
     """РўРёРї РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё"""
     POSITIVE = "positive"
@@ -34,7 +27,6 @@ class AskQuestionRequest(BaseModel):
     query: str = Field(..., min_length=3, max_length=2000, description="Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     user_id: str = Field(default="default", min_length=1, max_length=100, description="ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     session_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="ID chat session")
-    user_level: UserLevel = Field(default=UserLevel.BEGINNER, description="РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ")
     include_path: bool = Field(default=False, description="Р’РєР»СЋС‡РёС‚СЊ СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё")
     include_feedback_prompt: bool = Field(default=True, description="Р’РєР»СЋС‡РёС‚СЊ Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё")
     debug: bool = Field(default=False, description="РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ")
@@ -52,7 +44,6 @@ class AskQuestionRequest(BaseModel):
                 "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
                 "user_id": "user_123",
                 "session_id": "chat_abc",
-                "user_level": "beginner",
                 "include_path": False,
                 "include_feedback_prompt": True,
                 "debug": False
@@ -355,7 +346,6 @@ class UserSummaryResponse(BaseModel):
     num_challenges: int
     num_breakthroughs: int
     average_rating: float
-    user_level: str
     last_interaction: Optional[str] = None
 
 

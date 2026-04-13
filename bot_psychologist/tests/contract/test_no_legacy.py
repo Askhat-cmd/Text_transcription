@@ -75,7 +75,7 @@ def test_no_legacy_runtime_markers_in_active_neo_paths() -> None:
             assert marker not in text, f"legacy marker '{marker}' found in {rel_path}"
 
 
-def test_sd_and_level_prompt_files_moved_to_legacy_folder() -> None:
+def test_sd_and_level_prompt_files_fully_removed_from_runtime_tree() -> None:
     legacy_prompt_names = [
         "prompt_sd_green.md",
         "prompt_sd_blue.md",
@@ -91,10 +91,10 @@ def test_sd_and_level_prompt_files_moved_to_legacy_folder() -> None:
         root_path = REPO_ROOT / "bot_agent" / filename
         legacy_path = REPO_ROOT / "bot_agent" / "legacy" / "prompts" / filename
         assert not root_path.exists(), f"legacy prompt still located in active root: {root_path}"
-        assert legacy_path.exists(), f"legacy prompt missing in archive folder: {legacy_path}"
+        assert not legacy_path.exists(), f"legacy prompt file should be removed: {legacy_path}"
 
 
-def test_legacy_python_modules_archived_and_removed_from_active() -> None:
+def test_legacy_python_modules_fully_removed_from_runtime_tree() -> None:
     legacy_python_modules = [
         "answer_basic.py",
         "answer_sag_aware.py",
@@ -106,5 +106,5 @@ def test_legacy_python_modules_archived_and_removed_from_active() -> None:
     for filename in legacy_python_modules:
         active_path = REPO_ROOT / "bot_agent" / filename
         archived_path = REPO_ROOT / "bot_agent" / "legacy" / "python" / filename
-        assert archived_path.exists(), f"archived legacy module missing: {archived_path}"
+        assert not archived_path.exists(), f"legacy module file should be removed: {archived_path}"
         assert not active_path.exists(), f"legacy module still exists in active path: {active_path}"

@@ -407,7 +407,6 @@ const API_KEY = import.meta.env.VITE_API_KEY || "test-key-001";
 const response = await apiService.askQuestion({
   query: "Что такое осознавание?",
   user_id: userId,
-  user_level: userLevel,
   include_path: true,
   include_feedback_prompt: true
 });

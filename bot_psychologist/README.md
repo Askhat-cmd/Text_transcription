@@ -132,7 +132,6 @@ bot_psychologist/
   data/                Runtime data and admin overrides
   docs/                Technical docs
   logs/                Runtime logs
-  migrations/          Data migration helpers
   scripts/             Maintenance and evaluation scripts
   tests/               Unit, integration, contract, UI, regression tests
   web_ui/              React Web chat and admin UI

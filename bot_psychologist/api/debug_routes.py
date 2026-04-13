@@ -13,14 +13,27 @@ logger = logging.getLogger(__name__)
 
 def _sanitize_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
     trace = dict(raw_trace or {})
-    for key in ("sd_level", "sd_classification", "sd_detail"):
+
+    for key in (
+        "sd_classification",
+        "sd_detail",
+        "sd_level",
+        "sd_secondary",
+        "sd_confidence",
+        "sd_method",
+        "sd_allowed_blocks",
+        "user_level",
+        "user_level_adapter_applied",
+    ):
         trace.pop(key, None)
-    cfg = trace.get("config_snapshot")
-    if isinstance(cfg, dict):
-        cfg_clean = dict(cfg)
-        cfg_clean.pop("sd_confidence_threshold", None)
-        cfg_clean.pop("user_level", None)
-        trace["config_snapshot"] = cfg_clean
+
+    config_snapshot = trace.get("config_snapshot")
+    if isinstance(config_snapshot, dict):
+        sanitized_snapshot = dict(config_snapshot)
+        for key in ("user_level", "sd_confidence_threshold"):
+            sanitized_snapshot.pop(key, None)
+        trace["config_snapshot"] = sanitized_snapshot
+
     trace["trace_contract_version"] = "v2"
     return trace
 

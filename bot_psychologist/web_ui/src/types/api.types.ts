@@ -14,7 +14,6 @@ export interface AskQuestionRequest {
   query: string;
   user_id?: string;
   session_id?: string;
-  user_level?: 'beginner' | 'intermediate' | 'advanced';
   include_path?: boolean;
   include_feedback_prompt?: boolean;
   debug?: boolean;

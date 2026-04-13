@@ -1,8 +1,8 @@
-# api/main.py
+﻿# api/main.py
 """
 FastAPI Application for Bot Psychologist API (Phase 5)
 
-Главный файл приложения с middleware, настройками и запуском.
+Р“Р»Р°РІРЅС‹Р№ С„Р°Р№Р» РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ middleware, РЅР°СЃС‚СЂРѕР№РєР°РјРё Рё Р·Р°РїСѓСЃРєРѕРј.
 """
 
 import asyncio
@@ -18,7 +18,7 @@ from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.openapi.utils import get_openapi
 
-# Добавить путь к bot_agent
+# Р”РѕР±Р°РІРёС‚СЊ РїСѓС‚СЊ Рє bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from logging_config import get_logger, setup_logging
@@ -57,7 +57,7 @@ def _ensure_prompt_default_snapshots() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Жизненный цикл приложения"""
+    """Р–РёР·РЅРµРЅРЅС‹Р№ С†РёРєР» РїСЂРёР»РѕР¶РµРЅРёСЏ"""
     global _startup_time
     # Startup
     _startup_time = time.time()
@@ -104,22 +104,22 @@ app = FastAPI(
     description="""
 # Bot Psychologist API
 
-REST API для взаимодействия с Bot Agent (Phases 1-4).
+REST API РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ Bot Agent (Phases 1-4).
 
-## Возможности
+## Р’РѕР·РјРѕР¶РЅРѕСЃС‚Рё
 
-- 🧠 **Phase 1:** Базовый QA (TF-IDF + LLM)
-- 📊 **Phase 2:** SAG-aware QA (адаптация по уровню)
-- 🔗 **Phase 3:** Graph-powered QA (Knowledge Graph)
-- 🎯 **Phase 4:** Adaptive QA (состояние + память + пути)
+- рџ§  **Phase 1:** Р‘Р°Р·РѕРІС‹Р№ QA (TF-IDF + LLM)
+- рџ“Љ **Phase 2:** NEO diagnostics QA
+- рџ”— **Phase 3:** Graph-powered QA (Knowledge Graph)
+- рџЋЇ **Phase 4:** Adaptive QA (СЃРѕСЃС‚РѕСЏРЅРёРµ + РїР°РјСЏС‚СЊ + РїСѓС‚Рё)
 
-## Аутентификация
+## РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ
 
-Все endpoints (кроме health check) требуют API ключ в заголовке `X-API-Key`.
+Р’СЃРµ endpoints (РєСЂРѕРјРµ health check) С‚СЂРµР±СѓСЋС‚ API РєР»СЋС‡ РІ Р·Р°РіРѕР»РѕРІРєРµ `X-API-Key`.
 
 ## Rate Limiting
 
-Лимит запросов зависит от типа API ключа (100-1000 req/min).
+Р›РёРјРёС‚ Р·Р°РїСЂРѕСЃРѕРІ Р·Р°РІРёСЃРёС‚ РѕС‚ С‚РёРїР° API РєР»СЋС‡Р° (100-1000 req/min).
     """,
     version="0.12.0",
     docs_url="/api/docs",
@@ -130,7 +130,7 @@ REST API для взаимодействия с Bot Agent (Phases 1-4).
 
 # ===== MIDDLEWARE =====
 
-# CORS для веб-интеграции
+# CORS РґР»СЏ РІРµР±-РёРЅС‚РµРіСЂР°С†РёРё
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -138,7 +138,7 @@ app.add_middleware(
         "http://localhost:8080",
         "http://127.0.0.1:3000",
         "http://127.0.0.1:8080",
-        "*"  # TODO: в production ограничить
+        "*"  # TODO: РІ production РѕРіСЂР°РЅРёС‡РёС‚СЊ
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -152,7 +152,7 @@ app.add_middleware(
 )
 
 
-# Middleware для логирования
+# Middleware РґР»СЏ Р»РѕРіРёСЂРѕРІР°РЅРёСЏ
 @app.middleware("http")
 async def add_latency_header(request: Request, call_next):
     """Add X-Response-Time-Ms header to each response."""
@@ -165,10 +165,10 @@ async def add_latency_header(request: Request, call_next):
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
-    """Логировать все запросы"""
+    """Р›РѕРіРёСЂРѕРІР°С‚СЊ РІСЃРµ Р·Р°РїСЂРѕСЃС‹"""
     start_ts = time.time()
     
-    # Получить API ключ (скрыть для логов)
+    # РџРѕР»СѓС‡РёС‚СЊ API РєР»СЋС‡ (СЃРєСЂС‹С‚СЊ РґР»СЏ Р»РѕРіРѕРІ)
     api_key = request.headers.get("X-API-Key", "none")
     api_key_masked = api_key[:10] + "..." if api_key != "none" and len(api_key) > 10 else api_key
     
@@ -185,7 +185,7 @@ async def log_requests(request: Request, call_next):
     except Exception as e:
         elapsed_time = time.time() - start_ts
         logger.error(
-            "❌ Unhandled API error on %s %s after %.3fs: %s",
+            "вќЊ Unhandled API error on %s %s after %.3fs: %s",
             request.method,
             request.url.path,
             elapsed_time,
@@ -215,14 +215,14 @@ app.include_router(admin_router_v1)
 # ===== CUSTOM OPENAPI =====
 
 def custom_openapi():
-    """Кастомная OpenAPI схема"""
+    """РљР°СЃС‚РѕРјРЅР°СЏ OpenAPI СЃС…РµРјР°"""
     if app.openapi_schema:
         return app.openapi_schema
     
     openapi_schema = get_openapi(
         title="Bot Psychologist API",
         version="0.6.0",
-        description="REST API для взаимодействия с Bot Agent (Phase 5)",
+        description="REST API РґР»СЏ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ СЃ Bot Agent (Phase 5)",
         routes=app.routes,
     )
     
@@ -241,7 +241,7 @@ app.openapi = custom_openapi
 
 @app.get("/", tags=["root"])
 async def root():
-    """Корневой endpoint"""
+    """РљРѕСЂРЅРµРІРѕР№ endpoint"""
     return {
         "name": "Bot Psychologist API",
         "version": "0.6.0",
@@ -252,20 +252,19 @@ async def root():
 
 @app.get("/api/v1/info", tags=["info"])
 async def api_info():
-    """Информация об API"""
+    """РРЅС„РѕСЂРјР°С†РёСЏ РѕР± API"""
     return {
         "name": "Bot Psychologist API",
         "version": "0.6.0",
         "phases": {
             "phase_1": "Basic QA (TF-IDF + LLM)",
-            "phase_2": "SAG-aware QA (User Level Adaptation)",
+            "phase_2": "NEO diagnostics QA",
             "phase_3": "Graph-powered QA (Knowledge Graph + Semantic)",
             "phase_4": "Adaptive QA (State + Memory + Paths)",
             "phase_5": "REST API (FastAPI)"
         },
         "endpoints": {
             "basic": "/api/v1/questions/basic",
-            "sag_aware": "/api/v1/questions/sag-aware",
             "graph_powered": "/api/v1/questions/graph-powered",
             "adaptive": "/api/v1/questions/adaptive",
             "history": "/api/v1/users/{user_id}/history",
@@ -288,5 +287,6 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
+
 
 

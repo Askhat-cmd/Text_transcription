@@ -7,7 +7,7 @@ REST API для взаимодействия с Bot Agent.
 
 from .main import app
 from .models import (
-    UserLevel, FeedbackType,
+    FeedbackType,
     AskQuestionRequest, FeedbackRequest, GetUserHistoryRequest, GetStatsRequest,
     SourceResponse, StateAnalysisResponse, PathStepResponse, PathRecommendationResponse,
     AnswerResponse, AdaptiveAnswerResponse, ConversationTurnResponse,
@@ -24,7 +24,6 @@ __all__ = [
     "api_key_manager",
     "verify_api_key",
     # Enums
-    "UserLevel",
     "FeedbackType",
     # Request Models
     "AskQuestionRequest",

@@ -84,7 +84,6 @@ class APIService {
   async askAdaptiveQuestion(
     query: string,
     userId: string,
-    userLevel: 'beginner' | 'intermediate' | 'advanced' = 'beginner',
     includePath: boolean = false,
     includeFeedback: boolean = true,
     sessionId?: string
@@ -96,7 +95,6 @@ class APIService {
           query,
           user_id: userId,
           session_id: sessionId,
-          user_level: userLevel,
           include_path: includePath,
           include_feedback_prompt: includeFeedback,
           debug: false,
@@ -118,7 +116,6 @@ class APIService {
       includePath?: boolean;
       includeFeedback?: boolean;
       sessionId?: string;
-      userLevel?: 'beginner' | 'intermediate' | 'advanced';
       maxRetries?: number;
     }
   ): Promise<void> {
@@ -147,7 +144,6 @@ class APIService {
             query,
             user_id: userId,
             session_id: options?.sessionId,
-            user_level: options?.userLevel ?? 'beginner',
             include_path: options?.includePath ?? false,
             include_feedback_prompt: options?.includeFeedback ?? true,
             debug: false,
@@ -376,18 +372,6 @@ class APIService {
     try {
       const response = await this.api.post<AnswerResponse>(
         '/questions/basic',
-        { query }
-      );
-      return response.data;
-    } catch (error) {
-      throw this.handleError(error);
-    }
-  }
-
-  async askSagAwareQuestion(query: string): Promise<AnswerResponse> {
-    try {
-      const response = await this.api.post<AnswerResponse>(
-        '/questions/sag-aware',
         { query }
       );
       return response.data;

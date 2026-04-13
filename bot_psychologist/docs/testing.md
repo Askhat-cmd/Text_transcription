@@ -48,9 +48,9 @@ python tests/test_phase1.py
 
 ---
 
-### Phase 2: SAG-aware QA
+### Legacy (архив): SAG-aware QA
 
-**Р¤Р°Р№Р»**: `tests/test_phase2.py`
+**Р¤Р°Р№Р»**: `tests/test_phase2.py` (только для исторической совместимости, не active runtime)
 
 **РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
 - `answer_question_sag_aware(query: str, user_level: str)`
@@ -105,7 +105,7 @@ python tests/test_phase3.py
 **Р¤Р°Р№Р»**: `tests/test_phase4.py`
 
 **РўРµСЃС‚РёСЂСѓРµРјС‹Рµ С„СѓРЅРєС†РёРё**:
-- `answer_question_adaptive(query: str, user_id: str, user_level: str)`
+- `answer_question_adaptive(query: str, user_id: str)`
 
 **РџСЂРёРјРµСЂ С‚РµСЃС‚Р°**:
 ```python
@@ -113,8 +113,7 @@ from bot_agent import answer_question_adaptive
 
 result = answer_question_adaptive(
     "РҐРѕС‡Сѓ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ",
-    user_id="test_user_001",
-    user_level="beginner"
+    user_id="test_user_001"
 )
 assert result["status"] == "success"
 assert "state_analysis" in result
@@ -177,7 +176,6 @@ response = requests.post(
     json={
         "query": "РҐРѕС‡Сѓ РЅР°С‡Р°С‚СЊ РїСЂР°РєС‚РёРєРѕРІР°С‚СЊ РѕСЃРѕР·РЅР°РІР°РЅРёРµ",
         "user_id": "test_user_001",
-        "user_level": "beginner",
         "include_path": True
     }
 )
@@ -298,7 +296,6 @@ def test_full_flow():
         json={
             "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
             "user_id": "test_user_001",
-            "user_level": "beginner",
             "include_path": True
         }
     )

@@ -28,7 +28,6 @@ async def test_concurrent_streams_dont_block() -> None:
             async for token in stream_answer_tokens(
                 "test",
                 user_id=user_id,
-                user_level="beginner",
                 answer_fn=_slow_answer,
             )
         ]

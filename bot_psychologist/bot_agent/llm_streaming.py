@@ -19,7 +19,6 @@ async def stream_answer_tokens(
     query: str,
     *,
     user_id: str,
-    user_level: str = "beginner",
     session_store: Any = None,
     include_path: bool = False,
     include_feedback_prompt: bool = False,
@@ -41,7 +40,6 @@ async def stream_answer_tokens(
         lambda: runtime_fn(
             query,
             user_id=user_id,
-            user_level=user_level,
             include_path_recommendation=include_path,
             include_feedback_prompt=include_feedback_prompt,
             debug=debug,

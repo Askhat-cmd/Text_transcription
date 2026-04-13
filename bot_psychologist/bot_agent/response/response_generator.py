@@ -6,7 +6,6 @@ import logging
 from typing import AsyncGenerator, Iterable, Optional
 
 from ..config import config
-from ..feature_flags import feature_flags
 from ..llm_answerer import LLMAnswerer
 from .prompt_templates import build_mode_prompt
 
@@ -27,10 +26,6 @@ class ResponseGenerator:
         if level == "high":
             return min(1.0, default + 0.05)
         return default
-
-    @staticmethod
-    def _sd_runtime_disabled() -> bool:
-        return feature_flags.enabled("DISABLE_SD_RUNTIME")
 
     @staticmethod
     def _conflicts_with_mode(level_text: str, mode: str) -> bool:

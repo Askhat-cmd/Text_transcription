@@ -12,7 +12,6 @@ export const API_ENDPOINTS = {
   // Questions
   QUESTIONS_ADAPTIVE: '/questions/adaptive',
   QUESTIONS_BASIC: '/questions/basic',
-  QUESTIONS_SAG_AWARE: '/questions/sag-aware',
   QUESTIONS_GRAPH: '/questions/graph-powered',
 
   // Users
@@ -36,7 +35,6 @@ export const DEFAULT_HISTORY_TURNS = 10;
 export const DEFAULT_SETTINGS = {
   apiKey: '',
   userId: '',
-  userLevel: 'beginner',
   theme: DEFAULT_THEME,
   showSources: true,
   showPath: false,

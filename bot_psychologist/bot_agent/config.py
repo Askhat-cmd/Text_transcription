@@ -46,7 +46,7 @@ class Config:
     SAG_FINAL_DIR = DATA_ROOT / "sag_final"
 
     # === Knowledge Source ===
-    # "json"     → SAG v2.0 JSON (voice_bot_pipeline/sag_final) — legacy режим
+    # "json"     → legacy JSON source (архивный режим)
     # "db_json"  → Bot_data_base exported *_blocks.json (без запущенного сервера)
     # "chromadb" → Bot_data_base через HTTP API (рекомендуется для production)
     # "api"      → Bot_data_base через HTTP API (явный режим)
@@ -144,15 +144,10 @@ class Config:
     STATE_CLASSIFIER_CONFIDENCE_THRESHOLD: float = float(
         os.getenv("STATE_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
     )
-    SD_CLASSIFIER_ENABLED: bool = os.getenv("SD_CLASSIFIER_ENABLED", "True").lower() == "true"
-    SD_CLASSIFIER_CONFIDENCE_THRESHOLD: float = float(
-        os.getenv("SD_CLASSIFIER_CONFIDENCE_THRESHOLD", "0.65")
-    )
     DECISION_GATE_RULE_THRESHOLD: float = float(os.getenv("DECISION_GATE_RULE_THRESHOLD", "0.75"))
     DECISION_GATE_LLM_ROUTER_ENABLED: bool = os.getenv(
         "DECISION_GATE_LLM_ROUTER_ENABLED", "True"
     ).lower() == "true"
-    PROMPT_SD_OVERRIDES_BASE: bool = os.getenv("PROMPT_SD_OVERRIDES_BASE", "True").lower() == "true"
     PROMPT_MODE_OVERRIDES_SD: bool = os.getenv("PROMPT_MODE_OVERRIDES_SD", "True").lower() == "true"
 
     # === Conversation memory ===

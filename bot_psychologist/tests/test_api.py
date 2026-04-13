@@ -1,10 +1,10 @@
-# test_api.py
+﻿# test_api.py
 """
-Тесты для Bot Psychologist API (Phase 5)
+РўРµСЃС‚С‹ РґР»СЏ Bot Psychologist API (Phase 5)
 
-Запуск:
-1. Запустить сервер: python api/main.py
-2. Запустить тесты: python test_api.py
+Р—Р°РїСѓСЃРє:
+1. Р—Р°РїСѓСЃС‚РёС‚СЊ СЃРµСЂРІРµСЂ: python api/main.py
+2. Р—Р°РїСѓСЃС‚РёС‚СЊ С‚РµСЃС‚С‹: python test_api.py
 """
 
 import requests
@@ -24,7 +24,7 @@ def _require_server():
 
 
 def get_headers():
-    """Заголовки с API ключом"""
+    """Р—Р°РіРѕР»РѕРІРєРё СЃ API РєР»СЋС‡РѕРј"""
     return {
         "X-API-Key": API_KEY,
         "Content-Type": "application/json"
@@ -32,14 +32,14 @@ def get_headers():
 
 
 def print_separator(title: str):
-    """Печать разделителя"""
+    """РџРµС‡Р°С‚СЊ СЂР°Р·РґРµР»РёС‚РµР»СЏ"""
     print("\n" + "=" * 100)
     print(f"TEST: {title}")
     print("=" * 100)
 
 
 def test_health_check():
-    """Проверка здоровья"""
+    """РџСЂРѕРІРµСЂРєР° Р·РґРѕСЂРѕРІСЊСЏ"""
     print_separator("Health Check")
     _require_server()
     
@@ -57,7 +57,7 @@ def test_health_check():
 
 
 def test_root_endpoint():
-    """Проверка корневого endpoint"""
+    """РџСЂРѕРІРµСЂРєР° РєРѕСЂРЅРµРІРѕРіРѕ endpoint"""
     print_separator("Root Endpoint")
     _require_server()
     
@@ -78,7 +78,7 @@ def test_root_endpoint():
 
 
 def test_api_info():
-    """Проверка информации об API"""
+    """РџСЂРѕРІРµСЂРєР° РёРЅС„РѕСЂРјР°С†РёРё РѕР± API"""
     print_separator("API Info")
     _require_server()
     
@@ -98,15 +98,13 @@ def test_api_info():
 
 
 def test_adaptive_question():
-    """Тест адаптивного вопроса (Phase 4)"""
+    """РўРµСЃС‚ Р°РґР°РїС‚РёРІРЅРѕРіРѕ РІРѕРїСЂРѕСЃР° (Phase 4)"""
     print_separator("Adaptive Question (Phase 4)")
     _require_server()
     
     payload = {
-        "query": "Что такое осознавание?",
-        "user_id": "api_test_user_001",
-        "user_level": "beginner",
-        "include_path": True,
+        "query": "Р§С‚Рѕ С‚Р°РєРѕРµ РѕСЃРѕР·РЅР°РІР°РЅРёРµ?",
+        "user_id": "api_test_user_001",        "include_path": True,
         "include_feedback_prompt": True,
         "debug": False
     }
@@ -138,12 +136,12 @@ def test_adaptive_question():
 
 
 def test_basic_question():
-    """Тест базового вопроса (Phase 1)"""
+    """РўРµСЃС‚ Р±Р°Р·РѕРІРѕРіРѕ РІРѕРїСЂРѕСЃР° (Phase 1)"""
     print_separator("Basic Question (Phase 1)")
     _require_server()
     
     payload = {
-        "query": "Как медитировать?",
+        "query": "РљР°Рє РјРµРґРёС‚РёСЂРѕРІР°С‚СЊ?",
         "user_id": "api_test_user_002"
     }
     
@@ -171,7 +169,7 @@ def test_basic_question():
 
 
 def test_user_history():
-    """Тест истории пользователя"""
+    """РўРµСЃС‚ РёСЃС‚РѕСЂРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"""
     print_separator("User History")
     _require_server()
     
@@ -201,7 +199,7 @@ def test_user_history():
 
 
 def test_feedback():
-    """Тест отправки обратной связи"""
+    """РўРµСЃС‚ РѕС‚РїСЂР°РІРєРё РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё"""
     print_separator("Feedback")
     _require_server()
     
@@ -210,7 +208,7 @@ def test_feedback():
         "turn_index": 0,
         "feedback": "positive",
         "rating": 5,
-        "comment": "Очень полезно!"
+        "comment": "РћС‡РµРЅСЊ РїРѕР»РµР·РЅРѕ!"
     }
     
     print(f"Feedback: {payload['feedback']}, Rating: {payload['rating']}")
@@ -229,7 +227,7 @@ def test_feedback():
     else:
         print(f"Error: {response.text}")
     
-    # Может вернуть 400 если turn_index не существует
+    # РњРѕР¶РµС‚ РІРµСЂРЅСѓС‚СЊ 400 РµСЃР»Рё turn_index РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
     assert response.status_code in [200, 400], f"Expected 200 or 400, got {response.status_code}"
     
     print("[OK] PASSED")
@@ -237,7 +235,7 @@ def test_feedback():
 
 
 def test_statistics():
-    """Тест статистики"""
+    """РўРµСЃС‚ СЃС‚Р°С‚РёСЃС‚РёРєРё"""
     print_separator("Statistics")
     _require_server()
     
@@ -264,7 +262,7 @@ def test_statistics():
 
 
 def test_invalid_api_key():
-    """Тест с невалидным API ключом"""
+    """РўРµСЃС‚ СЃ РЅРµРІР°Р»РёРґРЅС‹Рј API РєР»СЋС‡РѕРј"""
     print_separator("Invalid API Key (Expect 403)")
     _require_server()
     
@@ -288,7 +286,7 @@ def test_invalid_api_key():
 
 
 def test_missing_api_key():
-    """Тест без API ключа"""
+    """РўРµСЃС‚ Р±РµР· API РєР»СЋС‡Р°"""
     print_separator("Missing API Key (Expect 403)")
     _require_server()
     
@@ -307,7 +305,7 @@ def test_missing_api_key():
 
 
 def run_all_tests():
-    """Запуск всех тестов"""
+    """Р—Р°РїСѓСЃРє РІСЃРµС… С‚РµСЃС‚РѕРІ"""
     print("\n" + "=" * 100)
     print("BOT PSYCHOLOGIST API - PHASE 5 TESTING")
     print(f"Started at: {datetime.now().isoformat()}")
@@ -375,5 +373,6 @@ def run_all_tests():
 if __name__ == "__main__":
     success = run_all_tests()
     exit(0 if success else 1)
+
 
 

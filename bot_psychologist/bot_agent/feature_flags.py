@@ -16,11 +16,9 @@ _DEFAULTS: Dict[str, bool] = {
     # PRD 11.0 Wave 1 (Soft Freeze): Neo runtime is default.
     "NEO_MINDBOT_ENABLED": True,
     "LEGACY_PIPELINE_ENABLED": False,
-    # Compatibility runtime switches used by current code paths.
-    "DISABLE_SD_RUNTIME": True,
+    # Compatibility runtime switch.
     "DISABLE_USER_LEVEL_ADAPTER": True,
-    # Explicit migration flags (PRD terminology).
-    "SD_CLASSIFIER_ENABLED": False,
+    # Explicit migration flag.
     "USER_LEVEL_ADAPTER_ENABLED": False,
     "PRE_ROUTING_ENABLED": False,
     # Neo runtime feature flags.
@@ -35,7 +33,6 @@ _DEFAULTS: Dict[str, bool] = {
     "ENABLE_CONDITIONAL_RERANKER": True,
     # Phase 3
     "ENABLE_FAST_STATE_DETECTOR": True,
-    "ENABLE_FAST_SD_DETECTOR": True,
 }
 
 

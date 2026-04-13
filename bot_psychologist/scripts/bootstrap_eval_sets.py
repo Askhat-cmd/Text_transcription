@@ -33,6 +33,9 @@ def _literal(node: ast.AST) -> Any:
 
 
 def _extract_sd_cases(sd_test_path: Path) -> list[dict[str, Any]]:
+    if not sd_test_path.exists():
+        return []
+
     tree = _load_ast(sd_test_path)
     cases: list[dict[str, Any]] = []
 

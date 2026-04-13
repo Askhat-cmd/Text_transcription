@@ -204,21 +204,26 @@ def _to_chunk_trace_item(raw_chunk: dict, passed_default: bool) -> ChunkTraceIte
 
 def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
     trace = dict(raw_trace or {})
+
     for key in (
-        "user_level",
-        "user_level_adapter_applied",
         "sd_classification",
         "sd_detail",
         "sd_level",
+        "sd_secondary",
+        "sd_confidence",
+        "sd_method",
+        "sd_allowed_blocks",
+        "user_level",
+        "user_level_adapter_applied",
     ):
         trace.pop(key, None)
 
-    cfg_snapshot = trace.get("config_snapshot")
-    if isinstance(cfg_snapshot, dict):
-        cfg_clean = dict(cfg_snapshot)
-        cfg_clean.pop("user_level", None)
-        cfg_clean.pop("sd_confidence_threshold", None)
-        trace["config_snapshot"] = cfg_clean
+    config_snapshot = trace.get("config_snapshot")
+    if isinstance(config_snapshot, dict):
+        cleaned_snapshot = dict(config_snapshot)
+        for key in ("user_level", "sd_confidence_threshold"):
+            cleaned_snapshot.pop(key, None)
+        trace["config_snapshot"] = cleaned_snapshot
 
     trace["trace_contract_version"] = "v2"
 
@@ -228,6 +233,11 @@ def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
 _LEGACY_RUNTIME_METADATA_KEYS = (
     "user_level",
     "user_level_adapter_applied",
+    "sd_level",
+    "sd_secondary",
+    "sd_confidence",
+    "sd_method",
+    "sd_allowed_blocks",
     "decision_rule_id",
     "mode_reason",
     "confidence_level",
@@ -238,8 +248,6 @@ _LEGACY_RUNTIME_METADATA_KEYS = (
 def _strip_legacy_runtime_metadata(raw_metadata: dict) -> dict:
     metadata = dict(raw_metadata or {})
     for key in _LEGACY_RUNTIME_METADATA_KEYS:
-        metadata.pop(key, None)
-    for key in ("sd_level", "sd_secondary", "sd_confidence", "sd_method", "sd_allowed_blocks"):
         metadata.pop(key, None)
     return metadata
 
@@ -260,7 +268,7 @@ def _to_sources(raw_sources: list[dict]) -> list[SourceResponse]:
 
 
 def _build_answer_response_from_adaptive(result: dict) -> AnswerResponse:
-    metadata = result.get("metadata", {}) or {}
+    metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}) or {})
     return AnswerResponse(
         status=result.get("status", "success"),
         answer=result.get("answer", ""),
@@ -285,7 +293,6 @@ def _run_neo_compat_answer(
     return answer_question_adaptive(
         request.query,
         user_id=session_key,
-        user_level=request.user_level.value,
         include_path_recommendation=False,
         include_feedback_prompt=False,
         debug=request.debug,
@@ -360,43 +367,6 @@ async def ask_basic_question_with_semantic(
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
-    except Exception as e:
-        logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
-
-
-@router.post(
-    "/questions/sag-aware",
-    response_model=AnswerResponse,
-    summary="Phase 2: SAG-aware QA",
-    description="QA СЃ СѓС‡РµС‚РѕРј SAG v2.0 Рё СѓСЂРѕРІРЅСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ"
-)
-async def ask_sag_aware_question(
-    request: AskQuestionRequest,
-    api_key: str = Depends(verify_api_key)
-):
-    """
-    **Phase 2:** SAG-aware QA СЃ Р°РґР°РїС‚Р°С†РёРµР№ РїРѕ СѓСЂРѕРІРЅСЋ.
-    
-    РСЃРїРѕР»СЊР·СѓРµС‚:
-    - TF-IDF retrieval
-    - User level adaptation (beginner/intermediate/advanced)
-    - Semantic analysis
-    - РђРґР°РїС‚РёРІРЅС‹Рµ РѕС‚РІРµС‚С‹
-    """
-    
-    logger.info(f"[NEO_COMPAT] SAG-aware endpoint routed to adaptive runtime: {request.query[:50]}...")
-
-    try:
-        result = _run_neo_compat_answer(request=request)
-        _record_user(request.user_id)
-        _stats["total_questions"] += 1
-        _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
-        return _build_answer_response_from_adaptive(result)
-
     except Exception as e:
         logger.error(f"вќЊ РћС€РёР±РєР°: {e}")
         raise HTTPException(
@@ -500,7 +470,6 @@ async def ask_adaptive_question(
         result = answer_question_adaptive(
             request.query,
             user_id=session_key,
-            user_level=request.user_level.value,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
             debug=request.debug,
@@ -855,7 +824,6 @@ async def ask_adaptive_question_stream(
             async for token in stream_answer_tokens(
                 request.query,
                 user_id=session_key,
-                user_level=request.user_level.value,
                 session_store=store,
                 include_path=request.include_path,
                 include_feedback_prompt=request.include_feedback_prompt,
@@ -1155,7 +1123,6 @@ async def get_user_summary(
             num_challenges=summary.get("num_challenges", 0),
             num_breakthroughs=summary.get("num_breakthroughs", 0),
             average_rating=summary.get("average_rating", 0),
-            user_level=summary.get("user_level", "beginner"),
             last_interaction=summary.get("last_interaction")
         )
     except Exception as e:

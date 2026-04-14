@@ -504,8 +504,6 @@ def answer_question_adaptive(
             confidence_scorer=confidence_scorer,
             decision_gate=decision_gate,
             informational_branch_enabled=informational_branch_enabled,
-            resolve_mode_prompt_fn=resolve_mode_prompt,
-            build_mode_directive_fn=build_mode_directive,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             build_first_turn_instruction_fn=build_first_turn_instruction,

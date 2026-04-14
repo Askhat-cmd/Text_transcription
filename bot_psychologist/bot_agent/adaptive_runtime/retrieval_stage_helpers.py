@@ -392,8 +392,6 @@ def _run_retrieval_routing_context_stage(
     confidence_scorer,
     decision_gate,
     informational_branch_enabled: bool,
-    resolve_mode_prompt_fn,
-    build_mode_directive_fn,
     phase8_signals,
     correction_protocol_active: bool,
     build_first_turn_instruction_fn,
@@ -429,6 +427,8 @@ def _run_retrieval_routing_context_stage(
         _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
         _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
     )
+    from .mode_policy_helpers import resolve_mode_prompt as _runtime_resolve_mode_prompt
+    from ..decision import build_mode_directive as _runtime_build_mode_directive
 
     hybrid_query_stage = _prepare_hybrid_query_stage(
         query=query,
@@ -482,10 +482,10 @@ def _run_retrieval_routing_context_stage(
         decision_gate=decision_gate,
         retrieved_blocks=retrieved_blocks,
         informational_branch_enabled=informational_branch_enabled,
-        resolve_mode_prompt_fn=resolve_mode_prompt_fn,
+        resolve_mode_prompt_fn=_runtime_resolve_mode_prompt,
         config=config,
         log_retrieval_pairs_fn=log_retrieval_pairs_fn,
-        build_mode_directive_fn=build_mode_directive_fn,
+        build_mode_directive_fn=_runtime_build_mode_directive,
         logger=logger,
     )
     routing_result = routing_cap_stage["routing_result"]

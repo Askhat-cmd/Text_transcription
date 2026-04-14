@@ -169,6 +169,27 @@ def _build_working_state(
     )
 
 
+def _set_working_state_best_effort(
+    *,
+    memory,
+    state_analysis: StateAnalysis,
+    routing_result,
+    build_working_state_fn,
+    logger,
+    log_prefix: str,
+) -> None:
+    try:
+        memory.set_working_state(
+            build_working_state_fn(
+                state_analysis=state_analysis,
+                routing_result=routing_result,
+                memory=memory,
+            )
+        )
+    except Exception as exc:
+        logger.warning("%s %s", log_prefix, exc)
+
+
 def _looks_like_greeting(query: str) -> bool:
     q = (query or "").strip().lower()
     greetings = {

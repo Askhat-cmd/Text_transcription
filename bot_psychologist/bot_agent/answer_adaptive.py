@@ -118,6 +118,7 @@ from .adaptive_runtime.state_helpers import (
     _should_use_fast_path as _runtime_should_use_fast_path,
     _detect_fast_path_reason as _runtime_detect_fast_path_reason,
     _build_fast_path_block as _runtime_build_fast_path_block,
+    _set_working_state_best_effort as _runtime_set_working_state_best_effort,
 )
 from .adaptive_runtime.mode_policy_helpers import (
     MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
@@ -307,6 +308,23 @@ def _build_working_state(
         state_analysis=state_analysis,
         routing_result=routing_result,
         memory=memory,
+    )
+
+
+def _set_working_state_best_effort(
+    *,
+    memory,
+    state_analysis: StateAnalysis,
+    routing_result,
+    log_prefix: str,
+) -> None:
+    return _runtime_set_working_state_best_effort(
+        memory=memory,
+        state_analysis=state_analysis,
+        routing_result=routing_result,
+        build_working_state_fn=_build_working_state,
+        logger=logger,
+        log_prefix=log_prefix,
     )
 
 
@@ -747,16 +765,12 @@ def answer_question_adaptive(
                     {"name": "validate", "label": "Validation", "duration_ms": 0, "skipped": False}
                 )
 
-            try:
-                memory.set_working_state(
-                    _build_working_state(
-                        state_analysis=state_analysis,
-                        routing_result=pre_routing_result,
-                        memory=memory,
-                    )
-                )
-            except Exception as exc:
-                logger.warning(f"[FAST_PATH] working_state update failed: {exc}")
+            _set_working_state_best_effort(
+                memory=memory,
+                state_analysis=state_analysis,
+                routing_result=pre_routing_result,
+                log_prefix="[FAST_PATH] working_state update failed:",
+            )
 
             tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
             tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
@@ -1237,16 +1251,12 @@ def answer_question_adaptive(
                 start_time,
                 query
             )
-            try:
-                memory.set_working_state(
-                    _build_working_state(
-                        state_analysis=state_analysis,
-                        routing_result=routing_result,
-                        memory=memory,
-                    )
-                )
-            except Exception as exc:
-                logger.warning(f"[ADAPTIVE] working_state update failed (partial): {exc}")
+            _set_working_state_best_effort(
+                memory=memory,
+                state_analysis=state_analysis,
+                routing_result=routing_result,
+                log_prefix="[ADAPTIVE] working_state update failed (partial):",
+            )
             _persist_turn(
                 memory=memory,
                 user_input=query,
@@ -1603,16 +1613,12 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
         
-        try:
-            memory.set_working_state(
-                _build_working_state(
-                    state_analysis=state_analysis,
-                    routing_result=routing_result,
-                    memory=memory,
-                )
-            )
-        except Exception as exc:
-            logger.warning(f"[ADAPTIVE] working_state update failed: {exc}")
+        _set_working_state_best_effort(
+            memory=memory,
+            state_analysis=state_analysis,
+            routing_result=routing_result,
+            log_prefix="[ADAPTIVE] working_state update failed:",
+        )
 
         tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
         tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None

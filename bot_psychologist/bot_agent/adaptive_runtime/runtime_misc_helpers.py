@@ -164,6 +164,89 @@ def _load_runtime_memory_context(
     }
 
 
+def _run_bootstrap_and_onboarding_guard(
+    *,
+    user_id: str,
+    user_level: str,
+    query: str,
+    start_time: datetime,
+    schedule_summary_task: bool,
+    debug_trace: Optional[Dict[str, Any]],
+    debug_info: Optional[Dict[str, Any]],
+    load_runtime_memory_context_fn,
+    data_loader,
+    get_conversation_memory_fn,
+    memory_updater,
+    config,
+    detect_phase8_signals_fn,
+    informational_branch_enabled_fn,
+    build_start_command_response_fn,
+    truncate_preview_fn,
+    apply_memory_debug_info_fn,
+    resolve_path_user_level_fn,
+) -> Dict[str, Any]:
+    stage1 = load_runtime_memory_context_fn(
+        user_id=user_id,
+        query=query,
+        data_loader=data_loader,
+        get_conversation_memory_fn=get_conversation_memory_fn,
+        memory_updater=memory_updater,
+        config=config,
+    )
+    memory = stage1["memory"]
+    memory_context_bundle = stage1["memory_context_bundle"]
+    conversation_context = stage1["conversation_context"]
+    cross_session_context = stage1["cross_session_context"]
+    context_turns = stage1["context_turns"]
+    memory_trace_metrics = stage1["memory_trace_metrics"]
+    if memory_context_bundle is not None:
+        memory_trace_metrics["summary_staleness"] = memory_context_bundle.staleness
+        memory_trace_metrics["memory_strategy"] = memory_context_bundle.strategy
+
+    if debug_trace is not None:
+        debug_trace["turn_number"] = len(memory.turns) + 1
+        debug_trace["cross_session_context"] = truncate_preview_fn(cross_session_context, 500)
+        debug_trace["memory_strategy"] = (
+            memory_context_bundle.strategy if memory_context_bundle else None
+        )
+        debug_trace["summary_staleness"] = (
+            memory_context_bundle.staleness if memory_context_bundle else None
+        )
+        apply_memory_debug_info_fn(debug_trace, memory, memory_trace_metrics)
+
+    phase8_signals = detect_phase8_signals_fn(query=query, turns_count=len(memory.turns))
+    if debug_trace is not None:
+        debug_trace["phase8_signals"] = phase8_signals.as_dict()
+
+    start_command_response = None
+    if informational_branch_enabled_fn() and phase8_signals.start_command:
+        start_command_response = build_start_command_response_fn(
+            user_id=user_id,
+            user_level=user_level,
+            query=query,
+            memory=memory,
+            start_time=start_time,
+            schedule_summary_task=schedule_summary_task,
+        )
+
+    path_level_enum = resolve_path_user_level_fn(user_level)
+    if debug_info is not None:
+        debug_info["user_id"] = user_id
+        debug_info["memory_turns"] = len(memory.turns)
+
+    return {
+        "memory": memory,
+        "memory_context_bundle": memory_context_bundle,
+        "conversation_context": conversation_context,
+        "cross_session_context": cross_session_context,
+        "context_turns": context_turns,
+        "memory_trace_metrics": memory_trace_metrics,
+        "phase8_signals": phase8_signals,
+        "path_level_enum": path_level_enum,
+        "start_command_response": start_command_response,
+    }
+
+
 def _generate_llm_with_trace(
     *,
     response_generator,

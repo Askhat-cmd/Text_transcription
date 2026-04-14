@@ -147,6 +147,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
+    _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
     _generate_llm_with_trace as _runtime_generate_llm_with_trace,
     _run_validation_retry_generation as _runtime_run_validation_retry_generation,
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
@@ -336,7 +337,7 @@ def answer_question_adaptive(
     conversation_context = ""
     memory_context_bundle = None
     phase8_signals = None
-    level_adapter = None  # legacy compatibility marker: level-based prompting is disabled
+    level_adapter = None  # compatibility sentinel: level-based prompting stays disabled
     
     current_stage = "init"
     try:
@@ -345,52 +346,37 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ“љ Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё...")
         
-        stage1 = _runtime_load_runtime_memory_context(
+        bootstrap = _runtime_run_bootstrap_and_onboarding_guard(
             user_id=user_id,
+            user_level=user_level,
             query=query,
+            start_time=start_time,
+            schedule_summary_task=schedule_summary_task,
+            debug_trace=debug_trace,
+            debug_info=debug_info,
+            load_runtime_memory_context_fn=_runtime_load_runtime_memory_context,
             data_loader=data_loader,
             get_conversation_memory_fn=get_conversation_memory,
             memory_updater=memory_updater,
             config=config,
+            detect_phase8_signals_fn=detect_phase8_signals,
+            informational_branch_enabled_fn=_runtime_informational_branch_enabled,
+            build_start_command_response_fn=_build_start_command_response,
+            truncate_preview_fn=_truncate_preview,
+            apply_memory_debug_info_fn=_apply_memory_debug_info,
+            resolve_path_user_level_fn=_resolve_path_user_level,
         )
-        memory = stage1["memory"]
-        memory_context_bundle = stage1["memory_context_bundle"]
-        conversation_context = stage1["conversation_context"]
-        cross_session_context = stage1["cross_session_context"]
-        context_turns = stage1["context_turns"]
-        memory_trace_metrics = stage1["memory_trace_metrics"]
-        if memory_context_bundle is not None:
-            memory_trace_metrics["summary_staleness"] = memory_context_bundle.staleness
-            memory_trace_metrics["memory_strategy"] = memory_context_bundle.strategy
-        if debug_trace is not None:
-            debug_trace["turn_number"] = len(memory.turns) + 1
-            debug_trace["cross_session_context"] = _truncate_preview(cross_session_context, 500)
-            debug_trace["memory_strategy"] = memory_context_bundle.strategy if memory_context_bundle else None
-            debug_trace["summary_staleness"] = (
-                memory_context_bundle.staleness if memory_context_bundle else None
-            )
-            _apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
-
-        phase8_signals = detect_phase8_signals(query=query, turns_count=len(memory.turns))
-        if debug_trace is not None:
-            debug_trace["phase8_signals"] = phase8_signals.as_dict()
-        if _runtime_informational_branch_enabled() and phase8_signals.start_command:
-            return _build_start_command_response(
-                user_id=user_id,
-                user_level=user_level,
-                query=query,
-                memory=memory,
-                start_time=start_time,
-                schedule_summary_task=schedule_summary_task,
-            )
-        
-        # Phase 3: user level adapter removed from active runtime.
+        memory = bootstrap["memory"]
+        memory_context_bundle = bootstrap["memory_context_bundle"]
+        conversation_context = bootstrap["conversation_context"]
+        cross_session_context = bootstrap["cross_session_context"]
+        memory_trace_metrics = bootstrap["memory_trace_metrics"]
+        phase8_signals = bootstrap["phase8_signals"]
+        path_level_enum = bootstrap["path_level_enum"]
+        start_command_response = bootstrap["start_command_response"]
         _ = level_adapter
-        path_level_enum = _resolve_path_user_level(user_level)
-        
-        if debug_info is not None:
-            debug_info["user_id"] = user_id
-            debug_info["memory_turns"] = len(memory.turns)
+        if start_command_response is not None:
+            return start_command_response
         
         # ================================================================
         # Р­РўРђРџ 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ

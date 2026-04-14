@@ -131,3 +131,60 @@ def _dedupe_and_apply_progressive_rag(
             debug_trace["progressive_rag_error"] = str(exc)
 
     return processed_blocks
+
+
+def _prepare_conditional_rerank(
+    *,
+    retrieved_blocks: List[Any],
+    top_k: int,
+    config,
+    use_deterministic_router: bool,
+    diagnostics_v1,
+    pre_routing_result,
+    feature_flag_enabled_fn,
+    should_rerank_fn,
+) -> Dict[str, Any]:
+    if use_deterministic_router and diagnostics_v1 is not None:
+        rerank_mode = (
+            "CLARIFICATION" if diagnostics_v1.interaction_mode == "informational" else "PRESENCE"
+        )
+        rerank_confidence = (
+            float(diagnostics_v1.confidence.interaction_mode)
+            + float(diagnostics_v1.confidence.nervous_system_state)
+            + float(diagnostics_v1.confidence.request_function)
+        ) / 3.0
+    else:
+        rerank_mode = pre_routing_result.mode if pre_routing_result is not None else "PRESENCE"
+        rerank_confidence = (
+            float(pre_routing_result.confidence_score)
+            if pre_routing_result is not None
+            else 0.5
+        )
+
+    conditional_reranker = feature_flag_enabled_fn("ENABLE_CONDITIONAL_RERANKER")
+    rerank_flags = {
+        "legacy_always_on": bool(
+            config.VOYAGE_ENABLED and (not conditional_reranker or not config.RERANKER_ENABLED)
+        ),
+        "RERANKER_ENABLED": bool(config.RERANKER_ENABLED and conditional_reranker),
+        "RERANKER_CONFIDENCE_THRESHOLD": float(config.RERANKER_CONFIDENCE_THRESHOLD),
+        "RERANKER_MODE_WHITELIST": str(config.RERANKER_MODE_WHITELIST),
+        "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
+    }
+    should_run_rerank, rerank_reason = should_rerank_fn(
+        confidence_score=rerank_confidence,
+        routing_mode=rerank_mode,
+        retrieved_block_count=len(retrieved_blocks),
+        flags=rerank_flags,
+    )
+    rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
+
+    return {
+        "rerank_mode": rerank_mode,
+        "rerank_confidence": rerank_confidence,
+        "conditional_reranker": conditional_reranker,
+        "rerank_flags": rerank_flags,
+        "should_run_rerank": should_run_rerank,
+        "rerank_reason": rerank_reason,
+        "rerank_k": rerank_k,
+    }

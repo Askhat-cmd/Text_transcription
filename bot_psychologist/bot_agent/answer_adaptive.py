@@ -154,6 +154,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
 from .adaptive_runtime.retrieval_stage_helpers import (
     _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
+    _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
 )
 
 logger = logging.getLogger(__name__)
@@ -278,6 +279,10 @@ def _retrieve_blocks_with_degraded_mode(**kwargs):
 
 def _dedupe_and_apply_progressive_rag(**kwargs):
     return _runtime_dedupe_and_apply_progressive_rag(**kwargs)
+
+
+def _prepare_conditional_rerank(**kwargs):
+    return _runtime_prepare_conditional_rerank(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -972,40 +977,21 @@ def answer_question_adaptive(
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)
         initial_retrieved_blocks = list(raw_retrieved_blocks)
-        if use_deterministic_router and diagnostics_v1 is not None:
-            rerank_mode = (
-                "CLARIFICATION" if diagnostics_v1.interaction_mode == "informational" else "PRESENCE"
-            )
-            rerank_confidence = (
-                float(diagnostics_v1.confidence.interaction_mode)
-                + float(diagnostics_v1.confidence.nervous_system_state)
-                + float(diagnostics_v1.confidence.request_function)
-            ) / 3.0
-        else:
-            # Wave 4 migration step: for rerank gating reuse already-computed pre-routing result.
-            rerank_mode = pre_routing_result.mode if pre_routing_result is not None else "PRESENCE"
-            rerank_confidence = (
-                float(pre_routing_result.confidence_score)
-                if pre_routing_result is not None
-                else 0.5
-            )
-        conditional_reranker = feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
-        rerank_flags = {
-            "legacy_always_on": bool(
-                config.VOYAGE_ENABLED and (not conditional_reranker or not config.RERANKER_ENABLED)
-            ),
-            "RERANKER_ENABLED": bool(config.RERANKER_ENABLED and conditional_reranker),
-            "RERANKER_CONFIDENCE_THRESHOLD": float(config.RERANKER_CONFIDENCE_THRESHOLD),
-            "RERANKER_MODE_WHITELIST": str(config.RERANKER_MODE_WHITELIST),
-            "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
-        }
-        should_run_rerank, rerank_reason = should_rerank(
-            confidence_score=rerank_confidence,
-            routing_mode=rerank_mode,
-            retrieved_block_count=len(retrieved_blocks),
-            flags=rerank_flags,
+        rerank_prep = _prepare_conditional_rerank(
+            retrieved_blocks=retrieved_blocks,
+            top_k=top_k,
+            config=config,
+            use_deterministic_router=use_deterministic_router,
+            diagnostics_v1=diagnostics_v1,
+            pre_routing_result=pre_routing_result,
+            feature_flag_enabled_fn=feature_flags.enabled,
+            should_rerank_fn=should_rerank,
         )
-        rerank_k = min(len(retrieved_blocks), max(1, min(top_k, config.VOYAGE_TOP_K)))
+        rerank_mode = rerank_prep["rerank_mode"]
+        conditional_reranker = rerank_prep["conditional_reranker"]
+        should_run_rerank = rerank_prep["should_run_rerank"]
+        rerank_reason = rerank_prep["rerank_reason"]
+        rerank_k = rerank_prep["rerank_k"]
         rerank_applied = False
         if should_run_rerank and rerank_k > 0:
             reranker = VoyageReranker(

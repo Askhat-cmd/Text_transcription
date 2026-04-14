@@ -75,6 +75,7 @@ from .adaptive_runtime.response_utils import (
     _save_session_summary_best_effort,
     _build_sources_from_blocks,
     _attach_debug_payload,
+    _attach_success_observability,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
@@ -854,40 +855,39 @@ def answer_question_adaptive(
                     "confidence_score": pre_routing_result.confidence_score,
                     "confidence_level": pre_routing_result.confidence_level,
                 }
-            _attach_debug_payload(
+            debug_trace = _attach_success_observability(
                 result=result,
+                strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
+                attach_debug_payload_fn=_attach_debug_payload,
                 debug_info=debug_info,
                 memory=memory,
                 elapsed_time=elapsed_time,
                 llm_result=llm_result,
+                debug_trace=debug_trace,
+                finalize_success_debug_trace_fn=_finalize_success_debug_trace,
+                finalize_success_kwargs={
+                    "elapsed_time": elapsed_time,
+                    "tokens_prompt": tokens_prompt,
+                    "tokens_completion": tokens_completion,
+                    "tokens_total": tokens_total,
+                    "session_metrics": session_metrics,
+                    "memory": memory,
+                    "memory_trace_metrics": memory_trace_metrics,
+                    "start_time": start_time,
+                    "session_store": session_store,
+                    "user_id": user_id,
+                    "pipeline_stages": pipeline_stages,
+                    "model_used": str(model_used),
+                    "estimate_cost_fn": _estimate_cost,
+                    "compute_anomalies_fn": _compute_anomalies,
+                    "attach_trace_schema_fn": attach_trace_schema_status,
+                    "build_state_trajectory_fn": _build_state_trajectory,
+                    "store_blob_fn": _store_blob,
+                    "strip_legacy_trace_fields_fn": _strip_legacy_trace_fields,
+                    "aggregate_from_llm_calls": False,
+                    "include_summary_pending": True,
+                },
             )
-            if debug_trace is not None:
-                debug_trace = _finalize_success_debug_trace(
-                    debug_trace,
-                    elapsed_time=elapsed_time,
-                    tokens_prompt=tokens_prompt,
-                    tokens_completion=tokens_completion,
-                    tokens_total=tokens_total,
-                    session_metrics=session_metrics,
-                    memory=memory,
-                    memory_trace_metrics=memory_trace_metrics,
-                    start_time=start_time,
-                    session_store=session_store,
-                    user_id=user_id,
-                    pipeline_stages=pipeline_stages,
-                    model_used=str(model_used),
-                    estimate_cost_fn=_estimate_cost,
-                    compute_anomalies_fn=_compute_anomalies,
-                    attach_trace_schema_fn=attach_trace_schema_status,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                    strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-                    aggregate_from_llm_calls=False,
-                    include_summary_pending=True,
-                )
-                result["debug_trace"] = debug_trace
-
-            result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
             logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
             return result
 
@@ -1705,42 +1705,41 @@ def answer_question_adaptive(
             elapsed_time=elapsed_time,
         )
 
-        result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
-        
-        _attach_debug_payload(
+        debug_trace = _attach_success_observability(
             result=result,
+            strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
+            attach_debug_payload_fn=_attach_debug_payload,
             debug_info=debug_info,
             memory=memory,
             elapsed_time=elapsed_time,
             llm_result=llm_result,
             retrieval_details=(debug_info or {}).get("retrieval_details", {}),
             sources=sources,
+            debug_trace=debug_trace,
+            finalize_success_debug_trace_fn=_finalize_success_debug_trace,
+            finalize_success_kwargs={
+                "elapsed_time": elapsed_time,
+                "tokens_prompt": tokens_prompt,
+                "tokens_completion": tokens_completion,
+                "tokens_total": tokens_total,
+                "session_metrics": session_metrics,
+                "memory": memory,
+                "memory_trace_metrics": memory_trace_metrics,
+                "start_time": start_time,
+                "session_store": session_store,
+                "user_id": user_id,
+                "pipeline_stages": pipeline_stages,
+                "model_used": str(model_used),
+                "estimate_cost_fn": _estimate_cost,
+                "compute_anomalies_fn": _compute_anomalies,
+                "attach_trace_schema_fn": attach_trace_schema_status,
+                "build_state_trajectory_fn": _build_state_trajectory,
+                "store_blob_fn": _store_blob,
+                "strip_legacy_trace_fields_fn": _strip_legacy_trace_fields,
+                "aggregate_from_llm_calls": True,
+                "include_summary_pending": True,
+            },
         )
-        if debug_trace is not None:
-            debug_trace = _finalize_success_debug_trace(
-                debug_trace,
-                elapsed_time=elapsed_time,
-                tokens_prompt=tokens_prompt,
-                tokens_completion=tokens_completion,
-                tokens_total=tokens_total,
-                session_metrics=session_metrics,
-                memory=memory,
-                memory_trace_metrics=memory_trace_metrics,
-                start_time=start_time,
-                session_store=session_store,
-                user_id=user_id,
-                pipeline_stages=pipeline_stages,
-                model_used=str(model_used),
-                estimate_cost_fn=_estimate_cost,
-                compute_anomalies_fn=_compute_anomalies,
-                attach_trace_schema_fn=attach_trace_schema_status,
-                build_state_trajectory_fn=_build_state_trajectory,
-                store_blob_fn=_store_blob,
-                strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-                aggregate_from_llm_calls=True,
-                include_summary_pending=True,
-            )
-            result["debug_trace"] = debug_trace
         
         logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
         

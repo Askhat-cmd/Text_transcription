@@ -369,3 +369,37 @@ def _attach_debug_payload(
     if sources is not None:
         result.setdefault("metadata", {})["sources"] = sources
     result["debug"] = debug_info
+
+
+def _attach_success_observability(
+    *,
+    result: Dict[str, Any],
+    strip_legacy_runtime_metadata_fn,
+    attach_debug_payload_fn,
+    debug_info: Optional[Dict[str, Any]],
+    memory,
+    elapsed_time: float,
+    llm_result: Optional[Dict[str, Any]],
+    retrieval_details: Optional[Dict[str, Any]] = None,
+    sources: Optional[List[Dict[str, Any]]] = None,
+    debug_trace: Optional[Dict[str, Any]] = None,
+    finalize_success_debug_trace_fn=None,
+    finalize_success_kwargs: Optional[Dict[str, Any]] = None,
+) -> Optional[Dict[str, Any]]:
+    result["metadata"] = strip_legacy_runtime_metadata_fn(result.get("metadata", {}))
+    attach_debug_payload_fn(
+        result=result,
+        debug_info=debug_info,
+        memory=memory,
+        elapsed_time=elapsed_time,
+        llm_result=llm_result,
+        retrieval_details=retrieval_details,
+        sources=sources,
+    )
+    if debug_trace is not None and finalize_success_debug_trace_fn is not None:
+        debug_trace = finalize_success_debug_trace_fn(
+            debug_trace,
+            **(finalize_success_kwargs or {}),
+        )
+        result["debug_trace"] = debug_trace
+    return debug_trace

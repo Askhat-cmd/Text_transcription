@@ -84,6 +84,7 @@ from .adaptive_runtime.response_utils import (
     _attach_debug_payload,
     _attach_success_observability,
     _handle_no_retrieval_partial_response as _runtime_handle_no_retrieval_partial_response,
+    _run_no_retrieval_stage as _runtime_run_no_retrieval_stage,
     _handle_llm_generation_error_response as _runtime_handle_llm_generation_error_response,
 )
 from .adaptive_runtime.trace_helpers import (
@@ -370,6 +371,10 @@ def _run_full_path_success_stage(**kwargs):
 
 def _handle_no_retrieval_partial_response(**kwargs):
     return _runtime_handle_no_retrieval_partial_response(**kwargs)
+
+
+def _run_no_retrieval_stage(**kwargs):
+    return _runtime_run_no_retrieval_stage(**kwargs)
 
 
 def _handle_llm_generation_error_response(**kwargs):
@@ -996,12 +1001,7 @@ def answer_question_adaptive(
         conversation_context = routing_context_stage["conversation_context"]
 
         if not retrieved_blocks:
-            return _handle_no_retrieval_partial_response(
-                message=(
-                    "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» "
-                    "РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ "
-                    "РІРѕРїСЂРѕСЃ."
-                ),
+            return _run_no_retrieval_stage(
                 state_analysis=state_analysis,
                 memory=memory,
                 start_time=start_time,
@@ -1016,15 +1016,6 @@ def answer_question_adaptive(
                 model_used=str(config.LLM_MODEL),
                 initial_retrieved_blocks=initial_retrieved_blocks,
                 reranked_blocks_for_trace=reranked_blocks_for_trace,
-                append_stages=[
-                    {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True},
-                    {
-                        "name": "format",
-                        "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ",
-                        "duration_ms": 0,
-                        "skipped": True,
-                    },
-                ],
                 set_working_state_best_effort_fn=_set_working_state_best_effort,
                 persist_turn_fn=_persist_turn,
                 finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,

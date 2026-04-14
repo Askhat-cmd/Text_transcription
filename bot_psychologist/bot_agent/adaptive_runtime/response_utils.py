@@ -534,6 +534,71 @@ def _handle_no_retrieval_partial_response(
     return response
 
 
+def _run_no_retrieval_stage(
+    *,
+    state_analysis: StateAnalysis,
+    memory,
+    start_time: datetime,
+    query: str,
+    routing_result,
+    schedule_summary_task: bool,
+    debug_info: Optional[Dict[str, Any]],
+    debug_trace: Optional[Dict[str, Any]],
+    session_store,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    model_used: str,
+    initial_retrieved_blocks,
+    reranked_blocks_for_trace,
+    set_working_state_best_effort_fn,
+    persist_turn_fn,
+    finalize_failure_debug_trace_fn,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+) -> Dict[str, Any]:
+    return _handle_no_retrieval_partial_response(
+        message=(
+            "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» "
+            "РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ "
+            "РІРѕРїСЂРѕСЃ."
+        ),
+        state_analysis=state_analysis,
+        memory=memory,
+        start_time=start_time,
+        query=query,
+        routing_result=routing_result,
+        schedule_summary_task=schedule_summary_task,
+        debug_info=debug_info,
+        debug_trace=debug_trace,
+        session_store=session_store,
+        user_id=user_id,
+        pipeline_stages=pipeline_stages,
+        model_used=model_used,
+        initial_retrieved_blocks=initial_retrieved_blocks,
+        reranked_blocks_for_trace=reranked_blocks_for_trace,
+        append_stages=[
+            {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True},
+            {
+                "name": "format",
+                "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ",
+                "duration_ms": 0,
+                "skipped": True,
+            },
+        ],
+        set_working_state_best_effort_fn=set_working_state_best_effort_fn,
+        persist_turn_fn=persist_turn_fn,
+        finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
+        estimate_cost_fn=estimate_cost_fn,
+        compute_anomalies_fn=compute_anomalies_fn,
+        attach_trace_schema_fn=attach_trace_schema_fn,
+        build_state_trajectory_fn=build_state_trajectory_fn,
+        store_blob_fn=store_blob_fn,
+    )
+
+
 def _handle_llm_generation_error_response(
     *,
     llm_error: str,

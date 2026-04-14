@@ -77,6 +77,7 @@ from .adaptive_runtime.response_utils import (
     _build_sources_from_blocks,
     _attach_debug_payload,
     _attach_success_observability,
+    _handle_no_retrieval_partial_response as _runtime_handle_no_retrieval_partial_response,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
@@ -95,6 +96,7 @@ from .adaptive_runtime.trace_helpers import (
     _collect_progressive_feedback_blocks,
     _build_voyage_rerank_debug_payload,
     _build_routing_debug_payload,
+    _attach_retrieval_observability as _runtime_attach_retrieval_observability,
     _build_llm_prompts,
     _prepare_llm_prompt_previews,
     _build_llm_call_trace,
@@ -298,6 +300,14 @@ def _attach_routing_stage_debug_trace(**kwargs):
 
 def _build_path_recommendation_if_enabled(**kwargs):
     return _runtime_build_path_recommendation_if_enabled(**kwargs)
+
+
+def _handle_no_retrieval_partial_response(**kwargs):
+    return _runtime_handle_no_retrieval_partial_response(**kwargs)
+
+
+def _attach_retrieval_observability(**kwargs):
+    return _runtime_attach_retrieval_observability(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1162,61 +1172,44 @@ def answer_question_adaptive(
             )
 
         if not retrieved_blocks:
-            response = _build_partial_response(
-                "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ РІРѕРїСЂРѕСЃ.",
-                state_analysis,
-                memory,
-                start_time,
-                query
-            )
-            _set_working_state_best_effort(
-                memory=memory,
+            return _handle_no_retrieval_partial_response(
+                message=(
+                    "Рљ СЃРѕР¶Р°Р»РµРЅРёСЋ, СЂРµР»РµРІР°РЅС‚РЅС‹Р№ РјР°С‚РµСЂРёР°Р» "
+                    "РЅРµ РЅР°Р№РґРµРЅ. РџРѕРїСЂРѕР±СѓР№С‚Рµ РїРµСЂРµС„РѕСЂРјСѓР»РёСЂРѕРІР°С‚СЊ "
+                    "РІРѕРїСЂРѕСЃ."
+                ),
                 state_analysis=state_analysis,
-                routing_result=routing_result,
-                log_prefix="[ADAPTIVE] working_state update failed (partial):",
-            )
-            _persist_turn(
                 memory=memory,
-                user_input=query,
-                bot_response=response.get("answer", ""),
-                user_state=state_analysis.primary_state.value if state_analysis else None,
-                blocks_used=0,
-                concepts=[],
+                start_time=start_time,
+                query=query,
+                routing_result=routing_result,
                 schedule_summary_task=schedule_summary_task,
+                debug_info=debug_info,
+                debug_trace=debug_trace,
+                session_store=session_store,
+                user_id=user_id,
+                pipeline_stages=pipeline_stages,
+                model_used=str(config.LLM_MODEL),
+                initial_retrieved_blocks=initial_retrieved_blocks,
+                reranked_blocks_for_trace=reranked_blocks_for_trace,
+                append_stages=[
+                    {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True},
+                    {
+                        "name": "format",
+                        "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ",
+                        "duration_ms": 0,
+                        "skipped": True,
+                    },
+                ],
+                set_working_state_best_effort_fn=_set_working_state_best_effort,
+                persist_turn_fn=_persist_turn,
+                finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
+                estimate_cost_fn=_estimate_cost,
+                compute_anomalies_fn=_compute_anomalies,
+                attach_trace_schema_fn=attach_trace_schema_status,
+                build_state_trajectory_fn=_build_state_trajectory,
+                store_blob_fn=_store_blob,
             )
-            if debug_info is not None:
-                debug_info["memory_summary"] = memory.get_summary()
-                debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
-                response["debug"] = debug_info
-            if debug_trace is not None:
-                debug_trace = _finalize_failure_debug_trace(
-                    debug_trace,
-                    memory=memory,
-                    start_time=start_time,
-                    session_store=session_store,
-                    user_id=user_id,
-                    pipeline_stages=pipeline_stages,
-                    model_used=str(config.LLM_MODEL),
-                    estimate_cost_fn=_estimate_cost,
-                    compute_anomalies_fn=_compute_anomalies,
-                    attach_trace_schema_fn=attach_trace_schema_status,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                    initial_retrieved_blocks=initial_retrieved_blocks,
-                    reranked_blocks_for_trace=reranked_blocks_for_trace,
-                    blocks_after_cap=0,
-                    append_stages=[
-                        {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True},
-                        {
-                            "name": "format",
-                            "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ",
-                            "duration_ms": 0,
-                            "skipped": True,
-                        },
-                    ],
-                )
-                response["debug_trace"] = debug_trace
-            return response
         
         blocks = [block for block, score in retrieved_blocks]
         adapted_blocks = list(blocks)
@@ -1237,35 +1230,28 @@ def answer_question_adaptive(
             if debug_trace is not None:
                 debug_trace["progressive_rag_feedback_blocks"] = boosted_ids
         
-        if debug_info is not None:
-            debug_info["blocks_found"] = len(retrieved_blocks)
-            debug_info["blocks_after_filter"] = len(adapted_blocks)
-            debug_info["hybrid_query"] = hybrid_query
-            debug_info["retrieval_details"] = _build_retrieval_debug_details(
-                initial_retrieved_blocks=initial_retrieved_blocks,
-                reranked_blocks_for_trace=reranked_blocks_for_trace,
-                capped_retrieved_blocks=capped_retrieved_blocks,
-                adapted_blocks=adapted_blocks,
-                build_retrieval_detail_fn=_build_retrieval_detail,
-            )
-            debug_info["voyage_rerank"] = _build_voyage_rerank_debug_payload(
-                rerank_k=rerank_k,
-                should_run_rerank=should_run_rerank,
-                rerank_reason=rerank_reason,
-                rerank_applied=rerank_applied,
-                block_cap=block_cap,
-            )
-            debug_info["routing"] = _build_routing_debug_payload(
-                routing_result=routing_result,
-                route_resolution_count=route_resolution_count,
-            )
-        if debug_trace is not None:
-            chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
-                initial_retrieved=initial_retrieved_blocks,
-                reranked=reranked_blocks_for_trace,
-            )
-            debug_trace["chunks_retrieved"] = chunks_retrieved
-            debug_trace["chunks_after_filter"] = chunks_after_rerank
+        _attach_retrieval_observability(
+            debug_info=debug_info,
+            debug_trace=debug_trace,
+            retrieved_blocks=retrieved_blocks,
+            adapted_blocks=adapted_blocks,
+            hybrid_query=hybrid_query,
+            initial_retrieved_blocks=initial_retrieved_blocks,
+            reranked_blocks_for_trace=reranked_blocks_for_trace,
+            capped_retrieved_blocks=capped_retrieved_blocks,
+            rerank_k=rerank_k,
+            should_run_rerank=should_run_rerank,
+            rerank_reason=rerank_reason,
+            rerank_applied=rerank_applied,
+            block_cap=block_cap,
+            routing_result=routing_result,
+            route_resolution_count=route_resolution_count,
+            build_retrieval_debug_details_fn=_build_retrieval_debug_details,
+            build_retrieval_detail_fn=_build_retrieval_detail,
+            build_voyage_rerank_debug_payload_fn=_build_voyage_rerank_debug_payload,
+            build_routing_debug_payload_fn=_build_routing_debug_payload,
+            build_chunk_trace_lists_after_rerank_fn=_build_chunk_trace_lists_after_rerank,
+        )
         
         # ================================================================
         # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ

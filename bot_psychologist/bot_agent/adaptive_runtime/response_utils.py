@@ -456,3 +456,79 @@ def _attach_success_observability(
         )
         result["debug_trace"] = debug_trace
     return debug_trace
+
+
+def _handle_no_retrieval_partial_response(
+    *,
+    message: str,
+    state_analysis: StateAnalysis,
+    memory,
+    start_time: datetime,
+    query: str,
+    routing_result,
+    schedule_summary_task: bool,
+    debug_info: Optional[Dict[str, Any]],
+    debug_trace: Optional[Dict[str, Any]],
+    session_store,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    model_used: str,
+    initial_retrieved_blocks,
+    reranked_blocks_for_trace,
+    append_stages: List[Dict[str, Any]],
+    set_working_state_best_effort_fn,
+    persist_turn_fn,
+    finalize_failure_debug_trace_fn,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+) -> Dict[str, Any]:
+    response = _build_partial_response(
+        message,
+        state_analysis,
+        memory,
+        start_time,
+        query,
+    )
+    set_working_state_best_effort_fn(
+        memory=memory,
+        state_analysis=state_analysis,
+        routing_result=routing_result,
+        log_prefix="[ADAPTIVE] working_state update failed (partial):",
+    )
+    persist_turn_fn(
+        memory=memory,
+        user_input=query,
+        bot_response=response.get("answer", ""),
+        user_state=state_analysis.primary_state.value if state_analysis else None,
+        blocks_used=0,
+        concepts=[],
+        schedule_summary_task=schedule_summary_task,
+    )
+    if debug_info is not None:
+        debug_info["memory_summary"] = memory.get_summary()
+        debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
+        response["debug"] = debug_info
+    if debug_trace is not None:
+        debug_trace = finalize_failure_debug_trace_fn(
+            debug_trace,
+            memory=memory,
+            start_time=start_time,
+            session_store=session_store,
+            user_id=user_id,
+            pipeline_stages=pipeline_stages,
+            model_used=model_used,
+            estimate_cost_fn=estimate_cost_fn,
+            compute_anomalies_fn=compute_anomalies_fn,
+            attach_trace_schema_fn=attach_trace_schema_fn,
+            build_state_trajectory_fn=build_state_trajectory_fn,
+            store_blob_fn=store_blob_fn,
+            initial_retrieved_blocks=initial_retrieved_blocks,
+            reranked_blocks_for_trace=reranked_blocks_for_trace,
+            blocks_after_cap=0,
+            append_stages=append_stages,
+        )
+        response["debug_trace"] = debug_trace
+    return response

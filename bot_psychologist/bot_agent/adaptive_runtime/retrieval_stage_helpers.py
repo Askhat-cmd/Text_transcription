@@ -250,7 +250,6 @@ def _run_retrieval_and_rerank_stage(
     logger,
     debug_trace,
     pipeline_stages,
-    log_retrieval_pairs_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
@@ -261,6 +260,7 @@ def _run_retrieval_and_rerank_stage(
     hybrid_query: str,
 ) -> Dict[str, Any]:
     from ..progressive_rag import get_progressive_rag as _get_progressive_rag
+    from .trace_helpers import _log_retrieval_pairs as _runtime_log_retrieval_pairs
 
     retrieval_stage = _retrieve_blocks_with_degraded_mode(
         query=query,
@@ -288,7 +288,7 @@ def _run_retrieval_and_rerank_stage(
         logger=logger,
     )
 
-    log_retrieval_pairs_fn("Initial retrieval", raw_retrieved_blocks, limit=10)
+    _runtime_log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
     retrieved_blocks = list(raw_retrieved_blocks)
     initial_retrieved_blocks = list(raw_retrieved_blocks)
     rerank_prep = _prepare_conditional_rerank(
@@ -378,7 +378,6 @@ def _run_retrieval_routing_context_stage(
     logger,
     debug_trace,
     pipeline_stages,
-    log_retrieval_pairs_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
@@ -404,9 +403,6 @@ def _run_retrieval_routing_context_stage(
     memory_context_bundle,
     mode_prompt_key,
     route_resolution_count: int,
-    truncate_preview_fn,
-    refresh_context_and_apply_trace_snapshot_fn,
-    run_no_retrieval_stage_fn,
     start_time,
     schedule_summary_task: bool,
     debug_info,
@@ -420,13 +416,19 @@ def _run_retrieval_routing_context_stage(
     attach_trace_schema_fn,
     build_state_trajectory_fn,
     store_blob_fn,
-    prepare_adapted_blocks_and_attach_observability_fn,
     model_used: str,
 ) -> Dict[str, Any]:
     from .routing_stage_helpers import (
         _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
         _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
     )
+    from .trace_helpers import (
+        _log_retrieval_pairs as _runtime_log_retrieval_pairs,
+        _prepare_adapted_blocks_and_attach_observability as _runtime_prepare_adapted_blocks_and_attach_observability,
+        _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
+        _truncate_preview as _runtime_truncate_preview,
+    )
+    from .response_utils import _run_no_retrieval_stage as _runtime_run_no_retrieval_stage
     from .mode_policy_helpers import resolve_mode_prompt as _runtime_resolve_mode_prompt
     from ..decision import build_mode_directive as _runtime_build_mode_directive
 
@@ -450,7 +452,6 @@ def _run_retrieval_routing_context_stage(
         logger=logger,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        log_retrieval_pairs_fn=log_retrieval_pairs_fn,
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,
         pre_routing_result=pre_routing_result,
@@ -484,7 +485,7 @@ def _run_retrieval_routing_context_stage(
         informational_branch_enabled=informational_branch_enabled,
         resolve_mode_prompt_fn=_runtime_resolve_mode_prompt,
         config=config,
-        log_retrieval_pairs_fn=log_retrieval_pairs_fn,
+        log_retrieval_pairs_fn=_runtime_log_retrieval_pairs,
         build_mode_directive_fn=_runtime_build_mode_directive,
         logger=logger,
     )
@@ -522,7 +523,7 @@ def _run_retrieval_routing_context_stage(
         initial_retrieved_blocks=initial_retrieved_blocks,
         hybrid_query=hybrid_query,
         include_full_content=bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)),
-        truncate_preview_fn=truncate_preview_fn,
+        truncate_preview_fn=_runtime_truncate_preview,
         should_run_rerank=bool(should_run_rerank),
         rerank_reason=rerank_reason,
         rerank_applied=bool(rerank_applied),
@@ -530,7 +531,7 @@ def _run_retrieval_routing_context_stage(
         mode_prompt_key=mode_prompt_key,
         conversation_context=conversation_context,
         memory_context_bundle=memory_context_bundle,
-        refresh_context_and_apply_trace_snapshot_fn=refresh_context_and_apply_trace_snapshot_fn,
+        refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
     )
     phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
     selected_practice = routing_context_stage["selected_practice"]
@@ -541,7 +542,7 @@ def _run_retrieval_routing_context_stage(
     if not retrieved_blocks:
         return {
             "current_stage": current_stage,
-            "early_response": run_no_retrieval_stage_fn(
+            "early_response": _runtime_run_no_retrieval_stage(
                 state_analysis=state_analysis,
                 memory=memory,
                 start_time=start_time,
@@ -567,7 +568,7 @@ def _run_retrieval_routing_context_stage(
             ),
         }
 
-    retrieval_observability_stage = prepare_adapted_blocks_and_attach_observability_fn(
+    retrieval_observability_stage = _runtime_prepare_adapted_blocks_and_attach_observability(
         retrieved_blocks=retrieved_blocks,
         routing_signals=routing_signals,
         progressive_rag=progressive_rag,

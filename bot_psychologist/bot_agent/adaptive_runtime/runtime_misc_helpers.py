@@ -358,3 +358,97 @@ def _build_prompt_stack_override(
     system_prompt_override = prompt_build.system_prompt
     prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
     return system_prompt_override, prompt_stack_meta
+
+
+def _run_llm_generation_cycle(
+    *,
+    response_generator_cls,
+    query: str,
+    blocks: List[Any],
+    conversation_context: str,
+    mode: str,
+    confidence_level: str,
+    forbid: List[str],
+    additional_system_context: str,
+    sd_level: str,
+    config,
+    session_store,
+    session_id: str,
+    mode_prompt: str,
+    mode_prompt_override: Optional[str],
+    informational_mode: bool,
+    route: str,
+    diagnostics_payload: Optional[Dict[str, Any]],
+    phase8_signals,
+    correction_protocol_active: bool,
+    prompt_stack_enabled: bool,
+    prompt_registry,
+    debug_trace: Optional[Dict[str, Any]],
+    pipeline_stages: List[Dict[str, Any]],
+    build_prompt_stack_override_fn,
+    prepare_llm_prompt_previews_fn,
+    generate_llm_with_trace_fn,
+    build_llm_call_trace_fn,
+) -> Tuple[Dict[str, Any], Any, Dict[str, Any], Optional[str]]:
+    response_generator = response_generator_cls()
+
+    system_prompt_override, prompt_stack_meta = build_prompt_stack_override_fn(
+        enabled=prompt_stack_enabled,
+        prompt_registry=prompt_registry,
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        additional_system_context=additional_system_context,
+        route=route,
+        mode=mode,
+        diagnostics_payload=diagnostics_payload,
+        mode_prompt_override=mode_prompt_override if informational_mode else None,
+        phase8_signals=phase8_signals,
+        correction_protocol_active=correction_protocol_active,
+    )
+
+    llm_system_preview = ""
+    llm_user_preview = ""
+    system_blob_id = None
+    user_blob_id = None
+    if debug_trace is not None:
+        llm_system_preview, llm_user_preview = prepare_llm_prompt_previews_fn(
+            response_generator=response_generator,
+            query=query,
+            blocks=blocks,
+            conversation_context=conversation_context,
+            sd_level=sd_level,
+            mode_prompt=mode_prompt,
+            additional_system_context=additional_system_context,
+            mode_prompt_override=mode_prompt_override,
+            mode_overrides_sd=informational_mode,
+            system_prompt_override=system_prompt_override,
+        )
+        debug_trace["prompt_stack_v2"] = prompt_stack_meta
+
+    llm_result, _, _ = generate_llm_with_trace_fn(
+        response_generator=response_generator,
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        mode=mode,
+        confidence_level=confidence_level,
+        forbid=forbid,
+        additional_system_context=additional_system_context,
+        sd_level=sd_level,
+        config=config,
+        session_store=session_store,
+        session_id=session_id,
+        mode_prompt_override=mode_prompt_override,
+        informational_mode=informational_mode,
+        system_prompt_override=system_prompt_override,
+        debug_trace=debug_trace,
+        pipeline_stages=pipeline_stages,
+        llm_system_preview=llm_system_preview,
+        llm_user_preview=llm_user_preview,
+        system_blob_id=system_blob_id,
+        user_blob_id=user_blob_id,
+        build_llm_call_trace_fn=build_llm_call_trace_fn,
+    )
+
+    return llm_result, response_generator, prompt_stack_meta, system_prompt_override

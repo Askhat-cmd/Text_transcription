@@ -157,6 +157,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _run_validation_retry_generation as _runtime_run_validation_retry_generation,
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
     _build_prompt_stack_override as _runtime_build_prompt_stack_override,
+    _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
@@ -278,6 +279,10 @@ def _collect_llm_session_metrics(**kwargs):
 
 def _build_prompt_stack_override(**kwargs):
     return _runtime_build_prompt_stack_override(**kwargs)
+
+
+def _run_llm_generation_cycle(**kwargs):
+    return _runtime_run_llm_generation_cycle(**kwargs)
 
 
 def _retrieve_blocks_with_degraded_mode(**kwargs):
@@ -713,43 +718,9 @@ def answer_question_adaptive(
             )
             if fast_phase8_suffix:
                 state_context = f"{state_context}\n\n{fast_phase8_suffix}"
-            response_generator = ResponseGenerator()
-            system_prompt_override, prompt_stack_meta = _build_prompt_stack_override(
-                enabled=_prompt_stack_v2_enabled(),
-                prompt_registry=prompt_registry_v2,
-                query=query,
-                blocks=[fast_block],
-                conversation_context=conversation_context,
-                additional_system_context=state_context,
-                route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
-                mode=pre_routing_result.mode if pre_routing_result else "PRESENCE",
-                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                mode_prompt_override=mode_prompt_override if informational_mode else None,
-                phase8_signals=phase8_signals,
-                correction_protocol_active=correction_protocol_active,
-            )
-            llm_system_preview = ""
-            llm_user_preview = ""
-            system_blob_id = None
-            user_blob_id = None
-            if debug_trace is not None:
-                llm_system_preview, llm_user_preview = _prepare_llm_prompt_previews(
-                    response_generator=response_generator,
-                    query=query,
-                    blocks=[fast_block],
-                    conversation_context=conversation_context,
-                    sd_level=sd_result.primary,
-                    mode_prompt=mode_directive.prompt,
-                    additional_system_context=state_context,
-                    mode_prompt_override=mode_prompt_override,
-                    mode_overrides_sd=informational_mode,
-                    system_prompt_override=system_prompt_override,
-                )
-                debug_trace["prompt_stack_v2"] = prompt_stack_meta
-
             current_stage = "llm"
-            llm_result, _, _ = _generate_llm_with_trace(
-                response_generator=response_generator,
+            llm_result, response_generator, _, system_prompt_override = _run_llm_generation_cycle(
+                response_generator_cls=ResponseGenerator,
                 query=query,
                 blocks=[fast_block],
                 conversation_context=conversation_context,
@@ -763,13 +734,18 @@ def answer_question_adaptive(
                 session_id=user_id,
                 mode_prompt_override=mode_prompt_override,
                 informational_mode=informational_mode,
-                system_prompt_override=system_prompt_override,
+                route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
+                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                phase8_signals=phase8_signals,
+                correction_protocol_active=correction_protocol_active,
+                prompt_stack_enabled=_prompt_stack_v2_enabled(),
+                prompt_registry=prompt_registry_v2,
+                mode_prompt=mode_directive.prompt,
                 debug_trace=debug_trace,
                 pipeline_stages=pipeline_stages,
-                llm_system_preview=llm_system_preview,
-                llm_user_preview=llm_user_preview,
-                system_blob_id=system_blob_id,
-                user_blob_id=user_blob_id,
+                build_prompt_stack_override_fn=_build_prompt_stack_override,
+                prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
+                generate_llm_with_trace_fn=_generate_llm_with_trace,
                 build_llm_call_trace_fn=_build_llm_call_trace,
             )
             answer = llm_result.get("answer", "")
@@ -1279,43 +1255,9 @@ def answer_question_adaptive(
         )
 
         # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
-        response_generator = ResponseGenerator()
-        system_prompt_override, prompt_stack_meta = _build_prompt_stack_override(
-            enabled=_prompt_stack_v2_enabled(),
-            prompt_registry=prompt_registry_v2,
-            query=query,
-            blocks=adapted_blocks,
-            conversation_context=conversation_context,
-            additional_system_context=state_context,
-            route=getattr(routing_result, "route", ""),
-            mode=routing_result.mode,
-            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            mode_prompt_override=mode_prompt_override if informational_mode else None,
-            phase8_signals=phase8_signals,
-            correction_protocol_active=correction_protocol_active,
-        )
-        llm_system_preview = ""
-        llm_user_preview = ""
-        system_blob_id = None
-        user_blob_id = None
-        if debug_trace is not None:
-            llm_system_preview, llm_user_preview = _prepare_llm_prompt_previews(
-                response_generator=response_generator,
-                query=query,
-                blocks=adapted_blocks,
-                conversation_context=conversation_context,
-                sd_level=sd_result.primary,
-                mode_prompt=mode_directive.prompt,
-                additional_system_context=state_context,
-                mode_prompt_override=mode_prompt_override,
-                mode_overrides_sd=informational_mode,
-                system_prompt_override=system_prompt_override,
-            )
-            debug_trace["prompt_stack_v2"] = prompt_stack_meta
-
         current_stage = "llm"
-        llm_result, _, _ = _generate_llm_with_trace(
-            response_generator=response_generator,
+        llm_result, response_generator, _, system_prompt_override = _run_llm_generation_cycle(
+            response_generator_cls=ResponseGenerator,
             query=query,
             blocks=adapted_blocks,
             conversation_context=conversation_context,
@@ -1329,13 +1271,18 @@ def answer_question_adaptive(
             session_id=user_id,
             mode_prompt_override=mode_prompt_override,
             informational_mode=informational_mode,
-            system_prompt_override=system_prompt_override,
+            route=getattr(routing_result, "route", ""),
+            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+            phase8_signals=phase8_signals,
+            correction_protocol_active=correction_protocol_active,
+            prompt_stack_enabled=_prompt_stack_v2_enabled(),
+            prompt_registry=prompt_registry_v2,
+            mode_prompt=mode_directive.prompt,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
-            llm_system_preview=llm_system_preview,
-            llm_user_preview=llm_user_preview,
-            system_blob_id=system_blob_id,
-            user_blob_id=user_blob_id,
+            build_prompt_stack_override_fn=_build_prompt_stack_override,
+            prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
+            generate_llm_with_trace_fn=_generate_llm_with_trace,
             build_llm_call_trace_fn=_build_llm_call_trace,
         )
         

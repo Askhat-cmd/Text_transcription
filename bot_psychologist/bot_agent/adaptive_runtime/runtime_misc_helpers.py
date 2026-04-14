@@ -320,3 +320,41 @@ def _collect_llm_session_metrics(
         "model_used": model_used,
         "session_metrics": session_metrics,
     }
+
+
+def _build_prompt_stack_override(
+    *,
+    enabled: bool,
+    prompt_registry,
+    query: str,
+    blocks: List[Any],
+    conversation_context: str,
+    additional_system_context: str,
+    route: str,
+    mode: str,
+    diagnostics_payload: Optional[Dict[str, Any]],
+    mode_prompt_override: Optional[str],
+    phase8_signals,
+    correction_protocol_active: bool,
+) -> Tuple[Optional[str], Dict[str, Any]]:
+    prompt_stack_meta: Dict[str, Any] = {"enabled": False}
+    system_prompt_override: Optional[str] = None
+    if not enabled:
+        return system_prompt_override, prompt_stack_meta
+
+    prompt_build = prompt_registry.build(
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        additional_system_context=additional_system_context,
+        route=route,
+        mode=mode,
+        diagnostics=diagnostics_payload,
+        mode_prompt_override=mode_prompt_override,
+        first_turn=bool(phase8_signals.first_turn) if phase8_signals else False,
+        mixed_query_bridge=bool(phase8_signals.mixed_query) if phase8_signals else False,
+        user_correction_protocol=bool(correction_protocol_active),
+    )
+    system_prompt_override = prompt_build.system_prompt
+    prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
+    return system_prompt_override, prompt_stack_meta

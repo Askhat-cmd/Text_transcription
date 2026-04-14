@@ -148,6 +148,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _generate_llm_with_trace as _runtime_generate_llm_with_trace,
     _run_validation_retry_generation as _runtime_run_validation_retry_generation,
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
+    _build_prompt_stack_override as _runtime_build_prompt_stack_override,
 )
 
 logger = logging.getLogger(__name__)
@@ -260,6 +261,10 @@ def _run_validation_retry_generation(**kwargs):
 
 def _collect_llm_session_metrics(**kwargs):
     return _runtime_collect_llm_session_metrics(**kwargs)
+
+
+def _build_prompt_stack_override(**kwargs):
+    return _runtime_build_prompt_stack_override(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -653,24 +658,20 @@ def answer_question_adaptive(
             if fast_phase8_suffix:
                 state_context = f"{state_context}\n\n{fast_phase8_suffix}"
             response_generator = ResponseGenerator()
-            prompt_stack_meta: Dict[str, Any] = {"enabled": False}
-            system_prompt_override: Optional[str] = None
-            if _prompt_stack_v2_enabled():
-                prompt_build = prompt_registry_v2.build(
-                    query=query,
-                    blocks=[fast_block],
-                    conversation_context=conversation_context,
-                    additional_system_context=state_context,
-                    route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
-                    mode=pre_routing_result.mode if pre_routing_result else "PRESENCE",
-                    diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                    mode_prompt_override=mode_prompt_override if informational_mode else None,
-                    first_turn=bool(phase8_signals.first_turn) if phase8_signals else False,
-                    mixed_query_bridge=bool(phase8_signals.mixed_query) if phase8_signals else False,
-                    user_correction_protocol=bool(correction_protocol_active),
-                )
-                system_prompt_override = prompt_build.system_prompt
-                prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
+            system_prompt_override, prompt_stack_meta = _build_prompt_stack_override(
+                enabled=_prompt_stack_v2_enabled(),
+                prompt_registry=prompt_registry_v2,
+                query=query,
+                blocks=[fast_block],
+                conversation_context=conversation_context,
+                additional_system_context=state_context,
+                route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
+                mode=pre_routing_result.mode if pre_routing_result else "PRESENCE",
+                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                mode_prompt_override=mode_prompt_override if informational_mode else None,
+                phase8_signals=phase8_signals,
+                correction_protocol_active=correction_protocol_active,
+            )
             llm_system_preview = ""
             llm_user_preview = ""
             system_blob_id = None
@@ -1379,24 +1380,20 @@ def answer_question_adaptive(
 
         # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
         response_generator = ResponseGenerator()
-        prompt_stack_meta: Dict[str, Any] = {"enabled": False}
-        system_prompt_override: Optional[str] = None
-        if _prompt_stack_v2_enabled():
-            prompt_build = prompt_registry_v2.build(
-                query=query,
-                blocks=adapted_blocks,
-                conversation_context=conversation_context,
-                additional_system_context=state_context,
-                route=getattr(routing_result, "route", ""),
-                mode=routing_result.mode,
-                diagnostics=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                mode_prompt_override=mode_prompt_override if informational_mode else None,
-                first_turn=bool(phase8_signals.first_turn) if phase8_signals else False,
-                mixed_query_bridge=bool(phase8_signals.mixed_query) if phase8_signals else False,
-                user_correction_protocol=bool(correction_protocol_active),
-            )
-            system_prompt_override = prompt_build.system_prompt
-            prompt_stack_meta = {"enabled": True, **prompt_build.as_dict()}
+        system_prompt_override, prompt_stack_meta = _build_prompt_stack_override(
+            enabled=_prompt_stack_v2_enabled(),
+            prompt_registry=prompt_registry_v2,
+            query=query,
+            blocks=adapted_blocks,
+            conversation_context=conversation_context,
+            additional_system_context=state_context,
+            route=getattr(routing_result, "route", ""),
+            mode=routing_result.mode,
+            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+            mode_prompt_override=mode_prompt_override if informational_mode else None,
+            phase8_signals=phase8_signals,
+            correction_protocol_active=correction_protocol_active,
+        )
         llm_system_preview = ""
         llm_user_preview = ""
         system_blob_id = None

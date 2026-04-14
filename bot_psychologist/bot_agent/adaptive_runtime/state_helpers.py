@@ -120,6 +120,33 @@ def _build_state_context(
 """
 
 
+def _compose_state_context(
+    *,
+    state_analysis: StateAnalysis,
+    mode_prompt: str,
+    nervous_system_state: str,
+    request_function: str,
+    contradiction_suggestion: str,
+    cross_session_context: str,
+    phase8_context_suffix: str = "",
+    practice_context_suffix: str = "",
+    build_state_context_fn=_build_state_context,
+) -> str:
+    state_context = build_state_context_fn(
+        state_analysis=state_analysis,
+        mode_prompt=mode_prompt,
+        nervous_system_state=nervous_system_state,
+        request_function=request_function,
+        contradiction_suggestion=contradiction_suggestion,
+        cross_session_context=cross_session_context,
+    )
+    if phase8_context_suffix:
+        state_context = f"{state_context}\n\n{phase8_context_suffix}"
+    if practice_context_suffix:
+        state_context = f"{state_context}{practice_context_suffix}"
+    return state_context
+
+
 def _depth_to_phase(depth: str) -> str:
     normalized = (depth or "").lower()
     if "deep" in normalized:

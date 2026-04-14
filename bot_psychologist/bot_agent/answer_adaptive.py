@@ -113,6 +113,7 @@ from .adaptive_runtime.state_helpers import (
     _resolve_path_user_level as _runtime_resolve_path_user_level,
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
+    _compose_state_context as _runtime_compose_state_context,
     _depth_to_phase as _runtime_depth_to_phase,
     _mode_to_direction as _runtime_mode_to_direction,
     _derive_defense as _runtime_derive_defense,
@@ -308,6 +309,10 @@ def _handle_no_retrieval_partial_response(**kwargs):
 
 def _attach_retrieval_observability(**kwargs):
     return _runtime_attach_retrieval_observability(**kwargs)
+
+
+def _compose_state_context(**kwargs):
+    return _runtime_compose_state_context(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1259,9 +1264,9 @@ def answer_question_adaptive(
         logger.debug("рџ¤– Р­С‚Р°Рї 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р°...")
         
         # Р”РѕР±Р°РІРёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        state_context = _build_state_context(
-            state_analysis,
-            state_context_mode_prompt,
+        state_context = _compose_state_context(
+            state_analysis=state_analysis,
+            mode_prompt=state_context_mode_prompt,
             nervous_system_state=(
                 diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
             ),
@@ -1270,11 +1275,10 @@ def answer_question_adaptive(
             ),
             contradiction_suggestion=contradiction_hint,
             cross_session_context=cross_session_context,
+            phase8_context_suffix=phase8_context_suffix,
+            practice_context_suffix=practice_context_suffix,
+            build_state_context_fn=_build_state_context,
         )
-        if phase8_context_suffix:
-            state_context = f"{state_context}\n\n{phase8_context_suffix}"
-        if practice_context_suffix:
-            state_context = f"{state_context}{practice_context_suffix}"
 
         # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
         response_generator = ResponseGenerator()

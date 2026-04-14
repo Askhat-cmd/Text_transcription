@@ -73,6 +73,7 @@ from .adaptive_runtime.response_utils import (
     _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
     _build_fast_path_success_response as _runtime_build_fast_path_success_response,
     _build_full_path_success_response as _runtime_build_full_path_success_response,
+    _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
     _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
@@ -317,6 +318,10 @@ def _build_fast_path_success_response(**kwargs):
 
 def _build_full_path_success_response(**kwargs):
     return _runtime_build_full_path_success_response(**kwargs)
+
+
+def _build_unhandled_exception_response(**kwargs):
+    return _runtime_build_unhandled_exception_response(**kwargs)
 
 
 def _handle_no_retrieval_partial_response(**kwargs):
@@ -1448,50 +1453,27 @@ def answer_question_adaptive(
     
     except Exception as e:
         logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)
-        response = _build_error_response(
-            f"Произошла ошибка при обработке запроса: {str(e)}",
-            state_analysis,
-            start_time,
+        response = _build_unhandled_exception_response(
+            exception=e,
+            state_analysis=state_analysis,
+            start_time=start_time,
+            user_id=user_id,
+            query=query,
+            schedule_summary_task=schedule_summary_task,
+            debug_trace=debug_trace,
+            current_stage=str(current_stage),
+            session_store=session_store,
+            pipeline_stages=pipeline_stages,
+            llm_model_name=str(config.LLM_MODEL),
+            build_error_response_fn=_build_error_response,
+            get_conversation_memory_fn=get_conversation_memory,
+            persist_turn_best_effort_fn=_persist_turn_best_effort,
+            finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
+            estimate_cost_fn=_estimate_cost,
+            compute_anomalies_fn=_compute_anomalies,
+            attach_trace_schema_fn=attach_trace_schema_status,
+            build_state_trajectory_fn=_build_state_trajectory,
+            store_blob_fn=_store_blob,
+            strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
         )
-        response["metadata"] = {"user_id": user_id}
-        try:
-            memory = get_conversation_memory(user_id)
-            _persist_turn_best_effort(
-                memory=memory,
-                user_input=query,
-                bot_response=response["answer"],
-                blocks_used=0,
-                schedule_summary_task=schedule_summary_task,
-            )
-        except Exception:
-            pass
-        if debug_trace is not None:
-            debug_trace["pipeline_error"] = {
-                "stage": str(current_stage),
-                "exception_type": type(e).__name__,
-                "message": str(e),
-                "partial_trace_available": True,
-            }
-            try:
-                memory = get_conversation_memory(user_id)
-                debug_trace = _finalize_failure_debug_trace(
-                    debug_trace,
-                    memory=memory,
-                    start_time=start_time,
-                    session_store=session_store,
-                    user_id=user_id,
-                    pipeline_stages=pipeline_stages,
-                    model_used=str(config.LLM_MODEL),
-                    estimate_cost_fn=_estimate_cost,
-                    compute_anomalies_fn=_compute_anomalies,
-                    attach_trace_schema_fn=attach_trace_schema_status,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                    include_chunks=False,
-                    include_total_duration=False,
-                    strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-                )
-            except Exception:
-                pass
-            response["debug_trace"] = debug_trace
         return response

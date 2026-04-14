@@ -905,3 +905,79 @@ def _build_full_path_success_response(
         logger.info("[ADAPTIVE] response ready in %.2fs", elapsed_time)
 
     return result
+
+
+def _build_unhandled_exception_response(
+    *,
+    exception: Exception,
+    state_analysis: Optional[StateAnalysis],
+    start_time: datetime,
+    user_id: str,
+    query: str,
+    schedule_summary_task: bool,
+    debug_trace: Optional[Dict[str, Any]],
+    current_stage: str,
+    session_store,
+    pipeline_stages: List[Dict[str, Any]],
+    llm_model_name: str,
+    build_error_response_fn,
+    get_conversation_memory_fn,
+    persist_turn_best_effort_fn,
+    finalize_failure_debug_trace_fn,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+    strip_legacy_trace_fields_fn,
+) -> Dict[str, Any]:
+    response = build_error_response_fn(
+        f"Произошла ошибка при обработке запроса: {str(exception)}",
+        state_analysis,
+        start_time,
+    )
+    response["metadata"] = {"user_id": user_id}
+
+    try:
+        memory = get_conversation_memory_fn(user_id)
+        persist_turn_best_effort_fn(
+            memory=memory,
+            user_input=query,
+            bot_response=response["answer"],
+            blocks_used=0,
+            schedule_summary_task=schedule_summary_task,
+        )
+    except Exception:
+        pass
+
+    if debug_trace is not None:
+        debug_trace["pipeline_error"] = {
+            "stage": str(current_stage),
+            "exception_type": type(exception).__name__,
+            "message": str(exception),
+            "partial_trace_available": True,
+        }
+        try:
+            memory = get_conversation_memory_fn(user_id)
+            debug_trace = finalize_failure_debug_trace_fn(
+                debug_trace,
+                memory=memory,
+                start_time=start_time,
+                session_store=session_store,
+                user_id=user_id,
+                pipeline_stages=pipeline_stages,
+                model_used=llm_model_name,
+                estimate_cost_fn=estimate_cost_fn,
+                compute_anomalies_fn=compute_anomalies_fn,
+                attach_trace_schema_fn=attach_trace_schema_fn,
+                build_state_trajectory_fn=build_state_trajectory_fn,
+                store_blob_fn=store_blob_fn,
+                include_chunks=False,
+                include_total_duration=False,
+                strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+            )
+        except Exception:
+            pass
+        response["debug_trace"] = debug_trace
+
+    return response

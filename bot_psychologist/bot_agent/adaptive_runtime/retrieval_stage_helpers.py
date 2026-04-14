@@ -387,7 +387,6 @@ def _run_retrieval_routing_context_stage(
     state_analysis,
     memory,
     conversation_context: str,
-    resolve_routing_and_apply_block_cap_fn,
     user_stage,
     route_resolver,
     confidence_scorer,
@@ -395,7 +394,6 @@ def _run_retrieval_routing_context_stage(
     informational_branch_enabled: bool,
     resolve_mode_prompt_fn,
     build_mode_directive_fn,
-    finalize_routing_context_and_trace_fn,
     phase8_signals,
     correction_protocol_active: bool,
     build_first_turn_instruction_fn,
@@ -427,6 +425,11 @@ def _run_retrieval_routing_context_stage(
     prepare_adapted_blocks_and_attach_observability_fn,
     model_used: str,
 ) -> Dict[str, Any]:
+    from .routing_stage_helpers import (
+        _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
+        _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
+    )
+
     hybrid_query_stage = _prepare_hybrid_query_stage(
         query=query,
         diagnostics_v1=diagnostics_v1,
@@ -469,7 +472,7 @@ def _run_retrieval_routing_context_stage(
 
     current_stage = "rerank" if rerank_applied else "retrieval"
 
-    routing_cap_stage = resolve_routing_and_apply_block_cap_fn(
+    routing_cap_stage = _runtime_resolve_routing_and_apply_block_cap(
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,
         user_stage=user_stage,
@@ -496,7 +499,7 @@ def _run_retrieval_routing_context_stage(
     mode_directive = routing_cap_stage["mode_directive"]
     state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
 
-    routing_context_stage = finalize_routing_context_and_trace_fn(
+    routing_context_stage = _runtime_finalize_routing_context_and_trace(
         informational_branch_enabled=informational_branch_enabled,
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,

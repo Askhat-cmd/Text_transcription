@@ -128,8 +128,6 @@ from .adaptive_runtime.routing_stage_helpers import (
     _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
     _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
-    _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
-    _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
@@ -501,7 +499,6 @@ def answer_question_adaptive(
             state_analysis=state_analysis,
             memory=memory,
             conversation_context=conversation_context,
-            resolve_routing_and_apply_block_cap_fn=_runtime_resolve_routing_and_apply_block_cap,
             user_stage=user_stage,
             route_resolver=route_resolver,
             confidence_scorer=confidence_scorer,
@@ -509,7 +506,6 @@ def answer_question_adaptive(
             informational_branch_enabled=informational_branch_enabled,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             build_mode_directive_fn=build_mode_directive,
-            finalize_routing_context_and_trace_fn=_runtime_finalize_routing_context_and_trace,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             build_first_turn_instruction_fn=build_first_turn_instruction,

@@ -96,3 +96,38 @@ def _retrieve_blocks_with_degraded_mode(
         "author_map": author_map,
     }
 
+
+def _dedupe_and_apply_progressive_rag(
+    *,
+    raw_retrieved_blocks: List[Any],
+    progressive_rag,
+    debug_trace: Dict[str, Any] | None,
+    logger,
+) -> List[Any]:
+    seen_ids = set()
+    deduped_blocks = []
+    for block, score in raw_retrieved_blocks:
+        if block.block_id not in seen_ids:
+            seen_ids.add(block.block_id)
+            deduped_blocks.append((block, score))
+
+    if len(deduped_blocks) < len(raw_retrieved_blocks):
+        logger.info(
+            "[RETRIEVAL] Deduped %s duplicate blocks (%s -> %s)",
+            len(raw_retrieved_blocks) - len(deduped_blocks),
+            len(raw_retrieved_blocks),
+            len(deduped_blocks),
+        )
+
+    processed_blocks = deduped_blocks
+    try:
+        processed_blocks = progressive_rag.rerank_by_weights(processed_blocks)
+        if debug_trace is not None:
+            debug_trace["progressive_rag_enabled"] = True
+    except Exception as exc:
+        logger.warning("[PROGRESSIVE_RAG] rerank_by_weights failed: %s", exc)
+        if debug_trace is not None:
+            debug_trace["progressive_rag_enabled"] = False
+            debug_trace["progressive_rag_error"] = str(exc)
+
+    return processed_blocks

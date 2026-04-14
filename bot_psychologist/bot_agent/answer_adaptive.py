@@ -153,6 +153,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
+    _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
 )
 
 logger = logging.getLogger(__name__)
@@ -273,6 +274,10 @@ def _build_prompt_stack_override(**kwargs):
 
 def _retrieve_blocks_with_degraded_mode(**kwargs):
     return _runtime_retrieve_blocks_with_degraded_mode(**kwargs)
+
+
+def _dedupe_and_apply_progressive_rag(**kwargs):
+    return _runtime_dedupe_and_apply_progressive_rag(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -956,31 +961,13 @@ def answer_question_adaptive(
             if retrieval_degraded_reason:
                 debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
         
-        # Р”РµРґСѓРїР»РёРєР°С†РёСЏ Р±Р»РѕРєРѕРІ РїРѕ block_id РґРѕ SD filter
-        seen_ids = set()
-        deduped_blocks = []
-        for block, score in raw_retrieved_blocks:
-            if block.block_id not in seen_ids:
-                seen_ids.add(block.block_id)
-                deduped_blocks.append((block, score))
-        
-        if len(deduped_blocks) < len(raw_retrieved_blocks):
-            logger.info(
-                f"[RETRIEVAL] Deduped {len(raw_retrieved_blocks) - len(deduped_blocks)} duplicate blocks "
-                f"({len(raw_retrieved_blocks)} -> {len(deduped_blocks)})"
-            )
-        raw_retrieved_blocks = deduped_blocks
-
         progressive_rag = get_progressive_rag(str(config.BOT_DB_PATH))
-        try:
-            raw_retrieved_blocks = progressive_rag.rerank_by_weights(raw_retrieved_blocks)
-            if debug_trace is not None:
-                debug_trace["progressive_rag_enabled"] = True
-        except Exception as exc:
-            logger.warning(f"[PROGRESSIVE_RAG] rerank_by_weights failed: {exc}")
-            if debug_trace is not None:
-                debug_trace["progressive_rag_enabled"] = False
-                debug_trace["progressive_rag_error"] = str(exc)
+        raw_retrieved_blocks = _dedupe_and_apply_progressive_rag(
+            raw_retrieved_blocks=raw_retrieved_blocks,
+            progressive_rag=progressive_rag,
+            debug_trace=debug_trace,
+            logger=logger,
+        )
         
         _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
         retrieved_blocks = list(raw_retrieved_blocks)

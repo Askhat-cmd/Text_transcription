@@ -78,6 +78,7 @@ from .adaptive_runtime.response_utils import (
     _attach_debug_payload,
     _attach_success_observability,
     _handle_no_retrieval_partial_response as _runtime_handle_no_retrieval_partial_response,
+    _handle_llm_generation_error_response as _runtime_handle_llm_generation_error_response,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
@@ -304,6 +305,10 @@ def _build_path_recommendation_if_enabled(**kwargs):
 
 def _handle_no_retrieval_partial_response(**kwargs):
     return _runtime_handle_no_retrieval_partial_response(**kwargs)
+
+
+def _handle_llm_generation_error_response(**kwargs):
+    return _runtime_handle_llm_generation_error_response(**kwargs)
 
 
 def _attach_retrieval_observability(**kwargs):
@@ -1332,42 +1337,28 @@ def answer_question_adaptive(
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
-            response = _build_error_response(
-                f"РћС€РёР±РєР° РїСЂРё РіРµРЅРµСЂР°С†РёРё РѕС‚РІРµС‚Р°: {llm_result['error']}",
-                state_analysis,
-                start_time
-            )
-            _persist_turn_best_effort(
+            response = _handle_llm_generation_error_response(
+                llm_error=str(llm_result.get("error", "")),
+                state_analysis=state_analysis,
+                start_time=start_time,
                 memory=memory,
-                user_input=query,
-                bot_response=response.get("answer", ""),
-                user_state=state_analysis.primary_state.value if state_analysis else None,
-                blocks_used=0,
-                concepts=[],
+                query=query,
                 schedule_summary_task=schedule_summary_task,
+                debug_info=debug_info,
+                debug_trace=debug_trace,
+                session_store=session_store,
+                user_id=user_id,
+                pipeline_stages=pipeline_stages,
+                model_used=str(config.LLM_MODEL),
+                initial_retrieved_blocks=initial_retrieved_blocks,
+                reranked_blocks_for_trace=reranked_blocks_for_trace,
+                finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
+                estimate_cost_fn=_estimate_cost,
+                compute_anomalies_fn=_compute_anomalies,
+                attach_trace_schema_fn=attach_trace_schema_status,
+                build_state_trajectory_fn=_build_state_trajectory,
+                store_blob_fn=_store_blob,
             )
-            if debug_info is not None:
-                debug_info["memory_summary"] = memory.get_summary()
-                debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
-                response["debug"] = debug_info
-            if debug_trace is not None:
-                debug_trace = _finalize_failure_debug_trace(
-                    debug_trace,
-                    memory=memory,
-                    start_time=start_time,
-                    session_store=session_store,
-                    user_id=user_id,
-                    pipeline_stages=pipeline_stages,
-                    model_used=str(config.LLM_MODEL),
-                    estimate_cost_fn=_estimate_cost,
-                    compute_anomalies_fn=_compute_anomalies,
-                    attach_trace_schema_fn=attach_trace_schema_status,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                    initial_retrieved_blocks=initial_retrieved_blocks,
-                    reranked_blocks_for_trace=reranked_blocks_for_trace,
-                )
-                response["debug_trace"] = debug_trace
             return response
         
         answer = llm_result["answer"]

@@ -532,3 +532,69 @@ def _handle_no_retrieval_partial_response(
         )
         response["debug_trace"] = debug_trace
     return response
+
+
+def _handle_llm_generation_error_response(
+    *,
+    llm_error: str,
+    state_analysis: StateAnalysis,
+    start_time: datetime,
+    memory,
+    query: str,
+    schedule_summary_task: bool,
+    debug_info: Optional[Dict[str, Any]],
+    debug_trace: Optional[Dict[str, Any]],
+    session_store,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    model_used: str,
+    initial_retrieved_blocks,
+    reranked_blocks_for_trace,
+    finalize_failure_debug_trace_fn,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+) -> Dict[str, Any]:
+    response = _build_error_response(
+        f"РћС€РёР±РєР° РїСЂРё РіРµРЅРµСЂР°С†РёРё РѕС‚РІРµС‚Р°: {llm_error}",
+        state_analysis,
+        start_time,
+    )
+
+    _persist_turn_best_effort(
+        memory=memory,
+        user_input=query,
+        bot_response=response.get("answer", ""),
+        user_state=state_analysis.primary_state.value if state_analysis else None,
+        blocks_used=0,
+        concepts=[],
+        schedule_summary_task=schedule_summary_task,
+    )
+
+    if debug_info is not None:
+        debug_info["memory_summary"] = memory.get_summary()
+        debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
+        response["debug"] = debug_info
+
+    if debug_trace is not None:
+        debug_trace = finalize_failure_debug_trace_fn(
+            debug_trace,
+            memory=memory,
+            start_time=start_time,
+            session_store=session_store,
+            user_id=user_id,
+            pipeline_stages=pipeline_stages,
+            model_used=model_used,
+            estimate_cost_fn=estimate_cost_fn,
+            compute_anomalies_fn=compute_anomalies_fn,
+            attach_trace_schema_fn=attach_trace_schema_fn,
+            build_state_trajectory_fn=build_state_trajectory_fn,
+            store_blob_fn=store_blob_fn,
+            initial_retrieved_blocks=initial_retrieved_blocks,
+            reranked_blocks_for_trace=reranked_blocks_for_trace,
+        )
+        response["debug_trace"] = debug_trace
+
+    return response

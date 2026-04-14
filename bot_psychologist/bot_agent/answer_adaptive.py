@@ -74,7 +74,6 @@ from .adaptive_runtime.response_utils import (
     _build_fast_path_success_response as _runtime_build_fast_path_success_response,
     _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
-    _prepare_full_path_post_llm_artifacts as _runtime_prepare_full_path_post_llm_artifacts,
     _run_full_path_success_stage as _runtime_run_full_path_success_stage,
     _persist_turn_best_effort,
     _persist_turn,
@@ -82,7 +81,6 @@ from .adaptive_runtime.response_utils import (
     _build_sources_from_blocks,
     _attach_debug_payload,
     _attach_success_observability,
-    _handle_no_retrieval_partial_response as _runtime_handle_no_retrieval_partial_response,
     _run_no_retrieval_stage as _runtime_run_no_retrieval_stage,
     _handle_llm_generation_error_response as _runtime_handle_llm_generation_error_response,
 )
@@ -101,7 +99,6 @@ from .adaptive_runtime.trace_helpers import (
     _build_retrieval_debug_details,
     _build_voyage_rerank_debug_payload,
     _build_routing_debug_payload,
-    _attach_retrieval_observability as _runtime_attach_retrieval_observability,
     _prepare_adapted_blocks_and_attach_observability as _runtime_prepare_adapted_blocks_and_attach_observability,
     _build_llm_prompts,
     _prepare_llm_prompt_previews,
@@ -149,8 +146,6 @@ from .adaptive_runtime.routing_stage_helpers import (
     _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
     _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
-    _resolve_practice_selection_context as _runtime_resolve_practice_selection_context,
-    _attach_routing_stage_debug_trace as _runtime_attach_routing_stage_debug_trace,
     _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
@@ -321,16 +316,8 @@ def _run_state_and_pre_routing_pipeline(**kwargs):
     return _runtime_run_state_and_pre_routing_pipeline(**kwargs)
 
 
-def _resolve_practice_selection_context(**kwargs):
-    return _runtime_resolve_practice_selection_context(**kwargs)
-
-
 def _resolve_routing_and_apply_block_cap(**kwargs):
     return _runtime_resolve_routing_and_apply_block_cap(**kwargs)
-
-
-def _attach_routing_stage_debug_trace(**kwargs):
-    return _runtime_attach_routing_stage_debug_trace(**kwargs)
 
 
 def _finalize_routing_context_and_trace(**kwargs):
@@ -353,16 +340,8 @@ def _build_unhandled_exception_response(**kwargs):
     return _runtime_build_unhandled_exception_response(**kwargs)
 
 
-def _prepare_full_path_post_llm_artifacts(**kwargs):
-    return _runtime_prepare_full_path_post_llm_artifacts(**kwargs)
-
-
 def _run_full_path_success_stage(**kwargs):
     return _runtime_run_full_path_success_stage(**kwargs)
-
-
-def _handle_no_retrieval_partial_response(**kwargs):
-    return _runtime_handle_no_retrieval_partial_response(**kwargs)
 
 
 def _run_no_retrieval_stage(**kwargs):
@@ -371,10 +350,6 @@ def _run_no_retrieval_stage(**kwargs):
 
 def _handle_llm_generation_error_response(**kwargs):
     return _runtime_handle_llm_generation_error_response(**kwargs)
-
-
-def _attach_retrieval_observability(**kwargs):
-    return _runtime_attach_retrieval_observability(**kwargs)
 
 
 def _prepare_adapted_blocks_and_attach_observability(**kwargs):

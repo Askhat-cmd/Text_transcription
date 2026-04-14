@@ -203,26 +203,6 @@ def _apply_output_validation_policy(
     )
 
 
-def _build_start_command_response(
-    *,
-    user_id: str,
-    user_level: str,
-    query: str,
-    memory,
-    start_time: datetime,
-    schedule_summary_task: bool = True,
-) -> Dict[str, Any]:
-    return _runtime_build_start_command_response(
-        user_id=user_id,
-        user_level=user_level,
-        query=query,
-        memory=memory,
-        start_time=start_time,
-        schedule_summary_task=schedule_summary_task,
-        logger=logger,
-    )
-
-
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
     return _runtime_resolve_path_user_level(_user_level)
 
@@ -250,23 +230,6 @@ def _build_state_context(
         request_function=request_function,
         contradiction_suggestion=contradiction_suggestion,
         cross_session_context=cross_session_context,
-    )
-
-
-def _set_working_state_best_effort(
-    *,
-    memory,
-    state_analysis: StateAnalysis,
-    routing_result,
-    log_prefix: str,
-) -> None:
-    return _runtime_set_working_state_best_effort(
-        memory=memory,
-        state_analysis=state_analysis,
-        routing_result=routing_result,
-        build_working_state_fn=_runtime_build_working_state,
-        logger=logger,
-        log_prefix=log_prefix,
     )
 
 
@@ -342,6 +305,15 @@ def answer_question_adaptive(
     memory_context_bundle = None
     phase8_signals = None
     level_adapter = None  # compatibility sentinel: level-based prompting stays disabled
+    build_start_command_response_fn = lambda **kwargs: _runtime_build_start_command_response(
+        logger=logger,
+        **kwargs,
+    )
+    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
+        build_working_state_fn=_runtime_build_working_state,
+        logger=logger,
+        **kwargs,
+    )
     
     current_stage = "init"
     try:
@@ -365,7 +337,7 @@ def answer_question_adaptive(
             config=config,
             detect_phase8_signals_fn=detect_phase8_signals,
             informational_branch_enabled_fn=lambda: informational_branch_enabled,
-            build_start_command_response_fn=_build_start_command_response,
+            build_start_command_response_fn=build_start_command_response_fn,
             truncate_preview_fn=_truncate_preview,
             apply_memory_debug_info_fn=_apply_memory_debug_info,
             resolve_path_user_level_fn=_resolve_path_user_level,
@@ -483,7 +455,7 @@ def answer_question_adaptive(
             run_validation_retry_generation_fn=_runtime_run_validation_retry_generation,
             apply_output_validation_policy_fn=_apply_output_validation_policy,
             apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
-            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
             include_feedback_prompt=include_feedback_prompt,
             mode_prompt_key=mode_prompt_key,
             memory_trace_metrics=memory_trace_metrics,
@@ -580,7 +552,7 @@ def answer_question_adaptive(
             debug_info=debug_info,
             session_store=session_store,
             user_id=user_id,
-            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
             persist_turn_fn=_persist_turn,
             finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
             estimate_cost_fn=_runtime_estimate_cost,
@@ -678,7 +650,7 @@ def answer_question_adaptive(
             fallback_model_name=llm_model_name,
             collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
-            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
             build_path_recommendation_if_enabled_fn=_runtime_build_path_recommendation_if_enabled,
             get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
             persist_turn_fn=_persist_turn,

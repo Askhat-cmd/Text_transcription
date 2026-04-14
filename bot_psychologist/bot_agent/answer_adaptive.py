@@ -161,6 +161,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
     _build_prompt_stack_override as _runtime_build_prompt_stack_override,
     _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
+    _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
@@ -286,6 +287,10 @@ def _build_prompt_stack_override(**kwargs):
 
 def _run_llm_generation_cycle(**kwargs):
     return _runtime_run_llm_generation_cycle(**kwargs)
+
+
+def _format_and_validate_llm_answer(**kwargs):
+    return _runtime_format_and_validate_llm_answer(**kwargs)
 
 
 def _retrieve_blocks_with_degraded_mode(**kwargs):
@@ -764,58 +769,32 @@ def answer_question_adaptive(
                 generate_llm_with_trace_fn=_generate_llm_with_trace,
                 build_llm_call_trace_fn=_build_llm_call_trace,
             )
-            answer = llm_result.get("answer", "")
-            formatter = ResponseFormatter()
-            answer = formatter.format_answer(
-                answer,
+            answer = _format_and_validate_llm_answer(
+                llm_result=llm_result,
+                response_generator=response_generator,
+                query=query,
+                blocks=[fast_block],
+                conversation_context=conversation_context,
                 mode=pre_routing_result.mode,
                 confidence_level=pre_routing_result.confidence_level,
-                user_message=query,
+                forbid=pre_routing_result.decision.forbid,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                config=config,
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
                 informational_mode=informational_mode,
-            )
-
-            def _retry_fast_validation(hint: str) -> Dict[str, Any]:
-                return _run_validation_retry_generation(
-                    response_generator=response_generator,
-                    query=query,
-                    hint=hint,
-                    blocks=[fast_block],
-                    conversation_context=conversation_context,
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                    forbid=pre_routing_result.decision.forbid,
-                    additional_system_context=state_context,
-                    sd_level=sd_result.primary,
-                    config=config,
-                    session_store=session_store,
-                    session_id=user_id,
-                    mode_prompt_override=mode_prompt_override,
-                    informational_mode=informational_mode,
-                    system_prompt_override=system_prompt_override,
-                    format_answer_fn=lambda raw_answer: formatter.format_answer(
-                        raw_answer,
-                        mode=pre_routing_result.mode,
-                        confidence_level=pre_routing_result.confidence_level,
-                        user_message=query,
-                        informational_mode=informational_mode,
-                    ),
-                )
-
-            answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
-                answer=answer,
-                query=query,
+                system_prompt_override=system_prompt_override,
                 route=getattr(pre_routing_result, "route", ""),
-                mode=pre_routing_result.mode,
-                generate_retry_fn=_retry_fast_validation,
-            )
-            _apply_output_validation_observability(
-                validation_meta=validation_meta,
-                validation_retry_result=validation_retry_result,
-                llm_result=llm_result,
                 debug_trace=debug_trace,
                 pipeline_stages=pipeline_stages,
                 fallback_model_name=str(config.LLM_MODEL),
                 include_retry_llm_trace=False,
+                response_formatter_cls=ResponseFormatter,
+                run_validation_retry_generation_fn=_run_validation_retry_generation,
+                apply_output_validation_policy_fn=_apply_output_validation_policy,
+                apply_output_validation_observability_fn=_apply_output_validation_observability,
             )
 
             _set_working_state_best_effort(
@@ -1260,58 +1239,32 @@ def answer_question_adaptive(
             )
             return response
         
-        answer = llm_result["answer"]
-        formatter = ResponseFormatter()
-        answer = formatter.format_answer(
-            answer,
+        answer = _format_and_validate_llm_answer(
+            llm_result=llm_result,
+            response_generator=response_generator,
+            query=query,
+            blocks=adapted_blocks,
+            conversation_context=conversation_context,
             mode=routing_result.mode,
             confidence_level=routing_result.confidence_level,
-            user_message=query,
+            forbid=routing_result.decision.forbid,
+            additional_system_context=state_context,
+            sd_level=sd_result.primary,
+            config=config,
+            session_store=session_store,
+            session_id=user_id,
+            mode_prompt_override=mode_prompt_override,
             informational_mode=informational_mode,
-        )
-
-        def _retry_validation(hint: str) -> Dict[str, Any]:
-            return _run_validation_retry_generation(
-                response_generator=response_generator,
-                query=query,
-                hint=hint,
-                blocks=adapted_blocks,
-                conversation_context=conversation_context,
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-                forbid=routing_result.decision.forbid,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                config=config,
-                session_store=session_store,
-                session_id=user_id,
-                mode_prompt_override=mode_prompt_override,
-                informational_mode=informational_mode,
-                system_prompt_override=system_prompt_override,
-                format_answer_fn=lambda raw_answer: formatter.format_answer(
-                    raw_answer,
-                    mode=routing_result.mode,
-                    confidence_level=routing_result.confidence_level,
-                    user_message=query,
-                    informational_mode=informational_mode,
-                ),
-            )
-
-        answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
-            answer=answer,
-            query=query,
+            system_prompt_override=system_prompt_override,
             route=getattr(routing_result, "route", ""),
-            mode=routing_result.mode,
-            generate_retry_fn=_retry_validation,
-        )
-        _apply_output_validation_observability(
-            validation_meta=validation_meta,
-            validation_retry_result=validation_retry_result,
-            llm_result=llm_result,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
             fallback_model_name=str(config.LLM_MODEL),
             include_retry_llm_trace=True,
+            response_formatter_cls=ResponseFormatter,
+            run_validation_retry_generation_fn=_run_validation_retry_generation,
+            apply_output_validation_policy_fn=_apply_output_validation_policy,
+            apply_output_validation_observability_fn=_apply_output_validation_observability,
         )
 
         # ================================================================

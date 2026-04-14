@@ -452,3 +452,87 @@ def _run_llm_generation_cycle(
     )
 
     return llm_result, response_generator, prompt_stack_meta, system_prompt_override
+
+
+def _format_and_validate_llm_answer(
+    *,
+    llm_result: Dict[str, Any],
+    response_generator,
+    query: str,
+    blocks: List[Any],
+    conversation_context: str,
+    mode: str,
+    confidence_level: str,
+    forbid: List[str],
+    additional_system_context: str,
+    sd_level: str,
+    config,
+    session_store,
+    session_id: str,
+    mode_prompt_override: Optional[str],
+    informational_mode: bool,
+    system_prompt_override: Optional[str],
+    route: str,
+    debug_trace: Optional[Dict[str, Any]],
+    pipeline_stages: List[Dict[str, Any]],
+    fallback_model_name: str,
+    include_retry_llm_trace: bool,
+    response_formatter_cls,
+    run_validation_retry_generation_fn,
+    apply_output_validation_policy_fn,
+    apply_output_validation_observability_fn,
+) -> str:
+    answer = llm_result.get("answer", "")
+    formatter = response_formatter_cls()
+    answer = formatter.format_answer(
+        answer,
+        mode=mode,
+        confidence_level=confidence_level,
+        user_message=query,
+        informational_mode=informational_mode,
+    )
+
+    def _retry_validation(hint: str) -> Dict[str, Any]:
+        return run_validation_retry_generation_fn(
+            response_generator=response_generator,
+            query=query,
+            hint=hint,
+            blocks=blocks,
+            conversation_context=conversation_context,
+            mode=mode,
+            confidence_level=confidence_level,
+            forbid=forbid,
+            additional_system_context=additional_system_context,
+            sd_level=sd_level,
+            config=config,
+            session_store=session_store,
+            session_id=session_id,
+            mode_prompt_override=mode_prompt_override,
+            informational_mode=informational_mode,
+            system_prompt_override=system_prompt_override,
+            format_answer_fn=lambda raw_answer: formatter.format_answer(
+                raw_answer,
+                mode=mode,
+                confidence_level=confidence_level,
+                user_message=query,
+                informational_mode=informational_mode,
+            ),
+        )
+
+    answer, validation_meta, validation_retry_result = apply_output_validation_policy_fn(
+        answer=answer,
+        query=query,
+        route=route,
+        mode=mode,
+        generate_retry_fn=_retry_validation,
+    )
+    apply_output_validation_observability_fn(
+        validation_meta=validation_meta,
+        validation_retry_result=validation_retry_result,
+        llm_result=llm_result,
+        debug_trace=debug_trace,
+        pipeline_stages=pipeline_stages,
+        fallback_model_name=fallback_model_name,
+        include_retry_llm_trace=include_retry_llm_trace,
+    )
+    return answer

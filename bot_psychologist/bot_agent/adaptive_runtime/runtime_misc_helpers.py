@@ -536,3 +536,38 @@ def _format_and_validate_llm_answer(
         include_retry_llm_trace=include_retry_llm_trace,
     )
     return answer
+
+
+def _execute_full_path_llm_stage(
+    *,
+    run_generation_fn,
+    format_answer_fn,
+    handle_llm_error_fn,
+    logger,
+) -> Dict[str, Any]:
+    llm_result, response_generator, _prompt_stack_meta, system_prompt_override = run_generation_fn()
+
+    if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
+        logger.error("[ADAPTIVE] LLM error: %s", llm_result["error"])
+        response = handle_llm_error_fn(str(llm_result.get("error", "")))
+        return {
+            "error_response": response,
+            "llm_result": llm_result,
+            "answer": "",
+            "response_generator": response_generator,
+            "system_prompt_override": system_prompt_override,
+        }
+
+    answer = format_answer_fn(
+        llm_result=llm_result,
+        response_generator=response_generator,
+        system_prompt_override=system_prompt_override,
+    )
+
+    return {
+        "error_response": None,
+        "llm_result": llm_result,
+        "answer": answer,
+        "response_generator": response_generator,
+        "system_prompt_override": system_prompt_override,
+    }

@@ -165,6 +165,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _build_prompt_stack_override as _runtime_build_prompt_stack_override,
     _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
     _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
+    _execute_full_path_llm_stage as _runtime_execute_full_path_llm_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
@@ -294,6 +295,10 @@ def _run_llm_generation_cycle(**kwargs):
 
 def _format_and_validate_llm_answer(**kwargs):
     return _runtime_format_and_validate_llm_answer(**kwargs)
+
+
+def _execute_full_path_llm_stage(**kwargs):
+    return _runtime_execute_full_path_llm_stage(**kwargs)
 
 
 def _dedupe_and_apply_progressive_rag(**kwargs):
@@ -1066,40 +1071,65 @@ def answer_question_adaptive(
 
         # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
         current_stage = "llm"
-        llm_result, response_generator, _, system_prompt_override = _run_llm_generation_cycle(
-            response_generator_cls=ResponseGenerator,
-            query=query,
-            blocks=adapted_blocks,
-            conversation_context=conversation_context,
-            mode=routing_result.mode,
-            confidence_level=routing_result.confidence_level,
-            forbid=routing_result.decision.forbid,
-            additional_system_context=state_context,
-            sd_level=sd_result.primary,
-            config=config,
-            session_store=session_store,
-            session_id=user_id,
-            mode_prompt_override=mode_prompt_override,
-            informational_mode=informational_mode,
-            route=getattr(routing_result, "route", ""),
-            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            phase8_signals=phase8_signals,
-            correction_protocol_active=correction_protocol_active,
-            prompt_stack_enabled=_prompt_stack_v2_enabled(),
-            prompt_registry=prompt_registry_v2,
-            mode_prompt=mode_directive.prompt,
-            debug_trace=debug_trace,
-            pipeline_stages=pipeline_stages,
-            build_prompt_stack_override_fn=_build_prompt_stack_override,
-            prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
-            generate_llm_with_trace_fn=_generate_llm_with_trace,
-            build_llm_call_trace_fn=_build_llm_call_trace,
-        )
-        
-        if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
-            logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")
-            response = _handle_llm_generation_error_response(
-                llm_error=str(llm_result.get("error", "")),
+        llm_stage = _execute_full_path_llm_stage(
+            run_generation_fn=lambda: _run_llm_generation_cycle(
+                response_generator_cls=ResponseGenerator,
+                query=query,
+                blocks=adapted_blocks,
+                conversation_context=conversation_context,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                forbid=routing_result.decision.forbid,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                config=config,
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
+                informational_mode=informational_mode,
+                route=getattr(routing_result, "route", ""),
+                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+                phase8_signals=phase8_signals,
+                correction_protocol_active=correction_protocol_active,
+                prompt_stack_enabled=_prompt_stack_v2_enabled(),
+                prompt_registry=prompt_registry_v2,
+                mode_prompt=mode_directive.prompt,
+                debug_trace=debug_trace,
+                pipeline_stages=pipeline_stages,
+                build_prompt_stack_override_fn=_build_prompt_stack_override,
+                prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
+                generate_llm_with_trace_fn=_generate_llm_with_trace,
+                build_llm_call_trace_fn=_build_llm_call_trace,
+            ),
+            format_answer_fn=lambda llm_result, response_generator, system_prompt_override: _format_and_validate_llm_answer(
+                llm_result=llm_result,
+                response_generator=response_generator,
+                query=query,
+                blocks=adapted_blocks,
+                conversation_context=conversation_context,
+                mode=routing_result.mode,
+                confidence_level=routing_result.confidence_level,
+                forbid=routing_result.decision.forbid,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                config=config,
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
+                informational_mode=informational_mode,
+                system_prompt_override=system_prompt_override,
+                route=getattr(routing_result, "route", ""),
+                debug_trace=debug_trace,
+                pipeline_stages=pipeline_stages,
+                fallback_model_name=str(config.LLM_MODEL),
+                include_retry_llm_trace=True,
+                response_formatter_cls=ResponseFormatter,
+                run_validation_retry_generation_fn=_run_validation_retry_generation,
+                apply_output_validation_policy_fn=_apply_output_validation_policy,
+                apply_output_validation_observability_fn=_apply_output_validation_observability,
+            ),
+            handle_llm_error_fn=lambda llm_error: _handle_llm_generation_error_response(
+                llm_error=llm_error,
                 state_analysis=state_analysis,
                 start_time=start_time,
                 memory=memory,
@@ -1119,36 +1149,13 @@ def answer_question_adaptive(
                 attach_trace_schema_fn=attach_trace_schema_status,
                 build_state_trajectory_fn=_build_state_trajectory,
                 store_blob_fn=_store_blob,
-            )
-            return response
-        
-        answer = _format_and_validate_llm_answer(
-            llm_result=llm_result,
-            response_generator=response_generator,
-            query=query,
-            blocks=adapted_blocks,
-            conversation_context=conversation_context,
-            mode=routing_result.mode,
-            confidence_level=routing_result.confidence_level,
-            forbid=routing_result.decision.forbid,
-            additional_system_context=state_context,
-            sd_level=sd_result.primary,
-            config=config,
-            session_store=session_store,
-            session_id=user_id,
-            mode_prompt_override=mode_prompt_override,
-            informational_mode=informational_mode,
-            system_prompt_override=system_prompt_override,
-            route=getattr(routing_result, "route", ""),
-            debug_trace=debug_trace,
-            pipeline_stages=pipeline_stages,
-            fallback_model_name=str(config.LLM_MODEL),
-            include_retry_llm_trace=True,
-            response_formatter_cls=ResponseFormatter,
-            run_validation_retry_generation_fn=_run_validation_retry_generation,
-            apply_output_validation_policy_fn=_apply_output_validation_policy,
-            apply_output_validation_observability_fn=_apply_output_validation_observability,
+            ),
+            logger=logger,
         )
+        if llm_stage["error_response"] is not None:
+            return llm_stage["error_response"]
+        llm_result = llm_stage["llm_result"]
+        answer = llm_stage["answer"]
 
         # ================================================================
         # Р­РўРђРџ 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР· Рё РёР·РІР»РµС‡РµРЅРёРµ РєРѕРЅС†РµРїС‚РѕРІ

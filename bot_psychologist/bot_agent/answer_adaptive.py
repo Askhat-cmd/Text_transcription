@@ -166,9 +166,9 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
-    _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
     _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
+    _run_retrieval_and_rerank_stage as _runtime_run_retrieval_and_rerank_stage,
 )
 
 logger = logging.getLogger(__name__)
@@ -295,16 +295,16 @@ def _format_and_validate_llm_answer(**kwargs):
     return _runtime_format_and_validate_llm_answer(**kwargs)
 
 
-def _retrieve_blocks_with_degraded_mode(**kwargs):
-    return _runtime_retrieve_blocks_with_degraded_mode(**kwargs)
-
-
 def _dedupe_and_apply_progressive_rag(**kwargs):
     return _runtime_dedupe_and_apply_progressive_rag(**kwargs)
 
 
 def _prepare_conditional_rerank(**kwargs):
     return _runtime_prepare_conditional_rerank(**kwargs)
+
+
+def _run_retrieval_and_rerank_stage(**kwargs):
+    return _runtime_run_retrieval_and_rerank_stage(**kwargs)
 
 
 def _run_state_analysis_stage(**kwargs):
@@ -856,9 +856,8 @@ def answer_question_adaptive(
 
         current_stage = "retrieval"
         from .semantic_analyzer import detect_author_intent
-        retrieval_stage = _retrieve_blocks_with_degraded_mode(
+        retrieval_stage = _run_retrieval_and_rerank_stage(
             query=query,
-            hybrid_query=hybrid_query,
             top_k=top_k,
             config=config,
             data_loader=data_loader,
@@ -866,78 +865,35 @@ def answer_question_adaptive(
             timed_fn=_timed,
             detect_author_intent_fn=detect_author_intent,
             logger=logger,
-        )
-        raw_retrieved_blocks = retrieval_stage["raw_retrieved_blocks"]
-        stage = retrieval_stage["stage"]
-        retrieval_degraded_reason = retrieval_stage["retrieval_degraded_reason"]
-
-        if debug_trace is not None:
-            pipeline_stages.append(stage)
-            if retrieval_degraded_reason:
-                debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
-        
-        progressive_rag = get_progressive_rag(str(config.BOT_DB_PATH))
-        raw_retrieved_blocks = _dedupe_and_apply_progressive_rag(
-            raw_retrieved_blocks=raw_retrieved_blocks,
-            progressive_rag=progressive_rag,
             debug_trace=debug_trace,
-            logger=logger,
-        )
-        
-        _log_retrieval_pairs("Initial retrieval", raw_retrieved_blocks, limit=10)
-        retrieved_blocks = list(raw_retrieved_blocks)
-        initial_retrieved_blocks = list(raw_retrieved_blocks)
-        rerank_prep = _prepare_conditional_rerank(
-            retrieved_blocks=retrieved_blocks,
-            top_k=top_k,
-            config=config,
+            pipeline_stages=pipeline_stages,
+            get_progressive_rag_fn=get_progressive_rag,
+            dedupe_and_apply_progressive_rag_fn=_dedupe_and_apply_progressive_rag,
+            log_retrieval_pairs_fn=_log_retrieval_pairs,
+            prepare_conditional_rerank_fn=_prepare_conditional_rerank,
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,
             pre_routing_result=pre_routing_result,
             feature_flag_enabled_fn=feature_flags.enabled,
             should_rerank_fn=should_rerank,
+            voyage_reranker_cls=VoyageReranker,
+            detect_routing_signals_fn=detect_routing_signals,
+            state_analysis=state_analysis,
+            memory=memory,
+            hybrid_query=hybrid_query,
         )
-        rerank_mode = rerank_prep["rerank_mode"]
-        conditional_reranker = rerank_prep["conditional_reranker"]
-        should_run_rerank = rerank_prep["should_run_rerank"]
-        rerank_reason = rerank_prep["rerank_reason"]
-        rerank_k = rerank_prep["rerank_k"]
-        rerank_applied = False
-        if should_run_rerank and rerank_k > 0:
-            reranker = VoyageReranker(
-                model=config.VOYAGE_MODEL,
-                enabled=bool(config.VOYAGE_ENABLED or (conditional_reranker and config.RERANKER_ENABLED)),
-            )
+        retrieved_blocks = retrieval_stage["retrieved_blocks"]
+        initial_retrieved_blocks = retrieval_stage["initial_retrieved_blocks"]
+        reranked_blocks_for_trace = retrieval_stage["reranked_blocks_for_trace"]
+        rerank_mode = retrieval_stage["rerank_mode"]
+        conditional_reranker = retrieval_stage["conditional_reranker"]
+        should_run_rerank = retrieval_stage["should_run_rerank"]
+        rerank_reason = retrieval_stage["rerank_reason"]
+        rerank_k = retrieval_stage["rerank_k"]
+        rerank_applied = retrieval_stage["rerank_applied"]
+        routing_signals = retrieval_stage["routing_signals"]
+        if rerank_applied:
             current_stage = "rerank"
-            reranked, rerank_stage = _timed(
-                "rerank",
-                "Rerank",
-                reranker.rerank_pairs,
-                query,
-                retrieved_blocks,
-                top_k=rerank_k,
-            )
-            rerank_applied = True
-            if debug_trace is not None:
-                pipeline_stages.append(rerank_stage)
-            if reranked:
-                retrieved_blocks = reranked
-                voyage_active = bool(
-                    (config.VOYAGE_ENABLED or (conditional_reranker and config.RERANKER_ENABLED))
-                    and config.VOYAGE_API_KEY
-                )
-                if voyage_active:
-                    logger.info("[VOYAGE] rerank success, top_k=%s", rerank_k)
-                else:
-                    logger.info("[VOYAGE] rerank skipped (disabled)")
-        else:
-            if debug_trace is not None:
-                pipeline_stages.append(
-                    {"name": "rerank", "label": "Rerank", "duration_ms": 0, "skipped": True}
-                )
-            logger.info("[RERANK] skipped: %s", rerank_reason)
-        reranked_blocks_for_trace = list(retrieved_blocks)
-        routing_signals = detect_routing_signals(query, retrieved_blocks, state_analysis, memory=memory)
 
         if use_deterministic_router and diagnostics_v1 is not None:
             practice_candidate_score = (

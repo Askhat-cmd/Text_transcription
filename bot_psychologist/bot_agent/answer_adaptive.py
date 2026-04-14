@@ -694,18 +694,6 @@ def answer_question_adaptive(
                 conversation_context=conversation_context,
                 state_analysis=state_analysis,
             )
-            state_context = _build_state_context(
-                state_analysis,
-                state_context_mode_prompt,
-                nervous_system_state=(
-                    diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
-                ),
-                request_function=(
-                    diagnostics_v1.request_function if diagnostics_v1 else "understand"
-                ),
-                contradiction_suggestion=contradiction_hint,
-                cross_session_context=cross_session_context,
-            )
             fast_phase8_suffix = _runtime_build_phase8_context_suffix(
                 informational_branch_enabled=_informational_branch_enabled(),
                 phase8_signals=phase8_signals,
@@ -716,8 +704,21 @@ def answer_question_adaptive(
                 build_user_correction_instruction_fn=build_user_correction_instruction,
                 build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
             )
-            if fast_phase8_suffix:
-                state_context = f"{state_context}\n\n{fast_phase8_suffix}"
+            state_context = _compose_state_context(
+                state_analysis=state_analysis,
+                mode_prompt=state_context_mode_prompt,
+                nervous_system_state=(
+                    diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
+                ),
+                request_function=(
+                    diagnostics_v1.request_function if diagnostics_v1 else "understand"
+                ),
+                contradiction_suggestion=contradiction_hint,
+                cross_session_context=cross_session_context,
+                phase8_context_suffix=fast_phase8_suffix,
+                practice_context_suffix="",
+                build_state_context_fn=_build_state_context,
+            )
             current_stage = "llm"
             llm_result, response_generator, _, system_prompt_override = _run_llm_generation_cycle(
                 response_generator_cls=ResponseGenerator,

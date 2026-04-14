@@ -5,6 +5,52 @@ from __future__ import annotations
 from typing import Any, Callable, Dict, List
 
 
+def _prepare_hybrid_query_stage(
+    *,
+    query: str,
+    diagnostics_v1,
+    state_analysis,
+    memory,
+    conversation_context: str,
+    config,
+    recent_user_turns_fn,
+    hybrid_query_builder_cls,
+    logger,
+) -> Dict[str, Any]:
+    retrieval_working_state = {
+        "nss": (
+            diagnostics_v1.nervous_system_state
+            if diagnostics_v1
+            else "window"
+        ),
+        "request_function": (
+            diagnostics_v1.request_function
+            if diagnostics_v1
+            else "understand"
+        ),
+        "confidence": float(getattr(state_analysis, "confidence", 0.0) or 0.0),
+    }
+    query_builder = hybrid_query_builder_cls(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+    recent_user_turns = recent_user_turns_fn(memory, limit=2)
+    hybrid_query = query_builder.build_query(
+        current_question=query,
+        conversation_summary=memory.summary or "",
+        working_state=retrieval_working_state,
+        short_term_context=conversation_context,
+        latest_user_turns=recent_user_turns,
+    )
+    logger.info(
+        "[RETRIEVAL] built hybrid_query len=%s (orig_query len=%s)",
+        len(hybrid_query),
+        len(query),
+    )
+    return {
+        "retrieval_working_state": retrieval_working_state,
+        "recent_user_turns": recent_user_turns,
+        "hybrid_query": hybrid_query,
+    }
+
+
 def _retrieve_blocks_with_degraded_mode(
     *,
     query: str,

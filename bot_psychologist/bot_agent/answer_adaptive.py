@@ -158,6 +158,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _run_fast_path_stage as _runtime_run_fast_path_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
+    _prepare_hybrid_query_stage as _runtime_prepare_hybrid_query_stage,
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
     _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
     _run_retrieval_and_rerank_stage as _runtime_run_retrieval_and_rerank_stage,
@@ -519,33 +520,18 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
 
-        retrieval_working_state = {
-            "nss": (
-                diagnostics_v1.nervous_system_state
-                if diagnostics_v1
-                else "window"
-            ),
-            "request_function": (
-                diagnostics_v1.request_function
-                if diagnostics_v1
-                else "understand"
-            ),
-            "confidence": float(getattr(state_analysis, "confidence", 0.0) or 0.0),
-        }
-        query_builder = HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
-        recent_user_turns = _recent_user_turns(memory, limit=2)
-        hybrid_query = query_builder.build_query(
-            current_question=query,
-            conversation_summary=memory.summary or "",
-            working_state=retrieval_working_state,
-            short_term_context=conversation_context,
-            latest_user_turns=recent_user_turns,
+        hybrid_query_stage = _runtime_prepare_hybrid_query_stage(
+            query=query,
+            diagnostics_v1=diagnostics_v1,
+            state_analysis=state_analysis,
+            memory=memory,
+            conversation_context=conversation_context,
+            config=config,
+            recent_user_turns_fn=_recent_user_turns,
+            hybrid_query_builder_cls=HybridQueryBuilder,
+            logger=logger,
         )
-        logger.info(
-            "[RETRIEVAL] built hybrid_query len=%s (orig_query len=%s)",
-            len(hybrid_query),
-            len(query),
-        )
+        hybrid_query = hybrid_query_stage["hybrid_query"]
 
         current_stage = "retrieval"
         from .semantic_analyzer import detect_author_intent

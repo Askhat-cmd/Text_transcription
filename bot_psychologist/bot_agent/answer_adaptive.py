@@ -136,6 +136,8 @@ from .adaptive_runtime.routing_stage_helpers import (
     _compute_diagnostics_v1 as _runtime_compute_diagnostics_v1,
     _build_contradiction_payload as _runtime_build_contradiction_payload,
     _resolve_pre_routing as _runtime_resolve_pre_routing,
+    _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
+    _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
@@ -557,49 +559,19 @@ def answer_question_adaptive(
                 pre_routing_result.mode,
                 pre_routing_result.decision.reason,
             )
-            if debug_trace is not None:
-                debug_trace["fast_path"] = True
-                debug_trace["fast_path_reason"] = _detect_fast_path_reason(query, pre_routing_result)
-                debug_trace["recommended_mode"] = pre_routing_result.mode
-                debug_trace["route_track"] = getattr(pre_routing_result, "track", "direct")
-                debug_trace["route_tone"] = getattr(pre_routing_result, "tone", "minimal")
-                debug_trace["routing_result"] = {
-                    "mode": pre_routing_result.mode,
-                    "track": getattr(pre_routing_result, "track", "direct"),
-                    "tone": getattr(pre_routing_result, "tone", "minimal"),
-                }
-                debug_trace["decision_rule_id"] = pre_routing_result.decision.rule_id
-                debug_trace["confidence_score"] = pre_routing_result.confidence_score
-                debug_trace["confidence_level"] = pre_routing_result.confidence_level
-                debug_trace["mode_reason"] = pre_routing_result.decision.reason
-                debug_trace["block_cap"] = 0
-                debug_trace["blocks_initial"] = 0
-                debug_trace["blocks_after_cap"] = 0
-                debug_trace["hybrid_query_preview"] = _truncate_preview(query, 400)
-                debug_trace["hybrid_query_len"] = len(query or "")
-                debug_trace["hybrid_query_text"] = (
-                    query
-                    if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True))
-                    else _truncate_preview(query, 1200)
-                )
-
-                for stage_name, label in [
-                    ("retrieval", "Retrieval"),
-                    ("rerank", "Rerank"),
-                ]:
-                    pipeline_stages.append(
-                        {"name": stage_name, "label": label, "duration_ms": 0, "skipped": True}
-                    )
-            mode_directive = build_mode_directive(
-                mode=pre_routing_result.mode,
-                confidence_level=pre_routing_result.confidence_level,
-                reason=pre_routing_result.decision.reason,
-                forbid=pre_routing_result.decision.forbid,
+            _runtime_apply_fast_path_debug_bootstrap(
+                debug_trace=debug_trace,
+                query=query,
+                pre_routing_result=pre_routing_result,
+                detect_fast_path_reason_fn=_detect_fast_path_reason,
+                truncate_preview_fn=_truncate_preview,
+                config=config,
+                pipeline_stages=pipeline_stages,
             )
-            state_context_mode_prompt = (
-                "Р Р•Р–Рњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
-                if informational_mode
-                else mode_directive.prompt
+            mode_directive, state_context_mode_prompt = _runtime_build_fast_path_mode_directive(
+                pre_routing_result=pre_routing_result,
+                informational_mode=informational_mode,
+                build_mode_directive_fn=build_mode_directive,
             )
             refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
                 memory=memory,

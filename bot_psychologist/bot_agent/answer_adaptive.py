@@ -90,6 +90,9 @@ from .adaptive_runtime.trace_helpers import (
     _log_context_build,
     _build_retrieval_detail,
     _build_retrieval_debug_details,
+    _collect_progressive_feedback_blocks,
+    _build_voyage_rerank_debug_payload,
+    _build_routing_debug_payload,
     _build_llm_prompts,
     _build_llm_prompt_previews,
     _build_llm_call_trace,
@@ -1401,13 +1404,11 @@ def answer_question_adaptive(
             debug_trace["blocks_after_cap"] = len(adapted_blocks)
 
         if routing_signals.get("positive_feedback_signal"):
-            boosted_ids: List[str] = []
-            for block in adapted_blocks[:3]:
-                block_id = str(getattr(block, "block_id", "")).strip()
-                if not block_id:
-                    continue
-                progressive_rag.record_positive_feedback(block_id)
-                boosted_ids.append(block_id)
+            boosted_ids = _collect_progressive_feedback_blocks(
+                adapted_blocks=adapted_blocks,
+                progressive_rag=progressive_rag,
+                limit=3,
+            )
             if boosted_ids:
                 logger.info("[PROGRESSIVE_RAG] positive feedback -> boosted blocks: %s", boosted_ids)
             if debug_trace is not None:
@@ -1424,28 +1425,17 @@ def answer_question_adaptive(
                 adapted_blocks=adapted_blocks,
                 build_retrieval_detail_fn=_build_retrieval_detail,
             )
-            debug_info["voyage_rerank"] = {
-                "enabled": bool(
-                    config.VOYAGE_ENABLED
-                    or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
-                ),
-                "top_k": rerank_k,
-                "should_run": bool(should_run_rerank),
-                "reason": rerank_reason,
-                "applied": bool(rerank_applied),
-                "confidence_block_cap": block_cap,
-            }
-            debug_info["routing"] = {
-                "mode": routing_result.mode,
-                "track": getattr(routing_result, "track", "direct"),
-                "tone": getattr(routing_result, "tone", "minimal"),
-                "route": getattr(routing_result, "route", None),
-                "rule_id": routing_result.decision.rule_id,
-                "reason": routing_result.decision.reason,
-                "confidence_score": routing_result.confidence_score,
-                "confidence_level": routing_result.confidence_level,
-                "route_resolution_count": route_resolution_count,
-            }
+            debug_info["voyage_rerank"] = _build_voyage_rerank_debug_payload(
+                rerank_k=rerank_k,
+                should_run_rerank=should_run_rerank,
+                rerank_reason=rerank_reason,
+                rerank_applied=rerank_applied,
+                block_cap=block_cap,
+            )
+            debug_info["routing"] = _build_routing_debug_payload(
+                routing_result=routing_result,
+                route_resolution_count=route_resolution_count,
+            )
         if debug_trace is not None:
             chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
                 initial_retrieved=initial_retrieved_blocks,

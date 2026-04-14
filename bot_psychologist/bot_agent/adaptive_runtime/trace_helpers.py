@@ -297,6 +297,61 @@ def _build_retrieval_debug_details(
     }
 
 
+def _collect_progressive_feedback_blocks(
+    *,
+    adapted_blocks: List[Any],
+    progressive_rag,
+    limit: int = 3,
+) -> List[str]:
+    boosted_ids: List[str] = []
+    for block in adapted_blocks[: max(1, int(limit))]:
+        block_id = str(getattr(block, "block_id", "")).strip()
+        if not block_id:
+            continue
+        progressive_rag.record_positive_feedback(block_id)
+        boosted_ids.append(block_id)
+    return boosted_ids
+
+
+def _build_voyage_rerank_debug_payload(
+    *,
+    rerank_k: int,
+    should_run_rerank: bool,
+    rerank_reason: str,
+    rerank_applied: bool,
+    block_cap: int,
+) -> Dict[str, Any]:
+    return {
+        "enabled": bool(
+            config.VOYAGE_ENABLED
+            or (feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER") and config.RERANKER_ENABLED)
+        ),
+        "top_k": rerank_k,
+        "should_run": bool(should_run_rerank),
+        "reason": rerank_reason,
+        "applied": bool(rerank_applied),
+        "confidence_block_cap": block_cap,
+    }
+
+
+def _build_routing_debug_payload(
+    *,
+    routing_result,
+    route_resolution_count: int,
+) -> Dict[str, Any]:
+    return {
+        "mode": routing_result.mode,
+        "track": getattr(routing_result, "track", "direct"),
+        "tone": getattr(routing_result, "tone", "minimal"),
+        "route": getattr(routing_result, "route", None),
+        "rule_id": routing_result.decision.rule_id,
+        "reason": routing_result.decision.reason,
+        "confidence_score": routing_result.confidence_score,
+        "confidence_level": routing_result.confidence_level,
+        "route_resolution_count": route_resolution_count,
+    }
+
+
 def _build_llm_prompts(
     *,
     response_generator: ResponseGenerator,

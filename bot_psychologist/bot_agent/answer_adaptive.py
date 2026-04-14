@@ -158,6 +158,7 @@ from .adaptive_runtime.retrieval_stage_helpers import (
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
     _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
     _run_retrieval_and_rerank_stage as _runtime_run_retrieval_and_rerank_stage,
+    _run_retrieval_routing_context_stage as _runtime_run_retrieval_routing_context_stage,
 )
 
 logger = logging.getLogger(__name__)
@@ -514,22 +515,9 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
 
-        hybrid_query_stage = _runtime_prepare_hybrid_query_stage(
-            query=query,
-            diagnostics_v1=diagnostics_v1,
-            state_analysis=state_analysis,
-            memory=memory,
-            conversation_context=conversation_context,
-            config=config,
-            recent_user_turns_fn=_recent_user_turns,
-            hybrid_query_builder_cls=HybridQueryBuilder,
-            logger=logger,
-        )
-        hybrid_query = hybrid_query_stage["hybrid_query"]
-
         current_stage = "retrieval"
         from .semantic_analyzer import detect_author_intent
-        retrieval_stage = _runtime_run_retrieval_and_rerank_stage(
+        stage3 = _runtime_run_retrieval_routing_context_stage(
             query=query,
             top_k=top_k,
             config=config,
@@ -553,138 +541,75 @@ def answer_question_adaptive(
             detect_routing_signals_fn=detect_routing_signals,
             state_analysis=state_analysis,
             memory=memory,
-            hybrid_query=hybrid_query,
-        )
-        retrieved_blocks = retrieval_stage["retrieved_blocks"]
-        initial_retrieved_blocks = retrieval_stage["initial_retrieved_blocks"]
-        reranked_blocks_for_trace = retrieval_stage["reranked_blocks_for_trace"]
-        progressive_rag = retrieval_stage["progressive_rag"]
-        should_run_rerank = retrieval_stage["should_run_rerank"]
-        rerank_reason = retrieval_stage["rerank_reason"]
-        rerank_k = retrieval_stage["rerank_k"]
-        rerank_applied = retrieval_stage["rerank_applied"]
-        routing_signals = retrieval_stage["routing_signals"]
-        if rerank_applied:
-            current_stage = "rerank"
-
-        routing_cap_stage = _runtime_resolve_routing_and_apply_block_cap(
-            use_deterministic_router=use_deterministic_router,
-            diagnostics_v1=diagnostics_v1,
+            conversation_context=conversation_context,
+            prepare_hybrid_query_stage_fn=_runtime_prepare_hybrid_query_stage,
+            recent_user_turns_fn=_recent_user_turns,
+            hybrid_query_builder_cls=HybridQueryBuilder,
+            resolve_routing_and_apply_block_cap_fn=_runtime_resolve_routing_and_apply_block_cap,
             user_stage=user_stage,
             route_resolver=route_resolver,
             confidence_scorer=confidence_scorer,
-            pre_routing_result=pre_routing_result,
             decision_gate=decision_gate,
-            retrieved_blocks=retrieved_blocks,
             informational_branch_enabled_fn=_runtime_informational_branch_enabled,
             resolve_mode_prompt_fn=resolve_mode_prompt,
-            config=config,
-            log_retrieval_pairs_fn=_log_retrieval_pairs,
             build_mode_directive_fn=build_mode_directive,
-            logger=logger,
-        )
-        routing_result = routing_cap_stage["routing_result"]
-        block_cap = routing_cap_stage["block_cap"]
-        route_resolution_count += int(routing_cap_stage["route_resolution_increment"])
-        informational_mode = routing_cap_stage["informational_mode"]
-        mode_prompt_key = routing_cap_stage["mode_prompt_key"]
-        mode_prompt_override = routing_cap_stage["mode_prompt_override"]
-        retrieved_blocks = routing_cap_stage["retrieved_blocks"]
-        capped_retrieved_blocks = routing_cap_stage["capped_retrieved_blocks"]
-        mode_directive = routing_cap_stage["mode_directive"]
-        state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
-
-        routing_context_stage = _runtime_finalize_routing_context_and_trace(
-            informational_branch_enabled=_runtime_informational_branch_enabled(),
+            finalize_routing_context_and_trace_fn=_runtime_finalize_routing_context_and_trace,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
-            informational_mode=informational_mode,
             build_first_turn_instruction_fn=build_first_turn_instruction,
             build_mixed_query_instruction_fn=build_mixed_query_instruction,
             build_user_correction_instruction_fn=build_user_correction_instruction,
             build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
-            routing_result=routing_result,
-            diagnostics_v1=diagnostics_v1,
-            query=query,
-            memory=memory,
             practice_selector=practice_selector,
             practice_allowed_routes=PRACTICE_ALLOWED_ROUTES,
             practice_skip_routes=PRACTICE_SKIP_ROUTES,
-            logger=logger,
-            debug_trace=debug_trace,
-            mode_reason=mode_directive.reason,
-            block_cap=block_cap,
-            initial_retrieved_blocks=initial_retrieved_blocks,
-            hybrid_query=hybrid_query,
-            include_full_content=bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)),
-            truncate_preview_fn=_truncate_preview,
-            should_run_rerank=bool(should_run_rerank),
-            rerank_reason=rerank_reason,
-            rerank_applied=bool(rerank_applied),
-            route_resolution_count=route_resolution_count,
-            mode_prompt_key=mode_prompt_key,
-            conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
-            refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
-        )
-        phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
-        selected_practice = routing_context_stage["selected_practice"]
-        practice_alternatives = routing_context_stage["practice_alternatives"]
-        practice_context_suffix = routing_context_stage["practice_context_suffix"]
-        conversation_context = routing_context_stage["conversation_context"]
-
-        if not retrieved_blocks:
-            return _runtime_run_no_retrieval_stage(
-                state_analysis=state_analysis,
-                memory=memory,
-                start_time=start_time,
-                query=query,
-                routing_result=routing_result,
-                schedule_summary_task=schedule_summary_task,
-                debug_info=debug_info,
-                debug_trace=debug_trace,
-                session_store=session_store,
-                user_id=user_id,
-                pipeline_stages=pipeline_stages,
-                model_used=str(config.LLM_MODEL),
-                initial_retrieved_blocks=initial_retrieved_blocks,
-                reranked_blocks_for_trace=reranked_blocks_for_trace,
-                set_working_state_best_effort_fn=_set_working_state_best_effort,
-                persist_turn_fn=_persist_turn,
-                finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-                estimate_cost_fn=_runtime_estimate_cost,
-                compute_anomalies_fn=_compute_anomalies,
-                attach_trace_schema_fn=attach_trace_schema_status,
-                build_state_trajectory_fn=_build_state_trajectory,
-                store_blob_fn=_store_blob,
-            )
-        
-        retrieval_observability_stage = _runtime_prepare_adapted_blocks_and_attach_observability(
-            retrieved_blocks=retrieved_blocks,
-            routing_signals=routing_signals,
-            progressive_rag=progressive_rag,
-            debug_trace=debug_trace,
-            logger=logger,
-            debug_info=debug_info,
-            hybrid_query=hybrid_query,
-            initial_retrieved_blocks=initial_retrieved_blocks,
-            reranked_blocks_for_trace=reranked_blocks_for_trace,
-            capped_retrieved_blocks=capped_retrieved_blocks,
-            rerank_k=rerank_k,
-            should_run_rerank=should_run_rerank,
-            rerank_reason=rerank_reason,
-            rerank_applied=rerank_applied,
-            block_cap=block_cap,
-            routing_result=routing_result,
+            mode_prompt_key=mode_prompt_key,
             route_resolution_count=route_resolution_count,
+            truncate_preview_fn=_truncate_preview,
+            refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
+            run_no_retrieval_stage_fn=_runtime_run_no_retrieval_stage,
+            start_time=start_time,
+            schedule_summary_task=schedule_summary_task,
+            debug_info=debug_info,
+            session_store=session_store,
+            user_id=user_id,
+            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            persist_turn_fn=_persist_turn,
+            finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
+            estimate_cost_fn=_runtime_estimate_cost,
+            compute_anomalies_fn=_compute_anomalies,
+            attach_trace_schema_fn=attach_trace_schema_status,
+            build_state_trajectory_fn=_build_state_trajectory,
+            store_blob_fn=_store_blob,
+            prepare_adapted_blocks_and_attach_observability_fn=_runtime_prepare_adapted_blocks_and_attach_observability,
             build_retrieval_debug_details_fn=_build_retrieval_debug_details,
             build_retrieval_detail_fn=_build_retrieval_detail,
             build_voyage_rerank_debug_payload_fn=_build_voyage_rerank_debug_payload,
             build_routing_debug_payload_fn=_build_routing_debug_payload,
             build_chunk_trace_lists_after_rerank_fn=_build_chunk_trace_lists_after_rerank,
+            model_used=str(config.LLM_MODEL),
         )
-        blocks = retrieval_observability_stage["blocks"]
-        adapted_blocks = retrieval_observability_stage["adapted_blocks"]
+        current_stage = stage3["current_stage"]
+        if stage3["early_response"] is not None:
+            return stage3["early_response"]
+        hybrid_query = stage3["hybrid_query"]
+        initial_retrieved_blocks = stage3["initial_retrieved_blocks"]
+        reranked_blocks_for_trace = stage3["reranked_blocks_for_trace"]
+        routing_result = stage3["routing_result"]
+        block_cap = stage3["block_cap"]
+        route_resolution_count = stage3["route_resolution_count"]
+        informational_mode = stage3["informational_mode"]
+        mode_prompt_key = stage3["mode_prompt_key"]
+        mode_prompt_override = stage3["mode_prompt_override"]
+        mode_directive = stage3["mode_directive"]
+        state_context_mode_prompt = stage3["state_context_mode_prompt"]
+        phase8_context_suffix = stage3["phase8_context_suffix"]
+        selected_practice = stage3["selected_practice"]
+        practice_alternatives = stage3["practice_alternatives"]
+        practice_context_suffix = stage3["practice_context_suffix"]
+        conversation_context = stage3["conversation_context"]
+        adapted_blocks = stage3["adapted_blocks"]
         
         # ================================================================
         # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ

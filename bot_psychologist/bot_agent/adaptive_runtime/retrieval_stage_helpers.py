@@ -371,3 +371,272 @@ def _run_retrieval_and_rerank_stage(
         "rerank_applied": rerank_applied,
         "routing_signals": routing_signals,
     }
+
+
+def _run_retrieval_routing_context_stage(
+    *,
+    query: str,
+    top_k: int,
+    config,
+    data_loader,
+    get_retriever_fn,
+    timed_fn,
+    detect_author_intent_fn,
+    logger,
+    debug_trace,
+    pipeline_stages,
+    get_progressive_rag_fn,
+    dedupe_and_apply_progressive_rag_fn,
+    log_retrieval_pairs_fn,
+    prepare_conditional_rerank_fn,
+    use_deterministic_router: bool,
+    diagnostics_v1,
+    pre_routing_result,
+    feature_flag_enabled_fn,
+    should_rerank_fn,
+    voyage_reranker_cls,
+    detect_routing_signals_fn,
+    state_analysis,
+    memory,
+    conversation_context: str,
+    prepare_hybrid_query_stage_fn,
+    recent_user_turns_fn,
+    hybrid_query_builder_cls,
+    resolve_routing_and_apply_block_cap_fn,
+    user_stage,
+    route_resolver,
+    confidence_scorer,
+    decision_gate,
+    informational_branch_enabled_fn,
+    resolve_mode_prompt_fn,
+    build_mode_directive_fn,
+    finalize_routing_context_and_trace_fn,
+    phase8_signals,
+    correction_protocol_active: bool,
+    build_first_turn_instruction_fn,
+    build_mixed_query_instruction_fn,
+    build_user_correction_instruction_fn,
+    build_informational_guardrail_instruction_fn,
+    practice_selector,
+    practice_allowed_routes,
+    practice_skip_routes,
+    memory_context_bundle,
+    mode_prompt_key,
+    route_resolution_count: int,
+    truncate_preview_fn,
+    refresh_context_and_apply_trace_snapshot_fn,
+    run_no_retrieval_stage_fn,
+    start_time,
+    schedule_summary_task: bool,
+    debug_info,
+    session_store,
+    user_id: str,
+    set_working_state_best_effort_fn,
+    persist_turn_fn,
+    finalize_failure_debug_trace_fn,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+    prepare_adapted_blocks_and_attach_observability_fn,
+    build_retrieval_debug_details_fn,
+    build_retrieval_detail_fn,
+    build_voyage_rerank_debug_payload_fn,
+    build_routing_debug_payload_fn,
+    build_chunk_trace_lists_after_rerank_fn,
+    model_used: str,
+) -> Dict[str, Any]:
+    hybrid_query_stage = prepare_hybrid_query_stage_fn(
+        query=query,
+        diagnostics_v1=diagnostics_v1,
+        state_analysis=state_analysis,
+        memory=memory,
+        conversation_context=conversation_context,
+        config=config,
+        recent_user_turns_fn=recent_user_turns_fn,
+        hybrid_query_builder_cls=hybrid_query_builder_cls,
+        logger=logger,
+    )
+    hybrid_query = hybrid_query_stage["hybrid_query"]
+
+    retrieval_stage = _run_retrieval_and_rerank_stage(
+        query=query,
+        top_k=top_k,
+        config=config,
+        data_loader=data_loader,
+        get_retriever_fn=get_retriever_fn,
+        timed_fn=timed_fn,
+        detect_author_intent_fn=detect_author_intent_fn,
+        logger=logger,
+        debug_trace=debug_trace,
+        pipeline_stages=pipeline_stages,
+        get_progressive_rag_fn=get_progressive_rag_fn,
+        dedupe_and_apply_progressive_rag_fn=dedupe_and_apply_progressive_rag_fn,
+        log_retrieval_pairs_fn=log_retrieval_pairs_fn,
+        prepare_conditional_rerank_fn=prepare_conditional_rerank_fn,
+        use_deterministic_router=use_deterministic_router,
+        diagnostics_v1=diagnostics_v1,
+        pre_routing_result=pre_routing_result,
+        feature_flag_enabled_fn=feature_flag_enabled_fn,
+        should_rerank_fn=should_rerank_fn,
+        voyage_reranker_cls=voyage_reranker_cls,
+        detect_routing_signals_fn=detect_routing_signals_fn,
+        state_analysis=state_analysis,
+        memory=memory,
+        hybrid_query=hybrid_query,
+    )
+    retrieved_blocks = retrieval_stage["retrieved_blocks"]
+    initial_retrieved_blocks = retrieval_stage["initial_retrieved_blocks"]
+    reranked_blocks_for_trace = retrieval_stage["reranked_blocks_for_trace"]
+    progressive_rag = retrieval_stage["progressive_rag"]
+    should_run_rerank = retrieval_stage["should_run_rerank"]
+    rerank_reason = retrieval_stage["rerank_reason"]
+    rerank_k = retrieval_stage["rerank_k"]
+    rerank_applied = retrieval_stage["rerank_applied"]
+    routing_signals = retrieval_stage["routing_signals"]
+
+    current_stage = "rerank" if rerank_applied else "retrieval"
+
+    routing_cap_stage = resolve_routing_and_apply_block_cap_fn(
+        use_deterministic_router=use_deterministic_router,
+        diagnostics_v1=diagnostics_v1,
+        user_stage=user_stage,
+        route_resolver=route_resolver,
+        confidence_scorer=confidence_scorer,
+        pre_routing_result=pre_routing_result,
+        decision_gate=decision_gate,
+        retrieved_blocks=retrieved_blocks,
+        informational_branch_enabled_fn=informational_branch_enabled_fn,
+        resolve_mode_prompt_fn=resolve_mode_prompt_fn,
+        config=config,
+        log_retrieval_pairs_fn=log_retrieval_pairs_fn,
+        build_mode_directive_fn=build_mode_directive_fn,
+        logger=logger,
+    )
+    routing_result = routing_cap_stage["routing_result"]
+    block_cap = routing_cap_stage["block_cap"]
+    route_resolution_count += int(routing_cap_stage["route_resolution_increment"])
+    informational_mode = routing_cap_stage["informational_mode"]
+    mode_prompt_key = routing_cap_stage["mode_prompt_key"]
+    mode_prompt_override = routing_cap_stage["mode_prompt_override"]
+    retrieved_blocks = routing_cap_stage["retrieved_blocks"]
+    capped_retrieved_blocks = routing_cap_stage["capped_retrieved_blocks"]
+    mode_directive = routing_cap_stage["mode_directive"]
+    state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
+
+    routing_context_stage = finalize_routing_context_and_trace_fn(
+        informational_branch_enabled=informational_branch_enabled_fn(),
+        phase8_signals=phase8_signals,
+        correction_protocol_active=correction_protocol_active,
+        informational_mode=informational_mode,
+        build_first_turn_instruction_fn=build_first_turn_instruction_fn,
+        build_mixed_query_instruction_fn=build_mixed_query_instruction_fn,
+        build_user_correction_instruction_fn=build_user_correction_instruction_fn,
+        build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction_fn,
+        routing_result=routing_result,
+        diagnostics_v1=diagnostics_v1,
+        query=query,
+        memory=memory,
+        practice_selector=practice_selector,
+        practice_allowed_routes=practice_allowed_routes,
+        practice_skip_routes=practice_skip_routes,
+        logger=logger,
+        debug_trace=debug_trace,
+        mode_reason=mode_directive.reason,
+        block_cap=block_cap,
+        initial_retrieved_blocks=initial_retrieved_blocks,
+        hybrid_query=hybrid_query,
+        include_full_content=bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)),
+        truncate_preview_fn=truncate_preview_fn,
+        should_run_rerank=bool(should_run_rerank),
+        rerank_reason=rerank_reason,
+        rerank_applied=bool(rerank_applied),
+        route_resolution_count=route_resolution_count,
+        mode_prompt_key=mode_prompt_key,
+        conversation_context=conversation_context,
+        memory_context_bundle=memory_context_bundle,
+        refresh_context_and_apply_trace_snapshot_fn=refresh_context_and_apply_trace_snapshot_fn,
+    )
+    phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
+    selected_practice = routing_context_stage["selected_practice"]
+    practice_alternatives = routing_context_stage["practice_alternatives"]
+    practice_context_suffix = routing_context_stage["practice_context_suffix"]
+    conversation_context = routing_context_stage["conversation_context"]
+
+    if not retrieved_blocks:
+        return {
+            "current_stage": current_stage,
+            "early_response": run_no_retrieval_stage_fn(
+                state_analysis=state_analysis,
+                memory=memory,
+                start_time=start_time,
+                query=query,
+                routing_result=routing_result,
+                schedule_summary_task=schedule_summary_task,
+                debug_info=debug_info,
+                debug_trace=debug_trace,
+                session_store=session_store,
+                user_id=user_id,
+                pipeline_stages=pipeline_stages,
+                model_used=model_used,
+                initial_retrieved_blocks=initial_retrieved_blocks,
+                reranked_blocks_for_trace=reranked_blocks_for_trace,
+                set_working_state_best_effort_fn=set_working_state_best_effort_fn,
+                persist_turn_fn=persist_turn_fn,
+                finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
+                estimate_cost_fn=estimate_cost_fn,
+                compute_anomalies_fn=compute_anomalies_fn,
+                attach_trace_schema_fn=attach_trace_schema_fn,
+                build_state_trajectory_fn=build_state_trajectory_fn,
+                store_blob_fn=store_blob_fn,
+            ),
+        }
+
+    retrieval_observability_stage = prepare_adapted_blocks_and_attach_observability_fn(
+        retrieved_blocks=retrieved_blocks,
+        routing_signals=routing_signals,
+        progressive_rag=progressive_rag,
+        debug_trace=debug_trace,
+        logger=logger,
+        debug_info=debug_info,
+        hybrid_query=hybrid_query,
+        initial_retrieved_blocks=initial_retrieved_blocks,
+        reranked_blocks_for_trace=reranked_blocks_for_trace,
+        capped_retrieved_blocks=capped_retrieved_blocks,
+        rerank_k=rerank_k,
+        should_run_rerank=should_run_rerank,
+        rerank_reason=rerank_reason,
+        rerank_applied=rerank_applied,
+        block_cap=block_cap,
+        routing_result=routing_result,
+        route_resolution_count=route_resolution_count,
+        build_retrieval_debug_details_fn=build_retrieval_debug_details_fn,
+        build_retrieval_detail_fn=build_retrieval_detail_fn,
+        build_voyage_rerank_debug_payload_fn=build_voyage_rerank_debug_payload_fn,
+        build_routing_debug_payload_fn=build_routing_debug_payload_fn,
+        build_chunk_trace_lists_after_rerank_fn=build_chunk_trace_lists_after_rerank_fn,
+    )
+
+    return {
+        "current_stage": current_stage,
+        "early_response": None,
+        "hybrid_query": hybrid_query,
+        "initial_retrieved_blocks": initial_retrieved_blocks,
+        "reranked_blocks_for_trace": reranked_blocks_for_trace,
+        "routing_result": routing_result,
+        "block_cap": block_cap,
+        "route_resolution_count": route_resolution_count,
+        "informational_mode": informational_mode,
+        "mode_prompt_key": mode_prompt_key,
+        "mode_prompt_override": mode_prompt_override,
+        "mode_directive": mode_directive,
+        "state_context_mode_prompt": state_context_mode_prompt,
+        "phase8_context_suffix": phase8_context_suffix,
+        "selected_practice": selected_practice,
+        "practice_alternatives": practice_alternatives,
+        "practice_context_suffix": practice_context_suffix,
+        "conversation_context": conversation_context,
+        "blocks": retrieval_observability_stage["blocks"],
+        "adapted_blocks": retrieval_observability_stage["adapted_blocks"],
+    }

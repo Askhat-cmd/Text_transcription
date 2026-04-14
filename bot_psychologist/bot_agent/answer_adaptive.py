@@ -75,7 +75,6 @@ from .adaptive_runtime.response_utils import (
     _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
     _prepare_full_path_post_llm_artifacts as _runtime_prepare_full_path_post_llm_artifacts,
-    _finalize_full_path_success_stage as _runtime_finalize_full_path_success_stage,
     _run_full_path_success_stage as _runtime_run_full_path_success_stage,
     _persist_turn_best_effort,
     _persist_turn,
@@ -168,7 +167,6 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _build_prompt_stack_override as _runtime_build_prompt_stack_override,
     _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
     _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
-    _execute_full_path_llm_stage as _runtime_execute_full_path_llm_stage,
     _run_full_path_llm_stage as _runtime_run_full_path_llm_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
@@ -301,10 +299,6 @@ def _format_and_validate_llm_answer(**kwargs):
     return _runtime_format_and_validate_llm_answer(**kwargs)
 
 
-def _execute_full_path_llm_stage(**kwargs):
-    return _runtime_execute_full_path_llm_stage(**kwargs)
-
-
 def _run_full_path_llm_stage(**kwargs):
     return _runtime_run_full_path_llm_stage(**kwargs)
 
@@ -359,10 +353,6 @@ def _build_unhandled_exception_response(**kwargs):
 
 def _prepare_full_path_post_llm_artifacts(**kwargs):
     return _runtime_prepare_full_path_post_llm_artifacts(**kwargs)
-
-
-def _finalize_full_path_success_stage(**kwargs):
-    return _runtime_finalize_full_path_success_stage(**kwargs)
 
 
 def _run_full_path_success_stage(**kwargs):

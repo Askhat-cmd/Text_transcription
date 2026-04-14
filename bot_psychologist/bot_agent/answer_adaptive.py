@@ -70,6 +70,7 @@ from .adaptive_runtime.response_utils import (
     _build_success_response,
     _build_fast_success_metadata,
     _build_full_success_metadata,
+    _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
     _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
@@ -140,6 +141,8 @@ from .adaptive_runtime.routing_stage_helpers import (
     _build_state_context_mode_prompt as _runtime_build_state_context_mode_prompt,
     _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
+    _resolve_practice_selection_context as _runtime_resolve_practice_selection_context,
+    _attach_routing_stage_debug_trace as _runtime_attach_routing_stage_debug_trace,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
@@ -283,6 +286,18 @@ def _dedupe_and_apply_progressive_rag(**kwargs):
 
 def _prepare_conditional_rerank(**kwargs):
     return _runtime_prepare_conditional_rerank(**kwargs)
+
+
+def _resolve_practice_selection_context(**kwargs):
+    return _runtime_resolve_practice_selection_context(**kwargs)
+
+
+def _attach_routing_stage_debug_trace(**kwargs):
+    return _runtime_attach_routing_stage_debug_trace(**kwargs)
+
+
+def _build_path_recommendation_if_enabled(**kwargs):
+    return _runtime_build_path_recommendation_if_enabled(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -1094,84 +1109,39 @@ def answer_question_adaptive(
             build_user_correction_instruction_fn=build_user_correction_instruction,
             build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
         )
-        selected_practice: Optional[Dict[str, Any]] = None
-        practice_alternatives: List[Dict[str, Any]] = []
-        practice_context_suffix = ""
-        resolved_route = str(getattr(routing_result, "route", "") or "").strip().lower()
-        practice_routing_enabled = (
-            resolved_route in PRACTICE_ALLOWED_ROUTES
-            and resolved_route not in PRACTICE_SKIP_ROUTES
-        )
-        if practice_routing_enabled:
-            try:
-                diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
-                selection = practice_selector.select(
-                    route=resolved_route,
-                    nervous_system_state=str(
-                        diagnostics_payload.get("nervous_system_state")
-                        or "window"
-                    ),
-                    request_function=str(
-                        diagnostics_payload.get("request_function")
-                        or "understand"
-                    ),
-                    core_theme=str(diagnostics_payload.get("core_theme") or query),
-                    last_practice_channel=str(memory.metadata.get("last_practice_channel") or ""),
-                    safety_flags=[],
-                )
-                if selection.primary is not None:
-                    selected_practice = selection.primary.as_dict()
-                    practice_alternatives = [item.as_dict() for item in selection.alternatives]
-                    memory.metadata["last_practice_channel"] = selection.primary.entry.channel
-                    practice_context_suffix = (
-                        "\n\nPRACTICE_SUGGESTION:\n"
-                        f"- title: {selection.primary.entry.title}\n"
-                        f"- channel: {selection.primary.entry.channel}\n"
-                        f"- instruction: {selection.primary.entry.instruction}\n"
-                        f"- micro_tuning: {selection.primary.entry.micro_tuning}\n"
-                        f"- closure: {selection.primary.entry.closure}\n"
-                        f"- time_limit_minutes: {selection.primary.entry.time_limit_minutes}"
-                    )
-            except Exception as exc:
-                logger.warning("[PRACTICE] selection skipped: %s", exc)
-        elif resolved_route in PRACTICE_SKIP_ROUTES:
-            logger.info("[PRACTICE] skipped by route policy for route=%s", resolved_route)
-        else:
-            logger.info("[PRACTICE] skipped for route=%s", resolved_route or "unknown")
-
-        if debug_trace is not None:
-            debug_trace["recommended_mode"] = routing_result.mode
-            debug_trace["route_track"] = getattr(routing_result, "track", "direct")
-            debug_trace["route_tone"] = getattr(routing_result, "tone", "minimal")
-            debug_trace["routing_result"] = {
-                "mode": routing_result.mode,
-                "track": getattr(routing_result, "track", "direct"),
-                "tone": getattr(routing_result, "tone", "minimal"),
-            }
-            debug_trace["resolved_route"] = getattr(routing_result, "route", None)
-            debug_trace["decision_rule_id"] = routing_result.decision.rule_id
-            debug_trace["confidence_score"] = routing_result.confidence_score
-            debug_trace["confidence_level"] = routing_result.confidence_level
-            debug_trace["mode_reason"] = mode_directive.reason
-            debug_trace["block_cap"] = block_cap
-            debug_trace["blocks_initial"] = len(initial_retrieved_blocks)
-            debug_trace["hybrid_query_preview"] = _truncate_preview(hybrid_query, 400)
-            debug_trace["hybrid_query_len"] = len(hybrid_query)
-            debug_trace["hybrid_query_text"] = (
-                hybrid_query
-                if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True))
-                else _truncate_preview(hybrid_query, 1200)
+        selected_practice, practice_alternatives, practice_context_suffix = (
+            _resolve_practice_selection_context(
+                routing_result=routing_result,
+                diagnostics_v1=diagnostics_v1,
+                query=query,
+                memory=memory,
+                practice_selector=practice_selector,
+                practice_allowed_routes=PRACTICE_ALLOWED_ROUTES,
+                practice_skip_routes=PRACTICE_SKIP_ROUTES,
+                logger=logger,
             )
-            debug_trace["rerank_should_run"] = bool(should_run_rerank)
-            debug_trace["rerank_reason"] = rerank_reason
-            debug_trace["rerank_applied"] = bool(rerank_applied)
-            debug_trace["route_resolution_count"] = route_resolution_count
-            debug_trace["informational_mode"] = informational_mode
-            debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
-            debug_trace["phase8_context_suffix"] = phase8_context_suffix
-            debug_trace["user_correction_protocol"] = correction_protocol_active
-            debug_trace["selected_practice"] = selected_practice
-            debug_trace["practice_alternatives"] = practice_alternatives
+        )
+
+        _attach_routing_stage_debug_trace(
+            debug_trace=debug_trace,
+            routing_result=routing_result,
+            mode_reason=mode_directive.reason,
+            block_cap=block_cap,
+            initial_retrieved_blocks=initial_retrieved_blocks,
+            hybrid_query=hybrid_query,
+            include_full_content=bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)),
+            truncate_preview_fn=_truncate_preview,
+            should_run_rerank=bool(should_run_rerank),
+            rerank_reason=rerank_reason,
+            rerank_applied=bool(rerank_applied),
+            route_resolution_count=route_resolution_count,
+            informational_mode=informational_mode,
+            mode_prompt_key=mode_prompt_key,
+            phase8_context_suffix=phase8_context_suffix,
+            correction_protocol_active=correction_protocol_active,
+            selected_practice=selected_practice,
+            practice_alternatives=practice_alternatives,
+        )
 
         refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
             memory=memory,
@@ -1512,36 +1482,17 @@ def answer_question_adaptive(
         path_recommendation = None
         route_name = str(getattr(routing_result, "route", "") or "").lower()
         path_builder_blocked_routes = {"inform", "reflect", "contact_hold", "regulate"}
-        should_build_path = (
-            include_path_recommendation
-            and state_analysis.primary_state != UserState.INTEGRATED
-            and route_name not in path_builder_blocked_routes
+        path_recommendation = _build_path_recommendation_if_enabled(
+            include_path_recommendation=include_path_recommendation,
+            state_analysis=state_analysis,
+            route_name=route_name,
+            path_builder_blocked_routes=path_builder_blocked_routes,
+            user_id=user_id,
+            user_level_enum=path_level_enum,
+            memory=memory,
+            path_builder=path_builder,
+            logger=logger,
         )
-        if should_build_path:
-            try:
-                personal_path = path_builder.build_path(
-                    user_id=user_id,
-                    state_analysis=state_analysis,
-                    user_level=path_level_enum,
-                    memory=memory
-                )
-                
-                path_recommendation = {
-                    "current_state": personal_path.current_state.value,
-                    "target_state": personal_path.target_state.value,
-                    "key_focus": personal_path.key_focus,
-                    "steps_count": len(personal_path.path_steps),
-                    "total_duration_weeks": personal_path.total_duration_weeks,
-                    "adaptation_notes": personal_path.adaptation_notes,
-                    "first_step": {
-                        "title": personal_path.path_steps[0].title if personal_path.path_steps else "",
-                        "duration_weeks": personal_path.path_steps[0].duration_weeks if personal_path.path_steps else 0,
-                        "practices": personal_path.path_steps[0].practices[:3] if personal_path.path_steps else []
-                    } if personal_path.path_steps else None
-                }
-            except Exception as e:
-                logger.warning(f"вљ пёЏ РћС€РёР±РєР° РїРѕСЃС‚СЂРѕРµРЅРёСЏ РїСѓС‚Рё: {e}")
-                path_recommendation = None
         
         # ================================================================
         # Р­РўРђРџ 7: РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё

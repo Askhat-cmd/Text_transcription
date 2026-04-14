@@ -253,6 +253,59 @@ def _build_full_success_metadata(
     }
 
 
+def _build_path_recommendation_if_enabled(
+    *,
+    include_path_recommendation: bool,
+    state_analysis: StateAnalysis,
+    route_name: str,
+    path_builder_blocked_routes,
+    user_id: str,
+    user_level_enum,
+    memory,
+    path_builder,
+    logger,
+) -> Optional[Dict[str, Any]]:
+    should_build_path = (
+        include_path_recommendation
+        and state_analysis.primary_state != UserState.INTEGRATED
+        and route_name not in path_builder_blocked_routes
+    )
+    if not should_build_path:
+        return None
+
+    try:
+        personal_path = path_builder.build_path(
+            user_id=user_id,
+            state_analysis=state_analysis,
+            user_level=user_level_enum,
+            memory=memory,
+        )
+        if not personal_path:
+            return None
+        return {
+            "current_state": personal_path.current_state.value,
+            "target_state": personal_path.target_state.value,
+            "key_focus": personal_path.key_focus,
+            "steps_count": len(personal_path.path_steps),
+            "total_duration_weeks": personal_path.total_duration_weeks,
+            "adaptation_notes": personal_path.adaptation_notes,
+            "first_step": {
+                "title": personal_path.path_steps[0].title if personal_path.path_steps else "",
+                "duration_weeks": (
+                    personal_path.path_steps[0].duration_weeks if personal_path.path_steps else 0
+                ),
+                "practices": (
+                    personal_path.path_steps[0].practices[:3] if personal_path.path_steps else []
+                ),
+            }
+            if personal_path.path_steps
+            else None,
+        }
+    except Exception as exc:  # pragma: no cover - defensive path
+        logger.warning("[PATH_BUILDER] recommendation skipped: %s", exc)
+        return None
+
+
 def _persist_turn_best_effort(
     *,
     memory,

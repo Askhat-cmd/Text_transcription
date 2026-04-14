@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 
 INFORMATIONAL_MODE_PROMPT = (
@@ -227,3 +227,120 @@ def _build_fast_path_mode_directive(
         fallback_prompt=mode_directive.prompt,
     )
     return mode_directive, state_context_mode_prompt
+
+
+def _resolve_practice_selection_context(
+    *,
+    routing_result,
+    diagnostics_v1,
+    query: str,
+    memory,
+    practice_selector,
+    practice_allowed_routes,
+    practice_skip_routes,
+    logger,
+) -> Tuple[Optional[Dict[str, Any]], List[Dict[str, Any]], str]:
+    selected_practice: Optional[Dict[str, Any]] = None
+    practice_alternatives: List[Dict[str, Any]] = []
+    practice_context_suffix = ""
+
+    resolved_route = str(getattr(routing_result, "route", "") or "").strip().lower()
+    practice_routing_enabled = (
+        resolved_route in practice_allowed_routes
+        and resolved_route not in practice_skip_routes
+    )
+
+    if practice_routing_enabled:
+        try:
+            diagnostics_payload = diagnostics_v1.as_dict() if diagnostics_v1 else {}
+            selection = practice_selector.select(
+                route=resolved_route,
+                nervous_system_state=str(
+                    diagnostics_payload.get("nervous_system_state") or "window"
+                ),
+                request_function=str(
+                    diagnostics_payload.get("request_function") or "understand"
+                ),
+                core_theme=str(diagnostics_payload.get("core_theme") or query),
+                last_practice_channel=str(memory.metadata.get("last_practice_channel") or ""),
+                safety_flags=[],
+            )
+            if selection.primary is not None:
+                selected_practice = selection.primary.as_dict()
+                practice_alternatives = [item.as_dict() for item in selection.alternatives]
+                memory.metadata["last_practice_channel"] = selection.primary.entry.channel
+                practice_context_suffix = (
+                    "\n\nPRACTICE_SUGGESTION:\n"
+                    f"- title: {selection.primary.entry.title}\n"
+                    f"- channel: {selection.primary.entry.channel}\n"
+                    f"- instruction: {selection.primary.entry.instruction}\n"
+                    f"- micro_tuning: {selection.primary.entry.micro_tuning}\n"
+                    f"- closure: {selection.primary.entry.closure}\n"
+                    f"- time_limit_minutes: {selection.primary.entry.time_limit_minutes}"
+                )
+        except Exception as exc:  # pragma: no cover - guarded side-effect path
+            logger.warning("[PRACTICE] selection skipped: %s", exc)
+    elif resolved_route in practice_skip_routes:
+        logger.info("[PRACTICE] skipped by route policy for route=%s", resolved_route)
+    else:
+        logger.info("[PRACTICE] skipped for route=%s", resolved_route or "unknown")
+
+    return selected_practice, practice_alternatives, practice_context_suffix
+
+
+def _attach_routing_stage_debug_trace(
+    *,
+    debug_trace: Optional[Dict[str, Any]],
+    routing_result,
+    mode_reason: str,
+    block_cap: int,
+    initial_retrieved_blocks,
+    hybrid_query: str,
+    include_full_content: bool,
+    truncate_preview_fn,
+    should_run_rerank: bool,
+    rerank_reason: str,
+    rerank_applied: bool,
+    route_resolution_count: int,
+    informational_mode: bool,
+    mode_prompt_key: Optional[str],
+    phase8_context_suffix: str,
+    correction_protocol_active: bool,
+    selected_practice: Optional[Dict[str, Any]],
+    practice_alternatives: List[Dict[str, Any]],
+) -> None:
+    if debug_trace is None:
+        return
+
+    debug_trace["recommended_mode"] = routing_result.mode
+    debug_trace["route_track"] = getattr(routing_result, "track", "direct")
+    debug_trace["route_tone"] = getattr(routing_result, "tone", "minimal")
+    debug_trace["routing_result"] = {
+        "mode": routing_result.mode,
+        "track": getattr(routing_result, "track", "direct"),
+        "tone": getattr(routing_result, "tone", "minimal"),
+    }
+    debug_trace["resolved_route"] = getattr(routing_result, "route", None)
+    debug_trace["decision_rule_id"] = routing_result.decision.rule_id
+    debug_trace["confidence_score"] = routing_result.confidence_score
+    debug_trace["confidence_level"] = routing_result.confidence_level
+    debug_trace["mode_reason"] = mode_reason
+    debug_trace["block_cap"] = block_cap
+    debug_trace["blocks_initial"] = len(initial_retrieved_blocks or [])
+    debug_trace["hybrid_query_preview"] = truncate_preview_fn(hybrid_query, 400)
+    debug_trace["hybrid_query_len"] = len(hybrid_query or "")
+    debug_trace["hybrid_query_text"] = (
+        hybrid_query
+        if include_full_content
+        else truncate_preview_fn(hybrid_query, 1200)
+    )
+    debug_trace["rerank_should_run"] = bool(should_run_rerank)
+    debug_trace["rerank_reason"] = rerank_reason
+    debug_trace["rerank_applied"] = bool(rerank_applied)
+    debug_trace["route_resolution_count"] = route_resolution_count
+    debug_trace["informational_mode"] = informational_mode
+    debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
+    debug_trace["phase8_context_suffix"] = phase8_context_suffix
+    debug_trace["user_correction_protocol"] = correction_protocol_active
+    debug_trace["selected_practice"] = selected_practice
+    debug_trace["practice_alternatives"] = practice_alternatives

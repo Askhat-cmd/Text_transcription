@@ -147,6 +147,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _generate_llm_with_trace as _runtime_generate_llm_with_trace,
     _run_validation_retry_generation as _runtime_run_validation_retry_generation,
+    _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
 )
 
 logger = logging.getLogger(__name__)
@@ -255,6 +256,10 @@ def _generate_llm_with_trace(**kwargs):
 
 def _run_validation_retry_generation(**kwargs):
     return _runtime_run_validation_retry_generation(**kwargs)
+
+
+def _collect_llm_session_metrics(**kwargs):
+    return _runtime_collect_llm_session_metrics(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -772,17 +777,17 @@ def answer_question_adaptive(
                 log_prefix="[FAST_PATH] working_state update failed:",
             )
 
-            tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
-            tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
-            tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
-            model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else config.LLM_MODEL
-            session_metrics = _update_session_token_metrics(
+            llm_metrics = _collect_llm_session_metrics(
                 memory=memory,
-                tokens_prompt=tokens_prompt,
-                tokens_completion=tokens_completion,
-                tokens_total=tokens_total,
-                model_name=str(model_used),
+                llm_result=llm_result if isinstance(llm_result, dict) else {},
+                fallback_model_name=config.LLM_MODEL,
+                update_session_token_metrics_fn=_update_session_token_metrics,
             )
+            tokens_prompt = llm_metrics["tokens_prompt"]
+            tokens_completion = llm_metrics["tokens_completion"]
+            tokens_total = llm_metrics["tokens_total"]
+            model_used = llm_metrics["model_used"]
+            session_metrics = llm_metrics["session_metrics"]
 
             _persist_turn(
                 memory=memory,
@@ -1620,17 +1625,17 @@ def answer_question_adaptive(
             log_prefix="[ADAPTIVE] working_state update failed:",
         )
 
-        tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
-        tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
-        tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
-        model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else config.LLM_MODEL
-        session_metrics = _update_session_token_metrics(
+        llm_metrics = _collect_llm_session_metrics(
             memory=memory,
-            tokens_prompt=tokens_prompt,
-            tokens_completion=tokens_completion,
-            tokens_total=tokens_total,
-            model_name=str(model_used),
+            llm_result=llm_result if isinstance(llm_result, dict) else {},
+            fallback_model_name=config.LLM_MODEL,
+            update_session_token_metrics_fn=_update_session_token_metrics,
         )
+        tokens_prompt = llm_metrics["tokens_prompt"]
+        tokens_completion = llm_metrics["tokens_completion"]
+        tokens_total = llm_metrics["tokens_total"]
+        model_used = llm_metrics["model_used"]
+        session_metrics = llm_metrics["session_metrics"]
 
         _persist_turn(
             memory=memory,

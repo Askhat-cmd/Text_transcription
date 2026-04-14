@@ -293,3 +293,30 @@ def _run_validation_retry_generation(
     )
     retry_result["answer"] = format_answer_fn(str(retry_result.get("answer") or ""))
     return retry_result
+
+
+def _collect_llm_session_metrics(
+    *,
+    memory,
+    llm_result: Dict[str, Any],
+    fallback_model_name: str,
+    update_session_token_metrics_fn,
+) -> Dict[str, Any]:
+    tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
+    tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
+    tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
+    model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else fallback_model_name
+    session_metrics = update_session_token_metrics_fn(
+        memory=memory,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        tokens_total=tokens_total,
+        model_name=str(model_used),
+    )
+    return {
+        "tokens_prompt": tokens_prompt,
+        "tokens_completion": tokens_completion,
+        "tokens_total": tokens_total,
+        "model_used": model_used,
+        "session_metrics": session_metrics,
+    }

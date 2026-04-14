@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Any, Callable, Dict, List
+from typing import Any, Dict, List
 
 
 def _prepare_hybrid_query_stage(
@@ -60,7 +60,6 @@ def _retrieve_blocks_with_degraded_mode(
     data_loader,
     get_retriever_fn,
     timed_fn,
-    detect_author_intent_fn: Callable[[str, List[str]], str | None],
     logger,
 ) -> Dict[str, Any]:
     retrieval_degraded_reason = None
@@ -74,12 +73,14 @@ def _retrieve_blocks_with_degraded_mode(
     author_id_filter = None
     author_map = {}
     if config.AUTHOR_BLEND_MODE in {"single", "blend"}:
+        from ..semantic_analyzer import detect_author_intent as _detect_author_intent
+
         for block in data_loader.get_all_blocks():
             if block.author and block.author_id:
                 author_map[block.author] = block.author_id
 
         if author_map:
-            author_name = detect_author_intent_fn(query, list(author_map.keys()))
+            author_name = _detect_author_intent(query, list(author_map.keys()))
             if author_name:
                 author_id_filter = author_map.get(author_name)
                 logger.info(
@@ -244,7 +245,6 @@ def _run_retrieval_and_rerank_stage(
     data_loader,
     get_retriever_fn,
     timed_fn,
-    detect_author_intent_fn,
     logger,
     debug_trace,
     pipeline_stages,
@@ -269,7 +269,6 @@ def _run_retrieval_and_rerank_stage(
         data_loader=data_loader,
         get_retriever_fn=get_retriever_fn,
         timed_fn=timed_fn,
-        detect_author_intent_fn=detect_author_intent_fn,
         logger=logger,
     )
     raw_retrieved_blocks = retrieval_stage["raw_retrieved_blocks"]
@@ -379,7 +378,6 @@ def _run_retrieval_routing_context_stage(
     data_loader,
     get_retriever_fn,
     timed_fn,
-    detect_author_intent_fn,
     logger,
     debug_trace,
     pipeline_stages,
@@ -457,7 +455,6 @@ def _run_retrieval_routing_context_stage(
         data_loader=data_loader,
         get_retriever_fn=get_retriever_fn,
         timed_fn=timed_fn,
-        detect_author_intent_fn=detect_author_intent_fn,
         logger=logger,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,

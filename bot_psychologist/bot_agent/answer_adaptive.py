@@ -486,7 +486,6 @@ def answer_question_adaptive(
         logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
 
         current_stage = "retrieval"
-        from .semantic_analyzer import detect_author_intent
         stage3 = _runtime_run_retrieval_routing_context_stage(
             query=query,
             top_k=top_k,
@@ -494,7 +493,6 @@ def answer_question_adaptive(
             data_loader=data_loader,
             get_retriever_fn=get_retriever,
             timed_fn=_timed,
-            detect_author_intent_fn=detect_author_intent,
             logger=logger,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,

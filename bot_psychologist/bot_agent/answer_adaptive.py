@@ -74,6 +74,7 @@ from .adaptive_runtime.response_utils import (
     _build_fast_path_success_response as _runtime_build_fast_path_success_response,
     _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
+    _prepare_full_path_post_llm_artifacts as _runtime_prepare_full_path_post_llm_artifacts,
     _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
@@ -332,6 +333,10 @@ def _build_full_path_success_response(**kwargs):
 
 def _build_unhandled_exception_response(**kwargs):
     return _runtime_build_unhandled_exception_response(**kwargs)
+
+
+def _prepare_full_path_post_llm_artifacts(**kwargs):
+    return _runtime_prepare_full_path_post_llm_artifacts(**kwargs)
 
 
 def _handle_no_retrieval_partial_response(**kwargs):
@@ -1237,81 +1242,43 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ”¬ Р­С‚Р°Рї 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·...")
         
-        semantic_analyzer = SemanticAnalyzer()
-        semantic_data = semantic_analyzer.analyze_relations(adapted_blocks)
-        concepts = semantic_data.get("primary_concepts", [])
-        
-        # ================================================================
-        # Р­РўРђРџ 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ)
-        # ================================================================
         logger.debug("рџ›¤пёЏ Р­С‚Р°Рї 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё...")
-        
-        path_recommendation = None
-        route_name = str(getattr(routing_result, "route", "") or "").lower()
-        path_builder_blocked_routes = {"inform", "reflect", "contact_hold", "regulate"}
-        path_recommendation = _build_path_recommendation_if_enabled(
-            include_path_recommendation=include_path_recommendation,
+        logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
+        logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
+
+        post_llm = _prepare_full_path_post_llm_artifacts(
+            memory=memory,
+            query=query,
+            answer=answer,
             state_analysis=state_analysis,
-            route_name=route_name,
-            path_builder_blocked_routes=path_builder_blocked_routes,
+            routing_result=routing_result,
+            adapted_blocks=adapted_blocks,
+            include_path_recommendation=include_path_recommendation,
+            include_feedback_prompt=include_feedback_prompt,
             user_id=user_id,
             user_level_enum=path_level_enum,
-            memory=memory,
+            llm_result=llm_result,
+            fallback_model_name=str(config.LLM_MODEL),
+            schedule_summary_task=schedule_summary_task,
+            collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+            update_session_token_metrics_fn=_update_session_token_metrics,
+            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            build_path_recommendation_if_enabled_fn=_build_path_recommendation_if_enabled,
+            get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
+            persist_turn_fn=_persist_turn,
+            save_session_summary_best_effort_fn=_save_session_summary_best_effort,
+            semantic_analyzer_cls=SemanticAnalyzer,
             path_builder=path_builder,
             logger=logger,
         )
-        
-        # ================================================================
-        # Р­РўРђРџ 7: РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
-        # ================================================================
-        logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
-        
-        feedback_prompt = ""
-        if include_feedback_prompt:
-            feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
-        
-        # ================================================================
-        # Р­РўРђРџ 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
-        # ================================================================
-        logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
-        
-        _set_working_state_best_effort(
-            memory=memory,
-            state_analysis=state_analysis,
-            routing_result=routing_result,
-            log_prefix="[ADAPTIVE] working_state update failed:",
-        )
-
-        llm_metrics = _collect_llm_session_metrics(
-            memory=memory,
-            llm_result=llm_result if isinstance(llm_result, dict) else {},
-            fallback_model_name=config.LLM_MODEL,
-            update_session_token_metrics_fn=_update_session_token_metrics,
-        )
-        tokens_prompt = llm_metrics["tokens_prompt"]
-        tokens_completion = llm_metrics["tokens_completion"]
-        tokens_total = llm_metrics["tokens_total"]
-        model_used = llm_metrics["model_used"]
-        session_metrics = llm_metrics["session_metrics"]
-
-        _persist_turn(
-            memory=memory,
-            user_input=query,
-            bot_response=answer,
-            user_state=state_analysis.primary_state.value,
-            blocks_used=len(adapted_blocks),
-            concepts=concepts,
-            schedule_summary_task=schedule_summary_task,
-        )
-        _save_session_summary_best_effort(
-            memory=memory,
-            user_id=user_id,
-            query=query,
-            answer=answer,
-            state_end=state_analysis.primary_state.value,
-            concepts=concepts,
-            logger=logger,
-        )
+        concepts = post_llm["concepts"]
+        path_recommendation = post_llm["path_recommendation"]
+        feedback_prompt = post_llm["feedback_prompt"]
+        tokens_prompt = post_llm["tokens_prompt"]
+        tokens_completion = post_llm["tokens_completion"]
+        tokens_total = post_llm["tokens_total"]
+        model_used = post_llm["model_used"]
+        session_metrics = post_llm["session_metrics"]
         
         result = _build_full_path_success_response(
             answer=answer,

@@ -981,3 +981,101 @@ def _build_unhandled_exception_response(
         response["debug_trace"] = debug_trace
 
     return response
+
+
+def _prepare_full_path_post_llm_artifacts(
+    *,
+    memory,
+    query: str,
+    answer: str,
+    state_analysis: StateAnalysis,
+    routing_result,
+    adapted_blocks: List[Any],
+    include_path_recommendation: bool,
+    include_feedback_prompt: bool,
+    user_id: str,
+    user_level_enum,
+    llm_result: Dict[str, Any],
+    fallback_model_name: str,
+    schedule_summary_task: bool,
+    collect_llm_session_metrics_fn,
+    update_session_token_metrics_fn,
+    set_working_state_best_effort_fn,
+    build_path_recommendation_if_enabled_fn,
+    get_feedback_prompt_for_state_fn,
+    persist_turn_fn,
+    save_session_summary_best_effort_fn,
+    semantic_analyzer_cls,
+    path_builder,
+    logger=None,
+) -> Dict[str, Any]:
+    semantic_analyzer = semantic_analyzer_cls()
+    semantic_data = semantic_analyzer.analyze_relations(adapted_blocks)
+    concepts = semantic_data.get("primary_concepts", [])
+
+    route_name = str(getattr(routing_result, "route", "") or "").lower()
+    path_builder_blocked_routes = {"inform", "reflect", "contact_hold", "regulate"}
+    path_recommendation = build_path_recommendation_if_enabled_fn(
+        include_path_recommendation=include_path_recommendation,
+        state_analysis=state_analysis,
+        route_name=route_name,
+        path_builder_blocked_routes=path_builder_blocked_routes,
+        user_id=user_id,
+        user_level_enum=user_level_enum,
+        memory=memory,
+        path_builder=path_builder,
+        logger=logger,
+    )
+
+    feedback_prompt = ""
+    if include_feedback_prompt:
+        feedback_prompt = get_feedback_prompt_for_state_fn(state_analysis.primary_state)
+
+    set_working_state_best_effort_fn(
+        memory=memory,
+        state_analysis=state_analysis,
+        routing_result=routing_result,
+        log_prefix="[ADAPTIVE] working_state update failed:",
+    )
+
+    llm_metrics = collect_llm_session_metrics_fn(
+        memory=memory,
+        llm_result=llm_result if isinstance(llm_result, dict) else {},
+        fallback_model_name=fallback_model_name,
+        update_session_token_metrics_fn=update_session_token_metrics_fn,
+    )
+    tokens_prompt = llm_metrics["tokens_prompt"]
+    tokens_completion = llm_metrics["tokens_completion"]
+    tokens_total = llm_metrics["tokens_total"]
+    model_used = llm_metrics["model_used"]
+    session_metrics = llm_metrics["session_metrics"]
+
+    persist_turn_fn(
+        memory=memory,
+        user_input=query,
+        bot_response=answer,
+        user_state=state_analysis.primary_state.value,
+        blocks_used=len(adapted_blocks),
+        concepts=concepts,
+        schedule_summary_task=schedule_summary_task,
+    )
+    save_session_summary_best_effort_fn(
+        memory=memory,
+        user_id=user_id,
+        query=query,
+        answer=answer,
+        state_end=state_analysis.primary_state.value,
+        concepts=concepts,
+        logger=logger,
+    )
+
+    return {
+        "concepts": concepts,
+        "path_recommendation": path_recommendation,
+        "feedback_prompt": feedback_prompt,
+        "tokens_prompt": tokens_prompt,
+        "tokens_completion": tokens_completion,
+        "tokens_total": tokens_total,
+        "model_used": model_used,
+        "session_metrics": session_metrics,
+    }

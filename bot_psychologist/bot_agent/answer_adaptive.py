@@ -101,6 +101,7 @@ from .adaptive_runtime.trace_helpers import (
     _prepare_llm_prompt_previews,
     _build_llm_call_trace,
     _update_session_token_metrics,
+    _apply_output_validation_observability as _runtime_apply_output_validation_observability,
     _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
     _finalize_success_debug_trace,
@@ -321,6 +322,10 @@ def _compose_state_context(**kwargs):
 
 def _refresh_context_and_apply_trace_snapshot(**kwargs):
     return _runtime_refresh_context_and_apply_trace_snapshot(**kwargs)
+
+
+def _apply_output_validation_observability(**kwargs):
+    return _runtime_apply_output_validation_observability(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -811,16 +816,15 @@ def answer_question_adaptive(
                 mode=pre_routing_result.mode,
                 generate_retry_fn=_retry_fast_validation,
             )
-            if isinstance(validation_retry_result, dict):
-                llm_result["validation_retry_llm"] = validation_retry_result.get("llm_call_info")
-            if debug_trace is not None:
-                debug_trace["output_validation"] = validation_meta
-                pipeline_stages.append(
-                    {"name": "format", "label": "Formatting", "duration_ms": 0, "skipped": False}
-                )
-                pipeline_stages.append(
-                    {"name": "validate", "label": "Validation", "duration_ms": 0, "skipped": False}
-                )
+            _apply_output_validation_observability(
+                validation_meta=validation_meta,
+                validation_retry_result=validation_retry_result,
+                llm_result=llm_result,
+                debug_trace=debug_trace,
+                pipeline_stages=pipeline_stages,
+                fallback_model_name=str(config.LLM_MODEL),
+                include_retry_llm_trace=False,
+            )
 
             _set_working_state_best_effort(
                 memory=memory,
@@ -1405,35 +1409,15 @@ def answer_question_adaptive(
             mode=routing_result.mode,
             generate_retry_fn=_retry_validation,
         )
-        if isinstance(validation_retry_result, dict):
-            llm_result["validation_retry_llm"] = validation_retry_result.get("llm_call_info")
-            retry_call_info = validation_retry_result.get("llm_call_info")
-            if debug_trace is not None and isinstance(retry_call_info, dict):
-                debug_trace.setdefault("llm_calls", []).append(
-                    {
-                        "step": "answer_retry",
-                        "model": retry_call_info.get("model", config.LLM_MODEL),
-                        "system_prompt_preview": retry_call_info.get("system_prompt_preview"),
-                        "user_prompt_preview": retry_call_info.get("user_prompt_preview"),
-                        "response_preview": retry_call_info.get("response_preview"),
-                        "tokens_prompt": retry_call_info.get("tokens_prompt"),
-                        "tokens_completion": retry_call_info.get("tokens_completion"),
-                        "tokens_total": retry_call_info.get("tokens_total"),
-                        "duration_ms": retry_call_info.get("duration_ms"),
-                        "system_prompt_blob_id": retry_call_info.get("system_prompt_blob_id"),
-                        "user_prompt_blob_id": retry_call_info.get("user_prompt_blob_id"),
-                        "memory_snapshot_blob_id": None,
-                        "blob_error": retry_call_info.get("blob_error"),
-                    }
-                )
-        if debug_trace is not None:
-            debug_trace["output_validation"] = validation_meta
-            pipeline_stages.append(
-                {"name": "format", "label": "Formatting", "duration_ms": 0, "skipped": False}
-            )
-            pipeline_stages.append(
-                {"name": "validate", "label": "Validation", "duration_ms": 0, "skipped": False}
-            )
+        _apply_output_validation_observability(
+            validation_meta=validation_meta,
+            validation_retry_result=validation_retry_result,
+            llm_result=llm_result,
+            debug_trace=debug_trace,
+            pipeline_stages=pipeline_stages,
+            fallback_model_name=str(config.LLM_MODEL),
+            include_retry_llm_trace=True,
+        )
 
         # ================================================================
         # Р­РўРђРџ 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР· Рё РёР·РІР»РµС‡РµРЅРёРµ РєРѕРЅС†РµРїС‚РѕРІ

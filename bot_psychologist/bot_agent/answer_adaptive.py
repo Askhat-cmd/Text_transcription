@@ -326,6 +326,12 @@ def answer_question_adaptive(
     
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
+    llm_model_name = str(config.LLM_MODEL)
+    prompt_stack_enabled = _runtime_prompt_stack_v2_enabled()
+    output_validation_enabled = _output_validation_enabled()
+    informational_branch_enabled = _runtime_informational_branch_enabled()
+    diagnostics_v1_enabled = _runtime_diagnostics_v1_enabled()
+    deterministic_route_resolver_enabled = _runtime_deterministic_route_resolver_enabled()
     pipeline_stages: List[Dict] = []
     debug_info, debug_trace = _init_debug_payloads(
         debug=debug,
@@ -359,7 +365,7 @@ def answer_question_adaptive(
             memory_updater=memory_updater,
             config=config,
             detect_phase8_signals_fn=detect_phase8_signals,
-            informational_branch_enabled_fn=_runtime_informational_branch_enabled,
+            informational_branch_enabled_fn=lambda: informational_branch_enabled,
             build_start_command_response_fn=_build_start_command_response,
             truncate_preview_fn=_truncate_preview,
             apply_memory_debug_info_fn=_apply_memory_debug_info,
@@ -401,9 +407,9 @@ def answer_question_adaptive(
             derive_informational_mode_hint_fn=_runtime_derive_informational_mode_hint,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             logger=logger,
-            diagnostics_v1_enabled=_runtime_diagnostics_v1_enabled(),
-            deterministic_route_resolver_enabled=_runtime_deterministic_route_resolver_enabled(),
-            informational_branch_enabled=_runtime_informational_branch_enabled(),
+            diagnostics_v1_enabled=diagnostics_v1_enabled,
+            deterministic_route_resolver_enabled=deterministic_route_resolver_enabled,
+            informational_branch_enabled=informational_branch_enabled,
             diagnostics_classifier=diagnostics_classifier,
             detect_contradiction_fn=detect_contradiction,
             decision_gate_cls=DecisionGate,
@@ -449,7 +455,7 @@ def answer_question_adaptive(
             build_fast_path_block_fn=_runtime_build_fast_path_block,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
-            informational_branch_enabled=_runtime_informational_branch_enabled(),
+            informational_branch_enabled=informational_branch_enabled,
             build_phase8_context_suffix_fn=_runtime_build_phase8_context_suffix,
             build_first_turn_instruction_fn=build_first_turn_instruction,
             build_mixed_query_instruction_fn=build_mixed_query_instruction,
@@ -467,7 +473,7 @@ def answer_question_adaptive(
             session_store=session_store,
             user_id=user_id,
             mode_prompt_override=mode_prompt_override,
-            prompt_stack_enabled=_runtime_prompt_stack_v2_enabled(),
+            prompt_stack_enabled=prompt_stack_enabled,
             prompt_registry=prompt_registry_v2,
             build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
             prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
@@ -485,7 +491,7 @@ def answer_question_adaptive(
             schedule_summary_task=schedule_summary_task,
             start_time=start_time,
             debug_info=debug_info,
-            llm_model_name=str(config.LLM_MODEL),
+            llm_model_name=llm_model_name,
             collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
             persist_turn_fn=_persist_turn,
@@ -493,7 +499,7 @@ def answer_question_adaptive(
             build_fast_path_success_response_fn=_runtime_build_fast_path_success_response,
             build_success_response_fn=_build_success_response,
             build_fast_success_metadata_fn=_build_fast_success_metadata,
-            output_validation_enabled=_output_validation_enabled(),
+            output_validation_enabled=output_validation_enabled,
             attach_success_observability_fn=_attach_success_observability,
             strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
             attach_debug_payload_fn=_attach_debug_payload,
@@ -551,7 +557,7 @@ def answer_question_adaptive(
             route_resolver=route_resolver,
             confidence_scorer=confidence_scorer,
             decision_gate=decision_gate,
-            informational_branch_enabled_fn=_runtime_informational_branch_enabled,
+            informational_branch_enabled_fn=lambda: informational_branch_enabled,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             build_mode_directive_fn=build_mode_directive,
             finalize_routing_context_and_trace_fn=_runtime_finalize_routing_context_and_trace,
@@ -589,7 +595,7 @@ def answer_question_adaptive(
             build_voyage_rerank_debug_payload_fn=_build_voyage_rerank_debug_payload,
             build_routing_debug_payload_fn=_build_routing_debug_payload,
             build_chunk_trace_lists_after_rerank_fn=_build_chunk_trace_lists_after_rerank,
-            model_used=str(config.LLM_MODEL),
+            model_used=llm_model_name,
         )
         current_stage = stage3["current_stage"]
         if stage3["early_response"] is not None:
@@ -634,7 +640,7 @@ def answer_question_adaptive(
             informational_mode=informational_mode,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
-            prompt_stack_enabled=_runtime_prompt_stack_v2_enabled(),
+            prompt_stack_enabled=prompt_stack_enabled,
             prompt_registry=prompt_registry_v2,
             mode_directive=mode_directive,
             debug_trace=debug_trace,
@@ -664,13 +670,13 @@ def answer_question_adaptive(
             attach_trace_schema_fn=attach_trace_schema_status,
             build_state_trajectory_fn=_build_state_trajectory,
             store_blob_fn=_store_blob,
-            llm_model_name=str(config.LLM_MODEL),
+            llm_model_name=llm_model_name,
             logger=logger,
             run_full_path_success_stage_fn=_runtime_run_full_path_success_stage,
             include_path_recommendation=include_path_recommendation,
             include_feedback_prompt=include_feedback_prompt,
             user_level_enum=path_level_enum,
-            fallback_model_name=str(config.LLM_MODEL),
+            fallback_model_name=llm_model_name,
             collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
             set_working_state_best_effort_fn=_set_working_state_best_effort,
@@ -687,7 +693,7 @@ def answer_question_adaptive(
             selected_practice=selected_practice,
             practice_alternatives=practice_alternatives,
             block_cap=block_cap,
-            output_validation_enabled=_output_validation_enabled(),
+            output_validation_enabled=output_validation_enabled,
             memory_context_bundle=memory_context_bundle,
             memory_trace_metrics=memory_trace_metrics,
             hybrid_query=hybrid_query,
@@ -717,7 +723,7 @@ def answer_question_adaptive(
             current_stage=str(current_stage),
             session_store=session_store,
             pipeline_stages=pipeline_stages,
-            llm_model_name=str(config.LLM_MODEL),
+            llm_model_name=llm_model_name,
             build_error_response_fn=_build_error_response,
             get_conversation_memory_fn=get_conversation_memory,
             persist_turn_best_effort_fn=_persist_turn_best_effort,

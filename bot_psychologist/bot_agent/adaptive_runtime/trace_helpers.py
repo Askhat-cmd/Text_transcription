@@ -369,36 +369,31 @@ def _attach_retrieval_observability(
     block_cap: int,
     routing_result,
     route_resolution_count: int,
-    build_retrieval_debug_details_fn,
-    build_retrieval_detail_fn,
-    build_voyage_rerank_debug_payload_fn,
-    build_routing_debug_payload_fn,
-    build_chunk_trace_lists_after_rerank_fn,
 ) -> None:
     if debug_info is not None:
         debug_info["blocks_found"] = len(retrieved_blocks)
         debug_info["blocks_after_filter"] = len(adapted_blocks)
         debug_info["hybrid_query"] = hybrid_query
-        debug_info["retrieval_details"] = build_retrieval_debug_details_fn(
+        debug_info["retrieval_details"] = _build_retrieval_debug_details(
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
             capped_retrieved_blocks=capped_retrieved_blocks,
             adapted_blocks=adapted_blocks,
-            build_retrieval_detail_fn=build_retrieval_detail_fn,
+            build_retrieval_detail_fn=_build_retrieval_detail,
         )
-        debug_info["voyage_rerank"] = build_voyage_rerank_debug_payload_fn(
+        debug_info["voyage_rerank"] = _build_voyage_rerank_debug_payload(
             rerank_k=rerank_k,
             should_run_rerank=should_run_rerank,
             rerank_reason=rerank_reason,
             rerank_applied=rerank_applied,
             block_cap=block_cap,
         )
-        debug_info["routing"] = build_routing_debug_payload_fn(
+        debug_info["routing"] = _build_routing_debug_payload(
             routing_result=routing_result,
             route_resolution_count=route_resolution_count,
         )
     if debug_trace is not None:
-        chunks_retrieved, chunks_after_rerank = build_chunk_trace_lists_after_rerank_fn(
+        chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
             initial_retrieved=initial_retrieved_blocks,
             reranked=reranked_blocks_for_trace,
         )
@@ -425,11 +420,6 @@ def _prepare_adapted_blocks_and_attach_observability(
     block_cap: int,
     routing_result,
     route_resolution_count: int,
-    build_retrieval_debug_details_fn,
-    build_retrieval_detail_fn,
-    build_voyage_rerank_debug_payload_fn,
-    build_routing_debug_payload_fn,
-    build_chunk_trace_lists_after_rerank_fn,
 ) -> Dict[str, Any]:
     blocks = [block for block, _score in retrieved_blocks]
     adapted_blocks = list(blocks)
@@ -470,11 +460,6 @@ def _prepare_adapted_blocks_and_attach_observability(
         block_cap=block_cap,
         routing_result=routing_result,
         route_resolution_count=route_resolution_count,
-        build_retrieval_debug_details_fn=build_retrieval_debug_details_fn,
-        build_retrieval_detail_fn=build_retrieval_detail_fn,
-        build_voyage_rerank_debug_payload_fn=build_voyage_rerank_debug_payload_fn,
-        build_routing_debug_payload_fn=build_routing_debug_payload_fn,
-        build_chunk_trace_lists_after_rerank_fn=build_chunk_trace_lists_after_rerank_fn,
     )
 
     return {

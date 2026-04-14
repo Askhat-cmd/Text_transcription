@@ -435,11 +435,6 @@ def _run_retrieval_routing_context_stage(
     build_state_trajectory_fn,
     store_blob_fn,
     prepare_adapted_blocks_and_attach_observability_fn,
-    build_retrieval_debug_details_fn,
-    build_retrieval_detail_fn,
-    build_voyage_rerank_debug_payload_fn,
-    build_routing_debug_payload_fn,
-    build_chunk_trace_lists_after_rerank_fn,
     model_used: str,
 ) -> Dict[str, Any]:
     hybrid_query_stage = _prepare_hybrid_query_stage(
@@ -604,11 +599,6 @@ def _run_retrieval_routing_context_stage(
         block_cap=block_cap,
         routing_result=routing_result,
         route_resolution_count=route_resolution_count,
-        build_retrieval_debug_details_fn=build_retrieval_debug_details_fn,
-        build_retrieval_detail_fn=build_retrieval_detail_fn,
-        build_voyage_rerank_debug_payload_fn=build_voyage_rerank_debug_payload_fn,
-        build_routing_debug_payload_fn=build_routing_debug_payload_fn,
-        build_chunk_trace_lists_after_rerank_fn=build_chunk_trace_lists_after_rerank_fn,
     )
 
     return {

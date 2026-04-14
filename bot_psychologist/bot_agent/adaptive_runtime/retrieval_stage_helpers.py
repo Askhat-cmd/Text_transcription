@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List
 
+from .pipeline_utils import _timed as _runtime_timed
+
 
 def _prepare_hybrid_query_stage(
     *,
@@ -59,7 +61,6 @@ def _retrieve_blocks_with_degraded_mode(
     config,
     data_loader,
     get_retriever_fn,
-    timed_fn,
     logger,
 ) -> Dict[str, Any]:
     retrieval_degraded_reason = None
@@ -116,7 +117,7 @@ def _retrieve_blocks_with_degraded_mode(
                     "skipped": False,
                 }
             else:
-                raw_retrieved_blocks, stage = timed_fn(
+                raw_retrieved_blocks, stage = _runtime_timed(
                     "retrieval",
                     "Retrieval",
                     retriever.retrieve,
@@ -245,7 +246,6 @@ def _run_retrieval_and_rerank_stage(
     config,
     data_loader,
     get_retriever_fn,
-    timed_fn,
     logger,
     debug_trace,
     pipeline_stages,
@@ -268,7 +268,6 @@ def _run_retrieval_and_rerank_stage(
         config=config,
         data_loader=data_loader,
         get_retriever_fn=get_retriever_fn,
-        timed_fn=timed_fn,
         logger=logger,
     )
     raw_retrieved_blocks = retrieval_stage["raw_retrieved_blocks"]
@@ -314,7 +313,7 @@ def _run_retrieval_and_rerank_stage(
                 or (conditional_reranker and config.RERANKER_ENABLED)
             ),
         )
-        reranked, rerank_stage = timed_fn(
+        reranked, rerank_stage = _runtime_timed(
             "rerank",
             "Rerank",
             reranker.rerank_pairs,
@@ -375,7 +374,6 @@ def _run_retrieval_routing_context_stage(
     config,
     data_loader,
     get_retriever_fn,
-    timed_fn,
     logger,
     debug_trace,
     pipeline_stages,
@@ -449,7 +447,6 @@ def _run_retrieval_routing_context_stage(
         config=config,
         data_loader=data_loader,
         get_retriever_fn=get_retriever_fn,
-        timed_fn=timed_fn,
         logger=logger,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,

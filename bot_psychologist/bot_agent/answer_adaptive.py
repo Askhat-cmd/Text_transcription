@@ -490,7 +490,6 @@ def answer_question_adaptive(
             config=config,
             data_loader=data_loader,
             get_retriever_fn=get_retriever,
-            timed_fn=_timed,
             logger=logger,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,

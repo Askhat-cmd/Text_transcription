@@ -11,6 +11,104 @@ INFORMATIONAL_MODE_PROMPT = (
 )
 
 
+def _run_state_analysis_stage(
+    *,
+    query: str,
+    memory,
+    config,
+    phase8_signals,
+    debug_trace: Optional[Dict[str, Any]],
+    debug_info: Optional[Dict[str, Any]],
+    pipeline_stages: List[Dict[str, Any]],
+    timed_fn,
+    run_coroutine_sync_fn,
+    state_classifier,
+    classify_parallel_fn,
+    fallback_state_analysis_fn,
+    fallback_sd_result_fn,
+    resolve_user_stage_fn,
+    derive_informational_mode_hint_fn,
+    resolve_mode_prompt_fn,
+    logger,
+) -> Dict[str, Any]:
+    conversation_history = [
+        {"role": "user", "content": turn.user_input}
+        for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
+    ]
+
+    if debug_trace is not None:
+        try:
+            state_analysis, stage = timed_fn(
+                "state_classifier",
+                "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
+                run_coroutine_sync_fn,
+                state_classifier.classify(
+                    query,
+                    conversation_history=conversation_history,
+                ),
+            )
+            pipeline_stages.append(stage)
+        except Exception as exc:
+            logger.warning(
+                "[CLASSIFY] StateClassifier failed: %s. Using fallback.",
+                exc,
+            )
+            state_analysis = fallback_state_analysis_fn()
+            pipeline_stages.append(
+                {
+                    "name": "state_classifier",
+                    "label": "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
+                    "duration_ms": 0,
+                    "skipped": False,
+                }
+            )
+        sd_result = fallback_sd_result_fn("disabled_by_design")
+    else:
+        state_analysis, sd_result = run_coroutine_sync_fn(
+            classify_parallel_fn(
+                query,
+                conversation_history,
+            )
+        )
+
+    user_stage = resolve_user_stage_fn(memory, state_analysis)
+    informational_mode_hint = derive_informational_mode_hint_fn(phase8_signals, query)
+    informational_mode = informational_mode_hint
+    mode_prompt_key, mode_prompt_override = resolve_mode_prompt_fn(
+        "informational" if informational_mode else "",
+        config,
+    )
+
+    logger.info("STATE ANALYSIS ready conf=%.2f", float(state_analysis.confidence))
+
+    if debug_info is not None:
+        debug_info["state_analysis"] = {
+            "primary": state_analysis.primary_state.value,
+            "confidence": state_analysis.confidence,
+            "secondary": [s.value for s in state_analysis.secondary_states],
+            "emotional_tone": state_analysis.emotional_tone,
+            "depth": state_analysis.depth,
+            "user_stage": user_stage,
+        }
+
+    if debug_trace is not None:
+        debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
+        debug_trace["user_state"] = state_analysis.primary_state.value
+        debug_trace["informational_mode_hint"] = informational_mode_hint
+        debug_trace["informational_mode"] = informational_mode
+        debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
+
+    return {
+        "state_analysis": state_analysis,
+        "sd_result": sd_result,
+        "user_stage": user_stage,
+        "informational_mode_hint": informational_mode_hint,
+        "informational_mode": informational_mode,
+        "mode_prompt_key": mode_prompt_key,
+        "mode_prompt_override": mode_prompt_override,
+    }
+
+
 def _compute_diagnostics_v1(
     *,
     query: str,

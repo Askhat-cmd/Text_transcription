@@ -141,6 +141,7 @@ from .adaptive_runtime.mode_policy_helpers import (
     _apply_output_validation_policy as _runtime_apply_output_validation_policy,
 )
 from .adaptive_runtime.routing_stage_helpers import (
+    _run_state_analysis_stage as _runtime_run_state_analysis_stage,
     _compute_diagnostics_v1 as _runtime_compute_diagnostics_v1,
     _build_contradiction_payload as _runtime_build_contradiction_payload,
     _resolve_pre_routing as _runtime_resolve_pre_routing,
@@ -303,6 +304,10 @@ def _dedupe_and_apply_progressive_rag(**kwargs):
 
 def _prepare_conditional_rerank(**kwargs):
     return _runtime_prepare_conditional_rerank(**kwargs)
+
+
+def _run_state_analysis_stage(**kwargs):
+    return _runtime_run_state_analysis_stage(**kwargs)
 
 
 def _resolve_practice_selection_context(**kwargs):
@@ -568,73 +573,33 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
         
-        # РџРѕР»СѓС‡РёС‚СЊ РёСЃС‚РѕСЂРёСЋ РґР»СЏ РєРѕРЅС‚РµРєСЃС‚Р° Р°РЅР°Р»РёР·Р°
-        conversation_history = [
-            {"role": "user", "content": turn.user_input}
-            for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
-        ]
-        
-        if debug_trace is not None:
-            current_stage = "state_classifier"
-            try:
-                state_analysis, stage = _timed(
-                    "state_classifier",
-                    "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
-                    _run_coroutine_sync,
-                    state_classifier.classify(
-                        query,
-                        conversation_history=conversation_history,
-                    ),
-                )
-                pipeline_stages.append(stage)
-            except Exception as exc:
-                logger.warning(
-                    "[CLASSIFY] StateClassifier failed: %s. Using fallback.",
-                    exc,
-                )
-                state_analysis = _fallback_state_analysis()
-                pipeline_stages.append(
-                    {
-                        "name": "state_classifier",
-                        "label": "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
-                        "duration_ms": 0,
-                        "skipped": False,
-                    }
-                )
-            sd_result = _fallback_sd_result("disabled_by_design")
-        else:
-            state_analysis, sd_result = _run_coroutine_sync(
-                _classify_parallel(
-                    query,
-                    conversation_history,
-                )
-            )
-        user_stage = resolve_user_stage(memory, state_analysis)
-        informational_mode_hint = _derive_informational_mode_hint(phase8_signals, query)
-        informational_mode = informational_mode_hint
-        mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
-            "informational" if informational_mode else "",
-            config,
+        current_stage = "state_classifier"
+        stage2 = _run_state_analysis_stage(
+            query=query,
+            memory=memory,
+            config=config,
+            phase8_signals=phase8_signals,
+            debug_trace=debug_trace,
+            debug_info=debug_info,
+            pipeline_stages=pipeline_stages,
+            timed_fn=_timed,
+            run_coroutine_sync_fn=_run_coroutine_sync,
+            state_classifier=state_classifier,
+            classify_parallel_fn=_classify_parallel,
+            fallback_state_analysis_fn=_fallback_state_analysis,
+            fallback_sd_result_fn=_fallback_sd_result,
+            resolve_user_stage_fn=resolve_user_stage,
+            derive_informational_mode_hint_fn=_derive_informational_mode_hint,
+            resolve_mode_prompt_fn=resolve_mode_prompt,
+            logger=logger,
         )
-
-        logger.info("STATE ANALYSIS ready conf=%.2f", float(state_analysis.confidence))
-
-        if debug_info is not None:
-            debug_info["state_analysis"] = {
-                "primary": state_analysis.primary_state.value,
-                "confidence": state_analysis.confidence,
-                "secondary": [s.value for s in state_analysis.secondary_states],
-                "emotional_tone": state_analysis.emotional_tone,
-                "depth": state_analysis.depth,
-                "user_stage": user_stage,
-            }
-
-        if debug_trace is not None:
-            debug_trace["state_secondary"] = [s.value for s in state_analysis.secondary_states]
-            debug_trace["user_state"] = state_analysis.primary_state.value
-            debug_trace["informational_mode_hint"] = informational_mode_hint
-            debug_trace["informational_mode"] = informational_mode
-            debug_trace["applied_mode_prompt"] = mode_prompt_key if informational_mode else None
+        state_analysis = stage2["state_analysis"]
+        sd_result = stage2["sd_result"]
+        user_stage = stage2["user_stage"]
+        informational_mode_hint = stage2["informational_mode_hint"]
+        informational_mode = stage2["informational_mode"]
+        mode_prompt_key = stage2["mode_prompt_key"]
+        mode_prompt_override = stage2["mode_prompt_override"]
 
         use_new_diagnostics_v1 = _diagnostics_v1_enabled()
         use_deterministic_router = (

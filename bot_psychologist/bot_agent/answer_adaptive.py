@@ -268,106 +268,6 @@ def _build_start_command_response(
     )
 
 
-def _generate_llm_with_trace(**kwargs):
-    return _runtime_generate_llm_with_trace(**kwargs)
-
-
-def _run_validation_retry_generation(**kwargs):
-    return _runtime_run_validation_retry_generation(**kwargs)
-
-
-def _collect_llm_session_metrics(**kwargs):
-    return _runtime_collect_llm_session_metrics(**kwargs)
-
-
-def _build_prompt_stack_override(**kwargs):
-    return _runtime_build_prompt_stack_override(**kwargs)
-
-
-def _run_llm_generation_cycle(**kwargs):
-    return _runtime_run_llm_generation_cycle(**kwargs)
-
-
-def _format_and_validate_llm_answer(**kwargs):
-    return _runtime_format_and_validate_llm_answer(**kwargs)
-
-
-def _run_full_path_llm_stage(**kwargs):
-    return _runtime_run_full_path_llm_stage(**kwargs)
-
-
-def _run_fast_path_stage(**kwargs):
-    return _runtime_run_fast_path_stage(**kwargs)
-
-
-def _dedupe_and_apply_progressive_rag(**kwargs):
-    return _runtime_dedupe_and_apply_progressive_rag(**kwargs)
-
-
-def _prepare_conditional_rerank(**kwargs):
-    return _runtime_prepare_conditional_rerank(**kwargs)
-
-
-def _run_retrieval_and_rerank_stage(**kwargs):
-    return _runtime_run_retrieval_and_rerank_stage(**kwargs)
-
-
-def _run_state_and_pre_routing_pipeline(**kwargs):
-    return _runtime_run_state_and_pre_routing_pipeline(**kwargs)
-
-
-def _resolve_routing_and_apply_block_cap(**kwargs):
-    return _runtime_resolve_routing_and_apply_block_cap(**kwargs)
-
-
-def _finalize_routing_context_and_trace(**kwargs):
-    return _runtime_finalize_routing_context_and_trace(**kwargs)
-
-
-def _build_path_recommendation_if_enabled(**kwargs):
-    return _runtime_build_path_recommendation_if_enabled(**kwargs)
-
-
-def _build_fast_path_success_response(**kwargs):
-    return _runtime_build_fast_path_success_response(**kwargs)
-
-
-def _build_full_path_success_response(**kwargs):
-    return _runtime_build_full_path_success_response(**kwargs)
-
-
-def _build_unhandled_exception_response(**kwargs):
-    return _runtime_build_unhandled_exception_response(**kwargs)
-
-
-def _run_full_path_success_stage(**kwargs):
-    return _runtime_run_full_path_success_stage(**kwargs)
-
-
-def _run_no_retrieval_stage(**kwargs):
-    return _runtime_run_no_retrieval_stage(**kwargs)
-
-
-def _handle_llm_generation_error_response(**kwargs):
-    return _runtime_handle_llm_generation_error_response(**kwargs)
-
-
-def _prepare_adapted_blocks_and_attach_observability(**kwargs):
-    return _runtime_prepare_adapted_blocks_and_attach_observability(**kwargs)
-
-
-def _compose_state_context(**kwargs):
-    return _runtime_compose_state_context(**kwargs)
-
-
-def _refresh_context_and_apply_trace_snapshot(**kwargs):
-    return _runtime_refresh_context_and_apply_trace_snapshot(**kwargs)
-
-
-def _apply_output_validation_observability(**kwargs):
-    return _runtime_apply_output_validation_observability(**kwargs)
-
-
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
     return _runtime_resolve_path_user_level(_user_level)
 
@@ -584,7 +484,7 @@ def answer_question_adaptive(
         logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
         
         current_stage = "state_classifier"
-        stage2 = _run_state_and_pre_routing_pipeline(
+        stage2 = _runtime_run_state_and_pre_routing_pipeline(
             query=query,
             memory=memory,
             config=config,
@@ -630,7 +530,7 @@ def answer_question_adaptive(
         pre_routing_result = stage2["pre_routing_result"]
         fast_path_enabled = stage2["fast_path_enabled"]
 
-        fast_path_stage = _run_fast_path_stage(
+        fast_path_stage = _runtime_run_fast_path_stage(
             fast_path_enabled=fast_path_enabled,
             logger=logger,
             pre_routing_result=pre_routing_result,
@@ -648,7 +548,7 @@ def answer_question_adaptive(
             conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
             diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            refresh_context_and_apply_trace_snapshot_fn=_refresh_context_and_apply_trace_snapshot,
+            refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
             build_fast_path_block_fn=_build_fast_path_block,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
@@ -661,10 +561,10 @@ def answer_question_adaptive(
             state_analysis=state_analysis,
             contradiction_hint=contradiction_hint,
             cross_session_context=cross_session_context,
-            compose_state_context_fn=_compose_state_context,
+            compose_state_context_fn=_runtime_compose_state_context,
             build_state_context_fn=_build_state_context,
             diagnostics_v1=diagnostics_v1,
-            run_llm_generation_cycle_fn=_run_llm_generation_cycle,
+            run_llm_generation_cycle_fn=_runtime_run_llm_generation_cycle,
             response_generator_cls=ResponseGenerator,
             sd_primary=sd_result.primary,
             session_store=session_store,
@@ -672,15 +572,15 @@ def answer_question_adaptive(
             mode_prompt_override=mode_prompt_override,
             prompt_stack_enabled=_prompt_stack_v2_enabled(),
             prompt_registry=prompt_registry_v2,
-            build_prompt_stack_override_fn=_build_prompt_stack_override,
+            build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
             prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
-            generate_llm_with_trace_fn=_generate_llm_with_trace,
+            generate_llm_with_trace_fn=_runtime_generate_llm_with_trace,
             build_llm_call_trace_fn=_build_llm_call_trace,
-            format_and_validate_llm_answer_fn=_format_and_validate_llm_answer,
+            format_and_validate_llm_answer_fn=_runtime_format_and_validate_llm_answer,
             response_formatter_cls=ResponseFormatter,
-            run_validation_retry_generation_fn=_run_validation_retry_generation,
+            run_validation_retry_generation_fn=_runtime_run_validation_retry_generation,
             apply_output_validation_policy_fn=_apply_output_validation_policy,
-            apply_output_validation_observability_fn=_apply_output_validation_observability,
+            apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
             set_working_state_best_effort_fn=_set_working_state_best_effort,
             include_feedback_prompt=include_feedback_prompt,
             mode_prompt_key=mode_prompt_key,
@@ -689,11 +589,11 @@ def answer_question_adaptive(
             start_time=start_time,
             debug_info=debug_info,
             llm_model_name=str(config.LLM_MODEL),
-            collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+            collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
             persist_turn_fn=_persist_turn,
             get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
-            build_fast_path_success_response_fn=_build_fast_path_success_response,
+            build_fast_path_success_response_fn=_runtime_build_fast_path_success_response,
             build_success_response_fn=_build_success_response,
             build_fast_success_metadata_fn=_build_fast_success_metadata,
             output_validation_enabled=_output_validation_enabled(),
@@ -749,7 +649,7 @@ def answer_question_adaptive(
 
         current_stage = "retrieval"
         from .semantic_analyzer import detect_author_intent
-        retrieval_stage = _run_retrieval_and_rerank_stage(
+        retrieval_stage = _runtime_run_retrieval_and_rerank_stage(
             query=query,
             top_k=top_k,
             config=config,
@@ -761,9 +661,9 @@ def answer_question_adaptive(
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
             get_progressive_rag_fn=get_progressive_rag,
-            dedupe_and_apply_progressive_rag_fn=_dedupe_and_apply_progressive_rag,
+            dedupe_and_apply_progressive_rag_fn=_runtime_dedupe_and_apply_progressive_rag,
             log_retrieval_pairs_fn=_log_retrieval_pairs,
-            prepare_conditional_rerank_fn=_prepare_conditional_rerank,
+            prepare_conditional_rerank_fn=_runtime_prepare_conditional_rerank,
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,
             pre_routing_result=pre_routing_result,
@@ -789,7 +689,7 @@ def answer_question_adaptive(
         if rerank_applied:
             current_stage = "rerank"
 
-        routing_cap_stage = _resolve_routing_and_apply_block_cap(
+        routing_cap_stage = _runtime_resolve_routing_and_apply_block_cap(
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,
             user_stage=user_stage,
@@ -816,7 +716,7 @@ def answer_question_adaptive(
         mode_directive = routing_cap_stage["mode_directive"]
         state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
 
-        routing_context_stage = _finalize_routing_context_and_trace(
+        routing_context_stage = _runtime_finalize_routing_context_and_trace(
             informational_branch_enabled=_informational_branch_enabled(),
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
@@ -847,7 +747,7 @@ def answer_question_adaptive(
             mode_prompt_key=mode_prompt_key,
             conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
-            refresh_context_and_apply_trace_snapshot_fn=_refresh_context_and_apply_trace_snapshot,
+            refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
         )
         phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
         selected_practice = routing_context_stage["selected_practice"]
@@ -856,7 +756,7 @@ def answer_question_adaptive(
         conversation_context = routing_context_stage["conversation_context"]
 
         if not retrieved_blocks:
-            return _run_no_retrieval_stage(
+            return _runtime_run_no_retrieval_stage(
                 state_analysis=state_analysis,
                 memory=memory,
                 start_time=start_time,
@@ -881,7 +781,7 @@ def answer_question_adaptive(
                 store_blob_fn=_store_blob,
             )
         
-        retrieval_observability_stage = _prepare_adapted_blocks_and_attach_observability(
+        retrieval_observability_stage = _runtime_prepare_adapted_blocks_and_attach_observability(
             retrieved_blocks=retrieved_blocks,
             routing_signals=routing_signals,
             progressive_rag=progressive_rag,
@@ -914,7 +814,7 @@ def answer_question_adaptive(
         logger.debug("рџ¤– Р­С‚Р°Рї 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р°...")
         
         # Р”РѕР±Р°РІРёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        state_context = _compose_state_context(
+        state_context = _runtime_compose_state_context(
             state_analysis=state_analysis,
             mode_prompt=state_context_mode_prompt,
             nervous_system_state=(
@@ -932,7 +832,7 @@ def answer_question_adaptive(
 
         # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
         current_stage = "llm"
-        llm_stage = _run_full_path_llm_stage(
+        llm_stage = _runtime_run_full_path_llm_stage(
             query=query,
             adapted_blocks=adapted_blocks,
             conversation_context=conversation_context,
@@ -952,18 +852,18 @@ def answer_question_adaptive(
             mode_prompt=mode_directive.prompt,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
-            run_llm_generation_cycle_fn=_run_llm_generation_cycle,
+            run_llm_generation_cycle_fn=_runtime_run_llm_generation_cycle,
             response_generator_cls=ResponseGenerator,
-            build_prompt_stack_override_fn=_build_prompt_stack_override,
+            build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
             prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
-            generate_llm_with_trace_fn=_generate_llm_with_trace,
+            generate_llm_with_trace_fn=_runtime_generate_llm_with_trace,
             build_llm_call_trace_fn=_build_llm_call_trace,
-            format_and_validate_llm_answer_fn=_format_and_validate_llm_answer,
+            format_and_validate_llm_answer_fn=_runtime_format_and_validate_llm_answer,
             response_formatter_cls=ResponseFormatter,
-            run_validation_retry_generation_fn=_run_validation_retry_generation,
+            run_validation_retry_generation_fn=_runtime_run_validation_retry_generation,
             apply_output_validation_policy_fn=_apply_output_validation_policy,
-            apply_output_validation_observability_fn=_apply_output_validation_observability,
-            handle_llm_generation_error_response_fn=_handle_llm_generation_error_response,
+            apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
+            handle_llm_generation_error_response_fn=_runtime_handle_llm_generation_error_response,
             state_analysis=state_analysis,
             start_time=start_time,
             memory=memory,
@@ -994,7 +894,7 @@ def answer_question_adaptive(
         logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
         logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
 
-        result = _run_full_path_success_stage(
+        result = _runtime_run_full_path_success_stage(
             memory=memory,
             query=query,
             answer=answer,
@@ -1008,16 +908,16 @@ def answer_question_adaptive(
             llm_result=llm_result,
             fallback_model_name=str(config.LLM_MODEL),
             schedule_summary_task=schedule_summary_task,
-            collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+            collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
             set_working_state_best_effort_fn=_set_working_state_best_effort,
-            build_path_recommendation_if_enabled_fn=_build_path_recommendation_if_enabled,
+            build_path_recommendation_if_enabled_fn=_runtime_build_path_recommendation_if_enabled,
             get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
             persist_turn_fn=_persist_turn,
             save_session_summary_best_effort_fn=_save_session_summary_best_effort,
             semantic_analyzer_cls=SemanticAnalyzer,
             path_builder=path_builder,
-            build_full_path_success_response_fn=_build_full_path_success_response,
+            build_full_path_success_response_fn=_runtime_build_full_path_success_response,
             conversation_context=conversation_context,
             debug_info=debug_info,
             debug_trace=debug_trace,
@@ -1060,7 +960,7 @@ def answer_question_adaptive(
     
     except Exception as e:
         logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)
-        response = _build_unhandled_exception_response(
+        response = _runtime_build_unhandled_exception_response(
             exception=e,
             state_analysis=state_analysis,
             start_time=start_time,

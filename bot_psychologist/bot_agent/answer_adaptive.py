@@ -97,12 +97,10 @@ from .adaptive_runtime.trace_helpers import (
     _prepare_llm_prompt_previews,
     _build_llm_call_trace,
     _update_session_token_metrics,
-    _build_memory_context_snapshot,
     _refresh_runtime_memory_snapshot,
     _apply_memory_debug_info,
-    _apply_trace_memory_snapshot,
-    _finalize_trace_payload,
     _finalize_success_debug_trace,
+    _finalize_failure_debug_trace,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
@@ -1263,37 +1261,31 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
-                    initial_retrieved=initial_retrieved_blocks,
-                    reranked=reranked_blocks_for_trace,
-                )
-                debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_rerank
-                debug_trace["blocks_after_cap"] = 0
-                pipeline_stages.append(
-                    {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True}
-                )
-                pipeline_stages.append(
-                    {"name": "format", "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ", "duration_ms": 0, "skipped": True}
-                )
-                _apply_trace_memory_snapshot(
+                debug_trace = _finalize_failure_debug_trace(
                     debug_trace,
                     memory=memory,
                     start_time=start_time,
                     session_store=session_store,
                     user_id=user_id,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                )
-                debug_trace["estimated_cost_usd"] = _estimate_cost(
-                    debug_trace.get("llm_calls", []),
-                    str(config.LLM_MODEL),
-                )
-                debug_trace = _finalize_trace_payload(
-                    debug_trace,
                     pipeline_stages=pipeline_stages,
+                    model_used=str(config.LLM_MODEL),
+                    estimate_cost_fn=_estimate_cost,
                     compute_anomalies_fn=_compute_anomalies,
                     attach_trace_schema_fn=attach_trace_schema_status,
+                    build_state_trajectory_fn=_build_state_trajectory,
+                    store_blob_fn=_store_blob,
+                    initial_retrieved_blocks=initial_retrieved_blocks,
+                    reranked_blocks_for_trace=reranked_blocks_for_trace,
+                    blocks_after_cap=0,
+                    append_stages=[
+                        {"name": "llm", "label": "LLM", "duration_ms": 0, "skipped": True},
+                        {
+                            "name": "format",
+                            "label": "Р¤РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ",
+                            "duration_ms": 0,
+                            "skipped": True,
+                        },
+                    ],
                 )
                 response["debug_trace"] = debug_trace
             return response
@@ -1456,30 +1448,21 @@ def answer_question_adaptive(
                 debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
                 response["debug"] = debug_info
             if debug_trace is not None:
-                chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
-                    initial_retrieved=initial_retrieved_blocks,
-                    reranked=reranked_blocks_for_trace,
-                )
-                debug_trace["chunks_retrieved"] = chunks_retrieved
-                debug_trace["chunks_after_filter"] = chunks_after_rerank
-                _apply_trace_memory_snapshot(
+                debug_trace = _finalize_failure_debug_trace(
                     debug_trace,
                     memory=memory,
                     start_time=start_time,
                     session_store=session_store,
                     user_id=user_id,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                )
-                debug_trace["estimated_cost_usd"] = _estimate_cost(
-                    debug_trace.get("llm_calls", []),
-                    str(config.LLM_MODEL),
-                )
-                debug_trace = _finalize_trace_payload(
-                    debug_trace,
                     pipeline_stages=pipeline_stages,
+                    model_used=str(config.LLM_MODEL),
+                    estimate_cost_fn=_estimate_cost,
                     compute_anomalies_fn=_compute_anomalies,
                     attach_trace_schema_fn=attach_trace_schema_status,
+                    build_state_trajectory_fn=_build_state_trajectory,
+                    store_blob_fn=_store_blob,
+                    initial_retrieved_blocks=initial_retrieved_blocks,
+                    reranked_blocks_for_trace=reranked_blocks_for_trace,
                 )
                 response["debug_trace"] = debug_trace
             return response
@@ -1783,24 +1766,24 @@ def answer_question_adaptive(
             }
             try:
                 memory = get_conversation_memory(user_id)
-                _apply_trace_memory_snapshot(
+                debug_trace = _finalize_failure_debug_trace(
                     debug_trace,
                     memory=memory,
                     start_time=start_time,
                     session_store=session_store,
                     user_id=user_id,
+                    pipeline_stages=pipeline_stages,
+                    model_used=str(config.LLM_MODEL),
+                    estimate_cost_fn=_estimate_cost,
+                    compute_anomalies_fn=_compute_anomalies,
+                    attach_trace_schema_fn=attach_trace_schema_status,
                     build_state_trajectory_fn=_build_state_trajectory,
                     store_blob_fn=_store_blob,
+                    include_chunks=False,
                     include_total_duration=False,
+                    strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
                 )
             except Exception:
                 pass
-            debug_trace = _finalize_trace_payload(
-                debug_trace,
-                pipeline_stages=pipeline_stages,
-                compute_anomalies_fn=_compute_anomalies,
-                attach_trace_schema_fn=attach_trace_schema_status,
-                strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-            )
             response["debug_trace"] = debug_trace
         return response

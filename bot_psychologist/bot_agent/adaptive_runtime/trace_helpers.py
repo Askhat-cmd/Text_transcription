@@ -755,6 +755,67 @@ def _finalize_success_debug_trace(
     )
 
 
+def _finalize_failure_debug_trace(
+    debug_trace: Optional[Dict[str, Any]],
+    *,
+    memory,
+    start_time: datetime,
+    session_store,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    model_used: str,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+    initial_retrieved_blocks: Optional[List[Any]] = None,
+    reranked_blocks_for_trace: Optional[List[Any]] = None,
+    blocks_after_cap: Optional[int] = None,
+    append_stages: Optional[List[Dict[str, Any]]] = None,
+    include_chunks: bool = True,
+    include_total_duration: bool = True,
+    strip_legacy_trace_fields_fn=None,
+) -> Optional[Dict[str, Any]]:
+    if debug_trace is None:
+        return None
+
+    if include_chunks and initial_retrieved_blocks is not None and reranked_blocks_for_trace is not None:
+        chunks_retrieved, chunks_after_rerank = _build_chunk_trace_lists_after_rerank(
+            initial_retrieved=initial_retrieved_blocks,
+            reranked=reranked_blocks_for_trace,
+        )
+        debug_trace["chunks_retrieved"] = chunks_retrieved
+        debug_trace["chunks_after_filter"] = chunks_after_rerank
+    if blocks_after_cap is not None:
+        debug_trace["blocks_after_cap"] = blocks_after_cap
+
+    for stage in append_stages or []:
+        pipeline_stages.append(stage)
+
+    _apply_trace_memory_snapshot(
+        debug_trace,
+        memory=memory,
+        start_time=start_time,
+        session_store=session_store,
+        user_id=user_id,
+        build_state_trajectory_fn=build_state_trajectory_fn,
+        store_blob_fn=store_blob_fn,
+        include_total_duration=include_total_duration,
+    )
+    debug_trace["estimated_cost_usd"] = estimate_cost_fn(
+        debug_trace.get("llm_calls", []),
+        str(model_used),
+    )
+    return _finalize_trace_payload(
+        debug_trace,
+        pipeline_stages=pipeline_stages,
+        compute_anomalies_fn=compute_anomalies_fn,
+        attach_trace_schema_fn=attach_trace_schema_fn,
+        strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+    )
+
+
 def _apply_trace_model_info(debug_trace: Optional[Dict[str, Any]]) -> None:
     if debug_trace is None:
         return

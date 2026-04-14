@@ -224,6 +224,120 @@ def _resolve_pre_routing(
     return decision_gate, pre_routing_result, fast_path_enabled
 
 
+def _run_state_and_pre_routing_pipeline(
+    *,
+    query: str,
+    memory,
+    config,
+    phase8_signals,
+    debug_trace: Optional[Dict[str, Any]],
+    debug_info: Optional[Dict[str, Any]],
+    pipeline_stages: List[Dict[str, Any]],
+    timed_fn,
+    run_coroutine_sync_fn,
+    state_classifier,
+    classify_parallel_fn,
+    fallback_state_analysis_fn,
+    fallback_sd_result_fn,
+    resolve_user_stage_fn,
+    derive_informational_mode_hint_fn,
+    resolve_mode_prompt_fn,
+    logger,
+    diagnostics_v1_enabled: bool,
+    deterministic_route_resolver_enabled: bool,
+    informational_branch_enabled: bool,
+    diagnostics_classifier,
+    detect_contradiction_fn,
+    decision_gate_cls,
+    detect_routing_signals_fn,
+    should_use_fast_path_fn,
+) -> Dict[str, Any]:
+    stage2 = _run_state_analysis_stage(
+        query=query,
+        memory=memory,
+        config=config,
+        phase8_signals=phase8_signals,
+        debug_trace=debug_trace,
+        debug_info=debug_info,
+        pipeline_stages=pipeline_stages,
+        timed_fn=timed_fn,
+        run_coroutine_sync_fn=run_coroutine_sync_fn,
+        state_classifier=state_classifier,
+        classify_parallel_fn=classify_parallel_fn,
+        fallback_state_analysis_fn=fallback_state_analysis_fn,
+        fallback_sd_result_fn=fallback_sd_result_fn,
+        resolve_user_stage_fn=resolve_user_stage_fn,
+        derive_informational_mode_hint_fn=derive_informational_mode_hint_fn,
+        resolve_mode_prompt_fn=resolve_mode_prompt_fn,
+        logger=logger,
+    )
+    state_analysis = stage2["state_analysis"]
+    sd_result = stage2["sd_result"]
+    user_stage = stage2["user_stage"]
+    informational_mode_hint = stage2["informational_mode_hint"]
+    informational_mode = stage2["informational_mode"]
+    mode_prompt_key = stage2["mode_prompt_key"]
+    mode_prompt_override = stage2["mode_prompt_override"]
+
+    use_new_diagnostics_v1 = diagnostics_v1_enabled
+    use_deterministic_router = (
+        deterministic_route_resolver_enabled and use_new_diagnostics_v1
+    )
+
+    diagnostics_v1, correction_protocol_active = _compute_diagnostics_v1(
+        query=query,
+        state_analysis=state_analysis,
+        informational_mode_hint=informational_mode_hint,
+        phase8_signals=phase8_signals,
+        informational_branch_enabled=informational_branch_enabled,
+        use_new_diagnostics_v1=use_new_diagnostics_v1,
+        use_deterministic_router=use_deterministic_router,
+        diagnostics_classifier=diagnostics_classifier,
+        debug_trace=debug_trace,
+        debug_info=debug_info,
+    )
+
+    contradiction_info, contradiction_hint = _build_contradiction_payload(
+        query=query,
+        detect_contradiction_fn=detect_contradiction_fn,
+        debug_trace=debug_trace,
+    )
+
+    decision_gate, pre_routing_result, fast_path_enabled = _resolve_pre_routing(
+        use_deterministic_router=use_deterministic_router,
+        query=query,
+        state_analysis=state_analysis,
+        memory=memory,
+        user_stage=user_stage,
+        informational_mode=informational_mode,
+        contradiction_info=contradiction_info,
+        contradiction_hint=contradiction_hint,
+        decision_gate_cls=decision_gate_cls,
+        detect_routing_signals_fn=detect_routing_signals_fn,
+        should_use_fast_path_fn=should_use_fast_path_fn,
+        logger=logger,
+    )
+
+    return {
+        "state_analysis": state_analysis,
+        "sd_result": sd_result,
+        "user_stage": user_stage,
+        "informational_mode_hint": informational_mode_hint,
+        "informational_mode": informational_mode,
+        "mode_prompt_key": mode_prompt_key,
+        "mode_prompt_override": mode_prompt_override,
+        "use_new_diagnostics_v1": use_new_diagnostics_v1,
+        "use_deterministic_router": use_deterministic_router,
+        "diagnostics_v1": diagnostics_v1,
+        "correction_protocol_active": correction_protocol_active,
+        "contradiction_info": contradiction_info,
+        "contradiction_hint": contradiction_hint,
+        "decision_gate": decision_gate,
+        "pre_routing_result": pre_routing_result,
+        "fast_path_enabled": fast_path_enabled,
+    }
+
+
 def _apply_fast_path_debug_bootstrap(
     *,
     debug_trace: Optional[Dict[str, Any]],

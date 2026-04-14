@@ -144,10 +144,7 @@ from .adaptive_runtime.mode_policy_helpers import (
     _apply_output_validation_policy as _runtime_apply_output_validation_policy,
 )
 from .adaptive_runtime.routing_stage_helpers import (
-    _run_state_analysis_stage as _runtime_run_state_analysis_stage,
-    _compute_diagnostics_v1 as _runtime_compute_diagnostics_v1,
-    _build_contradiction_payload as _runtime_build_contradiction_payload,
-    _resolve_pre_routing as _runtime_resolve_pre_routing,
+    _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
     _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
     _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
@@ -320,8 +317,8 @@ def _run_retrieval_and_rerank_stage(**kwargs):
     return _runtime_run_retrieval_and_rerank_stage(**kwargs)
 
 
-def _run_state_analysis_stage(**kwargs):
-    return _runtime_run_state_analysis_stage(**kwargs)
+def _run_state_and_pre_routing_pipeline(**kwargs):
+    return _runtime_run_state_and_pre_routing_pipeline(**kwargs)
 
 
 def _resolve_practice_selection_context(**kwargs):
@@ -612,7 +609,7 @@ def answer_question_adaptive(
         logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
         
         current_stage = "state_classifier"
-        stage2 = _run_state_analysis_stage(
+        stage2 = _run_state_and_pre_routing_pipeline(
             query=query,
             memory=memory,
             config=config,
@@ -630,6 +627,14 @@ def answer_question_adaptive(
             derive_informational_mode_hint_fn=_derive_informational_mode_hint,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             logger=logger,
+            diagnostics_v1_enabled=_diagnostics_v1_enabled(),
+            deterministic_route_resolver_enabled=_deterministic_route_resolver_enabled(),
+            informational_branch_enabled=_informational_branch_enabled(),
+            diagnostics_classifier=diagnostics_classifier,
+            detect_contradiction_fn=detect_contradiction,
+            decision_gate_cls=DecisionGate,
+            detect_routing_signals_fn=detect_routing_signals,
+            should_use_fast_path_fn=_should_use_fast_path,
         )
         state_analysis = stage2["state_analysis"]
         sd_result = stage2["sd_result"]
@@ -638,47 +643,17 @@ def answer_question_adaptive(
         informational_mode = stage2["informational_mode"]
         mode_prompt_key = stage2["mode_prompt_key"]
         mode_prompt_override = stage2["mode_prompt_override"]
-
-        use_new_diagnostics_v1 = _diagnostics_v1_enabled()
-        use_deterministic_router = (
-            _deterministic_route_resolver_enabled() and use_new_diagnostics_v1
-        )
+        use_new_diagnostics_v1 = stage2["use_new_diagnostics_v1"]
+        use_deterministic_router = stage2["use_deterministic_router"]
         confidence_scorer = ConfidenceScorer()
         route_resolution_count = 0
-
-        diagnostics_v1, correction_protocol_active = _runtime_compute_diagnostics_v1(
-            query=query,
-            state_analysis=state_analysis,
-            informational_mode_hint=informational_mode_hint,
-            phase8_signals=phase8_signals,
-            informational_branch_enabled=_informational_branch_enabled(),
-            use_new_diagnostics_v1=use_new_diagnostics_v1,
-            use_deterministic_router=use_deterministic_router,
-            diagnostics_classifier=diagnostics_classifier,
-            debug_trace=debug_trace,
-            debug_info=debug_info,
-        )
-
-        contradiction_info, contradiction_hint = _runtime_build_contradiction_payload(
-            query=query,
-            detect_contradiction_fn=detect_contradiction,
-            debug_trace=debug_trace,
-        )
-
-        decision_gate, pre_routing_result, fast_path_enabled = _runtime_resolve_pre_routing(
-            use_deterministic_router=use_deterministic_router,
-            query=query,
-            state_analysis=state_analysis,
-            memory=memory,
-            user_stage=user_stage,
-            informational_mode=informational_mode,
-            contradiction_info=contradiction_info,
-            contradiction_hint=contradiction_hint,
-            decision_gate_cls=DecisionGate,
-            detect_routing_signals_fn=detect_routing_signals,
-            should_use_fast_path_fn=_should_use_fast_path,
-            logger=logger,
-        )
+        diagnostics_v1 = stage2["diagnostics_v1"]
+        correction_protocol_active = stage2["correction_protocol_active"]
+        contradiction_info = stage2["contradiction_info"]
+        contradiction_hint = stage2["contradiction_hint"]
+        decision_gate = stage2["decision_gate"]
+        pre_routing_result = stage2["pre_routing_result"]
+        fast_path_enabled = stage2["fast_path_enabled"]
 
         fast_path_stage = _run_fast_path_stage(
             fast_path_enabled=fast_path_enabled,

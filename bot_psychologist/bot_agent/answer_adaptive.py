@@ -168,6 +168,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
     _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
     _run_full_path_llm_stage as _runtime_run_full_path_llm_stage,
+    _run_fast_path_stage as _runtime_run_fast_path_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
@@ -301,6 +302,10 @@ def _format_and_validate_llm_answer(**kwargs):
 
 def _run_full_path_llm_stage(**kwargs):
     return _runtime_run_full_path_llm_stage(**kwargs)
+
+
+def _run_fast_path_stage(**kwargs):
+    return _runtime_run_fast_path_stage(**kwargs)
 
 
 def _dedupe_and_apply_progressive_rag(**kwargs):
@@ -675,176 +680,86 @@ def answer_question_adaptive(
             logger=logger,
         )
 
-        if fast_path_enabled:
-            logger.info(
-                "[FAST_PATH] enabled mode=%s reason=%s",
-                pre_routing_result.mode,
-                pre_routing_result.decision.reason,
-            )
-            _runtime_apply_fast_path_debug_bootstrap(
-                debug_trace=debug_trace,
-                query=query,
-                pre_routing_result=pre_routing_result,
-                detect_fast_path_reason_fn=_detect_fast_path_reason,
-                truncate_preview_fn=_truncate_preview,
-                config=config,
-                pipeline_stages=pipeline_stages,
-            )
-            mode_directive, state_context_mode_prompt = _runtime_build_fast_path_mode_directive(
-                pre_routing_result=pre_routing_result,
-                informational_mode=informational_mode,
-                build_mode_directive_fn=build_mode_directive,
-            )
-            conversation_context = _refresh_context_and_apply_trace_snapshot(
-                memory=memory,
-                conversation_context=conversation_context,
-                memory_context_bundle=memory_context_bundle,
-                debug_trace=debug_trace,
-                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                route=(
-                    getattr(pre_routing_result, "route", None)
-                    if pre_routing_result
-                    else None
-                ),
-            )
-            fast_block = _build_fast_path_block(
-                query=query,
-                conversation_context=conversation_context,
-                state_analysis=state_analysis,
-            )
-            fast_phase8_suffix = _runtime_build_phase8_context_suffix(
-                informational_branch_enabled=_informational_branch_enabled(),
-                phase8_signals=phase8_signals,
-                correction_protocol_active=correction_protocol_active,
-                informational_mode=informational_mode,
-                build_first_turn_instruction_fn=build_first_turn_instruction,
-                build_mixed_query_instruction_fn=build_mixed_query_instruction,
-                build_user_correction_instruction_fn=build_user_correction_instruction,
-                build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
-            )
-            state_context = _compose_state_context(
-                state_analysis=state_analysis,
-                mode_prompt=state_context_mode_prompt,
-                nervous_system_state=(
-                    diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
-                ),
-                request_function=(
-                    diagnostics_v1.request_function if diagnostics_v1 else "understand"
-                ),
-                contradiction_suggestion=contradiction_hint,
-                cross_session_context=cross_session_context,
-                phase8_context_suffix=fast_phase8_suffix,
-                practice_context_suffix="",
-                build_state_context_fn=_build_state_context,
-            )
-            current_stage = "llm"
-            llm_result, response_generator, _, system_prompt_override = _run_llm_generation_cycle(
-                response_generator_cls=ResponseGenerator,
-                query=query,
-                blocks=[fast_block],
-                conversation_context=conversation_context,
-                mode=pre_routing_result.mode,
-                confidence_level=pre_routing_result.confidence_level,
-                forbid=pre_routing_result.decision.forbid,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                config=config,
-                session_store=session_store,
-                session_id=user_id,
-                mode_prompt_override=mode_prompt_override,
-                informational_mode=informational_mode,
-                route=getattr(pre_routing_result, "route", "") if pre_routing_result else "",
-                diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                phase8_signals=phase8_signals,
-                correction_protocol_active=correction_protocol_active,
-                prompt_stack_enabled=_prompt_stack_v2_enabled(),
-                prompt_registry=prompt_registry_v2,
-                mode_prompt=mode_directive.prompt,
-                debug_trace=debug_trace,
-                pipeline_stages=pipeline_stages,
-                build_prompt_stack_override_fn=_build_prompt_stack_override,
-                prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
-                generate_llm_with_trace_fn=_generate_llm_with_trace,
-                build_llm_call_trace_fn=_build_llm_call_trace,
-            )
-            answer = _format_and_validate_llm_answer(
-                llm_result=llm_result,
-                response_generator=response_generator,
-                query=query,
-                blocks=[fast_block],
-                conversation_context=conversation_context,
-                mode=pre_routing_result.mode,
-                confidence_level=pre_routing_result.confidence_level,
-                forbid=pre_routing_result.decision.forbid,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                config=config,
-                session_store=session_store,
-                session_id=user_id,
-                mode_prompt_override=mode_prompt_override,
-                informational_mode=informational_mode,
-                system_prompt_override=system_prompt_override,
-                route=getattr(pre_routing_result, "route", ""),
-                debug_trace=debug_trace,
-                pipeline_stages=pipeline_stages,
-                fallback_model_name=str(config.LLM_MODEL),
-                include_retry_llm_trace=False,
-                response_formatter_cls=ResponseFormatter,
-                run_validation_retry_generation_fn=_run_validation_retry_generation,
-                apply_output_validation_policy_fn=_apply_output_validation_policy,
-                apply_output_validation_observability_fn=_apply_output_validation_observability,
-            )
-
-            _set_working_state_best_effort(
-                memory=memory,
-                state_analysis=state_analysis,
-                routing_result=pre_routing_result,
-                log_prefix="[FAST_PATH] working_state update failed:",
-            )
-
-            result = _build_fast_path_success_response(
-                answer=answer,
-                state_analysis=state_analysis,
-                pre_routing_result=pre_routing_result,
-                mode_directive_reason=mode_directive.reason,
-                informational_mode=informational_mode,
-                mode_prompt_key=mode_prompt_key,
-                conversation_context=conversation_context,
-                memory_context_bundle=memory_context_bundle,
-                memory_trace_metrics=memory_trace_metrics,
-                query=query,
-                include_feedback_prompt=include_feedback_prompt,
-                memory=memory,
-                schedule_summary_task=schedule_summary_task,
-                user_id=user_id,
-                start_time=start_time,
-                llm_result=llm_result,
-                debug_info=debug_info,
-                debug_trace=debug_trace,
-                session_store=session_store,
-                pipeline_stages=pipeline_stages,
-                llm_model_name=str(config.LLM_MODEL),
-                collect_llm_session_metrics_fn=_collect_llm_session_metrics,
-                update_session_token_metrics_fn=_update_session_token_metrics,
-                persist_turn_fn=_persist_turn,
-                get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
-                build_success_response_fn=_build_success_response,
-                build_fast_success_metadata_fn=_build_fast_success_metadata,
-                prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
-                output_validation_enabled=_output_validation_enabled(),
-                attach_success_observability_fn=_attach_success_observability,
-                strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
-                attach_debug_payload_fn=_attach_debug_payload,
-                finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-                estimate_cost_fn=_estimate_cost,
-                compute_anomalies_fn=_compute_anomalies,
-                attach_trace_schema_fn=attach_trace_schema_status,
-                build_state_trajectory_fn=_build_state_trajectory,
-                store_blob_fn=_store_blob,
-                strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-                logger=logger,
-            )
-            return result
+        fast_path_stage = _run_fast_path_stage(
+            fast_path_enabled=fast_path_enabled,
+            logger=logger,
+            pre_routing_result=pre_routing_result,
+            debug_trace=debug_trace,
+            query=query,
+            detect_fast_path_reason_fn=_detect_fast_path_reason,
+            truncate_preview_fn=_truncate_preview,
+            config=config,
+            pipeline_stages=pipeline_stages,
+            apply_fast_path_debug_bootstrap_fn=_runtime_apply_fast_path_debug_bootstrap,
+            build_fast_path_mode_directive_fn=_runtime_build_fast_path_mode_directive,
+            informational_mode=informational_mode,
+            build_mode_directive_fn=build_mode_directive,
+            memory=memory,
+            conversation_context=conversation_context,
+            memory_context_bundle=memory_context_bundle,
+            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+            refresh_context_and_apply_trace_snapshot_fn=_refresh_context_and_apply_trace_snapshot,
+            build_fast_path_block_fn=_build_fast_path_block,
+            phase8_signals=phase8_signals,
+            correction_protocol_active=correction_protocol_active,
+            informational_branch_enabled=_informational_branch_enabled(),
+            build_phase8_context_suffix_fn=_runtime_build_phase8_context_suffix,
+            build_first_turn_instruction_fn=build_first_turn_instruction,
+            build_mixed_query_instruction_fn=build_mixed_query_instruction,
+            build_user_correction_instruction_fn=build_user_correction_instruction,
+            build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
+            state_analysis=state_analysis,
+            contradiction_hint=contradiction_hint,
+            cross_session_context=cross_session_context,
+            compose_state_context_fn=_compose_state_context,
+            build_state_context_fn=_build_state_context,
+            diagnostics_v1=diagnostics_v1,
+            run_llm_generation_cycle_fn=_run_llm_generation_cycle,
+            response_generator_cls=ResponseGenerator,
+            sd_primary=sd_result.primary,
+            session_store=session_store,
+            user_id=user_id,
+            mode_prompt_override=mode_prompt_override,
+            prompt_stack_enabled=_prompt_stack_v2_enabled(),
+            prompt_registry=prompt_registry_v2,
+            build_prompt_stack_override_fn=_build_prompt_stack_override,
+            prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
+            generate_llm_with_trace_fn=_generate_llm_with_trace,
+            build_llm_call_trace_fn=_build_llm_call_trace,
+            format_and_validate_llm_answer_fn=_format_and_validate_llm_answer,
+            response_formatter_cls=ResponseFormatter,
+            run_validation_retry_generation_fn=_run_validation_retry_generation,
+            apply_output_validation_policy_fn=_apply_output_validation_policy,
+            apply_output_validation_observability_fn=_apply_output_validation_observability,
+            set_working_state_best_effort_fn=_set_working_state_best_effort,
+            include_feedback_prompt=include_feedback_prompt,
+            mode_prompt_key=mode_prompt_key,
+            memory_trace_metrics=memory_trace_metrics,
+            schedule_summary_task=schedule_summary_task,
+            start_time=start_time,
+            debug_info=debug_info,
+            llm_model_name=str(config.LLM_MODEL),
+            collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+            update_session_token_metrics_fn=_update_session_token_metrics,
+            persist_turn_fn=_persist_turn,
+            get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
+            build_fast_path_success_response_fn=_build_fast_path_success_response,
+            build_success_response_fn=_build_success_response,
+            build_fast_success_metadata_fn=_build_fast_success_metadata,
+            output_validation_enabled=_output_validation_enabled(),
+            attach_success_observability_fn=_attach_success_observability,
+            strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
+            attach_debug_payload_fn=_attach_debug_payload,
+            finalize_success_debug_trace_fn=_finalize_success_debug_trace,
+            estimate_cost_fn=_estimate_cost,
+            compute_anomalies_fn=_compute_anomalies,
+            attach_trace_schema_fn=attach_trace_schema_status,
+            build_state_trajectory_fn=_build_state_trajectory,
+            store_blob_fn=_store_blob,
+            strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
+        )
+        if fast_path_stage is not None:
+            return fast_path_stage["result"]
 
         if debug_trace is not None and debug_trace.get("fast_path") is None:
             debug_trace["fast_path"] = False

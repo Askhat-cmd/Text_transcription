@@ -1079,3 +1079,25 @@ def _prepare_full_path_post_llm_artifacts(
         "model_used": model_used,
         "session_metrics": session_metrics,
     }
+
+
+def _finalize_full_path_success_stage(
+    *,
+    prepare_post_llm_fn,
+    build_success_response_fn,
+) -> Dict[str, Any]:
+    post_llm = prepare_post_llm_fn()
+    result = build_success_response_fn(
+        path_recommendation=post_llm["path_recommendation"],
+        feedback_prompt=post_llm["feedback_prompt"],
+        concepts=post_llm["concepts"],
+        tokens_prompt=post_llm["tokens_prompt"],
+        tokens_completion=post_llm["tokens_completion"],
+        tokens_total=post_llm["tokens_total"],
+        model_used=post_llm["model_used"],
+        session_metrics=post_llm["session_metrics"],
+    )
+    return {
+        "result": result,
+        "post_llm": post_llm,
+    }

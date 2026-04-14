@@ -152,6 +152,7 @@ from .adaptive_runtime.routing_stage_helpers import (
     _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
     _resolve_practice_selection_context as _runtime_resolve_practice_selection_context,
     _attach_routing_stage_debug_trace as _runtime_attach_routing_stage_debug_trace,
+    _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
@@ -321,6 +322,10 @@ def _resolve_routing_and_apply_block_cap(**kwargs):
 
 def _attach_routing_stage_debug_trace(**kwargs):
     return _runtime_attach_routing_stage_debug_trace(**kwargs)
+
+
+def _finalize_routing_context_and_trace(**kwargs):
+    return _runtime_finalize_routing_context_and_trace(**kwargs)
 
 
 def _build_path_recommendation_if_enabled(**kwargs):
@@ -926,7 +931,7 @@ def answer_question_adaptive(
         mode_directive = routing_cap_stage["mode_directive"]
         state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
 
-        phase8_context_suffix = _runtime_build_phase8_context_suffix(
+        routing_context_stage = _finalize_routing_context_and_trace(
             informational_branch_enabled=_informational_branch_enabled(),
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
@@ -935,23 +940,15 @@ def answer_question_adaptive(
             build_mixed_query_instruction_fn=build_mixed_query_instruction,
             build_user_correction_instruction_fn=build_user_correction_instruction,
             build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
-        )
-        selected_practice, practice_alternatives, practice_context_suffix = (
-            _resolve_practice_selection_context(
-                routing_result=routing_result,
-                diagnostics_v1=diagnostics_v1,
-                query=query,
-                memory=memory,
-                practice_selector=practice_selector,
-                practice_allowed_routes=PRACTICE_ALLOWED_ROUTES,
-                practice_skip_routes=PRACTICE_SKIP_ROUTES,
-                logger=logger,
-            )
-        )
-
-        _attach_routing_stage_debug_trace(
-            debug_trace=debug_trace,
             routing_result=routing_result,
+            diagnostics_v1=diagnostics_v1,
+            query=query,
+            memory=memory,
+            practice_selector=practice_selector,
+            practice_allowed_routes=PRACTICE_ALLOWED_ROUTES,
+            practice_skip_routes=PRACTICE_SKIP_ROUTES,
+            logger=logger,
+            debug_trace=debug_trace,
             mode_reason=mode_directive.reason,
             block_cap=block_cap,
             initial_retrieved_blocks=initial_retrieved_blocks,
@@ -962,22 +959,16 @@ def answer_question_adaptive(
             rerank_reason=rerank_reason,
             rerank_applied=bool(rerank_applied),
             route_resolution_count=route_resolution_count,
-            informational_mode=informational_mode,
             mode_prompt_key=mode_prompt_key,
-            phase8_context_suffix=phase8_context_suffix,
-            correction_protocol_active=correction_protocol_active,
-            selected_practice=selected_practice,
-            practice_alternatives=practice_alternatives,
-        )
-
-        conversation_context = _refresh_context_and_apply_trace_snapshot(
-            memory=memory,
             conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
-            debug_trace=debug_trace,
-            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            route=getattr(routing_result, "route", None),
+            refresh_context_and_apply_trace_snapshot_fn=_refresh_context_and_apply_trace_snapshot,
         )
+        phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
+        selected_practice = routing_context_stage["selected_practice"]
+        practice_alternatives = routing_context_stage["practice_alternatives"]
+        practice_context_suffix = routing_context_stage["practice_context_suffix"]
+        conversation_context = routing_context_stage["conversation_context"]
 
         if not retrieved_blocks:
             return _handle_no_retrieval_partial_response(

@@ -535,3 +535,100 @@ def _attach_routing_stage_debug_trace(
     debug_trace["user_correction_protocol"] = correction_protocol_active
     debug_trace["selected_practice"] = selected_practice
     debug_trace["practice_alternatives"] = practice_alternatives
+
+
+def _finalize_routing_context_and_trace(
+    *,
+    informational_branch_enabled: bool,
+    phase8_signals,
+    correction_protocol_active: bool,
+    informational_mode: bool,
+    build_first_turn_instruction_fn: Callable[[], str],
+    build_mixed_query_instruction_fn: Callable[[], str],
+    build_user_correction_instruction_fn: Callable[[], str],
+    build_informational_guardrail_instruction_fn: Callable[[], str],
+    routing_result,
+    diagnostics_v1,
+    query: str,
+    memory,
+    practice_selector,
+    practice_allowed_routes,
+    practice_skip_routes,
+    logger,
+    debug_trace: Optional[Dict[str, Any]],
+    mode_reason: str,
+    block_cap: int,
+    initial_retrieved_blocks,
+    hybrid_query: str,
+    include_full_content: bool,
+    truncate_preview_fn,
+    should_run_rerank: bool,
+    rerank_reason: str,
+    rerank_applied: bool,
+    route_resolution_count: int,
+    mode_prompt_key: Optional[str],
+    conversation_context: str,
+    memory_context_bundle,
+    refresh_context_and_apply_trace_snapshot_fn,
+) -> Dict[str, Any]:
+    phase8_context_suffix = _build_phase8_context_suffix(
+        informational_branch_enabled=informational_branch_enabled,
+        phase8_signals=phase8_signals,
+        correction_protocol_active=correction_protocol_active,
+        informational_mode=informational_mode,
+        build_first_turn_instruction_fn=build_first_turn_instruction_fn,
+        build_mixed_query_instruction_fn=build_mixed_query_instruction_fn,
+        build_user_correction_instruction_fn=build_user_correction_instruction_fn,
+        build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction_fn,
+    )
+
+    selected_practice, practice_alternatives, practice_context_suffix = (
+        _resolve_practice_selection_context(
+            routing_result=routing_result,
+            diagnostics_v1=diagnostics_v1,
+            query=query,
+            memory=memory,
+            practice_selector=practice_selector,
+            practice_allowed_routes=practice_allowed_routes,
+            practice_skip_routes=practice_skip_routes,
+            logger=logger,
+        )
+    )
+
+    _attach_routing_stage_debug_trace(
+        debug_trace=debug_trace,
+        routing_result=routing_result,
+        mode_reason=mode_reason,
+        block_cap=block_cap,
+        initial_retrieved_blocks=initial_retrieved_blocks,
+        hybrid_query=hybrid_query,
+        include_full_content=include_full_content,
+        truncate_preview_fn=truncate_preview_fn,
+        should_run_rerank=should_run_rerank,
+        rerank_reason=rerank_reason,
+        rerank_applied=rerank_applied,
+        route_resolution_count=route_resolution_count,
+        informational_mode=informational_mode,
+        mode_prompt_key=mode_prompt_key,
+        phase8_context_suffix=phase8_context_suffix,
+        correction_protocol_active=correction_protocol_active,
+        selected_practice=selected_practice,
+        practice_alternatives=practice_alternatives,
+    )
+
+    updated_conversation_context = refresh_context_and_apply_trace_snapshot_fn(
+        memory=memory,
+        conversation_context=conversation_context,
+        memory_context_bundle=memory_context_bundle,
+        debug_trace=debug_trace,
+        diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+        route=getattr(routing_result, "route", None),
+    )
+
+    return {
+        "phase8_context_suffix": phase8_context_suffix,
+        "selected_practice": selected_practice,
+        "practice_alternatives": practice_alternatives,
+        "practice_context_suffix": practice_context_suffix,
+        "conversation_context": updated_conversation_context,
+    }

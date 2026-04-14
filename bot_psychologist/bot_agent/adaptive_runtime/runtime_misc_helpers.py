@@ -179,7 +179,7 @@ def _run_bootstrap_and_onboarding_guard(
     memory_updater,
     config,
     detect_phase8_signals_fn,
-    informational_branch_enabled_fn,
+    informational_branch_enabled: bool,
     build_start_command_response_fn,
     truncate_preview_fn,
     apply_memory_debug_info_fn,
@@ -219,7 +219,7 @@ def _run_bootstrap_and_onboarding_guard(
         debug_trace["phase8_signals"] = phase8_signals.as_dict()
 
     start_command_response = None
-    if informational_branch_enabled_fn() and phase8_signals.start_command:
+    if informational_branch_enabled and phase8_signals.start_command:
         start_command_response = build_start_command_response_fn(
             user_id=user_id,
             user_level=user_level,

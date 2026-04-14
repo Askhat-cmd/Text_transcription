@@ -451,7 +451,7 @@ def _resolve_routing_and_apply_block_cap(
     pre_routing_result,
     decision_gate,
     retrieved_blocks,
-    informational_branch_enabled_fn: Callable[[], bool],
+    informational_branch_enabled: bool,
     resolve_mode_prompt_fn,
     config,
     log_retrieval_pairs_fn,
@@ -485,7 +485,7 @@ def _resolve_routing_and_apply_block_cap(
         )
 
     informational_mode = (
-        informational_branch_enabled_fn()
+        informational_branch_enabled
         and str(getattr(routing_result, "route", "") or "").lower() == "inform"
     )
     mode_prompt_key, mode_prompt_override = resolve_mode_prompt_fn(

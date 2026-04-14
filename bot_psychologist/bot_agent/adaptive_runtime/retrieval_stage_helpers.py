@@ -495,7 +495,7 @@ def _run_retrieval_routing_context_stage(
         pre_routing_result=pre_routing_result,
         decision_gate=decision_gate,
         retrieved_blocks=retrieved_blocks,
-        informational_branch_enabled_fn=lambda: informational_branch_enabled,
+        informational_branch_enabled=informational_branch_enabled,
         resolve_mode_prompt_fn=resolve_mode_prompt_fn,
         config=config,
         log_retrieval_pairs_fn=log_retrieval_pairs_fn,

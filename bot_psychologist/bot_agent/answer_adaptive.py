@@ -328,7 +328,7 @@ def answer_question_adaptive(
             memory_updater=memory_updater,
             config=config,
             detect_phase8_signals_fn=detect_phase8_signals,
-            informational_branch_enabled_fn=lambda: informational_branch_enabled,
+            informational_branch_enabled=informational_branch_enabled,
             build_start_command_response_fn=build_start_command_response_fn,
             truncate_preview_fn=_truncate_preview,
             apply_memory_debug_info_fn=_apply_memory_debug_info,

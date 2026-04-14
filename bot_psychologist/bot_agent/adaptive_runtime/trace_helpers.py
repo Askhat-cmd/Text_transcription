@@ -200,6 +200,60 @@ def _build_retrieval_detail(block, score: float, stage: str) -> Dict:
     }
 
 
+def _build_retrieval_debug_details(
+    *,
+    initial_retrieved_blocks: List[Tuple[Any, float]],
+    reranked_blocks_for_trace: List[Tuple[Any, float]],
+    capped_retrieved_blocks: List[Tuple[Any, float]],
+    adapted_blocks: List[Any],
+    build_retrieval_detail_fn,
+) -> Dict[str, List[Dict[str, Any]]]:
+    reranked_ids = {str(block.block_id) for block, _ in reranked_blocks_for_trace}
+    capped_ids = {str(block.block_id) for block, _ in capped_retrieved_blocks}
+    reranked_out = [
+        (block, score)
+        for block, score in initial_retrieved_blocks
+        if str(block.block_id) not in reranked_ids
+    ]
+    confidence_capped_out = [
+        (block, score)
+        for block, score in reranked_blocks_for_trace
+        if str(block.block_id) not in capped_ids
+    ]
+    final_score_map = {str(block.block_id): float(score) for block, score in capped_retrieved_blocks}
+
+    return {
+        "initial_retrieval": [
+            build_retrieval_detail_fn(block, score, "initial")
+            for block, score in initial_retrieved_blocks
+        ],
+        "after_rerank": [
+            build_retrieval_detail_fn(block, score, "rerank")
+            for block, score in reranked_blocks_for_trace
+        ],
+        "after_confidence_cap": [
+            build_retrieval_detail_fn(block, score, "confidence_cap")
+            for block, score in capped_retrieved_blocks
+        ],
+        "reranked_out": [
+            build_retrieval_detail_fn(block, score, "rerank")
+            for block, score in reranked_out
+        ],
+        "confidence_capped": [
+            build_retrieval_detail_fn(block, score, "confidence_cap")
+            for block, score in confidence_capped_out
+        ],
+        "final_blocks": [
+            build_retrieval_detail_fn(
+                block,
+                final_score_map.get(str(block.block_id), 0.0),
+                "final",
+            )
+            for block in adapted_blocks
+        ],
+    }
+
+
 def _build_llm_prompts(
     *,
     response_generator: ResponseGenerator,

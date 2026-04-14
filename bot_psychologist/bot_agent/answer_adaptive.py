@@ -71,6 +71,9 @@ from .adaptive_runtime.response_utils import (
     _build_fast_success_metadata,
     _build_full_success_metadata,
     _persist_turn_best_effort,
+    _persist_turn,
+    _save_session_summary_best_effort,
+    _build_sources_from_blocks,
 )
 from .adaptive_runtime.trace_helpers import (
     _strip_legacy_runtime_metadata,
@@ -85,6 +88,7 @@ from .adaptive_runtime.trace_helpers import (
     _recent_user_turns,
     _log_context_build,
     _build_retrieval_detail,
+    _build_retrieval_debug_details,
     _build_llm_prompts,
     _build_llm_prompt_previews,
     _build_llm_call_trace,
@@ -891,7 +895,8 @@ def answer_question_adaptive(
                 model_name=str(model_used),
             )
 
-            memory.add_turn(
+            _persist_turn(
+                memory=memory,
                 user_input=query,
                 bot_response=answer,
                 user_state=state_analysis.primary_state.value,
@@ -1375,7 +1380,8 @@ def answer_question_adaptive(
                 )
             except Exception as exc:
                 logger.warning(f"[ADAPTIVE] working_state update failed (partial): {exc}")
-            memory.add_turn(
+            _persist_turn(
+                memory=memory,
                 user_input=query,
                 bot_response=response.get("answer", ""),
                 user_state=state_analysis.primary_state.value if state_analysis else None,
@@ -1448,49 +1454,13 @@ def answer_question_adaptive(
             debug_info["blocks_found"] = len(retrieved_blocks)
             debug_info["blocks_after_filter"] = len(adapted_blocks)
             debug_info["hybrid_query"] = hybrid_query
-            reranked_ids = {str(block.block_id) for block, _ in reranked_blocks_for_trace}
-            capped_ids = {str(block.block_id) for block, _ in capped_retrieved_blocks}
-            reranked_out = [
-                (block, score)
-                for block, score in initial_retrieved_blocks
-                if str(block.block_id) not in reranked_ids
-            ]
-            confidence_capped_out = [
-                (block, score)
-                for block, score in reranked_blocks_for_trace
-                if str(block.block_id) not in capped_ids
-            ]
-            final_score_map = {str(block.block_id): float(score) for block, score in capped_retrieved_blocks}
-            debug_info["retrieval_details"] = {
-                "initial_retrieval": [
-                    _build_retrieval_detail(block, score, "initial")
-                    for block, score in initial_retrieved_blocks
-                ],
-                "after_rerank": [
-                    _build_retrieval_detail(block, score, "rerank")
-                    for block, score in reranked_blocks_for_trace
-                ],
-                "after_confidence_cap": [
-                    _build_retrieval_detail(block, score, "confidence_cap")
-                    for block, score in capped_retrieved_blocks
-                ],
-                "reranked_out": [
-                    _build_retrieval_detail(block, score, "rerank")
-                    for block, score in reranked_out
-                ],
-                "confidence_capped": [
-                    _build_retrieval_detail(block, score, "confidence_cap")
-                    for block, score in confidence_capped_out
-                ],
-                "final_blocks": [
-                    _build_retrieval_detail(
-                        block,
-                        final_score_map.get(str(block.block_id), 0.0),
-                        "final",
-                    )
-                    for block in adapted_blocks
-                ],
-            }
+            debug_info["retrieval_details"] = _build_retrieval_debug_details(
+                initial_retrieved_blocks=initial_retrieved_blocks,
+                reranked_blocks_for_trace=reranked_blocks_for_trace,
+                capped_retrieved_blocks=capped_retrieved_blocks,
+                adapted_blocks=adapted_blocks,
+                build_retrieval_detail_fn=_build_retrieval_detail,
+            )
             debug_info["voyage_rerank"] = {
                 "enabled": bool(
                     config.VOYAGE_ENABLED
@@ -1860,7 +1830,8 @@ def answer_question_adaptive(
             model_name=str(model_used),
         )
 
-        memory.add_turn(
+        _persist_turn(
+            memory=memory,
             user_input=query,
             bot_response=answer,
             user_state=state_analysis.primary_state.value,
@@ -1868,48 +1839,22 @@ def answer_question_adaptive(
             concepts=concepts,
             schedule_summary_task=schedule_summary_task,
         )
-        try:
-            primary_interests = memory.get_primary_interests()
-            key_themes = []
-            for item in (concepts or []) + primary_interests:
-                text = str(item).strip()
-                if text and text not in key_themes:
-                    key_themes.append(text)
-            if hasattr(memory, "save_session_summary"):
-                memory.save_session_summary(
-                    user_id=getattr(memory, "owner_user_id", user_id),
-                    summary={
-                        "session_id": user_id,
-                        "date": datetime.now().date().isoformat(),
-                        "key_themes": key_themes[:3],
-                        "state_end": state_analysis.primary_state.value,
-                        "notable_moments": [
-                            f"Р—Р°РїСЂРѕСЃ: {_truncate_preview(query, 140)}",
-                            f"РћС‚РІРµС‚: {_truncate_preview(answer, 140)}",
-                        ],
-                    },
-                )
-        except Exception as exc:
-            logger.warning(f"[MEMORY] save_session_summary skipped: {exc}")
+        _save_session_summary_best_effort(
+            memory=memory,
+            user_id=user_id,
+            query=query,
+            answer=answer,
+            state_end=state_analysis.primary_state.value,
+            concepts=concepts,
+            logger=logger,
+        )
         
         # ================================================================
         # Р¤РќРђР›Р¬РќР«Р™ Р Р•Р—РЈР›Р¬РўРђРў
         # ================================================================
         elapsed_time = (datetime.now() - start_time).total_seconds()
         
-        sources = [
-            {
-                "block_id": b.block_id,
-                "title": b.title,
-                "document_title": b.document_title,
-                "youtube_link": b.youtube_link,
-                "start": b.start,
-                "end": b.end,
-                "block_type": getattr(b, 'block_type', 'unknown'),
-                "complexity_score": getattr(b, 'complexity_score', 0)
-            }
-            for b in adapted_blocks
-        ]
+        sources = _build_sources_from_blocks(adapted_blocks)
         _log_blocks("SOURCES", adapted_blocks, limit=10)
         
         result = _build_success_response(

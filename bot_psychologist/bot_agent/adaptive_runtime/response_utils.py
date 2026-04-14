@@ -274,3 +274,76 @@ def _persist_turn_best_effort(
         )
     except Exception:
         pass
+
+
+def _persist_turn(
+    *,
+    memory,
+    user_input: str,
+    bot_response: str,
+    user_state: Optional[str] = None,
+    blocks_used: int = 0,
+    concepts: Optional[List[str]] = None,
+    schedule_summary_task: bool = True,
+) -> None:
+    memory.add_turn(
+        user_input=user_input,
+        bot_response=bot_response,
+        user_state=user_state,
+        blocks_used=blocks_used,
+        concepts=concepts or [],
+        schedule_summary_task=schedule_summary_task,
+    )
+
+
+def _save_session_summary_best_effort(
+    *,
+    memory,
+    user_id: str,
+    query: str,
+    answer: str,
+    state_end: str,
+    concepts: Optional[List[str]] = None,
+    logger=None,
+) -> None:
+    try:
+        primary_interests = memory.get_primary_interests()
+        key_themes: List[str] = []
+        for item in (concepts or []) + primary_interests:
+            text = str(item).strip()
+            if text and text not in key_themes:
+                key_themes.append(text)
+
+        if hasattr(memory, "save_session_summary"):
+            memory.save_session_summary(
+                user_id=getattr(memory, "owner_user_id", user_id),
+                summary={
+                    "session_id": user_id,
+                    "date": datetime.now().date().isoformat(),
+                    "key_themes": key_themes[:3],
+                    "state_end": state_end,
+                    "notable_moments": [
+                        f"Запрос: {str(query or '')[:140]}",
+                        f"Ответ: {str(answer or '')[:140]}",
+                    ],
+                },
+            )
+    except Exception as exc:
+        if logger is not None:
+            logger.warning("[MEMORY] save_session_summary skipped: %s", exc)
+
+
+def _build_sources_from_blocks(blocks: List[Any]) -> List[Dict[str, Any]]:
+    return [
+        {
+            "block_id": b.block_id,
+            "title": b.title,
+            "document_title": b.document_title,
+            "youtube_link": b.youtube_link,
+            "start": b.start,
+            "end": b.end,
+            "block_type": getattr(b, "block_type", "unknown"),
+            "complexity_score": getattr(b, "complexity_score", 0),
+        }
+        for b in blocks
+    ]

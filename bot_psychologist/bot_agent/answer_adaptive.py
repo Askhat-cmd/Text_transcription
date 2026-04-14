@@ -151,6 +151,9 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
     _build_prompt_stack_override as _runtime_build_prompt_stack_override,
 )
+from .adaptive_runtime.retrieval_stage_helpers import (
+    _retrieve_blocks_with_degraded_mode as _runtime_retrieve_blocks_with_degraded_mode,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -266,6 +269,10 @@ def _collect_llm_session_metrics(**kwargs):
 
 def _build_prompt_stack_override(**kwargs):
     return _runtime_build_prompt_stack_override(**kwargs)
+
+
+def _retrieve_blocks_with_degraded_mode(**kwargs):
+    return _runtime_retrieve_blocks_with_degraded_mode(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -927,60 +934,22 @@ def answer_question_adaptive(
             len(query),
         )
 
-        retrieval_degraded_reason = None
-        try:
-            retriever = get_retriever()
-        except Exception as exc:
-            logger.warning("[RETRIEVAL] get_retriever failed, degraded mode enabled: %s", exc)
-            retriever = None
-            retrieval_degraded_reason = "retriever_init_failed"
         current_stage = "retrieval"
-
-        author_id_filter = None
-        author_map = {}
-        if config.AUTHOR_BLEND_MODE in {"single", "blend"}:
-            for block in data_loader.get_all_blocks():
-                if block.author and block.author_id:
-                    author_map[block.author] = block.author_id
-
-            if author_map:
-                from .semantic_analyzer import detect_author_intent
-                author_name = detect_author_intent(query, list(author_map.keys()))
-                if author_name:
-                    author_id_filter = author_map.get(author_name)
-                    logger.info("[RETRIEVAL] author intent detected: %s (%s)", author_name, author_id_filter)
-
-
-        if retriever is None:
-            raw_retrieved_blocks = []
-            stage = {"name": "retrieval", "label": "Retrieval (degraded)", "duration_ms": 0, "skipped": True}
-        else:
-            try:
-                if config.AUTHOR_BLEND_MODE == "blend" and author_map:
-                    raw_retrieved_blocks = []
-                    for author_id in author_map.values():
-                        raw_retrieved_blocks.extend(
-                            retriever.retrieve(
-                                hybrid_query,
-                                top_k=3,
-                                author_id=author_id,
-                            )
-                        )
-                    stage = {"name": "retrieval", "label": "Retrieval (blend)", "duration_ms": 0, "skipped": False}
-                else:
-                    raw_retrieved_blocks, stage = _timed(
-                        "retrieval",
-                        "Retrieval",
-                        retriever.retrieve,
-                        hybrid_query,
-                        top_k=top_k,
-                        author_id=author_id_filter,
-                    )
-            except Exception as exc:
-                logger.warning("[RETRIEVAL] retrieve failed, degraded mode enabled: %s", exc)
-                raw_retrieved_blocks = []
-                retrieval_degraded_reason = "retrieval_failed"
-                stage = {"name": "retrieval", "label": "Retrieval (degraded)", "duration_ms": 0, "skipped": True}
+        from .semantic_analyzer import detect_author_intent
+        retrieval_stage = _retrieve_blocks_with_degraded_mode(
+            query=query,
+            hybrid_query=hybrid_query,
+            top_k=top_k,
+            config=config,
+            data_loader=data_loader,
+            get_retriever_fn=get_retriever,
+            timed_fn=_timed,
+            detect_author_intent_fn=detect_author_intent,
+            logger=logger,
+        )
+        raw_retrieved_blocks = retrieval_stage["raw_retrieved_blocks"]
+        stage = retrieval_stage["stage"]
+        retrieval_degraded_reason = retrieval_stage["retrieval_degraded_reason"]
 
         if debug_trace is not None:
             pipeline_stages.append(stage)

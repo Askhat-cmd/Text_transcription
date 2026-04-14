@@ -132,6 +132,11 @@ from .adaptive_runtime.mode_policy_helpers import (
     _informational_branch_enabled as _runtime_informational_branch_enabled,
     _apply_output_validation_policy as _runtime_apply_output_validation_policy,
 )
+from .adaptive_runtime.routing_stage_helpers import (
+    _compute_diagnostics_v1 as _runtime_compute_diagnostics_v1,
+    _build_contradiction_payload as _runtime_build_contradiction_payload,
+    _resolve_pre_routing as _runtime_resolve_pre_routing,
+)
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
     _sd_runtime_disabled as _runtime_sd_runtime_disabled,
@@ -512,79 +517,39 @@ def answer_question_adaptive(
         confidence_scorer = ConfidenceScorer()
         route_resolution_count = 0
 
-        diagnostics_v1 = None
-        correction_protocol_active = False
-        if use_new_diagnostics_v1:
-            diagnostics_v1 = diagnostics_classifier.classify(
-                query=query,
-                state_analysis=state_analysis,
-                informational_mode_hint=informational_mode_hint,
-            )
-            correction_protocol_active = bool(
-                _informational_branch_enabled()
-                and phase8_signals is not None
-                and phase8_signals.user_correction
-            )
-            if correction_protocol_active:
-                recalibrated = diagnostics_v1.as_dict()
-                confidence = dict(recalibrated.get("confidence") or {})
-                confidence["interaction_mode"] = min(
-                    float(confidence.get("interaction_mode", 0.6) or 0.6),
-                    0.6,
-                )
-                confidence["request_function"] = min(
-                    float(confidence.get("request_function", 0.6) or 0.6),
-                    0.6,
-                )
-                recalibrated["confidence"] = confidence
-                recalibrated["request_function"] = "validation"
-                diagnostics_v1 = diagnostics_classifier.sanitize(recalibrated)
-            if debug_trace is not None:
-                debug_trace["diagnostics_v1"] = diagnostics_v1.as_dict()
-                debug_trace["route_strategy"] = (
-                    "deterministic_v1" if use_deterministic_router else "decision_gate_v0"
-                )
-                debug_trace["user_correction_protocol"] = correction_protocol_active
-            if debug_info is not None:
-                debug_info["diagnostics_v1"] = diagnostics_v1.as_dict()
-
-        contradiction_info = detect_contradiction(query)
-        contradiction_hint = (
-            str(contradiction_info.get("suggestion", ""))
-            if contradiction_info.get("has_contradiction")
-            else ""
+        diagnostics_v1, correction_protocol_active = _runtime_compute_diagnostics_v1(
+            query=query,
+            state_analysis=state_analysis,
+            informational_mode_hint=informational_mode_hint,
+            phase8_signals=phase8_signals,
+            informational_branch_enabled=_informational_branch_enabled(),
+            use_new_diagnostics_v1=use_new_diagnostics_v1,
+            use_deterministic_router=use_deterministic_router,
+            diagnostics_classifier=diagnostics_classifier,
+            debug_trace=debug_trace,
+            debug_info=debug_info,
         )
 
-        if debug_trace is not None:
-            debug_trace["contradiction"] = contradiction_info
+        contradiction_info, contradiction_hint = _runtime_build_contradiction_payload(
+            query=query,
+            detect_contradiction_fn=detect_contradiction,
+            debug_trace=debug_trace,
+        )
 
-        decision_gate = None if use_deterministic_router else DecisionGate()
-        pre_routing_result = None
-        if use_deterministic_router:
-            # Phase 4: one deterministic route per turn; fast path is disabled.
-            fast_path_enabled = False
-            logger.info("[ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled")
-        else:
-            pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
-            pre_routing_signals["contradiction_detected"] = bool(
-                contradiction_info.get("has_contradiction", False)
-            )
-            pre_routing_signals["contradiction_suggestion"] = contradiction_hint
-            pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
-            fast_path_enabled = _should_use_fast_path(query, pre_routing_result)
-            if informational_mode and fast_path_enabled:
-                # For true informational route we prefer full retrieval context over compact fast-path.
-                fast_path_enabled = False
-                logger.info(
-                    "[FAST_PATH] disabled for informational route (user_state=%s)",
-                    state_analysis.primary_state.value,
-                )
-            logger.info(
-                "[CONFIDENCE] score=%.4f level=%s -> FAST_PATH: %s",
-                pre_routing_result.confidence_score,
-                pre_routing_result.confidence_level,
-                "yes" if fast_path_enabled else "no",
-            )
+        decision_gate, pre_routing_result, fast_path_enabled = _runtime_resolve_pre_routing(
+            use_deterministic_router=use_deterministic_router,
+            query=query,
+            state_analysis=state_analysis,
+            memory=memory,
+            user_stage=user_stage,
+            informational_mode=informational_mode,
+            contradiction_info=contradiction_info,
+            contradiction_hint=contradiction_hint,
+            decision_gate_cls=DecisionGate,
+            detect_routing_signals_fn=detect_routing_signals,
+            should_use_fast_path_fn=_should_use_fast_path,
+            logger=logger,
+        )
 
         if fast_path_enabled:
             logger.info(

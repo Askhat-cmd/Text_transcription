@@ -147,6 +147,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _generate_llm_with_trace as _runtime_generate_llm_with_trace,
+    _run_validation_retry_generation as _runtime_run_validation_retry_generation,
 )
 
 logger = logging.getLogger(__name__)
@@ -251,6 +252,10 @@ def _build_start_command_response(
 
 def _generate_llm_with_trace(**kwargs):
     return _runtime_generate_llm_with_trace(**kwargs)
+
+
+def _run_validation_retry_generation(**kwargs):
+    return _runtime_run_validation_retry_generation(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -700,33 +705,31 @@ def answer_question_adaptive(
             )
 
             def _retry_fast_validation(hint: str) -> Dict[str, Any]:
-                retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
-                retry_result = response_generator.generate(
-                    retry_query,
-                    [fast_block],
+                return _run_validation_retry_generation(
+                    response_generator=response_generator,
+                    query=query,
+                    hint=hint,
+                    blocks=[fast_block],
                     conversation_context=conversation_context,
                     mode=pre_routing_result.mode,
                     confidence_level=pre_routing_result.confidence_level,
                     forbid=pre_routing_result.decision.forbid,
                     additional_system_context=state_context,
                     sd_level=sd_result.primary,
-                    model=config.LLM_MODEL,
-                    temperature=config.LLM_TEMPERATURE,
-                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
+                    config=config,
                     session_store=session_store,
                     session_id=user_id,
                     mode_prompt_override=mode_prompt_override,
-                    mode_overrides_sd=informational_mode,
-                    system_prompt_override=system_prompt_override,
-                )
-                retry_result["answer"] = formatter.format_answer(
-                    str(retry_result.get("answer") or ""),
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                    user_message=query,
                     informational_mode=informational_mode,
+                    system_prompt_override=system_prompt_override,
+                    format_answer_fn=lambda raw_answer: formatter.format_answer(
+                        raw_answer,
+                        mode=pre_routing_result.mode,
+                        confidence_level=pre_routing_result.confidence_level,
+                        user_message=query,
+                        informational_mode=informational_mode,
+                    ),
                 )
-                return retry_result
 
             answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
                 answer=answer,
@@ -1492,33 +1495,31 @@ def answer_question_adaptive(
         )
 
         def _retry_validation(hint: str) -> Dict[str, Any]:
-            retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
-            retry_result = response_generator.generate(
-                retry_query,
-                adapted_blocks,
+            return _run_validation_retry_generation(
+                response_generator=response_generator,
+                query=query,
+                hint=hint,
+                blocks=adapted_blocks,
                 conversation_context=conversation_context,
                 mode=routing_result.mode,
                 confidence_level=routing_result.confidence_level,
                 forbid=routing_result.decision.forbid,
                 additional_system_context=state_context,
                 sd_level=sd_result.primary,
-                model=config.LLM_MODEL,
-                temperature=config.LLM_TEMPERATURE,
-                max_tokens=config.get_mode_max_tokens(routing_result.mode),
+                config=config,
                 session_store=session_store,
                 session_id=user_id,
                 mode_prompt_override=mode_prompt_override,
-                mode_overrides_sd=informational_mode,
-                system_prompt_override=system_prompt_override,
-            )
-            retry_result["answer"] = formatter.format_answer(
-                str(retry_result.get("answer") or ""),
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-                user_message=query,
                 informational_mode=informational_mode,
+                system_prompt_override=system_prompt_override,
+                format_answer_fn=lambda raw_answer: formatter.format_answer(
+                    raw_answer,
+                    mode=routing_result.mode,
+                    confidence_level=routing_result.confidence_level,
+                    user_message=query,
+                    informational_mode=informational_mode,
+                ),
             )
-            return retry_result
 
         answer, validation_meta, validation_retry_result = _apply_output_validation_policy(
             answer=answer,

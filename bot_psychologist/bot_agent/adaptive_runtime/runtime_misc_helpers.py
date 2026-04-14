@@ -250,3 +250,46 @@ def _generate_llm_with_trace(
             )
 
     return llm_result, llm_error, duration_ms
+
+
+def _run_validation_retry_generation(
+    *,
+    response_generator,
+    query: str,
+    hint: str,
+    blocks: List[Any],
+    conversation_context: str,
+    mode: str,
+    confidence_level: str,
+    forbid: List[str],
+    additional_system_context: str,
+    sd_level: str,
+    config,
+    session_store,
+    session_id: str,
+    mode_prompt_override: Optional[str],
+    informational_mode: bool,
+    system_prompt_override: Optional[str],
+    format_answer_fn: Callable[[str], str],
+) -> Dict[str, Any]:
+    retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
+    retry_result = response_generator.generate(
+        retry_query,
+        blocks,
+        conversation_context=conversation_context,
+        mode=mode,
+        confidence_level=confidence_level,
+        forbid=forbid,
+        additional_system_context=additional_system_context,
+        sd_level=sd_level,
+        model=config.LLM_MODEL,
+        temperature=config.LLM_TEMPERATURE,
+        max_tokens=config.get_mode_max_tokens(mode),
+        session_store=session_store,
+        session_id=session_id,
+        mode_prompt_override=mode_prompt_override,
+        mode_overrides_sd=informational_mode,
+        system_prompt_override=system_prompt_override,
+    )
+    retry_result["answer"] = format_answer_fn(str(retry_result.get("answer") or ""))
+    return retry_result

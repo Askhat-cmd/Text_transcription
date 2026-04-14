@@ -90,7 +90,6 @@ from .adaptive_runtime.trace_helpers import (
     _build_chunk_trace_item,
     _build_chunk_trace_lists_after_rerank,
     _recent_user_turns,
-    _log_context_build,
     _build_retrieval_detail,
     _build_retrieval_debug_details,
     _collect_progressive_feedback_blocks,
@@ -101,7 +100,7 @@ from .adaptive_runtime.trace_helpers import (
     _prepare_llm_prompt_previews,
     _build_llm_call_trace,
     _update_session_token_metrics,
-    _refresh_runtime_memory_snapshot,
+    _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
     _finalize_success_debug_trace,
     _finalize_failure_debug_trace,
@@ -313,6 +312,10 @@ def _attach_retrieval_observability(**kwargs):
 
 def _compose_state_context(**kwargs):
     return _runtime_compose_state_context(**kwargs)
+
+
+def _refresh_context_and_apply_trace_snapshot(**kwargs):
+    return _runtime_refresh_context_and_apply_trace_snapshot(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -659,23 +662,18 @@ def answer_question_adaptive(
                 informational_mode=informational_mode,
                 build_mode_directive_fn=build_mode_directive,
             )
-            refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
+            conversation_context = _refresh_context_and_apply_trace_snapshot(
                 memory=memory,
+                conversation_context=conversation_context,
+                memory_context_bundle=memory_context_bundle,
+                debug_trace=debug_trace,
                 diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                route=getattr(pre_routing_result, "route", None) if pre_routing_result else None,
+                route=(
+                    getattr(pre_routing_result, "route", None)
+                    if pre_routing_result
+                    else None
+                ),
             )
-            if refreshed_context:
-                conversation_context = refreshed_context
-            if debug_trace is not None and isinstance(snapshot_payload, dict):
-                debug_trace["snapshot_v12"] = snapshot_payload
-                debug_trace["snapshot_v11"] = snapshot_payload
-            _log_context_build(memory, conversation_context, memory_context_bundle)
-            if debug_trace is not None:
-                debug_trace["context_mode"] = (
-                    "summary"
-                    if bool(getattr(memory_context_bundle, "summary_used", False))
-                    else "full"
-                )
             fast_block = _build_fast_path_block(
                 query=query,
                 conversation_context=conversation_context,
@@ -1158,23 +1156,14 @@ def answer_question_adaptive(
             practice_alternatives=practice_alternatives,
         )
 
-        refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
+        conversation_context = _refresh_context_and_apply_trace_snapshot(
             memory=memory,
+            conversation_context=conversation_context,
+            memory_context_bundle=memory_context_bundle,
+            debug_trace=debug_trace,
             diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
             route=getattr(routing_result, "route", None),
         )
-        if refreshed_context:
-            conversation_context = refreshed_context
-        if debug_trace is not None and isinstance(snapshot_payload, dict):
-            debug_trace["snapshot_v12"] = snapshot_payload
-            debug_trace["snapshot_v11"] = snapshot_payload
-        _log_context_build(memory, conversation_context, memory_context_bundle)
-        if debug_trace is not None:
-            debug_trace["context_mode"] = (
-                "summary"
-                if bool(getattr(memory_context_bundle, "summary_used", False))
-                else "full"
-            )
 
         if not retrieved_blocks:
             return _handle_no_retrieval_partial_response(

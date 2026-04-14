@@ -675,6 +675,39 @@ def _refresh_runtime_memory_snapshot(
         return None, None
 
 
+def _refresh_context_and_apply_trace_snapshot(
+    *,
+    memory,
+    conversation_context: str,
+    memory_context_bundle,
+    debug_trace: Optional[Dict[str, Any]],
+    diagnostics_payload: Optional[Dict[str, Any]],
+    route: Optional[str],
+) -> str:
+    refreshed_context, snapshot_payload = _refresh_runtime_memory_snapshot(
+        memory=memory,
+        diagnostics_payload=diagnostics_payload,
+        route=route,
+    )
+    if refreshed_context:
+        conversation_context = refreshed_context
+
+    if debug_trace is not None and isinstance(snapshot_payload, dict):
+        debug_trace["snapshot_v12"] = snapshot_payload
+        debug_trace["snapshot_v11"] = snapshot_payload
+
+    _log_context_build(memory, conversation_context, memory_context_bundle)
+
+    if debug_trace is not None:
+        debug_trace["context_mode"] = (
+            "summary"
+            if bool(getattr(memory_context_bundle, "summary_used", False))
+            else "full"
+        )
+
+    return conversation_context
+
+
 def _apply_memory_debug_info(
     debug_trace: Optional[Dict],
     memory,

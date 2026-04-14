@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from ..onboarding_flow import build_start_message
 from .state_helpers import _fallback_state_analysis
@@ -162,3 +162,91 @@ def _load_runtime_memory_context(
         "context_turns": context_turns,
         "memory_trace_metrics": memory_trace_metrics,
     }
+
+
+def _generate_llm_with_trace(
+    *,
+    response_generator,
+    query: str,
+    blocks: List[Any],
+    conversation_context: str,
+    mode: str,
+    confidence_level: str,
+    forbid: List[str],
+    additional_system_context: str,
+    sd_level: str,
+    config,
+    session_store,
+    session_id: str,
+    mode_prompt_override: Optional[str],
+    informational_mode: bool,
+    system_prompt_override: Optional[str],
+    debug_trace: Optional[Dict[str, Any]],
+    pipeline_stages: List[Dict[str, Any]],
+    llm_system_preview: str,
+    llm_user_preview: str,
+    system_blob_id: Optional[str],
+    user_blob_id: Optional[str],
+    build_llm_call_trace_fn: Callable[..., Dict[str, Any]],
+) -> Tuple[Dict[str, Any], Optional[str], int]:
+    llm_started = datetime.now()
+    llm_result: Dict[str, Any] = {}
+    llm_error: Optional[str] = None
+    duration_ms = 0
+
+    try:
+        llm_result = response_generator.generate(
+            query,
+            blocks,
+            conversation_context=conversation_context,
+            mode=mode,
+            confidence_level=confidence_level,
+            forbid=forbid,
+            additional_system_context=additional_system_context,
+            sd_level=sd_level,
+            model=config.LLM_MODEL,
+            temperature=config.LLM_TEMPERATURE,
+            max_tokens=config.get_mode_max_tokens(mode),
+            system_prompt_blob_id=system_blob_id,
+            user_prompt_blob_id=user_blob_id,
+            session_store=session_store,
+            session_id=session_id,
+            mode_prompt_override=mode_prompt_override,
+            mode_overrides_sd=informational_mode,
+            system_prompt_override=system_prompt_override,
+        )
+    except Exception as llm_exc:
+        llm_error = str(llm_exc)
+        raise
+    finally:
+        duration_ms = int((datetime.now() - llm_started).total_seconds() * 1000)
+        if debug_trace is not None:
+            call_info = (
+                llm_result.get("llm_call_info")
+                if isinstance(llm_result, dict) and isinstance(llm_result.get("llm_call_info"), dict)
+                else {}
+            )
+            debug_trace["system_prompt_blob_id"] = call_info.get("system_prompt_blob_id")
+            debug_trace["user_prompt_blob_id"] = call_info.get("user_prompt_blob_id")
+            pipeline_stages.append(
+                {
+                    "name": "llm",
+                    "label": "LLM",
+                    "duration_ms": duration_ms,
+                    "skipped": False,
+                }
+            )
+            debug_trace.setdefault("llm_calls", []).append(
+                build_llm_call_trace_fn(
+                    llm_result=llm_result if isinstance(llm_result, dict) else {},
+                    step="answer",
+                    system_prompt_preview=llm_system_preview,
+                    user_prompt_preview=llm_user_preview,
+                    fallback_error=llm_error,
+                    duration_ms=duration_ms,
+                    system_prompt_blob_id=system_blob_id,
+                    user_prompt_blob_id=user_blob_id,
+                )
+            )
+
+    return llm_result, llm_error, duration_ms

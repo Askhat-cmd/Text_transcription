@@ -146,6 +146,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _sd_runtime_disabled as _runtime_sd_runtime_disabled,
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
+    _generate_llm_with_trace as _runtime_generate_llm_with_trace,
 )
 
 logger = logging.getLogger(__name__)
@@ -246,6 +247,10 @@ def _build_start_command_response(
         schedule_summary_task=schedule_summary_task,
         logger=logger,
     )
+
+
+def _generate_llm_with_trace(**kwargs):
+    return _runtime_generate_llm_with_trace(**kwargs)
 
 
 def _resolve_path_user_level(_user_level: str) -> UserLevel:
@@ -668,63 +673,31 @@ def answer_question_adaptive(
                 llm_user_preview = _truncate_preview(full_user_prompt, 300)
                 debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
-            llm_started = datetime.now()
-            llm_result = {}
-            llm_error = None
-            try:
-                current_stage = "llm"
-                llm_result = response_generator.generate(
-                    query,
-                    [fast_block],
-                    conversation_context=conversation_context,
-                    mode=pre_routing_result.mode,
-                    confidence_level=pre_routing_result.confidence_level,
-                    forbid=pre_routing_result.decision.forbid,
-                    additional_system_context=state_context,
-                    sd_level=sd_result.primary,
-                    model=config.LLM_MODEL,
-                    temperature=config.LLM_TEMPERATURE,
-                    max_tokens=config.get_mode_max_tokens(pre_routing_result.mode),
-                    system_prompt_blob_id=system_blob_id,
-                    user_prompt_blob_id=user_blob_id,
-                    session_store=session_store,
-                    session_id=user_id,
-                    mode_prompt_override=mode_prompt_override,
-                    mode_overrides_sd=informational_mode,
-                    system_prompt_override=system_prompt_override,
-                )
-            except Exception as llm_exc:
-                llm_error = str(llm_exc)
-                raise
-            finally:
-                if debug_trace is not None:
-                    call_info = (
-                        llm_result.get("llm_call_info")
-                        if isinstance(llm_result, dict) and isinstance(llm_result.get("llm_call_info"), dict)
-                        else {}
-                    )
-                    debug_trace["system_prompt_blob_id"] = call_info.get("system_prompt_blob_id")
-                    debug_trace["user_prompt_blob_id"] = call_info.get("user_prompt_blob_id")
-                    pipeline_stages.append(
-                        {
-                            "name": "llm",
-                            "label": "LLM",
-                            "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
-                            "skipped": False,
-                        }
-                    )
-                    debug_trace["llm_calls"].append(
-                        _build_llm_call_trace(
-                            llm_result=llm_result if isinstance(llm_result, dict) else {},
-                            step="answer",
-                            system_prompt_preview=llm_system_preview,
-                            user_prompt_preview=llm_user_preview,
-                            fallback_error=llm_error,
-                            duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
-                            system_prompt_blob_id=system_blob_id,
-                            user_prompt_blob_id=user_blob_id,
-                        )
-                    )
+            current_stage = "llm"
+            llm_result, _, _ = _generate_llm_with_trace(
+                response_generator=response_generator,
+                query=query,
+                blocks=[fast_block],
+                conversation_context=conversation_context,
+                mode=pre_routing_result.mode,
+                confidence_level=pre_routing_result.confidence_level,
+                forbid=pre_routing_result.decision.forbid,
+                additional_system_context=state_context,
+                sd_level=sd_result.primary,
+                config=config,
+                session_store=session_store,
+                session_id=user_id,
+                mode_prompt_override=mode_prompt_override,
+                informational_mode=informational_mode,
+                system_prompt_override=system_prompt_override,
+                debug_trace=debug_trace,
+                pipeline_stages=pipeline_stages,
+                llm_system_preview=llm_system_preview,
+                llm_user_preview=llm_user_preview,
+                system_blob_id=system_blob_id,
+                user_blob_id=user_blob_id,
+                build_llm_call_trace_fn=_build_llm_call_trace,
+            )
             answer = llm_result.get("answer", "")
             formatter = ResponseFormatter()
             answer = formatter.format_answer(
@@ -1451,63 +1424,31 @@ def answer_question_adaptive(
             llm_user_preview = _truncate_preview(full_user_prompt, 300)
             debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
-        llm_started = datetime.now()
-        llm_result = {}
-        llm_error = None
-        try:
-            current_stage = "llm"
-            llm_result = response_generator.generate(
-                query,
-                adapted_blocks,
-                conversation_context=conversation_context,
-                mode=routing_result.mode,
-                confidence_level=routing_result.confidence_level,
-                forbid=routing_result.decision.forbid,
-                additional_system_context=state_context,
-                sd_level=sd_result.primary,
-                model=config.LLM_MODEL,
-                temperature=config.LLM_TEMPERATURE,
-                max_tokens=config.get_mode_max_tokens(routing_result.mode),
-                system_prompt_blob_id=system_blob_id,
-                user_prompt_blob_id=user_blob_id,
-                session_store=session_store,
-                session_id=user_id,
-                mode_prompt_override=mode_prompt_override,
-                mode_overrides_sd=informational_mode,
-                system_prompt_override=system_prompt_override,
-            )
-        except Exception as llm_exc:
-            llm_error = str(llm_exc)
-            raise
-        finally:
-            if debug_trace is not None:
-                call_info = (
-                    llm_result.get("llm_call_info")
-                    if isinstance(llm_result, dict) and isinstance(llm_result.get("llm_call_info"), dict)
-                    else {}
-                )
-                debug_trace["system_prompt_blob_id"] = call_info.get("system_prompt_blob_id")
-                debug_trace["user_prompt_blob_id"] = call_info.get("user_prompt_blob_id")
-                pipeline_stages.append(
-                    {
-                        "name": "llm",
-                        "label": "LLM",
-                        "duration_ms": int((datetime.now() - llm_started).total_seconds() * 1000),
-                        "skipped": False,
-                    }
-                )
-                debug_trace["llm_calls"].append(
-                    _build_llm_call_trace(
-                        llm_result=llm_result if isinstance(llm_result, dict) else {},
-                        step="answer",
-                        system_prompt_preview=llm_system_preview,
-                        user_prompt_preview=llm_user_preview,
-                        fallback_error=llm_error,
-                        duration_ms=int((datetime.now() - llm_started).total_seconds() * 1000),
-                        system_prompt_blob_id=system_blob_id,
-                        user_prompt_blob_id=user_blob_id,
-                    )
-                )
+        current_stage = "llm"
+        llm_result, _, _ = _generate_llm_with_trace(
+            response_generator=response_generator,
+            query=query,
+            blocks=adapted_blocks,
+            conversation_context=conversation_context,
+            mode=routing_result.mode,
+            confidence_level=routing_result.confidence_level,
+            forbid=routing_result.decision.forbid,
+            additional_system_context=state_context,
+            sd_level=sd_result.primary,
+            config=config,
+            session_store=session_store,
+            session_id=user_id,
+            mode_prompt_override=mode_prompt_override,
+            informational_mode=informational_mode,
+            system_prompt_override=system_prompt_override,
+            debug_trace=debug_trace,
+            pipeline_stages=pipeline_stages,
+            llm_system_preview=llm_system_preview,
+            llm_user_preview=llm_user_preview,
+            system_blob_id=system_blob_id,
+            user_blob_id=user_blob_id,
+            build_llm_call_trace_fn=_build_llm_call_trace,
+        )
         
         if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
             logger.error(f"[ADAPTIVE] LLM error: {llm_result['error']}")

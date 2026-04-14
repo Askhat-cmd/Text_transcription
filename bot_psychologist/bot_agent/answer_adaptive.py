@@ -13,20 +13,16 @@ Adaptive Answer Module - Phase 4
 - Р—Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
 """
 
-import asyncio
 import logging
-import json
 from typing import Any, Dict, Optional, List, Tuple
 from datetime import datetime
 
-from .data_loader import Block, data_loader
+from .data_loader import data_loader
 from .retriever import get_retriever
 from .user_level_types import UserLevel
 from .semantic_analyzer import SemanticAnalyzer
-from .graph_client import graph_client
-from .state_classifier import state_classifier, StateAnalysis, UserState
+from .state_classifier import state_classifier, StateAnalysis
 from .conversation_memory import get_conversation_memory
-from .working_state import WorkingState
 from .path_builder import path_builder
 from .config import config
 from .decision import (
@@ -415,11 +411,9 @@ def answer_question_adaptive(
         state_analysis = stage2["state_analysis"]
         sd_result = stage2["sd_result"]
         user_stage = stage2["user_stage"]
-        informational_mode_hint = stage2["informational_mode_hint"]
         informational_mode = stage2["informational_mode"]
         mode_prompt_key = stage2["mode_prompt_key"]
         mode_prompt_override = stage2["mode_prompt_override"]
-        use_new_diagnostics_v1 = stage2["use_new_diagnostics_v1"]
         use_deterministic_router = stage2["use_deterministic_router"]
         confidence_scorer = ConfidenceScorer()
         route_resolution_count = 0
@@ -565,8 +559,6 @@ def answer_question_adaptive(
         initial_retrieved_blocks = retrieval_stage["initial_retrieved_blocks"]
         reranked_blocks_for_trace = retrieval_stage["reranked_blocks_for_trace"]
         progressive_rag = retrieval_stage["progressive_rag"]
-        rerank_mode = retrieval_stage["rerank_mode"]
-        conditional_reranker = retrieval_stage["conditional_reranker"]
         should_run_rerank = retrieval_stage["should_run_rerank"]
         rerank_reason = retrieval_stage["rerank_reason"]
         rerank_k = retrieval_stage["rerank_k"]

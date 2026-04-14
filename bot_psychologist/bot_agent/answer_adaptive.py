@@ -158,7 +158,6 @@ from .adaptive_runtime.retrieval_stage_helpers import (
     _prepare_hybrid_query_stage as _runtime_prepare_hybrid_query_stage,
     _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
     _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
-    _run_retrieval_and_rerank_stage as _runtime_run_retrieval_and_rerank_stage,
     _run_retrieval_routing_context_stage as _runtime_run_retrieval_routing_context_stage,
 )
 

@@ -249,7 +249,6 @@ def _build_retrieval_debug_details(
     reranked_blocks_for_trace: List[Tuple[Any, float]],
     capped_retrieved_blocks: List[Tuple[Any, float]],
     adapted_blocks: List[Any],
-    build_retrieval_detail_fn,
 ) -> Dict[str, List[Dict[str, Any]]]:
     reranked_ids = {str(block.block_id) for block, _ in reranked_blocks_for_trace}
     capped_ids = {str(block.block_id) for block, _ in capped_retrieved_blocks}
@@ -267,27 +266,27 @@ def _build_retrieval_debug_details(
 
     return {
         "initial_retrieval": [
-            build_retrieval_detail_fn(block, score, "initial")
+            _build_retrieval_detail(block, score, "initial")
             for block, score in initial_retrieved_blocks
         ],
         "after_rerank": [
-            build_retrieval_detail_fn(block, score, "rerank")
+            _build_retrieval_detail(block, score, "rerank")
             for block, score in reranked_blocks_for_trace
         ],
         "after_confidence_cap": [
-            build_retrieval_detail_fn(block, score, "confidence_cap")
+            _build_retrieval_detail(block, score, "confidence_cap")
             for block, score in capped_retrieved_blocks
         ],
         "reranked_out": [
-            build_retrieval_detail_fn(block, score, "rerank")
+            _build_retrieval_detail(block, score, "rerank")
             for block, score in reranked_out
         ],
         "confidence_capped": [
-            build_retrieval_detail_fn(block, score, "confidence_cap")
+            _build_retrieval_detail(block, score, "confidence_cap")
             for block, score in confidence_capped_out
         ],
         "final_blocks": [
-            build_retrieval_detail_fn(
+            _build_retrieval_detail(
                 block,
                 final_score_map.get(str(block.block_id), 0.0),
                 "final",
@@ -379,7 +378,6 @@ def _attach_retrieval_observability(
             reranked_blocks_for_trace=reranked_blocks_for_trace,
             capped_retrieved_blocks=capped_retrieved_blocks,
             adapted_blocks=adapted_blocks,
-            build_retrieval_detail_fn=_build_retrieval_detail,
         )
         debug_info["voyage_rerank"] = _build_voyage_rerank_debug_payload(
             rerank_k=rerank_k,

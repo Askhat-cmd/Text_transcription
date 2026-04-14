@@ -15,10 +15,11 @@ def _prepare_hybrid_query_stage(
     memory,
     conversation_context: str,
     config,
-    recent_user_turns_fn,
-    hybrid_query_builder_cls,
     logger,
 ) -> Dict[str, Any]:
+    from ..retrieval import HybridQueryBuilder as _HybridQueryBuilder
+    from .trace_helpers import _recent_user_turns as _recent_user_turns
+
     retrieval_working_state = {
         "nss": (
             diagnostics_v1.nervous_system_state
@@ -32,8 +33,8 @@ def _prepare_hybrid_query_stage(
         ),
         "confidence": float(getattr(state_analysis, "confidence", 0.0) or 0.0),
     }
-    query_builder = hybrid_query_builder_cls(max_chars=config.MAX_CONTEXT_SIZE + 1200)
-    recent_user_turns = recent_user_turns_fn(memory, limit=2)
+    query_builder = _HybridQueryBuilder(max_chars=config.MAX_CONTEXT_SIZE + 1200)
+    recent_user_turns = _recent_user_turns(memory, limit=2)
     hybrid_query = query_builder.build_query(
         current_question=query,
         conversation_summary=memory.summary or "",
@@ -386,8 +387,6 @@ def _run_retrieval_routing_context_stage(
     state_analysis,
     memory,
     conversation_context: str,
-    recent_user_turns_fn,
-    hybrid_query_builder_cls,
     resolve_routing_and_apply_block_cap_fn,
     user_stage,
     route_resolver,
@@ -435,8 +434,6 @@ def _run_retrieval_routing_context_stage(
         memory=memory,
         conversation_context=conversation_context,
         config=config,
-        recent_user_turns_fn=recent_user_turns_fn,
-        hybrid_query_builder_cls=hybrid_query_builder_cls,
         logger=logger,
     )
     hybrid_query = hybrid_query_stage["hybrid_query"]

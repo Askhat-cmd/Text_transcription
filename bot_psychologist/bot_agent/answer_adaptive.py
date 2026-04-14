@@ -31,7 +31,7 @@ from .decision import (
     detect_routing_signals,
     resolve_user_stage,
 )
-from .retrieval import ConfidenceScorer, HybridQueryBuilder, VoyageReranker
+from .retrieval import ConfidenceScorer, VoyageReranker
 from .response import ResponseFormatter, ResponseGenerator
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
@@ -87,7 +87,6 @@ from .adaptive_runtime.trace_helpers import (
     _truncate_preview,
     _extract_block_trace_fields,
     _build_chunk_trace_item,
-    _recent_user_turns,
     _prepare_adapted_blocks_and_attach_observability as _runtime_prepare_adapted_blocks_and_attach_observability,
     _build_llm_prompts,
     _prepare_llm_prompt_previews,
@@ -502,8 +501,6 @@ def answer_question_adaptive(
             state_analysis=state_analysis,
             memory=memory,
             conversation_context=conversation_context,
-            recent_user_turns_fn=_recent_user_turns,
-            hybrid_query_builder_cls=HybridQueryBuilder,
             resolve_routing_and_apply_block_cap_fn=_runtime_resolve_routing_and_apply_block_cap,
             user_stage=user_stage,
             route_resolver=route_resolver,

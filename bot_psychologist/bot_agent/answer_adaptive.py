@@ -94,7 +94,7 @@ from .adaptive_runtime.trace_helpers import (
     _build_voyage_rerank_debug_payload,
     _build_routing_debug_payload,
     _build_llm_prompts,
-    _build_llm_prompt_previews,
+    _prepare_llm_prompt_previews,
     _build_llm_call_trace,
     _update_session_token_metrics,
     _build_memory_context_snapshot,
@@ -650,27 +650,18 @@ def answer_question_adaptive(
             system_blob_id = None
             user_blob_id = None
             if debug_trace is not None:
-                if system_prompt_override is not None:
-                    full_system_prompt = system_prompt_override
-                    full_user_prompt = response_generator.answerer.build_context_prompt(
-                        [fast_block],
-                        query,
-                        conversation_history=conversation_context,
-                    )
-                else:
-                    full_system_prompt, full_user_prompt = _build_llm_prompts(
-                        response_generator=response_generator,
-                        query=query,
-                        blocks=[fast_block],
-                        conversation_context=conversation_context,
-                        sd_level=sd_result.primary,
-                        mode_prompt=mode_directive.prompt,
-                        additional_system_context=state_context,
-                        mode_prompt_override=mode_prompt_override,
-                        mode_overrides_sd=informational_mode,
-                    )
-                llm_system_preview = _truncate_preview(full_system_prompt, 300)
-                llm_user_preview = _truncate_preview(full_user_prompt, 300)
+                llm_system_preview, llm_user_preview = _prepare_llm_prompt_previews(
+                    response_generator=response_generator,
+                    query=query,
+                    blocks=[fast_block],
+                    conversation_context=conversation_context,
+                    sd_level=sd_result.primary,
+                    mode_prompt=mode_directive.prompt,
+                    additional_system_context=state_context,
+                    mode_prompt_override=mode_prompt_override,
+                    mode_overrides_sd=informational_mode,
+                    system_prompt_override=system_prompt_override,
+                )
                 debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
             current_stage = "llm"
@@ -1401,27 +1392,18 @@ def answer_question_adaptive(
         system_blob_id = None
         user_blob_id = None
         if debug_trace is not None:
-            if system_prompt_override is not None:
-                full_system_prompt = system_prompt_override
-                full_user_prompt = response_generator.answerer.build_context_prompt(
-                    adapted_blocks,
-                    query,
-                    conversation_history=conversation_context,
-                )
-            else:
-                full_system_prompt, full_user_prompt = _build_llm_prompts(
-                    response_generator=response_generator,
-                    query=query,
-                    blocks=adapted_blocks,
-                    conversation_context=conversation_context,
-                    sd_level=sd_result.primary,
-                    mode_prompt=mode_directive.prompt,
-                    additional_system_context=state_context,
-                    mode_prompt_override=mode_prompt_override,
-                    mode_overrides_sd=informational_mode,
-                )
-            llm_system_preview = _truncate_preview(full_system_prompt, 300)
-            llm_user_preview = _truncate_preview(full_user_prompt, 300)
+            llm_system_preview, llm_user_preview = _prepare_llm_prompt_previews(
+                response_generator=response_generator,
+                query=query,
+                blocks=adapted_blocks,
+                conversation_context=conversation_context,
+                sd_level=sd_result.primary,
+                mode_prompt=mode_directive.prompt,
+                additional_system_context=state_context,
+                mode_prompt_override=mode_prompt_override,
+                mode_overrides_sd=informational_mode,
+                system_prompt_override=system_prompt_override,
+            )
             debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
         current_stage = "llm"

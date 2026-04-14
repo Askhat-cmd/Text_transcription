@@ -409,7 +409,7 @@ def _build_llm_prompt_previews(
     additional_system_context: str,
     mode_prompt_override: Optional[str] = None,
     mode_overrides_sd: bool = False,
-) -> Tuple[str, str]:
+    ) -> Tuple[str, str]:
     full_system, full_user = _build_llm_prompts(
         response_generator=response_generator,
         query=query,
@@ -422,6 +422,47 @@ def _build_llm_prompt_previews(
         mode_overrides_sd=mode_overrides_sd,
     )
     return _truncate_preview(full_system, 300), _truncate_preview(full_user, 300)
+
+
+def _prepare_llm_prompt_previews(
+    *,
+    response_generator: ResponseGenerator,
+    query: str,
+    blocks: List[Block],
+    conversation_context: str,
+    sd_level: str,
+    mode_prompt: str,
+    additional_system_context: str,
+    mode_prompt_override: Optional[str] = None,
+    mode_overrides_sd: bool = False,
+    system_prompt_override: Optional[str] = None,
+) -> Tuple[str, str]:
+    if system_prompt_override is not None:
+        try:
+            user_prompt = response_generator.answerer.build_context_prompt(
+                blocks,
+                query,
+                conversation_history=conversation_context,
+            )
+        except Exception as exc:
+            logger.debug(f"[DEBUG_TRACE] Failed to build overridden user prompt: {exc}")
+            user_prompt = ""
+        return (
+            _truncate_preview(system_prompt_override, 300),
+            _truncate_preview(user_prompt, 300),
+        )
+
+    return _build_llm_prompt_previews(
+        response_generator=response_generator,
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        sd_level=sd_level,
+        mode_prompt=mode_prompt,
+        additional_system_context=additional_system_context,
+        mode_prompt_override=mode_prompt_override,
+        mode_overrides_sd=mode_overrides_sd,
+    )
 
 
 def _build_llm_call_trace(

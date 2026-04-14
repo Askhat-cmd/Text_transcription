@@ -137,6 +137,8 @@ from .adaptive_runtime.routing_stage_helpers import (
     _build_contradiction_payload as _runtime_build_contradiction_payload,
     _resolve_pre_routing as _runtime_resolve_pre_routing,
     _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
+    _build_state_context_mode_prompt as _runtime_build_state_context_mode_prompt,
+    _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
@@ -607,17 +609,16 @@ def answer_question_adaptive(
                 contradiction_suggestion=contradiction_hint,
                 cross_session_context=cross_session_context,
             )
-            fast_phase8_parts: List[str] = []
-            if _informational_branch_enabled():
-                if phase8_signals is not None and phase8_signals.first_turn:
-                    fast_phase8_parts.append(build_first_turn_instruction())
-                if phase8_signals is not None and phase8_signals.mixed_query:
-                    fast_phase8_parts.append(build_mixed_query_instruction())
-                if correction_protocol_active:
-                    fast_phase8_parts.append(build_user_correction_instruction())
-                if informational_mode:
-                    fast_phase8_parts.append(build_informational_guardrail_instruction())
-            fast_phase8_suffix = "\n\n".join(part for part in fast_phase8_parts if part.strip())
+            fast_phase8_suffix = _runtime_build_phase8_context_suffix(
+                informational_branch_enabled=_informational_branch_enabled(),
+                phase8_signals=phase8_signals,
+                correction_protocol_active=correction_protocol_active,
+                informational_mode=informational_mode,
+                build_first_turn_instruction_fn=build_first_turn_instruction,
+                build_mixed_query_instruction_fn=build_mixed_query_instruction,
+                build_user_correction_instruction_fn=build_user_correction_instruction,
+                build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
+            )
             if fast_phase8_suffix:
                 state_context = f"{state_context}\n\n{fast_phase8_suffix}"
             response_generator = ResponseGenerator()
@@ -1152,22 +1153,20 @@ def answer_question_adaptive(
             diagnostics_v1.request_function if diagnostics_v1 else "understand",
             getattr(routing_result, "route", "reflect"),
         )
-        state_context_mode_prompt = (
-            "Р Р•Р–Рњ: INFORMATIONAL\nР”Р°Р№ РїРѕР»РЅС‹Р№ СЃС‚СЂСѓРєС‚СѓСЂРёСЂРѕРІР°РЅРЅС‹Р№ РѕС‚РІРµС‚ РїРѕ С‚РµРјРµ."
-            if informational_mode
-            else mode_directive.prompt
+        state_context_mode_prompt = _runtime_build_state_context_mode_prompt(
+            informational_mode=informational_mode,
+            fallback_prompt=mode_directive.prompt,
         )
-        phase8_context_parts: List[str] = []
-        if _informational_branch_enabled():
-            if phase8_signals is not None and phase8_signals.first_turn:
-                phase8_context_parts.append(build_first_turn_instruction())
-            if phase8_signals is not None and phase8_signals.mixed_query:
-                phase8_context_parts.append(build_mixed_query_instruction())
-            if correction_protocol_active:
-                phase8_context_parts.append(build_user_correction_instruction())
-            if informational_mode:
-                phase8_context_parts.append(build_informational_guardrail_instruction())
-        phase8_context_suffix = "\n\n".join(part for part in phase8_context_parts if part.strip())
+        phase8_context_suffix = _runtime_build_phase8_context_suffix(
+            informational_branch_enabled=_informational_branch_enabled(),
+            phase8_signals=phase8_signals,
+            correction_protocol_active=correction_protocol_active,
+            informational_mode=informational_mode,
+            build_first_turn_instruction_fn=build_first_turn_instruction,
+            build_mixed_query_instruction_fn=build_mixed_query_instruction,
+            build_user_correction_instruction_fn=build_user_correction_instruction,
+            build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
+        )
         selected_practice: Optional[Dict[str, Any]] = None
         practice_alternatives: List[Dict[str, Any]] = []
         practice_context_suffix = ""

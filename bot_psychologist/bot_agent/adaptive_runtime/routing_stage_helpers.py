@@ -2,7 +2,13 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Callable, Dict, Optional, Tuple
+
+
+INFORMATIONAL_MODE_PROMPT = (
+    "РЕЖИМ: INFORMATIONAL\n"
+    "Дай полный структурированный ответ по теме."
+)
 
 
 def _compute_diagnostics_v1(
@@ -167,6 +173,43 @@ def _apply_fast_path_debug_bootstrap(
         )
 
 
+def _build_state_context_mode_prompt(
+    *,
+    informational_mode: bool,
+    fallback_prompt: str,
+) -> str:
+    if informational_mode:
+        return INFORMATIONAL_MODE_PROMPT
+    return fallback_prompt
+
+
+def _build_phase8_context_suffix(
+    *,
+    informational_branch_enabled: bool,
+    phase8_signals,
+    correction_protocol_active: bool,
+    informational_mode: bool,
+    build_first_turn_instruction_fn: Callable[[], str],
+    build_mixed_query_instruction_fn: Callable[[], str],
+    build_user_correction_instruction_fn: Callable[[], str],
+    build_informational_guardrail_instruction_fn: Callable[[], str],
+) -> str:
+    if not informational_branch_enabled:
+        return ""
+
+    parts = []
+    if phase8_signals is not None and phase8_signals.first_turn:
+        parts.append(build_first_turn_instruction_fn())
+    if phase8_signals is not None and phase8_signals.mixed_query:
+        parts.append(build_mixed_query_instruction_fn())
+    if correction_protocol_active:
+        parts.append(build_user_correction_instruction_fn())
+    if informational_mode:
+        parts.append(build_informational_guardrail_instruction_fn())
+
+    return "\n\n".join(part for part in parts if part and part.strip())
+
+
 def _build_fast_path_mode_directive(
     *,
     pre_routing_result,
@@ -179,9 +222,8 @@ def _build_fast_path_mode_directive(
         reason=pre_routing_result.decision.reason,
         forbid=pre_routing_result.decision.forbid,
     )
-    state_context_mode_prompt = (
-        "РЕЖИМ: INFORMATIONAL\nДай полный структурированный ответ по теме."
-        if informational_mode
-        else mode_directive.prompt
+    state_context_mode_prompt = _build_state_context_mode_prompt(
+        informational_mode=informational_mode,
+        fallback_prompt=mode_directive.prompt,
     )
     return mode_directive, state_context_mode_prompt

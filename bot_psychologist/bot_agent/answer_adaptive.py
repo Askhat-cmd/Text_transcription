@@ -155,9 +155,6 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
-    _prepare_hybrid_query_stage as _runtime_prepare_hybrid_query_stage,
-    _dedupe_and_apply_progressive_rag as _runtime_dedupe_and_apply_progressive_rag,
-    _prepare_conditional_rerank as _runtime_prepare_conditional_rerank,
     _run_retrieval_routing_context_stage as _runtime_run_retrieval_routing_context_stage,
 )
 
@@ -507,9 +504,7 @@ def answer_question_adaptive(
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
             get_progressive_rag_fn=get_progressive_rag,
-            dedupe_and_apply_progressive_rag_fn=_runtime_dedupe_and_apply_progressive_rag,
             log_retrieval_pairs_fn=_log_retrieval_pairs,
-            prepare_conditional_rerank_fn=_runtime_prepare_conditional_rerank,
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,
             pre_routing_result=pre_routing_result,
@@ -520,7 +515,6 @@ def answer_question_adaptive(
             state_analysis=state_analysis,
             memory=memory,
             conversation_context=conversation_context,
-            prepare_hybrid_query_stage_fn=_runtime_prepare_hybrid_query_stage,
             recent_user_turns_fn=_recent_user_turns,
             hybrid_query_builder_cls=HybridQueryBuilder,
             resolve_routing_and_apply_block_cap_fn=_runtime_resolve_routing_and_apply_block_cap,
@@ -528,7 +522,7 @@ def answer_question_adaptive(
             route_resolver=route_resolver,
             confidence_scorer=confidence_scorer,
             decision_gate=decision_gate,
-            informational_branch_enabled_fn=lambda: informational_branch_enabled,
+            informational_branch_enabled=informational_branch_enabled,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             build_mode_directive_fn=build_mode_directive,
             finalize_routing_context_and_trace_fn=_runtime_finalize_routing_context_and_trace,

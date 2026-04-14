@@ -249,9 +249,7 @@ def _run_retrieval_and_rerank_stage(
     debug_trace,
     pipeline_stages,
     get_progressive_rag_fn,
-    dedupe_and_apply_progressive_rag_fn,
     log_retrieval_pairs_fn,
-    prepare_conditional_rerank_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
@@ -284,7 +282,7 @@ def _run_retrieval_and_rerank_stage(
             debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
 
     progressive_rag = get_progressive_rag_fn(str(config.BOT_DB_PATH))
-    raw_retrieved_blocks = dedupe_and_apply_progressive_rag_fn(
+    raw_retrieved_blocks = _dedupe_and_apply_progressive_rag(
         raw_retrieved_blocks=raw_retrieved_blocks,
         progressive_rag=progressive_rag,
         debug_trace=debug_trace,
@@ -294,7 +292,7 @@ def _run_retrieval_and_rerank_stage(
     log_retrieval_pairs_fn("Initial retrieval", raw_retrieved_blocks, limit=10)
     retrieved_blocks = list(raw_retrieved_blocks)
     initial_retrieved_blocks = list(raw_retrieved_blocks)
-    rerank_prep = prepare_conditional_rerank_fn(
+    rerank_prep = _prepare_conditional_rerank(
         retrieved_blocks=retrieved_blocks,
         top_k=top_k,
         config=config,
@@ -386,9 +384,7 @@ def _run_retrieval_routing_context_stage(
     debug_trace,
     pipeline_stages,
     get_progressive_rag_fn,
-    dedupe_and_apply_progressive_rag_fn,
     log_retrieval_pairs_fn,
-    prepare_conditional_rerank_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
@@ -399,7 +395,6 @@ def _run_retrieval_routing_context_stage(
     state_analysis,
     memory,
     conversation_context: str,
-    prepare_hybrid_query_stage_fn,
     recent_user_turns_fn,
     hybrid_query_builder_cls,
     resolve_routing_and_apply_block_cap_fn,
@@ -407,7 +402,7 @@ def _run_retrieval_routing_context_stage(
     route_resolver,
     confidence_scorer,
     decision_gate,
-    informational_branch_enabled_fn,
+    informational_branch_enabled: bool,
     resolve_mode_prompt_fn,
     build_mode_directive_fn,
     finalize_routing_context_and_trace_fn,
@@ -447,7 +442,7 @@ def _run_retrieval_routing_context_stage(
     build_chunk_trace_lists_after_rerank_fn,
     model_used: str,
 ) -> Dict[str, Any]:
-    hybrid_query_stage = prepare_hybrid_query_stage_fn(
+    hybrid_query_stage = _prepare_hybrid_query_stage(
         query=query,
         diagnostics_v1=diagnostics_v1,
         state_analysis=state_analysis,
@@ -472,9 +467,7 @@ def _run_retrieval_routing_context_stage(
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
         get_progressive_rag_fn=get_progressive_rag_fn,
-        dedupe_and_apply_progressive_rag_fn=dedupe_and_apply_progressive_rag_fn,
         log_retrieval_pairs_fn=log_retrieval_pairs_fn,
-        prepare_conditional_rerank_fn=prepare_conditional_rerank_fn,
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,
         pre_routing_result=pre_routing_result,
@@ -507,7 +500,7 @@ def _run_retrieval_routing_context_stage(
         pre_routing_result=pre_routing_result,
         decision_gate=decision_gate,
         retrieved_blocks=retrieved_blocks,
-        informational_branch_enabled_fn=informational_branch_enabled_fn,
+        informational_branch_enabled_fn=lambda: informational_branch_enabled,
         resolve_mode_prompt_fn=resolve_mode_prompt_fn,
         config=config,
         log_retrieval_pairs_fn=log_retrieval_pairs_fn,
@@ -526,7 +519,7 @@ def _run_retrieval_routing_context_stage(
     state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
 
     routing_context_stage = finalize_routing_context_and_trace_fn(
-        informational_branch_enabled=informational_branch_enabled_fn(),
+        informational_branch_enabled=informational_branch_enabled,
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,

@@ -35,7 +35,6 @@ from .retrieval import ConfidenceScorer, HybridQueryBuilder, VoyageReranker
 from .response import ResponseFormatter, ResponseGenerator
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
-from .progressive_rag import get_progressive_rag
 from .diagnostics_classifier import diagnostics_classifier
 from .route_resolver import route_resolver
 from .memory_updater import memory_updater
@@ -495,7 +494,6 @@ def answer_question_adaptive(
             logger=logger,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
-            get_progressive_rag_fn=get_progressive_rag,
             log_retrieval_pairs_fn=_log_retrieval_pairs,
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,

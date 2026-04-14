@@ -249,7 +249,6 @@ def _run_retrieval_and_rerank_stage(
     logger,
     debug_trace,
     pipeline_stages,
-    get_progressive_rag_fn,
     log_retrieval_pairs_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
@@ -260,6 +259,8 @@ def _run_retrieval_and_rerank_stage(
     memory,
     hybrid_query: str,
 ) -> Dict[str, Any]:
+    from ..progressive_rag import get_progressive_rag as _get_progressive_rag
+
     retrieval_stage = _retrieve_blocks_with_degraded_mode(
         query=query,
         hybrid_query=hybrid_query,
@@ -279,7 +280,7 @@ def _run_retrieval_and_rerank_stage(
         if retrieval_degraded_reason:
             debug_trace["retrieval_degraded_reason"] = retrieval_degraded_reason
 
-    progressive_rag = get_progressive_rag_fn(str(config.BOT_DB_PATH))
+    progressive_rag = _get_progressive_rag(str(config.BOT_DB_PATH))
     raw_retrieved_blocks = _dedupe_and_apply_progressive_rag(
         raw_retrieved_blocks=raw_retrieved_blocks,
         progressive_rag=progressive_rag,
@@ -378,7 +379,6 @@ def _run_retrieval_routing_context_stage(
     logger,
     debug_trace,
     pipeline_stages,
-    get_progressive_rag_fn,
     log_retrieval_pairs_fn,
     use_deterministic_router: bool,
     diagnostics_v1,
@@ -453,7 +453,6 @@ def _run_retrieval_routing_context_stage(
         logger=logger,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        get_progressive_rag_fn=get_progressive_rag_fn,
         log_retrieval_pairs_fn=log_retrieval_pairs_fn,
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,

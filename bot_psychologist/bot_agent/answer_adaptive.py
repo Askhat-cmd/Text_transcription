@@ -147,9 +147,9 @@ from .adaptive_runtime.routing_stage_helpers import (
     _build_contradiction_payload as _runtime_build_contradiction_payload,
     _resolve_pre_routing as _runtime_resolve_pre_routing,
     _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
-    _build_state_context_mode_prompt as _runtime_build_state_context_mode_prompt,
     _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
+    _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
     _resolve_practice_selection_context as _runtime_resolve_practice_selection_context,
     _attach_routing_stage_debug_trace as _runtime_attach_routing_stage_debug_trace,
 )
@@ -313,6 +313,10 @@ def _run_state_analysis_stage(**kwargs):
 
 def _resolve_practice_selection_context(**kwargs):
     return _runtime_resolve_practice_selection_context(**kwargs)
+
+
+def _resolve_routing_and_apply_block_cap(**kwargs):
+    return _runtime_resolve_routing_and_apply_block_cap(**kwargs)
 
 
 def _attach_routing_stage_debug_trace(**kwargs):
@@ -895,61 +899,33 @@ def answer_question_adaptive(
         if rerank_applied:
             current_stage = "rerank"
 
-        if use_deterministic_router and diagnostics_v1 is not None:
-            practice_candidate_score = (
-                0.75 if diagnostics_v1.request_function == "solution" else 0.0
-            )
-            routing_result = route_resolver.resolve(
-                diagnostics=diagnostics_v1,
-                safety_override=False,
-                practice_candidate_score=practice_candidate_score,
-                user_stage=user_stage,
-            )
-            route_resolution_count += 1
-            block_cap = confidence_scorer.suggest_block_cap(
-                len(retrieved_blocks),
-                routing_result.confidence_level,
-            )
-        else:
-            # Wave 4 contract: non-deterministic path uses one DecisionGate result per turn.
-            if pre_routing_result is None:
-                raise RuntimeError("pre_routing_result is missing in non-deterministic routing flow")
-            routing_result = pre_routing_result
-            block_cap = decision_gate.scorer.suggest_block_cap(
-                len(retrieved_blocks),
-                routing_result.confidence_level,
-            )
-        if _informational_branch_enabled():
-            informational_mode = str(getattr(routing_result, "route", "") or "").lower() == "inform"
-        else:
-            informational_mode = False
-        mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
-            "informational" if informational_mode else "",
-            config,
+        routing_cap_stage = _resolve_routing_and_apply_block_cap(
+            use_deterministic_router=use_deterministic_router,
+            diagnostics_v1=diagnostics_v1,
+            user_stage=user_stage,
+            route_resolver=route_resolver,
+            confidence_scorer=confidence_scorer,
+            pre_routing_result=pre_routing_result,
+            decision_gate=decision_gate,
+            retrieved_blocks=retrieved_blocks,
+            informational_branch_enabled_fn=_informational_branch_enabled,
+            resolve_mode_prompt_fn=resolve_mode_prompt,
+            config=config,
+            log_retrieval_pairs_fn=_log_retrieval_pairs,
+            build_mode_directive_fn=build_mode_directive,
+            logger=logger,
         )
-        stage_count_before_cap = len(retrieved_blocks)
-        retrieved_blocks = retrieved_blocks[:block_cap]
-        capped_retrieved_blocks = list(retrieved_blocks)
-        logger.info(
-            f"[RETRIEVAL] confidence_cap={block_cap} (before={stage_count_before_cap})"
-        )
-        _log_retrieval_pairs("After confidence cap", retrieved_blocks, limit=10)
-        mode_directive = build_mode_directive(
-            mode=routing_result.mode,
-            confidence_level=routing_result.confidence_level,
-            reason=routing_result.decision.reason,
-            forbid=routing_result.decision.forbid,
-        )
-        logger.info(
-            "ROUTING nss=%s fn=%s route=%s",
-            diagnostics_v1.nervous_system_state if diagnostics_v1 else "window",
-            diagnostics_v1.request_function if diagnostics_v1 else "understand",
-            getattr(routing_result, "route", "reflect"),
-        )
-        state_context_mode_prompt = _runtime_build_state_context_mode_prompt(
-            informational_mode=informational_mode,
-            fallback_prompt=mode_directive.prompt,
-        )
+        routing_result = routing_cap_stage["routing_result"]
+        block_cap = routing_cap_stage["block_cap"]
+        route_resolution_count += int(routing_cap_stage["route_resolution_increment"])
+        informational_mode = routing_cap_stage["informational_mode"]
+        mode_prompt_key = routing_cap_stage["mode_prompt_key"]
+        mode_prompt_override = routing_cap_stage["mode_prompt_override"]
+        retrieved_blocks = routing_cap_stage["retrieved_blocks"]
+        capped_retrieved_blocks = routing_cap_stage["capped_retrieved_blocks"]
+        mode_directive = routing_cap_stage["mode_directive"]
+        state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
+
         phase8_context_suffix = _runtime_build_phase8_context_suffix(
             informational_branch_enabled=_informational_branch_enabled(),
             phase8_signals=phase8_signals,

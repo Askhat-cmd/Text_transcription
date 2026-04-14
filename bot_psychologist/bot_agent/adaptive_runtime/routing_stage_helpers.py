@@ -327,6 +327,99 @@ def _build_fast_path_mode_directive(
     return mode_directive, state_context_mode_prompt
 
 
+def _resolve_routing_and_apply_block_cap(
+    *,
+    use_deterministic_router: bool,
+    diagnostics_v1,
+    user_stage: str,
+    route_resolver,
+    confidence_scorer,
+    pre_routing_result,
+    decision_gate,
+    retrieved_blocks,
+    informational_branch_enabled_fn: Callable[[], bool],
+    resolve_mode_prompt_fn,
+    config,
+    log_retrieval_pairs_fn,
+    build_mode_directive_fn,
+    logger,
+) -> Dict[str, Any]:
+    route_resolution_increment = 0
+    if use_deterministic_router and diagnostics_v1 is not None:
+        practice_candidate_score = (
+            0.75 if diagnostics_v1.request_function == "solution" else 0.0
+        )
+        routing_result = route_resolver.resolve(
+            diagnostics=diagnostics_v1,
+            safety_override=False,
+            practice_candidate_score=practice_candidate_score,
+            user_stage=user_stage,
+        )
+        route_resolution_increment = 1
+        block_cap = confidence_scorer.suggest_block_cap(
+            len(retrieved_blocks),
+            routing_result.confidence_level,
+        )
+    else:
+        # Non-deterministic path uses one DecisionGate result per turn.
+        if pre_routing_result is None:
+            raise RuntimeError("pre_routing_result is missing in non-deterministic routing flow")
+        routing_result = pre_routing_result
+        block_cap = decision_gate.scorer.suggest_block_cap(
+            len(retrieved_blocks),
+            routing_result.confidence_level,
+        )
+
+    informational_mode = (
+        informational_branch_enabled_fn()
+        and str(getattr(routing_result, "route", "") or "").lower() == "inform"
+    )
+    mode_prompt_key, mode_prompt_override = resolve_mode_prompt_fn(
+        "informational" if informational_mode else "",
+        config,
+    )
+
+    stage_count_before_cap = len(retrieved_blocks)
+    retrieved_blocks = retrieved_blocks[:block_cap]
+    capped_retrieved_blocks = list(retrieved_blocks)
+    logger.info(
+        "[RETRIEVAL] confidence_cap=%s (before=%s)",
+        block_cap,
+        stage_count_before_cap,
+    )
+    log_retrieval_pairs_fn("After confidence cap", retrieved_blocks, limit=10)
+
+    mode_directive = build_mode_directive_fn(
+        mode=routing_result.mode,
+        confidence_level=routing_result.confidence_level,
+        reason=routing_result.decision.reason,
+        forbid=routing_result.decision.forbid,
+    )
+    logger.info(
+        "ROUTING nss=%s fn=%s route=%s",
+        diagnostics_v1.nervous_system_state if diagnostics_v1 else "window",
+        diagnostics_v1.request_function if diagnostics_v1 else "understand",
+        getattr(routing_result, "route", "reflect"),
+    )
+    state_context_mode_prompt = _build_state_context_mode_prompt(
+        informational_mode=informational_mode,
+        fallback_prompt=mode_directive.prompt,
+    )
+
+    return {
+        "routing_result": routing_result,
+        "block_cap": block_cap,
+        "route_resolution_increment": route_resolution_increment,
+        "informational_mode": informational_mode,
+        "mode_prompt_key": mode_prompt_key,
+        "mode_prompt_override": mode_prompt_override,
+        "retrieved_blocks": retrieved_blocks,
+        "capped_retrieved_blocks": capped_retrieved_blocks,
+        "mode_directive": mode_directive,
+        "state_context_mode_prompt": state_context_mode_prompt,
+    }
+
+
 def _resolve_practice_selection_context(
     *,
     routing_result,

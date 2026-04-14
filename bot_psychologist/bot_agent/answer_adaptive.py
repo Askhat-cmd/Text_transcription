@@ -152,6 +152,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
     _run_full_path_llm_stage as _runtime_run_full_path_llm_stage,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
+    _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
 )
 from .adaptive_runtime.retrieval_stage_helpers import (
     _prepare_hybrid_query_stage as _runtime_prepare_hybrid_query_stage,
@@ -611,50 +612,34 @@ def answer_question_adaptive(
         conversation_context = stage3["conversation_context"]
         adapted_blocks = stage3["adapted_blocks"]
         
-        # ================================================================
-        # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        # ================================================================
-        logger.debug("рџ¤– Р­С‚Р°Рї 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р°...")
-        
-        # Р”РѕР±Р°РІРёС‚СЊ РєРѕРЅС‚РµРєСЃС‚ СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        state_context = _runtime_compose_state_context(
+        stage4 = _runtime_run_generation_and_success_stage(
+            query=query,
             state_analysis=state_analysis,
-            mode_prompt=state_context_mode_prompt,
-            nervous_system_state=(
-                diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"
-            ),
-            request_function=(
-                diagnostics_v1.request_function if diagnostics_v1 else "understand"
-            ),
-            contradiction_suggestion=contradiction_hint,
+            routing_result=routing_result,
+            diagnostics_v1=diagnostics_v1,
+            contradiction_hint=contradiction_hint,
+            contradiction_info=contradiction_info,
             cross_session_context=cross_session_context,
             phase8_context_suffix=phase8_context_suffix,
             practice_context_suffix=practice_context_suffix,
             build_state_context_fn=_build_state_context,
-        )
-
-        # Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° (СЃ СѓС‡С‘С‚РѕРј РёСЃС‚РѕСЂРёРё РґРёР°Р»РѕРіР°)
-        current_stage = "llm"
-        llm_stage = _runtime_run_full_path_llm_stage(
-            query=query,
+            compose_state_context_fn=_runtime_compose_state_context,
+            state_context_mode_prompt=state_context_mode_prompt,
             adapted_blocks=adapted_blocks,
-            conversation_context=conversation_context,
-            routing_result=routing_result,
-            state_context=state_context,
             sd_primary=sd_result.primary,
             config=config,
             session_store=session_store,
             user_id=user_id,
             mode_prompt_override=mode_prompt_override,
             informational_mode=informational_mode,
-            diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             prompt_stack_enabled=_runtime_prompt_stack_v2_enabled(),
             prompt_registry=prompt_registry_v2,
-            mode_prompt=mode_directive.prompt,
+            mode_directive=mode_directive,
             debug_trace=debug_trace,
             pipeline_stages=pipeline_stages,
+            run_full_path_llm_stage_fn=_runtime_run_full_path_llm_stage,
             run_llm_generation_cycle_fn=_runtime_run_llm_generation_cycle,
             response_generator_cls=ResponseGenerator,
             build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
@@ -667,7 +652,6 @@ def answer_question_adaptive(
             apply_output_validation_policy_fn=_apply_output_validation_policy,
             apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
             handle_llm_generation_error_response_fn=_runtime_handle_llm_generation_error_response,
-            state_analysis=state_analysis,
             start_time=start_time,
             memory=memory,
             schedule_summary_task=schedule_summary_task,
@@ -682,35 +666,11 @@ def answer_question_adaptive(
             store_blob_fn=_store_blob,
             llm_model_name=str(config.LLM_MODEL),
             logger=logger,
-        )
-        if llm_stage["error_response"] is not None:
-            return llm_stage["error_response"]
-        llm_result = llm_stage["llm_result"]
-        answer = llm_stage["answer"]
-
-        # ================================================================
-        # Р­РўРђРџ 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР· Рё РёР·РІР»РµС‡РµРЅРёРµ РєРѕРЅС†РµРїС‚РѕРІ
-        # ================================================================
-        logger.debug("рџ”¬ Р­С‚Р°Рї 5: РЎРµРјР°РЅС‚РёС‡РµСЃРєРёР№ Р°РЅР°Р»РёР·...")
-        
-        logger.debug("рџ›¤пёЏ Р­С‚Р°Рї 6: Р РµРєРѕРјРµРЅРґР°С†РёСЏ РїСѓС‚Рё...")
-        logger.debug("рџ“ќ Р­С‚Р°Рї 7: РџРѕРґРіРѕС‚РѕРІРєР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё...")
-        logger.debug("рџ’ѕ Р­С‚Р°Рї 8: РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ...")
-
-        result = _runtime_run_full_path_success_stage(
-            memory=memory,
-            query=query,
-            answer=answer,
-            state_analysis=state_analysis,
-            routing_result=routing_result,
-            adapted_blocks=adapted_blocks,
+            run_full_path_success_stage_fn=_runtime_run_full_path_success_stage,
             include_path_recommendation=include_path_recommendation,
             include_feedback_prompt=include_feedback_prompt,
-            user_id=user_id,
             user_level_enum=path_level_enum,
-            llm_result=llm_result,
             fallback_model_name=str(config.LLM_MODEL),
-            schedule_summary_task=schedule_summary_task,
             collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
             update_session_token_metrics_fn=_update_session_token_metrics,
             set_working_state_best_effort_fn=_set_working_state_best_effort,
@@ -722,26 +682,15 @@ def answer_question_adaptive(
             path_builder=path_builder,
             build_full_path_success_response_fn=_runtime_build_full_path_success_response,
             conversation_context=conversation_context,
-            debug_info=debug_info,
-            debug_trace=debug_trace,
-            start_time=start_time,
-            mode_directive_reason=mode_directive.reason,
+            mode_prompt_key=mode_prompt_key,
             route_resolution_count=route_resolution_count,
             selected_practice=selected_practice,
             practice_alternatives=practice_alternatives,
             block_cap=block_cap,
-            informational_mode=informational_mode,
-            mode_prompt_key=mode_prompt_key,
-            prompt_stack_v2_enabled=_runtime_prompt_stack_v2_enabled(),
             output_validation_enabled=_output_validation_enabled(),
-            diagnostics_v1_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            contradiction_detected=bool(contradiction_info.get("has_contradiction", False)),
-            cross_session_context_used=bool(cross_session_context),
             memory_context_bundle=memory_context_bundle,
             memory_trace_metrics=memory_trace_metrics,
             hybrid_query=hybrid_query,
-            session_store=session_store,
-            pipeline_stages=pipeline_stages,
             build_sources_from_blocks_fn=_build_sources_from_blocks,
             log_blocks_fn=_log_blocks,
             build_success_response_fn=_build_success_response,
@@ -750,16 +699,10 @@ def answer_question_adaptive(
             strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
             attach_debug_payload_fn=_attach_debug_payload,
             finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-            estimate_cost_fn=_runtime_estimate_cost,
-            compute_anomalies_fn=_compute_anomalies,
-            attach_trace_schema_fn=attach_trace_schema_status,
-            build_state_trajectory_fn=_build_state_trajectory,
-            store_blob_fn=_store_blob,
             strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
-            logger=logger,
         )
-
-        return result
+        current_stage = stage4["current_stage"]
+        return stage4["result"]
     
     except Exception as e:
         logger.error(f"[ADAPTIVE] unhandled error: {e}", exc_info=True)

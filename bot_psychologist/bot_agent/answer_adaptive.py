@@ -72,6 +72,7 @@ from .adaptive_runtime.response_utils import (
     _build_full_success_metadata,
     _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
     _build_fast_path_success_response as _runtime_build_fast_path_success_response,
+    _build_full_path_success_response as _runtime_build_full_path_success_response,
     _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
@@ -312,6 +313,10 @@ def _build_path_recommendation_if_enabled(**kwargs):
 
 def _build_fast_path_success_response(**kwargs):
     return _runtime_build_fast_path_success_response(**kwargs)
+
+
+def _build_full_path_success_response(**kwargs):
+    return _runtime_build_full_path_success_response(**kwargs)
 
 
 def _handle_no_retrieval_partial_response(**kwargs):
@@ -1385,96 +1390,60 @@ def answer_question_adaptive(
             logger=logger,
         )
         
-        # ================================================================
-        # Р¤РќРђР›Р¬РќР«Р™ Р Р•Р—РЈР›Р¬РўРђРў
-        # ================================================================
-        elapsed_time = (datetime.now() - start_time).total_seconds()
-        
-        sources = _build_sources_from_blocks(adapted_blocks)
-        _log_blocks("SOURCES", adapted_blocks, limit=10)
-        
-        result = _build_success_response(
+        result = _build_full_path_success_response(
             answer=answer,
             state_analysis=state_analysis,
             path_recommendation=path_recommendation,
             conversation_context=conversation_context,
             feedback_prompt=feedback_prompt,
-            sources=sources,
             concepts=concepts,
-            metadata=_build_full_success_metadata(
-                user_id=user_id,
-                state_analysis=state_analysis,
-                routing_result=routing_result,
-                mode_reason=mode_directive.reason,
-                route_resolution_count=route_resolution_count,
-                blocks_used=len(adapted_blocks),
-                selected_practice=selected_practice,
-                practice_alternatives=practice_alternatives,
-                retrieval_block_cap=block_cap,
-                informational_mode=informational_mode,
-                mode_prompt_key=mode_prompt_key,
-                prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
-                output_validation_enabled=_output_validation_enabled(),
-                diagnostics_v1_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-                contradiction_detected=bool(contradiction_info.get("has_contradiction", False)),
-                cross_session_context_used=bool(cross_session_context),
-                memory_context_mode=(
-                    "summary"
-                    if bool(getattr(memory_context_bundle, "summary_used", False))
-                    else "full"
-                ),
-                memory_trace_metrics=memory_trace_metrics,
-                summary_length=len(memory.summary) if memory.summary else 0,
-                summary_last_turn=memory.summary_updated_at,
-                summary_pending_turn=memory.metadata.get("summary_pending_turn"),
-                memory_turns=len(memory.turns),
-                hybrid_query_len=len(hybrid_query),
-                tokens_prompt=tokens_prompt,
-                tokens_completion=tokens_completion,
-                tokens_total=tokens_total,
-                session_metrics=session_metrics,
-            ),
-            elapsed_time=elapsed_time,
-        )
-
-        debug_trace = _attach_success_observability(
-            result=result,
+            adapted_blocks=adapted_blocks,
+            debug_info=debug_info,
+            debug_trace=debug_trace,
+            llm_result=llm_result,
+            memory=memory,
+            start_time=start_time,
+            user_id=user_id,
+            routing_result=routing_result,
+            mode_directive_reason=mode_directive.reason,
+            route_resolution_count=route_resolution_count,
+            selected_practice=selected_practice,
+            practice_alternatives=practice_alternatives,
+            block_cap=block_cap,
+            informational_mode=informational_mode,
+            mode_prompt_key=mode_prompt_key,
+            prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
+            output_validation_enabled=_output_validation_enabled(),
+            diagnostics_v1_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
+            contradiction_detected=bool(contradiction_info.get("has_contradiction", False)),
+            cross_session_context_used=bool(cross_session_context),
+            memory_context_bundle=memory_context_bundle,
+            memory_trace_metrics=memory_trace_metrics,
+            hybrid_query=hybrid_query,
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            tokens_total=tokens_total,
+            session_metrics=session_metrics,
+            model_used=str(model_used),
+            session_store=session_store,
+            pipeline_stages=pipeline_stages,
+            build_sources_from_blocks_fn=_build_sources_from_blocks,
+            log_blocks_fn=_log_blocks,
+            build_success_response_fn=_build_success_response,
+            build_full_success_metadata_fn=_build_full_success_metadata,
+            attach_success_observability_fn=_attach_success_observability,
             strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
             attach_debug_payload_fn=_attach_debug_payload,
-            debug_info=debug_info,
-            memory=memory,
-            elapsed_time=elapsed_time,
-            llm_result=llm_result,
-            retrieval_details=(debug_info or {}).get("retrieval_details", {}),
-            sources=sources,
-            debug_trace=debug_trace,
             finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-            finalize_success_kwargs={
-                "elapsed_time": elapsed_time,
-                "tokens_prompt": tokens_prompt,
-                "tokens_completion": tokens_completion,
-                "tokens_total": tokens_total,
-                "session_metrics": session_metrics,
-                "memory": memory,
-                "memory_trace_metrics": memory_trace_metrics,
-                "start_time": start_time,
-                "session_store": session_store,
-                "user_id": user_id,
-                "pipeline_stages": pipeline_stages,
-                "model_used": str(model_used),
-                "estimate_cost_fn": _estimate_cost,
-                "compute_anomalies_fn": _compute_anomalies,
-                "attach_trace_schema_fn": attach_trace_schema_status,
-                "build_state_trajectory_fn": _build_state_trajectory,
-                "store_blob_fn": _store_blob,
-                "strip_legacy_trace_fields_fn": _strip_legacy_trace_fields,
-                "aggregate_from_llm_calls": True,
-                "include_summary_pending": True,
-            },
+            estimate_cost_fn=_estimate_cost,
+            compute_anomalies_fn=_compute_anomalies,
+            attach_trace_schema_fn=attach_trace_schema_status,
+            build_state_trajectory_fn=_build_state_trajectory,
+            store_blob_fn=_store_blob,
+            strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
+            logger=logger,
         )
-        
-        logger.info(f"[ADAPTIVE] response ready in {elapsed_time:.2f}s")
-        
+
         return result
     
     except Exception as e:

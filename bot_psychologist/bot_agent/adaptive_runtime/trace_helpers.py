@@ -30,6 +30,49 @@ def _strip_legacy_runtime_metadata(metadata: Dict[str, Any]) -> Dict[str, Any]:
     return cleaned
 
 
+def _init_debug_payloads(
+    *,
+    debug: bool,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    config_snapshot: Dict[str, Any],
+) -> tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
+    debug_info = {} if debug else None
+    debug_trace = None
+    if debug:
+        debug_trace = {
+            "chunks_retrieved": [],
+            "chunks_after_filter": [],
+            "llm_calls": [],
+            "context_written": "",
+            "total_duration_ms": 0,
+            "fast_path": None,
+            "fast_path_reason": None,
+            "decision_rule_id": None,
+            "mode_reason": None,
+            "block_cap": None,
+            "blocks_initial": None,
+            "blocks_after_cap": None,
+            "hybrid_query_preview": None,
+            "memory_turns_content": [],
+            "summary_text": None,
+            "semantic_hits_detail": [],
+            "state_secondary": [],
+            "state_trajectory": [],
+            "pipeline_stages": pipeline_stages,
+            "anomalies": [],
+            "system_prompt_blob_id": None,
+            "user_prompt_blob_id": None,
+            "memory_snapshot_blob_id": None,
+            "config_snapshot": config_snapshot,
+            "estimated_cost_usd": None,
+            "pipeline_error": None,
+            "session_id": user_id,
+            "turn_number": None,
+        }
+    return debug_info, debug_trace
+
+
 def _strip_legacy_trace_fields(debug_trace: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
     if not isinstance(debug_trace, dict):
         return debug_trace
@@ -552,6 +595,68 @@ def _finalize_trace_payload(
         debug_trace = strip_legacy_trace_fields_fn(debug_trace)
     debug_trace = attach_trace_schema_fn(debug_trace)
     return debug_trace
+
+
+def _finalize_success_debug_trace(
+    debug_trace: Optional[Dict[str, Any]],
+    *,
+    elapsed_time: float,
+    tokens_prompt: Optional[int],
+    tokens_completion: Optional[int],
+    tokens_total: Optional[int],
+    session_metrics: Optional[Dict[str, Any]],
+    memory,
+    memory_trace_metrics: Optional[Dict[str, object]],
+    start_time: datetime,
+    session_store,
+    user_id: str,
+    pipeline_stages: List[Dict[str, Any]],
+    model_used: str,
+    estimate_cost_fn,
+    compute_anomalies_fn,
+    attach_trace_schema_fn,
+    build_state_trajectory_fn,
+    store_blob_fn,
+    strip_legacy_trace_fields_fn=None,
+    aggregate_from_llm_calls: bool = False,
+    include_summary_pending: bool = True,
+) -> Optional[Dict[str, Any]]:
+    if debug_trace is None:
+        return None
+
+    debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
+    _apply_trace_model_info(debug_trace)
+    _apply_trace_token_metrics(
+        debug_trace,
+        tokens_prompt=tokens_prompt,
+        tokens_completion=tokens_completion,
+        tokens_total=tokens_total,
+        session_metrics=session_metrics,
+        aggregate_from_llm_calls=aggregate_from_llm_calls,
+    )
+    _apply_trace_memory_snapshot(
+        debug_trace,
+        memory=memory,
+        start_time=start_time,
+        session_store=session_store,
+        user_id=user_id,
+        build_state_trajectory_fn=build_state_trajectory_fn,
+        store_blob_fn=store_blob_fn,
+        memory_trace_metrics=memory_trace_metrics,
+        include_total_duration=False,
+        include_summary_pending=include_summary_pending,
+    )
+    debug_trace["estimated_cost_usd"] = estimate_cost_fn(
+        debug_trace.get("llm_calls", []),
+        str(model_used),
+    )
+    return _finalize_trace_payload(
+        debug_trace,
+        pipeline_stages=pipeline_stages,
+        compute_anomalies_fn=compute_anomalies_fn,
+        attach_trace_schema_fn=attach_trace_schema_fn,
+        strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+    )
 
 
 def _apply_trace_model_info(debug_trace: Optional[Dict[str, Any]]) -> None:

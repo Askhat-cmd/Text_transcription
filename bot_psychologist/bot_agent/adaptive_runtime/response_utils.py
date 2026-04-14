@@ -347,3 +347,25 @@ def _build_sources_from_blocks(blocks: List[Any]) -> List[Dict[str, Any]]:
         }
         for b in blocks
     ]
+
+
+def _attach_debug_payload(
+    *,
+    result: Dict[str, Any],
+    debug_info: Optional[Dict[str, Any]],
+    memory,
+    elapsed_time: float,
+    llm_result: Optional[Dict[str, Any]] = None,
+    retrieval_details: Optional[Dict[str, Any]] = None,
+    sources: Optional[List[Dict[str, Any]]] = None,
+) -> None:
+    if debug_info is None:
+        return
+    debug_info["memory_summary"] = memory.get_summary()
+    debug_info["total_time"] = elapsed_time
+    debug_info["llm_tokens"] = (llm_result or {}).get("tokens_used", 0)
+    if retrieval_details is not None:
+        result.setdefault("metadata", {})["retrieval_details"] = retrieval_details
+    if sources is not None:
+        result.setdefault("metadata", {})["sources"] = sources
+    result["debug"] = debug_info

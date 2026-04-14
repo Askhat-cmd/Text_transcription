@@ -74,8 +74,10 @@ from .adaptive_runtime.response_utils import (
     _persist_turn,
     _save_session_summary_best_effort,
     _build_sources_from_blocks,
+    _attach_debug_payload,
 )
 from .adaptive_runtime.trace_helpers import (
+    _init_debug_payloads,
     _strip_legacy_runtime_metadata,
     _strip_legacy_trace_fields,
     _log_retrieval_pairs,
@@ -84,7 +86,6 @@ from .adaptive_runtime.trace_helpers import (
     _extract_block_trace_fields,
     _build_chunk_trace_item,
     _build_chunk_trace_lists_after_rerank,
-    _get_memory_trace_metrics,
     _recent_user_turns,
     _log_context_build,
     _build_retrieval_detail,
@@ -98,8 +99,7 @@ from .adaptive_runtime.trace_helpers import (
     _apply_memory_debug_info,
     _apply_trace_memory_snapshot,
     _finalize_trace_payload,
-    _apply_trace_model_info,
-    _apply_trace_token_metrics,
+    _finalize_success_debug_trace,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
@@ -133,6 +133,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
     _sd_runtime_disabled as _runtime_sd_runtime_disabled,
     _build_start_command_response as _runtime_build_start_command_response,
+    _load_runtime_memory_context as _runtime_load_runtime_memory_context,
 )
 
 logger = logging.getLogger(__name__)
@@ -362,40 +363,13 @@ def answer_question_adaptive(
     
     top_k = top_k or config.TOP_K_BLOCKS
     start_time = datetime.now()
-    debug_info = {} if debug else None
     pipeline_stages: List[Dict] = []
-    debug_trace = None
-    if debug:
-        debug_trace = {
-            "chunks_retrieved": [],
-            "chunks_after_filter": [],
-            "llm_calls": [],
-            "context_written": "",
-            "total_duration_ms": 0,
-            "fast_path": None,
-            "fast_path_reason": None,
-            "decision_rule_id": None,
-            "mode_reason": None,
-            "block_cap": None,
-            "blocks_initial": None,
-            "blocks_after_cap": None,
-            "hybrid_query_preview": None,
-            "memory_turns_content": [],
-            "summary_text": None,
-            "semantic_hits_detail": [],
-            "state_secondary": [],
-            "state_trajectory": [],
-            "pipeline_stages": pipeline_stages,
-            "anomalies": [],
-            "system_prompt_blob_id": None,
-            "user_prompt_blob_id": None,
-            "memory_snapshot_blob_id": None,
-            "config_snapshot": _build_config_snapshot(config),
-            "estimated_cost_usd": None,
-            "pipeline_error": None,
-            "session_id": user_id,
-            "turn_number": None,
-        }
+    debug_info, debug_trace = _init_debug_payloads(
+        debug=debug,
+        user_id=user_id,
+        pipeline_stages=pipeline_stages,
+        config_snapshot=_build_config_snapshot(config),
+    )
     conversation_context = ""
     memory_context_bundle = None
     phase8_signals = None
@@ -408,26 +382,21 @@ def answer_question_adaptive(
         # ================================================================
         logger.debug("рџ“љ Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё...")
         
-        data_loader.load_all_data()
-        memory = get_conversation_memory(user_id)
-        memory_update = memory_updater.build_runtime_context(
-            memory=memory,
-            diagnostics=None,
-            route=None,
-            max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
+        stage1 = _runtime_load_runtime_memory_context(
+            user_id=user_id,
+            query=query,
+            data_loader=data_loader,
+            get_conversation_memory_fn=get_conversation_memory,
+            memory_updater=memory_updater,
+            config=config,
         )
-        memory_context_bundle = memory_update.context
-        conversation_context = memory_context_bundle.context_text or memory.get_adaptive_context_text(query)
-        cross_session_context = ""
-        if hasattr(memory, "load_cross_session_context"):
-            cross_session_context = memory.load_cross_session_context(
-                getattr(memory, "owner_user_id", user_id),
-                limit=3,
-            )
-        context_turns = len(memory.turns)
-        memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
+        memory = stage1["memory"]
+        memory_context_bundle = stage1["memory_context_bundle"]
+        conversation_context = stage1["conversation_context"]
+        cross_session_context = stage1["cross_session_context"]
+        context_turns = stage1["context_turns"]
+        memory_trace_metrics = stage1["memory_trace_metrics"]
         if memory_context_bundle is not None:
-            memory_trace_metrics["summary_used"] = bool(memory_context_bundle.summary_used)
             memory_trace_metrics["summary_staleness"] = memory_context_bundle.staleness
             memory_trace_metrics["memory_strategy"] = memory_context_bundle.strategy
         if debug_trace is not None:
@@ -959,42 +928,36 @@ def answer_question_adaptive(
                     "confidence_score": pre_routing_result.confidence_score,
                     "confidence_level": pre_routing_result.confidence_level,
                 }
-                debug_info["memory_summary"] = memory.get_summary()
-                debug_info["total_time"] = elapsed_time
-                debug_info["llm_tokens"] = llm_result.get("tokens_used", 0)
-                result["debug"] = debug_info
+            _attach_debug_payload(
+                result=result,
+                debug_info=debug_info,
+                memory=memory,
+                elapsed_time=elapsed_time,
+                llm_result=llm_result,
+            )
             if debug_trace is not None:
-                debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
-                _apply_trace_model_info(debug_trace)
-                _apply_trace_token_metrics(
+                debug_trace = _finalize_success_debug_trace(
                     debug_trace,
+                    elapsed_time=elapsed_time,
                     tokens_prompt=tokens_prompt,
                     tokens_completion=tokens_completion,
                     tokens_total=tokens_total,
                     session_metrics=session_metrics,
-                )
-                _apply_trace_memory_snapshot(
-                    debug_trace,
                     memory=memory,
+                    memory_trace_metrics=memory_trace_metrics,
                     start_time=start_time,
                     session_store=session_store,
                     user_id=user_id,
-                    build_state_trajectory_fn=_build_state_trajectory,
-                    store_blob_fn=_store_blob,
-                    memory_trace_metrics=memory_trace_metrics,
-                    include_total_duration=False,
-                    include_summary_pending=True,
-                )
-                debug_trace["estimated_cost_usd"] = _estimate_cost(
-                    debug_trace.get("llm_calls", []),
-                    str(model_used),
-                )
-                debug_trace = _finalize_trace_payload(
-                    debug_trace,
                     pipeline_stages=pipeline_stages,
+                    model_used=str(model_used),
+                    estimate_cost_fn=_estimate_cost,
                     compute_anomalies_fn=_compute_anomalies,
                     attach_trace_schema_fn=attach_trace_schema_status,
+                    build_state_trajectory_fn=_build_state_trajectory,
+                    store_blob_fn=_store_blob,
                     strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
+                    aggregate_from_llm_calls=False,
+                    include_summary_pending=True,
                 )
                 result["debug_trace"] = debug_trace
 
@@ -1903,46 +1866,38 @@ def answer_question_adaptive(
 
         result["metadata"] = _strip_legacy_runtime_metadata(result.get("metadata", {}))
         
-        if debug_info is not None:
-            debug_info["memory_summary"] = memory.get_summary()
-            debug_info["total_time"] = elapsed_time
-            debug_info["llm_tokens"] = llm_result.get("tokens_used", 0)
-            result["metadata"]["retrieval_details"] = debug_info.get("retrieval_details", {})
-            result["metadata"]["sources"] = sources
-            result["debug"] = debug_info
+        _attach_debug_payload(
+            result=result,
+            debug_info=debug_info,
+            memory=memory,
+            elapsed_time=elapsed_time,
+            llm_result=llm_result,
+            retrieval_details=(debug_info or {}).get("retrieval_details", {}),
+            sources=sources,
+        )
         if debug_trace is not None:
-            debug_trace["total_duration_ms"] = int(elapsed_time * 1000)
-            _apply_trace_model_info(debug_trace)
-            _apply_trace_token_metrics(
+            debug_trace = _finalize_success_debug_trace(
                 debug_trace,
+                elapsed_time=elapsed_time,
                 tokens_prompt=tokens_prompt,
                 tokens_completion=tokens_completion,
                 tokens_total=tokens_total,
                 session_metrics=session_metrics,
-                aggregate_from_llm_calls=True,
-            )
-            _apply_trace_memory_snapshot(
-                debug_trace,
                 memory=memory,
+                memory_trace_metrics=memory_trace_metrics,
                 start_time=start_time,
                 session_store=session_store,
                 user_id=user_id,
-                build_state_trajectory_fn=_build_state_trajectory,
-                store_blob_fn=_store_blob,
-                memory_trace_metrics=memory_trace_metrics,
-                include_total_duration=False,
-                include_summary_pending=True,
-            )
-            debug_trace["estimated_cost_usd"] = _estimate_cost(
-                debug_trace.get("llm_calls", []),
-                str(model_used),
-            )
-            debug_trace = _finalize_trace_payload(
-                debug_trace,
                 pipeline_stages=pipeline_stages,
+                model_used=str(model_used),
+                estimate_cost_fn=_estimate_cost,
                 compute_anomalies_fn=_compute_anomalies,
                 attach_trace_schema_fn=attach_trace_schema_status,
+                build_state_trajectory_fn=_build_state_trajectory,
+                store_blob_fn=_store_blob,
                 strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
+                aggregate_from_llm_calls=True,
+                include_summary_pending=True,
             )
             result["debug_trace"] = debug_trace
         

@@ -114,3 +114,51 @@ def _build_start_command_response(
         "timestamp": datetime.now().isoformat(),
         "processing_time_seconds": round(elapsed_time, 2),
     }
+
+
+def _load_runtime_memory_context(
+    *,
+    user_id: str,
+    query: str,
+    data_loader,
+    get_conversation_memory_fn,
+    memory_updater,
+    config,
+) -> Dict[str, Any]:
+    # Local import to avoid widening module-level coupling.
+    from .trace_helpers import _get_memory_trace_metrics
+
+    data_loader.load_all_data()
+    memory = get_conversation_memory_fn(user_id)
+    memory_update = memory_updater.build_runtime_context(
+        memory=memory,
+        diagnostics=None,
+        route=None,
+        max_context_chars=int(getattr(config, "MAX_CONTEXT_SIZE", 2200) or 2200),
+    )
+    memory_context_bundle = memory_update.context
+    conversation_context = (
+        memory_context_bundle.context_text
+        or memory.get_adaptive_context_text(query)
+    )
+
+    cross_session_context = ""
+    if hasattr(memory, "load_cross_session_context"):
+        cross_session_context = memory.load_cross_session_context(
+            getattr(memory, "owner_user_id", user_id),
+            limit=3,
+        )
+
+    context_turns = len(memory.turns)
+    memory_trace_metrics = _get_memory_trace_metrics(memory, context_turns)
+    if memory_context_bundle is not None:
+        memory_trace_metrics["summary_used"] = bool(memory_context_bundle.summary_used)
+
+    return {
+        "memory": memory,
+        "memory_context_bundle": memory_context_bundle,
+        "conversation_context": conversation_context,
+        "cross_session_context": cross_session_context,
+        "context_turns": context_turns,
+        "memory_trace_metrics": memory_trace_metrics,
+    }

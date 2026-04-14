@@ -71,6 +71,7 @@ from .adaptive_runtime.response_utils import (
     _build_fast_success_metadata,
     _build_full_success_metadata,
     _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
+    _build_fast_path_success_response as _runtime_build_fast_path_success_response,
     _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
@@ -307,6 +308,10 @@ def _attach_routing_stage_debug_trace(**kwargs):
 
 def _build_path_recommendation_if_enabled(**kwargs):
     return _runtime_build_path_recommendation_if_enabled(**kwargs)
+
+
+def _build_fast_path_success_response(**kwargs):
+    return _runtime_build_fast_path_success_response(**kwargs)
 
 
 def _handle_no_retrieval_partial_response(**kwargs):
@@ -810,116 +815,48 @@ def answer_question_adaptive(
                 log_prefix="[FAST_PATH] working_state update failed:",
             )
 
-            llm_metrics = _collect_llm_session_metrics(
-                memory=memory,
-                llm_result=llm_result if isinstance(llm_result, dict) else {},
-                fallback_model_name=config.LLM_MODEL,
-                update_session_token_metrics_fn=_update_session_token_metrics,
-            )
-            tokens_prompt = llm_metrics["tokens_prompt"]
-            tokens_completion = llm_metrics["tokens_completion"]
-            tokens_total = llm_metrics["tokens_total"]
-            model_used = llm_metrics["model_used"]
-            session_metrics = llm_metrics["session_metrics"]
-
-            _persist_turn(
-                memory=memory,
-                user_input=query,
-                bot_response=answer,
-                user_state=state_analysis.primary_state.value,
-                blocks_used=0,
-                concepts=[],
-                schedule_summary_task=schedule_summary_task,
-            )
-
-            memory_turns = len(memory.turns)
-            summary_length = len(memory.summary) if memory.summary else 0
-            summary_last_turn = memory.summary_updated_at
-            elapsed_time = (datetime.now() - start_time).total_seconds()
-            feedback_prompt = ""
-            if include_feedback_prompt:
-                feedback_prompt = _get_feedback_prompt_for_state(state_analysis.primary_state)
-
-            result = _build_success_response(
+            result = _build_fast_path_success_response(
                 answer=answer,
                 state_analysis=state_analysis,
-                path_recommendation=None,
+                pre_routing_result=pre_routing_result,
+                mode_directive_reason=mode_directive.reason,
+                informational_mode=informational_mode,
+                mode_prompt_key=mode_prompt_key,
                 conversation_context=conversation_context,
-                feedback_prompt=feedback_prompt,
-                sources=[],
-                concepts=[],
-                metadata=_build_fast_success_metadata(
-                    user_id=user_id,
-                    state_analysis=state_analysis,
-                    routing_result=pre_routing_result,
-                    mode_reason=mode_directive.reason,
-                    informational_mode=informational_mode,
-                    mode_prompt_key=mode_prompt_key,
-                    prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
-                    output_validation_enabled=_output_validation_enabled(),
-                    memory_context_mode=(
-                        "summary"
-                        if bool(getattr(memory_context_bundle, "summary_used", False))
-                        else "full"
-                    ),
-                    memory_trace_metrics=memory_trace_metrics,
-                    summary_length=summary_length,
-                    summary_last_turn=summary_last_turn,
-                    summary_pending_turn=memory.metadata.get("summary_pending_turn"),
-                    memory_turns=memory_turns,
-                    hybrid_query_len=len(query or ""),
-                    tokens_prompt=tokens_prompt,
-                    tokens_completion=tokens_completion,
-                    tokens_total=tokens_total,
-                    session_metrics=session_metrics,
-                ),
-                elapsed_time=elapsed_time,
-            )
-            if debug_info is not None:
-                debug_info["fast_path"] = True
-                debug_info["routing"] = {
-                    "mode": pre_routing_result.mode,
-                    "track": getattr(pre_routing_result, "track", "direct"),
-                    "tone": getattr(pre_routing_result, "tone", "minimal"),
-                    "rule_id": pre_routing_result.decision.rule_id,
-                    "reason": pre_routing_result.decision.reason,
-                    "confidence_score": pre_routing_result.confidence_score,
-                    "confidence_level": pre_routing_result.confidence_level,
-                }
-            debug_trace = _attach_success_observability(
-                result=result,
+                memory_context_bundle=memory_context_bundle,
+                memory_trace_metrics=memory_trace_metrics,
+                query=query,
+                include_feedback_prompt=include_feedback_prompt,
+                memory=memory,
+                schedule_summary_task=schedule_summary_task,
+                user_id=user_id,
+                start_time=start_time,
+                llm_result=llm_result,
+                debug_info=debug_info,
+                debug_trace=debug_trace,
+                session_store=session_store,
+                pipeline_stages=pipeline_stages,
+                llm_model_name=str(config.LLM_MODEL),
+                collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+                update_session_token_metrics_fn=_update_session_token_metrics,
+                persist_turn_fn=_persist_turn,
+                get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
+                build_success_response_fn=_build_success_response,
+                build_fast_success_metadata_fn=_build_fast_success_metadata,
+                prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
+                output_validation_enabled=_output_validation_enabled(),
+                attach_success_observability_fn=_attach_success_observability,
                 strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
                 attach_debug_payload_fn=_attach_debug_payload,
-                debug_info=debug_info,
-                memory=memory,
-                elapsed_time=elapsed_time,
-                llm_result=llm_result,
-                debug_trace=debug_trace,
                 finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-                finalize_success_kwargs={
-                    "elapsed_time": elapsed_time,
-                    "tokens_prompt": tokens_prompt,
-                    "tokens_completion": tokens_completion,
-                    "tokens_total": tokens_total,
-                    "session_metrics": session_metrics,
-                    "memory": memory,
-                    "memory_trace_metrics": memory_trace_metrics,
-                    "start_time": start_time,
-                    "session_store": session_store,
-                    "user_id": user_id,
-                    "pipeline_stages": pipeline_stages,
-                    "model_used": str(model_used),
-                    "estimate_cost_fn": _estimate_cost,
-                    "compute_anomalies_fn": _compute_anomalies,
-                    "attach_trace_schema_fn": attach_trace_schema_status,
-                    "build_state_trajectory_fn": _build_state_trajectory,
-                    "store_blob_fn": _store_blob,
-                    "strip_legacy_trace_fields_fn": _strip_legacy_trace_fields,
-                    "aggregate_from_llm_calls": False,
-                    "include_summary_pending": True,
-                },
+                estimate_cost_fn=_estimate_cost,
+                compute_anomalies_fn=_compute_anomalies,
+                attach_trace_schema_fn=attach_trace_schema_status,
+                build_state_trajectory_fn=_build_state_trajectory,
+                store_blob_fn=_store_blob,
+                strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
+                logger=logger,
             )
-            logger.info(f"[ADAPTIVE] fast-path response ready in {elapsed_time:.2f}s")
             return result
 
         if debug_trace is not None and debug_trace.get("fast_path") is None:

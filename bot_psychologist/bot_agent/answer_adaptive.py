@@ -118,12 +118,7 @@ from .adaptive_runtime.state_helpers import (
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
     _compose_state_context as _runtime_compose_state_context,
-    _depth_to_phase as _runtime_depth_to_phase,
-    _mode_to_direction as _runtime_mode_to_direction,
-    _derive_defense as _runtime_derive_defense,
     _build_working_state as _runtime_build_working_state,
-    _looks_like_greeting as _runtime_looks_like_greeting,
-    _looks_like_name_intro as _runtime_looks_like_name_intro,
     _should_use_fast_path as _runtime_should_use_fast_path,
     _detect_fast_path_reason as _runtime_detect_fast_path_reason,
     _build_fast_path_block as _runtime_build_fast_path_block,
@@ -150,7 +145,6 @@ from .adaptive_runtime.routing_stage_helpers import (
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
-    _sd_runtime_disabled as _runtime_sd_runtime_disabled,
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _generate_llm_with_trace as _runtime_generate_llm_with_trace,
@@ -183,50 +177,12 @@ def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[s
     return _runtime_resolve_mode_prompt(user_state, cfg)
 
 
-def _derive_informational_mode_hint(phase8_signals, query: str) -> bool:
-    return _runtime_derive_informational_mode_hint(phase8_signals, query)
-
-
-def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
-    return _runtime_estimate_cost(llm_calls, model_name)
-
-
-def _detect_fast_path_reason(query: str, routing_result) -> str:
-    return _runtime_detect_fast_path_reason(query, routing_result)
-
-
-def _fallback_state_analysis() -> StateAnalysis:
-    return _runtime_fallback_state_analysis()
-
-
 def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationResult:
     return _runtime_fallback_sd_result(reason)
 
 
-def _sd_runtime_disabled() -> bool:
-    return _runtime_sd_runtime_disabled()
-
-
-def _diagnostics_v1_enabled() -> bool:
-    return _runtime_diagnostics_v1_enabled()
-
-
-def _deterministic_route_resolver_enabled() -> bool:
-    return _runtime_deterministic_route_resolver_enabled()
-
-
-def _prompt_stack_v2_enabled() -> bool:
-    return _runtime_prompt_stack_v2_enabled()
-
-
 def _output_validation_enabled() -> bool:
     return _runtime_output_validation_enabled()
-
-
-def _informational_branch_enabled() -> bool:
-    return _runtime_informational_branch_enabled()
-
-
 
 
 def _apply_output_validation_policy(
@@ -276,6 +232,7 @@ async def _classify_parallel(
     user_message: str,
     history_state: List[Dict],
 ) -> Tuple[StateAnalysis, SDClassificationResult]:
+    # Compatibility touchpoint for phase8 runtime test harness monkeypatching.
     return await _runtime_classify_parallel(user_message, history_state)
 
 
@@ -297,31 +254,6 @@ def _build_state_context(
     )
 
 
-def _depth_to_phase(depth: str) -> str:
-    return _runtime_depth_to_phase(depth)
-
-
-def _mode_to_direction(mode: str) -> str:
-    return _runtime_mode_to_direction(mode)
-
-
-def _derive_defense(state_value: str) -> Optional[str]:
-    return _runtime_derive_defense(state_value)
-
-
-def _build_working_state(
-    *,
-    state_analysis: StateAnalysis,
-    routing_result,
-    memory,
-) -> WorkingState:
-    return _runtime_build_working_state(
-        state_analysis=state_analysis,
-        routing_result=routing_result,
-        memory=memory,
-    )
-
-
 def _set_working_state_best_effort(
     *,
     memory,
@@ -333,32 +265,14 @@ def _set_working_state_best_effort(
         memory=memory,
         state_analysis=state_analysis,
         routing_result=routing_result,
-        build_working_state_fn=_build_working_state,
+        build_working_state_fn=_runtime_build_working_state,
         logger=logger,
         log_prefix=log_prefix,
     )
 
 
-def _looks_like_greeting(query: str) -> bool:
-    return _runtime_looks_like_greeting(query)
-
-def _looks_like_name_intro(query: str) -> bool:
-    return _runtime_looks_like_name_intro(query)
-
 def _should_use_fast_path(query: str, routing_result) -> bool:
     return _runtime_should_use_fast_path(query, routing_result)
-
-def _build_fast_path_block(
-    *,
-    query: str,
-    conversation_context: str,
-    state_analysis: StateAnalysis,
-) -> Block:
-    return _runtime_build_fast_path_block(
-        query=query,
-        conversation_context=conversation_context,
-        state_analysis=state_analysis,
-    )
 
 def answer_question_adaptive(
     query: str,
@@ -460,7 +374,7 @@ def answer_question_adaptive(
         phase8_signals = detect_phase8_signals(query=query, turns_count=len(memory.turns))
         if debug_trace is not None:
             debug_trace["phase8_signals"] = phase8_signals.as_dict()
-        if _informational_branch_enabled() and phase8_signals.start_command:
+        if _runtime_informational_branch_enabled() and phase8_signals.start_command:
             return _build_start_command_response(
                 user_id=user_id,
                 user_level=user_level,
@@ -496,15 +410,15 @@ def answer_question_adaptive(
             run_coroutine_sync_fn=_run_coroutine_sync,
             state_classifier=state_classifier,
             classify_parallel_fn=_classify_parallel,
-            fallback_state_analysis_fn=_fallback_state_analysis,
+            fallback_state_analysis_fn=_runtime_fallback_state_analysis,
             fallback_sd_result_fn=_fallback_sd_result,
             resolve_user_stage_fn=resolve_user_stage,
-            derive_informational_mode_hint_fn=_derive_informational_mode_hint,
+            derive_informational_mode_hint_fn=_runtime_derive_informational_mode_hint,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             logger=logger,
-            diagnostics_v1_enabled=_diagnostics_v1_enabled(),
-            deterministic_route_resolver_enabled=_deterministic_route_resolver_enabled(),
-            informational_branch_enabled=_informational_branch_enabled(),
+            diagnostics_v1_enabled=_runtime_diagnostics_v1_enabled(),
+            deterministic_route_resolver_enabled=_runtime_deterministic_route_resolver_enabled(),
+            informational_branch_enabled=_runtime_informational_branch_enabled(),
             diagnostics_classifier=diagnostics_classifier,
             detect_contradiction_fn=detect_contradiction,
             decision_gate_cls=DecisionGate,
@@ -536,7 +450,7 @@ def answer_question_adaptive(
             pre_routing_result=pre_routing_result,
             debug_trace=debug_trace,
             query=query,
-            detect_fast_path_reason_fn=_detect_fast_path_reason,
+            detect_fast_path_reason_fn=_runtime_detect_fast_path_reason,
             truncate_preview_fn=_truncate_preview,
             config=config,
             pipeline_stages=pipeline_stages,
@@ -549,10 +463,10 @@ def answer_question_adaptive(
             memory_context_bundle=memory_context_bundle,
             diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
             refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
-            build_fast_path_block_fn=_build_fast_path_block,
+            build_fast_path_block_fn=_runtime_build_fast_path_block,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
-            informational_branch_enabled=_informational_branch_enabled(),
+            informational_branch_enabled=_runtime_informational_branch_enabled(),
             build_phase8_context_suffix_fn=_runtime_build_phase8_context_suffix,
             build_first_turn_instruction_fn=build_first_turn_instruction,
             build_mixed_query_instruction_fn=build_mixed_query_instruction,
@@ -570,7 +484,7 @@ def answer_question_adaptive(
             session_store=session_store,
             user_id=user_id,
             mode_prompt_override=mode_prompt_override,
-            prompt_stack_enabled=_prompt_stack_v2_enabled(),
+            prompt_stack_enabled=_runtime_prompt_stack_v2_enabled(),
             prompt_registry=prompt_registry_v2,
             build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
             prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
@@ -601,7 +515,7 @@ def answer_question_adaptive(
             strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
             attach_debug_payload_fn=_attach_debug_payload,
             finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-            estimate_cost_fn=_estimate_cost,
+            estimate_cost_fn=_runtime_estimate_cost,
             compute_anomalies_fn=_compute_anomalies,
             attach_trace_schema_fn=attach_trace_schema_status,
             build_state_trajectory_fn=_build_state_trajectory,
@@ -698,7 +612,7 @@ def answer_question_adaptive(
             pre_routing_result=pre_routing_result,
             decision_gate=decision_gate,
             retrieved_blocks=retrieved_blocks,
-            informational_branch_enabled_fn=_informational_branch_enabled,
+            informational_branch_enabled_fn=_runtime_informational_branch_enabled,
             resolve_mode_prompt_fn=resolve_mode_prompt,
             config=config,
             log_retrieval_pairs_fn=_log_retrieval_pairs,
@@ -717,7 +631,7 @@ def answer_question_adaptive(
         state_context_mode_prompt = routing_cap_stage["state_context_mode_prompt"]
 
         routing_context_stage = _runtime_finalize_routing_context_and_trace(
-            informational_branch_enabled=_informational_branch_enabled(),
+            informational_branch_enabled=_runtime_informational_branch_enabled(),
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             informational_mode=informational_mode,
@@ -774,7 +688,7 @@ def answer_question_adaptive(
                 set_working_state_best_effort_fn=_set_working_state_best_effort,
                 persist_turn_fn=_persist_turn,
                 finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-                estimate_cost_fn=_estimate_cost,
+                estimate_cost_fn=_runtime_estimate_cost,
                 compute_anomalies_fn=_compute_anomalies,
                 attach_trace_schema_fn=attach_trace_schema_status,
                 build_state_trajectory_fn=_build_state_trajectory,
@@ -847,7 +761,7 @@ def answer_question_adaptive(
             diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
-            prompt_stack_enabled=_prompt_stack_v2_enabled(),
+            prompt_stack_enabled=_runtime_prompt_stack_v2_enabled(),
             prompt_registry=prompt_registry_v2,
             mode_prompt=mode_directive.prompt,
             debug_trace=debug_trace,
@@ -872,7 +786,7 @@ def answer_question_adaptive(
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
             finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-            estimate_cost_fn=_estimate_cost,
+            estimate_cost_fn=_runtime_estimate_cost,
             compute_anomalies_fn=_compute_anomalies,
             attach_trace_schema_fn=attach_trace_schema_status,
             build_state_trajectory_fn=_build_state_trajectory,
@@ -929,7 +843,7 @@ def answer_question_adaptive(
             block_cap=block_cap,
             informational_mode=informational_mode,
             mode_prompt_key=mode_prompt_key,
-            prompt_stack_v2_enabled=_prompt_stack_v2_enabled(),
+            prompt_stack_v2_enabled=_runtime_prompt_stack_v2_enabled(),
             output_validation_enabled=_output_validation_enabled(),
             diagnostics_v1_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
             contradiction_detected=bool(contradiction_info.get("has_contradiction", False)),
@@ -947,7 +861,7 @@ def answer_question_adaptive(
             strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
             attach_debug_payload_fn=_attach_debug_payload,
             finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-            estimate_cost_fn=_estimate_cost,
+            estimate_cost_fn=_runtime_estimate_cost,
             compute_anomalies_fn=_compute_anomalies,
             attach_trace_schema_fn=attach_trace_schema_status,
             build_state_trajectory_fn=_build_state_trajectory,
@@ -976,7 +890,7 @@ def answer_question_adaptive(
             get_conversation_memory_fn=get_conversation_memory,
             persist_turn_best_effort_fn=_persist_turn_best_effort,
             finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-            estimate_cost_fn=_estimate_cost,
+            estimate_cost_fn=_runtime_estimate_cost,
             compute_anomalies_fn=_compute_anomalies,
             attach_trace_schema_fn=attach_trace_schema_status,
             build_state_trajectory_fn=_build_state_trajectory,

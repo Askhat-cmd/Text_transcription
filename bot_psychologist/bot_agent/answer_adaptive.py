@@ -32,7 +32,6 @@ from .decision import (
     resolve_user_stage,
 )
 from .retrieval import ConfidenceScorer, HybridQueryBuilder, VoyageReranker
-from .reranker_gate import should_rerank
 from .response import ResponseFormatter, ResponseGenerator
 from .feature_flags import feature_flags
 from .contradiction_detector import detect_contradiction
@@ -501,8 +500,6 @@ def answer_question_adaptive(
             use_deterministic_router=use_deterministic_router,
             diagnostics_v1=diagnostics_v1,
             pre_routing_result=pre_routing_result,
-            feature_flag_enabled_fn=feature_flags.enabled,
-            should_rerank_fn=should_rerank,
             voyage_reranker_cls=VoyageReranker,
             detect_routing_signals_fn=detect_routing_signals,
             state_analysis=state_analysis,

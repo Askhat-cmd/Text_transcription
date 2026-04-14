@@ -188,9 +188,10 @@ def _prepare_conditional_rerank(
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
-    feature_flag_enabled_fn,
-    should_rerank_fn,
 ) -> Dict[str, Any]:
+    from ..feature_flags import feature_flags as _feature_flags
+    from ..reranker_gate import should_rerank as _should_rerank
+
     if use_deterministic_router and diagnostics_v1 is not None:
         rerank_mode = (
             "CLARIFICATION" if diagnostics_v1.interaction_mode == "informational" else "PRESENCE"
@@ -208,7 +209,7 @@ def _prepare_conditional_rerank(
             else 0.5
         )
 
-    conditional_reranker = feature_flag_enabled_fn("ENABLE_CONDITIONAL_RERANKER")
+    conditional_reranker = _feature_flags.enabled("ENABLE_CONDITIONAL_RERANKER")
     rerank_flags = {
         "legacy_always_on": bool(
             config.VOYAGE_ENABLED and (not conditional_reranker or not config.RERANKER_ENABLED)
@@ -218,7 +219,7 @@ def _prepare_conditional_rerank(
         "RERANKER_MODE_WHITELIST": str(config.RERANKER_MODE_WHITELIST),
         "RERANKER_BLOCK_THRESHOLD": int(config.RERANKER_BLOCK_THRESHOLD),
     }
-    should_run_rerank, rerank_reason = should_rerank_fn(
+    should_run_rerank, rerank_reason = _should_rerank(
         confidence_score=rerank_confidence,
         routing_mode=rerank_mode,
         retrieved_block_count=len(retrieved_blocks),
@@ -253,8 +254,6 @@ def _run_retrieval_and_rerank_stage(
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
-    feature_flag_enabled_fn,
-    should_rerank_fn,
     voyage_reranker_cls,
     detect_routing_signals_fn,
     state_analysis,
@@ -298,8 +297,6 @@ def _run_retrieval_and_rerank_stage(
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,
         pre_routing_result=pre_routing_result,
-        feature_flag_enabled_fn=feature_flag_enabled_fn,
-        should_rerank_fn=should_rerank_fn,
     )
     rerank_mode = rerank_prep["rerank_mode"]
     conditional_reranker = rerank_prep["conditional_reranker"]
@@ -386,8 +383,6 @@ def _run_retrieval_routing_context_stage(
     use_deterministic_router: bool,
     diagnostics_v1,
     pre_routing_result,
-    feature_flag_enabled_fn,
-    should_rerank_fn,
     voyage_reranker_cls,
     detect_routing_signals_fn,
     state_analysis,
@@ -463,8 +458,6 @@ def _run_retrieval_routing_context_stage(
         use_deterministic_router=use_deterministic_router,
         diagnostics_v1=diagnostics_v1,
         pre_routing_result=pre_routing_result,
-        feature_flag_enabled_fn=feature_flag_enabled_fn,
-        should_rerank_fn=should_rerank_fn,
         voyage_reranker_cls=voyage_reranker_cls,
         detect_routing_signals_fn=detect_routing_signals_fn,
         state_analysis=state_analysis,

@@ -97,10 +97,10 @@ from .adaptive_runtime.trace_helpers import (
     _recent_user_turns,
     _build_retrieval_detail,
     _build_retrieval_debug_details,
-    _collect_progressive_feedback_blocks,
     _build_voyage_rerank_debug_payload,
     _build_routing_debug_payload,
     _attach_retrieval_observability as _runtime_attach_retrieval_observability,
+    _prepare_adapted_blocks_and_attach_observability as _runtime_prepare_adapted_blocks_and_attach_observability,
     _build_llm_prompts,
     _prepare_llm_prompt_previews,
     _build_llm_call_trace,
@@ -358,6 +358,10 @@ def _handle_llm_generation_error_response(**kwargs):
 
 def _attach_retrieval_observability(**kwargs):
     return _runtime_attach_retrieval_observability(**kwargs)
+
+
+def _prepare_adapted_blocks_and_attach_observability(**kwargs):
+    return _runtime_prepare_adapted_blocks_and_attach_observability(**kwargs)
 
 
 def _compose_state_context(**kwargs):
@@ -894,6 +898,7 @@ def answer_question_adaptive(
         retrieved_blocks = retrieval_stage["retrieved_blocks"]
         initial_retrieved_blocks = retrieval_stage["initial_retrieved_blocks"]
         reranked_blocks_for_trace = retrieval_stage["reranked_blocks_for_trace"]
+        progressive_rag = retrieval_stage["progressive_rag"]
         rerank_mode = retrieval_stage["rerank_mode"]
         conditional_reranker = retrieval_stage["conditional_reranker"]
         should_run_rerank = retrieval_stage["should_run_rerank"]
@@ -1010,30 +1015,13 @@ def answer_question_adaptive(
                 store_blob_fn=_store_blob,
             )
         
-        blocks = [block for block, score in retrieved_blocks]
-        adapted_blocks = list(blocks)
-
-        if not adapted_blocks:
-            adapted_blocks = blocks[:3]  # fallback
-        if debug_trace is not None:
-            debug_trace["blocks_after_cap"] = len(adapted_blocks)
-
-        if routing_signals.get("positive_feedback_signal"):
-            boosted_ids = _collect_progressive_feedback_blocks(
-                adapted_blocks=adapted_blocks,
-                progressive_rag=progressive_rag,
-                limit=3,
-            )
-            if boosted_ids:
-                logger.info("[PROGRESSIVE_RAG] positive feedback -> boosted blocks: %s", boosted_ids)
-            if debug_trace is not None:
-                debug_trace["progressive_rag_feedback_blocks"] = boosted_ids
-        
-        _attach_retrieval_observability(
-            debug_info=debug_info,
-            debug_trace=debug_trace,
+        retrieval_observability_stage = _prepare_adapted_blocks_and_attach_observability(
             retrieved_blocks=retrieved_blocks,
-            adapted_blocks=adapted_blocks,
+            routing_signals=routing_signals,
+            progressive_rag=progressive_rag,
+            debug_trace=debug_trace,
+            logger=logger,
+            debug_info=debug_info,
             hybrid_query=hybrid_query,
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
@@ -1051,6 +1039,8 @@ def answer_question_adaptive(
             build_routing_debug_payload_fn=_build_routing_debug_payload,
             build_chunk_trace_lists_after_rerank_fn=_build_chunk_trace_lists_after_rerank,
         )
+        blocks = retrieval_observability_stage["blocks"]
+        adapted_blocks = retrieval_observability_stage["adapted_blocks"]
         
         # ================================================================
         # Р­РўРђРџ 4: Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ

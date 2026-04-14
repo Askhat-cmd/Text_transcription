@@ -316,6 +316,7 @@ def _run_retrieval_and_rerank_stage(
         "retrieved_blocks": retrieved_blocks,
         "initial_retrieved_blocks": initial_retrieved_blocks,
         "reranked_blocks_for_trace": reranked_blocks_for_trace,
+        "progressive_rag": progressive_rag,
         "rerank_mode": rerank_mode,
         "conditional_reranker": conditional_reranker,
         "should_run_rerank": should_run_rerank,

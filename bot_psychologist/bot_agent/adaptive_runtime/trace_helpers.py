@@ -406,6 +406,84 @@ def _attach_retrieval_observability(
         debug_trace["chunks_after_filter"] = chunks_after_rerank
 
 
+def _prepare_adapted_blocks_and_attach_observability(
+    *,
+    retrieved_blocks: List[Tuple[Any, float]],
+    routing_signals: Dict[str, Any],
+    progressive_rag,
+    debug_trace: Optional[Dict[str, Any]],
+    logger,
+    debug_info: Optional[Dict[str, Any]],
+    hybrid_query: str,
+    initial_retrieved_blocks: List[Tuple[Any, float]],
+    reranked_blocks_for_trace: List[Tuple[Any, float]],
+    capped_retrieved_blocks: List[Tuple[Any, float]],
+    rerank_k: int,
+    should_run_rerank: bool,
+    rerank_reason: str,
+    rerank_applied: bool,
+    block_cap: int,
+    routing_result,
+    route_resolution_count: int,
+    build_retrieval_debug_details_fn,
+    build_retrieval_detail_fn,
+    build_voyage_rerank_debug_payload_fn,
+    build_routing_debug_payload_fn,
+    build_chunk_trace_lists_after_rerank_fn,
+) -> Dict[str, Any]:
+    blocks = [block for block, _score in retrieved_blocks]
+    adapted_blocks = list(blocks)
+    if not adapted_blocks:
+        adapted_blocks = blocks[:3]  # fallback
+
+    if debug_trace is not None:
+        debug_trace["blocks_after_cap"] = len(adapted_blocks)
+
+    boosted_ids: List[str] = []
+    if routing_signals.get("positive_feedback_signal"):
+        boosted_ids = _collect_progressive_feedback_blocks(
+            adapted_blocks=adapted_blocks,
+            progressive_rag=progressive_rag,
+            limit=3,
+        )
+        if boosted_ids:
+            logger.info(
+                "[PROGRESSIVE_RAG] positive feedback -> boosted blocks: %s",
+                boosted_ids,
+            )
+        if debug_trace is not None:
+            debug_trace["progressive_rag_feedback_blocks"] = boosted_ids
+
+    _attach_retrieval_observability(
+        debug_info=debug_info,
+        debug_trace=debug_trace,
+        retrieved_blocks=retrieved_blocks,
+        adapted_blocks=adapted_blocks,
+        hybrid_query=hybrid_query,
+        initial_retrieved_blocks=initial_retrieved_blocks,
+        reranked_blocks_for_trace=reranked_blocks_for_trace,
+        capped_retrieved_blocks=capped_retrieved_blocks,
+        rerank_k=rerank_k,
+        should_run_rerank=should_run_rerank,
+        rerank_reason=rerank_reason,
+        rerank_applied=rerank_applied,
+        block_cap=block_cap,
+        routing_result=routing_result,
+        route_resolution_count=route_resolution_count,
+        build_retrieval_debug_details_fn=build_retrieval_debug_details_fn,
+        build_retrieval_detail_fn=build_retrieval_detail_fn,
+        build_voyage_rerank_debug_payload_fn=build_voyage_rerank_debug_payload_fn,
+        build_routing_debug_payload_fn=build_routing_debug_payload_fn,
+        build_chunk_trace_lists_after_rerank_fn=build_chunk_trace_lists_after_rerank_fn,
+    )
+
+    return {
+        "blocks": blocks,
+        "adapted_blocks": adapted_blocks,
+        "boosted_ids": boosted_ids,
+    }
+
+
 def _build_llm_prompts(
     *,
     response_generator: ResponseGenerator,

@@ -320,7 +320,7 @@ def _generate_llm_with_trace(
     llm_user_preview: str,
     system_blob_id: Optional[str],
     user_blob_id: Optional[str],
-    build_llm_call_trace_fn: Callable[..., Dict[str, Any]],
+    build_llm_call_trace: Callable[..., Dict[str, Any]],
 ) -> Tuple[Dict[str, Any], Optional[str], int]:
     llm_started = datetime.now()
     llm_result: Dict[str, Any] = {}
@@ -370,7 +370,7 @@ def _generate_llm_with_trace(
                 }
             )
             debug_trace.setdefault("llm_calls", []).append(
-                build_llm_call_trace_fn(
+                build_llm_call_trace(
                     llm_result=llm_result if isinstance(llm_result, dict) else {},
                     step="answer",
                     system_prompt_preview=llm_system_preview,
@@ -433,13 +433,13 @@ def _collect_llm_session_metrics(
     memory,
     llm_result: Dict[str, Any],
     fallback_model_name: str,
-    update_session_token_metrics_fn,
+    update_session_token_metrics,
 ) -> Dict[str, Any]:
     tokens_prompt = llm_result.get("tokens_prompt") if isinstance(llm_result, dict) else None
     tokens_completion = llm_result.get("tokens_completion") if isinstance(llm_result, dict) else None
     tokens_total = llm_result.get("tokens_total") if isinstance(llm_result, dict) else None
     model_used = llm_result.get("model_used") if isinstance(llm_result, dict) else fallback_model_name
-    session_metrics = update_session_token_metrics_fn(
+    session_metrics = update_session_token_metrics(
         memory=memory,
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
@@ -518,14 +518,14 @@ def _run_llm_generation_cycle(
     prompt_registry,
     debug_trace: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
-    build_prompt_stack_override_fn,
-    prepare_llm_prompt_previews_fn,
-    generate_llm_with_trace_fn,
-    build_llm_call_trace_fn,
+    build_prompt_stack_override,
+    prepare_llm_prompt_previews,
+    generate_llm_with_trace,
+    build_llm_call_trace,
 ) -> Tuple[Dict[str, Any], Any, Dict[str, Any], Optional[str]]:
     response_generator = response_generator_cls()
 
-    system_prompt_override, prompt_stack_meta = build_prompt_stack_override_fn(
+    system_prompt_override, prompt_stack_meta = build_prompt_stack_override(
         enabled=prompt_stack_enabled,
         prompt_registry=prompt_registry,
         query=query,
@@ -545,7 +545,7 @@ def _run_llm_generation_cycle(
     system_blob_id = None
     user_blob_id = None
     if debug_trace is not None:
-        llm_system_preview, llm_user_preview = prepare_llm_prompt_previews_fn(
+        llm_system_preview, llm_user_preview = prepare_llm_prompt_previews(
             response_generator=response_generator,
             query=query,
             blocks=blocks,
@@ -559,7 +559,7 @@ def _run_llm_generation_cycle(
         )
         debug_trace["prompt_stack_v2"] = prompt_stack_meta
 
-    llm_result, _, _ = generate_llm_with_trace_fn(
+    llm_result, _, _ = generate_llm_with_trace(
         response_generator=response_generator,
         query=query,
         blocks=blocks,
@@ -581,7 +581,7 @@ def _run_llm_generation_cycle(
         llm_user_preview=llm_user_preview,
         system_blob_id=system_blob_id,
         user_blob_id=user_blob_id,
-        build_llm_call_trace_fn=build_llm_call_trace_fn,
+        build_llm_call_trace=build_llm_call_trace,
     )
 
     return llm_result, response_generator, prompt_stack_meta, system_prompt_override
@@ -611,9 +611,9 @@ def _format_and_validate_llm_answer(
     fallback_model_name: str,
     include_retry_llm_trace: bool,
     response_formatter_cls,
-    run_validation_retry_generation_fn,
-    apply_output_validation_policy_fn,
-    apply_output_validation_observability_fn,
+    run_validation_retry_generation,
+    apply_output_validation_policy,
+    apply_output_validation_observability,
 ) -> str:
     answer = llm_result.get("answer", "")
     formatter = response_formatter_cls()
@@ -626,7 +626,7 @@ def _format_and_validate_llm_answer(
     )
 
     def _retry_validation(hint: str) -> Dict[str, Any]:
-        return run_validation_retry_generation_fn(
+        return run_validation_retry_generation(
             response_generator=response_generator,
             query=query,
             hint=hint,
@@ -652,14 +652,14 @@ def _format_and_validate_llm_answer(
             ),
         )
 
-    answer, validation_meta, validation_retry_result = apply_output_validation_policy_fn(
+    answer, validation_meta, validation_retry_result = apply_output_validation_policy(
         answer=answer,
         query=query,
         route=route,
         mode=mode,
         generate_retry_fn=_retry_validation,
     )
-    apply_output_validation_observability_fn(
+    apply_output_validation_observability(
         validation_meta=validation_meta,
         validation_retry_result=validation_retry_result,
         llm_result=llm_result,
@@ -893,10 +893,10 @@ def _run_fast_path_stage(
         mode_prompt=mode_directive.prompt,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        build_prompt_stack_override_fn=_build_prompt_stack_override,
-        prepare_llm_prompt_previews_fn=_runtime_prepare_llm_prompt_previews,
-        generate_llm_with_trace_fn=_generate_llm_with_trace,
-        build_llm_call_trace_fn=_runtime_build_llm_call_trace,
+        build_prompt_stack_override=_build_prompt_stack_override,
+        prepare_llm_prompt_previews=_runtime_prepare_llm_prompt_previews,
+        generate_llm_with_trace=_generate_llm_with_trace,
+        build_llm_call_trace=_runtime_build_llm_call_trace,
     )
     answer = _format_and_validate_llm_answer(
         llm_result=llm_result,
@@ -921,9 +921,9 @@ def _run_fast_path_stage(
         fallback_model_name=llm_model_name,
         include_retry_llm_trace=False,
         response_formatter_cls=response_formatter_cls,
-        run_validation_retry_generation_fn=_run_validation_retry_generation,
-        apply_output_validation_policy_fn=_runtime_apply_output_validation_policy_adapter,
-        apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
+        run_validation_retry_generation=_run_validation_retry_generation,
+        apply_output_validation_policy=_runtime_apply_output_validation_policy_adapter,
+        apply_output_validation_observability=_runtime_apply_output_validation_observability,
     )
     set_working_state_best_effort_fn = _build_set_working_state_best_effort_adapter(
         set_working_state_best_effort=_runtime_set_working_state_best_effort,
@@ -1051,10 +1051,10 @@ def _run_full_path_llm_stage(
         mode_prompt=mode_prompt,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        build_prompt_stack_override_fn=_build_prompt_stack_override,
-        prepare_llm_prompt_previews_fn=_runtime_prepare_llm_prompt_previews,
-        generate_llm_with_trace_fn=_generate_llm_with_trace,
-        build_llm_call_trace_fn=_runtime_build_llm_call_trace,
+        build_prompt_stack_override=_build_prompt_stack_override,
+        prepare_llm_prompt_previews=_runtime_prepare_llm_prompt_previews,
+        generate_llm_with_trace=_generate_llm_with_trace,
+        build_llm_call_trace=_runtime_build_llm_call_trace,
     )
 
     if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
@@ -1104,9 +1104,9 @@ def _run_full_path_llm_stage(
         fallback_model_name=llm_model_name,
         include_retry_llm_trace=True,
         response_formatter_cls=response_formatter_cls,
-        run_validation_retry_generation_fn=_run_validation_retry_generation,
-        apply_output_validation_policy_fn=apply_output_validation_policy_fn,
-        apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
+        run_validation_retry_generation=_run_validation_retry_generation,
+        apply_output_validation_policy=apply_output_validation_policy_fn,
+        apply_output_validation_observability=_runtime_apply_output_validation_observability,
     )
     return {
         "error_response": None,

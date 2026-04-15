@@ -715,7 +715,7 @@ def _build_fast_path_success_response(
         memory=memory,
         llm_result=llm_result if isinstance(llm_result, dict) else {},
         fallback_model_name=llm_model_name,
-        update_session_token_metrics_fn=update_session_token_metrics,
+        update_session_token_metrics=update_session_token_metrics,
     )
     tokens_prompt = llm_metrics["tokens_prompt"]
     tokens_completion = llm_metrics["tokens_completion"]
@@ -1113,7 +1113,7 @@ def _prepare_full_path_post_llm_artifacts(
         memory=memory,
         llm_result=llm_result if isinstance(llm_result, dict) else {},
         fallback_model_name=fallback_model_name,
-        update_session_token_metrics_fn=update_session_token_metrics,
+        update_session_token_metrics=update_session_token_metrics,
     )
     tokens_prompt = llm_metrics["tokens_prompt"]
     tokens_completion = llm_metrics["tokens_completion"]

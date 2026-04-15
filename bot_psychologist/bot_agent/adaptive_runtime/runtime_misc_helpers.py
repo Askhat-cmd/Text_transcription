@@ -181,10 +181,11 @@ def _run_bootstrap_and_onboarding_guard(
     detect_phase8_signals_fn,
     informational_branch_enabled: bool,
     build_start_command_response_fn,
-    truncate_preview_fn,
     apply_memory_debug_info_fn,
     resolve_path_user_level_fn,
 ) -> Dict[str, Any]:
+    from .trace_helpers import _truncate_preview as _runtime_truncate_preview
+
     stage1 = load_runtime_memory_context_fn(
         user_id=user_id,
         query=query,
@@ -205,7 +206,7 @@ def _run_bootstrap_and_onboarding_guard(
 
     if debug_trace is not None:
         debug_trace["turn_number"] = len(memory.turns) + 1
-        debug_trace["cross_session_context"] = truncate_preview_fn(cross_session_context, 500)
+        debug_trace["cross_session_context"] = _runtime_truncate_preview(cross_session_context, 500)
         debug_trace["memory_strategy"] = (
             memory_context_bundle.strategy if memory_context_bundle else None
         )
@@ -663,7 +664,6 @@ def _run_fast_path_stage(
     pre_routing_result,
     debug_trace: Optional[Dict[str, Any]],
     query: str,
-    truncate_preview_fn,
     config,
     pipeline_stages: List[Dict[str, Any]],
     informational_mode: bool,
@@ -733,6 +733,7 @@ def _run_fast_path_stage(
         _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
         _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+        _truncate_preview as _runtime_truncate_preview,
         _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
     from .response_utils import (
@@ -776,7 +777,7 @@ def _run_fast_path_stage(
         query=query,
         pre_routing_result=pre_routing_result,
         detect_fast_path_reason_fn=_runtime_detect_fast_path_reason,
-        truncate_preview_fn=truncate_preview_fn,
+        truncate_preview_fn=_runtime_truncate_preview,
         config=config,
         pipeline_stages=pipeline_stages,
     )

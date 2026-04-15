@@ -52,7 +52,6 @@ from .adaptive_runtime.response_utils import (
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
-    _truncate_preview,
     _extract_block_trace_fields,
     _build_chunk_trace_item,
     _build_llm_prompts as _runtime_build_llm_prompts,
@@ -293,7 +292,6 @@ def answer_question_adaptive(
             detect_phase8_signals_fn=detect_phase8_signals,
             informational_branch_enabled=informational_branch_enabled,
             build_start_command_response_fn=build_start_command_response_fn,
-            truncate_preview_fn=_truncate_preview,
             apply_memory_debug_info_fn=_apply_memory_debug_info,
             resolve_path_user_level_fn=_resolve_path_user_level,
         )
@@ -365,7 +363,6 @@ def answer_question_adaptive(
             pre_routing_result=pre_routing_result,
             debug_trace=debug_trace,
             query=query,
-            truncate_preview_fn=_truncate_preview,
             config=config,
             pipeline_stages=pipeline_stages,
             informational_mode=informational_mode,

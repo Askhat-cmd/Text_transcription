@@ -403,7 +403,7 @@ def _run_validation_retry_generation(
     mode_prompt_override: Optional[str],
     informational_mode: bool,
     system_prompt_override: Optional[str],
-    format_answer_fn: Callable[[str], str],
+    format_answer: Callable[[str], str],
 ) -> Dict[str, Any]:
     retry_query = f"{query}\n\n[VALIDATION_HINT]\n{hint}"
     retry_result = response_generator.generate(
@@ -424,7 +424,7 @@ def _run_validation_retry_generation(
         mode_overrides_sd=informational_mode,
         system_prompt_override=system_prompt_override,
     )
-    retry_result["answer"] = format_answer_fn(str(retry_result.get("answer") or ""))
+    retry_result["answer"] = format_answer(str(retry_result.get("answer") or ""))
     return retry_result
 
 
@@ -643,7 +643,7 @@ def _format_and_validate_llm_answer(
             mode_prompt_override=mode_prompt_override,
             informational_mode=informational_mode,
             system_prompt_override=system_prompt_override,
-            format_answer_fn=lambda raw_answer: formatter.format_answer(
+            format_answer=lambda raw_answer: formatter.format_answer(
                 raw_answer,
                 mode=mode,
                 confidence_level=confidence_level,
@@ -925,12 +925,12 @@ def _run_fast_path_stage(
         apply_output_validation_policy=_runtime_apply_output_validation_policy_adapter,
         apply_output_validation_observability=_runtime_apply_output_validation_observability,
     )
-    set_working_state_best_effort_fn = _build_set_working_state_best_effort_adapter(
+    set_working_state_best_effort = _build_set_working_state_best_effort_adapter(
         set_working_state_best_effort=_runtime_set_working_state_best_effort,
         build_working_state=_runtime_build_working_state,
         logger=logger,
     )
-    set_working_state_best_effort_fn(
+    set_working_state_best_effort(
         memory=memory,
         state_analysis=state_analysis,
         routing_result=pre_routing_result,
@@ -1007,7 +1007,7 @@ def _run_full_path_llm_stage(
     pipeline_stages: List[Dict[str, Any]],
     response_generator_cls,
     response_formatter_cls,
-    apply_output_validation_policy_fn,
+    apply_output_validation_policy,
     state_analysis,
     start_time: datetime,
     memory,
@@ -1105,7 +1105,7 @@ def _run_full_path_llm_stage(
         include_retry_llm_trace=True,
         response_formatter_cls=response_formatter_cls,
         run_validation_retry_generation=_run_validation_retry_generation,
-        apply_output_validation_policy=apply_output_validation_policy_fn,
+        apply_output_validation_policy=apply_output_validation_policy,
         apply_output_validation_observability=_runtime_apply_output_validation_observability,
     )
     return {
@@ -1244,7 +1244,7 @@ def _run_generation_and_success_stage(
         pipeline_stages=pipeline_stages,
         response_generator_cls=response_generator_cls,
         response_formatter_cls=response_formatter_cls,
-        apply_output_validation_policy_fn=_runtime_apply_output_validation_policy_adapter,
+        apply_output_validation_policy=_runtime_apply_output_validation_policy_adapter,
         state_analysis=state_analysis,
         start_time=start_time,
         memory=memory,
@@ -1266,7 +1266,7 @@ def _run_generation_and_success_stage(
     logger.debug("📝 Этап 7: Подготовка обратной связи...")
     logger.debug("💾 Этап 8: Сохранение в память...")
 
-    set_working_state_best_effort_fn = _build_set_working_state_best_effort_adapter(
+    set_working_state_best_effort = _build_set_working_state_best_effort_adapter(
         set_working_state_best_effort=_runtime_set_working_state_best_effort,
         build_working_state=_runtime_build_working_state,
         logger=logger,
@@ -1288,7 +1288,7 @@ def _run_generation_and_success_stage(
         schedule_summary_task=schedule_summary_task,
         collect_llm_session_metrics=_collect_llm_session_metrics,
         update_session_token_metrics=_runtime_update_session_token_metrics,
-        set_working_state_best_effort=set_working_state_best_effort_fn,
+        set_working_state_best_effort=set_working_state_best_effort,
         build_path_recommendation_if_enabled=_runtime_build_path_recommendation_if_enabled,
         get_feedback_prompt_for_state=_runtime_get_feedback_prompt_for_state,
         persist_turn=_runtime_persist_turn,

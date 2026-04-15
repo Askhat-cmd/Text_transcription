@@ -55,11 +55,8 @@ from .adaptive_runtime.pipeline_utils import (
 from .adaptive_runtime.response_utils import (
     _get_feedback_prompt_for_state,
     _build_partial_response,
-    _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
-    _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
     _persist_turn,
-    _save_session_summary_best_effort,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
@@ -548,16 +545,8 @@ def answer_question_adaptive(
             include_feedback_prompt=include_feedback_prompt,
             user_level_enum=path_level_enum,
             fallback_model_name=llm_model_name,
-            collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
-            update_session_token_metrics_fn=_update_session_token_metrics,
-            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-            build_path_recommendation_if_enabled_fn=_runtime_build_path_recommendation_if_enabled,
-            get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
-            persist_turn_fn=_persist_turn,
-            save_session_summary_best_effort_fn=_save_session_summary_best_effort,
             semantic_analyzer_cls=SemanticAnalyzer,
             path_builder=path_builder,
-            build_full_path_success_response_fn=_runtime_build_full_path_success_response,
             conversation_context=conversation_context,
             mode_prompt_key=mode_prompt_key,
             route_resolution_count=route_resolution_count,

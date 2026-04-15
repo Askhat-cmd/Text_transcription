@@ -1078,16 +1078,8 @@ def _run_generation_and_success_stage(
     include_feedback_prompt: bool,
     user_level_enum,
     fallback_model_name: str,
-    collect_llm_session_metrics_fn,
-    update_session_token_metrics_fn,
-    set_working_state_best_effort_fn,
-    build_path_recommendation_if_enabled_fn,
-    get_feedback_prompt_for_state_fn,
-    persist_turn_fn,
-    save_session_summary_best_effort_fn,
     semantic_analyzer_cls,
     path_builder,
-    build_full_path_success_response_fn,
     conversation_context: str,
     mode_prompt_key: Optional[str],
     route_resolution_count: int,
@@ -1109,16 +1101,26 @@ def _run_generation_and_success_stage(
     from .response_utils import (
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
+        _build_full_path_success_response as _runtime_build_full_path_success_response,
         _build_full_success_metadata as _runtime_build_full_success_metadata,
+        _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
         _build_sources_from_blocks as _runtime_build_sources_from_blocks,
         _build_success_response as _runtime_build_success_response,
+        _get_feedback_prompt_for_state as _runtime_get_feedback_prompt_for_state,
+        _persist_turn as _runtime_persist_turn,
         _run_full_path_success_stage as _runtime_run_full_path_success_stage,
+        _save_session_summary_best_effort as _runtime_save_session_summary_best_effort,
+    )
+    from .state_helpers import (
+        _build_working_state as _runtime_build_working_state,
+        _set_working_state_best_effort as _runtime_set_working_state_best_effort,
     )
     from .trace_helpers import (
         _finalize_success_debug_trace as _runtime_finalize_success_debug_trace,
         _log_blocks as _runtime_log_blocks,
         _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+        _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
 
     logger.debug("🤖 Этап 4: Генерация ответа...")
@@ -1183,6 +1185,12 @@ def _run_generation_and_success_stage(
     logger.debug("📝 Этап 7: Подготовка обратной связи...")
     logger.debug("💾 Этап 8: Сохранение в память...")
 
+    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
+        build_working_state_fn=_runtime_build_working_state,
+        logger=logger,
+        **kwargs,
+    )
+
     result = _runtime_run_full_path_success_stage(
         memory=memory,
         query=query,
@@ -1197,16 +1205,16 @@ def _run_generation_and_success_stage(
         llm_result=llm_result,
         fallback_model_name=fallback_model_name,
         schedule_summary_task=schedule_summary_task,
-        collect_llm_session_metrics_fn=collect_llm_session_metrics_fn,
-        update_session_token_metrics_fn=update_session_token_metrics_fn,
+        collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+        update_session_token_metrics_fn=_runtime_update_session_token_metrics,
         set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-        build_path_recommendation_if_enabled_fn=build_path_recommendation_if_enabled_fn,
-        get_feedback_prompt_for_state_fn=get_feedback_prompt_for_state_fn,
-        persist_turn_fn=persist_turn_fn,
-        save_session_summary_best_effort_fn=save_session_summary_best_effort_fn,
+        build_path_recommendation_if_enabled_fn=_runtime_build_path_recommendation_if_enabled,
+        get_feedback_prompt_for_state_fn=_runtime_get_feedback_prompt_for_state,
+        persist_turn_fn=_runtime_persist_turn,
+        save_session_summary_best_effort_fn=_runtime_save_session_summary_best_effort,
         semantic_analyzer_cls=semantic_analyzer_cls,
         path_builder=path_builder,
-        build_full_path_success_response_fn=build_full_path_success_response_fn,
+        build_full_path_success_response_fn=_runtime_build_full_path_success_response,
         conversation_context=conversation_context,
         debug_info=debug_info,
         debug_trace=debug_trace,

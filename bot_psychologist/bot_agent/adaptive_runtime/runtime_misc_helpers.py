@@ -1118,16 +1118,20 @@ def _run_generation_and_success_stage(
     hybrid_query: str,
     build_sources_from_blocks_fn,
     log_blocks_fn,
-    build_success_response_fn,
-    build_full_success_metadata_fn,
-    attach_success_observability_fn,
-    strip_legacy_runtime_metadata_fn,
-    attach_debug_payload_fn,
-    finalize_success_debug_trace_fn,
-    strip_legacy_trace_fields_fn,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    from .response_utils import _run_full_path_success_stage as _runtime_run_full_path_success_stage
+    from .response_utils import (
+        _attach_debug_payload as _runtime_attach_debug_payload,
+        _attach_success_observability as _runtime_attach_success_observability,
+        _build_full_success_metadata as _runtime_build_full_success_metadata,
+        _build_success_response as _runtime_build_success_response,
+        _run_full_path_success_stage as _runtime_run_full_path_success_stage,
+    )
+    from .trace_helpers import (
+        _finalize_success_debug_trace as _runtime_finalize_success_debug_trace,
+        _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
+        _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+    )
 
     logger.debug("🤖 Этап 4: Генерация ответа...")
 
@@ -1244,18 +1248,18 @@ def _run_generation_and_success_stage(
         pipeline_stages=pipeline_stages,
         build_sources_from_blocks_fn=build_sources_from_blocks_fn,
         log_blocks_fn=log_blocks_fn,
-        build_success_response_fn=build_success_response_fn,
-        build_full_success_metadata_fn=build_full_success_metadata_fn,
-        attach_success_observability_fn=attach_success_observability_fn,
-        strip_legacy_runtime_metadata_fn=strip_legacy_runtime_metadata_fn,
-        attach_debug_payload_fn=attach_debug_payload_fn,
-        finalize_success_debug_trace_fn=finalize_success_debug_trace_fn,
+        build_success_response_fn=_runtime_build_success_response,
+        build_full_success_metadata_fn=_runtime_build_full_success_metadata,
+        attach_success_observability_fn=_runtime_attach_success_observability,
+        strip_legacy_runtime_metadata_fn=_runtime_strip_legacy_runtime_metadata,
+        attach_debug_payload_fn=_runtime_attach_debug_payload,
+        finalize_success_debug_trace_fn=_runtime_finalize_success_debug_trace,
         estimate_cost_fn=estimate_cost_fn,
         compute_anomalies_fn=compute_anomalies_fn,
         attach_trace_schema_fn=attach_trace_schema_fn,
         build_state_trajectory_fn=build_state_trajectory_fn,
         store_blob_fn=store_blob_fn,
-        strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+        strip_legacy_trace_fields_fn=_runtime_strip_legacy_trace_fields,
         logger=logger,
     )
 

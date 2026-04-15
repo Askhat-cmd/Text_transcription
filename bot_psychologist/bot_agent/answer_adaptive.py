@@ -56,8 +56,6 @@ from .adaptive_runtime.response_utils import (
     _get_feedback_prompt_for_state,
     _build_partial_response,
     _build_error_response,
-    _build_success_response,
-    _build_full_success_metadata,
     _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
     _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
@@ -65,12 +63,9 @@ from .adaptive_runtime.response_utils import (
     _persist_turn,
     _save_session_summary_best_effort,
     _build_sources_from_blocks,
-    _attach_debug_payload,
-    _attach_success_observability,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
-    _strip_legacy_runtime_metadata,
     _strip_legacy_trace_fields,
     _log_blocks,
     _truncate_preview,
@@ -80,7 +75,6 @@ from .adaptive_runtime.trace_helpers import (
     _update_session_token_metrics,
     _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
-    _finalize_success_debug_trace,
     _finalize_failure_debug_trace,
 )
 from .adaptive_runtime.state_helpers import (
@@ -588,13 +582,6 @@ def answer_question_adaptive(
             hybrid_query=hybrid_query,
             build_sources_from_blocks_fn=_build_sources_from_blocks,
             log_blocks_fn=_log_blocks,
-            build_success_response_fn=_build_success_response,
-            build_full_success_metadata_fn=_build_full_success_metadata,
-            attach_success_observability_fn=_attach_success_observability,
-            strip_legacy_runtime_metadata_fn=_strip_legacy_runtime_metadata,
-            attach_debug_payload_fn=_attach_debug_payload,
-            finalize_success_debug_trace_fn=_finalize_success_debug_trace,
-            strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
         )
         current_stage = stage4["current_stage"]
         return stage4["result"]

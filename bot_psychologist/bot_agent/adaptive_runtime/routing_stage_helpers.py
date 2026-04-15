@@ -335,8 +335,8 @@ def _apply_fast_path_debug_bootstrap(
     debug_trace: Optional[Dict[str, Any]],
     query: str,
     pre_routing_result,
-    detect_fast_path_reason_fn,
-    truncate_preview_fn,
+    detect_fast_path_reason,
+    truncate_preview,
     config,
     pipeline_stages,
 ) -> None:
@@ -344,7 +344,7 @@ def _apply_fast_path_debug_bootstrap(
         return
 
     debug_trace["fast_path"] = True
-    debug_trace["fast_path_reason"] = detect_fast_path_reason_fn(query, pre_routing_result)
+    debug_trace["fast_path_reason"] = detect_fast_path_reason(query, pre_routing_result)
     debug_trace["recommended_mode"] = pre_routing_result.mode
     debug_trace["route_track"] = getattr(pre_routing_result, "track", "direct")
     debug_trace["route_tone"] = getattr(pre_routing_result, "tone", "minimal")
@@ -360,12 +360,12 @@ def _apply_fast_path_debug_bootstrap(
     debug_trace["block_cap"] = 0
     debug_trace["blocks_initial"] = 0
     debug_trace["blocks_after_cap"] = 0
-    debug_trace["hybrid_query_preview"] = truncate_preview_fn(query, 400)
+    debug_trace["hybrid_query_preview"] = truncate_preview(query, 400)
     debug_trace["hybrid_query_len"] = len(query or "")
     debug_trace["hybrid_query_text"] = (
         query
         if bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True))
-        else truncate_preview_fn(query, 1200)
+        else truncate_preview(query, 1200)
     )
 
     for stage_name, label in [

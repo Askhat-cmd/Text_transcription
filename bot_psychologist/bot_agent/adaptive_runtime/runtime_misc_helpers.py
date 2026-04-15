@@ -825,8 +825,8 @@ def _run_fast_path_stage(
         debug_trace=debug_trace,
         query=query,
         pre_routing_result=pre_routing_result,
-        detect_fast_path_reason_fn=_runtime_detect_fast_path_reason,
-        truncate_preview_fn=_runtime_truncate_preview,
+        detect_fast_path_reason=_runtime_detect_fast_path_reason,
+        truncate_preview=_runtime_truncate_preview,
         config=config,
         pipeline_stages=pipeline_stages,
     )

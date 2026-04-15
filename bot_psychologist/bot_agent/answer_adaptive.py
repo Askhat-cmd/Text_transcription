@@ -38,23 +38,17 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
-from .trace_schema import attach_trace_schema_status
 from .onboarding_flow import (
     detect_phase8_signals,
 )
 from .adaptive_runtime.pipeline_utils import (
     _timed,
     _build_config_snapshot,
-    _compute_anomalies,
-    _build_state_trajectory,
-    _store_blob,
     _run_coroutine_sync,
 )
 from .adaptive_runtime.response_utils import (
-    _get_feedback_prompt_for_state,
     _build_partial_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
-    _persist_turn,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
@@ -62,7 +56,6 @@ from .adaptive_runtime.trace_helpers import (
     _extract_block_trace_fields,
     _build_chunk_trace_item,
     _build_llm_prompts as _runtime_build_llm_prompts,
-    _update_session_token_metrics,
     _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
 )
@@ -74,10 +67,8 @@ from .adaptive_runtime.state_helpers import (
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
     _compose_state_context as _runtime_compose_state_context,
-    _build_working_state as _runtime_build_working_state,
     _should_use_fast_path as _runtime_should_use_fast_path,
     _build_fast_path_block as _runtime_build_fast_path_block,
-    _set_working_state_best_effort as _runtime_set_working_state_best_effort,
 )
 from .adaptive_runtime.mode_policy_helpers import (
     MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
@@ -94,11 +85,9 @@ from .adaptive_runtime.routing_stage_helpers import (
     _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
-    _estimate_cost as _runtime_estimate_cost,
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
-    _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
     _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
 )
@@ -283,12 +272,6 @@ def answer_question_adaptive(
         logger=logger,
         **kwargs,
     )
-    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
-        build_working_state_fn=_runtime_build_working_state,
-        logger=logger,
-        **kwargs,
-    )
-    
     current_stage = "init"
     try:
         # ================================================================
@@ -410,7 +393,6 @@ def answer_question_adaptive(
             prompt_registry=prompt_registry_v2,
             response_formatter_cls=ResponseFormatter,
             apply_output_validation_policy_fn=_apply_output_validation_policy,
-            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
             include_feedback_prompt=include_feedback_prompt,
             mode_prompt_key=mode_prompt_key,
             memory_trace_metrics=memory_trace_metrics,
@@ -418,16 +400,7 @@ def answer_question_adaptive(
             start_time=start_time,
             debug_info=debug_info,
             llm_model_name=llm_model_name,
-            collect_llm_session_metrics_fn=_runtime_collect_llm_session_metrics,
-            update_session_token_metrics_fn=_update_session_token_metrics,
-            persist_turn_fn=_persist_turn,
-            get_feedback_prompt_for_state_fn=_get_feedback_prompt_for_state,
             output_validation_enabled=output_validation_enabled,
-            estimate_cost_fn=_runtime_estimate_cost,
-            compute_anomalies_fn=_compute_anomalies,
-            attach_trace_schema_fn=attach_trace_schema_status,
-            build_state_trajectory_fn=_build_state_trajectory,
-            store_blob_fn=_store_blob,
         )
         if fast_path_stage is not None:
             return fast_path_stage["result"]

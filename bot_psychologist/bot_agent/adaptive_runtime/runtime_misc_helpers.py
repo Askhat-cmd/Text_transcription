@@ -689,7 +689,6 @@ def _run_fast_path_stage(
     prompt_registry,
     response_formatter_cls,
     apply_output_validation_policy_fn,
-    set_working_state_best_effort_fn,
     include_feedback_prompt: bool,
     mode_prompt_key: Optional[str],
     memory_trace_metrics: Dict[str, Any],
@@ -697,23 +696,20 @@ def _run_fast_path_stage(
     start_time: datetime,
     debug_info: Optional[Dict[str, Any]],
     llm_model_name: str,
-    collect_llm_session_metrics_fn,
-    update_session_token_metrics_fn,
-    persist_turn_fn,
-    get_feedback_prompt_for_state_fn,
     output_validation_enabled: bool,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
 ) -> Optional[Dict[str, Any]]:
+    from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
     from ..decision import build_mode_directive as _runtime_build_mode_directive
     from ..onboarding_flow import (
         build_first_turn_instruction as _runtime_build_first_turn_instruction,
         build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
         build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
         build_user_correction_instruction as _runtime_build_user_correction_instruction,
+    )
+    from .pipeline_utils import (
+        _build_state_trajectory as _runtime_build_state_trajectory,
+        _compute_anomalies as _runtime_compute_anomalies,
+        _store_blob as _runtime_store_blob,
     )
     from .routing_stage_helpers import (
         _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
@@ -723,7 +719,9 @@ def _run_fast_path_stage(
     from .state_helpers import _detect_fast_path_reason as _runtime_detect_fast_path_reason
     from .state_helpers import (
         _build_state_context as _runtime_build_state_context,
+        _build_working_state as _runtime_build_working_state,
         _compose_state_context as _runtime_compose_state_context,
+        _set_working_state_best_effort as _runtime_set_working_state_best_effort,
     )
     from .trace_helpers import (
         _apply_output_validation_observability as _runtime_apply_output_validation_observability,
@@ -732,12 +730,15 @@ def _run_fast_path_stage(
         _prepare_llm_prompt_previews as _runtime_prepare_llm_prompt_previews,
         _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+        _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
     from .response_utils import (
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
         _build_fast_path_success_response as _runtime_build_fast_path_success_response,
         _build_fast_success_metadata as _runtime_build_fast_success_metadata,
+        _get_feedback_prompt_for_state as _runtime_get_feedback_prompt_for_state,
+        _persist_turn as _runtime_persist_turn,
         _build_success_response as _runtime_build_success_response,
     )
 
@@ -853,6 +854,11 @@ def _run_fast_path_stage(
         apply_output_validation_policy_fn=apply_output_validation_policy_fn,
         apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
     )
+    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
+        build_working_state_fn=_runtime_build_working_state,
+        logger=logger,
+        **kwargs,
+    )
     set_working_state_best_effort_fn(
         memory=memory,
         state_analysis=state_analysis,
@@ -881,10 +887,10 @@ def _run_fast_path_stage(
         session_store=session_store,
         pipeline_stages=pipeline_stages,
         llm_model_name=llm_model_name,
-        collect_llm_session_metrics_fn=collect_llm_session_metrics_fn,
-        update_session_token_metrics_fn=update_session_token_metrics_fn,
-        persist_turn_fn=persist_turn_fn,
-        get_feedback_prompt_for_state_fn=get_feedback_prompt_for_state_fn,
+        collect_llm_session_metrics_fn=_collect_llm_session_metrics,
+        update_session_token_metrics_fn=_runtime_update_session_token_metrics,
+        persist_turn_fn=_runtime_persist_turn,
+        get_feedback_prompt_for_state_fn=_runtime_get_feedback_prompt_for_state,
         build_success_response_fn=_runtime_build_success_response,
         build_fast_success_metadata_fn=_runtime_build_fast_success_metadata,
         prompt_stack_v2_enabled=prompt_stack_enabled,
@@ -893,11 +899,11 @@ def _run_fast_path_stage(
         strip_legacy_runtime_metadata_fn=_runtime_strip_legacy_runtime_metadata,
         attach_debug_payload_fn=_runtime_attach_debug_payload,
         finalize_success_debug_trace_fn=_runtime_finalize_success_debug_trace,
-        estimate_cost_fn=estimate_cost_fn,
-        compute_anomalies_fn=compute_anomalies_fn,
-        attach_trace_schema_fn=attach_trace_schema_fn,
-        build_state_trajectory_fn=build_state_trajectory_fn,
-        store_blob_fn=store_blob_fn,
+        estimate_cost_fn=_estimate_cost,
+        compute_anomalies_fn=_runtime_compute_anomalies,
+        attach_trace_schema_fn=_runtime_attach_trace_schema_status,
+        build_state_trajectory_fn=_runtime_build_state_trajectory,
+        store_blob_fn=_runtime_store_blob,
         strip_legacy_trace_fields_fn=_runtime_strip_legacy_trace_fields,
         logger=logger,
     )

@@ -116,6 +116,58 @@ def _build_start_command_response(
     }
 
 
+def _prepare_adaptive_run_context(
+    *,
+    top_k: Optional[int],
+    debug: bool,
+    user_id: str,
+    config,
+    output_validation_enabled_fn,
+) -> Dict[str, Any]:
+    from .mode_policy_helpers import (
+        _deterministic_route_resolver_enabled as _runtime_deterministic_route_resolver_enabled,
+        _diagnostics_v1_enabled as _runtime_diagnostics_v1_enabled,
+        _informational_branch_enabled as _runtime_informational_branch_enabled,
+        _prompt_stack_v2_enabled as _runtime_prompt_stack_v2_enabled,
+    )
+    from .pipeline_utils import _build_config_snapshot as _runtime_build_config_snapshot
+    from .trace_helpers import _init_debug_payloads as _runtime_init_debug_payloads
+
+    resolved_top_k = top_k or config.TOP_K_BLOCKS
+    start_time = datetime.now()
+    llm_model_name = str(config.LLM_MODEL)
+    prompt_stack_enabled = _runtime_prompt_stack_v2_enabled()
+    output_validation_enabled = bool(output_validation_enabled_fn())
+    informational_branch_enabled = _runtime_informational_branch_enabled()
+    diagnostics_v1_enabled = _runtime_diagnostics_v1_enabled()
+    deterministic_route_resolver_enabled = _runtime_deterministic_route_resolver_enabled()
+    pipeline_stages: List[Dict[str, Any]] = []
+    debug_info, debug_trace = _runtime_init_debug_payloads(
+        debug=debug,
+        user_id=user_id,
+        pipeline_stages=pipeline_stages,
+        config_snapshot=_runtime_build_config_snapshot(config),
+    )
+    return {
+        "top_k": resolved_top_k,
+        "start_time": start_time,
+        "llm_model_name": llm_model_name,
+        "prompt_stack_enabled": prompt_stack_enabled,
+        "output_validation_enabled": output_validation_enabled,
+        "informational_branch_enabled": informational_branch_enabled,
+        "diagnostics_v1_enabled": diagnostics_v1_enabled,
+        "deterministic_route_resolver_enabled": deterministic_route_resolver_enabled,
+        "pipeline_stages": pipeline_stages,
+        "debug_info": debug_info,
+        "debug_trace": debug_trace,
+        "conversation_context": "",
+        "memory_context_bundle": None,
+        "phase8_signals": None,
+        "level_adapter": None,
+        "current_stage": "init",
+    }
+
+
 def _load_runtime_memory_context(
     *,
     user_id: str,

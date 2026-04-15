@@ -15,7 +15,6 @@ Adaptive Answer Module - Phase 4
 
 import logging
 from typing import Any, Dict, Optional, List, Tuple
-from datetime import datetime
 
 from .data_loader import data_loader
 from .retriever import get_retriever
@@ -36,14 +35,10 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
-from .adaptive_runtime.pipeline_utils import (
-    _build_config_snapshot,
-)
 from .adaptive_runtime.response_utils import (
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
 )
 from .adaptive_runtime.trace_helpers import (
-    _init_debug_payloads,
     _build_llm_prompts as _runtime_build_llm_prompts,
 )
 from .adaptive_runtime.state_helpers import (
@@ -56,17 +51,14 @@ from .adaptive_runtime.state_helpers import (
 from .adaptive_runtime.mode_policy_helpers import (
     MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
     resolve_mode_prompt as _runtime_resolve_mode_prompt,
-    _diagnostics_v1_enabled as _runtime_diagnostics_v1_enabled,
-    _deterministic_route_resolver_enabled as _runtime_deterministic_route_resolver_enabled,
-    _prompt_stack_v2_enabled as _runtime_prompt_stack_v2_enabled,
     _output_validation_enabled as _runtime_output_validation_enabled,
-    _informational_branch_enabled as _runtime_informational_branch_enabled,
     _apply_output_validation_policy as _runtime_apply_output_validation_policy,
 )
 from .adaptive_runtime.routing_stage_helpers import (
     _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
+    _prepare_adaptive_run_context as _runtime_prepare_adaptive_run_context,
     _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
     _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
@@ -225,26 +217,29 @@ def answer_question_adaptive(
     
     logger.info(f"[ADAPTIVE] new request user_id={user_id} query='{query[:50]}...'")
     
-    top_k = top_k or config.TOP_K_BLOCKS
-    start_time = datetime.now()
-    llm_model_name = str(config.LLM_MODEL)
-    prompt_stack_enabled = _runtime_prompt_stack_v2_enabled()
-    output_validation_enabled = _output_validation_enabled()
-    informational_branch_enabled = _runtime_informational_branch_enabled()
-    diagnostics_v1_enabled = _runtime_diagnostics_v1_enabled()
-    deterministic_route_resolver_enabled = _runtime_deterministic_route_resolver_enabled()
-    pipeline_stages: List[Dict] = []
-    debug_info, debug_trace = _init_debug_payloads(
+    runtime_ctx = _runtime_prepare_adaptive_run_context(
+        top_k=top_k,
         debug=debug,
         user_id=user_id,
-        pipeline_stages=pipeline_stages,
-        config_snapshot=_build_config_snapshot(config),
+        config=config,
+        output_validation_enabled_fn=_output_validation_enabled,
     )
-    conversation_context = ""
-    memory_context_bundle = None
-    phase8_signals = None
+    top_k = runtime_ctx["top_k"]
+    start_time = runtime_ctx["start_time"]
+    llm_model_name = runtime_ctx["llm_model_name"]
+    prompt_stack_enabled = runtime_ctx["prompt_stack_enabled"]
+    output_validation_enabled = runtime_ctx["output_validation_enabled"]
+    informational_branch_enabled = runtime_ctx["informational_branch_enabled"]
+    diagnostics_v1_enabled = runtime_ctx["diagnostics_v1_enabled"]
+    deterministic_route_resolver_enabled = runtime_ctx["deterministic_route_resolver_enabled"]
+    pipeline_stages = runtime_ctx["pipeline_stages"]
+    debug_info = runtime_ctx["debug_info"]
+    debug_trace = runtime_ctx["debug_trace"]
+    conversation_context = runtime_ctx["conversation_context"]
+    memory_context_bundle = runtime_ctx["memory_context_bundle"]
+    phase8_signals = runtime_ctx["phase8_signals"]
     level_adapter = None  # compatibility sentinel: level-based prompting stays disabled
-    current_stage = "init"
+    current_stage = runtime_ctx["current_stage"]
     try:
         # ================================================================
         # Р­РўРђРџ 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё

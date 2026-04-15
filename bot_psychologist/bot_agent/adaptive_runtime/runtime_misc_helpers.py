@@ -1295,7 +1295,7 @@ def _run_generation_and_success_stage(
         save_session_summary_best_effort=_runtime_save_session_summary_best_effort,
         semantic_analyzer_cls=_runtime_semantic_analyzer_cls,
         path_builder=_runtime_path_builder,
-        build_full_path_success_response_fn=_runtime_build_full_path_success_response,
+        build_full_path_success_response=_runtime_build_full_path_success_response,
         conversation_context=conversation_context,
         debug_info=debug_info,
         debug_trace=debug_trace,

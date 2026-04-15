@@ -1198,7 +1198,7 @@ def _run_full_path_success_stage(
     save_session_summary_best_effort,
     semantic_analyzer_cls,
     path_builder,
-    build_full_path_success_response_fn,
+    build_full_path_success_response,
     conversation_context: str,
     debug_info: Optional[Dict[str, Any]],
     debug_trace: Optional[Dict[str, Any]],
@@ -1262,7 +1262,7 @@ def _run_full_path_success_stage(
             path_builder=path_builder,
             logger=logger,
         ),
-        build_success_response=lambda path_recommendation, feedback_prompt, concepts, tokens_prompt, tokens_completion, tokens_total, model_used, session_metrics: build_full_path_success_response_fn(
+        build_success_response=lambda path_recommendation, feedback_prompt, concepts, tokens_prompt, tokens_completion, tokens_total, model_used, session_metrics: build_full_path_success_response(
             answer=answer,
             state_analysis=state_analysis,
             path_recommendation=path_recommendation,

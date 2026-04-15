@@ -55,18 +55,15 @@ from .adaptive_runtime.pipeline_utils import (
 from .adaptive_runtime.response_utils import (
     _get_feedback_prompt_for_state,
     _build_partial_response,
-    _build_error_response,
     _build_path_recommendation_if_enabled as _runtime_build_path_recommendation_if_enabled,
     _build_full_path_success_response as _runtime_build_full_path_success_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
-    _persist_turn_best_effort,
     _persist_turn,
     _save_session_summary_best_effort,
     _build_sources_from_blocks,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
-    _strip_legacy_trace_fields,
     _log_blocks,
     _truncate_preview,
     _extract_block_trace_fields,
@@ -600,15 +597,5 @@ def answer_question_adaptive(
             session_store=session_store,
             pipeline_stages=pipeline_stages,
             llm_model_name=llm_model_name,
-            build_error_response_fn=_build_error_response,
-            get_conversation_memory_fn=get_conversation_memory,
-            persist_turn_best_effort_fn=_persist_turn_best_effort,
-            finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-            estimate_cost_fn=_runtime_estimate_cost,
-            compute_anomalies_fn=_compute_anomalies,
-            attach_trace_schema_fn=attach_trace_schema_status,
-            build_state_trajectory_fn=_build_state_trajectory,
-            store_blob_fn=_store_blob,
-            strip_legacy_trace_fields_fn=_strip_legacy_trace_fields,
         )
         return response

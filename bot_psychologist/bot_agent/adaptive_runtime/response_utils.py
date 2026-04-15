@@ -985,18 +985,21 @@ def _build_unhandled_exception_response(
     session_store,
     pipeline_stages: List[Dict[str, Any]],
     llm_model_name: str,
-    build_error_response_fn,
-    get_conversation_memory_fn,
-    persist_turn_best_effort_fn,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
-    strip_legacy_trace_fields_fn,
 ) -> Dict[str, Any]:
-    response = build_error_response_fn(
+    from ..conversation_memory import get_conversation_memory as _runtime_get_conversation_memory
+    from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
+    from .pipeline_utils import (
+        _build_state_trajectory as _runtime_build_state_trajectory,
+        _compute_anomalies as _runtime_compute_anomalies,
+        _store_blob as _runtime_store_blob,
+    )
+    from .runtime_misc_helpers import _estimate_cost as _runtime_estimate_cost
+    from .trace_helpers import (
+        _finalize_failure_debug_trace as _runtime_finalize_failure_debug_trace,
+        _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+    )
+
+    response = _build_error_response(
         f"Произошла ошибка при обработке запроса: {str(exception)}",
         state_analysis,
         start_time,
@@ -1004,8 +1007,8 @@ def _build_unhandled_exception_response(
     response["metadata"] = {"user_id": user_id}
 
     try:
-        memory = get_conversation_memory_fn(user_id)
-        persist_turn_best_effort_fn(
+        memory = _runtime_get_conversation_memory(user_id)
+        _persist_turn_best_effort(
             memory=memory,
             user_input=query,
             bot_response=response["answer"],
@@ -1023,8 +1026,8 @@ def _build_unhandled_exception_response(
             "partial_trace_available": True,
         }
         try:
-            memory = get_conversation_memory_fn(user_id)
-            debug_trace = finalize_failure_debug_trace_fn(
+            memory = _runtime_get_conversation_memory(user_id)
+            debug_trace = _runtime_finalize_failure_debug_trace(
                 debug_trace,
                 memory=memory,
                 start_time=start_time,
@@ -1032,14 +1035,14 @@ def _build_unhandled_exception_response(
                 user_id=user_id,
                 pipeline_stages=pipeline_stages,
                 model_used=llm_model_name,
-                estimate_cost_fn=estimate_cost_fn,
-                compute_anomalies_fn=compute_anomalies_fn,
-                attach_trace_schema_fn=attach_trace_schema_fn,
-                build_state_trajectory_fn=build_state_trajectory_fn,
-                store_blob_fn=store_blob_fn,
+                estimate_cost_fn=_runtime_estimate_cost,
+                compute_anomalies_fn=_runtime_compute_anomalies,
+                attach_trace_schema_fn=_runtime_attach_trace_schema_status,
+                build_state_trajectory_fn=_runtime_build_state_trajectory,
+                store_blob_fn=_runtime_store_blob,
                 include_chunks=False,
                 include_total_duration=False,
-                strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+                strip_legacy_trace_fields_fn=_runtime_strip_legacy_trace_fields,
             )
         except Exception:
             pass

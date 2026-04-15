@@ -20,10 +20,8 @@ from datetime import datetime
 from .data_loader import data_loader
 from .retriever import get_retriever
 from .user_level_types import UserLevel
-from .semantic_analyzer import SemanticAnalyzer
 from .state_classifier import state_classifier, StateAnalysis
 from .conversation_memory import get_conversation_memory
-from .path_builder import path_builder
 from .config import config
 from .decision import (
     DecisionGate,
@@ -545,8 +543,6 @@ def answer_question_adaptive(
             include_feedback_prompt=include_feedback_prompt,
             user_level_enum=path_level_enum,
             fallback_model_name=llm_model_name,
-            semantic_analyzer_cls=SemanticAnalyzer,
-            path_builder=path_builder,
             conversation_context=conversation_context,
             mode_prompt_key=mode_prompt_key,
             route_resolution_count=route_resolution_count,

@@ -1078,8 +1078,6 @@ def _run_generation_and_success_stage(
     include_feedback_prompt: bool,
     user_level_enum,
     fallback_model_name: str,
-    semantic_analyzer_cls,
-    path_builder,
     conversation_context: str,
     mode_prompt_key: Optional[str],
     route_resolution_count: int,
@@ -1092,6 +1090,8 @@ def _run_generation_and_success_stage(
     hybrid_query: str,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
+    from ..path_builder import path_builder as _runtime_path_builder
+    from ..semantic_analyzer import SemanticAnalyzer as _runtime_semantic_analyzer_cls
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
     from .pipeline_utils import (
         _build_state_trajectory as _runtime_build_state_trajectory,
@@ -1212,8 +1212,8 @@ def _run_generation_and_success_stage(
         get_feedback_prompt_for_state_fn=_runtime_get_feedback_prompt_for_state,
         persist_turn_fn=_runtime_persist_turn,
         save_session_summary_best_effort_fn=_runtime_save_session_summary_best_effort,
-        semantic_analyzer_cls=semantic_analyzer_cls,
-        path_builder=path_builder,
+        semantic_analyzer_cls=_runtime_semantic_analyzer_cls,
+        path_builder=_runtime_path_builder,
         build_full_path_success_response_fn=_runtime_build_full_path_success_response,
         conversation_context=conversation_context,
         debug_info=debug_info,

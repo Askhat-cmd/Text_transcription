@@ -686,7 +686,6 @@ def _run_fast_path_stage(
     prompt_stack_enabled: bool,
     prompt_registry,
     response_formatter_cls,
-    apply_output_validation_policy_fn,
     include_feedback_prompt: bool,
     mode_prompt_key: Optional[str],
     memory_trace_metrics: Dict[str, Any],
@@ -696,6 +695,7 @@ def _run_fast_path_stage(
     llm_model_name: str,
     output_validation_enabled: bool,
 ) -> Optional[Dict[str, Any]]:
+    from ..output_validator import output_validator as _runtime_output_validator
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
     from ..decision import build_mode_directive as _runtime_build_mode_directive
     from ..onboarding_flow import (
@@ -703,6 +703,9 @@ def _run_fast_path_stage(
         build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
         build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
         build_user_correction_instruction as _runtime_build_user_correction_instruction,
+    )
+    from .mode_policy_helpers import (
+        _apply_output_validation_policy as _runtime_apply_output_validation_policy,
     )
     from .pipeline_utils import (
         _build_state_trajectory as _runtime_build_state_trajectory,
@@ -741,6 +744,24 @@ def _run_fast_path_stage(
         _persist_turn as _runtime_persist_turn,
         _build_success_response as _runtime_build_success_response,
     )
+
+    def _runtime_apply_output_validation_policy_adapter(
+        *,
+        answer: str,
+        query: str = "",
+        route: str,
+        mode: str,
+        generate_retry_fn=None,
+    ):
+        return _runtime_apply_output_validation_policy(
+            answer=answer,
+            query=query,
+            route=route,
+            mode=mode,
+            validator=_runtime_output_validator,
+            force_enabled=output_validation_enabled,
+            generate_retry_fn=generate_retry_fn,
+        )
 
     if not fast_path_enabled:
         return None
@@ -851,7 +872,7 @@ def _run_fast_path_stage(
         include_retry_llm_trace=False,
         response_formatter_cls=response_formatter_cls,
         run_validation_retry_generation_fn=_run_validation_retry_generation,
-        apply_output_validation_policy_fn=apply_output_validation_policy_fn,
+        apply_output_validation_policy_fn=_runtime_apply_output_validation_policy_adapter,
         apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
     )
     set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
@@ -1071,7 +1092,6 @@ def _run_generation_and_success_stage(
     pipeline_stages,
     response_generator_cls,
     response_formatter_cls,
-    apply_output_validation_policy_fn,
     start_time: datetime,
     memory,
     schedule_summary_task: bool,
@@ -1095,9 +1115,13 @@ def _run_generation_and_success_stage(
     hybrid_query: str,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
+    from ..output_validator import output_validator as _runtime_output_validator
     from ..path_builder import path_builder as _runtime_path_builder
     from ..semantic_analyzer import SemanticAnalyzer as _runtime_semantic_analyzer_cls
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
+    from .mode_policy_helpers import (
+        _apply_output_validation_policy as _runtime_apply_output_validation_policy,
+    )
     from .pipeline_utils import (
         _build_state_trajectory as _runtime_build_state_trajectory,
         _compute_anomalies as _runtime_compute_anomalies,
@@ -1129,6 +1153,24 @@ def _run_generation_and_success_stage(
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
         _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
+
+    def _runtime_apply_output_validation_policy_adapter(
+        *,
+        answer: str,
+        query: str = "",
+        route: str,
+        mode: str,
+        generate_retry_fn=None,
+    ):
+        return _runtime_apply_output_validation_policy(
+            answer=answer,
+            query=query,
+            route=route,
+            mode=mode,
+            validator=_runtime_output_validator,
+            force_enabled=output_validation_enabled,
+            generate_retry_fn=generate_retry_fn,
+        )
 
     logger.debug("🤖 Этап 4: Генерация ответа...")
 
@@ -1170,7 +1212,7 @@ def _run_generation_and_success_stage(
         pipeline_stages=pipeline_stages,
         response_generator_cls=response_generator_cls,
         response_formatter_cls=response_formatter_cls,
-        apply_output_validation_policy_fn=apply_output_validation_policy_fn,
+        apply_output_validation_policy_fn=_runtime_apply_output_validation_policy_adapter,
         state_analysis=state_analysis,
         start_time=start_time,
         memory=memory,

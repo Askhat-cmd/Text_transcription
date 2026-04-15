@@ -40,18 +40,14 @@ from .adaptive_runtime.pipeline_utils import (
     _build_config_snapshot,
 )
 from .adaptive_runtime.response_utils import (
-    _build_partial_response,
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
-    _extract_block_trace_fields,
-    _build_chunk_trace_item,
     _build_llm_prompts as _runtime_build_llm_prompts,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
-    _fallback_sd_result as _runtime_fallback_sd_result,
     _resolve_path_user_level as _runtime_resolve_path_user_level,
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
@@ -93,10 +89,6 @@ MODE_PROMPT_MAP = _RUNTIME_MODE_PROMPT_MAP
 
 def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[str]]:
     return _runtime_resolve_mode_prompt(user_state, cfg)
-
-
-def _fallback_sd_result(reason: str = "fallback_on_error") -> SDClassificationResult:
-    return _runtime_fallback_sd_result(reason)
 
 
 def _output_validation_enabled() -> bool:

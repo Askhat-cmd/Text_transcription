@@ -72,7 +72,6 @@ from .adaptive_runtime.trace_helpers import (
     _update_session_token_metrics,
     _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
-    _finalize_failure_debug_trace,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
@@ -545,12 +544,6 @@ def answer_question_adaptive(
             debug_info=debug_info,
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
-            finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-            estimate_cost_fn=_runtime_estimate_cost,
-            compute_anomalies_fn=_compute_anomalies,
-            attach_trace_schema_fn=attach_trace_schema_status,
-            build_state_trajectory_fn=_build_state_trajectory,
-            store_blob_fn=_store_blob,
             llm_model_name=llm_model_name,
             logger=logger,
             include_path_recommendation=include_path_recommendation,

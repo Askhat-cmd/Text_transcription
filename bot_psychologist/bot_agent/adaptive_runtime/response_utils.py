@@ -615,13 +615,16 @@ def _handle_llm_generation_error_response(
     model_used: str,
     initial_retrieved_blocks,
     reranked_blocks_for_trace,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
 ) -> Dict[str, Any]:
+    from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
+    from .pipeline_utils import (
+        _build_state_trajectory as _runtime_build_state_trajectory,
+        _compute_anomalies as _runtime_compute_anomalies,
+        _store_blob as _runtime_store_blob,
+    )
+    from .runtime_misc_helpers import _estimate_cost as _runtime_estimate_cost
+    from .trace_helpers import _finalize_failure_debug_trace as _runtime_finalize_failure_debug_trace
+
     response = _build_error_response(
         f"РћС€РёР±РєР° РїСЂРё РіРµРЅРµСЂР°С†РёРё РѕС‚РІРµС‚Р°: {llm_error}",
         state_analysis,
@@ -644,7 +647,7 @@ def _handle_llm_generation_error_response(
         response["debug"] = debug_info
 
     if debug_trace is not None:
-        debug_trace = finalize_failure_debug_trace_fn(
+        debug_trace = _runtime_finalize_failure_debug_trace(
             debug_trace,
             memory=memory,
             start_time=start_time,
@@ -652,11 +655,11 @@ def _handle_llm_generation_error_response(
             user_id=user_id,
             pipeline_stages=pipeline_stages,
             model_used=model_used,
-            estimate_cost_fn=estimate_cost_fn,
-            compute_anomalies_fn=compute_anomalies_fn,
-            attach_trace_schema_fn=attach_trace_schema_fn,
-            build_state_trajectory_fn=build_state_trajectory_fn,
-            store_blob_fn=store_blob_fn,
+            estimate_cost_fn=_runtime_estimate_cost,
+            compute_anomalies_fn=_runtime_compute_anomalies,
+            attach_trace_schema_fn=_runtime_attach_trace_schema_status,
+            build_state_trajectory_fn=_runtime_build_state_trajectory,
+            store_blob_fn=_runtime_store_blob,
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
         )

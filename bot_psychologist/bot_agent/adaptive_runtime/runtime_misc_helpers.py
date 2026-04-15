@@ -936,12 +936,6 @@ def _run_full_path_llm_stage(
     debug_info: Optional[Dict[str, Any]],
     initial_retrieved_blocks,
     reranked_blocks_for_trace,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
     llm_model_name: str,
     logger,
 ) -> Dict[str, Any]:
@@ -1001,12 +995,6 @@ def _run_full_path_llm_stage(
             model_used=llm_model_name,
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
-            finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
-            estimate_cost_fn=estimate_cost_fn,
-            compute_anomalies_fn=compute_anomalies_fn,
-            attach_trace_schema_fn=attach_trace_schema_fn,
-            build_state_trajectory_fn=build_state_trajectory_fn,
-            store_blob_fn=store_blob_fn,
         )
         return {
             "error_response": response,
@@ -1084,12 +1072,6 @@ def _run_generation_and_success_stage(
     debug_info,
     initial_retrieved_blocks,
     reranked_blocks_for_trace,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
     llm_model_name: str,
     logger,
     include_path_recommendation: bool,
@@ -1120,6 +1102,12 @@ def _run_generation_and_success_stage(
     log_blocks_fn,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
+    from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
+    from .pipeline_utils import (
+        _build_state_trajectory as _runtime_build_state_trajectory,
+        _compute_anomalies as _runtime_compute_anomalies,
+        _store_blob as _runtime_store_blob,
+    )
     from .response_utils import (
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
@@ -1181,12 +1169,6 @@ def _run_generation_and_success_stage(
         debug_info=debug_info,
         initial_retrieved_blocks=initial_retrieved_blocks,
         reranked_blocks_for_trace=reranked_blocks_for_trace,
-        finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
-        estimate_cost_fn=estimate_cost_fn,
-        compute_anomalies_fn=compute_anomalies_fn,
-        attach_trace_schema_fn=attach_trace_schema_fn,
-        build_state_trajectory_fn=build_state_trajectory_fn,
-        store_blob_fn=store_blob_fn,
         llm_model_name=llm_model_name,
         logger=logger,
     )
@@ -1254,11 +1236,11 @@ def _run_generation_and_success_stage(
         strip_legacy_runtime_metadata_fn=_runtime_strip_legacy_runtime_metadata,
         attach_debug_payload_fn=_runtime_attach_debug_payload,
         finalize_success_debug_trace_fn=_runtime_finalize_success_debug_trace,
-        estimate_cost_fn=estimate_cost_fn,
-        compute_anomalies_fn=compute_anomalies_fn,
-        attach_trace_schema_fn=attach_trace_schema_fn,
-        build_state_trajectory_fn=build_state_trajectory_fn,
-        store_blob_fn=store_blob_fn,
+        estimate_cost_fn=_estimate_cost,
+        compute_anomalies_fn=_runtime_compute_anomalies,
+        attach_trace_schema_fn=_runtime_attach_trace_schema_status,
+        build_state_trajectory_fn=_runtime_build_state_trajectory,
+        store_blob_fn=_runtime_store_blob,
         strip_legacy_trace_fields_fn=_runtime_strip_legacy_trace_fields,
         logger=logger,
     )

@@ -51,7 +51,6 @@ from .adaptive_runtime.state_helpers import (
     _resolve_path_user_level as _runtime_resolve_path_user_level,
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
-    _compose_state_context as _runtime_compose_state_context,
     _should_use_fast_path as _runtime_should_use_fast_path,
 )
 from .adaptive_runtime.mode_policy_helpers import (

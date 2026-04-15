@@ -1071,7 +1071,6 @@ def _run_generation_and_success_stage(
     mode_directive,
     debug_trace,
     pipeline_stages,
-    run_full_path_llm_stage_fn,
     run_llm_generation_cycle_fn,
     response_generator_cls,
     build_prompt_stack_override_fn,
@@ -1098,7 +1097,6 @@ def _run_generation_and_success_stage(
     store_blob_fn,
     llm_model_name: str,
     logger,
-    run_full_path_success_stage_fn,
     include_path_recommendation: bool,
     include_feedback_prompt: bool,
     user_level_enum,
@@ -1134,6 +1132,8 @@ def _run_generation_and_success_stage(
     strip_legacy_trace_fields_fn,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
+    from .response_utils import _run_full_path_success_stage as _runtime_run_full_path_success_stage
+
     logger.debug("🤖 Этап 4: Генерация ответа...")
 
     state_context = compose_state_context_fn(
@@ -1152,7 +1152,7 @@ def _run_generation_and_success_stage(
         build_state_context_fn=build_state_context_fn,
     )
 
-    llm_stage = run_full_path_llm_stage_fn(
+    llm_stage = _run_full_path_llm_stage(
         query=query,
         adapted_blocks=adapted_blocks,
         conversation_context=conversation_context,
@@ -1211,7 +1211,7 @@ def _run_generation_and_success_stage(
     logger.debug("📝 Этап 7: Подготовка обратной связи...")
     logger.debug("💾 Этап 8: Сохранение в память...")
 
-    result = run_full_path_success_stage_fn(
+    result = _runtime_run_full_path_success_stage(
         memory=memory,
         query=query,
         answer=answer,

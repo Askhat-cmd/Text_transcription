@@ -53,11 +53,6 @@ def _estimate_cost(llm_calls: List[Dict], model_name: str) -> float:
     return round(total, 6)
 
 
-def _sd_runtime_disabled() -> bool:
-    """SD-runtime is intentionally disabled in active Neo runtime."""
-    return True
-
-
 def _build_start_command_response(
     *,
     user_id: str,

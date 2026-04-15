@@ -711,6 +711,46 @@ def _execute_full_path_llm_stage(
     }
 
 
+def _build_output_validation_policy_adapter(
+    *,
+    apply_output_validation_policy,
+    validator,
+    force_enabled: bool,
+):
+    def _adapter(
+        *,
+        answer: str,
+        query: str = "",
+        route: str,
+        mode: str,
+        generate_retry_fn=None,
+    ):
+        return apply_output_validation_policy(
+            answer=answer,
+            query=query,
+            route=route,
+            mode=mode,
+            validator=validator,
+            force_enabled=force_enabled,
+            generate_retry_fn=generate_retry_fn,
+        )
+
+    return _adapter
+
+
+def _build_set_working_state_best_effort_adapter(
+    *,
+    set_working_state_best_effort,
+    build_working_state,
+    logger,
+):
+    return lambda **kwargs: set_working_state_best_effort(
+        build_working_state_fn=build_working_state,
+        logger=logger,
+        **kwargs,
+    )
+
+
 def _run_fast_path_stage(
     *,
     fast_path_enabled: bool,
@@ -800,23 +840,11 @@ def _run_fast_path_stage(
         _build_success_response as _runtime_build_success_response,
     )
 
-    def _runtime_apply_output_validation_policy_adapter(
-        *,
-        answer: str,
-        query: str = "",
-        route: str,
-        mode: str,
-        generate_retry_fn=None,
-    ):
-        return _runtime_apply_output_validation_policy(
-            answer=answer,
-            query=query,
-            route=route,
-            mode=mode,
-            validator=_runtime_output_validator,
-            force_enabled=output_validation_enabled,
-            generate_retry_fn=generate_retry_fn,
-        )
+    _runtime_apply_output_validation_policy_adapter = _build_output_validation_policy_adapter(
+        apply_output_validation_policy=_runtime_apply_output_validation_policy,
+        validator=_runtime_output_validator,
+        force_enabled=output_validation_enabled,
+    )
 
     if not fast_path_enabled:
         return None
@@ -930,10 +958,10 @@ def _run_fast_path_stage(
         apply_output_validation_policy_fn=_runtime_apply_output_validation_policy_adapter,
         apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
     )
-    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
-        build_working_state_fn=_runtime_build_working_state,
+    set_working_state_best_effort_fn = _build_set_working_state_best_effort_adapter(
+        set_working_state_best_effort=_runtime_set_working_state_best_effort,
+        build_working_state=_runtime_build_working_state,
         logger=logger,
-        **kwargs,
     )
     set_working_state_best_effort_fn(
         memory=memory,
@@ -1209,23 +1237,11 @@ def _run_generation_and_success_stage(
         _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
 
-    def _runtime_apply_output_validation_policy_adapter(
-        *,
-        answer: str,
-        query: str = "",
-        route: str,
-        mode: str,
-        generate_retry_fn=None,
-    ):
-        return _runtime_apply_output_validation_policy(
-            answer=answer,
-            query=query,
-            route=route,
-            mode=mode,
-            validator=_runtime_output_validator,
-            force_enabled=output_validation_enabled,
-            generate_retry_fn=generate_retry_fn,
-        )
+    _runtime_apply_output_validation_policy_adapter = _build_output_validation_policy_adapter(
+        apply_output_validation_policy=_runtime_apply_output_validation_policy,
+        validator=_runtime_output_validator,
+        force_enabled=output_validation_enabled,
+    )
 
     logger.debug("🤖 Этап 4: Генерация ответа...")
 
@@ -1289,10 +1305,10 @@ def _run_generation_and_success_stage(
     logger.debug("📝 Этап 7: Подготовка обратной связи...")
     logger.debug("💾 Этап 8: Сохранение в память...")
 
-    set_working_state_best_effort_fn = lambda **kwargs: _runtime_set_working_state_best_effort(
-        build_working_state_fn=_runtime_build_working_state,
+    set_working_state_best_effort_fn = _build_set_working_state_best_effort_adapter(
+        set_working_state_best_effort=_runtime_set_working_state_best_effort,
+        build_working_state=_runtime_build_working_state,
         logger=logger,
-        **kwargs,
     )
 
     result = _runtime_run_full_path_success_stage(

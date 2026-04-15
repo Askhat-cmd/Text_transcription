@@ -393,23 +393,23 @@ def _build_phase8_context_suffix(
     phase8_signals,
     correction_protocol_active: bool,
     informational_mode: bool,
-    build_first_turn_instruction_fn: Callable[[], str],
-    build_mixed_query_instruction_fn: Callable[[], str],
-    build_user_correction_instruction_fn: Callable[[], str],
-    build_informational_guardrail_instruction_fn: Callable[[], str],
+    build_first_turn_instruction: Callable[[], str],
+    build_mixed_query_instruction: Callable[[], str],
+    build_user_correction_instruction: Callable[[], str],
+    build_informational_guardrail_instruction: Callable[[], str],
 ) -> str:
     if not informational_branch_enabled:
         return ""
 
     parts = []
     if phase8_signals is not None and phase8_signals.first_turn:
-        parts.append(build_first_turn_instruction_fn())
+        parts.append(build_first_turn_instruction())
     if phase8_signals is not None and phase8_signals.mixed_query:
-        parts.append(build_mixed_query_instruction_fn())
+        parts.append(build_mixed_query_instruction())
     if correction_protocol_active:
-        parts.append(build_user_correction_instruction_fn())
+        parts.append(build_user_correction_instruction())
     if informational_mode:
-        parts.append(build_informational_guardrail_instruction_fn())
+        parts.append(build_informational_guardrail_instruction())
 
     return "\n\n".join(part for part in parts if part and part.strip())
 
@@ -418,9 +418,9 @@ def _build_fast_path_mode_directive(
     *,
     pre_routing_result,
     informational_mode: bool,
-    build_mode_directive_fn,
+    build_mode_directive,
 ) -> Tuple[Any, str]:
-    mode_directive = build_mode_directive_fn(
+    mode_directive = build_mode_directive(
         mode=pre_routing_result.mode,
         confidence_level=pre_routing_result.confidence_level,
         reason=pre_routing_result.decision.reason,
@@ -444,10 +444,10 @@ def _resolve_routing_and_apply_block_cap(
     decision_gate,
     retrieved_blocks,
     informational_branch_enabled: bool,
-    resolve_mode_prompt_fn,
+    resolve_mode_prompt,
     config,
-    log_retrieval_pairs_fn,
-    build_mode_directive_fn,
+    log_retrieval_pairs,
+    build_mode_directive,
     logger,
 ) -> Dict[str, Any]:
     route_resolution_increment = 0
@@ -480,7 +480,7 @@ def _resolve_routing_and_apply_block_cap(
         informational_branch_enabled
         and str(getattr(routing_result, "route", "") or "").lower() == "inform"
     )
-    mode_prompt_key, mode_prompt_override = resolve_mode_prompt_fn(
+    mode_prompt_key, mode_prompt_override = resolve_mode_prompt(
         "informational" if informational_mode else "",
         config,
     )
@@ -493,9 +493,9 @@ def _resolve_routing_and_apply_block_cap(
         block_cap,
         stage_count_before_cap,
     )
-    log_retrieval_pairs_fn("After confidence cap", retrieved_blocks, limit=10)
+    log_retrieval_pairs("After confidence cap", retrieved_blocks, limit=10)
 
-    mode_directive = build_mode_directive_fn(
+    mode_directive = build_mode_directive(
         mode=routing_result.mode,
         confidence_level=routing_result.confidence_level,
         reason=routing_result.decision.reason,
@@ -594,7 +594,7 @@ def _attach_routing_stage_debug_trace(
     initial_retrieved_blocks,
     hybrid_query: str,
     include_full_content: bool,
-    truncate_preview_fn,
+    truncate_preview,
     should_run_rerank: bool,
     rerank_reason: str,
     rerank_applied: bool,
@@ -624,12 +624,12 @@ def _attach_routing_stage_debug_trace(
     debug_trace["mode_reason"] = mode_reason
     debug_trace["block_cap"] = block_cap
     debug_trace["blocks_initial"] = len(initial_retrieved_blocks or [])
-    debug_trace["hybrid_query_preview"] = truncate_preview_fn(hybrid_query, 400)
+    debug_trace["hybrid_query_preview"] = truncate_preview(hybrid_query, 400)
     debug_trace["hybrid_query_len"] = len(hybrid_query or "")
     debug_trace["hybrid_query_text"] = (
         hybrid_query
         if include_full_content
-        else truncate_preview_fn(hybrid_query, 1200)
+        else truncate_preview(hybrid_query, 1200)
     )
     debug_trace["rerank_should_run"] = bool(should_run_rerank)
     debug_trace["rerank_reason"] = rerank_reason
@@ -649,10 +649,10 @@ def _finalize_routing_context_and_trace(
     phase8_signals,
     correction_protocol_active: bool,
     informational_mode: bool,
-    build_first_turn_instruction_fn: Callable[[], str],
-    build_mixed_query_instruction_fn: Callable[[], str],
-    build_user_correction_instruction_fn: Callable[[], str],
-    build_informational_guardrail_instruction_fn: Callable[[], str],
+    build_first_turn_instruction: Callable[[], str],
+    build_mixed_query_instruction: Callable[[], str],
+    build_user_correction_instruction: Callable[[], str],
+    build_informational_guardrail_instruction: Callable[[], str],
     routing_result,
     diagnostics_v1,
     query: str,
@@ -667,7 +667,7 @@ def _finalize_routing_context_and_trace(
     initial_retrieved_blocks,
     hybrid_query: str,
     include_full_content: bool,
-    truncate_preview_fn,
+    truncate_preview,
     should_run_rerank: bool,
     rerank_reason: str,
     rerank_applied: bool,
@@ -675,17 +675,17 @@ def _finalize_routing_context_and_trace(
     mode_prompt_key: Optional[str],
     conversation_context: str,
     memory_context_bundle,
-    refresh_context_and_apply_trace_snapshot_fn,
+    refresh_context_and_apply_trace_snapshot,
 ) -> Dict[str, Any]:
     phase8_context_suffix = _build_phase8_context_suffix(
         informational_branch_enabled=informational_branch_enabled,
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,
-        build_first_turn_instruction_fn=build_first_turn_instruction_fn,
-        build_mixed_query_instruction_fn=build_mixed_query_instruction_fn,
-        build_user_correction_instruction_fn=build_user_correction_instruction_fn,
-        build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction_fn,
+        build_first_turn_instruction=build_first_turn_instruction,
+        build_mixed_query_instruction=build_mixed_query_instruction,
+        build_user_correction_instruction=build_user_correction_instruction,
+        build_informational_guardrail_instruction=build_informational_guardrail_instruction,
     )
 
     selected_practice, practice_alternatives, practice_context_suffix = (
@@ -709,7 +709,7 @@ def _finalize_routing_context_and_trace(
         initial_retrieved_blocks=initial_retrieved_blocks,
         hybrid_query=hybrid_query,
         include_full_content=include_full_content,
-        truncate_preview_fn=truncate_preview_fn,
+        truncate_preview=truncate_preview,
         should_run_rerank=should_run_rerank,
         rerank_reason=rerank_reason,
         rerank_applied=rerank_applied,
@@ -722,7 +722,7 @@ def _finalize_routing_context_and_trace(
         practice_alternatives=practice_alternatives,
     )
 
-    updated_conversation_context = refresh_context_and_apply_trace_snapshot_fn(
+    updated_conversation_context = refresh_context_and_apply_trace_snapshot(
         memory=memory,
         conversation_context=conversation_context,
         memory_context_bundle=memory_context_bundle,

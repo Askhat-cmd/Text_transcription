@@ -490,10 +490,10 @@ def _run_retrieval_routing_context_stage(
         decision_gate=decision_gate,
         retrieved_blocks=retrieved_blocks,
         informational_branch_enabled=informational_branch_enabled,
-        resolve_mode_prompt_fn=_runtime_resolve_mode_prompt,
+        resolve_mode_prompt=_runtime_resolve_mode_prompt,
         config=config,
-        log_retrieval_pairs_fn=_runtime_log_retrieval_pairs,
-        build_mode_directive_fn=_runtime_build_mode_directive,
+        log_retrieval_pairs=_runtime_log_retrieval_pairs,
+        build_mode_directive=_runtime_build_mode_directive,
         logger=logger,
     )
     routing_result = routing_cap_stage["routing_result"]
@@ -512,10 +512,10 @@ def _run_retrieval_routing_context_stage(
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,
-        build_first_turn_instruction_fn=_runtime_build_first_turn_instruction,
-        build_mixed_query_instruction_fn=_runtime_build_mixed_query_instruction,
-        build_user_correction_instruction_fn=_runtime_build_user_correction_instruction,
-        build_informational_guardrail_instruction_fn=_runtime_build_informational_guardrail_instruction,
+        build_first_turn_instruction=_runtime_build_first_turn_instruction,
+        build_mixed_query_instruction=_runtime_build_mixed_query_instruction,
+        build_user_correction_instruction=_runtime_build_user_correction_instruction,
+        build_informational_guardrail_instruction=_runtime_build_informational_guardrail_instruction,
         routing_result=routing_result,
         diagnostics_v1=diagnostics_v1,
         query=query,
@@ -530,7 +530,7 @@ def _run_retrieval_routing_context_stage(
         initial_retrieved_blocks=initial_retrieved_blocks,
         hybrid_query=hybrid_query,
         include_full_content=bool(getattr(config, "LLM_PAYLOAD_INCLUDE_FULL_CONTENT", True)),
-        truncate_preview_fn=_runtime_truncate_preview,
+        truncate_preview=_runtime_truncate_preview,
         should_run_rerank=bool(should_run_rerank),
         rerank_reason=rerank_reason,
         rerank_applied=bool(rerank_applied),
@@ -538,7 +538,7 @@ def _run_retrieval_routing_context_stage(
         mode_prompt_key=mode_prompt_key,
         conversation_context=conversation_context,
         memory_context_bundle=memory_context_bundle,
-        refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
+        refresh_context_and_apply_trace_snapshot=_runtime_refresh_context_and_apply_trace_snapshot,
     )
     phase8_context_suffix = routing_context_stage["phase8_context_suffix"]
     selected_practice = routing_context_stage["selected_practice"]

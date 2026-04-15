@@ -833,7 +833,7 @@ def _run_fast_path_stage(
     mode_directive, state_context_mode_prompt = _runtime_build_fast_path_mode_directive(
         pre_routing_result=pre_routing_result,
         informational_mode=informational_mode,
-        build_mode_directive_fn=_runtime_build_mode_directive,
+        build_mode_directive=_runtime_build_mode_directive,
     )
     conversation_context = _runtime_refresh_context_and_apply_trace_snapshot(
         memory=memory,
@@ -853,10 +853,10 @@ def _run_fast_path_stage(
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,
-        build_first_turn_instruction_fn=_runtime_build_first_turn_instruction,
-        build_mixed_query_instruction_fn=_runtime_build_mixed_query_instruction,
-        build_user_correction_instruction_fn=_runtime_build_user_correction_instruction,
-        build_informational_guardrail_instruction_fn=_runtime_build_informational_guardrail_instruction,
+        build_first_turn_instruction=_runtime_build_first_turn_instruction,
+        build_mixed_query_instruction=_runtime_build_mixed_query_instruction,
+        build_user_correction_instruction=_runtime_build_user_correction_instruction,
+        build_informational_guardrail_instruction=_runtime_build_informational_guardrail_instruction,
     )
     state_context = _runtime_compose_state_context(
         state_analysis=state_analysis,

@@ -60,7 +60,7 @@ def test_query_is_passed_to_output_validation_policy(monkeypatch) -> None:
         query="мой вопрос про сравнение",
         route="inform",
         mode="CLARIFICATION",
-        generate_retry_fn=_retry_generate,
+        generate_retry=_retry_generate,
     )
 
     assert observed_queries == ["мой вопрос про сравнение", "мой вопрос про сравнение"]

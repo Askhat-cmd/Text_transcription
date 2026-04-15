@@ -96,7 +96,7 @@ def _apply_output_validation_policy(
     mode: str,
     validator=output_validator,
     force_enabled: Optional[bool] = None,
-    generate_retry_fn=None,
+    generate_retry=None,
 ) -> Tuple[str, Dict[str, Any], Optional[Dict[str, Any]]]:
     """Validate output, optionally retry generation once, then fallback safely."""
     enabled = _output_validation_enabled() if force_enabled is None else bool(force_enabled)
@@ -125,7 +125,7 @@ def _apply_output_validation_policy(
     final_text = first.text
     final_valid = bool(first.valid)
 
-    if first.needs_regeneration and callable(generate_retry_fn):
+    if first.needs_regeneration and callable(generate_retry):
         hint = validator.build_regeneration_hint(
             first.errors,
             route=route,
@@ -133,7 +133,7 @@ def _apply_output_validation_policy(
             query=query or "",
         )
         try:
-            retry_llm_result = generate_retry_fn(hint)
+            retry_llm_result = generate_retry(hint)
         except Exception as exc:
             logger.warning("[OUTPUT_VALIDATOR] retry generation failed: %s", exc)
             retry_llm_result = {"error": str(exc), "answer": ""}

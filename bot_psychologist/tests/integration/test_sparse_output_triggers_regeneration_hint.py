@@ -29,7 +29,7 @@ def test_sparse_output_triggers_regeneration_hint() -> None:
             query="Объясни избегание и чем оно отличается от осознанной паузы",
             route="inform",
             mode="CLARIFICATION",
-            generate_retry_fn=_retry_generate,
+            generate_retry=_retry_generate,
         )
 
         assert "hint" in captured

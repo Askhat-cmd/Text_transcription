@@ -23,11 +23,10 @@ def test_generation_validation_separation_with_single_retry(monkeypatch) -> None
         answer="Ты должен сделать это немедленно.",
         route="safe_override",
         mode="VALIDATION",
-        generate_retry_fn=_retry,
+        generate_retry=_retry,
     )
     assert retry_calls["count"] == 1
     assert isinstance(retry_result, dict)
     assert meta["enabled"] is True
     assert meta["fallback_used"] is False
     assert "должен" not in final_text.lower()
-

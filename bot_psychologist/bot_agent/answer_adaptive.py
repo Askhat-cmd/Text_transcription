@@ -92,7 +92,7 @@ def _apply_output_validation_policy(
     query: str = "",
     route: str,
     mode: str,
-    generate_retry_fn=None,
+    generate_retry=None,
 ) -> Tuple[str, Dict[str, Any], Optional[Dict[str, Any]]]:
     return _runtime_apply_output_validation_policy(
         answer=answer,
@@ -101,7 +101,7 @@ def _apply_output_validation_policy(
         mode=mode,
         validator=output_validator,
         force_enabled=_output_validation_enabled(),
-        generate_retry_fn=generate_retry_fn,
+        generate_retry=generate_retry,
     )
 
 

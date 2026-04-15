@@ -657,7 +657,7 @@ def _format_and_validate_llm_answer(
         query=query,
         route=route,
         mode=mode,
-        generate_retry_fn=_retry_validation,
+        generate_retry=_retry_validation,
     )
     apply_output_validation_observability(
         validation_meta=validation_meta,
@@ -683,7 +683,7 @@ def _build_output_validation_policy_adapter(
         query: str = "",
         route: str,
         mode: str,
-        generate_retry_fn=None,
+        generate_retry=None,
     ):
         return apply_output_validation_policy(
             answer=answer,
@@ -692,7 +692,7 @@ def _build_output_validation_policy_adapter(
             mode=mode,
             validator=validator,
             force_enabled=force_enabled,
-            generate_retry_fn=generate_retry_fn,
+            generate_retry=generate_retry,
         )
 
     return _adapter

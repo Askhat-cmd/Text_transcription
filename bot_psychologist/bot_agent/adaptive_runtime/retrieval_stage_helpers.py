@@ -393,10 +393,6 @@ def _run_retrieval_routing_context_stage(
     informational_branch_enabled: bool,
     phase8_signals,
     correction_protocol_active: bool,
-    build_first_turn_instruction_fn,
-    build_mixed_query_instruction_fn,
-    build_user_correction_instruction_fn,
-    build_informational_guardrail_instruction_fn,
     practice_selector,
     practice_allowed_routes,
     practice_skip_routes,
@@ -410,6 +406,12 @@ def _run_retrieval_routing_context_stage(
     user_id: str,
     model_used: str,
 ) -> Dict[str, Any]:
+    from ..onboarding_flow import (
+        build_first_turn_instruction as _runtime_build_first_turn_instruction,
+        build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
+        build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
+        build_user_correction_instruction as _runtime_build_user_correction_instruction,
+    )
     from .routing_stage_helpers import (
         _finalize_routing_context_and_trace as _runtime_finalize_routing_context_and_trace,
         _resolve_routing_and_apply_block_cap as _runtime_resolve_routing_and_apply_block_cap,
@@ -510,10 +512,10 @@ def _run_retrieval_routing_context_stage(
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,
-        build_first_turn_instruction_fn=build_first_turn_instruction_fn,
-        build_mixed_query_instruction_fn=build_mixed_query_instruction_fn,
-        build_user_correction_instruction_fn=build_user_correction_instruction_fn,
-        build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction_fn,
+        build_first_turn_instruction_fn=_runtime_build_first_turn_instruction,
+        build_mixed_query_instruction_fn=_runtime_build_mixed_query_instruction,
+        build_user_correction_instruction_fn=_runtime_build_user_correction_instruction,
+        build_informational_guardrail_instruction_fn=_runtime_build_informational_guardrail_instruction,
         routing_result=routing_result,
         diagnostics_v1=diagnostics_v1,
         query=query,

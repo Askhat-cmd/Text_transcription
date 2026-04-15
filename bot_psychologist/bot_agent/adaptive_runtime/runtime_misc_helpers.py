@@ -121,7 +121,7 @@ def _load_runtime_memory_context(
     user_id: str,
     query: str,
     data_loader,
-    get_conversation_memory_fn,
+    get_conversation_memory,
     memory_updater,
     config,
 ) -> Dict[str, Any]:
@@ -129,7 +129,7 @@ def _load_runtime_memory_context(
     from .trace_helpers import _get_memory_trace_metrics
 
     data_loader.load_all_data()
-    memory = get_conversation_memory_fn(user_id)
+    memory = get_conversation_memory(user_id)
     memory_update = memory_updater.build_runtime_context(
         memory=memory,
         diagnostics=None,
@@ -174,7 +174,7 @@ def _run_bootstrap_and_onboarding_guard(
     debug_trace: Optional[Dict[str, Any]],
     debug_info: Optional[Dict[str, Any]],
     data_loader,
-    get_conversation_memory_fn,
+    get_conversation_memory,
     memory_updater,
     config,
     informational_branch_enabled: bool,
@@ -191,7 +191,7 @@ def _run_bootstrap_and_onboarding_guard(
         user_id=user_id,
         query=query,
         data_loader=data_loader,
-        get_conversation_memory_fn=get_conversation_memory_fn,
+        get_conversation_memory=get_conversation_memory,
         memory_updater=memory_updater,
         config=config,
     )

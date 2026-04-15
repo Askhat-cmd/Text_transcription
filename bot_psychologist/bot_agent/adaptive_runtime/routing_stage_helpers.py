@@ -21,7 +21,7 @@ def _run_state_analysis_stage(
     debug_info: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
     state_classifier,
-    classify_parallel_fn,
+    classify_parallel,
     logger,
 ) -> Dict[str, Any]:
     from ..decision import resolve_user_stage as _runtime_resolve_user_stage
@@ -72,7 +72,7 @@ def _run_state_analysis_stage(
         sd_result = _runtime_fallback_sd_result("disabled_by_design")
     else:
         state_analysis, sd_result = _runtime_run_coroutine_sync(
-            classify_parallel_fn(
+            classify_parallel(
                 query,
                 conversation_history,
             )
@@ -198,8 +198,8 @@ def _resolve_pre_routing(
     contradiction_info: Dict[str, Any],
     contradiction_hint: str,
     decision_gate_cls,
-    detect_routing_signals_fn,
-    should_use_fast_path_fn,
+    detect_routing_signals,
+    should_use_fast_path,
     logger,
 ) -> Tuple[Optional[Any], Optional[Any], bool]:
     decision_gate = None if use_deterministic_router else decision_gate_cls()
@@ -209,13 +209,13 @@ def _resolve_pre_routing(
         fast_path_enabled = False
         logger.info("[ROUTING_V1] deterministic resolver enabled; FAST_PATH disabled")
     else:
-        pre_routing_signals = detect_routing_signals_fn(query, [], state_analysis, memory=memory)
+        pre_routing_signals = detect_routing_signals(query, [], state_analysis, memory=memory)
         pre_routing_signals["contradiction_detected"] = bool(
             contradiction_info.get("has_contradiction", False)
         )
         pre_routing_signals["contradiction_suggestion"] = contradiction_hint
         pre_routing_result = decision_gate.route(pre_routing_signals, user_stage=user_stage)
-        fast_path_enabled = should_use_fast_path_fn(query, pre_routing_result)
+        fast_path_enabled = should_use_fast_path(query, pre_routing_result)
         if informational_mode and fast_path_enabled:
             fast_path_enabled = False
             logger.info(
@@ -242,15 +242,15 @@ def _run_state_and_pre_routing_pipeline(
     debug_info: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
     state_classifier,
-    classify_parallel_fn,
+    classify_parallel,
     logger,
     diagnostics_v1_enabled: bool,
     deterministic_route_resolver_enabled: bool,
     informational_branch_enabled: bool,
     diagnostics_classifier,
     decision_gate_cls,
-    detect_routing_signals_fn,
-    should_use_fast_path_fn,
+    detect_routing_signals,
+    should_use_fast_path,
 ) -> Dict[str, Any]:
     stage2 = _run_state_analysis_stage(
         query=query,
@@ -261,7 +261,7 @@ def _run_state_and_pre_routing_pipeline(
         debug_info=debug_info,
         pipeline_stages=pipeline_stages,
         state_classifier=state_classifier,
-        classify_parallel_fn=classify_parallel_fn,
+        classify_parallel=classify_parallel,
         logger=logger,
     )
     state_analysis = stage2["state_analysis"]
@@ -305,8 +305,8 @@ def _run_state_and_pre_routing_pipeline(
         contradiction_info=contradiction_info,
         contradiction_hint=contradiction_hint,
         decision_gate_cls=decision_gate_cls,
-        detect_routing_signals_fn=detect_routing_signals_fn,
-        should_use_fast_path_fn=should_use_fast_path_fn,
+        detect_routing_signals=detect_routing_signals,
+        should_use_fast_path=should_use_fast_path,
         logger=logger,
     )
 

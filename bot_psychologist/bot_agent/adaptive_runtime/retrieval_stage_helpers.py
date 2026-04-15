@@ -61,12 +61,12 @@ def _retrieve_blocks_with_degraded_mode(
     top_k: int,
     config,
     data_loader,
-    get_retriever_fn,
+    get_retriever,
     logger,
 ) -> Dict[str, Any]:
     retrieval_degraded_reason = None
     try:
-        retriever = get_retriever_fn()
+        retriever = get_retriever()
     except Exception as exc:
         logger.warning("[RETRIEVAL] get_retriever failed, degraded mode enabled: %s", exc)
         retriever = None
@@ -246,7 +246,7 @@ def _run_retrieval_and_rerank_stage(
     top_k: int,
     config,
     data_loader,
-    get_retriever_fn,
+    get_retriever,
     logger,
     debug_trace,
     pipeline_stages,
@@ -254,7 +254,7 @@ def _run_retrieval_and_rerank_stage(
     diagnostics_v1,
     pre_routing_result,
     voyage_reranker_cls,
-    detect_routing_signals_fn,
+    detect_routing_signals,
     state_analysis,
     memory,
     hybrid_query: str,
@@ -268,7 +268,7 @@ def _run_retrieval_and_rerank_stage(
         top_k=top_k,
         config=config,
         data_loader=data_loader,
-        get_retriever_fn=get_retriever_fn,
+        get_retriever=get_retriever,
         logger=logger,
     )
     raw_retrieved_blocks = retrieval_stage["raw_retrieved_blocks"]
@@ -346,7 +346,7 @@ def _run_retrieval_and_rerank_stage(
         logger.info("[RERANK] skipped: %s", rerank_reason)
 
     reranked_blocks_for_trace = list(retrieved_blocks)
-    routing_signals = detect_routing_signals_fn(
+    routing_signals = detect_routing_signals(
         query,
         retrieved_blocks,
         state_analysis,
@@ -374,7 +374,7 @@ def _run_retrieval_routing_context_stage(
     top_k: int,
     config,
     data_loader,
-    get_retriever_fn,
+    get_retriever,
     logger,
     debug_trace,
     pipeline_stages,
@@ -382,7 +382,7 @@ def _run_retrieval_routing_context_stage(
     diagnostics_v1,
     pre_routing_result,
     voyage_reranker_cls,
-    detect_routing_signals_fn,
+    detect_routing_signals,
     state_analysis,
     memory,
     conversation_context: str,
@@ -455,7 +455,7 @@ def _run_retrieval_routing_context_stage(
         top_k=top_k,
         config=config,
         data_loader=data_loader,
-        get_retriever_fn=get_retriever_fn,
+        get_retriever=get_retriever,
         logger=logger,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
@@ -463,7 +463,7 @@ def _run_retrieval_routing_context_stage(
         diagnostics_v1=diagnostics_v1,
         pre_routing_result=pre_routing_result,
         voyage_reranker_cls=voyage_reranker_cls,
-        detect_routing_signals_fn=detect_routing_signals_fn,
+        detect_routing_signals=detect_routing_signals,
         state_analysis=state_analysis,
         memory=memory,
         hybrid_query=hybrid_query,

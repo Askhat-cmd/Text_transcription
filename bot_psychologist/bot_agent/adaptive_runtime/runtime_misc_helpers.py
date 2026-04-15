@@ -679,8 +679,6 @@ def _run_fast_path_stage(
     state_analysis,
     contradiction_hint: str,
     cross_session_context: str,
-    compose_state_context_fn,
-    build_state_context_fn,
     diagnostics_v1,
     response_generator_cls,
     sd_primary: str,
@@ -723,6 +721,10 @@ def _run_fast_path_stage(
         _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
     )
     from .state_helpers import _detect_fast_path_reason as _runtime_detect_fast_path_reason
+    from .state_helpers import (
+        _build_state_context as _runtime_build_state_context,
+        _compose_state_context as _runtime_compose_state_context,
+    )
     from .trace_helpers import (
         _apply_output_validation_observability as _runtime_apply_output_validation_observability,
         _build_llm_call_trace as _runtime_build_llm_call_trace,
@@ -784,7 +786,7 @@ def _run_fast_path_stage(
         build_user_correction_instruction_fn=_runtime_build_user_correction_instruction,
         build_informational_guardrail_instruction_fn=_runtime_build_informational_guardrail_instruction,
     )
-    state_context = compose_state_context_fn(
+    state_context = _runtime_compose_state_context(
         state_analysis=state_analysis,
         mode_prompt=state_context_mode_prompt,
         nervous_system_state=(diagnostics_v1.nervous_system_state if diagnostics_v1 else "window"),
@@ -793,7 +795,7 @@ def _run_fast_path_stage(
         cross_session_context=cross_session_context,
         phase8_context_suffix=fast_phase8_suffix,
         practice_context_suffix="",
-        build_state_context_fn=build_state_context_fn,
+        build_state_context_fn=_runtime_build_state_context,
     )
     llm_result, response_generator, _prompt_stack_meta, system_prompt_override = _run_llm_generation_cycle(
         response_generator_cls=response_generator_cls,

@@ -400,8 +400,6 @@ def answer_question_adaptive(
             state_analysis=state_analysis,
             contradiction_hint=contradiction_hint,
             cross_session_context=cross_session_context,
-            compose_state_context_fn=_runtime_compose_state_context,
-            build_state_context_fn=_build_state_context,
             diagnostics_v1=diagnostics_v1,
             response_generator_cls=ResponseGenerator,
             sd_primary=sd_result.primary,

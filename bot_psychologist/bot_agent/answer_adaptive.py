@@ -56,7 +56,6 @@ from .adaptive_runtime.trace_helpers import (
     _extract_block_trace_fields,
     _build_chunk_trace_item,
     _build_llm_prompts as _runtime_build_llm_prompts,
-    _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
 )
 from .adaptive_runtime.state_helpers import (
@@ -68,7 +67,6 @@ from .adaptive_runtime.state_helpers import (
     _build_state_context as _runtime_build_state_context,
     _compose_state_context as _runtime_compose_state_context,
     _should_use_fast_path as _runtime_should_use_fast_path,
-    _build_fast_path_block as _runtime_build_fast_path_block,
 )
 from .adaptive_runtime.mode_policy_helpers import (
     MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
@@ -375,8 +373,6 @@ def answer_question_adaptive(
             conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
             diagnostics_payload=diagnostics_v1.as_dict() if diagnostics_v1 else None,
-            refresh_context_and_apply_trace_snapshot_fn=_runtime_refresh_context_and_apply_trace_snapshot,
-            build_fast_path_block_fn=_runtime_build_fast_path_block,
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             informational_branch_enabled=informational_branch_enabled,

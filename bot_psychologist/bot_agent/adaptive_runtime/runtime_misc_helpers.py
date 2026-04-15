@@ -671,8 +671,6 @@ def _run_fast_path_stage(
     conversation_context: str,
     memory_context_bundle,
     diagnostics_payload: Optional[Dict[str, Any]],
-    refresh_context_and_apply_trace_snapshot_fn,
-    build_fast_path_block_fn,
     phase8_signals,
     correction_protocol_active: bool,
     informational_branch_enabled: bool,
@@ -718,6 +716,7 @@ def _run_fast_path_stage(
     )
     from .state_helpers import _detect_fast_path_reason as _runtime_detect_fast_path_reason
     from .state_helpers import (
+        _build_fast_path_block as _runtime_build_fast_path_block,
         _build_state_context as _runtime_build_state_context,
         _build_working_state as _runtime_build_working_state,
         _compose_state_context as _runtime_compose_state_context,
@@ -728,6 +727,7 @@ def _run_fast_path_stage(
         _build_llm_call_trace as _runtime_build_llm_call_trace,
         _finalize_success_debug_trace as _runtime_finalize_success_debug_trace,
         _prepare_llm_prompt_previews as _runtime_prepare_llm_prompt_previews,
+        _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
         _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
         _update_session_token_metrics as _runtime_update_session_token_metrics,
@@ -764,7 +764,7 @@ def _run_fast_path_stage(
         informational_mode=informational_mode,
         build_mode_directive_fn=_runtime_build_mode_directive,
     )
-    conversation_context = refresh_context_and_apply_trace_snapshot_fn(
+    conversation_context = _runtime_refresh_context_and_apply_trace_snapshot(
         memory=memory,
         conversation_context=conversation_context,
         memory_context_bundle=memory_context_bundle,
@@ -772,7 +772,7 @@ def _run_fast_path_stage(
         diagnostics_payload=diagnostics_payload,
         route=(getattr(pre_routing_result, "route", None) if pre_routing_result else None),
     )
-    fast_block = build_fast_path_block_fn(
+    fast_block = _runtime_build_fast_path_block(
         query=query,
         conversation_context=conversation_context,
         state_analysis=state_analysis,

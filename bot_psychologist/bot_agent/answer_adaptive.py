@@ -36,9 +36,6 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
-from .onboarding_flow import (
-    detect_phase8_signals,
-)
 from .adaptive_runtime.pipeline_utils import (
     _build_config_snapshot,
 )
@@ -75,7 +72,6 @@ from .adaptive_runtime.routing_stage_helpers import (
     _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
-    _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
     _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
@@ -272,12 +268,10 @@ def answer_question_adaptive(
             schedule_summary_task=schedule_summary_task,
             debug_trace=debug_trace,
             debug_info=debug_info,
-            load_runtime_memory_context_fn=_runtime_load_runtime_memory_context,
             data_loader=data_loader,
             get_conversation_memory_fn=get_conversation_memory,
             memory_updater=memory_updater,
             config=config,
-            detect_phase8_signals_fn=detect_phase8_signals,
             informational_branch_enabled=informational_branch_enabled,
             logger=logger,
         )

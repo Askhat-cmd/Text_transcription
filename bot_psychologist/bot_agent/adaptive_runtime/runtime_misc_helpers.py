@@ -173,22 +173,21 @@ def _run_bootstrap_and_onboarding_guard(
     schedule_summary_task: bool,
     debug_trace: Optional[Dict[str, Any]],
     debug_info: Optional[Dict[str, Any]],
-    load_runtime_memory_context_fn,
     data_loader,
     get_conversation_memory_fn,
     memory_updater,
     config,
-    detect_phase8_signals_fn,
     informational_branch_enabled: bool,
     logger=None,
 ) -> Dict[str, Any]:
+    from ..onboarding_flow import detect_phase8_signals as _runtime_detect_phase8_signals
     from .state_helpers import _resolve_path_user_level as _runtime_resolve_path_user_level
     from .trace_helpers import (
         _apply_memory_debug_info as _runtime_apply_memory_debug_info,
         _truncate_preview as _runtime_truncate_preview,
     )
 
-    stage1 = load_runtime_memory_context_fn(
+    stage1 = _load_runtime_memory_context(
         user_id=user_id,
         query=query,
         data_loader=data_loader,
@@ -217,7 +216,7 @@ def _run_bootstrap_and_onboarding_guard(
         )
         _runtime_apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
 
-    phase8_signals = detect_phase8_signals_fn(query=query, turns_count=len(memory.turns))
+    phase8_signals = _runtime_detect_phase8_signals(query=query, turns_count=len(memory.turns))
     if debug_trace is not None:
         debug_trace["phase8_signals"] = phase8_signals.as_dict()
 

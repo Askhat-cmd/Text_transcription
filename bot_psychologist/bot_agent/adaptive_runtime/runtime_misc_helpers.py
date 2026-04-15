@@ -922,18 +922,9 @@ def _run_full_path_llm_stage(
     mode_prompt: str,
     debug_trace: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
-    run_llm_generation_cycle_fn,
     response_generator_cls,
-    build_prompt_stack_override_fn,
-    prepare_llm_prompt_previews_fn,
-    generate_llm_with_trace_fn,
-    build_llm_call_trace_fn,
-    format_and_validate_llm_answer_fn,
     response_formatter_cls,
-    run_validation_retry_generation_fn,
     apply_output_validation_policy_fn,
-    apply_output_validation_observability_fn,
-    handle_llm_generation_error_response_fn,
     state_analysis,
     start_time: datetime,
     memory,
@@ -950,7 +941,16 @@ def _run_full_path_llm_stage(
     llm_model_name: str,
     logger,
 ) -> Dict[str, Any]:
-    llm_result, response_generator, _prompt_stack_meta, system_prompt_override = run_llm_generation_cycle_fn(
+    from .response_utils import (
+        _handle_llm_generation_error_response as _runtime_handle_llm_generation_error_response,
+    )
+    from .trace_helpers import (
+        _apply_output_validation_observability as _runtime_apply_output_validation_observability,
+        _build_llm_call_trace as _runtime_build_llm_call_trace,
+        _prepare_llm_prompt_previews as _runtime_prepare_llm_prompt_previews,
+    )
+
+    llm_result, response_generator, _prompt_stack_meta, system_prompt_override = _run_llm_generation_cycle(
         response_generator_cls=response_generator_cls,
         query=query,
         blocks=adapted_blocks,
@@ -974,15 +974,15 @@ def _run_full_path_llm_stage(
         mode_prompt=mode_prompt,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        build_prompt_stack_override_fn=build_prompt_stack_override_fn,
-        prepare_llm_prompt_previews_fn=prepare_llm_prompt_previews_fn,
-        generate_llm_with_trace_fn=generate_llm_with_trace_fn,
-        build_llm_call_trace_fn=build_llm_call_trace_fn,
+        build_prompt_stack_override_fn=_build_prompt_stack_override,
+        prepare_llm_prompt_previews_fn=_runtime_prepare_llm_prompt_previews,
+        generate_llm_with_trace_fn=_generate_llm_with_trace,
+        build_llm_call_trace_fn=_runtime_build_llm_call_trace,
     )
 
     if llm_result.get("error") and llm_result["error"] not in ["no_blocks"]:
         logger.error("[ADAPTIVE] LLM error: %s", llm_result["error"])
-        response = handle_llm_generation_error_response_fn(
+        response = _runtime_handle_llm_generation_error_response(
             llm_error=str(llm_result.get("error", "")),
             state_analysis=state_analysis,
             start_time=start_time,
@@ -1010,7 +1010,7 @@ def _run_full_path_llm_stage(
             "answer": "",
         }
 
-    answer = format_and_validate_llm_answer_fn(
+    answer = _format_and_validate_llm_answer(
         llm_result=llm_result,
         response_generator=response_generator,
         query=query,
@@ -1033,9 +1033,9 @@ def _run_full_path_llm_stage(
         fallback_model_name=llm_model_name,
         include_retry_llm_trace=True,
         response_formatter_cls=response_formatter_cls,
-        run_validation_retry_generation_fn=run_validation_retry_generation_fn,
+        run_validation_retry_generation_fn=_run_validation_retry_generation,
         apply_output_validation_policy_fn=apply_output_validation_policy_fn,
-        apply_output_validation_observability_fn=apply_output_validation_observability_fn,
+        apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
     )
     return {
         "error_response": None,
@@ -1071,18 +1071,9 @@ def _run_generation_and_success_stage(
     mode_directive,
     debug_trace,
     pipeline_stages,
-    run_llm_generation_cycle_fn,
     response_generator_cls,
-    build_prompt_stack_override_fn,
-    prepare_llm_prompt_previews_fn,
-    generate_llm_with_trace_fn,
-    build_llm_call_trace_fn,
-    format_and_validate_llm_answer_fn,
     response_formatter_cls,
-    run_validation_retry_generation_fn,
     apply_output_validation_policy_fn,
-    apply_output_validation_observability_fn,
-    handle_llm_generation_error_response_fn,
     start_time: datetime,
     memory,
     schedule_summary_task: bool,
@@ -1172,18 +1163,9 @@ def _run_generation_and_success_stage(
         mode_prompt=mode_directive.prompt,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        run_llm_generation_cycle_fn=run_llm_generation_cycle_fn,
         response_generator_cls=response_generator_cls,
-        build_prompt_stack_override_fn=build_prompt_stack_override_fn,
-        prepare_llm_prompt_previews_fn=prepare_llm_prompt_previews_fn,
-        generate_llm_with_trace_fn=generate_llm_with_trace_fn,
-        build_llm_call_trace_fn=build_llm_call_trace_fn,
-        format_and_validate_llm_answer_fn=format_and_validate_llm_answer_fn,
         response_formatter_cls=response_formatter_cls,
-        run_validation_retry_generation_fn=run_validation_retry_generation_fn,
         apply_output_validation_policy_fn=apply_output_validation_policy_fn,
-        apply_output_validation_observability_fn=apply_output_validation_observability_fn,
-        handle_llm_generation_error_response_fn=handle_llm_generation_error_response_fn,
         state_analysis=state_analysis,
         start_time=start_time,
         memory=memory,

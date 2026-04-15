@@ -60,11 +60,9 @@ from .adaptive_runtime.response_utils import (
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
     _persist_turn,
     _save_session_summary_best_effort,
-    _build_sources_from_blocks,
 )
 from .adaptive_runtime.trace_helpers import (
     _init_debug_payloads,
-    _log_blocks,
     _truncate_preview,
     _extract_block_trace_fields,
     _build_chunk_trace_item,
@@ -570,8 +568,6 @@ def answer_question_adaptive(
             memory_context_bundle=memory_context_bundle,
             memory_trace_metrics=memory_trace_metrics,
             hybrid_query=hybrid_query,
-            build_sources_from_blocks_fn=_build_sources_from_blocks,
-            log_blocks_fn=_log_blocks,
         )
         current_stage = stage4["current_stage"]
         return stage4["result"]

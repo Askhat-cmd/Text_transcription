@@ -1098,8 +1098,6 @@ def _run_generation_and_success_stage(
     memory_context_bundle,
     memory_trace_metrics,
     hybrid_query: str,
-    build_sources_from_blocks_fn,
-    log_blocks_fn,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
@@ -1112,11 +1110,13 @@ def _run_generation_and_success_stage(
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
         _build_full_success_metadata as _runtime_build_full_success_metadata,
+        _build_sources_from_blocks as _runtime_build_sources_from_blocks,
         _build_success_response as _runtime_build_success_response,
         _run_full_path_success_stage as _runtime_run_full_path_success_stage,
     )
     from .trace_helpers import (
         _finalize_success_debug_trace as _runtime_finalize_success_debug_trace,
+        _log_blocks as _runtime_log_blocks,
         _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
     )
@@ -1228,8 +1228,8 @@ def _run_generation_and_success_stage(
         hybrid_query=hybrid_query,
         session_store=session_store,
         pipeline_stages=pipeline_stages,
-        build_sources_from_blocks_fn=build_sources_from_blocks_fn,
-        log_blocks_fn=log_blocks_fn,
+        build_sources_from_blocks_fn=_runtime_build_sources_from_blocks,
+        log_blocks_fn=_runtime_log_blocks,
         build_success_response_fn=_runtime_build_success_response,
         build_full_success_metadata_fn=_runtime_build_full_success_metadata,
         attach_success_observability_fn=_runtime_attach_success_observability,

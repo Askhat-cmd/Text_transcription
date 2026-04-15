@@ -681,10 +681,6 @@ def _run_fast_path_stage(
     correction_protocol_active: bool,
     informational_branch_enabled: bool,
     build_phase8_context_suffix_fn,
-    build_first_turn_instruction_fn,
-    build_mixed_query_instruction_fn,
-    build_user_correction_instruction_fn,
-    build_informational_guardrail_instruction_fn,
     state_analysis,
     contradiction_hint: str,
     cross_session_context: str,
@@ -727,6 +723,12 @@ def _run_fast_path_stage(
     store_blob_fn,
     strip_legacy_trace_fields_fn,
 ) -> Optional[Dict[str, Any]]:
+    from ..onboarding_flow import (
+        build_first_turn_instruction as _runtime_build_first_turn_instruction,
+        build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
+        build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
+        build_user_correction_instruction as _runtime_build_user_correction_instruction,
+    )
     from .trace_helpers import (
         _apply_output_validation_observability as _runtime_apply_output_validation_observability,
         _build_llm_call_trace as _runtime_build_llm_call_trace,
@@ -773,10 +775,10 @@ def _run_fast_path_stage(
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,
         informational_mode=informational_mode,
-        build_first_turn_instruction_fn=build_first_turn_instruction_fn,
-        build_mixed_query_instruction_fn=build_mixed_query_instruction_fn,
-        build_user_correction_instruction_fn=build_user_correction_instruction_fn,
-        build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction_fn,
+        build_first_turn_instruction_fn=_runtime_build_first_turn_instruction,
+        build_mixed_query_instruction_fn=_runtime_build_mixed_query_instruction,
+        build_user_correction_instruction_fn=_runtime_build_user_correction_instruction,
+        build_informational_guardrail_instruction_fn=_runtime_build_informational_guardrail_instruction,
     )
     state_context = compose_state_context_fn(
         state_analysis=state_analysis,

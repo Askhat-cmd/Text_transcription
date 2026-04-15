@@ -44,10 +44,6 @@ from .practice_selector import practice_selector
 from .trace_schema import attach_trace_schema_status
 from .onboarding_flow import (
     detect_phase8_signals,
-    build_first_turn_instruction,
-    build_mixed_query_instruction,
-    build_user_correction_instruction,
-    build_informational_guardrail_instruction,
 )
 from .adaptive_runtime.pipeline_utils import (
     _timed,
@@ -430,10 +426,6 @@ def answer_question_adaptive(
             correction_protocol_active=correction_protocol_active,
             informational_branch_enabled=informational_branch_enabled,
             build_phase8_context_suffix_fn=_runtime_build_phase8_context_suffix,
-            build_first_turn_instruction_fn=build_first_turn_instruction,
-            build_mixed_query_instruction_fn=build_mixed_query_instruction,
-            build_user_correction_instruction_fn=build_user_correction_instruction,
-            build_informational_guardrail_instruction_fn=build_informational_guardrail_instruction,
             state_analysis=state_analysis,
             contradiction_hint=contradiction_hint,
             cross_session_context=cross_session_context,

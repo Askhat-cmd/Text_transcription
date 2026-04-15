@@ -869,10 +869,10 @@ def _build_full_path_success_response(
     model_used: str,
     session_store,
     pipeline_stages: List[Dict[str, Any]],
-    build_sources_from_blocks_fn,
-    log_blocks_fn,
-    build_success_response_fn,
-    build_full_success_metadata_fn,
+    build_sources_from_blocks,
+    log_blocks,
+    build_success_response,
+    build_full_success_metadata,
     attach_success_observability_fn,
     strip_legacy_runtime_metadata_fn,
     attach_debug_payload_fn,
@@ -886,10 +886,10 @@ def _build_full_path_success_response(
     logger=None,
 ) -> Dict[str, Any]:
     elapsed_time = (datetime.now() - start_time).total_seconds()
-    sources = build_sources_from_blocks_fn(adapted_blocks)
-    log_blocks_fn("SOURCES", adapted_blocks, limit=10)
+    sources = build_sources_from_blocks(adapted_blocks)
+    log_blocks("SOURCES", adapted_blocks, limit=10)
 
-    result = build_success_response_fn(
+    result = build_success_response(
         answer=answer,
         state_analysis=state_analysis,
         path_recommendation=path_recommendation,
@@ -897,7 +897,7 @@ def _build_full_path_success_response(
         feedback_prompt=feedback_prompt,
         sources=sources,
         concepts=concepts,
-        metadata=build_full_success_metadata_fn(
+        metadata=build_full_success_metadata(
             user_id=user_id,
             state_analysis=state_analysis,
             routing_result=routing_result,
@@ -1154,11 +1154,11 @@ def _prepare_full_path_post_llm_artifacts(
 
 def _finalize_full_path_success_stage(
     *,
-    prepare_post_llm_fn,
-    build_success_response_fn,
+    prepare_post_llm,
+    build_success_response,
 ) -> Dict[str, Any]:
-    post_llm = prepare_post_llm_fn()
-    result = build_success_response_fn(
+    post_llm = prepare_post_llm()
+    result = build_success_response(
         path_recommendation=post_llm["path_recommendation"],
         feedback_prompt=post_llm["feedback_prompt"],
         concepts=post_llm["concepts"],
@@ -1220,10 +1220,10 @@ def _run_full_path_success_stage(
     hybrid_query: str,
     session_store,
     pipeline_stages: List[Dict[str, Any]],
-    build_sources_from_blocks_fn,
-    log_blocks_fn,
-    build_success_response_fn,
-    build_full_success_metadata_fn,
+    build_sources_from_blocks,
+    log_blocks,
+    build_success_response,
+    build_full_success_metadata,
     attach_success_observability_fn,
     strip_legacy_runtime_metadata_fn,
     attach_debug_payload_fn,
@@ -1237,7 +1237,7 @@ def _run_full_path_success_stage(
     logger=None,
 ) -> Dict[str, Any]:
     success_stage = _finalize_full_path_success_stage(
-        prepare_post_llm_fn=lambda: _prepare_full_path_post_llm_artifacts(
+        prepare_post_llm=lambda: _prepare_full_path_post_llm_artifacts(
             memory=memory,
             query=query,
             answer=answer,
@@ -1262,7 +1262,7 @@ def _run_full_path_success_stage(
             path_builder=path_builder,
             logger=logger,
         ),
-        build_success_response_fn=lambda path_recommendation, feedback_prompt, concepts, tokens_prompt, tokens_completion, tokens_total, model_used, session_metrics: build_full_path_success_response_fn(
+        build_success_response=lambda path_recommendation, feedback_prompt, concepts, tokens_prompt, tokens_completion, tokens_total, model_used, session_metrics: build_full_path_success_response_fn(
             answer=answer,
             state_analysis=state_analysis,
             path_recommendation=path_recommendation,
@@ -1299,10 +1299,10 @@ def _run_full_path_success_stage(
             model_used=str(model_used),
             session_store=session_store,
             pipeline_stages=pipeline_stages,
-            build_sources_from_blocks_fn=build_sources_from_blocks_fn,
-            log_blocks_fn=log_blocks_fn,
-            build_success_response_fn=build_success_response_fn,
-            build_full_success_metadata_fn=build_full_success_metadata_fn,
+            build_sources_from_blocks=build_sources_from_blocks,
+            log_blocks=log_blocks,
+            build_success_response=build_success_response,
+            build_full_success_metadata=build_full_success_metadata,
             attach_success_observability_fn=attach_success_observability_fn,
             strip_legacy_runtime_metadata_fn=strip_legacy_runtime_metadata_fn,
             attach_debug_payload_fn=attach_debug_payload_fn,

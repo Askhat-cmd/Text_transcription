@@ -55,7 +55,6 @@ from .adaptive_runtime.trace_helpers import (
     _extract_block_trace_fields,
     _build_chunk_trace_item,
     _build_llm_prompts as _runtime_build_llm_prompts,
-    _apply_memory_debug_info,
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
@@ -82,7 +81,6 @@ from .adaptive_runtime.routing_stage_helpers import (
     _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
-    _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
@@ -265,10 +263,6 @@ def answer_question_adaptive(
     memory_context_bundle = None
     phase8_signals = None
     level_adapter = None  # compatibility sentinel: level-based prompting stays disabled
-    build_start_command_response_fn = lambda **kwargs: _runtime_build_start_command_response(
-        logger=logger,
-        **kwargs,
-    )
     current_stage = "init"
     try:
         # ================================================================
@@ -291,9 +285,8 @@ def answer_question_adaptive(
             config=config,
             detect_phase8_signals_fn=detect_phase8_signals,
             informational_branch_enabled=informational_branch_enabled,
-            build_start_command_response_fn=build_start_command_response_fn,
-            apply_memory_debug_info_fn=_apply_memory_debug_info,
             resolve_path_user_level_fn=_resolve_path_user_level,
+            logger=logger,
         )
         memory = bootstrap["memory"]
         memory_context_bundle = bootstrap["memory_context_bundle"]

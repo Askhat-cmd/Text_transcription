@@ -180,11 +180,13 @@ def _run_bootstrap_and_onboarding_guard(
     config,
     detect_phase8_signals_fn,
     informational_branch_enabled: bool,
-    build_start_command_response_fn,
-    apply_memory_debug_info_fn,
     resolve_path_user_level_fn,
+    logger=None,
 ) -> Dict[str, Any]:
-    from .trace_helpers import _truncate_preview as _runtime_truncate_preview
+    from .trace_helpers import (
+        _apply_memory_debug_info as _runtime_apply_memory_debug_info,
+        _truncate_preview as _runtime_truncate_preview,
+    )
 
     stage1 = load_runtime_memory_context_fn(
         user_id=user_id,
@@ -213,7 +215,7 @@ def _run_bootstrap_and_onboarding_guard(
         debug_trace["summary_staleness"] = (
             memory_context_bundle.staleness if memory_context_bundle else None
         )
-        apply_memory_debug_info_fn(debug_trace, memory, memory_trace_metrics)
+        _runtime_apply_memory_debug_info(debug_trace, memory, memory_trace_metrics)
 
     phase8_signals = detect_phase8_signals_fn(query=query, turns_count=len(memory.turns))
     if debug_trace is not None:
@@ -221,13 +223,14 @@ def _run_bootstrap_and_onboarding_guard(
 
     start_command_response = None
     if informational_branch_enabled and phase8_signals.start_command:
-        start_command_response = build_start_command_response_fn(
+        start_command_response = _build_start_command_response(
             user_id=user_id,
             user_level=user_level,
             query=query,
             memory=memory,
             start_time=start_time,
             schedule_summary_task=schedule_summary_task,
+            logger=logger,
         )
 
     path_level_enum = resolve_path_user_level_fn(user_level)

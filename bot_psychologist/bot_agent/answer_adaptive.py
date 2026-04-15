@@ -285,7 +285,6 @@ def answer_question_adaptive(
             config=config,
             detect_phase8_signals_fn=detect_phase8_signals,
             informational_branch_enabled=informational_branch_enabled,
-            resolve_path_user_level_fn=_resolve_path_user_level,
             logger=logger,
         )
         memory = bootstrap["memory"]

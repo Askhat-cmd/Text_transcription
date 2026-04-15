@@ -180,9 +180,9 @@ def _run_bootstrap_and_onboarding_guard(
     config,
     detect_phase8_signals_fn,
     informational_branch_enabled: bool,
-    resolve_path_user_level_fn,
     logger=None,
 ) -> Dict[str, Any]:
+    from .state_helpers import _resolve_path_user_level as _runtime_resolve_path_user_level
     from .trace_helpers import (
         _apply_memory_debug_info as _runtime_apply_memory_debug_info,
         _truncate_preview as _runtime_truncate_preview,
@@ -233,7 +233,7 @@ def _run_bootstrap_and_onboarding_guard(
             logger=logger,
         )
 
-    path_level_enum = resolve_path_user_level_fn(user_level)
+    path_level_enum = _runtime_resolve_path_user_level(user_level)
     if debug_info is not None:
         debug_info["user_id"] = user_id
         debug_info["memory_turns"] = len(memory.turns)

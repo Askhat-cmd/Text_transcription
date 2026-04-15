@@ -703,20 +703,12 @@ def _run_fast_path_stage(
     update_session_token_metrics_fn,
     persist_turn_fn,
     get_feedback_prompt_for_state_fn,
-    build_fast_path_success_response_fn,
-    build_success_response_fn,
-    build_fast_success_metadata_fn,
     output_validation_enabled: bool,
-    attach_success_observability_fn,
-    strip_legacy_runtime_metadata_fn,
-    attach_debug_payload_fn,
-    finalize_success_debug_trace_fn,
     estimate_cost_fn,
     compute_anomalies_fn,
     attach_trace_schema_fn,
     build_state_trajectory_fn,
     store_blob_fn,
-    strip_legacy_trace_fields_fn,
 ) -> Optional[Dict[str, Any]]:
     from ..decision import build_mode_directive as _runtime_build_mode_directive
     from ..onboarding_flow import (
@@ -734,7 +726,17 @@ def _run_fast_path_stage(
     from .trace_helpers import (
         _apply_output_validation_observability as _runtime_apply_output_validation_observability,
         _build_llm_call_trace as _runtime_build_llm_call_trace,
+        _finalize_success_debug_trace as _runtime_finalize_success_debug_trace,
         _prepare_llm_prompt_previews as _runtime_prepare_llm_prompt_previews,
+        _strip_legacy_runtime_metadata as _runtime_strip_legacy_runtime_metadata,
+        _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,
+    )
+    from .response_utils import (
+        _attach_debug_payload as _runtime_attach_debug_payload,
+        _attach_success_observability as _runtime_attach_success_observability,
+        _build_fast_path_success_response as _runtime_build_fast_path_success_response,
+        _build_fast_success_metadata as _runtime_build_fast_success_metadata,
+        _build_success_response as _runtime_build_success_response,
     )
 
     if not fast_path_enabled:
@@ -855,7 +857,7 @@ def _run_fast_path_stage(
         routing_result=pre_routing_result,
         log_prefix="[FAST_PATH] working_state update failed:",
     )
-    result = build_fast_path_success_response_fn(
+    result = _runtime_build_fast_path_success_response(
         answer=answer,
         state_analysis=state_analysis,
         pre_routing_result=pre_routing_result,
@@ -881,20 +883,20 @@ def _run_fast_path_stage(
         update_session_token_metrics_fn=update_session_token_metrics_fn,
         persist_turn_fn=persist_turn_fn,
         get_feedback_prompt_for_state_fn=get_feedback_prompt_for_state_fn,
-        build_success_response_fn=build_success_response_fn,
-        build_fast_success_metadata_fn=build_fast_success_metadata_fn,
+        build_success_response_fn=_runtime_build_success_response,
+        build_fast_success_metadata_fn=_runtime_build_fast_success_metadata,
         prompt_stack_v2_enabled=prompt_stack_enabled,
         output_validation_enabled=output_validation_enabled,
-        attach_success_observability_fn=attach_success_observability_fn,
-        strip_legacy_runtime_metadata_fn=strip_legacy_runtime_metadata_fn,
-        attach_debug_payload_fn=attach_debug_payload_fn,
-        finalize_success_debug_trace_fn=finalize_success_debug_trace_fn,
+        attach_success_observability_fn=_runtime_attach_success_observability,
+        strip_legacy_runtime_metadata_fn=_runtime_strip_legacy_runtime_metadata,
+        attach_debug_payload_fn=_runtime_attach_debug_payload,
+        finalize_success_debug_trace_fn=_runtime_finalize_success_debug_trace,
         estimate_cost_fn=estimate_cost_fn,
         compute_anomalies_fn=compute_anomalies_fn,
         attach_trace_schema_fn=attach_trace_schema_fn,
         build_state_trajectory_fn=build_state_trajectory_fn,
         store_blob_fn=store_blob_fn,
-        strip_legacy_trace_fields_fn=strip_legacy_trace_fields_fn,
+        strip_legacy_trace_fields_fn=_runtime_strip_legacy_trace_fields,
         logger=logger,
     )
     return {

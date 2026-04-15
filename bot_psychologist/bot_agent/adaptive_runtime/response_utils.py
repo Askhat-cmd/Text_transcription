@@ -476,14 +476,14 @@ def _handle_no_retrieval_partial_response(
     initial_retrieved_blocks,
     reranked_blocks_for_trace,
     append_stages: List[Dict[str, Any]],
-    set_working_state_best_effort_fn,
-    persist_turn_fn,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
+    set_working_state_best_effort,
+    persist_turn,
+    finalize_failure_debug_trace,
+    estimate_cost,
+    compute_anomalies,
+    attach_trace_schema,
+    build_state_trajectory,
+    store_blob,
 ) -> Dict[str, Any]:
     response = _build_partial_response(
         message,
@@ -492,13 +492,13 @@ def _handle_no_retrieval_partial_response(
         start_time,
         query,
     )
-    set_working_state_best_effort_fn(
+    set_working_state_best_effort(
         memory=memory,
         state_analysis=state_analysis,
         routing_result=routing_result,
         log_prefix="[ADAPTIVE] working_state update failed (partial):",
     )
-    persist_turn_fn(
+    persist_turn(
         memory=memory,
         user_input=query,
         bot_response=response.get("answer", ""),
@@ -512,7 +512,7 @@ def _handle_no_retrieval_partial_response(
         debug_info["total_time"] = (datetime.now() - start_time).total_seconds()
         response["debug"] = debug_info
     if debug_trace is not None:
-        debug_trace = finalize_failure_debug_trace_fn(
+        debug_trace = finalize_failure_debug_trace(
             debug_trace,
             memory=memory,
             start_time=start_time,
@@ -520,11 +520,11 @@ def _handle_no_retrieval_partial_response(
             user_id=user_id,
             pipeline_stages=pipeline_stages,
             model_used=model_used,
-            estimate_cost_fn=estimate_cost_fn,
-            compute_anomalies_fn=compute_anomalies_fn,
-            attach_trace_schema_fn=attach_trace_schema_fn,
-            build_state_trajectory_fn=build_state_trajectory_fn,
-            store_blob_fn=store_blob_fn,
+            estimate_cost_fn=estimate_cost,
+            compute_anomalies_fn=compute_anomalies,
+            attach_trace_schema_fn=attach_trace_schema,
+            build_state_trajectory_fn=build_state_trajectory,
+            store_blob_fn=store_blob,
             initial_retrieved_blocks=initial_retrieved_blocks,
             reranked_blocks_for_trace=reranked_blocks_for_trace,
             blocks_after_cap=0,
@@ -550,14 +550,14 @@ def _run_no_retrieval_stage(
     model_used: str,
     initial_retrieved_blocks,
     reranked_blocks_for_trace,
-    set_working_state_best_effort_fn,
-    persist_turn_fn,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
+    set_working_state_best_effort,
+    persist_turn,
+    finalize_failure_debug_trace,
+    estimate_cost,
+    compute_anomalies,
+    attach_trace_schema,
+    build_state_trajectory,
+    store_blob,
 ) -> Dict[str, Any]:
     return _handle_no_retrieval_partial_response(
         message=(
@@ -588,14 +588,14 @@ def _run_no_retrieval_stage(
                 "skipped": True,
             },
         ],
-        set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-        persist_turn_fn=persist_turn_fn,
-        finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
-        estimate_cost_fn=estimate_cost_fn,
-        compute_anomalies_fn=compute_anomalies_fn,
-        attach_trace_schema_fn=attach_trace_schema_fn,
-        build_state_trajectory_fn=build_state_trajectory_fn,
-        store_blob_fn=store_blob_fn,
+        set_working_state_best_effort=set_working_state_best_effort,
+        persist_turn=persist_turn,
+        finalize_failure_debug_trace=finalize_failure_debug_trace,
+        estimate_cost=estimate_cost,
+        compute_anomalies=compute_anomalies,
+        attach_trace_schema=attach_trace_schema,
+        build_state_trajectory=build_state_trajectory,
+        store_blob=store_blob,
     )
 
 

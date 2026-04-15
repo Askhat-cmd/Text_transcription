@@ -564,18 +564,18 @@ def _run_retrieval_routing_context_stage(
                 model_used=model_used,
                 initial_retrieved_blocks=initial_retrieved_blocks,
                 reranked_blocks_for_trace=reranked_blocks_for_trace,
-                set_working_state_best_effort_fn=lambda **kwargs: _runtime_set_working_state_best_effort(
+                set_working_state_best_effort=lambda **kwargs: _runtime_set_working_state_best_effort(
                     build_working_state_fn=_runtime_build_working_state,
                     logger=logger,
                     **kwargs,
                 ),
-                persist_turn_fn=_runtime_persist_turn,
-                finalize_failure_debug_trace_fn=_runtime_finalize_failure_debug_trace,
-                estimate_cost_fn=_runtime_estimate_cost,
-                compute_anomalies_fn=_runtime_compute_anomalies,
-                attach_trace_schema_fn=_runtime_attach_trace_schema_status,
-                build_state_trajectory_fn=_runtime_build_state_trajectory,
-                store_blob_fn=_runtime_store_blob,
+                persist_turn=_runtime_persist_turn,
+                finalize_failure_debug_trace=_runtime_finalize_failure_debug_trace,
+                estimate_cost=_runtime_estimate_cost,
+                compute_anomalies=_runtime_compute_anomalies,
+                attach_trace_schema=_runtime_attach_trace_schema_status,
+                build_state_trajectory=_runtime_build_state_trajectory,
+                store_blob=_runtime_store_blob,
             ),
         }
 

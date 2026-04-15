@@ -222,7 +222,7 @@ def answer_question_adaptive(
         debug=debug,
         user_id=user_id,
         config=config,
-        output_validation_enabled_fn=_output_validation_enabled,
+        output_validation_enabled_reader=_output_validation_enabled,
     )
     top_k = runtime_ctx["top_k"]
     start_time = runtime_ctx["start_time"]

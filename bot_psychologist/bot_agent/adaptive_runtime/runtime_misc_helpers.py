@@ -122,7 +122,7 @@ def _prepare_adaptive_run_context(
     debug: bool,
     user_id: str,
     config,
-    output_validation_enabled_fn,
+    output_validation_enabled_reader,
 ) -> Dict[str, Any]:
     from .mode_policy_helpers import (
         _deterministic_route_resolver_enabled as _runtime_deterministic_route_resolver_enabled,
@@ -137,7 +137,7 @@ def _prepare_adaptive_run_context(
     start_time = datetime.now()
     llm_model_name = str(config.LLM_MODEL)
     prompt_stack_enabled = _runtime_prompt_stack_v2_enabled()
-    output_validation_enabled = bool(output_validation_enabled_fn())
+    output_validation_enabled = bool(output_validation_enabled_reader())
     informational_branch_enabled = _runtime_informational_branch_enabled()
     diagnostics_v1_enabled = _runtime_diagnostics_v1_enabled()
     deterministic_route_resolver_enabled = _runtime_deterministic_route_resolver_enabled()

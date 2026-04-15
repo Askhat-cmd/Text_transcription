@@ -540,7 +540,6 @@ def answer_question_adaptive(
             include_path_recommendation=include_path_recommendation,
             include_feedback_prompt=include_feedback_prompt,
             user_level_enum=path_level_enum,
-            fallback_model_name=llm_model_name,
             conversation_context=conversation_context,
             mode_prompt_key=mode_prompt_key,
             route_resolution_count=route_resolution_count,

@@ -738,6 +738,19 @@ def _build_output_validation_policy_adapter(
     return _adapter
 
 
+def _build_runtime_output_validation_policy_adapter(*, force_enabled: bool):
+    from ..output_validator import output_validator as _runtime_output_validator
+    from .mode_policy_helpers import (
+        _apply_output_validation_policy as _runtime_apply_output_validation_policy,
+    )
+
+    return _build_output_validation_policy_adapter(
+        apply_output_validation_policy=_runtime_apply_output_validation_policy,
+        validator=_runtime_output_validator,
+        force_enabled=force_enabled,
+    )
+
+
 def _build_set_working_state_best_effort_adapter(
     *,
     set_working_state_best_effort,
@@ -789,7 +802,6 @@ def _run_fast_path_stage(
     llm_model_name: str,
     output_validation_enabled: bool,
 ) -> Optional[Dict[str, Any]]:
-    from ..output_validator import output_validator as _runtime_output_validator
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
     from ..decision import build_mode_directive as _runtime_build_mode_directive
     from ..onboarding_flow import (
@@ -797,9 +809,6 @@ def _run_fast_path_stage(
         build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
         build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
         build_user_correction_instruction as _runtime_build_user_correction_instruction,
-    )
-    from .mode_policy_helpers import (
-        _apply_output_validation_policy as _runtime_apply_output_validation_policy,
     )
     from .pipeline_utils import (
         _build_state_trajectory as _runtime_build_state_trajectory,
@@ -840,9 +849,7 @@ def _run_fast_path_stage(
         _build_success_response as _runtime_build_success_response,
     )
 
-    _runtime_apply_output_validation_policy_adapter = _build_output_validation_policy_adapter(
-        apply_output_validation_policy=_runtime_apply_output_validation_policy,
-        validator=_runtime_output_validator,
+    _runtime_apply_output_validation_policy_adapter = _build_runtime_output_validation_policy_adapter(
         force_enabled=output_validation_enabled,
     )
 
@@ -1198,13 +1205,9 @@ def _run_generation_and_success_stage(
     hybrid_query: str,
     contradiction_info: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    from ..output_validator import output_validator as _runtime_output_validator
     from ..path_builder import path_builder as _runtime_path_builder
     from ..semantic_analyzer import SemanticAnalyzer as _runtime_semantic_analyzer_cls
     from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
-    from .mode_policy_helpers import (
-        _apply_output_validation_policy as _runtime_apply_output_validation_policy,
-    )
     from .pipeline_utils import (
         _build_state_trajectory as _runtime_build_state_trajectory,
         _compute_anomalies as _runtime_compute_anomalies,
@@ -1237,9 +1240,7 @@ def _run_generation_and_success_stage(
         _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
 
-    _runtime_apply_output_validation_policy_adapter = _build_output_validation_policy_adapter(
-        apply_output_validation_policy=_runtime_apply_output_validation_policy,
-        validator=_runtime_output_validator,
+    _runtime_apply_output_validation_policy_adapter = _build_runtime_output_validation_policy_adapter(
         force_enabled=output_validation_enabled,
     )
 

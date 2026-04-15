@@ -565,7 +565,7 @@ def _run_retrieval_routing_context_stage(
                 initial_retrieved_blocks=initial_retrieved_blocks,
                 reranked_blocks_for_trace=reranked_blocks_for_trace,
                 set_working_state_best_effort=lambda **kwargs: _runtime_set_working_state_best_effort(
-                    build_working_state_fn=_runtime_build_working_state,
+                    build_working_state=_runtime_build_working_state,
                     logger=logger,
                     **kwargs,
                 ),

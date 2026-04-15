@@ -130,9 +130,9 @@ def _compose_state_context(
     cross_session_context: str,
     phase8_context_suffix: str = "",
     practice_context_suffix: str = "",
-    build_state_context_fn=_build_state_context,
+    build_state_context=_build_state_context,
 ) -> str:
-    state_context = build_state_context_fn(
+    state_context = build_state_context(
         state_analysis=state_analysis,
         mode_prompt=mode_prompt,
         nervous_system_state=nervous_system_state,
@@ -201,13 +201,13 @@ def _set_working_state_best_effort(
     memory,
     state_analysis: StateAnalysis,
     routing_result,
-    build_working_state_fn,
+    build_working_state,
     logger,
     log_prefix: str,
 ) -> None:
     try:
         memory.set_working_state(
-            build_working_state_fn(
+            build_working_state(
                 state_analysis=state_analysis,
                 routing_result=routing_result,
                 memory=memory,

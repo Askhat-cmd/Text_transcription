@@ -718,7 +718,7 @@ def _build_set_working_state_best_effort_adapter(
     logger,
 ):
     return lambda **kwargs: set_working_state_best_effort(
-        build_working_state_fn=build_working_state,
+        build_working_state=build_working_state,
         logger=logger,
         **kwargs,
     )
@@ -867,7 +867,7 @@ def _run_fast_path_stage(
         cross_session_context=cross_session_context,
         phase8_context_suffix=fast_phase8_suffix,
         practice_context_suffix="",
-        build_state_context_fn=_runtime_build_state_context,
+        build_state_context=_runtime_build_state_context,
     )
     llm_result, response_generator, _prompt_stack_meta, system_prompt_override = _run_llm_generation_cycle(
         response_generator_cls=response_generator_cls,
@@ -1219,7 +1219,7 @@ def _run_generation_and_success_stage(
         cross_session_context=cross_session_context,
         phase8_context_suffix=phase8_context_suffix,
         practice_context_suffix=practice_context_suffix,
-        build_state_context_fn=_runtime_build_state_context,
+        build_state_context=_runtime_build_state_context,
     )
 
     llm_stage = _run_full_path_llm_stage(

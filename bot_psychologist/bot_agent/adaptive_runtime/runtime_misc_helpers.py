@@ -691,7 +691,6 @@ def _run_fast_path_stage(
     compose_state_context_fn,
     build_state_context_fn,
     diagnostics_v1,
-    run_llm_generation_cycle_fn,
     response_generator_cls,
     sd_primary: str,
     session_store,
@@ -699,15 +698,8 @@ def _run_fast_path_stage(
     mode_prompt_override: Optional[str],
     prompt_stack_enabled: bool,
     prompt_registry,
-    build_prompt_stack_override_fn,
-    prepare_llm_prompt_previews_fn,
-    generate_llm_with_trace_fn,
-    build_llm_call_trace_fn,
-    format_and_validate_llm_answer_fn,
     response_formatter_cls,
-    run_validation_retry_generation_fn,
     apply_output_validation_policy_fn,
-    apply_output_validation_observability_fn,
     set_working_state_best_effort_fn,
     include_feedback_prompt: bool,
     mode_prompt_key: Optional[str],
@@ -735,6 +727,12 @@ def _run_fast_path_stage(
     store_blob_fn,
     strip_legacy_trace_fields_fn,
 ) -> Optional[Dict[str, Any]]:
+    from .trace_helpers import (
+        _apply_output_validation_observability as _runtime_apply_output_validation_observability,
+        _build_llm_call_trace as _runtime_build_llm_call_trace,
+        _prepare_llm_prompt_previews as _runtime_prepare_llm_prompt_previews,
+    )
+
     if not fast_path_enabled:
         return None
 
@@ -791,7 +789,7 @@ def _run_fast_path_stage(
         practice_context_suffix="",
         build_state_context_fn=build_state_context_fn,
     )
-    llm_result, response_generator, _prompt_stack_meta, system_prompt_override = run_llm_generation_cycle_fn(
+    llm_result, response_generator, _prompt_stack_meta, system_prompt_override = _run_llm_generation_cycle(
         response_generator_cls=response_generator_cls,
         query=query,
         blocks=[fast_block],
@@ -815,12 +813,12 @@ def _run_fast_path_stage(
         mode_prompt=mode_directive.prompt,
         debug_trace=debug_trace,
         pipeline_stages=pipeline_stages,
-        build_prompt_stack_override_fn=build_prompt_stack_override_fn,
-        prepare_llm_prompt_previews_fn=prepare_llm_prompt_previews_fn,
-        generate_llm_with_trace_fn=generate_llm_with_trace_fn,
-        build_llm_call_trace_fn=build_llm_call_trace_fn,
+        build_prompt_stack_override_fn=_build_prompt_stack_override,
+        prepare_llm_prompt_previews_fn=_runtime_prepare_llm_prompt_previews,
+        generate_llm_with_trace_fn=_generate_llm_with_trace,
+        build_llm_call_trace_fn=_runtime_build_llm_call_trace,
     )
-    answer = format_and_validate_llm_answer_fn(
+    answer = _format_and_validate_llm_answer(
         llm_result=llm_result,
         response_generator=response_generator,
         query=query,
@@ -843,9 +841,9 @@ def _run_fast_path_stage(
         fallback_model_name=llm_model_name,
         include_retry_llm_trace=False,
         response_formatter_cls=response_formatter_cls,
-        run_validation_retry_generation_fn=run_validation_retry_generation_fn,
+        run_validation_retry_generation_fn=_run_validation_retry_generation,
         apply_output_validation_policy_fn=apply_output_validation_policy_fn,
-        apply_output_validation_observability_fn=apply_output_validation_observability_fn,
+        apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
     )
     set_working_state_best_effort_fn(
         memory=memory,

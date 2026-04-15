@@ -83,11 +83,8 @@ from .adaptive_runtime.trace_helpers import (
     _truncate_preview,
     _extract_block_trace_fields,
     _build_chunk_trace_item,
-    _build_llm_prompts,
-    _prepare_llm_prompt_previews,
-    _build_llm_call_trace,
+    _build_llm_prompts as _runtime_build_llm_prompts,
     _update_session_token_metrics,
-    _apply_output_validation_observability as _runtime_apply_output_validation_observability,
     _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
     _apply_memory_debug_info,
     _finalize_success_debug_trace,
@@ -129,12 +126,7 @@ from .adaptive_runtime.runtime_misc_helpers import (
     _build_start_command_response as _runtime_build_start_command_response,
     _load_runtime_memory_context as _runtime_load_runtime_memory_context,
     _run_bootstrap_and_onboarding_guard as _runtime_run_bootstrap_and_onboarding_guard,
-    _generate_llm_with_trace as _runtime_generate_llm_with_trace,
-    _run_validation_retry_generation as _runtime_run_validation_retry_generation,
     _collect_llm_session_metrics as _runtime_collect_llm_session_metrics,
-    _build_prompt_stack_override as _runtime_build_prompt_stack_override,
-    _run_llm_generation_cycle as _runtime_run_llm_generation_cycle,
-    _format_and_validate_llm_answer as _runtime_format_and_validate_llm_answer,
     _run_fast_path_stage as _runtime_run_fast_path_stage,
     _run_generation_and_success_stage as _runtime_run_generation_and_success_stage,
 )
@@ -216,6 +208,35 @@ def _build_state_context(
 
 def _should_use_fast_path(query: str, routing_result) -> bool:
     return _runtime_should_use_fast_path(query, routing_result)
+
+
+def _build_llm_prompts(
+    *,
+    response_generator,
+    query: str,
+    blocks,
+    conversation_context: str,
+    user_level_adapter=None,
+    sd_level: Optional[str] = None,
+    mode_prompt: str,
+    additional_system_context: str,
+    mode_prompt_override: Optional[str] = None,
+    mode_overrides_sd: bool = False,
+):
+    """Compatibility export retained for regression contract tests."""
+    return _runtime_build_llm_prompts(
+        response_generator=response_generator,
+        query=query,
+        blocks=blocks,
+        conversation_context=conversation_context,
+        user_level_adapter=user_level_adapter,
+        sd_level=str(sd_level or ""),
+        mode_prompt=mode_prompt,
+        additional_system_context=additional_system_context,
+        mode_prompt_override=mode_prompt_override,
+        mode_overrides_sd=mode_overrides_sd,
+    )
+
 
 def answer_question_adaptive(
     query: str,
@@ -419,7 +440,6 @@ def answer_question_adaptive(
             compose_state_context_fn=_runtime_compose_state_context,
             build_state_context_fn=_build_state_context,
             diagnostics_v1=diagnostics_v1,
-            run_llm_generation_cycle_fn=_runtime_run_llm_generation_cycle,
             response_generator_cls=ResponseGenerator,
             sd_primary=sd_result.primary,
             session_store=session_store,
@@ -427,15 +447,8 @@ def answer_question_adaptive(
             mode_prompt_override=mode_prompt_override,
             prompt_stack_enabled=prompt_stack_enabled,
             prompt_registry=prompt_registry_v2,
-            build_prompt_stack_override_fn=_runtime_build_prompt_stack_override,
-            prepare_llm_prompt_previews_fn=_prepare_llm_prompt_previews,
-            generate_llm_with_trace_fn=_runtime_generate_llm_with_trace,
-            build_llm_call_trace_fn=_build_llm_call_trace,
-            format_and_validate_llm_answer_fn=_runtime_format_and_validate_llm_answer,
             response_formatter_cls=ResponseFormatter,
-            run_validation_retry_generation_fn=_runtime_run_validation_retry_generation,
             apply_output_validation_policy_fn=_apply_output_validation_policy,
-            apply_output_validation_observability_fn=_runtime_apply_output_validation_observability,
             set_working_state_best_effort_fn=set_working_state_best_effort_fn,
             include_feedback_prompt=include_feedback_prompt,
             mode_prompt_key=mode_prompt_key,

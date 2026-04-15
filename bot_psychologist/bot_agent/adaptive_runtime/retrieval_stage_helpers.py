@@ -408,14 +408,6 @@ def _run_retrieval_routing_context_stage(
     debug_info,
     session_store,
     user_id: str,
-    set_working_state_best_effort_fn,
-    persist_turn_fn,
-    finalize_failure_debug_trace_fn,
-    estimate_cost_fn,
-    compute_anomalies_fn,
-    attach_trace_schema_fn,
-    build_state_trajectory_fn,
-    store_blob_fn,
     model_used: str,
 ) -> Dict[str, Any]:
     from .routing_stage_helpers import (
@@ -429,7 +421,20 @@ def _run_retrieval_routing_context_stage(
         _truncate_preview as _runtime_truncate_preview,
     )
     from .response_utils import _run_no_retrieval_stage as _runtime_run_no_retrieval_stage
+    from .response_utils import _persist_turn as _runtime_persist_turn
+    from .runtime_misc_helpers import _estimate_cost as _runtime_estimate_cost
     from .mode_policy_helpers import resolve_mode_prompt as _runtime_resolve_mode_prompt
+    from .pipeline_utils import (
+        _build_state_trajectory as _runtime_build_state_trajectory,
+        _compute_anomalies as _runtime_compute_anomalies,
+        _store_blob as _runtime_store_blob,
+    )
+    from .state_helpers import (
+        _build_working_state as _runtime_build_working_state,
+        _set_working_state_best_effort as _runtime_set_working_state_best_effort,
+    )
+    from ..trace_schema import attach_trace_schema_status as _runtime_attach_trace_schema_status
+    from .trace_helpers import _finalize_failure_debug_trace as _runtime_finalize_failure_debug_trace
     from ..decision import build_mode_directive as _runtime_build_mode_directive
 
     hybrid_query_stage = _prepare_hybrid_query_stage(
@@ -557,14 +562,18 @@ def _run_retrieval_routing_context_stage(
                 model_used=model_used,
                 initial_retrieved_blocks=initial_retrieved_blocks,
                 reranked_blocks_for_trace=reranked_blocks_for_trace,
-                set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-                persist_turn_fn=persist_turn_fn,
-                finalize_failure_debug_trace_fn=finalize_failure_debug_trace_fn,
-                estimate_cost_fn=estimate_cost_fn,
-                compute_anomalies_fn=compute_anomalies_fn,
-                attach_trace_schema_fn=attach_trace_schema_fn,
-                build_state_trajectory_fn=build_state_trajectory_fn,
-                store_blob_fn=store_blob_fn,
+                set_working_state_best_effort_fn=lambda **kwargs: _runtime_set_working_state_best_effort(
+                    build_working_state_fn=_runtime_build_working_state,
+                    logger=logger,
+                    **kwargs,
+                ),
+                persist_turn_fn=_runtime_persist_turn,
+                finalize_failure_debug_trace_fn=_runtime_finalize_failure_debug_trace,
+                estimate_cost_fn=_runtime_estimate_cost,
+                compute_anomalies_fn=_runtime_compute_anomalies,
+                attach_trace_schema_fn=_runtime_attach_trace_schema_status,
+                build_state_trajectory_fn=_runtime_build_state_trajectory,
+                store_blob_fn=_runtime_store_blob,
             ),
         }
 

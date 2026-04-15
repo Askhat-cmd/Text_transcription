@@ -517,14 +517,6 @@ def answer_question_adaptive(
             debug_info=debug_info,
             session_store=session_store,
             user_id=user_id,
-            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-            persist_turn_fn=_persist_turn,
-            finalize_failure_debug_trace_fn=_finalize_failure_debug_trace,
-            estimate_cost_fn=_runtime_estimate_cost,
-            compute_anomalies_fn=_compute_anomalies,
-            attach_trace_schema_fn=attach_trace_schema_status,
-            build_state_trajectory_fn=_build_state_trajectory,
-            store_blob_fn=_store_blob,
             model_used=llm_model_name,
         )
         current_stage = stage3["current_stage"]

@@ -20,17 +20,24 @@ def _run_state_analysis_stage(
     debug_trace: Optional[Dict[str, Any]],
     debug_info: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
-    timed_fn,
-    run_coroutine_sync_fn,
     state_classifier,
     classify_parallel_fn,
-    fallback_state_analysis_fn,
-    fallback_sd_result_fn,
-    resolve_user_stage_fn,
-    derive_informational_mode_hint_fn,
-    resolve_mode_prompt_fn,
     logger,
 ) -> Dict[str, Any]:
+    from ..decision import resolve_user_stage as _runtime_resolve_user_stage
+    from .mode_policy_helpers import (
+        _derive_informational_mode_hint as _runtime_derive_informational_mode_hint,
+        resolve_mode_prompt as _runtime_resolve_mode_prompt,
+    )
+    from .pipeline_utils import (
+        _run_coroutine_sync as _runtime_run_coroutine_sync,
+        _timed as _runtime_timed,
+    )
+    from .state_helpers import (
+        _fallback_sd_result as _runtime_fallback_sd_result,
+        _fallback_state_analysis as _runtime_fallback_state_analysis,
+    )
+
     conversation_history = [
         {"role": "user", "content": turn.user_input}
         for turn in memory.get_last_turns(config.CONVERSATION_HISTORY_DEPTH)
@@ -38,10 +45,10 @@ def _run_state_analysis_stage(
 
     if debug_trace is not None:
         try:
-            state_analysis, stage = timed_fn(
+            state_analysis, stage = _runtime_timed(
                 "state_classifier",
                 "РљР»Р°СЃСЃРёС„РёРєР°С‚РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ",
-                run_coroutine_sync_fn,
+                _runtime_run_coroutine_sync,
                 state_classifier.classify(
                     query,
                     conversation_history=conversation_history,
@@ -53,7 +60,7 @@ def _run_state_analysis_stage(
                 "[CLASSIFY] StateClassifier failed: %s. Using fallback.",
                 exc,
             )
-            state_analysis = fallback_state_analysis_fn()
+            state_analysis = _runtime_fallback_state_analysis()
             pipeline_stages.append(
                 {
                     "name": "state_classifier",
@@ -62,19 +69,19 @@ def _run_state_analysis_stage(
                     "skipped": False,
                 }
             )
-        sd_result = fallback_sd_result_fn("disabled_by_design")
+        sd_result = _runtime_fallback_sd_result("disabled_by_design")
     else:
-        state_analysis, sd_result = run_coroutine_sync_fn(
+        state_analysis, sd_result = _runtime_run_coroutine_sync(
             classify_parallel_fn(
                 query,
                 conversation_history,
             )
         )
 
-    user_stage = resolve_user_stage_fn(memory, state_analysis)
-    informational_mode_hint = derive_informational_mode_hint_fn(phase8_signals, query)
+    user_stage = _runtime_resolve_user_stage(memory, state_analysis)
+    informational_mode_hint = _runtime_derive_informational_mode_hint(phase8_signals, query)
     informational_mode = informational_mode_hint
-    mode_prompt_key, mode_prompt_override = resolve_mode_prompt_fn(
+    mode_prompt_key, mode_prompt_override = _runtime_resolve_mode_prompt(
         "informational" if informational_mode else "",
         config,
     )
@@ -165,10 +172,11 @@ def _compute_diagnostics_v1(
 def _build_contradiction_payload(
     *,
     query: str,
-    detect_contradiction_fn,
     debug_trace: Optional[Dict[str, Any]] = None,
 ) -> Tuple[Dict[str, Any], str]:
-    contradiction_info = detect_contradiction_fn(query)
+    from ..contradiction_detector import detect_contradiction as _runtime_detect_contradiction
+
+    contradiction_info = _runtime_detect_contradiction(query)
     contradiction_hint = (
         str(contradiction_info.get("suggestion", ""))
         if contradiction_info.get("has_contradiction")
@@ -233,21 +241,13 @@ def _run_state_and_pre_routing_pipeline(
     debug_trace: Optional[Dict[str, Any]],
     debug_info: Optional[Dict[str, Any]],
     pipeline_stages: List[Dict[str, Any]],
-    timed_fn,
-    run_coroutine_sync_fn,
     state_classifier,
     classify_parallel_fn,
-    fallback_state_analysis_fn,
-    fallback_sd_result_fn,
-    resolve_user_stage_fn,
-    derive_informational_mode_hint_fn,
-    resolve_mode_prompt_fn,
     logger,
     diagnostics_v1_enabled: bool,
     deterministic_route_resolver_enabled: bool,
     informational_branch_enabled: bool,
     diagnostics_classifier,
-    detect_contradiction_fn,
     decision_gate_cls,
     detect_routing_signals_fn,
     should_use_fast_path_fn,
@@ -260,15 +260,8 @@ def _run_state_and_pre_routing_pipeline(
         debug_trace=debug_trace,
         debug_info=debug_info,
         pipeline_stages=pipeline_stages,
-        timed_fn=timed_fn,
-        run_coroutine_sync_fn=run_coroutine_sync_fn,
         state_classifier=state_classifier,
         classify_parallel_fn=classify_parallel_fn,
-        fallback_state_analysis_fn=fallback_state_analysis_fn,
-        fallback_sd_result_fn=fallback_sd_result_fn,
-        resolve_user_stage_fn=resolve_user_stage_fn,
-        derive_informational_mode_hint_fn=derive_informational_mode_hint_fn,
-        resolve_mode_prompt_fn=resolve_mode_prompt_fn,
         logger=logger,
     )
     state_analysis = stage2["state_analysis"]
@@ -299,7 +292,6 @@ def _run_state_and_pre_routing_pipeline(
 
     contradiction_info, contradiction_hint = _build_contradiction_payload(
         query=query,
-        detect_contradiction_fn=detect_contradiction_fn,
         debug_trace=debug_trace,
     )
 

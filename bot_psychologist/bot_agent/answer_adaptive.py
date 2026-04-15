@@ -26,12 +26,10 @@ from .config import config
 from .decision import (
     DecisionGate,
     detect_routing_signals,
-    resolve_user_stage,
 )
 from .retrieval import ConfidenceScorer, VoyageReranker
 from .response import ResponseFormatter, ResponseGenerator
 from .feature_flags import feature_flags
-from .contradiction_detector import detect_contradiction
 from .diagnostics_classifier import diagnostics_classifier
 from .route_resolver import route_resolver
 from .memory_updater import memory_updater
@@ -42,9 +40,7 @@ from .onboarding_flow import (
     detect_phase8_signals,
 )
 from .adaptive_runtime.pipeline_utils import (
-    _timed,
     _build_config_snapshot,
-    _run_coroutine_sync,
 )
 from .adaptive_runtime.response_utils import (
     _build_partial_response,
@@ -58,7 +54,6 @@ from .adaptive_runtime.trace_helpers import (
 )
 from .adaptive_runtime.state_helpers import (
     SDClassificationResult,
-    _fallback_state_analysis as _runtime_fallback_state_analysis,
     _fallback_sd_result as _runtime_fallback_sd_result,
     _resolve_path_user_level as _runtime_resolve_path_user_level,
     _classify_parallel as _runtime_classify_parallel,
@@ -69,7 +64,6 @@ from .adaptive_runtime.state_helpers import (
 from .adaptive_runtime.mode_policy_helpers import (
     MODE_PROMPT_MAP as _RUNTIME_MODE_PROMPT_MAP,
     resolve_mode_prompt as _runtime_resolve_mode_prompt,
-    _derive_informational_mode_hint as _runtime_derive_informational_mode_hint,
     _diagnostics_v1_enabled as _runtime_diagnostics_v1_enabled,
     _deterministic_route_resolver_enabled as _runtime_deterministic_route_resolver_enabled,
     _prompt_stack_v2_enabled as _runtime_prompt_stack_v2_enabled,
@@ -313,21 +307,13 @@ def answer_question_adaptive(
             debug_trace=debug_trace,
             debug_info=debug_info,
             pipeline_stages=pipeline_stages,
-            timed_fn=_timed,
-            run_coroutine_sync_fn=_run_coroutine_sync,
             state_classifier=state_classifier,
             classify_parallel_fn=_classify_parallel,
-            fallback_state_analysis_fn=_runtime_fallback_state_analysis,
-            fallback_sd_result_fn=_fallback_sd_result,
-            resolve_user_stage_fn=resolve_user_stage,
-            derive_informational_mode_hint_fn=_runtime_derive_informational_mode_hint,
-            resolve_mode_prompt_fn=resolve_mode_prompt,
             logger=logger,
             diagnostics_v1_enabled=diagnostics_v1_enabled,
             deterministic_route_resolver_enabled=deterministic_route_resolver_enabled,
             informational_branch_enabled=informational_branch_enabled,
             diagnostics_classifier=diagnostics_classifier,
-            detect_contradiction_fn=detect_contradiction,
             decision_gate_cls=DecisionGate,
             detect_routing_signals_fn=detect_routing_signals,
             should_use_fast_path_fn=_should_use_fast_path,

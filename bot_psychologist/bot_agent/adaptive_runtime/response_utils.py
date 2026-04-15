@@ -691,12 +691,12 @@ def _build_fast_path_success_response(
     session_store,
     pipeline_stages: List[Dict[str, Any]],
     llm_model_name: str,
-    collect_llm_session_metrics_fn,
-    update_session_token_metrics_fn,
-    persist_turn_fn,
-    get_feedback_prompt_for_state_fn,
-    build_success_response_fn,
-    build_fast_success_metadata_fn,
+    collect_llm_session_metrics,
+    update_session_token_metrics,
+    persist_turn,
+    get_feedback_prompt_for_state,
+    build_success_response,
+    build_fast_success_metadata,
     prompt_stack_v2_enabled: bool,
     output_validation_enabled: bool,
     attach_success_observability_fn,
@@ -711,11 +711,11 @@ def _build_fast_path_success_response(
     strip_legacy_trace_fields_fn,
     logger=None,
 ) -> Dict[str, Any]:
-    llm_metrics = collect_llm_session_metrics_fn(
+    llm_metrics = collect_llm_session_metrics(
         memory=memory,
         llm_result=llm_result if isinstance(llm_result, dict) else {},
         fallback_model_name=llm_model_name,
-        update_session_token_metrics_fn=update_session_token_metrics_fn,
+        update_session_token_metrics_fn=update_session_token_metrics,
     )
     tokens_prompt = llm_metrics["tokens_prompt"]
     tokens_completion = llm_metrics["tokens_completion"]
@@ -723,7 +723,7 @@ def _build_fast_path_success_response(
     model_used = llm_metrics["model_used"]
     session_metrics = llm_metrics["session_metrics"]
 
-    persist_turn_fn(
+    persist_turn(
         memory=memory,
         user_input=query,
         bot_response=answer,
@@ -738,12 +738,12 @@ def _build_fast_path_success_response(
     summary_last_turn = memory.summary_updated_at
     elapsed_time = (datetime.now() - start_time).total_seconds()
     feedback_prompt = (
-        get_feedback_prompt_for_state_fn(state_analysis.primary_state)
+        get_feedback_prompt_for_state(state_analysis.primary_state)
         if include_feedback_prompt
         else ""
     )
 
-    result = build_success_response_fn(
+    result = build_success_response(
         answer=answer,
         state_analysis=state_analysis,
         path_recommendation=None,
@@ -751,7 +751,7 @@ def _build_fast_path_success_response(
         feedback_prompt=feedback_prompt,
         sources=[],
         concepts=[],
-        metadata=build_fast_success_metadata_fn(
+        metadata=build_fast_success_metadata(
             user_id=user_id,
             state_analysis=state_analysis,
             routing_result=pre_routing_result,
@@ -1069,13 +1069,13 @@ def _prepare_full_path_post_llm_artifacts(
     llm_result: Dict[str, Any],
     fallback_model_name: str,
     schedule_summary_task: bool,
-    collect_llm_session_metrics_fn,
-    update_session_token_metrics_fn,
-    set_working_state_best_effort_fn,
-    build_path_recommendation_if_enabled_fn,
-    get_feedback_prompt_for_state_fn,
-    persist_turn_fn,
-    save_session_summary_best_effort_fn,
+    collect_llm_session_metrics,
+    update_session_token_metrics,
+    set_working_state_best_effort,
+    build_path_recommendation_if_enabled,
+    get_feedback_prompt_for_state,
+    persist_turn,
+    save_session_summary_best_effort,
     semantic_analyzer_cls,
     path_builder,
     logger=None,
@@ -1086,7 +1086,7 @@ def _prepare_full_path_post_llm_artifacts(
 
     route_name = str(getattr(routing_result, "route", "") or "").lower()
     path_builder_blocked_routes = {"inform", "reflect", "contact_hold", "regulate"}
-    path_recommendation = build_path_recommendation_if_enabled_fn(
+    path_recommendation = build_path_recommendation_if_enabled(
         include_path_recommendation=include_path_recommendation,
         state_analysis=state_analysis,
         route_name=route_name,
@@ -1100,20 +1100,20 @@ def _prepare_full_path_post_llm_artifacts(
 
     feedback_prompt = ""
     if include_feedback_prompt:
-        feedback_prompt = get_feedback_prompt_for_state_fn(state_analysis.primary_state)
+        feedback_prompt = get_feedback_prompt_for_state(state_analysis.primary_state)
 
-    set_working_state_best_effort_fn(
+    set_working_state_best_effort(
         memory=memory,
         state_analysis=state_analysis,
         routing_result=routing_result,
         log_prefix="[ADAPTIVE] working_state update failed:",
     )
 
-    llm_metrics = collect_llm_session_metrics_fn(
+    llm_metrics = collect_llm_session_metrics(
         memory=memory,
         llm_result=llm_result if isinstance(llm_result, dict) else {},
         fallback_model_name=fallback_model_name,
-        update_session_token_metrics_fn=update_session_token_metrics_fn,
+        update_session_token_metrics_fn=update_session_token_metrics,
     )
     tokens_prompt = llm_metrics["tokens_prompt"]
     tokens_completion = llm_metrics["tokens_completion"]
@@ -1121,7 +1121,7 @@ def _prepare_full_path_post_llm_artifacts(
     model_used = llm_metrics["model_used"]
     session_metrics = llm_metrics["session_metrics"]
 
-    persist_turn_fn(
+    persist_turn(
         memory=memory,
         user_input=query,
         bot_response=answer,
@@ -1130,7 +1130,7 @@ def _prepare_full_path_post_llm_artifacts(
         concepts=concepts,
         schedule_summary_task=schedule_summary_task,
     )
-    save_session_summary_best_effort_fn(
+    save_session_summary_best_effort(
         memory=memory,
         user_id=user_id,
         query=query,
@@ -1189,13 +1189,13 @@ def _run_full_path_success_stage(
     llm_result: Dict[str, Any],
     fallback_model_name: str,
     schedule_summary_task: bool,
-    collect_llm_session_metrics_fn,
-    update_session_token_metrics_fn,
-    set_working_state_best_effort_fn,
-    build_path_recommendation_if_enabled_fn,
-    get_feedback_prompt_for_state_fn,
-    persist_turn_fn,
-    save_session_summary_best_effort_fn,
+    collect_llm_session_metrics,
+    update_session_token_metrics,
+    set_working_state_best_effort,
+    build_path_recommendation_if_enabled,
+    get_feedback_prompt_for_state,
+    persist_turn,
+    save_session_summary_best_effort,
     semantic_analyzer_cls,
     path_builder,
     build_full_path_success_response_fn,
@@ -1251,13 +1251,13 @@ def _run_full_path_success_stage(
             llm_result=llm_result,
             fallback_model_name=fallback_model_name,
             schedule_summary_task=schedule_summary_task,
-            collect_llm_session_metrics_fn=collect_llm_session_metrics_fn,
-            update_session_token_metrics_fn=update_session_token_metrics_fn,
-            set_working_state_best_effort_fn=set_working_state_best_effort_fn,
-            build_path_recommendation_if_enabled_fn=build_path_recommendation_if_enabled_fn,
-            get_feedback_prompt_for_state_fn=get_feedback_prompt_for_state_fn,
-            persist_turn_fn=persist_turn_fn,
-            save_session_summary_best_effort_fn=save_session_summary_best_effort_fn,
+            collect_llm_session_metrics=collect_llm_session_metrics,
+            update_session_token_metrics=update_session_token_metrics,
+            set_working_state_best_effort=set_working_state_best_effort,
+            build_path_recommendation_if_enabled=build_path_recommendation_if_enabled,
+            get_feedback_prompt_for_state=get_feedback_prompt_for_state,
+            persist_turn=persist_turn,
+            save_session_summary_best_effort=save_session_summary_best_effort,
             semantic_analyzer_cls=semantic_analyzer_cls,
             path_builder=path_builder,
             logger=logger,

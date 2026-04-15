@@ -27,7 +27,6 @@ from .path_builder import path_builder
 from .config import config
 from .decision import (
     DecisionGate,
-    build_mode_directive,
     detect_routing_signals,
     resolve_user_stage,
 )
@@ -96,7 +95,6 @@ from .adaptive_runtime.state_helpers import (
     _compose_state_context as _runtime_compose_state_context,
     _build_working_state as _runtime_build_working_state,
     _should_use_fast_path as _runtime_should_use_fast_path,
-    _detect_fast_path_reason as _runtime_detect_fast_path_reason,
     _build_fast_path_block as _runtime_build_fast_path_block,
     _set_working_state_best_effort as _runtime_set_working_state_best_effort,
 )
@@ -113,9 +111,6 @@ from .adaptive_runtime.mode_policy_helpers import (
 )
 from .adaptive_runtime.routing_stage_helpers import (
     _run_state_and_pre_routing_pipeline as _runtime_run_state_and_pre_routing_pipeline,
-    _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
-    _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
-    _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
 )
 from .adaptive_runtime.runtime_misc_helpers import (
     _estimate_cost as _runtime_estimate_cost,
@@ -408,14 +403,10 @@ def answer_question_adaptive(
             pre_routing_result=pre_routing_result,
             debug_trace=debug_trace,
             query=query,
-            detect_fast_path_reason_fn=_runtime_detect_fast_path_reason,
             truncate_preview_fn=_truncate_preview,
             config=config,
             pipeline_stages=pipeline_stages,
-            apply_fast_path_debug_bootstrap_fn=_runtime_apply_fast_path_debug_bootstrap,
-            build_fast_path_mode_directive_fn=_runtime_build_fast_path_mode_directive,
             informational_mode=informational_mode,
-            build_mode_directive_fn=build_mode_directive,
             memory=memory,
             conversation_context=conversation_context,
             memory_context_bundle=memory_context_bundle,
@@ -425,7 +416,6 @@ def answer_question_adaptive(
             phase8_signals=phase8_signals,
             correction_protocol_active=correction_protocol_active,
             informational_branch_enabled=informational_branch_enabled,
-            build_phase8_context_suffix_fn=_runtime_build_phase8_context_suffix,
             state_analysis=state_analysis,
             contradiction_hint=contradiction_hint,
             cross_session_context=cross_session_context,

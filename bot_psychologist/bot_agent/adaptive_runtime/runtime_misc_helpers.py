@@ -663,14 +663,10 @@ def _run_fast_path_stage(
     pre_routing_result,
     debug_trace: Optional[Dict[str, Any]],
     query: str,
-    detect_fast_path_reason_fn,
     truncate_preview_fn,
     config,
     pipeline_stages: List[Dict[str, Any]],
-    apply_fast_path_debug_bootstrap_fn,
-    build_fast_path_mode_directive_fn,
     informational_mode: bool,
-    build_mode_directive_fn,
     memory,
     conversation_context: str,
     memory_context_bundle,
@@ -680,7 +676,6 @@ def _run_fast_path_stage(
     phase8_signals,
     correction_protocol_active: bool,
     informational_branch_enabled: bool,
-    build_phase8_context_suffix_fn,
     state_analysis,
     contradiction_hint: str,
     cross_session_context: str,
@@ -723,12 +718,19 @@ def _run_fast_path_stage(
     store_blob_fn,
     strip_legacy_trace_fields_fn,
 ) -> Optional[Dict[str, Any]]:
+    from ..decision import build_mode_directive as _runtime_build_mode_directive
     from ..onboarding_flow import (
         build_first_turn_instruction as _runtime_build_first_turn_instruction,
         build_informational_guardrail_instruction as _runtime_build_informational_guardrail_instruction,
         build_mixed_query_instruction as _runtime_build_mixed_query_instruction,
         build_user_correction_instruction as _runtime_build_user_correction_instruction,
     )
+    from .routing_stage_helpers import (
+        _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
+        _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
+        _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,
+    )
+    from .state_helpers import _detect_fast_path_reason as _runtime_detect_fast_path_reason
     from .trace_helpers import (
         _apply_output_validation_observability as _runtime_apply_output_validation_observability,
         _build_llm_call_trace as _runtime_build_llm_call_trace,
@@ -743,19 +745,19 @@ def _run_fast_path_stage(
         pre_routing_result.mode,
         pre_routing_result.decision.reason,
     )
-    apply_fast_path_debug_bootstrap_fn(
+    _runtime_apply_fast_path_debug_bootstrap(
         debug_trace=debug_trace,
         query=query,
         pre_routing_result=pre_routing_result,
-        detect_fast_path_reason_fn=detect_fast_path_reason_fn,
+        detect_fast_path_reason_fn=_runtime_detect_fast_path_reason,
         truncate_preview_fn=truncate_preview_fn,
         config=config,
         pipeline_stages=pipeline_stages,
     )
-    mode_directive, state_context_mode_prompt = build_fast_path_mode_directive_fn(
+    mode_directive, state_context_mode_prompt = _runtime_build_fast_path_mode_directive(
         pre_routing_result=pre_routing_result,
         informational_mode=informational_mode,
-        build_mode_directive_fn=build_mode_directive_fn,
+        build_mode_directive_fn=_runtime_build_mode_directive,
     )
     conversation_context = refresh_context_and_apply_trace_snapshot_fn(
         memory=memory,
@@ -770,7 +772,7 @@ def _run_fast_path_stage(
         conversation_context=conversation_context,
         state_analysis=state_analysis,
     )
-    fast_phase8_suffix = build_phase8_context_suffix_fn(
+    fast_phase8_suffix = _runtime_build_phase8_context_suffix(
         informational_branch_enabled=informational_branch_enabled,
         phase8_signals=phase8_signals,
         correction_protocol_active=correction_protocol_active,

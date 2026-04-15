@@ -511,8 +511,6 @@ def answer_question_adaptive(
             cross_session_context=cross_session_context,
             phase8_context_suffix=phase8_context_suffix,
             practice_context_suffix=practice_context_suffix,
-            build_state_context_fn=_build_state_context,
-            compose_state_context_fn=_runtime_compose_state_context,
             state_context_mode_prompt=state_context_mode_prompt,
             adapted_blocks=adapted_blocks,
             sd_primary=sd_result.primary,

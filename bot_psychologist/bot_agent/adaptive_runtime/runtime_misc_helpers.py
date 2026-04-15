@@ -1046,8 +1046,6 @@ def _run_generation_and_success_stage(
     cross_session_context: str,
     phase8_context_suffix: str,
     practice_context_suffix: str,
-    build_state_context_fn,
-    compose_state_context_fn,
     state_context_mode_prompt: str,
     adapted_blocks,
     sd_primary: str,
@@ -1112,7 +1110,9 @@ def _run_generation_and_success_stage(
         _save_session_summary_best_effort as _runtime_save_session_summary_best_effort,
     )
     from .state_helpers import (
+        _build_state_context as _runtime_build_state_context,
         _build_working_state as _runtime_build_working_state,
+        _compose_state_context as _runtime_compose_state_context,
         _set_working_state_best_effort as _runtime_set_working_state_best_effort,
     )
     from .trace_helpers import (
@@ -1125,7 +1125,7 @@ def _run_generation_and_success_stage(
 
     logger.debug("🤖 Этап 4: Генерация ответа...")
 
-    state_context = compose_state_context_fn(
+    state_context = _runtime_compose_state_context(
         state_analysis=state_analysis,
         mode_prompt=state_context_mode_prompt,
         nervous_system_state=(
@@ -1138,7 +1138,7 @@ def _run_generation_and_success_stage(
         cross_session_context=cross_session_context,
         phase8_context_suffix=phase8_context_suffix,
         practice_context_suffix=practice_context_suffix,
-        build_state_context_fn=build_state_context_fn,
+        build_state_context_fn=_runtime_build_state_context,
     )
 
     llm_stage = _run_full_path_llm_stage(

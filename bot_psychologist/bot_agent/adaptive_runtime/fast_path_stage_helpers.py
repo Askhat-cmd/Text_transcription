@@ -71,7 +71,7 @@ def _run_fast_path_stage(
         _compute_anomalies as _runtime_compute_anomalies,
         _store_blob as _runtime_store_blob,
     )
-    from .routing_stage_helpers import (
+    from .routing_context_helpers import (
         _apply_fast_path_debug_bootstrap as _runtime_apply_fast_path_debug_bootstrap,
         _build_fast_path_mode_directive as _runtime_build_fast_path_mode_directive,
         _build_phase8_context_suffix as _runtime_build_phase8_context_suffix,

@@ -622,7 +622,7 @@ def _handle_llm_generation_error_response(
         _compute_anomalies as _runtime_compute_anomalies,
         _store_blob as _runtime_store_blob,
     )
-    from .runtime_misc_helpers import _estimate_cost as _runtime_estimate_cost
+    from .pricing_helpers import _estimate_cost as _runtime_estimate_cost
     from .trace_helpers import _finalize_failure_debug_trace as _runtime_finalize_failure_debug_trace
 
     response = _build_error_response(
@@ -996,7 +996,7 @@ def _build_unhandled_exception_response(
         _compute_anomalies as _runtime_compute_anomalies,
         _store_blob as _runtime_store_blob,
     )
-    from .runtime_misc_helpers import _estimate_cost as _runtime_estimate_cost
+    from .pricing_helpers import _estimate_cost as _runtime_estimate_cost
     from .trace_helpers import (
         _finalize_failure_debug_trace as _runtime_finalize_failure_debug_trace,
         _strip_legacy_trace_fields as _runtime_strip_legacy_trace_fields,

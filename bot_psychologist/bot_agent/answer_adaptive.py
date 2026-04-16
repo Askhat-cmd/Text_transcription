@@ -1,17 +1,5 @@
 ﻿# bot_agent/answer_adaptive.py
-"""
-Adaptive Answer Module - Phase 4
-================================
-
-Р“Р»Р°РІРЅР°СЏ С„СѓРЅРєС†РёСЏ Phase 4: answer_question_adaptive.
-
-Р Р°СЃС€РёСЂСЏРµС‚ Phase 3 РїРѕР»РЅРѕС†РµРЅРЅС‹Рј СЃРѕРїСЂРѕРІРѕР¶РґРµРЅРёРµРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ:
-- РљР»Р°СЃСЃРёС„РёРєР°С†РёСЏ СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (10 СЃРѕСЃС‚РѕСЏРЅРёР№)
-- Р”РѕР»РіРѕСЃСЂРѕС‡РЅР°СЏ РїР°РјСЏС‚СЊ РґРёР°Р»РѕРіР°
-- РџРѕСЃС‚СЂРѕРµРЅРёРµ РїРµСЂСЃРѕРЅР°Р»СЊРЅС‹С… РїСѓС‚РµР№ С‚СЂР°РЅСЃС„РѕСЂРјР°С†РёРё
-- РђРґР°РїС‚РёРІРЅС‹Рµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїРѕ СЃРѕСЃС‚РѕСЏРЅРёСЋ
-- Р—Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
-"""
+"""Adaptive answer orchestration entrypoint for Phase 4 runtime."""
 
 import logging
 from typing import Any, Dict, Optional, Tuple
@@ -144,40 +132,19 @@ def answer_question_adaptive(
     schedule_summary_task: bool = True,
 ) -> Dict:
     """
-    Phase 4: РђРґР°РїС‚РёРІРЅС‹Р№ QA СЃ СѓС‡РµС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ Рё РёСЃС‚РѕСЂРёРё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ.
-    
-    Р­С‚Р°РїС‹ РѕР±СЂР°Р±РѕС‚РєРё:
-        1. Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        2. РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        3. РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
-        4. Р“РµРЅРµСЂР°С†РёСЏ РѕС‚РІРµС‚Р° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј СЃРѕСЃС‚РѕСЏРЅРёСЏ
-        5. РџРѕСЃС‚СЂРѕРµРЅРёРµ СЂРµРєРѕРјРµРЅРґР°С†РёРё РїСѓС‚Рё
-        6. РџРѕРґРіРѕС‚РѕРІРєР° Р·Р°РїСЂРѕСЃР° РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
-        7. РЎРѕС…СЂР°РЅРµРЅРёРµ РІ РїР°РјСЏС‚СЊ
-    
+    Phase 4 adaptive QA pipeline orchestrator.
+
     Args:
-        query: Р’РѕРїСЂРѕСЃ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        user_id: ID РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (РґР»СЏ РїР°РјСЏС‚Рё)
-        user_level: РЈСЂРѕРІРµРЅСЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ (beginner/intermediate/advanced)
-        include_path_recommendation: Р’РєР»СЋС‡Р°С‚СЊ Р»Рё СЂРµРєРѕРјРµРЅРґР°С†РёСЋ РїСѓС‚Рё
-        include_feedback_prompt: Р—Р°РїСЂР°С€РёРІР°С‚СЊ Р»Рё РѕР±СЂР°С‚РЅСѓСЋ СЃРІСЏР·СЊ
-        top_k: РљРѕР»РёС‡РµСЃС‚РІРѕ Р±Р»РѕРєРѕРІ РґР»СЏ РїРѕРёСЃРєР°
-        debug: РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ
-    
+        query: User question text.
+        user_id: User id for memory/session scope.
+        user_level: Requested user level (runtime currently normalized to intermediate).
+        include_path_recommendation: Include optional path recommendation payload.
+        include_feedback_prompt: Include optional feedback prompt.
+        top_k: Retrieval candidate count.
+        debug: Attach debug payload when enabled.
+
     Returns:
-        Dict СЃ СЂР°СЃС€РёСЂРµРЅРЅС‹РјРё РїРѕР»СЏРјРё Phase 4:
-            - status: "success" | "error" | "partial"
-            - answer: str вЂ” РѕС‚РІРµС‚
-            - state_analysis: Dict вЂ” Р°РЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ
-            - path_recommendation: Optional[Dict] вЂ” СЂРµРєРѕРјРµРЅРґСѓРµРјС‹Р№ РїСѓС‚СЊ
-            - conversation_context: str вЂ” РєРѕРЅС‚РµРєСЃС‚ РёСЃС‚РѕСЂРёРё
-            - feedback_prompt: str вЂ” Р·Р°РїСЂРѕСЃ РѕР±СЂР°С‚РЅРѕР№ СЃРІСЏР·Рё
-            - sources: List[Dict]
-            - concepts: List[str]
-            - metadata: Dict
-            - timestamp: str
-            - processing_time_seconds: float
-            - debug: Optional[Dict]
+        Phase-4 response payload with status/answer/metadata/debug contracts.
     """
     
     logger.info(f"[ADAPTIVE] new request user_id={user_id} query='{query[:50]}...'")
@@ -206,10 +173,8 @@ def answer_question_adaptive(
     level_adapter = None  # compatibility sentinel: level-based prompting stays disabled
     current_stage = runtime_ctx["current_stage"]
     try:
-        # ================================================================
-        # Р­РўРђРџ 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё
-        # ================================================================
-        logger.debug("рџ“љ Р­С‚Р°Рї 1: Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… Рё РїР°РјСЏС‚Рё...")
+        # Stage 1: bootstrap data and memory.
+        logger.debug("[ADAPTIVE] stage1 bootstrap")
         
         bootstrap = _runtime_run_bootstrap_and_onboarding_guard(
             user_id=user_id,
@@ -238,10 +203,8 @@ def answer_question_adaptive(
         if start_command_response is not None:
             return start_command_response
         
-        # ================================================================
-        # Р­РўРђРџ 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
-        # ================================================================
-        logger.debug("рџЋЇ Р­С‚Р°Рї 2: РђРЅР°Р»РёР· СЃРѕСЃС‚РѕСЏРЅРёСЏ...")
+        # Stage 2: state analysis and pre-routing.
+        logger.debug("[ADAPTIVE] stage2 state-analysis")
         
         current_stage = "state_classifier"
         stage2 = _runtime_run_state_and_pre_routing_pipeline(
@@ -323,10 +286,8 @@ def answer_question_adaptive(
         if debug_trace is not None and debug_trace.get("fast_path") is None:
             debug_trace["fast_path"] = False
         
-        # ================================================================
-        # Р­РўРђРџ 3: РџРѕРёСЃРє СЂРµР»РµРІР°РЅС‚РЅС‹С… Р±Р»РѕРєРѕРІ
-        # ================================================================
-        logger.debug("рџ”Ќ Р­С‚Р°Рї 3: РџРѕРёСЃРє Р±Р»РѕРєРѕРІ...")
+        # Stage 3: retrieval, rerank, routing-context shaping.
+        logger.debug("[ADAPTIVE] stage3 retrieval")
 
         current_stage = "retrieval"
         stage3 = _runtime_run_retrieval_routing_context_stage(

@@ -1,24 +1,29 @@
-﻿# Text Transcription Monorepo
+﻿# Neo MindBot
 
-## Current Status (2026-04-16)
+## Final Runtime Snapshot (2026-04-16)
 
-This repository contains two projects, but active runtime development is focused on `bot_psychologist`.
+This document is the high-level architecture snapshot after completing `answer_adaptive.py` modularization.
 
-- Active runtime: `bot_psychologist`
-- Legacy/auxiliary pipeline: `voice_bot_pipeline` (not in active runtime path)
-- Main adaptive runtime entrypoint: `bot_psychologist/bot_agent/answer_adaptive.py`
+## Completion Status
+
+- Modularization program: completed
+- Scope: Waves `1-144`
+- Final orchestrator file: `bot_psychologist/bot_agent/answer_adaptive.py` (`418` lines)
+- Tests at completion checkpoint: `501 passed, 13 skipped`
 
 ## Architecture After Refactoring
 
-`answer_adaptive.py` is fully modularized and now acts as a facade-orchestrator.
+`answer_adaptive.py` now acts only as a facade-orchestrator that coordinates runtime stages:
 
-- Waves completed: `1-144`
-- Final facade size: `418` lines
-- Test baseline after completion: `501 passed, 13 skipped`
+1. bootstrap and memory preload,
+2. state/diagnostics and pre-routing,
+3. retrieval/rerank/context shaping,
+4. generation and output validation,
+5. memory persistence and trace finalization.
 
-All operational logic is placed in `bot_psychologist/bot_agent/adaptive_runtime/`.
+All stage logic is moved into `bot_psychologist/bot_agent/adaptive_runtime/`.
 
-## Adaptive Runtime Modules
+## Adaptive Runtime Module Map
 
 Runtime package includes 20 Python modules (19 functional modules + package initializer):
 
@@ -43,14 +48,16 @@ Runtime package includes 20 Python modules (19 functional modules + package init
 19. `state_helpers.py` - state classification, fallback state, and state-context helpers.
 20. `trace_helpers.py` - trace payload shaping, LLM canvas payloads, and trace sanitation.
 
-## Documentation Pointers
+## Operational Principles
 
-- `bot_psychologist/README.md` - runtime-level quick start and architecture snapshot.
-- `bot_psychologist/docs/architecture.md` - detailed post-refactor architecture.
-- `bot_psychologist/docs/bot_agent.md` - bot agent structure and runtime ownership.
-- `bot_psychologist/STRATEGY_Answer_Adaptive_Modularization.md` - completed strategy and closure report.
+- One production truth for regular and SSE chat flow.
+- Backward-compatible response and trace contracts.
+- Deterministic routing with explicit diagnostics trace.
+- No active runtime dependency on removed `response_utils.py`.
 
-## Notes
+## Canonical Technical Docs
 
-- `response_utils.py` was removed in Wave 142 and is not part of active runtime.
-- Modularization waves are completed; no open modularization TODO remains in active strategy.
+- `bot_psychologist/README.md`
+- `bot_psychologist/docs/architecture.md`
+- `bot_psychologist/docs/bot_agent.md`
+- `bot_psychologist/docs/trace_runtime.md`

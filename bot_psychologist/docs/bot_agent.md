@@ -1,67 +1,58 @@
-# Bot Agent
+﻿# Bot Agent
 
 ## Role
 
-`bot_agent` is the core runtime package. It converts a user message into a final assistant answer and a diagnostic trace.
+`bot_agent` is the core runtime package. It converts a user message into a final assistant answer plus diagnostic trace payload.
+
+## Completion Snapshot
+
+- Answer-adaptive modularization waves: `1-144` (completed)
+- `answer_adaptive.py`: facade-orchestrator only
+- Facade size: `418` lines
+- Completion test baseline: `501 passed, 13 skipped`
 
 ## Main Runtime Path
 
 1. Read request context and session state.
-2. Detect user state and resolve route.
-3. Retrieve relevant chunks.
-4. Optionally apply rerank gate.
-5. Build prompt stack.
-6. Run LLM call.
-7. Validate and format output.
-8. Update memory and trace.
+2. Detect state and resolve route/pre-routing mode.
+3. Retrieve and rerank relevant chunks.
+4. Build prompt stack and runtime context.
+5. Run LLM call.
+6. Validate and format output.
+7. Update memory and finalize trace.
 
-## Key Modules
+## Architecture After Refactoring
 
-### Routing and State
+### Facade Entrypoint
 
-- `diagnostics_classifier.py`
-- `state_classifier.py`
-- `route_resolver.py`
+- `answer_adaptive.py`
+  - keeps public runtime entrypoint `answer_question_adaptive(...)`
+  - wires stage modules and compatibility exports used by tests/contracts
 
-### Retrieval
+### Adaptive Runtime Modules
 
-- `data_loader.py`
-- `retriever.py`
-- `progressive_rag.py`
-- `reranker_gate.py`
+Runtime package includes 20 Python modules (19 functional modules + package initializer):
 
-### Prompt and Generation
-
-- `prompt_registry_v2.py`
-- `prompt_system_base.md`
-- `prompt_mode_informational.md`
-- `llm_answerer.py`
-- `llm_streaming.py`
-
-### Response Control
-
-- `output_validator.py`
-- `response/response_formatter.py`
-
-### Memory
-
-- `conversation_memory.py`
-- `memory_v11.py`
-- `memory_v12.py`
-- `summary_manager.py`
-- `semantic_memory.py`
-
-### Practice and Recommendation
-
-- `practice_selector.py`
-- `practice_schema.py`
-- `practices_recommender.py`
-
-### Runtime Config
-
-- `runtime_config.py`
-- `feature_flags.py`
-- `config.py`
+1. `__init__.py` - package metadata and runtime module map.
+2. `bootstrap_runtime_helpers.py` - request bootstrap, memory preload, onboarding/start command guards.
+3. `fast_path_stage_helpers.py` - fast-path execution and early-success flow.
+4. `full_path_stage_helpers.py` - full generation stage orchestration and success path wiring.
+5. `llm_runtime_helpers.py` - LLM invocation support and call-level utilities.
+6. `mode_policy_helpers.py` - mode prompt resolution and output-validation policy wiring.
+7. `pipeline_utils.py` - shared pipeline helpers and stage-level utility functions.
+8. `pricing_helpers.py` - token/cost estimation helpers.
+9. `response_common_helpers.py` - shared response builders and observability helpers.
+10. `response_failure_helpers.py` - failure/no-retrieval/unhandled-error response paths.
+11. `response_success_helpers.py` - full/fast success response composition.
+12. `retrieval_pipeline_helpers.py` - retrieval/rerank pipeline internals.
+13. `retrieval_stage_helpers.py` - retrieval stage orchestration and handoff to generation.
+14. `routing_context_helpers.py` - routing context shaping and practice/context suffixes.
+15. `routing_pre_stage_helpers.py` - state analysis, diagnostics, pre-routing decisions.
+16. `routing_stage_helpers.py` - compatibility facade for routing split modules.
+17. `runtime_adapter_helpers.py` - adapter factories for injected runtime dependencies.
+18. `runtime_misc_helpers.py` - compatibility facade for previously split runtime utilities.
+19. `state_helpers.py` - state classification, fallback state, and state-context helpers.
+20. `trace_helpers.py` - trace payload shaping, LLM canvas payloads, and trace sanitation.
 
 ## Data Contracts
 
@@ -80,14 +71,15 @@ Bot Agent emits structured telemetry consumed by:
 - LLM payload endpoint
 - Trace export JSON
 
-## Failure Strategy
+## Current Notes
 
-- Defensive defaults when retrieval or rerank is unavailable.
-- Controlled fallback behavior for memory and diagnostics.
-- Validation stage can trigger regeneration hints when output quality is low.
+- `response_utils.py (removed in Wave 142)` was removed in Wave 142.
+- No open modularization TODO remains in active strategy.
 
 ## Related Docs
 
 - [Architecture](./architecture.md)
 - [Overview](./overview.md)
 - [Testing](./testing.md)
+- [Trace Runtime](./trace_runtime.md)
+

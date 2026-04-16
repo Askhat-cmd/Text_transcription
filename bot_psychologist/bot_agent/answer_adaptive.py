@@ -35,7 +35,7 @@ from .memory_updater import memory_updater
 from .prompt_registry_v2 import prompt_registry_v2
 from .output_validator import output_validator
 from .practice_selector import practice_selector
-from .adaptive_runtime.response_utils import (
+from .adaptive_runtime.response_failure_helpers import (
     _build_unhandled_exception_response as _runtime_build_unhandled_exception_response,
 )
 from .adaptive_runtime.trace_helpers import (

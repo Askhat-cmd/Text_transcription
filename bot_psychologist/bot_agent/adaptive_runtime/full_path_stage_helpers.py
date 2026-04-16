@@ -54,7 +54,7 @@ def _run_full_path_llm_stage(
     llm_model_name: str,
     logger,
 ) -> Dict[str, Any]:
-    from .response_utils import (
+    from .response_failure_helpers import (
         _handle_llm_generation_error_response as _runtime_handle_llm_generation_error_response,
     )
     from .trace_helpers import (

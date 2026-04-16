@@ -63,7 +63,7 @@ def _run_retrieval_routing_context_stage(
         _refresh_context_and_apply_trace_snapshot as _runtime_refresh_context_and_apply_trace_snapshot,
         _truncate_preview as _runtime_truncate_preview,
     )
-    from .response_utils import _run_no_retrieval_stage as _runtime_run_no_retrieval_stage
+    from .response_failure_helpers import _run_no_retrieval_stage as _runtime_run_no_retrieval_stage
     from .response_utils import _persist_turn as _runtime_persist_turn
     from .pricing_helpers import _estimate_cost as _runtime_estimate_cost
     from .mode_policy_helpers import resolve_mode_prompt as _runtime_resolve_mode_prompt

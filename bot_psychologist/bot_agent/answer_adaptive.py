@@ -14,12 +14,11 @@ Adaptive Answer Module - Phase 4
 """
 
 import logging
-from typing import Any, Dict, Optional, List, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 from .data_loader import data_loader
 from .retriever import get_retriever
-from .user_level_types import UserLevel
-from .state_classifier import state_classifier, StateAnalysis
+from .state_classifier import state_classifier
 from .conversation_memory import get_conversation_memory
 from .config import config
 from .decision import (
@@ -42,7 +41,6 @@ from .adaptive_runtime.trace_helpers import (
     _build_llm_prompts as _runtime_build_llm_prompts,
 )
 from .adaptive_runtime.state_helpers import (
-    SDClassificationResult,
     _resolve_path_user_level as _runtime_resolve_path_user_level,
     _classify_parallel as _runtime_classify_parallel,
     _build_state_context as _runtime_build_state_context,
@@ -79,15 +77,12 @@ PRACTICE_SKIP_ROUTES = {"contact_hold", "contacthold", "presence", "crisis_hold"
 # Compatibility touchpoint for inventory tests/documentation.
 MODE_PROMPT_MAP = _RUNTIME_MODE_PROMPT_MAP
 
-
-
-
-def resolve_mode_prompt(user_state: str, cfg) -> Tuple[Optional[str], Optional[str]]:
-    return _runtime_resolve_mode_prompt(user_state, cfg)
-
-
-def _output_validation_enabled() -> bool:
-    return _runtime_output_validation_enabled()
+resolve_mode_prompt = _runtime_resolve_mode_prompt
+_output_validation_enabled = _runtime_output_validation_enabled
+_resolve_path_user_level = _runtime_resolve_path_user_level
+_classify_parallel = _runtime_classify_parallel
+_build_state_context = _runtime_build_state_context
+_should_use_fast_path = _runtime_should_use_fast_path
 
 
 def _apply_output_validation_policy(
@@ -107,40 +102,6 @@ def _apply_output_validation_policy(
         force_enabled=_output_validation_enabled(),
         generate_retry=generate_retry,
     )
-
-
-def _resolve_path_user_level(_user_level: str) -> UserLevel:
-    return _runtime_resolve_path_user_level(_user_level)
-
-
-async def _classify_parallel(
-    user_message: str,
-    history_state: List[Dict],
-) -> Tuple[StateAnalysis, SDClassificationResult]:
-    # Compatibility touchpoint for phase8 runtime test harness monkeypatching.
-    return await _runtime_classify_parallel(user_message, history_state)
-
-
-def _build_state_context(
-    state_analysis: StateAnalysis,
-    mode_prompt: str,
-    nervous_system_state: str = "window",
-    request_function: str = "understand",
-    contradiction_suggestion: str = "",
-    cross_session_context: str = "",
-) -> str:
-    return _runtime_build_state_context(
-        state_analysis=state_analysis,
-        mode_prompt=mode_prompt,
-        nervous_system_state=nervous_system_state,
-        request_function=request_function,
-        contradiction_suggestion=contradiction_suggestion,
-        cross_session_context=cross_session_context,
-    )
-
-
-def _should_use_fast_path(query: str, routing_result) -> bool:
-    return _runtime_should_use_fast_path(query, routing_result)
 
 
 def _build_llm_prompts(

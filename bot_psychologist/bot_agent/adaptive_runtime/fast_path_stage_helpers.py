@@ -95,16 +95,16 @@ def _run_fast_path_stage(
         _truncate_preview as _runtime_truncate_preview,
         _update_session_token_metrics as _runtime_update_session_token_metrics,
     )
-    from .response_success_helpers import (
-        _build_fast_path_success_response as _runtime_build_fast_path_success_response,
-    )
-    from .response_utils import (
+    from .response_common_helpers import (
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
         _build_fast_success_metadata as _runtime_build_fast_success_metadata,
         _build_success_response as _runtime_build_success_response,
         _get_feedback_prompt_for_state as _runtime_get_feedback_prompt_for_state,
         _persist_turn as _runtime_persist_turn,
+    )
+    from .response_success_helpers import (
+        _build_fast_path_success_response as _runtime_build_fast_path_success_response,
     )
 
     _runtime_apply_output_validation_policy_adapter = _build_runtime_output_validation_policy_adapter(

@@ -213,7 +213,7 @@ def _run_generation_and_success_stage(
         _build_full_path_success_response as _runtime_build_full_path_success_response,
         _run_full_path_success_stage as _runtime_run_full_path_success_stage,
     )
-    from .response_utils import (
+    from .response_common_helpers import (
         _attach_debug_payload as _runtime_attach_debug_payload,
         _attach_success_observability as _runtime_attach_success_observability,
         _build_full_success_metadata as _runtime_build_full_success_metadata,

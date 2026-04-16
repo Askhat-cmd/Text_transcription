@@ -1,24 +1,31 @@
-# Knowledge Package Format
+# SAG v2: формат пакета знаний
 
-This note describes the structure of knowledge blocks consumed by retrieval.
+## Назначение
 
-## Core Block Fields
+Этот документ описывает актуальный формат knowledge-блоков, которые используются retrieval-слоем в `bot_psychologist`.
 
-- `block_id`
-- `title`
-- `summary`
-- `content`
-- `keywords`
-- `source` metadata (author, link, timestamps when available)
+## Обязательные поля блока
 
-## Retrieval Usage
+- `block_id` — стабильный идентификатор блока.
+- `title` — заголовок блока.
+- `summary` — краткое содержание.
+- `content` — основной текст.
+- `keywords` — ключевые слова для поиска.
+- `source` — метаданные источника (автор, ссылка, таймкоды при наличии).
 
-- Blocks are indexed for semantic and keyword retrieval.
-- Selected chunks are passed to prompt assembly.
-- Chunk metadata is included in debug trace for observability.
+## Как используется в runtime
 
-## Validation Guidelines
+1. Блоки индексируются для семантического и keyword-поиска.
+2. Retrieval отбирает релевантные чанки для ответа.
+3. Метаданные выбранных блоков попадают в trace для диагностики.
 
-- Keep `block_id` stable across updates.
-- Preserve text quality in `summary` and `content`.
-- Keep metadata fields consistent for deterministic rendering in UI trace.
+## Правила валидации данных
+
+- `block_id` должен быть стабильным между обновлениями.
+- `summary` и `content` должны сохранять смысловую целостность.
+- Поля `source` и `keywords` должны быть консистентными для корректного рендеринга в UI/trace.
+
+## Актуальность
+
+- Статус: актуальный справочник формата.
+- Связан с runtime-контуром retrieval и trace.

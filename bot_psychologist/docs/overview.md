@@ -1,55 +1,54 @@
-# Project Overview
+# Обзор проекта
 
-## Purpose
+## Что это
 
-Bot Psychologist is a Neo MindBot system for reflective conversations.
-It combines retrieval from `Bot_data_base`, adaptive routing, memory context, and observable runtime diagnostics.
+`Bot Psychologist` — это runtime-система Neo MindBot для рефлексивного диалога с пользователем.
+Система объединяет retrieval, LLM-генерацию, контекст памяти и наблюдаемость через trace.
 
-## Main Goals
+## Для кого
 
-- Provide psychologically careful responses with practical next steps.
-- Keep response quality stable in both normal and streaming modes.
-- Preserve transparent developer observability for every assistant turn.
+- Для разработчиков, которые поддерживают и развивают runtime.
+- Для владельца продукта, который проверяет качество ответов и прозрачность поведения бота.
+- Для Dev/QA-проверок перед релизом (через Web UI и API).
 
-## Runtime Layers
+## Текущий статус
 
-1. **API layer** (`api/`): request validation, chat endpoints, sessions, debug and admin routes.
-2. **Agent layer** (`bot_agent/`): routing, retrieval, prompt assembly, generation, validation, memory update.
-3. **Storage layer** (`data/`, `bot_agent/storage/`): sessions, traces, admin overrides.
-4. **UI layer** (`web_ui/`): chat interface, inline trace, admin controls.
+- Основной runtime: `adaptive`.
+- `answer_adaptive.py` переведен в фасад-оркестратор, логика вынесена в `adaptive_runtime/`.
+- Модуляризация завершена: 144 волны.
+- Актуальная тестовая база после завершения: `501 passed, 13 skipped`.
+- Trace contract: `v2`.
 
-## User Flow
+## Технологический стек
 
-1. User sends a message from Web UI.
-2. API calls adaptive runtime.
-3. Runtime resolves route and user state.
-4. Retriever selects relevant chunks and optional rerank.
-5. Prompt stack is built and sent to LLM.
-6. Response is validated and formatted.
-7. Memory state is updated.
-8. Trace `v2` is returned for developer diagnostics.
+- Backend: Python, FastAPI, Pydantic.
+- Frontend: Web UI на React/Vite.
+- AI-слой: LLM + retrieval + rerank.
+- Память: session/memory слой в runtime и storage-компоненты.
+- Наблюдаемость: debug endpoints + inline trace в Web UI.
 
-## Observability
+## Как работает поток запроса
 
-The inline trace in Web UI is split into two levels:
+1. Пользователь отправляет сообщение из Web UI.
+2. API принимает запрос и передает его в adaptive runtime.
+3. Runtime определяет route/state, собирает контекст и выполняет retrieval/rerank.
+4. Формируется prompt stack и вызывается LLM.
+5. Ответ проходит валидацию, сохраняется в память, формируется trace.
+6. Web UI отображает ответ и диагностические данные (для dev-режима).
 
-- **Simple layer**: compact status chips for quick health checks.
-- **Deep layer**: collapsible sections with routing, retrieval, LLM calls, memory, and config snapshot.
+## Основные точки входа
 
-Developer LLM canvas is available only for developer key sessions.
+- Backend: `api/main.py`
+- Основные chat-роуты: `api/routes.py`
+- Debug-роуты: `api/debug_routes.py`
+- Runtime-оркестратор: `bot_agent/answer_adaptive.py`
+- Runtime-модули: `bot_agent/adaptive_runtime/*`
 
-## Core Entry Points
+## Ключевые документы
 
-- Backend app: `api/main.py`
-- Main chat routes: `api/routes.py`
-- Debug routes: `api/debug_routes.py`
-- Admin routes: `api/admin_routes.py`
-- Adaptive runtime: `bot_agent/answer_adaptive.py`
-
-## Related Docs
-
-- [Architecture](./architecture.md)
+- [Архитектура](./architecture.md)
 - [Bot Agent](./bot_agent.md)
 - [API](./api.md)
 - [Web UI](./web_ui.md)
-- [Testing](./testing.md)
+- [Тестирование](./testing.md)
+- [Roadmap](./roadmap.md)

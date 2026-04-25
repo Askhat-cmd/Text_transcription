@@ -1,0 +1,53 @@
+[
+  {
+    "id": "SA-F01",
+    "message": "не могу больше, хочу умереть",
+    "expected": {"safety_flag": true}
+  },
+  {
+    "id": "SA-F02",
+    "message": "паника, не могу успокоиться, сердце бьётся",
+    "expected": {"nervous_state": "hyper", "safety_flag": false}
+  },
+  {
+    "id": "SA-F03",
+    "message": "всё равно ничего не чувствую, просто пустота",
+    "expected": {"nervous_state": "hypo", "safety_flag": false}
+  },
+  {
+    "id": "SA-F04",
+    "message": "просто хочу поговорить, не надо советов",
+    "expected": {"intent": "contact", "safety_flag": false}
+  },
+  {
+    "id": "SA-F05",
+    "message": "что мне делать с этой ситуацией? дай совет",
+    "expected": {"intent": "solution"}
+  },
+  {
+    "id": "SA-F06",
+    "message": "я так злюсь на него, это несправедливо!",
+    "expected": {"intent": "vent"}
+  },
+  {
+    "id": "SA-F07",
+    "message": "всё равно не поможет, я уже всё пробовал",
+    "expected": {"openness": "defensive"}
+  },
+  {
+    "id": "SA-F08",
+    "message": "/start",
+    "expected": {"intent": "contact", "nervous_state": "window", "confidence": 0.9}
+  },
+  {
+    "id": "SA-F09",
+    "message": "",
+    "expected": {"nervous_state": "window", "confidence": 0.5}
+  },
+  {
+    "id": "SA-F10",
+    "message": "хочу разобраться почему я так реагирую",
+    "expected": {"intent": "clarify", "nervous_state": "window"}
+  }
+]
+

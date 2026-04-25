@@ -5,9 +5,9 @@ from __future__ import annotations
 import asyncio
 import logging
 
+from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import thread_manager_agent
 from .contracts.memory_bundle import MemoryBundle
-from .contracts.state_snapshot import StateSnapshot
 from .thread_storage import thread_storage
 
 
@@ -21,7 +21,10 @@ class MultiAgentOrchestrator:
         current_thread = thread_storage.load_active(user_id)
         archived_threads = thread_storage.load_archived(user_id)
 
-        state_snapshot = self._build_snapshot(query)
+        state_snapshot = await state_analyzer_agent.analyze(
+            user_message=query,
+            previous_thread=current_thread,
+        )
         updated_thread = await thread_manager_agent.update(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -46,24 +49,15 @@ class MultiAgentOrchestrator:
             "debug": {
                 "multiagent_enabled": True,
                 "thread_manager_model": "heuristic",
+                "nervous_state": state_snapshot.nervous_state,
+                "intent": state_snapshot.intent,
+                "safety_flag": state_snapshot.safety_flag,
+                "confidence": state_snapshot.confidence,
             },
         }
 
     def run_sync(self, *, query: str, user_id: str) -> dict:
         return asyncio.run(self.run(query=query, user_id=user_id))
-
-    def _build_snapshot(self, query: str) -> StateSnapshot:
-        lowered = query.lower()
-        safety_flag = any(marker in lowered for marker in ("suicide", "kill myself", "self harm"))
-        intent = "contact" if len(query.strip()) <= 5 else "explore"
-        return StateSnapshot(
-            nervous_state="window" if not safety_flag else "hyper",
-            intent=intent,
-            openness="open",
-            ok_position="I+W+",
-            safety_flag=safety_flag,
-            confidence=0.7,
-        )
 
     def _build_answer(self, *, query: str, thread, memory_bundle: MemoryBundle) -> str:
         _ = memory_bundle
@@ -77,4 +71,3 @@ class MultiAgentOrchestrator:
 
 
 orchestrator = MultiAgentOrchestrator()
-

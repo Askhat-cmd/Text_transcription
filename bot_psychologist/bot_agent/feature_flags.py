@@ -39,6 +39,7 @@ _DEFAULTS: Dict[str, bool] = {
 
 _STRING_DEFAULTS: Dict[str, str] = {
     "THREAD_MANAGER_MODEL": "gpt-5-nano",
+    "STATE_ANALYZER_MODEL": "gpt-5-nano",
     "THREAD_STORAGE_DIR": "bot_psychologist/data/threads",
 }
 

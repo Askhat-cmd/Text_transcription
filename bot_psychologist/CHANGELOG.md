@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.13.0 - 2026-04-25
+
+### Added
+- Новый модуль `api/conversations/`:
+  - `models.py` (`ConversationContext`, `ConversationSummary`, `StartConversationRequest`)
+  - `repository.py` (CRUD + lifecycle + schema extension for `memory_items`)
+  - `service.py` (create/resume/pause/close/list/touch)
+- Новый API роутер `api/routes/conversation_routes.py`:
+  - `GET /api/v1/conversations/`
+  - `POST /api/v1/conversations/new`
+  - `POST /api/v1/conversations/{conversation_id}/close`
+- Добавлена SQL-миграция `scripts/migrations/014_conversation_layer.sql`.
+- Новые тестовые наборы:
+  - `tests/conversations/test_migration_014.py`
+  - `tests/conversations/test_conversation_models.py`
+  - `tests/conversations/test_conversation_repository.py`
+  - `tests/conversations/test_conversation_service.py`
+  - `tests/api/test_conversation_routes.py`
+  - `tests/api/test_dependencies_conversation.py`
+  - `tests/identity/test_dependencies.py`
+
+### Fixed
+- FINDING-01: при конфликте `(provider, external_id)` больше не перепривязывается `user_id` в `linked_identities`.
+- FINDING-02: fallback identity-контекст теперь UUID-подобный (`anon_<32hex>` + fallback session/conversation ids), с логом `identity.resolve_failed`.
+- FINDING-03: `upsert_session()` в identity repository упрощен до одной актуальной SQL-ветки.
+- FINDING-04: fingerprint теперь учитывает `X-Forwarded-For` и `X-Real-IP` до `request.client.host`.
+- FINDING-07: в `/api/v1/identity/me` `external_id` отдается в маскированном виде.
+- Session metadata hardening: вместо сырого IP сохраняется `ip_hash`.
+
+### Changed
+- `IdentityContext.conversation_id` теперь резолвится через conversation layer (включая поддержку `X-Conversation-Id`).
+- Chat routes обновляют `last_message_at` разговора через `ConversationService.touch_conversation()`.
+
 ## v0.12.1 - 2026-04-25
 
 ### Added

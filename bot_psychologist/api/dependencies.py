@@ -7,14 +7,17 @@ If warmup failed or not enabled, dependencies fall back to lazy init.
 """
 from __future__ import annotations
 
+import logging
+import uuid
 from typing import Optional
 
-from fastapi import Depends, Request
+from fastapi import Depends, Header, Request
 
 from bot_agent.config import config
 from bot_agent.data_loader import DataLoader, data_loader as _default_data_loader
 from bot_agent.graph_client import KnowledgeGraphClient, graph_client as _default_graph_client
 from bot_agent.retriever import SimpleRetriever, get_retriever as _get_default_retriever
+from .conversations import ConversationRepository, ConversationService
 from .identity import (
     IdentityContext,
     IdentityRepository,
@@ -22,6 +25,8 @@ from .identity import (
     build_fingerprint_from_request,
     extract_legacy_user_id_from_request,
     generate_session_id,
+    hash_ip,
+    resolve_client_ip,
 )
 
 _data_loader: Optional[DataLoader] = None
@@ -30,6 +35,10 @@ _retriever: Optional[SimpleRetriever] = None
 _embedding_model_warmed: bool = False
 _identity_repository: Optional[IdentityRepository] = None
 _identity_service: Optional[IdentityService] = None
+_conversation_repository: Optional[ConversationRepository] = None
+_conversation_service: Optional[ConversationService] = None
+
+logger = logging.getLogger(__name__)
 
 
 def set_preloaded_components(
@@ -74,41 +83,102 @@ def get_identity_service() -> IdentityService:
     return _identity_service
 
 
+def get_conversation_service() -> ConversationService:
+    """FastAPI dependency: singleton conversation service."""
+    global _conversation_repository, _conversation_service
+    if _conversation_service is None:
+        _conversation_repository = ConversationRepository(str(config.BOT_DB_PATH))
+        _conversation_service = ConversationService(_conversation_repository)
+    return _conversation_service
+
+
 async def get_identity_context(
     request: Request,
+    x_session_id: Optional[str] = Header(default=None, alias="X-Session-Id"),
+    x_device_fingerprint: Optional[str] = Header(default=None, alias="X-Device-Fingerprint"),
+    x_conversation_id: Optional[str] = Header(default=None, alias="X-Conversation-Id"),
     identity_service: IdentityService = Depends(get_identity_service),
+    conversation_service: ConversationService = Depends(get_conversation_service),
 ) -> IdentityContext:
     """FastAPI dependency: resolve stable identity context for request."""
-    session_id_header = (request.headers.get("X-Session-Id") or "").strip()
-    fingerprint_header = (request.headers.get("X-Device-Fingerprint") or "").strip()
+    session_id_header = x_session_id.strip() if isinstance(x_session_id, str) else ""
+    fingerprint_header = (
+        x_device_fingerprint.strip() if isinstance(x_device_fingerprint, str) else ""
+    )
     legacy_user_id = await extract_legacy_user_id_from_request(request)
+    conversation_id_header = (
+        x_conversation_id.strip() if isinstance(x_conversation_id, str) else ""
+    )
 
     fingerprint = fingerprint_header or build_fingerprint_from_request(request)
     session_id = session_id_header or generate_session_id()
+    client_ip = resolve_client_ip(request)
+    user_agent = (request.headers.get("user-agent") or "").strip()
+    metadata = {
+        "ip_hash": hash_ip(client_ip),
+        "user_agent_prefix": user_agent[:80],
+        "channel": "web",
+    }
 
     try:
+        identity: Optional[IdentityContext] = None
         if session_id_header:
             restored = await identity_service.resolve_by_session(session_id_header)
             if restored is not None and not legacy_user_id:
-                return restored
+                identity = restored
 
-        return await identity_service.resolve_or_create(
-            provider="web",
-            external_id=fingerprint,
-            session_id=session_id,
-            channel="web",
-            metadata={
-                "ip": request.client.host if request.client else None,
-                "user_agent": request.headers.get("user-agent"),
-            },
-            legacy_user_id=legacy_user_id,
+        if identity is None:
+            identity = await identity_service.resolve_or_create(
+                provider="web",
+                external_id=fingerprint,
+                session_id=session_id,
+                channel="web",
+                metadata=metadata,
+                legacy_user_id=legacy_user_id,
+            )
+
+        resolved_conversation = None
+        if conversation_id_header:
+            resolved_conversation = await conversation_service.get_conversation_context(
+                conversation_id_header
+            )
+            if (
+                resolved_conversation is None
+                or resolved_conversation.user_id != identity.user_id
+            ):
+                resolved_conversation = None
+
+        if resolved_conversation is None:
+            resolved_conversation = await conversation_service.get_or_create_conversation(
+                user_id=identity.user_id,
+                session_id=identity.session_id,
+                channel=identity.channel,
+            )
+
+        return IdentityContext(
+            user_id=identity.user_id,
+            session_id=identity.session_id,
+            conversation_id=resolved_conversation.conversation_id,
+            channel=identity.channel,
+            is_anonymous=identity.is_anonymous,
+            created_new_user=identity.created_new_user,
+            provider=identity.provider,
+            external_id=identity.external_id,
         )
-    except Exception:
-        fallback_user = legacy_user_id or f"anon-{fingerprint.replace('sha256:', '')[:16]}"
+    except Exception as exc:
+        logger.error(
+            "identity.resolve_failed",
+            extra={"error": str(exc), "fingerprint_prefix": fingerprint[:8]},
+            exc_info=True,
+        )
+        fallback_token = uuid.uuid4().hex
+        fallback_user = f"anon_{fallback_token}"
+        fallback_session = f"fallback_{uuid.uuid4().hex}"
+        fallback_conversation = f"fallback_{uuid.uuid4().hex}"
         return IdentityContext(
             user_id=fallback_user,
-            session_id=session_id,
-            conversation_id=session_id,
+            session_id=fallback_session,
+            conversation_id=fallback_conversation,
             channel="web",
             is_anonymous=True,
             created_new_user=False,

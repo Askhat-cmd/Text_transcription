@@ -49,6 +49,43 @@ def test_build_fingerprint_from_request_is_deterministic() -> None:
     assert fp1 == fp2
 
 
+def test_fingerprint_reads_forwarded_for() -> None:
+    req = _make_request(
+        headers={
+            "X-Forwarded-For": "1.2.3.4, 10.0.0.1",
+            "User-Agent": "A",
+            "Accept-Language": "ru",
+        }
+    )
+    fp = build_fingerprint_from_request(req)
+    req_same = _make_request(
+        headers={
+            "X-Forwarded-For": "1.2.3.4",
+            "User-Agent": "A",
+            "Accept-Language": "ru",
+        }
+    )
+    assert fp == build_fingerprint_from_request(req_same)
+
+
+def test_fingerprint_reads_real_ip_when_no_forwarded_for() -> None:
+    req = _make_request(
+        headers={"X-Real-IP": "5.6.7.8", "User-Agent": "A", "Accept-Language": "ru"}
+    )
+    fp = build_fingerprint_from_request(req)
+    req_same = _make_request(
+        headers={"X-Real-IP": "5.6.7.8", "User-Agent": "A", "Accept-Language": "ru"}
+    )
+    assert fp == build_fingerprint_from_request(req_same)
+
+
+def test_fingerprint_is_sha256_hex() -> None:
+    req = _make_request(headers={"User-Agent": "A"})
+    fp = build_fingerprint_from_request(req)
+    assert fp.startswith("sha256:")
+    assert len(fp.replace("sha256:", "")) == 64
+
+
 def test_generate_session_id_has_prefix() -> None:
     session_id = generate_session_id()
     assert session_id.startswith("sess_")

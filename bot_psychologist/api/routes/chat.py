@@ -13,7 +13,13 @@ from bot_agent.llm_streaming import stream_answer_tokens
 from bot_agent.storage import SessionManager
 
 from ..auth import is_dev_key, verify_api_key
-from ..dependencies import get_data_loader, get_graph_client, get_identity_context, get_retriever
+from ..dependencies import (
+    get_conversation_service,
+    get_data_loader,
+    get_graph_client,
+    get_identity_context,
+    get_retriever,
+)
 from ..identity import IdentityContext
 from ..models import (
     AdaptiveAnswerResponse,
@@ -79,7 +85,8 @@ def _resolve_stream_answer_tokens():
 async def ask_basic_question(
     request: AskQuestionRequest,
     identity: IdentityContext = Depends(get_identity_context),
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
+    conv_service=Depends(get_conversation_service),
 ):
     """
     **Phase 1:** Базовый QA без адаптации.
@@ -105,6 +112,7 @@ async def ask_basic_question(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
         result = _run_neo_compat_answer(request=normalized_request)
+        await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
@@ -126,7 +134,8 @@ async def ask_basic_question(
 async def ask_basic_question_with_semantic(
     request: AskQuestionRequest,
     identity: IdentityContext = Depends(get_identity_context),
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
+    conv_service=Depends(get_conversation_service),
 ):
     """
     Phase 1 enhanced: basic QA with memory.
@@ -138,6 +147,7 @@ async def ask_basic_question_with_semantic(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
         result = _run_neo_compat_answer(request=normalized_request)
+        await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
@@ -160,6 +170,7 @@ async def ask_graph_powered_question(
     identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
     store: SessionStore = Depends(get_session_store),
+    conv_service=Depends(get_conversation_service),
 ):
     """
     **Phase 3:** Graph-powered QA с использованием Knowledge Graph.
@@ -178,6 +189,7 @@ async def ask_graph_powered_question(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
         result = _run_neo_compat_answer(request=normalized_request, session_store=store)
+        await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
@@ -205,6 +217,7 @@ async def ask_adaptive_question(
     _graph_client=Depends(get_graph_client),
     _retriever=Depends(get_retriever),
     store: SessionStore = Depends(get_session_store),
+    conv_service=Depends(get_conversation_service),
 ):
     """
     **Phase 4:** Полностью адаптивный QA.
@@ -258,6 +271,7 @@ async def ask_adaptive_question(
             debug=request.debug,
             session_store=store,
         )
+        await conv_service.touch_conversation(identity.conversation_id)
         
         # Обновить статистику
         _record_user(identity.user_id)
@@ -315,6 +329,7 @@ async def ask_adaptive_question(
         response_metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}))
         response_metadata["user_id"] = identity.user_id
         response_metadata["session_id"] = session_key
+        response_metadata["conversation_id"] = identity.conversation_id
 
         trace = None
         if request.debug:
@@ -569,6 +584,7 @@ async def ask_adaptive_question_stream(
     api_key: str = Depends(verify_api_key),
     _data_loader=Depends(get_data_loader),
     store: SessionStore = Depends(get_session_store),
+    conv_service=Depends(get_conversation_service),
 ):
     if not config.ENABLE_STREAMING:
         raise HTTPException(
@@ -623,6 +639,7 @@ async def ask_adaptive_question_stream(
 
             result = dict(_result_holder)
             answer = str(result.get("answer", "") or "")
+            await conv_service.touch_conversation(identity.conversation_id)
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
             trace_raw = result.get("debug_trace") or result.get("debug")

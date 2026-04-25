@@ -11,12 +11,35 @@ from fastapi import Request
 
 def build_fingerprint_from_request(request: Request) -> str:
     """Build deterministic fallback fingerprint from request metadata."""
-    client_ip = (request.client.host if request.client else "") or ""
+    forwarded_for = (request.headers.get("x-forwarded-for") or "").strip()
+    real_ip = (request.headers.get("x-real-ip") or "").strip()
+    client_ip = (
+        forwarded_for.split(",")[0].strip()
+        or real_ip
+        or ((request.client.host if request.client else "") or "")
+    )
     user_agent = request.headers.get("user-agent", "")
     accept_language = request.headers.get("accept-language", "")
     source = f"{client_ip}|{user_agent}|{accept_language}".strip()
     digest = hashlib.sha256(source.encode("utf-8")).hexdigest()
     return f"sha256:{digest}"
+
+
+def resolve_client_ip(request: Request) -> str:
+    """Resolve client IP with reverse-proxy priority."""
+    forwarded_for = (request.headers.get("x-forwarded-for") or "").strip()
+    real_ip = (request.headers.get("x-real-ip") or "").strip()
+    return (
+        forwarded_for.split(",")[0].strip()
+        or real_ip
+        or ((request.client.host if request.client else "") or "")
+        or "unknown"
+    )
+
+
+def hash_ip(ip: str) -> str:
+    """Return short irreversible hash for IP-safe metadata logging/storage."""
+    return "ip_sha:" + hashlib.sha256((ip or "").encode("utf-8")).hexdigest()[:16]
 
 
 def generate_session_id() -> str:

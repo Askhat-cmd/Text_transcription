@@ -16,6 +16,8 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(config, "BOT_DB_PATH", tmp_path / "identity_stub.db", raising=False)
     monkeypatch.setattr(deps, "_identity_repository", None, raising=False)
     monkeypatch.setattr(deps, "_identity_service", None, raising=False)
+    monkeypatch.setattr(deps, "_conversation_repository", None, raising=False)
+    monkeypatch.setattr(deps, "_conversation_service", None, raising=False)
     with TestClient(app, base_url="http://localhost") as test_client:
         yield test_client
 
@@ -32,4 +34,3 @@ def test_link_telegram_stub_returns_501(client: TestClient) -> None:
         json={"code": "ABC123", "telegram_user_id": "123456789"},
     )
     assert res.status_code == 501
-

@@ -58,12 +58,26 @@ class IdentityService:
         if resolved_user is None:
             resolved_user = self.repository.create_user(metadata_json=metadata or {})
             created_new_user = True
-            self.repository.add_linked_identity(
+            linked_identity = self.repository.add_linked_identity(
                 user_id=resolved_user.id,
                 provider=provider_norm,
                 external_id=external_norm,
                 metadata_json=metadata or {},
             )
+            if linked_identity.user_id != resolved_user.id:
+                logger.warning(
+                    "identity.fingerprint_collision",
+                    extra={
+                        "provider": provider_norm,
+                        "fingerprint_prefix": external_norm[:16],
+                        "existing_user_id": linked_identity.user_id,
+                        "attempted_user_id": resolved_user.id,
+                    },
+                )
+                existing_user = self.repository.get_user(linked_identity.user_id)
+                if existing_user is not None:
+                    resolved_user = existing_user
+                    created_new_user = False
             logger.info(
                 "identity.user_created",
                 extra={"user_id": resolved_user.id, "provider": provider_norm},

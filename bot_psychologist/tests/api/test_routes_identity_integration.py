@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import sqlite3
 from pathlib import Path
 from typing import Any
 
@@ -38,6 +40,8 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(config, "BOT_DB_PATH", tmp_path / "identity_api.db", raising=False)
     monkeypatch.setattr(deps, "_identity_repository", None, raising=False)
     monkeypatch.setattr(deps, "_identity_service", None, raising=False)
+    monkeypatch.setattr(deps, "_conversation_repository", None, raising=False)
+    monkeypatch.setattr(deps, "_conversation_service", None, raising=False)
     monkeypatch.setattr(routes, "answer_question_adaptive", _stub_adaptive_result, raising=True)
     with TestClient(app, base_url="http://localhost") as test_client:
         yield test_client
@@ -69,6 +73,9 @@ def test_ask_with_fingerprint_header_creates_user(client: TestClient) -> None:
     payload = me.json()
     assert payload["user_id"]
     assert payload["session_id"] == "session-fp-1"
+    assert payload["external_id"].startswith("sha256:")
+    assert payload["external_id"].endswith("...")
+    assert payload["external_id"] != "sha256:explicit-fp"
 
 
 def test_ask_same_fingerprint_uses_same_user(client: TestClient) -> None:
@@ -118,3 +125,29 @@ def test_history_scoped_to_user(client: TestClient) -> None:
     assert r1.status_code == 200
     assert r2.status_code == 200
     assert r1.json()["user_id"] != r2.json()["user_id"]
+
+
+def test_identity_session_metadata_uses_ip_hash(tmp_path: Path, client: TestClient) -> None:
+    headers = {
+        "X-API-Key": "test-key-001",
+        "X-Device-Fingerprint": "sha256:meta-fp",
+        "X-Session-Id": "meta-session",
+        "X-Forwarded-For": "203.0.113.7",
+    }
+    me = client.get("/api/v1/identity/me", headers=headers)
+    assert me.status_code == 200
+
+    db_path = tmp_path / "identity_api.db"
+    conn = sqlite3.connect(db_path)
+    try:
+        row = conn.execute(
+            "SELECT metadata_json FROM sessions WHERE session_id = ?",
+            ("meta-session",),
+        ).fetchone()
+        assert row is not None
+        payload = json.loads(row[0] or "{}")
+        assert "ip_hash" in payload
+        assert payload["ip_hash"].startswith("ip_sha:")
+        assert "ip" not in payload
+    finally:
+        conn.close()

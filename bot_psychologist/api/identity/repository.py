@@ -212,7 +212,6 @@ class IdentityRepository:
                     id, user_id, provider, external_id, created_at, metadata_json
                 ) VALUES (?, ?, ?, ?, ?, ?)
                 ON CONFLICT(provider, external_id) DO UPDATE SET
-                    user_id = excluded.user_id,
                     metadata_json = COALESCE(linked_identities.metadata_json, excluded.metadata_json)
                 """,
                 (identity_id, user_id, provider, external_id, now, payload),
@@ -299,68 +298,37 @@ class IdentityRepository:
         now = _utc_now_iso()
         payload = json.dumps(metadata_json or {}, ensure_ascii=False)
         with self._connect() as conn:
-            columns = self._table_columns(conn, "sessions")
-            last_seen_value = now
-            if "last_seen_at" in columns:
-                conn.execute(
-                    """
-                    INSERT INTO sessions (
-                        session_id, user_id, created_at, last_active, last_seen_at,
-                        status, channel, device_fingerprint, expires_at, metadata_json, metadata
-                    )
-                    VALUES (?, ?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)
-                    ON CONFLICT(session_id) DO UPDATE SET
-                        user_id = excluded.user_id,
-                        last_active = excluded.last_active,
-                        last_seen_at = excluded.last_seen_at,
-                        channel = COALESCE(excluded.channel, sessions.channel),
-                        device_fingerprint = COALESCE(excluded.device_fingerprint, sessions.device_fingerprint),
-                        expires_at = COALESCE(excluded.expires_at, sessions.expires_at),
-                        metadata_json = COALESCE(excluded.metadata_json, sessions.metadata_json),
-                        metadata = COALESCE(excluded.metadata, sessions.metadata)
-                    """,
-                    (
-                        session_id,
-                        user_id,
-                        now,
-                        now,
-                        now,
-                        channel,
-                        device_fingerprint,
-                        expires_at,
-                        payload,
-                        payload,
-                    ),
+            # ensure_schema() на старте приложения гарантирует наличие last_seen_at.
+            conn.execute(
+                """
+                INSERT INTO sessions (
+                    session_id, user_id, created_at, last_active, last_seen_at,
+                    status, channel, device_fingerprint, expires_at, metadata_json, metadata
                 )
-            else:
-                conn.execute(
-                    """
-                    INSERT INTO sessions (
-                        session_id, user_id, created_at, last_active,
-                        status, channel, device_fingerprint, expires_at, metadata_json, metadata
-                    )
-                    VALUES (?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)
-                    ON CONFLICT(session_id) DO UPDATE SET
-                        user_id = excluded.user_id,
-                        last_active = excluded.last_active,
-                        channel = COALESCE(excluded.channel, sessions.channel),
-                        device_fingerprint = COALESCE(excluded.device_fingerprint, sessions.device_fingerprint),
-                        expires_at = COALESCE(excluded.expires_at, sessions.expires_at),
-                        metadata_json = COALESCE(excluded.metadata_json, sessions.metadata_json),
-                        metadata = COALESCE(excluded.metadata, sessions.metadata)
-                    """,
-                    (
-                        session_id,
-                        user_id,
-                        now,
-                        now,
-                        channel,
-                        device_fingerprint,
-                        expires_at,
-                        payload,
-                        payload,
-                    ),
-                )
+                VALUES (?, ?, ?, ?, ?, 'active', ?, ?, ?, ?, ?)
+                ON CONFLICT(session_id) DO UPDATE SET
+                    user_id = excluded.user_id,
+                    last_active = excluded.last_active,
+                    last_seen_at = excluded.last_seen_at,
+                    channel = COALESCE(excluded.channel, sessions.channel),
+                    device_fingerprint = COALESCE(excluded.device_fingerprint, sessions.device_fingerprint),
+                    expires_at = COALESCE(excluded.expires_at, sessions.expires_at),
+                    metadata_json = COALESCE(excluded.metadata_json, sessions.metadata_json),
+                    metadata = COALESCE(excluded.metadata, sessions.metadata)
+                """,
+                (
+                    session_id,
+                    user_id,
+                    now,
+                    now,
+                    now,
+                    channel,
+                    device_fingerprint,
+                    expires_at,
+                    payload,
+                    payload,
+                ),
+            )
             row = conn.execute("SELECT * FROM sessions WHERE session_id = ?", (session_id,)).fetchone()
         return SessionRecord(
             session_id=str(row["session_id"]),

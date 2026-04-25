@@ -11,6 +11,7 @@ from . import chat as _chat
 from . import common as _common
 from .chat import router as chat_router
 from .common import _build_turn_diff
+from .conversation_routes import router as conversation_router
 from .feedback import router as feedback_router
 from .health import health_check, router as health_router
 from .identity_routes import router as identity_router
@@ -46,6 +47,7 @@ ask_adaptive_question_stream = _chat.ask_adaptive_question_stream
 
 router = APIRouter()
 router.include_router(chat_router)
+router.include_router(conversation_router)
 router.include_router(users_router)
 router.include_router(feedback_router)
 router.include_router(identity_router)

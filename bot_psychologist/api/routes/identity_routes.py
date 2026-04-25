@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 
 from ..auth import verify_api_key
 from ..dependencies import get_identity_context
-from ..identity import IdentityContext
+from ..identity import IdentityContext, mask_external_id
 
 router = APIRouter(prefix="/api/v1/identity", tags=["identity"])
 
@@ -29,7 +29,10 @@ async def get_me_identity(
     identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
 ):
-    return identity.model_dump()
+    data = identity.model_dump()
+    if data.get("external_id"):
+        data["external_id"] = mask_external_id(identity.provider, str(data["external_id"]))
+    return data
 
 
 @router.get(

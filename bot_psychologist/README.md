@@ -1,50 +1,67 @@
 ﻿# Bot Psychologist
 
-Bot Psychologist is the active Neo MindBot runtime for reflective dialogue, retrieval-backed responses, and developer observability.
+Bot Psychologist — активный runtime проекта Neo MindBot для веб-чата, retrieval-пайплайна и наблюдаемости через trace/debug интерфейсы.
 
-## Completion Update (2026-04-16)
+## Текущее состояние архитектуры
 
-`answer_adaptive.py` modularization is completed.
+### Что уже реализовано
 
-- Waves completed: `1-144`
-- Final `answer_adaptive.py` role: facade-orchestrator only
-- Final `answer_adaptive.py` size: `418` lines
-- Validation baseline: `501 passed, 13 skipped`
+- Реализован стабильный `user_id` через Identity Layer (PRD-013).
+- `session_id` используется как уровень устройства/клиента, а не как идентификатор человека.
+- `conversation_id` выделен в отдельный UUID диалога и не равен `session_id` (PRD-014).
+- Модуль `answer_adaptive.py` завершил модуляризацию (waves 1-144) и работает как фасад-оркестратор.
+- Проект подготовлен к следующему этапу: контрактная интеграция Telegram (без production transport на текущий момент).
 
-## Architecture After Refactoring
+### Что планируется
 
-`bot_agent/answer_adaptive.py` now orchestrates runtime stages and delegates implementation to `bot_agent/adaptive_runtime/`.
+- PRD-015A: Telegram Integration Contract (контракты и связка identity/conversation).
+- Следующий этап: реальный Telegram transport layer.
+- Далее: multi-agent orchestration.
 
-### Orchestration stages
+## Иерархия идентификаторов
 
-1. Runtime bootstrap and memory preload.
-2. State analysis and pre-routing.
-3. Retrieval/rerank and routing context shaping.
-4. Generation, output validation, and response build.
-5. Memory persistence and trace finalization.
+| Уровень | Поле | Назначение |
+|---|---|---|
+| Человек | `user_id` | Стабильный внутренний UUID пользователя |
+| Канал | `linked_identity` | Привязка канала: `web` / `telegram` / `api` |
+| Сессия | `session_id` | Текущее устройство / браузер / клиент |
+| Диалог | `conversation_id` | Отдельный чат внутри пользовательского контекста |
 
-## Adaptive Runtime Modules
+## Ключевые backend-модули
 
-Полный список модулей и их назначение: [docs/architecture.md](docs/architecture.md)
+- `api/identity/` — разрешение идентичности и нормализация канала.
+- `api/conversations/` — управление жизненным циклом диалога.
+- `api/routes/` — HTTP API-слой.
+- `api/dependencies.py` — сборка request context (identity + conversation + runtime deps).
+- `Bot_data_base/` — внешний сервис данных/памяти.
+- `telegram_adapter/` — задел под будущий канал Telegram.
 
-## Scope
+## Локальный запуск
 
-- Active workspace: `bot_psychologist/`
-- Main user channel: Web chat (`web_ui`)
-- Main API: `/api/v1/questions/adaptive` and `/api/v1/questions/adaptive-stream`
-- Trace contract: `v2`
+Минимальный dev-flow:
 
-## Quick Start
+1. Поднять backend `bot_psychologist` (`:8001`).
+2. Поднять `Bot_data_base` (`:8003`).
+3. При необходимости поднять `web_ui` (`:3000`).
+4. Учитывать, что `GET /api/v1/health` может вернуть `degraded_fallback`, если сервис базы не запущен.
 
 ### Backend
 
 ```powershell
 cd C:\My_practice\Text_transcription\bot_psychologist
 .venv\Scripts\Activate.ps1
-.venv\Scripts\python.exe -m uvicorn api.main:app --host 0.0.0.0 --port 8001
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8001
 ```
 
-### Frontend
+### Bot_data_base
+
+```powershell
+cd C:\My_practice\Text_transcription\Bot_data_base
+.venv\Scripts\Activate.ps1
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8003
+```
+
+### Web UI
 
 ```powershell
 cd C:\My_practice\Text_transcription\bot_psychologist\web_ui
@@ -52,60 +69,43 @@ npm install
 npm run dev
 ```
 
-Web UI URL: `http://localhost:3000`
-API base URL: `http://localhost:8001/api/v1`
+## Ключевые API сценарии
 
-## Identity Headers (PRD-013)
+- `GET /api/v1/identity/me` — получить текущий identity context.
+- `POST /api/v1/conversations/new` — начать новый диалог.
+- `GET /api/v1/conversations/` — получить список диалогов пользователя.
+- `POST /api/v1/questions/adaptive` — основной adaptive-runtime ответ.
+- `POST /api/v1/conversations/{id}/close` — закрыть выбранный диалог.
 
-Для стабильной identity-привязки API поддерживает заголовки:
+## Тестирование
 
-- `X-Device-Fingerprint` — стабильный device/browser fingerprint.
-- `X-Session-Id` — текущая сессия клиента.
+Подтвержденные команды:
 
-Если заголовки не переданы, backend использует безопасный fallback и сохраняет обратную совместимость со старыми клиентами (включая legacy `user_id` в body).
+```bash
+pytest tests/identity tests/conversations tests/api -q
+pytest tests/api -q
+```
 
-## Core Endpoints
+## Что дальше
 
-### Chat
+1. PRD-015A — Telegram Integration Contract (без реального транспорта).
+2. PRD-015B / следующий этап — реальный Telegram transport layer.
+3. Далее — мультиагентная оркестрация.
 
-- `POST /api/v1/questions/adaptive`
-- `POST /api/v1/questions/adaptive-stream`
-
-### Sessions
-
-- `GET /api/v1/users/{user_id}/sessions`
-- `POST /api/v1/users/{user_id}/sessions`
-- `DELETE /api/v1/users/{user_id}/sessions/{session_id}`
-
-### Debug
-
-- `GET /api/debug/session/{session_id}/metrics`
-- `GET /api/debug/session/{session_id}/traces`
-- `GET /api/debug/session/{session_id}/llm-payload`
-- `GET /api/debug/blob/{blob_id}`
-
-## Documentation
+## Документация
 
 - [Overview](docs/overview.md)
 - [Architecture](docs/architecture.md)
+- [Architecture: Identity + Conversations](docs/architecture_identity_and_conversations.md)
+- [Local Dev Runbook](docs/local_dev_runbook.md)
+- [Testing Matrix](docs/testing_matrix.md)
+- [Telegram Integration Strategy](docs/telegram_integration_strategy.md)
 - [Bot Agent](docs/bot_agent.md)
 - [API](docs/api.md)
 - [Web UI](docs/web_ui.md)
-- [Testing](docs/testing.md)
 - [Trace runtime](docs/trace_runtime.md)
 
-## Notes
+## Ограничения и безопасность
 
-- `response_utils.py (removed in Wave 142)` was removed in Wave 142.
-- Answer-adaptive modularization has no open TODO in active strategy.
-
-## Memory
-
-- `memory_v12.py` is the active snapshot schema (`v1.2`) in runtime.
-- `memory_context.py` builds runtime memory context from summary + recent turns + v1.2 snapshot.
-
-## External Deployment (CORS)
-
-- ⚠️ Before deploying to an external server, update `api/main.py` CORS settings and replace permissive wildcard origins with explicit trusted domains.
-- Current `allow_origins=["*"]` is acceptable only for local development/debug usage.
-
+- Telegram в production пока не подключен.
+- Для внешнего деплоя требуется строгая настройка CORS (без `allow_origins=["*"]`).

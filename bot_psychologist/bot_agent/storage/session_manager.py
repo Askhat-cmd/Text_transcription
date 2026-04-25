@@ -512,6 +512,16 @@ class SessionManager:
         for row in rows:
             metadata_raw = row["metadata"]
             metadata = json.loads(metadata_raw) if metadata_raw else {}
+            source = str(metadata.get("source", "")).strip().lower()
+            session_id = str(row["session_id"] or "")
+
+            # Hide technical identity sessions from chat sidebar.
+            is_chat_source = source in {"web_ui", "api", "telegram", "telegram_adapter"}
+            technical_prefixes = ("sess_", "web_", "telegram_")
+            is_legacy_chat = (not source) and (not session_id.startswith(technical_prefixes))
+            if not (is_chat_source or is_legacy_chat):
+                continue
+
             turn_data = last_turns_by_session.get(row["session_id"], {})
             result.append(
                 {

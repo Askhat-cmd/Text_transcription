@@ -84,3 +84,61 @@ def test_retention_cleanup_deletes_old_archived() -> None:
     result = manager.run_retention_cleanup(active_days=90, archive_days=365)
     assert result["deleted_count"] == 1
     assert manager.load_session(session_id) is None
+
+
+def test_delete_session_data_cascades_turns_and_embeddings() -> None:
+    manager = SessionManager(db_path=":memory:")
+    session_id = "delete-cascade-session"
+    manager.create_session(session_id=session_id, user_id="user_delete")
+
+    embedding = np.random.rand(8).astype(np.float32)
+    manager.save_turn(
+        session_id=session_id,
+        turn_number=1,
+        user_input="first",
+        bot_response="answer",
+        mode="PRESENCE",
+        embedding=embedding,
+    )
+
+    assert manager.load_session(session_id) is not None
+    assert manager.delete_session_data(session_id) is True
+    assert manager.load_session(session_id) is None
+
+    with manager._connect() as conn:  # noqa: SLF001 - test-level DB assertion
+        turns_count = conn.execute(
+            "SELECT COUNT(*) FROM conversation_turns WHERE session_id = ?",
+            (session_id,),
+        ).fetchone()[0]
+        embeddings_count = conn.execute(
+            "SELECT COUNT(*) FROM semantic_embeddings WHERE session_id = ?",
+            (session_id,),
+        ).fetchone()[0]
+
+    assert turns_count == 0
+    assert embeddings_count == 0
+
+
+def test_list_user_sessions_excludes_technical_identity_sessions() -> None:
+    manager = SessionManager(db_path=":memory:")
+    user_id = "user_for_sidebar"
+
+    manager.create_session(
+        session_id="sess_technical_1",
+        user_id=user_id,
+        metadata={"ip_hash": "ip_sha:abc", "channel": "web"},
+    )
+    manager.create_session(
+        session_id="web_technical_2",
+        user_id=user_id,
+        metadata={"ip_hash": "ip_sha:def", "channel": "web"},
+    )
+    manager.create_session(session_id="legacy-visible-uuid", user_id=user_id, metadata={})
+    manager.create_user_session(user_id=user_id, title="Visible chat")
+
+    sessions = manager.list_user_sessions(user_id=user_id, limit=20)
+    session_ids = {item["session_id"] for item in sessions}
+
+    assert "sess_technical_1" not in session_ids
+    assert "web_technical_2" not in session_ids
+    assert "legacy-visible-uuid" in session_ids

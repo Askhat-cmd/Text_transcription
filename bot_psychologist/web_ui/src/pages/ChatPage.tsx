@@ -422,22 +422,15 @@ const ChatPage: React.FC = () => {
   const handleDeleteChat = async (chatId: string) => {
     try {
       await apiService.deleteUserSession(userId, chatId);
-
-      const remaining = sessions.filter((session) => session.id !== chatId);
-
-      if (remaining.length === 0) {
-        const created = await apiService.createUserSession(userId);
-        const mapped = mapServerSession(created);
-        setSessions([mapped]);
-        setActiveChatId(mapped.id);
+      const deletingActive = chatId === activeChatId;
+      if (deletingActive) {
         replaceMessages([]);
-        return;
       }
 
-      setSessions(remaining);
-      if (chatId === activeChatId) {
-        setActiveChatId(remaining[0].id);
-      }
+      const preferredSessionId = deletingActive ? undefined : activeChatId;
+      await loadSessions(preferredSessionId);
+      clearError();
+      setSidebarError(null);
     } catch (deleteError) {
       setSidebarError(deleteError instanceof Error ? deleteError.message : 'Не удалось удалить чат');
     }

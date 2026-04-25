@@ -23,8 +23,11 @@ import type { InlineTrace } from '../types';
 class APIService {
   private api: AxiosInstance;
   private apiKey: string = '';
+  private webSessionId: string = '';
 
   constructor() {
+    this.webSessionId = this.getOrCreateWebSessionId();
+
     this.api = axios.create({
       baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8001/api/v1',
       timeout: 120000,
@@ -36,6 +39,9 @@ class APIService {
     this.api.interceptors.request.use((config) => {
       if (this.apiKey) {
         config.headers['X-API-Key'] = this.apiKey;
+      }
+      if (this.webSessionId) {
+        config.headers['X-Session-Id'] = this.webSessionId;
       }
       return config;
     });
@@ -77,6 +83,27 @@ class APIService {
   private handleAuthError(): void {
     localStorage.removeItem('bot_api_key');
     console.warn('API key is invalid or expired');
+  }
+
+  private getOrCreateWebSessionId(): string {
+    const key = 'bot_web_session_id';
+
+    try {
+      const existing = localStorage.getItem(key);
+      if (existing && existing.trim()) {
+        return existing.trim();
+      }
+    } catch {
+      // noop
+    }
+
+    const generated = `sess_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+    try {
+      localStorage.setItem(key, generated);
+    } catch {
+      // noop
+    }
+    return generated;
   }
 
   // === QUESTION ENDPOINTS ===

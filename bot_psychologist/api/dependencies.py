@@ -28,6 +28,7 @@ from .identity import (
     hash_ip,
     resolve_client_ip,
 )
+from .telegram_adapter.service import TelegramAdapterService
 
 _data_loader: Optional[DataLoader] = None
 _graph_client: Optional[KnowledgeGraphClient] = None
@@ -37,6 +38,7 @@ _identity_repository: Optional[IdentityRepository] = None
 _identity_service: Optional[IdentityService] = None
 _conversation_repository: Optional[ConversationRepository] = None
 _conversation_service: Optional[ConversationService] = None
+_telegram_adapter_service: Optional[TelegramAdapterService] = None
 
 logger = logging.getLogger(__name__)
 
@@ -90,6 +92,17 @@ def get_conversation_service() -> ConversationService:
         _conversation_repository = ConversationRepository(str(config.BOT_DB_PATH))
         _conversation_service = ConversationService(_conversation_repository)
     return _conversation_service
+
+
+def get_telegram_adapter_service() -> TelegramAdapterService:
+    """FastAPI dependency: singleton telegram adapter service."""
+    global _telegram_adapter_service
+    if _telegram_adapter_service is None:
+        _telegram_adapter_service = TelegramAdapterService(
+            identity_service=get_identity_service(),
+            conversation_service=get_conversation_service(),
+        )
+    return _telegram_adapter_service
 
 
 async def get_identity_context(

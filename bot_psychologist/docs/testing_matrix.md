@@ -24,6 +24,16 @@ pytest tests/api -q
 Ожидание:
 - PASS по HTTP-контрактам API.
 
+### Набор C — Telegram contract (PRD-015A)
+
+```bash
+pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter.py tests/telegram_adapter/test_service.py tests/api/test_telegram_mock_routes.py -q
+```
+
+Ожидание:
+- PASS по контрактам Telegram adapter (mock/dev-only).
+- PASS по strict linking сценарию (`telegram_not_linked` для unlinked identity).
+
 ## Что относится к PRD-014
 
 - `tests/conversations/*`
@@ -55,6 +65,7 @@ pytest tests/api -q
 
 ### FAIL
 - Любой red в наборах A/B;
+- Любой red в наборе C (Telegram contract);
 - Ошибки identity fallback, ломающие контракт UUID;
 - Ошибки жизненного цикла conversations (создание/список/закрытие).
 
@@ -62,6 +73,7 @@ pytest tests/api -q
 
 ### Реализовано
 - Базовая тест-матрица для PRD-014.
+- Контрактные проверки PRD-015A (Telegram mock/dev flow).
 
 ### Планируется
 - Выделение CI-пайплайна с обязательным gate для наборов A/B.

@@ -15,6 +15,7 @@ from .conversation_routes import router as conversation_router
 from .feedback import router as feedback_router
 from .health import health_check, router as health_router
 from .identity_routes import router as identity_router
+from .telegram_mock_routes import router as telegram_mock_router
 from .users import router as users_router
 
 # Совместимый экспорт для monkeypatch(routes.answer_question_adaptive)
@@ -51,6 +52,7 @@ router.include_router(conversation_router)
 router.include_router(users_router)
 router.include_router(feedback_router)
 router.include_router(identity_router)
+router.include_router(telegram_mock_router)
 router.include_router(health_router)
 
 __all__ = [

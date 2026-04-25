@@ -10,12 +10,11 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - `session_id` используется как уровень устройства/клиента, а не как идентификатор человека.
 - `conversation_id` выделен в отдельный UUID диалога и не равен `session_id` (PRD-014).
 - Модуль `answer_adaptive.py` завершил модуляризацию (waves 1-144) и работает как фасад-оркестратор.
-- Проект подготовлен к следующему этапу: контрактная интеграция Telegram (без production transport на текущий момент).
+- Реализован PRD-015A: контрактная интеграция Telegram через `api/telegram_adapter/` (mock/dev-only, без production transport).
 
 ### Что планируется
 
-- PRD-015A: Telegram Integration Contract (контракты и связка identity/conversation).
-- Следующий этап: реальный Telegram transport layer.
+- PRD-015B: реальный Telegram transport layer (webhook/polling и delivery в Telegram).
 - Далее: multi-agent orchestration.
 
 ## Иерархия идентификаторов
@@ -34,7 +33,7 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - `api/routes/` — HTTP API-слой.
 - `api/dependencies.py` — сборка request context (identity + conversation + runtime deps).
 - `Bot_data_base/` — внешний сервис данных/памяти.
-- `telegram_adapter/` — задел под будущий канал Telegram.
+- `api/telegram_adapter/` — контрактный слой Telegram (mock/dev-only, strict linking).
 
 ## Локальный запуск
 
@@ -76,6 +75,7 @@ npm run dev
 - `GET /api/v1/conversations/` — получить список диалогов пользователя.
 - `POST /api/v1/questions/adaptive` — основной adaptive-runtime ответ.
 - `POST /api/v1/conversations/{id}/close` — закрыть выбранный диалог.
+- `POST /api/v1/dev/telegram/mock-update` — dev-only mock endpoint для проверки Telegram-контракта.
 
 ## Тестирование
 
@@ -84,12 +84,13 @@ npm run dev
 ```bash
 pytest tests/identity tests/conversations tests/api -q
 pytest tests/api -q
+pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter.py tests/telegram_adapter/test_service.py tests/api/test_telegram_mock_routes.py -q
 ```
 
 ## Что дальше
 
-1. PRD-015A — Telegram Integration Contract (без реального транспорта).
-2. PRD-015B / следующий этап — реальный Telegram transport layer.
+1. PRD-015B / следующий этап — реальный Telegram transport layer.
+2. Account linking flow `/start <code>` и delivery ответов обратно в Telegram.
 3. Далее — мультиагентная оркестрация.
 
 ## Документация
@@ -107,5 +108,5 @@ pytest tests/api -q
 
 ## Ограничения и безопасность
 
-- Telegram в production пока не подключен.
+- Telegram transport в production пока не подключен (контрактный mock-слой уже реализован).
 - Для внешнего деплоя требуется строгая настройка CORS (без `allow_origins=["*"]`).

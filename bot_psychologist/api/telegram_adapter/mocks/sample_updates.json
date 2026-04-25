@@ -1,0 +1,30 @@
+﻿[
+  {
+    "update_id": 1001,
+    "telegram_user_id": "tg_user_001",
+    "chat_id": "tg_chat_001",
+    "message_id": "msg_001",
+    "text": "Привет, расскажи про самопознание",
+    "username": "neo_user",
+    "language_code": "ru",
+    "timestamp": "2026-04-25T12:00:00Z"
+  },
+  {
+    "update_id": 1002,
+    "telegram_user_id": "",
+    "chat_id": "tg_chat_002",
+    "message_id": "msg_002",
+    "text": "",
+    "timestamp": "2026-04-25T12:01:00Z"
+  },
+  {
+    "update_id": 1003,
+    "telegram_user_id": "tg_user_unlinked",
+    "chat_id": "tg_chat_003",
+    "message_id": "msg_003",
+    "text": "Есть кто живой?",
+    "username": "unlinked_user",
+    "language_code": "ru",
+    "timestamp": "2026-04-25T12:02:00Z"
+  }
+]

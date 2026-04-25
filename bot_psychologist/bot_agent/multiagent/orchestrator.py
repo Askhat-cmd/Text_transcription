@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 
+from .agents.memory_retrieval import memory_retrieval_agent
 from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import thread_manager_agent
 from .contracts.memory_bundle import MemoryBundle
@@ -36,8 +37,22 @@ class MultiAgentOrchestrator:
             thread_storage.archive_thread(current_thread, reason="new_thread")
         thread_storage.save_active(updated_thread)
 
-        memory_bundle = MemoryBundle(conversation_context="", semantic_hits=[], retrieved_chunks=[])
+        memory_bundle = await memory_retrieval_agent.assemble(
+            user_message=query,
+            thread_state=updated_thread,
+            user_id=user_id,
+        )
         answer = self._build_answer(query=query, thread=updated_thread, memory_bundle=memory_bundle)
+
+        asyncio.create_task(
+            memory_retrieval_agent.update(
+                user_id=user_id,
+                user_message=query,
+                assistant_response=answer,
+                thread_state=updated_thread,
+            )
+        )
+
         return {
             "status": "ok",
             "answer": answer,
@@ -53,6 +68,9 @@ class MultiAgentOrchestrator:
                 "intent": state_snapshot.intent,
                 "safety_flag": state_snapshot.safety_flag,
                 "confidence": state_snapshot.confidence,
+                "has_relevant_knowledge": memory_bundle.has_relevant_knowledge,
+                "context_turns": memory_bundle.context_turns,
+                "semantic_hits_count": len(memory_bundle.semantic_hits),
             },
         }
 

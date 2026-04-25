@@ -1,0 +1,40 @@
+[
+  {
+    "id": "MR-F01",
+    "user_message": "хочу разобраться с тревогой",
+    "thread_phase": "clarify",
+    "thread_relation": "continue",
+    "core_direction": "тревога на работе",
+    "open_loops": ["почему я так реагирую"],
+    "expected_n_turns": 6,
+    "expected_query_contains": ["тревог", "работ"]
+  },
+  {
+    "id": "MR-F02",
+    "user_message": "новая тема",
+    "thread_phase": "clarify",
+    "thread_relation": "new_thread",
+    "core_direction": "новая тема",
+    "open_loops": [],
+    "expected_n_turns": 2
+  },
+  {
+    "id": "MR-F03",
+    "user_message": "хочу осмыслить всё что понял",
+    "thread_phase": "integrate",
+    "thread_relation": "continue",
+    "core_direction": "паттерн избегания",
+    "open_loops": [],
+    "expected_n_turns": 10
+  },
+  {
+    "id": "MR-F04",
+    "user_message": "срочно нужна помощь",
+    "thread_phase": "stabilize",
+    "thread_relation": "continue",
+    "core_direction": "кризис",
+    "open_loops": [],
+    "expected_n_turns": 3
+  }
+]
+

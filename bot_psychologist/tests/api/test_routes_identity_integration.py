@@ -151,3 +151,28 @@ def test_identity_session_metadata_uses_ip_hash(tmp_path: Path, client: TestClie
         assert "ip" not in payload
     finally:
         conn.close()
+
+
+def test_adaptive_uses_request_session_id_as_runtime_scope(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    captured: dict[str, Any] = {}
+
+    def _capture_stub(*_args: Any, **kwargs: Any) -> dict[str, Any]:
+        captured["user_id"] = kwargs.get("user_id")
+        return _stub_adaptive_result()
+
+    monkeypatch.setattr(routes, "answer_question_adaptive", _capture_stub, raising=True)
+    headers = {
+        "X-API-Key": "test-key-001",
+        "X-Session-Id": "identity-session-1",
+        "X-Device-Fingerprint": "sha256:runtime-scope-fp",
+    }
+    response = client.post(
+        "/api/v1/questions/adaptive",
+        headers=headers,
+        json={"query": "test", "session_id": "chat-session-xyz"},
+    )
+    assert response.status_code == 200
+    assert captured.get("user_id") == "chat-session-xyz"

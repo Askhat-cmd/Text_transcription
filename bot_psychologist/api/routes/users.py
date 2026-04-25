@@ -183,6 +183,60 @@ async def get_user_history(
     logger.info("History requested for user=%s", canonical_user_id)
 
     try:
+        requested_scope = (user_id or "").strip()
+        manager = SessionManager(str(config.BOT_DB_PATH))
+
+        # РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ СЃ Web UI:
+        # РµСЃР»Рё РІ path РїРµСЂРµРґР°РЅ session_id Р°РєС‚РёРІРЅРѕРіРѕ С‡Р°С‚Р°, РІРѕР·РІСЂР°С‰Р°РµРј РёСЃС‚РѕСЂРёСЋ РёРјРµРЅРЅРѕ СЌС‚РѕР№ СЃРµСЃСЃРёРё.
+        if requested_scope and requested_scope != canonical_user_id:
+            payload = manager.load_session(requested_scope)
+            if payload:
+                session_info = payload.get("session_info", {}) or {}
+                session_owner = session_info.get("user_id")
+                if session_owner and session_owner != canonical_user_id:
+                    raise HTTPException(
+                        status_code=status.HTTP_403_FORBIDDEN,
+                        detail="Session does not belong to user",
+                    )
+
+                all_turns = payload.get("conversation_turns", []) or []
+                sliced_turns = all_turns[-max(1, int(last_n_turns)) :]
+                turns = [
+                    ConversationTurnResponse(
+                        timestamp=turn.get("timestamp", ""),
+                        user_input=turn.get("user_input", ""),
+                        user_state=turn.get("user_state"),
+                        bot_response=turn.get("bot_response", ""),
+                        blocks_used=len(turn.get("chunks_used", []) or []),
+                        concepts=[],
+                        user_feedback=turn.get("user_feedback"),
+                        user_rating=turn.get("user_rating"),
+                    )
+                    for turn in sliced_turns
+                ]
+                return UserHistoryResponse(
+                    user_id=canonical_user_id,
+                    total_turns=len(all_turns),
+                    turns=turns,
+                    primary_interests=[],
+                    average_rating=0.0,
+                    last_interaction=(
+                        all_turns[-1].get("timestamp") if all_turns else None
+                    ),
+                )
+            # Если явно запрошена сессия, но ее нет в БД — возвращаем пустую историю,
+            # чтобы не смешивать новый чат с legacy user-memory.
+            return UserHistoryResponse(
+                user_id=canonical_user_id,
+                total_turns=0,
+                turns=[],
+                primary_interests=[],
+                average_rating=0.0,
+                last_interaction=None,
+            )
+
+
+        # РСЃС‚РѕСЂРёСЏ РїРѕ legacy user memory (РѕР±СЂР°С‚РЅР°СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ).
         memory = get_conversation_memory(canonical_user_id)
         summary = memory.get_summary()
         last_turns = memory.get_last_turns(last_n_turns)
@@ -210,6 +264,8 @@ async def get_user_history(
             average_rating=summary.get("average_rating", 0),
             last_interaction=summary.get("last_interaction"),
         )
+    except HTTPException:
+        raise
     except Exception as exc:
         logger.error("Error fetching user history: %s", exc)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
@@ -454,4 +510,3 @@ async def gdpr_delete_user_data(
     except Exception as exc:
         logger.error("GDPR delete error: %s", exc)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
-

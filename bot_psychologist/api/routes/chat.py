@@ -76,6 +76,23 @@ def _resolve_stream_answer_tokens():
     return stream_answer_tokens
 
 
+def _resolve_runtime_session_scope(
+    request: AskQuestionRequest,
+    identity: IdentityContext,
+) -> tuple[str, str]:
+    """
+    Возвращает ключи сессии/runtime для изоляции контекста чатов.
+
+    Если фронт прислал request.session_id (UUID активного чата),
+    используем его как runtime scope, чтобы новый чат не подтягивал историю
+    другого чата того же пользователя.
+    """
+    requested_session = (request.session_id or "").strip()
+    if requested_session:
+        return requested_session, requested_session
+    return identity.session_id, identity.user_id
+
+
 @router.post(
     "/questions/basic",
     response_model=AnswerResponse,
@@ -235,21 +252,22 @@ async def ask_adaptive_question(
     - Адаптивный запрос обратной связи
     """
     
+    session_key, runtime_user_scope = _resolve_runtime_session_scope(request, identity)
+
     logger.info(
-        "[ADAPTIVE] Adaptive question: %s... (user=%s session=%s)",
+        "[ADAPTIVE] Adaptive question: %s... (user=%s runtime_scope=%s session=%s)",
         request.query[:50],
         identity.user_id,
-        identity.session_id,
+        runtime_user_scope,
+        session_key,
     )
 
     try:
-        session_key = identity.session_id
-
         # Dev-   debug-
         if is_dev_key(api_key):
             request.debug = True
 
-        if request.session_id:
+        if session_key:
             try:
                 session_manager = SessionManager(str(config.BOT_DB_PATH))
                 session_manager.create_session(
@@ -265,7 +283,7 @@ async def ask_adaptive_question(
 
         result = _resolve_answer_question_adaptive()(
             request.query,
-            user_id=identity.user_id,
+            user_id=runtime_user_scope,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
             debug=request.debug,
@@ -330,6 +348,7 @@ async def ask_adaptive_question(
         response_metadata["user_id"] = identity.user_id
         response_metadata["session_id"] = session_key
         response_metadata["conversation_id"] = identity.conversation_id
+        response_metadata["runtime_user_scope"] = runtime_user_scope
 
         trace = None
         if request.debug:
@@ -592,19 +611,20 @@ async def ask_adaptive_question_stream(
             detail="Streaming is disabled",
         )
 
+    session_key, runtime_user_scope = _resolve_runtime_session_scope(request, identity)
+
     logger.info(
-        "[ADAPTIVE-STREAM] query: %s... (user=%s session=%s)",
+        "[ADAPTIVE-STREAM] query: %s... (user=%s runtime_scope=%s session=%s)",
         request.query[:50],
         identity.user_id,
-        identity.session_id,
+        runtime_user_scope,
+        session_key,
     )
-
-    session_key = identity.session_id
 
     if is_dev_key(api_key):
         request.debug = True
 
-    if request.session_id:
+    if session_key:
         try:
             session_manager = SessionManager(str(config.BOT_DB_PATH))
             session_manager.create_session(
@@ -627,7 +647,7 @@ async def ask_adaptive_question_stream(
         try:
             async for token in _resolve_stream_answer_tokens()(
                 request.query,
-                user_id=identity.user_id,
+                user_id=runtime_user_scope,
                 session_store=store,
                 include_path=request.include_path,
                 include_feedback_prompt=request.include_feedback_prompt,
@@ -668,7 +688,7 @@ async def ask_adaptive_question_stream(
                 yield "event: trace\n"
                 yield f"data: {json.dumps(trace, ensure_ascii=False)}\n\n"
             try:
-                memory = get_conversation_memory(identity.user_id)
+                memory = get_conversation_memory(runtime_user_scope)
                 schedule_fn = getattr(memory, "schedule_summary_task_if_due", None)
                 if callable(schedule_fn):
                     schedule_fn()

@@ -1,10 +1,10 @@
-"""Summary manager helpers for Memory v1.1."""
+"""Summary manager helpers for runtime memory policy."""
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .memory_v11 import resolve_summary_staleness
+from .memory_context import resolve_summary_staleness
 
 
 @dataclass(frozen=True)
@@ -35,4 +35,3 @@ class SummaryManager:
 
 
 summary_manager = SummaryManager()
-

@@ -13,7 +13,7 @@
 ## Где это в коде
 - Backend trace API: `api/debug_routes.py`
 - Формирование runtime trace: `bot_agent/answer_adaptive.py`
-- Memory trace context: `bot_agent/conversation_memory.py`, `bot_agent/memory_v11.py`
+- Memory trace context: `bot_agent/conversation_memory.py`, `bot_agent/memory_context.py`
 - Inline trace UI (в сообщении): `web_ui/src/components/chat/InlineDebugTrace.tsx`
 - Статус-полоса (8 чипов): `web_ui/src/components/debug/StatusBar.tsx`
 - Полотно LLM: `web_ui/src/components/debug/LLMPayloadPanel.tsx`

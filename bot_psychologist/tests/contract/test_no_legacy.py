@@ -20,7 +20,7 @@ def test_no_legacy_runtime_markers_in_active_neo_paths() -> None:
             "from .answer_sag_aware",
             "from .answer_graph_powered",
         ],
-        "api/routes.py": [
+        "api/routes/chat.py": [
             "answer_question_basic(",
             "answer_question_sag_aware(",
             "answer_question_graph_powered(",

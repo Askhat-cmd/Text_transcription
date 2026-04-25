@@ -4,13 +4,13 @@
   "entrypoints": [
     {
       "name": "adaptive_http",
-      "file": "bot_psychologist/api/routes.py",
+      "file": "bot_psychologist/api/routes/chat.py",
       "symbol": "ask_adaptive_question",
       "route": "/questions/adaptive"
     },
     {
       "name": "adaptive_stream",
-      "file": "bot_psychologist/api/routes.py",
+      "file": "bot_psychologist/api/routes/chat.py",
       "symbol": "ask_adaptive_question_stream",
       "route": "/questions/adaptive-stream"
     },
@@ -44,7 +44,7 @@
       ]
     },
     "streaming_divergence_markers": {
-      "file": "bot_psychologist/api/routes.py",
+      "file": "bot_psychologist/api/routes/chat.py",
       "patterns": [
         "_classify_parallel(",
         "sd_classifier",

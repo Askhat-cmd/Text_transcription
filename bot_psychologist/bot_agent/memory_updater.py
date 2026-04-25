@@ -1,4 +1,4 @@
-"""Runtime memory updater for Memory v1.1."""
+"""Runtime memory updater for active memory snapshot/context contract."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, Iterable
 
 from .config import config
-from .memory_v11 import build_snapshot_v11, compose_memory_context_v11, MemoryContextBundle
+from .memory_context import compose_memory_context, MemoryContextBundle
 from .memory_v12 import build_snapshot_v12
 from .summary_manager import summary_manager
 
@@ -35,23 +35,17 @@ class MemoryUpdater:
             summary_updated_at=summary_updated_at,
             total_turns=total_turns,
         )
-        legacy_snapshot = build_snapshot_v11(
-            diagnostics=diagnostics or {},
-            route=route,
-            summary_staleness=staleness,
-            engagement=self._extract_engagement(memory),
-        )
         snapshot = build_snapshot_v12(
             diagnostics=diagnostics or {},
             route=route,
             summary_staleness=staleness,
             engagement=self._extract_engagement(memory),
         )
-        context = compose_memory_context_v11(
+        context = compose_memory_context(
             summary=normalized_summary,
             summary_updated_at=summary_updated_at,
             total_turns=total_turns,
-            snapshot=legacy_snapshot,
+            snapshot=snapshot,
             recent_turns=list(recent_turns) if recent_turns is not None else list(getattr(memory, "turns", [])),
             summary_window_size=int(getattr(config, "SUMMARY_WINDOW_SIZE", 5) or 5),
             recent_window=int(getattr(config, "RECENT_WINDOW", 4) or 4),

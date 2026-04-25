@@ -4,7 +4,10 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-API_ROUTES = REPO_ROOT / "bot_psychologist/api/routes.py"
+API_ROUTE_FILES = [
+    REPO_ROOT / "bot_psychologist/api/routes/chat.py",
+    REPO_ROOT / "bot_psychologist/api/routes/common.py",
+]
 
 
 def _read_text(path: Path) -> str:
@@ -12,13 +15,13 @@ def _read_text(path: Path) -> str:
 
 
 def test_streaming_entrypoint_exists() -> None:
-    text = _read_text(API_ROUTES)
+    text = _read_text(API_ROUTE_FILES[0])
     assert "ask_adaptive_question_stream" in text
     assert "/questions/adaptive-stream" in text
 
 
 def test_streaming_runtime_legacy_markers_are_sanitized() -> None:
-    text = _read_text(API_ROUTES)
+    text = "\n".join(_read_text(path) for path in API_ROUTE_FILES)
     # Active runtime should not contain legacy streaming classifier split.
     assert "_classify_parallel(" not in text
     assert "sd_classifier" not in text

@@ -90,3 +90,13 @@ API base URL: `http://localhost:8001/api/v1`
 - `response_utils.py (removed in Wave 142)` was removed in Wave 142.
 - Answer-adaptive modularization has no open TODO in active strategy.
 
+## Memory
+
+- `memory_v12.py` is the active snapshot schema (`v1.2`) in runtime.
+- `memory_context.py` builds runtime memory context from summary + recent turns + v1.2 snapshot.
+
+## External Deployment (CORS)
+
+- ⚠️ Before deploying to an external server, update `api/main.py` CORS settings and replace permissive wildcard origins with explicit trusted domains.
+- Current `allow_origins=["*"]` is acceptable only for local development/debug usage.
+

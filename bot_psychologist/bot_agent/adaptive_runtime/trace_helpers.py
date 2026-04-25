@@ -695,7 +695,6 @@ def _build_memory_context_snapshot(memory) -> str:
             snapshot = (
                 metadata.get("laststatesnapshot")
                 or metadata.get("last_state_snapshot_v12")
-                or metadata.get("last_state_snapshot_v11")
             )
             if isinstance(snapshot, dict):
                 return _truncate_preview(json.dumps(snapshot, ensure_ascii=False), 1200)

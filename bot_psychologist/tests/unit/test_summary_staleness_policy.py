@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from bot_agent.memory_v11 import resolve_summary_staleness
+from bot_agent.memory_context import resolve_summary_staleness
 
 
 def test_summary_staleness_fresh() -> None:

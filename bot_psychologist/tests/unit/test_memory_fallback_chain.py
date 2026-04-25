@@ -6,7 +6,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from bot_agent.memory_v11 import build_snapshot_v11, compose_memory_context_v11
+from bot_agent.memory_context import compose_memory_context
+from bot_agent.memory_v12 import build_snapshot_v12
 
 
 @dataclass
@@ -25,9 +26,8 @@ def _turns() -> list[_Turn]:
 
 
 def test_memory_fallback_chain_fresh_summary_prefers_summary() -> None:
-    snapshot = build_snapshot_v11(
+    snapshot = build_snapshot_v12(
         diagnostics={
-            "interaction_mode": "coaching",
             "nervous_system_state": "window",
             "request_function": "understand",
             "core_theme": "core",
@@ -35,7 +35,7 @@ def test_memory_fallback_chain_fresh_summary_prefers_summary() -> None:
         route="reflect",
         summary_staleness="fresh",
     )
-    bundle = compose_memory_context_v11(
+    bundle = compose_memory_context(
         summary="fresh summary",
         summary_updated_at=4,
         total_turns=5,
@@ -47,8 +47,8 @@ def test_memory_fallback_chain_fresh_summary_prefers_summary() -> None:
 
 
 def test_memory_fallback_chain_missing_summary_uses_snapshot_and_recent() -> None:
-    snapshot = build_snapshot_v11(route="reflect", summary_staleness="missing")
-    bundle = compose_memory_context_v11(
+    snapshot = build_snapshot_v12(route="reflect", summary_staleness="missing")
+    bundle = compose_memory_context(
         summary=None,
         summary_updated_at=None,
         total_turns=4,
@@ -62,8 +62,8 @@ def test_memory_fallback_chain_missing_summary_uses_snapshot_and_recent() -> Non
 
 
 def test_memory_fallback_chain_corrupted_snapshot_ignores_broken_fields() -> None:
-    broken_snapshot = {"schema_version": "0.0", "diagnostics": {}, "routing": {}, "meta": {}}
-    bundle = compose_memory_context_v11(
+    broken_snapshot = {"_schema_version": "0.0", "nervous_system_state": "window"}
+    bundle = compose_memory_context(
         summary="old summary",
         summary_updated_at=1,
         total_turns=12,

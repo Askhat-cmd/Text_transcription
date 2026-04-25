@@ -6,7 +6,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from bot_agent.memory_v11 import build_snapshot_v11, compose_memory_context_v11
+from bot_agent.memory_context import compose_memory_context
+from bot_agent.memory_v12 import build_snapshot_v12
 
 
 @dataclass
@@ -17,9 +18,8 @@ class _Turn:
 
 def test_context_continuity_between_sessions_uses_summary_plus_recent_window() -> None:
     previous_summary = "Пользователь исследует паттерн избегания ответственности."
-    snapshot = build_snapshot_v11(
+    snapshot = build_snapshot_v12(
         diagnostics={
-            "interaction_mode": "coaching",
             "nervous_system_state": "window",
             "request_function": "explore",
             "core_theme": "избегание ответственности",
@@ -31,7 +31,7 @@ def test_context_continuity_between_sessions_uses_summary_plus_recent_window() -
         _Turn(user_input="я снова откладываю важные дела", bot_response="давай разберем шаг за шагом"),
         _Turn(user_input="хочу изменить это", bot_response="выделим один небольшой шаг"),
     ]
-    bundle = compose_memory_context_v11(
+    bundle = compose_memory_context(
         summary=previous_summary,
         summary_updated_at=4,
         total_turns=5,

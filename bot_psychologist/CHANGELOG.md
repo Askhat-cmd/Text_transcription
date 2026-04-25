@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.12.1 - 2026-04-25
+
+### Added
+- PRD-013 Identity Layer:
+  - `api/identity/` (`models.py`, `repository.py`, `service.py`, `middleware.py`)
+  - `api/routes/identity_routes.py` (`/api/v1/identity/me`, stub endpoints for telegram linking)
+  - SQL migration `scripts/migrations/013_identity_layer.sql`
+  - Admin endpoint `GET /api/admin/users/{user_id}/identity` (+ `/api/v1/...`)
+
+### Changed
+- `api/dependencies.py`: added `get_identity_service()` and `get_identity_context()`.
+- `api/routes/chat.py`, `api/routes/users.py`, `api/routes/feedback.py`: switched to canonical `IdentityContext`.
+- `api/models.py`: `AskQuestionRequest.user_id` marked as deprecated-compatible optional field.
+- `README.md`: added identity request headers section.
+
+### Tests
+- Added new test packs:
+  - `tests/identity/test_migration_013.py`
+  - `tests/identity/test_identity_models.py`
+  - `tests/identity/test_identity_repository.py`
+  - `tests/identity/test_identity_service.py`
+  - `tests/identity/test_identity_middleware.py`
+  - `tests/identity/test_legacy_user_id_bridge.py`
+  - `tests/identity/test_link_telegram_stub.py`
+  - `tests/identity/test_resolve_telegram.py`
+  - `tests/identity/test_identity_logging.py`
+  - `tests/api/test_routes_identity_integration.py`
+  - `tests/api/test_admin_identity_endpoint.py`
+- Full regression after integration: `538 passed, 13 skipped`.
+
 ## v0.7.1 - 2026-04-12
 
 ### Changed

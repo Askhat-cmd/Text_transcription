@@ -13,6 +13,7 @@ from .chat import router as chat_router
 from .common import _build_turn_diff
 from .feedback import router as feedback_router
 from .health import health_check, router as health_router
+from .identity_routes import router as identity_router
 from .users import router as users_router
 
 # Совместимый экспорт для monkeypatch(routes.answer_question_adaptive)
@@ -47,6 +48,7 @@ router = APIRouter()
 router.include_router(chat_router)
 router.include_router(users_router)
 router.include_router(feedback_router)
+router.include_router(identity_router)
 router.include_router(health_router)
 
 __all__ = [

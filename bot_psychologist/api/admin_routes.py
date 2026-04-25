@@ -15,6 +15,8 @@ from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.prompt_registry_v2 import PROMPT_STACK_ORDER, PROMPT_STACK_VERSION, prompt_registry_v2
 from .auth import is_dev_key
+from .dependencies import get_identity_service
+from .identity import IdentityService, mask_external_id
 
 
 # ─── Auth dependency ───────────────────────────────────────────────────────────
@@ -998,3 +1000,51 @@ async def admin_reset_everything():
     """Удаляет ВСЕ overrides. Бот вернётся к состоянию 'из коробки'."""
     config.reset_all_overrides()
     return {"status": "ok", "message": "Все overrides удалены. Восстановлены дефолты."}
+
+async def _admin_user_identity_payload(
+    user_id: str,
+    identity_service: IdentityService,
+) -> dict[str, Any]:
+    user = await identity_service.get_user(user_id)
+    if user is None:
+        raise HTTPException(status_code=404, detail=f"User not found: {user_id}")
+
+    linked = await identity_service.get_linked_identities(user_id)
+    sessions = await identity_service.get_active_sessions(user_id, limit=50)
+
+    return {
+        "user_id": user.id,
+        "created_at": user.created_at.isoformat(),
+        "status": user.status,
+        "linked_identities": [
+            {
+                "provider": item.provider,
+                "external_id": mask_external_id(item.provider, item.external_id),
+                "verified_at": item.verified_at.isoformat() if item.verified_at else None,
+            }
+            for item in linked
+        ],
+        "active_sessions": [
+            {
+                "session_id": item.session_id,
+                "channel": item.channel,
+                "last_seen_at": item.last_seen_at.isoformat() if item.last_seen_at else None,
+            }
+            for item in sessions
+        ],
+    }
+
+
+@admin_router.get(
+    "/users/{user_id}/identity",
+    summary="Identity details for a user",
+)
+@admin_router_v1.get(
+    "/users/{user_id}/identity",
+    summary="Identity details for a user (v1 route)",
+)
+async def admin_get_user_identity(
+    user_id: str,
+    identity_service: IdentityService = Depends(get_identity_service),
+):
+    return await _admin_user_identity_payload(user_id=user_id, identity_service=identity_service)

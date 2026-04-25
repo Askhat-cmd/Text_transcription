@@ -55,6 +55,15 @@ npm run dev
 Web UI URL: `http://localhost:3000`
 API base URL: `http://localhost:8001/api/v1`
 
+## Identity Headers (PRD-013)
+
+Для стабильной identity-привязки API поддерживает заголовки:
+
+- `X-Device-Fingerprint` — стабильный device/browser fingerprint.
+- `X-Session-Id` — текущая сессия клиента.
+
+Если заголовки не переданы, backend использует безопасный fallback и сохраняет обратную совместимость со старыми клиентами (включая legacy `user_id` в body).
+
 ## Core Endpoints
 
 ### Chat

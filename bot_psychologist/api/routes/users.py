@@ -1,4 +1,6 @@
-"""User/session/memory-роуты API."""
+"""User/session/memory API routes."""
+
+from __future__ import annotations
 
 from datetime import datetime
 from typing import Optional
@@ -10,6 +12,8 @@ from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.storage import SessionManager
 
 from ..auth import verify_api_key
+from ..dependencies import get_identity_context
+from ..identity import IdentityContext
 from ..models import (
     ArchiveSessionsResponse,
     ChatSessionInfoResponse,
@@ -26,25 +30,28 @@ from .common import _session_title, logger
 
 router = APIRouter(prefix="/api/v1", tags=["bot"])
 
+
 @router.get(
     "/users/{user_id}/sessions",
     response_model=UserSessionsResponse,
     summary="User chat sessions",
-    description="Get all chat sessions for user"
+    description="Get all chat sessions for user",
 )
 async def list_user_sessions(
     user_id: str,
     limit: int = 100,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
     try:
+        canonical_user_id = identity.user_id
         manager = SessionManager(str(config.BOT_DB_PATH))
-        raw_sessions = manager.list_user_sessions(user_id=user_id, limit=limit)
+        raw_sessions = manager.list_user_sessions(user_id=canonical_user_id, limit=limit)
 
         sessions = [
             ChatSessionInfoResponse(
                 session_id=item.get("session_id", ""),
-                user_id=user_id,
+                user_id=canonical_user_id,
                 created_at=item.get("created_at") or datetime.now().isoformat(),
                 last_active=item.get("last_active") or item.get("created_at") or datetime.now().isoformat(),
                 status=item.get("status") or "active",
@@ -58,38 +65,38 @@ async def list_user_sessions(
         ]
 
         return UserSessionsResponse(
-            user_id=user_id,
+            user_id=canonical_user_id,
             total_sessions=len(sessions),
             sessions=sessions,
         )
-    except Exception as e:
-        logger.error(f"Error listing user sessions: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error listing user sessions: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.post(
     "/users/{user_id}/sessions",
     response_model=ChatSessionInfoResponse,
     summary="Create user chat session",
-    description="Create a new chat session for user"
+    description="Create a new chat session for user",
 )
 async def create_user_session(
     user_id: str,
     request: Optional[CreateSessionRequest] = None,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
     try:
+        canonical_user_id = identity.user_id
         manager = SessionManager(str(config.BOT_DB_PATH))
         created = manager.create_user_session(
-            user_id=user_id,
+            user_id=canonical_user_id,
             title=(request.title if request else None),
         )
 
         return ChatSessionInfoResponse(
             session_id=created.get("session_id", ""),
-            user_id=user_id,
+            user_id=canonical_user_id,
             created_at=created.get("created_at") or datetime.now().isoformat(),
             last_active=created.get("last_active") or datetime.now().isoformat(),
             status=created.get("status") or "active",
@@ -99,194 +106,172 @@ async def create_user_session(
             last_bot_response=created.get("last_bot_response"),
             last_turn_timestamp=created.get("last_turn_timestamp"),
         )
-    except Exception as e:
-        logger.error(f"Error creating session for {user_id}: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error creating session for %s: %s", user_id, exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.delete(
     "/users/{user_id}/sessions/{session_id}",
     response_model=DeleteSessionResponse,
     summary="Delete user chat session",
-    description="Delete one chat session of user"
+    description="Delete one chat session of user",
 )
 async def delete_user_session(
     user_id: str,
     session_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
     try:
+        canonical_user_id = identity.user_id
         manager = SessionManager(str(config.BOT_DB_PATH))
         payload = manager.load_session(session_id)
         if not payload:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Session {session_id} not found"
+                detail=f"Session {session_id} not found",
             )
 
         session_info = payload.get("session_info", {})
         session_user_id = session_info.get("user_id")
-        if session_user_id and session_user_id != user_id:
+        if session_user_id and session_user_id != canonical_user_id:
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Session does not belong to user"
+                detail="Session does not belong to user",
             )
 
         deleted = manager.delete_session_data(session_id)
         if not deleted:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Session {session_id} not found"
+                detail=f"Session {session_id} not found",
             )
 
         return DeleteSessionResponse(
             status="success",
             message=f"Session {session_id} deleted",
-            user_id=user_id,
+            user_id=canonical_user_id,
             session_id=session_id,
         )
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Error deleting session {session_id}: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error deleting session %s: %s", session_id, exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.get(
     "/users/{user_id}/history",
     response_model=UserHistoryResponse,
-    summary="стория пользователя",
-    description="Получить историю диалога пользователя"
+    summary="User history",
+    description="Get user dialogue history",
 )
 @router.post(
     "/users/{user_id}/history",
     response_model=UserHistoryResponse,
-    summary="стория пользователя (POST)",
-    description="Получить историю диалога пользователя (совместимость)"
+    summary="User history (POST)",
+    description="Get user dialogue history (compatibility)",
 )
 async def get_user_history(
     user_id: str,
     last_n_turns: int = 10,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
-    """
-    Получить историю диалога пользователя.
-    
-    **Параметры:**
-    - `user_id`: ID пользователя
-    - `last_n_turns`: Последние N оборотов (по умолчанию 10)
-    
-    **Возвращает:**
-    - стория диалогов
-    - Основные интересы
-    - Средний рейтинг
-    - Последнее взаимодействие
-    """
-    
-    logger.info(f"📋 стория для {user_id}")
-    
+    canonical_user_id = identity.user_id
+    logger.info("History requested for user=%s", canonical_user_id)
+
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         summary = memory.get_summary()
         last_turns = memory.get_last_turns(last_n_turns)
-        
+
         turns = []
         for turn in last_turns:
-            turns.append(ConversationTurnResponse(
-                timestamp=turn.timestamp,
-                user_input=turn.user_input,
-                user_state=turn.user_state,
-                bot_response=turn.bot_response or "",
-                blocks_used=turn.blocks_used,
-                concepts=turn.concepts or [],
-                user_feedback=turn.user_feedback,
-                user_rating=turn.user_rating
-            ))
-        
+            turns.append(
+                ConversationTurnResponse(
+                    timestamp=turn.timestamp,
+                    user_input=turn.user_input,
+                    user_state=turn.user_state,
+                    bot_response=turn.bot_response or "",
+                    blocks_used=turn.blocks_used,
+                    concepts=turn.concepts or [],
+                    user_feedback=turn.user_feedback,
+                    user_rating=turn.user_rating,
+                )
+            )
+
         return UserHistoryResponse(
-            user_id=user_id,
+            user_id=canonical_user_id,
             total_turns=len(memory.turns),
             turns=turns,
             primary_interests=summary.get("primary_interests", []),
             average_rating=summary.get("average_rating", 0),
-            last_interaction=summary.get("last_interaction")
+            last_interaction=summary.get("last_interaction"),
         )
-    
-    except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error fetching user history: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.get(
     "/users/{user_id}/summary",
     response_model=UserSummaryResponse,
-    summary="Сводка пользователя",
-    description="Краткая сводка по истории диалога пользователя"
+    summary="User summary",
+    description="Compact user history summary",
 )
 async def get_user_summary(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
-    logger.info(f"📌 Сводка для {user_id}")
+    canonical_user_id = identity.user_id
+    logger.info("Summary requested for user=%s", canonical_user_id)
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         summary = memory.get_summary()
         return UserSummaryResponse(
-            user_id=user_id,
+            user_id=canonical_user_id,
             total_turns=summary.get("total_turns", len(memory.turns)),
             primary_interests=summary.get("primary_interests", []),
             num_challenges=summary.get("num_challenges", 0),
             num_breakthroughs=summary.get("num_breakthroughs", 0),
             average_rating=summary.get("average_rating", 0),
-            last_interaction=summary.get("last_interaction")
+            last_interaction=summary.get("last_interaction"),
         )
-    except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error fetching summary: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.get(
     "/users/{user_id}/session",
     response_model=SessionInfoResponse,
-    summary="Session Storage Status",
-    description="Статус SQLite-персистентности для пользователя"
+    summary="Session storage status",
+    description="SQLite persistence status for user",
 )
 async def get_user_session_info(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
+    canonical_user_id = identity.user_id
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         manager = memory.session_manager
         if not manager:
-            return SessionInfoResponse(
-                user_id=user_id,
-                enabled=False,
-                exists=False,
-            )
+            return SessionInfoResponse(user_id=canonical_user_id, enabled=False, exists=False)
 
-        payload = manager.load_session(user_id)
+        payload = manager.load_session(canonical_user_id)
         if not payload:
-            return SessionInfoResponse(
-                user_id=user_id,
-                enabled=True,
-                exists=False,
-            )
+            return SessionInfoResponse(user_id=canonical_user_id, enabled=True, exists=False)
 
         session_info = payload.get("session_info", {})
         turns = payload.get("conversation_turns", [])
         embeddings = payload.get("semantic_embeddings", [])
-
         return SessionInfoResponse(
-            user_id=user_id,
+            user_id=canonical_user_id,
             enabled=True,
             exists=True,
             status=session_info.get("status"),
@@ -296,28 +281,26 @@ async def get_user_session_info(
             has_working_state=bool(session_info.get("working_state")),
             has_summary=bool(session_info.get("conversation_summary")),
         )
-    except Exception as e:
-        logger.error(f"❌ Error loading session info: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error loading session info: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.post(
     "/sessions/archive",
     response_model=ArchiveSessionsResponse,
-    summary="Archive Old Sessions",
-    description="Архивировать старые SQLite-сессии старше N дней"
+    summary="Archive old sessions",
+    description="Archive old SQLite sessions by retention policy",
 )
 async def archive_old_sessions(
     active_days: int = 90,
     archive_days: int = 365,
-    api_key: str = Depends(verify_api_key)
+    api_key: str = Depends(verify_api_key),
 ):
     if active_days < 1 or archive_days < 1:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="active_days and archive_days must be >= 1"
+            detail="active_days and archive_days must be >= 1",
         )
     try:
         manager = SessionManager(str(config.BOT_DB_PATH))
@@ -333,148 +316,142 @@ async def archive_old_sessions(
             archive_days=archive_days,
             db_path=str(config.BOT_DB_PATH),
         )
-    except Exception as e:
-        logger.error(f"❌ Error archiving sessions: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error archiving sessions: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.get(
     "/users/{user_id}/semantic-stats",
-    summary="Semantic Memory Stats",
-    description="Get semantic memory stats for user"
+    summary="Semantic memory stats",
+    description="Get semantic memory stats for user",
 )
 async def get_semantic_stats(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
+    canonical_user_id = identity.user_id
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         if not memory.semantic_memory:
             return {"enabled": False, "message": "Semantic memory disabled"}
         stats = memory.semantic_memory.get_stats()
-        return {"enabled": True, "user_id": user_id, **stats}
-    except Exception as e:
-        logger.error(f"❌ Error getting semantic stats: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+        return {"enabled": True, "user_id": canonical_user_id, **stats}
+    except Exception as exc:
+        logger.error("Error getting semantic stats: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.post(
     "/users/{user_id}/rebuild-semantic-memory",
-    summary="Rebuild Semantic Memory",
-    description="Rebuild semantic memory for user"
+    summary="Rebuild semantic memory",
+    description="Rebuild semantic memory for user",
 )
 async def rebuild_semantic_memory(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
+    canonical_user_id = identity.user_id
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         if not memory.semantic_memory:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Semantic memory disabled"
-            )
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Semantic memory disabled")
         memory.rebuild_semantic_memory()
         stats = memory.semantic_memory.get_stats()
         return {
             "success": True,
             "message": f"Semantic memory rebuilt for {stats.get('total_embeddings', 0)} turns",
-            "stats": stats
+            "stats": stats,
         }
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"❌ Error rebuilding semantic memory: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error rebuilding semantic memory: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.post(
     "/users/{user_id}/update-summary",
-    summary="Update Conversation Summary",
-    description="Force update conversation summary for user"
+    summary="Update conversation summary",
+    description="Force update conversation summary for user",
 )
 async def force_update_summary(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
+    canonical_user_id = identity.user_id
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         if len(memory.turns) < 5:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Not enough turns to create summary (minimum 5)"
+                detail="Not enough turns to create summary (minimum 5)",
             )
         memory._update_summary()
         return {
             "success": True,
             "summary": memory.summary,
             "updated_at_turn": memory.summary_updated_at,
-            "summary_length": len(memory.summary) if memory.summary else 0
+            "summary_length": len(memory.summary) if memory.summary else 0,
         }
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"❌ Error updating summary: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error updating summary: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.delete(
     "/users/{user_id}/history",
     response_model=DeleteHistoryResponse,
-    summary="Очистить историю пользователя",
-    description="Удалить историю диалога пользователя"
+    summary="Delete user history",
+    description="Delete dialogue history for user",
 )
 async def delete_user_history(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
-    logger.info(f"🧹 Очистка истории для {user_id}")
+    canonical_user_id = identity.user_id
+    logger.info("History cleanup for user=%s", canonical_user_id)
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         memory.clear()
         return DeleteHistoryResponse(
             status="success",
-            message=f"стория пользователя {user_id} очищена",
-            user_id=user_id
+            message=f"History for user {canonical_user_id} cleared",
+            user_id=canonical_user_id,
         )
-    except Exception as e:
-        logger.error(f"❌ Ошибка: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("Error deleting history: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
 
 @router.delete(
     "/users/{user_id}/gdpr-data",
     response_model=DeleteHistoryResponse,
-    summary="GDPR Delete User Data",
-    description="Полностью удалить данные пользователя из JSON/semantic cache/SQLite"
+    summary="GDPR delete user data",
+    description="Delete all user data from JSON/semantic cache/SQLite",
 )
 async def gdpr_delete_user_data(
     user_id: str,
-    api_key: str = Depends(verify_api_key)
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
 ):
-    logger.info(f"🗑️ GDPR delete for {user_id}")
+    canonical_user_id = identity.user_id
+    logger.info("GDPR delete for user=%s", canonical_user_id)
     try:
-        memory = get_conversation_memory(user_id)
+        memory = get_conversation_memory(canonical_user_id)
         memory.purge_user_data()
         return DeleteHistoryResponse(
             status="success",
-            message=f"Данные пользователя {user_id} полностью удалены (GDPR)",
-            user_id=user_id
+            message=f"User data for {canonical_user_id} deleted (GDPR)",
+            user_id=canonical_user_id,
         )
-    except Exception as e:
-        logger.error(f"❌ GDPR delete error: {e}")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
-        )
+    except Exception as exc:
+        logger.error("GDPR delete error: %s", exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
 

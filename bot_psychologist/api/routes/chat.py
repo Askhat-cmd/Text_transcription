@@ -13,7 +13,8 @@ from bot_agent.llm_streaming import stream_answer_tokens
 from bot_agent.storage import SessionManager
 
 from ..auth import is_dev_key, verify_api_key
-from ..dependencies import get_data_loader, get_graph_client, get_retriever
+from ..dependencies import get_data_loader, get_graph_client, get_identity_context, get_retriever
+from ..identity import IdentityContext
 from ..models import (
     AdaptiveAnswerResponse,
     AnswerResponse,
@@ -77,6 +78,7 @@ def _resolve_stream_answer_tokens():
 )
 async def ask_basic_question(
     request: AskQuestionRequest,
+    identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key)
 ):
     """
@@ -99,8 +101,11 @@ async def ask_basic_question(
     logger.info(f"[NEO_COMPAT] Basic endpoint routed to adaptive runtime: {request.query[:50]}...")
 
     try:
-        result = _run_neo_compat_answer(request=request)
-        _record_user(request.user_id)
+        normalized_request = request.model_copy(
+            update={"user_id": identity.user_id, "session_id": identity.session_id},
+        )
+        result = _run_neo_compat_answer(request=normalized_request)
+        _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -120,6 +125,7 @@ async def ask_basic_question(
 )
 async def ask_basic_question_with_semantic(
     request: AskQuestionRequest,
+    identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key)
 ):
     """
@@ -128,8 +134,11 @@ async def ask_basic_question_with_semantic(
     logger.info(f"[NEO_COMPAT] Basic+Semantic endpoint routed to adaptive runtime: {request.query[:50]}...")
 
     try:
-        result = _run_neo_compat_answer(request=request)
-        _record_user(request.user_id)
+        normalized_request = request.model_copy(
+            update={"user_id": identity.user_id, "session_id": identity.session_id},
+        )
+        result = _run_neo_compat_answer(request=normalized_request)
+        _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -148,6 +157,7 @@ async def ask_basic_question_with_semantic(
 )
 async def ask_graph_powered_question(
     request: AskQuestionRequest,
+    identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
     store: SessionStore = Depends(get_session_store),
 ):
@@ -164,8 +174,11 @@ async def ask_graph_powered_question(
     logger.info(f"[NEO_COMPAT] Graph-powered endpoint routed to adaptive runtime: {request.query[:50]}...")
 
     try:
-        result = _run_neo_compat_answer(request=request, session_store=store)
-        _record_user(request.user_id)
+        normalized_request = request.model_copy(
+            update={"user_id": identity.user_id, "session_id": identity.session_id},
+        )
+        result = _run_neo_compat_answer(request=normalized_request, session_store=store)
+        _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         return _build_answer_response_from_adaptive(result)
@@ -186,6 +199,7 @@ async def ask_graph_powered_question(
 )
 async def ask_adaptive_question(
     request: AskQuestionRequest,
+    identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
     _data_loader=Depends(get_data_loader),
     _graph_client=Depends(get_graph_client),
@@ -208,10 +222,15 @@ async def ask_adaptive_question(
     - Адаптивный запрос обратной связи
     """
     
-    logger.info(f"[ADAPTIVE] Adaptive question: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(
+        "[ADAPTIVE] Adaptive question: %s... (user=%s session=%s)",
+        request.query[:50],
+        identity.user_id,
+        identity.session_id,
+    )
 
     try:
-        session_key = request.session_id or request.user_id
+        session_key = identity.session_id
 
         # Dev-   debug-
         if is_dev_key(api_key):
@@ -222,10 +241,10 @@ async def ask_adaptive_question(
                 session_manager = SessionManager(str(config.BOT_DB_PATH))
                 session_manager.create_session(
                     session_id=session_key,
-                    user_id=request.user_id,
+                    user_id=identity.user_id,
                     metadata={
                         "source": "api",
-                        "owner_user_id": request.user_id,
+                        "owner_user_id": identity.user_id,
                     },
                 )
             except Exception as exc:
@@ -233,7 +252,7 @@ async def ask_adaptive_question(
 
         result = _resolve_answer_question_adaptive()(
             request.query,
-            user_id=session_key,
+            user_id=identity.user_id,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
             debug=request.debug,
@@ -241,7 +260,7 @@ async def ask_adaptive_question(
         )
         
         # Обновить статистику
-        _record_user(request.user_id)
+        _record_user(identity.user_id)
         _stats["total_questions"] += 1
         _stats["total_processing_time"] += result.get("processing_time_seconds", 0)
         
@@ -294,7 +313,7 @@ async def ask_adaptive_question(
             )
         
         response_metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}))
-        response_metadata["user_id"] = request.user_id
+        response_metadata["user_id"] = identity.user_id
         response_metadata["session_id"] = session_key
 
         trace = None
@@ -546,6 +565,7 @@ async def ask_adaptive_question(
 )
 async def ask_adaptive_question_stream(
     request: AskQuestionRequest,
+    identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
     _data_loader=Depends(get_data_loader),
     store: SessionStore = Depends(get_session_store),
@@ -556,9 +576,14 @@ async def ask_adaptive_question_stream(
             detail="Streaming is disabled",
         )
 
-    logger.info(f"[ADAPTIVE-STREAM] query: {request.query[:50]}... (user: {request.user_id})")
+    logger.info(
+        "[ADAPTIVE-STREAM] query: %s... (user=%s session=%s)",
+        request.query[:50],
+        identity.user_id,
+        identity.session_id,
+    )
 
-    session_key = request.session_id or request.user_id
+    session_key = identity.session_id
 
     if is_dev_key(api_key):
         request.debug = True
@@ -568,10 +593,10 @@ async def ask_adaptive_question_stream(
             session_manager = SessionManager(str(config.BOT_DB_PATH))
             session_manager.create_session(
                 session_id=session_key,
-                user_id=request.user_id,
+                user_id=identity.user_id,
                 metadata={
                     "source": "api",
-                    "owner_user_id": request.user_id,
+                    "owner_user_id": identity.user_id,
                 },
             )
         except Exception as exc:
@@ -586,7 +611,7 @@ async def ask_adaptive_question_stream(
         try:
             async for token in _resolve_stream_answer_tokens()(
                 request.query,
-                user_id=session_key,
+                user_id=identity.user_id,
                 session_store=store,
                 include_path=request.include_path,
                 include_feedback_prompt=request.include_feedback_prompt,
@@ -626,7 +651,7 @@ async def ask_adaptive_question_stream(
                 yield "event: trace\n"
                 yield f"data: {json.dumps(trace, ensure_ascii=False)}\n\n"
             try:
-                memory = get_conversation_memory(session_key)
+                memory = get_conversation_memory(identity.user_id)
                 schedule_fn = getattr(memory, "schedule_summary_task_if_due", None)
                 if callable(schedule_fn):
                     schedule_fn()

@@ -10,12 +10,13 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - `session_id` используется как уровень устройства/клиента, а не как идентификатор человека.
 - `conversation_id` выделен в отдельный UUID диалога и не равен `session_id` (PRD-014).
 - Модуль `answer_adaptive.py` завершил модуляризацию (waves 1-144) и работает как фасад-оркестратор.
-- Реализован PRD-015A: контрактная интеграция Telegram через `api/telegram_adapter/` (mock/dev-only, без production transport).
+- Реализован PRD-015A + PRD-015B-v2: Telegram adapter + transport (`mock/polling/webhook`) с graceful shutdown.
+- Реализован PRD-016-v2: registration/access control (`/auth/register`, `/auth/login`, session token, `/link`).
+- `api/auth.py` переведен на DB-backed API keys (без in-memory хардкода ключей).
 
 ### Что планируется
 
-- PRD-015B: реальный Telegram transport layer (webhook/polling и delivery в Telegram).
-- Далее: multi-agent orchestration.
+- PRD-017: multi-agent orchestration.
 
 ## Иерархия идентификаторов
 
@@ -33,7 +34,8 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - `api/routes/` — HTTP API-слой.
 - `api/dependencies.py` — сборка request context (identity + conversation + runtime deps).
 - `Bot_data_base/` — внешний сервис данных/памяти.
-- `api/telegram_adapter/` — контрактный слой Telegram (mock/dev-only, strict linking).
+- `api/telegram_adapter/` — transport-слой Telegram (`mock/polling/webhook`) и обработка `/link`.
+- `api/registration/` — регистрация, логин, invite keys, link-code, confirm-link, bootstrap.
 
 ## Локальный запуск
 
@@ -76,6 +78,11 @@ npm run dev
 - `POST /api/v1/questions/adaptive` — основной adaptive-runtime ответ.
 - `POST /api/v1/conversations/{id}/close` — закрыть выбранный диалог.
 - `POST /api/v1/dev/telegram/mock-update` — dev-only mock endpoint для проверки Telegram-контракта.
+- `POST /api/v1/auth/register` — регистрация по `username + invite_key`.
+- `POST /api/v1/auth/login` — вход по `username + access_key` и выдача `session_token`.
+- `POST /api/v1/auth/telegram/link-code` — получить одноразовый код привязки Telegram (Bearer session token).
+- `POST /api/v1/auth/telegram/confirm-link` — internal endpoint подтверждения привязки.
+- `POST /api/v1/admin/invite-keys` — создание invite key (только `role=admin`, Bearer session token).
 
 ## Тестирование
 
@@ -85,12 +92,13 @@ npm run dev
 pytest tests/identity tests/conversations tests/api -q
 pytest tests/api -q
 pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter.py tests/telegram_adapter/test_service.py tests/api/test_telegram_mock_routes.py -q
+pytest tests/registration tests/telegram_adapter/test_outbound.py tests/telegram_adapter/test_transport.py tests/telegram_adapter/test_webhook.py tests/telegram_adapter/test_link_command.py tests/api/test_auth_routes.py -q
 ```
 
 ## Что дальше
 
-1. PRD-015B / следующий этап — реальный Telegram transport layer.
-2. Account linking flow `/start <code>` и delivery ответов обратно в Telegram.
+1. Довести production-runbook для Telegram webhook (reverse proxy + TLS + secret rotation).
+2. Добавить recovery-flow для утерянного `access_key`.
 3. Далее — мультиагентная оркестрация.
 
 ## Документация
@@ -108,5 +116,6 @@ pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter
 
 ## Ограничения и безопасность
 
-- Telegram transport в production пока не подключен (контрактный mock-слой уже реализован).
+- Telegram transport включается только через env-флаги (`TELEGRAM_ENABLED=true`, mode polling/webhook).
+- `/api/v1/auth/telegram/confirm-link` требует `X-Internal-Key` и `X-Request-HMAC`.
 - Для внешнего деплоя требуется строгая настройка CORS (без `allow_origins=["*"]`).

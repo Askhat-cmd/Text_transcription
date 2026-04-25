@@ -10,7 +10,7 @@ import shutil
 import sys
 import time
 from pathlib import Path
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, suppress
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -24,7 +24,13 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from logging_config import get_logger, setup_logging
 from .routes import router
 from .debug_routes import router as debug_router
-from .dependencies import set_preloaded_components
+from .dependencies import (
+    get_database_bootstrap,
+    set_preloaded_components,
+)
+from .telegram_adapter.config import TelegramAdapterSettings
+from .telegram_adapter.factory import build_polling_transport
+from .telegram_adapter.webhook_routes import router as telegram_webhook_router
 
 from bot_agent.config import config
 from bot_agent.config_validation import assert_runtime_config
@@ -39,6 +45,8 @@ logger = get_logger(__name__)
 
 # ===== STARTUP TIME =====
 _startup_time: float = 0.0
+_telegram_transport = None
+_telegram_transport_task: asyncio.Task | None = None
 
 
 def _ensure_prompt_default_snapshots() -> None:
@@ -58,7 +66,7 @@ def _ensure_prompt_default_snapshots() -> None:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Жизненный цикл приложения"""
-    global _startup_time
+    global _startup_time, _telegram_transport, _telegram_transport_task
     # Startup
     _startup_time = time.time()
     logger.info("API server starting")
@@ -66,6 +74,7 @@ async def lifespan(app: FastAPI):
     logger.info("Docs: http://localhost:8000/api/docs")
     assert_runtime_config(config)
     logger.info("[STARTUP] runtime config validation: OK")
+    await get_database_bootstrap().run()
     _ensure_prompt_default_snapshots()
 
     if config.WARMUP_ON_START:
@@ -93,8 +102,33 @@ async def lifespan(app: FastAPI):
         )
         logger.info("[WARMUP] completed")
 
+    telegram_runtime_settings = TelegramAdapterSettings.from_env()
+    if telegram_runtime_settings.enabled and telegram_runtime_settings.mode == "polling":
+        if not telegram_runtime_settings.bot_token:
+            logger.warning(
+                "TELEGRAM_ENABLED=true but TELEGRAM_BOT_TOKEN is empty; polling skipped"
+            )
+        else:
+            try:
+                _telegram_transport = build_polling_transport(settings=telegram_runtime_settings)
+                _telegram_transport_task = asyncio.create_task(_telegram_transport.start())
+                logger.info("telegram polling transport started")
+            except Exception as exc:
+                logger.warning("telegram polling transport failed to start: %s", exc)
+
     yield
     # Shutdown
+    if _telegram_transport_task is not None and _telegram_transport is not None:
+        try:
+            await _telegram_transport.stop()
+        except Exception as exc:
+            logger.warning("telegram transport stop failed: %s", exc)
+        _telegram_transport_task.cancel()
+        with suppress(asyncio.CancelledError):
+            await _telegram_transport_task
+        _telegram_transport = None
+        _telegram_transport_task = None
+
     uptime = time.time() - _startup_time if _startup_time else 0.0
     logger.info("API server shutting down | uptime=%.2fs", uptime)
 
@@ -211,6 +245,10 @@ from .admin_routes import admin_router, admin_router_v1  # Admin Config Panel (l
 app.include_router(admin_router)
 app.include_router(admin_router_v1)
 
+_telegram_import_settings = TelegramAdapterSettings.from_env()
+if _telegram_import_settings.enabled and _telegram_import_settings.mode == "webhook":
+    app.include_router(telegram_webhook_router)
+
 
 # ===== CUSTOM OPENAPI =====
 
@@ -287,6 +325,4 @@ if __name__ == "__main__":
         reload=True,
         log_level="info"
     )
-
-
 

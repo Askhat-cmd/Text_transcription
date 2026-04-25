@@ -65,3 +65,6 @@ class IdentityContext(BaseModel):
     created_new_user: bool = False
     provider: IdentityProvider = "web"
     external_id: Optional[str] = None
+    role: str = "anonymous"
+    username: Optional[str] = None
+    is_registered: bool = False

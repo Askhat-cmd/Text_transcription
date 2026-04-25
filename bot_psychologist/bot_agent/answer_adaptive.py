@@ -1,4 +1,4 @@
-﻿# bot_agent/answer_adaptive.py
+# bot_agent/answer_adaptive.py
 """Adaptive answer orchestration entrypoint for Phase 4 runtime."""
 
 import logging
@@ -148,6 +148,18 @@ def answer_question_adaptive(
     """
     
     logger.info(f"[ADAPTIVE] new request user_id={user_id} query='{query[:50]}...'")
+
+    if feature_flags.enabled("MULTIAGENT_ENABLED"):
+        try:
+            from .multiagent.orchestrator import orchestrator
+
+            multiagent_response = orchestrator.run_sync(query=query, user_id=user_id)
+            if isinstance(multiagent_response, dict) and multiagent_response.get("status") == "ok":
+                logger.info("[ADAPTIVE] served by multiagent orchestrator")
+                return multiagent_response
+            logger.warning("[ADAPTIVE] multiagent returned non-ok payload, fallback to classic runtime")
+        except Exception as exc:
+            logger.error("[ADAPTIVE] multiagent branch failed, fallback to classic runtime: %s", exc)
     
     runtime_ctx = _runtime_prepare_adaptive_run_context(
         top_k=top_k,

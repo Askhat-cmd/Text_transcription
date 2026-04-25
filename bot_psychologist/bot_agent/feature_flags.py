@@ -33,6 +33,13 @@ _DEFAULTS: Dict[str, bool] = {
     "ENABLE_CONDITIONAL_RERANKER": True,
     # Phase 3
     "ENABLE_FAST_STATE_DETECTOR": True,
+    # Multiagent (PRD-017)
+    "MULTIAGENT_ENABLED": False,
+}
+
+_STRING_DEFAULTS: Dict[str, str] = {
+    "THREAD_MANAGER_MODEL": "gpt-5-nano",
+    "THREAD_STORAGE_DIR": "bot_psychologist/data/threads",
 }
 
 
@@ -54,6 +61,12 @@ class FeatureFlags:
     @staticmethod
     def snapshot() -> Dict[str, bool]:
         return {name: FeatureFlags.enabled(name) for name in _DEFAULTS}
+
+    @staticmethod
+    def value(name: str, default: str = "") -> str:
+        if name in _STRING_DEFAULTS:
+            return os.getenv(name, _STRING_DEFAULTS[name])
+        return os.getenv(name, default)
 
 
 feature_flags = FeatureFlags()

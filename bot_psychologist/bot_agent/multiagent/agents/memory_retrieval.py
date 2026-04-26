@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
 from typing import Any
 
@@ -71,10 +72,45 @@ class MemoryRetrievalAgent:
         assistant_response: str,
         thread_state: ThreadState,
     ) -> None:
-        """Scaffold for future memory writeback (PRD-022)."""
-        logger.debug(
-            "[MRA] update scaffold user_id=%s thread_id=%s", user_id, thread_state.thread_id
-        )
+        """Non-blocking memory writeback for completed orchestrator turn."""
+        try:
+            from ...conversation_memory import get_conversation_memory  # noqa: PLC0415
+
+            memory = get_conversation_memory(user_id=user_id)
+            add_turn = getattr(memory, "add_turn", None)
+            if not callable(add_turn):
+                logger.warning(
+                    "[MRA] update skipped: add_turn missing user_id=%s thread_id=%s",
+                    user_id,
+                    thread_state.thread_id,
+                )
+                return
+
+            kwargs: dict[str, Any] = {
+                "user_input": user_message,
+                "bot_response": assistant_response,
+            }
+            try:
+                signature = inspect.signature(add_turn)
+                if "metadata" in signature.parameters:
+                    kwargs["metadata"] = {
+                        "phase": thread_state.phase,
+                        "response_mode": thread_state.response_mode,
+                        "thread_id": thread_state.thread_id,
+                        "continuity_score": thread_state.continuity_score,
+                    }
+            except Exception:
+                # Defensive fallback: call with baseline arguments only.
+                pass
+
+            add_turn(**kwargs)
+            logger.debug(
+                "[MRA] update ok user_id=%s thread_id=%s",
+                user_id,
+                thread_state.thread_id,
+            )
+        except Exception as exc:
+            logger.warning("[MRA] update failed (non-blocking): %s", exc)
 
     @staticmethod
     def _resolve_n_turns(thread_state: ThreadState) -> int:
@@ -202,4 +238,3 @@ class MemoryRetrievalAgent:
 
 
 memory_retrieval_agent = MemoryRetrievalAgent()
-

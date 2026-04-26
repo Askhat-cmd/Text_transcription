@@ -421,3 +421,81 @@ def test_mr_30_fixture_f03() -> None:
         open_loops=item["open_loops"],
     )
     assert MemoryRetrievalAgent._resolve_n_turns(thread) == item["expected_n_turns"]
+
+
+@pytest.mark.asyncio
+async def test_mr_31_update_calls_add_turn(monkeypatch) -> None:
+    conv_module = importlib.import_module("bot_agent.conversation_memory")
+    captured: dict[str, str] = {}
+
+    class _Memory:
+        def add_turn(self, *, user_input: str, bot_response: str) -> None:
+            captured["user_input"] = user_input
+            captured["bot_response"] = bot_response
+
+    monkeypatch.setattr(conv_module, "get_conversation_memory", lambda user_id: _Memory())
+    agent = MemoryRetrievalAgent()
+
+    await agent.update(
+        user_id="u1",
+        user_message="вопрос",
+        assistant_response="ответ",
+        thread_state=_thread(),
+    )
+
+    assert captured == {"user_input": "вопрос", "bot_response": "ответ"}
+
+
+@pytest.mark.asyncio
+async def test_mr_32_update_with_metadata_if_supported(monkeypatch) -> None:
+    conv_module = importlib.import_module("bot_agent.conversation_memory")
+    captured: dict[str, object] = {}
+
+    class _Memory:
+        def add_turn(
+            self,
+            *,
+            user_input: str,
+            bot_response: str,
+            metadata: dict | None = None,
+        ) -> None:
+            captured["user_input"] = user_input
+            captured["bot_response"] = bot_response
+            captured["metadata"] = metadata
+
+    monkeypatch.setattr(conv_module, "get_conversation_memory", lambda user_id: _Memory())
+    agent = MemoryRetrievalAgent()
+    state = _thread(phase="integrate")
+
+    await agent.update(
+        user_id="u1",
+        user_message="вопрос",
+        assistant_response="ответ",
+        thread_state=state,
+    )
+
+    assert captured["user_input"] == "вопрос"
+    assert captured["bot_response"] == "ответ"
+    assert isinstance(captured["metadata"], dict)
+    assert captured["metadata"]["phase"] == "integrate"
+    assert captured["metadata"]["response_mode"] == state.response_mode
+    assert captured["metadata"]["thread_id"] == state.thread_id
+
+
+@pytest.mark.asyncio
+async def test_mr_33_update_error_non_blocking(monkeypatch) -> None:
+    conv_module = importlib.import_module("bot_agent.conversation_memory")
+
+    class _Memory:
+        def add_turn(self, **kwargs) -> None:
+            raise RuntimeError("db unavailable")
+
+    monkeypatch.setattr(conv_module, "get_conversation_memory", lambda user_id: _Memory())
+    agent = MemoryRetrievalAgent()
+
+    await agent.update(
+        user_id="u1",
+        user_message="вопрос",
+        assistant_response="ответ",
+        thread_state=_thread(),
+    )

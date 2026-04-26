@@ -106,7 +106,27 @@ async def test_return_to_old_restores_archived_thread() -> None:
     assert updated.thread_id == "old-thread"
 
 
+@pytest.mark.asyncio
+async def test_russian_followup_question_keeps_continuity() -> None:
+    manager = ThreadManagerAgent()
+    current = ThreadState(
+        thread_id="ru-thread-1",
+        user_id="u-ru",
+        core_direction="я чувствую сильную тревогу перед важным собеседованием завтра",
+        phase="clarify",
+        turns_in_phase=1,
+    )
+    updated = await manager.update(
+        user_message="ты права, но как мне не думать об этом постоянно?",
+        state_snapshot=_snapshot(intent="solution"),
+        user_id="u-ru",
+        current_thread=current,
+        archived_threads=[],
+    )
+    assert updated.thread_id == "ru-thread-1"
+    assert updated.relation_to_thread == "continue"
+
+
 def test_update_is_coroutine() -> None:
     manager = ThreadManagerAgent()
     assert asyncio.iscoroutinefunction(manager.update)
-

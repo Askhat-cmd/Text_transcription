@@ -1,5 +1,13 @@
 # Changelog
 
+## [Epoch 4 Live Run — Fixed] 2026-04-26
+
+### PRD-025 Verification
+- TC-04 (continuity): `thread_id` совпал, `relation_to_thread=continue` — FIX-01 `thread_storage`/continuity работает.
+- TC-05 (safety): `safety_flag=True`, `response_mode=safe_override` — FIX-02 safety detection работает.
+- Итог первого живого прогона мультиагентной системы NEO: **5/5 PASS**.
+- Локальный регрессионный прогон: `pytest tests/multiagent -q` — pass.
+
 ## v0.13.0 - 2026-04-25
 
 ### Added

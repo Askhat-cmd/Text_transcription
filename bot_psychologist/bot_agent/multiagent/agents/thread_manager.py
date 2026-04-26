@@ -17,10 +17,24 @@ logger = logging.getLogger(__name__)
 _RETURN_MARKERS = ("return to", "go back", "continue that", "same topic")
 _RESOLUTION_MARKERS = ("resolved", "understood", "thanks", "done", "clear")
 _BRANCH_MARKERS = ("also", "and another", "what if", "by the way", "next question")
+_NEW_THREAD_THRESHOLD = 0.20
+_FOLLOWUP_CONTINUE_MARKERS = (
+    "ты права",
+    "вы правы",
+    "я понимаю",
+    "об этом",
+    "про это",
+    "по этому поводу",
+    "но как мне",
+    "как мне не",
+    "that makes sense",
+    "you are right",
+    "about it",
+)
 
 
 def _normalize_tokens(text: str) -> set[str]:
-    tokens = re.findall(r"[a-zA-Z0-9]+", text.lower())
+    tokens = re.findall(r"[A-Za-zА-Яа-яЁё0-9]+", text.lower())
     return {t for t in tokens if len(t) > 2}
 
 
@@ -136,9 +150,11 @@ class ThreadManagerAgent:
 
         if archived_threads and any(marker in lowered for marker in _RETURN_MARKERS):
             return "return_to_old", continuity
-        if continuity < 0.35:
+        if any(marker in lowered for marker in _FOLLOWUP_CONTINUE_MARKERS):
+            return "continue", max(continuity, 0.25)
+        if continuity < _NEW_THREAD_THRESHOLD:
             return "new_thread", continuity
-        if "?" in user_message or any(marker in lowered for marker in _BRANCH_MARKERS):
+        if any(marker in lowered for marker in _BRANCH_MARKERS):
             return "branch", continuity
         return "continue", continuity
 
@@ -420,4 +436,3 @@ class ThreadManagerAgent:
 
 
 thread_manager_agent = ThreadManagerAgent()
-

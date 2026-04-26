@@ -1,0 +1,43 @@
+[
+  {
+    "id": "WA-F01",
+    "response_mode": "validate",
+    "safety_active": false,
+    "must_avoid": [],
+    "llm_mock_response": "Я слышу тебя. Это звучит непросто.",
+    "expected_non_empty": true
+  },
+  {
+    "id": "WA-F02",
+    "response_mode": "safe_override",
+    "safety_active": true,
+    "must_avoid": ["анализ", "практики"],
+    "llm_mock_response": "Я здесь рядом. Ты не один.",
+    "expected_non_empty": true
+  },
+  {
+    "id": "WA-F03",
+    "response_mode": "safe_override",
+    "safety_active": true,
+    "must_avoid": [],
+    "llm_mock_response": "",
+    "expected_fallback": true,
+    "expected_contains": ["здесь", "один"]
+  },
+  {
+    "id": "WA-F04",
+    "response_mode": "practice",
+    "safety_active": false,
+    "must_avoid": [],
+    "llm_mock_response": "Попробуй завтра утром написать три вещи, за которые благодарен.",
+    "expected_non_empty": true
+  },
+  {
+    "id": "WA-F05",
+    "response_mode": "regulate",
+    "safety_active": false,
+    "llm_throws": true,
+    "expected_fallback": true,
+    "expected_contains": ["вдох", "рядом"]
+  }
+]

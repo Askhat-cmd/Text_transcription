@@ -3,6 +3,7 @@
 from .memory_retrieval import MemoryRetrievalAgent, memory_retrieval_agent
 from .state_analyzer import StateAnalyzerAgent, state_analyzer_agent
 from .thread_manager import ThreadManagerAgent, thread_manager_agent
+from .writer_agent import WriterAgent, writer_agent
 
 __all__ = [
     "MemoryRetrievalAgent",
@@ -11,4 +12,6 @@ __all__ = [
     "state_analyzer_agent",
     "ThreadManagerAgent",
     "thread_manager_agent",
+    "WriterAgent",
+    "writer_agent",
 ]

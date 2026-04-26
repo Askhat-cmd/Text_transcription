@@ -40,6 +40,9 @@ _DEFAULTS: Dict[str, bool] = {
 _STRING_DEFAULTS: Dict[str, str] = {
     "THREAD_MANAGER_MODEL": "gpt-5-nano",
     "STATE_ANALYZER_MODEL": "gpt-5-nano",
+    "WRITER_MODEL": "gpt-5-mini",
+    "WRITER_MAX_TOKENS": "400",
+    "WRITER_TEMPERATURE": "0.7",
     "MEMORY_RAG_N_RESULTS": "4",
     "MEMORY_RAG_MIN_SCORE": "0.45",
     "MEMORY_CONV_TURNS_DEFAULT": "6",

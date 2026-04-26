@@ -21,5 +21,6 @@ export { useDebugBlob } from './useDebugBlob';
 export { useTraceCache } from './useTraceCache';
 export { useSessionTrace } from './useSessionTrace';
 export type { SessionMetrics } from './useSessionTrace';
+export { useMultiAgentTrace } from './useMultiAgentTrace';
 
 

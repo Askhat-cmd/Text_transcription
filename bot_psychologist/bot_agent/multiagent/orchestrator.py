@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import time
 
+from bot_agent.config import config
 from .agents.memory_retrieval import memory_retrieval_agent
 from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import thread_manager_agent
@@ -60,14 +62,19 @@ class MultiAgentOrchestrator:
 
     async def run(self, *, query: str, user_id: str) -> dict:
         query = self._normalize_query(query)
+        t_total_start = time.perf_counter()
 
         current_thread = thread_storage.load_active(user_id)
         archived_threads = thread_storage.load_archived(user_id)
 
+        t0 = time.perf_counter()
         state_snapshot = await state_analyzer_agent.analyze(
             user_message=query,
             previous_thread=current_thread,
         )
+        t_state = int((time.perf_counter() - t0) * 1000)
+
+        t0 = time.perf_counter()
         updated_thread = await thread_manager_agent.update(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -75,23 +82,31 @@ class MultiAgentOrchestrator:
             current_thread=current_thread,
             archived_threads=archived_threads,
         )
+        t_thread = int((time.perf_counter() - t0) * 1000)
         if updated_thread.relation_to_thread == "new_thread" and current_thread is not None:
             thread_storage.archive_thread(current_thread, reason="new_thread")
         thread_storage.save_active(updated_thread)
 
+        t0 = time.perf_counter()
         memory_bundle = await memory_retrieval_agent.assemble(
             user_message=query,
             thread_state=updated_thread,
             user_id=user_id,
         )
+        t_memory = int((time.perf_counter() - t0) * 1000)
 
         writer_contract = WriterContract(
             user_message=query,
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
         )
+        t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
+        t_writer = int((time.perf_counter() - t0) * 1000)
+
+        t0 = time.perf_counter()
         validation_result = validator_agent.validate(draft_answer, writer_contract)
+        t_validator = int((time.perf_counter() - t0) * 1000)
         if validation_result.is_blocked:
             final_answer = validation_result.safe_replacement or draft_answer
         else:
@@ -105,6 +120,7 @@ class MultiAgentOrchestrator:
                 thread_state=updated_thread,
             )
         )
+        total_latency_ms = int((time.perf_counter() - t_total_start) * 1000)
 
         return {
             "status": "ok",
@@ -116,6 +132,8 @@ class MultiAgentOrchestrator:
             "continuity_score": updated_thread.continuity_score,
             "debug": {
                 "multiagent_enabled": True,
+                "pipeline_version": "multiagent_v1",
+                "total_latency_ms": total_latency_ms,
                 "thread_manager_model": "heuristic",
                 "nervous_state": state_snapshot.nervous_state,
                 "intent": state_snapshot.intent,
@@ -124,9 +142,23 @@ class MultiAgentOrchestrator:
                 "has_relevant_knowledge": memory_bundle.has_relevant_knowledge,
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
+                "thread_id": updated_thread.thread_id,
+                "phase": updated_thread.phase,
+                "relation_to_thread": updated_thread.relation_to_thread,
+                "continuity_score": updated_thread.continuity_score,
+                "response_mode": updated_thread.response_mode,
+                "tokens_used": None,
+                "model_used": config.LLM_MODEL,
                 "validator_blocked": validation_result.is_blocked,
                 "validator_block_reason": validation_result.block_reason,
                 "validator_quality_flags": validation_result.quality_flags,
+                "timings": {
+                    "state_analyzer_ms": t_state,
+                    "thread_manager_ms": t_thread,
+                    "memory_retrieval_ms": t_memory,
+                    "writer_ms": t_writer,
+                    "validator_ms": t_validator,
+                },
             },
         }
 

@@ -24,6 +24,59 @@ export type InlineTrace = Partial<DebugTrace> & {
   prompt_overlay?: string;
 };
 
+export interface StateAnalyzerTrace {
+  latency_ms: number;
+  nervous_state: 'calm' | 'anxious' | 'crisis' | 'neutral' | string;
+  intent: string;
+  safety_flag: boolean;
+  confidence: number;
+}
+
+export interface ThreadManagerTrace {
+  latency_ms: number;
+  thread_id: string;
+  phase: 'exploring' | 'deepening' | 'closing' | string;
+  relation_to_thread: 'continue' | 'new_thread' | string;
+  continuity_score: number;
+}
+
+export interface MemoryRetrievalTrace {
+  latency_ms: number;
+  context_turns: number;
+  semantic_hits_count: number;
+  has_relevant_knowledge: boolean;
+}
+
+export interface WriterTrace {
+  latency_ms: number;
+  response_mode: string;
+  tokens_used?: number | null;
+  model_used?: string | null;
+}
+
+export interface ValidatorTrace {
+  latency_ms: number;
+  is_blocked: boolean;
+  block_reason?: string | null;
+  quality_flags: string[];
+}
+
+export interface MultiAgentPipelineTrace {
+  state_analyzer: StateAnalyzerTrace;
+  thread_manager: ThreadManagerTrace;
+  memory_retrieval: MemoryRetrievalTrace;
+  writer: WriterTrace;
+  validator: ValidatorTrace;
+}
+
+export interface MultiAgentTraceData {
+  session_id: string;
+  turn_index?: number | null;
+  pipeline_version: string;
+  total_latency_ms: number;
+  agents: MultiAgentPipelineTrace;
+}
+
 export interface Message {
   id: string;
   role: 'user' | 'bot';

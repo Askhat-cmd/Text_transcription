@@ -18,7 +18,7 @@ import type {
   CreateSessionRequest,
   DeleteSessionResponse,
 } from '../types/api.types';
-import type { InlineTrace } from '../types';
+import type { InlineTrace, MultiAgentTraceData } from '../types';
 
 class APIService {
   private api: AxiosInstance;
@@ -75,6 +75,11 @@ class APIService {
     return Boolean(this.apiKey);
   }
 
+  hasDevKey(): boolean {
+    const key = this.apiKey.trim();
+    return key.startsWith('dev-key-');
+  }
+
   clearAPIKey(): void {
     this.apiKey = '';
     localStorage.removeItem('bot_api_key');
@@ -83,6 +88,11 @@ class APIService {
   private handleAuthError(): void {
     localStorage.removeItem('bot_api_key');
     console.warn('API key is invalid or expired');
+  }
+
+  private getDebugBaseURL(): string {
+    const baseUrl = this.api.defaults.baseURL || '';
+    return baseUrl.replace(/\/api\/v1\/?$/, '');
   }
 
   private getOrCreateWebSessionId(): string {
@@ -420,6 +430,23 @@ class APIService {
   }
 
   // === CHAT SESSIONS ===
+
+  async getMultiAgentTrace(
+    sessionId: string,
+    turnIndex?: number
+  ): Promise<MultiAgentTraceData> {
+    try {
+      const params = turnIndex !== undefined ? `?turn_index=${turnIndex}` : '';
+      const response = await this.api.request<MultiAgentTraceData>({
+        method: 'GET',
+        baseURL: this.getDebugBaseURL(),
+        url: `/api/debug/session/${encodeURIComponent(sessionId)}/multiagent-trace${params}`,
+      });
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
 
   async getUserSessions(userId: string, limit: number = 100): Promise<UserSessionsResponse> {
     try {

@@ -2,6 +2,7 @@
 
 import json
 from datetime import datetime
+from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
@@ -91,6 +92,57 @@ def _resolve_runtime_session_scope(
     if requested_session:
         return requested_session, requested_session
     return identity.session_id, identity.user_id
+
+
+def _resolve_multiagent_turn_index(
+    *,
+    result: Dict[str, Any],
+    store: SessionStore,
+    session_id: str,
+) -> int:
+    traces = store.get_session_traces(session_id)
+    expected_turn = max(1, len(traces) + 1)
+
+    debug_trace = result.get("debug_trace")
+    if isinstance(debug_trace, dict):
+        turn_number = debug_trace.get("turn_number")
+        try:
+            if turn_number is not None:
+                parsed_turn = int(turn_number)
+                if parsed_turn > 0:
+                    return max(parsed_turn, expected_turn)
+        except (TypeError, ValueError):
+            pass
+
+    for item in reversed(traces):
+        if isinstance(item, dict):
+            turn_number = item.get("turn_number")
+            try:
+                if turn_number is not None:
+                    parsed_turn = int(turn_number)
+                    if parsed_turn > 0:
+                        return max(parsed_turn + 1, expected_turn)
+            except (TypeError, ValueError):
+                continue
+    return expected_turn
+
+
+def _save_multiagent_debug_if_present(
+    *,
+    result: Dict[str, Any],
+    store: SessionStore,
+    session_id: str,
+) -> None:
+    debug_payload = result.get("debug")
+    if not isinstance(debug_payload, dict):
+        return
+    if not debug_payload.get("multiagent_enabled"):
+        return
+    turn_index = _resolve_multiagent_turn_index(result=result, store=store, session_id=session_id)
+    payload = dict(debug_payload)
+    payload["turn_index"] = turn_index
+    payload["session_id"] = session_id
+    store.save_multiagent_debug(session_id=session_id, turn_index=turn_index, debug=payload)
 
 
 @router.post(
@@ -289,6 +341,7 @@ async def ask_adaptive_question(
             debug=request.debug,
             session_store=store,
         )
+        _save_multiagent_debug_if_present(result=result, store=store, session_id=session_key)
         await conv_service.touch_conversation(identity.conversation_id)
         
         # Обновить статистику
@@ -659,6 +712,7 @@ async def ask_adaptive_question_stream(
 
             result = dict(_result_holder)
             answer = str(result.get("answer", "") or "")
+            _save_multiagent_debug_if_present(result=result, store=store, session_id=session_key)
             await conv_service.touch_conversation(identity.conversation_id)
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)

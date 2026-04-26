@@ -1,9 +1,18 @@
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from .auth import verify_api_key, is_dev_key
+from .models import (
+    MemoryRetrievalTrace,
+    MultiAgentPipelineTrace,
+    MultiAgentTraceResponse,
+    StateAnalyzerTrace,
+    ThreadManagerTrace,
+    ValidatorTrace,
+    WriterTrace,
+)
 from .session_store import SessionStore, get_session_store
 from bot_agent.config import config
 
@@ -171,6 +180,87 @@ async def get_session_traces(
     if format_value == "compact":
         sanitized = [_compact_trace_payload(trace) for trace in sanitized]
     return {"session_id": session_id, "format": format_value, "traces": sanitized}
+
+
+@router.get(
+    "/session/{session_id}/multiagent-trace",
+    response_model=MultiAgentTraceResponse,
+)
+async def get_multiagent_trace(
+    session_id: str,
+    turn_index: Optional[int] = Query(default=None),
+    api_key: str = Depends(verify_api_key),
+    store: SessionStore = Depends(get_session_store),
+):
+    if not is_dev_key(api_key):
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Debug access denied")
+
+    if turn_index is None:
+        debug = store.get_latest_multiagent_debug(session_id)
+    else:
+        debug = store.get_multiagent_debug(session_id, turn_index)
+
+    if not debug:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Multiagent trace not found for this session",
+        )
+
+    if not bool(debug.get("multiagent_enabled")):
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Session was processed by legacy pipeline",
+        )
+
+    timings = debug.get("timings") if isinstance(debug.get("timings"), dict) else {}
+    tokens_used = debug.get("tokens_used")
+    if tokens_used is None:
+        tokens_used = debug.get("tokens_total")
+
+    model_used = debug.get("model_used") or debug.get("primary_model")
+
+    return MultiAgentTraceResponse(
+        session_id=session_id,
+        turn_index=_safe_int(debug.get("turn_index")),
+        pipeline_version=str(debug.get("pipeline_version") or "multiagent_v1"),
+        total_latency_ms=_safe_int(debug.get("total_latency_ms")) or 0,
+        agents=MultiAgentPipelineTrace(
+            state_analyzer=StateAnalyzerTrace(
+                latency_ms=_safe_int(timings.get("state_analyzer_ms")) or 0,
+                nervous_state=str(debug.get("nervous_state") or "neutral"),
+                intent=str(debug.get("intent") or ""),
+                safety_flag=bool(debug.get("safety_flag", False)),
+                confidence=float(debug.get("confidence") or 0.0),
+            ),
+            thread_manager=ThreadManagerTrace(
+                latency_ms=_safe_int(timings.get("thread_manager_ms")) or 0,
+                thread_id=str(debug.get("thread_id") or ""),
+                phase=str(debug.get("phase") or "exploring"),
+                relation_to_thread=str(debug.get("relation_to_thread") or "continue"),
+                continuity_score=float(debug.get("continuity_score") or 0.0),
+            ),
+            memory_retrieval=MemoryRetrievalTrace(
+                latency_ms=_safe_int(timings.get("memory_retrieval_ms")) or 0,
+                context_turns=_safe_int(debug.get("context_turns")) or 0,
+                semantic_hits_count=_safe_int(debug.get("semantic_hits_count")) or 0,
+                has_relevant_knowledge=bool(debug.get("has_relevant_knowledge", False)),
+            ),
+            writer=WriterTrace(
+                latency_ms=_safe_int(timings.get("writer_ms")) or 0,
+                response_mode=str(debug.get("response_mode") or ""),
+                tokens_used=_safe_int(tokens_used),
+                model_used=str(model_used) if model_used is not None else None,
+            ),
+            validator=ValidatorTrace(
+                latency_ms=_safe_int(timings.get("validator_ms")) or 0,
+                is_blocked=bool(debug.get("validator_blocked", False)),
+                block_reason=str(debug.get("validator_block_reason"))
+                if debug.get("validator_block_reason") is not None
+                else None,
+                quality_flags=[str(item) for item in (debug.get("validator_quality_flags") or [])],
+            ),
+        ),
+    )
 
 
 @router.get("/session/{session_id}/llm-payload")

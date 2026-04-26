@@ -190,6 +190,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
           <>
             <MessageList
               messages={messages}
+              sessionId={sessionId}
               compactMode={compactMode}
             />
             {isThinking && (

@@ -10,11 +10,13 @@ import MessageItem from './Message';
 
 interface MessageListProps {
   messages: Message[];
+  sessionId?: string;
   compactMode?: boolean;
 }
 
 export const MessageList: React.FC<MessageListProps> = ({
   messages,
+  sessionId,
   compactMode = false,
 }) => {
   return (
@@ -23,6 +25,7 @@ export const MessageList: React.FC<MessageListProps> = ({
         <MessageItem
           key={message.id}
           message={message}
+          sessionId={sessionId}
           compactMode={compactMode}
         />
       ))}

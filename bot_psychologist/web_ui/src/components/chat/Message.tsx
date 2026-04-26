@@ -9,22 +9,46 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { FiClock } from 'react-icons/fi';
 import type { Message } from '../../types';
+import { useMultiAgentTrace } from '../../hooks';
+import { apiService } from '../../services/api.service';
 import { formatterService } from '../../services/formatter.service';
 import clsx from 'clsx';
 
 // Import standalone insight components
 import { InlineDebugTrace } from './InlineDebugTrace';
+import { MultiAgentTraceWidget } from './MultiAgentTraceWidget';
 
 interface MessageItemProps {
   message: Message;
+  sessionId?: string;
   compactMode?: boolean;
 }
 
 export const MessageItem: React.FC<MessageItemProps> = ({
   message,
+  sessionId,
   compactMode = false,
 }) => {
   const isUser = message.role === 'user';
+  const inlineTrace = message.trace ?? null;
+  const isDevMode = apiService.hasDevKey();
+  const hasBotTurnPattern = /-b-(\d+)$/.test(message.id);
+  const isMultiagentTraceCandidate =
+    Boolean((inlineTrace as Record<string, unknown> | null)?.multiagent_enabled) ||
+    (inlineTrace as Record<string, unknown> | null)?.pipeline_version === 'multiagent_v1';
+  const shouldLoadMultiagentTrace = Boolean(
+    !isUser &&
+      sessionId &&
+      isDevMode &&
+      (isMultiagentTraceCandidate || hasBotTurnPattern)
+  );
+  const { trace: multiagentTrace, isLoading: multiagentTraceLoading } = useMultiAgentTrace(
+    sessionId,
+    message.id,
+    shouldLoadMultiagentTrace
+  );
+  const showLegacyInlineTrace = Boolean(inlineTrace);
+  const showMultiagentTrace = Boolean(shouldLoadMultiagentTrace && (multiagentTrace || multiagentTraceLoading));
 
   return (
     <div className="flex justify-start">
@@ -45,8 +69,12 @@ export const MessageItem: React.FC<MessageItemProps> = ({
         {/* Bot-specific content */}
         {!isUser && (
           <>
-            {message.trace && (
-              <InlineDebugTrace trace={message.trace} />
+            {showMultiagentTrace && (
+              <MultiAgentTraceWidget trace={multiagentTrace} isLoading={multiagentTraceLoading} />
+            )}
+
+            {showLegacyInlineTrace && inlineTrace && (
+              <InlineDebugTrace trace={inlineTrace} />
             )}
 
             {/* Processing Time */}

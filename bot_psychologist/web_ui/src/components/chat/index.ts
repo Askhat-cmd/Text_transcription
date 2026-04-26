@@ -7,5 +7,6 @@ export { MessageList } from './MessageList';
 export { MessageItem } from './Message';
 export { InputBox } from './InputBox';
 export { TypingIndicator } from './TypingIndicator';
+export { MultiAgentTraceWidget } from './MultiAgentTraceWidget';
 
 

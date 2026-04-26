@@ -22,6 +22,8 @@ class SessionStore:
         self._ttl_seconds = ttl_seconds
         self._sessions: Dict[str, SessionData] = {}
         self._blobs: Dict[str, Dict[str, Any]] = {}
+        self._multiagent_debug: Dict[str, Dict[int, Dict[str, Any]]] = {}
+        self._multiagent_updated: Dict[str, float] = {}
         self._lock = Lock()
 
     def cleanup_expired(self) -> None:
@@ -40,6 +42,14 @@ class SessionStore:
             ]
             for key in expired_blobs:
                 self._blobs.pop(key, None)
+
+            expired_multiagent = [
+                key for key, ts in self._multiagent_updated.items()
+                if now - ts > self._ttl_seconds
+            ]
+            for key in expired_multiagent:
+                self._multiagent_updated.pop(key, None)
+                self._multiagent_debug.pop(key, None)
 
     def append_trace(self, session_id: str, trace: Dict[str, Any]) -> None:
         if not session_id:
@@ -99,6 +109,54 @@ class SessionStore:
             payload["session_id"] = target_session
             result.append(payload)
         return result
+
+    def save_multiagent_debug(self, session_id: str, turn_index: int, debug: Dict[str, Any]) -> None:
+        if not session_id:
+            return
+        if isinstance(turn_index, bool):
+            return
+        try:
+            normalized_turn = int(turn_index)
+        except (TypeError, ValueError):
+            return
+        payload = dict(debug or {})
+        payload["turn_index"] = normalized_turn
+        with self._lock:
+            session_debug = self._multiagent_debug.get(session_id)
+            if session_debug is None:
+                session_debug = {}
+                self._multiagent_debug[session_id] = session_debug
+            session_debug[normalized_turn] = payload
+            self._multiagent_updated[session_id] = time.time()
+
+    def get_multiagent_debug(self, session_id: str, turn_index: int) -> Optional[Dict[str, Any]]:
+        if not session_id:
+            return None
+        if isinstance(turn_index, bool):
+            return None
+        try:
+            normalized_turn = int(turn_index)
+        except (TypeError, ValueError):
+            return None
+        with self._lock:
+            session_debug = self._multiagent_debug.get(session_id)
+            if not session_debug:
+                return None
+            payload = session_debug.get(normalized_turn)
+            return dict(payload) if isinstance(payload, dict) else None
+
+    def get_latest_multiagent_debug(self, session_id: str) -> Optional[Dict[str, Any]]:
+        if not session_id:
+            return None
+        with self._lock:
+            session_debug = self._multiagent_debug.get(session_id)
+            if not session_debug:
+                return None
+            latest_turn = max(session_debug.keys(), default=None)
+            if latest_turn is None:
+                return None
+            payload = session_debug.get(latest_turn)
+            return dict(payload) if isinstance(payload, dict) else None
 
     def get_session_metrics(self, session_id: str) -> Optional[Dict[str, Any]]:
         traces = self.get_session_traces(session_id)

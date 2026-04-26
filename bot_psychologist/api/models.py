@@ -296,6 +296,67 @@ class DebugTrace(BaseModel):
     turn_diff: Optional[TurnDiff] = None
 
 
+class AgentTimings(BaseModel):
+    state_analyzer_ms: int = 0
+    thread_manager_ms: int = 0
+    memory_retrieval_ms: int = 0
+    writer_ms: int = 0
+    validator_ms: int = 0
+
+
+class StateAnalyzerTrace(BaseModel):
+    latency_ms: int
+    nervous_state: str
+    intent: str
+    safety_flag: bool
+    confidence: float
+
+
+class ThreadManagerTrace(BaseModel):
+    latency_ms: int
+    thread_id: str
+    phase: str
+    relation_to_thread: str
+    continuity_score: float
+
+
+class MemoryRetrievalTrace(BaseModel):
+    latency_ms: int
+    context_turns: int
+    semantic_hits_count: int
+    has_relevant_knowledge: bool
+
+
+class WriterTrace(BaseModel):
+    latency_ms: int
+    response_mode: str
+    tokens_used: Optional[int] = None
+    model_used: Optional[str] = None
+
+
+class ValidatorTrace(BaseModel):
+    latency_ms: int
+    is_blocked: bool
+    block_reason: Optional[str] = None
+    quality_flags: List[str] = Field(default_factory=list)
+
+
+class MultiAgentPipelineTrace(BaseModel):
+    state_analyzer: StateAnalyzerTrace
+    thread_manager: ThreadManagerTrace
+    memory_retrieval: MemoryRetrievalTrace
+    writer: WriterTrace
+    validator: ValidatorTrace
+
+
+class MultiAgentTraceResponse(BaseModel):
+    session_id: str
+    turn_index: Optional[int] = None
+    pipeline_version: str
+    total_latency_ms: int
+    agents: MultiAgentPipelineTrace
+
+
 class AdaptiveAnswerResponse(BaseModel):
     """РђРґР°РїС‚РёРІРЅС‹Р№ РѕС‚РІРµС‚ (С„Р°Р·Р° 4)"""
     status: str

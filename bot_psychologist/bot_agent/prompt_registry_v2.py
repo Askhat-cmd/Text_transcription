@@ -1,4 +1,8 @@
 """Prompt Stack v2 builder for Neo MindBot."""
+# DEPRECATED since PRD-022 (Epoch 4).
+# Replaced by: multiagent/agents/writer_agent_prompts.py
+# Kept for MULTIAGENT_ENABLED=False rollback path.
+# Do not extend this module — extend the multiagent equivalent.
 
 from __future__ import annotations
 

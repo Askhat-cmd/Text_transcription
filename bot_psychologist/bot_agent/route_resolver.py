@@ -1,4 +1,8 @@
 """Deterministic route resolver for Neo MindBot Phase 4."""
+# DEPRECATED since PRD-022 (Epoch 4).
+# Replaced by: multiagent/agents/thread_manager.py
+# Kept for MULTIAGENT_ENABLED=False rollback path.
+# Do not extend this module — extend the multiagent equivalent.
 
 from __future__ import annotations
 

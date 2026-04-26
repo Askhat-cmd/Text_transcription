@@ -1,0 +1,55 @@
+[
+  {
+    "id": "VA-F01",
+    "draft": "Я слышу тебя. Расскажи больше.",
+    "response_mode": "validate",
+    "must_avoid": [],
+    "safety_active": false,
+    "expected_blocked": false
+  },
+  {
+    "id": "VA-F02",
+    "draft": "Принимай витамин D каждый день — это поможет.",
+    "response_mode": "reflect",
+    "must_avoid": [],
+    "safety_active": false,
+    "expected_blocked": true,
+    "expected_category": "safety"
+  },
+  {
+    "id": "VA-F03",
+    "draft": "Я слышу тебя. Вот упражнение на дыхание.",
+    "response_mode": "safe_override",
+    "must_avoid": [],
+    "safety_active": true,
+    "expected_blocked": true,
+    "expected_category": "contract"
+  },
+  {
+    "id": "VA-F04",
+    "draft": "Расскажи мне про свою практики медитации.",
+    "response_mode": "validate",
+    "must_avoid": ["практика"],
+    "safety_active": false,
+    "expected_blocked": true,
+    "expected_category": "contract"
+  },
+  {
+    "id": "VA-F05",
+    "draft": "Я понимаю, что это тяжело.",
+    "response_mode": "reflect",
+    "must_avoid": [],
+    "safety_active": false,
+    "expected_blocked": false,
+    "expected_quality_flags": ["forbidden_start"]
+  },
+  {
+    "id": "VA-F06",
+    "draft": "ок",
+    "response_mode": "validate",
+    "must_avoid": [],
+    "safety_active": false,
+    "expected_blocked": false,
+    "expected_quality_flags": ["too_short"]
+  }
+]

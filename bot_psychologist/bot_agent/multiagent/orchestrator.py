@@ -8,6 +8,7 @@ import logging
 from .agents.memory_retrieval import memory_retrieval_agent
 from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import thread_manager_agent
+from .agents.validator_agent import validator_agent
 from .agents.writer_agent import writer_agent
 from .contracts.writer_contract import WriterContract
 from .thread_storage import thread_storage
@@ -49,20 +50,25 @@ class MultiAgentOrchestrator:
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
         )
-        answer = await writer_agent.write(writer_contract)
+        draft_answer = await writer_agent.write(writer_contract)
+        validation_result = validator_agent.validate(draft_answer, writer_contract)
+        if validation_result.is_blocked:
+            final_answer = validation_result.safe_replacement or draft_answer
+        else:
+            final_answer = draft_answer
 
         asyncio.create_task(
             memory_retrieval_agent.update(
                 user_id=user_id,
                 user_message=query,
-                assistant_response=answer,
+                assistant_response=final_answer,
                 thread_state=updated_thread,
             )
         )
 
         return {
             "status": "ok",
-            "answer": answer,
+            "answer": final_answer,
             "thread_id": updated_thread.thread_id,
             "phase": updated_thread.phase,
             "response_mode": updated_thread.response_mode,
@@ -78,6 +84,9 @@ class MultiAgentOrchestrator:
                 "has_relevant_knowledge": memory_bundle.has_relevant_knowledge,
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
+                "validator_blocked": validation_result.is_blocked,
+                "validator_block_reason": validation_result.block_reason,
+                "validator_quality_flags": validation_result.quality_flags,
             },
         }
 

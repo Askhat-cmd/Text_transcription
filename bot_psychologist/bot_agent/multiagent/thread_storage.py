@@ -15,18 +15,23 @@ from .contracts.thread_state import ArchivedThread, ThreadState
 
 logger = logging.getLogger(__name__)
 
+_THIS_FILE = Path(__file__).resolve()
 _DEFAULT_STORAGE_DIR = Path(
-    os.getenv("THREAD_STORAGE_DIR", "bot_psychologist/data/threads")
-).resolve()
+    os.getenv(
+        "THREAD_STORAGE_DIR",
+        str(_THIS_FILE.parent.parent.parent / "data" / "threads"),
+    )
+).expanduser().resolve()
 
 
 class ThreadStorage:
     """Persistent storage for active and archived thread states."""
 
     def __init__(self, storage_dir: Path = _DEFAULT_STORAGE_DIR):
-        self._dir = Path(storage_dir)
+        self._dir = Path(storage_dir).expanduser().resolve()
         self._dir.mkdir(parents=True, exist_ok=True)
         self._lock = threading.RLock()
+        logger.info("[THREAD_STORAGE] storage_dir=%s", self._dir)
 
     def _active_path(self, user_id: str) -> Path:
         return self._dir / f"{user_id}_active.json"
@@ -94,4 +99,3 @@ class ThreadStorage:
 
 
 thread_storage = ThreadStorage()
-

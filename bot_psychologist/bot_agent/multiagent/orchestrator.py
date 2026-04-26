@@ -20,7 +20,47 @@ logger = logging.getLogger(__name__)
 class MultiAgentOrchestrator:
     """Coordinates StateSnapshot -> ThreadManager -> Memory -> Writer."""
 
+    @staticmethod
+    def _has_cyrillic(text: str) -> bool:
+        return any(("А" <= ch <= "я") or ch in {"Ё", "ё"} for ch in text)
+
+    @staticmethod
+    def _looks_like_mojibake(text: str) -> bool:
+        # Typical UTF-8->cp1251 mojibake contains many capital 'Р'/'С' markers.
+        marker_count = text.count("Р") + text.count("С")
+        return marker_count >= 3 and marker_count > max(2, len(text) // 10)
+
+    def _normalize_query(self, query: str) -> str:
+        if not query:
+            return query
+
+        if self._looks_like_mojibake(query):
+            try:
+                repaired = query.encode("cp1251").decode("utf-8")
+                if self._has_cyrillic(repaired) and not self._looks_like_mojibake(repaired):
+                    logger.warning("[MULTIAGENT] query mojibake repaired")
+                    return repaired
+            except (UnicodeEncodeError, UnicodeDecodeError):
+                pass
+
+        # Don't touch already-correct Cyrillic text.
+        if self._has_cyrillic(query):
+            return query
+
+        # Attempt to repair cp1251/latin-1 mojibake from shell environments.
+        try:
+            repaired = query.encode("latin-1").decode("cp1251")
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            return query
+
+        if self._has_cyrillic(repaired):
+            logger.warning("[MULTIAGENT] query encoding repaired")
+            return repaired
+        return query
+
     async def run(self, *, query: str, user_id: str) -> dict:
+        query = self._normalize_query(query)
+
         current_thread = thread_storage.load_active(user_id)
         archived_threads = thread_storage.load_archived(user_id)
 

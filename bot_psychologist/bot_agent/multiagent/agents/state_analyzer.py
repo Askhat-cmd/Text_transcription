@@ -40,6 +40,33 @@ _SAFETY_KEYWORDS = frozenset(
         "end it all",
         "hurt myself",
         "i want to die",
+        "\u0443\u0441\u0442\u0430\u043b\u0430 \u043e\u0442 \u0436\u0438\u0437\u043d\u0438",
+        "\u0443\u0441\u0442\u0430\u043b \u043e\u0442 \u0436\u0438\u0437\u043d\u0438",
+        "\u043d\u0435 \u0445\u043e\u0447\u0435\u0442\u0441\u044f \u0436\u0438\u0442\u044c",
+        "\u0437\u0430\u0447\u0435\u043c \u044f \u0436\u0438\u0432\u0443",
+        "\u043b\u0443\u0447\u0448\u0435 \u0431\u044b \u044f \u0443\u043c\u0435\u0440\u043b\u0430",
+        "\u043b\u0443\u0447\u0448\u0435 \u0431\u044b \u044f \u0443\u043c\u0435\u0440",
+        "\u0445\u043e\u0447\u0443 \u0438\u0441\u0447\u0435\u0437\u043d\u0443\u0442\u044c",
+        "\u0445\u043e\u0447\u0443 \u043f\u0440\u043e\u0441\u0442\u043e \u0438\u0441\u0447\u0435\u0437\u043d\u0443\u0442\u044c",
+        "\u0445\u043e\u0447\u0443 \u0443\u0441\u043d\u0443\u0442\u044c \u0438 \u043d\u0435 \u043f\u0440\u043e\u0441\u044b\u043f\u0430\u0442\u044c\u0441\u044f",
+        "\u043d\u0435\u0442 \u0441\u043c\u044b\u0441\u043b\u0430 \u0436\u0438\u0442\u044c",
+        "\u0441\u043c\u044b\u0441\u043b\u0430 \u043d\u0435\u0442 \u0436\u0438\u0442\u044c",
+        "\u0432\u0441\u0451 \u0431\u0435\u0441\u0441\u043c\u044b\u0441\u043b\u0435\u043d\u043d\u043e",
+        "\u0436\u0438\u0437\u043d\u044c \u0431\u0435\u0441\u0441\u043c\u044b\u0441\u043b\u0435\u043d\u043d\u0430",
+        "\u0434\u0443\u043c\u0430\u044e \u043e \u0441\u043c\u0435\u0440\u0442\u0438",
+        "\u043c\u044b\u0441\u043b\u0438 \u043e \u0441\u043c\u0435\u0440\u0442\u0438",
+        "\u043f\u0440\u0438\u0447\u0438\u043d\u0438\u0442\u044c \u0441\u0435\u0431\u0435 \u0432\u0440\u0435\u0434",
+        "\u043d\u0430\u0432\u0440\u0435\u0434\u0438\u0442\u044c \u0441\u0435\u0431\u0435",
+        "\u043f\u043e\u0440\u0435\u0437\u0430\u0442\u044c \u0441\u0435\u0431\u044f",
+        "\u043d\u0435 \u0432\u0438\u0436\u0443 \u0441\u043c\u044b\u0441\u043b\u0430 \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0442\u044c",
+        "wish i was dead",
+        "better off dead",
+        "don't want to be here",
+        "want to disappear",
+        "no reason to live",
+        "thinking about ending",
+        "end my life",
+        "take my own life",
     }
 )
 
@@ -408,22 +435,66 @@ class StateAnalyzerAgent:
                     deterministic.openness or "open",
                 )
             )
+            ok_position = _sanitize_field(
+                parsed.get("ok_position"),
+                _VALID_OK_POSITION,
+                "I+W+",
+            )
+            confidence = _clamp_confidence(parsed.get("confidence"), 0.75)
+
+            if ok_position == "I-W-" or openness == "collapsed":
+                safety_flag = await self._llm_safety_check(message=message, client=client)
+                if safety_flag:
+                    return StateSnapshot(
+                        nervous_state="hyper",
+                        intent="contact",
+                        openness="collapsed",
+                        ok_position="I-W-",
+                        safety_flag=True,
+                        confidence=max(0.95, confidence),
+                    )
+
             result = StateSnapshot(
                 nervous_state=nervous_state,
                 intent=intent,
                 openness=openness,
-                ok_position=_sanitize_field(
-                    parsed.get("ok_position"),
-                    _VALID_OK_POSITION,
-                    "I+W+",
-                ),
+                ok_position=ok_position,
                 safety_flag=False,
-                confidence=_clamp_confidence(parsed.get("confidence"), 0.75),
+                confidence=confidence,
             )
             return result
         except Exception as exc:
             logger.error("[STATE_ANALYZER] llm fallback failed: %s", exc, exc_info=True)
             return self._fallback_from_deterministic(deterministic, confidence=0.55)
+
+    async def _llm_safety_check(self, message: str, client: Any) -> bool:
+        """Secondary LLM safety check for implicit crisis phrases."""
+        try:
+            response = await client.chat.completions.create(
+                model=self._model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a safety classifier for a mental health support bot. "
+                            "Reply ONLY YES or NO. "
+                            "YES if the message implies suicidal ideation, self-harm intent, "
+                            "wish to disappear, death ideation, or acute crisis posture. "
+                            "NO otherwise."
+                        ),
+                    },
+                    {
+                        "role": "user",
+                        "content": f"Message: {message[:500]}",
+                    },
+                ],
+                temperature=0.0,
+                max_tokens=5,
+            )
+            answer = (response.choices[0].message.content or "").strip().upper()
+            return answer.startswith("YES")
+        except Exception:
+            return False
 
     def _get_client(self) -> Optional[Any]:
         if self._client is not None:

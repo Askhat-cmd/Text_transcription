@@ -17,6 +17,8 @@ from .state_analyzer_prompts import STATE_ANALYZER_SYSTEM, STATE_ANALYZER_USER_T
 
 logger = logging.getLogger(__name__)
 
+STATE_ANALYZER_MODEL_DEFAULT = "gpt-4o-mini"
+
 _VALID_NERVOUS = {"window", "hyper", "hypo"}
 _VALID_INTENT = {"clarify", "vent", "explore", "contact", "solution"}
 _VALID_OPENNESS = {"open", "mixed", "defensive", "collapsed"}
@@ -237,7 +239,10 @@ class StateAnalyzerAgent:
 
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
-        self._model = model or feature_flags.value("STATE_ANALYZER_MODEL", "gpt-5-nano")
+        self._model = model or feature_flags.value(
+            "STATE_ANALYZER_MODEL",
+            STATE_ANALYZER_MODEL_DEFAULT,
+        )
 
     async def analyze(
         self,

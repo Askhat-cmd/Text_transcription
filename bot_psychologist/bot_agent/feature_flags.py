@@ -39,8 +39,11 @@ _DEFAULTS: Dict[str, bool] = {
 
 _STRING_DEFAULTS: Dict[str, str] = {
     "THREAD_MANAGER_MODEL": "gpt-5-nano",
-    "STATE_ANALYZER_MODEL": "gpt-5-nano",
+    "STATE_ANALYZER_MODEL": "gpt-4o-mini",
     "WRITER_MODEL": "gpt-5-mini",
+    "MULTIAGENT_LLM_TIMEOUT": "30",
+    "MULTIAGENT_MAX_TOKENS": "600",
+    "MULTIAGENT_TEMPERATURE": "0.7",
     "WRITER_MAX_TOKENS": "400",
     "WRITER_TEMPERATURE": "0.7",
     "MEMORY_RAG_N_RESULTS": "4",
@@ -64,6 +67,10 @@ class FeatureFlags:
         if name not in _DEFAULTS:
             return False
         return _as_bool(os.getenv(name), _DEFAULTS[name])
+
+    @staticmethod
+    def is_enabled(name: str) -> bool:
+        return FeatureFlags.enabled(name)
 
     @staticmethod
     def snapshot() -> Dict[str, bool]:

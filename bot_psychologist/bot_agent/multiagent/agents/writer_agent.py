@@ -14,8 +14,9 @@ from .writer_agent_prompts import WRITER_SYSTEM, WRITER_USER_TEMPLATE
 logger = logging.getLogger(__name__)
 
 WRITER_MODEL_DEFAULT = "gpt-5-mini"
-WRITER_MAX_TOKENS_DEFAULT = 400
+WRITER_MAX_TOKENS_DEFAULT = 600
 WRITER_TEMPERATURE_DEFAULT = 0.7
+WRITER_TIMEOUT_DEFAULT = 30.0
 
 _SAFE_OVERRIDE_FALLBACKS = {
     "ru": "Я здесь. Ты не один. Сделай медленный вдох — я рядом.",
@@ -44,12 +45,22 @@ class WriterAgent:
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
         self._model = model or feature_flags.value("WRITER_MODEL", WRITER_MODEL_DEFAULT)
+        self._timeout = _to_float(
+            feature_flags.value("MULTIAGENT_LLM_TIMEOUT", str(WRITER_TIMEOUT_DEFAULT)),
+            WRITER_TIMEOUT_DEFAULT,
+        )
         self._max_tokens = _to_int(
-            feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
+            feature_flags.value(
+                "MULTIAGENT_MAX_TOKENS",
+                feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
+            ),
             WRITER_MAX_TOKENS_DEFAULT,
         )
         self._temperature = _to_float(
-            feature_flags.value("WRITER_TEMPERATURE", str(WRITER_TEMPERATURE_DEFAULT)),
+            feature_flags.value(
+                "MULTIAGENT_TEMPERATURE",
+                feature_flags.value("WRITER_TEMPERATURE", str(WRITER_TEMPERATURE_DEFAULT)),
+            ),
             WRITER_TEMPERATURE_DEFAULT,
         )
 
@@ -102,6 +113,7 @@ class WriterAgent:
             ],
             temperature=self._temperature,
             max_tokens=self._max_tokens,
+            timeout=self._timeout,
         )
         return (response.choices[0].message.content or "").strip()
 
@@ -143,4 +155,3 @@ class WriterAgent:
 
 
 writer_agent = WriterAgent()
-

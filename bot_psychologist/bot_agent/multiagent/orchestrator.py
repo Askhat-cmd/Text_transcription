@@ -103,6 +103,7 @@ class MultiAgentOrchestrator:
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
         t_writer = int((time.perf_counter() - t0) * 1000)
+        writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
 
         t0 = time.perf_counter()
         validation_result = validator_agent.validate(draft_answer, writer_contract)
@@ -121,6 +122,29 @@ class MultiAgentOrchestrator:
             )
         )
         total_latency_ms = int((time.perf_counter() - t_total_start) * 1000)
+        semantic_hits_detail = []
+        for raw_hit in memory_bundle.semantic_hits:
+            if hasattr(raw_hit, "to_dict"):
+                hit = raw_hit.to_dict()  # type: ignore[assignment]
+            elif isinstance(raw_hit, dict):
+                hit = raw_hit
+            else:
+                hit = {
+                    "chunk_id": "",
+                    "source": "unknown",
+                    "score": 0.0,
+                    "content": str(raw_hit),
+                }
+            content_full = str(hit.get("content", "") or "")
+            semantic_hits_detail.append(
+                {
+                    "chunk_id": str(hit.get("chunk_id", "")),
+                    "source": str(hit.get("source", "unknown")),
+                    "score": float(hit.get("score", 0.0) or 0.0),
+                    "content_preview": content_full[:200],
+                    "content_full": content_full,
+                }
+            )
 
         return {
             "status": "ok",
@@ -142,16 +166,39 @@ class MultiAgentOrchestrator:
                 "has_relevant_knowledge": memory_bundle.has_relevant_knowledge,
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
+                "semantic_hits_detail": semantic_hits_detail,
+                "rag_query": getattr(memory_bundle, "rag_query", "") or "",
+                "conversation_context": memory_bundle.conversation_context,
+                "user_profile": {
+                    "patterns": list(getattr(memory_bundle.user_profile, "patterns", []) or []),
+                    "values": list(getattr(memory_bundle.user_profile, "values", []) or []),
+                    "progress_notes": list(getattr(memory_bundle.user_profile, "progress_notes", []) or []),
+                },
                 "thread_id": updated_thread.thread_id,
                 "phase": updated_thread.phase,
                 "relation_to_thread": updated_thread.relation_to_thread,
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
-                "tokens_used": None,
-                "model_used": config.LLM_MODEL,
+                "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
+                "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
+                "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),
+                "tokens_prompt": writer_debug.get("tokens_prompt"),
+                "tokens_completion": writer_debug.get("tokens_completion"),
+                "tokens_total": writer_debug.get("tokens_total"),
+                "tokens_used": writer_debug.get("tokens_total"),
+                "estimated_cost_usd": writer_debug.get("estimated_cost_usd"),
+                "model_used": str(writer_debug.get("model") or config.LLM_MODEL),
+                "model_temperature": writer_debug.get("temperature"),
+                "model_max_tokens": writer_debug.get("max_tokens"),
                 "validator_blocked": validation_result.is_blocked,
                 "validator_block_reason": validation_result.block_reason,
                 "validator_quality_flags": validation_result.quality_flags,
+                "memory_written": {
+                    "user_input": query[:200],
+                    "bot_response": final_answer[:200],
+                    "thread_id": updated_thread.thread_id,
+                    "phase": updated_thread.phase,
+                },
                 "timings": {
                     "state_analyzer_ms": t_state,
                     "thread_manager_ms": t_thread,

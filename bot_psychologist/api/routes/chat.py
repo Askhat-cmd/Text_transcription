@@ -101,7 +101,43 @@ def _resolve_multiagent_turn_index(
     session_id: str,
 ) -> int:
     traces = store.get_session_traces(session_id)
-    expected_turn = max(1, len(traces) + 1)
+    expected_turn = 1
+    trace_turns: list[int] = []
+    for item in traces:
+        if not isinstance(item, dict):
+            continue
+        raw_turn = item.get("turn_number")
+        try:
+            if raw_turn is not None:
+                parsed = int(raw_turn)
+                if parsed > 0:
+                    trace_turns.append(parsed)
+        except (TypeError, ValueError):
+            continue
+    if trace_turns:
+        expected_turn = max(expected_turn, max(trace_turns) + 1)
+    elif traces:
+        expected_turn = max(expected_turn, len(traces) + 1)
+
+    metadata = result.get("metadata")
+    if isinstance(metadata, dict):
+        meta_turn = metadata.get("turn_number")
+        try:
+            if meta_turn is not None:
+                parsed_turn = int(meta_turn)
+                if parsed_turn > 0:
+                    return max(parsed_turn, expected_turn)
+        except (TypeError, ValueError):
+            pass
+
+    latest_debug = store.get_latest_multiagent_debug(session_id)
+    if isinstance(latest_debug, dict):
+        latest_turn = latest_debug.get("turn_index")
+        try:
+            if latest_turn is not None:
+                expected_turn = max(expected_turn, int(latest_turn) + 1)
+        except (TypeError, ValueError):
+            pass
 
     debug_trace = result.get("debug_trace")
     if isinstance(debug_trace, dict):
@@ -124,7 +160,7 @@ def _resolve_multiagent_turn_index(
                         return max(parsed_turn + 1, expected_turn)
             except (TypeError, ValueError):
                 continue
-    return expected_turn
+    return max(expected_turn, 1)
 
 
 def _save_multiagent_debug_if_present(

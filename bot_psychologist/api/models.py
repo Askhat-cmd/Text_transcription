@@ -349,12 +349,73 @@ class MultiAgentPipelineTrace(BaseModel):
     validator: ValidatorTrace
 
 
+class SemanticHitTrace(BaseModel):
+    chunk_id: str
+    source: str
+    score: float
+    content_preview: str
+    content_full: str
+
+
+class MemoryContextTrace(BaseModel):
+    conversation_context: str = ""
+    rag_query: str = ""
+    semantic_hits: List[SemanticHitTrace] = Field(default_factory=list)
+    user_profile_patterns: List[str] = Field(default_factory=list)
+    user_profile_values: List[str] = Field(default_factory=list)
+    memory_written_preview: str = ""
+
+
+class WriterLLMTrace(BaseModel):
+    system_prompt: str = ""
+    user_prompt: str = ""
+    llm_response_raw: str = ""
+    model: str = ""
+    temperature: float = 0.7
+    max_tokens: int = 600
+    tokens_prompt: Optional[int] = None
+    tokens_completion: Optional[int] = None
+    tokens_total: Optional[int] = None
+    estimated_cost_usd: Optional[float] = None
+
+
+class TurnDiffTrace(BaseModel):
+    nervous_state_prev: Optional[str] = None
+    nervous_state_curr: str = ""
+    phase_prev: Optional[str] = None
+    phase_curr: str = ""
+    relation_to_thread: str = ""
+    memory_turns_delta: int = 0
+    semantic_hits_delta: int = 0
+
+
+class AnomalyItem(BaseModel):
+    code: str
+    severity: str
+    message: str
+
+
+class SessionDashboard(BaseModel):
+    total_turns: int = 0
+    avg_latency_ms: int = 0
+    total_cost_usd: float = 0.0
+    state_trajectory: List[str] = Field(default_factory=list)
+    thread_switches: int = 0
+    safety_events: int = 0
+    validator_blocks: int = 0
+
+
 class MultiAgentTraceResponse(BaseModel):
     session_id: str
     turn_index: Optional[int] = None
     pipeline_version: str
     total_latency_ms: int
     agents: MultiAgentPipelineTrace
+    memory_context: MemoryContextTrace = Field(default_factory=MemoryContextTrace)
+    writer_llm: WriterLLMTrace = Field(default_factory=WriterLLMTrace)
+    turn_diff: Optional[TurnDiffTrace] = None
+    anomalies: List[AnomalyItem] = Field(default_factory=list)
+    session_dashboard: Optional[SessionDashboard] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

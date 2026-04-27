@@ -65,6 +65,7 @@ class MemoryBundle:
     """Prepared memory payload for Writer layer."""
 
     conversation_context: str = ""
+    rag_query: str = ""
     user_profile: UserProfile = field(default_factory=UserProfile)
     semantic_hits: list[SemanticHit] = field(default_factory=list)
     retrieved_chunks: list[Any] = field(default_factory=list)
@@ -74,6 +75,7 @@ class MemoryBundle:
     def to_dict(self) -> dict[str, Any]:
         return {
             "conversation_context": self.conversation_context,
+            "rag_query": self.rag_query,
             "user_profile": self.user_profile.to_dict(),
             "semantic_hits": [hit.to_dict() for hit in self.semantic_hits],
             "retrieved_chunks": self.retrieved_chunks,
@@ -109,6 +111,7 @@ class MemoryBundle:
                 )
         return cls(
             conversation_context=str(payload.get("conversation_context", "")),
+            rag_query=str(payload.get("rag_query", "")),
             user_profile=user_profile,
             semantic_hits=semantic_hits,
             retrieved_chunks=list(payload.get("retrieved_chunks", [])),

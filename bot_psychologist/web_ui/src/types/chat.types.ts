@@ -69,12 +69,73 @@ export interface MultiAgentPipelineTrace {
   validator: ValidatorTrace;
 }
 
+export interface SemanticHitTrace {
+  chunk_id: string;
+  source: string;
+  score: number;
+  content_preview: string;
+  content_full: string;
+}
+
+export interface MemoryContextTrace {
+  conversation_context: string;
+  rag_query: string;
+  semantic_hits: SemanticHitTrace[];
+  user_profile_patterns: string[];
+  user_profile_values: string[];
+  memory_written_preview: string;
+}
+
+export interface WriterLLMTrace {
+  system_prompt: string;
+  user_prompt: string;
+  llm_response_raw: string;
+  model: string;
+  temperature: number;
+  max_tokens: number;
+  tokens_prompt?: number | null;
+  tokens_completion?: number | null;
+  tokens_total?: number | null;
+  estimated_cost_usd?: number | null;
+}
+
+export interface TurnDiffTrace {
+  nervous_state_prev?: string | null;
+  nervous_state_curr: string;
+  phase_prev?: string | null;
+  phase_curr: string;
+  relation_to_thread: string;
+  memory_turns_delta: number;
+  semantic_hits_delta: number;
+}
+
+export interface AnomalyItem {
+  code: string;
+  severity: string;
+  message: string;
+}
+
+export interface SessionDashboardTrace {
+  total_turns: number;
+  avg_latency_ms: number;
+  total_cost_usd: number;
+  state_trajectory: string[];
+  thread_switches: number;
+  safety_events: number;
+  validator_blocks: number;
+}
+
 export interface MultiAgentTraceData {
   session_id: string;
   turn_index?: number | null;
   pipeline_version: string;
   total_latency_ms: number;
   agents: MultiAgentPipelineTrace;
+  memory_context?: MemoryContextTrace;
+  writer_llm?: WriterLLMTrace;
+  turn_diff?: TurnDiffTrace | null;
+  anomalies?: AnomalyItem[];
+  session_dashboard?: SessionDashboardTrace | null;
 }
 
 export interface Message {

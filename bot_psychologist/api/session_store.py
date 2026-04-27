@@ -24,6 +24,8 @@ class SessionStore:
         self._blobs: Dict[str, Dict[str, Any]] = {}
         self._multiagent_debug: Dict[str, Dict[int, Dict[str, Any]]] = {}
         self._multiagent_updated: Dict[str, float] = {}
+        self._session_stats: Dict[str, Dict[str, Any]] = {}
+        self._session_stats_updated: Dict[str, float] = {}
         self._lock = Lock()
 
     def cleanup_expired(self) -> None:
@@ -50,6 +52,14 @@ class SessionStore:
             for key in expired_multiagent:
                 self._multiagent_updated.pop(key, None)
                 self._multiagent_debug.pop(key, None)
+
+            expired_stats = [
+                key for key, ts in self._session_stats_updated.items()
+                if now - ts > self._ttl_seconds
+            ]
+            for key in expired_stats:
+                self._session_stats_updated.pop(key, None)
+                self._session_stats.pop(key, None)
 
     def append_trace(self, session_id: str, trace: Dict[str, Any]) -> None:
         if not session_id:
@@ -128,6 +138,7 @@ class SessionStore:
                 self._multiagent_debug[session_id] = session_debug
             session_debug[normalized_turn] = payload
             self._multiagent_updated[session_id] = time.time()
+        self.accumulate_session_stats(session_id=session_id, debug=payload)
 
     def get_multiagent_debug(self, session_id: str, turn_index: int) -> Optional[Dict[str, Any]]:
         if not session_id:
@@ -157,6 +168,66 @@ class SessionStore:
                 return None
             payload = session_debug.get(latest_turn)
             return dict(payload) if isinstance(payload, dict) else None
+
+    def accumulate_session_stats(self, session_id: str, debug: Dict[str, Any]) -> None:
+        if not session_id:
+            return
+        if not isinstance(debug, dict):
+            return
+        with self._lock:
+            stats = self._session_stats.get(session_id)
+            if not isinstance(stats, dict):
+                stats = {
+                    "total_turns": 0,
+                    "total_tokens": 0,
+                    "total_cost_usd": 0.0,
+                    "total_latency_ms": 0,
+                    "state_trajectory": [],
+                    "thread_switches": 0,
+                    "safety_events": 0,
+                    "validator_blocks": 0,
+                }
+            stats["total_turns"] = int(stats.get("total_turns", 0) or 0) + 1
+            stats["total_tokens"] = int(stats.get("total_tokens", 0) or 0) + int(debug.get("tokens_total") or 0)
+            stats["total_cost_usd"] = round(
+                float(stats.get("total_cost_usd", 0.0) or 0.0) + float(debug.get("estimated_cost_usd") or 0.0),
+                6,
+            )
+            stats["total_latency_ms"] = int(stats.get("total_latency_ms", 0) or 0) + int(
+                debug.get("total_latency_ms") or 0
+            )
+
+            state_trajectory = list(stats.get("state_trajectory", []))
+            current_state = str(debug.get("nervous_state") or "").strip()
+            if current_state and (not state_trajectory or state_trajectory[-1] != current_state):
+                state_trajectory.append(current_state)
+            stats["state_trajectory"] = state_trajectory
+
+            if str(debug.get("relation_to_thread") or "") == "new_thread":
+                stats["thread_switches"] = int(stats.get("thread_switches", 0) or 0) + 1
+            if bool(debug.get("safety_flag")):
+                stats["safety_events"] = int(stats.get("safety_events", 0) or 0) + 1
+            if bool(debug.get("validator_blocked")):
+                stats["validator_blocks"] = int(stats.get("validator_blocks", 0) or 0) + 1
+
+            self._session_stats[session_id] = stats
+            self._session_stats_updated[session_id] = time.time()
+
+    def get_session_stats(self, session_id: str) -> Dict[str, Any]:
+        with self._lock:
+            stats = self._session_stats.get(session_id)
+            if not isinstance(stats, dict):
+                return {
+                    "total_turns": 0,
+                    "total_tokens": 0,
+                    "total_cost_usd": 0.0,
+                    "total_latency_ms": 0,
+                    "state_trajectory": [],
+                    "thread_switches": 0,
+                    "safety_events": 0,
+                    "validator_blocks": 0,
+                }
+            return dict(stats)
 
     def get_session_metrics(self, session_id: str) -> Optional[Dict[str, Any]]:
         traces = self.get_session_traces(session_id)

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import time
 from typing import Any, Optional
 
 from ...config import config
@@ -23,6 +24,12 @@ _SAFE_OVERRIDE_FALLBACKS = {
     "en": "I'm here. You're not alone. Take a slow breath — I'm with you.",
 }
 _DEFAULT_LANG = "ru"
+
+_COST_PER_1K_TOKENS = {
+    "gpt-5-mini": {"input": 0.00025, "output": 0.00200},
+    "gpt-4o-mini": {"input": 0.00015, "output": 0.00060},
+    "default": {"input": 0.00125, "output": 0.01000},
+}
 
 
 def _to_int(value: str, default: int) -> int:
@@ -63,9 +70,25 @@ class WriterAgent:
             ),
             WRITER_TEMPERATURE_DEFAULT,
         )
+        self.last_debug: dict[str, Any] = {}
 
     async def write(self, contract: WriterContract) -> str:
         """Write one answer text with safe fallback behavior."""
+        self.last_debug = {
+            "model": self._model,
+            "temperature": self._temperature,
+            "max_tokens": self._max_tokens,
+            "timeout": self._timeout,
+            "system_prompt": WRITER_SYSTEM,
+            "user_prompt": "",
+            "llm_response": "",
+            "tokens_prompt": None,
+            "tokens_completion": None,
+            "tokens_total": None,
+            "estimated_cost_usd": None,
+            "duration_ms": None,
+            "error": None,
+        }
         try:
             if contract.thread_state.safety_active:
                 lang = contract.response_language or self._detect_language(contract.user_message)
@@ -73,13 +96,15 @@ class WriterAgent:
                 try:
                     result = await self._call_llm(contract)
                     return result if result.strip() else fallback
-                except Exception:
+                except Exception as exc:
+                    self.last_debug["error"] = str(exc)
                     return fallback
 
             result = await self._call_llm(contract)
             return result if result.strip() else self._static_fallback(contract)
         except Exception as exc:
             logger.error("[WRITER] write failed: %s", exc, exc_info=True)
+            self.last_debug["error"] = str(exc)
             return self._static_fallback(contract)
 
     async def _call_llm(self, contract: WriterContract) -> str:
@@ -104,7 +129,9 @@ class WriterAgent:
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
             semantic_hits=self._format_hits(ctx["semantic_hits"]),
         )
+        self.last_debug["user_prompt"] = user_prompt
 
+        start_ts = time.perf_counter()
         response = await client.chat.completions.create(
             model=self._model,
             messages=[
@@ -115,7 +142,22 @@ class WriterAgent:
             max_tokens=self._max_tokens,
             timeout=self._timeout,
         )
-        return (response.choices[0].message.content or "").strip()
+        llm_response = (response.choices[0].message.content or "").strip()
+        tokens_prompt, tokens_completion, tokens_total = self._extract_tokens(response)
+        estimated_cost = self._estimate_cost(tokens_prompt=tokens_prompt, tokens_completion=tokens_completion)
+        duration_ms = int((time.perf_counter() - start_ts) * 1000)
+        self.last_debug.update(
+            {
+                "llm_response": llm_response,
+                "tokens_prompt": tokens_prompt,
+                "tokens_completion": tokens_completion,
+                "tokens_total": tokens_total,
+                "estimated_cost_usd": estimated_cost,
+                "duration_ms": duration_ms,
+                "error": None,
+            }
+        )
+        return llm_response
 
     def _get_client(self):
         if self._client is not None:
@@ -141,6 +183,39 @@ class WriterAgent:
         if not hits:
             return "нет релевантных знаний"
         return "\n---\n".join(f"• {h[:300]}" for h in hits[:2])
+
+    @staticmethod
+    def _extract_tokens(response: Any) -> tuple[Optional[int], Optional[int], Optional[int]]:
+        usage = getattr(response, "usage", None)
+        if usage is None:
+            return None, None, None
+        prompt_tokens = getattr(usage, "prompt_tokens", None)
+        completion_tokens = getattr(usage, "completion_tokens", None)
+        total_tokens = getattr(usage, "total_tokens", None)
+        if total_tokens is None and isinstance(prompt_tokens, int) and isinstance(completion_tokens, int):
+            total_tokens = prompt_tokens + completion_tokens
+        try:
+            prompt_value = int(prompt_tokens) if prompt_tokens is not None else None
+        except (TypeError, ValueError):
+            prompt_value = None
+        try:
+            completion_value = int(completion_tokens) if completion_tokens is not None else None
+        except (TypeError, ValueError):
+            completion_value = None
+        try:
+            total_value = int(total_tokens) if total_tokens is not None else None
+        except (TypeError, ValueError):
+            total_value = None
+        return prompt_value, completion_value, total_value
+
+    def _estimate_cost(self, *, tokens_prompt: Optional[int], tokens_completion: Optional[int]) -> Optional[float]:
+        if tokens_prompt is None and tokens_completion is None:
+            return None
+        rates = _COST_PER_1K_TOKENS.get((self._model or "").lower(), _COST_PER_1K_TOKENS["default"])
+        prompt = float(tokens_prompt or 0)
+        completion = float(tokens_completion or 0)
+        cost = (prompt / 1000.0) * float(rates["input"]) + (completion / 1000.0) * float(rates["output"])
+        return round(cost, 6)
 
     @staticmethod
     def _static_fallback(contract: WriterContract) -> str:

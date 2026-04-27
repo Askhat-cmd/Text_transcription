@@ -57,6 +57,7 @@ class MemoryRetrievalAgent:
 
         return MemoryBundle(
             conversation_context=conversation_context if isinstance(conversation_context, str) else "",
+            rag_query=rag_query,
             user_profile=user_profile if isinstance(user_profile, UserProfile) else UserProfile(),
             semantic_hits=filtered_hits,
             retrieved_chunks=[h.content for h in filtered_hits],

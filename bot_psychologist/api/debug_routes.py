@@ -5,12 +5,18 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from .auth import verify_api_key, is_dev_key
 from .models import (
+    AnomalyItem,
+    MemoryContextTrace,
     MemoryRetrievalTrace,
     MultiAgentPipelineTrace,
     MultiAgentTraceResponse,
+    SemanticHitTrace,
+    SessionDashboard,
     StateAnalyzerTrace,
     ThreadManagerTrace,
+    TurnDiffTrace,
     ValidatorTrace,
+    WriterLLMTrace,
     WriterTrace,
 )
 from .session_store import SessionStore, get_session_store
@@ -80,6 +86,77 @@ def _derive_turn_tokens(trace: Dict[str, Any]) -> tuple[int, int, int]:
         total_value = total
 
     return prompt_value, completion_value, total_value
+
+
+def _build_turn_diff(
+    *,
+    current: Dict[str, Any],
+    previous: Optional[Dict[str, Any]],
+) -> Optional[TurnDiffTrace]:
+    if not isinstance(previous, dict):
+        return None
+
+    prev_state = str(previous.get("nervous_state") or "").strip() or None
+    curr_state = str(current.get("nervous_state") or "").strip()
+    prev_phase = str(previous.get("phase") or "").strip() or None
+    curr_phase = str(current.get("phase") or "").strip()
+    relation = str(current.get("relation_to_thread") or "").strip()
+
+    curr_turns = _safe_int(current.get("context_turns")) or 0
+    prev_turns = _safe_int(previous.get("context_turns")) or 0
+    curr_hits = _safe_int(current.get("semantic_hits_count")) or 0
+    prev_hits = _safe_int(previous.get("semantic_hits_count")) or 0
+
+    state_changed = prev_state != curr_state
+    phase_changed = prev_phase != curr_phase
+    memory_delta = curr_turns - prev_turns
+    hits_delta = curr_hits - prev_hits
+
+    if not (state_changed or phase_changed or memory_delta != 0 or hits_delta != 0):
+        return None
+
+    return TurnDiffTrace(
+        nervous_state_prev=prev_state,
+        nervous_state_curr=curr_state,
+        phase_prev=prev_phase,
+        phase_curr=curr_phase,
+        relation_to_thread=relation,
+        memory_turns_delta=memory_delta,
+        semantic_hits_delta=hits_delta,
+    )
+
+
+def _build_anomalies(debug: Dict[str, Any]) -> List[AnomalyItem]:
+    anomalies: List[AnomalyItem] = []
+    timings = debug.get("timings") if isinstance(debug.get("timings"), dict) else {}
+    total_ms = max(_safe_int(debug.get("total_latency_ms")) or 0, 1)
+    writer_ms = max(_safe_int(timings.get("writer_ms")) or 0, 0)
+
+    if writer_ms > 0 and (writer_ms / total_ms) > 0.6:
+        anomalies.append(
+            AnomalyItem(
+                code="SLOW_WRITER",
+                severity="WARN",
+                message=f"Writer занял {writer_ms}ms ({round(writer_ms / total_ms * 100)}% общего времени)",
+            )
+        )
+    if bool(debug.get("safety_flag")):
+        anomalies.append(
+            AnomalyItem(
+                code="SAFETY_FLAG",
+                severity="WARN",
+                message="State Analyzer обнаружил признак кризисного состояния",
+            )
+        )
+    if bool(debug.get("validator_blocked")):
+        anomalies.append(
+            AnomalyItem(
+                code="VALIDATOR_BLOCKED",
+                severity="ERROR",
+                message=f"Ответ заблокирован: {debug.get('validator_block_reason', 'неизвестная причина')}",
+            )
+        )
+    return anomalies
 
 
 def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
@@ -218,10 +295,88 @@ async def get_multiagent_trace(
         tokens_used = debug.get("tokens_total")
 
     model_used = debug.get("model_used") or debug.get("primary_model")
+    resolved_turn_index = _safe_int(debug.get("turn_index"))
+    previous_debug = None
+    if isinstance(resolved_turn_index, int) and resolved_turn_index > 1:
+        previous_debug = store.get_multiagent_debug(session_id, resolved_turn_index - 1)
+
+    raw_hits = debug.get("semantic_hits_detail")
+    semantic_hits: List[SemanticHitTrace] = []
+    if isinstance(raw_hits, list):
+        for item in raw_hits:
+            if not isinstance(item, dict):
+                continue
+            semantic_hits.append(
+                SemanticHitTrace(
+                    chunk_id=str(item.get("chunk_id", "")),
+                    source=str(item.get("source", "unknown")),
+                    score=float(item.get("score", 0.0) or 0.0),
+                    content_preview=str(item.get("content_preview", "")),
+                    content_full=str(item.get("content_full", "")),
+                )
+            )
+
+    profile = debug.get("user_profile") if isinstance(debug.get("user_profile"), dict) else {}
+    memory_written = debug.get("memory_written")
+    if isinstance(memory_written, dict):
+        memory_written_preview = (
+            f"user: {str(memory_written.get('user_input', '') or '')}\n"
+            f"assistant: {str(memory_written.get('bot_response', '') or '')}\n"
+            f"thread_id: {str(memory_written.get('thread_id', '') or '')} | "
+            f"phase: {str(memory_written.get('phase', '') or '')}"
+        ).strip()
+    else:
+        memory_written_preview = str(memory_written or "")
+
+    memory_context = MemoryContextTrace(
+        conversation_context=str(debug.get("conversation_context", "") or ""),
+        rag_query=str(debug.get("rag_query", "") or ""),
+        semantic_hits=semantic_hits,
+        user_profile_patterns=[str(v) for v in (profile.get("patterns") or [])],
+        user_profile_values=[str(v) for v in (profile.get("values") or [])],
+        memory_written_preview=memory_written_preview,
+    )
+
+    writer_llm = WriterLLMTrace(
+        system_prompt=str(debug.get("writer_system_prompt", "") or ""),
+        user_prompt=str(debug.get("writer_user_prompt", "") or ""),
+        llm_response_raw=str(debug.get("writer_llm_response_raw", "") or ""),
+        model=str(model_used or ""),
+        temperature=float(debug.get("model_temperature") or 0.7),
+        max_tokens=_safe_int(debug.get("model_max_tokens")) or 600,
+        tokens_prompt=_safe_int(debug.get("tokens_prompt")),
+        tokens_completion=_safe_int(debug.get("tokens_completion")),
+        tokens_total=_safe_int(debug.get("tokens_total")),
+        estimated_cost_usd=(
+            float(debug.get("estimated_cost_usd"))
+            if isinstance(debug.get("estimated_cost_usd"), (int, float))
+            else None
+        ),
+    )
+
+    anomalies = _build_anomalies(debug)
+    turn_diff = _build_turn_diff(current=debug, previous=previous_debug)
+
+    stats = store.get_session_stats(session_id)
+    total_turns = int(stats.get("total_turns", 0) or 0)
+    avg_latency = (
+        round((int(stats.get("total_latency_ms", 0) or 0) / max(total_turns, 1)))
+        if total_turns > 0
+        else 0
+    )
+    session_dashboard = SessionDashboard(
+        total_turns=total_turns,
+        avg_latency_ms=int(avg_latency),
+        total_cost_usd=float(stats.get("total_cost_usd", 0.0) or 0.0),
+        state_trajectory=[str(v) for v in (stats.get("state_trajectory") or [])],
+        thread_switches=int(stats.get("thread_switches", 0) or 0),
+        safety_events=int(stats.get("safety_events", 0) or 0),
+        validator_blocks=int(stats.get("validator_blocks", 0) or 0),
+    )
 
     return MultiAgentTraceResponse(
         session_id=session_id,
-        turn_index=_safe_int(debug.get("turn_index")),
+        turn_index=resolved_turn_index,
         pipeline_version=str(debug.get("pipeline_version") or "multiagent_v1"),
         total_latency_ms=_safe_int(debug.get("total_latency_ms")) or 0,
         agents=MultiAgentPipelineTrace(
@@ -260,6 +415,11 @@ async def get_multiagent_trace(
                 quality_flags=[str(item) for item in (debug.get("validator_quality_flags") or [])],
             ),
         ),
+        memory_context=memory_context,
+        writer_llm=writer_llm,
+        turn_diff=turn_diff,
+        anomalies=anomalies,
+        session_dashboard=session_dashboard,
     )
 
 

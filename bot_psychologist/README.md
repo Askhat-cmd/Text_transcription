@@ -13,10 +13,88 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - Реализован PRD-015A + PRD-015B-v2: Telegram adapter + transport (`mock/polling/webhook`) с graceful shutdown.
 - Реализован PRD-016-v2: registration/access control (`/auth/register`, `/auth/login`, session token, `/link`).
 - `api/auth.py` переведен на DB-backed API keys (без in-memory хардкода ключей).
+- Реализована мультиагентная система (PRD-017..025, Эпоха 4):
+  - State Analyzer Agent — классификация состояния пользователя
+  - Thread Manager Agent — управление нитями диалога
+  - Memory Retrieval Agent — контекстное извлечение памяти
+  - Writer Agent NEO — генерация ответов бота
+  - Validator Agent — контроль качества ответов
+  - Orchestrator — координация всех агентов
+  - Thread Storage — персистентное хранилище нитей (JSON, стабильный путь от `__file__`)
+- Первый живой прогон мультиагентной системы: 5/5 TC passed (2026-04-26)
+- `pytest tests/multiagent -q` → 190 passed
 
 ### Что планируется
 
-- PRD-017: multi-agent orchestration.
+- PRD-026: обновление трейса под мультиагентную архитектуру
+- PRD-027: веб-AdminPage с управлением агентами на лету
+- PRD-028: Legacy Cleanup — удаление старой каскадной системы (после 2+ недель стабильной работы)
+
+## Мультиагентная система (Эпоха 4)
+
+### Статус: активна, работает параллельно старой системе
+
+Мультиагентная система включается флагом `MULTIAGENT_ENABLED=true` в `.env`.
+При `MULTIAGENT_ENABLED=false` бот работает по старой каскадной системе (`answer_adaptive.py`).
+
+### Переходный период
+
+Обе системы существуют одновременно. Это осознанное решение:
+- Новая система проходит накопление реального трафика
+- Старая — страховочная сеть на случай непредвиденных сценариев
+- После 2+ недель стабильной работы и готовности трейса/AdminPage
+  будет выполнен PRD-028: Legacy Cleanup — осторожное удаление каскадной системы
+
+### Как работает новая система
+
+Каждое сообщение пользователя проходит через цепочку агентов:
+
+```text
+Сообщение пользователя
+        ↓
+[1] State Analyzer Agent
+    → nervous_state (window/hyper/hypo)
+    → intent (clarify/vent/explore/contact/solution)
+    → openness (open/mixed/defensive/collapsed)
+    → ok_position (I+W+/I-W+/I+W-/I-W-)
+    → safety_flag (bool)
+    → confidence (0.0–1.0)
+        ↓
+[2] Thread Manager Agent (детерминированный, без LLM)
+    → thread_id (UUID нити)
+    → phase (stabilize/clarify/explore/integrate)
+    → relation_to_thread (continue/branch/new_thread/return_to_old)
+    → continuity_score (float)
+        ↓
+[3] Memory Retrieval Agent
+    → memory_bundle (контекст диалога + профиль + semantic_hits)
+        ↓
+[4] Writer Agent NEO
+    → draft ответа
+    → response_mode (reflect/validate/explore/regulate/practice/safe_override)
+        ↓
+[5] Validator Agent
+    → is_blocked / block_reason / quality_flags
+        ↓
+Финальный ответ NEO
+```
+
+⚠️ Если `safety_flag=True`, цепочка уходит в защитный режим `safe_override`.
+
+### Ключевые файлы
+
+| Компонент | Файл |
+|---|---|
+| Оркестратор | `bot_agent/multiagent/orchestrator.py` |
+| State Analyzer | `bot_agent/multiagent/agents/state_analyzer.py` |
+| Thread Manager | `bot_agent/multiagent/agents/thread_manager.py` |
+| Memory Agent | `bot_agent/multiagent/agents/memory_retrieval.py` |
+| Writer Agent | `bot_agent/multiagent/agents/writer_agent.py` |
+| Validator Agent | `bot_agent/multiagent/agents/validator_agent.py` |
+| Thread Storage | `bot_agent/multiagent/thread_storage.py` |
+| Контракты | `bot_agent/multiagent/contracts/` |
+| Feature flags | `bot_agent/feature_flags.py` |
+| Тесты | `tests/multiagent/` |
 
 ## Иерархия идентификаторов
 
@@ -95,11 +173,28 @@ pytest tests/telegram_adapter/test_models.py tests/telegram_adapter/test_adapter
 pytest tests/registration tests/telegram_adapter/test_outbound.py tests/telegram_adapter/test_transport.py tests/telegram_adapter/test_webhook.py tests/telegram_adapter/test_link_command.py tests/api/test_auth_routes.py -q
 ```
 
+### Мультиагентная система
+
+```bash
+# Полный прогон тестов мультиагентной системы
+pytest tests/multiagent -q
+
+# Отдельные модули
+pytest tests/multiagent/test_state_analyzer.py -q
+pytest tests/multiagent/test_thread_manager.py -q
+pytest tests/multiagent/test_orchestrator_e2e.py -q
+pytest tests/multiagent/test_safety_detection.py -q
+pytest tests/multiagent/test_thread_storage_persistence.py -q
+
+# Feature flags
+pytest tests/test_feature_flags.py -q
+```
+
 ## Что дальше
 
-1. Довести production-runbook для Telegram webhook (reverse proxy + TLS + secret rotation).
-2. Добавить recovery-flow для утерянного `access_key`.
-3. Далее — мультиагентная оркестрация.
+1. Довести PRD-026: богатый мультиагентный трейс в UI.
+2. Довести PRD-027: AdminPage для оперативного управления агентами.
+3. Подготовить PRD-028: Legacy Cleanup после периода стабилизации.
 
 ## Документация
 
@@ -113,6 +208,13 @@ pytest tests/registration tests/telegram_adapter/test_outbound.py tests/telegram
 - [API](docs/api.md)
 - [Web UI](docs/web_ui.md)
 - [Trace runtime](docs/trace_runtime.md)
+
+### Мультиагентная система
+- [Multiagent Architecture](docs/multiagent_architecture.md)
+- [Agent Contracts](docs/multiagent_contracts.md)
+- [Thread Lifecycle](docs/thread_lifecycle.md)
+- [Safety System](docs/safety_system.md)
+- [Migration Guide](docs/migration_legacy_to_multiagent.md)
 
 ## Ограничения и безопасность
 

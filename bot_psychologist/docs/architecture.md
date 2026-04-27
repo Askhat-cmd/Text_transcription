@@ -1,5 +1,9 @@
 ﻿# Architecture
 
+> ⚠️ **Важно:** этот документ описывает legacy/каскадную архитектуру.
+> Актуальная мультиагентная архитектура описана в [multiagent_architecture.md](./multiagent_architecture.md).
+> Сейчас обе системы работают параллельно, переключение — через `MULTIAGENT_ENABLED`.
+
 ## System Diagram
 
 ```text
@@ -92,3 +96,4 @@ Runtime package includes 20 Python modules (19 functional modules + package init
 - [API](./api.md)
 - [Web UI](./web_ui.md)
 - [Trace Runtime](./trace_runtime.md)
+

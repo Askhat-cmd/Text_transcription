@@ -37,7 +37,7 @@ class MemoryRetrievalAgent:
         rag_query = self._build_rag_query(user_message, thread_state)
 
         results = await asyncio.gather(
-            self._load_conversation(user_id, n_turns),
+            self._load_conversation(user_id, n_turns, user_message),
             self._load_profile(user_id),
             self._load_rag(rag_query),
             return_exceptions=True,
@@ -138,15 +138,22 @@ class MemoryRetrievalAgent:
         return " ".join(parts)[:RAG_QUERY_MAX_LEN]
 
     @staticmethod
-    async def _load_conversation(user_id: str, n_turns: int) -> str:
+    async def _load_conversation(user_id: str, n_turns: int, user_message: str = "") -> str:
         try:
             from ...conversation_memory import get_conversation_memory  # noqa: PLC0415
 
             memory = get_conversation_memory(user_id=user_id)
-            turns = memory.get_last_turns(n=n_turns)
-            if not turns:
+            if not getattr(memory, "turns", None):
                 return ""
 
+            # Reuse adaptive context logic from cascade runtime:
+            # short-term turns + summary + semantic memory.
+            context = memory.get_adaptive_context_text(user_message or "")
+            if context:
+                return str(context)
+
+            # Defensive fallback if adaptive context is empty.
+            turns = memory.get_last_turns(n=n_turns)
             lines: list[str] = []
             for turn in turns:
                 user_input = (turn.user_input or "").strip()
@@ -197,33 +204,31 @@ class MemoryRetrievalAgent:
     @staticmethod
     async def _load_rag(query: str) -> list[SemanticHit]:
         try:
-            from ...chroma_loader import ChromaLoader  # noqa: PLC0415
+            from ...retriever import get_retriever  # noqa: PLC0415
 
             if not query.strip():
                 return []
 
-            loader = ChromaLoader()
-            results = loader.query_blocks(query_text=query, top_k=RAG_N_RESULTS)
+            retriever = get_retriever()
+            results = retriever.retrieve(query, top_k=RAG_N_RESULTS)
             hits: list[SemanticHit] = []
             for item in results:
-                block = None
-                score = 0.0
                 if isinstance(item, tuple) and len(item) >= 2:
                     block, score = item[0], float(item[1] or 0.0)
-                elif isinstance(item, dict):
-                    score = float(item.get("score", 0.0) or 0.0)
-                if block is not None:
-                    chunk_id = str(getattr(block, "block_id", ""))
-                    content = str(getattr(block, "content", "") or "")
-                    source = str(getattr(block, "document_title", "") or "unknown")
                 else:
-                    chunk_id = str(item.get("id", "")) if isinstance(item, dict) else ""
-                    content = str(item.get("content", "")) if isinstance(item, dict) else ""
-                    source = (
-                        str(item.get("source", item.get("collection", "unknown")))
-                        if isinstance(item, dict)
-                        else "unknown"
-                    )
+                    block = item
+                    score = 0.5
+
+                chunk_id = str(getattr(block, "block_id", "") or "")
+                content = str(getattr(block, "content", "") or "")
+                source = str(
+                    getattr(block, "document_title", "")
+                    or getattr(block, "source_type", "")
+                    or "unknown"
+                )
+                if not content:
+                    continue
+
                 hits.append(
                     SemanticHit(
                         chunk_id=chunk_id,
@@ -232,6 +237,7 @@ class MemoryRetrievalAgent:
                         score=score,
                     )
                 )
+            logger.info("[MRA] rag hits=%d query='%s...'", len(hits), query[:50])
             return hits
         except Exception as exc:
             logger.warning("[MRA] rag load error: %s", exc)

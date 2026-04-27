@@ -107,7 +107,7 @@ def test_mr_06_n_turns_integrate() -> None:
 
 
 def test_mr_07_n_turns_new_thread() -> None:
-    assert MemoryRetrievalAgent._resolve_n_turns(_thread(relation="new_thread")) == 2
+    assert MemoryRetrievalAgent._resolve_n_turns(_thread(relation="new_thread")) == 5
 
 
 def test_mr_08_n_turns_default_unknown_phase() -> None:

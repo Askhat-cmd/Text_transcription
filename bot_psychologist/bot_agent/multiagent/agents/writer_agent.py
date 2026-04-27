@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 import time
 from typing import Any, Optional
 
@@ -30,6 +31,15 @@ _COST_PER_1K_TOKENS = {
     "gpt-4o-mini": {"input": 0.00015, "output": 0.00060},
     "default": {"input": 0.00125, "output": 0.01000},
 }
+
+_RU_NAME_PATTERNS = (
+    re.compile(r"\bменя\s+зовут\s+([А-ЯЁA-Z][А-ЯЁа-яёA-Za-z\-]{1,30})", re.IGNORECASE),
+    re.compile(r"\bмое\s+имя\s+([А-ЯЁA-Z][А-ЯЁа-яёA-Za-z\-]{1,30})", re.IGNORECASE),
+)
+_EN_NAME_PATTERNS = (
+    re.compile(r"\bmy\s+name\s+is\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
+    re.compile(r"\bi\s+am\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
+)
 
 
 def _to_int(value: str, default: int) -> int:
@@ -95,13 +105,17 @@ class WriterAgent:
                 fallback = _SAFE_OVERRIDE_FALLBACKS.get(lang, _SAFE_OVERRIDE_FALLBACKS[_DEFAULT_LANG])
                 try:
                     result = await self._call_llm(contract)
-                    return result if result.strip() else fallback
+                    if not result.strip():
+                        return fallback
+                    return self._apply_name_continuity(result, contract)
                 except Exception as exc:
                     self.last_debug["error"] = str(exc)
                     return fallback
 
             result = await self._call_llm(contract)
-            return result if result.strip() else self._static_fallback(contract)
+            if not result.strip():
+                return self._static_fallback(contract)
+            return self._apply_name_continuity(result, contract)
         except Exception as exc:
             logger.error("[WRITER] write failed: %s", exc, exc_info=True)
             self.last_debug["error"] = str(exc)
@@ -227,6 +241,49 @@ class WriterAgent:
         if mode == "regulate":
             return "Сделай медленный вдох. Я рядом."
         return "Я слышу тебя."
+
+
+    def _apply_name_continuity(self, response_text: str, contract: WriterContract) -> str:
+        """Добавляет обращение по имени, если имя явно есть в контексте и отсутствует в ответе."""
+        name = self._extract_user_name(contract)
+        if not name:
+            return response_text
+        if name.lower() in response_text.lower():
+            return response_text
+        return f"{name}, {response_text}"
+
+    def _extract_user_name(self, contract: WriterContract) -> Optional[str]:
+        memory_bundle = getattr(contract, "memory_bundle", None)
+        conversation_context = ""
+        if memory_bundle is not None:
+            conversation_context = str(getattr(memory_bundle, "conversation_context", "") or "")
+        context = " ".join(
+            (
+                str(contract.user_message or ""),
+                conversation_context,
+            )
+        )
+        if not context.strip():
+            return None
+
+        for pattern in _RU_NAME_PATTERNS:
+            match = pattern.search(context)
+            if match:
+                return self._normalize_name(match.group(1))
+
+        for pattern in _EN_NAME_PATTERNS:
+            match = pattern.search(context)
+            if match:
+                return self._normalize_name(match.group(1))
+
+        return None
+
+    @staticmethod
+    def _normalize_name(raw_name: str) -> Optional[str]:
+        name = (raw_name or "").strip(" .,:;!?\"'()[]{}")
+        if len(name) < 2 or len(name) > 31:
+            return None
+        return name[0].upper() + name[1:]
 
 
 writer_agent = WriterAgent()

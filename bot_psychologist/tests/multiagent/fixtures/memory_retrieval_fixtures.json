@@ -16,7 +16,7 @@
     "thread_relation": "new_thread",
     "core_direction": "новая тема",
     "open_loops": [],
-    "expected_n_turns": 2
+    "expected_n_turns": 5
   },
   {
     "id": "MR-F03",
@@ -37,4 +37,3 @@
     "expected_n_turns": 3
   }
 ]
-

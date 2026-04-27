@@ -2,6 +2,7 @@
 """Adaptive answer orchestration entrypoint for Phase 4 runtime."""
 
 import logging
+import threading
 from typing import Any, Dict, Optional, Tuple
 
 from .data_loader import data_loader
@@ -120,6 +121,49 @@ def _build_llm_prompts(
     )
 
 
+def _run_multiagent_orchestrator_sync(query: str, user_id: str) -> Dict[str, Any]:
+    """
+    Run multiagent orchestrator from both sync and async call-sites.
+
+    In FastAPI request handlers we're already inside an event loop; direct
+    asyncio.run() in orchestrator.run_sync would fail there. In that case we
+    execute the sync wrapper in a dedicated thread.
+    """
+    from .multiagent.orchestrator import orchestrator
+
+    try:
+        import asyncio
+
+        asyncio.get_running_loop()
+        loop_is_running = True
+    except RuntimeError:
+        loop_is_running = False
+
+    if not loop_is_running:
+        return orchestrator.run_sync(query=query, user_id=user_id)
+
+    result_holder: Dict[str, Any] = {}
+    error_holder: Dict[str, Exception] = {}
+
+    def _runner() -> None:
+        try:
+            result_holder["result"] = orchestrator.run_sync(query=query, user_id=user_id)
+        except Exception as exc:  # pragma: no cover - defensive thread bridge
+            error_holder["error"] = exc
+
+    thread = threading.Thread(target=_runner, name="neo-multiagent-runner", daemon=True)
+    thread.start()
+    thread.join()
+
+    if "error" in error_holder:
+        raise error_holder["error"]
+
+    result = result_holder.get("result")
+    if isinstance(result, dict):
+        return result
+    return {}
+
+
 def answer_question_adaptive(
     query: str,
     user_id: str = "default",
@@ -151,9 +195,7 @@ def answer_question_adaptive(
 
     if feature_flags.enabled("MULTIAGENT_ENABLED"):
         try:
-            from .multiagent.orchestrator import orchestrator
-
-            multiagent_response = orchestrator.run_sync(query=query, user_id=user_id)
+            multiagent_response = _run_multiagent_orchestrator_sync(query=query, user_id=user_id)
             if isinstance(multiagent_response, dict) and multiagent_response.get("status") == "ok":
                 logger.info("[ADAPTIVE] served by multiagent orchestrator")
                 return multiagent_response

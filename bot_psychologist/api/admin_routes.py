@@ -8,15 +8,42 @@ Admin Config Panel — API endpoints.
 
 from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
 from typing import Any
+import importlib
+import json
+import os
+import threading as _threading
+from collections import deque as _deque
+from datetime import datetime
+from pathlib import Path
 
 from bot_agent.config import config
 from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
+from bot_agent.multiagent.orchestrator import orchestrator
+from bot_agent.multiagent.thread_storage import thread_storage
 from bot_agent.prompt_registry_v2 import PROMPT_STACK_ORDER, PROMPT_STACK_VERSION, prompt_registry_v2
 from .auth import is_dev_key
 from .dependencies import get_identity_service
 from .identity import IdentityService, mask_external_id
+
+
+_agent_metrics_lock = _threading.Lock()
+_agent_metrics: dict[str, dict[str, Any]] = {
+    "state_analyzer": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+    "thread_manager": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+    "memory_retrieval": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+    "writer": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+    "validator": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+}
+_agent_traces: _deque[dict[str, Any]] = _deque(maxlen=200)
+_orchestrator_mode: dict[str, str] = {"pipeline_mode": "full_multiagent"}
+_agent_prompt_overrides: dict[str, dict[str, str]] = {}
+_AGENT_PROMPT_MAP = {
+    "writer": "bot_agent.multiagent.agents.writer_agent_prompts",
+    "state_analyzer": "bot_agent.multiagent.agents.state_analyzer_prompts",
+    "thread_manager": "bot_agent.multiagent.agents.thread_manager_prompts",
+}
 
 
 # ─── Auth dependency ───────────────────────────────────────────────────────────
@@ -224,6 +251,110 @@ def _group_feature_flags(snapshot: dict[str, bool]) -> dict[str, dict[str, bool]
         group: {flag: snapshot.get(flag, False) for flag in flags}
         for group, flags in groups.items()
     }
+
+
+def _compute_agent_metrics() -> list[dict[str, Any]]:
+    with _agent_metrics_lock:
+        result = []
+        for agent_id, metric in _agent_metrics.items():
+            call_count = int(metric.get("call_count", 0))
+            total_ms = int(metric.get("total_ms", 0))
+            error_count = int(metric.get("error_count", 0))
+            avg_ms = round(total_ms / call_count, 1) if call_count > 0 else 0
+            result.append(
+                {
+                    "id": agent_id,
+                    "enabled": bool(metric.get("enabled", True)),
+                    "call_count": call_count,
+                    "avg_latency_ms": avg_ms,
+                    "error_count": error_count,
+                    "error_rate": round(error_count / call_count, 4) if call_count > 0 else 0.0,
+                    "last_run": metric.get("last_run"),
+                }
+            )
+    return result
+
+
+def _get_thread_storage_dir() -> Path:
+    raw = os.getenv("THREAD_STORAGE_DIR")
+    if raw:
+        return Path(raw).expanduser().resolve()
+    storage_dir = getattr(thread_storage, "_dir", None)
+    if storage_dir is not None:
+        return Path(storage_dir).expanduser().resolve()
+    return (Path(__file__).resolve().parent.parent / "data" / "threads").resolve()
+
+
+def _list_active_threads() -> list[dict[str, Any]]:
+    storage_dir = _get_thread_storage_dir()
+    if not storage_dir.exists():
+        return []
+    threads: list[dict[str, Any]] = []
+    for file_path in sorted(storage_dir.glob("*_active.json")):
+        try:
+            payload = json.loads(file_path.read_text(encoding="utf-8"))
+            threads.append(
+                {
+                    "thread_id": str(payload.get("thread_id", "")),
+                    "user_id": str(payload.get("user_id", "")),
+                    "phase": str(payload.get("phase", "unknown")),
+                    "response_mode": str(payload.get("response_mode", "unknown")),
+                    "core_direction": str(payload.get("core_direction", "")),
+                    "turn_count": int(payload.get("turn_count", 0) or 0),
+                    "created_at": str(payload.get("created_at", "")),
+                    "last_updated_at": str(payload.get("last_updated_at", "")),
+                    "status": "active",
+                    "open_loops_count": len(payload.get("open_loops", []) or []),
+                    "closed_loops_count": len(payload.get("closed_loops", []) or []),
+                }
+            )
+        except Exception:
+            continue
+    return threads
+
+
+def _list_archived_threads() -> list[dict[str, Any]]:
+    storage_dir = _get_thread_storage_dir()
+    if not storage_dir.exists():
+        return []
+    threads: list[dict[str, Any]] = []
+    for file_path in sorted(storage_dir.glob("*_archive.json")):
+        user_id = file_path.stem.replace("_archive", "")
+        try:
+            payload = json.loads(file_path.read_text(encoding="utf-8"))
+            for item in payload if isinstance(payload, list) else []:
+                threads.append(
+                    {
+                        "thread_id": str(item.get("thread_id", "")),
+                        "user_id": user_id,
+                        "final_phase": str(item.get("final_phase", "")),
+                        "core_direction": str(item.get("core_direction", "")),
+                        "archived_at": str(item.get("archived_at", "")),
+                        "archive_reason": str(item.get("archive_reason", "")),
+                        "status": "archived",
+                    }
+                )
+        except Exception:
+            continue
+    return threads
+
+
+def _get_agent_prompts_raw(agent_id: str) -> dict[str, str]:
+    module_path = _AGENT_PROMPT_MAP.get(agent_id)
+    if not module_path:
+        raise HTTPException(status_code=404, detail=f"No prompts module for agent: {agent_id}")
+    try:
+        module = importlib.import_module(module_path)
+    except ImportError as exc:
+        raise HTTPException(status_code=500, detail=f"Cannot load agent prompts: {exc}") from exc
+    result: dict[str, str] = {}
+    for attr in dir(module):
+        if attr.startswith("_"):
+            continue
+        value = getattr(module, attr, None)
+        if isinstance(value, str) and len(value) > 20:
+            result[attr] = value
+    return result
 
 
 def _group_param_value(group_name: str, key: str, default: Any = None) -> Any:
@@ -986,6 +1117,226 @@ async def admin_import_overrides(body: dict):
             status_code=500,
             detail={"message": str(e), "rollback_applied": True},
         )
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MULTIAGENT: AGENTS STATUS
+# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.get(
+    "/agents/status",
+    summary="Статус агентов мультиагентного пайплайна",
+)
+async def admin_agents_status():
+    pipeline_version = getattr(orchestrator, "pipeline_version", "multiagent_v1")
+    return {"pipeline_version": pipeline_version, "agents": _compute_agent_metrics()}
+
+
+@admin_router.post(
+    "/agents/{agent_id}/toggle",
+    summary="Включить/выключить агента",
+)
+async def admin_agents_toggle(agent_id: str, body: dict):
+    if agent_id not in _agent_metrics:
+        raise HTTPException(status_code=404, detail=f"Unknown agent: {agent_id}. Valid: {sorted(_agent_metrics)}")
+    with _agent_metrics_lock:
+        _agent_metrics[agent_id]["enabled"] = bool(body.get("enabled", True))
+        enabled = bool(_agent_metrics[agent_id]["enabled"])
+    return {"agent_id": agent_id, "enabled": enabled, "status": "ok"}
+
+
+@admin_router.post(
+    "/agents/metrics/record",
+    summary="Записать метрику прогона агента (internal)",
+)
+async def admin_agents_record_metric(body: dict):
+    agent_id = str(body.get("agent_id", ""))
+    if agent_id not in _agent_metrics:
+        raise HTTPException(status_code=404, detail=f"Unknown agent_id: {agent_id}")
+    with _agent_metrics_lock:
+        metric = _agent_metrics[agent_id]
+        metric["call_count"] += 1
+        metric["total_ms"] += int(body.get("latency_ms", 0) or 0)
+        if bool(body.get("error", False)):
+            metric["error_count"] += 1
+        metric["last_run"] = datetime.utcnow().isoformat() + "Z"
+    return {"status": "ok"}
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MULTIAGENT: ORCHESTRATOR CONFIG
+# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.get(
+    "/orchestrator/config",
+    summary="Конфигурация оркестратора",
+)
+async def admin_orchestrator_get_config():
+    with _agent_metrics_lock:
+        agents_enabled = {agent_id: bool(metric.get("enabled", True)) for agent_id, metric in _agent_metrics.items()}
+    return {
+        "pipeline_mode": _orchestrator_mode["pipeline_mode"],
+        "agents_enabled": agents_enabled,
+        "pipeline_version": getattr(orchestrator, "pipeline_version", "multiagent_v1"),
+    }
+
+
+@admin_router.patch(
+    "/orchestrator/config",
+    summary="Изменить режим пайплайна",
+)
+async def admin_orchestrator_patch_config(body: dict):
+    valid_modes = {"full_multiagent", "hybrid", "legacy_adaptive"}
+    mode = str(body.get("pipeline_mode", ""))
+    if mode not in valid_modes:
+        raise HTTPException(status_code=422, detail=f"Invalid pipeline_mode '{mode}'. Valid: {sorted(valid_modes)}")
+    _orchestrator_mode["pipeline_mode"] = mode
+    return {"pipeline_mode": mode, "status": "ok"}
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MULTIAGENT: AGENT TRACES
+# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.get(
+    "/agents/traces",
+    summary="Трассировки агентов по последним запросам",
+)
+async def admin_agents_traces(
+    limit: int = Query(default=50, ge=1, le=200),
+    agent_id: str | None = Query(default=None),
+):
+    with _agent_metrics_lock:
+        traces = list(_agent_traces)
+    if agent_id:
+        traces = [trace for trace in traces if trace.get("agent_id") == agent_id]
+    return {"traces": traces[-limit:][::-1], "total": len(traces)}
+
+
+@admin_router.post(
+    "/agents/traces/record",
+    summary="Записать трассировку агента (internal)",
+)
+async def admin_agents_traces_record(body: dict):
+    trace = {
+        "agent_id": str(body.get("agent_id", "unknown")),
+        "request_id": str(body.get("request_id", "")),
+        "user_id": str(body.get("user_id", "")),
+        "input_preview": str(body.get("input_preview", ""))[:300],
+        "output_preview": str(body.get("output_preview", ""))[:300],
+        "latency_ms": int(body.get("latency_ms", 0) or 0),
+        "error": body.get("error"),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+    }
+    with _agent_metrics_lock:
+        _agent_traces.append(trace)
+    return {"status": "ok"}
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MULTIAGENT: THREADS
+# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.get(
+    "/threads",
+    summary="Список тредов (активные/архивные)",
+)
+async def admin_threads_list(
+    status: str | None = Query(default="active"),
+    user_id: str | None = Query(default=None),
+    limit: int = Query(default=50, ge=1, le=200),
+):
+    if status == "active":
+        threads = _list_active_threads()
+    elif status == "archived":
+        threads = _list_archived_threads()
+    else:
+        threads = _list_active_threads() + _list_archived_threads()
+    if user_id:
+        threads = [thread for thread in threads if thread.get("user_id") == user_id]
+    return {"threads": threads[:limit], "total": len(threads)}
+
+
+@admin_router.delete(
+    "/threads/{user_id}",
+    summary="Удалить активный тред пользователя",
+)
+async def admin_threads_delete(user_id: str):
+    active_path = _get_thread_storage_dir() / f"{user_id}_active.json"
+    if not active_path.exists():
+        raise HTTPException(status_code=404, detail=f"No active thread for user: {user_id}")
+    active_path.unlink()
+    return {"status": "ok", "user_id": user_id, "deleted": "active_thread"}
+
+
+# ══════════════════════════════════════════════════════════════════════
+# MULTIAGENT: AGENT PROMPTS
+# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.get(
+    "/agents/{agent_id}/prompts",
+    summary="Промпты конкретного агента",
+)
+async def admin_agent_prompts_get(agent_id: str):
+    if agent_id not in _AGENT_PROMPT_MAP:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Agent '{agent_id}' has no managed prompts. Valid: {sorted(_AGENT_PROMPT_MAP)}",
+        )
+    raw = _get_agent_prompts_raw(agent_id)
+    overrides = _agent_prompt_overrides.get(agent_id, {})
+    prompts = []
+    for key, text in sorted(raw.items()):
+        text_override = overrides.get(key)
+        effective_text = text_override if text_override is not None else text
+        prompts.append(
+            {
+                "key": key,
+                "text": effective_text,
+                "default_text": text,
+                "is_overridden": text_override is not None,
+                "char_count": len(effective_text),
+            }
+        )
+    return {"agent_id": agent_id, "prompts": prompts}
+
+
+@admin_router.put(
+    "/agents/{agent_id}/prompts/{prompt_key}",
+    summary="Обновить промпт агента (in-memory override)",
+)
+async def admin_agent_prompts_update(agent_id: str, prompt_key: str, body: dict):
+    if agent_id not in _AGENT_PROMPT_MAP:
+        raise HTTPException(status_code=404, detail=f"Unknown agent: {agent_id}")
+    raw = _get_agent_prompts_raw(agent_id)
+    if prompt_key not in raw:
+        raise HTTPException(status_code=404, detail=f"Unknown prompt_key: {prompt_key}")
+    text = str(body.get("text", "") or "")
+    if len(text.strip()) < 20:
+        raise HTTPException(status_code=422, detail="Prompt text too short")
+    overrides = _agent_prompt_overrides.setdefault(agent_id, {})
+    overrides[prompt_key] = text
+    return {
+        "status": "ok",
+        "agent_id": agent_id,
+        "prompt_key": prompt_key,
+        "is_overridden": True,
+        "char_count": len(text),
+    }
+
+
+@admin_router.post(
+    "/agents/{agent_id}/prompts/{prompt_key}/reset",
+    summary="Сбросить override промпта агента",
+)
+async def admin_agent_prompts_reset(agent_id: str, prompt_key: str):
+    if agent_id not in _AGENT_PROMPT_MAP:
+        raise HTTPException(status_code=404, detail=f"Unknown agent: {agent_id}")
+    raw = _get_agent_prompts_raw(agent_id)
+    if prompt_key not in raw:
+        raise HTTPException(status_code=404, detail=f"Unknown prompt_key: {prompt_key}")
+    _agent_prompt_overrides.setdefault(agent_id, {}).pop(prompt_key, None)
+    return {"status": "ok", "agent_id": agent_id, "prompt_key": prompt_key, "is_overridden": False}
 
 
 # ══════════════════════════════════════════════════════════════════════

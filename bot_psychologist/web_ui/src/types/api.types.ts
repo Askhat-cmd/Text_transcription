@@ -244,6 +244,7 @@ export interface LLMPayloadTrace {
   turn_number?: number | null;
   recommended_mode?: string | null;
   user_state?: string | null;
+  agent_id?: string | null;
   hybrid_query_preview?: string | null;
   chunks_count?: number;
   llm_calls: LLMPayloadCall[];

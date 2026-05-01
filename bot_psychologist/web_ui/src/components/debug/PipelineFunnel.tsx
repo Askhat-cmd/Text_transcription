@@ -5,13 +5,28 @@ interface FunnelStage {
   label: string;
   count: number;
   color: string;
+  suffix?: string;
 }
 
 export const PipelineFunnel: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
-  const stages: FunnelStage[] = [
+  const baseStages: FunnelStage[] = [
     { label: 'Initial', count: trace.blocks_initial ?? 0, color: 'bg-sky-400' },
     { label: 'To LLM', count: trace.blocks_after_cap ?? 0, color: 'bg-emerald-400' },
-  ].filter((stage) => stage.count != null);
+  ];
+
+  const pipelineStages = trace.pipeline_stages ?? [];
+  const stageByName = Object.fromEntries(pipelineStages.map((stage) => [stage.name, stage]));
+  const multiagentStages: FunnelStage[] = [
+    { label: 'StateAnalyzer', count: stageByName.state_analyzer?.duration_ms ?? 0, color: 'bg-purple-400', suffix: 'ms' },
+    { label: 'MemoryRetrieval', count: stageByName.memory_retrieval?.duration_ms ?? 0, color: 'bg-teal-400', suffix: 'ms' },
+    { label: 'Writer', count: stageByName.writer?.duration_ms ?? 0, color: 'bg-green-400', suffix: 'ms' },
+    { label: 'Validator', count: stageByName.validator?.duration_ms ?? 0, color: 'bg-orange-400', suffix: 'ms' },
+  ].filter((stage) => stage.count > 0);
+
+  const stages: FunnelStage[] = [...baseStages.filter((stage) => stage.count > 0), ...multiagentStages];
+  if (stages.length === 0) {
+    return null;
+  }
 
   const max = Math.max(...stages.map((stage) => stage.count), 1);
 
@@ -26,8 +41,8 @@ export const PipelineFunnel: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
               style={{ width: `${(stage.count / max) * 100}%` }}
             />
           </div>
-          <span className="text-[11px] font-mono font-bold text-slate-600 dark:text-slate-300 w-6 text-right">
-            {stage.count}
+          <span className="text-[11px] font-mono font-bold text-slate-600 dark:text-slate-300 w-14 text-right">
+            {stage.count}{stage.suffix ?? ''}
           </span>
         </div>
       ))}

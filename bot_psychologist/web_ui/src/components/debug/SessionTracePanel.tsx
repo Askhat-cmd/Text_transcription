@@ -17,6 +17,13 @@ const traceLabel = (trace: InlineTrace) => {
   return `#${turn} · ${mode} · ${state}`;
 };
 
+const traceAgent = (trace: InlineTrace) => {
+  const direct = (trace as { agent_id?: string | null }).agent_id;
+  if (direct) return direct;
+  const firstCall = trace.llm_calls?.[0]?.step;
+  return firstCall ?? '—';
+};
+
 export const SessionTracePanel: React.FC<Props> = ({ sessionId }) => {
   const { metrics, traces } = useSessionTrace(sessionId);
 
@@ -132,23 +139,34 @@ export const SessionTracePanel: React.FC<Props> = ({ sessionId }) => {
             <summary className="cursor-pointer font-semibold text-slate-600 dark:text-slate-400 py-1 select-none">
               Trace History
             </summary>
-            <div className="mt-2 space-y-1">
-              {ordered.map((trace, idx) => (
-                <div
-                  key={`${trace.turn_number ?? idx}`}
-                  className="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800"
-                >
-                  <span className="text-[11px] font-mono text-slate-600 dark:text-slate-300">
-                    {traceLabel(trace)}
-                  </span>
-                  <span className="ml-auto text-[10px] text-slate-400">{formatMs(trace.total_duration_ms)}</span>
-                  {trace.anomalies && trace.anomalies.filter((item) => item.severity !== 'info').length > 0 && (
-                    <span className="text-[10px] text-rose-600 dark:text-rose-300">
-                      Warn {trace.anomalies.filter((item) => item.severity !== 'info').length}
-                    </span>
-                  )}
-                </div>
-              ))}
+            <div className="mt-2 overflow-x-auto">
+              <table className="min-w-full text-[11px]">
+                <thead>
+                  <tr className="text-left text-slate-400">
+                    <th className="pb-2 pr-3">Turn</th>
+                    <th className="pb-2 pr-3">Agent</th>
+                    <th className="pb-2 pr-3">Latency</th>
+                    <th className="pb-2 pr-3">Warn</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ordered.map((trace, idx) => (
+                    <tr
+                      key={`${trace.turn_number ?? idx}`}
+                      className="border-t border-slate-200 align-top text-slate-600 dark:border-slate-700 dark:text-slate-300"
+                    >
+                      <td className="py-2 pr-3 font-mono">{traceLabel(trace)}</td>
+                      <td className="py-2 pr-3 font-mono">{traceAgent(trace)}</td>
+                      <td className="py-2 pr-3">{formatMs(trace.total_duration_ms)}</td>
+                      <td className="py-2 pr-3">
+                        {trace.anomalies && trace.anomalies.filter((item) => item.severity !== 'info').length > 0
+                          ? trace.anomalies.filter((item) => item.severity !== 'info').length
+                          : '—'}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </details>
 

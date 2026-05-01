@@ -6,6 +6,9 @@ import { useAdminConfig } from '../../hooks/useAdminConfig';
 import { ConfigGroupPanel } from './ConfigGroupPanel';
 import { PromptEditorPanel } from './PromptEditorPanel';
 import { HistoryPanel } from './HistoryPanel';
+import { AgentsTab } from './AgentsTab';
+import { OrchestratorTab } from './OrchestratorTab';
+import { ThreadsTab } from './ThreadsTab';
 import { GROUP_COLORS } from '../../constants/adminColors';
 import type { HistoryEntry } from '../../types/admin.types';
 
@@ -17,7 +20,10 @@ type Tab =
   | 'memory'
   | 'prompts'
   | 'runtime'
-  | 'compatibility';
+  | 'compatibility'
+  | 'agents'
+  | 'orchestrator'
+  | 'threads';
 
 const TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'llm',       label: '🤖 LLM',       hoverColor: 'hover:bg-violet-500/20' },
@@ -28,6 +34,9 @@ const TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'prompts',   label: '🧩 Prompts',     hoverColor: 'hover:bg-rose-500/20'   },
   { key: 'runtime',   label: '⚙️ Runtime',    hoverColor: 'hover:bg-slate-500/20'  },
   { key: 'compatibility',   label: '🧰 Compatibility',    hoverColor: 'hover:bg-amber-500/20' },
+  { key: 'agents', label: '🤖 Агенты', hoverColor: 'hover:bg-purple-500/20' },
+  { key: 'orchestrator', label: '🎭 Оркестратор', hoverColor: 'hover:bg-indigo-500/20' },
+  { key: 'threads', label: '🧵 Треды', hoverColor: 'hover:bg-teal-500/20' },
 ];
 
 const ROUTING_ADVANCED_KEYS = new Set([
@@ -565,6 +574,10 @@ export const AdminPanel: React.FC = () => {
                 </div>
               </div>
             )}
+
+            {activeTab === 'agents' && <AgentsTab />}
+            {activeTab === 'orchestrator' && <OrchestratorTab />}
+            {activeTab === 'threads' && <ThreadsTab />}
           </>
         )}
       </div>

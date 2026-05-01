@@ -121,3 +121,82 @@ export interface AdminRuntimeEffectiveResponse {
     developer_trace_mode_available?: boolean;
   };
 }
+
+export type AgentId =
+  | 'state_analyzer'
+  | 'thread_manager'
+  | 'memory_retrieval'
+  | 'writer'
+  | 'validator';
+
+export interface AgentStatus {
+  id: AgentId;
+  enabled: boolean;
+  call_count: number;
+  avg_latency_ms: number;
+  error_count: number;
+  error_rate: number;
+  last_run?: string | null;
+}
+
+export interface AgentsStatusResponse {
+  pipeline_version: string;
+  agents: AgentStatus[];
+}
+
+export interface OrchestratorConfig {
+  pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+  agents_enabled: Record<AgentId, boolean>;
+  pipeline_version: string;
+}
+
+export interface AgentTrace {
+  agent_id: string;
+  request_id: string;
+  user_id: string;
+  input_preview: string;
+  output_preview: string;
+  latency_ms: number;
+  error?: string | null;
+  timestamp: string;
+}
+
+export interface AgentTracesResponse {
+  traces: AgentTrace[];
+  total: number;
+}
+
+export interface ThreadItem {
+  thread_id: string;
+  user_id: string;
+  phase?: string;
+  response_mode?: string;
+  core_direction?: string;
+  turn_count?: number;
+  created_at?: string;
+  last_updated_at?: string;
+  status: 'active' | 'archived';
+  open_loops_count?: number;
+  closed_loops_count?: number;
+  final_phase?: string;
+  archived_at?: string;
+  archive_reason?: string;
+}
+
+export interface ThreadsResponse {
+  threads: ThreadItem[];
+  total: number;
+}
+
+export interface AgentPrompt {
+  key: string;
+  text: string;
+  default_text: string;
+  is_overridden: boolean;
+  char_count: number;
+}
+
+export interface AgentPromptsResponse {
+  agent_id: 'writer' | 'state_analyzer' | 'thread_manager';
+  prompts: AgentPrompt[];
+}

@@ -10,6 +10,11 @@ import type {
   AdminStatusResponse,
   AdminRuntimeEffectiveResponse,
   AdminDiagnosticsEffectiveResponse,
+  AgentsStatusResponse,
+  OrchestratorConfig,
+  AgentTracesResponse,
+  ThreadsResponse,
+  AgentPromptsResponse,
 } from '../types/admin.types';
 
 // Получаем API-ключ из localStorage (так же как и остальные запросы приложения)
@@ -92,5 +97,63 @@ export const adminConfigService = {
     request<{ status: string; blocks_loaded: number; data_source: string; degraded_mode: boolean }>(
       'POST',
       '/reload-data'
+    ),
+
+  // Multiagent
+  getAgentsStatus: () =>
+    request<AgentsStatusResponse>('GET', '/agents/status'),
+  toggleAgent: (agentId: string, enabled: boolean) =>
+    request<{ status: string; agent_id: string; enabled: boolean }>('POST', `/agents/${agentId}/toggle`, { enabled }),
+  recordAgentMetric: (body: { agent_id: string; latency_ms?: number; error?: boolean }) =>
+    request<{ status: string }>('POST', '/agents/metrics/record', body),
+
+  getOrchestratorConfig: () =>
+    request<OrchestratorConfig>('GET', '/orchestrator/config'),
+  patchOrchestratorConfig: (pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive') =>
+    request<{ status: string; pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive' }>(
+      'PATCH',
+      '/orchestrator/config',
+      { pipeline_mode }
+    ),
+
+  getAgentTraces: (params?: { limit?: number; agent_id?: string }) => {
+    const search = new URLSearchParams();
+    if (params?.limit != null) search.set('limit', String(params.limit));
+    if (params?.agent_id) search.set('agent_id', params.agent_id);
+    const query = search.toString();
+    return request<AgentTracesResponse>('GET', `/agents/traces${query ? `?${query}` : ''}`);
+  },
+  recordAgentTrace: (body: {
+    agent_id: string;
+    request_id?: string;
+    user_id?: string;
+    input_preview?: string;
+    output_preview?: string;
+    latency_ms?: number;
+    error?: string | null;
+  }) => request<{ status: string }>('POST', '/agents/traces/record', body),
+
+  getThreads: (status: 'active' | 'archived' | 'all' = 'active', user_id?: string, limit = 50) => {
+    const search = new URLSearchParams();
+    search.set('status', status);
+    search.set('limit', String(limit));
+    if (user_id) search.set('user_id', user_id);
+    return request<ThreadsResponse>('GET', `/threads?${search.toString()}`);
+  },
+  deleteThread: (userId: string) =>
+    request<{ status: string; user_id: string; deleted: string }>('DELETE', `/threads/${userId}`),
+
+  getAgentPrompts: (agentId: 'writer' | 'state_analyzer' | 'thread_manager') =>
+    request<AgentPromptsResponse>('GET', `/agents/${agentId}/prompts`),
+  updateAgentPrompt: (agentId: 'writer' | 'state_analyzer' | 'thread_manager', promptKey: string, text: string) =>
+    request<{ status: string; agent_id: string; prompt_key: string; is_overridden: boolean; char_count: number }>(
+      'PUT',
+      `/agents/${agentId}/prompts/${promptKey}`,
+      { text }
+    ),
+  resetAgentPrompt: (agentId: 'writer' | 'state_analyzer' | 'thread_manager', promptKey: string) =>
+    request<{ status: string; agent_id: string; prompt_key: string; is_overridden: boolean }>(
+      'POST',
+      `/agents/${agentId}/prompts/${promptKey}/reset`
     ),
 };

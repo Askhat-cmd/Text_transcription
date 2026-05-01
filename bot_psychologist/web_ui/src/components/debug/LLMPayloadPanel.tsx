@@ -146,6 +146,11 @@ export const LLMPayloadPanel: React.FC<Props> = ({ sessionId }) => {
       <div className="mt-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 space-y-3">
         <div className="flex items-center gap-2 text-[11px] text-slate-500">
           <span>session: {sessionId}</span>
+          {payload?.agent_id && (
+            <span className="rounded bg-purple-500/10 px-2 py-0.5 text-purple-400/90">
+              agent: {payload.agent_id}
+            </span>
+          )}
           <button
             type="button"
             onClick={() => void copyAll()}

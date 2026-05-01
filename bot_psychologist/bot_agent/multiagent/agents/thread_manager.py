@@ -6,10 +6,11 @@ import logging
 import re
 import uuid
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
 from ..contracts.state_snapshot import StateSnapshot
 from ..contracts.thread_state import ArchivedThread, ThreadState
+from .agent_llm_config import get_model_for_agent
 
 
 logger = logging.getLogger(__name__)
@@ -109,6 +110,10 @@ def _mode_and_goal(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str]
 
 class ThreadManagerAgent:
     """Builds and updates thread state per user turn."""
+
+    def __init__(self, model: Optional[str] = None, client: Optional[Any] = None) -> None:
+        self._model = model or get_model_for_agent("thread_manager")
+        self._client = client
 
     async def update(
         self,

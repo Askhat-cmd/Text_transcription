@@ -203,6 +203,17 @@ export interface AgentPromptsResponse {
   prompts: AgentPrompt[];
 }
 
+export interface AgentLLMEntry {
+  model: string;
+  default_model: string;
+  is_overridden: boolean;
+}
+
+export interface AgentLLMConfigResponse {
+  agents: { [agentId: string]: AgentLLMEntry };
+  allowed_models: string[];
+}
+
 export type PipelineMode = 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
 
 export interface AgentOverviewStatus {

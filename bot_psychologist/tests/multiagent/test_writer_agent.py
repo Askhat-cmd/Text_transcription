@@ -246,21 +246,19 @@ async def test_wa_15_semantic_hits_limit() -> None:
     assert "hit_3" not in user_prompt
 
 
-def test_wa_16_model_from_feature_flags(monkeypatch) -> None:
-    def _value(name: str, default: str = "") -> str:
-        if name == "WRITER_MODEL":
-            return "gpt-4.1-mini"
-        if name == "WRITER_MAX_TOKENS":
-            return "400"
-        if name == "WRITER_TEMPERATURE":
-            return "0.7"
-        return default
+def test_wa_16_model_from_agent_llm_config() -> None:
+    from bot_agent.multiagent.agents.agent_llm_config import (
+        reset_model_for_agent,
+        set_model_for_agent,
+    )
 
     writer_module = importlib.import_module("bot_agent.multiagent.agents.writer_agent")
-
-    monkeypatch.setattr(writer_module.feature_flags, "value", _value)
-    agent = writer_module.WriterAgent(client=_FakeClient("ok"))
-    assert agent._model == "gpt-4.1-mini"
+    set_model_for_agent("writer", "gpt-4.1-mini")
+    try:
+        agent = writer_module.WriterAgent(client=_FakeClient("ok"))
+        assert agent._model == "gpt-4.1-mini"
+    finally:
+        reset_model_for_agent("writer")
 
 
 @pytest.mark.asyncio

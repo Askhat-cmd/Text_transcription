@@ -10,12 +10,12 @@ from typing import Any, Optional
 from ...config import config
 from ...feature_flags import feature_flags
 from ..contracts.writer_contract import WriterContract
+from .agent_llm_config import get_model_for_agent
 from .writer_agent_prompts import WRITER_SYSTEM, WRITER_USER_TEMPLATE
 
 
 logger = logging.getLogger(__name__)
 
-WRITER_MODEL_DEFAULT = "gpt-5-mini"
 WRITER_MAX_TOKENS_DEFAULT = 600
 WRITER_TEMPERATURE_DEFAULT = 0.7
 WRITER_TIMEOUT_DEFAULT = 30.0
@@ -61,7 +61,7 @@ class WriterAgent:
 
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
-        self._model = model or feature_flags.value("WRITER_MODEL", WRITER_MODEL_DEFAULT)
+        self._model = model or get_model_for_agent("writer")
         self._timeout = _to_float(
             feature_flags.value("MULTIAGENT_LLM_TIMEOUT", str(WRITER_TIMEOUT_DEFAULT)),
             WRITER_TIMEOUT_DEFAULT,

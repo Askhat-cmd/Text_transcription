@@ -9,15 +9,13 @@ from dataclasses import dataclass
 from typing import Any, Optional
 
 from ...config import config
-from ...feature_flags import feature_flags
 from ..contracts.state_snapshot import StateSnapshot
 from ..contracts.thread_state import ThreadState
+from .agent_llm_config import get_model_for_agent
 from .state_analyzer_prompts import STATE_ANALYZER_SYSTEM, STATE_ANALYZER_USER_TEMPLATE
 
 
 logger = logging.getLogger(__name__)
-
-STATE_ANALYZER_MODEL_DEFAULT = "gpt-4o-mini"
 
 _VALID_NERVOUS = {"window", "hyper", "hypo"}
 _VALID_INTENT = {"clarify", "vent", "explore", "contact", "solution"}
@@ -266,10 +264,7 @@ class StateAnalyzerAgent:
 
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
-        self._model = model or feature_flags.value(
-            "STATE_ANALYZER_MODEL",
-            STATE_ANALYZER_MODEL_DEFAULT,
-        )
+        self._model = model or get_model_for_agent("state_analyzer")
 
     async def analyze(
         self,

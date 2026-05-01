@@ -1,9 +1,9 @@
-# api/admin_routes.py
+﻿# api/admin_routes.py
 """
-Admin Config Panel — API endpoints.
+Admin Config Panel вЂ” API endpoints.
 
-Все эндпоинты требуют dev-ключ в заголовке X-API-Key.
-Роутер регистрируется в main.py через app.include_router(admin_router).
+Р’СЃРµ СЌРЅРґРїРѕРёРЅС‚С‹ С‚СЂРµР±СѓСЋС‚ dev-РєР»СЋС‡ РІ Р·Р°РіРѕР»РѕРІРєРµ X-API-Key.
+Р РѕСѓС‚РµСЂ СЂРµРіРёСЃС‚СЂРёСЂСѓРµС‚СЃСЏ РІ main.py С‡РµСЂРµР· app.include_router(admin_router).
 """
 
 from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
@@ -22,6 +22,12 @@ from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
 from bot_agent.multiagent.thread_storage import thread_storage
+from bot_agent.multiagent.agents.agent_llm_config import (
+    ALLOWED_MODELS,
+    get_all_agent_models,
+    set_model_for_agent,
+    reset_model_for_agent,
+)
 from bot_agent.prompt_registry_v2 import PROMPT_STACK_ORDER, PROMPT_STACK_VERSION, prompt_registry_v2
 from .auth import is_dev_key
 from .dependencies import get_identity_service
@@ -65,29 +71,29 @@ def _compute_env_pipeline_mode() -> str:
     return "legacy_adaptive"
 
 
-# ─── Auth dependency ───────────────────────────────────────────────────────────
+# в”Ђв”Ђв”Ђ Auth dependency в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 
 def require_dev_key(x_api_key: str = Header(..., alias="X-API-Key")) -> str:
-    """FastAPI Dependency: доступ только для dev-ключа."""
+    """FastAPI Dependency: РґРѕСЃС‚СѓРї С‚РѕР»СЊРєРѕ РґР»СЏ dev-РєР»СЋС‡Р°."""
     if not is_dev_key(x_api_key):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Доступ запрещён: требуется dev-ключ",
+            detail="Р”РѕСЃС‚СѓРї Р·Р°РїСЂРµС‰С‘РЅ: С‚СЂРµР±СѓРµС‚СЃСЏ dev-РєР»СЋС‡",
         )
     return x_api_key
 
 
-# ─── Router ────────────────────────────────────────────────────────────────────
+# в”Ђв”Ђв”Ђ Router в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 
 admin_router = APIRouter(
     prefix="/api/admin",
-    tags=["⚙️ Admin Config"],
+    tags=["вљ™пёЏ Admin Config"],
     dependencies=[Depends(require_dev_key)],
 )
 
 admin_router_v1 = APIRouter(
     prefix="/api/v1/admin",
-    tags=["⚙️ Admin Config v1"],
+    tags=["вљ™пёЏ Admin Config v1"],
     dependencies=[Depends(require_dev_key)],
 )
 
@@ -501,7 +507,7 @@ def _build_config_schema_v104() -> dict[str, Any]:
                 "deprecated": False,
                 "compatibility_only": False,
                 "type": "string",
-                "label": "Источник данных",
+                "label": "РСЃС‚РѕС‡РЅРёРє РґР°РЅРЅС‹С…",
             },
             "blocks_loaded": {
                 "value": status["blocks_loaded"],
@@ -510,7 +516,7 @@ def _build_config_schema_v104() -> dict[str, Any]:
                 "deprecated": False,
                 "compatibility_only": False,
                 "type": "int",
-                "label": "Загружено блоков",
+                "label": "Р—Р°РіСЂСѓР¶РµРЅРѕ Р±Р»РѕРєРѕРІ",
             },
             "version": {
                 "value": status["version"],
@@ -519,7 +525,7 @@ def _build_config_schema_v104() -> dict[str, Any]:
                 "deprecated": False,
                 "compatibility_only": False,
                 "type": "string",
-                "label": "Версия runtime",
+                "label": "Р’РµСЂСЃРёСЏ runtime",
             },
         },
         "feature_flags": {
@@ -551,11 +557,11 @@ def _build_config_schema_v104() -> dict[str, Any]:
 def _validate_import_overrides_payload(body: dict) -> dict:
     if not isinstance(body.get("config"), dict):
         raise HTTPException(
-            status_code=422, detail="Поле 'config' должно быть объектом"
+            status_code=422, detail="РџРѕР»Рµ 'config' РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕР±СЉРµРєС‚РѕРј"
         )
     if not isinstance(body.get("prompts"), dict):
         raise HTTPException(
-            status_code=422, detail="Поле 'prompts' должно быть объектом"
+            status_code=422, detail="РџРѕР»Рµ 'prompts' РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РѕР±СЉРµРєС‚РѕРј"
         )
 
     editable = getattr(config, "EDITABLE_CONFIG", {})
@@ -611,39 +617,39 @@ def _validate_import_overrides_payload(body: dict) -> dict:
     return normalized
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # CONFIG ENDPOINTS
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/config",
-    summary="Все параметры конфига (сгруппированные)",
-    response_description="Параметры разбиты по группам: llm, retrieval, memory, storage, runtime",
+    summary="Р’СЃРµ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° (СЃРіСЂСѓРїРїРёСЂРѕРІР°РЅРЅС‹Рµ)",
+    response_description="РџР°СЂР°РјРµС‚СЂС‹ СЂР°Р·Р±РёС‚С‹ РїРѕ РіСЂСѓРїРїР°Рј: llm, retrieval, memory, storage, runtime",
 )
 @admin_router_v1.get(
     "/config",
-    summary="Все параметры конфига (v1)",
+    summary="Р’СЃРµ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° (v1)",
 )
 async def admin_get_config():
     """
-    Возвращает все редактируемые параметры конфига с метаданными.
-    Для каждого параметра: текущее значение, дефолт, флаг is_overridden.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ РІСЃРµ СЂРµРґР°РєС‚РёСЂСѓРµРјС‹Рµ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° СЃ РјРµС‚Р°РґР°РЅРЅС‹РјРё.
+    Р”Р»СЏ РєР°Р¶РґРѕРіРѕ РїР°СЂР°РјРµС‚СЂР°: С‚РµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ, РґРµС„РѕР»С‚, С„Р»Р°Рі is_overridden.
     """
     return config.get_all_config()
 
 
 @admin_router.get(
     "/config/schema",
-    summary="Схема параметров конфига",
+    summary="РЎС…РµРјР° РїР°СЂР°РјРµС‚СЂРѕРІ РєРѕРЅС„РёРіР°",
 )
 @admin_router_v1.get(
     "/config/schema",
-    summary="Схема параметров конфига (v1)",
+    summary="РЎС…РµРјР° РїР°СЂР°РјРµС‚СЂРѕРІ РєРѕРЅС„РёРіР° (v1)",
 )
 async def admin_get_config_schema():
     """
-    Возвращает схему редактируемых параметров по группам.
-    Используется фронтендом для динамического рендера форм.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃС…РµРјСѓ СЂРµРґР°РєС‚РёСЂСѓРµРјС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РїРѕ РіСЂСѓРїРїР°Рј.
+    РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ С„СЂРѕРЅС‚РµРЅРґРѕРј РґР»СЏ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ СЂРµРЅРґРµСЂР° С„РѕСЂРј.
     """
     schema: dict[str, dict[str, Any]] = {}
     editable = getattr(config, "EDITABLE_CONFIG", {})
@@ -659,7 +665,7 @@ async def admin_get_config_schema():
             "label": meta.get("label", key),
             "options": meta.get("options"),
         }
-    # Специальное поле c nullable-интом для нового режима токенов.
+    # РЎРїРµС†РёР°Р»СЊРЅРѕРµ РїРѕР»Рµ c nullable-РёРЅС‚РѕРј РґР»СЏ РЅРѕРІРѕРіРѕ СЂРµР¶РёРјР° С‚РѕРєРµРЅРѕРІ.
     if "llm" in schema:
         schema["llm"]["MAX_TOKENS"] = {
             "type": "int_or_null",
@@ -667,7 +673,7 @@ async def admin_get_config_schema():
             "max": 16000,
             "default": None,
             "nullable": True,
-            "label": "Лимит токенов (null = без ограничения)",
+            "label": "Р›РёРјРёС‚ С‚РѕРєРµРЅРѕРІ (null = Р±РµР· РѕРіСЂР°РЅРёС‡РµРЅРёСЏ)",
             "options": None,
         }
     return schema
@@ -675,11 +681,11 @@ async def admin_get_config_schema():
 
 @admin_router.get(
     "/config/schema-v104",
-    summary="Schema v10.4 для admin surface (editable/read-only/deprecated)",
+    summary="Schema v10.4 РґР»СЏ admin surface (editable/read-only/deprecated)",
 )
 @admin_router_v1.get(
     "/config/schema-v104",
-    summary="Schema v10.4 для admin surface (v1 route)",
+    summary="Schema v10.4 РґР»СЏ admin surface (v1 route)",
 )
 async def admin_get_config_schema_v104():
     return _build_config_schema_v104()
@@ -687,35 +693,35 @@ async def admin_get_config_schema_v104():
 
 @admin_router.put(
     "/config",
-    summary="Сохранить значение одного параметра",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ Р·РЅР°С‡РµРЅРёРµ РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР°",
 )
 @admin_router.post(
     "/config",
-    summary="Сохранить параметры конфига (single/group payload)",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° (single/group payload)",
 )
 @admin_router_v1.put(
     "/config",
-    summary="Сохранить параметры конфига (v1)",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° (v1)",
 )
 @admin_router_v1.post(
     "/config",
-    summary="Сохранить параметры конфига (v1, grouped)",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° (v1, grouped)",
 )
 async def admin_set_config(body: dict):
     """
-    Сохраняет override одного параметра конфига.
+    РЎРѕС…СЂР°РЅСЏРµС‚ override РѕРґРЅРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° РєРѕРЅС„РёРіР°.
 
     Body: `{"key": "LLM_TEMPERATURE", "value": 0.5}`
 
-    Валидирует тип и диапазон перед сохранением.
-    Изменение применяется к следующему запросу бота без рестарта.
+    Р’Р°Р»РёРґРёСЂСѓРµС‚ С‚РёРї Рё РґРёР°РїР°Р·РѕРЅ РїРµСЂРµРґ СЃРѕС…СЂР°РЅРµРЅРёРµРј.
+    РР·РјРµРЅРµРЅРёРµ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ Р·Р°РїСЂРѕСЃСѓ Р±РѕС‚Р° Р±РµР· СЂРµСЃС‚Р°СЂС‚Р°.
     """
     # Legacy single-key payload: {"key": "...", "value": ...}
     key = body.get("key")
     value = body.get("value")
     if key is not None:
         if value is None:
-            raise HTTPException(status_code=422, detail="Поле 'value' обязательно")
+            raise HTTPException(status_code=422, detail="РџРѕР»Рµ 'value' РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ")
         try:
             return config.set_config_override(key, value)
         except ValueError as e:
@@ -740,20 +746,20 @@ async def admin_set_config(body: dict):
                 errors[param_key] = str(exc)
 
     if not updated and not errors:
-        raise HTTPException(status_code=422, detail="Payload не содержит параметров для обновления")
+        raise HTTPException(status_code=422, detail="Payload РЅРµ СЃРѕРґРµСЂР¶РёС‚ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ")
     return {"status": "ok", "updated": updated, "errors": errors}
 
 
 @admin_router.delete(
     "/config/{key}",
-    summary="Сбросить один параметр к дефолту",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РѕРґРёРЅ РїР°СЂР°РјРµС‚СЂ Рє РґРµС„РѕР»С‚Сѓ",
 )
 @admin_router_v1.delete(
     "/config/{key}",
-    summary="Сбросить один параметр к дефолту (v1)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РѕРґРёРЅ РїР°СЂР°РјРµС‚СЂ Рє РґРµС„РѕР»С‚Сѓ (v1)",
 )
 async def admin_reset_config_param(key: str):
-    """Удаляет override параметра. Параметр вернётся к дефолту из config.py."""
+    """РЈРґР°Р»СЏРµС‚ override РїР°СЂР°РјРµС‚СЂР°. РџР°СЂР°РјРµС‚СЂ РІРµСЂРЅС‘С‚СЃСЏ Рє РґРµС„РѕР»С‚Сѓ РёР· config.py."""
     try:
         return config.reset_config_override(key)
     except ValueError as e:
@@ -762,25 +768,25 @@ async def admin_reset_config_param(key: str):
 
 @admin_router.post(
     "/config/reset-all",
-    summary="Сбросить ВСЕ параметры конфига к дефолтам",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ Р’РЎР• РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° Рє РґРµС„РѕР»С‚Р°Рј",
 )
 @admin_router_v1.post(
     "/config/reset-all",
-    summary="Сбросить все параметры конфига к дефолтам (v1)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РІСЃРµ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° Рє РґРµС„РѕР»С‚Р°Рј (v1)",
 )
 async def admin_reset_all_config():
-    """Удаляет все config-overrides. Промты не затрагивает."""
+    """РЈРґР°Р»СЏРµС‚ РІСЃРµ config-overrides. РџСЂРѕРјС‚С‹ РЅРµ Р·Р°С‚СЂР°РіРёРІР°РµС‚."""
     config.reset_all_config_overrides()
-    return {"status": "ok", "message": "Все параметры конфига сброшены к дефолтам"}
+    return {"status": "ok", "message": "Р’СЃРµ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРЅС„РёРіР° СЃР±СЂРѕС€РµРЅС‹ Рє РґРµС„РѕР»С‚Р°Рј"}
 
 
 @admin_router.get(
     "/status",
-    summary="Runtime-статус источника данных",
+    summary="Runtime-СЃС‚Р°С‚СѓСЃ РёСЃС‚РѕС‡РЅРёРєР° РґР°РЅРЅС‹С…",
 )
 @admin_router_v1.get(
     "/status",
-    summary="Runtime-статус источника данных (v1)",
+    summary="Runtime-СЃС‚Р°С‚СѓСЃ РёСЃС‚РѕС‡РЅРёРєР° РґР°РЅРЅС‹С… (v1)",
 )
 async def admin_status():
     status_payload = _status_snapshot()
@@ -854,11 +860,11 @@ async def admin_trace_recent(
 
 @admin_router.post(
     "/reload-data",
-    summary="Перезагрузить базу знаний в data_loader",
+    summary="РџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ Р±Р°Р·Сѓ Р·РЅР°РЅРёР№ РІ data_loader",
 )
 @admin_router_v1.post(
     "/reload-data",
-    summary="Перезагрузить базу знаний в data_loader (v1)",
+    summary="РџРµСЂРµР·Р°РіСЂСѓР·РёС‚СЊ Р±Р°Р·Сѓ Р·РЅР°РЅРёР№ РІ data_loader (v1)",
 )
 async def admin_reload_data():
     blocks = data_loader.reload()
@@ -872,29 +878,29 @@ async def admin_reload_data():
     }
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # PROMPT ENDPOINTS
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/prompts",
-    summary="Список всех промтов с превью",
+    summary="РЎРїРёСЃРѕРє РІСЃРµС… РїСЂРѕРјС‚РѕРІ СЃ РїСЂРµРІСЊСЋ",
 )
 @admin_router_v1.get(
     "/prompts",
-    summary="Список всех промтов (v1)",
+    summary="РЎРїРёСЃРѕРє РІСЃРµС… РїСЂРѕРјС‚РѕРІ (v1)",
 )
 async def admin_get_prompts():
     """
-    Возвращает список всех 10 редактируемых промтов.
-    Для каждого: label, превью 150 символов, флаг is_overridden, char_count.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃРїРёСЃРѕРє РІСЃРµС… 10 СЂРµРґР°РєС‚РёСЂСѓРµРјС‹С… РїСЂРѕРјС‚РѕРІ.
+    Р”Р»СЏ РєР°Р¶РґРѕРіРѕ: label, РїСЂРµРІСЊСЋ 150 СЃРёРјРІРѕР»РѕРІ, С„Р»Р°Рі is_overridden, char_count.
     """
     return config.get_all_prompts()
 
 
 @admin_router.get(
     "/prompts/stack-v2",
-    summary="Prompt stack v2 surface для Neo runtime",
+    summary="Prompt stack v2 surface РґР»СЏ Neo runtime",
 )
 @admin_router_v1.get(
     "/prompts/stack-v2",
@@ -922,15 +928,15 @@ async def admin_get_prompts_stack_v2_usage(session_id: str | None = Query(defaul
 
 @admin_router.get(
     "/prompts/{name}",
-    summary="Полный текст промта",
+    summary="РџРѕР»РЅС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р°",
 )
 @admin_router_v1.get(
     "/prompts/{name}",
-    summary="Полный текст промта (v1)",
+    summary="РџРѕР»РЅС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р° (v1)",
 )
 async def admin_get_prompt(name: str):
     """
-    Возвращает полный текст промта: актуальный (с override) и дефолтный (из .md).
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»РЅС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р°: Р°РєС‚СѓР°Р»СЊРЅС‹Р№ (СЃ override) Рё РґРµС„РѕР»С‚РЅС‹Р№ (РёР· .md).
     """
     try:
         data = config.get_prompt(name)
@@ -943,11 +949,11 @@ async def admin_get_prompt(name: str):
 
 @admin_router.get(
     "/prompts/stack-v2/{name}",
-    summary="Детали секции prompt stack v2",
+    summary="Р”РµС‚Р°Р»Рё СЃРµРєС†РёРё prompt stack v2",
 )
 @admin_router_v1.get(
     "/prompts/stack-v2/{name}",
-    summary="Детали секции prompt stack v2 (v1 route)",
+    summary="Р”РµС‚Р°Р»Рё СЃРµРєС†РёРё prompt stack v2 (v1 route)",
 )
 async def admin_get_prompt_stack_v2(name: str):
     return _build_prompt_stack_v2_detail(name)
@@ -955,20 +961,20 @@ async def admin_get_prompt_stack_v2(name: str):
 
 @admin_router.put(
     "/prompts/{name}",
-    summary="Сохранить новый текст промта",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ РЅРѕРІС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р°",
 )
 @admin_router_v1.put(
     "/prompts/{name}",
-    summary="Сохранить новый текст промта (v1)",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ РЅРѕРІС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р° (v1)",
 )
 async def admin_set_prompt(name: str, body: dict):
     """
-    Сохраняет override текста промта.
+    РЎРѕС…СЂР°РЅСЏРµС‚ override С‚РµРєСЃС‚Р° РїСЂРѕРјС‚Р°.
 
-    Body: `{"text": "Новый текст промта..."}`
+    Body: `{"text": "РќРѕРІС‹Р№ С‚РµРєСЃС‚ РїСЂРѕРјС‚Р°..."}`
 
-    Изменение применяется к следующему запросу бота без рестарта
-    (только если промт читается внутри функции, а не на уровне модуля).
+    РР·РјРµРЅРµРЅРёРµ РїСЂРёРјРµРЅСЏРµС‚СЃСЏ Рє СЃР»РµРґСѓСЋС‰РµРјСѓ Р·Р°РїСЂРѕСЃСѓ Р±РѕС‚Р° Р±РµР· СЂРµСЃС‚Р°СЂС‚Р°
+    (С‚РѕР»СЊРєРѕ РµСЃР»Рё РїСЂРѕРјС‚ С‡РёС‚Р°РµС‚СЃСЏ РІРЅСѓС‚СЂРё С„СѓРЅРєС†РёРё, Р° РЅРµ РЅР° СѓСЂРѕРІРЅРµ РјРѕРґСѓР»СЏ).
     """
     text = body.get("text", body.get("content", ""))
     try:
@@ -981,11 +987,11 @@ async def admin_set_prompt(name: str, body: dict):
 
 @admin_router.put(
     "/prompts/stack-v2/{name}",
-    summary="Сохранить editable секцию prompt stack v2",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ editable СЃРµРєС†РёСЋ prompt stack v2",
 )
 @admin_router_v1.put(
     "/prompts/stack-v2/{name}",
-    summary="Сохранить editable секцию prompt stack v2 (v1 route)",
+    summary="РЎРѕС…СЂР°РЅРёС‚СЊ editable СЃРµРєС†РёСЋ prompt stack v2 (v1 route)",
 )
 async def admin_set_prompt_stack_v2(name: str, body: dict):
     detail = _build_prompt_stack_v2_detail(name)
@@ -1005,22 +1011,22 @@ async def admin_set_prompt_stack_v2(name: str, body: dict):
 
 @admin_router.delete(
     "/prompts/{name}",
-    summary="Сбросить промт к дефолту (из .md файла)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РїСЂРѕРјС‚ Рє РґРµС„РѕР»С‚Сѓ (РёР· .md С„Р°Р№Р»Р°)",
 )
 @admin_router_v1.delete(
     "/prompts/{name}",
-    summary="Сбросить промт к дефолту (v1)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РїСЂРѕРјС‚ Рє РґРµС„РѕР»С‚Сѓ (v1)",
 )
 @admin_router.post(
     "/prompts/{name}/reset",
-    summary="Сбросить промт к дефолту",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РїСЂРѕРјС‚ Рє РґРµС„РѕР»С‚Сѓ",
 )
 @admin_router_v1.post(
     "/prompts/{name}/reset",
-    summary="Сбросить промт к дефолту (v1)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ РїСЂРѕРјС‚ Рє РґРµС„РѕР»С‚Сѓ (v1)",
 )
 async def admin_reset_prompt(name: str):
-    """Удаляет override промта. Бот вернётся к тексту из .md файла."""
+    """РЈРґР°Р»СЏРµС‚ override РїСЂРѕРјС‚Р°. Р‘РѕС‚ РІРµСЂРЅС‘С‚СЃСЏ Рє С‚РµРєСЃС‚Сѓ РёР· .md С„Р°Р№Р»Р°."""
     try:
         result = config.reset_prompt_override(name)
         result["content"] = result.get("text", "")
@@ -1031,11 +1037,11 @@ async def admin_reset_prompt(name: str):
 
 @admin_router.post(
     "/prompts/stack-v2/{name}/reset",
-    summary="Сбросить editable секцию prompt stack v2",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ editable СЃРµРєС†РёСЋ prompt stack v2",
 )
 @admin_router_v1.post(
     "/prompts/stack-v2/{name}/reset",
-    summary="Сбросить editable секцию prompt stack v2 (v1 route)",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ editable СЃРµРєС†РёСЋ prompt stack v2 (v1 route)",
 )
 async def admin_reset_prompt_stack_v2(name: str):
     detail = _build_prompt_stack_v2_detail(name)
@@ -1051,46 +1057,46 @@ async def admin_reset_prompt_stack_v2(name: str):
 
 @admin_router.post(
     "/prompts/reset-all",
-    summary="Сбросить ВСЕ промты к дефолтам",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ Р’РЎР• РїСЂРѕРјС‚С‹ Рє РґРµС„РѕР»С‚Р°Рј",
 )
 async def admin_reset_all_prompts():
-    """Удаляет все prompt-overrides. Config не затрагивает."""
+    """РЈРґР°Р»СЏРµС‚ РІСЃРµ prompt-overrides. Config РЅРµ Р·Р°С‚СЂР°РіРёРІР°РµС‚."""
     config.reset_all_prompt_overrides()
-    return {"status": "ok", "message": "Все промты сброшены к дефолтам"}
+    return {"status": "ok", "message": "Р’СЃРµ РїСЂРѕРјС‚С‹ СЃР±СЂРѕС€РµРЅС‹ Рє РґРµС„РѕР»С‚Р°Рј"}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # HISTORY
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/history",
-    summary="История изменений (последние 50)",
+    summary="РСЃС‚РѕСЂРёСЏ РёР·РјРµРЅРµРЅРёР№ (РїРѕСЃР»РµРґРЅРёРµ 50)",
 )
 async def admin_get_history():
     """
-    Возвращает хронологический список последних 50 изменений конфига и промтов.
-    Каждая запись: key, type, old, new, timestamp.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ С…СЂРѕРЅРѕР»РѕРіРёС‡РµСЃРєРёР№ СЃРїРёСЃРѕРє РїРѕСЃР»РµРґРЅРёС… 50 РёР·РјРµРЅРµРЅРёР№ РєРѕРЅС„РёРіР° Рё РїСЂРѕРјС‚РѕРІ.
+    РљР°Р¶РґР°СЏ Р·Р°РїРёСЃСЊ: key, type, old, new, timestamp.
     """
     return {"history": config.get_history()}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # EXPORT / IMPORT
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/export",
-    summary="Экспортировать все overrides (backup)",
+    summary="Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІСЃРµ overrides (backup)",
 )
 @admin_router_v1.get(
     "/export",
-    summary="Экспортировать все overrides (backup, v1)",
+    summary="Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РІСЃРµ overrides (backup, v1)",
 )
 async def admin_export_overrides():
     """
-    Возвращает полный JSON-файл admin_overrides.json.
-    Используется для резервного копирования или переноса между окружениями.
+    Р’РѕР·РІСЂР°С‰Р°РµС‚ РїРѕР»РЅС‹Р№ JSON-С„Р°Р№Р» admin_overrides.json.
+    РСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ РґР»СЏ СЂРµР·РµСЂРІРЅРѕРіРѕ РєРѕРїРёСЂРѕРІР°РЅРёСЏ РёР»Рё РїРµСЂРµРЅРѕСЃР° РјРµР¶РґСѓ РѕРєСЂСѓР¶РµРЅРёСЏРјРё.
     """
     payload = config._load_overrides()
     payload.setdefault("config", {})
@@ -1105,19 +1111,19 @@ async def admin_export_overrides():
 
 @admin_router.post(
     "/import",
-    summary="Импортировать overrides из JSON (restore)",
+    summary="РРјРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ overrides РёР· JSON (restore)",
 )
 @admin_router_v1.post(
     "/import",
-    summary="Импортировать overrides из JSON (restore, v1)",
+    summary="РРјРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ overrides РёР· JSON (restore, v1)",
 )
 async def admin_import_overrides(body: dict):
     """
-    Загружает overrides из тела запроса.
-    Полностью заменяет текущий admin_overrides.json.
-    Валидирует структуру перед сохранением.
+    Р—Р°РіСЂСѓР¶Р°РµС‚ overrides РёР· С‚РµР»Р° Р·Р°РїСЂРѕСЃР°.
+    РџРѕР»РЅРѕСЃС‚СЊСЋ Р·Р°РјРµРЅСЏРµС‚ С‚РµРєСѓС‰РёР№ admin_overrides.json.
+    Р’Р°Р»РёРґРёСЂСѓРµС‚ СЃС‚СЂСѓРєС‚СѓСЂСѓ РїРµСЂРµРґ СЃРѕС…СЂР°РЅРµРЅРёРµРј.
 
-    Body: содержимое admin_overrides.json (полученное через /export).
+    Body: СЃРѕРґРµСЂР¶РёРјРѕРµ admin_overrides.json (РїРѕР»СѓС‡РµРЅРЅРѕРµ С‡РµСЂРµР· /export).
     """
     normalized = _validate_import_overrides_payload(body)
     previous = config._load_overrides()
@@ -1145,13 +1151,13 @@ async def admin_import_overrides(body: dict):
         )
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # MULTIAGENT: AGENTS STATUS
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/agents/status",
-    summary="Статус агентов мультиагентного пайплайна",
+    summary="РЎС‚Р°С‚СѓСЃ Р°РіРµРЅС‚РѕРІ РјСѓР»СЊС‚РёР°РіРµРЅС‚РЅРѕРіРѕ РїР°Р№РїР»Р°Р№РЅР°",
 )
 async def admin_agents_status():
     pipeline_version = getattr(orchestrator, "pipeline_version", "multiagent_v1")
@@ -1160,7 +1166,7 @@ async def admin_agents_status():
 
 @admin_router.post(
     "/agents/{agent_id}/toggle",
-    summary="Включить/выключить агента",
+    summary="Р’РєР»СЋС‡РёС‚СЊ/РІС‹РєР»СЋС‡РёС‚СЊ Р°РіРµРЅС‚Р°",
 )
 async def admin_agents_toggle(agent_id: str, body: dict):
     if agent_id not in _agent_metrics:
@@ -1173,7 +1179,7 @@ async def admin_agents_toggle(agent_id: str, body: dict):
 
 @admin_router.post(
     "/agents/metrics/record",
-    summary="Записать метрику прогона агента (internal)",
+    summary="Р—Р°РїРёСЃР°С‚СЊ РјРµС‚СЂРёРєСѓ РїСЂРѕРіРѕРЅР° Р°РіРµРЅС‚Р° (internal)",
 )
 async def admin_agents_record_metric(body: dict):
     agent_id = str(body.get("agent_id", ""))
@@ -1189,13 +1195,13 @@ async def admin_agents_record_metric(body: dict):
     return {"status": "ok"}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # MULTIAGENT: ORCHESTRATOR CONFIG
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/orchestrator/config",
-    summary="Конфигурация оркестратора",
+    summary="РљРѕРЅС„РёРіСѓСЂР°С†РёСЏ РѕСЂРєРµСЃС‚СЂР°С‚РѕСЂР°",
 )
 async def admin_orchestrator_get_config():
     runtime_metrics = getattr(orchestrator, "_agent_metrics", None)
@@ -1215,7 +1221,7 @@ async def admin_orchestrator_get_config():
 
 @admin_router.patch(
     "/orchestrator/config",
-    summary="Изменить режим пайплайна",
+    summary="РР·РјРµРЅРёС‚СЊ СЂРµР¶РёРј РїР°Р№РїР»Р°Р№РЅР°",
 )
 async def admin_orchestrator_patch_config(body: dict):
     valid_modes = {"full_multiagent", "hybrid", "legacy_adaptive"}
@@ -1226,13 +1232,13 @@ async def admin_orchestrator_patch_config(body: dict):
     return {"pipeline_mode": mode, "status": "ok"}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # MULTIAGENT: AGENT TRACES
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/agents/traces",
-    summary="Трассировки агентов по последним запросам",
+    summary="РўСЂР°СЃСЃРёСЂРѕРІРєРё Р°РіРµРЅС‚РѕРІ РїРѕ РїРѕСЃР»РµРґРЅРёРј Р·Р°РїСЂРѕСЃР°Рј",
 )
 async def admin_agents_traces(
     limit: int = Query(default=50, ge=1, le=200),
@@ -1251,7 +1257,7 @@ async def admin_agents_traces(
 
 @admin_router.get(
     "/overview",
-    summary="Обзор состояния multiagent runtime",
+    summary="РћР±Р·РѕСЂ СЃРѕСЃС‚РѕСЏРЅРёСЏ multiagent runtime",
 )
 async def admin_overview():
     env_flags = _env_flags_snapshot()
@@ -1284,7 +1290,7 @@ async def admin_overview():
 
 @admin_router.post(
     "/agents/traces/record",
-    summary="Записать трассировку агента (internal)",
+    summary="Р—Р°РїРёСЃР°С‚СЊ С‚СЂР°СЃСЃРёСЂРѕРІРєСѓ Р°РіРµРЅС‚Р° (internal)",
 )
 async def admin_agents_traces_record(body: dict):
     trace = {
@@ -1302,13 +1308,13 @@ async def admin_agents_traces_record(body: dict):
     return {"status": "ok"}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # MULTIAGENT: THREADS
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/threads",
-    summary="Список тредов (активные/архивные)",
+    summary="РЎРїРёСЃРѕРє С‚СЂРµРґРѕРІ (Р°РєС‚РёРІРЅС‹Рµ/Р°СЂС…РёРІРЅС‹Рµ)",
 )
 async def admin_threads_list(
     status: str | None = Query(default="active"),
@@ -1328,7 +1334,7 @@ async def admin_threads_list(
 
 @admin_router.delete(
     "/threads/{user_id}",
-    summary="Удалить активный тред пользователя",
+    summary="РЈРґР°Р»РёС‚СЊ Р°РєС‚РёРІРЅС‹Р№ С‚СЂРµРґ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ",
 )
 async def admin_threads_delete(user_id: str):
     active_path = _get_thread_storage_dir() / f"{user_id}_active.json"
@@ -1338,13 +1344,13 @@ async def admin_threads_delete(user_id: str):
     return {"status": "ok", "user_id": user_id, "deleted": "active_thread"}
 
 
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # MULTIAGENT: AGENT PROMPTS
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.get(
     "/agents/{agent_id}/prompts",
-    summary="Промпты конкретного агента",
+    summary="РџСЂРѕРјРїС‚С‹ РєРѕРЅРєСЂРµС‚РЅРѕРіРѕ Р°РіРµРЅС‚Р°",
 )
 async def admin_agent_prompts_get(agent_id: str):
     if agent_id not in _AGENT_PROMPT_MAP:
@@ -1372,7 +1378,7 @@ async def admin_agent_prompts_get(agent_id: str):
 
 @admin_router.put(
     "/agents/{agent_id}/prompts/{prompt_key}",
-    summary="Обновить промпт агента (in-memory override)",
+    summary="РћР±РЅРѕРІРёС‚СЊ РїСЂРѕРјРїС‚ Р°РіРµРЅС‚Р° (in-memory override)",
 )
 async def admin_agent_prompts_update(agent_id: str, prompt_key: str, body: dict):
     if agent_id not in _AGENT_PROMPT_MAP:
@@ -1396,7 +1402,7 @@ async def admin_agent_prompts_update(agent_id: str, prompt_key: str, body: dict)
 
 @admin_router.post(
     "/agents/{agent_id}/prompts/{prompt_key}/reset",
-    summary="Сбросить override промпта агента",
+    summary="РЎР±СЂРѕСЃРёС‚СЊ override РїСЂРѕРјРїС‚Р° Р°РіРµРЅС‚Р°",
 )
 async def admin_agent_prompts_reset(agent_id: str, prompt_key: str):
     if agent_id not in _AGENT_PROMPT_MAP:
@@ -1407,19 +1413,61 @@ async def admin_agent_prompts_reset(agent_id: str, prompt_key: str):
     _agent_prompt_overrides.setdefault(agent_id, {}).pop(prompt_key, None)
     return {"status": "ok", "agent_id": agent_id, "prompt_key": prompt_key, "is_overridden": False}
 
+@admin_router.get(
+    "/agents/llm-config",
+    summary="Получить LLM-модели всех агентов",
+)
+async def admin_get_agents_llm_config():
+    return {
+        "agents": get_all_agent_models(),
+        "allowed_models": list(ALLOWED_MODELS),
+    }
 
-# ══════════════════════════════════════════════════════════════════════
+
+@admin_router.patch(
+    "/agents/{agent_id}/llm-config",
+    summary="Изменить LLM-модель конкретного агента",
+)
+async def admin_patch_agent_llm_config(agent_id: str, body: dict):
+    model = str(body.get("model", "")).strip()
+    if not model:
+        raise HTTPException(status_code=422, detail="Field 'model' is required")
+    try:
+        set_model_for_agent(agent_id, model)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    return {"status": "ok", "agent_id": agent_id, "model": model}
+
+
+@admin_router.post(
+    "/agents/{agent_id}/llm-config/reset",
+    summary="Сбросить LLM-модель агента к дефолту",
+)
+async def admin_reset_agent_llm_config(agent_id: str):
+    try:
+        reset_model_for_agent(agent_id)
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+    agents = get_all_agent_models()
+    return {
+        "status": "ok",
+        "agent_id": agent_id,
+        "model": agents[agent_id]["default_model"],
+        "is_overridden": False,
+    }
+
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # FULL RESET
-# ══════════════════════════════════════════════════════════════════════
+# в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 
 @admin_router.post(
     "/reset-all",
-    summary="Полный сброс — и конфиг, и промты",
+    summary="РџРѕР»РЅС‹Р№ СЃР±СЂРѕСЃ вЂ” Рё РєРѕРЅС„РёРі, Рё РїСЂРѕРјС‚С‹",
 )
 async def admin_reset_everything():
-    """Удаляет ВСЕ overrides. Бот вернётся к состоянию 'из коробки'."""
+    """РЈРґР°Р»СЏРµС‚ Р’РЎР• overrides. Р‘РѕС‚ РІРµСЂРЅС‘С‚СЃСЏ Рє СЃРѕСЃС‚РѕСЏРЅРёСЋ 'РёР· РєРѕСЂРѕР±РєРё'."""
     config.reset_all_overrides()
-    return {"status": "ok", "message": "Все overrides удалены. Восстановлены дефолты."}
+    return {"status": "ok", "message": "Р’СЃРµ overrides СѓРґР°Р»РµРЅС‹. Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅС‹ РґРµС„РѕР»С‚С‹."}
 
 async def _admin_user_identity_payload(
     user_id: str,
@@ -1468,3 +1516,4 @@ async def admin_get_user_identity(
     identity_service: IdentityService = Depends(get_identity_service),
 ):
     return await _admin_user_identity_payload(user_id=user_id, identity_service=identity_service)
+

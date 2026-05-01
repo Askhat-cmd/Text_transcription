@@ -15,6 +15,7 @@ import type {
   AgentTracesResponse,
   ThreadsResponse,
   AgentPromptsResponse,
+  AgentLLMConfigResponse,
   OverviewData,
 } from '../types/admin.types';
 
@@ -158,5 +159,19 @@ export const adminConfigService = {
     request<{ status: string; agent_id: string; prompt_key: string; is_overridden: boolean }>(
       'POST',
       `/agents/${agentId}/prompts/${promptKey}/reset`
+    ),
+
+  getAgentLLMConfig: () =>
+    request<AgentLLMConfigResponse>('GET', '/agents/llm-config'),
+  patchAgentLLMConfig: (agentId: string, model: string) =>
+    request<{ status: string; agent_id: string; model: string }>(
+      'PATCH',
+      `/agents/${agentId}/llm-config`,
+      { model }
+    ),
+  resetAgentLLMConfig: (agentId: string) =>
+    request<{ status: string; agent_id: string; model: string; is_overridden: boolean }>(
+      'POST',
+      `/agents/${agentId}/llm-config/reset`
     ),
 };

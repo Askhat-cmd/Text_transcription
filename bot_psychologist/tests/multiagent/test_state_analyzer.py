@@ -298,10 +298,18 @@ def test_sa_27_singleton_export_exists() -> None:
     assert isinstance(state_analyzer_agent, StateAnalyzerAgent)
 
 
-def test_sa_28_model_from_env(monkeypatch) -> None:
-    monkeypatch.setenv("STATE_ANALYZER_MODEL", "gpt-5-mini")
-    agent = StateAnalyzerAgent(client=_FakeClient(_llm_payload()))
-    assert agent._model == "gpt-5-mini"
+def test_sa_28_model_from_agent_llm_config() -> None:
+    from bot_agent.multiagent.agents.agent_llm_config import (
+        reset_model_for_agent,
+        set_model_for_agent,
+    )
+
+    set_model_for_agent("state_analyzer", "gpt-5-mini")
+    try:
+        agent = StateAnalyzerAgent(client=_FakeClient(_llm_payload()))
+        assert agent._model == "gpt-5-mini"
+    finally:
+        reset_model_for_agent("state_analyzer")
 
 
 @pytest.mark.asyncio

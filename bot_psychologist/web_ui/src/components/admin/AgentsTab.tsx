@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react';
 
 import { useAgentStatus } from '../../hooks/useAgentStatus';
+import { useAgentLLMConfig } from '../../hooks/useAgentLLMConfig';
 import { useThreads } from '../../hooks/useThreads';
 import type { AgentId } from '../../types/admin.types';
 import { AgentCard } from './AgentCard';
@@ -24,6 +25,14 @@ export const AgentsTab: React.FC = () => {
     loadAgentsStatus,
     toggleAgent,
   } = useAgentStatus();
+  const {
+    data: llmConfig,
+    isLoading: llmLoading,
+    isSaving: llmSaving,
+    error: llmError,
+    setModel,
+    resetModel,
+  } = useAgentLLMConfig();
   const {
     agentTraces,
     loadAgentTraces,
@@ -85,6 +94,81 @@ export const AgentsTab: React.FC = () => {
           )}
         </div>
       )}
+
+      <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+        <div className="flex items-center gap-2">
+          <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-100">🧠 Модели агентов</h4>
+          {(llmLoading || llmSaving) && (
+            <span className="ml-auto text-xs text-slate-500">Обновление...</span>
+          )}
+        </div>
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          Изменения применяются к следующему запросу без перезапуска сервера.
+        </p>
+        {llmError && <p className="mt-2 text-xs text-rose-500">{llmError}</p>}
+        {llmConfig && (
+          <div className="mt-3 overflow-x-auto">
+            <table className="min-w-full text-xs">
+              <thead>
+                <tr className="border-b border-slate-200 text-left dark:border-slate-700">
+                  <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Агент</th>
+                  <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Активная модель</th>
+                  <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Дефолт</th>
+                  <th className="px-2 py-2" />
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(llmConfig.agents).map(([agentId, cfg]) => (
+                  <tr key={agentId} className="border-b border-slate-100 dark:border-slate-800">
+                    <td className="px-2 py-2 align-middle">
+                      <code className="text-slate-700 dark:text-slate-200">{agentId}</code>
+                    </td>
+                    <td className="px-2 py-2 align-middle">
+                      <div className="flex items-center gap-2">
+                        <select
+                          value={cfg.model}
+                          onChange={(e) => {
+                            void setModel(agentId, e.target.value);
+                          }}
+                          className="rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                          disabled={llmSaving}
+                        >
+                          {llmConfig.allowed_models.map((m) => (
+                            <option key={m} value={m}>{m}</option>
+                          ))}
+                        </select>
+                        {cfg.is_overridden && (
+                          <span className="rounded bg-amber-100 px-2 py-0.5 text-[11px] text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+                            изменено
+                          </span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-2 py-2 align-middle">
+                      <code className="text-slate-500 dark:text-slate-400">{cfg.default_model}</code>
+                    </td>
+                    <td className="px-2 py-2 align-middle">
+                      {cfg.is_overridden && (
+                        <button
+                          type="button"
+                          className="rounded border border-slate-300 px-2 py-1 text-[11px] text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"
+                          onClick={() => {
+                            void resetModel(agentId);
+                          }}
+                          disabled={llmSaving}
+                          title="Вернуть к дефолту"
+                        >
+                          ↩ Сброс
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
 
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
         <div className="flex items-center gap-2">

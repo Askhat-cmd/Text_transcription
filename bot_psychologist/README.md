@@ -201,6 +201,7 @@ pytest tests/test_feature_flags.py -q
 - [Overview](docs/overview.md)
 - [Architecture](docs/architecture.md)
 - [Architecture: Identity + Conversations](docs/architecture_identity_and_conversations.md)
+- [Registration](docs/registration.md)
 - [Local Dev Runbook](docs/local_dev_runbook.md)
 - [Testing Matrix](docs/testing_matrix.md)
 - [Telegram Integration Strategy](docs/telegram_integration_strategy.md)

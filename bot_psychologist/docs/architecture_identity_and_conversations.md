@@ -1,27 +1,33 @@
-﻿# Архитектура Identity и Conversations
+# Архитектура Identity и Conversations
 
 ## Назначение
 
-Документ фиксирует текущий runtime-контракт после PRD-013 и PRD-014:
-- identity-слой определяет стабильного пользователя;
+Документ фиксирует runtime-контракт после PRD-013, PRD-014 и PRD-016-v2:
+- identity-слой определяет устойчивого пользователя;
 - conversation-слой определяет жизненный цикл конкретного диалога;
-- chat-слой использует уже разрешенный контекст и не управляет identity напрямую.
+- registration-слой добавляет управляемый доступ (register/login/session/linking);
+- chat-слой работает только с уже разрешенным контекстом.
 
 ## Ключевые контексты
 
 ### IdentityContext
 
-IdentityContext формируется в `api/dependencies.py` и содержит:
-- `user_id` — стабильный UUID пользователя;
-- `session_id` — идентификатор текущей сессии/устройства;
+`IdentityContext` формируется в `api/dependencies.py` и содержит:
+- `user_id` — устойчивый UUID пользователя;
+- `session_id` — идентификатор клиентской сессии;
+- `conversation_id` — активный диалог в рамках текущего запроса;
 - `channel` — `web` / `telegram` / `api`;
 - `provider` и `external_id` — источник внешней идентичности;
 - `is_anonymous` — fallback-режим при проблемах резолва;
-- `conversation_id` — текущий диалог, связанный с identity.
+- `role: str` (default: `"anonymous"`);
+- `username: Optional[str]` (default: `None`);
+- `is_registered: bool` (default: `False`).
+
+Новые поля (`role`, `username`, `is_registered`) добавлены с дефолтами, чтобы сохранить обратную совместимость.
 
 ### ConversationContext
 
-ConversationContext формируется в `api/conversations/service.py`:
+`ConversationContext` формируется в `api/conversations/service.py`:
 - `conversation_id` — UUID диалога;
 - `user_id` — владелец диалога;
 - `session_id` — сессия, из которой активирован диалог;
@@ -33,33 +39,57 @@ ConversationContext формируется в `api/conversations/service.py`:
 ## Поток обработки запроса
 
 1. HTTP-запрос попадает в `api/routes/*`.
-2. `get_identity_context()` в `api/dependencies.py` резолвит identity через `api/identity/service.py`.
-3. `get_conversation_service()` возвращает сервис conversation-уровня.
-4. Conversation service резолвит или создает нужный `ConversationContext`.
-5. Chat endpoint передает управление в adaptive-runtime и возвращает ответ.
-6. После ответа обновляется `last_message_at`/статус диалога.
+2. `get_identity_context()` резолвит identity через `api/identity/service.py`.
+3. `ConversationService` резолвит или создает `ConversationContext`.
+4. Chat endpoint передает управление в runtime (single-agent или multiagent).
+5. После ответа обновляется состояние диалога (`last_message_at`, `status`).
 
-## Почему `conversation_id != session_id`
+## Связь identity и registration
 
-- `session_id` — транспортно-клиентский уровень (браузер/устройство/временная сессия).
-- `conversation_id` — бизнес-уровень конкретного диалога.
-- Один `session_id` может породить несколько `conversation_id` (например, новые ветки обсуждения).
-- Это предотвращает смешивание истории и делает корректным закрытие/архивацию диалогов.
+`api/registration/service.py` интегрирован с identity-слоем:
+- при `register` создается пользовательский профиль с ролью и username;
+- при `login` выдается session token, связанный с user;
+- при `confirm-link` создается `linked_identity` с `provider="telegram"` и `external_id=telegram_user_id`;
+- связь всегда строится через общий `user_id`.
+
+Схема связи:
+
+```text
+users.id (user_id)
+  ├─ identity context (runtime)
+  ├─ user profile (role, username, status)
+  └─ linked_identities(provider, external_id)
+       └─ telegram link after confirm-link
+```
+
+## Иерархия идентификаторов
+
+| Уровень | Поле | Назначение | Жизненный цикл |
+|---|---|---|---|
+| Человек | `user_id` | Канонический идентификатор пользователя | Долгоживущий |
+| Внешний канал | `linked_identity` | Привязка `provider + external_id` | До отвязки/удаления |
+| Клиентская сессия | `session_id` | Устройство/браузер/клиент | Временный |
+| Диалог | `conversation_id` | Отдельная ветка общения | На время жизни диалога |
+
+Почему `conversation_id != session_id`:
+- `session_id` описывает техническую сессию клиента;
+- `conversation_id` описывает бизнес-диалог;
+- одна сессия может иметь несколько диалогов.
 
 ## Границы модулей
 
 Правило модульности:
-- runtime/агенты не читают и не пишут напрямую в таблицы identity/conversations;
-- доступ к данным идет через `IdentityService` и `ConversationService`;
-- SQL-доступ инкапсулирован в `api/identity/repository.py` и `api/conversations/repository.py`.
+- runtime-агенты не пишут напрямую в identity/conversation таблицы;
+- доступ идет через `IdentityService` и `ConversationService`;
+- SQL-слой изолирован в `api/identity/repository.py` и `api/conversations/repository.py`.
 
-## Реализовано vs планируется
+## Что изменилось в PRD-016-v2
 
-### Реализовано
-- Identity Layer с устойчивым `user_id`.
-- Conversation Layer с отдельным `conversation_id` и lifecycle-операциями.
-- API-маршруты `/api/v1/identity/*` и `/api/v1/conversations/*`.
+Было:
+- identity в основном опирался на `user_id` и fallback-анонимность;
+- не было полного контракта регистрации/логина/привязки в одном слое.
 
-### Планируется
-- Контрактная интеграция Telegram через identity/conversation слой (PRD-015A).
-- Реальный transport-слой Telegram на следующем этапе.
+Стало:
+- добавлены `role`, `username`, `is_registered` в identity-контекст;
+- добавлен registration-пакет (`register`, `login`, `invite keys`, `link-code`, `confirm-link`);
+- привязка Telegram выполняется через явную linked identity, а не через неявное слияние.

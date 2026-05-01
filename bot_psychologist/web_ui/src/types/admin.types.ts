@@ -146,6 +146,8 @@ export interface AgentsStatusResponse {
 
 export interface OrchestratorConfig {
   pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+  actual_pipeline_mode?: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+  env_flags?: Record<string, string>;
   agents_enabled: Record<AgentId, boolean>;
   pipeline_version: string;
 }
@@ -199,4 +201,35 @@ export interface AgentPrompt {
 export interface AgentPromptsResponse {
   agent_id: 'writer' | 'state_analyzer' | 'thread_manager';
   prompts: AgentPrompt[];
+}
+
+export type PipelineMode = 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+
+export interface AgentOverviewStatus {
+  agent_id: string;
+  enabled: boolean;
+  calls: number;
+  errors: number;
+  avg_ms: number;
+  last_run: string | null;
+}
+
+export interface RecentTrace {
+  agent_id: string;
+  request_id: string;
+  user_id: string;
+  input_preview: string;
+  output_preview: string;
+  latency_ms: number;
+  error?: string | null;
+  timestamp: string;
+}
+
+export interface OverviewData {
+  pipeline_mode: PipelineMode;
+  feature_flags: Record<string, string>;
+  agents: AgentOverviewStatus[];
+  recent_traces: RecentTrace[];
+  server_time: string;
+  schema_version: string;
 }

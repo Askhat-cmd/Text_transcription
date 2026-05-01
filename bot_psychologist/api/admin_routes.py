@@ -13,7 +13,7 @@ import json
 import os
 import threading as _threading
 from collections import deque as _deque
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from bot_agent.config import config
@@ -44,6 +44,25 @@ _AGENT_PROMPT_MAP = {
     "state_analyzer": "bot_agent.multiagent.agents.state_analyzer_prompts",
     "thread_manager": "bot_agent.multiagent.agents.thread_manager_prompts",
 }
+
+
+def _env_flags_snapshot() -> dict[str, str]:
+    return {
+        "MULTIAGENT_ENABLED": os.getenv("MULTIAGENT_ENABLED", "off"),
+        "LEGACY_PIPELINE_ENABLED": os.getenv("LEGACY_PIPELINE_ENABLED", "off"),
+        "NEO_MINDBOT_ENABLED": os.getenv("NEO_MINDBOT_ENABLED", "off"),
+    }
+
+
+def _compute_env_pipeline_mode() -> str:
+    flags = _env_flags_snapshot()
+    multi_on = flags["MULTIAGENT_ENABLED"] == "on"
+    legacy_on = flags["LEGACY_PIPELINE_ENABLED"] == "on"
+    if multi_on and legacy_on:
+        return "hybrid"
+    if multi_on:
+        return "full_multiagent"
+    return "legacy_adaptive"
 
 
 # ─── Auth dependency ───────────────────────────────────────────────────────────
@@ -254,24 +273,31 @@ def _group_feature_flags(snapshot: dict[str, bool]) -> dict[str, dict[str, bool]
 
 
 def _compute_agent_metrics() -> list[dict[str, Any]]:
-    with _agent_metrics_lock:
-        result = []
-        for agent_id, metric in _agent_metrics.items():
-            call_count = int(metric.get("call_count", 0))
-            total_ms = int(metric.get("total_ms", 0))
-            error_count = int(metric.get("error_count", 0))
-            avg_ms = round(total_ms / call_count, 1) if call_count > 0 else 0
-            result.append(
-                {
-                    "id": agent_id,
-                    "enabled": bool(metric.get("enabled", True)),
-                    "call_count": call_count,
-                    "avg_latency_ms": avg_ms,
-                    "error_count": error_count,
-                    "error_rate": round(error_count / call_count, 4) if call_count > 0 else 0.0,
-                    "last_run": metric.get("last_run"),
-                }
-            )
+    runtime_metrics = getattr(orchestrator, "_agent_metrics", None)
+    source: dict[str, dict[str, Any]]
+    if isinstance(runtime_metrics, dict) and runtime_metrics:
+        source = runtime_metrics
+    else:
+        source = _agent_metrics
+
+    result = []
+    for agent_id in sorted(source.keys()):
+        metric = source.get(agent_id, {})
+        call_count = int(metric.get("call_count", 0))
+        total_ms = int(metric.get("total_ms", 0))
+        error_count = int(metric.get("error_count", 0))
+        avg_ms = round(total_ms / call_count, 1) if call_count > 0 else 0
+        result.append(
+            {
+                "id": agent_id,
+                "enabled": bool(metric.get("enabled", True)),
+                "call_count": call_count,
+                "avg_latency_ms": avg_ms,
+                "error_count": error_count,
+                "error_rate": round(error_count / call_count, 4) if call_count > 0 else 0.0,
+                "last_run": metric.get("last_run"),
+            }
+        )
     return result
 
 
@@ -1172,10 +1198,16 @@ async def admin_agents_record_metric(body: dict):
     summary="Конфигурация оркестратора",
 )
 async def admin_orchestrator_get_config():
+    runtime_metrics = getattr(orchestrator, "_agent_metrics", None)
+    source = runtime_metrics if isinstance(runtime_metrics, dict) and runtime_metrics else _agent_metrics
     with _agent_metrics_lock:
-        agents_enabled = {agent_id: bool(metric.get("enabled", True)) for agent_id, metric in _agent_metrics.items()}
+        agents_enabled = {agent_id: bool(metric.get("enabled", True)) for agent_id, metric in source.items()}
+    env_flags = _env_flags_snapshot()
+    actual_mode = _compute_env_pipeline_mode()
     return {
         "pipeline_mode": _orchestrator_mode["pipeline_mode"],
+        "actual_pipeline_mode": actual_mode,
+        "env_flags": env_flags,
         "agents_enabled": agents_enabled,
         "pipeline_version": getattr(orchestrator, "pipeline_version", "multiagent_v1"),
     }
@@ -1206,11 +1238,48 @@ async def admin_agents_traces(
     limit: int = Query(default=50, ge=1, le=200),
     agent_id: str | None = Query(default=None),
 ):
-    with _agent_metrics_lock:
-        traces = list(_agent_traces)
+    runtime_traces = getattr(orchestrator, "_agent_traces", None)
+    if isinstance(runtime_traces, list) and runtime_traces:
+        traces = list(runtime_traces)
+    else:
+        with _agent_metrics_lock:
+            traces = list(_agent_traces)
     if agent_id:
         traces = [trace for trace in traces if trace.get("agent_id") == agent_id]
     return {"traces": traces[-limit:][::-1], "total": len(traces)}
+
+
+@admin_router.get(
+    "/overview",
+    summary="Обзор состояния multiagent runtime",
+)
+async def admin_overview():
+    env_flags = _env_flags_snapshot()
+    pipeline_mode = _compute_env_pipeline_mode()
+    agents = _compute_agent_metrics()
+    traces = getattr(orchestrator, "_agent_traces", None)
+    if isinstance(traces, list):
+        recent_traces = traces[-5:][::-1]
+    else:
+        recent_traces = list(_agent_traces)[-5:][::-1]
+    return {
+        "pipeline_mode": pipeline_mode,
+        "feature_flags": env_flags,
+        "agents": [
+            {
+                "agent_id": item.get("id"),
+                "enabled": item.get("enabled", True),
+                "calls": item.get("call_count", 0),
+                "errors": item.get("error_count", 0),
+                "avg_ms": item.get("avg_latency_ms", 0),
+                "last_run": item.get("last_run"),
+            }
+            for item in agents
+        ],
+        "recent_traces": recent_traces,
+        "server_time": datetime.now(timezone.utc).isoformat(),
+        "schema_version": ADMIN_SCHEMA_VERSION,
+    }
 
 
 @admin_router.post(
@@ -1226,7 +1295,7 @@ async def admin_agents_traces_record(body: dict):
         "output_preview": str(body.get("output_preview", ""))[:300],
         "latency_ms": int(body.get("latency_ms", 0) or 0),
         "error": body.get("error"),
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
     with _agent_metrics_lock:
         _agent_traces.append(trace)

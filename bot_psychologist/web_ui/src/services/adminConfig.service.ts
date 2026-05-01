@@ -15,6 +15,7 @@ import type {
   AgentTracesResponse,
   ThreadsResponse,
   AgentPromptsResponse,
+  OverviewData,
 } from '../types/admin.types';
 
 // Получаем API-ключ из localStorage (так же как и остальные запросы приложения)
@@ -109,6 +110,8 @@ export const adminConfigService = {
 
   getOrchestratorConfig: () =>
     request<OrchestratorConfig>('GET', '/orchestrator/config'),
+  getOverview: () =>
+    request<OverviewData>('GET', '/overview'),
   patchOrchestratorConfig: (pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive') =>
     request<{ status: string; pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive' }>(
       'PATCH',

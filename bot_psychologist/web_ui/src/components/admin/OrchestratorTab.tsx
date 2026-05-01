@@ -24,6 +24,8 @@ export const OrchestratorTab: React.FC = () => {
   }, [loadOrchestratorConfig]);
 
   const current = orchestratorConfig?.pipeline_mode;
+  const actualMode = orchestratorConfig?.actual_pipeline_mode;
+  const modeMismatch = actualMode != null && current != null && actualMode !== current;
 
   return (
     <div className="mt-4 space-y-4">
@@ -56,6 +58,22 @@ export const OrchestratorTab: React.FC = () => {
         <div className="mt-3 text-xs text-slate-600 dark:text-slate-300">
           pipeline_version: <span className="font-mono">{orchestratorConfig?.pipeline_version ?? '—'}</span>
         </div>
+        <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+          actual_pipeline_mode: <span className="font-mono">{actualMode ?? '—'}</span>
+        </div>
+        {orchestratorConfig?.env_flags && (
+          <div className="mt-2 rounded border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+            <div className="font-medium">env flags</div>
+            {Object.entries(orchestratorConfig.env_flags).map(([key, value]) => (
+              <div key={key} className="font-mono">{key}: {value}</div>
+            ))}
+          </div>
+        )}
+        {modeMismatch && (
+          <p className="mt-2 text-xs text-amber-500">
+            Предупреждение: выбранный pipeline_mode отличается от фактического режима по env-флагам.
+          </p>
+        )}
       </section>
 
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">

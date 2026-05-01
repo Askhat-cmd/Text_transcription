@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import time
+from datetime import datetime, timezone
 
 from bot_agent.config import config
 from .agents.memory_retrieval import memory_retrieval_agent
@@ -21,6 +22,51 @@ logger = logging.getLogger(__name__)
 
 class MultiAgentOrchestrator:
     """Coordinates StateSnapshot -> ThreadManager -> Memory -> Writer."""
+
+    def __init__(self) -> None:
+        self.pipeline_version = "multiagent_v1"
+        self._agent_metrics: dict[str, dict] = {
+            "state_analyzer": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+            "thread_manager": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+            "memory_retrieval": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+            "writer": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+            "validator": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+        }
+        self._agent_traces: list[dict] = []
+
+    def _record_agent_metric(
+        self,
+        *,
+        agent_id: str,
+        latency_ms: int,
+        user_id: str,
+        input_preview: str,
+        output_preview: str = "",
+        error: str | None = None,
+    ) -> None:
+        metric = self._agent_metrics.setdefault(
+            agent_id,
+            {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
+        )
+        metric["call_count"] = int(metric.get("call_count", 0)) + 1
+        metric["total_ms"] = int(metric.get("total_ms", 0)) + int(latency_ms)
+        if error:
+            metric["error_count"] = int(metric.get("error_count", 0)) + 1
+        metric["last_run"] = datetime.now(timezone.utc).isoformat()
+        self._agent_traces.append(
+            {
+                "agent_id": agent_id,
+                "request_id": "",
+                "user_id": user_id,
+                "input_preview": input_preview[:300],
+                "output_preview": output_preview[:300],
+                "latency_ms": int(latency_ms),
+                "error": error,
+                "timestamp": metric["last_run"],
+            }
+        )
+        if len(self._agent_traces) > 200:
+            self._agent_traces = self._agent_traces[-200:]
 
     @staticmethod
     def _has_cyrillic(text: str) -> bool:
@@ -73,6 +119,13 @@ class MultiAgentOrchestrator:
             previous_thread=current_thread,
         )
         t_state = int((time.perf_counter() - t0) * 1000)
+        self._record_agent_metric(
+            agent_id="state_analyzer",
+            latency_ms=t_state,
+            user_id=user_id,
+            input_preview=query,
+            output_preview=f"state={state_snapshot.nervous_state}; intent={state_snapshot.intent}",
+        )
 
         t0 = time.perf_counter()
         updated_thread = await thread_manager_agent.update(
@@ -83,6 +136,13 @@ class MultiAgentOrchestrator:
             archived_threads=archived_threads,
         )
         t_thread = int((time.perf_counter() - t0) * 1000)
+        self._record_agent_metric(
+            agent_id="thread_manager",
+            latency_ms=t_thread,
+            user_id=user_id,
+            input_preview=query,
+            output_preview=f"thread={updated_thread.thread_id}; phase={updated_thread.phase}",
+        )
         if updated_thread.relation_to_thread == "new_thread" and current_thread is not None:
             thread_storage.archive_thread(current_thread, reason="new_thread")
         thread_storage.save_active(updated_thread)
@@ -94,6 +154,13 @@ class MultiAgentOrchestrator:
             user_id=user_id,
         )
         t_memory = int((time.perf_counter() - t0) * 1000)
+        self._record_agent_metric(
+            agent_id="memory_retrieval",
+            latency_ms=t_memory,
+            user_id=user_id,
+            input_preview=query,
+            output_preview=f"hits={len(memory_bundle.semantic_hits)}; has_knowledge={memory_bundle.has_relevant_knowledge}",
+        )
 
         writer_contract = WriterContract(
             user_message=query,
@@ -103,11 +170,26 @@ class MultiAgentOrchestrator:
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
         t_writer = int((time.perf_counter() - t0) * 1000)
+        self._record_agent_metric(
+            agent_id="writer",
+            latency_ms=t_writer,
+            user_id=user_id,
+            input_preview=query,
+            output_preview=draft_answer,
+        )
         writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
 
         t0 = time.perf_counter()
         validation_result = validator_agent.validate(draft_answer, writer_contract)
         t_validator = int((time.perf_counter() - t0) * 1000)
+        self._record_agent_metric(
+            agent_id="validator",
+            latency_ms=t_validator,
+            user_id=user_id,
+            input_preview=query,
+            output_preview=f"blocked={validation_result.is_blocked}; reason={validation_result.block_reason}",
+            error=validation_result.block_reason if validation_result.is_blocked else None,
+        )
         if validation_result.is_blocked:
             final_answer = validation_result.safe_replacement or draft_answer
         else:

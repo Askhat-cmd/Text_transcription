@@ -63,7 +63,10 @@ def test_agent_toggle_unknown(admin_client):
 def test_orchestrator_get(admin_client):
     resp = admin_client.get("/api/admin/orchestrator/config", headers=ADMIN_HEADERS)
     assert resp.status_code == 200
-    assert resp.json()["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    payload = resp.json()
+    assert payload["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    assert payload["actual_pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    assert isinstance(payload["env_flags"], dict)
 
 
 @pytest.mark.parametrize("mode", ["full_multiagent", "hybrid", "legacy_adaptive"])
@@ -103,6 +106,16 @@ def test_traces_record_and_fetch(admin_client):
     resp = admin_client.get("/api/admin/agents/traces?agent_id=writer", headers=ADMIN_HEADERS)
     assert resp.status_code == 200
     assert any(item["agent_id"] == "writer" for item in resp.json()["traces"])
+
+
+def test_admin_overview(admin_client):
+    resp = admin_client.get("/api/admin/overview", headers=ADMIN_HEADERS)
+    assert resp.status_code == 200
+    payload = resp.json()
+    assert payload["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    assert isinstance(payload["feature_flags"], dict)
+    assert isinstance(payload["agents"], list)
+    assert isinstance(payload["recent_traces"], list)
 
 
 def test_threads_list(admin_client):

@@ -1,6 +1,7 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react';
 
-import { useAgents } from '../../hooks/useAgents';
+import { useAgentStatus } from '../../hooks/useAgentStatus';
+import { useThreads } from '../../hooks/useThreads';
 import type { AgentId } from '../../types/admin.types';
 import { AgentCard } from './AgentCard';
 
@@ -16,15 +17,17 @@ const AGENT_OPTIONS: Array<{ value: AgentId | ''; label: string }> = [
 export const AgentsTab: React.FC = () => {
   const {
     agents,
-    agentTraces,
     isLoading,
     isSaving,
     error,
     successMessage,
     loadAgentsStatus,
-    loadAgentTraces,
     toggleAgent,
-  } = useAgents();
+  } = useAgentStatus();
+  const {
+    agentTraces,
+    loadAgentTraces,
+  } = useThreads();
 
   const [traceAgentFilter, setTraceAgentFilter] = useState<AgentId | ''>('');
 

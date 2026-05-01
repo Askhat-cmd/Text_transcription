@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 
-import { useAgents } from '../../hooks/useAgents';
+import { useAgentPrompts } from '../../hooks/useAgentPrompts';
 import type { AgentId } from '../../types/admin.types';
 
 const AGENT_OPTIONS: { id: AgentId; label: string }[] = [
@@ -19,7 +19,7 @@ export const AgentPromptEditorPanel: React.FC = () => {
     loadAgentPrompts,
     saveAgentPrompt,
     resetAgentPrompt,
-  } = useAgents();
+  } = useAgentPrompts();
 
   const [selectedAgent, setSelectedAgent] = useState<'writer' | 'state_analyzer' | 'thread_manager'>('writer');
   const [selectedPromptKey, setSelectedPromptKey] = useState<string | null>(null);

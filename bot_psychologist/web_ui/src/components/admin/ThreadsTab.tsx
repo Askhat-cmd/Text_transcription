@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react';
 
-import { useAgents } from '../../hooks/useAgents';
+import { useThreads } from '../../hooks/useThreads';
 
 export const ThreadsTab: React.FC = () => {
   const {
@@ -11,7 +11,7 @@ export const ThreadsTab: React.FC = () => {
     successMessage,
     loadThreads,
     deleteThread,
-  } = useAgents();
+  } = useThreads();
 
   const [statusFilter, setStatusFilter] = useState<'active' | 'archived' | 'all'>('active');
   const [userFilter, setUserFilter] = useState('');

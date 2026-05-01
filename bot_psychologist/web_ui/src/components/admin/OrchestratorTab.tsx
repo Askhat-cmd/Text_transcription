@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from 'react';
 
-import { useAgents } from '../../hooks/useAgents';
+import { useOrchestrator } from '../../hooks/useOrchestrator';
 
 const MODES: Array<{ key: 'full_multiagent' | 'hybrid' | 'legacy_adaptive'; label: string }> = [
   { key: 'full_multiagent', label: 'full_multiagent' },
@@ -16,14 +16,12 @@ export const OrchestratorTab: React.FC = () => {
     error,
     successMessage,
     loadOrchestratorConfig,
-    loadAgentsStatus,
     setPipelineMode,
-  } = useAgents();
+  } = useOrchestrator();
 
   useEffect(() => {
     void loadOrchestratorConfig();
-    void loadAgentsStatus();
-  }, [loadAgentsStatus, loadOrchestratorConfig]);
+  }, [loadOrchestratorConfig]);
 
   const current = orchestratorConfig?.pipeline_mode;
 

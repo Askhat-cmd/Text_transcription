@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 
 import pytest
 
@@ -68,3 +69,40 @@ async def test_touch_updates_last_message_at(prepared_service) -> None:
     assert before is not None and after is not None
     assert after.last_message_at > before.last_message_at
 
+
+@pytest.mark.asyncio
+async def test_get_or_create_logs_lookup_user_fallback(prepared_service, caplog) -> None:
+    service, user_id, session_id = prepared_service
+    repo = service._repo  # noqa: SLF001 - test verification
+    caplog.set_level(logging.INFO, logger="api.conversations.service")
+
+    first = await service.get_or_create_conversation(user_id=user_id, session_id=session_id)
+
+    identity_repo = IdentityRepository(repo._db_path)  # noqa: SLF001 - test wiring
+    other_session = identity_repo.upsert_session(
+        session_id="srv-s1-alt",
+        user_id=user_id,
+        channel="web",
+    )
+    resumed = await service.get_or_create_conversation(
+        user_id=user_id,
+        session_id=other_session.session_id,
+    )
+
+    assert resumed.conversation_id == first.conversation_id
+    resume_logs = [r for r in caplog.records if r.msg == "conversation.resumed"]
+    assert resume_logs
+    assert getattr(resume_logs[-1], "lookup", None) == "user_fallback"
+
+
+@pytest.mark.asyncio
+async def test_get_or_create_logs_create_reason(prepared_service, caplog) -> None:
+    service, user_id, session_id = prepared_service
+    caplog.set_level(logging.INFO, logger="api.conversations.service")
+
+    created = await service.get_or_create_conversation(user_id=user_id, session_id=session_id)
+    assert created.is_new is True
+
+    create_logs = [r for r in caplog.records if r.msg == "conversation.created"]
+    assert create_logs
+    assert getattr(create_logs[-1], "reason", None) == "no_active_found"

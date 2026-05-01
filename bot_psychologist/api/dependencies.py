@@ -216,7 +216,9 @@ async def get_identity_context(
     )
 
     fingerprint = fingerprint_header or build_fingerprint_from_request(request)
-    session_id = session_id_header or generate_session_id()
+    # Для web-кейса без X-Session-Id используем стабильный технический session key,
+    # чтобы не пересоздавать conversation на каждом запросе.
+    session_id = session_id_header or fingerprint[:32]
     client_ip = resolve_client_ip(request)
     user_agent = (request.headers.get("user-agent") or "").strip()
     metadata = {

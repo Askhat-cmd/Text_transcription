@@ -72,6 +72,8 @@ def test_done_event_has_no_trace_field(monkeypatch) -> None:
     assert "answer_fallback" in done_data
     assert done_data["answer"] == done_data["answer_fallback"]
     assert "latency_ms" in done_data
+    assert done_data.get("session_id")
+    assert done_data.get("conversation_id")
 
 
 def test_done_event_size_under_2kb(monkeypatch) -> None:

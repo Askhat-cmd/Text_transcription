@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import sqlite3
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -72,6 +72,15 @@ class ConversationRepository:
             metadata_json=ConversationRepository._load_json(row["metadata_json"]),
             message_count=int(row["message_count"] or 0),
         )
+
+    @staticmethod
+    def _is_recent(last_message_at: datetime, *, hours: int = 24) -> bool:
+        """Check recency window for fallback conversation resume."""
+        value = last_message_at
+        if value.tzinfo is None:
+            value = value.replace(tzinfo=timezone.utc)
+        cutoff = datetime.now(timezone.utc) - timedelta(hours=max(1, hours))
+        return value >= cutoff
 
     async def ensure_schema(self) -> None:
         """Ensure schema required by conversation layer is present."""
@@ -191,6 +200,20 @@ class ConversationRepository:
         session_id: str,
         channel: str = "web",
     ) -> Optional[ConversationRecord]:
+        record, _lookup = await self.get_active_conversation_with_lookup(
+            user_id=user_id,
+            session_id=session_id,
+            channel=channel,
+        )
+        return record
+
+    async def get_active_conversation_with_lookup(
+        self,
+        *,
+        user_id: str,
+        session_id: str,
+        channel: str = "web",
+    ) -> tuple[Optional[ConversationRecord], Optional[str]]:
         await self.ensure_schema()
         with self._connect() as conn:
             row = conn.execute(
@@ -203,9 +226,29 @@ class ConversationRepository:
                 """,
                 (user_id, session_id, channel),
             ).fetchone()
-        if row is None:
-            return None
-        return self._to_record(row)
+            if row is not None:
+                return self._to_record(row), "session_id"
+
+            # Fallback для web: если session_id технически сменился,
+            # пробуем последнюю активную conversation пользователя в том же канале.
+            fallback_row = conn.execute(
+                """
+                SELECT *
+                FROM conversations
+                WHERE user_id = ? AND channel = ? AND status = 'active'
+                ORDER BY last_message_at DESC
+                LIMIT 1
+                """,
+                (user_id, channel),
+            ).fetchone()
+
+        if fallback_row is None:
+            return None, None
+
+        fallback_record = self._to_record(fallback_row)
+        if not self._is_recent(fallback_record.last_message_at, hours=24):
+            return None, None
+        return fallback_record, "user_fallback"
 
     async def pause_active_conversations(
         self,
@@ -307,4 +350,3 @@ class ConversationRepository:
                 (now, user_id, max(0, days_threshold)),
             )
         return int(cursor.rowcount or 0)
-

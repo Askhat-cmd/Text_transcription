@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import asyncio
+import sqlite3
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -101,3 +103,50 @@ async def test_archive_old_conversations(tmp_path) -> None:
     assert refreshed is not None
     assert refreshed.status == "archived"
 
+
+@pytest.mark.asyncio
+async def test_get_active_conversation_fallback_by_user_channel(tmp_path) -> None:
+    db_path = tmp_path / "conv_repo.db"
+    identity_repo = IdentityRepository(str(db_path))
+    user = identity_repo.create_user()
+    session_a = identity_repo.upsert_session(session_id="s7-a", user_id=user.id, channel="web")
+    session_b = identity_repo.upsert_session(session_id="s7-b", user_id=user.id, channel="web")
+    repo = ConversationRepository(str(db_path))
+
+    conv = await repo.create_conversation(user_id=user.id, session_id=session_a.session_id)
+    active, lookup = await repo.get_active_conversation_with_lookup(
+        user_id=user.id,
+        session_id=session_b.session_id,
+        channel="web",
+    )
+
+    assert active is not None
+    assert active.id == conv.id
+    assert lookup == "user_fallback"
+
+
+@pytest.mark.asyncio
+async def test_get_active_conversation_fallback_respects_24h_recency(tmp_path) -> None:
+    db_path = tmp_path / "conv_repo.db"
+    identity_repo = IdentityRepository(str(db_path))
+    user = identity_repo.create_user()
+    session_a = identity_repo.upsert_session(session_id="s8-a", user_id=user.id, channel="web")
+    session_b = identity_repo.upsert_session(session_id="s8-b", user_id=user.id, channel="web")
+    repo = ConversationRepository(str(db_path))
+
+    conv = await repo.create_conversation(user_id=user.id, session_id=session_a.session_id)
+    stale_iso = (datetime.now(timezone.utc) - timedelta(hours=25)).isoformat()
+    with sqlite3.connect(str(db_path)) as conn:
+        conn.execute(
+            "UPDATE conversations SET last_message_at = ? WHERE id = ?",
+            (stale_iso, conv.id),
+        )
+        conn.commit()
+
+    active, lookup = await repo.get_active_conversation_with_lookup(
+        user_id=user.id,
+        session_id=session_b.session_id,
+        channel="web",
+    )
+    assert active is None
+    assert lookup is None

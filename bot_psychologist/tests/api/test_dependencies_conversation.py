@@ -65,3 +65,16 @@ def test_foreign_conversation_header_is_ignored(client: TestClient) -> None:
     assert first_b != conv_a
     assert second_b != conv_a
 
+
+def test_without_session_header_conversation_is_stable_by_fingerprint(client: TestClient) -> None:
+    headers = {
+        "X-API-Key": "test-key-001",
+        "X-Device-Fingerprint": "sha256:dep-fp-no-session",
+    }
+
+    first = client.get("/api/v1/identity/me", headers=headers)
+    second = client.get("/api/v1/identity/me", headers=headers)
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert first.json()["conversation_id"] == second.json()["conversation_id"]

@@ -45,11 +45,16 @@ class ConversationService:
             )
             logger.info(
                 "conversation.created",
-                extra={"conversation_id": created.id, "user_id": user_id, "channel": channel},
+                extra={
+                    "conversation_id": created.id,
+                    "user_id": user_id,
+                    "channel": channel,
+                    "reason": "force_new",
+                },
             )
             return self._to_context(created, is_new=True)
 
-        active = await self._repo.get_active_conversation(
+        active, lookup = await self._repo.get_active_conversation_with_lookup(
             user_id=user_id,
             session_id=session_id,
             channel=channel,
@@ -57,7 +62,12 @@ class ConversationService:
         if active is not None:
             logger.info(
                 "conversation.resumed",
-                extra={"conversation_id": active.id, "user_id": user_id, "channel": channel},
+                extra={
+                    "conversation_id": active.id,
+                    "user_id": user_id,
+                    "channel": channel,
+                    "lookup": lookup or "session_id",
+                },
             )
             return self._to_context(active, is_new=False)
 
@@ -68,7 +78,12 @@ class ConversationService:
         )
         logger.info(
             "conversation.created",
-            extra={"conversation_id": created.id, "user_id": user_id, "channel": channel},
+            extra={
+                "conversation_id": created.id,
+                "user_id": user_id,
+                "channel": channel,
+                "reason": "no_active_found",
+            },
         )
         return self._to_context(created, is_new=True)
 
@@ -140,4 +155,3 @@ class ConversationService:
 
     async def touch_conversation(self, conversation_id: str) -> None:
         await self._repo.update_last_message_at(conversation_id)
-

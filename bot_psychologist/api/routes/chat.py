@@ -763,6 +763,8 @@ async def ask_adaptive_question_stream(
                 "answer_fallback": answer,
                 "mode": (result.get("metadata") or {}).get("recommended_mode"),
                 "latency_ms": latency_ms,
+                "session_id": session_key,
+                "conversation_id": identity.conversation_id,
             }
 
             yield f"data: {json.dumps(done_payload, ensure_ascii=False)}\n\n"

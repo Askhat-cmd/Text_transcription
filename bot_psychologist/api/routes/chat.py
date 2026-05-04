@@ -39,6 +39,7 @@ from ..session_store import SessionStore, get_session_store
 from .common import (
     _append_trace_with_resolved_session,
     _build_answer_response_from_adaptive,
+    _normalize_semantic_hits_detail_for_debug_trace,
     _record_user,
     _run_neo_compat_answer,
     _strip_legacy_runtime_metadata,
@@ -600,8 +601,17 @@ async def ask_adaptive_question(
                             trace_payload[key] = _strip_legacy_trace_fields(
                                 {"config_snapshot": raw_dict.get(key)},
                             ).get("config_snapshot")
+                        elif key == "semantic_hits_detail":
+                            trace_payload[key] = _normalize_semantic_hits_detail_for_debug_trace(
+                                raw_dict.get(key),
+                            )
                         else:
                             trace_payload[key] = raw_dict.get(key)
+
+                if "semantic_hits_detail" in trace_payload:
+                    trace_payload["semantic_hits_detail"] = _normalize_semantic_hits_detail_for_debug_trace(
+                        trace_payload.get("semantic_hits_detail"),
+                    )
 
                 if trace_payload.get("decision_rule_id") is not None:
                     trace_payload["decision_rule_id"] = str(trace_payload.get("decision_rule_id"))

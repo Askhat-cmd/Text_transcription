@@ -199,6 +199,52 @@ def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
 
     return trace
 
+
+def _normalize_semantic_hits_detail_for_debug_trace(raw_hits: Any) -> list[dict]:
+    """
+    Приводит semantic_hits_detail к контракту DebugTrace:
+    - block_id
+    - score
+    - text_preview
+    - source
+
+    Поддерживает оба формата:
+    - legacy/v2: block_id + text_preview
+    - multiagent: chunk_id + content_preview/content_full
+    """
+    if not isinstance(raw_hits, list):
+        return []
+
+    normalized: list[dict] = []
+    for item in raw_hits:
+        if not isinstance(item, dict):
+            continue
+
+        block_id = str(item.get("block_id") or item.get("chunk_id") or "").strip()
+        score_raw = item.get("score", 0.0)
+        try:
+            score = float(score_raw or 0.0)
+        except (TypeError, ValueError):
+            score = 0.0
+
+        text_preview = str(
+            item.get("text_preview")
+            or item.get("content_preview")
+            or item.get("content_full")
+            or ""
+        )
+        source = item.get("source")
+        normalized.append(
+            {
+                "block_id": block_id,
+                "score": score,
+                "text_preview": text_preview[:200],
+                "source": str(source) if source is not None else None,
+            }
+        )
+
+    return normalized
+
 _LEGACY_RUNTIME_METADATA_KEYS = (
     "user_level",
     "user_level_adapter_applied",

@@ -207,6 +207,9 @@ export interface AgentLLMEntry {
   model: string;
   default_model: string;
   is_overridden: boolean;
+  temperature: number;
+  default_temperature: number;
+  is_temperature_overridden: boolean;
 }
 
 export interface AgentLLMConfigResponse {

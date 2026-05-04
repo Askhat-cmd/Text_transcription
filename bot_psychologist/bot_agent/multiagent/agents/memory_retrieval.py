@@ -135,6 +135,8 @@ class MemoryRetrievalAgent:
             if first_loop:
                 parts.append(first_loop)
 
+        # Защитная дедупликация: каждый смысловой кусок должен попасть в query один раз.
+        parts = list(dict.fromkeys(p.strip() for p in parts if p.strip()))
         return " ".join(parts)[:RAG_QUERY_MAX_LEN]
 
     @staticmethod

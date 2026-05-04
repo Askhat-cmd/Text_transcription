@@ -119,12 +119,18 @@ class MultiAgentOrchestrator:
             previous_thread=current_thread,
         )
         t_state = int((time.perf_counter() - t0) * 1000)
+        state_debug = (
+            state_analyzer_agent.last_debug
+            if isinstance(getattr(state_analyzer_agent, "last_debug", None), dict)
+            else {}
+        )
         self._record_agent_metric(
             agent_id="state_analyzer",
             latency_ms=t_state,
             user_id=user_id,
             input_preview=query,
             output_preview=f"state={state_snapshot.nervous_state}; intent={state_snapshot.intent}",
+            error=str(state_debug.get("error")) if state_debug.get("error") else None,
         )
 
         t0 = time.perf_counter()
@@ -170,14 +176,15 @@ class MultiAgentOrchestrator:
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
         t_writer = int((time.perf_counter() - t0) * 1000)
+        writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
         self._record_agent_metric(
             agent_id="writer",
             latency_ms=t_writer,
             user_id=user_id,
             input_preview=query,
             output_preview=draft_answer,
+            error=str(writer_debug.get("error")) if writer_debug.get("error") else None,
         )
-        writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
 
         t0 = time.perf_counter()
         validation_result = validator_agent.validate(draft_answer, writer_contract)
@@ -264,6 +271,9 @@ class MultiAgentOrchestrator:
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),
+                "writer_api_mode": writer_debug.get("api_mode"),
+                "writer_error": writer_debug.get("error"),
+                "writer_fallback_used": bool(writer_debug.get("fallback_used", False)),
                 "tokens_prompt": writer_debug.get("tokens_prompt"),
                 "tokens_completion": writer_debug.get("tokens_completion"),
                 "tokens_total": writer_debug.get("tokens_total"),
@@ -272,6 +282,9 @@ class MultiAgentOrchestrator:
                 "model_used": str(writer_debug.get("model") or config.LLM_MODEL),
                 "model_temperature": writer_debug.get("temperature"),
                 "model_max_tokens": writer_debug.get("max_tokens"),
+                "state_analyzer_model": state_debug.get("model"),
+                "state_analyzer_api_mode": state_debug.get("api_mode"),
+                "state_analyzer_error": state_debug.get("error"),
                 "validator_blocked": validation_result.is_blocked,
                 "validator_block_reason": validation_result.block_reason,
                 "validator_quality_flags": validation_result.quality_flags,

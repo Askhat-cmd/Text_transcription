@@ -5,7 +5,10 @@ import pytest
 
 from api.main import app
 from bot_agent.config import config
-from bot_agent.multiagent.agents.agent_llm_config import _AGENT_MODEL_OVERRIDES
+from bot_agent.multiagent.agents.agent_llm_config import (
+    _AGENT_MODEL_OVERRIDES,
+    _AGENT_TEMPERATURE_OVERRIDES,
+)
 from bot_agent.runtime_config import RuntimeConfig
 
 
@@ -27,8 +30,10 @@ def admin_client(tmp_path, monkeypatch):
 @pytest.fixture(autouse=True)
 def clear_overrides():
     _AGENT_MODEL_OVERRIDES.clear()
+    _AGENT_TEMPERATURE_OVERRIDES.clear()
     yield
     _AGENT_MODEL_OVERRIDES.clear()
+    _AGENT_TEMPERATURE_OVERRIDES.clear()
 
 
 def test_get_llm_config(admin_client):
@@ -39,6 +44,8 @@ def test_get_llm_config(admin_client):
     assert data["agents"]["state_analyzer"]["model"] == "gpt-5-nano"
     assert data["agents"]["thread_manager"]["model"] == "gpt-5-nano"
     assert data["agents"]["writer"]["model"] == "gpt-5-mini"
+    assert data["agents"]["writer"]["temperature"] == pytest.approx(0.7)
+    assert data["agents"]["state_analyzer"]["temperature"] == pytest.approx(0.1)
 
 
 def test_get_llm_config_allowed_models(admin_client):
@@ -92,10 +99,27 @@ def test_patch_missing_model_field(admin_client):
     assert res.status_code == 422
 
 
+def test_patch_temperature_only(admin_client):
+    res = admin_client.patch(
+        "/api/admin/agents/writer/llm-config",
+        json={"temperature": 0.9},
+        headers=ADMIN_HEADERS,
+    )
+    assert res.status_code == 200
+    payload = res.json()
+    assert payload["temperature"] == pytest.approx(0.9)
+    assert payload["is_temperature_overridden"] is True
+
+    get_res = admin_client.get("/api/admin/agents/llm-config", headers=ADMIN_HEADERS)
+    writer_cfg = get_res.json()["agents"]["writer"]
+    assert writer_cfg["temperature"] == pytest.approx(0.9)
+    assert writer_cfg["is_temperature_overridden"] is True
+
+
 def test_reset_restores_default(admin_client):
     admin_client.patch(
         "/api/admin/agents/writer/llm-config",
-        json={"model": "gpt-5"},
+        json={"model": "gpt-5", "temperature": 1.2},
         headers=ADMIN_HEADERS,
     )
 
@@ -106,7 +130,9 @@ def test_reset_restores_default(admin_client):
     assert res.status_code == 200
     payload = res.json()
     assert payload["is_overridden"] is False
+    assert payload["is_temperature_overridden"] is False
     assert payload["model"] == "gpt-5-mini"
+    assert payload["temperature"] == pytest.approx(0.7)
 
     get_res = admin_client.get("/api/admin/agents/llm-config", headers=ADMIN_HEADERS)
     assert get_res.json()["agents"]["writer"]["is_overridden"] is False

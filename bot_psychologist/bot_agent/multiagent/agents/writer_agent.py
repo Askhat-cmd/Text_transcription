@@ -1,4 +1,4 @@
-"""Writer Agent for NEO multi-agent runtime."""
+﻿"""Writer Agent for NEO multi-agent runtime."""
 
 from __future__ import annotations
 
@@ -10,7 +10,8 @@ from typing import Any, Optional
 from ...config import config
 from ...feature_flags import feature_flags
 from ..contracts.writer_contract import WriterContract
-from .agent_llm_config import get_model_for_agent
+from .agent_llm_client import create_agent_completion
+from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .writer_agent_prompts import WRITER_SYSTEM, WRITER_USER_TEMPLATE
 
 
@@ -22,7 +23,7 @@ WRITER_TIMEOUT_DEFAULT = 30.0
 
 _SAFE_OVERRIDE_FALLBACKS = {
     "ru": "Я здесь. Ты не один. Сделай медленный вдох — я рядом.",
-    "en": "I'm here. You're not alone. Take a slow breath — I'm with you.",
+    "en": "I'm here. You're not alone. Take a slow breath - I'm with you.",
 }
 _DEFAULT_LANG = "ru"
 
@@ -61,34 +62,39 @@ class WriterAgent:
 
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
-        self._model = model or get_model_for_agent("writer")
-        self._timeout = _to_float(
-            feature_flags.value("MULTIAGENT_LLM_TIMEOUT", str(WRITER_TIMEOUT_DEFAULT)),
-            WRITER_TIMEOUT_DEFAULT,
-        )
-        self._max_tokens = _to_int(
-            feature_flags.value(
-                "MULTIAGENT_MAX_TOKENS",
-                feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
-            ),
-            WRITER_MAX_TOKENS_DEFAULT,
-        )
-        self._temperature = _to_float(
-            feature_flags.value(
-                "MULTIAGENT_TEMPERATURE",
-                feature_flags.value("WRITER_TEMPERATURE", str(WRITER_TEMPERATURE_DEFAULT)),
-            ),
-            WRITER_TEMPERATURE_DEFAULT,
-        )
+        self._model_override = model
         self.last_debug: dict[str, Any] = {}
+
+    def _resolve_model(self) -> str:
+        return self._model_override or get_model_for_agent("writer")
+
+    def _resolve_runtime_settings(self) -> dict[str, Any]:
+        model = self._resolve_model()
+        return {
+            "model": model,
+            "timeout": _to_float(
+                feature_flags.value("MULTIAGENT_LLM_TIMEOUT", str(WRITER_TIMEOUT_DEFAULT)),
+                WRITER_TIMEOUT_DEFAULT,
+            ),
+            "max_tokens": _to_int(
+                feature_flags.value(
+                    "MULTIAGENT_MAX_TOKENS",
+                    feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
+                ),
+                WRITER_MAX_TOKENS_DEFAULT,
+            ),
+            "temperature": get_temperature_for_agent("writer"),
+        }
 
     async def write(self, contract: WriterContract) -> str:
         """Write one answer text with safe fallback behavior."""
+        runtime_settings = self._resolve_runtime_settings()
         self.last_debug = {
-            "model": self._model,
-            "temperature": self._temperature,
-            "max_tokens": self._max_tokens,
-            "timeout": self._timeout,
+            "model": runtime_settings["model"],
+            "api_mode": None,
+            "temperature": runtime_settings["temperature"],
+            "max_tokens": runtime_settings["max_tokens"],
+            "timeout": runtime_settings["timeout"],
             "system_prompt": WRITER_SYSTEM,
             "user_prompt": "",
             "llm_response": "",
@@ -98,6 +104,7 @@ class WriterAgent:
             "estimated_cost_usd": None,
             "duration_ms": None,
             "error": None,
+            "fallback_used": False,
         }
         try:
             if contract.thread_state.safety_active:
@@ -106,19 +113,23 @@ class WriterAgent:
                 try:
                     result = await self._call_llm(contract)
                     if not result.strip():
+                        self.last_debug["fallback_used"] = True
                         return fallback
                     return self._apply_name_continuity(result, contract)
                 except Exception as exc:
                     self.last_debug["error"] = str(exc)
+                    self.last_debug["fallback_used"] = True
                     return fallback
 
             result = await self._call_llm(contract)
             if not result.strip():
+                self.last_debug["fallback_used"] = True
                 return self._static_fallback(contract)
             return self._apply_name_continuity(result, contract)
         except Exception as exc:
             logger.error("[WRITER] write failed: %s", exc, exc_info=True)
             self.last_debug["error"] = str(exc)
+            self.last_debug["fallback_used"] = True
             return self._static_fallback(contract)
 
     async def _call_llm(self, contract: WriterContract) -> str:
@@ -146,22 +157,33 @@ class WriterAgent:
         self.last_debug["user_prompt"] = user_prompt
 
         start_ts = time.perf_counter()
-        response = await client.chat.completions.create(
-            model=self._model,
+        runtime_settings = self._resolve_runtime_settings()
+        result = await create_agent_completion(
+            client=client,
+            model=runtime_settings["model"],
             messages=[
                 {"role": "system", "content": WRITER_SYSTEM},
                 {"role": "user", "content": user_prompt},
             ],
-            temperature=self._temperature,
-            max_tokens=self._max_tokens,
-            timeout=self._timeout,
+            temperature=runtime_settings["temperature"],
+            max_tokens=runtime_settings["max_tokens"],
+            timeout=runtime_settings["timeout"],
         )
-        llm_response = (response.choices[0].message.content or "").strip()
-        tokens_prompt, tokens_completion, tokens_total = self._extract_tokens(response)
+        llm_response = result.text
+        tokens_prompt, tokens_completion, tokens_total = (
+            result.tokens_prompt,
+            result.tokens_completion,
+            result.tokens_total,
+        )
         estimated_cost = self._estimate_cost(tokens_prompt=tokens_prompt, tokens_completion=tokens_completion)
         duration_ms = int((time.perf_counter() - start_ts) * 1000)
         self.last_debug.update(
             {
+                "model": runtime_settings["model"],
+                "api_mode": result.api_mode,
+                "temperature": runtime_settings["temperature"],
+                "max_tokens": runtime_settings["max_tokens"],
+                "timeout": runtime_settings["timeout"],
                 "llm_response": llm_response,
                 "tokens_prompt": tokens_prompt,
                 "tokens_completion": tokens_completion,
@@ -169,6 +191,7 @@ class WriterAgent:
                 "estimated_cost_usd": estimated_cost,
                 "duration_ms": duration_ms,
                 "error": None,
+                "fallback_used": False,
             }
         )
         return llm_response
@@ -196,36 +219,13 @@ class WriterAgent:
     def _format_hits(hits: list[str]) -> str:
         if not hits:
             return "нет релевантных знаний"
-        return "\n---\n".join(f"• {h[:300]}" for h in hits[:2])
-
-    @staticmethod
-    def _extract_tokens(response: Any) -> tuple[Optional[int], Optional[int], Optional[int]]:
-        usage = getattr(response, "usage", None)
-        if usage is None:
-            return None, None, None
-        prompt_tokens = getattr(usage, "prompt_tokens", None)
-        completion_tokens = getattr(usage, "completion_tokens", None)
-        total_tokens = getattr(usage, "total_tokens", None)
-        if total_tokens is None and isinstance(prompt_tokens, int) and isinstance(completion_tokens, int):
-            total_tokens = prompt_tokens + completion_tokens
-        try:
-            prompt_value = int(prompt_tokens) if prompt_tokens is not None else None
-        except (TypeError, ValueError):
-            prompt_value = None
-        try:
-            completion_value = int(completion_tokens) if completion_tokens is not None else None
-        except (TypeError, ValueError):
-            completion_value = None
-        try:
-            total_value = int(total_tokens) if total_tokens is not None else None
-        except (TypeError, ValueError):
-            total_value = None
-        return prompt_value, completion_value, total_value
+        return "\n---\n".join(f"- {h[:300]}" for h in hits[:2])
 
     def _estimate_cost(self, *, tokens_prompt: Optional[int], tokens_completion: Optional[int]) -> Optional[float]:
         if tokens_prompt is None and tokens_completion is None:
             return None
-        rates = _COST_PER_1K_TOKENS.get((self._model or "").lower(), _COST_PER_1K_TOKENS["default"])
+        model = str(self.last_debug.get("model") or self._resolve_model()).lower()
+        rates = _COST_PER_1K_TOKENS.get(model, _COST_PER_1K_TOKENS["default"])
         prompt = float(tokens_prompt or 0)
         completion = float(tokens_completion or 0)
         cost = (prompt / 1000.0) * float(rates["input"]) + (completion / 1000.0) * float(rates["output"])
@@ -242,9 +242,8 @@ class WriterAgent:
             return "Сделай медленный вдох. Я рядом."
         return "Я слышу тебя."
 
-
     def _apply_name_continuity(self, response_text: str, contract: WriterContract) -> str:
-        """Добавляет обращение по имени, если имя явно есть в контексте и отсутствует в ответе."""
+        """Добавляет обращение по имени, если имя найдено в контексте и отсутствует в ответе."""
         name = self._extract_user_name(contract)
         if not name:
             return response_text

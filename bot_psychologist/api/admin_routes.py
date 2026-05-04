@@ -25,6 +25,8 @@ from bot_agent.multiagent.thread_storage import thread_storage
 from bot_agent.multiagent.agents.agent_llm_config import (
     ALLOWED_MODELS,
     get_all_agent_models,
+    set_temperature_for_agent,
+    reset_temperature_for_agent,
     set_model_for_agent,
     reset_model_for_agent,
 )
@@ -1426,17 +1428,33 @@ async def admin_get_agents_llm_config():
 
 @admin_router.patch(
     "/agents/{agent_id}/llm-config",
-    summary="Изменить LLM-модель конкретного агента",
+    summary="Изменить LLM-конфиг конкретного агента",
 )
 async def admin_patch_agent_llm_config(agent_id: str, body: dict):
-    model = str(body.get("model", "")).strip()
-    if not model:
-        raise HTTPException(status_code=422, detail="Field 'model' is required")
+    model_raw = body.get("model")
+    model = str(model_raw).strip() if model_raw is not None else ""
+    temperature_raw = body.get("temperature")
+    if not model and temperature_raw is None:
+        raise HTTPException(status_code=422, detail="At least one field is required: 'model' or 'temperature'")
     try:
-        set_model_for_agent(agent_id, model)
+        if model:
+            set_model_for_agent(agent_id, model)
+        if temperature_raw is not None:
+            set_temperature_for_agent(agent_id, float(temperature_raw))
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
-    return {"status": "ok", "agent_id": agent_id, "model": model}
+    agents = get_all_agent_models()
+    if agent_id not in agents:
+        raise HTTPException(status_code=422, detail=f"Unknown agent_id '{agent_id}'")
+    payload = agents[agent_id]
+    return {
+        "status": "ok",
+        "agent_id": agent_id,
+        "model": payload["model"],
+        "temperature": payload["temperature"],
+        "is_overridden": payload["is_overridden"],
+        "is_temperature_overridden": payload["is_temperature_overridden"],
+    }
 
 
 @admin_router.post(
@@ -1446,14 +1464,17 @@ async def admin_patch_agent_llm_config(agent_id: str, body: dict):
 async def admin_reset_agent_llm_config(agent_id: str):
     try:
         reset_model_for_agent(agent_id)
+        reset_temperature_for_agent(agent_id)
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
     agents = get_all_agent_models()
     return {
         "status": "ok",
         "agent_id": agent_id,
-        "model": agents[agent_id]["default_model"],
+        "model": agents[agent_id]["model"],
+        "temperature": agents[agent_id]["temperature"],
         "is_overridden": False,
+        "is_temperature_overridden": False,
     }
 
 # в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ

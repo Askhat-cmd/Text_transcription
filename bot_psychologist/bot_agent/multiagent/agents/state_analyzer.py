@@ -11,7 +11,8 @@ from typing import Any, Optional
 from ...config import config
 from ..contracts.state_snapshot import StateSnapshot
 from ..contracts.thread_state import ThreadState
-from .agent_llm_config import get_model_for_agent
+from .agent_llm_client import create_agent_completion
+from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
 from .state_analyzer_prompts import STATE_ANALYZER_SYSTEM, STATE_ANALYZER_USER_TEMPLATE
 
 
@@ -264,7 +265,11 @@ class StateAnalyzerAgent:
 
     def __init__(self, client: Optional[Any] = None, model: Optional[str] = None):
         self._client = client
-        self._model = model or get_model_for_agent("state_analyzer")
+        self._model_override = model
+        self.last_debug: dict[str, Any] = {}
+
+    def _resolve_model(self) -> str:
+        return self._model_override or get_model_for_agent("state_analyzer")
 
     async def analyze(
         self,
@@ -378,6 +383,19 @@ class StateAnalyzerAgent:
         previous_thread: Optional[ThreadState],
         deterministic: _DeterministicResult,
     ) -> StateSnapshot:
+        model = self._resolve_model()
+        temperature = get_temperature_for_agent("state_analyzer")
+        self.last_debug = {
+            "model": model,
+            "api_mode": None,
+            "temperature": temperature,
+            "max_tokens": 240,
+            "tokens_prompt": None,
+            "tokens_completion": None,
+            "tokens_total": None,
+            "raw_response": "",
+            "error": None,
+        }
         try:
             client = self._get_client()
             if client is None:
@@ -390,18 +408,30 @@ class StateAnalyzerAgent:
                 previous_context=previous_context,
                 deterministic_hints=hints,
             )
-
-            response = await client.chat.completions.create(
-                model=self._model,
-                response_format={"type": "json_object"},
+            result = await create_agent_completion(
+                client=client,
+                model=model,
                 messages=[
                     {"role": "system", "content": STATE_ANALYZER_SYSTEM},
                     {"role": "user", "content": user_prompt},
                 ],
-                temperature=0.1,
+                temperature=temperature,
                 max_tokens=240,
+                response_format={"type": "json_object"},
+                require_json=True,
             )
-            raw = response.choices[0].message.content or "{}"
+            raw = result.text or "{}"
+            self.last_debug.update(
+                {
+                    "model": model,
+                    "api_mode": result.api_mode,
+                    "tokens_prompt": result.tokens_prompt,
+                    "tokens_completion": result.tokens_completion,
+                    "tokens_total": result.tokens_total,
+                    "raw_response": raw,
+                    "error": None,
+                }
+            )
             parsed = self._parse_json(raw)
             nervous_state = (
                 deterministic.nervous_state
@@ -460,13 +490,16 @@ class StateAnalyzerAgent:
             return result
         except Exception as exc:
             logger.error("[STATE_ANALYZER] llm fallback failed: %s", exc, exc_info=True)
+            self.last_debug["error"] = str(exc)
             return self._fallback_from_deterministic(deterministic, confidence=0.55)
 
     async def _llm_safety_check(self, message: str, client: Any) -> bool:
         """Secondary LLM safety check for implicit crisis phrases."""
         try:
-            response = await client.chat.completions.create(
-                model=self._model,
+            model = self._resolve_model()
+            result = await create_agent_completion(
+                client=client,
+                model=model,
                 messages=[
                     {
                         "role": "system",
@@ -486,7 +519,7 @@ class StateAnalyzerAgent:
                 temperature=0.0,
                 max_tokens=5,
             )
-            answer = (response.choices[0].message.content or "").strip().upper()
+            answer = (result.text or "").strip().upper()
             return answer.startswith("YES")
         except Exception:
             return False

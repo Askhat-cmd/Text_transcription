@@ -30,7 +30,20 @@ export const useAgentLLMConfig = () => {
     setIsSaving(true);
     setError(null);
     try {
-      await adminConfigService.patchAgentLLMConfig(agentId, model);
+      await adminConfigService.patchAgentLLMConfig(agentId, { model });
+      await load();
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setIsSaving(false);
+    }
+  }, [load]);
+
+  const setTemperature = useCallback(async (agentId: string, temperature: number) => {
+    setIsSaving(true);
+    setError(null);
+    try {
+      await adminConfigService.patchAgentLLMConfig(agentId, { temperature });
       await load();
     } catch (e) {
       setError((e as Error).message);
@@ -58,6 +71,7 @@ export const useAgentLLMConfig = () => {
     isSaving,
     error,
     setModel,
+    setTemperature,
     resetModel,
     reload: load,
   };

@@ -33,9 +33,24 @@ class _QueueCompletions:
         )
 
 
+class _QueueResponses:
+    def __init__(self, payloads: list[str]) -> None:
+        self._payloads = payloads
+        self.calls: list[dict] = []
+
+    async def create(self, **kwargs):
+        self.calls.append(kwargs)
+        idx = min(len(self.calls) - 1, len(self._payloads) - 1)
+        return SimpleNamespace(
+            output_text=self._payloads[idx],
+            usage=SimpleNamespace(input_tokens=12, output_tokens=7, total_tokens=19),
+        )
+
+
 class _FakeClient:
     def __init__(self, payloads: list[str]) -> None:
         self.chat = SimpleNamespace(completions=_QueueCompletions(payloads))
+        self.responses = _QueueResponses(payloads)
 
 
 def _analysis_payload(

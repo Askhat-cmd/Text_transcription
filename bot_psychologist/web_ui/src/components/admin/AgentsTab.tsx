@@ -31,6 +31,7 @@ export const AgentsTab: React.FC = () => {
     isSaving: llmSaving,
     error: llmError,
     setModel,
+    setTemperature,
     resetModel,
   } = useAgentLLMConfig();
   const {
@@ -113,6 +114,7 @@ export const AgentsTab: React.FC = () => {
                 <tr className="border-b border-slate-200 text-left dark:border-slate-700">
                   <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Агент</th>
                   <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Активная модель</th>
+                  <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Temperature</th>
                   <th className="px-2 py-2 font-semibold text-slate-700 dark:text-slate-200">Дефолт</th>
                   <th className="px-2 py-2" />
                 </tr>
@@ -145,10 +147,36 @@ export const AgentsTab: React.FC = () => {
                       </div>
                     </td>
                     <td className="px-2 py-2 align-middle">
-                      <code className="text-slate-500 dark:text-slate-400">{cfg.default_model}</code>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="number"
+                          min={0}
+                          max={2}
+                          step={0.1}
+                          value={Number(cfg.temperature ?? 0.7)}
+                          onChange={(e) => {
+                            const parsed = Number(e.target.value);
+                            if (Number.isNaN(parsed)) return;
+                            void setTemperature(agentId, parsed);
+                          }}
+                          className="w-20 rounded border border-slate-300 bg-white px-2 py-1 text-xs text-slate-700 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-200"
+                          disabled={llmSaving}
+                        />
+                        {cfg.is_temperature_overridden && (
+                          <span className="rounded bg-blue-100 px-2 py-0.5 text-[11px] text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">
+                            изменено
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-2 py-2 align-middle">
-                      {cfg.is_overridden && (
+                      <div className="flex flex-col gap-1">
+                        <code className="text-slate-500 dark:text-slate-400">{cfg.default_model}</code>
+                        <code className="text-slate-500 dark:text-slate-400">{cfg.default_temperature}</code>
+                      </div>
+                    </td>
+                    <td className="px-2 py-2 align-middle">
+                      {(cfg.is_overridden || cfg.is_temperature_overridden) && (
                         <button
                           type="button"
                           className="rounded border border-slate-300 px-2 py-1 text-[11px] text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700"

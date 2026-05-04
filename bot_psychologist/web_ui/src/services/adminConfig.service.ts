@@ -163,14 +163,28 @@ export const adminConfigService = {
 
   getAgentLLMConfig: () =>
     request<AgentLLMConfigResponse>('GET', '/agents/llm-config'),
-  patchAgentLLMConfig: (agentId: string, model: string) =>
-    request<{ status: string; agent_id: string; model: string }>(
+  patchAgentLLMConfig: (agentId: string, payload: { model?: string; temperature?: number }) =>
+    request<{
+      status: string;
+      agent_id: string;
+      model: string;
+      temperature: number;
+      is_overridden: boolean;
+      is_temperature_overridden: boolean;
+    }>(
       'PATCH',
       `/agents/${agentId}/llm-config`,
-      { model }
+      payload
     ),
   resetAgentLLMConfig: (agentId: string) =>
-    request<{ status: string; agent_id: string; model: string; is_overridden: boolean }>(
+    request<{
+      status: string;
+      agent_id: string;
+      model: string;
+      temperature: number;
+      is_overridden: boolean;
+      is_temperature_overridden: boolean;
+    }>(
       'POST',
       `/agents/${agentId}/llm-config/reset`
     ),

@@ -8,69 +8,41 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 
-def _runtime_ctx() -> dict:
-    return {
-        "top_k": 3,
-        "start_time": 0.0,
-        "llm_model_name": "gpt-5-mini",
-        "prompt_stack_enabled": True,
-        "output_validation_enabled": False,
-        "informational_branch_enabled": True,
-        "diagnostics_v1_enabled": True,
-        "deterministic_route_resolver_enabled": True,
-        "pipeline_stages": [],
-        "debug_info": {},
-        "debug_trace": None,
-        "conversation_context": "",
-        "memory_context_bundle": None,
-        "phase8_signals": {},
-        "current_stage": "bootstrap",
-    }
-
-
-def _bootstrap_response() -> dict:
-    return {
-        "memory": None,
-        "memory_context_bundle": None,
-        "conversation_context": "",
-        "cross_session_context": "",
-        "memory_trace_metrics": {},
-        "phase8_signals": {},
-        "path_level_enum": None,
-        "start_command_response": {
-            "status": "ok",
-            "answer": "legacy-path-response",
-        },
-    }
-
-
-def test_lr_01_rollback_flag_false(monkeypatch) -> None:
+def test_lr_01_rollback_flag_false_uses_multiagent_shim(monkeypatch) -> None:
     answer_module = importlib.import_module("bot_agent.answer_adaptive")
-    orch_module = importlib.import_module("bot_agent.multiagent.orchestrator")
 
-    called = {"run_sync": False}
+    called = {"adapter": False}
 
-    def _run_sync_guard(*, query: str, user_id: str) -> dict:
-        called["run_sync"] = True
-        return {"status": "ok", "answer": "should-not-be-used"}
+    def _adapter_guard(**_kwargs) -> dict:
+        called["adapter"] = True
+        return {
+            "status": "ok",
+            "answer": "multiagent-response",
+            "metadata": {"runtime": "multiagent"},
+            "debug": {},
+        }
 
-    monkeypatch.setattr(orch_module.orchestrator, "run_sync", _run_sync_guard)
+    monkeypatch.setattr(answer_module, "run_multiagent_adaptive_sync", _adapter_guard, raising=True)
     monkeypatch.setattr(
         answer_module.feature_flags,
         "enabled",
         lambda name: False if name == "MULTIAGENT_ENABLED" else False,
+        raising=True,
     )
-    monkeypatch.setattr(answer_module, "_runtime_prepare_adaptive_run_context", lambda **kwargs: _runtime_ctx())
     monkeypatch.setattr(
         answer_module,
-        "_runtime_run_bootstrap_and_onboarding_guard",
-        lambda **kwargs: _bootstrap_response(),
+        "_runtime_prepare_adaptive_run_context",
+        lambda **_kwargs: (_ for _ in ()).throw(AssertionError("legacy cascade must not be called")),
+        raising=True,
     )
 
     result = answer_module.answer_question_adaptive(query="привет", user_id="u1")
 
-    assert result["answer"] == "legacy-path-response"
-    assert called["run_sync"] is False
+    assert result["answer"] == "multiagent-response"
+    assert called["adapter"] is True
+    assert result["metadata"]["runtime_entrypoint"] == "answer_adaptive_deprecated_shim"
+    assert result["metadata"]["legacy_fallback_used"] is False
+    assert result["metadata"]["legacy_fallback_blocked"] is True
 
 
 def test_lr_02_rollback_no_import_error() -> None:

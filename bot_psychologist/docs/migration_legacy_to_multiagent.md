@@ -29,10 +29,10 @@
 
 Если `LEGACY_PIPELINE_ENABLED=true`, legacy runtime все равно не включается.
 
-## Что остается до PRD-041
+## Статус после PRD-041
 
-Legacy-код физически еще присутствует, но не считается рабочим runtime-контуром.
-Он retained only for PRD-041 purge.
+Legacy cascade implementation was physically removed in PRD-041.
+`answer_adaptive.py` оставлен только как compatibility shim и больше не содержит legacy body.
 
 ## Рекомендуемые проверки
 

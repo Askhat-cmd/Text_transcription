@@ -28,19 +28,19 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 
 - PRD-026: обновление трейса под мультиагентную архитектуру
 - PRD-027: веб-AdminPage с управлением агентами на лету
-- PRD-041: Physical Legacy Purge — физическое удаление старой каскадной системы
+- PRD-042: Post-Purge Stabilization & Final Regression
 
 ## Мультиагентная система (Эпоха 4)
 
 ### Статус: active runtime = multiagent-only
 
-После PRD-036/037/039 активный runtime только `multiagent`.
+После PRD-036/037/039/041 активный runtime только `multiagent`.
 Флаг `MULTIAGENT_ENABLED` сохранен как deprecated compatibility flag и не переключает runtime в legacy.
 
 ### Legacy статус
 
-Legacy-каскадный код пока физически лежит в репозитории только как переходный слой совместимости.
-Физическое удаление планируется отдельным этапом: PRD-041 (Physical Legacy Purge).
+Legacy cascade implementation physically removed in PRD-041.
+`answer_adaptive.py` оставлен только как tiny compatibility shim на `multiagent_adapter`.
 
 ### Как работает новая система
 
@@ -191,7 +191,7 @@ pytest tests/test_feature_flags.py -q
 
 1. Довести PRD-026: богатый мультиагентный трейс в UI.
 2. Довести PRD-027: AdminPage для оперативного управления агентами.
-3. Подготовить PRD-041: Physical Legacy Purge.
+3. Провести PRD-042: Post-Purge Stabilization & Final Regression.
 
 ## Документация
 

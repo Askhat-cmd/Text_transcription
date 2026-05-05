@@ -23,10 +23,10 @@ def test_readme_does_not_recommend_multiagent_disabled_state() -> None:
     assert "MULTIAGENT_ENABLED=false" not in text
 
 
-def test_migration_doc_marks_legacy_as_prd_041_purge_only() -> None:
+def test_migration_doc_marks_legacy_as_physically_removed_in_prd_041() -> None:
     text = _read_text(MIGRATION_PATH)
     assert "PRD-041" in text
-    assert "retained only for PRD-041 purge" in text
+    assert "physically removed" in text
 
 
 def test_testing_matrix_mentions_active_runtime_multiagent_check() -> None:

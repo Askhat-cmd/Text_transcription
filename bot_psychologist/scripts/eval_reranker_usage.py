@@ -32,12 +32,12 @@ def evaluate_reranker_usage(
     sample_size: int = 100,
     top_k: int | None = None,
 ) -> dict[str, Any]:
-    from bot_agent.answer_adaptive import _fallback_state_analysis
     from bot_agent.config import config
     from bot_agent.db_api_client import DBApiUnavailableError
     from bot_agent.decision import DecisionGate, detect_routing_signals
     from bot_agent.reranker_gate import should_rerank
     from bot_agent.retriever import get_retriever
+    from bot_agent.state_classifier import StateAnalysis, UserState
 
     queries = _load_eval_queries(eval_set_path, sample_size)
     if not queries:
@@ -62,7 +62,15 @@ def evaluate_reranker_usage(
         retriever._api_retrieve = _quick_unavailable
 
     decision_gate = DecisionGate()
-    state_analysis = _fallback_state_analysis()
+    state_analysis = StateAnalysis(
+        primary_state=UserState.CURIOUS,
+        confidence=0.45,
+        secondary_states=[],
+        indicators=[],
+        emotional_tone="neutral",
+        depth="surface",
+        recommendations=[],
+    )
     reasons: Counter[str] = Counter()
     modes: Counter[str] = Counter()
     activations = 0

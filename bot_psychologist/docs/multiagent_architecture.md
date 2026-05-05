@@ -240,7 +240,7 @@ THREAD_STORAGE_DIR=bot_psychologist/data/threads
 
 Замечания:
 - `THREAD_STORAGE_DIR` разрешается в абсолютный путь в `thread_storage.py` через `Path(...).resolve()`.
-- Legacy-ветка физически сохранена до PRD-041 purge и не используется как active runtime.
+- Legacy cascade implementation physically removed in PRD-041; `answer_adaptive.py` kept only as compatibility shim.
 
 ## Пример вывода orchestrator.run()
 

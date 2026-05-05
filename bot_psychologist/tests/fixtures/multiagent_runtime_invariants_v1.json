@@ -74,5 +74,10 @@
     ],
     "legacy_fallback_enabled": false,
     "legacy_fallback_used": false
+  },
+  "physical_purge": {
+    "adaptive_runtime_exists": false,
+    "answer_adaptive_contains_legacy_body": false,
+    "legacy_fallback_available": false
   }
 }

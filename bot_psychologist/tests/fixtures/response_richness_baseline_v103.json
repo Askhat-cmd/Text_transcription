@@ -34,9 +34,9 @@
   ],
   "routing_touchpoints": [
     {
-      "name": "mode_prompt_map",
+      "name": "answer_adaptive_shim_markers",
       "file": "bot_psychologist/bot_agent/answer_adaptive.py",
-      "symbols": ["MODE_PROMPT_MAP", "resolve_mode_prompt"]
+      "symbols": ["run_multiagent_adaptive_sync", "_apply_deprecated_shim_markers"]
     },
     {
       "name": "phase8_signals",

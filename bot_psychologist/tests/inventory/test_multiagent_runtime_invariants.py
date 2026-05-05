@@ -50,6 +50,10 @@ def test_multiagent_runtime_invariants_fixture_shape() -> None:
 
     assert isinstance(payload.get("active_entrypoints"), list) and payload["active_entrypoints"]
     assert isinstance(payload.get("admin_contract"), dict)
+    purge = payload.get("physical_purge", {})
+    assert purge.get("adaptive_runtime_exists") is False
+    assert purge.get("answer_adaptive_contains_legacy_body") is False
+    assert purge.get("legacy_fallback_available") is False
 
 
 def test_multiagent_entrypoints_follow_required_and_forbidden_symbols() -> None:

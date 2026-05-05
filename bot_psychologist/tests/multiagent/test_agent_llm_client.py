@@ -142,7 +142,11 @@ async def test_create_agent_completion_require_json_appends_instruction() -> Non
         require_json=True,
     )
     sent_input = str(client.responses.calls[0]["input"])
-    assert "Return ONLY a valid JSON object." in sent_input
+    assert "Return ONLY valid JSON." in sent_input
+    assert "Use double quotes for all keys and string values." in sent_input
+    assert "No markdown." in sent_input
+    assert "No comments." in sent_input
+    assert "No trailing commas." in sent_input
 
 
 def test_messages_to_input_formats_roles() -> None:

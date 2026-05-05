@@ -28,6 +28,7 @@ def test_agents_status_returns_5_agents(admin_client):
     assert resp.status_code == 200
     data = resp.json()
     assert len(data["agents"]) == 5
+    assert data["active_runtime"] in {"multiagent", "legacy_adaptive"}
     assert {item["id"] for item in data["agents"]} == {
         "state_analyzer", "thread_manager", "memory_retrieval", "writer", "validator"
     }
@@ -66,7 +67,18 @@ def test_orchestrator_get(admin_client):
     payload = resp.json()
     assert payload["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
     assert payload["actual_pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    assert payload["active_runtime"] in {"multiagent", "legacy_adaptive"}
     assert isinstance(payload["env_flags"], dict)
+
+
+def test_orchestrator_get_truthy_env_flags(admin_client, monkeypatch):
+    monkeypatch.setenv("MULTIAGENT_ENABLED", "true")
+    monkeypatch.setenv("LEGACY_PIPELINE_ENABLED", "0")
+    resp = admin_client.get("/api/admin/orchestrator/config", headers=ADMIN_HEADERS)
+    assert resp.status_code == 200
+    payload = resp.json()
+    assert payload["actual_pipeline_mode"] == "full_multiagent"
+    assert payload["active_runtime"] == "multiagent"
 
 
 @pytest.mark.parametrize("mode", ["full_multiagent", "hybrid", "legacy_adaptive"])

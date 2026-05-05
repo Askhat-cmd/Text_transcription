@@ -38,6 +38,8 @@ export const AdminOverviewTab: React.FC = () => {
       { calls: 0, errors: 0 },
     );
   }, [overview]);
+  const effectiveMode =
+    overview?.active_runtime === 'multiagent' ? 'full_multiagent' : overview?.pipeline_mode;
 
   return (
     <div className="mt-4 space-y-4">
@@ -61,8 +63,8 @@ export const AdminOverviewTab: React.FC = () => {
             <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">
               <div className="text-xs text-slate-500">Pipeline mode</div>
               <div className="mt-1">
-                <span className={`rounded border px-2 py-0.5 text-xs font-medium ${modeBadgeClass[overview.pipeline_mode] || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
-                  {overview.pipeline_mode}
+                <span className={`rounded border px-2 py-0.5 text-xs font-medium ${modeBadgeClass[effectiveMode || ''] || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
+                  {effectiveMode}
                 </span>
               </div>
             </div>

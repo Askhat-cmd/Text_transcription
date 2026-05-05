@@ -143,7 +143,11 @@ async def create_agent_completion(
     if require_json:
         input_text = (
             f"{input_text}\n\n"
-            "Return ONLY a valid JSON object. No markdown. No explanation."
+            "Return ONLY valid JSON.\n"
+            "Use double quotes for all keys and string values.\n"
+            "No markdown.\n"
+            "No comments.\n"
+            "No trailing commas."
         )
 
     request_kwargs = {

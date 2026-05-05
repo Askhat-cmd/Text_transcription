@@ -62,14 +62,28 @@ def _env_flags_snapshot() -> dict[str, str]:
     }
 
 
+def _is_truthy_env(value: str | None) -> bool:
+    normalized = str(value or "").strip().lower()
+    return normalized in {"1", "true", "on", "yes", "y"}
+
+
 def _compute_env_pipeline_mode() -> str:
     flags = _env_flags_snapshot()
-    multi_on = flags["MULTIAGENT_ENABLED"] == "on"
-    legacy_on = flags["LEGACY_PIPELINE_ENABLED"] == "on"
+    multi_on = _is_truthy_env(flags["MULTIAGENT_ENABLED"])
+    legacy_on = _is_truthy_env(flags["LEGACY_PIPELINE_ENABLED"])
     if multi_on and legacy_on:
         return "hybrid"
     if multi_on:
         return "full_multiagent"
+    return "legacy_adaptive"
+
+
+def _compute_active_runtime(actual_mode: str | None = None) -> str:
+    pipeline_version = str(getattr(orchestrator, "pipeline_version", "") or "")
+    if pipeline_version.startswith("multiagent"):
+        return "multiagent"
+    if actual_mode in {"full_multiagent", "hybrid"}:
+        return "multiagent"
     return "legacy_adaptive"
 
 
@@ -1163,7 +1177,12 @@ async def admin_import_overrides(body: dict):
 )
 async def admin_agents_status():
     pipeline_version = getattr(orchestrator, "pipeline_version", "multiagent_v1")
-    return {"pipeline_version": pipeline_version, "agents": _compute_agent_metrics()}
+    actual_mode = _compute_env_pipeline_mode()
+    return {
+        "pipeline_version": pipeline_version,
+        "active_runtime": _compute_active_runtime(actual_mode),
+        "agents": _compute_agent_metrics(),
+    }
 
 
 @admin_router.post(
@@ -1215,6 +1234,7 @@ async def admin_orchestrator_get_config():
     return {
         "pipeline_mode": _orchestrator_mode["pipeline_mode"],
         "actual_pipeline_mode": actual_mode,
+        "active_runtime": _compute_active_runtime(actual_mode),
         "env_flags": env_flags,
         "agents_enabled": agents_enabled,
         "pipeline_version": getattr(orchestrator, "pipeline_version", "multiagent_v1"),
@@ -1272,6 +1292,7 @@ async def admin_overview():
         recent_traces = list(_agent_traces)[-5:][::-1]
     return {
         "pipeline_mode": pipeline_mode,
+        "active_runtime": _compute_active_runtime(pipeline_mode),
         "feature_flags": env_flags,
         "agents": [
             {

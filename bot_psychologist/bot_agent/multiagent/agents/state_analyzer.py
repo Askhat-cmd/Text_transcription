@@ -394,6 +394,7 @@ class StateAnalyzerAgent:
             "tokens_completion": None,
             "tokens_total": None,
             "raw_response": "",
+            "parse_error": None,
             "error": None,
         }
         try:
@@ -429,10 +430,22 @@ class StateAnalyzerAgent:
                     "tokens_completion": result.tokens_completion,
                     "tokens_total": result.tokens_total,
                     "raw_response": raw,
+                    "parse_error": None,
                     "error": None,
                 }
             )
-            parsed = self._parse_json(raw)
+            try:
+                parsed = self._parse_json(raw)
+            except json.JSONDecodeError as exc:
+                raw_preview = raw.replace("\n", "\\n")[:500]
+                logger.warning(
+                    "[STATE_ANALYZER] json decode failed: %s | raw_response_preview=%s",
+                    exc,
+                    raw_preview,
+                )
+                self.last_debug["parse_error"] = str(exc)
+                self.last_debug["error"] = f"JSONDecodeError: {exc}"
+                return self._fallback_from_deterministic(deterministic, confidence=0.55)
             nervous_state = (
                 deterministic.nervous_state
                 if deterministic.nervous_conf >= 0.8
@@ -543,8 +556,16 @@ class StateAnalyzerAgent:
         cleaned = text.strip()
         if cleaned.startswith("```"):
             cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned, flags=re.IGNORECASE).strip()
-            cleaned = re.sub(r"\s*```$", "", cleaned).strip()
-        return json.loads(cleaned)
+            cleaned = re.sub(r"\s*```$", "", cleaned, flags=re.IGNORECASE).strip()
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError:
+            start = cleaned.find("{")
+            end = cleaned.rfind("}")
+            if start == -1 or end == -1 or end <= start:
+                raise
+            candidate = cleaned[start : end + 1].strip()
+            return json.loads(candidate)
 
     @staticmethod
     def _build_previous_context(previous_thread: Optional[ThreadState]) -> str:

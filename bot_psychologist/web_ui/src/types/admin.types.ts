@@ -141,12 +141,14 @@ export interface AgentStatus {
 
 export interface AgentsStatusResponse {
   pipeline_version: string;
+  active_runtime?: 'multiagent' | 'legacy_adaptive';
   agents: AgentStatus[];
 }
 
 export interface OrchestratorConfig {
   pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
   actual_pipeline_mode?: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+  active_runtime?: 'multiagent' | 'legacy_adaptive';
   env_flags?: Record<string, string>;
   agents_enabled: Record<AgentId, boolean>;
   pipeline_version: string;
@@ -241,6 +243,7 @@ export interface RecentTrace {
 
 export interface OverviewData {
   pipeline_mode: PipelineMode;
+  active_runtime?: 'multiagent' | 'legacy_adaptive';
   feature_flags: Record<string, string>;
   agents: AgentOverviewStatus[];
   recent_traces: RecentTrace[];

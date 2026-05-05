@@ -155,7 +155,9 @@ export const AdminPanel: React.FC = () => {
     : null;
 
   const currentPipelineMode =
-    orchestratorConfig?.actual_pipeline_mode ?? orchestratorConfig?.pipeline_mode ?? 'legacy_adaptive';
+    orchestratorConfig?.active_runtime === 'multiagent'
+      ? 'full_multiagent'
+      : orchestratorConfig?.actual_pipeline_mode ?? orchestratorConfig?.pipeline_mode ?? 'legacy_adaptive';
   const pipelineBadgeClass =
     currentPipelineMode === 'full_multiagent'
       ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'

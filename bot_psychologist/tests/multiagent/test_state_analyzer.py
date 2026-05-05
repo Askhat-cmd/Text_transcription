@@ -193,3 +193,36 @@ def test_model_from_agent_llm_config_dynamic() -> None:
         assert agent._resolve_model() == "gpt-5-mini"
     finally:
         reset_model_for_agent("state_analyzer")
+
+
+def test_parse_json_accepts_pure_json() -> None:
+    parsed = StateAnalyzerAgent._parse_json('{"nervous_state":"window","intent":"contact"}')
+    assert parsed["nervous_state"] == "window"
+    assert parsed["intent"] == "contact"
+
+
+def test_parse_json_accepts_markdown_fenced_json() -> None:
+    raw = """```json
+{"nervous_state":"hyper","intent":"vent"}
+```"""
+    parsed = StateAnalyzerAgent._parse_json(raw)
+    assert parsed["nervous_state"] == "hyper"
+    assert parsed["intent"] == "vent"
+
+
+def test_parse_json_extracts_embedded_json() -> None:
+    raw = 'before {"nervous_state":"window","intent":"explore"} after'
+    parsed = StateAnalyzerAgent._parse_json(raw)
+    assert parsed["nervous_state"] == "window"
+    assert parsed["intent"] == "explore"
+
+
+@pytest.mark.asyncio
+async def test_invalid_json_saved_to_last_debug_parse_error() -> None:
+    client = _FakeClient("{bad json", should_fail=False)
+    agent = StateAnalyzerAgent(client=client, model="gpt-5-nano")
+    snapshot = await agent.analyze("неоднозначный вопрос")
+    assert snapshot.safety_flag is False
+    assert agent.last_debug.get("raw_response") == "{bad json"
+    assert agent.last_debug.get("parse_error")
+    assert "JSONDecodeError" in str(agent.last_debug.get("error"))

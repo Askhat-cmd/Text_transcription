@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter
 
-from bot_agent import answer_question_adaptive as _default_answer_question_adaptive
 from bot_agent.config import config
+from bot_agent.multiagent.runtime_adapter import (
+    run_multiagent_adaptive_sync as _default_run_multiagent_adaptive_sync,
+)
 
 from . import chat as _chat
 from . import common as _common
@@ -21,7 +23,8 @@ from .telegram_mock_routes import router as telegram_mock_router
 from .users import router as users_router
 
 # Совместимый экспорт для monkeypatch(routes.answer_question_adaptive)
-answer_question_adaptive = _default_answer_question_adaptive
+run_multiagent_adaptive_sync = _default_run_multiagent_adaptive_sync
+answer_question_adaptive = run_multiagent_adaptive_sync
 stream_answer_tokens = _chat.stream_answer_tokens
 
 # Совместимые статистические маркеры для старых тест-контрактов.
@@ -63,6 +66,7 @@ __all__ = [
     "router",
     "ask_adaptive_question",
     "ask_adaptive_question_stream",
+    "run_multiagent_adaptive_sync",
     "answer_question_adaptive",
     "stream_answer_tokens",
     "config",

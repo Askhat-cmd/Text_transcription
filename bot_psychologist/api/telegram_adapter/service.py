@@ -6,7 +6,7 @@ import inspect
 import logging
 from typing import Any, Awaitable, Callable, Protocol
 
-from bot_agent.answer_adaptive import answer_question_adaptive
+from bot_agent.multiagent.runtime_adapter import run_multiagent_adaptive_sync
 
 from api.conversations import ConversationService
 from api.identity import IdentityService
@@ -38,8 +38,8 @@ async def _default_chat_executor(
     conversation_id: str,
 ) -> str | dict[str, Any]:
     _ = (session_id, conversation_id)
-    return answer_question_adaptive(
-        query,
+    return run_multiagent_adaptive_sync(
+        query=query,
         user_id=user_id,
         include_path_recommendation=False,
         include_feedback_prompt=False,

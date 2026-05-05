@@ -7,10 +7,10 @@ from typing import Any, Dict, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
 
-from bot_agent import answer_question_adaptive
 from bot_agent.config import config
 from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.llm_streaming import stream_answer_tokens
+from bot_agent.multiagent.runtime_adapter import run_multiagent_adaptive_sync
 from bot_agent.storage import SessionManager
 
 from ..auth import is_dev_key, verify_api_key
@@ -41,7 +41,7 @@ from .common import (
     _build_answer_response_from_adaptive,
     _normalize_semantic_hits_detail_for_debug_trace,
     _record_user,
-    _run_neo_compat_answer,
+    _run_multiagent_compat_answer,
     _strip_legacy_runtime_metadata,
     _strip_legacy_trace_fields,
     _to_chunk_trace_item,
@@ -52,17 +52,22 @@ from .common import (
 router = APIRouter(prefix="/api/v1", tags=["bot"])
 
 
-def _resolve_answer_question_adaptive():
+def _resolve_multiagent_runtime():
     """Возвращает answer-функцию с учетом monkeypatch в api.routes."""
     try:
         from api import routes as routes_pkg  # runtime import для избежания циклов
 
-        candidate = getattr(routes_pkg, "answer_question_adaptive", None)
+        legacy_candidate = getattr(routes_pkg, "answer_question_adaptive", None)
+        candidate = getattr(routes_pkg, "run_multiagent_adaptive_sync", None)
+        if callable(legacy_candidate) and legacy_candidate is not candidate:
+            return legacy_candidate
         if callable(candidate):
             return candidate
+        if callable(legacy_candidate):
+            return legacy_candidate
     except Exception:
         pass
-    return answer_question_adaptive
+    return run_multiagent_adaptive_sync
 
 
 def _resolve_stream_answer_tokens():
@@ -217,7 +222,7 @@ async def ask_basic_question(
         normalized_request = request.model_copy(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
-        result = _run_neo_compat_answer(request=normalized_request)
+        result = _run_multiagent_compat_answer(request=normalized_request)
         await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
@@ -252,7 +257,7 @@ async def ask_basic_question_with_semantic(
         normalized_request = request.model_copy(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
-        result = _run_neo_compat_answer(request=normalized_request)
+        result = _run_multiagent_compat_answer(request=normalized_request)
         await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
@@ -294,7 +299,7 @@ async def ask_graph_powered_question(
         normalized_request = request.model_copy(
             update={"user_id": identity.user_id, "session_id": identity.session_id},
         )
-        result = _run_neo_compat_answer(request=normalized_request, session_store=store)
+        result = _run_multiagent_compat_answer(request=normalized_request, session_store=store)
         await conv_service.touch_conversation(identity.conversation_id)
         _record_user(identity.user_id)
         _stats["total_questions"] += 1
@@ -370,8 +375,8 @@ async def ask_adaptive_question(
             except Exception as exc:
                 logger.warning(f" Failed to pre-create session {session_key}: {exc}")
 
-        result = _resolve_answer_question_adaptive()(
-            request.query,
+        result = _resolve_multiagent_runtime()(
+            query=request.query,
             user_id=runtime_user_scope,
             include_path_recommendation=request.include_path,
             include_feedback_prompt=request.include_feedback_prompt,
@@ -752,7 +757,7 @@ async def ask_adaptive_question_stream(
                 include_feedback_prompt=request.include_feedback_prompt,
                 debug=request.debug,
                 on_complete=_on_complete,
-                answer_fn=_resolve_answer_question_adaptive(),
+                answer_fn=_resolve_multiagent_runtime(),
             ):
                 yield f"data: {json.dumps({'token': token}, ensure_ascii=False)}\n\n"
 

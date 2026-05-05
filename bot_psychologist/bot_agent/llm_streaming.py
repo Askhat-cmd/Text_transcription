@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import inspect
 import logging
 from typing import Any, AsyncIterator, Callable, Optional
 
@@ -35,17 +36,28 @@ async def stream_answer_tokens(
     loop = asyncio.get_running_loop()
     runtime_fn = answer_fn or _default_answer_fn()
 
+    runtime_kwargs = {
+        "query": query,
+        "user_id": user_id,
+        "include_path_recommendation": include_path,
+        "include_feedback_prompt": include_feedback_prompt,
+        "debug": debug,
+        "session_store": session_store,
+    }
+    try:
+        fn_signature = inspect.signature(runtime_fn)
+        accepts_var_kwargs = any(
+            parameter.kind == inspect.Parameter.VAR_KEYWORD
+            for parameter in fn_signature.parameters.values()
+        )
+        if accepts_var_kwargs or "schedule_summary_task" in fn_signature.parameters:
+            runtime_kwargs["schedule_summary_task"] = False
+    except (TypeError, ValueError):
+        runtime_kwargs["schedule_summary_task"] = False
+
     result: dict = await loop.run_in_executor(
         None,
-        lambda: runtime_fn(
-            query,
-            user_id=user_id,
-            include_path_recommendation=include_path,
-            include_feedback_prompt=include_feedback_prompt,
-            debug=debug,
-            session_store=session_store,
-            schedule_summary_task=False,
-        ),
+        lambda: runtime_fn(**runtime_kwargs),
     )
 
     if on_complete:

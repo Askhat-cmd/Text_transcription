@@ -9,7 +9,7 @@ from typing import Any, Dict, Optional
 # Добавляем путь к bot_agent
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from bot_agent import answer_question_adaptive
+from bot_agent.multiagent.runtime_adapter import run_multiagent_adaptive_sync
 
 from ..models import (
     AskQuestionRequest,
@@ -296,20 +296,24 @@ def _build_answer_response_from_adaptive(result: dict) -> AnswerResponse:
         processing_time_seconds=result.get("processing_time_seconds", 0),
     )
 
-def _run_neo_compat_answer(
+def _run_multiagent_compat_answer(
     *,
     request: AskQuestionRequest,
     session_store: SessionStore | None = None,
 ) -> dict:
     session_key = request.session_id or request.user_id
-    return answer_question_adaptive(
-        request.query,
+    return run_multiagent_adaptive_sync(
+        query=request.query,
         user_id=session_key,
         include_path_recommendation=False,
         include_feedback_prompt=False,
         debug=request.debug,
         session_store=session_store,
     )
+
+
+# Backward-compatible alias for existing imports/tests.
+_run_neo_compat_answer = _run_multiagent_compat_answer
 
 def _session_title(item: dict) -> str:
     metadata = item.get("metadata") or {}

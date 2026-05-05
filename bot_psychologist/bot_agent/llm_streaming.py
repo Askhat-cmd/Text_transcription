@@ -11,9 +11,9 @@ logger = logging.getLogger(__name__)
 
 
 def _default_answer_fn() -> Callable[..., dict]:
-    from .answer_adaptive import answer_question_adaptive
+    from .multiagent.runtime_adapter import run_multiagent_adaptive_sync
 
-    return answer_question_adaptive
+    return run_multiagent_adaptive_sync
 
 
 async def stream_answer_tokens(

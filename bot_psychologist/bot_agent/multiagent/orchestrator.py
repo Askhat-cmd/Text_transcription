@@ -285,6 +285,10 @@ class MultiAgentOrchestrator:
                 "state_analyzer_model": state_debug.get("model"),
                 "state_analyzer_api_mode": state_debug.get("api_mode"),
                 "state_analyzer_error": state_debug.get("error"),
+                "state_analyzer_parse_error": state_debug.get("parse_error"),
+                "state_analyzer_fallback_used": bool(
+                    state_debug.get("error") or state_debug.get("parse_error")
+                ),
                 "validator_blocked": validation_result.is_blocked,
                 "validator_block_reason": validation_result.block_reason,
                 "validator_quality_flags": validation_result.quality_flags,

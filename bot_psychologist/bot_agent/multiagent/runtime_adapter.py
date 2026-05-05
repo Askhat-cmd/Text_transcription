@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 import threading
 import time
 from typing import Any, Dict
 
 from .orchestrator import orchestrator
+
+logger = logging.getLogger(__name__)
 
 
 def _run_orchestrator_from_sync(*, query: str, user_id: str) -> Dict[str, Any]:
@@ -57,6 +60,9 @@ def normalize_multiagent_result(
     debug_payload = dict(debug_payload)
     debug_payload.setdefault("multiagent_enabled", True)
     debug_payload.setdefault("pipeline_version", "multiagent_v1")
+    debug_payload["runtime_entrypoint"] = "multiagent_adapter"
+    debug_payload["legacy_fallback_used"] = False
+    debug_payload["direct_multiagent_cutover"] = True
 
     confidence_raw = debug_payload.get("confidence")
     try:
@@ -82,6 +88,8 @@ def normalize_multiagent_result(
         "conversation_context": str(debug_payload.get("conversation_context", "") or ""),
         "metadata": {
             "runtime": "multiagent",
+            "runtime_entrypoint": "multiagent_adapter",
+            "legacy_fallback_used": False,
             "pipeline_version": str(debug_payload.get("pipeline_version", "multiagent_v1")),
             "thread_id": result.get("thread_id"),
             "phase": result.get("phase"),
@@ -118,7 +126,7 @@ async def run_multiagent_adaptive_async(
     _ = (session_store, include_path_recommendation)
     started_at = time.perf_counter()
     raw_result = await orchestrator.run(query=query, user_id=user_id)
-    return normalize_multiagent_result(
+    normalized = normalize_multiagent_result(
         result=raw_result,
         query=query,
         user_id=user_id,
@@ -126,6 +134,14 @@ async def run_multiagent_adaptive_async(
         started_at=started_at,
         include_feedback_prompt=include_feedback_prompt,
     )
+    logger.info(
+        "[MULTIAGENT_ADAPTER] served query user_id=%s model=%s writer_api_mode=%s state_api_mode=%s",
+        user_id,
+        normalized.get("metadata", {}).get("model_used"),
+        normalized.get("metadata", {}).get("writer_api_mode"),
+        normalized.get("metadata", {}).get("state_analyzer_api_mode"),
+    )
+    return normalized
 
 
 def run_multiagent_adaptive_sync(
@@ -140,7 +156,7 @@ def run_multiagent_adaptive_sync(
     _ = (session_store, include_path_recommendation)
     started_at = time.perf_counter()
     raw_result = _run_orchestrator_from_sync(query=query, user_id=user_id)
-    return normalize_multiagent_result(
+    normalized = normalize_multiagent_result(
         result=raw_result,
         query=query,
         user_id=user_id,
@@ -148,3 +164,11 @@ def run_multiagent_adaptive_sync(
         started_at=started_at,
         include_feedback_prompt=include_feedback_prompt,
     )
+    logger.info(
+        "[MULTIAGENT_ADAPTER] served query user_id=%s model=%s writer_api_mode=%s state_api_mode=%s",
+        user_id,
+        normalized.get("metadata", {}).get("model_used"),
+        normalized.get("metadata", {}).get("writer_api_mode"),
+        normalized.get("metadata", {}).get("state_analyzer_api_mode"),
+    )
+    return normalized

@@ -57,14 +57,9 @@ def _resolve_multiagent_runtime():
     try:
         from api import routes as routes_pkg  # runtime import для избежания циклов
 
-        legacy_candidate = getattr(routes_pkg, "answer_question_adaptive", None)
         candidate = getattr(routes_pkg, "run_multiagent_adaptive_sync", None)
-        if callable(legacy_candidate) and legacy_candidate is not candidate:
-            return legacy_candidate
         if callable(candidate):
             return candidate
-        if callable(legacy_candidate):
-            return legacy_candidate
     except Exception:
         pass
     return run_multiagent_adaptive_sync
@@ -594,6 +589,11 @@ async def ask_adaptive_question(
                     "pipeline_error",
                     "turn_number",
                     "user_state",
+                    "runtime_entrypoint",
+                    "legacy_fallback_used",
+                    "direct_multiagent_cutover",
+                    "state_analyzer_fallback_used",
+                    "state_analyzer_parse_error",
                     "recommended_mode",
                     "confidence_score",
                     "confidence_level",

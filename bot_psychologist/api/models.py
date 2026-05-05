@@ -288,6 +288,11 @@ class DebugTrace(BaseModel):
     session_id: Optional[str] = None
     turn_number: Optional[int] = None
     user_state: Optional[str] = None
+    runtime_entrypoint: Optional[str] = None
+    legacy_fallback_used: Optional[bool] = None
+    direct_multiagent_cutover: Optional[bool] = None
+    state_analyzer_fallback_used: Optional[bool] = None
+    state_analyzer_parse_error: Optional[str] = None
     recommended_mode: Optional[str] = None
     confidence_score: Optional[float] = None
     confidence_level: Optional[str] = None

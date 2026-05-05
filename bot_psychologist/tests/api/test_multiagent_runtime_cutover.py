@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -32,6 +32,8 @@ def _stub_multiagent_runtime(*, query: str, user_id: str, **_kwargs: Any) -> dic
         "conversation_context": "stub-context",
         "metadata": {
             "runtime": "multiagent",
+            "runtime_entrypoint": "multiagent_adapter",
+            "legacy_fallback_used": False,
             "pipeline_version": "multiagent_v1",
             "recommended_mode": "reflect",
             "runtime_user_scope": user_id,
@@ -39,6 +41,10 @@ def _stub_multiagent_runtime(*, query: str, user_id: str, **_kwargs: Any) -> dic
         "debug": {
             "multiagent_enabled": True,
             "pipeline_version": "multiagent_v1",
+            "runtime_entrypoint": "multiagent_adapter",
+            "legacy_fallback_used": False,
+            "direct_multiagent_cutover": True,
+            "state_analyzer_fallback_used": False,
             "nervous_state": "calm",
             "confidence": 0.91,
             "conversation_context": "stub-context",
@@ -97,13 +103,18 @@ def test_adaptive_endpoint_does_not_call_legacy_answer_adaptive(
     response = client.post(
         "/api/v1/questions/adaptive",
         headers={"X-API-Key": "test-key-001"},
-        json={"query": "тестовый запрос"},
+        json={"query": "test query", "debug": True},
     )
 
     assert response.status_code == 200
     payload = response.json()
     assert payload["answer"].startswith("multiagent:")
     assert payload["metadata"]["runtime"] == "multiagent"
+    assert payload["metadata"]["runtime_entrypoint"] == "multiagent_adapter"
+    assert payload["metadata"]["legacy_fallback_used"] is False
+    assert payload["trace"]["direct_multiagent_cutover"] is True
+    assert payload["trace"]["legacy_fallback_used"] is False
+    assert payload["trace"]["state_analyzer_fallback_used"] is False
 
 
 @pytest.mark.parametrize(
@@ -127,7 +138,7 @@ def test_compat_endpoints_use_multiagent_runtime_and_not_legacy(
     response = client.post(
         endpoint,
         headers={"X-API-Key": "test-key-001"},
-        json={"query": "совместимый endpoint"},
+        json={"query": "compat endpoint"},
     )
     assert response.status_code == 200
     payload = response.json()
@@ -148,7 +159,7 @@ def test_streaming_endpoint_does_not_call_legacy_answer_adaptive(
     response = client.post(
         "/api/v1/questions/adaptive-stream",
         headers={"X-API-Key": "test-key-001"},
-        json={"query": "проверка streaming"},
+        json={"query": "stream check"},
     )
     assert response.status_code == 200
 

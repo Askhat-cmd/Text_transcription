@@ -149,3 +149,28 @@ async def test_stream_answer_tokens_uses_1ms_sleep_between_tokens(monkeypatch: p
     ]
 
     assert sleep_calls == [0.001, 0.001, 0.001]
+
+
+@pytest.mark.asyncio
+async def test_stream_default_answer_fn_uses_multiagent_not_legacy(monkeypatch: pytest.MonkeyPatch) -> None:
+    import bot_agent.answer_adaptive as legacy_adaptive
+    from bot_agent.multiagent import runtime_adapter
+
+    def _boom(*_args, **_kwargs):
+        raise AssertionError("legacy answer_adaptive must not be called")
+
+    def _fake_multiagent_adapter(**_kwargs):
+        return {"answer": "from multiagent adapter"}
+
+    monkeypatch.setattr(legacy_adaptive, "answer_question_adaptive", _boom, raising=True)
+    monkeypatch.setattr(runtime_adapter, "run_multiagent_adaptive_sync", _fake_multiagent_adapter, raising=True)
+
+    tokens = [
+        token
+        async for token in stream_answer_tokens(
+            "q",
+            user_id="u-default",
+        )
+    ]
+
+    assert "".join(tokens) == "from multiagent adapter"

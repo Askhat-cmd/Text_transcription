@@ -42,7 +42,7 @@ def client(tmp_path: Path, monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(deps, "_identity_service", None, raising=False)
     monkeypatch.setattr(deps, "_conversation_repository", None, raising=False)
     monkeypatch.setattr(deps, "_conversation_service", None, raising=False)
-    monkeypatch.setattr(routes, "answer_question_adaptive", _stub_adaptive_result, raising=True)
+    monkeypatch.setattr(routes, "run_multiagent_adaptive_sync", _stub_adaptive_result, raising=True)
     with TestClient(app, base_url="http://localhost") as test_client:
         yield test_client
 
@@ -163,7 +163,7 @@ def test_adaptive_uses_request_session_id_as_runtime_scope(
         captured["user_id"] = kwargs.get("user_id")
         return _stub_adaptive_result()
 
-    monkeypatch.setattr(routes, "answer_question_adaptive", _capture_stub, raising=True)
+    monkeypatch.setattr(routes, "run_multiagent_adaptive_sync", _capture_stub, raising=True)
     headers = {
         "X-API-Key": "test-key-001",
         "X-Session-Id": "identity-session-1",

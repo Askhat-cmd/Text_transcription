@@ -1,145 +1,204 @@
 {
-  "schema_version": "10.4-phase0",
-  "ui_surface": {
-    "primary_tabs": [
-      {
-        "key": "llm",
-        "label": "🤖 LLM",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'llm'", "label: '🤖 LLM'"]
-      },
-      {
-        "key": "retrieval",
-        "label": "🔍 Поиск",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'retrieval'", "label: '🔍 Поиск'"]
-      },
-      {
-        "key": "routing",
-        "label": "🧭 Маршрутизация",
-        "status": "misleading",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'routing'", "label: '🧭 Маршрутизация'"]
-      },
-      {
-        "key": "memory",
-        "label": "🧠 Память",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'memory'", "label: '🧠 Память'"]
-      },
-      {
-        "key": "storage",
-        "label": "🗄️ Хранилище",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'storage'", "label: '🗄️ Хранилище'"]
-      },
-      {
-        "key": "runtime",
-        "label": "⚙️ Runtime",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'runtime'", "label: '⚙️ Runtime'"]
-      },
-      {
-        "key": "prompts",
-        "label": "📝 Промты",
-        "status": "misleading",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'prompts'", "label: '📝 Промты'"]
-      },
-      {
-        "key": "history",
-        "label": "🕐 История",
-        "status": "active",
-        "file": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-        "markers": ["key: 'history'", "label: '🕐 История'"]
-      }
-    ],
-    "legacy_primary_controls": [
-      {
-        "name": "sd_classifier_controls",
-        "classification": "misleading",
-        "file": "bot_psychologist/bot_agent/runtime_config.py",
-        "markers": ["\"SD_CLASSIFIER_ENABLED\"", "\"SD_CLASSIFIER_CONFIDENCE_THRESHOLD\""]
-      },
-      {
-        "name": "old_decision_gate_controls",
-        "classification": "misleading",
-        "file": "bot_psychologist/bot_agent/runtime_config.py",
-        "markers": ["\"DECISION_GATE_RULE_THRESHOLD\"", "\"DECISION_GATE_LLM_ROUTER_ENABLED\""]
-      },
-      {
-        "name": "path_prompt_priority_legacy",
-        "classification": "misleading",
-        "file": "bot_psychologist/bot_agent/runtime_config.py",
-        "markers": ["\"PROMPT_SD_OVERRIDES_BASE\"", "\"PROMPT_MODE_OVERRIDES_SD\""]
-      },
-      {
-        "name": "user_level_prompt_groups",
-        "classification": "deprecated_visible",
-        "file": "bot_psychologist/bot_agent/runtime_config.py",
-        "markers": [
-          "\"prompt_system_level_beginner\"",
-          "\"prompt_system_level_intermediate\"",
-          "\"prompt_system_level_advanced\""
-        ]
-      },
-      {
-        "name": "mode_informational_curious_artifact",
-        "classification": "deprecated_visible",
-        "file": "bot_psychologist/bot_agent/runtime_config.py",
-        "markers": ["\"prompt_mode_informational\"", "\"Mode: Informational (curious)\""]
-      }
-    ],
-    "broken_flows": [
-      {
-        "name": "prompt_fetch_error_non_actionable",
-        "classification": "broken",
-        "files": [
-          {
-            "path": "bot_psychologist/web_ui/src/hooks/useAdminConfig.ts",
-            "markers": [
-              "setError((e as Error).message)",
-              "loadPromptDetail = useCallback(async (name: string) => {",
-              "adminConfigService.getPrompt(name)"
-            ]
-          },
-          {
-            "path": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
-            "markers": ["⚠ {error}"]
-          }
-        ],
-        "missing_markers": ["Повторить", "retry"]
-      }
-    ]
-  },
-  "admin_api_baseline": {
-    "schema_status": "legacy_unversioned_groups_payload",
-    "endpoints": [
-      {
-        "name": "admin_config",
-        "file": "bot_psychologist/api/admin_routes.py",
-        "markers": ["@admin_router.get(", "\"/config\"", "return config.get_all_config()"]
-      },
-      {
-        "name": "admin_prompts",
-        "file": "bot_psychologist/api/admin_routes.py",
-        "markers": ["@admin_router.get(", "\"/prompts\"", "return config.get_all_prompts()"]
-      },
-      {
-        "name": "admin_prompt_detail",
-        "file": "bot_psychologist/api/admin_routes.py",
-        "markers": ["\"/prompts/{name}\"", "data[\"content\"] = data.get(\"text\", \"\")"]
-      },
-      {
-        "name": "admin_status",
-        "file": "bot_psychologist/api/admin_routes.py",
-        "markers": ["\"/status\"", "\"version\": \"0.7.0\""]
-      }
-    ]
-  }
+    "schema_version":  "10.4-phase0",
+    "ui_surface":  {
+                       "primary_tabs":  [
+                                            {
+                                                "key":  "llm",
+                                                "label":  "🤖 LLM",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027llm\u0027",
+                                                                "label: \u0027🤖 LLM\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "retrieval",
+                                                "label":  "🔍 Поиск",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027retrieval\u0027",
+                                                                "label: \u0027🔍 Поиск\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "routing",
+                                                "label":  "🧭 Маршрутизация",
+                                                "status":  "misleading",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027routing\u0027",
+                                                                "label: \u0027🧭 Маршрутизация\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "memory",
+                                                "label":  "🧠 Память",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027memory\u0027",
+                                                                "label: \u0027🧠 Память\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "storage",
+                                                "label":  "🗄️ Хранилище",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027storage\u0027",
+                                                                "label: \u0027🗄️ Хранилище\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "runtime",
+                                                "label":  "⚙️ Runtime",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027runtime\u0027",
+                                                                "label: \u0027⚙️ Runtime\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "prompts",
+                                                "label":  "📝 Промты",
+                                                "status":  "misleading",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027prompts\u0027",
+                                                                "label: \u0027📝 Промты\u0027"
+                                                            ]
+                                            },
+                                            {
+                                                "key":  "history",
+                                                "label":  "🕐 История",
+                                                "status":  "active",
+                                                "file":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                "markers":  [
+                                                                "key: \u0027history\u0027",
+                                                                "label: \u0027🕐 История\u0027"
+                                                            ]
+                                            }
+                                        ],
+                       "legacy_primary_controls":  [
+                                                       {
+                                                           "name":  "sd_classifier_controls",
+                                                           "classification":  "misleading",
+                                                           "file":  "bot_psychologist/bot_agent/runtime_config.py",
+                                                           "markers":  [
+                                                                           "\"SD_CLASSIFIER_ENABLED\"",
+                                                                           "\"SD_CLASSIFIER_CONFIDENCE_THRESHOLD\""
+                                                                       ]
+                                                       },
+                                                       {
+                                                           "name":  "old_decision_gate_controls",
+                                                           "classification":  "misleading",
+                                                           "file":  "bot_psychologist/bot_agent/runtime_config.py",
+                                                           "markers":  [
+                                                                           "\"DECISION_GATE_RULE_THRESHOLD\"",
+                                                                           "\"DECISION_GATE_LLM_ROUTER_ENABLED\""
+                                                                       ]
+                                                       },
+                                                       {
+                                                           "name":  "path_prompt_priority_legacy",
+                                                           "classification":  "misleading",
+                                                           "file":  "bot_psychologist/bot_agent/runtime_config.py",
+                                                           "markers":  [
+                                                                           "\"PROMPT_SD_OVERRIDES_BASE\"",
+                                                                           "\"PROMPT_MODE_OVERRIDES_SD\""
+                                                                       ]
+                                                       },
+                                                       {
+                                                           "name":  "user_level_prompt_groups",
+                                                           "classification":  "deprecated_visible",
+                                                           "file":  "bot_psychologist/bot_agent/runtime_config.py",
+                                                           "markers":  [
+                                                                           "\"prompt_system_level_beginner\"",
+                                                                           "\"prompt_system_level_intermediate\"",
+                                                                           "\"prompt_system_level_advanced\""
+                                                                       ]
+                                                       },
+                                                       {
+                                                           "name":  "mode_informational_curious_artifact",
+                                                           "classification":  "deprecated_visible",
+                                                           "file":  "bot_psychologist/bot_agent/runtime_config.py",
+                                                           "markers":  [
+                                                                           "\"prompt_mode_informational\"",
+                                                                           "\"Mode: Informational (curious)\""
+                                                                       ]
+                                                       }
+                                                   ],
+                       "broken_flows":  [
+                                            {
+                                                "name":  "prompt_fetch_error_non_actionable",
+                                                "classification":  "broken",
+                                                "files":  [
+                                                              {
+                                                                  "path":  "bot_psychologist/web_ui/src/hooks/useAdminConfig.ts",
+                                                                  "markers":  [
+                                                                                  "setError((e as Error).message)",
+                                                                                  "loadPromptDetail = useCallback(async (name: string) =\u003e {",
+                                                                                  "adminConfigService.getPrompt(name)"
+                                                                              ]
+                                                              },
+                                                              {
+                                                                  "path":  "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+                                                                  "markers":  [
+                                                                                  "⚠ {error}"
+                                                                              ]
+                                                              }
+                                                          ],
+                                                "missing_markers":  [
+                                                                        "Повторить",
+                                                                        "retry"
+                                                                    ]
+                                            }
+                                        ]
+                   },
+    "admin_api_baseline":  {
+                               "schema_status":  "legacy_unversioned_groups_payload",
+                               "endpoints":  [
+                                                 {
+                                                     "name":  "admin_config",
+                                                     "file":  "bot_psychologist/api/admin_routes.py",
+                                                     "markers":  [
+                                                                     "@admin_router.get(",
+                                                                     "\"/config\"",
+                                                                     "return config.get_all_config()"
+                                                                 ]
+                                                 },
+                                                 {
+                                                     "name":  "admin_prompts",
+                                                     "file":  "bot_psychologist/api/admin_routes.py",
+                                                     "markers":  [
+                                                                     "@admin_router.get(",
+                                                                     "\"/prompts\"",
+                                                                     "return config.get_all_prompts()"
+                                                                 ]
+                                                 },
+                                                 {
+                                                     "name":  "admin_prompt_detail",
+                                                     "file":  "bot_psychologist/api/admin_routes.py",
+                                                     "markers":  [
+                                                                     "\"/prompts/{name}\"",
+                                                                     "data[\"content\"] = data.get(\"text\", \"\")"
+                                                                 ]
+                                                 },
+                                                 {
+                                                     "name":  "admin_status",
+                                                     "file":  "bot_psychologist/api/admin_routes.py",
+                                                     "markers":  [
+                                                                     "\"/status\"",
+                                                                     "\"version\": \"0.7.0\""
+                                                                 ]
+                                                 }
+                                             ]
+                           },
+    "status":  "archived",
+    "archived_after_prd":  "PRD-037",
+    "superseded_by":  "admin_runtime_contract_tests",
+    "do_not_use_as_current_failure_contract":  true
 }

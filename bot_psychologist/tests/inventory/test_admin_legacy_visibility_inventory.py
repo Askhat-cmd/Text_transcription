@@ -13,7 +13,7 @@ def _read_text(path: Path) -> str:
 
 
 def _load_fixture() -> dict:
-    return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
+    return json.loads(FIXTURE_PATH.read_text(encoding="utf-8-sig"))
 
 
 def test_legacy_controls_inventory_shape() -> None:

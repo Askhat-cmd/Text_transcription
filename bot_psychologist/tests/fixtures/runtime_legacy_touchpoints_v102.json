@@ -1,5 +1,9 @@
 {
   "schema_version": "10.2-phase0",
+  "status": "archived",
+  "archived_after_prd": "PRD-037",
+  "superseded_by": "multiagent_runtime_invariants_v1",
+  "do_not_use_as_runtime_contract": true,
   "captured_for": "PRD_10.2 legacy runtime purge baseline",
   "entrypoints": [
     {

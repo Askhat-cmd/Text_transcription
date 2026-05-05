@@ -1,0 +1,78 @@
+{
+  "schema_version": "multiagent-runtime-invariants-v1",
+  "status": "active",
+  "runtime_contract": {
+    "active_runtime": "multiagent",
+    "runtime_entrypoint": "multiagent_adapter",
+    "legacy_fallback_enabled": false,
+    "legacy_fallback_used": false
+  },
+  "active_entrypoints": [
+    {
+      "name": "adaptive_api",
+      "file": "bot_psychologist/api/routes/chat.py",
+      "required_symbols": [
+        "run_multiagent_adaptive_sync",
+        "_resolve_multiagent_runtime"
+      ],
+      "forbidden_symbols": [
+        "_resolve_answer_question_adaptive"
+      ]
+    },
+    {
+      "name": "compat_api",
+      "file": "bot_psychologist/api/routes/common.py",
+      "required_symbols": [
+        "_run_multiagent_compat_answer",
+        "run_multiagent_adaptive_sync"
+      ],
+      "forbidden_symbols": [
+        "from bot_agent import answer_question_adaptive"
+      ]
+    },
+    {
+      "name": "streaming_default",
+      "file": "bot_psychologist/bot_agent/llm_streaming.py",
+      "required_symbols": [
+        "run_multiagent_adaptive_sync"
+      ],
+      "forbidden_symbols": [
+        "from .answer_adaptive import answer_question_adaptive"
+      ]
+    },
+    {
+      "name": "telegram_default_executor",
+      "file": "bot_psychologist/api/telegram_adapter/service.py",
+      "required_symbols": [
+        "run_multiagent_adaptive_sync"
+      ],
+      "forbidden_symbols": [
+        "from bot_agent.answer_adaptive import answer_question_adaptive"
+      ]
+    },
+    {
+      "name": "answer_adaptive_public_shim",
+      "file": "bot_psychologist/bot_agent/answer_adaptive.py",
+      "required_symbols": [
+        "def answer_question_adaptive",
+        "run_multiagent_adaptive_sync"
+      ],
+      "forbidden_in_public_function": [
+        "fallback to classic runtime",
+        "_runtime_prepare_adaptive_run_context"
+      ]
+    }
+  ],
+  "admin_contract": {
+    "endpoint": "/api/admin/runtime/effective",
+    "active_runtime": "multiagent",
+    "forbidden_active_modes": [
+      "legacy_adaptive",
+      "hybrid",
+      "classic",
+      "cascade"
+    ],
+    "legacy_fallback_enabled": false,
+    "legacy_fallback_used": false
+  }
+}

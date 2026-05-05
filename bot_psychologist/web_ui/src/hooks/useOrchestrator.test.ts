@@ -1,4 +1,4 @@
-import React, { act } from 'react';
+﻿import React, { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -40,8 +40,9 @@ describe('useOrchestrator', () => {
 
   it('loads orchestrator config', async () => {
     vi.spyOn(adminConfigService, 'getOrchestratorConfig').mockResolvedValue({
-      pipeline_mode: 'full_multiagent',
+      pipeline_mode: 'multiagent_only',
       pipeline_version: 'multiagent_v1',
+      active_runtime: 'multiagent',
       agents_enabled: {
         state_analyzer: true,
         thread_manager: true,
@@ -56,18 +57,20 @@ describe('useOrchestrator', () => {
       await hook.state.loadOrchestratorConfig();
     });
 
-    expect(hook.state.orchestratorConfig?.pipeline_mode).toBe('full_multiagent');
+    expect(hook.state.orchestratorConfig?.pipeline_mode).toBe('multiagent_only');
     hook.cleanup();
   });
 
-  it('updates pipeline mode', async () => {
+  it('updates pipeline mode using full_multiagent alias', async () => {
     vi.spyOn(adminConfigService, 'patchOrchestratorConfig').mockResolvedValue({
       status: 'ok',
-      pipeline_mode: 'hybrid',
+      pipeline_mode: 'multiagent_only',
+      pipeline_mode_alias_received: 'full_multiagent',
     });
     vi.spyOn(adminConfigService, 'getOrchestratorConfig').mockResolvedValue({
-      pipeline_mode: 'hybrid',
+      pipeline_mode: 'multiagent_only',
       pipeline_version: 'multiagent_v1',
+      active_runtime: 'multiagent',
       agents_enabled: {
         state_analyzer: true,
         thread_manager: true,
@@ -79,12 +82,11 @@ describe('useOrchestrator', () => {
 
     const hook = mountHook();
     await act(async () => {
-      await hook.state.setPipelineMode('hybrid');
+      await hook.state.setPipelineMode('full_multiagent');
     });
 
-    expect(hook.state.orchestratorConfig?.pipeline_mode).toBe('hybrid');
+    expect(hook.state.orchestratorConfig?.pipeline_mode).toBe('multiagent_only');
     expect(hook.state.successMessage).toContain('pipeline_mode');
     hook.cleanup();
   });
 });
-

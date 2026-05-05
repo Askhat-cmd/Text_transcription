@@ -113,8 +113,8 @@ export const adminConfigService = {
     request<OrchestratorConfig>('GET', '/orchestrator/config'),
   getOverview: () =>
     request<OverviewData>('GET', '/overview'),
-  patchOrchestratorConfig: (pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive') =>
-    request<{ status: string; pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive' }>(
+  patchOrchestratorConfig: (pipeline_mode: 'multiagent_only' | 'full_multiagent') =>
+    request<{ status: string; pipeline_mode: 'multiagent_only'; pipeline_mode_alias_received?: string }>(
       'PATCH',
       '/orchestrator/config',
       { pipeline_mode }

@@ -28,7 +28,11 @@ def test_agents_status_returns_5_agents(admin_client):
     assert resp.status_code == 200
     data = resp.json()
     assert len(data["agents"]) == 5
-    assert data["active_runtime"] in {"multiagent", "legacy_adaptive"}
+    assert data["active_runtime"] == "multiagent"
+    assert data["runtime_entrypoint"] in {"multiagent_adapter", "answer_adaptive_deprecated_shim"}
+    assert data["pipeline_mode"] == "multiagent_only"
+    assert data["pipeline_mode_read_only"] is True
+    assert data["legacy"]["fallback_enabled"] is False
     assert {item["id"] for item in data["agents"]} == {
         "state_analyzer", "thread_manager", "memory_retrieval", "writer", "validator"
     }
@@ -65,23 +69,26 @@ def test_orchestrator_get(admin_client):
     resp = admin_client.get("/api/admin/orchestrator/config", headers=ADMIN_HEADERS)
     assert resp.status_code == 200
     payload = resp.json()
-    assert payload["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
-    assert payload["actual_pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
-    assert payload["active_runtime"] in {"multiagent", "legacy_adaptive"}
+    assert payload["pipeline_mode"] == "multiagent_only"
+    assert payload["actual_pipeline_mode"] == "multiagent_only"
+    assert payload["active_runtime"] == "multiagent"
+    assert payload["runtime_entrypoint"] in {"multiagent_adapter", "answer_adaptive_deprecated_shim"}
+    assert payload["legacy"]["cascade_status"] == "deprecated_retained_for_purge"
+    assert payload["compatibility"]["pipeline_mode_read_only"] is True
     assert isinstance(payload["env_flags"], dict)
 
 
-def test_orchestrator_get_truthy_env_flags(admin_client, monkeypatch):
-    monkeypatch.setenv("MULTIAGENT_ENABLED", "true")
-    monkeypatch.setenv("LEGACY_PIPELINE_ENABLED", "0")
+def test_orchestrator_get_truthy_env_flags_do_not_enable_legacy(admin_client, monkeypatch):
+    monkeypatch.setenv("MULTIAGENT_ENABLED", "false")
+    monkeypatch.setenv("LEGACY_PIPELINE_ENABLED", "true")
     resp = admin_client.get("/api/admin/orchestrator/config", headers=ADMIN_HEADERS)
     assert resp.status_code == 200
     payload = resp.json()
-    assert payload["actual_pipeline_mode"] == "full_multiagent"
+    assert payload["actual_pipeline_mode"] == "multiagent_only"
     assert payload["active_runtime"] == "multiagent"
 
 
-@pytest.mark.parametrize("mode", ["full_multiagent", "hybrid", "legacy_adaptive"])
+@pytest.mark.parametrize("mode", ["multiagent_only", "full_multiagent"])
 def test_orchestrator_patch_valid(admin_client, mode: str):
     resp = admin_client.patch(
         "/api/admin/orchestrator/config",
@@ -89,7 +96,20 @@ def test_orchestrator_patch_valid(admin_client, mode: str):
         headers=ADMIN_HEADERS,
     )
     assert resp.status_code == 200
-    assert resp.json()["pipeline_mode"] == mode
+    body = resp.json()
+    assert body["pipeline_mode"] == "multiagent_only"
+    assert body["pipeline_mode_read_only"] is True
+
+
+@pytest.mark.parametrize("mode", ["legacy_adaptive", "hybrid", "classic"])
+def test_orchestrator_patch_rejects_legacy_modes(admin_client, mode: str):
+    resp = admin_client.patch(
+        "/api/admin/orchestrator/config",
+        json={"pipeline_mode": mode},
+        headers=ADMIN_HEADERS,
+    )
+    assert resp.status_code == 422
+    assert "Legacy runtime modes are disabled" in resp.json()["detail"]
 
 
 def test_orchestrator_patch_invalid(admin_client):
@@ -124,7 +144,9 @@ def test_admin_overview(admin_client):
     resp = admin_client.get("/api/admin/overview", headers=ADMIN_HEADERS)
     assert resp.status_code == 200
     payload = resp.json()
-    assert payload["pipeline_mode"] in {"full_multiagent", "hybrid", "legacy_adaptive"}
+    assert payload["pipeline_mode"] == "multiagent_only"
+    assert payload["active_runtime"] == "multiagent"
+    assert payload["legacy"]["fallback_enabled"] is False
     assert isinstance(payload["feature_flags"], dict)
     assert isinstance(payload["agents"], list)
     assert isinstance(payload["recent_traces"], list)

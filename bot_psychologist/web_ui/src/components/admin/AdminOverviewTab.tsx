@@ -4,9 +4,7 @@ import { adminConfigService } from '../../services/adminConfig.service';
 import type { OverviewData } from '../../types/admin.types';
 
 const modeBadgeClass: Record<string, string> = {
-  full_multiagent: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-  hybrid: 'bg-blue-100 text-blue-700 border-blue-200',
-  legacy_adaptive: 'bg-amber-100 text-amber-700 border-amber-200',
+  multiagent_only: 'bg-emerald-100 text-emerald-700 border-emerald-200',
 };
 
 export const AdminOverviewTab: React.FC = () => {
@@ -38,8 +36,7 @@ export const AdminOverviewTab: React.FC = () => {
       { calls: 0, errors: 0 },
     );
   }, [overview]);
-  const effectiveMode =
-    overview?.active_runtime === 'multiagent' ? 'full_multiagent' : overview?.pipeline_mode;
+  const effectiveMode = overview?.pipeline_mode ?? 'multiagent_only';
 
   return (
     <div className="mt-4 space-y-4">
@@ -67,6 +64,8 @@ export const AdminOverviewTab: React.FC = () => {
                   {effectiveMode}
                 </span>
               </div>
+              <div className="mt-1 text-xs text-slate-500">entrypoint: {overview.runtime_entrypoint ?? 'multiagent_adapter'}</div>
+              <div className="mt-1 text-xs text-slate-500">legacy fallback: disabled</div>
             </div>
             <div className="rounded-lg border border-slate-200 p-3 dark:border-slate-700">
               <div className="text-xs text-slate-500">Агенты</div>

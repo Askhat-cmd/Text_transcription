@@ -38,7 +38,7 @@ const PRIMARY_TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'memory', label: 'Memory', hoverColor: 'hover:bg-emerald-500/20' },
 ];
 
-const LEGACY_TABS: { key: Tab; label: string; hoverColor: string }[] = [
+const ADVANCED_TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'llm', label: 'LLM', hoverColor: 'hover:bg-violet-500/20' },
   { key: 'retrieval', label: 'Retrieval', hoverColor: 'hover:bg-blue-500/20' },
   { key: 'diagnostics', label: 'Diagnostics', hoverColor: 'hover:bg-cyan-500/20' },
@@ -54,7 +54,7 @@ const ROUTING_ADVANCED_KEYS = new Set([
   'STATE_CLASSIFIER_CONFIDENCE_THRESHOLD',
 ]);
 
-const LEGACY_TAB_KEYS = new Set<Tab>(['llm', 'retrieval', 'diagnostics', 'routing', 'prompts', 'compatibility']);
+const ADVANCED_TAB_KEYS = new Set<Tab>(['llm', 'retrieval', 'diagnostics', 'routing', 'prompts', 'compatibility']);
 
 export const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('overview');
@@ -117,7 +117,7 @@ export const AdminPanel: React.FC = () => {
   }, [activeTab]);
 
   useEffect(() => {
-    if (LEGACY_TAB_KEYS.has(activeTab)) {
+    if (ADVANCED_TAB_KEYS.has(activeTab)) {
       setLegacyOpen(true);
     }
   }, [activeTab]);
@@ -154,16 +154,8 @@ export const AdminPanel: React.FC = () => {
       }
     : null;
 
-  const currentPipelineMode =
-    orchestratorConfig?.active_runtime === 'multiagent'
-      ? 'full_multiagent'
-      : orchestratorConfig?.actual_pipeline_mode ?? orchestratorConfig?.pipeline_mode ?? 'legacy_adaptive';
-  const pipelineBadgeClass =
-    currentPipelineMode === 'full_multiagent'
-      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-      : currentPipelineMode === 'hybrid'
-        ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
-        : 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+  const pipelineBadgeClass = 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
+  const runtimeEntrypoint = orchestratorConfig?.runtime_entrypoint ?? 'multiagent_adapter';
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -176,7 +168,13 @@ export const AdminPanel: React.FC = () => {
                 <p className="text-sm text-slate-400 mt-0.5">Multiagent-first control surface</p>
                 <div className="mt-2">
                   <span className={`inline-flex items-center rounded border px-2 py-0.5 text-xs font-medium ${pipelineBadgeClass}`}>
-                    {currentPipelineMode}
+                    multiagent
+                  </span>
+                  <span className="ml-2 inline-flex items-center rounded border border-slate-500/50 bg-slate-700/30 px-2 py-0.5 text-xs text-slate-200">
+                    entrypoint: {runtimeEntrypoint}
+                  </span>
+                  <span className="ml-2 inline-flex items-center rounded border border-emerald-500/40 bg-emerald-500/10 px-2 py-0.5 text-xs text-emerald-300">
+                    legacy fallback: disabled
                   </span>
                 </div>
               </div>
@@ -263,11 +261,11 @@ export const AdminPanel: React.FC = () => {
 
           <details className="relative" open={legacyOpen} onToggle={(e) => setLegacyOpen((e.target as HTMLDetailsElement).open)}>
             <summary className="list-none cursor-pointer px-3 py-1.5 text-xs border border-slate-600 rounded text-slate-300 hover:bg-slate-700">
-              Legacy Epoch 1-3
+              Advanced Controls
             </summary>
             <div className="absolute right-0 mt-1 w-[34rem] rounded border border-slate-700 bg-slate-900 p-2 shadow-lg z-20">
               <div className="flex flex-wrap gap-1">
-                {LEGACY_TABS.map((tab) => (
+                {ADVANCED_TABS.map((tab) => (
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}

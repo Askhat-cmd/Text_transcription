@@ -100,6 +100,27 @@ export interface AdminRuntimeEffectiveResponse {
   schema_version: string;
   admin_schema_version: string;
   prompt_stack_version: string;
+  active_runtime: 'multiagent';
+  runtime_entrypoint: 'multiagent_adapter' | 'answer_adaptive_deprecated_shim';
+  pipeline_version: string;
+  pipeline_mode: 'multiagent_only';
+  pipeline_mode_read_only: boolean;
+  pipeline_mode_legacy_value?: string | null;
+  legacy_modes_selectable: boolean;
+  legacy: {
+    fallback_enabled: boolean;
+    fallback_used: boolean;
+    cascade_available: boolean;
+    cascade_status: 'deprecated_retained_for_purge';
+    purge_planned_prd: 'PRD-041';
+  };
+  compatibility: {
+    pipeline_mode: 'multiagent_only';
+    pipeline_mode_legacy_value?: string | null;
+    pipeline_mode_read_only: boolean;
+    legacy_modes_selectable: boolean;
+  };
+  agents: Record<string, Record<string, unknown>>;
   status: AdminStatusResponse;
   feature_flags: {
     all: Record<string, boolean>;
@@ -141,14 +162,27 @@ export interface AgentStatus {
 
 export interface AgentsStatusResponse {
   pipeline_version: string;
-  active_runtime?: 'multiagent' | 'legacy_adaptive';
+  active_runtime: 'multiagent';
+  runtime_entrypoint?: 'multiagent_adapter' | 'answer_adaptive_deprecated_shim';
+  pipeline_mode?: 'multiagent_only';
+  pipeline_mode_read_only?: boolean;
+  legacy?: Record<string, unknown>;
+  agent_contract?: Record<string, Record<string, unknown>>;
   agents: AgentStatus[];
 }
 
 export interface OrchestratorConfig {
-  pipeline_mode: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
-  actual_pipeline_mode?: 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
-  active_runtime?: 'multiagent' | 'legacy_adaptive';
+  pipeline_mode: 'multiagent_only';
+  actual_pipeline_mode?: 'multiagent_only';
+  active_runtime: 'multiagent';
+  runtime_entrypoint?: 'multiagent_adapter' | 'answer_adaptive_deprecated_shim';
+  legacy?: Record<string, unknown>;
+  compatibility?: {
+    pipeline_mode: 'multiagent_only';
+    pipeline_mode_legacy_value?: string | null;
+    pipeline_mode_read_only: boolean;
+    legacy_modes_selectable: boolean;
+  };
   env_flags?: Record<string, string>;
   agents_enabled: Record<AgentId, boolean>;
   pipeline_version: string;
@@ -212,6 +246,9 @@ export interface AgentLLMEntry {
   temperature: number;
   default_temperature: number;
   is_temperature_overridden: boolean;
+  kind?: string;
+  llm_model_effective?: boolean;
+  note?: string;
 }
 
 export interface AgentLLMConfigResponse {
@@ -219,7 +256,7 @@ export interface AgentLLMConfigResponse {
   allowed_models: string[];
 }
 
-export type PipelineMode = 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+export type PipelineMode = 'multiagent_only';
 
 export interface AgentOverviewStatus {
   agent_id: string;
@@ -243,7 +280,11 @@ export interface RecentTrace {
 
 export interface OverviewData {
   pipeline_mode: PipelineMode;
-  active_runtime?: 'multiagent' | 'legacy_adaptive';
+  active_runtime: 'multiagent';
+  runtime_entrypoint?: 'multiagent_adapter' | 'answer_adaptive_deprecated_shim';
+  legacy?: Record<string, unknown>;
+  compatibility?: Record<string, unknown>;
+  agent_contract?: Record<string, Record<string, unknown>>;
   feature_flags: Record<string, string>;
   agents: AgentOverviewStatus[];
   recent_traces: RecentTrace[];

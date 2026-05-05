@@ -45,7 +45,7 @@ _agent_metrics: dict[str, dict[str, Any]] = {
     "validator": {"call_count": 0, "total_ms": 0, "error_count": 0, "last_run": None, "enabled": True},
 }
 _agent_traces: _deque[dict[str, Any]] = _deque(maxlen=200)
-_orchestrator_mode: dict[str, str] = {"pipeline_mode": "full_multiagent"}
+_orchestrator_mode: dict[str, str] = {"pipeline_mode": "multiagent_only"}
 _agent_prompt_overrides: dict[str, dict[str, str]] = {}
 _AGENT_PROMPT_MAP = {
     "writer": "bot_agent.multiagent.agents.writer_agent_prompts",
@@ -68,23 +68,55 @@ def _is_truthy_env(value: str | None) -> bool:
 
 
 def _compute_env_pipeline_mode() -> str:
-    flags = _env_flags_snapshot()
-    multi_on = _is_truthy_env(flags["MULTIAGENT_ENABLED"])
-    legacy_on = _is_truthy_env(flags["LEGACY_PIPELINE_ENABLED"])
-    if multi_on and legacy_on:
-        return "hybrid"
-    if multi_on:
-        return "full_multiagent"
-    return "legacy_adaptive"
+    # PRD-037: admin runtime contract is multiagent-only.
+    # Keep this helper for backward-compatible payload fields.
+    return "multiagent_only"
 
 
 def _compute_active_runtime(actual_mode: str | None = None) -> str:
-    pipeline_version = str(getattr(orchestrator, "pipeline_version", "") or "")
-    if pipeline_version.startswith("multiagent"):
-        return "multiagent"
-    if actual_mode in {"full_multiagent", "hybrid"}:
-        return "multiagent"
-    return "legacy_adaptive"
+    _ = actual_mode
+    return "multiagent"
+
+
+def _runtime_entrypoint() -> str:
+    return "multiagent_adapter"
+
+
+def _legacy_status_payload() -> dict[str, Any]:
+    return {
+        "fallback_enabled": False,
+        "fallback_used": False,
+        "cascade_available": True,
+        "cascade_status": "deprecated_retained_for_purge",
+        "purge_planned_prd": "PRD-041",
+    }
+
+
+def _compatibility_runtime_payload() -> dict[str, Any]:
+    return {
+        "pipeline_mode": "multiagent_only",
+        "pipeline_mode_legacy_value": None,
+        "pipeline_mode_read_only": True,
+        "legacy_modes_selectable": False,
+    }
+
+
+def _runtime_agents_contract_payload() -> dict[str, dict[str, Any]]:
+    return {
+        "state_analyzer": {"kind": "llm"},
+        "thread_manager": _thread_manager_llm_meta(),
+        "memory_retrieval": {"kind": "retrieval"},
+        "writer": {"kind": "llm"},
+        "validator": {"kind": "deterministic"},
+    }
+
+
+def _thread_manager_llm_meta() -> dict[str, Any]:
+    return {
+        "kind": "heuristic",
+        "llm_model_effective": False,
+        "note": "Model selection is reserved for future LLM thread manager; current implementation is heuristic.",
+    }
 
 
 # в”Ђв”Ђв”Ђ Auth dependency в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
@@ -420,11 +452,23 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     validation = validate_runtime_config(config)
     # session_id retained only for route-level backward compatibility.
     _ = session_id
+    pipeline_version = str(getattr(orchestrator, "pipeline_version", "multiagent_v1") or "multiagent_v1")
+    compatibility_payload = _compatibility_runtime_payload()
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
         "admin_schema_version": ADMIN_SCHEMA_VERSION,
         "prompt_stack_version": PROMPT_STACK_VERSION,
+        "active_runtime": _compute_active_runtime(),
+        "runtime_entrypoint": _runtime_entrypoint(),
+        "pipeline_version": pipeline_version,
+        "legacy": _legacy_status_payload(),
+        "compatibility": compatibility_payload,
+        "pipeline_mode": compatibility_payload["pipeline_mode"],
+        "pipeline_mode_read_only": compatibility_payload["pipeline_mode_read_only"],
+        "pipeline_mode_legacy_value": compatibility_payload["pipeline_mode_legacy_value"],
+        "legacy_modes_selectable": compatibility_payload["legacy_modes_selectable"],
+        "agents": _runtime_agents_contract_payload(),
         "status": status_payload,
         "feature_flags": {
             "all": flags_snapshot,
@@ -1177,10 +1221,15 @@ async def admin_import_overrides(body: dict):
 )
 async def admin_agents_status():
     pipeline_version = getattr(orchestrator, "pipeline_version", "multiagent_v1")
-    actual_mode = _compute_env_pipeline_mode()
+    compatibility_payload = _compatibility_runtime_payload()
     return {
         "pipeline_version": pipeline_version,
-        "active_runtime": _compute_active_runtime(actual_mode),
+        "active_runtime": _compute_active_runtime(),
+        "runtime_entrypoint": _runtime_entrypoint(),
+        "pipeline_mode": compatibility_payload["pipeline_mode"],
+        "pipeline_mode_read_only": compatibility_payload["pipeline_mode_read_only"],
+        "legacy": _legacy_status_payload(),
+        "agent_contract": _runtime_agents_contract_payload(),
         "agents": _compute_agent_metrics(),
     }
 
@@ -1230,11 +1279,15 @@ async def admin_orchestrator_get_config():
     with _agent_metrics_lock:
         agents_enabled = {agent_id: bool(metric.get("enabled", True)) for agent_id, metric in source.items()}
     env_flags = _env_flags_snapshot()
-    actual_mode = _compute_env_pipeline_mode()
+    compatibility_payload = _compatibility_runtime_payload()
+    actual_mode = compatibility_payload["pipeline_mode"]
     return {
-        "pipeline_mode": _orchestrator_mode["pipeline_mode"],
+        "pipeline_mode": compatibility_payload["pipeline_mode"],
         "actual_pipeline_mode": actual_mode,
         "active_runtime": _compute_active_runtime(actual_mode),
+        "runtime_entrypoint": _runtime_entrypoint(),
+        "legacy": _legacy_status_payload(),
+        "compatibility": compatibility_payload,
         "env_flags": env_flags,
         "agents_enabled": agents_enabled,
         "pipeline_version": getattr(orchestrator, "pipeline_version", "multiagent_v1"),
@@ -1246,12 +1299,27 @@ async def admin_orchestrator_get_config():
     summary="РР·РјРµРЅРёС‚СЊ СЂРµР¶РёРј РїР°Р№РїР»Р°Р№РЅР°",
 )
 async def admin_orchestrator_patch_config(body: dict):
-    valid_modes = {"full_multiagent", "hybrid", "legacy_adaptive"}
     mode = str(body.get("pipeline_mode", ""))
-    if mode not in valid_modes:
-        raise HTTPException(status_code=422, detail=f"Invalid pipeline_mode '{mode}'. Valid: {sorted(valid_modes)}")
-    _orchestrator_mode["pipeline_mode"] = mode
-    return {"pipeline_mode": mode, "status": "ok"}
+    normalized_mode = mode.strip().lower()
+    if normalized_mode in {"legacy_adaptive", "hybrid", "classic", "cascade"}:
+        raise HTTPException(
+            status_code=422,
+            detail="Legacy runtime modes are disabled after PRD-036. Active runtime is multiagent.",
+        )
+    if normalized_mode not in {"multiagent_only", "full_multiagent"}:
+        raise HTTPException(
+            status_code=422,
+            detail="Invalid pipeline_mode. Valid modes: ['multiagent_only', 'full_multiagent']",
+        )
+    _orchestrator_mode["pipeline_mode"] = "multiagent_only"
+    compatibility_payload = _compatibility_runtime_payload()
+    return {
+        "pipeline_mode": compatibility_payload["pipeline_mode"],
+        "pipeline_mode_alias_received": mode,
+        "pipeline_mode_read_only": compatibility_payload["pipeline_mode_read_only"],
+        "legacy_modes_selectable": compatibility_payload["legacy_modes_selectable"],
+        "status": "ok",
+    }
 
 
 # в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
@@ -1283,7 +1351,8 @@ async def admin_agents_traces(
 )
 async def admin_overview():
     env_flags = _env_flags_snapshot()
-    pipeline_mode = _compute_env_pipeline_mode()
+    compatibility_payload = _compatibility_runtime_payload()
+    pipeline_mode = compatibility_payload["pipeline_mode"]
     agents = _compute_agent_metrics()
     traces = getattr(orchestrator, "_agent_traces", None)
     if isinstance(traces, list):
@@ -1293,6 +1362,10 @@ async def admin_overview():
     return {
         "pipeline_mode": pipeline_mode,
         "active_runtime": _compute_active_runtime(pipeline_mode),
+        "runtime_entrypoint": _runtime_entrypoint(),
+        "legacy": _legacy_status_payload(),
+        "compatibility": compatibility_payload,
+        "agent_contract": _runtime_agents_contract_payload(),
         "feature_flags": env_flags,
         "agents": [
             {
@@ -1441,8 +1514,12 @@ async def admin_agent_prompts_reset(agent_id: str, prompt_key: str):
     summary="Получить LLM-модели всех агентов",
 )
 async def admin_get_agents_llm_config():
+    agents = get_all_agent_models()
+    thread_manager = agents.get("thread_manager")
+    if isinstance(thread_manager, dict):
+        thread_manager.update(_thread_manager_llm_meta())
     return {
-        "agents": get_all_agent_models(),
+        "agents": agents,
         "allowed_models": list(ALLOWED_MODELS),
     }
 
@@ -1468,7 +1545,7 @@ async def admin_patch_agent_llm_config(agent_id: str, body: dict):
     if agent_id not in agents:
         raise HTTPException(status_code=422, detail=f"Unknown agent_id '{agent_id}'")
     payload = agents[agent_id]
-    return {
+    response = {
         "status": "ok",
         "agent_id": agent_id,
         "model": payload["model"],
@@ -1476,6 +1553,9 @@ async def admin_patch_agent_llm_config(agent_id: str, body: dict):
         "is_overridden": payload["is_overridden"],
         "is_temperature_overridden": payload["is_temperature_overridden"],
     }
+    if agent_id == "thread_manager":
+        response.update(_thread_manager_llm_meta())
+    return response
 
 
 @admin_router.post(
@@ -1489,7 +1569,7 @@ async def admin_reset_agent_llm_config(agent_id: str):
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
     agents = get_all_agent_models()
-    return {
+    response = {
         "status": "ok",
         "agent_id": agent_id,
         "model": agents[agent_id]["model"],
@@ -1497,6 +1577,9 @@ async def admin_reset_agent_llm_config(agent_id: str):
         "is_overridden": False,
         "is_temperature_overridden": False,
     }
+    if agent_id == "thread_manager":
+        response.update(_thread_manager_llm_meta())
+    return response
 
 # в•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђв•ђ
 # FULL RESET

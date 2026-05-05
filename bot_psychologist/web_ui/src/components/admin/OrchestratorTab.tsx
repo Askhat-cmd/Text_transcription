@@ -2,10 +2,9 @@
 
 import { useOrchestrator } from '../../hooks/useOrchestrator';
 
-const MODES: Array<{ key: 'full_multiagent' | 'hybrid' | 'legacy_adaptive'; label: string }> = [
-  { key: 'full_multiagent', label: 'full_multiagent' },
-  { key: 'hybrid', label: 'hybrid' },
-  { key: 'legacy_adaptive', label: 'legacy_adaptive' },
+const MODES: Array<{ key: 'multiagent_only' | 'full_multiagent'; label: string }> = [
+  { key: 'multiagent_only', label: 'multiagent_only' },
+  { key: 'full_multiagent', label: 'full_multiagent (alias)' },
 ];
 
 export const OrchestratorTab: React.FC = () => {
@@ -23,14 +22,14 @@ export const OrchestratorTab: React.FC = () => {
     void loadOrchestratorConfig();
   }, [loadOrchestratorConfig]);
 
-  const current = orchestratorConfig?.pipeline_mode;
-  const actualMode = orchestratorConfig?.actual_pipeline_mode;
-  const modeMismatch = actualMode != null && current != null && actualMode !== current;
+  const current = orchestratorConfig?.pipeline_mode ?? 'multiagent_only';
+  const runtimeEntrypoint = orchestratorConfig?.runtime_entrypoint ?? 'multiagent_adapter';
+  const legacy = orchestratorConfig?.legacy as Record<string, unknown> | undefined;
 
   return (
     <div className="mt-4 space-y-4">
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">
-        <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">🎭 Оркестратор</h3>
+        <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">Оркестратор</h3>
         {error && <p className="mt-2 text-xs text-rose-500">{error}</p>}
         {successMessage && <p className="mt-2 text-xs text-emerald-500">{successMessage}</p>}
 
@@ -41,12 +40,11 @@ export const OrchestratorTab: React.FC = () => {
               type="button"
               disabled={isSaving || isLoading}
               onClick={() => {
-                if (current === mode.key) return;
                 void setPipelineMode(mode.key);
               }}
               className={`rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
-                current === mode.key
-                  ? 'border-indigo-500 bg-indigo-100 text-indigo-700 dark:border-indigo-400 dark:bg-indigo-900/40 dark:text-indigo-300'
+                current === 'multiagent_only'
+                  ? 'border-emerald-500 bg-emerald-100 text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900/40 dark:text-emerald-300'
                   : 'border-slate-300 text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-700'
               }`}
             >
@@ -56,24 +54,24 @@ export const OrchestratorTab: React.FC = () => {
         </div>
 
         <div className="mt-3 text-xs text-slate-600 dark:text-slate-300">
-          pipeline_version: <span className="font-mono">{orchestratorConfig?.pipeline_version ?? '—'}</span>
+          active_runtime: <span className="font-mono">{orchestratorConfig?.active_runtime ?? 'multiagent'}</span>
         </div>
         <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
-          actual_pipeline_mode: <span className="font-mono">{actualMode ?? '—'}</span>
+          runtime_entrypoint: <span className="font-mono">{runtimeEntrypoint}</span>
         </div>
-        {orchestratorConfig?.env_flags && (
-          <div className="mt-2 rounded border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-            <div className="font-medium">env flags</div>
-            {Object.entries(orchestratorConfig.env_flags).map(([key, value]) => (
-              <div key={key} className="font-mono">{key}: {value}</div>
-            ))}
-          </div>
-        )}
-        {modeMismatch && (
-          <p className="mt-2 text-xs text-amber-500">
-            Предупреждение: выбранный pipeline_mode отличается от фактического режима по env-флагам.
-          </p>
-        )}
+        <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+          pipeline_mode: <span className="font-mono">{current}</span> <span className="text-slate-400">(read-only)</span>
+        </div>
+        <div className="mt-1 text-xs text-slate-600 dark:text-slate-300">
+          pipeline_version: <span className="font-mono">{orchestratorConfig?.pipeline_version ?? 'multiagent_v1'}</span>
+        </div>
+
+        <div className="mt-2 rounded border border-slate-200 bg-slate-50 p-2 text-xs text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+          <div className="font-medium">legacy status</div>
+          <div className="font-mono">fallback_enabled: {String(legacy?.fallback_enabled ?? false)}</div>
+          <div className="font-mono">cascade_status: {String(legacy?.cascade_status ?? 'deprecated_retained_for_purge')}</div>
+          <div className="font-mono">purge_planned_prd: {String(legacy?.purge_planned_prd ?? 'PRD-041')}</div>
+        </div>
       </section>
 
       <section className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-800">

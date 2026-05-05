@@ -41,6 +41,7 @@ describe('useAgentStatus', () => {
   it('loads agents status', async () => {
     vi.spyOn(adminConfigService, 'getAgentsStatus').mockResolvedValue({
       pipeline_version: 'multiagent_v1',
+      active_runtime: 'multiagent',
       agents: [{
         id: 'writer',
         enabled: true,
@@ -70,6 +71,7 @@ describe('useAgentStatus', () => {
     });
     vi.spyOn(adminConfigService, 'getAgentsStatus').mockResolvedValue({
       pipeline_version: 'multiagent_v1',
+      active_runtime: 'multiagent',
       agents: [{
         id: 'writer',
         enabled: false,
@@ -91,4 +93,3 @@ describe('useAgentStatus', () => {
     hook.cleanup();
   });
 });
-

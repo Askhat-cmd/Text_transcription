@@ -124,6 +124,13 @@ export const AgentsTab: React.FC = () => {
                   <tr key={agentId} className="border-b border-slate-100 dark:border-slate-800">
                     <td className="px-2 py-2 align-middle">
                       <code className="text-slate-700 dark:text-slate-200">{agentId}</code>
+                      {agentId === 'thread_manager' && (
+                        <div className="mt-1">
+                          <span className="rounded bg-amber-100 px-2 py-0.5 text-[11px] text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
+                            heuristic / model reserved
+                          </span>
+                        </div>
+                      )}
                     </td>
                     <td className="px-2 py-2 align-middle">
                       <div className="flex items-center gap-2">
@@ -145,6 +152,11 @@ export const AgentsTab: React.FC = () => {
                           </span>
                         )}
                       </div>
+                      {agentId === 'thread_manager' && (
+                        <p className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                          Model selection is reserved; current thread manager implementation is heuristic.
+                        </p>
+                      )}
                     </td>
                     <td className="px-2 py-2 align-middle">
                       <div className="flex items-center gap-2">

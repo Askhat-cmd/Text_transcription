@@ -1,9 +1,9 @@
-import { useCallback, useState } from 'react';
+﻿import { useCallback, useState } from 'react';
 
 import { adminConfigService } from '../services/adminConfig.service';
 import type { OrchestratorConfig } from '../types/admin.types';
 
-type PipelineMode = 'full_multiagent' | 'hybrid' | 'legacy_adaptive';
+type PipelineMode = 'multiagent_only' | 'full_multiagent';
 
 export const useOrchestrator = () => {
   const [orchestratorConfig, setOrchestratorConfig] = useState<OrchestratorConfig | null>(null);
@@ -69,4 +69,3 @@ export const useOrchestrator = () => {
     setPipelineMode,
   };
 };
-

@@ -40,7 +40,7 @@ def test_admin_config_schema_v104_exists_and_contains_markers(admin_client):
 
     routing_params = editable_groups["routing"]["params"]
     assert "STATE_CLASSIFIER_ENABLED" in routing_params
-    assert routing_params["STATE_CLASSIFIER_ENABLED"]["deprecated"] is False
+    assert routing_params["STATE_CLASSIFIER_ENABLED"]["deprecated"] is True
     assert routing_params["STATE_CLASSIFIER_ENABLED"]["compatibility_only"] is False
 
     assert "runtime_status" in payload["read_only"]

@@ -3,11 +3,11 @@
 ## Обзор
 
 Документ описывает актуальную мультиагентную архитектуру рантайма в `bot_psychologist`.
-Система введена в Эпохе 4 (PRD-017..PRD-025) и работает в параллельном режиме со старой каскадной системой.
+Система введена в Эпохе 4 (PRD-017..PRD-025) и является единственным активным runtime после PRD-036/037/039.
 
 Ключевой переключатель:
-- `MULTIAGENT_ENABLED=true` — использовать мультиагентный пайплайн.
-- `MULTIAGENT_ENABLED=false` — использовать legacy-каскад (`answer_adaptive.py`).
+- `MULTIAGENT_ENABLED=true` — рекомендуемое значение compatibility flag.
+- `MULTIAGENT_ENABLED=false` — deprecated value, не включает legacy runtime.
 
 См. также:
 - [Контракты](./multiagent_contracts.md)
@@ -214,8 +214,9 @@ Final Answer + Multiagent Debug Payload
 Файл: `bot_agent/feature_flags.py`
 
 Ключевые флаги:
-- `MULTIAGENT_ENABLED` (bool, default: `False`) — основной переключатель пайплайна.
-- `STATE_ANALYZER_MODEL` (str, default: `gpt-4o-mini`)
+- `MULTIAGENT_ENABLED` (bool, default: `True`) — deprecated compatibility flag (runtime не переключает).
+- `STATE_ANALYZER_MODEL` (str, default: `gpt-5-nano`)
+- `THREAD_MANAGER_MODEL` (str, default: `gpt-5-nano`, reserved; thread manager now heuristic)
 - `WRITER_MODEL` (str, default: `gpt-5-mini`)
 - `MULTIAGENT_LLM_TIMEOUT` (str->float, default: `30`)
 - `MULTIAGENT_MAX_TOKENS` (str->int, default: `600`)
@@ -228,7 +229,8 @@ Final Answer + Multiagent Debug Payload
 
 ```env
 MULTIAGENT_ENABLED=true
-STATE_ANALYZER_MODEL=gpt-4o-mini
+STATE_ANALYZER_MODEL=gpt-5-nano
+THREAD_MANAGER_MODEL=gpt-5-nano
 WRITER_MODEL=gpt-5-mini
 MULTIAGENT_LLM_TIMEOUT=30
 MULTIAGENT_MAX_TOKENS=600
@@ -238,7 +240,7 @@ THREAD_STORAGE_DIR=bot_psychologist/data/threads
 
 Замечания:
 - `THREAD_STORAGE_DIR` разрешается в абсолютный путь в `thread_storage.py` через `Path(...).resolve()`.
-- При выключенном мультиагенте используется legacy-ветка.
+- Legacy-ветка физически сохранена до PRD-041 purge и не используется как active runtime.
 
 ## Пример вывода orchestrator.run()
 

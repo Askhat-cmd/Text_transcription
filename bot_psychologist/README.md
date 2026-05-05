@@ -9,7 +9,7 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - Реализован стабильный `user_id` через Identity Layer (PRD-013).
 - `session_id` используется как уровень устройства/клиента, а не как идентификатор человека.
 - `conversation_id` выделен в отдельный UUID диалога и не равен `session_id` (PRD-014).
-- Модуль `answer_adaptive.py` завершил модуляризацию (waves 1-144) и работает как фасад-оркестратор.
+- Модуль `answer_adaptive.py` сохранен как deprecated compatibility shim и проксирует в multiagent runtime.
 - Реализован PRD-015A + PRD-015B-v2: Telegram adapter + transport (`mock/polling/webhook`) с graceful shutdown.
 - Реализован PRD-016-v2: registration/access control (`/auth/register`, `/auth/login`, session token, `/link`).
 - `api/auth.py` переведен на DB-backed API keys (без in-memory хардкода ключей).
@@ -28,22 +28,19 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 
 - PRD-026: обновление трейса под мультиагентную архитектуру
 - PRD-027: веб-AdminPage с управлением агентами на лету
-- PRD-028: Legacy Cleanup — удаление старой каскадной системы (после 2+ недель стабильной работы)
+- PRD-041: Physical Legacy Purge — физическое удаление старой каскадной системы
 
 ## Мультиагентная система (Эпоха 4)
 
-### Статус: активна, работает параллельно старой системе
+### Статус: active runtime = multiagent-only
 
-Мультиагентная система включается флагом `MULTIAGENT_ENABLED=true` в `.env`.
-При `MULTIAGENT_ENABLED=false` бот работает по старой каскадной системе (`answer_adaptive.py`).
+После PRD-036/037/039 активный runtime только `multiagent`.
+Флаг `MULTIAGENT_ENABLED` сохранен как deprecated compatibility flag и не переключает runtime в legacy.
 
-### Переходный период
+### Legacy статус
 
-Обе системы существуют одновременно. Это осознанное решение:
-- Новая система проходит накопление реального трафика
-- Старая — страховочная сеть на случай непредвиденных сценариев
-- После 2+ недель стабильной работы и готовности трейса/AdminPage
-  будет выполнен PRD-028: Legacy Cleanup — осторожное удаление каскадной системы
+Legacy-каскадный код пока физически лежит в репозитории только как переходный слой совместимости.
+Физическое удаление планируется отдельным этапом: PRD-041 (Physical Legacy Purge).
 
 ### Как работает новая система
 
@@ -194,7 +191,7 @@ pytest tests/test_feature_flags.py -q
 
 1. Довести PRD-026: богатый мультиагентный трейс в UI.
 2. Довести PRD-027: AdminPage для оперативного управления агентами.
-3. Подготовить PRD-028: Legacy Cleanup после периода стабилизации.
+3. Подготовить PRD-041: Physical Legacy Purge.
 
 ## Документация
 

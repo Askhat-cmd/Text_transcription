@@ -10,6 +10,7 @@ from fastapi import APIRouter, Depends, HTTPException, Header, Query, status
 from typing import Any
 import importlib
 import json
+import logging
 import os
 import threading as _threading
 from collections import deque as _deque
@@ -35,6 +36,7 @@ from .auth import is_dev_key
 from .dependencies import get_identity_service
 from .identity import IdentityService, mask_external_id
 
+logger = logging.getLogger(__name__)
 
 _agent_metrics_lock = _threading.Lock()
 _agent_metrics: dict[str, dict[str, Any]] = {
@@ -80,6 +82,13 @@ def _compute_active_runtime(actual_mode: str | None = None) -> str:
 
 def _runtime_entrypoint() -> str:
     return "multiagent_adapter"
+
+
+def _deprecated_runtime_warnings(env_flags: dict[str, str]) -> list[str]:
+    warnings: list[str] = []
+    if _is_truthy_env(env_flags.get("LEGACY_PIPELINE_ENABLED")):
+        warnings.append("LEGACY_PIPELINE_ENABLED is deprecated and ignored")
+    return warnings
 
 
 def _legacy_status_payload() -> dict[str, Any]:
@@ -153,7 +162,13 @@ LEGACY_CONFIG_KEY_MAP = {
     "RERANK_TOP_K": "VOYAGE_TOP_K",
 }
 
-DEPRECATED_CONFIG_KEYS: set[str] = set()
+DEPRECATED_CONFIG_KEYS: set[str] = {
+    "FAST_DETECTOR_ENABLED",
+    "STATE_CLASSIFIER_ENABLED",
+    "DECISION_GATE_RULE_THRESHOLD",
+    "DECISION_GATE_LLM_ROUTER_ENABLED",
+    "PROMPT_MODE_OVERRIDES_SD",
+}
 
 COMPATIBILITY_ONLY_CONFIG_KEYS: set[str] = set()
 
@@ -449,6 +464,8 @@ def _group_param_value(group_name: str, key: str, default: Any = None) -> Any:
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
+    env_flags = _env_flags_snapshot()
+    runtime_warnings = _deprecated_runtime_warnings(env_flags)
     validation = validate_runtime_config(config)
     # session_id retained only for route-level backward compatibility.
     _ = session_id
@@ -468,6 +485,8 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
         "pipeline_mode_read_only": compatibility_payload["pipeline_mode_read_only"],
         "pipeline_mode_legacy_value": compatibility_payload["pipeline_mode_legacy_value"],
         "legacy_modes_selectable": compatibility_payload["legacy_modes_selectable"],
+        "deprecated_runtime_flags": feature_flags.deprecated_runtime_flags(),
+        "runtime_warnings": runtime_warnings,
         "agents": _runtime_agents_contract_payload(),
         "status": status_payload,
         "feature_flags": {
@@ -1279,6 +1298,9 @@ async def admin_orchestrator_get_config():
     with _agent_metrics_lock:
         agents_enabled = {agent_id: bool(metric.get("enabled", True)) for agent_id, metric in source.items()}
     env_flags = _env_flags_snapshot()
+    runtime_warnings = _deprecated_runtime_warnings(env_flags)
+    for warning in runtime_warnings:
+        logger.warning("[PRD-040] %s", warning)
     compatibility_payload = _compatibility_runtime_payload()
     actual_mode = compatibility_payload["pipeline_mode"]
     return {
@@ -1289,6 +1311,7 @@ async def admin_orchestrator_get_config():
         "legacy": _legacy_status_payload(),
         "compatibility": compatibility_payload,
         "env_flags": env_flags,
+        "runtime_warnings": runtime_warnings,
         "agents_enabled": agents_enabled,
         "pipeline_version": getattr(orchestrator, "pipeline_version", "multiagent_v1"),
     }
@@ -1351,6 +1374,7 @@ async def admin_agents_traces(
 )
 async def admin_overview():
     env_flags = _env_flags_snapshot()
+    runtime_warnings = _deprecated_runtime_warnings(env_flags)
     compatibility_payload = _compatibility_runtime_payload()
     pipeline_mode = compatibility_payload["pipeline_mode"]
     agents = _compute_agent_metrics()
@@ -1367,6 +1391,8 @@ async def admin_overview():
         "compatibility": compatibility_payload,
         "agent_contract": _runtime_agents_contract_payload(),
         "feature_flags": env_flags,
+        "deprecated_runtime_flags": feature_flags.deprecated_runtime_flags(),
+        "runtime_warnings": runtime_warnings,
         "agents": [
             {
                 "agent_id": item.get("id"),

@@ -56,10 +56,17 @@ npm run dev
 ## Smoke-проверки после старта
 
 1. `GET /api/v1/health` -> `200`
-2. `GET /api/v1/identity/me` (с `X-API-Key` и identity headers) -> `200`
-3. `POST /api/v1/conversations/new` -> `200`
-4. `POST /api/v1/questions/adaptive` -> `200` и непустой `answer`
-5. `POST /api/v1/conversations/{id}/close` -> `200`
+2. `GET /api/admin/runtime/effective` (c `X-API-Key`) -> `active_runtime=multiagent`
+3. `GET /api/v1/identity/me` (с `X-API-Key` и identity headers) -> `200`
+4. `POST /api/v1/conversations/new` -> `200`
+5. `POST /api/v1/questions/adaptive` -> `200` и непустой `answer`
+6. `POST /api/v1/conversations/{id}/close` -> `200`
+
+## Runtime flags (PRD-040)
+
+- `MULTIAGENT_ENABLED` и `LEGACY_PIPELINE_ENABLED` считаются deprecated compatibility flags.
+- Даже при `LEGACY_PIPELINE_ENABLED=true` active runtime остается `multiagent`.
+- Источник истины для runtime: `/api/admin/runtime/effective`.
 
 ## Реализовано vs планируется
 

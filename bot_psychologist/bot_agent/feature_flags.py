@@ -33,13 +33,15 @@ _DEFAULTS: Dict[str, bool] = {
     "ENABLE_CONDITIONAL_RERANKER": True,
     # Phase 3
     "ENABLE_FAST_STATE_DETECTOR": True,
-    # Multiagent (PRD-017)
-    "MULTIAGENT_ENABLED": False,
+    # Deprecated compatibility flag.
+    # Multiagent runtime is always active after PRD-036.
+    # Retained only for old tests/tools until PRD-041/PRD-042 cleanup.
+    "MULTIAGENT_ENABLED": True,
 }
 
 _STRING_DEFAULTS: Dict[str, str] = {
     "THREAD_MANAGER_MODEL": "gpt-5-nano",
-    "STATE_ANALYZER_MODEL": "gpt-4o-mini",
+    "STATE_ANALYZER_MODEL": "gpt-5-nano",
     "WRITER_MODEL": "gpt-5-mini",
     "MULTIAGENT_LLM_TIMEOUT": "30",
     "MULTIAGENT_MAX_TOKENS": "600",
@@ -50,6 +52,11 @@ _STRING_DEFAULTS: Dict[str, str] = {
     "MEMORY_RAG_MIN_SCORE": "0.45",
     "MEMORY_CONV_TURNS_DEFAULT": "6",
     "THREAD_STORAGE_DIR": "bot_psychologist/data/threads",
+}
+
+_DEPRECATED_RUNTIME_FLAGS: Dict[str, str] = {
+    "MULTIAGENT_ENABLED": "ignored_as_runtime_switch_after_PRD_036",
+    "LEGACY_PIPELINE_ENABLED": "legacy_runtime_disabled_after_PRD_036",
 }
 
 
@@ -75,6 +82,10 @@ class FeatureFlags:
     @staticmethod
     def snapshot() -> Dict[str, bool]:
         return {name: FeatureFlags.enabled(name) for name in _DEFAULTS}
+
+    @staticmethod
+    def deprecated_runtime_flags() -> Dict[str, str]:
+        return dict(_DEPRECATED_RUNTIME_FLAGS)
 
     @staticmethod
     def value(name: str, default: str = "") -> str:

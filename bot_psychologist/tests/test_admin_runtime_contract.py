@@ -45,12 +45,26 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["compatibility"]["pipeline_mode"] == "multiagent_only"
     assert payload["compatibility"]["legacy_modes_selectable"] is False
     assert payload["compatibility"]["pipeline_mode_read_only"] is True
+    assert payload["deprecated_runtime_flags"] == {
+        "MULTIAGENT_ENABLED": "ignored_as_runtime_switch_after_PRD_036",
+        "LEGACY_PIPELINE_ENABLED": "legacy_runtime_disabled_after_PRD_036",
+    }
+    assert payload["runtime_warnings"] == []
 
     thread_manager = payload["agents"]["thread_manager"]
     assert thread_manager["kind"] == "heuristic"
     assert thread_manager["llm_model_effective"] is False
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
+
+
+def test_runtime_effective_warns_when_legacy_flag_forced(admin_client, monkeypatch):
+    monkeypatch.setenv("LEGACY_PIPELINE_ENABLED", "true")
+    response = admin_client.get("/api/admin/runtime/effective", headers=ADMIN_HEADERS)
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["active_runtime"] == "multiagent"
+    assert "LEGACY_PIPELINE_ENABLED is deprecated and ignored" in payload["runtime_warnings"]
 
 
 def test_orchestrator_mode_endpoint_rejects_legacy_and_normalizes_alias(admin_client):

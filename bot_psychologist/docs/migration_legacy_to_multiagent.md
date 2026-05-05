@@ -1,73 +1,43 @@
-﻿# Миграция: каскадная → мультиагентная система
+﻿# Миграция: legacy cascade → multiagent runtime
 
 ## Текущий статус
 
-Проект находится в переходном режиме:
-- мультиагентный runtime активируется через `MULTIAGENT_ENABLED=true`;
-- legacy-каскад сохраняется как страховочный контур;
-- обе системы поддерживаются параллельно.
+После PRD-036/037/039 проект работает в режиме **multiagent-only**:
+- `active_runtime = multiagent`
+- `runtime_entrypoint = multiagent_adapter`
+- `legacy_fallback_used = false`
 
-## Как переключать режим
+`answer_adaptive.py` сохранен как compatibility shim и больше не является legacy runtime entrypoint.
 
-Файл: `.env`
+## Runtime source of truth
 
-```env
-MULTIAGENT_ENABLED=true
-```
+Проверять активный runtime нужно через Admin runtime contract:
+- `GET /api/admin/runtime/effective`
+- `GET /api/v1/admin/runtime/effective`
 
-- `true` — используется `bot_agent/multiagent/orchestrator.py`;
-- `false` — используется legacy-ветка (`answer_adaptive.py`).
+Ожидаемые поля:
+- `active_runtime: "multiagent"`
+- `pipeline_mode: "multiagent_only"`
+- `legacy.fallback_enabled: false`
 
-## Что уже изменилось
+## Deprecated compatibility flags
 
-- Реализована цепочка агентов: State → Thread → Memory → Writer → Validator.
-- Добавлено хранение нитей в `thread_storage`.
-- Добавлены контракты dataclass в `bot_agent/multiagent/contracts/`.
-- Добавлен rich debug payload для trace-интерфейса.
-- Прогон мультиагентных тестов: `190 passed`.
+Флаги оставлены только для совместимости и не переключают runtime:
+- `MULTIAGENT_ENABLED`
+- `LEGACY_PIPELINE_ENABLED`
+- `NEO_MINDBOT_ENABLED`
 
-## Что остается в legacy
+Если `LEGACY_PIPELINE_ENABLED=true`, legacy runtime все равно не включается.
 
-Legacy-ветка оставлена как fallback до завершения периода стабилизации:
-- сравнительный runtime-контроль;
-- безопасный откат на случай регрессий;
-- проверка поведения на реальном трафике.
+## Что остается до PRD-041
 
-## Критерии готовности к PRD-028 (Legacy Cleanup)
-
-Рекомендуемые условия:
-- не менее 2 недель стабильной работы мультиагентного режима;
-- отсутствие критичных регрессий по ответам и safety;
-- готовый и информативный trace/UI;
-- подтвержденный прогон тестов и live-сценариев;
-- отсутствие бизнес-зависимостей от legacy-функций.
-
-## Что планируется удалить в PRD-028
-
-После выполнения критериев:
-- устаревшие каскадные этапы и связки;
-- дублирующие helper-модули legacy-контура;
-- неиспользуемые debug-поля старого формата.
-
-Удаление должно быть поэтапным, с тестами и контрольным diff.
-
-## Риски и страховки
-
-Основные риски:
-- деградация качества ответов при edge-case сценариях;
-- расхождение trace-контрактов UI/backend;
-- потеря fallback при преждевременном удалении legacy.
-
-Страховки:
-- feature-flag переключение (`MULTIAGENT_ENABLED`);
-- обязательный pytest прогон;
-- контрольные live-проверки перед каждым этапом cleanup;
-- отдельный rollback plan в PRD-028.
+Legacy-код физически еще присутствует, но не считается рабочим runtime-контуром.
+Он retained only for PRD-041 purge.
 
 ## Рекомендуемые проверки
 
 ```bash
-pytest tests/multiagent -q
 pytest tests/test_feature_flags.py -q
-pytest tests/api -q
+pytest tests/test_admin_runtime_contract.py -q
+pytest tests/inventory -q
 ```

@@ -39,6 +39,11 @@ def _sanitize_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
         "sd_allowed_blocks",
         "user_level",
         "user_level_adapter_applied",
+        "decision_rule_id",
+        "mode_reason",
+        "confidence_level",
+        "informational_mode",
+        "applied_mode_prompt",
     ):
         trace.pop(key, None)
 
@@ -49,7 +54,7 @@ def _sanitize_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
             sanitized_snapshot.pop(key, None)
         trace["config_snapshot"] = sanitized_snapshot
 
-    trace["trace_contract_version"] = "v2"
+    trace["trace_contract_version"] = "multiagent_compat_v2"
     return trace
 
 
@@ -352,6 +357,17 @@ async def get_multiagent_trace(
             if isinstance(debug.get("estimated_cost_usd"), (int, float))
             else None
         ),
+        api_mode=(
+            str(debug.get("writer_api_mode"))
+            if debug.get("writer_api_mode") is not None
+            else None
+        ),
+        error=(
+            str(debug.get("writer_error"))
+            if debug.get("writer_error") is not None
+            else None
+        ),
+        fallback_used=bool(debug.get("writer_fallback_used", False)),
     )
 
     anomalies = _build_anomalies(debug)
@@ -386,6 +402,27 @@ async def get_multiagent_trace(
                 intent=str(debug.get("intent") or ""),
                 safety_flag=bool(debug.get("safety_flag", False)),
                 confidence=float(debug.get("confidence") or 0.0),
+                model=(
+                    str(debug.get("state_analyzer_model"))
+                    if debug.get("state_analyzer_model") is not None
+                    else None
+                ),
+                api_mode=(
+                    str(debug.get("state_analyzer_api_mode"))
+                    if debug.get("state_analyzer_api_mode") is not None
+                    else None
+                ),
+                error=(
+                    str(debug.get("state_analyzer_error"))
+                    if debug.get("state_analyzer_error") is not None
+                    else None
+                ),
+                fallback_used=bool(debug.get("state_analyzer_fallback_used", False)),
+                parse_error=(
+                    str(debug.get("state_analyzer_parse_error"))
+                    if debug.get("state_analyzer_parse_error") is not None
+                    else None
+                ),
             ),
             thread_manager=ThreadManagerTrace(
                 latency_ms=_safe_int(timings.get("thread_manager_ms")) or 0,

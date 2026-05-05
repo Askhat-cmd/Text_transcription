@@ -114,7 +114,7 @@ def _enrich_trace_for_storage(
     previous_trace: Optional[Dict[str, Any]],
     trace_payload: Dict[str, Any],
 ) -> Dict[str, Any]:
-    enriched = _strip_legacy_trace_fields(trace_payload)
+    enriched = _build_multiagent_trace_storage_payload(trace_payload)
     prompt, completion, total = _extract_token_triplet(enriched)
     if enriched.get("tokens_prompt") is None:
         enriched["tokens_prompt"] = prompt
@@ -172,35 +172,7 @@ def _to_chunk_trace_item(raw_chunk: dict, passed_default: bool) -> ChunkTraceIte
         text=str(chunk_text) if chunk_text is not None else None,
     )
 
-def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
-    trace = dict(raw_trace or {})
-
-    for key in (
-        "sd_classification",
-        "sd_detail",
-        "sd_level",
-        "sd_secondary",
-        "sd_confidence",
-        "sd_method",
-        "sd_allowed_blocks",
-        "user_level",
-        "user_level_adapter_applied",
-    ):
-        trace.pop(key, None)
-
-    config_snapshot = trace.get("config_snapshot")
-    if isinstance(config_snapshot, dict):
-        cleaned_snapshot = dict(config_snapshot)
-        for key in ("user_level", "sd_confidence_threshold"):
-            cleaned_snapshot.pop(key, None)
-        trace["config_snapshot"] = cleaned_snapshot
-
-    trace["trace_contract_version"] = "v2"
-
-    return trace
-
-
-def _normalize_semantic_hits_detail_for_debug_trace(raw_hits: Any) -> list[dict]:
+def _normalize_semantic_hits_detail_for_debug_trace_compat(raw_hits: Any) -> list[dict]:
     """
     Приводит semantic_hits_detail к контракту DebugTrace:
     - block_id
@@ -245,7 +217,25 @@ def _normalize_semantic_hits_detail_for_debug_trace(raw_hits: Any) -> list[dict]
 
     return normalized
 
-_LEGACY_RUNTIME_METADATA_KEYS = (
+
+_FORBIDDEN_LEGACY_TRACE_KEYS = {
+    "sd_classification",
+    "sd_detail",
+    "sd_level",
+    "sd_secondary",
+    "sd_confidence",
+    "sd_method",
+    "sd_allowed_blocks",
+    "user_level",
+    "user_level_adapter_applied",
+    "decision_rule_id",
+    "mode_reason",
+    "confidence_level",
+    "informational_mode",
+    "applied_mode_prompt",
+}
+
+_FORBIDDEN_LEGACY_METADATA_KEYS = {
     "user_level",
     "user_level_adapter_applied",
     "sd_level",
@@ -256,15 +246,141 @@ _LEGACY_RUNTIME_METADATA_KEYS = (
     "decision_rule_id",
     "mode_reason",
     "confidence_level",
+}
+
+_COMPAT_ONLY_METADATA_KEYS = (
+    "decision_rule_id",
+    "mode_reason",
+    "confidence_level",
     "confidence_score",
 )
 
+_MULTIAGENT_METADATA_KEYS = {
+    "runtime",
+    "runtime_entrypoint",
+    "pipeline_version",
+    "legacy_fallback_used",
+    "legacy_fallback_blocked",
+    "direct_multiagent_cutover",
+    "thread_id",
+    "phase",
+    "response_mode",
+    "relation_to_thread",
+    "continuity_score",
+    "recommended_mode",
+    "runtime_user_scope",
+    "session_id",
+    "model_used",
+    "writer_api_mode",
+    "state_analyzer_api_mode",
+    "tokens_prompt",
+    "tokens_completion",
+    "tokens_total",
+    "estimated_cost_usd",
+    "session_tokens_prompt",
+    "session_tokens_completion",
+    "session_tokens_total",
+    "session_cost_usd",
+    "session_turns",
+    "memory_turns",
+    "summary_length",
+    "summary_last_turn",
+    "summary_pending_turn",
+    "summary_used",
+    "semantic_hits",
+    "context_mode",
+    "hybrid_query_len",
+}
+
+
+def _build_debug_trace_compat_payload(raw_trace: dict) -> dict:
+    trace = dict(raw_trace or {})
+    for key in _FORBIDDEN_LEGACY_TRACE_KEYS:
+        trace.pop(key, None)
+
+    config_snapshot = trace.get("config_snapshot")
+    if isinstance(config_snapshot, dict):
+        cleaned_snapshot = dict(config_snapshot)
+        for key in ("user_level", "sd_confidence_threshold"):
+            cleaned_snapshot.pop(key, None)
+        trace["config_snapshot"] = cleaned_snapshot
+
+    trace["trace_contract_version"] = "multiagent_compat_v2"
+    return trace
+
+
+def _build_multiagent_trace_storage_payload(raw_trace: dict) -> dict:
+    trace = _build_debug_trace_compat_payload(raw_trace)
+    trace["trace_contract_version"] = "multiagent_v1"
+    return trace
+
+
+def _build_multiagent_metadata(
+    raw_metadata: dict | None,
+    debug_payload: dict | None = None,
+) -> dict:
+    metadata = dict(raw_metadata or {})
+    debug = debug_payload if isinstance(debug_payload, dict) else {}
+    cleaned: dict[str, Any] = {}
+
+    for key in _MULTIAGENT_METADATA_KEYS:
+        value = metadata.get(key)
+        if value is not None:
+            cleaned[key] = value
+
+    fallback_map = {
+        "runtime_entrypoint": "runtime_entrypoint",
+        "pipeline_version": "pipeline_version",
+        "legacy_fallback_used": "legacy_fallback_used",
+        "legacy_fallback_blocked": "legacy_fallback_blocked",
+        "direct_multiagent_cutover": "direct_multiagent_cutover",
+        "thread_id": "thread_id",
+        "phase": "phase",
+        "response_mode": "response_mode",
+        "relation_to_thread": "relation_to_thread",
+        "continuity_score": "continuity_score",
+        "recommended_mode": "recommended_mode",
+        "model_used": "model_used",
+        "writer_api_mode": "writer_api_mode",
+        "state_analyzer_api_mode": "state_analyzer_api_mode",
+        "tokens_prompt": "tokens_prompt",
+        "tokens_completion": "tokens_completion",
+        "tokens_total": "tokens_total",
+        "estimated_cost_usd": "estimated_cost_usd",
+    }
+    for target_key, source_key in fallback_map.items():
+        if cleaned.get(target_key) is None and debug.get(source_key) is not None:
+            cleaned[target_key] = debug.get(source_key)
+
+    cleaned["runtime"] = "multiagent"
+    cleaned["runtime_entrypoint"] = str(cleaned.get("runtime_entrypoint") or "multiagent_adapter")
+    cleaned["pipeline_version"] = str(cleaned.get("pipeline_version") or "multiagent_v1")
+    cleaned["legacy_fallback_used"] = bool(cleaned.get("legacy_fallback_used", False))
+    cleaned["direct_multiagent_cutover"] = bool(cleaned.get("direct_multiagent_cutover", True))
+
+    if cleaned.get("response_mode") is None and cleaned.get("recommended_mode") is not None:
+        cleaned["response_mode"] = cleaned.get("recommended_mode")
+    if cleaned.get("recommended_mode") is None and cleaned.get("response_mode") is not None:
+        cleaned["recommended_mode"] = cleaned.get("response_mode")
+
+    for key in _FORBIDDEN_LEGACY_METADATA_KEYS:
+        cleaned.pop(key, None)
+
+    return cleaned
+
+
+# Backward-compatible aliases for staged migration.
+def _strip_legacy_trace_fields(raw_trace: dict) -> dict:
+    return _build_debug_trace_compat_payload(raw_trace)
+
 
 def _strip_legacy_runtime_metadata(raw_metadata: dict) -> dict:
-    metadata = dict(raw_metadata or {})
-    for key in _LEGACY_RUNTIME_METADATA_KEYS:
-        metadata.pop(key, None)
-    return metadata
+    return _build_multiagent_metadata(raw_metadata, None)
+
+
+# Compat alias used by existing tests/callers.
+_normalize_semantic_hits_detail_for_debug_trace = _normalize_semantic_hits_detail_for_debug_trace_compat
+
 
 def _to_sources(raw_sources: list[dict]) -> list[SourceResponse]:
     return [
@@ -281,16 +397,22 @@ def _to_sources(raw_sources: list[dict]) -> list[SourceResponse]:
     ]
 
 def _build_answer_response_from_adaptive(result: dict) -> AnswerResponse:
-    metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}) or {})
+    metadata = _build_multiagent_metadata(
+        result.get("metadata", {}) or {},
+        result.get("debug", {}) or {},
+    )
+    confidence_score = metadata.get("continuity_score")
+    if confidence_score is None:
+        confidence_score = metadata.get("confidence_score")
     return AnswerResponse(
         status=result.get("status", "success"),
         answer=result.get("answer", ""),
         concepts=result.get("concepts", []),
         sources=_to_sources(result.get("sources", [])),
-        recommended_mode=metadata.get("recommended_mode"),
-        decision_rule_id=metadata.get("decision_rule_id"),
-        confidence_level=metadata.get("confidence_level"),
-        confidence_score=metadata.get("confidence_score"),
+        recommended_mode=metadata.get("response_mode") or metadata.get("recommended_mode"),
+        decision_rule_id=None,
+        confidence_level=None,
+        confidence_score=confidence_score,
         metadata=metadata,
         timestamp=datetime.now().isoformat(),
         processing_time_seconds=result.get("processing_time_seconds", 0),

@@ -36,6 +36,11 @@ def _reset_store() -> None:
 
 
 def test_writer_last_debug_populated(monkeypatch) -> None:
+    class FakeResponses:
+        async def create(self, **_kwargs):
+            usage = SimpleNamespace(input_tokens=120, output_tokens=30, total_tokens=150)
+            return SimpleNamespace(output_text="готовый ответ", usage=usage)
+
     class FakeChatCompletions:
         async def create(self, **_kwargs):
             usage = SimpleNamespace(prompt_tokens=120, completion_tokens=30, total_tokens=150)
@@ -48,6 +53,7 @@ def test_writer_last_debug_populated(monkeypatch) -> None:
 
     class FakeClient:
         chat = FakeChat()
+        responses = FakeResponses()
 
     writer = writer_module.WriterAgent(client=FakeClient(), model="gpt-5-mini")
     contract = SimpleNamespace(
@@ -273,6 +279,14 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
             "writer_user_prompt": "usr",
             "writer_llm_response_raw": "resp",
             "model_used": "gpt-5-mini",
+            "writer_api_mode": "responses",
+            "writer_error": None,
+            "writer_fallback_used": False,
+            "state_analyzer_model": "gpt-5-mini",
+            "state_analyzer_api_mode": "responses",
+            "state_analyzer_error": None,
+            "state_analyzer_parse_error": None,
+            "state_analyzer_fallback_used": False,
             "validator_blocked": False,
             "validator_block_reason": None,
             "validator_quality_flags": [],
@@ -293,9 +307,13 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
     payload = response.json()
     assert payload["pipeline_version"] == "multiagent_v1"
     assert payload["agents"]["state_analyzer"]["nervous_state"] == "calm"
+    assert payload["agents"]["state_analyzer"]["api_mode"] == "responses"
     assert payload["agents"]["writer"]["tokens_used"] == 321
     assert payload["writer_llm"]["system_prompt"] == "sys"
+    assert payload["writer_llm"]["api_mode"] == "responses"
     assert payload["memory_context"]["rag_query"] == "hi hello"
+    assert "sd_level" not in payload
+    assert "user_level" not in payload
     assert isinstance(payload["session_dashboard"]["total_turns"], int)
     assert isinstance(payload["anomalies"], list)
 

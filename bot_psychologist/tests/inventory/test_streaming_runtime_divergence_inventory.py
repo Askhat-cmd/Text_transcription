@@ -26,8 +26,9 @@ def test_streaming_runtime_legacy_markers_are_sanitized() -> None:
     assert "_classify_parallel(" not in text
     assert "sd_classifier" not in text
 
-    # Active runtime keeps explicit sanitization of legacy trace fields.
-    assert "_strip_legacy_trace_fields(" in text
+    # Active runtime uses explicit multiagent builders + compat debug view.
+    assert "_build_multiagent_trace_storage_payload(" in text
+    assert "_build_debug_trace_compat_payload(" in text
     assert "\"sd_classification\"" in text
     assert "\"sd_detail\"" in text
     assert "user_level_adapter_applied" in text

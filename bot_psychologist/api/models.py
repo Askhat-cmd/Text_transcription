@@ -234,8 +234,8 @@ class LLMCallTrace(BaseModel):
 
 
 class DebugTrace(BaseModel):
-    """      ."""
-    trace_contract_version: str = "v2"
+    """Compatibility inline debug trace; active contract is MultiAgentTraceResponse."""
+    trace_contract_version: str = "multiagent_compat_v2"
     chunks_retrieved: List[ChunkTraceItem]
     chunks_after_filter: List[ChunkTraceItem] = Field(default_factory=list)
     llm_calls: List[LLMCallTrace]
@@ -315,6 +315,11 @@ class StateAnalyzerTrace(BaseModel):
     intent: str
     safety_flag: bool
     confidence: float
+    model: Optional[str] = None
+    api_mode: Optional[str] = None
+    error: Optional[str] = None
+    fallback_used: Optional[bool] = None
+    parse_error: Optional[str] = None
 
 
 class ThreadManagerTrace(BaseModel):
@@ -382,6 +387,9 @@ class WriterLLMTrace(BaseModel):
     tokens_completion: Optional[int] = None
     tokens_total: Optional[int] = None
     estimated_cost_usd: Optional[float] = None
+    api_mode: Optional[str] = None
+    error: Optional[str] = None
+    fallback_used: Optional[bool] = None
 
 
 class TurnDiffTrace(BaseModel):

@@ -39,11 +39,11 @@ from ..session_store import SessionStore, get_session_store
 from .common import (
     _append_trace_with_resolved_session,
     _build_answer_response_from_adaptive,
-    _normalize_semantic_hits_detail_for_debug_trace,
+    _build_debug_trace_compat_payload,
+    _build_multiagent_metadata,
+    _normalize_semantic_hits_detail_for_debug_trace_compat,
     _record_user,
     _run_multiagent_compat_answer,
-    _strip_legacy_runtime_metadata,
-    _strip_legacy_trace_fields,
     _to_chunk_trace_item,
     logger,
     _stats,
@@ -434,7 +434,10 @@ async def ask_adaptive_question(
                 first_step=first_step_response
             )
         
-        response_metadata = _strip_legacy_runtime_metadata(result.get("metadata", {}))
+        response_metadata = _build_multiagent_metadata(
+            result.get("metadata", {}),
+            result.get("debug", {}) or {},
+        )
         response_metadata["user_id"] = identity.user_id
         response_metadata["session_id"] = session_key
         response_metadata["conversation_id"] = identity.conversation_id
@@ -444,7 +447,10 @@ async def ask_adaptive_question(
         if request.debug:
             raw = result.get("debug_trace") or result.get("debug")
             try:
-                metadata = result.get("metadata", {}) or {}
+                metadata = _build_multiagent_metadata(
+                    result.get("metadata", {}) or {},
+                    raw if isinstance(raw, dict) else {},
+                )
                 raw_dict = raw if isinstance(raw, dict) else {}
 
                 chunks_retrieved_raw = []
@@ -514,7 +520,7 @@ async def ask_adaptive_question(
                         logger.warning(f"[DEBUG_TRACE] Invalid LLM call trace item skipped: {llm_exc}")
 
                 trace_payload = {
-                    "trace_contract_version": "v2",
+                    "trace_contract_version": "multiagent_compat_v2",
                     "chunks_retrieved": chunks_retrieved,
                     "chunks_after_filter": chunks_after_filter,
                     "llm_calls": llm_calls,
@@ -603,25 +609,25 @@ async def ask_adaptive_question(
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):
-                            trace_payload[key] = _strip_legacy_trace_fields(
+                            trace_payload[key] = _build_debug_trace_compat_payload(
                                 {"config_snapshot": raw_dict.get(key)},
                             ).get("config_snapshot")
                         elif key == "semantic_hits_detail":
-                            trace_payload[key] = _normalize_semantic_hits_detail_for_debug_trace(
+                            trace_payload[key] = _normalize_semantic_hits_detail_for_debug_trace_compat(
                                 raw_dict.get(key),
                             )
                         else:
                             trace_payload[key] = raw_dict.get(key)
 
                 if "semantic_hits_detail" in trace_payload:
-                    trace_payload["semantic_hits_detail"] = _normalize_semantic_hits_detail_for_debug_trace(
+                    trace_payload["semantic_hits_detail"] = _normalize_semantic_hits_detail_for_debug_trace_compat(
                         trace_payload.get("semantic_hits_detail"),
                     )
 
                 if trace_payload.get("decision_rule_id") is not None:
                     trace_payload["decision_rule_id"] = str(trace_payload.get("decision_rule_id"))
 
-                trace_payload = _strip_legacy_trace_fields(trace_payload)
+                trace_payload = _build_debug_trace_compat_payload(trace_payload)
 
                 trace = DebugTrace(**trace_payload)
 
@@ -770,7 +776,7 @@ async def ask_adaptive_question_stream(
             trace_raw = result.get("debug_trace") or result.get("debug")
             trace = trace_raw if isinstance(trace_raw, dict) else None
             if trace is not None:
-                trace = _strip_legacy_trace_fields(trace)
+                trace = _build_debug_trace_compat_payload(trace)
 
             done_payload = {
                 "done": True,

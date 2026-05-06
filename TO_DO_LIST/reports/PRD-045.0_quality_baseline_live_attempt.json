@@ -1,0 +1,34 @@
+{
+  "run_metadata": {
+    "date": "2026-05-06T10:36:32.955597Z",
+    "git_sha": "f6806ed",
+    "mode": "live",
+    "python": "3.13.2",
+    "backend_used": "http://localhost:8001/api/v1",
+    "api_available": false,
+    "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\quality_baseline_cases.json",
+    "cases_total": 5,
+    "cases_executed": 0,
+    "live_runtime_executed": false
+  },
+  "runtime_config_snapshot": {
+    "state_analyzer_model": null,
+    "writer_model": null,
+    "max_tokens": null,
+    "temperature": null,
+    "rag_top_k": null,
+    "rag_min_score": null
+  },
+  "summary": {
+    "cases_executed": 0,
+    "errors_count": 1,
+    "safety_cases": 0,
+    "avg_latency_ms": null,
+    "generic_risk_flags": 0,
+    "continuity_risk_flags": 0
+  },
+  "errors": [
+    "Live mode unavailable: identity probe failed: <urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение> | Start backend and provide a valid X-API-Key. Example: python -m uvicorn api.main:app --host 0.0.0.0 --port 8001"
+  ],
+  "case_results": []
+}

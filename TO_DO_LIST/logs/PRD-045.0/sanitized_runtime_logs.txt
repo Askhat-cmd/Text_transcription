@@ -1,0 +1,14 @@
+﻿PRD-045.0 sanitized runtime log snapshot
+Generated: 2026-05-06
+
+Live baseline probe result (sanitized):
+- Backend URL: http://localhost:8001/api/v1
+- Probe endpoint: /identity/me
+- Status: unavailable
+- Error: connection refused (WinError 10061)
+- Interpretation: local backend process was not running on port 8001 during this execution.
+
+Sensitive data handling:
+- No API keys written.
+- No bearer/session secrets written.
+- No raw private user chat logs captured.

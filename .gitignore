@@ -165,3 +165,7 @@ tests_after.txt
 tests_diff.txt
 tests_v*_before.txt
 tests_v*_after.txt
+
+# PRD audit artifacts
+!TO_DO_LIST/
+!TO_DO_LIST/**

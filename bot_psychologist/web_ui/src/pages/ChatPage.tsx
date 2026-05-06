@@ -4,7 +4,7 @@
  * Chat interface with server-side multi-chat sidebar and grouped history.
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   FiAlertTriangle,
@@ -173,6 +173,8 @@ const ChatPage: React.FC = () => {
 
   const [sessions, setSessions] = useState<ChatSession[]>([]);
   const [activeChatId, setActiveChatId] = useState('');
+  const activeChatIdRef = useRef(activeChatId);
+  const [messagesSessionId, setMessagesSessionId] = useState('');
   const [isSessionsLoading, setIsSessionsLoading] = useState(true);
   const [sidebarError, setSidebarError] = useState<string | null>(null);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
@@ -235,17 +237,48 @@ const ChatPage: React.FC = () => {
       .filter((group) => group.sessions.length > 0);
   }, [sessions]);
 
+  useEffect(() => {
+    activeChatIdRef.current = activeChatId;
+  }, [activeChatId]);
+
   const loadActiveChatHistory = useCallback(async (sessionId: string) => {
+    if (import.meta.env.DEV) {
+      console.debug('[ChatPage] load history start', { sessionId });
+    }
+
     try {
       const history = await apiService.getUserHistory(sessionId, 100);
+      if (activeChatIdRef.current !== sessionId) {
+        if (import.meta.env.DEV) {
+          console.debug('[ChatPage] load history ignored stale', {
+            sessionId,
+            active: activeChatIdRef.current,
+          });
+        }
+        return;
+      }
       const loadedMessages = historyToMessages(sessionId, history.turns);
       const hydratedMessages = loadedMessages.map((message) => ({
         ...message,
         trace: message.trace ?? getTrace(message.id),
       }));
+      setMessagesSessionId(sessionId);
       replaceMessages(hydratedMessages);
       clearError();
+      if (import.meta.env.DEV) {
+        console.debug('[ChatPage] load history applied', { sessionId, turns: history.turns.length });
+      }
     } catch (historyError) {
+      if (activeChatIdRef.current !== sessionId) {
+        if (import.meta.env.DEV) {
+          console.debug('[ChatPage] load history ignored stale', {
+            sessionId,
+            active: activeChatIdRef.current,
+          });
+        }
+        return;
+      }
+      setMessagesSessionId(sessionId);
       replaceMessages([]);
       setSidebarError(historyError instanceof Error ? historyError.message : 'Не удалось загрузить историю чата');
     }
@@ -258,7 +291,12 @@ const ChatPage: React.FC = () => {
     }
   }, [messages, setTrace]);
 
-  const loadSessions = useCallback(async (preferredSessionId?: string) => {
+  const loadSessions = useCallback(async (
+    preferredSessionId?: string,
+    options: { createIfEmpty?: boolean } = {},
+  ) => {
+    const { createIfEmpty = true } = options;
+
     if (!apiService.hasAPIKey()) {
       setIsSessionsLoading(false);
       setSessions([]);
@@ -272,9 +310,15 @@ const ChatPage: React.FC = () => {
       const response = await apiService.getUserSessions(userId, 200);
       let mapped = response.sessions.map(mapServerSession);
 
-      if (mapped.length === 0) {
+      if (mapped.length === 0 && createIfEmpty) {
         const created = await apiService.createUserSession(userId);
         mapped = [mapServerSession(created)];
+      }
+
+      if (mapped.length === 0) {
+        setSessions([]);
+        setActiveChatId('');
+        return;
       }
 
       const sorted = sortSessionsByUpdatedAt(mapped);
@@ -358,6 +402,7 @@ const ChatPage: React.FC = () => {
 
   useEffect(() => {
     if (!activeChatId) {
+      setMessagesSessionId('');
       replaceMessages([]);
       return;
     }
@@ -367,6 +412,7 @@ const ChatPage: React.FC = () => {
 
   useEffect(() => {
     if (!activeChatId) return;
+    if (messagesSessionId !== activeChatId) return;
 
     setSessions((previous) => {
       const next = previous.map((session) => {
@@ -389,12 +435,19 @@ const ChatPage: React.FC = () => {
 
       return sortSessionsByUpdatedAt(next);
     });
-  }, [messages, activeChatId]);
+  }, [messages, activeChatId, messagesSessionId]);
 
   const handleSendMessage = (message: string) => {
     if (!activeChatId) return;
-    void sendQuestion(message);
+    const sendingSessionId = activeChatId;
+    setMessagesSessionId(sendingSessionId);
     clearError();
+    void sendQuestion(message).finally(() => {
+      if (import.meta.env.DEV) {
+        console.debug('[ChatPage] send complete reload sessions', { sessionId: sendingSessionId });
+      }
+      void loadSessions(sendingSessionId, { createIfEmpty: false });
+    });
   };
 
   const handleNewChat = async () => {
@@ -404,6 +457,7 @@ const ChatPage: React.FC = () => {
 
       setSessions((prev) => sortSessionsByUpdatedAt([mapped, ...prev]));
       setActiveChatId(mapped.id);
+      setMessagesSessionId(mapped.id);
       replaceMessages([]);
       clearError();
       setSidebarError(null);
@@ -414,6 +468,9 @@ const ChatPage: React.FC = () => {
   };
 
   const handleSelectChat = (chatId: string) => {
+    if (import.meta.env.DEV) {
+      console.debug('[ChatPage] select chat', { chatId });
+    }
     setActiveChatId(chatId);
     setIsMobileSidebarOpen(false);
     clearError();
@@ -424,6 +481,7 @@ const ChatPage: React.FC = () => {
       await apiService.deleteUserSession(userId, chatId);
       const deletingActive = chatId === activeChatId;
       if (deletingActive) {
+        setMessagesSessionId('');
         replaceMessages([]);
       }
 
@@ -449,6 +507,7 @@ const ChatPage: React.FC = () => {
         return sortSessionsByUpdatedAt([mapped, ...remaining]);
       });
       setActiveChatId(mapped.id);
+      setMessagesSessionId(mapped.id);
       replaceMessages([]);
       clearError();
     } catch (clearChatError) {
@@ -562,6 +621,7 @@ const ChatPage: React.FC = () => {
 
       setSessions([mapped]);
       setActiveChatId(mapped.id);
+      setMessagesSessionId(mapped.id);
       replaceMessages([]);
       clearError();
 

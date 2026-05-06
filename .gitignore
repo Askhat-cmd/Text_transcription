@@ -1,11 +1,11 @@
-# ========================================
+﻿# ========================================
 # Text Transcription - Monorepo .gitignore
 # ========================================
-# Общие правила для монорепозитория
-# Специфичные правила для проектов находятся в их собственных .gitignore файлах
+# РћР±С‰РёРµ РїСЂР°РІРёР»Р° РґР»СЏ РјРѕРЅРѕСЂРµРїРѕР·РёС‚РѕСЂРёСЏ
+# РЎРїРµС†РёС„РёС‡РЅС‹Рµ РїСЂР°РІРёР»Р° РґР»СЏ РїСЂРѕРµРєС‚РѕРІ РЅР°С…РѕРґСЏС‚СЃСЏ РІ РёС… СЃРѕР±СЃС‚РІРµРЅРЅС‹С… .gitignore С„Р°Р№Р»Р°С…
 
 # ========================================
-# ПЕРЕМЕННЫЕ ОКРУЖЕНИЯ И КЛЮЧИ
+# РџР•Р Р•РњР•РќРќР«Р• РћРљР РЈР–Р•РќРРЇ Р РљР›Р®Р§Р
 # ========================================
 .env
 *.env
@@ -38,7 +38,7 @@ wheels/
 *.egg
 MANIFEST
 
-# Виртуальные окружения
+# Р’РёСЂС‚СѓР°Р»СЊРЅС‹Рµ РѕРєСЂСѓР¶РµРЅРёСЏ
 .venv/
 venv/
 ENV/
@@ -47,7 +47,7 @@ env/
 venv.bak/
 
 # ========================================
-# IDE И РЕДАКТОРЫ
+# IDE Р Р Р•Р”РђРљРўРћР Р«
 # ========================================
 .vscode/
 .idea/
@@ -62,7 +62,7 @@ venv.bak/
 .cursor/
 
 # ========================================
-# ЛОГИ И ВРЕМЕННЫЕ ФАЙЛЫ
+# Р›РћР“Р Р Р’Р Р•РњР•РќРќР«Р• Р¤РђР™Р›Р«
 # ========================================
 *.log
 logs/
@@ -75,24 +75,26 @@ yarn-error.log*
 dev-debug.log
 
 # ========================================
-# ДАННЫЕ ПРОЕКТА (voice_bot_pipeline)
+# Р”РђРќРќР«Р• РџР РћР•РљРўРђ (voice_bot_pipeline)
 # ========================================
-# Векторная база данных ChromaDB
+# Р’РµРєС‚РѕСЂРЅР°СЏ Р±Р°Р·Р° РґР°РЅРЅС‹С… ChromaDB
 voice_bot_pipeline/data/chromadb/
 
-# Реестр видео (может содержать чувствительные данные)
+# Р РµРµСЃС‚СЂ РІРёРґРµРѕ (РјРѕР¶РµС‚ СЃРѕРґРµСЂР¶Р°С‚СЊ С‡СѓРІСЃС‚РІРёС‚РµР»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ)
 voice_bot_pipeline/data/video_registry.json
 
-# Логи пайплайна
+# Р›РѕРіРё РїР°Р№РїР»Р°Р№РЅР°
 voice_bot_pipeline/pipeline.log
 
 # ========================================
-# ДАННЫЕ ПРОЕКТА (bot_psychologist)
+# Р”РђРќРќР«Р• РџР РћР•РљРўРђ (bot_psychologist)
 # ========================================
 bot_psychologist/logs/
 bot_psychologist/.cache_bot_agent/
 bot_psychologist/data/
 !bot_psychologist/data/.gitkeep
+!bot_psychologist/data/threads/
+!bot_psychologist/data/threads/.gitkeep
 bot_psychologist/.cache_bot_agent/tfidf_cache.joblib
 bot_psychologist/.cache_bot_agent/tfidf_cache.hash
 bot_psychologist/.tmp_pytest/
@@ -100,22 +102,17 @@ bot_psychologist/tests/_tmp_memory_persistence/
 bot_psychologist/tests/_tmp_memory_probe/
 bot_psychologist/tests/test_sqlite.db*
 
-# Временно разрешаем коммит логов бота для удаленной диагностики агентами
-!bot_psychologist/logs/
-!bot_psychologist/logs/**
-!bot_psychologist/logs/**/*.log
-!bot_psychologist/logs/**/*.log.*
 telegram_adapter/telegram_sessions.db
 
 # ========================================
-# ЗАВИСИМОСТИ
+# Р—РђР’РРЎРРњРћРЎРўР
 # ========================================
 node_modules/
 .pnp
 .pnp.js
 
 # ========================================
-# СИСТЕМНЫЕ ФАЙЛЫ
+# РЎРРЎРўР•РњРќР«Р• Р¤РђР™Р›Р«
 # ========================================
 .DS_Store
 .DS_Store?
@@ -127,7 +124,7 @@ Thumbs.db
 desktop.ini
 
 # ========================================
-# ПРОЧИЕ
+# РџР РћР§РР•
 # ========================================
 *.bak
 *.backup
@@ -137,7 +134,34 @@ desktop.ini
 .git_commit_msg.txt
 backups/
 
-# TaskMaster (опционально, если не хотите коммитить задачи)
+# TaskMaster (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ, РµСЃР»Рё РЅРµ С…РѕС‚РёС‚Рµ РєРѕРјРјРёС‚РёС‚СЊ Р·Р°РґР°С‡Рё)
 # .taskmaster/tasks/
 # .taskmaster/state.json
 
+
+# Python/test temp
+**/__pycache__/
+**/.pytest_cache/
+**/.tmp_pytest*/
+**/pytest-of-*/
+**/.torchinductor_*/
+**/_tmp_memory_persistence/
+**/_tmp_memory_probe/
+
+# Runtime local db/log artifacts
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.log
+.tmp_*.log
+.tmp_*.db
+
+# Local reports/snapshots
+live_test_report.*
+prd*_verify_report.json
+tests_before.txt
+tests_after.txt
+tests_diff.txt
+tests_v*_before.txt
+tests_v*_after.txt

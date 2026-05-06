@@ -1,4 +1,4 @@
-# Logs
+﻿# Logs are local runtime artifacts. Attach logs to chat when needed.
 logs/**
 !logs/
 !logs/.gitkeep
@@ -8,19 +8,6 @@ logs/**
 !logs/retrieval/.gitkeep
 !logs/error/
 !logs/error/.gitkeep
-*.log
-logs/**/*.log
-logs/**/*.log.*
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-dev-debug.log
-
-# Временно разрешаем коммит логов в репозиторий
-!logs/
-!logs/**
-!logs/**/*.log
-!logs/**/*.log.*
 
 # Dependency directories
 node_modules/
@@ -35,10 +22,11 @@ __pycache__/
 .cache_bot_agent/
 .taskmaster/
 *.db
+*.db-journal
 
 # Editor directories and files
-.idea
-.vscode
+.idea/
+.vscode/
 *.suo
 *.ntvs*
 *.njsproj

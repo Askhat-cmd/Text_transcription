@@ -1,78 +1,39 @@
 ﻿# Local Dev Runbook
 
-## Цель
+## Goal
+Run backend and web UI locally with the current multiagent runtime contract.
 
-Быстрый и воспроизводимый локальный запуск всех основных сервисов после миграции проекта.
+## Preconditions
+- Repository root: `C:\My_practice\Text_transcription`
+- Python venv initialized in `bot_psychologist/.venv`
+- Node dependencies installed in `bot_psychologist/web_ui`
 
-## Предпосылки
-
-- Репозиторий: `C:\My_practice\Text_transcription`
-- `bot_psychologist` venv (Python 3.12)
-- `Bot_data_base` venv (Python 3.10)
-
-## Шаг 1. Запуск bot_psychologist API
-
+## 1. Start backend
 ```powershell
 cd C:\My_practice\Text_transcription\bot_psychologist
 .venv\Scripts\Activate.ps1
 python -m uvicorn api.main:app --host 0.0.0.0 --port 8001
 ```
 
-Проверка:
+Health check:
 - `http://localhost:8001/api/v1/health`
 
-## Шаг 2. Запуск Bot_data_base API
-
-```powershell
-cd C:\My_practice\Text_transcription\Bot_data_base
-.venv\Scripts\Activate.ps1
-python -m uvicorn api.main:app --host 0.0.0.0 --port 8003
-```
-
-Проверка:
-- `http://localhost:8003/`
-- `http://localhost:8003/api/registry/`
-
-## Шаг 3. Запуск Web UI (опционально)
-
+## 2. Start web UI
 ```powershell
 cd C:\My_practice\Text_transcription\bot_psychologist\web_ui
 npm install
 npm run dev
 ```
 
-Проверка:
+Open:
 - `http://localhost:3000`
 
-## Как трактовать `health=degraded_fallback`
+## 3. Runtime contract smoke
+1. `GET /api/admin/runtime/effective` with `X-API-Key` returns `active_runtime=multiagent`.
+2. `POST /api/v1/questions/adaptive` returns non-empty `answer`.
+3. Trace endpoint `/api/debug/session/{id}/multiagent-trace` returns `200`.
 
-Если backend `bot_psychologist` работает, но `Bot_data_base` не поднят/недоступен,
-`GET /api/v1/health` может вернуть:
-- `status: degraded_fallback`
-- `bot_data_base_api: unavailable`
-
-Это штатный fallback-режим, а не полная недоступность сервиса.
-
-## Smoke-проверки после старта
-
-1. `GET /api/v1/health` -> `200`
-2. `GET /api/admin/runtime/effective` (c `X-API-Key`) -> `active_runtime=multiagent`
-3. `GET /api/v1/identity/me` (с `X-API-Key` и identity headers) -> `200`
-4. `POST /api/v1/conversations/new` -> `200`
-5. `POST /api/v1/questions/adaptive` -> `200` и непустой `answer`
-6. `POST /api/v1/conversations/{id}/close` -> `200`
-
-## Runtime flags (PRD-040)
-
-- `MULTIAGENT_ENABLED` и `LEGACY_PIPELINE_ENABLED` считаются deprecated compatibility flags.
-- Даже при `LEGACY_PIPELINE_ENABLED=true` active runtime остается `multiagent`.
-- Источник истины для runtime: `/api/admin/runtime/effective`.
-
-## Реализовано vs планируется
-
-### Реализовано
-- Локальный запуск backend + data service + web-ui.
-- Fallback-поведение при недоступности data service.
-
-### Планируется
-- Автоматизация smoke-run (скрипт единого старта и проверки).
+## Runtime flags
+- `MULTIAGENT_ENABLED` and `LEGACY_PIPELINE_ENABLED` are compatibility flags.
+- Effective runtime remains multiagent-only after PRD-041/042 cutover.
+- Always verify effective runtime via admin endpoint, not by assumptions from env text.

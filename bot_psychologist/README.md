@@ -24,11 +24,13 @@ Bot Psychologist — активный runtime проекта Neo MindBot для 
 - Первый живой прогон мультиагентной системы: 5/5 TC passed (2026-04-26)
 - `pytest tests/multiagent -q` → 190 passed
 
-### Что планируется
+### Текущий статус
 
-- PRD-026: обновление трейса под мультиагентную архитектуру
-- PRD-027: веб-AdminPage с управлением агентами на лету
-- PRD-042: Post-Purge Stabilization & Final Regression (completed)
+- Active runtime: `multiagent_adapter`.
+- Legacy cascade physically removed in PRD-041.
+- Post-purge stabilization completed in PRD-042.
+- `answer_adaptive.py` remains only as a compatibility shim.
+- Telegram adapter is present as future integration layer, but not an active production channel yet.
 
 ## Мультиагентная система (Эпоха 4)
 
@@ -188,11 +190,13 @@ pytest tests/multiagent/test_thread_storage_persistence.py -q
 pytest tests/test_feature_flags.py -q
 ```
 
-## Что дальше
+## Следующие направления
 
-1. Довести PRD-026: богатый мультиагентный трейс в UI.
-2. Довести PRD-027: AdminPage для оперативного управления агентами.
-3. Провести PRD-042: Post-Purge Stabilization & Final Regression.
+1. Repository hygiene and documentation consolidation.
+2. Production hardening:
+   APP_ENV production guard, strict CORS, Redis/shared rate limiting, ThreadStorage JSON -> DB, safe/full trace separation.
+3. Quality tuning:
+   response_mode evaluation, Writer prompt quality, RAG ranking, evaluation dataset.
 
 ## Документация
 

@@ -73,7 +73,10 @@ def test_orchestrator_get(admin_client):
     assert payload["actual_pipeline_mode"] == "multiagent_only"
     assert payload["active_runtime"] == "multiagent"
     assert payload["runtime_entrypoint"] in {"multiagent_adapter", "answer_adaptive_deprecated_shim"}
-    assert payload["legacy"]["cascade_status"] == "deprecated_retained_for_purge"
+    assert payload["legacy"]["cascade_status"] in {
+        "deprecated_retained_for_purge",
+        "physically_removed",
+    }
     assert payload["compatibility"]["pipeline_mode_read_only"] is True
     assert isinstance(payload["env_flags"], dict)
 

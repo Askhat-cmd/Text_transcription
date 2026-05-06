@@ -169,3 +169,6 @@ tests_v*_after.txt
 # PRD audit artifacts
 !TO_DO_LIST/
 !TO_DO_LIST/**
+
+# Local archive (keep locally, do not track on GitHub)
+АРХИВ_отработано/

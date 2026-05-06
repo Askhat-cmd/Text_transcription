@@ -1,7 +1,7 @@
 {
   "run_metadata": {
-    "date": "2026-05-06T11:38:56.331155Z",
-    "git_sha": "b14d386",
+    "date": "2026-05-06T11:50:00.887646Z",
+    "git_sha": "d49d935",
     "mode": "live",
     "python": "3.13.2",
     "backend_used": "http://127.0.0.1:8011/api/v1",
@@ -23,7 +23,7 @@
     "cases_executed": 3,
     "errors_count": 0,
     "safety_cases": 0,
-    "avg_latency_ms": 10044.03,
+    "avg_latency_ms": 12442.68,
     "generic_risk_flags": 2,
     "continuity_risk_flags": 0
   },
@@ -58,7 +58,7 @@
           "case_id": "QB-001",
           "turn_index": 1,
           "user_message": "Привет",
-          "answer": "Слышу тебя и рад, что ты написал. Мне приятно, что ты здесь — можешь продолжать, когда почувствуешь готовность. Я на связи.",
+          "answer": "Привет — рад(а), что написал(а). Мне приятно, что ты здесь; можешь писать дальше, когда будешь готов(а). Я на связи.",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -81,7 +81,7 @@
             "quality_trace": {
               "version": "quality_trace_v1",
               "answer": {
-                "chars": 123,
+                "chars": 116,
                 "sentences": 3,
                 "questions": 0,
                 "too_short": false,
@@ -110,7 +110,7 @@
                 "closed_loops_count": 0,
                 "has_open_loops": false,
                 "has_closed_loops": false,
-                "turns_in_phase": 3
+                "turns_in_phase": 4
               },
               "memory": {
                 "context_turns": 6,
@@ -125,7 +125,7 @@
                 "answer_mentions_recent_context": true,
                 "answer_mentions_open_loop": false,
                 "possible_closed_loop_repetition": false,
-                "context_overlap_terms_count": 16,
+                "context_overlap_terms_count": 14,
                 "open_loop_overlap_terms_count": 0,
                 "closed_loop_overlap_terms_count": 0
               },
@@ -152,13 +152,13 @@
             "too_many_questions": false,
             "contains_numbered_list": false,
             "generic_phrase_risk": false,
-            "mentions_user_context": false,
+            "mentions_user_context": true,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 8208.027599999696
+          "latency_ms": 11329.5092999997
         }
       ],
-      "final_answer": "Слышу тебя и рад, что ты написал. Мне приятно, что ты здесь — можешь продолжать, когда почувствуешь готовность. Я на связи.",
+      "final_answer": "Привет — рад(а), что написал(а). Мне приятно, что ты здесь; можешь писать дальше, когда будешь готов(а). Я на связи.",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -181,7 +181,7 @@
         "quality_trace": {
           "version": "quality_trace_v1",
           "answer": {
-            "chars": 123,
+            "chars": 116,
             "sentences": 3,
             "questions": 0,
             "too_short": false,
@@ -210,7 +210,7 @@
             "closed_loops_count": 0,
             "has_open_loops": false,
             "has_closed_loops": false,
-            "turns_in_phase": 3
+            "turns_in_phase": 4
           },
           "memory": {
             "context_turns": 6,
@@ -225,7 +225,7 @@
             "answer_mentions_recent_context": true,
             "answer_mentions_open_loop": false,
             "possible_closed_loop_repetition": false,
-            "context_overlap_terms_count": 16,
+            "context_overlap_terms_count": 14,
             "open_loop_overlap_terms_count": 0,
             "closed_loop_overlap_terms_count": 0
           },
@@ -252,7 +252,7 @@
         "too_many_questions": false,
         "contains_numbered_list": false,
         "generic_phrase_risk": false,
-        "mentions_user_context": false,
+        "mentions_user_context": true,
         "has_practice_step_when_expected": null
       },
       "error": null
@@ -284,7 +284,7 @@
           "case_id": "QB-002",
           "turn_index": 1,
           "user_message": "Я очень устал, просто хочу услышать пару спокойных слов",
-          "answer": "Ты глубоко устал и сейчас тебе важно не решение, а простая тёплая опора — несколько спокойных слов, которые дадут передышку и позволят на мгновение отпустить напряжение. Похоже, ты просишь о тихом присутствии, чтобы почувствовать, что тебя слышат и можно немного успокоиться. \n\nХочешь, чтобы я сейчас просто помолчал рядом или чтобы я сказал ещё немного спокойных слов?",
+          "answer": "Ты очень устал и сейчас тебе важно не столько решение, сколько тихая поддержка — пару спокойных слов, которые позволят передохнуть. Похоже, хочешь на мгновение отпустить все требования и просто почувствовать, что кто‑то рядом и ничего от тебя не ждёт. Могу сказать: ты сделал(а) то, что смог(ла) сегодня, и сейчас можно позволить себе паузу и глубокий вдох. Хочешь, чтобы я помолчал(а) вместе с тобой несколько минут или предпочитаешь ещё пару мягких фраз?",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -307,8 +307,8 @@
             "quality_trace": {
               "version": "quality_trace_v1",
               "answer": {
-                "chars": 369,
-                "sentences": 3,
+                "chars": 456,
+                "sentences": 4,
                 "questions": 1,
                 "too_short": false,
                 "too_long": false,
@@ -336,7 +336,7 @@
                 "closed_loops_count": 0,
                 "has_open_loops": false,
                 "has_closed_loops": false,
-                "turns_in_phase": 3
+                "turns_in_phase": 4
               },
               "memory": {
                 "context_turns": 6,
@@ -351,14 +351,14 @@
                 "answer_mentions_recent_context": true,
                 "answer_mentions_open_loop": false,
                 "possible_closed_loop_repetition": false,
-                "context_overlap_terms_count": 18,
+                "context_overlap_terms_count": 27,
                 "open_loop_overlap_terms_count": 0,
                 "closed_loop_overlap_terms_count": 0
               },
               "response_mode": {
                 "mode": "reflect",
                 "goal_present": true,
-                "practice_step_present": false,
+                "practice_step_present": true,
                 "mode_risk_flags": []
               },
               "validator": {
@@ -383,10 +383,10 @@
             "mentions_user_context": true,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 10993.579199999658
+          "latency_ms": 12528.33610000016
         }
       ],
-      "final_answer": "Ты глубоко устал и сейчас тебе важно не решение, а простая тёплая опора — несколько спокойных слов, которые дадут передышку и позволят на мгновение отпустить напряжение. Похоже, ты просишь о тихом присутствии, чтобы почувствовать, что тебя слышат и можно немного успокоиться. \n\nХочешь, чтобы я сейчас просто помолчал рядом или чтобы я сказал ещё немного спокойных слов?",
+      "final_answer": "Ты очень устал и сейчас тебе важно не столько решение, сколько тихая поддержка — пару спокойных слов, которые позволят передохнуть. Похоже, хочешь на мгновение отпустить все требования и просто почувствовать, что кто‑то рядом и ничего от тебя не ждёт. Могу сказать: ты сделал(а) то, что смог(ла) сегодня, и сейчас можно позволить себе паузу и глубокий вдох. Хочешь, чтобы я помолчал(а) вместе с тобой несколько минут или предпочитаешь ещё пару мягких фраз?",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -409,8 +409,8 @@
         "quality_trace": {
           "version": "quality_trace_v1",
           "answer": {
-            "chars": 369,
-            "sentences": 3,
+            "chars": 456,
+            "sentences": 4,
             "questions": 1,
             "too_short": false,
             "too_long": false,
@@ -438,7 +438,7 @@
             "closed_loops_count": 0,
             "has_open_loops": false,
             "has_closed_loops": false,
-            "turns_in_phase": 3
+            "turns_in_phase": 4
           },
           "memory": {
             "context_turns": 6,
@@ -453,14 +453,14 @@
             "answer_mentions_recent_context": true,
             "answer_mentions_open_loop": false,
             "possible_closed_loop_repetition": false,
-            "context_overlap_terms_count": 18,
+            "context_overlap_terms_count": 27,
             "open_loop_overlap_terms_count": 0,
             "closed_loop_overlap_terms_count": 0
           },
           "response_mode": {
             "mode": "reflect",
             "goal_present": true,
-            "practice_step_present": false,
+            "practice_step_present": true,
             "mode_risk_flags": []
           },
           "validator": {
@@ -514,7 +514,7 @@
           "case_id": "QB-003",
           "turn_index": 1,
           "user_message": "Не знаю, что со мной, все как-то не так",
-          "answer": "Похоже, у тебя есть постоянное, фоновое ощущение, что что-то не на месте — не просто плохое настроение, а такой внутренний «шум», который делает всё тяжёлым и чужим. Это ощущение кажется устойчивым и пронизывает разные сферы жизни, как будто что-то внутри постоянно сигналит, что ты не такой, каким должен быть. Когда это началось или что сейчас мешает больше всего?",
+          "answer": "Похоже, ты испытываешь сильное ощущение, что что-то внутри не в порядке — всё кажется не на своих местах и будто мешает жить. Это не просто краткое расстройство, а устойчивый фон, который делает знакомые вещи тяжёлыми и чужими. Ты не уверен(а), как это описать точнее, и это добавляет беспокойства. Можешь ли ты вспомнить, когда впервые заметил(а) это состояние или что случилось перед тем, как оно появилось?",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -537,8 +537,8 @@
             "quality_trace": {
               "version": "quality_trace_v1",
               "answer": {
-                "chars": 366,
-                "sentences": 3,
+                "chars": 409,
+                "sentences": 4,
                 "questions": 1,
                 "too_short": false,
                 "too_long": false,
@@ -566,7 +566,7 @@
                 "closed_loops_count": 0,
                 "has_open_loops": false,
                 "has_closed_loops": false,
-                "turns_in_phase": 3
+                "turns_in_phase": 4
               },
               "memory": {
                 "context_turns": 6,
@@ -581,7 +581,7 @@
                 "answer_mentions_recent_context": true,
                 "answer_mentions_open_loop": false,
                 "possible_closed_loop_repetition": false,
-                "context_overlap_terms_count": 25,
+                "context_overlap_terms_count": 20,
                 "open_loop_overlap_terms_count": 0,
                 "closed_loop_overlap_terms_count": 0
               },
@@ -613,10 +613,10 @@
             "mentions_user_context": true,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 10930.487900001026
+          "latency_ms": 13470.203900000342
         }
       ],
-      "final_answer": "Похоже, у тебя есть постоянное, фоновое ощущение, что что-то не на месте — не просто плохое настроение, а такой внутренний «шум», который делает всё тяжёлым и чужим. Это ощущение кажется устойчивым и пронизывает разные сферы жизни, как будто что-то внутри постоянно сигналит, что ты не такой, каким должен быть. Когда это началось или что сейчас мешает больше всего?",
+      "final_answer": "Похоже, ты испытываешь сильное ощущение, что что-то внутри не в порядке — всё кажется не на своих местах и будто мешает жить. Это не просто краткое расстройство, а устойчивый фон, который делает знакомые вещи тяжёлыми и чужими. Ты не уверен(а), как это описать точнее, и это добавляет беспокойства. Можешь ли ты вспомнить, когда впервые заметил(а) это состояние или что случилось перед тем, как оно появилось?",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -639,8 +639,8 @@
         "quality_trace": {
           "version": "quality_trace_v1",
           "answer": {
-            "chars": 366,
-            "sentences": 3,
+            "chars": 409,
+            "sentences": 4,
             "questions": 1,
             "too_short": false,
             "too_long": false,
@@ -668,7 +668,7 @@
             "closed_loops_count": 0,
             "has_open_loops": false,
             "has_closed_loops": false,
-            "turns_in_phase": 3
+            "turns_in_phase": 4
           },
           "memory": {
             "context_turns": 6,
@@ -683,7 +683,7 @@
             "answer_mentions_recent_context": true,
             "answer_mentions_open_loop": false,
             "possible_closed_loop_repetition": false,
-            "context_overlap_terms_count": 25,
+            "context_overlap_terms_count": 20,
             "open_loop_overlap_terms_count": 0,
             "closed_loop_overlap_terms_count": 0
           },

@@ -1,0 +1,74 @@
+﻿# PRD-045.2 command output
+
+## python -m pytest bot_psychologist/tests/multiagent/test_writer_prompt_contract.py -q
+..                                                                       [100%]
+2 passed in 0.10s
+
+ExitCode: 0
+
+## python -m pytest bot_psychologist/tests/multiagent/test_orchestrator_e2e.py -q
+...............                                                          [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_orchestrator_e2e.py: 17 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_orchestrator_e2e.py::test_e2e_11_new_thread_archived
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+15 passed, 18 warnings in 0.20s
+
+ExitCode: 0
+
+## python -m pytest bot_psychologist/tests/multiagent/test_quality_trace.py -q
+.....                                                                    [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_quality_trace.py::test_quality_trace_returns_dict_and_expected_top_keys
+tests/multiagent/test_quality_trace.py::test_quality_trace_marks_questions_list_and_generic_risk
+tests/multiagent/test_quality_trace.py::test_quality_trace_confidence_and_continuity_buckets
+tests/multiagent/test_quality_trace.py::test_quality_trace_practice_mode_flag_when_no_step
+tests/multiagent/test_quality_trace.py::test_quality_trace_has_no_raw_user_text_or_raw_context
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_quality_trace.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+5 passed, 5 warnings in 0.10s
+
+ExitCode: 0
+
+## python -m pytest bot_psychologist/tests/evaluation -q
+..                                                                       [100%]
+2 passed in 0.02s
+
+ExitCode: 0
+
+## $env:PYTHONPATH="bot_psychologist"; python -m pytest bot_psychologist/tests/api/test_quality_trace_api_contract.py -q; Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
+.                                                                        [100%]
+1 passed in 1.16s
+
+ExitCode: 0
+
+## $env:PYTHONPATH="bot_psychologist"; python -m pytest bot_psychologist/tests/api/test_multiagent_trace_storage_consistency.py -q; Remove-Item Env:PYTHONPATH -ErrorAction SilentlyContinue
+...                                                                      [100%]
+3 passed in 1.77s
+
+ExitCode: 0
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode dry-run
+[OK] dry-run report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.json
+[OK] dry-run report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.md
+
+ExitCode: 0
+
+## Start temporary API server on 8011
+Started PID: 16336
+Server readiness: OK
+## python bot_psychologist/scripts/run_quality_baseline.py --mode live --limit 3 --api-base-url http://127.0.0.1:8011/api/v1
+[OK] live report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.json
+[OK] live report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.md
+
+ExitCode: 0
+Stopped PID: 16336
+

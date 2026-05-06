@@ -1,10 +1,10 @@
 {
   "run_metadata": {
-    "date": "2026-05-06T11:17:41.434035Z",
-    "git_sha": "29c8d5f",
+    "date": "2026-05-06T11:38:56.331155Z",
+    "git_sha": "b14d386",
     "mode": "live",
     "python": "3.13.2",
-    "backend_used": "http://localhost:8001/api/v1",
+    "backend_used": "http://127.0.0.1:8011/api/v1",
     "api_available": true,
     "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\quality_baseline_cases.json",
     "cases_total": 3,
@@ -23,7 +23,7 @@
     "cases_executed": 3,
     "errors_count": 0,
     "safety_cases": 0,
-    "avg_latency_ms": 11137.6,
+    "avg_latency_ms": 10044.03,
     "generic_risk_flags": 2,
     "continuity_risk_flags": 0
   },
@@ -58,7 +58,7 @@
           "case_id": "QB-001",
           "turn_index": 1,
           "user_message": "Привет",
-          "answer": "Привет — слышу тебя. Мне приятно, что ты написал. Можешь продолжать, когда будешь готов.",
+          "answer": "Слышу тебя и рад, что ты написал. Мне приятно, что ты здесь — можешь продолжать, когда почувствуешь готовность. Я на связи.",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -77,8 +77,72 @@
             "model_max_tokens": null,
             "validator_blocked": null,
             "validator_quality_flags": null,
-            "quality_trace_version": null,
-            "quality_trace": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 123,
+                "sentences": 3,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "contact",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 3
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 2,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 16,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "validate",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
             "quality_trace_error": null,
             "timings": {}
           },
@@ -88,13 +152,13 @@
             "too_many_questions": false,
             "contains_numbered_list": false,
             "generic_phrase_risk": false,
-            "mentions_user_context": true,
+            "mentions_user_context": false,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 7855.171199998949
+          "latency_ms": 8208.027599999696
         }
       ],
-      "final_answer": "Привет — слышу тебя. Мне приятно, что ты написал. Можешь продолжать, когда будешь готов.",
+      "final_answer": "Слышу тебя и рад, что ты написал. Мне приятно, что ты здесь — можешь продолжать, когда почувствуешь готовность. Я на связи.",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -113,8 +177,72 @@
         "model_max_tokens": null,
         "validator_blocked": null,
         "validator_quality_flags": null,
-        "quality_trace_version": null,
-        "quality_trace": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 123,
+            "sentences": 3,
+            "questions": 0,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "contact",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 3
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 2,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 16,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "validate",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
         "quality_trace_error": null,
         "timings": {}
       },
@@ -124,7 +252,7 @@
         "too_many_questions": false,
         "contains_numbered_list": false,
         "generic_phrase_risk": false,
-        "mentions_user_context": true,
+        "mentions_user_context": false,
         "has_practice_step_when_expected": null
       },
       "error": null
@@ -156,7 +284,7 @@
           "case_id": "QB-002",
           "turn_index": 1,
           "user_message": "Я очень устал, просто хочу услышать пару спокойных слов",
-          "answer": "Ты чувствуешь сильную усталость и просто ищешь тихую поддержку — пару спокойных слов, которые позволят тебе на мгновение передохнуть. Это похоже на желание, чтобы кто‑то просто был рядом без требований и суеты, дать тебе пространство для восстановления. Хочешь, чтобы эти слова были более мягкими и обволакивающими или короткими и простыми?",
+          "answer": "Ты глубоко устал и сейчас тебе важно не решение, а простая тёплая опора — несколько спокойных слов, которые дадут передышку и позволят на мгновение отпустить напряжение. Похоже, ты просишь о тихом присутствии, чтобы почувствовать, что тебя слышат и можно немного успокоиться. \n\nХочешь, чтобы я сейчас просто помолчал рядом или чтобы я сказал ещё немного спокойных слов?",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -175,8 +303,74 @@
             "model_max_tokens": null,
             "validator_blocked": null,
             "validator_quality_flags": null,
-            "quality_trace_version": null,
-            "quality_trace": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 369,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 3
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 18,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
             "quality_trace_error": null,
             "timings": {}
           },
@@ -189,10 +383,10 @@
             "mentions_user_context": true,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 12797.753999999259
+          "latency_ms": 10993.579199999658
         }
       ],
-      "final_answer": "Ты чувствуешь сильную усталость и просто ищешь тихую поддержку — пару спокойных слов, которые позволят тебе на мгновение передохнуть. Это похоже на желание, чтобы кто‑то просто был рядом без требований и суеты, дать тебе пространство для восстановления. Хочешь, чтобы эти слова были более мягкими и обволакивающими или короткими и простыми?",
+      "final_answer": "Ты глубоко устал и сейчас тебе важно не решение, а простая тёплая опора — несколько спокойных слов, которые дадут передышку и позволят на мгновение отпустить напряжение. Похоже, ты просишь о тихом присутствии, чтобы почувствовать, что тебя слышат и можно немного успокоиться. \n\nХочешь, чтобы я сейчас просто помолчал рядом или чтобы я сказал ещё немного спокойных слов?",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -211,8 +405,74 @@
         "model_max_tokens": null,
         "validator_blocked": null,
         "validator_quality_flags": null,
-        "quality_trace_version": null,
-        "quality_trace": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 369,
+            "sentences": 3,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "generic_markers_count": 1
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "explore",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 3
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 18,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": [
+            "generic_phrase_risk"
+          ]
+        },
         "quality_trace_error": null,
         "timings": {}
       },
@@ -254,7 +514,7 @@
           "case_id": "QB-003",
           "turn_index": 1,
           "user_message": "Не знаю, что со мной, все как-то не так",
-          "answer": "Звучит так, будто сейчас всё кажется не на своих местах: есть внутреннее ощущение сбоя или постоянный фон, который мешает жить и делает всё непривычно тяжёлым. Похоже, это не просто плохое настроение, а как будто что-то внутри постоянно подсказывает, что ты не соответствуешь ожиданиям или не на своём месте. Хочешь ли ты сказать, когда это началось — недавно или это длится уже давно?",
+          "answer": "Похоже, у тебя есть постоянное, фоновое ощущение, что что-то не на месте — не просто плохое настроение, а такой внутренний «шум», который делает всё тяжёлым и чужим. Это ощущение кажется устойчивым и пронизывает разные сферы жизни, как будто что-то внутри постоянно сигналит, что ты не такой, каким должен быть. Когда это началось или что сейчас мешает больше всего?",
           "debug": {
             "pipeline_version": "multiagent_v1",
             "nervous_state": "window",
@@ -273,8 +533,74 @@
             "model_max_tokens": null,
             "validator_blocked": null,
             "validator_quality_flags": null,
-            "quality_trace_version": null,
-            "quality_trace": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 366,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "clarify",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 3
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 25,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
             "quality_trace_error": null,
             "timings": {}
           },
@@ -287,10 +613,10 @@
             "mentions_user_context": true,
             "has_practice_step_when_expected": null
           },
-          "latency_ms": 12759.882299998935
+          "latency_ms": 10930.487900001026
         }
       ],
-      "final_answer": "Звучит так, будто сейчас всё кажется не на своих местах: есть внутреннее ощущение сбоя или постоянный фон, который мешает жить и делает всё непривычно тяжёлым. Похоже, это не просто плохое настроение, а как будто что-то внутри постоянно подсказывает, что ты не соответствуешь ожиданиям или не на своём месте. Хочешь ли ты сказать, когда это началось — недавно или это длится уже давно?",
+      "final_answer": "Похоже, у тебя есть постоянное, фоновое ощущение, что что-то не на месте — не просто плохое настроение, а такой внутренний «шум», который делает всё тяжёлым и чужим. Это ощущение кажется устойчивым и пронизывает разные сферы жизни, как будто что-то внутри постоянно сигналит, что ты не такой, каким должен быть. Когда это началось или что сейчас мешает больше всего?",
       "final_debug_summary": {
         "pipeline_version": "multiagent_v1",
         "nervous_state": "window",
@@ -309,8 +635,74 @@
         "model_max_tokens": null,
         "validator_blocked": null,
         "validator_quality_flags": null,
-        "quality_trace_version": null,
-        "quality_trace": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 366,
+            "sentences": 3,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "generic_markers_count": 1
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "clarify",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 3
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 25,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": [
+            "generic_phrase_risk"
+          ]
+        },
         "quality_trace_error": null,
         "timings": {}
       },

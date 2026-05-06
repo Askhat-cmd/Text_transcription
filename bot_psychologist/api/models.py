@@ -299,6 +299,9 @@ class DebugTrace(BaseModel):
     informational_mode: Optional[bool] = None
     applied_mode_prompt: Optional[str] = None
     turn_diff: Optional[TurnDiff] = None
+    quality_trace_version: Optional[str] = None
+    quality_trace: Optional[Dict[str, Any]] = None
+    quality_trace_error: Optional[str] = None
 
 
 class AgentTimings(BaseModel):
@@ -429,6 +432,9 @@ class MultiAgentTraceResponse(BaseModel):
     turn_diff: Optional[TurnDiffTrace] = None
     anomalies: List[AnomalyItem] = Field(default_factory=list)
     session_dashboard: Optional[SessionDashboard] = None
+    quality_trace_version: Optional[str] = None
+    quality_trace: Optional[Dict[str, Any]] = None
+    quality_trace_error: Optional[str] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):
@@ -582,6 +588,5 @@ class StatsResponse(BaseModel):
     top_interests: List[str]
     feedback_stats: Dict[str, int]
     timestamp: str
-
 
 

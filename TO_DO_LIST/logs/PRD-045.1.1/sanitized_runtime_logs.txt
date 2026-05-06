@@ -1,0 +1,25 @@
+﻿# PRD-045.1.1 sanitized runtime logs
+
+Date: 2026-05-06
+Scope: delivery of `quality_trace` through API/debug surfaces and baseline live extraction.
+
+## Root Cause
+`quality_trace` терялся на API-слое по двум причинам:
+1. В `api/routes/chat.py` при сборке `trace` использовался приоритет `debug_trace` над `debug`, и поля `quality_trace*` из `debug` не попадали в финальный payload.
+2. В `api/models.py::DebugTrace` отсутствовали поля `quality_trace_version`, `quality_trace`, `quality_trace_error`, поэтому даже при наличии в payload Pydantic их отбрасывал.
+
+## Fix Summary
+- Добавлены поля quality trace в `DebugTrace` и `MultiAgentTraceResponse`.
+- В `chat.py` добавлен merge `debug_trace + debug` с приоритетом непустых значений из `debug`.
+- В trace extension list добавлены ключи: `quality_trace_version`, `quality_trace`, `quality_trace_error`.
+- В `debug_routes.py` endpoint `/multiagent-trace` теперь возвращает quality trace поля.
+
+## Runtime Verification
+- Live baseline against existing `localhost:8001` initially still showed `Quality trace: null` (stale running process context).
+- Verification with temporary updated API instance on `127.0.0.1:8011` produced:
+  - `Quality trace summary: []`
+  - `Quality trace summary: ["generic_phrase_risk"]`
+
+## Safety
+- No secrets, API keys, bearer/session tokens, DB dumps or raw private logs recorded here.
+- `quality_trace` remains compact deterministic audit layer (flags/counters), without raw user text or raw memory chunks.

@@ -54,6 +54,12 @@ def _stub_multiagent_runtime(*, query: str, user_id: str, **_kwargs: Any) -> dic
         "state_analyzer_api_mode": "responses",
         "validator_blocked": False,
         "validator_quality_flags": [],
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+            "version": "quality_trace_v1",
+            "summary_flags": ["generic_phrase_risk"],
+        },
+        "quality_trace_error": None,
     }
     return {
         "status": "ok",
@@ -128,6 +134,8 @@ def test_multiagent_trace_endpoint_consistent_with_adaptive_response(client: Tes
     payload = response.json()
     assert payload["trace"] is not None
     assert payload["metadata"]["runtime"] == "multiagent"
+    assert payload["trace"]["quality_trace_version"] == "quality_trace_v1"
+    assert payload["trace"]["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
 
     trace_response = client.get(
         f"/api/debug/session/{session_id}/multiagent-trace",
@@ -138,6 +146,18 @@ def test_multiagent_trace_endpoint_consistent_with_adaptive_response(client: Tes
     assert trace_payload["pipeline_version"] == "multiagent_v1"
     assert trace_payload["writer_llm"]["model"] == "gpt-5-mini"
     assert trace_payload["writer_llm"]["api_mode"] == "responses"
+    assert trace_payload["quality_trace_version"] == "quality_trace_v1"
+    assert trace_payload["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
+
+    traces_response = client.get(
+        f"/api/debug/session/{session_id}/traces",
+        headers=DEV_HEADERS,
+    )
+    assert traces_response.status_code == 200
+    traces_payload = traces_response.json()
+    assert isinstance(traces_payload.get("traces"), list)
+    assert traces_payload["traces"][-1]["quality_trace_version"] == "quality_trace_v1"
+    assert traces_payload["traces"][-1]["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
 
 
 def test_multiagent_trace_endpoint_falls_back_to_latest_when_turn_missing(client: TestClient) -> None:

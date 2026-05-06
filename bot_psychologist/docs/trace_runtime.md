@@ -16,6 +16,13 @@ Expected fields in trace/debug:
 - `quality_trace.answer/state/thread/memory/continuity/response_mode/validator/summary_flags`
 - `quality_trace_error` (nullable fallback marker if trace build fails)
 
+Delivery requirement: `quality_trace` must be visible not only in internal `orchestrator.debug`,
+but also in external debug surfaces:
+- `/api/v1/questions/adaptive` with `debug=true`
+- `/api/debug/session/{session_id}/traces`
+- `/api/debug/session/{session_id}/multiagent-trace`
+- baseline live report extraction
+
 ## Main endpoints
 - `GET /api/debug/session/{session_id}/metrics`
 - `GET /api/debug/session/{session_id}/traces?format=full|compact`

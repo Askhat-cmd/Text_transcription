@@ -445,13 +445,20 @@ async def ask_adaptive_question(
 
         trace = None
         if request.debug:
-            raw = result.get("debug_trace") or result.get("debug")
+            raw_debug_trace = result.get("debug_trace")
+            raw_debug = result.get("debug")
+            raw_trace_dict = raw_debug_trace if isinstance(raw_debug_trace, dict) else {}
+            raw_debug_dict = raw_debug if isinstance(raw_debug, dict) else {}
+            raw: dict[str, Any] = dict(raw_trace_dict)
+            for _key, _value in raw_debug_dict.items():
+                if _value is not None:
+                    raw[_key] = _value
             try:
                 metadata = _build_multiagent_metadata(
                     result.get("metadata", {}) or {},
-                    raw if isinstance(raw, dict) else {},
+                    raw,
                 )
-                raw_dict = raw if isinstance(raw, dict) else {}
+                raw_dict = raw
 
                 chunks_retrieved_raw = []
                 chunks_after_raw = []
@@ -606,6 +613,9 @@ async def ask_adaptive_question(
                     "informational_mode",
                     "applied_mode_prompt",
                     "turn_diff",
+                    "quality_trace_version",
+                    "quality_trace",
+                    "quality_trace_error",
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):
@@ -773,8 +783,14 @@ async def ask_adaptive_question_stream(
             await conv_service.touch_conversation(identity.conversation_id)
 
             latency_ms = int(float(result.get("processing_time_seconds", 0) or 0) * 1000)
-            trace_raw = result.get("debug_trace") or result.get("debug")
-            trace = trace_raw if isinstance(trace_raw, dict) else None
+            trace_raw_debug_trace = result.get("debug_trace")
+            trace_raw_debug = result.get("debug")
+            trace_dict_debug_trace = trace_raw_debug_trace if isinstance(trace_raw_debug_trace, dict) else {}
+            trace_dict_debug = trace_raw_debug if isinstance(trace_raw_debug, dict) else {}
+            trace = dict(trace_dict_debug_trace)
+            for _key, _value in trace_dict_debug.items():
+                if _value is not None:
+                    trace[_key] = _value
             if trace is not None:
                 trace = _build_debug_trace_compat_payload(trace)
 

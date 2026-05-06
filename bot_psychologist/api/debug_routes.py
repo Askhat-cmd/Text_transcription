@@ -505,6 +505,21 @@ async def get_multiagent_trace(
         turn_diff=turn_diff,
         anomalies=anomalies,
         session_dashboard=session_dashboard,
+        quality_trace_version=(
+            str(debug.get("quality_trace_version"))
+            if debug.get("quality_trace_version") is not None
+            else None
+        ),
+        quality_trace=(
+            debug.get("quality_trace")
+            if isinstance(debug.get("quality_trace"), dict)
+            else None
+        ),
+        quality_trace_error=(
+            str(debug.get("quality_trace_error"))
+            if debug.get("quality_trace_error") is not None
+            else None
+        ),
     )
 
 

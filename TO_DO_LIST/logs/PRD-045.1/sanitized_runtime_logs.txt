@@ -1,0 +1,19 @@
+﻿# PRD-045.1 sanitized runtime logs
+
+Date: 2026-05-06
+Scope: quality trace fields + baseline harness report extraction
+
+Runtime attempts:
+- dry-run baseline: completed
+- live baseline (--limit 3): completed, exit code 0
+
+Safety notes:
+- No API keys, bearer tokens, session secrets, raw private conversation dumps, or DB artifacts stored in this log.
+- Quality trace stores only compact deterministic counters/flags and does not include raw user message text or raw memory chunks.
+
+Observed warnings:
+- Existing deprecation warnings in tests related to `datetime.utcnow()`.
+
+Outcome:
+- Runtime integration for `quality_trace_version`/`quality_trace`/`quality_trace_error` is active.
+- Baseline summary now includes quality trace fields and compact summary rendering.

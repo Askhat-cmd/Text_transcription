@@ -14,6 +14,7 @@ from .agents.thread_manager import thread_manager_agent
 from .agents.validator_agent import validator_agent
 from .agents.writer_agent import writer_agent
 from .contracts.writer_contract import WriterContract
+from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
 
 
@@ -202,6 +203,21 @@ class MultiAgentOrchestrator:
         else:
             final_answer = draft_answer
 
+        quality_trace_error = None
+        try:
+            quality_trace = build_quality_trace(
+                final_answer=final_answer,
+                writer_contract=writer_contract,
+                validation_result=validation_result,
+            )
+        except Exception as exc:  # noqa: BLE001
+            quality_trace = {
+                "version": QUALITY_TRACE_VERSION,
+                "error": "quality_trace_failed",
+            }
+            quality_trace_error = f"quality_trace_failed:{exc.__class__.__name__}"
+            logger.warning("[MULTIAGENT] quality_trace build failed: %s", exc.__class__.__name__)
+
         asyncio.create_task(
             memory_retrieval_agent.update(
                 user_id=user_id,
@@ -292,6 +308,9 @@ class MultiAgentOrchestrator:
                 "validator_blocked": validation_result.is_blocked,
                 "validator_block_reason": validation_result.block_reason,
                 "validator_quality_flags": validation_result.quality_flags,
+                "quality_trace_version": QUALITY_TRACE_VERSION,
+                "quality_trace": quality_trace,
+                "quality_trace_error": quality_trace_error,
                 "memory_written": {
                     "user_input": query[:200],
                     "bot_response": final_answer[:200],

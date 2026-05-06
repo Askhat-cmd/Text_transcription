@@ -1,0 +1,91 @@
+http://localhost:3000/
+http://localhost:3000/admin
+
+АКТУАЛЬНЫЙ СТАРТ ПРОЕКТА ПОСЛЕ МИГРАЦИИ (ПК_2)
+Корень проекта: C:\My_practice\Text_transcription
+
+=====================================
+0) ОДНОРАЗОВОЕ ВОССТАНОВЛЕНИЕ .venv
+=====================================
+
+Важно:
+- bot_psychologist запускать на Python 3.12
+- Bot_data_base запускать на Python 3.10 (из-за chroma-hnswlib/chromadb на Windows)
+
+0.1 bot_psychologist (Python 3.12)
+cd C:\My_practice\Text_transcription\bot_psychologist
+if exist .venv rmdir /s /q .venv
+py -3.12 -m venv .venv
+.venv\Scripts\python.exe -m pip install --upgrade pip
+.venv\Scripts\python.exe -m pip install -r requirements_bot.txt
+.venv\Scripts\python.exe -m pip install -r api\requirements.txt
+
+0.2 Bot_data_base (Python 3.10)
+cd C:\My_practice\Text_transcription\Bot_data_base
+if exist .venv rmdir /s /q .venv
+py -3.10 -m venv .venv
+.venv\Scripts\python.exe -m pip install --upgrade pip
+.venv\Scripts\python.exe -m pip install --no-cache-dir -r requirements.txt
+
+=====================================
+1) ЗАПУСК API Bot_data_base
+=====================================
+cd C:\My_practice\Text_transcription\Bot_data_base
+.venv\Scripts\Activate.ps1
+python -m uvicorn api.main:app --reload --port 8003
+
+Проверка:
+http://localhost:8003/
+http://localhost:8003/api/registry/
+
+=====================================
+2) ЗАПУСК API СЕРВЕРА БОТА
+=====================================
+cd C:\My_practice\Text_transcription\bot_psychologist
+.venv\Scripts\Activate.ps1
+python -m uvicorn api.main:app --host 0.0.0.0 --port 8001
+
+Проверка:
+http://localhost:8001/api/v1/health
+Ожидаемо: "status":"healthy", "data_source":"api", "bot_data_base_api":"available"
+
+=====================================
+3) ЗАПУСК WEB UI
+=====================================
+cd C:\My_practice\Text_transcription\bot_psychologist\web_ui
+npm install
+npm run dev
+
+Открыть:
+http://localhost:3000
+Если 3000 занят, Vite автоматически поднимет следующий порт (например 3004).
+
+=====================================
+4) ПРОВЕРКА VOYAGE КЛЮЧА
+=====================================
+cd C:\My_practice\Text_transcription\bot_psychologist
+.venv\Scripts\Activate.ps1
+python -m pytest tests\test_Voyage_api.py -q
+
+=====================================
+5) БЫСТРАЯ ДИАГНОСТИКА ПОСЛЕ ПЕРЕЕЗДА
+=====================================
+Проверка версий Python:
+py -0p
+
+Должно быть:
+- 3.12 для bot_psychologist
+- 3.10 для Bot_data_base
+
+Если .venv снова "битый" (ошибка про старый путь python.exe):
+- удалить .venv
+- пересоздать по шагу 0
+
+Если Web UI стартует не на 3000:
+- проверь в терминале строку `Local: http://localhost:<порт>/`
+- либо освободи порт 3000 и перезапусти `npm run dev`
+
+Если при запуске бота ошибка [Errno 10048] (порт 8001 уже занят):
+- проверь занятый порт: `netstat -ano | findstr :8001`
+- заверши старый процесс: `taskkill /PID <PID> /F`
+- запусти бот заново по шагу 2

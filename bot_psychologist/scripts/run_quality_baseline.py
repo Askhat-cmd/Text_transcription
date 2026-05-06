@@ -200,7 +200,14 @@ def _probe_live_runtime(config: LiveRuntimeConfig) -> tuple[bool, str]:
 
 
 def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[dict[str, Any], float | None]:
-    trace = response.get("trace") if isinstance(response.get("trace"), dict) else {}
+    trace_payload = response.get("trace")
+    debug_payload = response.get("debug")
+    if isinstance(trace_payload, dict):
+        trace = trace_payload
+    elif isinstance(debug_payload, dict):
+        trace = debug_payload
+    else:
+        trace = {}
     metadata = response.get("metadata") if isinstance(response.get("metadata"), dict) else {}
     state = response.get("state_analysis") if isinstance(response.get("state_analysis"), dict) else {}
 
@@ -234,6 +241,9 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "model_max_tokens": trace.get("max_tokens"),
         "validator_blocked": trace.get("validator_blocked"),
         "validator_quality_flags": trace.get("validator_quality_flags"),
+        "quality_trace_version": trace.get("quality_trace_version"),
+        "quality_trace": trace.get("quality_trace"),
+        "quality_trace_error": trace.get("quality_trace_error"),
         "timings": trace.get("timings") if isinstance(trace.get("timings"), dict) else {},
     }
     return debug_summary, latency_ms
@@ -375,11 +385,34 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## Case Results")
     for case in cases:
+        final_debug = case.get("final_debug_summary") if isinstance(case.get("final_debug_summary"), dict) else {}
+        quality_trace = final_debug.get("quality_trace") if isinstance(final_debug.get("quality_trace"), dict) else None
+        quality_summary_flags = (
+            quality_trace.get("summary_flags")
+            if isinstance(quality_trace, dict) and isinstance(quality_trace.get("summary_flags"), list)
+            else None
+        )
         lines.append(f"### {case.get('case_id')} — {case.get('title')}")
         lines.append(f"- Category: {case.get('category')}")
         lines.append(f"- Turns: {case.get('turns')}")
         lines.append(f"- Final answer: {case.get('final_answer')}")
-        lines.append(f"- Debug summary: {json.dumps(case.get('final_debug_summary'), ensure_ascii=False)}")
+        lines.append(
+            "- Debug summary: "
+            + json.dumps(
+                {
+                    "pipeline_version": final_debug.get("pipeline_version"),
+                    "response_mode": final_debug.get("response_mode"),
+                    "continuity_score": final_debug.get("continuity_score"),
+                    "semantic_hits_count": final_debug.get("semantic_hits_count"),
+                    "validator_blocked": final_debug.get("validator_blocked"),
+                },
+                ensure_ascii=False,
+            )
+        )
+        if quality_summary_flags is not None:
+            lines.append(f"- Quality trace summary: {json.dumps(quality_summary_flags, ensure_ascii=False)}")
+        else:
+            lines.append("- Quality trace: null")
         lines.append(f"- Heuristic flags: {json.dumps(case.get('final_heuristic_quality'), ensure_ascii=False)}")
         note = case.get("error") or "ok"
         lines.append(f"- Notes: {note}")

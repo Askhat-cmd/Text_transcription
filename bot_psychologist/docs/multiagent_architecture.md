@@ -284,6 +284,12 @@ THREAD_STORAGE_DIR=bot_psychologist/data/threads
     "validator_blocked": false,
     "validator_block_reason": null,
     "validator_quality_flags": [],
+    "quality_trace_version": "quality_trace_v1",
+    "quality_trace": {
+      "version": "quality_trace_v1",
+      "summary_flags": []
+    },
+    "quality_trace_error": null,
     "memory_written": {...},
     "timings": {
       "state_analyzer_ms": 200,

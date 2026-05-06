@@ -174,8 +174,13 @@ async def test_e2e_03_debug_all_fields(monkeypatch) -> None:
         "validator_blocked",
         "validator_block_reason",
         "validator_quality_flags",
+        "quality_trace_version",
+        "quality_trace",
+        "quality_trace_error",
     ):
         assert key in debug
+    assert debug["quality_trace_version"] == "quality_trace_v1"
+    assert isinstance(debug["quality_trace"], dict)
 
 
 @pytest.mark.asyncio

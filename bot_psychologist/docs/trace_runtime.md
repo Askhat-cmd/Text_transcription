@@ -7,6 +7,15 @@ Trace endpoints and UI panels provide observability for each user turn in the mu
 - Active runtime path: `multiagent_adapter`
 - Legacy cascade trace fields are not part of active runtime contract
 
+## Quality trace v1
+`quality_trace` — compact deterministic audit layer for answer quality signals.
+It does not change the answer and does not block runtime.
+
+Expected fields in trace/debug:
+- `quality_trace_version=quality_trace_v1`
+- `quality_trace.answer/state/thread/memory/continuity/response_mode/validator/summary_flags`
+- `quality_trace_error` (nullable fallback marker if trace build fails)
+
 ## Main endpoints
 - `GET /api/debug/session/{session_id}/metrics`
 - `GET /api/debug/session/{session_id}/traces?format=full|compact`

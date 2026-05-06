@@ -167,6 +167,10 @@ export interface TurnDiff {
   memory_delta: TurnDiffMemoryDelta;
 }
 
+/**
+ * Compatibility only. Do not render in active chat UI.
+ * Active chat trace rendering uses MultiAgentTraceWidget.
+ */
 export interface DebugTrace {
   trace_contract_version?: string | null;
   chunks_retrieved: ChunkTraceItem[];

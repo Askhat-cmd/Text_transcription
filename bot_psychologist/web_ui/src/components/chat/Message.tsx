@@ -15,7 +15,6 @@ import { formatterService } from '../../services/formatter.service';
 import clsx from 'clsx';
 
 // Import standalone insight components
-import { InlineDebugTrace } from './InlineDebugTrace';
 import { MultiAgentTraceWidget } from './MultiAgentTraceWidget';
 
 interface MessageItemProps {
@@ -47,7 +46,6 @@ export const MessageItem: React.FC<MessageItemProps> = ({
     message.id,
     shouldLoadMultiagentTrace
   );
-  const showLegacyInlineTrace = Boolean(inlineTrace);
   const showMultiagentTrace = Boolean(shouldLoadMultiagentTrace && (multiagentTrace || multiagentTraceLoading));
 
   return (
@@ -71,10 +69,6 @@ export const MessageItem: React.FC<MessageItemProps> = ({
           <>
             {showMultiagentTrace && (
               <MultiAgentTraceWidget trace={multiagentTrace} isLoading={multiagentTraceLoading} />
-            )}
-
-            {showLegacyInlineTrace && inlineTrace && (
-              <InlineDebugTrace trace={inlineTrace} />
             )}
 
             {/* Processing Time */}

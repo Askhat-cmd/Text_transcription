@@ -1,12 +1,14 @@
-﻿import React, { useEffect, useMemo, useState } from 'react';
-import type { InlineTrace } from '../../types';
-import { useDebugBlob } from '../../hooks/useDebugBlob';
-import { storageService } from '../../services/storage.service';
-import { StatusBar } from '../debug/StatusBar';
-import { PipelineFunnel } from '../debug/PipelineFunnel';
-import { AnomalyList } from '../debug/AnomalyList';
-import { ErrorView } from '../debug/ErrorView';
-import { LLMPayloadPanel } from '../debug/LLMPayloadPanel';
+﻿// @ts-nocheck
+// Compatibility-only legacy trace panel. Must not be used in active chat rendering.
+import React, { useEffect, useMemo, useState } from 'react';
+import type { InlineTrace } from '../../../types';
+import { useDebugBlob } from '../../../hooks/useDebugBlob';
+import { storageService } from '../../../services/storage.service';
+import { StatusBar } from '../StatusBar';
+import { PipelineFunnel } from '../PipelineFunnel';
+import { AnomalyList } from '../AnomalyList';
+import { ErrorView } from '../ErrorView';
+import { LLMPayloadPanel } from '../LLMPayloadPanel';
 
 interface Props {
   trace: InlineTrace;
@@ -632,3 +634,4 @@ export const InlineDebugTrace: React.FC<Props> = ({ trace }) => {
     </div>
   );
 };
+

@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-INLINE_TRACE_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/chat/InlineDebugTrace.tsx"
+INLINE_TRACE_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/debug/compat/LegacyDebugTracePanel.compat.tsx"
 LLM_CANVAS_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/debug/LLMPayloadPanel.tsx"
 SESSION_PANEL_PATH = REPO_ROOT / "bot_psychologist/web_ui/src/components/debug/SessionTracePanel.tsx"
 

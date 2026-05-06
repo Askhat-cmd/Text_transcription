@@ -18,6 +18,7 @@ export interface TraceBlock {
 
 export type LLMCallInfo = LLMCallTrace;
 
+// Legacy debug payload kept for API compatibility; active message trace UI is multiagent-only.
 export type InlineTrace = Partial<DebugTrace> & {
   blocks?: TraceBlock[];
   signals?: Record<string, number>;

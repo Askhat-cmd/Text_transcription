@@ -2,6 +2,7 @@ import logging
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi.responses import JSONResponse
 
 from .auth import verify_api_key, is_dev_key
 from .models import (
@@ -164,6 +165,31 @@ def _build_anomalies(debug: Dict[str, Any]) -> List[AnomalyItem]:
     return anomalies
 
 
+def _collect_trace_lookup_keys(session_id: str, store: SessionStore) -> List[str]:
+    keys: List[str] = []
+    seen: set[str] = set()
+
+    def _push(value: Any) -> None:
+        key = str(value or "").strip()
+        if not key or key in seen:
+            return
+        seen.add(key)
+        keys.append(key)
+
+    _push(session_id)
+    traces = store.get_session_traces(session_id)
+    for trace in reversed(traces[-20:]):
+        if not isinstance(trace, dict):
+            continue
+        _push(trace.get("session_id"))
+        _push(trace.get("runtime_user_scope"))
+        _push(trace.get("conversation_id"))
+        _push(trace.get("user_id"))
+        _push(trace.get("request_user_id"))
+
+    return keys
+
+
 def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
     trace = dict(raw_trace or {})
 
@@ -277,15 +303,37 @@ async def get_multiagent_trace(
     if not is_dev_key(api_key):
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Debug access denied")
 
-    if turn_index is None:
-        debug = store.get_latest_multiagent_debug(session_id)
-    else:
-        debug = store.get_multiagent_debug(session_id, turn_index)
+    lookup_keys = _collect_trace_lookup_keys(session_id=session_id, store=store)
+    resolved_debug = store.find_multiagent_debug(
+        candidate_session_ids=lookup_keys,
+        turn_index=turn_index,
+    )
+    resolved_session_id = session_id
+    debug: Optional[Dict[str, Any]] = None
+    if resolved_debug is not None:
+        resolved_session_id, debug = resolved_debug
+
+    # If requested turn is missing (for example stale frontend index), fall back
+    # to latest available trace instead of a noisy 404.
+    if debug is None and turn_index is not None:
+        fallback_debug = store.find_multiagent_debug(
+            candidate_session_ids=lookup_keys,
+            turn_index=None,
+        )
+        if fallback_debug is not None:
+            resolved_session_id, debug = fallback_debug
 
     if not debug:
-        raise HTTPException(
+        available_keys = sorted(store.get_multiagent_debug_keys())
+        return JSONResponse(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Multiagent trace not found for this session",
+            content={
+                "detail": "No multiagent trace found for session",
+                "session_id": session_id,
+                "hint": "Trace may be stored under user_id or conversation_id key",
+                "searched_trace_keys": lookup_keys,
+                "available_trace_keys": available_keys[:20],
+            },
         )
 
     if not bool(debug.get("multiagent_enabled")):
@@ -303,7 +351,7 @@ async def get_multiagent_trace(
     resolved_turn_index = _safe_int(debug.get("turn_index"))
     previous_debug = None
     if isinstance(resolved_turn_index, int) and resolved_turn_index > 1:
-        previous_debug = store.get_multiagent_debug(session_id, resolved_turn_index - 1)
+        previous_debug = store.get_multiagent_debug(resolved_session_id, resolved_turn_index - 1)
 
     raw_hits = debug.get("semantic_hits_detail")
     semantic_hits: List[SemanticHitTrace] = []
@@ -373,7 +421,7 @@ async def get_multiagent_trace(
     anomalies = _build_anomalies(debug)
     turn_diff = _build_turn_diff(current=debug, previous=previous_debug)
 
-    stats = store.get_session_stats(session_id)
+    stats = store.get_session_stats(resolved_session_id)
     total_turns = int(stats.get("total_turns", 0) or 0)
     avg_latency = (
         round((int(stats.get("total_latency_ms", 0) or 0) / max(total_turns, 1)))
@@ -391,7 +439,7 @@ async def get_multiagent_trace(
     )
 
     return MultiAgentTraceResponse(
-        session_id=session_id,
+        session_id=resolved_session_id,
         turn_index=resolved_turn_index,
         pipeline_version=str(debug.get("pipeline_version") or "multiagent_v1"),
         total_latency_ms=_safe_int(debug.get("total_latency_ms")) or 0,

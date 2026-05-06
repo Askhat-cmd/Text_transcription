@@ -95,9 +95,10 @@ def _legacy_status_payload() -> dict[str, Any]:
     return {
         "fallback_enabled": False,
         "fallback_used": False,
-        "cascade_available": True,
-        "cascade_status": "deprecated_retained_for_purge",
-        "purge_planned_prd": "PRD-041",
+        "cascade_available": False,
+        "cascade_status": "physically_removed",
+        "purge_planned_prd": None,
+        "purge_completed_prd": "PRD-041",
     }
 
 

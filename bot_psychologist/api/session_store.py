@@ -169,6 +169,55 @@ class SessionStore:
             payload = session_debug.get(latest_turn)
             return dict(payload) if isinstance(payload, dict) else None
 
+    def get_multiagent_debug_keys(self) -> List[str]:
+        with self._lock:
+            return list(self._multiagent_debug.keys())
+
+    def find_multiagent_debug(
+        self,
+        *,
+        candidate_session_ids: Optional[List[str]] = None,
+        turn_index: Optional[int] = None,
+    ) -> Optional[tuple[str, Dict[str, Any]]]:
+        normalized_candidates: List[str] = []
+        seen: set[str] = set()
+        for raw in candidate_session_ids or []:
+            key = str(raw or "").strip()
+            if not key or key in seen:
+                continue
+            seen.add(key)
+            normalized_candidates.append(key)
+
+        if isinstance(turn_index, bool):
+            return None
+        normalized_turn: Optional[int] = None
+        if turn_index is not None:
+            try:
+                normalized_turn = int(turn_index)
+            except (TypeError, ValueError):
+                return None
+
+        with self._lock:
+            all_keys = list(self._multiagent_debug.keys())
+            search_order = normalized_candidates + [key for key in all_keys if key not in seen]
+
+            for session_id in search_order:
+                session_debug = self._multiagent_debug.get(session_id)
+                if not session_debug:
+                    continue
+                if normalized_turn is not None:
+                    payload = session_debug.get(normalized_turn)
+                    if isinstance(payload, dict):
+                        return session_id, dict(payload)
+                    continue
+                latest_turn = max(session_debug.keys(), default=None)
+                if latest_turn is None:
+                    continue
+                payload = session_debug.get(latest_turn)
+                if isinstance(payload, dict):
+                    return session_id, dict(payload)
+        return None
+
     def accumulate_session_stats(self, session_id: str, debug: Dict[str, Any]) -> None:
         if not session_id:
             return

@@ -38,9 +38,10 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     legacy = payload["legacy"]
     assert legacy["fallback_enabled"] is False
     assert legacy["fallback_used"] is False
-    assert legacy["cascade_available"] is True
-    assert legacy["cascade_status"] == "deprecated_retained_for_purge"
-    assert legacy["purge_planned_prd"] == "PRD-041"
+    assert legacy["cascade_available"] is False
+    assert legacy["cascade_status"] == "physically_removed"
+    assert legacy["purge_planned_prd"] is None
+    assert legacy["purge_completed_prd"] == "PRD-041"
 
     assert payload["compatibility"]["pipeline_mode"] == "multiagent_only"
     assert payload["compatibility"]["legacy_modes_selectable"] is False

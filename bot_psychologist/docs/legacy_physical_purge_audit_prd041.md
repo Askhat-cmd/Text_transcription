@@ -21,6 +21,8 @@ Import graph snapshot for legacy cascade candidates before physical purge.
 ## Notes
 
 - Import graph helper: `bot_psychologist/scripts/legacy_import_graph.py`
+- Post-purge stabilization follow-up: `docs/post_purge_stabilization_audit_prd042.md`
+- Remaining REVIEW modules register: `docs/post_purge_remaining_review_modules_prd042.md`
 - Key removal boundary for PRD-041:
   - remove `_answer_question_adaptive_legacy_cascade` body
   - remove all `adaptive_runtime` imports from `answer_adaptive.py`

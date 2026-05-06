@@ -34,6 +34,13 @@
 Legacy cascade implementation was physically removed in PRD-041.
 `answer_adaptive.py` оставлен только как compatibility shim и больше не содержит legacy body.
 
+## Статус после PRD-042
+
+PRD-042 закрыл post-purge stabilization:
+- debug endpoint `/api/debug/session/{session_id}/multiagent-trace` стабилизирован fallback lookup-ом;
+- при отсутствии trace endpoint возвращает явный диагностический payload;
+- добавлены regression-тесты на import safety, trace consistency и runtime smoke.
+
 ## Рекомендуемые проверки
 
 ```bash

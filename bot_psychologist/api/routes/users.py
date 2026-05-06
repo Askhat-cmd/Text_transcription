@@ -186,8 +186,8 @@ async def get_user_history(
         requested_scope = (user_id or "").strip()
         manager = SessionManager(str(config.BOT_DB_PATH))
 
-        # РЎРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ СЃ Web UI:
-        # РµСЃР»Рё РІ path РїРµСЂРµРґР°РЅ session_id Р°РєС‚РёРІРЅРѕРіРѕ С‡Р°С‚Р°, РІРѕР·РІСЂР°С‰Р°РµРј РёСЃС‚РѕСЂРёСЋ РёРјРµРЅРЅРѕ СЌС‚РѕР№ СЃРµСЃСЃРёРё.
+        # Совместимость с Web UI:
+        # если в path передан session_id активного чата, возвращаем историю именно этой сессии.
         if requested_scope and requested_scope != canonical_user_id:
             payload = manager.load_session(requested_scope)
             if payload:
@@ -236,7 +236,7 @@ async def get_user_history(
             )
 
 
-        # РСЃС‚РѕСЂРёСЏ РїРѕ legacy user memory (РѕР±СЂР°С‚РЅР°СЏ СЃРѕРІРјРµСЃС‚РёРјРѕСЃС‚СЊ).
+        # История по legacy user memory (обратная совместимость).
         memory = get_conversation_memory(canonical_user_id)
         summary = memory.get_summary()
         last_turns = memory.get_last_turns(last_n_turns)

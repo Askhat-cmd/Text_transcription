@@ -11,7 +11,7 @@ export const AnomalyList: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
   const anomalies = trace.anomalies ?? [];
   if (anomalies.length === 0) {
     return (
-      <p className="text-[11px] text-slate-400 px-2">Аномалий не обнаружено</p>
+      <p className="text-[11px] text-slate-400 px-2">РђРЅРѕРјР°Р»РёР№ РЅРµ РѕР±РЅР°СЂСѓР¶РµРЅРѕ</p>
     );
   }
 
@@ -33,7 +33,7 @@ export const AnomalyList: React.FC<{ trace: InlineTrace }> = ({ trace }) => {
                   href={anchor}
                   className="ml-auto text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
                 >
-                  перейти
+                  РїРµСЂРµР№С‚Рё
                 </a>
               )}
             </div>

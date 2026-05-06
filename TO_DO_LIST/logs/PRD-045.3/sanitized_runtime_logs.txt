@@ -1,0 +1,19 @@
+﻿# PRD-045.3 sanitized runtime logs
+
+Date: 2026-05-06
+Scope: state analyzer calibration harness (dry-run + live)
+
+Sanitized notes:
+- No API keys, bearer tokens, invite keys, DB dumps, or private conversation logs included.
+- Dataset is synthetic only.
+- Runner executed locally via script entrypoint and agent singletons.
+
+Observed safe runtime summary:
+- Dataset loaded: 72 cases
+- Dry-run: success
+- Live run (--limit 20): success
+- Live run (full): success
+- Report files updated in TO_DO_LIST/reports
+
+See full command output:
+- TO_DO_LIST/logs/PRD-045.3/test_command_output.txt

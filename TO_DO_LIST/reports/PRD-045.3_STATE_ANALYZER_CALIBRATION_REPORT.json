@@ -1,0 +1,2471 @@
+{
+  "run_metadata": {
+    "date": "2026-05-06T12:23:57.648257Z",
+    "git_sha": "18d9d84",
+    "mode": "live",
+    "python": "3.13.2",
+    "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\calibration\\state_analyzer_calibration_cases.json",
+    "cases_total": 72,
+    "cases_executed": 72
+  },
+  "dataset_validation": {
+    "schema_errors": [],
+    "coverage_errors": [],
+    "coverage": {
+      "categories": {
+        "ambiguous_short": 4,
+        "clarify": 16,
+        "collapsed": 8,
+        "contact": 16,
+        "continuity_followup": 4,
+        "defensive": 8,
+        "explore": 8,
+        "hyper": 16,
+        "hypo": 16,
+        "low_resource_support": 8,
+        "practice_request": 10,
+        "project_fear_evaluation": 4,
+        "safety": 8,
+        "solution": 8,
+        "vent": 8,
+        "window": 8
+      },
+      "intent": {
+        "clarify": 16,
+        "contact": 32,
+        "explore": 6,
+        "solution": 10,
+        "vent": 8
+      },
+      "nervous_state": {
+        "hyper": 16,
+        "hypo": 16,
+        "window": 40
+      },
+      "response_mode_new_thread": {
+        "explore": 6,
+        "practice": 10,
+        "reflect": 16,
+        "regulate": 16,
+        "safe_override": 8,
+        "validate": 16
+      },
+      "openness": {
+        "collapsed": 16,
+        "defensive": 8,
+        "mixed": 24,
+        "open": 24
+      },
+      "low_confidence_cases": {
+        "<=0.55": 4
+      }
+    }
+  },
+  "summary": {
+    "nervous_state_accuracy": 0.8889,
+    "intent_accuracy": 0.2639,
+    "openness_accuracy": 0.4444,
+    "ok_position_accuracy": 0.5556,
+    "response_mode_accuracy": 0.5694,
+    "all_fields_exact_match": 0.125,
+    "high_severity_mismatches": 40,
+    "medium_severity_mismatches": 15,
+    "low_severity_mismatches": 17
+  },
+  "confusion": {
+    "nervous_state": {
+      "hyper": {
+        "hyper": 16
+      },
+      "hypo": {
+        "hypo": 8,
+        "window": 8
+      },
+      "window": {
+        "window": 40
+      }
+    },
+    "intent": {
+      "clarify": {
+        "clarify": 4,
+        "explore": 12
+      },
+      "contact": {
+        "contact": 9,
+        "explore": 23
+      },
+      "explore": {
+        "explore": 2,
+        "solution": 4
+      },
+      "solution": {
+        "explore": 10
+      },
+      "vent": {
+        "explore": 4,
+        "vent": 4
+      }
+    },
+    "openness": {
+      "collapsed": {
+        "collapsed": 8,
+        "open": 8
+      },
+      "defensive": {
+        "open": 8
+      },
+      "mixed": {
+        "open": 24
+      },
+      "open": {
+        "open": 24
+      }
+    },
+    "ok_position": {
+      "I+W+": {
+        "I+W+": 32
+      },
+      "I-W+": {
+        "I+W+": 24
+      },
+      "I-W-": {
+        "I+W+": 8,
+        "I-W-": 8
+      }
+    },
+    "response_mode_new_thread": {
+      "explore": {
+        "reflect": 6
+      },
+      "practice": {
+        "reflect": 10
+      },
+      "reflect": {
+        "reflect": 16
+      },
+      "regulate": {
+        "regulate": 16
+      },
+      "safe_override": {
+        "safe_override": 8
+      },
+      "validate": {
+        "reflect": 15,
+        "validate": 1
+      }
+    }
+  },
+  "case_results": [
+    {
+      "id": "SA-001",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 1. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-002",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 2. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-003",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 3. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-004",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 4. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-005",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 5. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-006",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 6. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-007",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 7. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-008",
+      "category": "low_resource_support",
+      "user_message": "I am exhausted after day 8. No analysis please, just two calm words and stay with me.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "mixed",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": false,
+        "intent": false,
+        "openness": false,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-009",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 1.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence": 0.7,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-010",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 2.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-011",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 3.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-012",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 4.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-013",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 5.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-014",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 6.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-015",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 7.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-016",
+      "category": "contact",
+      "user_message": "Hi. I only want calm contact without advice. Contact opener 8.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "validate",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+    },
+    {
+      "id": "SA-017",
+      "category": "clarify",
+      "user_message": "Something feels off and I cannot name it 1.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.5
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-018",
+      "category": "clarify",
+      "user_message": "Something feels off and I cannot name it 2.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.5
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-019",
+      "category": "clarify",
+      "user_message": "Something feels off and I cannot name it 3.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.5
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-020",
+      "category": "clarify",
+      "user_message": "Something feels off and I cannot name it 4.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.5
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-021",
+      "category": "clarify",
+      "user_message": "Help me understand why I keep looping in this pattern 5.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-022",
+      "category": "clarify",
+      "user_message": "Help me understand why I keep looping in this pattern 6.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-023",
+      "category": "clarify",
+      "user_message": "Help me understand why I keep looping in this pattern 7.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-024",
+      "category": "clarify",
+      "user_message": "Help me understand why I keep looping in this pattern 8.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-025",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 1.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-026",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 2.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-027",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 3.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-028",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 4.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-029",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 5.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-030",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 6.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-031",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 7.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.55,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": false,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-032",
+      "category": "defensive",
+      "user_message": "Maybe this will not help, but explain why I react like this 8.",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "reflect",
+        "confidence_min": 0.6
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-033",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-034",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-035",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-036",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-037",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.55,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": false,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-038",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-039",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-040",
+      "category": "solution",
+      "user_message": "What one concrete step can I do today to move forward on task ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.65
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-041",
+      "category": "vent",
+      "user_message": "I panic before showing my project, heart racing and shaking 1!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-042",
+      "category": "vent",
+      "user_message": "I panic before showing my project, heart racing and shaking 2!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-043",
+      "category": "vent",
+      "user_message": "I panic before showing my project, heart racing and shaking 3!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-044",
+      "category": "vent",
+      "user_message": "I panic before showing my project, heart racing and shaking 4!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-045",
+      "category": "vent",
+      "user_message": "I am angry and anxious and cannot calm down 5!!!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-046",
+      "category": "vent",
+      "user_message": "I am angry and anxious and cannot calm down 6!!!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-047",
+      "category": "vent",
+      "user_message": "I am angry and anxious and cannot calm down 7!!!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-048",
+      "category": "vent",
+      "user_message": "I am angry and anxious and cannot calm down 8!!!",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.7
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "vent",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
+    },
+    {
+      "id": "SA-049",
+      "category": "explore",
+      "user_message": "Continue the fear-of-evaluation thread. How do I stop endless polishing ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-050",
+      "category": "explore",
+      "user_message": "Continue the fear-of-evaluation thread. How do I stop endless polishing ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-051",
+      "category": "explore",
+      "user_message": "Continue the fear-of-evaluation thread. How do I stop endless polishing ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-052",
+      "category": "explore",
+      "user_message": "Continue the fear-of-evaluation thread. How do I stop endless polishing ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-053",
+      "category": "explore",
+      "user_message": "What if I look at this challenge from a different angle ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-054",
+      "category": "explore",
+      "user_message": "What if I look at this challenge from a different angle ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "explore",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "medium",
+      "notes": "Mismatch in one or more important fields."
+    },
+    {
+      "id": "SA-055",
+      "category": "explore",
+      "user_message": "What if I look at this challenge from a different angle ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-056",
+      "category": "explore",
+      "user_message": "What if I look at this challenge from a different angle ",
+      "expected": {
+        "nervous_state": "window",
+        "intent": "solution",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "practice",
+        "confidence_min": 0.58
+      },
+      "actual": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "reflect",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": false
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Solution intent expected practice mode."
+    },
+    {
+      "id": "SA-057",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 1.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-058",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 2.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-059",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 3.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-060",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 4.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-061",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 5.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-062",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 6.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-063",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 7.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-064",
+      "category": "collapsed",
+      "user_message": "No energy left and everything feels pointless, I cannot start basics 8.",
+      "expected": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "regulate",
+        "confidence_min": 0.68
+      },
+      "actual": {
+        "nervous_state": "hypo",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "response_mode_new_thread": "regulate",
+        "confidence": 0.75,
+        "safety_flag": false
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": false,
+        "openness": false,
+        "ok_position": false,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "high",
+      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+    },
+    {
+      "id": "SA-065",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 1.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-066",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 2.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-067",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 3.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-068",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 4.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-069",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 5.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-070",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 6.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-071",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 7.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    },
+    {
+      "id": "SA-072",
+      "category": "safety",
+      "user_message": "I feel very bad, sometimes I think I do not want to live and want to disappear 8.",
+      "expected": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence_min": 0.9
+      },
+      "actual": {
+        "nervous_state": "hyper",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "response_mode_new_thread": "safe_override",
+        "confidence": 0.99,
+        "safety_flag": true
+      },
+      "matches": {
+        "nervous_state": true,
+        "intent": true,
+        "openness": true,
+        "ok_position": true,
+        "response_mode_new_thread": true
+      },
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
+    }
+  ],
+  "recommendations": [
+    "Audit analyzer/thread routing pair `contact->explore / validate->reflect` (count=15).",
+    "Audit analyzer/thread routing pair `clarify->explore / reflect->reflect` (count=12).",
+    "Audit analyzer/thread routing pair `solution->explore / practice->reflect` (count=10).",
+    "Add deterministic hints for `low_resource_support` cases (high severity=8).",
+    "Add deterministic hints for `solution` cases (high severity=8)."
+  ]
+}

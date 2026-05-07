@@ -1,0 +1,1431 @@
+{
+  "run_metadata": {
+    "date": "2026-05-07T03:48:00.042508Z",
+    "git_sha": "9fad302",
+    "mode": "live",
+    "python": "3.13.2",
+    "backend_used": "http://localhost:8001/api/v1",
+    "api_available": true,
+    "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\quality_baseline_cases.json",
+    "cases_total": 4,
+    "cases_executed": 4,
+    "live_runtime_executed": true,
+    "api_base_url": "http://localhost:8001/api/v1",
+    "api_runtime_verified": false,
+    "api_runtime_warning": "HTTP API mode cannot guarantee server process was restarted after local code changes unless runtime fingerprint endpoint exists."
+  },
+  "runtime_metadata": {
+    "git_sha": "9fad302",
+    "git_dirty": true,
+    "python": "3.13.2",
+    "cwd": "C:\\My_practice\\Text_transcription",
+    "runner_mode": "live",
+    "timestamp": "2026-05-07T03:46:32.123018Z",
+    "runtime_fingerprint": {
+      "state_analyzer_file_sha256": "6fa3d9f1f2a02ce62265b01916a1839ad77a1be68d5a3e1f142a2106427ada5f",
+      "thread_manager_file_sha256": "fcab68f2a360e07300cea43f29d79184fb17e5c82bfae70309a15f539bcaceac",
+      "writer_prompt_file_sha256": "303e53b8f243acf17f176bdfa7eab5ba0db46a455b96219e04d99156f521ccde",
+      "orchestrator_file_sha256": "ce7f4b112d458d3aec42410a9f933920dc65aa1b4c086fa512276d19f240aa72"
+    }
+  },
+  "runtime_config_snapshot": {
+    "state_analyzer_model": null,
+    "writer_model": "gpt-5-mini",
+    "max_tokens": null,
+    "temperature": null,
+    "rag_top_k": null,
+    "rag_min_score": null
+  },
+  "summary": {
+    "cases_executed": 4,
+    "errors_count": 0,
+    "safety_cases": 0,
+    "avg_latency_ms": 12188.06,
+    "generic_risk_flags": 3,
+    "continuity_risk_flags": 0
+  },
+  "errors": [],
+  "case_results": [
+    {
+      "case_id": "QB-002",
+      "title": "Contact when user is tired",
+      "category": "contact",
+      "turns": 1,
+      "test_user_id": "qb_user_qb-002",
+      "session_id": "qb-session-qb-002",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "mirror low intensity",
+          "be warm and short"
+        ],
+        "should_not": [
+          "push deep analysis",
+          "switch to productivity lecture"
+        ],
+        "quality_focus": [
+          "tone_match",
+          "resource_sensitivity"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-002",
+          "turn_index": 1,
+          "user_message": "Я очень устал, просто хочу услышать пару спокойных слов",
+          "answer": "Ты чувствуешь сильную усталость и сейчас тебе действительно нужно не решение, а простые тёплые слова, которые позволят немного опуститься и передохнуть. Похоже, хочется позволить себе паузу и быть услышанным без требований и ожиданий — просто побыть спокойным и легче на сердце. Хочешь, чтобы я остался рядом ещё на минуту в таком же тоне?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-002",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "response_mode": "reflect",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 339,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 7
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 18,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-002",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "reflect",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": [
+              "generic_phrase_risk"
+            ]
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 9773.456199996872
+        }
+      ],
+      "final_answer": "Ты чувствуешь сильную усталость и сейчас тебе действительно нужно не решение, а простые тёплые слова, которые позволят немного опуститься и передохнуть. Похоже, хочется позволить себе паузу и быть услышанным без требований и ожиданий — просто побыть спокойным и легче на сердце. Хочешь, чтобы я остался рядом ещё на минуту в таком же тоне?",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "qb-session-qb-002",
+        "phase": "clarify",
+        "relation_to_thread": "continue",
+        "continuity_score": 1.0,
+        "response_mode": "reflect",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": null,
+        "model_max_tokens": null,
+        "validator_blocked": null,
+        "validator_quality_flags": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 339,
+            "sentences": 3,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "generic_markers_count": 1
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "explore",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 7
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 18,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": [
+            "generic_phrase_risk"
+          ]
+        },
+        "quality_trace_error": null,
+        "timings": {},
+        "state": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": null,
+          "state_analyzer_api_mode": null,
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "qb-session-qb-002",
+          "phase": "clarify",
+          "relation_to_thread": "continue",
+          "response_mode": "reflect",
+          "response_goal": null,
+          "continuity_score": 1.0
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": null,
+          "model_max_tokens": null
+        },
+        "quality_trace_summary": [
+          "generic_phrase_risk"
+        ]
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": true,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-003",
+      "title": "Clarify ambiguous ask",
+      "category": "clarify",
+      "turns": 1,
+      "test_user_id": "qb_user_qb-003",
+      "session_id": "qb-session-qb-003",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "ask one focused clarifying question",
+          "name uncertainty without pressure"
+        ],
+        "should_not": [
+          "invent diagnosis",
+          "produce generic checklist"
+        ],
+        "quality_focus": [
+          "clarity",
+          "precision"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-003",
+          "turn_index": 1,
+          "user_message": "Не знаю, что со мной, все как-то не так",
+          "answer": "Звучит так, будто у тебя сейчас постоянный фоновый дискомфорт: всё кажется не на своих местах, как будто внутренне ты отстранён, устал и не в резонансе с жизнью. Это не просто плохой момент, а устойчивое чувство, которое делает привычные вещи тяжелее и подрывает уверенность в себе. \n\nКогда это состояние проявляется сильнее — в какое время суток или в каких ситуациях ты чаще это замечаешь?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "clarify",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-003",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "response_mode": "reflect",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 391,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "clarify",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 7
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 25,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "window",
+              "intent": "clarify",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-003",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "reflect",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": [
+              "generic_phrase_risk"
+            ]
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 13157.36040000047
+        }
+      ],
+      "final_answer": "Звучит так, будто у тебя сейчас постоянный фоновый дискомфорт: всё кажется не на своих местах, как будто внутренне ты отстранён, устал и не в резонансе с жизнью. Это не просто плохой момент, а устойчивое чувство, которое делает привычные вещи тяжелее и подрывает уверенность в себе. \n\nКогда это состояние проявляется сильнее — в какое время суток или в каких ситуациях ты чаще это замечаешь?",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "clarify",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "qb-session-qb-003",
+        "phase": "clarify",
+        "relation_to_thread": "continue",
+        "continuity_score": 1.0,
+        "response_mode": "reflect",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": null,
+        "model_max_tokens": null,
+        "validator_blocked": null,
+        "validator_quality_flags": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 391,
+            "sentences": 3,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "generic_markers_count": 1
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "clarify",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 7
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 25,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": [
+            "generic_phrase_risk"
+          ]
+        },
+        "quality_trace_error": null,
+        "timings": {},
+        "state": {
+          "nervous_state": "window",
+          "intent": "clarify",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": null,
+          "state_analyzer_api_mode": null,
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "qb-session-qb-003",
+          "phase": "clarify",
+          "relation_to_thread": "continue",
+          "response_mode": "reflect",
+          "response_goal": null,
+          "continuity_score": 1.0
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": null,
+          "model_max_tokens": null
+        },
+        "quality_trace_summary": [
+          "generic_phrase_risk"
+        ]
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": true,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-005",
+      "title": "Direct request for concrete first step",
+      "category": "solution",
+      "turns": 1,
+      "test_user_id": "qb_user_qb-005",
+      "session_id": "qb-session-qb-005",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "offer one concrete micro-step",
+          "keep it executable today"
+        ],
+        "should_not": [
+          "give abstract motivation only",
+          "offer ten-step framework"
+        ],
+        "quality_focus": [
+          "specificity",
+          "actionability",
+          "micro_shift"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-005",
+          "turn_index": 1,
+          "user_message": "Мне нужен конкретный первый шаг, чтобы перестать прокрастинировать сегодня",
+          "answer": "Вы хотите один конкретный первый шаг прямо сегодня — не что-то героическое, а маленькое действие, которое даст сигнал «я двигаюсь» и не перегрузит. По сути вы ищете точечный опыт, который снизит тревогу и начнёт менять привычную реакцию избегания через безопасную, маленькую встречу со страхом. Это значит выбрать не самый большой страх из вашей карты, а тот, с которым реально можно столкнуться в ближайшие часы, чтобы получить подтверждение, что вы справляетесь. Какой конкретный маленький шаг вы готовы попробовать сегодня, чтобы он казался выполнимым и не слишком страшным?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-005",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "response_mode": "reflect",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 577,
+                "sentences": 4,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 2
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 15,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-005",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "reflect",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": true
+          },
+          "latency_ms": 12756.10479999159
+        }
+      ],
+      "final_answer": "Вы хотите один конкретный первый шаг прямо сегодня — не что-то героическое, а маленькое действие, которое даст сигнал «я двигаюсь» и не перегрузит. По сути вы ищете точечный опыт, который снизит тревогу и начнёт менять привычную реакцию избегания через безопасную, маленькую встречу со страхом. Это значит выбрать не самый большой страх из вашей карты, а тот, с которым реально можно столкнуться в ближайшие часы, чтобы получить подтверждение, что вы справляетесь. Какой конкретный маленький шаг вы готовы попробовать сегодня, чтобы он казался выполнимым и не слишком страшным?",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "qb-session-qb-005",
+        "phase": "clarify",
+        "relation_to_thread": "continue",
+        "continuity_score": 1.0,
+        "response_mode": "reflect",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": null,
+        "model_max_tokens": null,
+        "validator_blocked": null,
+        "validator_quality_flags": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 577,
+            "sentences": 4,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "explore",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 2
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 15,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": true,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
+        "quality_trace_error": null,
+        "timings": {},
+        "state": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": null,
+          "state_analyzer_api_mode": null,
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "qb-session-qb-005",
+          "phase": "clarify",
+          "relation_to_thread": "continue",
+          "response_mode": "reflect",
+          "response_goal": null,
+          "continuity_score": 1.0
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": null,
+          "model_max_tokens": null
+        },
+        "quality_trace_summary": []
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": false,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": true
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-010",
+      "title": "Low-resource continuation",
+      "category": "collapsed_or_low_resource",
+      "turns": 3,
+      "test_user_id": "qb_user_qb-010",
+      "session_id": "qb-session-qb-010",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "reduce cognitive load",
+          "offer tiny step",
+          "avoid intensity"
+        ],
+        "should_not": [
+          "ask multiple deep questions",
+          "give long psychoeducation"
+        ],
+        "quality_focus": [
+          "resource_fit",
+          "micro_step",
+          "brevity"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-010",
+          "turn_index": 1,
+          "user_message": "Сил почти нет.",
+          "answer": "Я рядом. Сядь удобно или ляг, положи руку на живот и сделай медленный вдох через нос на 4 счёта, выдох через рот на 6 — повтори ещё два раза.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-010",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "regulate",
+            "context_turns": null,
+            "semantic_hits_count": 1,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 141,
+                "sentences": 2,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 1,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 14,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "regulate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-010",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "regulate",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 13900.69520000543
+        },
+        {
+          "case_id": "QB-010",
+          "turn_index": 2,
+          "user_message": "Даже отвечать тяжело.",
+          "answer": "Я рядом. Поставь руку на живот и сделай один медленный вдох через нос на 4 счета, затем выдох через рот на 6 — просто этот один цикл, всё.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-010",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "regulate",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 138,
+                "sentences": 2,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 12,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "regulate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-010",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "regulate",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": [
+              "generic_phrase_risk"
+            ]
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 12635.782400000608
+        },
+        {
+          "case_id": "QB-010",
+          "turn_index": 3,
+          "user_message": "Можно что-то совсем простое на сейчас?",
+          "answer": "Похоже, тебе нужно что‑то действительно предельно простое и лёгкое прямо сейчас — что‑то, что не требует сил и даёт мгновенное небольшое облегчение. Это может быть короткая физическая пауза или тихое слово поддержки внутри — важно, чтобы нагрузка была минимальной и всё прошло спокойно. Хочешь, чтобы это было что‑то с телом (например, ещё один медленный вдох) или просто тихая фраза/образ в голове?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "qb-session-qb-010",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "reflect",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": null,
+            "model_max_tokens": null,
+            "validator_blocked": null,
+            "validator_quality_flags": null,
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 399,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 2
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 1,
+                "closed_loops_count": 0,
+                "has_open_loops": true,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": true,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 21,
+                "open_loop_overlap_terms_count": 4,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
+            "quality_trace_error": null,
+            "timings": {},
+            "state": {
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": null,
+              "state_analyzer_api_mode": null,
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "qb-session-qb-010",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "reflect",
+              "response_goal": null,
+              "continuity_score": 1.0
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": null,
+              "model_max_tokens": null
+            },
+            "quality_trace_summary": [
+              "generic_phrase_risk"
+            ]
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 10904.937700004666
+        }
+      ],
+      "final_answer": "Похоже, тебе нужно что‑то действительно предельно простое и лёгкое прямо сейчас — что‑то, что не требует сил и даёт мгновенное небольшое облегчение. Это может быть короткая физическая пауза или тихое слово поддержки внутри — важно, чтобы нагрузка была минимальной и всё прошло спокойно. Хочешь, чтобы это было что‑то с телом (например, ещё один медленный вдох) или просто тихая фраза/образ в голове?",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "qb-session-qb-010",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "continuity_score": 1.0,
+        "response_mode": "reflect",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": null,
+        "model_max_tokens": null,
+        "validator_blocked": null,
+        "validator_quality_flags": null,
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 399,
+            "sentences": 3,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "generic_markers_count": 2
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "explore",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 1,
+            "closed_loops_count": 0,
+            "has_open_loops": true,
+            "has_closed_loops": false,
+            "turns_in_phase": 1
+          },
+          "memory": {
+            "context_turns": 5,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": true,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 21,
+            "open_loop_overlap_terms_count": 4,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "reflect",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": [
+            "generic_phrase_risk"
+          ]
+        },
+        "quality_trace_error": null,
+        "timings": {},
+        "state": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": null,
+          "state_analyzer_api_mode": null,
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "qb-session-qb-010",
+          "phase": "clarify",
+          "relation_to_thread": "new_thread",
+          "response_mode": "reflect",
+          "response_goal": null,
+          "continuity_score": 1.0
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": null,
+          "model_max_tokens": null
+        },
+        "quality_trace_summary": [
+          "generic_phrase_risk"
+        ]
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": true,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    }
+  ]
+}

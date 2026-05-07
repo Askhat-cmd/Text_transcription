@@ -1,0 +1,93 @@
+﻿# PRD-045.3.2 command output
+
+## python -m pytest bot_psychologist/tests/evaluation -q
+.......                                                                  [100%]
+7 passed in 4.33s
+
+ExitCode: 0
+
+
+## python -m pytest bot_psychologist/tests/calibration -q
+......                                                                   [100%]
+6 passed in 0.53s
+
+ExitCode: 0
+
+
+## python -m pytest bot_psychologist/tests/multiagent/test_state_analyzer_calibration_regression.py -q
+......                                                                   [100%]
+6 passed in 0.11s
+
+ExitCode: 0
+
+
+## python -m pytest bot_psychologist/tests/multiagent/test_thread_manager_response_mode.py -q
+....                                                                     [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_thread_manager_response_mode.py::test_contact_with_hypo_routes_to_validate
+tests/multiagent/test_thread_manager_response_mode.py::test_hypo_without_contact_routes_to_regulate
+tests/multiagent/test_thread_manager_response_mode.py::test_solution_on_new_thread_routes_to_practice
+tests/multiagent/test_thread_manager_response_mode.py::test_safety_routes_to_safe_override
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:128: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+4 passed, 4 warnings in 0.10s
+
+ExitCode: 0
+
+
+## python -m pytest bot_psychologist/tests/multiagent/test_orchestrator_e2e.py -q
+...............                                                          [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_orchestrator_e2e.py: 17 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_orchestrator_e2e.py::test_e2e_11_new_thread_archived
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+15 passed, 18 warnings in 0.21s
+
+ExitCode: 0
+
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode dry-run
+[OK] dry-run report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.json
+[OK] dry-run report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.0_quality_baseline_report.md
+
+ExitCode: 0
+
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode direct --case-ids QB-002,QB-003,QB-005,QB-010 --output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_REPORT.md
+[OK] direct report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_REPORT.json
+[OK] direct report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_REPORT.md
+[WARN] direct run completed with 8 errors
+
+ExitCode: 3
+
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode live --case-ids QB-002,QB-003,QB-005,QB-010 --output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.md
+[WARN] live mode uses external running API process; restart backend after code changes.
+[OK] live report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.json
+[OK] live report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.md
+
+ExitCode: 0
+
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode direct --case-ids QB-002,QB-003,QB-005,QB-010 --output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_REPORT.md
+[OK] direct report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_REPORT.json
+[OK] direct report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_REPORT.md
+
+ExitCode: 0
+
+
+## python bot_psychologist/scripts/run_quality_baseline.py --mode live --case-ids QB-002,QB-003,QB-005,QB-010 --output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.md
+[WARN] live mode uses external running API process; restart backend after code changes.
+[OK] live report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.json
+[OK] live report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.3.2_TARGETED_SMOKE_LIVE_REPORT.md
+
+ExitCode: 0
+

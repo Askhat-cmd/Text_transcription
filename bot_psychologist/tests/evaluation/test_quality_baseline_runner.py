@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 import sys
+from unittest.mock import patch
 
 
 def _load_runner_module():
@@ -37,3 +38,58 @@ def test_extract_debug_summary_keeps_quality_trace() -> None:
     assert summary["quality_trace"]["summary_flags"] == ["generic_phrase_risk"]
     assert summary["quality_trace_error"] is None
     assert latency_ms == 123.0
+
+
+def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
+    runner = _load_runner_module()
+    response = {
+        "debug": {
+            "nervous_state": "window",
+            "intent": "contact",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "response_mode": "validate",
+            "state_analyzer_model": "deterministic",
+            "state_analyzer_api_mode": "heuristic",
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "quality_trace": {
+                "summary_flags": ["generic_phrase_risk"],
+                "state": {"openness": "mixed", "ok_position": "I+W+"},
+                "thread": {"continuity_score": 0.12},
+            },
+            "total_latency_ms": 321,
+        }
+    }
+    summary, latency_ms = runner._extract_debug_summary(response, session_id="s-2")
+    assert isinstance(summary["state"], dict)
+    assert isinstance(summary["thread"], dict)
+    assert isinstance(summary["writer"], dict)
+    assert summary["state"]["intent"] == "contact"
+    assert summary["thread"]["response_mode"] == "validate"
+    assert summary["writer"]["model_used"] == "gpt-5-mini"
+    assert summary["quality_trace_summary"] == ["generic_phrase_risk"]
+    assert latency_ms == 321.0
+
+
+def test_runtime_metadata_contains_fingerprint_keys() -> None:
+    runner = _load_runner_module()
+    meta = runner._runtime_metadata(runner_mode="direct")
+    assert isinstance(meta, dict)
+    assert "git_sha" in meta
+    assert "git_dirty" in meta
+    assert "runtime_fingerprint" in meta
+    fp = meta["runtime_fingerprint"]
+    assert isinstance(fp, dict)
+    assert "state_analyzer_file_sha256" in fp
+    assert "thread_manager_file_sha256" in fp
+    assert "writer_prompt_file_sha256" in fp
+    assert "orchestrator_file_sha256" in fp
+
+
+def test_git_dirty_returns_none_when_git_unavailable() -> None:
+    runner = _load_runner_module()
+    with patch.object(runner.subprocess, "run", side_effect=FileNotFoundError("git missing")):
+        value = runner._git_dirty()
+    assert value is None

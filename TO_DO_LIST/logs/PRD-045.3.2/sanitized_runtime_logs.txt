@@ -1,0 +1,20 @@
+﻿# PRD-045.3.2 sanitized runtime logs
+
+Date: 2026-05-07
+Scope: runtime freshness diagnostics for baseline harness
+
+Summary:
+- Added direct mode (local orchestrator) and compared with live API mode.
+- Added runtime metadata + file fingerprints to reports.
+- Added stale-backend warning for live API mode.
+- Targeted smoke executed on QB-002,QB-003,QB-005,QB-010.
+
+Key findings:
+- QB-002 direct: validate/hypo/contact, short answer.
+- QB-002 live: reflect/window/explore, much longer answer.
+- QB-005 direct: practice/solution.
+- QB-005 live: reflect/explore.
+
+Safety:
+- No API keys/tokens/raw private conversations included in this log.
+- Full command outputs are stored in TO_DO_LIST/logs/PRD-045.3.2/test_command_output.txt.

@@ -1,0 +1,18 @@
+﻿PRD-045.4.1 sanitized runtime notes
+Date: 2026-05-07
+
+Executed in direct mode:
+- BEFORE: TO_DO_LIST/reports/PRD-045.4.1_BEFORE_SMOKE.json
+- AFTER: TO_DO_LIST/reports/PRD-045.4.1_LOW_RESOURCE_CONTINUITY_REPORT.json
+
+Before summary:
+- QB-002: response_mode=validate, mode_reason=explicit_contact_validate.
+- QB-005: response_mode=practice, mode_reason=solution_practice.
+- QB-010: relation=new_thread, relation_reason=continuity_below_threshold, response_mode=reflect, mode_reason=phase_clarify_reflect.
+
+After summary:
+- QB-002: response_mode=validate, mode_reason=explicit_contact_validate.
+- QB-005: response_mode=practice, mode_reason=solution_practice.
+- QB-010: relation=continue, relation_reason=low_resource_continuation_marker, thread_action=continue_thread, response_mode=validate, mode_reason=explicit_contact_validate.
+
+No secrets, private session keys, raw prompts, or full private conversations included in this log.

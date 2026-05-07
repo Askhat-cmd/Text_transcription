@@ -128,3 +128,20 @@ async def test_diagnostics_branch_marker_hit() -> None:
     assert relation["branch_marker_hit"] is True
     assert relation["selected_relation"] in {"branch", "new_thread"}
 
+
+@pytest.mark.asyncio
+async def test_low_resource_continuation_marker_diagnostics() -> None:
+    manager = ThreadManagerAgent()
+    current = _thread(core_direction="i feel depleted and very tired")
+    updated = await manager.update(
+        user_message="something very simple right now, no pressure please",
+        state_snapshot=_snapshot(intent="contact", nervous_state="hypo"),
+        user_id="u1",
+        current_thread=current,
+        archived_threads=[],
+    )
+    debug = manager.last_debug
+    assert updated.relation_to_thread == "continue"
+    assert debug["relation"]["low_resource_continue_marker_hit"] is True
+    assert debug["relation"]["relation_reason"] == "low_resource_continuation_marker"
+    assert "low_resource_followup_continued" in debug["summary_flags"]

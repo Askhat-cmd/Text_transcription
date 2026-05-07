@@ -74,6 +74,32 @@ _FOLLOWUP_CONTINUE_MARKERS = (
     "you are right",
     "about it",
 )
+_LOW_RESOURCE_CONTINUE_MARKERS = (
+    "\u0441\u0438\u043b \u043d\u0435\u0442",
+    "\u0441\u0438\u043b \u043f\u043e\u0447\u0442\u0438 \u043d\u0435\u0442",
+    "\u043f\u043e\u0447\u0442\u0438 \u043d\u0435\u0442 \u0441\u0438\u043b",
+    "\u0431\u0435\u0437 \u0441\u0438\u043b",
+    "\u043e\u0442\u0432\u0435\u0447\u0430\u0442\u044c \u0442\u044f\u0436\u0435\u043b\u043e",
+    "\u0433\u043e\u0432\u043e\u0440\u0438\u0442\u044c \u0442\u044f\u0436\u0435\u043b\u043e",
+    "\u0434\u0430\u0436\u0435 \u043e\u0442\u0432\u0435\u0447\u0430\u0442\u044c",
+    "\u0441\u043e\u0432\u0441\u0435\u043c \u043f\u0440\u043e\u0441\u0442\u043e\u0435",
+    "\u0447\u0442\u043e-\u0442\u043e \u043f\u0440\u043e\u0441\u0442\u043e\u0435",
+    "\u0447\u0442\u043e \u0442\u043e \u043f\u0440\u043e\u0441\u0442\u043e\u0435",
+    "\u043d\u0430 \u0441\u0435\u0439\u0447\u0430\u0441",
+    "\u043d\u0435 \u0434\u0430\u0432\u0438",
+    "\u0431\u0435\u0437 \u0434\u0430\u0432\u043b\u0435\u043d\u0438\u044f",
+    "\u043d\u0435 \u0432\u044b\u0432\u043e\u0436\u0443",
+    "no energy left",
+    "almost no energy",
+    "hard to answer",
+    "hard to even reply",
+    "even replying is hard",
+    "something simple",
+    "something very simple",
+    "right now",
+    "no pressure",
+    "don't push",
+)
 
 
 def _normalize_tokens(text: str) -> set[str]:
@@ -408,6 +434,7 @@ class ThreadManagerAgent:
             "archived_threads_count": archived_threads_count,
             "return_marker_hit": any(marker in lowered for marker in _RETURN_MARKERS),
             "followup_continue_marker_hit": any(marker in lowered for marker in _FOLLOWUP_CONTINUE_MARKERS),
+            "low_resource_continue_marker_hit": any(marker in lowered for marker in _LOW_RESOURCE_CONTINUE_MARKERS),
             "branch_marker_hit": any(marker in lowered for marker in _BRANCH_MARKERS),
             "resolution_marker_hit": any(marker in lowered for marker in _RESOLUTION_MARKERS),
             "message_token_count": len(message_tokens),
@@ -449,6 +476,7 @@ class ThreadManagerAgent:
         lowered = user_message.lower()
         return_marker_hit = any(marker in lowered for marker in _RETURN_MARKERS)
         followup_continue_marker_hit = any(marker in lowered for marker in _FOLLOWUP_CONTINUE_MARKERS)
+        low_resource_continue_marker_hit = any(marker in lowered for marker in _LOW_RESOURCE_CONTINUE_MARKERS)
         branch_marker_hit = any(marker in lowered for marker in _BRANCH_MARKERS)
 
         if archived_threads and return_marker_hit:
@@ -458,14 +486,18 @@ class ThreadManagerAgent:
             relation = "continue"
             continuity = max(continuity_raw, 0.25)
             relation_reason = "followup_continue_marker"
-        elif continuity_raw < _NEW_THREAD_THRESHOLD:
-            relation = "new_thread"
-            continuity = continuity_raw
-            relation_reason = "continuity_below_threshold"
         elif branch_marker_hit:
             relation = "branch"
             continuity = continuity_raw
             relation_reason = "branch_marker"
+        elif low_resource_continue_marker_hit:
+            relation = "continue"
+            continuity = max(continuity_raw, 0.25)
+            relation_reason = "low_resource_continuation_marker"
+        elif continuity_raw < _NEW_THREAD_THRESHOLD:
+            relation = "new_thread"
+            continuity = continuity_raw
+            relation_reason = "continuity_below_threshold"
 
         diag = self._relation_diag_from_message(
             user_message=user_message,
@@ -800,6 +832,10 @@ class ThreadManagerAgent:
             float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD
         ):
             flags.append("followup_marker_overrode_low_overlap")
+        if relation.get("relation_reason") == "low_resource_continuation_marker":
+            flags.append("low_resource_followup_continued")
+            if float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD:
+                flags.append("low_resource_marker_overrode_low_overlap")
         if relation.get("branch_marker_hit"):
             flags.append("branch_marker_hit")
         if relation.get("return_marker_hit"):
@@ -1013,4 +1049,3 @@ class ThreadManagerAgent:
 
 
 thread_manager_agent = ThreadManagerAgent()
-

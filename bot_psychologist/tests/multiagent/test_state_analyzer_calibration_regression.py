@@ -104,3 +104,15 @@ async def test_deterministic_debug_contains_compact_payload_without_raw_user_tex
     assert deterministic.get("intent") == "clarify"
     # Ensure compact debug contains no raw user text fields.
     assert "user_message" not in deterministic
+
+
+@pytest.mark.asyncio
+async def test_qb010_phrases_map_to_low_resource_hints() -> None:
+    agent = StateAnalyzerAgent(client=None, model="gpt-5-nano")
+    agent._get_client = lambda: None  # type: ignore[method-assign]
+
+    hypo_snapshot = await agent.analyze("\u0414\u0430\u0436\u0435 \u043e\u0442\u0432\u0435\u0447\u0430\u0442\u044c \u0442\u044f\u0436\u0435\u043b\u043e.")
+    followup_snapshot = await agent.analyze("\u041c\u043e\u0436\u043d\u043e \u0447\u0442\u043e-\u0442\u043e \u0441\u043e\u0432\u0441\u0435\u043c \u043f\u0440\u043e\u0441\u0442\u043e\u0435 \u043d\u0430 \u0441\u0435\u0439\u0447\u0430\u0441?")
+
+    assert hypo_snapshot.nervous_state == "hypo"
+    assert followup_snapshot.intent in {"contact", "solution"}

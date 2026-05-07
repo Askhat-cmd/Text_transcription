@@ -51,8 +51,11 @@ async def test_qb010_like_low_resource_followup_keeps_thread() -> None:
 
     debug = manager.last_debug
     assert turn3.relation_to_thread != "new_thread"
+    assert turn3.phase == "clarify"
     assert turn3.response_mode in {"validate", "regulate", "practice"}
     assert debug["relation"]["relation_reason"] == "low_resource_continuation_marker"
+    assert debug["phase"]["phase_reason"] == "low_resource_hold_phase"
+    assert "low_resource_phase_hold" in debug["summary_flags"]
     assert debug["action"]["thread_action"] == "continue_thread"
 
 
@@ -81,3 +84,69 @@ async def test_qb005_like_solution_window_is_practice() -> None:
     )
     assert updated.response_mode == "practice"
 
+
+@pytest.mark.asyncio
+async def test_low_resource_continuation_does_not_promote_to_explore() -> None:
+    manager = ThreadManagerAgent()
+    user_id = "phase_guard_low_resource"
+
+    turn1 = await manager.update(
+        user_message="No energy left.",
+        state_snapshot=_snapshot(intent="contact", nervous_state="hypo"),
+        user_id=user_id,
+        current_thread=None,
+        archived_threads=[],
+    )
+    turn2 = await manager.update(
+        user_message="Even replying is hard.",
+        state_snapshot=_snapshot(intent="contact", nervous_state="hypo"),
+        user_id=user_id,
+        current_thread=turn1,
+        archived_threads=[],
+    )
+    turn3 = await manager.update(
+        user_message="Something very simple right now, please.",
+        state_snapshot=_snapshot(intent="contact", nervous_state="hypo"),
+        user_id=user_id,
+        current_thread=turn2,
+        archived_threads=[],
+    )
+
+    debug = manager.last_debug
+    assert turn3.relation_to_thread == "continue"
+    assert turn3.phase == "clarify"
+    assert debug["phase"]["phase_reason"] == "low_resource_hold_phase"
+    assert "low_resource_phase_hold" in debug["summary_flags"]
+
+
+@pytest.mark.asyncio
+async def test_window_clarify_continue_can_promote_to_explore() -> None:
+    manager = ThreadManagerAgent()
+    user_id = "phase_guard_window"
+
+    turn1 = await manager.update(
+        user_message="I want to understand why this keeps happening.",
+        state_snapshot=_snapshot(intent="clarify", nervous_state="window"),
+        user_id=user_id,
+        current_thread=None,
+        archived_threads=[],
+    )
+    turn2 = await manager.update(
+        user_message="You are right, can you help me unpack this pattern?",
+        state_snapshot=_snapshot(intent="clarify", nervous_state="window"),
+        user_id=user_id,
+        current_thread=turn1,
+        archived_threads=[],
+    )
+    turn3 = await manager.update(
+        user_message="You are right, I think it repeats when I am criticized.",
+        state_snapshot=_snapshot(intent="clarify", nervous_state="window"),
+        user_id=user_id,
+        current_thread=turn2,
+        archived_threads=[],
+    )
+
+    debug = manager.last_debug
+    assert turn3.relation_to_thread == "continue"
+    assert turn3.phase == "explore"
+    assert debug["phase"]["phase_reason"] == "clarify_to_explore"

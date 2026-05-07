@@ -544,6 +544,20 @@ class ThreadManagerAgent:
         elif current_phase == "stabilize" and state_snapshot.nervous_state == "window":
             selected_phase = "clarify"
             phase_reason = "stabilize_to_clarify"
+        elif (
+            current_phase == "clarify"
+            and relation == "continue"
+            and (
+                state_snapshot.nervous_state in {"hyper", "hypo"}
+                or state_snapshot.intent == "contact"
+            )
+        ):
+            selected_phase = "clarify"
+            phase_reason = (
+                "low_resource_hold_phase"
+                if state_snapshot.nervous_state in {"hyper", "hypo"}
+                else "contact_hold_phase"
+            )
         elif current_phase == "clarify" and relation == "continue" and turns_in_phase >= 2:
             selected_phase = "explore"
             phase_reason = "clarify_to_explore"
@@ -850,6 +864,10 @@ class ThreadManagerAgent:
             flags.append("contact_validate_mode")
         if mode.get("mode_reason") == "nervous_regulate":
             flags.append("nervous_regulate_mode")
+        if phase.get("phase_reason") == "low_resource_hold_phase":
+            flags.append("low_resource_phase_hold")
+        if phase.get("phase_reason") == "contact_hold_phase":
+            flags.append("contact_phase_hold")
         if phase.get("previous_phase") != phase.get("selected_phase"):
             flags.append("phase_transition")
 

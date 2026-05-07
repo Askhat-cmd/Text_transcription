@@ -142,6 +142,9 @@ async def test_low_resource_continuation_marker_diagnostics() -> None:
     )
     debug = manager.last_debug
     assert updated.relation_to_thread == "continue"
+    assert updated.phase == "clarify"
     assert debug["relation"]["low_resource_continue_marker_hit"] is True
     assert debug["relation"]["relation_reason"] == "low_resource_continuation_marker"
+    assert debug["phase"]["phase_reason"] == "low_resource_hold_phase"
     assert "low_resource_followup_continued" in debug["summary_flags"]
+    assert "low_resource_phase_hold" in debug["summary_flags"]

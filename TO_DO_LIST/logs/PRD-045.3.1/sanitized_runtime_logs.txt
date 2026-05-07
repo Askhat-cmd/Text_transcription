@@ -1,0 +1,19 @@
+﻿# PRD-045.3.1 sanitized runtime logs
+
+Date: 2026-05-06
+Scope: targeted state-analyzer and routing calibration
+
+Sanitized summary:
+- Live calibration (before): executed successfully.
+- Live calibration (after): executed successfully.
+- Baseline smoke (--limit 3): executed successfully.
+- No secrets/API keys/private conversation dumps stored in this file.
+- Logs with full command outputs are in TO_DO_LIST/logs/PRD-045.3.1/test_command_output.txt.
+
+Key improvements (after vs before):
+- intent_accuracy: 0.25 -> 0.75
+- response_mode_accuracy: 0.5556 -> 0.8889
+- high_severity_mismatches: 42 -> 10
+
+Open issue from smoke baseline:
+- QB-002 remains response_mode=reflect and answer is not shorter.

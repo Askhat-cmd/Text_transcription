@@ -1,7 +1,7 @@
 {
   "run_metadata": {
-    "date": "2026-05-06T12:23:57.648257Z",
-    "git_sha": "18d9d84",
+    "date": "2026-05-06T12:43:54.413559Z",
+    "git_sha": "c93d61c",
     "mode": "live",
     "python": "3.13.2",
     "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\calibration\\state_analyzer_calibration_cases.json",
@@ -62,15 +62,15 @@
     }
   },
   "summary": {
-    "nervous_state_accuracy": 0.8889,
-    "intent_accuracy": 0.2639,
-    "openness_accuracy": 0.4444,
+    "nervous_state_accuracy": 1.0,
+    "intent_accuracy": 0.75,
+    "openness_accuracy": 0.5556,
     "ok_position_accuracy": 0.5556,
-    "response_mode_accuracy": 0.5694,
-    "all_fields_exact_match": 0.125,
-    "high_severity_mismatches": 40,
-    "medium_severity_mismatches": 15,
-    "low_severity_mismatches": 17
+    "response_mode_accuracy": 0.8889,
+    "all_fields_exact_match": 0.3333,
+    "high_severity_mismatches": 10,
+    "medium_severity_mismatches": 10,
+    "low_severity_mismatches": 52
   },
   "confusion": {
     "nervous_state": {
@@ -78,8 +78,7 @@
         "hyper": 16
       },
       "hypo": {
-        "hypo": 8,
-        "window": 8
+        "hypo": 16
       },
       "window": {
         "window": 40
@@ -87,19 +86,19 @@
     },
     "intent": {
       "clarify": {
-        "clarify": 4,
-        "explore": 12
+        "clarify": 16
       },
       "contact": {
-        "contact": 9,
-        "explore": 23
+        "contact": 24,
+        "explore": 8
       },
       "explore": {
         "explore": 2,
         "solution": 4
       },
       "solution": {
-        "explore": 10
+        "explore": 2,
+        "solution": 8
       },
       "vent": {
         "explore": 4,
@@ -112,7 +111,7 @@
         "open": 8
       },
       "defensive": {
-        "open": 8
+        "defensive": 8
       },
       "mixed": {
         "open": 24
@@ -135,10 +134,12 @@
     },
     "response_mode_new_thread": {
       "explore": {
-        "reflect": 6
+        "practice": 4,
+        "reflect": 2
       },
       "practice": {
-        "reflect": 10
+        "practice": 8,
+        "reflect": 2
       },
       "reflect": {
         "reflect": 16
@@ -150,8 +151,7 @@
         "safe_override": 8
       },
       "validate": {
-        "reflect": 15,
-        "validate": 1
+        "validate": 16
       }
     }
   },
@@ -169,24 +169,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-002",
@@ -201,24 +201,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-003",
@@ -233,24 +233,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-004",
@@ -265,24 +265,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-005",
@@ -297,24 +297,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-006",
@@ -329,24 +329,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-007",
@@ -361,24 +361,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-008",
@@ -393,24 +393,24 @@
         "confidence_min": 0.65
       },
       "actual": {
-        "nervous_state": "window",
-        "intent": "explore",
+        "nervous_state": "hypo",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
-        "nervous_state": false,
-        "intent": false,
+        "nervous_state": true,
+        "intent": true,
         "openness": false,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-009",
@@ -430,7 +430,7 @@
         "openness": "open",
         "ok_position": "I+W+",
         "response_mode_new_thread": "validate",
-        "confidence": 0.7,
+        "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
@@ -458,23 +458,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-011",
@@ -490,23 +490,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-012",
@@ -522,23 +522,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-013",
@@ -554,23 +554,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-014",
@@ -586,23 +586,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-015",
@@ -618,23 +618,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-016",
@@ -650,23 +650,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "contact",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "validate",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Low-resource/contact case routed to reflective/exploratory mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-017",
@@ -682,23 +682,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "clarify",
         "openness": "open",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.55,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": false,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "medium",
-      "notes": "Mismatch in one or more important fields."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-018",
@@ -714,7 +714,7 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "clarify",
         "openness": "open",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
@@ -723,14 +723,14 @@
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": false,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "medium",
-      "notes": "Mismatch in one or more important fields."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-019",
@@ -746,7 +746,7 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "clarify",
         "openness": "open",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
@@ -755,14 +755,14 @@
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": false,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "medium",
-      "notes": "Mismatch in one or more important fields."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-020",
@@ -778,7 +778,7 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "clarify",
         "openness": "open",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
@@ -787,14 +787,14 @@
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": false,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "medium",
-      "notes": "Mismatch in one or more important fields."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-021",
@@ -938,23 +938,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-026",
@@ -970,23 +970,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-027",
@@ -1002,23 +1002,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-028",
@@ -1034,23 +1034,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-029",
@@ -1066,23 +1066,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-030",
@@ -1098,23 +1098,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-031",
@@ -1130,23 +1130,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.55,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
-      "confidence_ok": false,
-      "severity": "medium",
-      "notes": "Mismatch in one or more important fields."
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-032",
@@ -1162,23 +1162,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
-        "openness": "open",
+        "intent": "clarify",
+        "openness": "defensive",
         "ok_position": "I+W+",
         "response_mode_new_thread": "reflect",
-        "confidence": 0.75,
+        "confidence": 0.797,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
-        "openness": false,
+        "intent": true,
+        "openness": true,
         "ok_position": false,
         "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Defensive/collapsed expected but model returned open with high confidence."
+      "severity": "low",
+      "notes": "Non-critical mismatch."
     },
     {
       "id": "SA-033",
@@ -1194,23 +1194,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-034",
@@ -1226,23 +1226,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-035",
@@ -1258,23 +1258,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-036",
@@ -1290,23 +1290,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-037",
@@ -1322,23 +1322,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
-        "confidence": 0.55,
+        "response_mode_new_thread": "practice",
+        "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
-      "confidence_ok": false,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "confidence_ok": true,
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-038",
@@ -1354,23 +1354,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-039",
@@ -1386,23 +1386,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-040",
@@ -1418,23 +1418,23 @@
       },
       "actual": {
         "nervous_state": "window",
-        "intent": "explore",
+        "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
       "matches": {
         "nervous_state": true,
-        "intent": false,
+        "intent": true,
         "openness": true,
         "ok_position": true,
-        "response_mode_new_thread": false
+        "response_mode_new_thread": true
       },
       "confidence_ok": true,
-      "severity": "high",
-      "notes": "Solution intent expected practice mode."
+      "severity": "low",
+      "notes": "All expected fields matched."
     },
     {
       "id": "SA-041",
@@ -1709,7 +1709,7 @@
         "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
@@ -1741,7 +1741,7 @@
         "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
@@ -1773,7 +1773,7 @@
         "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
@@ -1805,7 +1805,7 @@
         "intent": "solution",
         "openness": "open",
         "ok_position": "I+W+",
-        "response_mode_new_thread": "reflect",
+        "response_mode_new_thread": "practice",
         "confidence": 0.75,
         "safety_flag": false
       },
@@ -2462,10 +2462,10 @@
     }
   ],
   "recommendations": [
-    "Audit analyzer/thread routing pair `contact->explore / validate->reflect` (count=15).",
-    "Audit analyzer/thread routing pair `clarify->explore / reflect->reflect` (count=12).",
-    "Audit analyzer/thread routing pair `solution->explore / practice->reflect` (count=10).",
-    "Add deterministic hints for `low_resource_support` cases (high severity=8).",
-    "Add deterministic hints for `solution` cases (high severity=8)."
+    "Audit analyzer/thread routing pair `contact->explore / regulate->regulate` (count=8).",
+    "Audit analyzer/thread routing pair `vent->explore / regulate->regulate` (count=4).",
+    "Audit analyzer/thread routing pair `explore->solution / explore->practice` (count=4).",
+    "Add deterministic hints for `collapsed` cases (high severity=8).",
+    "Add deterministic hints for `explore` cases (high severity=2)."
   ]
 }

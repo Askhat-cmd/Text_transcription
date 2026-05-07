@@ -90,17 +90,36 @@ _HYPER_KEYWORDS = frozenset(
 
 _HYPO_KEYWORDS = frozenset(
     {
+        "устал",
+        "устала",
+        "очень устал",
+        "очень устала",
+        "выжат",
+        "выжата",
+        "нет ресурса",
         "ничего не чувствую",
         "пустота",
         "все равно",
         "всё равно",
         "нет сил",
+        "без сил",
+        "сил больше нет",
         "не могу встать",
         "апатия",
         "безразличие",
+        "измотан",
+        "измотана",
         "numb",
         "emptiness",
         "no energy",
+        "low energy",
+        "exhausted",
+        "very tired",
+        "so tired",
+        "drained",
+        "worn out",
+        "no strength",
+        "depleted",
         "dont care",
         "don't care",
     }
@@ -109,24 +128,66 @@ _HYPO_KEYWORDS = frozenset(
 _CONTACT_PHRASES = frozenset(
     {
         "просто хочу поговорить",
+        "не хочу советов",
+        "без советов",
         "не надо советов",
         "не нужно советов",
+        "не надо анализа",
+        "без анализа",
+        "не анализируй",
+        "просто скажи пару слов",
+        "пару спокойных слов",
+        "просто побудь рядом",
+        "просто будь рядом",
+        "просто поддержи",
+        "мне нужна поддержка",
+        "хочу спокойных слов",
         "хочу чтобы выслушали",
         "просто выслушай",
         "just want to talk",
         "no advice",
+        "without advice",
+        "no analysis",
+        "do not analyze",
+        "don't analyze",
+        "just two calm words",
+        "calm words",
+        "just stay with me",
+        "stay with me",
+        "just be with me",
+        "i only want calm contact",
+        "only want calm contact",
         "just listen",
     }
 )
 
 _SOLUTION_PHRASES = frozenset(
     {
+        "один конкретный шаг",
+        "конкретный шаг",
+        "что сделать сегодня",
+        "что мне сделать сегодня",
+        "с чего начать",
+        "первый шаг",
+        "какой шаг",
+        "дай практический шаг",
+        "как начать",
         "как мне",
         "что делать",
         "помоги решить",
         "что посоветуешь",
         "дай совет",
         "как справиться",
+        "one concrete step",
+        "concrete step",
+        "one step",
+        "what can i do today",
+        "what should i do today",
+        "how do i start",
+        "where do i start",
+        "move forward",
+        "first step",
+        "practical step",
         "what should i do",
         "how do i",
         "help me fix",
@@ -149,11 +210,25 @@ _VENT_PHRASES = frozenset(
 
 _CLARIFY_PHRASES = frozenset(
     {
+        "что-то не так",
+        "что то не так",
+        "не могу понять",
+        "не понимаю что происходит",
+        "почему я так",
+        "почему со мной",
+        "хочу понять почему",
         "почему я",
         "как понять",
         "хочу разобраться",
         "что со мной",
         "помоги понять",
+        "feels off",
+        "something feels off",
+        "cannot name it",
+        "can't name it",
+        "why i keep looping",
+        "explain why",
+        "what is happening to me",
         "why do i",
         "help me understand",
     }
@@ -173,14 +248,46 @@ _EXPLORE_PHRASES = frozenset(
 
 _DEFENSIVE_PHRASES = frozenset(
     {
+        "может это не поможет",
+        "это всё равно не поможет",
+        "я уже пробовал",
+        "я уже пробовала",
+        "не уверен что поможет",
+        "не уверена что поможет",
         "все равно не поможет",
         "всё равно не поможет",
         "уже пробовал",
         "ничего не изменится",
         "бесполезно",
         "это не работает",
+        "maybe this will not help",
+        "maybe it will not help",
+        "not sure this helps",
+        "i already tried",
+        "nothing will change",
+        "this is useless",
         "won't help",
         "already tried",
+    }
+)
+
+_COLLAPSED_PHRASES = frozenset(
+    {
+        "я сломался",
+        "я сломалась",
+        "я не справлюсь",
+        "я не вывожу",
+        "не могу больше",
+        "всё бесполезно",
+        "все бесполезно",
+        "ничего не получится",
+        "я в тупике",
+        "i am broken",
+        "i can't handle this",
+        "i cannot handle this",
+        "i can't do this anymore",
+        "nothing will work",
+        "i am stuck",
     }
 )
 
@@ -279,10 +386,13 @@ class StateAnalyzerAgent:
         message = (user_message or "").strip()
         try:
             if _is_empty(message):
+                self.last_debug = {"model": "deterministic", "api_mode": "heuristic", "reason": "empty_message"}
                 return self._default_snapshot()
             if _is_start_command(message):
+                self.last_debug = {"model": "deterministic", "api_mode": "heuristic", "reason": "start_command"}
                 return self._onboarding_snapshot()
             if _is_only_emoji_or_symbols(message):
+                self.last_debug = {"model": "deterministic", "api_mode": "heuristic", "reason": "emoji_or_symbols"}
                 return StateSnapshot(
                     nervous_state="window",
                     intent="contact",
@@ -292,6 +402,7 @@ class StateAnalyzerAgent:
                     confidence=0.6,
                 )
             if self._detect_safety(message):
+                self.last_debug = {"model": "deterministic", "api_mode": "heuristic", "reason": "safety_keywords"}
                 return StateSnapshot(
                     nervous_state="hyper",
                     intent="contact",
@@ -307,6 +418,7 @@ class StateAnalyzerAgent:
                 and deterministic.intent is not None
                 and deterministic.openness is not None
             ):
+                self._set_deterministic_debug(deterministic=deterministic)
                 return StateSnapshot(
                     nervous_state=deterministic.nervous_state,
                     intent=deterministic.intent,
@@ -370,11 +482,36 @@ class StateAnalyzerAgent:
         return None, 0.0
 
     def _detect_openness(self, message: str) -> tuple[Optional[str], float]:
+        if _contains_any(message, _COLLAPSED_PHRASES):
+            return "collapsed", 0.82
         if _contains_any(message, _DEFENSIVE_PHRASES):
             return "defensive", 0.85
         if _contains_any(message, _OPEN_PHRASES):
             return "open", 0.8
         return None, 0.0
+
+    def _set_deterministic_debug(self, *, deterministic: _DeterministicResult) -> None:
+        self.last_debug = {
+            "model": "deterministic",
+            "api_mode": "heuristic",
+            "temperature": None,
+            "max_tokens": None,
+            "tokens_prompt": None,
+            "tokens_completion": None,
+            "tokens_total": None,
+            "raw_response": "",
+            "parse_error": None,
+            "error": None,
+            "deterministic": {
+                "nervous_state": deterministic.nervous_state,
+                "nervous_conf": deterministic.nervous_conf,
+                "intent": deterministic.intent,
+                "intent_conf": deterministic.intent_conf,
+                "openness": deterministic.openness,
+                "openness_conf": deterministic.openness_conf,
+                "aggregate_conf": deterministic.aggregate_conf,
+            },
+        }
 
     async def _analyze_with_llm(
         self,

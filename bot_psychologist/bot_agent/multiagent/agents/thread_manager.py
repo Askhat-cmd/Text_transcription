@@ -99,7 +99,7 @@ def _mode_and_goal(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str]
         return "validate", "hold contact and avoid overload"
     if state_snapshot.nervous_state in {"hyper", "hypo"}:
         return "regulate", "softly stabilize state"
-    if phase == "explore" and state_snapshot.intent == "solution":
+    if state_snapshot.intent == "solution":
         return "practice", "provide one realistic next step"
     if phase == "explore":
         return "explore", "expand perspective"

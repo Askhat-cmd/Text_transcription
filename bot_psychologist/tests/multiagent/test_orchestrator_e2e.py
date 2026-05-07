@@ -95,6 +95,15 @@ def _patch_pipeline(
         "update",
         AsyncMock(return_value=updated_thread or _thread()),
     )
+    orch_module.thread_manager_agent.last_debug = {
+        "version": "thread_diagnostics_v1",
+        "relation": {},
+        "phase": {},
+        "mode": {},
+        "loops": {},
+        "action": {},
+        "summary_flags": [],
+    }
     monkeypatch.setattr(
         orch_module.memory_retrieval_agent,
         "assemble",
@@ -177,10 +186,16 @@ async def test_e2e_03_debug_all_fields(monkeypatch) -> None:
         "quality_trace_version",
         "quality_trace",
         "quality_trace_error",
+        "thread_diagnostics_version",
+        "thread_diagnostics",
     ):
         assert key in debug
     assert debug["quality_trace_version"] == "quality_trace_v1"
     assert isinstance(debug["quality_trace"], dict)
+    assert debug["thread_diagnostics_version"] == "thread_diagnostics_v1"
+    assert isinstance(debug["thread_diagnostics"], dict)
+    for key in ("relation", "phase", "mode", "loops", "action", "summary_flags"):
+        assert key in debug["thread_diagnostics"]
 
 
 @pytest.mark.asyncio

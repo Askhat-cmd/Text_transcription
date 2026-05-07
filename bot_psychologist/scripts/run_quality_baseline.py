@@ -261,6 +261,11 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
     state = response.get("state_analysis") if isinstance(response.get("state_analysis"), dict) else {}
 
     quality_trace = trace.get("quality_trace") if isinstance(trace.get("quality_trace"), dict) else {}
+    thread_diagnostics = (
+        trace.get("thread_diagnostics")
+        if isinstance(trace.get("thread_diagnostics"), dict)
+        else {}
+    )
     qt_state = quality_trace.get("state") if isinstance(quality_trace.get("state"), dict) else {}
     qt_thread = quality_trace.get("thread") if isinstance(quality_trace.get("thread"), dict) else {}
 
@@ -295,6 +300,26 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "response_mode": metadata.get("recommended_mode") or trace.get("response_mode") or trace.get("recommended_mode"),
         "response_goal": trace.get("response_goal"),
         "continuity_score": trace.get("continuity_score") or qt_thread.get("continuity_score"),
+        "relation_reason": (
+            thread_diagnostics.get("relation", {}).get("relation_reason")
+            if isinstance(thread_diagnostics.get("relation"), dict)
+            else None
+        ),
+        "phase_reason": (
+            thread_diagnostics.get("phase", {}).get("phase_reason")
+            if isinstance(thread_diagnostics.get("phase"), dict)
+            else None
+        ),
+        "mode_reason": (
+            thread_diagnostics.get("mode", {}).get("mode_reason")
+            if isinstance(thread_diagnostics.get("mode"), dict)
+            else None
+        ),
+        "thread_action": (
+            thread_diagnostics.get("action", {}).get("thread_action")
+            if isinstance(thread_diagnostics.get("action"), dict)
+            else None
+        ),
     }
     writer_block = {
         "model_used": trace.get("primary_model") or trace.get("model_used") or metadata.get("model_used"),
@@ -324,6 +349,8 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "quality_trace_version": trace.get("quality_trace_version"),
         "quality_trace": quality_trace or trace.get("quality_trace"),
         "quality_trace_error": trace.get("quality_trace_error"),
+        "thread_diagnostics_version": trace.get("thread_diagnostics_version"),
+        "thread_diagnostics": thread_diagnostics or trace.get("thread_diagnostics"),
         "timings": trace.get("timings") if isinstance(trace.get("timings"), dict) else {},
         "state": state_block,
         "thread": thread_block,
@@ -561,6 +588,7 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
     for case in cases:
         final_debug = case.get("final_debug_summary") if isinstance(case.get("final_debug_summary"), dict) else {}
         quality_trace = final_debug.get("quality_trace") if isinstance(final_debug.get("quality_trace"), dict) else None
+        thread_summary = final_debug.get("thread") if isinstance(final_debug.get("thread"), dict) else {}
         quality_summary_flags = (
             quality_trace.get("summary_flags")
             if isinstance(quality_trace, dict) and isinstance(quality_trace.get("summary_flags"), list)
@@ -581,6 +609,13 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
                 },
                 ensure_ascii=False,
             )
+        )
+        lines.append(
+            "- Thread diagnostics summary: "
+            + f"relation_reason={thread_summary.get('relation_reason')}, "
+            + f"phase_reason={thread_summary.get('phase_reason')}, "
+            + f"mode_reason={thread_summary.get('mode_reason')}, "
+            + f"action={thread_summary.get('thread_action')}"
         )
         if quality_summary_flags is not None:
             lines.append(f"- Quality trace summary: {json.dumps(quality_summary_flags, ensure_ascii=False)}")

@@ -616,6 +616,8 @@ async def ask_adaptive_question(
                     "quality_trace_version",
                     "quality_trace",
                     "quality_trace_error",
+                    "thread_diagnostics_version",
+                    "thread_diagnostics",
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):

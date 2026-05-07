@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from bot_agent.config import config
 from .agents.memory_retrieval import memory_retrieval_agent
 from .agents.state_analyzer import state_analyzer_agent
-from .agents.thread_manager import thread_manager_agent
+from .agents.thread_manager import THREAD_DIAGNOSTICS_VERSION, thread_manager_agent
 from .agents.validator_agent import validator_agent
 from .agents.writer_agent import writer_agent
 from .contracts.writer_contract import WriterContract
@@ -141,6 +141,11 @@ class MultiAgentOrchestrator:
             user_id=user_id,
             current_thread=current_thread,
             archived_threads=archived_threads,
+        )
+        thread_debug = (
+            thread_manager_agent.last_debug
+            if isinstance(getattr(thread_manager_agent, "last_debug", None), dict)
+            else {}
         )
         t_thread = int((time.perf_counter() - t0) * 1000)
         self._record_agent_metric(
@@ -284,6 +289,8 @@ class MultiAgentOrchestrator:
                 "relation_to_thread": updated_thread.relation_to_thread,
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
+                "thread_diagnostics_version": THREAD_DIAGNOSTICS_VERSION,
+                "thread_diagnostics": thread_debug,
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),

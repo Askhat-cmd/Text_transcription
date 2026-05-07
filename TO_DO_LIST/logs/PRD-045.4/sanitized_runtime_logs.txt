@@ -1,0 +1,13 @@
+﻿PRD-045.4 direct smoke sanitized runtime notes
+Date: 2026-05-07
+
+- Baseline runner executed in direct mode for cases: QB-002, QB-003, QB-005, QB-010.
+- OpenAI Responses API calls returned HTTP 200 during run.
+- Local retrieval endpoint http://localhost:8003/api/query/ returned HTTP 200 during run.
+- No secrets, no raw prompts, no raw conversation transcripts included in this log.
+
+Diagnostics summary from generated JSON report:
+- QB-002: relation_reason=no_current_thread, phase_reason=new_thread_default_clarify, mode_reason=explicit_contact_validate, thread_action=new_thread.
+- QB-003: relation_reason=no_current_thread, phase_reason=new_thread_default_clarify, mode_reason=phase_clarify_reflect, thread_action=new_thread.
+- QB-005: relation_reason=no_current_thread, phase_reason=new_thread_default_clarify, mode_reason=solution_practice, thread_action=new_thread.
+- QB-010: relation_reason=continuity_below_threshold, phase_reason=new_thread_default_clarify, mode_reason=phase_clarify_reflect, thread_action=new_thread.

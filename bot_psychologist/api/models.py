@@ -302,6 +302,8 @@ class DebugTrace(BaseModel):
     quality_trace_version: Optional[str] = None
     quality_trace: Optional[Dict[str, Any]] = None
     quality_trace_error: Optional[str] = None
+    thread_diagnostics_version: Optional[str] = None
+    thread_diagnostics: Optional[Dict[str, Any]] = None
 
 
 class AgentTimings(BaseModel):
@@ -435,6 +437,8 @@ class MultiAgentTraceResponse(BaseModel):
     quality_trace_version: Optional[str] = None
     quality_trace: Optional[Dict[str, Any]] = None
     quality_trace_error: Optional[str] = None
+    thread_diagnostics_version: Optional[str] = None
+    thread_diagnostics: Optional[Dict[str, Any]] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):
@@ -588,5 +592,4 @@ class StatsResponse(BaseModel):
     top_interests: List[str]
     feedback_stats: Dict[str, int]
     timestamp: str
-
 

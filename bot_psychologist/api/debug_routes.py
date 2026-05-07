@@ -520,6 +520,16 @@ async def get_multiagent_trace(
             if debug.get("quality_trace_error") is not None
             else None
         ),
+        thread_diagnostics_version=(
+            str(debug.get("thread_diagnostics_version"))
+            if debug.get("thread_diagnostics_version") is not None
+            else None
+        ),
+        thread_diagnostics=(
+            debug.get("thread_diagnostics")
+            if isinstance(debug.get("thread_diagnostics"), dict)
+            else None
+        ),
     )
 
 

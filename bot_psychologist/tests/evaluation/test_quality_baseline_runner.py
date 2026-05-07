@@ -59,6 +59,13 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
                 "state": {"openness": "mixed", "ok_position": "I+W+"},
                 "thread": {"continuity_score": 0.12},
             },
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+                "relation": {"relation_reason": "continuity_continue"},
+                "phase": {"phase_reason": "keep_current_phase"},
+                "mode": {"mode_reason": "phase_clarify_reflect"},
+                "action": {"thread_action": "continue_thread"},
+            },
             "total_latency_ms": 321,
         }
     }
@@ -70,6 +77,11 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
     assert summary["thread"]["response_mode"] == "validate"
     assert summary["writer"]["model_used"] == "gpt-5-mini"
     assert summary["quality_trace_summary"] == ["generic_phrase_risk"]
+    assert summary["thread_diagnostics_version"] == "thread_diagnostics_v1"
+    assert summary["thread"]["relation_reason"] == "continuity_continue"
+    assert summary["thread"]["phase_reason"] == "keep_current_phase"
+    assert summary["thread"]["mode_reason"] == "phase_clarify_reflect"
+    assert summary["thread"]["thread_action"] == "continue_thread"
     assert latency_ms == 321.0
 
 

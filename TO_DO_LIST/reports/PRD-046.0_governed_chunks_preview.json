@@ -1,0 +1,394 @@
+{
+  "schema_version": "governed_kb_dry_run_v1",
+  "generated_at": "2026-05-08T08:21:40.808671Z",
+  "registry_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\knowledge_sources\\source_registry.example.yaml",
+  "dry_run": true,
+  "raw_sources_missing": true,
+  "preview_output_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.0_governed_chunks_preview.json",
+  "sources": [
+    {
+      "source_id": "forge_spirit_v2",
+      "title": "КУЗНИЦА ДУХА v.2",
+      "source_kind": "practice_manual",
+      "raw_source_available": false,
+      "text_origin": "synthetic_fixture",
+      "chunks_generated": 3,
+      "validation_errors": 0,
+      "validation_warnings": 0,
+      "counts_by_type": {
+        "lens": 1,
+        "practice": 2
+      },
+      "counts_by_allowed_use": {
+        "diagnostic_lens": 3,
+        "practice_suggestion": 3,
+        "writer_context": 3
+      },
+      "counts_by_safety_flag": {
+        "directive_risk": 1,
+        "not_for_direct_quote": 3,
+        "practice_requires_low_resource_check": 2,
+        "requires_grounding": 3
+      },
+      "db_json_export_preview": {
+        "schema_version": "governed_kb_v1",
+        "source_id": "forge_spirit_v2",
+        "source_type": "practice_manual",
+        "title": "КУЗНИЦА ДУХА v.2",
+        "version": "v2",
+        "blocks": [
+          {
+            "id": "forge_spirit_v2::chunk::0001::6fe73bf7",
+            "title": "Принципы",
+            "summary": "Материал про практики саморегуляции и осторожные интервенции.",
+            "text_preview": "Материал про практики саморегуляции и осторожные интервенции.",
+            "complexity": 0.55,
+            "metadata": {
+              "source_title": "КУЗНИЦА ДУХА v.2",
+              "source_type": "practice_manual",
+              "chunk_index": 1,
+              "governance": {
+                "chunk_type": "practice",
+                "allowed_use": [
+                  "diagnostic_lens",
+                  "practice_suggestion",
+                  "writer_context"
+                ],
+                "safety_flags": [
+                  "requires_grounding",
+                  "not_for_direct_quote",
+                  "practice_requires_low_resource_check"
+                ],
+                "lens_family": [],
+                "tags": [
+                  "practice"
+                ],
+                "practice_metadata": {
+                  "goal": "",
+                  "duration": "",
+                  "steps_count": 0,
+                  "requires_journaling": false,
+                  "body_based": false,
+                  "low_resource_safe": false
+                },
+                "governance_notes": [
+                  "practice_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 0,
+                  "section_part_index": 0,
+                  "source_kind": "practice_manual",
+                  "language": "ru"
+                }
+              }
+            }
+          },
+          {
+            "id": "forge_spirit_v2::chunk::0002::c9d98643",
+            "title": "Практика 1: Дыхание 3 минуты",
+            "summary": "Цель: снизить перегрузку. Время: 3 минуты.",
+            "text_preview": "Цель: снизить перегрузку.\n\nВремя: 3 минуты.\n\nШаг 1. Заметь напряжение в теле.\nШаг 2. Сделай медленный вдох и длинный выдох.\nШаг 3. Проверь, стало ли чуть спокойнее.",
+            "complexity": 0.55,
+            "metadata": {
+              "source_title": "КУЗНИЦА ДУХА v.2",
+              "source_type": "practice_manual",
+              "chunk_index": 2,
+              "governance": {
+                "chunk_type": "practice",
+                "allowed_use": [
+                  "diagnostic_lens",
+                  "practice_suggestion",
+                  "writer_context"
+                ],
+                "safety_flags": [
+                  "requires_grounding",
+                  "not_for_direct_quote",
+                  "directive_risk",
+                  "practice_requires_low_resource_check"
+                ],
+                "lens_family": [
+                  "somatic"
+                ],
+                "tags": [
+                  "somatic",
+                  "practice"
+                ],
+                "practice_metadata": {
+                  "goal": "снизить перегрузку.",
+                  "duration": "3 минуты.",
+                  "steps_count": 3,
+                  "requires_journaling": false,
+                  "body_based": false,
+                  "low_resource_safe": false
+                },
+                "governance_notes": [
+                  "practice_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 1,
+                  "section_part_index": 0,
+                  "source_kind": "practice_manual",
+                  "language": "ru"
+                }
+              }
+            }
+          },
+          {
+            "id": "forge_spirit_v2::chunk::0003::aa0c80fe",
+            "title": "Линза избегания",
+            "summary": "Если человек откладывает важный шаг снова и снова, важно назвать паттерн мягко.",
+            "text_preview": "Если человек откладывает важный шаг снова и снова, важно назвать паттерн мягко.",
+            "complexity": 0.7,
+            "metadata": {
+              "source_title": "КУЗНИЦА ДУХА v.2",
+              "source_type": "practice_manual",
+              "chunk_index": 3,
+              "governance": {
+                "chunk_type": "lens",
+                "allowed_use": [
+                  "diagnostic_lens",
+                  "practice_suggestion",
+                  "writer_context"
+                ],
+                "safety_flags": [
+                  "requires_grounding",
+                  "not_for_direct_quote"
+                ],
+                "lens_family": [
+                  "avoidance"
+                ],
+                "tags": [
+                  "avoidance",
+                  "lens"
+                ],
+                "practice_metadata": {},
+                "governance_notes": [
+                  "lens_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 2,
+                  "section_part_index": 0,
+                  "source_kind": "practice_manual",
+                  "language": "ru"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "source_id": "neo_mindbot_notes",
+      "title": "Neo MindBot КОНСПЕКТ",
+      "source_kind": "architecture_notes",
+      "raw_source_available": false,
+      "text_origin": "synthetic_fixture",
+      "chunks_generated": 3,
+      "validation_errors": 0,
+      "validation_warnings": 0,
+      "counts_by_type": {
+        "excluded": 1,
+        "principle": 1,
+        "safety": 1
+      },
+      "counts_by_allowed_use": {
+        "diagnostic_lens": 2,
+        "do_not_use": 1,
+        "internal_only": 3,
+        "safety_protocol": 2,
+        "style_guidance": 2,
+        "writer_context": 2
+      },
+      "counts_by_safety_flag": {
+        "not_for_direct_quote": 3,
+        "source_style_not_user_facing": 3
+      },
+      "db_json_export_preview": {
+        "schema_version": "governed_kb_v1",
+        "source_id": "neo_mindbot_notes",
+        "source_type": "architecture_notes",
+        "title": "Neo MindBot КОНСПЕКТ",
+        "version": "notes",
+        "blocks": [
+          {
+            "id": "neo_mindbot_notes::chunk::0001::2e0353ca",
+            "title": "Архитектурные принципы",
+            "summary": "Внутренний материал. Не использовать как прямую цитату для пользователя.",
+            "text_preview": "Внутренний материал. Не использовать как прямую цитату для пользователя.",
+            "complexity": 0.9,
+            "metadata": {
+              "source_title": "Neo MindBot КОНСПЕКТ",
+              "source_type": "architecture_notes",
+              "chunk_index": 1,
+              "governance": {
+                "chunk_type": "excluded",
+                "allowed_use": [
+                  "do_not_use",
+                  "internal_only"
+                ],
+                "safety_flags": [
+                  "source_style_not_user_facing",
+                  "not_for_direct_quote"
+                ],
+                "lens_family": [
+                  "architecture"
+                ],
+                "tags": [
+                  "architecture",
+                  "excluded"
+                ],
+                "practice_metadata": {},
+                "governance_notes": [
+                  "explicit_exclusion_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 0,
+                  "section_part_index": 0,
+                  "source_kind": "architecture_notes",
+                  "language": "ru"
+                }
+              }
+            }
+          },
+          {
+            "id": "neo_mindbot_notes::chunk::0002::7ae0a37a",
+            "title": "Safety protocol",
+            "summary": "Если есть кризисные признаки, приоритет — безопасность и короткая поддержка.",
+            "text_preview": "Если есть кризисные признаки, приоритет — безопасность и короткая поддержка.",
+            "complexity": 0.7,
+            "metadata": {
+              "source_title": "Neo MindBot КОНСПЕКТ",
+              "source_type": "architecture_notes",
+              "chunk_index": 2,
+              "governance": {
+                "chunk_type": "safety",
+                "allowed_use": [
+                  "internal_only",
+                  "style_guidance",
+                  "safety_protocol",
+                  "diagnostic_lens",
+                  "writer_context"
+                ],
+                "safety_flags": [
+                  "source_style_not_user_facing",
+                  "not_for_direct_quote"
+                ],
+                "lens_family": [
+                  "safety",
+                  "architecture"
+                ],
+                "tags": [
+                  "safety",
+                  "architecture"
+                ],
+                "practice_metadata": {},
+                "governance_notes": [
+                  "safety_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 1,
+                  "section_part_index": 0,
+                  "source_kind": "architecture_notes",
+                  "language": "ru"
+                }
+              }
+            }
+          },
+          {
+            "id": "neo_mindbot_notes::chunk::0003::c9e43302",
+            "title": "Style guidance",
+            "summary": "Ответы должны быть конкретными, без авторитарных формулировок.",
+            "text_preview": "Ответы должны быть конкретными, без авторитарных формулировок.",
+            "complexity": 0.6,
+            "metadata": {
+              "source_title": "Neo MindBot КОНСПЕКТ",
+              "source_type": "architecture_notes",
+              "chunk_index": 3,
+              "governance": {
+                "chunk_type": "principle",
+                "allowed_use": [
+                  "internal_only",
+                  "style_guidance",
+                  "safety_protocol",
+                  "diagnostic_lens",
+                  "writer_context"
+                ],
+                "safety_flags": [
+                  "source_style_not_user_facing",
+                  "not_for_direct_quote"
+                ],
+                "lens_family": [
+                  "architecture"
+                ],
+                "tags": [
+                  "architecture",
+                  "principle"
+                ],
+                "practice_metadata": {},
+                "governance_notes": [
+                  "principle_marker",
+                  "direct_quote_not_allowed"
+                ],
+                "source_trace": {
+                  "chunker_version": "chunk_markdown_document_v1",
+                  "section_index": 2,
+                  "section_part_index": 0,
+                  "source_kind": "architecture_notes",
+                  "language": "ru"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "global_counts": {
+    "by_chunk_type": {
+      "excluded": 1,
+      "lens": 1,
+      "practice": 2,
+      "principle": 1,
+      "safety": 1
+    },
+    "by_allowed_use": {
+      "diagnostic_lens": 5,
+      "do_not_use": 1,
+      "internal_only": 3,
+      "practice_suggestion": 3,
+      "safety_protocol": 2,
+      "style_guidance": 2,
+      "writer_context": 5
+    },
+    "by_safety_flag": {
+      "directive_risk": 1,
+      "not_for_direct_quote": 6,
+      "practice_requires_low_resource_check": 2,
+      "requires_grounding": 3,
+      "source_style_not_user_facing": 3
+    },
+    "by_lens_family": {
+      "architecture": 3,
+      "avoidance": 1,
+      "safety": 1,
+      "somatic": 1
+    }
+  },
+  "governance_findings": {
+    "high_risk_chunks_count": 0,
+    "practice_chunks_count": 2,
+    "practice_requires_low_resource_check": 2,
+    "not_for_direct_quote_count": 6,
+    "internal_only_count": 3
+  }
+}

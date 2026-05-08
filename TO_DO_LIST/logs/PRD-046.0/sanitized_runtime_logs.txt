@@ -1,0 +1,24 @@
+﻿# PRD-046.0 sanitized runtime logs
+
+Generated at: 2026-05-08T08:21:00Z
+
+## python -m pytest bot_psychologist/tests/test_knowledge_governance_contracts.py -q
+exit_code=0
+- 4 passed in 0.08s
+
+## python -m pytest bot_psychologist/tests/test_knowledge_governance_chunker.py -q
+exit_code=0
+- 2 passed in 0.08s
+
+## python -m pytest bot_psychologist/tests/test_knowledge_governance_export.py -q
+exit_code=0
+- 1 passed in 0.08s
+
+## python -m pytest bot_psychologist/tests/multiagent -q
+exit_code=0
+- 228 passed, 319 warnings in 20.24s
+
+## python bot_psychologist/scripts/prepare_knowledge_base.py --registry bot_psychologist/knowledge_sources/source_registry.example.yaml --dry-run --output TO_DO_LIST/reports/PRD-046.0_governed_chunks_preview.json --markdown-report TO_DO_LIST/reports/PRD-046.0_KB_GOVERNANCE_DRY_RUN_REPORT.md
+exit_code=0
+- [OK] governed preview JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-046.0_governed_chunks_preview.json
+- [OK] dry-run markdown report: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-046.0_KB_GOVERNANCE_DRY_RUN_REPORT.md

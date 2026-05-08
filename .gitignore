@@ -172,3 +172,7 @@ tests_v*_after.txt
 
 # Local archive (keep locally, do not track on GitHub)
 АРХИВ_отработано/
+
+# Knowledge source raw/local artifacts (PRD-046.0)
+bot_psychologist/knowledge_sources/raw/
+bot_psychologist/knowledge_sources/local/

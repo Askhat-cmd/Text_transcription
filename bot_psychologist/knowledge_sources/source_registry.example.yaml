@@ -1,0 +1,31 @@
+sources:
+  - source_id: forge_spirit_v2
+    title: "КУЗНИЦА ДУХА v.2"
+    source_kind: "practice_manual"
+    author: "Salamat Sarsekenov"
+    language: "ru"
+    version: "v2"
+    raw_path: "bot_psychologist/knowledge_sources/raw/КУЗНИЦА ДУХА v.2.md"
+    allowed_global_use:
+      - diagnostic_lens
+      - practice_suggestion
+      - writer_context
+    default_safety_flags:
+      - requires_grounding
+      - not_for_direct_quote
+
+  - source_id: neo_mindbot_notes
+    title: "Neo MindBot КОНСПЕКТ"
+    source_kind: "architecture_notes"
+    author: null
+    language: "ru"
+    version: "notes"
+    raw_path: "bot_psychologist/knowledge_sources/raw/Neo MindBot КОНСПЕКТ.md"
+    allowed_global_use:
+      - internal_only
+      - style_guidance
+      - safety_protocol
+      - diagnostic_lens
+    default_safety_flags:
+      - source_style_not_user_facing
+      - not_for_direct_quote

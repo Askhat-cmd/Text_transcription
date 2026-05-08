@@ -20,6 +20,11 @@ def test_chroma_metadata_contains_flat_governance_fields(monkeypatch) -> None:
         source_id="src",
         author="Author",
         sd_level="GREEN",
+        heading_path=["Manual", "Практика"],
+        section_role_hint="practice",
+        boundary_confidence=0.92,
+        split_reason="practice_preserved",
+        parent_section_id="src::section::0::abc",
         governance={
             "schema_version": "governance_v1",
             "chunk_type": "practice",
@@ -27,6 +32,10 @@ def test_chroma_metadata_contains_flat_governance_fields(monkeypatch) -> None:
             "safety_flags": ["requires_grounding", "not_for_direct_quote"],
             "lens_family": ["somatic", "avoidance"],
             "practice_metadata": {"low_resource_safe": True},
+        },
+        chunking_quality={
+            "quality_notes": ["ok"],
+            "mixed_intent_risk": False,
         },
     )
 
@@ -38,3 +47,7 @@ def test_chroma_metadata_contains_flat_governance_fields(monkeypatch) -> None:
     assert meta["governance_lens_family"] == "somatic,avoidance"
     assert meta["governance_low_resource_safe"] == "true"
     assert meta["governance_not_for_direct_quote"] == "true"
+    assert meta["heading_path_text"] == "Manual > Практика"
+    assert meta["section_role_hint"] == "practice"
+    assert meta["split_reason"] == "practice_preserved"
+    assert meta["mixed_intent_risk"] == "false"

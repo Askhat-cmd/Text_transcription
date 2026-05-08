@@ -181,6 +181,13 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
             "source_style_not_user_facing": _parse_bool(
                 meta.get("governance_source_style_not_user_facing")
             ),
+            "chunking_quality": {
+                "section_role_hint": str(meta.get("section_role_hint") or "").strip(),
+                "heading_path_present": bool(str(meta.get("heading_path_text") or "").strip()),
+                "mixed_intent_risk": _parse_bool(meta.get("mixed_intent_risk")),
+                "quality_notes": _split_csv(meta.get("chunking_quality_notes")),
+                "split_reason": str(meta.get("split_reason") or "").strip(),
+            },
         }
 
     return ChunkResult(

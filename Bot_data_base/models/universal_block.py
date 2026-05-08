@@ -40,6 +40,11 @@ class UniversalBlock:
     chapter_index: int = 0
     chunk_index: int = 0
     total_chunks: int = 0
+    heading_path: list[str] = field(default_factory=list)
+    section_role_hint: str = ""
+    boundary_confidence: float = 0.0
+    split_reason: str = ""
+    parent_section_id: str = ""
 
     # === Служебные ===
     created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
@@ -73,6 +78,11 @@ class UniversalBlock:
                 "chapter_title": self.chapter_title,
                 "chunk_index": self.chunk_index,
                 "source_type": self.source_type,
+                "heading_path": self.heading_path or [],
+                "section_role_hint": self.section_role_hint,
+                "boundary_confidence": self.boundary_confidence,
+                "split_reason": self.split_reason,
+                "parent_section_id": self.parent_section_id,
                 "governance": self.governance or {},
                 "chunking_quality": self.chunking_quality or {},
             },

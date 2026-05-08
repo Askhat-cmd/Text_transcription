@@ -12,6 +12,11 @@ def test_json_export_preserves_governance_and_chunking_quality(tmp_path) -> None
         source_type="book",
         source_id="source_x",
         sd_level="GREEN",
+        heading_path=["Doc", "Section"],
+        section_role_hint="practice",
+        boundary_confidence=0.8,
+        split_reason="practice_preserved",
+        parent_section_id="source_x::section::0::abc",
         governance={
             "schema_version": "governance_v1",
             "chunk_type": "practice",
@@ -36,3 +41,5 @@ def test_json_export_preserves_governance_and_chunking_quality(tmp_path) -> None
     assert "governance" in metadata
     assert metadata["governance"]["schema_version"] == "governance_v1"
     assert metadata["chunking_quality"]["schema_version"] == "chunking_quality_v1"
+    assert metadata["heading_path"] == ["Doc", "Section"]
+    assert metadata["section_role_hint"] == "practice"

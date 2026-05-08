@@ -45,6 +45,11 @@ def test_build_chunk_result_returns_governance_summary() -> None:
             "governance_low_resource_safe": "true",
             "governance_not_for_direct_quote": "true",
             "governance_source_style_not_user_facing": "false",
+            "section_role_hint": "practice",
+            "heading_path_text": "Manual > Practice",
+            "mixed_intent_risk": "false",
+            "chunking_quality_notes": "missing_summary",
+            "split_reason": "practice_preserved",
         },
     }
 
@@ -53,6 +58,8 @@ def test_build_chunk_result_returns_governance_summary() -> None:
     assert result.governance["chunk_type"] == "practice"
     assert result.governance["allowed_use"] == ["writer_context", "practice_suggestion"]
     assert result.governance["not_for_direct_quote"] is True
+    assert result.governance["chunking_quality"]["section_role_hint"] == "practice"
+    assert result.governance["chunking_quality"]["heading_path_present"] is True
 
 
 def test_build_chunk_result_without_governance_returns_empty_dict() -> None:

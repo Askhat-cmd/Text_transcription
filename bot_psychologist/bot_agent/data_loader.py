@@ -108,6 +108,11 @@ class Block:
     language: str = "ru"
     governance: Dict = field(default_factory=dict)
     chunking_quality: Dict = field(default_factory=dict)
+    heading_path: List[str] = field(default_factory=list)
+    section_role_hint: str = ""
+    boundary_confidence: float = 0.0
+    split_reason: str = ""
+    parent_section_id: str = ""
 
     def __post_init__(self):
         if self.graph_entities is None:
@@ -501,6 +506,11 @@ class DataLoader:
                         if isinstance(meta.get("chunking_quality"), dict)
                         else {}
                     ),
+                    heading_path=meta.get("heading_path", []) if isinstance(meta.get("heading_path"), list) else [],
+                    section_role_hint=str(meta.get("section_role_hint", "") or ""),
+                    boundary_confidence=float(meta.get("boundary_confidence", 0.0) or 0.0),
+                    split_reason=str(meta.get("split_reason", "") or ""),
+                    parent_section_id=str(meta.get("parent_section_id", "") or ""),
                 )
                 blocks.append(block)
                 self._block_id_to_block[block.block_id] = block
@@ -707,6 +717,15 @@ class DataLoader:
                 if isinstance(block_data.get("chunking_quality"), dict)
                 else {}
             ),
+            heading_path=(
+                block_data.get("heading_path", [])
+                if isinstance(block_data.get("heading_path"), list)
+                else []
+            ),
+            section_role_hint=str(block_data.get("section_role_hint", "") or ""),
+            boundary_confidence=float(block_data.get("boundary_confidence", 0.0) or 0.0),
+            split_reason=str(block_data.get("split_reason", "") or ""),
+            parent_section_id=str(block_data.get("parent_section_id", "") or ""),
         )
 
     def _load_from_chromadb(self) -> None:

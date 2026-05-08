@@ -70,6 +70,7 @@ class ChromaManager:
 
     def _to_metadata(self, block: UniversalBlock) -> dict:
         governance = block.governance or {}
+        chunking_quality = block.chunking_quality or {}
         allowed_use = governance.get("allowed_use") or []
         safety_flags = governance.get("safety_flags") or []
         lens_family = governance.get("lens_family") or []
@@ -107,6 +108,13 @@ class ChromaManager:
             "governance_source_style_not_user_facing": _bool_to_str(
                 "source_style_not_user_facing" in safety_flags
             ),
+            "heading_path_text": " > ".join([str(p).strip() for p in (block.heading_path or []) if str(p).strip()]),
+            "section_role_hint": str(block.section_role_hint or ""),
+            "boundary_confidence": float(block.boundary_confidence or 0.0),
+            "split_reason": str(block.split_reason or ""),
+            "parent_section_id": str(block.parent_section_id or ""),
+            "chunking_quality_notes": _csv(chunking_quality.get("quality_notes") or []),
+            "mixed_intent_risk": _bool_to_str(chunking_quality.get("mixed_intent_risk")),
         }
 
     def _init_embedding_model(self) -> SentenceTransformer:

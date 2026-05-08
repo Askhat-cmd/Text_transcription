@@ -15,6 +15,11 @@ def test_to_bot_format_has_required_fields():
         complexity=0.4,
         author="Author",
         source_type="youtube",
+        heading_path=["Root", "Section"],
+        section_role_hint="theory",
+        boundary_confidence=0.6,
+        split_reason="theory_budget_split",
+        parent_section_id="src::section::0::abc",
     )
     bot_fmt = block.to_bot_format()
     assert "text" in bot_fmt
@@ -23,6 +28,7 @@ def test_to_bot_format_has_required_fields():
     assert "source" in bot_fmt
     assert "metadata" in bot_fmt
     assert bot_fmt["sd_level"] == "GREEN"
+    assert bot_fmt["metadata"]["heading_path"] == ["Root", "Section"]
 
 
 def test_to_dict_serializable():

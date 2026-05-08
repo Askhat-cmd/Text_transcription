@@ -149,6 +149,9 @@ class WriterAgent:
             safety_active=ctx["safety_active"],
             open_loops=", ".join(ctx["open_loops"]) or "нет",
             must_avoid=", ".join(ctx["must_avoid"]) or "нет",
+            diagnostic_card_summary=self._format_diagnostic_summary(ctx.get("diagnostic_card_summary")),
+            diagnostic_card_avoid=", ".join(ctx.get("diagnostic_card_avoid_list", []) or []) or "нет",
+            diagnostic_card_risk_flags=", ".join(ctx.get("diagnostic_card_risk_flags", []) or []) or "нет",
             conversation_context=(ctx["conversation_context"] or "нет")[:2000],
             user_profile_patterns=", ".join(ctx["user_profile_patterns"]) or "нет",
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
@@ -220,6 +223,17 @@ class WriterAgent:
         if not hits:
             return "нет релевантных знаний"
         return "\n---\n".join(f"- {h[:300]}" for h in hits[:2])
+
+    @staticmethod
+    def _format_diagnostic_summary(summary: Any) -> str:
+        if not isinstance(summary, dict) or not summary.get("present"):
+            return "нет"
+        return (
+            f"situation_label={summary.get('situation_label')}; "
+            f"current_need={summary.get('current_need')}; "
+            f"suggested_writer_move={summary.get('suggested_writer_move')}; "
+            f"confidence={summary.get('confidence')}"
+        )
 
     def _estimate_cost(self, *, tokens_prompt: Optional[int], tokens_completion: Optional[int]) -> Optional[float]:
         if tokens_prompt is None and tokens_completion is None:

@@ -276,6 +276,11 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         if isinstance(trace.get("context_package_summary"), dict)
         else {}
     )
+    diagnostic_card_summary = (
+        trace.get("diagnostic_card_summary")
+        if isinstance(trace.get("diagnostic_card_summary"), dict)
+        else {}
+    )
     semantic_frame_diag = (
         thread_diagnostics.get("semantic_frame")
         if isinstance(thread_diagnostics.get("semantic_frame"), dict)
@@ -377,6 +382,8 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "context_assembly_trace_version": trace.get("context_assembly_trace_version"),
         "context_assembly_trace": context_assembly_trace,
         "context_package_summary": context_package_summary,
+        "diagnostic_card_version": trace.get("diagnostic_card_version"),
+        "diagnostic_card_summary": diagnostic_card_summary,
         "pattern_core": thread_block.get("pattern_core"),
         "active_frame": thread_block.get("active_frame"),
         "semantic_frame_summary": semantic_frame_diag,
@@ -658,6 +665,19 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
             + f"dropped={context_trace.get('dropped_count')}, "
             + f"duplicates_removed={context_trace.get('duplicates_removed')}, "
             + f"budget={context_trace.get('budget_used_chars')}/{context_trace.get('budget_limit_chars')}"
+        )
+        diagnostic_card_summary = (
+            final_debug.get("diagnostic_card_summary")
+            if isinstance(final_debug.get("diagnostic_card_summary"), dict)
+            else {}
+        )
+        lines.append(
+            "- Diagnostic card summary: "
+            + f"version={final_debug.get('diagnostic_card_version')}, "
+            + f"situation_label={diagnostic_card_summary.get('situation_label')}, "
+            + f"suggested_writer_move={diagnostic_card_summary.get('suggested_writer_move')}, "
+            + f"confidence={diagnostic_card_summary.get('confidence')}, "
+            + f"risk_flags={json.dumps(diagnostic_card_summary.get('risk_flags', []), ensure_ascii=False)}"
         )
         semantic_frame = thread_summary.get("semantic_frame") if isinstance(thread_summary.get("semantic_frame"), dict) else {}
         lines.append(

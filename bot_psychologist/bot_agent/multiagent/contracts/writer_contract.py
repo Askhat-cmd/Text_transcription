@@ -6,6 +6,7 @@ from dataclasses import dataclass
 
 from ..context_assembly import format_context_for_writer
 from .context_package import ContextAssemblyPackage
+from .diagnostic_card import DiagnosticCard
 from .memory_bundle import MemoryBundle
 from .thread_state import ThreadState
 
@@ -18,6 +19,7 @@ class WriterContract:
     thread_state: ThreadState
     memory_bundle: MemoryBundle
     context_package: ContextAssemblyPackage | None = None
+    diagnostic_card: DiagnosticCard | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -27,6 +29,9 @@ class WriterContract:
             "memory_bundle": self.memory_bundle.to_dict(),
             "context_package": (
                 self.context_package.to_dict() if self.context_package is not None else None
+            ),
+            "diagnostic_card": (
+                self.diagnostic_card.to_dict() if self.diagnostic_card is not None else None
             ),
             "response_language": self.response_language,
         }
@@ -51,6 +56,29 @@ class WriterContract:
             conversation_context = self.memory_bundle.conversation_context
             semantic_hits = [hit.content for hit in self.memory_bundle.semantic_hits[:2]]
             context_assembly_trace = {}
+
+        diagnostic_card_payload = (
+            self.diagnostic_card.to_dict() if self.diagnostic_card is not None else {}
+        )
+        diagnostic_summary = (
+            {
+                "present": True,
+                "situation_label": self.diagnostic_card.situation_label,
+                "current_need": self.diagnostic_card.current_need,
+                "suggested_writer_move": self.diagnostic_card.suggested_writer_move,
+                "confidence": float(self.diagnostic_card.confidence),
+                "risk_flags": list(self.diagnostic_card.risk_flags),
+            }
+            if self.diagnostic_card is not None
+            else {
+                "present": False,
+                "situation_label": "",
+                "current_need": "",
+                "suggested_writer_move": "",
+                "confidence": 0.0,
+                "risk_flags": [],
+            }
+        )
 
         return {
             "user_message": self.user_message,
@@ -86,4 +114,16 @@ class WriterContract:
                     else 0
                 ),
             },
+            "diagnostic_card": diagnostic_card_payload,
+            "diagnostic_card_summary": diagnostic_summary,
+            "diagnostic_card_avoid_list": (
+                list(self.diagnostic_card.avoid_list)
+                if self.diagnostic_card is not None
+                else []
+            ),
+            "diagnostic_card_risk_flags": (
+                list(self.diagnostic_card.risk_flags)
+                if self.diagnostic_card is not None
+                else []
+            ),
         }

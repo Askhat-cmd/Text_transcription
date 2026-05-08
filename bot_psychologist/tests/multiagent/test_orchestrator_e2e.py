@@ -188,12 +188,18 @@ async def test_e2e_03_debug_all_fields(monkeypatch) -> None:
         "quality_trace_error",
         "thread_diagnostics_version",
         "thread_diagnostics",
+        "diagnostic_card_version",
+        "diagnostic_card",
+        "diagnostic_card_trace",
+        "diagnostic_card_summary",
     ):
         assert key in debug
     assert debug["quality_trace_version"] == "quality_trace_v1"
     assert isinstance(debug["quality_trace"], dict)
     assert debug["thread_diagnostics_version"] == "thread_diagnostics_v1"
     assert isinstance(debug["thread_diagnostics"], dict)
+    assert debug["diagnostic_card_version"] == "diagnostic_card_v1"
+    assert debug["diagnostic_card_summary"]["present"] is True
     for key in ("relation", "phase", "mode", "loops", "action", "summary_flags"):
         assert key in debug["thread_diagnostics"]
 

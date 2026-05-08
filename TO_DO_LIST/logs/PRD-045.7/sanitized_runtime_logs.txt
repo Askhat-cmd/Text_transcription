@@ -1,0 +1,32 @@
+﻿# PRD-045.7 sanitized runtime logs
+
+## Commands executed
+- python -m pytest bot_psychologist/tests/test_diagnostic_card.py -q
+- python -m pytest bot_psychologist/tests/test_writer_contract_diagnostic_card.py -q
+- python -m pytest bot_psychologist/tests/test_writer_contract_context_package.py -q
+- python -m pytest bot_psychologist/tests/test_context_assembly.py -q
+- python -m pytest bot_psychologist/tests/multiagent/test_thread_manager_diagnostics.py -q
+- python -m pytest bot_psychologist/tests/evaluation/test_quality_baseline_runner.py -q
+- python -m pytest bot_psychologist/tests/multiagent/test_orchestrator_e2e.py -q
+- python -m pytest bot_psychologist/tests/multiagent -q
+- python bot_psychologist/scripts/run_quality_baseline.py --mode direct --case-ids QB-002,QB-005,QB-010,QB-015 --output TO_DO_LIST/reports/PRD-045.7_BASELINE_DIRECT_SMOKE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.7_BASELINE_DIRECT_SMOKE_REPORT.md
+
+## Results
+- test_diagnostic_card.py: 5 passed
+- test_writer_contract_diagnostic_card.py: 3 passed
+- test_writer_contract_context_package.py: 2 passed
+- test_context_assembly.py: 7 passed
+- test_thread_manager_diagnostics.py: 10 passed
+- test_quality_baseline_runner.py: 4 passed
+- test_orchestrator_e2e.py: 15 passed
+- tests/multiagent: 227 passed
+- direct baseline smoke report generated
+
+## Direct smoke diagnostic card summary
+- QB-002: situation_label=low_resource_contact, suggested_writer_move=regulate_first, confidence=0.45, risk_flags=[low_resource, context_sparse]
+- QB-005: situation_label=concrete_next_step, suggested_writer_move=offer_one_micro_step, confidence=0.45, risk_flags=[context_sparse, avoid_directive_advice]
+- QB-010: situation_label=low_resource_contact, suggested_writer_move=regulate_first, confidence=0.88, risk_flags=[low_resource]
+- QB-015: situation_label=semantic_continuation, suggested_writer_move=reflect_pattern_once, confidence=0.88, risk_flags=[]
+
+## Notes
+- Logs sanitized: no API keys, no tokens, no raw private conversations.

@@ -79,6 +79,12 @@ safe_override — кризисный режим
 - Если есть must_avoid, не повторяй эти темы даже другими словами.
 - Не возвращай закрытую петлю как новый инсайт.
 
+DIAGNOSTIC CARD:
+- Используй diagnostic_card как внутренний ориентир (ситуация, текущая потребность, следующий ход).
+- Не показывай internal labels пользователю.
+- Не называй это диагностикой и не ставь диагнозы.
+- Если suggested_writer_move конфликтует с safety/must_avoid, приоритет у safety/must_avoid.
+
 ЖЕСТКИЕ ПРАВИЛА:
 - Отвечай на языке пользователя.
 - Не включай темы из must_avoid.
@@ -107,6 +113,11 @@ SAFETY АКТИВЕН: {safety_active}
 
 НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
 {must_avoid}
+
+DIAGNOSTIC CARD (внутренний ориентир):
+{diagnostic_card_summary}
+avoid_list: {diagnostic_card_avoid}
+risk_flags: {diagnostic_card_risk_flags}
 
 КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
 {conversation_context}

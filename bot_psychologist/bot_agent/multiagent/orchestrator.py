@@ -18,6 +18,7 @@ from .context_assembly import (
     build_context_assembly_package_v1,
 )
 from .contracts.writer_contract import WriterContract
+from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
 
@@ -182,12 +183,19 @@ class MultiAgentOrchestrator:
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
         )
+        diagnostic_card = build_diagnostic_card_v1(
+            state_snapshot=state_snapshot,
+            thread_state=updated_thread,
+            context_package=context_package,
+            thread_diagnostics=thread_debug,
+        )
 
         writer_contract = WriterContract(
             user_message=query,
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
             context_package=context_package,
+            diagnostic_card=diagnostic_card,
         )
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
@@ -314,6 +322,17 @@ class MultiAgentOrchestrator:
                     "personal_history_count": len(context_package.personal_history_context),
                     "semantic_hits_count": len(context_package.semantic_memory_hits),
                     "knowledge_hits_count": len(context_package.knowledge_rag_hits),
+                },
+                "diagnostic_card_version": DIAGNOSTIC_CARD_VERSION,
+                "diagnostic_card": diagnostic_card.to_dict(),
+                "diagnostic_card_trace": diagnostic_card.trace.to_dict(),
+                "diagnostic_card_summary": {
+                    "present": True,
+                    "situation_label": diagnostic_card.situation_label,
+                    "suggested_writer_move": diagnostic_card.suggested_writer_move,
+                    "current_need": diagnostic_card.current_need,
+                    "confidence": float(diagnostic_card.confidence),
+                    "risk_flags": list(diagnostic_card.risk_flags),
                 },
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),

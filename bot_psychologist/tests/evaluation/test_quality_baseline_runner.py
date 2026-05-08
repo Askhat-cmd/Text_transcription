@@ -101,6 +101,14 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
                 "semantic_hits_count": 1,
                 "knowledge_hits_count": 1,
             },
+            "diagnostic_card_version": "diagnostic_card_v1",
+            "diagnostic_card_summary": {
+                "present": True,
+                "situation_label": "semantic_continuation",
+                "suggested_writer_move": "reflect_pattern_once",
+                "confidence": 0.88,
+                "risk_flags": [],
+            },
             "total_latency_ms": 321,
         }
     }
@@ -124,6 +132,8 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
     assert summary["context_assembly_trace_version"] == "context_assembly_trace_v1"
     assert summary["context_assembly_trace"]["recent_full_count"] == 3
     assert summary["context_package_summary"]["recent_summarized_count"] == 1
+    assert summary["diagnostic_card_version"] == "diagnostic_card_v1"
+    assert summary["diagnostic_card_summary"]["situation_label"] == "semantic_continuation"
     assert latency_ms == 321.0
 
 

@@ -9,6 +9,7 @@ from typing import Any
 
 from ..contracts.memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from ..contracts.thread_state import ThreadState
+from ..knowledge_policy import apply_knowledge_policy_v1
 from .memory_retrieval_config import (
     CONVERSATION_TURNS_BY_PHASE,
     CONVERSATION_TURNS_DEFAULT,
@@ -62,15 +63,16 @@ class MemoryRetrievalAgent:
 
         valid_hits = [h for h in raw_hits if isinstance(h, SemanticHit)]
         filtered_hits = [h for h in valid_hits if float(h.score) >= RAG_MIN_SCORE]
-        filtered_hits.sort(key=lambda h: float(h.score), reverse=True)
+        # Governed hits go first, legacy hits remain available with lower priority.
+        filtered_hits.sort(
+            key=lambda h: (1 if getattr(h, "governance", {}) else 0, float(h.score)),
+            reverse=True,
+        )
+        policy_decisions, knowledge_policy_trace = apply_knowledge_policy_v1(filtered_hits)
         knowledge_rag_hits = [
-            {
-                "chunk_id": h.chunk_id,
-                "source": h.source,
-                "score": float(h.score),
-                "content": h.content,
-            }
-            for h in filtered_hits
+            decision.to_writer_hit_dict()
+            for decision in policy_decisions
+            if decision.allowed_for_writer
         ]
 
         return MemoryBundle(
@@ -87,8 +89,9 @@ class MemoryRetrievalAgent:
             ),
             knowledge_rag_hits=knowledge_rag_hits,
             retrieved_chunks=[h.content for h in filtered_hits],
-            has_relevant_knowledge=len(filtered_hits) > 0,
+            has_relevant_knowledge=len(knowledge_rag_hits) > 0,
             context_turns=n_turns,
+            knowledge_policy_trace=knowledge_policy_trace,
         )
 
     async def update(
@@ -355,6 +358,8 @@ class MemoryRetrievalAgent:
                     or getattr(block, "source_type", "")
                     or "unknown"
                 )
+                governance = getattr(block, "governance", {})
+                chunking_quality = getattr(block, "chunking_quality", {})
                 if not content:
                     continue
 
@@ -364,6 +369,8 @@ class MemoryRetrievalAgent:
                         content=content,
                         source=source,
                         score=score,
+                        governance=governance if isinstance(governance, dict) else {},
+                        chunking_quality=chunking_quality if isinstance(chunking_quality, dict) else {},
                     )
                 )
             logger.info("[MRA] rag hits=%d query='%s...'", len(hits), query[:50])

@@ -295,6 +295,7 @@ class MultiAgentOrchestrator:
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
                 "semantic_hits_detail": semantic_hits_detail,
+                "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,
                 "user_profile": {

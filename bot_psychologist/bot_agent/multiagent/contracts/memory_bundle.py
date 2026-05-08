@@ -14,6 +14,8 @@ class SemanticHit:
     content: str
     source: str
     score: float
+    governance: dict[str, Any] = field(default_factory=dict)
+    chunking_quality: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -21,6 +23,8 @@ class SemanticHit:
             "content": self.content,
             "source": self.source,
             "score": float(self.score),
+            "governance": dict(self.governance or {}),
+            "chunking_quality": dict(self.chunking_quality or {}),
         }
 
     @classmethod
@@ -30,6 +34,16 @@ class SemanticHit:
             content=str(payload.get("content", "")),
             source=str(payload.get("source", "unknown")),
             score=float(payload.get("score", 0.0) or 0.0),
+            governance=(
+                dict(payload.get("governance", {}))
+                if isinstance(payload.get("governance"), dict)
+                else {}
+            ),
+            chunking_quality=(
+                dict(payload.get("chunking_quality", {}))
+                if isinstance(payload.get("chunking_quality"), dict)
+                else {}
+            ),
         )
 
 
@@ -75,6 +89,7 @@ class MemoryBundle:
     retrieved_chunks: list[Any] = field(default_factory=list)
     has_relevant_knowledge: bool = False
     context_turns: int = 0
+    knowledge_policy_trace: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -89,6 +104,7 @@ class MemoryBundle:
             "retrieved_chunks": self.retrieved_chunks,
             "has_relevant_knowledge": bool(self.has_relevant_knowledge),
             "context_turns": int(self.context_turns),
+            "knowledge_policy_trace": dict(self.knowledge_policy_trace or {}),
         }
 
     @classmethod
@@ -129,4 +145,9 @@ class MemoryBundle:
             retrieved_chunks=list(payload.get("retrieved_chunks", [])),
             has_relevant_knowledge=bool(payload.get("has_relevant_knowledge", False)),
             context_turns=int(payload.get("context_turns", 0) or 0),
+            knowledge_policy_trace=(
+                dict(payload.get("knowledge_policy_trace", {}))
+                if isinstance(payload.get("knowledge_policy_trace"), dict)
+                else {}
+            ),
         )

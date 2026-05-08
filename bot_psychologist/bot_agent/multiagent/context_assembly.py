@@ -271,12 +271,16 @@ def _recent_turn_pairs(raw_turns: list[dict[str, Any]]) -> list[tuple[str, str, 
 
 
 def _normalize_hit(item: dict[str, Any], source: str) -> dict[str, Any]:
-    return {
+    normalized = {
         "source": source,
         "chunk_id": str(item.get("chunk_id", "")),
         "score": float(item.get("score", 0.0) or 0.0),
         "content": str(item.get("content", "") or ""),
     }
+    governance_summary = item.get("governance_summary")
+    if isinstance(governance_summary, dict):
+        normalized["governance_summary"] = dict(governance_summary)
+    return normalized
 
 
 def _deduplicate_hits(

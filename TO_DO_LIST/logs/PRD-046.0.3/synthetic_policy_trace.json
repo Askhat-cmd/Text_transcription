@@ -1,0 +1,134 @@
+{
+  "generated_at": "2026-05-08T11:19:02.820940+00:00",
+  "trace": {
+    "version": "knowledge_policy_trace_v1",
+    "input_hits_count": 4,
+    "included_writer_count": 2,
+    "included_diagnostic_count": 0,
+    "included_practice_count": 0,
+    "internal_only_count": 1,
+    "dropped_count": 1,
+    "drop_reasons": [
+      "mixed_intent_high_drop"
+    ],
+    "risk_flags_count": {
+      "practice_requires_low_resource_check": 1,
+      "mixed_intent_high": 1,
+      "legacy_no_governance": 1
+    },
+    "decisions": [
+      {
+        "chunk_id": "practice_1",
+        "source": "practice",
+        "score": 0.95,
+        "action": "include_writer_context",
+        "reasons": [
+          "content_sanitized_not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "risk_flags": [
+          "practice_requires_low_resource_check"
+        ]
+      },
+      {
+        "chunk_id": "internal_1",
+        "source": "architecture",
+        "score": 0.92,
+        "action": "internal_only",
+        "reasons": [
+          "internal_only_or_style_not_user_facing"
+        ],
+        "risk_flags": []
+      },
+      {
+        "chunk_id": "mixed_1",
+        "source": "mixed",
+        "score": 0.9,
+        "action": "drop",
+        "reasons": [
+          "mixed_intent_high_drop"
+        ],
+        "risk_flags": [
+          "mixed_intent_high"
+        ]
+      },
+      {
+        "chunk_id": "legacy_1",
+        "source": "legacy",
+        "score": 0.55,
+        "action": "include_writer_context",
+        "reasons": [
+          "legacy_no_governance"
+        ],
+        "risk_flags": [
+          "legacy_no_governance"
+        ]
+      }
+    ]
+  },
+  "safe_decisions": [
+    {
+      "chunk_id": "practice_1",
+      "source": "practice",
+      "score": 0.95,
+      "action": "include_writer_context",
+      "allowed_for_writer": true,
+      "allowed_for_diagnostic": false,
+      "allowed_for_practice": true,
+      "reasons": [
+        "content_sanitized_not_for_direct_quote",
+        "practice_requires_low_resource_check"
+      ],
+      "risk_flags": [
+        "practice_requires_low_resource_check"
+      ],
+      "sanitized_content_len": 66
+    },
+    {
+      "chunk_id": "internal_1",
+      "source": "architecture",
+      "score": 0.92,
+      "action": "internal_only",
+      "allowed_for_writer": false,
+      "allowed_for_diagnostic": true,
+      "allowed_for_practice": false,
+      "reasons": [
+        "internal_only_or_style_not_user_facing"
+      ],
+      "risk_flags": [],
+      "sanitized_content_len": 0
+    },
+    {
+      "chunk_id": "mixed_1",
+      "source": "mixed",
+      "score": 0.9,
+      "action": "drop",
+      "allowed_for_writer": false,
+      "allowed_for_diagnostic": false,
+      "allowed_for_practice": false,
+      "reasons": [
+        "mixed_intent_high_drop"
+      ],
+      "risk_flags": [
+        "mixed_intent_high"
+      ],
+      "sanitized_content_len": 0
+    },
+    {
+      "chunk_id": "legacy_1",
+      "source": "legacy",
+      "score": 0.55,
+      "action": "include_writer_context",
+      "allowed_for_writer": true,
+      "allowed_for_diagnostic": false,
+      "allowed_for_practice": false,
+      "reasons": [
+        "legacy_no_governance"
+      ],
+      "risk_flags": [
+        "legacy_no_governance"
+      ],
+      "sanitized_content_len": 14
+    }
+  ]
+}

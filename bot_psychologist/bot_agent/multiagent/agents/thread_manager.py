@@ -100,6 +100,44 @@ _LOW_RESOURCE_CONTINUE_MARKERS = (
     "no pressure",
     "don't push",
 )
+_RECURRENCE_CONTINUITY_MARKERS = (
+    "\u0441\u043d\u043e\u0432\u0430",
+    "\u043e\u043f\u044f\u0442\u044c",
+    "\u0432\u0441\u0435 \u0435\u0449\u0435",
+    "\u0432\u0441\u0451 \u0435\u0449\u0451",
+    "\u043f\u043e-\u043f\u0440\u0435\u0436\u043d\u0435\u043c\u0443",
+    "\u043a\u0430\u043a \u0442\u043e\u0433\u0434\u0430",
+    "\u0442\u043e \u0436\u0435 \u0441\u0430\u043c\u043e\u0435",
+    "\u0442\u0430 \u0436\u0435 \u0438\u0441\u0442\u043e\u0440\u0438\u044f",
+    "again",
+    "still",
+    "same thing",
+)
+_SEMANTIC_CONTINUITY_STOPWORDS = {
+    "\u0441\u0435\u0439\u0447\u0430\u0441",
+    "\u0445\u043e\u0447\u0443",
+    "\u043a\u0430\u043a",
+    "\u044d\u0442\u043e",
+    "\u0442\u043e\u0436\u0435",
+    "\u043e\u043f\u044f\u0442\u044c",
+    "\u0441\u043d\u043e\u0432\u0430",
+    "\u0435\u0449\u0451",
+    "\u0435\u0449\u0435",
+    "want",
+    "again",
+    "still",
+}
+_SEMANTIC_CONTINUITY_THEME_MARKERS = (
+    "\u043e\u0442\u043b\u043e\u0436",      # отложить / откладывать
+    "\u043f\u0435\u0440\u0435\u043f\u0438\u0441",  # переписывать
+    "\u0447\u0435\u0440\u043d\u043e\u0432\u0438\u043a",
+    "\u043f\u0443\u0431\u043b\u0438",      # публикация / публиковать
+    "postpone",
+    "draft",
+    "publish",
+    "delay",
+    "avoid",
+)
 
 
 def _normalize_tokens(text: str) -> set[str]:
@@ -117,6 +155,82 @@ def _continuity_score(message: str, core_direction: str) -> float:
     if union == 0:
         return 0.0
     return round(len(current & core) / union, 4)
+
+
+def _recurrence_marker_hit(message: str) -> bool:
+    lowered = (message or "").lower()
+    return any(marker in lowered for marker in _RECURRENCE_CONTINUITY_MARKERS)
+
+
+def _strip_semantic_noise(tokens: set[str]) -> set[str]:
+    cleaned = {token for token in tokens if token not in _SEMANTIC_CONTINUITY_STOPWORDS}
+    recurrence_tokens = {
+        token
+        for marker in _RECURRENCE_CONTINUITY_MARKERS
+        for token in _normalize_tokens(marker)
+    }
+    return cleaned - recurrence_tokens
+
+
+def _semantic_frame_sources(current_thread: ThreadState) -> dict[str, str]:
+    active_frame = current_thread.active_frame if isinstance(current_thread.active_frame, dict) else {}
+    open_loops = " ".join(str(item or "") for item in list(current_thread.open_loops or []))
+    active_values = " ".join(str(item or "") for item in active_frame.values())
+    return {
+        "core_direction": str(current_thread.core_direction or ""),
+        "pattern_core": str(current_thread.pattern_core or ""),
+        "open_loops": open_loops,
+        "active_frame": active_values,
+    }
+
+
+def _active_frame_continuity_signal(
+    *,
+    user_message: str,
+    current_thread: ThreadState,
+    resolution_marker_hit: bool,
+) -> tuple[bool, dict[str, Any]]:
+    recurrence_hit = _recurrence_marker_hit(user_message)
+    sources = _semantic_frame_sources(current_thread)
+    frame_text = " ".join(str(text or "") for text in sources.values()).lower()
+    message_lower = (user_message or "").lower()
+    source_tokens = {
+        name: _strip_semantic_noise(_normalize_tokens(text))
+        for name, text in sources.items()
+    }
+    semantic_frame_tokens: set[str] = set()
+    matched_sources: list[str] = []
+    message_tokens = _strip_semantic_noise(_normalize_tokens(user_message))
+
+    for name, tokens in source_tokens.items():
+        semantic_frame_tokens.update(tokens)
+        if message_tokens.intersection(tokens):
+            matched_sources.append(name)
+
+    overlap = len(message_tokens.intersection(semantic_frame_tokens))
+    message_theme_hit = any(marker in message_lower for marker in _SEMANTIC_CONTINUITY_THEME_MARKERS)
+    frame_theme_hit = any(marker in frame_text for marker in _SEMANTIC_CONTINUITY_THEME_MARKERS)
+
+    hit_reason = ""
+    should_continue = False
+    if recurrence_hit and not resolution_marker_hit and overlap >= 1:
+        should_continue = True
+        hit_reason = "recurrence_marker_plus_frame_overlap"
+    elif recurrence_hit and not resolution_marker_hit and message_theme_hit and frame_theme_hit:
+        should_continue = True
+        hit_reason = "recurrence_marker_plus_theme_alignment"
+
+    diag = {
+        "recurrence_marker_hit": recurrence_hit,
+        "semantic_frame_token_overlap": overlap,
+        "semantic_frame_token_count": len(semantic_frame_tokens),
+        "message_token_count": len(message_tokens),
+        "matched_sources": matched_sources,
+        "message_theme_hit": message_theme_hit,
+        "frame_theme_hit": frame_theme_hit,
+        "hit_reason": hit_reason,
+    }
+    return should_continue, diag
 
 
 def _mode_and_goal_with_reason(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str, str]:
@@ -507,6 +621,11 @@ class ThreadManagerAgent:
         relation_reason: str,
         archived_threads_count: int,
         current_thread_present: bool,
+        active_frame_semantic_continue_hit: bool = False,
+        active_frame_semantic_continue_reason: str = "",
+        semantic_frame_token_overlap: int = 0,
+        semantic_frame_token_count: int = 0,
+        semantic_frame_sources_checked: Optional[list[str]] = None,
     ) -> dict[str, Any]:
         lowered = user_message.lower()
         message_tokens = _normalize_tokens(user_message)
@@ -529,6 +648,11 @@ class ThreadManagerAgent:
             "core_token_count": len(core_tokens),
             "token_intersection_count": token_intersection_count,
             "token_union_count": token_union_count,
+            "active_frame_semantic_continue_hit": active_frame_semantic_continue_hit,
+            "active_frame_semantic_continue_reason": active_frame_semantic_continue_reason,
+            "semantic_frame_token_overlap": semantic_frame_token_overlap,
+            "semantic_frame_token_count": semantic_frame_token_count,
+            "semantic_frame_sources_checked": list(semantic_frame_sources_checked or []),
         }
 
     def _relation_diag_no_current_thread(
@@ -566,6 +690,12 @@ class ThreadManagerAgent:
         followup_continue_marker_hit = any(marker in lowered for marker in _FOLLOWUP_CONTINUE_MARKERS)
         low_resource_continue_marker_hit = any(marker in lowered for marker in _LOW_RESOURCE_CONTINUE_MARKERS)
         branch_marker_hit = any(marker in lowered for marker in _BRANCH_MARKERS)
+        resolution_marker_hit = any(marker in lowered for marker in _RESOLUTION_MARKERS)
+        active_frame_hit, active_frame_diag = _active_frame_continuity_signal(
+            user_message=user_message,
+            current_thread=current_thread,
+            resolution_marker_hit=resolution_marker_hit,
+        )
 
         if archived_threads and return_marker_hit:
             relation = "return_to_old"
@@ -582,6 +712,10 @@ class ThreadManagerAgent:
             relation = "continue"
             continuity = max(continuity_raw, 0.25)
             relation_reason = "low_resource_continuation_marker"
+        elif active_frame_hit:
+            relation = "continue"
+            continuity = max(continuity_raw, 0.25)
+            relation_reason = "active_frame_semantic_continuity"
         elif continuity_raw < _NEW_THREAD_THRESHOLD:
             relation = "new_thread"
             continuity = continuity_raw
@@ -595,8 +729,14 @@ class ThreadManagerAgent:
             relation_reason=relation_reason,
             archived_threads_count=len(archived_threads),
             current_thread_present=True,
+            active_frame_semantic_continue_hit=active_frame_hit,
+            active_frame_semantic_continue_reason=str(active_frame_diag.get("hit_reason", "") or ""),
+            semantic_frame_token_overlap=int(active_frame_diag.get("semantic_frame_token_overlap", 0) or 0),
+            semantic_frame_token_count=int(active_frame_diag.get("semantic_frame_token_count", 0) or 0),
+            semantic_frame_sources_checked=list(active_frame_diag.get("matched_sources", []) or []),
         )
         diag["continuity_raw"] = continuity_raw
+        diag["recurrence_marker_hit"] = bool(active_frame_diag.get("recurrence_marker_hit", False))
         return relation, continuity, diag
 
     def _resolve_relation(
@@ -980,6 +1120,10 @@ class ThreadManagerAgent:
             flags.append("low_resource_followup_continued")
             if float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD:
                 flags.append("low_resource_marker_overrode_low_overlap")
+        if relation.get("relation_reason") == "active_frame_semantic_continuity":
+            flags.append("active_frame_semantic_continuity")
+            if float(relation.get("continuity_raw") or 0.0) < _NEW_THREAD_THRESHOLD:
+                flags.append("semantic_guard_overrode_low_overlap")
         if relation.get("branch_marker_hit"):
             flags.append("branch_marker_hit")
         if relation.get("return_marker_hit"):

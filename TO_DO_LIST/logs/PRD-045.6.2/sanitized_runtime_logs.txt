@@ -1,0 +1,20 @@
+﻿PRD-045.6.2 sanitized runtime log
+Generated UTC: 2026-05-08T06:05:24Z
+Branch: main
+Git HEAD: 15621c3
+Baseline run date UTC: 2026-05-08T06:03:03.487532Z
+Cases executed: 4
+Errors count: 0
+Avg latency ms: 17485.88
+
+Case results (sanitized):
+- QB-002: relation=new_thread, reason=no_current_thread, phase=clarify, mode=validate, active_frame_hit=False, semantic_reason=
+- QB-005: relation=new_thread, reason=no_current_thread, phase=clarify, mode=practice, active_frame_hit=False, semantic_reason=
+- QB-010: relation=continue, reason=low_resource_continuation_marker, phase=clarify, mode=validate, active_frame_hit=False, semantic_reason=
+- QB-015: relation=continue, reason=active_frame_semantic_continuity, phase=explore, mode=explore, active_frame_hit=True, semantic_reason=recurrence_marker_plus_theme_alignment
+
+QB-015 focused: relation=continue, reason=active_frame_semantic_continuity, phase=explore, mode=explore, semantic_reason=recurrence_marker_plus_theme_alignment
+
+Notes:
+- Raw private dialogue content, keys, and tokens are intentionally omitted.
+- One transient OpenAI HTTP 500 was auto-retried and recovered in focused QB-015 run.

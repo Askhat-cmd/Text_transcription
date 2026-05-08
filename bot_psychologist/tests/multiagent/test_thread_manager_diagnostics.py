@@ -37,6 +37,25 @@ def _thread(*, core_direction: str = "anxiety before meeting") -> ThreadState:
     )
 
 
+def _semantic_continuity_thread() -> ThreadState:
+    now = datetime.utcnow()
+    return ThreadState(
+        thread_id="t-semantic",
+        user_id="u1",
+        core_direction="want to publish draft but keep postponing because of fear",
+        pattern_core="avoidance around publishing draft and postponing sending",
+        active_frame={
+            "current_need": "recognize avoidance loop without pressure",
+            "next_recommended_direction": "reflect repeated postponing pattern",
+        },
+        open_loops=["publish draft without endless polishing"],
+        phase="clarify",
+        turns_in_phase=2,
+        created_at=now,
+        updated_at=now,
+    )
+
+
 @pytest.mark.asyncio
 async def test_diagnostics_new_thread_reason_no_current_thread() -> None:
     manager = ThreadManagerAgent()
@@ -153,3 +172,54 @@ async def test_low_resource_continuation_marker_diagnostics() -> None:
     assert "low_resource_followup_continued" in debug["summary_flags"]
     assert "low_resource_phase_hold" in debug["summary_flags"]
     assert "low_resource_active_frame" in debug["summary_flags"]
+
+
+@pytest.mark.asyncio
+async def test_active_frame_semantic_continuity_guard_positive() -> None:
+    manager = ThreadManagerAgent()
+    updated = await manager.update(
+        user_message="I still want to postpone sending the draft again.",
+        state_snapshot=_snapshot(intent="explore", nervous_state="window"),
+        user_id="u1",
+        current_thread=_semantic_continuity_thread(),
+        archived_threads=[],
+    )
+    debug = manager.last_debug
+    relation = debug["relation"]
+    assert updated.relation_to_thread == "continue"
+    assert relation["relation_reason"] == "active_frame_semantic_continuity"
+    assert relation["active_frame_semantic_continue_hit"] is True
+    assert relation["semantic_frame_token_overlap"] >= 1
+    assert updated.continuity_score >= 0.25
+
+
+@pytest.mark.asyncio
+async def test_active_frame_semantic_continuity_guard_negative_unrelated() -> None:
+    manager = ThreadManagerAgent()
+    updated = await manager.update(
+        user_message="I still want to buy a bicycle again.",
+        state_snapshot=_snapshot(intent="explore", nervous_state="window"),
+        user_id="u1",
+        current_thread=_semantic_continuity_thread(),
+        archived_threads=[],
+    )
+    debug = manager.last_debug
+    relation = debug["relation"]
+    assert relation["active_frame_semantic_continue_hit"] is False
+    assert relation["relation_reason"] != "active_frame_semantic_continuity"
+    assert updated.relation_to_thread in {"new_thread", "branch", "continue"}
+
+
+@pytest.mark.asyncio
+async def test_active_frame_semantic_continuity_guard_branch_priority() -> None:
+    manager = ThreadManagerAgent()
+    updated = await manager.update(
+        user_message="By the way, another question: how to choose a laptop?",
+        state_snapshot=_snapshot(intent="explore", nervous_state="window"),
+        user_id="u1",
+        current_thread=_semantic_continuity_thread(),
+        archived_threads=[],
+    )
+    debug = manager.last_debug
+    assert updated.relation_to_thread == "branch"
+    assert debug["relation"]["relation_reason"] == "branch_marker"

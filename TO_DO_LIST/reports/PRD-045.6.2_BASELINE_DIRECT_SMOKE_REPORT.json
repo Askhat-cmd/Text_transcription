@@ -1,0 +1,3459 @@
+{
+  "run_metadata": {
+    "date": "2026-05-08T06:03:03.487532Z",
+    "git_sha": "15621c3",
+    "mode": "direct",
+    "python": "3.13.2",
+    "backend_used": "local_orchestrator",
+    "api_available": true,
+    "dataset_path": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\quality_baseline_cases.json",
+    "cases_total": 4,
+    "cases_executed": 4,
+    "live_runtime_executed": false,
+    "api_base_url": null,
+    "api_runtime_verified": true,
+    "api_runtime_warning": null
+  },
+  "runtime_metadata": {
+    "git_sha": "15621c3",
+    "git_dirty": true,
+    "python": "3.13.2",
+    "cwd": "C:\\My_practice\\Text_transcription",
+    "runner_mode": "direct",
+    "timestamp": "2026-05-08T06:00:42.885364Z",
+    "runtime_fingerprint": {
+      "state_analyzer_file_sha256": "e5be97ff9129d922c1d34b982d84f34d53cbb6d8def18b1b31ab0a98adef3cf3",
+      "thread_manager_file_sha256": "b8d0c988839f2dcbebd89dcce4306b08a83d36d411b77bc320ffadb5ea1e1960",
+      "writer_prompt_file_sha256": "303e53b8f243acf17f176bdfa7eab5ba0db46a455b96219e04d99156f521ccde",
+      "orchestrator_file_sha256": "29c7c9ffa8fe904be73174d2a2fa8390e35334da3fea94b80b37d7cd15e8d5b1"
+    }
+  },
+  "runtime_config_snapshot": {
+    "state_analyzer_model": "gpt-5-nano",
+    "writer_model": "gpt-5-mini",
+    "max_tokens": 600,
+    "temperature": 0.7,
+    "rag_top_k": null,
+    "rag_min_score": null
+  },
+  "summary": {
+    "cases_executed": 4,
+    "errors_count": 0,
+    "safety_cases": 0,
+    "avg_latency_ms": 17485.88,
+    "generic_risk_flags": 0,
+    "continuity_risk_flags": 1
+  },
+  "errors": [],
+  "case_results": [
+    {
+      "case_id": "QB-002",
+      "title": "Contact when user is tired",
+      "category": "contact",
+      "turns": 1,
+      "test_user_id": "baseline_direct_qb-002_1778220042",
+      "session_id": "qb-direct-qb-002-1778220042",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "mirror low intensity",
+          "be warm and short"
+        ],
+        "should_not": [
+          "push deep analysis",
+          "switch to productivity lecture"
+        ],
+        "quality_focus": [
+          "tone_match",
+          "resource_sensitivity"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-002",
+          "turn_index": 1,
+          "user_message": "Я очень устал, просто хочу услышать пару спокойных слов",
+          "answer": "Ты очень устал — это слышно. Спасибо, что сказал об этом; ты не один сейчас. Я рядом и слушаю.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "contact",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_e58801228af3",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "validate",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 94,
+                "sentences": 3,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "contact",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": false,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": false,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 0,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "validate",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "new_thread",
+                "relation_reason": "no_current_thread",
+                "continuity_score": 1.0,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": false,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": false,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 8,
+                "core_token_count": 8,
+                "token_intersection_count": 8,
+                "token_union_count": 8,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 0,
+                "semantic_frame_sources_checked": []
+              },
+              "phase": {
+                "previous_phase": null,
+                "selected_phase": "clarify",
+                "phase_reason": "new_thread_default_clarify",
+                "turns_in_phase_before": 0,
+                "turns_in_phase_after": 1,
+                "closed_loops_count": 0,
+                "continuity_score": 1.0
+              },
+              "mode": {
+                "selected_mode": "validate",
+                "response_goal": "hold contact and avoid overload",
+                "mode_reason": "explicit_contact_validate",
+                "safety_flag": false,
+                "intent": "contact",
+                "nervous_state": "hypo",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "new_thread",
+                "previous_thread_id_present": false,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "short support without pressure",
+                "next_recommended_direction": "keep answer short and low pressure"
+              },
+              "summary_flags": [
+                "contact_validate_mode",
+                "phase_transition",
+                "pattern_core_present",
+                "active_frame_present",
+                "low_resource_active_frame"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 0,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 0,
+              "budget_used_chars": 1129,
+              "budget_limit_chars": 8000,
+              "reasons": []
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 0,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "low-resource support / short support without pressure",
+            "active_frame": {
+              "current_need": "short support without pressure",
+              "last_supportive_move": "started contact and matched response mode",
+              "next_recommended_direction": "keep answer short and low pressure"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "short support without pressure",
+              "next_recommended_direction": "keep answer short and low pressure"
+            },
+            "timings": {
+              "state_analyzer_ms": 4746,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 16732,
+              "writer_ms": 9489,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "contact",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_e58801228af3",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "validate",
+              "response_goal": null,
+              "continuity_score": 1.0,
+              "pattern_core": "low-resource support / short support without pressure",
+              "active_frame": {
+                "current_need": "short support without pressure",
+                "last_supportive_move": "started contact and matched response mode",
+                "next_recommended_direction": "keep answer short and low pressure"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "no_current_thread",
+              "phase_reason": "new_thread_default_clarify",
+              "mode_reason": "explicit_contact_validate",
+              "thread_action": "new_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "short support without pressure",
+                "next_recommended_direction": "keep answer short and low pressure"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 30970.0
+        }
+      ],
+      "final_answer": "Ты очень устал — это слышно. Спасибо, что сказал об этом; ты не один сейчас. Я рядом и слушаю.",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "tm_e58801228af3",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "continuity_score": 1.0,
+        "response_mode": "validate",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": 0.7,
+        "model_max_tokens": 600,
+        "validator_blocked": false,
+        "validator_quality_flags": [],
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 94,
+            "sentences": 3,
+            "questions": 0,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "hypo",
+            "intent": "contact",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 1
+          },
+          "memory": {
+            "context_turns": 5,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": false,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": false,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 0,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "validate",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
+        "quality_trace_error": null,
+        "thread_diagnostics_version": "thread_diagnostics_v1",
+        "thread_diagnostics": {
+          "version": "thread_diagnostics_v1",
+          "relation": {
+            "selected_relation": "new_thread",
+            "relation_reason": "no_current_thread",
+            "continuity_score": 1.0,
+            "new_thread_threshold": 0.2,
+            "current_thread_present": false,
+            "archived_threads_count": 0,
+            "return_marker_hit": false,
+            "followup_continue_marker_hit": false,
+            "low_resource_continue_marker_hit": false,
+            "branch_marker_hit": false,
+            "resolution_marker_hit": false,
+            "message_token_count": 8,
+            "core_token_count": 8,
+            "token_intersection_count": 8,
+            "token_union_count": 8,
+            "active_frame_semantic_continue_hit": false,
+            "active_frame_semantic_continue_reason": "",
+            "semantic_frame_token_overlap": 0,
+            "semantic_frame_token_count": 0,
+            "semantic_frame_sources_checked": []
+          },
+          "phase": {
+            "previous_phase": null,
+            "selected_phase": "clarify",
+            "phase_reason": "new_thread_default_clarify",
+            "turns_in_phase_before": 0,
+            "turns_in_phase_after": 1,
+            "closed_loops_count": 0,
+            "continuity_score": 1.0
+          },
+          "mode": {
+            "selected_mode": "validate",
+            "response_goal": "hold contact and avoid overload",
+            "mode_reason": "explicit_contact_validate",
+            "safety_flag": false,
+            "intent": "contact",
+            "nervous_state": "hypo",
+            "phase": "clarify"
+          },
+          "loops": {
+            "open_loops_before": 0,
+            "open_loops_after": 0,
+            "closed_loops_before": 0,
+            "closed_loops_after": 0,
+            "open_loop_added": false,
+            "closed_loop_added": false,
+            "resolution_marker_hit": false
+          },
+          "action": {
+            "thread_action": "new_thread",
+            "previous_thread_id_present": false,
+            "selected_thread_id_present": true,
+            "archived_previous_thread": false,
+            "restored_archived_thread": false,
+            "safety_patch_used": false
+          },
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "short support without pressure",
+            "next_recommended_direction": "keep answer short and low pressure"
+          },
+          "summary_flags": [
+            "contact_validate_mode",
+            "phase_transition",
+            "pattern_core_present",
+            "active_frame_present",
+            "low_resource_active_frame"
+          ]
+        },
+        "context_assembly_trace_version": "context_assembly_trace_v1",
+        "context_assembly_trace": {
+          "version": "context_assembly_trace_v1",
+          "recent_full_count": 0,
+          "summarized_count": 0,
+          "dropped_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3,
+          "duplicates_removed": 0,
+          "budget_used_chars": 1129,
+          "budget_limit_chars": 8000,
+          "reasons": []
+        },
+        "context_package_summary": {
+          "has_current_user_message": true,
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "recent_full_count": 0,
+          "recent_summarized_count": 0,
+          "personal_history_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3
+        },
+        "pattern_core": "low-resource support / short support without pressure",
+        "active_frame": {
+          "current_need": "short support without pressure",
+          "last_supportive_move": "started contact and matched response mode",
+          "next_recommended_direction": "keep answer short and low pressure"
+        },
+        "semantic_frame_summary": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "short support without pressure",
+          "next_recommended_direction": "keep answer short and low pressure"
+        },
+        "timings": {
+          "state_analyzer_ms": 4746,
+          "thread_manager_ms": 0,
+          "memory_retrieval_ms": 16732,
+          "writer_ms": 9489,
+          "validator_ms": 0
+        },
+        "state": {
+          "nervous_state": "hypo",
+          "intent": "contact",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": "gpt-5-nano",
+          "state_analyzer_api_mode": "responses",
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "tm_e58801228af3",
+          "phase": "clarify",
+          "relation_to_thread": "new_thread",
+          "response_mode": "validate",
+          "response_goal": null,
+          "continuity_score": 1.0,
+          "pattern_core": "low-resource support / short support without pressure",
+          "active_frame": {
+            "current_need": "short support without pressure",
+            "last_supportive_move": "started contact and matched response mode",
+            "next_recommended_direction": "keep answer short and low pressure"
+          },
+          "pattern_core_present": true,
+          "relation_reason": "no_current_thread",
+          "phase_reason": "new_thread_default_clarify",
+          "mode_reason": "explicit_contact_validate",
+          "thread_action": "new_thread",
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "short support without pressure",
+            "next_recommended_direction": "keep answer short and low pressure"
+          }
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": 0.7,
+          "model_max_tokens": 600
+        },
+        "quality_trace_summary": []
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": false,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-005",
+      "title": "Direct request for concrete first step",
+      "category": "solution",
+      "turns": 1,
+      "test_user_id": "baseline_direct_qb-005_1778220074",
+      "session_id": "qb-direct-qb-005-1778220074",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "offer one concrete micro-step",
+          "keep it executable today"
+        ],
+        "should_not": [
+          "give abstract motivation only",
+          "offer ten-step framework"
+        ],
+        "quality_focus": [
+          "specificity",
+          "actionability",
+          "micro_shift"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-005",
+          "turn_index": 1,
+          "user_message": "Мне нужен конкретный первый шаг, чтобы перестать прокрастинировать сегодня",
+          "answer": "Выбери самую маленькую конкретную задачу (одну фразу, напр.: «написать вводный абзац письма»), поставь таймер на 10 минут прямо сейчас и работай над этой задачей, убрав телефон из видимости; когда таймер прозвенит, запиши одну короткую фразу: что сделал и каково было ожидание страха.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "solution",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_d3b1984ad9ef",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "practice",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 284,
+                "sentences": 2,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "solution",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": false,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": false,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 0,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "practice",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "new_thread",
+                "relation_reason": "no_current_thread",
+                "continuity_score": 1.0,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": false,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": false,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 9,
+                "core_token_count": 9,
+                "token_intersection_count": 9,
+                "token_union_count": 9,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 0,
+                "semantic_frame_sources_checked": []
+              },
+              "phase": {
+                "previous_phase": null,
+                "selected_phase": "clarify",
+                "phase_reason": "new_thread_default_clarify",
+                "turns_in_phase_before": 0,
+                "turns_in_phase_after": 1,
+                "closed_loops_count": 0,
+                "continuity_score": 1.0
+              },
+              "mode": {
+                "selected_mode": "practice",
+                "response_goal": "provide one realistic next step",
+                "mode_reason": "solution_practice",
+                "safety_flag": false,
+                "intent": "solution",
+                "nervous_state": "window",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "new_thread",
+                "previous_thread_id_present": false,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "one concrete next step",
+                "next_recommended_direction": "offer one executable micro-step"
+              },
+              "summary_flags": [
+                "solution_practice_mode",
+                "phase_transition",
+                "pattern_core_present",
+                "active_frame_present",
+                "solution_active_frame"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 0,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 0,
+              "budget_used_chars": 2376,
+              "budget_limit_chars": 8000,
+              "reasons": []
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 0,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "request for concrete next step / actionable micro-step",
+            "active_frame": {
+              "current_need": "one concrete next step",
+              "last_supportive_move": "started contact and matched response mode",
+              "next_recommended_direction": "offer one executable micro-step"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "one concrete next step",
+              "next_recommended_direction": "offer one executable micro-step"
+            },
+            "timings": {
+              "state_analyzer_ms": 3491,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3662,
+              "writer_ms": 5158,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "window",
+              "intent": "solution",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_d3b1984ad9ef",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "practice",
+              "response_goal": null,
+              "continuity_score": 1.0,
+              "pattern_core": "request for concrete next step / actionable micro-step",
+              "active_frame": {
+                "current_need": "one concrete next step",
+                "last_supportive_move": "started contact and matched response mode",
+                "next_recommended_direction": "offer one executable micro-step"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "no_current_thread",
+              "phase_reason": "new_thread_default_clarify",
+              "mode_reason": "solution_practice",
+              "thread_action": "new_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "one concrete next step",
+                "next_recommended_direction": "offer one executable micro-step"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": true
+          },
+          "latency_ms": 12314.0
+        }
+      ],
+      "final_answer": "Выбери самую маленькую конкретную задачу (одну фразу, напр.: «написать вводный абзац письма»), поставь таймер на 10 минут прямо сейчас и работай над этой задачей, убрав телефон из видимости; когда таймер прозвенит, запиши одну короткую фразу: что сделал и каково было ожидание страха.",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "solution",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "tm_d3b1984ad9ef",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "continuity_score": 1.0,
+        "response_mode": "practice",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": 0.7,
+        "model_max_tokens": 600,
+        "validator_blocked": false,
+        "validator_quality_flags": [],
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 284,
+            "sentences": 2,
+            "questions": 0,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "solution",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "continuity_bucket": "high",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 1
+          },
+          "memory": {
+            "context_turns": 5,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": false,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": false,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 0,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "practice",
+            "goal_present": true,
+            "practice_step_present": true,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
+        "quality_trace_error": null,
+        "thread_diagnostics_version": "thread_diagnostics_v1",
+        "thread_diagnostics": {
+          "version": "thread_diagnostics_v1",
+          "relation": {
+            "selected_relation": "new_thread",
+            "relation_reason": "no_current_thread",
+            "continuity_score": 1.0,
+            "new_thread_threshold": 0.2,
+            "current_thread_present": false,
+            "archived_threads_count": 0,
+            "return_marker_hit": false,
+            "followup_continue_marker_hit": false,
+            "low_resource_continue_marker_hit": false,
+            "branch_marker_hit": false,
+            "resolution_marker_hit": false,
+            "message_token_count": 9,
+            "core_token_count": 9,
+            "token_intersection_count": 9,
+            "token_union_count": 9,
+            "active_frame_semantic_continue_hit": false,
+            "active_frame_semantic_continue_reason": "",
+            "semantic_frame_token_overlap": 0,
+            "semantic_frame_token_count": 0,
+            "semantic_frame_sources_checked": []
+          },
+          "phase": {
+            "previous_phase": null,
+            "selected_phase": "clarify",
+            "phase_reason": "new_thread_default_clarify",
+            "turns_in_phase_before": 0,
+            "turns_in_phase_after": 1,
+            "closed_loops_count": 0,
+            "continuity_score": 1.0
+          },
+          "mode": {
+            "selected_mode": "practice",
+            "response_goal": "provide one realistic next step",
+            "mode_reason": "solution_practice",
+            "safety_flag": false,
+            "intent": "solution",
+            "nervous_state": "window",
+            "phase": "clarify"
+          },
+          "loops": {
+            "open_loops_before": 0,
+            "open_loops_after": 0,
+            "closed_loops_before": 0,
+            "closed_loops_after": 0,
+            "open_loop_added": false,
+            "closed_loop_added": false,
+            "resolution_marker_hit": false
+          },
+          "action": {
+            "thread_action": "new_thread",
+            "previous_thread_id_present": false,
+            "selected_thread_id_present": true,
+            "archived_previous_thread": false,
+            "restored_archived_thread": false,
+            "safety_patch_used": false
+          },
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "one concrete next step",
+            "next_recommended_direction": "offer one executable micro-step"
+          },
+          "summary_flags": [
+            "solution_practice_mode",
+            "phase_transition",
+            "pattern_core_present",
+            "active_frame_present",
+            "solution_active_frame"
+          ]
+        },
+        "context_assembly_trace_version": "context_assembly_trace_v1",
+        "context_assembly_trace": {
+          "version": "context_assembly_trace_v1",
+          "recent_full_count": 0,
+          "summarized_count": 0,
+          "dropped_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3,
+          "duplicates_removed": 0,
+          "budget_used_chars": 2376,
+          "budget_limit_chars": 8000,
+          "reasons": []
+        },
+        "context_package_summary": {
+          "has_current_user_message": true,
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "recent_full_count": 0,
+          "recent_summarized_count": 0,
+          "personal_history_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3
+        },
+        "pattern_core": "request for concrete next step / actionable micro-step",
+        "active_frame": {
+          "current_need": "one concrete next step",
+          "last_supportive_move": "started contact and matched response mode",
+          "next_recommended_direction": "offer one executable micro-step"
+        },
+        "semantic_frame_summary": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "one concrete next step",
+          "next_recommended_direction": "offer one executable micro-step"
+        },
+        "timings": {
+          "state_analyzer_ms": 3491,
+          "thread_manager_ms": 0,
+          "memory_retrieval_ms": 3662,
+          "writer_ms": 5158,
+          "validator_ms": 0
+        },
+        "state": {
+          "nervous_state": "window",
+          "intent": "solution",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": "gpt-5-nano",
+          "state_analyzer_api_mode": "responses",
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "tm_d3b1984ad9ef",
+          "phase": "clarify",
+          "relation_to_thread": "new_thread",
+          "response_mode": "practice",
+          "response_goal": null,
+          "continuity_score": 1.0,
+          "pattern_core": "request for concrete next step / actionable micro-step",
+          "active_frame": {
+            "current_need": "one concrete next step",
+            "last_supportive_move": "started contact and matched response mode",
+            "next_recommended_direction": "offer one executable micro-step"
+          },
+          "pattern_core_present": true,
+          "relation_reason": "no_current_thread",
+          "phase_reason": "new_thread_default_clarify",
+          "mode_reason": "solution_practice",
+          "thread_action": "new_thread",
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "one concrete next step",
+            "next_recommended_direction": "offer one executable micro-step"
+          }
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": 0.7,
+          "model_max_tokens": 600
+        },
+        "quality_trace_summary": []
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": false,
+        "mentions_user_context": false,
+        "has_practice_step_when_expected": true
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-010",
+      "title": "Low-resource continuation",
+      "category": "collapsed_or_low_resource",
+      "turns": 3,
+      "test_user_id": "baseline_direct_qb-010_1778220086",
+      "session_id": "qb-direct-qb-010-1778220086",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "reduce cognitive load",
+          "offer tiny step",
+          "avoid intensity"
+        ],
+        "should_not": [
+          "ask multiple deep questions",
+          "give long psychoeducation"
+        ],
+        "quality_focus": [
+          "resource_fit",
+          "micro_step",
+          "brevity"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-010",
+          "turn_index": 1,
+          "user_message": "Сил почти нет.",
+          "answer": "Сядь удобно, положи руку на живот. Сделай 4‑7‑8: вдох через нос на 4 счёта, задержи 7, медленный выдох через рот на 8 — повтори 4 раза.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_8ff1761fce9f",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "regulate",
+            "context_turns": null,
+            "semantic_hits_count": 1,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 135,
+                "sentences": 2,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 1,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": false,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": false,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 0,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "regulate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "new_thread",
+                "relation_reason": "no_current_thread",
+                "continuity_score": 1.0,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": false,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": true,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 3,
+                "core_token_count": 3,
+                "token_intersection_count": 3,
+                "token_union_count": 3,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 0,
+                "semantic_frame_sources_checked": []
+              },
+              "phase": {
+                "previous_phase": null,
+                "selected_phase": "clarify",
+                "phase_reason": "new_thread_default_clarify",
+                "turns_in_phase_before": 0,
+                "turns_in_phase_after": 1,
+                "closed_loops_count": 0,
+                "continuity_score": 1.0
+              },
+              "mode": {
+                "selected_mode": "regulate",
+                "response_goal": "softly stabilize state",
+                "mode_reason": "nervous_regulate",
+                "safety_flag": false,
+                "intent": "explore",
+                "nervous_state": "hypo",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "new_thread",
+                "previous_thread_id_present": false,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "summary_flags": [
+                "nervous_regulate_mode",
+                "phase_transition",
+                "pattern_core_present",
+                "active_frame_present"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 0,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 1,
+              "duplicates_removed": 0,
+              "budget_used_chars": 592,
+              "budget_limit_chars": 8000,
+              "reasons": []
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 0,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 1
+            },
+            "pattern_core": "Сил почти нет.",
+            "active_frame": {
+              "current_need": "explore perspective carefully",
+              "last_supportive_move": "started contact and matched response mode",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "timings": {
+              "state_analyzer_ms": 3689,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3124,
+              "writer_ms": 6460,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_8ff1761fce9f",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "regulate",
+              "response_goal": null,
+              "continuity_score": 1.0,
+              "pattern_core": "Сил почти нет.",
+              "active_frame": {
+                "current_need": "explore perspective carefully",
+                "last_supportive_move": "started contact and matched response mode",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "no_current_thread",
+              "phase_reason": "new_thread_default_clarify",
+              "mode_reason": "nervous_regulate",
+              "thread_action": "new_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 13276.0
+        },
+        {
+          "case_id": "QB-010",
+          "turn_index": 2,
+          "user_message": "Даже отвечать тяжело.",
+          "answer": "Сделай сейчас короткую паузу: сядь, положи руку на живот и проведи три медленных цикла дыхания — вдох через нос на 4 счёта, задержка на 4, медленный выдох через рот на 6. Следи, как рука поднимается и опускается — это займёт около 30 секунд и может чуть облегчить.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_8ff1761fce9f",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "response_mode": "regulate",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 264,
+                "sentences": 2,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 0.25,
+                "continuity_bucket": "medium",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 2
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 13,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "regulate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "continue",
+                "relation_reason": "low_resource_continuation_marker",
+                "continuity_score": 0.25,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": true,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": true,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 3,
+                "core_token_count": 3,
+                "token_intersection_count": 0,
+                "token_union_count": 6,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 16,
+                "semantic_frame_sources_checked": [],
+                "continuity_raw": 0.0,
+                "recurrence_marker_hit": false
+              },
+              "phase": {
+                "previous_phase": "clarify",
+                "selected_phase": "clarify",
+                "phase_reason": "low_resource_hold_phase",
+                "turns_in_phase_before": 1,
+                "turns_in_phase_after": 2,
+                "closed_loops_count": 0,
+                "continuity_score": 0.25
+              },
+              "mode": {
+                "selected_mode": "regulate",
+                "response_goal": "softly stabilize state",
+                "mode_reason": "nervous_regulate",
+                "safety_flag": false,
+                "intent": "explore",
+                "nervous_state": "hypo",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "continue_thread",
+                "previous_thread_id_present": true,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "summary_flags": [
+                "low_resource_followup_continued",
+                "low_resource_marker_overrode_low_overlap",
+                "nervous_regulate_mode",
+                "low_resource_phase_hold",
+                "pattern_core_present",
+                "active_frame_present"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 2,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 1,
+              "budget_used_chars": 1289,
+              "budget_limit_chars": 8000,
+              "reasons": [
+                "semantic_duplicate_recent_substring"
+              ]
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 2,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "Сил почти нет.",
+            "active_frame": {
+              "current_need": "explore perspective carefully",
+              "last_supportive_move": "continued current thread without restarting",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "timings": {
+              "state_analyzer_ms": 3174,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3105,
+              "writer_ms": 8215,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_8ff1761fce9f",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "regulate",
+              "response_goal": null,
+              "continuity_score": 0.25,
+              "pattern_core": "Сил почти нет.",
+              "active_frame": {
+                "current_need": "explore perspective carefully",
+                "last_supportive_move": "continued current thread without restarting",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "low_resource_continuation_marker",
+              "phase_reason": "low_resource_hold_phase",
+              "mode_reason": "nervous_regulate",
+              "thread_action": "continue_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 14505.0
+        },
+        {
+          "case_id": "QB-010",
+          "turn_index": 3,
+          "user_message": "Можно что-то совсем простое на сейчас?",
+          "answer": "Хорошо. Положи руку на живот и сделай один медленный вдох через нос и спокойный выдох через рот — не торопясь. Я с тобой.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "contact",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_8ff1761fce9f",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "response_mode": "validate",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 121,
+                "sentences": 3,
+                "questions": 0,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "contact",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 0.25,
+                "continuity_bucket": "medium",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 3
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 11,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "validate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "continue",
+                "relation_reason": "low_resource_continuation_marker",
+                "continuity_score": 0.25,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": true,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": true,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 5,
+                "core_token_count": 3,
+                "token_intersection_count": 0,
+                "token_union_count": 8,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 14,
+                "semantic_frame_sources_checked": [],
+                "continuity_raw": 0.0,
+                "recurrence_marker_hit": false
+              },
+              "phase": {
+                "previous_phase": "clarify",
+                "selected_phase": "clarify",
+                "phase_reason": "low_resource_hold_phase",
+                "turns_in_phase_before": 2,
+                "turns_in_phase_after": 3,
+                "closed_loops_count": 0,
+                "continuity_score": 0.25
+              },
+              "mode": {
+                "selected_mode": "validate",
+                "response_goal": "hold contact and avoid overload",
+                "mode_reason": "explicit_contact_validate",
+                "safety_flag": false,
+                "intent": "contact",
+                "nervous_state": "hypo",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "continue_thread",
+                "previous_thread_id_present": true,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "short support without pressure",
+                "next_recommended_direction": "keep answer short and low pressure"
+              },
+              "summary_flags": [
+                "low_resource_followup_continued",
+                "low_resource_marker_overrode_low_overlap",
+                "contact_validate_mode",
+                "low_resource_phase_hold",
+                "pattern_core_present",
+                "active_frame_present",
+                "low_resource_active_frame"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 4,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 2,
+              "budget_used_chars": 2431,
+              "budget_limit_chars": 8000,
+              "reasons": [
+                "semantic_duplicate_token_overlap",
+                "semantic_duplicate_recent_substring"
+              ]
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 4,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "Сил почти нет.",
+            "active_frame": {
+              "current_need": "short support without pressure",
+              "last_supportive_move": "held low-resource thread and avoided exploration",
+              "next_recommended_direction": "keep answer short and low pressure"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "short support without pressure",
+              "next_recommended_direction": "keep answer short and low pressure"
+            },
+            "timings": {
+              "state_analyzer_ms": 3326,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3121,
+              "writer_ms": 12567,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "contact",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_8ff1761fce9f",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "validate",
+              "response_goal": null,
+              "continuity_score": 0.25,
+              "pattern_core": "Сил почти нет.",
+              "active_frame": {
+                "current_need": "short support without pressure",
+                "last_supportive_move": "held low-resource thread and avoided exploration",
+                "next_recommended_direction": "keep answer short and low pressure"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "low_resource_continuation_marker",
+              "phase_reason": "low_resource_hold_phase",
+              "mode_reason": "explicit_contact_validate",
+              "thread_action": "continue_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "short support without pressure",
+                "next_recommended_direction": "keep answer short and low pressure"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": false,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 19025.0
+        }
+      ],
+      "final_answer": "Хорошо. Положи руку на живот и сделай один медленный вдох через нос и спокойный выдох через рот — не торопясь. Я с тобой.",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "tm_8ff1761fce9f",
+        "phase": "clarify",
+        "relation_to_thread": "continue",
+        "continuity_score": 0.25,
+        "response_mode": "validate",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": 0.7,
+        "model_max_tokens": 600,
+        "validator_blocked": false,
+        "validator_quality_flags": [],
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 121,
+            "sentences": 3,
+            "questions": 0,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "hypo",
+            "intent": "contact",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "continuity_bucket": "medium",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 3
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 11,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "validate",
+            "goal_present": true,
+            "practice_step_present": true,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
+        "quality_trace_error": null,
+        "thread_diagnostics_version": "thread_diagnostics_v1",
+        "thread_diagnostics": {
+          "version": "thread_diagnostics_v1",
+          "relation": {
+            "selected_relation": "continue",
+            "relation_reason": "low_resource_continuation_marker",
+            "continuity_score": 0.25,
+            "new_thread_threshold": 0.2,
+            "current_thread_present": true,
+            "archived_threads_count": 0,
+            "return_marker_hit": false,
+            "followup_continue_marker_hit": false,
+            "low_resource_continue_marker_hit": true,
+            "branch_marker_hit": false,
+            "resolution_marker_hit": false,
+            "message_token_count": 5,
+            "core_token_count": 3,
+            "token_intersection_count": 0,
+            "token_union_count": 8,
+            "active_frame_semantic_continue_hit": false,
+            "active_frame_semantic_continue_reason": "",
+            "semantic_frame_token_overlap": 0,
+            "semantic_frame_token_count": 14,
+            "semantic_frame_sources_checked": [],
+            "continuity_raw": 0.0,
+            "recurrence_marker_hit": false
+          },
+          "phase": {
+            "previous_phase": "clarify",
+            "selected_phase": "clarify",
+            "phase_reason": "low_resource_hold_phase",
+            "turns_in_phase_before": 2,
+            "turns_in_phase_after": 3,
+            "closed_loops_count": 0,
+            "continuity_score": 0.25
+          },
+          "mode": {
+            "selected_mode": "validate",
+            "response_goal": "hold contact and avoid overload",
+            "mode_reason": "explicit_contact_validate",
+            "safety_flag": false,
+            "intent": "contact",
+            "nervous_state": "hypo",
+            "phase": "clarify"
+          },
+          "loops": {
+            "open_loops_before": 0,
+            "open_loops_after": 0,
+            "closed_loops_before": 0,
+            "closed_loops_after": 0,
+            "open_loop_added": false,
+            "closed_loop_added": false,
+            "resolution_marker_hit": false
+          },
+          "action": {
+            "thread_action": "continue_thread",
+            "previous_thread_id_present": true,
+            "selected_thread_id_present": true,
+            "archived_previous_thread": false,
+            "restored_archived_thread": false,
+            "safety_patch_used": false
+          },
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "short support without pressure",
+            "next_recommended_direction": "keep answer short and low pressure"
+          },
+          "summary_flags": [
+            "low_resource_followup_continued",
+            "low_resource_marker_overrode_low_overlap",
+            "contact_validate_mode",
+            "low_resource_phase_hold",
+            "pattern_core_present",
+            "active_frame_present",
+            "low_resource_active_frame"
+          ]
+        },
+        "context_assembly_trace_version": "context_assembly_trace_v1",
+        "context_assembly_trace": {
+          "version": "context_assembly_trace_v1",
+          "recent_full_count": 4,
+          "summarized_count": 0,
+          "dropped_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3,
+          "duplicates_removed": 2,
+          "budget_used_chars": 2431,
+          "budget_limit_chars": 8000,
+          "reasons": [
+            "semantic_duplicate_token_overlap",
+            "semantic_duplicate_recent_substring"
+          ]
+        },
+        "context_package_summary": {
+          "has_current_user_message": true,
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "recent_full_count": 4,
+          "recent_summarized_count": 0,
+          "personal_history_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3
+        },
+        "pattern_core": "Сил почти нет.",
+        "active_frame": {
+          "current_need": "short support without pressure",
+          "last_supportive_move": "held low-resource thread and avoided exploration",
+          "next_recommended_direction": "keep answer short and low pressure"
+        },
+        "semantic_frame_summary": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "short support without pressure",
+          "next_recommended_direction": "keep answer short and low pressure"
+        },
+        "timings": {
+          "state_analyzer_ms": 3326,
+          "thread_manager_ms": 0,
+          "memory_retrieval_ms": 3121,
+          "writer_ms": 12567,
+          "validator_ms": 0
+        },
+        "state": {
+          "nervous_state": "hypo",
+          "intent": "contact",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": "gpt-5-nano",
+          "state_analyzer_api_mode": "responses",
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "tm_8ff1761fce9f",
+          "phase": "clarify",
+          "relation_to_thread": "continue",
+          "response_mode": "validate",
+          "response_goal": null,
+          "continuity_score": 0.25,
+          "pattern_core": "Сил почти нет.",
+          "active_frame": {
+            "current_need": "short support without pressure",
+            "last_supportive_move": "held low-resource thread and avoided exploration",
+            "next_recommended_direction": "keep answer short and low pressure"
+          },
+          "pattern_core_present": true,
+          "relation_reason": "low_resource_continuation_marker",
+          "phase_reason": "low_resource_hold_phase",
+          "mode_reason": "explicit_contact_validate",
+          "thread_action": "continue_thread",
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "short support without pressure",
+            "next_recommended_direction": "keep answer short and low pressure"
+          }
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": 0.7,
+          "model_max_tokens": 600
+        },
+        "quality_trace_summary": []
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": false,
+        "mentions_user_context": false,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    },
+    {
+      "case_id": "QB-015",
+      "title": "Continuation without restarting frame",
+      "category": "continuity",
+      "turns": 3,
+      "test_user_id": "baseline_direct_qb-015_1778220133",
+      "session_id": "qb-direct-qb-015-1778220133",
+      "expected": {
+        "language": "ru",
+        "should": [
+          "continue same thread",
+          "reflect repeated avoidance pattern",
+          "offer one precise next move"
+        ],
+        "should_not": [
+          "introduce new framework",
+          "restart as generic self-esteem topic"
+        ],
+        "quality_focus": [
+          "continuity",
+          "anti_generic",
+          "specificity"
+        ]
+      },
+      "turn_results": [
+        {
+          "case_id": "QB-015",
+          "turn_index": 1,
+          "user_message": "Мне страшно показать черновик.",
+          "answer": "Отправь черновик одному человеку, которому ты доверяешь, с пометкой: «Можешь за 10 минут дать 1–2 строки отзыва?» Сделай это прямо сейчас или в течение следующего часа. После — просто отметь, что ты сделал(а) шаг.",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "hypo",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_bf9f6174057b",
+            "phase": "clarify",
+            "relation_to_thread": "new_thread",
+            "continuity_score": 1.0,
+            "response_mode": "regulate",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 213,
+                "sentences": 3,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": true,
+                "generic_markers_count": 1
+              },
+              "state": {
+                "nervous_state": "hypo",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "new_thread",
+                "continuity_score": 1.0,
+                "continuity_bucket": "high",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 5,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": false,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": false,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 0,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "regulate",
+                "goal_present": true,
+                "practice_step_present": true,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": [
+                "generic_phrase_risk"
+              ]
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "new_thread",
+                "relation_reason": "no_current_thread",
+                "continuity_score": 1.0,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": false,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": false,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 4,
+                "core_token_count": 4,
+                "token_intersection_count": 4,
+                "token_union_count": 4,
+                "active_frame_semantic_continue_hit": false,
+                "active_frame_semantic_continue_reason": "",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 0,
+                "semantic_frame_sources_checked": []
+              },
+              "phase": {
+                "previous_phase": null,
+                "selected_phase": "clarify",
+                "phase_reason": "new_thread_default_clarify",
+                "turns_in_phase_before": 0,
+                "turns_in_phase_after": 1,
+                "closed_loops_count": 0,
+                "continuity_score": 1.0
+              },
+              "mode": {
+                "selected_mode": "regulate",
+                "response_goal": "softly stabilize state",
+                "mode_reason": "nervous_regulate",
+                "safety_flag": false,
+                "intent": "explore",
+                "nervous_state": "hypo",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "new_thread",
+                "previous_thread_id_present": false,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "summary_flags": [
+                "nervous_regulate_mode",
+                "phase_transition",
+                "pattern_core_present",
+                "active_frame_present"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 0,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 0,
+              "budget_used_chars": 4689,
+              "budget_limit_chars": 8000,
+              "reasons": []
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 0,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "Мне страшно показать черновик.",
+            "active_frame": {
+              "current_need": "explore perspective carefully",
+              "last_supportive_move": "started contact and matched response mode",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "timings": {
+              "state_analyzer_ms": 3199,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3484,
+              "writer_ms": 10474,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "hypo",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_bf9f6174057b",
+              "phase": "clarify",
+              "relation_to_thread": "new_thread",
+              "response_mode": "regulate",
+              "response_goal": null,
+              "continuity_score": 1.0,
+              "pattern_core": "Мне страшно показать черновик.",
+              "active_frame": {
+                "current_need": "explore perspective carefully",
+                "last_supportive_move": "started contact and matched response mode",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "no_current_thread",
+              "phase_reason": "new_thread_default_clarify",
+              "mode_reason": "nervous_regulate",
+              "thread_action": "new_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": [
+              "generic_phrase_risk"
+            ]
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": true,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 17160.0
+        },
+        {
+          "case_id": "QB-015",
+          "turn_index": 2,
+          "user_message": "Я снова его переписываю вместо публикации.",
+          "answer": "Асель, ты снова выбираешь переписывать текст вместо того, чтобы опубликовать — действие заменяет результат. Похоже, процесс редактирования даёт чувство контроля и безопасности, но одновременно откладывает то, чего хочешь добиться публикуя. Это выглядит как способ избегания риска результата (отзывы, видимость, возможная критика). Что именно сейчас останавливает тебя от публикации — содержание, реакция людей или что-то другое?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_bf9f6174057b",
+            "phase": "clarify",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "response_mode": "reflect",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 428,
+                "sentences": 4,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "clarify",
+                "relation_to_thread": "continue",
+                "continuity_score": 0.25,
+                "continuity_bucket": "medium",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 2
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 5,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "reflect",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "continue",
+                "relation_reason": "active_frame_semantic_continuity",
+                "continuity_score": 0.25,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": true,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": false,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 5,
+                "core_token_count": 4,
+                "token_intersection_count": 0,
+                "token_union_count": 9,
+                "active_frame_semantic_continue_hit": true,
+                "active_frame_semantic_continue_reason": "recurrence_marker_plus_theme_alignment",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 17,
+                "semantic_frame_sources_checked": [],
+                "continuity_raw": 0.0,
+                "recurrence_marker_hit": true
+              },
+              "phase": {
+                "previous_phase": "clarify",
+                "selected_phase": "clarify",
+                "phase_reason": "keep_current_phase",
+                "turns_in_phase_before": 1,
+                "turns_in_phase_after": 2,
+                "closed_loops_count": 0,
+                "continuity_score": 0.25
+              },
+              "mode": {
+                "selected_mode": "reflect",
+                "response_goal": "clarify key point",
+                "mode_reason": "phase_clarify_reflect",
+                "safety_flag": false,
+                "intent": "explore",
+                "nervous_state": "window",
+                "phase": "clarify"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "continue_thread",
+                "previous_thread_id_present": true,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "summary_flags": [
+                "active_frame_semantic_continuity",
+                "semantic_guard_overrode_low_overlap",
+                "pattern_core_present",
+                "active_frame_present"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 2,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 1,
+              "budget_used_chars": 4621,
+              "budget_limit_chars": 8000,
+              "reasons": [
+                "semantic_duplicate_token_overlap"
+              ]
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 2,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "Мне страшно показать черновик.",
+            "active_frame": {
+              "current_need": "explore perspective carefully",
+              "last_supportive_move": "continued current thread without restarting",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "timings": {
+              "state_analyzer_ms": 2909,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3375,
+              "writer_ms": 8330,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_bf9f6174057b",
+              "phase": "clarify",
+              "relation_to_thread": "continue",
+              "response_mode": "reflect",
+              "response_goal": null,
+              "continuity_score": 0.25,
+              "pattern_core": "Мне страшно показать черновик.",
+              "active_frame": {
+                "current_need": "explore perspective carefully",
+                "last_supportive_move": "continued current thread without restarting",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "active_frame_semantic_continuity",
+              "phase_reason": "keep_current_phase",
+              "mode_reason": "phase_clarify_reflect",
+              "thread_action": "continue_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 14625.0
+        },
+        {
+          "case_id": "QB-015",
+          "turn_index": 3,
+          "user_message": "И сейчас снова хочу отложить.",
+          "answer": "Асель, похоже, в моменте переписывание даёт чувство контроля и уменьшает страх — но одновременно откладывает цель (опубликовать). Возможно, это не про лень, а про желание снизить неопределённость: редактируя, ты отодвигаешь встречу с реакцией. Можно посмотреть на откладывание как на полезную информацию о том, что именно вызывает тревогу, а не как на провал стратегии. Если представить публикацию как маленький эксперимент, который даёт данные, а не окончательный вердикт, легче снизить ставку. Что могло бы быть самым простым и маленьким кусочком текста, который ты могла бы опубликовать прямо сейчас?",
+          "debug": {
+            "pipeline_version": "multiagent_v1",
+            "nervous_state": "window",
+            "intent": "explore",
+            "safety_flag": false,
+            "confidence": 0.75,
+            "thread_id": "tm_bf9f6174057b",
+            "phase": "explore",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "response_mode": "explore",
+            "context_turns": null,
+            "semantic_hits_count": 4,
+            "model_used": "gpt-5-mini",
+            "model_temperature": 0.7,
+            "model_max_tokens": 600,
+            "validator_blocked": false,
+            "validator_quality_flags": [],
+            "quality_trace_version": "quality_trace_v1",
+            "quality_trace": {
+              "version": "quality_trace_v1",
+              "answer": {
+                "chars": 603,
+                "sentences": 5,
+                "questions": 1,
+                "too_short": false,
+                "too_long": false,
+                "too_many_questions": false,
+                "contains_numbered_list": false,
+                "generic_phrase_risk": false,
+                "generic_markers_count": 0
+              },
+              "state": {
+                "nervous_state": "window",
+                "intent": "explore",
+                "openness": "open",
+                "ok_position": "I+W+",
+                "safety_flag": false,
+                "confidence": null,
+                "confidence_bucket": "unknown"
+              },
+              "thread": {
+                "thread_id_present": true,
+                "phase": "explore",
+                "relation_to_thread": "continue",
+                "continuity_score": 0.25,
+                "continuity_bucket": "medium",
+                "open_loops_count": 0,
+                "closed_loops_count": 0,
+                "has_open_loops": false,
+                "has_closed_loops": false,
+                "turns_in_phase": 1
+              },
+              "memory": {
+                "context_turns": 6,
+                "semantic_hits_count": 4,
+                "has_relevant_knowledge": true,
+                "rag_query_present": true,
+                "conversation_context_present": true,
+                "user_profile_non_empty": false,
+                "retrieval_status": "has_hits"
+              },
+              "continuity": {
+                "answer_mentions_recent_context": true,
+                "answer_mentions_open_loop": false,
+                "possible_closed_loop_repetition": false,
+                "context_overlap_terms_count": 13,
+                "open_loop_overlap_terms_count": 0,
+                "closed_loop_overlap_terms_count": 0
+              },
+              "response_mode": {
+                "mode": "explore",
+                "goal_present": true,
+                "practice_step_present": false,
+                "mode_risk_flags": []
+              },
+              "validator": {
+                "blocked": false,
+                "block_reason_present": false,
+                "quality_flags_count": 0,
+                "quality_flags": []
+              },
+              "summary_flags": []
+            },
+            "quality_trace_error": null,
+            "thread_diagnostics_version": "thread_diagnostics_v1",
+            "thread_diagnostics": {
+              "version": "thread_diagnostics_v1",
+              "relation": {
+                "selected_relation": "continue",
+                "relation_reason": "active_frame_semantic_continuity",
+                "continuity_score": 0.25,
+                "new_thread_threshold": 0.2,
+                "current_thread_present": true,
+                "archived_threads_count": 0,
+                "return_marker_hit": false,
+                "followup_continue_marker_hit": false,
+                "low_resource_continue_marker_hit": false,
+                "branch_marker_hit": false,
+                "resolution_marker_hit": false,
+                "message_token_count": 4,
+                "core_token_count": 4,
+                "token_intersection_count": 0,
+                "token_union_count": 8,
+                "active_frame_semantic_continue_hit": true,
+                "active_frame_semantic_continue_reason": "recurrence_marker_plus_theme_alignment",
+                "semantic_frame_token_overlap": 0,
+                "semantic_frame_token_count": 15,
+                "semantic_frame_sources_checked": [],
+                "continuity_raw": 0.0,
+                "recurrence_marker_hit": true
+              },
+              "phase": {
+                "previous_phase": "clarify",
+                "selected_phase": "explore",
+                "phase_reason": "clarify_to_explore",
+                "turns_in_phase_before": 2,
+                "turns_in_phase_after": 1,
+                "closed_loops_count": 0,
+                "continuity_score": 0.25
+              },
+              "mode": {
+                "selected_mode": "explore",
+                "response_goal": "expand perspective",
+                "mode_reason": "phase_explore",
+                "safety_flag": false,
+                "intent": "explore",
+                "nervous_state": "window",
+                "phase": "explore"
+              },
+              "loops": {
+                "open_loops_before": 0,
+                "open_loops_after": 0,
+                "closed_loops_before": 0,
+                "closed_loops_after": 0,
+                "open_loop_added": false,
+                "closed_loop_added": false,
+                "resolution_marker_hit": false
+              },
+              "action": {
+                "thread_action": "continue_thread",
+                "previous_thread_id_present": true,
+                "selected_thread_id_present": true,
+                "archived_previous_thread": false,
+                "restored_archived_thread": false,
+                "safety_patch_used": false
+              },
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "summary_flags": [
+                "active_frame_semantic_continuity",
+                "semantic_guard_overrode_low_overlap",
+                "phase_transition",
+                "pattern_core_present",
+                "active_frame_present"
+              ]
+            },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+              "version": "context_assembly_trace_v1",
+              "recent_full_count": 4,
+              "summarized_count": 0,
+              "dropped_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3,
+              "duplicates_removed": 2,
+              "budget_used_chars": 6714,
+              "budget_limit_chars": 8000,
+              "reasons": [
+                "medium_turn_kept_full",
+                "semantic_duplicate_recent_substring",
+                "semantic_duplicate_token_overlap"
+              ]
+            },
+            "context_package_summary": {
+              "has_current_user_message": true,
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "recent_full_count": 4,
+              "recent_summarized_count": 0,
+              "personal_history_count": 0,
+              "semantic_hits_count": 0,
+              "knowledge_hits_count": 3
+            },
+            "pattern_core": "Мне страшно показать черновик.",
+            "active_frame": {
+              "current_need": "explore perspective carefully",
+              "last_supportive_move": "continued current thread without restarting",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "semantic_frame_summary": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "timings": {
+              "state_analyzer_ms": 3099,
+              "thread_manager_ms": 0,
+              "memory_retrieval_ms": 3232,
+              "writer_ms": 11668,
+              "validator_ms": 0
+            },
+            "state": {
+              "nervous_state": "window",
+              "intent": "explore",
+              "openness": "open",
+              "ok_position": "I+W+",
+              "confidence": 0.75,
+              "state_analyzer_model": "gpt-5-nano",
+              "state_analyzer_api_mode": "responses",
+              "state_analyzer_deterministic": null
+            },
+            "thread": {
+              "thread_id": "tm_bf9f6174057b",
+              "phase": "explore",
+              "relation_to_thread": "continue",
+              "response_mode": "explore",
+              "response_goal": null,
+              "continuity_score": 0.25,
+              "pattern_core": "Мне страшно показать черновик.",
+              "active_frame": {
+                "current_need": "explore perspective carefully",
+                "last_supportive_move": "continued current thread without restarting",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              },
+              "pattern_core_present": true,
+              "relation_reason": "active_frame_semantic_continuity",
+              "phase_reason": "clarify_to_explore",
+              "mode_reason": "phase_explore",
+              "thread_action": "continue_thread",
+              "semantic_frame": {
+                "pattern_core_present": true,
+                "active_frame_present": true,
+                "active_frame_keys": [
+                  "current_need",
+                  "last_supportive_move",
+                  "next_recommended_direction"
+                ],
+                "current_need": "explore perspective carefully",
+                "next_recommended_direction": "expand carefully without strong interpretation"
+              }
+            },
+            "writer": {
+              "model_used": "gpt-5-mini",
+              "model_temperature": 0.7,
+              "model_max_tokens": 600
+            },
+            "quality_trace_summary": []
+          },
+          "heuristic_quality": {
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "mentions_user_context": true,
+            "has_practice_step_when_expected": null
+          },
+          "latency_ms": 18012.0
+        }
+      ],
+      "final_answer": "Асель, похоже, в моменте переписывание даёт чувство контроля и уменьшает страх — но одновременно откладывает цель (опубликовать). Возможно, это не про лень, а про желание снизить неопределённость: редактируя, ты отодвигаешь встречу с реакцией. Можно посмотреть на откладывание как на полезную информацию о том, что именно вызывает тревогу, а не как на провал стратегии. Если представить публикацию как маленький эксперимент, который даёт данные, а не окончательный вердикт, легче снизить ставку. Что могло бы быть самым простым и маленьким кусочком текста, который ты могла бы опубликовать прямо сейчас?",
+      "final_debug_summary": {
+        "pipeline_version": "multiagent_v1",
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "confidence": 0.75,
+        "thread_id": "tm_bf9f6174057b",
+        "phase": "explore",
+        "relation_to_thread": "continue",
+        "continuity_score": 0.25,
+        "response_mode": "explore",
+        "context_turns": null,
+        "semantic_hits_count": 4,
+        "model_used": "gpt-5-mini",
+        "model_temperature": 0.7,
+        "model_max_tokens": 600,
+        "validator_blocked": false,
+        "validator_quality_flags": [],
+        "quality_trace_version": "quality_trace_v1",
+        "quality_trace": {
+          "version": "quality_trace_v1",
+          "answer": {
+            "chars": 603,
+            "sentences": 5,
+            "questions": 1,
+            "too_short": false,
+            "too_long": false,
+            "too_many_questions": false,
+            "contains_numbered_list": false,
+            "generic_phrase_risk": false,
+            "generic_markers_count": 0
+          },
+          "state": {
+            "nervous_state": "window",
+            "intent": "explore",
+            "openness": "open",
+            "ok_position": "I+W+",
+            "safety_flag": false,
+            "confidence": null,
+            "confidence_bucket": "unknown"
+          },
+          "thread": {
+            "thread_id_present": true,
+            "phase": "explore",
+            "relation_to_thread": "continue",
+            "continuity_score": 0.25,
+            "continuity_bucket": "medium",
+            "open_loops_count": 0,
+            "closed_loops_count": 0,
+            "has_open_loops": false,
+            "has_closed_loops": false,
+            "turns_in_phase": 1
+          },
+          "memory": {
+            "context_turns": 6,
+            "semantic_hits_count": 4,
+            "has_relevant_knowledge": true,
+            "rag_query_present": true,
+            "conversation_context_present": true,
+            "user_profile_non_empty": false,
+            "retrieval_status": "has_hits"
+          },
+          "continuity": {
+            "answer_mentions_recent_context": true,
+            "answer_mentions_open_loop": false,
+            "possible_closed_loop_repetition": false,
+            "context_overlap_terms_count": 13,
+            "open_loop_overlap_terms_count": 0,
+            "closed_loop_overlap_terms_count": 0
+          },
+          "response_mode": {
+            "mode": "explore",
+            "goal_present": true,
+            "practice_step_present": false,
+            "mode_risk_flags": []
+          },
+          "validator": {
+            "blocked": false,
+            "block_reason_present": false,
+            "quality_flags_count": 0,
+            "quality_flags": []
+          },
+          "summary_flags": []
+        },
+        "quality_trace_error": null,
+        "thread_diagnostics_version": "thread_diagnostics_v1",
+        "thread_diagnostics": {
+          "version": "thread_diagnostics_v1",
+          "relation": {
+            "selected_relation": "continue",
+            "relation_reason": "active_frame_semantic_continuity",
+            "continuity_score": 0.25,
+            "new_thread_threshold": 0.2,
+            "current_thread_present": true,
+            "archived_threads_count": 0,
+            "return_marker_hit": false,
+            "followup_continue_marker_hit": false,
+            "low_resource_continue_marker_hit": false,
+            "branch_marker_hit": false,
+            "resolution_marker_hit": false,
+            "message_token_count": 4,
+            "core_token_count": 4,
+            "token_intersection_count": 0,
+            "token_union_count": 8,
+            "active_frame_semantic_continue_hit": true,
+            "active_frame_semantic_continue_reason": "recurrence_marker_plus_theme_alignment",
+            "semantic_frame_token_overlap": 0,
+            "semantic_frame_token_count": 15,
+            "semantic_frame_sources_checked": [],
+            "continuity_raw": 0.0,
+            "recurrence_marker_hit": true
+          },
+          "phase": {
+            "previous_phase": "clarify",
+            "selected_phase": "explore",
+            "phase_reason": "clarify_to_explore",
+            "turns_in_phase_before": 2,
+            "turns_in_phase_after": 1,
+            "closed_loops_count": 0,
+            "continuity_score": 0.25
+          },
+          "mode": {
+            "selected_mode": "explore",
+            "response_goal": "expand perspective",
+            "mode_reason": "phase_explore",
+            "safety_flag": false,
+            "intent": "explore",
+            "nervous_state": "window",
+            "phase": "explore"
+          },
+          "loops": {
+            "open_loops_before": 0,
+            "open_loops_after": 0,
+            "closed_loops_before": 0,
+            "closed_loops_after": 0,
+            "open_loop_added": false,
+            "closed_loop_added": false,
+            "resolution_marker_hit": false
+          },
+          "action": {
+            "thread_action": "continue_thread",
+            "previous_thread_id_present": true,
+            "selected_thread_id_present": true,
+            "archived_previous_thread": false,
+            "restored_archived_thread": false,
+            "safety_patch_used": false
+          },
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "explore perspective carefully",
+            "next_recommended_direction": "expand carefully without strong interpretation"
+          },
+          "summary_flags": [
+            "active_frame_semantic_continuity",
+            "semantic_guard_overrode_low_overlap",
+            "phase_transition",
+            "pattern_core_present",
+            "active_frame_present"
+          ]
+        },
+        "context_assembly_trace_version": "context_assembly_trace_v1",
+        "context_assembly_trace": {
+          "version": "context_assembly_trace_v1",
+          "recent_full_count": 4,
+          "summarized_count": 0,
+          "dropped_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3,
+          "duplicates_removed": 2,
+          "budget_used_chars": 6714,
+          "budget_limit_chars": 8000,
+          "reasons": [
+            "medium_turn_kept_full",
+            "semantic_duplicate_recent_substring",
+            "semantic_duplicate_token_overlap"
+          ]
+        },
+        "context_package_summary": {
+          "has_current_user_message": true,
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "recent_full_count": 4,
+          "recent_summarized_count": 0,
+          "personal_history_count": 0,
+          "semantic_hits_count": 0,
+          "knowledge_hits_count": 3
+        },
+        "pattern_core": "Мне страшно показать черновик.",
+        "active_frame": {
+          "current_need": "explore perspective carefully",
+          "last_supportive_move": "continued current thread without restarting",
+          "next_recommended_direction": "expand carefully without strong interpretation"
+        },
+        "semantic_frame_summary": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "explore perspective carefully",
+          "next_recommended_direction": "expand carefully without strong interpretation"
+        },
+        "timings": {
+          "state_analyzer_ms": 3099,
+          "thread_manager_ms": 0,
+          "memory_retrieval_ms": 3232,
+          "writer_ms": 11668,
+          "validator_ms": 0
+        },
+        "state": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "confidence": 0.75,
+          "state_analyzer_model": "gpt-5-nano",
+          "state_analyzer_api_mode": "responses",
+          "state_analyzer_deterministic": null
+        },
+        "thread": {
+          "thread_id": "tm_bf9f6174057b",
+          "phase": "explore",
+          "relation_to_thread": "continue",
+          "response_mode": "explore",
+          "response_goal": null,
+          "continuity_score": 0.25,
+          "pattern_core": "Мне страшно показать черновик.",
+          "active_frame": {
+            "current_need": "explore perspective carefully",
+            "last_supportive_move": "continued current thread without restarting",
+            "next_recommended_direction": "expand carefully without strong interpretation"
+          },
+          "pattern_core_present": true,
+          "relation_reason": "active_frame_semantic_continuity",
+          "phase_reason": "clarify_to_explore",
+          "mode_reason": "phase_explore",
+          "thread_action": "continue_thread",
+          "semantic_frame": {
+            "pattern_core_present": true,
+            "active_frame_present": true,
+            "active_frame_keys": [
+              "current_need",
+              "last_supportive_move",
+              "next_recommended_direction"
+            ],
+            "current_need": "explore perspective carefully",
+            "next_recommended_direction": "expand carefully without strong interpretation"
+          }
+        },
+        "writer": {
+          "model_used": "gpt-5-mini",
+          "model_temperature": 0.7,
+          "model_max_tokens": 600
+        },
+        "quality_trace_summary": []
+      },
+      "final_heuristic_quality": {
+        "too_short": false,
+        "too_long": false,
+        "too_many_questions": false,
+        "contains_numbered_list": false,
+        "generic_phrase_risk": false,
+        "mentions_user_context": true,
+        "has_practice_step_when_expected": null
+      },
+      "error": null
+    }
+  ]
+}

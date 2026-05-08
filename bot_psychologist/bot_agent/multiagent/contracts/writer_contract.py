@@ -38,6 +38,8 @@ class WriterContract:
             "open_loops": self.thread_state.open_loops,
             "closed_loops": self.thread_state.closed_loops,
             "core_direction": self.thread_state.core_direction,
+            "pattern_core": self.thread_state.pattern_core,
+            "active_frame": self.thread_state.active_frame,
             "nervous_state": self.thread_state.nervous_state,
             "safety_active": self.thread_state.safety_active,
             "conversation_context": self.memory_bundle.conversation_context,

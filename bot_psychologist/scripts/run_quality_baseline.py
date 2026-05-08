@@ -266,6 +266,11 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         if isinstance(trace.get("thread_diagnostics"), dict)
         else {}
     )
+    semantic_frame_diag = (
+        thread_diagnostics.get("semantic_frame")
+        if isinstance(thread_diagnostics.get("semantic_frame"), dict)
+        else {}
+    )
     qt_state = quality_trace.get("state") if isinstance(quality_trace.get("state"), dict) else {}
     qt_thread = quality_trace.get("thread") if isinstance(quality_trace.get("thread"), dict) else {}
 
@@ -293,6 +298,9 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "state_analyzer_api_mode": trace.get("state_analyzer_api_mode"),
         "state_analyzer_deterministic": trace.get("state_analyzer_deterministic"),
     }
+    pattern_core_value = trace.get("pattern_core")
+    active_frame_value = trace.get("active_frame") if isinstance(trace.get("active_frame"), dict) else {}
+
     thread_block = {
         "thread_id": trace.get("thread_id") or trace.get("session_id") or metadata.get("session_id") or session_id,
         "phase": trace.get("phase") or qt_thread.get("phase"),
@@ -300,6 +308,10 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "response_mode": metadata.get("recommended_mode") or trace.get("response_mode") or trace.get("recommended_mode"),
         "response_goal": trace.get("response_goal"),
         "continuity_score": trace.get("continuity_score") or qt_thread.get("continuity_score"),
+        "pattern_core": pattern_core_value,
+        "active_frame": active_frame_value,
+        "pattern_core_present": bool(str(pattern_core_value or "").strip())
+        or bool(semantic_frame_diag.get("pattern_core_present")),
         "relation_reason": (
             thread_diagnostics.get("relation", {}).get("relation_reason")
             if isinstance(thread_diagnostics.get("relation"), dict)
@@ -320,6 +332,7 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
             if isinstance(thread_diagnostics.get("action"), dict)
             else None
         ),
+        "semantic_frame": semantic_frame_diag,
     }
     writer_block = {
         "model_used": trace.get("primary_model") or trace.get("model_used") or metadata.get("model_used"),
@@ -351,6 +364,9 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "quality_trace_error": trace.get("quality_trace_error"),
         "thread_diagnostics_version": trace.get("thread_diagnostics_version"),
         "thread_diagnostics": thread_diagnostics or trace.get("thread_diagnostics"),
+        "pattern_core": thread_block.get("pattern_core"),
+        "active_frame": thread_block.get("active_frame"),
+        "semantic_frame_summary": semantic_frame_diag,
         "timings": trace.get("timings") if isinstance(trace.get("timings"), dict) else {},
         "state": state_block,
         "thread": thread_block,
@@ -616,6 +632,13 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
             + f"phase_reason={thread_summary.get('phase_reason')}, "
             + f"mode_reason={thread_summary.get('mode_reason')}, "
             + f"action={thread_summary.get('thread_action')}"
+        )
+        semantic_frame = thread_summary.get("semantic_frame") if isinstance(thread_summary.get("semantic_frame"), dict) else {}
+        lines.append(
+            "- Semantic frame summary: "
+            + f"pattern_core_present={semantic_frame.get('pattern_core_present')}, "
+            + f"current_need={semantic_frame.get('current_need')}, "
+            + f"next={semantic_frame.get('next_recommended_direction')}"
         )
         if quality_summary_flags is not None:
             lines.append(f"- Quality trace summary: {json.dumps(quality_summary_flags, ensure_ascii=False)}")

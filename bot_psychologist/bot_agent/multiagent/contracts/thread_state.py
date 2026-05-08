@@ -48,6 +48,8 @@ class ThreadState:
     continuity_score: float = 1.0
     turns_in_phase: int = 1
     last_meaningful_shift: str = ""
+    pattern_core: str = ""
+    active_frame: dict[str, str] = field(default_factory=dict)
 
     safety_active: bool = False
 
@@ -67,6 +69,8 @@ class ThreadState:
             self.turns_in_phase = 1
         if self.safety_active and self.response_mode != "safe_override":
             self.response_mode = "safe_override"
+        if not isinstance(self.active_frame, dict):
+            self.active_frame = {}
         if self.updated_at < self.created_at:
             self.updated_at = self.created_at
 
@@ -89,6 +93,8 @@ class ThreadState:
             "continuity_score": self.continuity_score,
             "turns_in_phase": self.turns_in_phase,
             "last_meaningful_shift": self.last_meaningful_shift,
+            "pattern_core": self.pattern_core,
+            "active_frame": self.active_frame,
             "safety_active": self.safety_active,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
@@ -97,6 +103,10 @@ class ThreadState:
     @classmethod
     def from_dict(cls, data: dict) -> "ThreadState":
         payload = dict(data)
+        payload.setdefault("pattern_core", "")
+        payload.setdefault("active_frame", {})
+        if not isinstance(payload.get("active_frame"), dict):
+            payload["active_frame"] = {}
         created_at_raw = payload.get("created_at")
         updated_at_raw = payload.get("updated_at")
         payload["created_at"] = (
@@ -123,6 +133,8 @@ class ArchivedThread:
     final_phase: str
     archived_at: datetime
     archive_reason: str
+    pattern_core: str = ""
+    active_frame: dict[str, str] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return {
@@ -133,11 +145,17 @@ class ArchivedThread:
             "final_phase": self.final_phase,
             "archived_at": self.archived_at.isoformat(),
             "archive_reason": self.archive_reason,
+            "pattern_core": self.pattern_core,
+            "active_frame": self.active_frame,
         }
 
     @classmethod
     def from_dict(cls, data: dict) -> "ArchivedThread":
         payload = dict(data)
+        payload.setdefault("pattern_core", "")
+        payload.setdefault("active_frame", {})
+        if not isinstance(payload.get("active_frame"), dict):
+            payload["active_frame"] = {}
         archived_at_raw = payload.get("archived_at")
         payload["archived_at"] = (
             datetime.fromisoformat(archived_at_raw)
@@ -145,4 +163,3 @@ class ArchivedThread:
             else datetime.utcnow()
         )
         return cls(**payload)
-

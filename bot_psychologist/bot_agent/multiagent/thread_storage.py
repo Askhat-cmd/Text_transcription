@@ -86,6 +86,8 @@ class ThreadStorage:
                 final_phase=thread.phase,
                 archived_at=datetime.utcnow(),
                 archive_reason=reason,
+                pattern_core=thread.pattern_core,
+                active_frame=dict(thread.active_frame),
             )
         )
         path = self._archive_path(thread.user_id)

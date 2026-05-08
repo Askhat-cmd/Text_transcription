@@ -1,0 +1,3 @@
+﻿[OK] direct report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.5_PATTERN_CORE_SMOKE_REPORT.json
+[OK] direct report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.5_PATTERN_CORE_SMOKE_REPORT.md
+

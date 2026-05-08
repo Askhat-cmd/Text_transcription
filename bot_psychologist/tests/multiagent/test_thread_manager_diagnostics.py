@@ -52,6 +52,10 @@ async def test_diagnostics_new_thread_reason_no_current_thread() -> None:
     assert debug["action"]["thread_action"] == "new_thread"
     assert debug["relation"]["relation_reason"] == "no_current_thread"
     assert debug["phase"]["phase_reason"] == "new_thread_default_clarify"
+    semantic = debug.get("semantic_frame")
+    assert isinstance(semantic, dict)
+    assert semantic.get("pattern_core_present") is True
+    assert semantic.get("active_frame_present") is True
 
 
 @pytest.mark.asyncio
@@ -148,3 +152,4 @@ async def test_low_resource_continuation_marker_diagnostics() -> None:
     assert debug["phase"]["phase_reason"] == "low_resource_hold_phase"
     assert "low_resource_followup_continued" in debug["summary_flags"]
     assert "low_resource_phase_hold" in debug["summary_flags"]
+    assert "low_resource_active_frame" in debug["summary_flags"]

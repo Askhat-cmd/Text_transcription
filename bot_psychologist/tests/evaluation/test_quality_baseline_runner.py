@@ -49,6 +49,11 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
             "phase": "clarify",
             "relation_to_thread": "continue",
             "response_mode": "validate",
+            "pattern_core": "stable continuity core",
+            "active_frame": {
+                "current_need": "short support without pressure",
+                "next_recommended_direction": "keep answer short and low pressure",
+            },
             "state_analyzer_model": "deterministic",
             "state_analyzer_api_mode": "heuristic",
             "model_used": "gpt-5-mini",
@@ -65,6 +70,13 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
                 "phase": {"phase_reason": "keep_current_phase"},
                 "mode": {"mode_reason": "phase_clarify_reflect"},
                 "action": {"thread_action": "continue_thread"},
+                "semantic_frame": {
+                    "pattern_core_present": True,
+                    "active_frame_present": True,
+                    "active_frame_keys": ["current_need", "next_recommended_direction"],
+                    "current_need": "short support without pressure",
+                    "next_recommended_direction": "keep answer short and low pressure",
+                },
             },
             "total_latency_ms": 321,
         }
@@ -82,6 +94,10 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
     assert summary["thread"]["phase_reason"] == "keep_current_phase"
     assert summary["thread"]["mode_reason"] == "phase_clarify_reflect"
     assert summary["thread"]["thread_action"] == "continue_thread"
+    assert summary["thread"]["pattern_core"] == "stable continuity core"
+    assert summary["thread"]["pattern_core_present"] is True
+    assert summary["thread"]["active_frame"]["current_need"] == "short support without pressure"
+    assert summary["semantic_frame_summary"]["pattern_core_present"] is True
     assert latency_ms == 321.0
 
 

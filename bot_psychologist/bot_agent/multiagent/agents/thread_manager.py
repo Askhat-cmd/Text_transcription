@@ -140,6 +140,89 @@ def _mode_and_goal(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str]
     return mode, goal
 
 
+def _derive_pattern_core_v1(
+    *,
+    user_message: str,
+    state_snapshot: StateSnapshot,
+    previous_core: str = "",
+) -> str:
+    previous = str(previous_core or "").strip()
+    if previous:
+        return previous[:220]
+    if state_snapshot.intent == "contact" and state_snapshot.nervous_state == "hypo":
+        return "low-resource support / short support without pressure"
+    if state_snapshot.intent == "solution":
+        return "request for concrete next step / actionable micro-step"
+    if state_snapshot.intent == "clarify":
+        return "clarifying inner pattern / focused clarification"
+    if state_snapshot.intent == "vent":
+        return "emotional venting / expression of strong emotion"
+    fallback = " ".join((user_message or "").strip().split())
+    return fallback[:120] or "conversation_support_pattern"
+
+
+def _build_active_frame_v1(
+    *,
+    state_snapshot: StateSnapshot,
+    relation: str,
+    response_mode: str,
+    phase: str,
+) -> dict[str, str]:
+    if state_snapshot.safety_flag:
+        current_need = "immediate safety and stabilization"
+    elif state_snapshot.intent == "contact" and state_snapshot.nervous_state == "hypo":
+        current_need = "short support without pressure"
+    elif state_snapshot.intent == "contact":
+        current_need = "warm contact and validation"
+    elif state_snapshot.intent == "solution":
+        current_need = "one concrete next step"
+    elif state_snapshot.intent == "clarify":
+        current_need = "gentle clarification"
+    elif state_snapshot.intent == "vent":
+        current_need = "emotional validation"
+    else:
+        current_need = "explore perspective carefully"
+
+    if state_snapshot.safety_flag:
+        last_supportive_move = "safety override"
+    elif relation == "new_thread":
+        last_supportive_move = "started contact and matched response mode"
+    elif relation == "branch":
+        last_supportive_move = "acknowledged branch while preserving thread"
+    elif relation == "return_to_old":
+        last_supportive_move = "restored previous thread continuity"
+    elif (
+        relation == "continue"
+        and state_snapshot.intent == "contact"
+        and state_snapshot.nervous_state == "hypo"
+        and phase == "clarify"
+    ):
+        last_supportive_move = "held low-resource thread and avoided exploration"
+    elif relation == "continue":
+        last_supportive_move = "continued current thread without restarting"
+    else:
+        last_supportive_move = "maintained thread continuity"
+
+    if state_snapshot.safety_flag:
+        next_direction = "prioritize safety"
+    elif state_snapshot.nervous_state == "hypo" and state_snapshot.intent == "contact":
+        next_direction = "keep answer short and low pressure"
+    elif state_snapshot.nervous_state == "hyper":
+        next_direction = "stabilize before analysis"
+    elif state_snapshot.intent == "solution" or response_mode == "practice":
+        next_direction = "offer one executable micro-step"
+    elif state_snapshot.intent == "clarify":
+        next_direction = "reflect one key point and ask at most one question"
+    else:
+        next_direction = "expand carefully without strong interpretation"
+
+    return {
+        "current_need": current_need,
+        "last_supportive_move": last_supportive_move,
+        "next_recommended_direction": next_direction,
+    }
+
+
 class ThreadManagerAgent:
     """Builds and updates thread state per user turn."""
 
@@ -175,6 +258,7 @@ class ThreadManagerAgent:
                 )
                 mode, goal, mode_reason = _mode_and_goal_with_reason(new_thread.phase, state_snapshot)
                 self.last_debug = self._compose_diagnostics(
+                    thread_state=new_thread,
                     relation=relation_diag,
                     phase={
                         "previous_phase": None,
@@ -232,6 +316,7 @@ class ThreadManagerAgent:
                 )
                 mode, goal, mode_reason = _mode_and_goal_with_reason(patched.phase, state_snapshot)
                 self.last_debug = self._compose_diagnostics(
+                    thread_state=patched,
                     relation=relation_diag,
                     phase={
                         "previous_phase": current_thread.phase,
@@ -288,6 +373,7 @@ class ThreadManagerAgent:
                 if restored is not None:
                     mode, goal, mode_reason = _mode_and_goal_with_reason(restored.phase, state_snapshot)
                     self.last_debug = self._compose_diagnostics(
+                        thread_state=restored,
                         relation=relation_diag,
                         phase={
                             "previous_phase": current_thread.phase,
@@ -337,6 +423,7 @@ class ThreadManagerAgent:
                 )
                 mode, goal, mode_reason = _mode_and_goal_with_reason(new_thread.phase, state_snapshot)
                 self.last_debug = self._compose_diagnostics(
+                    thread_state=new_thread,
                     relation=relation_diag,
                     phase={
                         "previous_phase": current_thread.phase,
@@ -386,6 +473,7 @@ class ThreadManagerAgent:
             )
             action_name = "branch_thread" if relation == "branch" else "continue_thread"
             self.last_debug = self._compose_diagnostics(
+                thread_state=continued,
                 relation=relation_diag,
                 phase=phase_diag,
                 mode=mode_diag,
@@ -613,10 +701,22 @@ class ThreadManagerAgent:
     ) -> ThreadState:
         phase = "stabilize" if state_snapshot.safety_flag else "clarify"
         mode, goal = _mode_and_goal(phase, state_snapshot)
+        pattern_core = _derive_pattern_core_v1(
+            user_message=user_message,
+            state_snapshot=state_snapshot,
+        )
+        active_frame = _build_active_frame_v1(
+            state_snapshot=state_snapshot,
+            relation=relation,
+            response_mode=mode,
+            phase=phase,
+        )
         return ThreadState(
             thread_id=f"tm_{uuid.uuid4().hex[:12]}",
             user_id=user_id,
             core_direction=user_message.strip()[:140] or "new_topic",
+            pattern_core=pattern_core,
+            active_frame=active_frame,
             phase=phase,
             open_loops=[user_message.strip()[:200]] if "?" in user_message else [],
             closed_loops=[],
@@ -679,10 +779,23 @@ class ThreadManagerAgent:
         )
         mode, goal, mode_reason = _mode_and_goal_with_reason(phase, state_snapshot)
         turns_in_phase = phase_diag["turns_in_phase_after"]
+        pattern_core = _derive_pattern_core_v1(
+            user_message=user_message,
+            state_snapshot=state_snapshot,
+            previous_core=current_thread.pattern_core,
+        )
+        active_frame = _build_active_frame_v1(
+            state_snapshot=state_snapshot,
+            relation=relation,
+            response_mode=mode,
+            phase=phase,
+        )
         updated = ThreadState(
             thread_id=current_thread.thread_id,
             user_id=current_thread.user_id,
             core_direction=current_thread.core_direction,
+            pattern_core=pattern_core,
+            active_frame=active_frame,
             phase=phase,  # type: ignore[arg-type]
             open_loops=open_loops,
             closed_loops=closed_loops,
@@ -764,10 +877,18 @@ class ThreadManagerAgent:
             key=lambda item: len(message_tokens & _normalize_tokens(item.core_direction)),
         )
         mode, goal = _mode_and_goal(best.final_phase, state_snapshot)
+        active_frame = _build_active_frame_v1(
+            state_snapshot=state_snapshot,
+            relation="return_to_old",
+            response_mode=mode,
+            phase=best.final_phase,
+        )
         return ThreadState(
             thread_id=best.thread_id,
             user_id=user_id,
             core_direction=best.core_direction,
+            pattern_core=best.pattern_core,
+            active_frame=dict(best.active_frame) or active_frame,
             phase=best.final_phase,  # type: ignore[arg-type]
             open_loops=list(best.open_loops),
             closed_loops=list(best.closed_loops),
@@ -800,10 +921,18 @@ class ThreadManagerAgent:
         state_snapshot: StateSnapshot,
         now: datetime,
     ) -> ThreadState:
+        active_frame = _build_active_frame_v1(
+            state_snapshot=state_snapshot,
+            relation="continue",
+            response_mode="safe_override",
+            phase="stabilize",
+        )
         return ThreadState(
             thread_id=current_thread.thread_id,
             user_id=current_thread.user_id,
             core_direction=current_thread.core_direction,
+            pattern_core=current_thread.pattern_core,
+            active_frame=active_frame,
             phase="stabilize",
             open_loops=list(current_thread.open_loops),
             closed_loops=list(current_thread.closed_loops),
@@ -837,6 +966,7 @@ class ThreadManagerAgent:
         mode: dict[str, Any],
         loops: dict[str, Any],
         action: dict[str, Any],
+        semantic_frame: dict[str, Any],
     ) -> list[str]:
         flags: list[str] = []
 
@@ -870,18 +1000,39 @@ class ThreadManagerAgent:
             flags.append("contact_phase_hold")
         if phase.get("previous_phase") != phase.get("selected_phase"):
             flags.append("phase_transition")
+        if semantic_frame.get("pattern_core_present"):
+            flags.append("pattern_core_present")
+        if semantic_frame.get("active_frame_present"):
+            flags.append("active_frame_present")
+        if semantic_frame.get("current_need") == "short support without pressure":
+            flags.append("low_resource_active_frame")
+        if semantic_frame.get("current_need") == "one concrete next step":
+            flags.append("solution_active_frame")
 
         return flags
+
+    def _build_semantic_frame_diag(self, thread_state: ThreadState) -> dict[str, Any]:
+        active_frame = thread_state.active_frame if isinstance(thread_state.active_frame, dict) else {}
+        keys = [key for key in ("current_need", "last_supportive_move", "next_recommended_direction") if key in active_frame]
+        return {
+            "pattern_core_present": bool(str(thread_state.pattern_core or "").strip()),
+            "active_frame_present": bool(active_frame),
+            "active_frame_keys": keys,
+            "current_need": str(active_frame.get("current_need", "") or ""),
+            "next_recommended_direction": str(active_frame.get("next_recommended_direction", "") or ""),
+        }
 
     def _compose_diagnostics(
         self,
         *,
+        thread_state: ThreadState,
         relation: dict[str, Any],
         phase: dict[str, Any],
         mode: dict[str, Any],
         loops: dict[str, Any],
         action: dict[str, Any],
     ) -> dict[str, Any]:
+        semantic_frame = self._build_semantic_frame_diag(thread_state)
         return {
             "version": THREAD_DIAGNOSTICS_VERSION,
             "relation": relation,
@@ -889,12 +1040,14 @@ class ThreadManagerAgent:
             "mode": mode,
             "loops": loops,
             "action": action,
+            "semantic_frame": semantic_frame,
             "summary_flags": self._build_summary_flags(
                 relation=relation,
                 phase=phase,
                 mode=mode,
                 loops=loops,
                 action=action,
+                semantic_frame=semantic_frame,
             ),
         }
 
@@ -948,6 +1101,7 @@ class ThreadManagerAgent:
             )
             relation_diag["relation_reason"] = "new_thread_fallback"
             self.last_debug = self._compose_diagnostics(
+                thread_state=fallback_thread,
                 relation=relation_diag,
                 phase={
                     "previous_phase": None,
@@ -991,6 +1145,17 @@ class ThreadManagerAgent:
             thread_id=current_thread.thread_id,
             user_id=current_thread.user_id,
             core_direction=current_thread.core_direction,
+            pattern_core=_derive_pattern_core_v1(
+                user_message=user_message,
+                state_snapshot=state_snapshot,
+                previous_core=current_thread.pattern_core,
+            ),
+            active_frame=_build_active_frame_v1(
+                state_snapshot=state_snapshot,
+                relation="continue",
+                response_mode="safe_override" if state_snapshot.safety_flag else "reflect",
+                phase="stabilize" if state_snapshot.safety_flag else current_thread.phase,
+            ),
             phase="stabilize" if state_snapshot.safety_flag else current_thread.phase,
             open_loops=list(current_thread.open_loops),
             closed_loops=list(current_thread.closed_loops),
@@ -1026,6 +1191,7 @@ class ThreadManagerAgent:
         )
         mode_reason = "safety_override" if state_snapshot.safety_flag else "fallback_validate"
         self.last_debug = self._compose_diagnostics(
+            thread_state=fallback_thread,
             relation=relation_diag,
             phase={
                 "previous_phase": current_thread.phase,

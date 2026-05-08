@@ -289,6 +289,8 @@ class MultiAgentOrchestrator:
                 "relation_to_thread": updated_thread.relation_to_thread,
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
+                "pattern_core": updated_thread.pattern_core,
+                "active_frame": dict(updated_thread.active_frame),
                 "thread_diagnostics_version": THREAD_DIAGNOSTICS_VERSION,
                 "thread_diagnostics": thread_debug,
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),

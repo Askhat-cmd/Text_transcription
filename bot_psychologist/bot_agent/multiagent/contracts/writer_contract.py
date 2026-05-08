@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from ..context_assembly import format_context_for_writer
+from .context_package import ContextAssemblyPackage
 from .memory_bundle import MemoryBundle
 from .thread_state import ThreadState
 
@@ -15,6 +17,7 @@ class WriterContract:
     user_message: str
     thread_state: ThreadState
     memory_bundle: MemoryBundle
+    context_package: ContextAssemblyPackage | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -22,11 +25,33 @@ class WriterContract:
             "user_message": self.user_message,
             "thread_state": self.thread_state.to_dict(),
             "memory_bundle": self.memory_bundle.to_dict(),
+            "context_package": (
+                self.context_package.to_dict() if self.context_package is not None else None
+            ),
             "response_language": self.response_language,
         }
 
     def to_prompt_context(self) -> dict:
         """Serialize context for Writer prompt templates."""
+        if self.context_package is not None:
+            conversation_context = format_context_for_writer(self.context_package)
+            semantic_hits = [
+                str(item.get("content", "") or "")
+                for item in self.context_package.knowledge_rag_hits
+                if str(item.get("content", "") or "").strip()
+            ]
+            if not semantic_hits:
+                semantic_hits = [
+                    str(item.get("content", "") or "")
+                    for item in self.context_package.semantic_memory_hits
+                    if str(item.get("content", "") or "").strip()
+                ]
+            context_assembly_trace = self.context_package.trace.to_dict()
+        else:
+            conversation_context = self.memory_bundle.conversation_context
+            semantic_hits = [hit.content for hit in self.memory_bundle.semantic_hits[:2]]
+            context_assembly_trace = {}
+
         return {
             "user_message": self.user_message,
             "phase": self.thread_state.phase,
@@ -42,9 +67,23 @@ class WriterContract:
             "active_frame": self.thread_state.active_frame,
             "nervous_state": self.thread_state.nervous_state,
             "safety_active": self.thread_state.safety_active,
-            "conversation_context": self.memory_bundle.conversation_context,
+            "conversation_context": conversation_context,
             "user_profile_patterns": self.memory_bundle.user_profile.patterns,
             "user_profile_values": self.memory_bundle.user_profile.values,
-            "semantic_hits": [hit.content for hit in self.memory_bundle.semantic_hits[:2]],
+            "semantic_hits": semantic_hits[:2],
             "has_relevant_knowledge": self.memory_bundle.has_relevant_knowledge,
+            "context_assembly_trace": context_assembly_trace,
+            "context_package_summary": {
+                "present": self.context_package is not None,
+                "recent_full_count": (
+                    len(self.context_package.recent_turns_full)
+                    if self.context_package is not None
+                    else 0
+                ),
+                "recent_summarized_count": (
+                    len(self.context_package.recent_turns_summarized)
+                    if self.context_package is not None
+                    else 0
+                ),
+            },
         }

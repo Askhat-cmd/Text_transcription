@@ -266,6 +266,16 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         if isinstance(trace.get("thread_diagnostics"), dict)
         else {}
     )
+    context_assembly_trace = (
+        trace.get("context_assembly_trace")
+        if isinstance(trace.get("context_assembly_trace"), dict)
+        else {}
+    )
+    context_package_summary = (
+        trace.get("context_package_summary")
+        if isinstance(trace.get("context_package_summary"), dict)
+        else {}
+    )
     semantic_frame_diag = (
         thread_diagnostics.get("semantic_frame")
         if isinstance(thread_diagnostics.get("semantic_frame"), dict)
@@ -364,6 +374,9 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "quality_trace_error": trace.get("quality_trace_error"),
         "thread_diagnostics_version": trace.get("thread_diagnostics_version"),
         "thread_diagnostics": thread_diagnostics or trace.get("thread_diagnostics"),
+        "context_assembly_trace_version": trace.get("context_assembly_trace_version"),
+        "context_assembly_trace": context_assembly_trace,
+        "context_package_summary": context_package_summary,
         "pattern_core": thread_block.get("pattern_core"),
         "active_frame": thread_block.get("active_frame"),
         "semantic_frame_summary": semantic_frame_diag,
@@ -632,6 +645,19 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
             + f"phase_reason={thread_summary.get('phase_reason')}, "
             + f"mode_reason={thread_summary.get('mode_reason')}, "
             + f"action={thread_summary.get('thread_action')}"
+        )
+        context_trace = (
+            final_debug.get("context_assembly_trace")
+            if isinstance(final_debug.get("context_assembly_trace"), dict)
+            else {}
+        )
+        lines.append(
+            "- Context assembly summary: "
+            + f"recent_full={context_trace.get('recent_full_count')}, "
+            + f"summarized={context_trace.get('summarized_count')}, "
+            + f"dropped={context_trace.get('dropped_count')}, "
+            + f"duplicates_removed={context_trace.get('duplicates_removed')}, "
+            + f"budget={context_trace.get('budget_used_chars')}/{context_trace.get('budget_limit_chars')}"
         )
         semantic_frame = thread_summary.get("semantic_frame") if isinstance(thread_summary.get("semantic_frame"), dict) else {}
         lines.append(

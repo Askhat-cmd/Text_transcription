@@ -68,6 +68,10 @@ class MemoryBundle:
     rag_query: str = ""
     user_profile: UserProfile = field(default_factory=UserProfile)
     semantic_hits: list[SemanticHit] = field(default_factory=list)
+    recent_turns: list[dict[str, Any]] = field(default_factory=list)
+    personal_history_context: list[dict[str, Any]] = field(default_factory=list)
+    semantic_memory_hits: list[dict[str, Any]] = field(default_factory=list)
+    knowledge_rag_hits: list[dict[str, Any]] = field(default_factory=list)
     retrieved_chunks: list[Any] = field(default_factory=list)
     has_relevant_knowledge: bool = False
     context_turns: int = 0
@@ -78,6 +82,10 @@ class MemoryBundle:
             "rag_query": self.rag_query,
             "user_profile": self.user_profile.to_dict(),
             "semantic_hits": [hit.to_dict() for hit in self.semantic_hits],
+            "recent_turns": list(self.recent_turns),
+            "personal_history_context": list(self.personal_history_context),
+            "semantic_memory_hits": list(self.semantic_memory_hits),
+            "knowledge_rag_hits": list(self.knowledge_rag_hits),
             "retrieved_chunks": self.retrieved_chunks,
             "has_relevant_knowledge": bool(self.has_relevant_knowledge),
             "context_turns": int(self.context_turns),
@@ -114,6 +122,10 @@ class MemoryBundle:
             rag_query=str(payload.get("rag_query", "")),
             user_profile=user_profile,
             semantic_hits=semantic_hits,
+            recent_turns=list(payload.get("recent_turns", [])),
+            personal_history_context=list(payload.get("personal_history_context", [])),
+            semantic_memory_hits=list(payload.get("semantic_memory_hits", [])),
+            knowledge_rag_hits=list(payload.get("knowledge_rag_hits", [])),
             retrieved_chunks=list(payload.get("retrieved_chunks", [])),
             has_relevant_knowledge=bool(payload.get("has_relevant_knowledge", False)),
             context_turns=int(payload.get("context_turns", 0) or 0),

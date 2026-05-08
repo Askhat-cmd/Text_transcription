@@ -78,6 +78,29 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
                     "next_recommended_direction": "keep answer short and low pressure",
                 },
             },
+            "context_assembly_trace_version": "context_assembly_trace_v1",
+            "context_assembly_trace": {
+                "version": "context_assembly_trace_v1",
+                "recent_full_count": 3,
+                "summarized_count": 1,
+                "dropped_count": 0,
+                "semantic_hits_count": 1,
+                "knowledge_hits_count": 1,
+                "duplicates_removed": 1,
+                "budget_used_chars": 3200,
+                "budget_limit_chars": 8000,
+                "reasons": [],
+            },
+            "context_package_summary": {
+                "has_current_user_message": True,
+                "pattern_core_present": True,
+                "active_frame_present": True,
+                "recent_full_count": 3,
+                "recent_summarized_count": 1,
+                "personal_history_count": 1,
+                "semantic_hits_count": 1,
+                "knowledge_hits_count": 1,
+            },
             "total_latency_ms": 321,
         }
     }
@@ -98,6 +121,9 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
     assert summary["thread"]["pattern_core_present"] is True
     assert summary["thread"]["active_frame"]["current_need"] == "short support without pressure"
     assert summary["semantic_frame_summary"]["pattern_core_present"] is True
+    assert summary["context_assembly_trace_version"] == "context_assembly_trace_v1"
+    assert summary["context_assembly_trace"]["recent_full_count"] == 3
+    assert summary["context_package_summary"]["recent_summarized_count"] == 1
     assert latency_ms == 321.0
 
 

@@ -13,6 +13,10 @@ from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import THREAD_DIAGNOSTICS_VERSION, thread_manager_agent
 from .agents.validator_agent import validator_agent
 from .agents.writer_agent import writer_agent
+from .context_assembly import (
+    CONTEXT_ASSEMBLY_TRACE_VERSION,
+    build_context_assembly_package_v1,
+)
 from .contracts.writer_contract import WriterContract
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
@@ -173,11 +177,17 @@ class MultiAgentOrchestrator:
             input_preview=query,
             output_preview=f"hits={len(memory_bundle.semantic_hits)}; has_knowledge={memory_bundle.has_relevant_knowledge}",
         )
+        context_package = build_context_assembly_package_v1(
+            user_message=query,
+            thread_state=updated_thread,
+            memory_bundle=memory_bundle,
+        )
 
         writer_contract = WriterContract(
             user_message=query,
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
+            context_package=context_package,
         )
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
@@ -293,6 +303,18 @@ class MultiAgentOrchestrator:
                 "active_frame": dict(updated_thread.active_frame),
                 "thread_diagnostics_version": THREAD_DIAGNOSTICS_VERSION,
                 "thread_diagnostics": thread_debug,
+                "context_assembly_trace_version": CONTEXT_ASSEMBLY_TRACE_VERSION,
+                "context_assembly_trace": context_package.trace.to_dict(),
+                "context_package_summary": {
+                    "has_current_user_message": bool(context_package.current_user_message.strip()),
+                    "pattern_core_present": bool((context_package.pattern_core or "").strip()),
+                    "active_frame_present": bool(context_package.active_frame),
+                    "recent_full_count": len(context_package.recent_turns_full),
+                    "recent_summarized_count": len(context_package.recent_turns_summarized),
+                    "personal_history_count": len(context_package.personal_history_context),
+                    "semantic_hits_count": len(context_package.semantic_memory_hits),
+                    "knowledge_hits_count": len(context_package.knowledge_rag_hits),
+                },
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),

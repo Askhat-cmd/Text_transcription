@@ -40,26 +40,52 @@ class MemoryRetrievalAgent:
             self._load_conversation(user_id, n_turns, user_message),
             self._load_profile(user_id),
             self._load_rag(rag_query),
+            self._load_recent_turns(user_id, n_turns),
+            self._load_personal_history_context(user_id),
+            self._load_semantic_memory_hits(user_id, user_message),
             return_exceptions=True,
         )
 
         conversation_context = results[0] if not isinstance(results[0], Exception) else ""
         user_profile = results[1] if not isinstance(results[1], Exception) else UserProfile()
         raw_hits = results[2] if not isinstance(results[2], Exception) else []
+        recent_turns = results[3] if not isinstance(results[3], Exception) else []
+        personal_history_context = results[4] if not isinstance(results[4], Exception) else []
+        semantic_memory_hits = results[5] if not isinstance(results[5], Exception) else []
 
-        for label, result in zip(("conversation", "profile", "rag"), results):
+        for label, result in zip(
+            ("conversation", "profile", "rag", "recent_turns", "personal_history", "semantic_memory"),
+            results,
+        ):
             if isinstance(result, Exception):
                 logger.warning("[MRA] %s load failed: %s", label, result)
 
         valid_hits = [h for h in raw_hits if isinstance(h, SemanticHit)]
         filtered_hits = [h for h in valid_hits if float(h.score) >= RAG_MIN_SCORE]
         filtered_hits.sort(key=lambda h: float(h.score), reverse=True)
+        knowledge_rag_hits = [
+            {
+                "chunk_id": h.chunk_id,
+                "source": h.source,
+                "score": float(h.score),
+                "content": h.content,
+            }
+            for h in filtered_hits
+        ]
 
         return MemoryBundle(
             conversation_context=conversation_context if isinstance(conversation_context, str) else "",
             rag_query=rag_query,
             user_profile=user_profile if isinstance(user_profile, UserProfile) else UserProfile(),
             semantic_hits=filtered_hits,
+            recent_turns=list(recent_turns) if isinstance(recent_turns, list) else [],
+            personal_history_context=(
+                list(personal_history_context) if isinstance(personal_history_context, list) else []
+            ),
+            semantic_memory_hits=(
+                list(semantic_memory_hits) if isinstance(semantic_memory_hits, list) else []
+            ),
+            knowledge_rag_hits=knowledge_rag_hits,
             retrieved_chunks=[h.content for h in filtered_hits],
             has_relevant_knowledge=len(filtered_hits) > 0,
             context_turns=n_turns,
@@ -202,6 +228,107 @@ class MemoryRetrievalAgent:
         except Exception as exc:
             logger.warning("[MRA] profile load error: %s", exc)
             return UserProfile()
+
+    @staticmethod
+    async def _load_recent_turns(user_id: str, n_turns: int) -> list[dict[str, Any]]:
+        try:
+            from ...conversation_memory import get_conversation_memory  # noqa: PLC0415
+
+            memory = get_conversation_memory(user_id=user_id)
+            turns = memory.get_last_turns(n=n_turns)
+            total = len(getattr(memory, "turns", []) or [])
+            start_index = max(1, total - len(turns) + 1)
+            result: list[dict[str, Any]] = []
+            for offset, turn in enumerate(turns):
+                result.append(
+                    {
+                        "turn_index": start_index + offset,
+                        "timestamp": str(getattr(turn, "timestamp", "") or ""),
+                        "user_input": str(getattr(turn, "user_input", "") or ""),
+                        "bot_response": str(getattr(turn, "bot_response", "") or ""),
+                        "user_state": str(getattr(turn, "user_state", "") or ""),
+                    }
+                )
+            return result
+        except Exception as exc:
+            logger.warning("[MRA] recent turns load error: %s", exc)
+            return []
+
+    @staticmethod
+    async def _load_personal_history_context(user_id: str) -> list[dict[str, Any]]:
+        try:
+            from ...conversation_memory import get_conversation_memory  # noqa: PLC0415
+
+            memory = get_conversation_memory(user_id=user_id)
+            summary = memory.get_summary()
+            items: list[dict[str, Any]] = []
+            conversation_summary = str(summary.get("conversation_summary", "") or "").strip()
+            if conversation_summary:
+                items.append(
+                    {
+                        "source": "conversation_summary",
+                        "content": conversation_summary,
+                    }
+                )
+            working_state = summary.get("working_state")
+            if isinstance(working_state, dict) and working_state:
+                active_track = str(working_state.get("active_track", "") or "").strip()
+                core_theme = str(working_state.get("core_theme", "") or "").strip()
+                state_fragments = [x for x in (active_track, core_theme) if x]
+                if state_fragments:
+                    items.append(
+                        {
+                            "source": "working_state",
+                            "content": "; ".join(state_fragments),
+                        }
+                    )
+            interests = [str(x) for x in summary.get("primary_interests", []) if str(x).strip()]
+            if interests:
+                items.append(
+                    {
+                        "source": "primary_interests",
+                        "content": ", ".join(interests[:5]),
+                    }
+                )
+            return items
+        except Exception as exc:
+            logger.warning("[MRA] personal history load error: %s", exc)
+            return []
+
+    @staticmethod
+    async def _load_semantic_memory_hits(user_id: str, query: str) -> list[dict[str, Any]]:
+        try:
+            from ...conversation_memory import get_conversation_memory  # noqa: PLC0415
+
+            if not query.strip():
+                return []
+            memory = get_conversation_memory(user_id=user_id)
+            semantic_memory = getattr(memory, "semantic_memory", None)
+            if semantic_memory is None:
+                return []
+            hits = semantic_memory.search_similar_turns(
+                query=query,
+                top_k=3,
+                min_similarity=0.6,
+                exclude_last_n=1,
+            )
+            result: list[dict[str, Any]] = []
+            for turn_emb, score in hits:
+                result.append(
+                    {
+                        "turn_id": f"turn_{int(getattr(turn_emb, 'turn_index', 0) or 0)}",
+                        "source": "semantic_memory",
+                        "score": float(score),
+                        "content": (
+                            f"User: {str(getattr(turn_emb, 'user_input', '') or '')}\n"
+                            f"Assistant: {str(getattr(turn_emb, 'bot_response_preview', '') or '')}"
+                        ).strip(),
+                    }
+                )
+            return result
+        except Exception as exc:
+            logger.warning("[MRA] semantic memory hits load error: %s", exc)
+            return []
 
     @staticmethod
     async def _load_rag(query: str) -> list[SemanticHit]:

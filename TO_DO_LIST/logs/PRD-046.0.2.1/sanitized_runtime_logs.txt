@@ -1,0 +1,28 @@
+﻿PRD-046.0.2.1 sanitized runtime logs
+Date: 2026-05-08
+
+Implemented calibration scope:
+- allowed_use precision guard by chunk_type
+- mixed_intent severity calibration and reasoning fields
+- query governance summary extension for mixed-intent
+- Bot_data_base query endpoint unit/integration test stability fix
+
+Key commands and outcomes:
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_allowed_use_policy.py -q -> 4 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_mixed_intent_calibration.py -q -> 3 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_governance_adapter.py -q -> 4 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_book_chunker_structure_aware.py -q -> 5 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_chunking_quality_structure_trace.py -q -> 4 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_query_governance_schema.py -q -> 2 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests/test_query_endpoint.py -q -> 12 passed
+- BOT_DB_DISABLE_EMBEDDINGS=1 python -m pytest Bot_data_base/tests -q -> 92 passed
+- python -m pytest bot_psychologist/tests/test_db_api_governance_pass_through.py -q -> 2 passed
+- python -m pytest bot_psychologist/tests/multiagent -q -> 228 passed
+
+Synthetic calibration smoke:
+- practice_manual: lens=1, practice=1, safety=1
+- practice_suggestion leakage: false
+- high/medium mixed-intent on practice_manual: 0
+- true mixed chunk warning preserved: true
+
+No private source documents, keys, or raw uploads included.

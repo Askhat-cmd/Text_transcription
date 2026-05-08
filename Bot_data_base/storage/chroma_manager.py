@@ -115,6 +115,10 @@ class ChromaManager:
             "parent_section_id": str(block.parent_section_id or ""),
             "chunking_quality_notes": _csv(chunking_quality.get("quality_notes") or []),
             "mixed_intent_risk": _bool_to_str(chunking_quality.get("mixed_intent_risk")),
+            "mixed_intent_severity": str(chunking_quality.get("mixed_intent_severity") or ""),
+            "mixed_intent_primary_role": str(chunking_quality.get("primary_role") or ""),
+            "mixed_intent_secondary_roles": _csv(chunking_quality.get("secondary_role_markers") or []),
+            "mixed_intent_reason": str(chunking_quality.get("mixed_intent_reason") or ""),
         }
 
     def _init_embedding_model(self) -> SentenceTransformer:

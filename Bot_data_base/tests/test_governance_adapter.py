@@ -51,6 +51,8 @@ def test_section_role_hint_safety_forces_chunk_type_safety() -> None:
     )
 
     assert governed[0].governance["chunk_type"] == "safety"
+    assert "safety_protocol" in governed[0].governance.get("allowed_use", [])
+    assert "practice_suggestion" not in governed[0].governance.get("allowed_use", [])
 
 
 def test_architecture_profile_marks_internal_only() -> None:

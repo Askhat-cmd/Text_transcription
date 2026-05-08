@@ -1,3 +1,5 @@
+﻿from contextlib import contextmanager
+from types import SimpleNamespace
 from unittest.mock import MagicMock, patch
 
 from fastapi.testclient import TestClient
@@ -5,6 +7,20 @@ from fastapi.testclient import TestClient
 from api.main import app
 
 client = TestClient(app)
+
+
+class _DummyRunner:
+    def __init__(self):
+        self.chroma_manager = SimpleNamespace(_embed_texts=lambda texts: [[0.1, 0.2, 0.3] for _ in texts])
+        self.registry = SimpleNamespace(get_source=lambda source_id: None)
+
+
+@contextmanager
+def _patched_query_runtime(mock_collection):
+    with patch("api.routes.query._get_collection", return_value=mock_collection), patch(
+        "api.routes.query._get_runner", return_value=_DummyRunner()
+    ):
+        yield
 
 
 def _mock_results():
@@ -37,14 +53,14 @@ class TestQueryEndpointBasic:
     def test_returns_200_on_valid_request(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "что такое осознанность"})
         assert response.status_code == 200
 
     def test_response_schema_valid(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "осознанность", "top_k": 3})
         data = response.json()
         assert "chunks" in data
@@ -60,7 +76,7 @@ class TestQueryEndpointBasic:
     def test_top_k_respected(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "практики", "top_k": 1})
         data = response.json()
         assert len(data["chunks"]) <= 1
@@ -68,7 +84,7 @@ class TestQueryEndpointBasic:
     def test_returns_chunks_structure(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "осознанность"})
         if response.json()["chunks"]:
             chunk = response.json()["chunks"][0]
@@ -83,14 +99,14 @@ class TestQueryEndpointSDFilter:
     def test_sd_level_0_returns_all_levels(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "практики", "sd_level": 0})
         assert response.json()["sd_filter_applied"] is False
 
     def test_sd_level_4_applies_filter(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "практики", "sd_level": 4})
         assert response.status_code == 200
 
@@ -100,7 +116,7 @@ class TestQueryEndpointSDFilter:
             {"documents": [[]], "metadatas": [[]], "distances": [[]], "ids": [[]]},
             _mock_results(),
         ]
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "редкий запрос xyz", "sd_level": 8})
         assert response.status_code == 200
         assert response.json()["sd_filter_applied"] is False
@@ -110,7 +126,7 @@ class TestQueryEndpointAuthorFilter:
     def test_author_filter_applied(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "осознанность", "author_id": "sarsekanov"})
         for chunk in response.json()["chunks"]:
             assert chunk["author_id"] == "sarsekanov"
@@ -118,7 +134,7 @@ class TestQueryEndpointAuthorFilter:
     def test_unknown_author_returns_empty(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = {"documents": [[]], "metadatas": [[]], "distances": [[]], "ids": [[]]}
-        with patch("api.routes.query._get_collection", return_value=mock_collection):
+        with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "осознанность", "author_id": "nonexistent_author_xyz"})
         assert response.status_code == 200
         assert response.json()["total_found"] == 0
@@ -128,15 +144,15 @@ class TestQueryEndpointRerank:
     def test_use_rerank_false_skips_voyage(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection), \
-            patch("utils.reranker.VoyageReranker.rerank") as mock_rerank:
+        with _patched_query_runtime(mock_collection), patch("utils.reranker.VoyageReranker.rerank") as mock_rerank:
             client.post("/api/query/", json={"query": "тест", "use_rerank": False})
             mock_rerank.assert_not_called()
 
     def test_voyage_failure_graceful_degradation(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
-        with patch("api.routes.query._get_collection", return_value=mock_collection), \
-            patch("utils.reranker.VoyageReranker.rerank", side_effect=Exception("API Error")):
+        with _patched_query_runtime(mock_collection), patch(
+            "utils.reranker.VoyageReranker.rerank", side_effect=Exception("API Error")
+        ):
             response = client.post("/api/query/", json={"query": "практики", "use_rerank": True})
         assert response.status_code == 200

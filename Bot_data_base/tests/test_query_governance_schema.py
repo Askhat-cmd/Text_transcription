@@ -48,6 +48,10 @@ def test_build_chunk_result_returns_governance_summary() -> None:
             "section_role_hint": "practice",
             "heading_path_text": "Manual > Practice",
             "mixed_intent_risk": "false",
+            "mixed_intent_severity": "low",
+            "mixed_intent_primary_role": "practice",
+            "mixed_intent_secondary_roles": "lens",
+            "mixed_intent_reason": "practice_with_light_lens_reference",
             "chunking_quality_notes": "missing_summary",
             "split_reason": "practice_preserved",
         },
@@ -60,6 +64,8 @@ def test_build_chunk_result_returns_governance_summary() -> None:
     assert result.governance["not_for_direct_quote"] is True
     assert result.governance["chunking_quality"]["section_role_hint"] == "practice"
     assert result.governance["chunking_quality"]["heading_path_present"] is True
+    assert result.governance["chunking_quality"]["mixed_intent_severity"] == "low"
+    assert result.governance["chunking_quality"]["primary_role"] == "practice"
 
 
 def test_build_chunk_result_without_governance_returns_empty_dict() -> None:

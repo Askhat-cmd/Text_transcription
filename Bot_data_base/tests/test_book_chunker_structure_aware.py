@@ -1,5 +1,6 @@
 ﻿from chunkers.book_chunker import BookChunker
 from governance.governance_adapter import apply_governance_to_blocks_v1
+from governance.chunking_quality import build_chunking_quality_v1
 
 
 def _chunk_types(blocks):
@@ -44,6 +45,17 @@ def test_structure_aware_manual_produces_lens_practice_safety() -> None:
     assert "lens" in types
     assert "practice" in types
     assert "safety" in types
+    for block in blocks:
+        block.chunking_quality = build_chunking_quality_v1(block)
+
+    lens_block = next(b for b in blocks if b.governance.get("chunk_type") == "lens")
+    safety_block = next(b for b in blocks if b.governance.get("chunk_type") == "safety")
+    practice_block = next(b for b in blocks if b.governance.get("chunk_type") == "practice")
+
+    assert "practice_suggestion" not in lens_block.governance.get("allowed_use", [])
+    assert "practice_suggestion" not in safety_block.governance.get("allowed_use", [])
+    assert "practice_suggestion" in practice_block.governance.get("allowed_use", [])
+    assert safety_block.chunking_quality.get("mixed_intent_severity") in {"none", "low"}
 
 
 def test_practice_section_preserved_within_budget() -> None:

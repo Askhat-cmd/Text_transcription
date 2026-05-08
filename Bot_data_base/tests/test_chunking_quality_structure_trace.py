@@ -16,6 +16,7 @@ def test_chunking_quality_marks_heading_path_presence() -> None:
     quality = build_chunking_quality_v1(block)
     assert quality["heading_path_present"] is True
     assert quality["section_role_hint"] == "practice"
+    assert quality["primary_role"] == "practice"
 
 
 def test_chunking_quality_detects_mixed_intent_risk() -> None:
@@ -34,6 +35,7 @@ def test_chunking_quality_detects_mixed_intent_risk() -> None:
 
     quality = build_chunking_quality_v1(block)
     assert quality["mixed_intent_risk"] is True
+    assert quality["mixed_intent_severity"] in {"medium", "high"}
     assert "mixed_intent_risk" in quality["quality_notes"]
 
 

@@ -1,0 +1,123 @@
+{
+  "practice_manual": {
+    "blocks_generated": 3,
+    "chunk_type_counts": {
+      "theory": 3
+    },
+    "blocks": [
+      {
+        "title": "??????? ?????????",
+        "section_role_hint": "theory",
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "requires_grounding",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "none",
+        "mixed_intent_reason": "single_role_markers"
+      },
+      {
+        "title": "???????? 1: ????-???? ?????????",
+        "section_role_hint": "theory",
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "requires_grounding",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "none",
+        "mixed_intent_reason": "single_role_markers"
+      },
+      {
+        "title": "????????????",
+        "section_role_hint": "theory",
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "requires_grounding",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "none",
+        "mixed_intent_reason": "single_role_markers"
+      }
+    ],
+    "practice_suggestion_leakage": false,
+    "high_or_medium_mixed_intent_count": 0
+  },
+  "architecture_notes": {
+    "blocks_generated": 2,
+    "chunk_type_counts": {
+      "style": 2
+    },
+    "blocks": [
+      {
+        "title": "Writer Rules",
+        "section_role_hint": "architecture",
+        "chunk_type": "style",
+        "allowed_use": [
+          "internal_only",
+          "style_guidance",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "source_style_not_user_facing",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "medium",
+        "mixed_intent_reason": "substantial_secondary_role_markers"
+      },
+      {
+        "title": "Diagnostic Center",
+        "section_role_hint": "architecture",
+        "chunk_type": "style",
+        "allowed_use": [
+          "internal_only",
+          "style_guidance",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "source_style_not_user_facing",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "medium",
+        "mixed_intent_reason": "substantial_secondary_role_markers"
+      }
+    ],
+    "practice_suggestion_leakage": false,
+    "internal_style_present": true
+  },
+  "true_mixed": {
+    "blocks_generated": 1,
+    "chunk_type_counts": {
+      "theory": 1
+    },
+    "blocks": [
+      {
+        "title": "???????? ? ??????????",
+        "section_role_hint": "theory",
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "requires_grounding",
+          "not_for_direct_quote"
+        ],
+        "mixed_intent_severity": "none",
+        "mixed_intent_reason": "single_role_markers"
+      }
+    ],
+    "warning_preserved": false
+  }
+}

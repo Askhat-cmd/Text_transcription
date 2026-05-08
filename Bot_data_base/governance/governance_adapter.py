@@ -3,6 +3,7 @@
 import re
 from typing import Iterable
 
+from governance.chunking_quality import analyze_mixed_intent_v1
 from models.universal_block import UniversalBlock
 
 _ALLOWED_PROFILES = {
@@ -14,11 +15,11 @@ _ALLOWED_PROFILES = {
 
 _PROFILE_DEFAULTS: dict[str, dict[str, list[str]]] = {
     "practice_manual": {
-        "allowed_use": ["diagnostic_lens", "writer_context", "practice_suggestion"],
+        "allowed_use": ["writer_context", "diagnostic_lens"],
         "safety_flags": ["requires_grounding", "not_for_direct_quote"],
     },
     "architecture_notes": {
-        "allowed_use": ["internal_only", "style_guidance", "safety_protocol", "diagnostic_lens"],
+        "allowed_use": ["internal_only", "style_guidance", "diagnostic_lens"],
         "safety_flags": ["source_style_not_user_facing", "not_for_direct_quote"],
     },
     "general_book": {
@@ -62,16 +63,6 @@ _SAFETY_MARKERS = (
     "не заменяет специалиста",
     "экстренная помощь",
     "безопасность",
-)
-
-_ARCHITECTURE_MARKERS = (
-    "neo mindbot",
-    "архитектур",
-    "writer",
-    "diagnostic center",
-    "safety layer",
-    "validator",
-    "prompt",
 )
 
 _STRONG_CLAIM_MARKERS = (
@@ -209,13 +200,38 @@ def _resolve_chunk_type(role_hint: str, lowered: str, source_kind_normalized: st
     return "theory"
 
 
-def _collect_role_marker_counts(lowered: str) -> dict[str, int]:
-    return {
-        "practice": _count_any(lowered, _PRACTICE_MARKERS),
-        "safety": _count_any(lowered, _SAFETY_MARKERS),
-        "lens": _count_any(lowered, _LENS_MARKERS),
-        "architecture": _count_any(lowered, _ARCHITECTURE_MARKERS),
-    }
+def _build_allowed_use(
+    *,
+    base_allowed: list[str],
+    chunk_type: str,
+    architecture_profile: bool,
+    safety_flags: list[str],
+) -> list[str]:
+    allowed = list(base_allowed)
+
+    if chunk_type == "practice":
+        allowed.append("practice_suggestion")
+    elif chunk_type == "safety":
+        allowed.extend(["safety_protocol", "writer_context"])
+    elif chunk_type == "style":
+        allowed.append("style_guidance")
+        if architecture_profile:
+            allowed.append("internal_only")
+    elif chunk_type == "lens":
+        allowed.append("diagnostic_lens")
+    elif chunk_type == "case":
+        allowed.extend(["writer_context", "diagnostic_lens"])
+    elif chunk_type == "quote":
+        if "not_for_direct_quote" in safety_flags:
+            allowed.append("writer_context")
+    elif chunk_type == "excluded":
+        allowed = ["do_not_use"]
+
+    # Precision guard: practice_suggestion only for explicit practice chunks.
+    if chunk_type != "practice":
+        allowed = [item for item in allowed if item != "practice_suggestion"]
+
+    return _dedupe(allowed)
 
 
 def apply_governance_to_blocks_v1(
@@ -254,22 +270,23 @@ def apply_governance_to_blocks_v1(
 
         chunk_type = _resolve_chunk_type(role_hint, lowered, source_kind_normalized, source_title_lower)
         notes: list[str] = []
-        allowed_use = list(profile_allowed)
         safety_flags = list(profile_flags)
         lens_family: list[str] = []
         tags: list[str] = []
         practice_metadata: dict = {}
 
-        role_marker_counts = _collect_role_marker_counts(lowered)
-        mixed_intent_risk = sum(1 for value in role_marker_counts.values() if value > 0) >= 2
+        architecture_profile = source_kind_normalized == "architecture_notes" or "neo mindbot" in source_title_lower
+        if architecture_profile:
+            safety_flags.extend(["source_style_not_user_facing", "not_for_direct_quote"])
+            notes.append("architecture_profile")
+            if chunk_type == "theory":
+                chunk_type = "style"
 
         if chunk_type == "safety":
-            allowed_use.append("safety_protocol")
             notes.append("safety_marker")
             lens_family.append("safety")
 
         if chunk_type == "practice":
-            allowed_use.append("practice_suggestion")
             notes.append("practice_marker")
             lens_family.append("somatic")
             practice_metadata = _extract_practice_metadata(text)
@@ -277,7 +294,6 @@ def apply_governance_to_blocks_v1(
                 safety_flags.append("practice_requires_low_resource_check")
 
         if chunk_type == "lens":
-            allowed_use.append("diagnostic_lens")
             safety_flags.append("requires_grounding")
             notes.append("lens_marker")
             if "избегани" in lowered:
@@ -285,34 +301,30 @@ def apply_governance_to_blocks_v1(
             if "ценност" in lowered or "самооцен" in lowered or "самоценност" in lowered:
                 lens_family.append("self_worth")
 
-        architecture_profile = source_kind_normalized == "architecture_notes" or "neo mindbot" in source_title_lower
-        if architecture_profile:
-            allowed_use.extend(["internal_only", "style_guidance"])
-            safety_flags.extend(["source_style_not_user_facing", "not_for_direct_quote"])
-            notes.append("architecture_profile")
-            lens_family.append("architecture")
-            if chunk_type == "theory":
-                chunk_type = "style"
-            explicit_practice = role_hint == "practice" or _contains_any(lowered, _PRACTICE_MARKERS)
-            if not explicit_practice:
-                allowed_use = [item for item in allowed_use if item != "practice_suggestion"]
-
         if _contains_any(lowered, _STRONG_CLAIM_MARKERS):
             safety_flags.append("not_for_direct_quote")
             notes.append("strong_claim_marker")
 
-        if chunk_type == "safety":
-            allowed_use.append("writer_context")
-
-        if mixed_intent_risk:
-            notes.append("mixed_intent_risk")
-
-        allowed_use = _dedupe(allowed_use)
         safety_flags = _dedupe(safety_flags)
+        allowed_use = _build_allowed_use(
+            base_allowed=list(profile_allowed),
+            chunk_type=chunk_type,
+            architecture_profile=architecture_profile,
+            safety_flags=safety_flags,
+        )
+
+        mixed = analyze_mixed_intent_v1(
+            lowered_text=lowered,
+            primary_role=chunk_type,
+            section_role_hint=role_hint,
+        )
+        if mixed.get("mixed_intent_risk"):
+            notes.append("mixed_intent_risk")
+        if chunk_type == "safety" and mixed.get("mixed_intent_reason") == "safety_practice_mixed":
+            notes.append("safety_practice_mixed")
+
         lens_family = _dedupe(lens_family)
         tags = _dedupe(tags + [chunk_type] + lens_family)
-        if chunk_type == "practice" and "practice_suggestion" not in allowed_use:
-            allowed_use.append("practice_suggestion")
 
         block.governance = {
             "schema_version": "governance_v1",

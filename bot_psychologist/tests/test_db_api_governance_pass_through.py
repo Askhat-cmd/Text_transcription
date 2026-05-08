@@ -45,8 +45,16 @@ def test_retriever_chunk_to_block_preserves_governance() -> None:
         end_time=None,
         block_title="Block",
         keywords=[],
-        governance={"schema_version": "governance_v1", "chunk_type": "lens"},
+        governance={
+            "schema_version": "governance_v1",
+            "chunk_type": "lens",
+            "chunking_quality": {
+                "mixed_intent_severity": "low",
+                "primary_role": "lens",
+            },
+        },
     )
 
     block = retriever._chunk_to_block(chunk)
     assert block.governance.get("chunk_type") == "lens"
+    assert block.governance.get("chunking_quality", {}).get("mixed_intent_severity") == "low"

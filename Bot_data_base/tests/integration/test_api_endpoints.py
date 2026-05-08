@@ -1,4 +1,5 @@
 ﻿import os
+from pathlib import Path
 
 import pytest
 from httpx import ASGITransport, AsyncClient
@@ -8,6 +9,13 @@ from api.main import app
 
 def _set_env():
     os.environ["BOT_DB_DISABLE_EMBEDDINGS"] = "1"
+
+
+@pytest.fixture(autouse=True)
+def _bot_db_workdir(monkeypatch):
+    # Endpoints construct PipelineRunner(config_path="config.yaml"), so tests must
+    # run with Bot_data_base as cwd to resolve config deterministically.
+    monkeypatch.chdir(Path(__file__).resolve().parents[2])
 
 
 def _make_client() -> AsyncClient:

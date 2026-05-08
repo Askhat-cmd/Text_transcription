@@ -36,6 +36,10 @@ def test_chroma_metadata_contains_flat_governance_fields(monkeypatch) -> None:
         chunking_quality={
             "quality_notes": ["ok"],
             "mixed_intent_risk": False,
+            "mixed_intent_severity": "low",
+            "primary_role": "practice",
+            "secondary_role_markers": ["lens"],
+            "mixed_intent_reason": "practice_with_light_lens_reference",
         },
     )
 
@@ -51,3 +55,6 @@ def test_chroma_metadata_contains_flat_governance_fields(monkeypatch) -> None:
     assert meta["section_role_hint"] == "practice"
     assert meta["split_reason"] == "practice_preserved"
     assert meta["mixed_intent_risk"] == "false"
+    assert meta["mixed_intent_severity"] == "low"
+    assert meta["mixed_intent_primary_role"] == "practice"
+    assert meta["mixed_intent_secondary_roles"] == "lens"

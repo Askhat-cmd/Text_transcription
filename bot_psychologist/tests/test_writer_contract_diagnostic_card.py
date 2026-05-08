@@ -83,6 +83,10 @@ def test_writer_contract_prompt_context_exposes_diagnostic_card() -> None:
     assert ctx["diagnostic_card_summary"]["suggested_writer_move"] == "reflect_pattern_once"
     assert "avoid_restarting_context" in ctx["diagnostic_card_avoid_list"]
     assert "avoid_over_exploration" in ctx["diagnostic_card_risk_flags"]
+    assert ctx["writer_move_instructions"]["version"] == "writer_move_instructions_v1"
+    assert ctx["writer_move_instructions"]["move"] == "reflect_pattern_once"
+    assert "name_one_repeated_pattern_gently" in ctx["writer_move_must_do"]
+    assert "do_not_list_multiple_hypotheses" in ctx["writer_move_must_not_do"]
 
 
 def test_writer_contract_backward_compat_without_diagnostic_card() -> None:
@@ -96,3 +100,5 @@ def test_writer_contract_backward_compat_without_diagnostic_card() -> None:
     assert payload["diagnostic_card"] is None
     assert ctx["diagnostic_card"] == {}
     assert ctx["diagnostic_card_summary"]["present"] is False
+    assert ctx["writer_move_instructions"]["version"] == "writer_move_instructions_v1"
+    assert ctx["writer_move_instructions"]["move"] == "validate_briefly"

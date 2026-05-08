@@ -7,6 +7,10 @@ from typing import Any
 
 from .contracts.validation_result import ValidationResult
 from .contracts.writer_contract import WriterContract
+from .writer_move_compliance import (
+    build_writer_move_compliance_trace_v1,
+    build_writer_move_instructions_v1,
+)
 
 QUALITY_TRACE_VERSION = "quality_trace_v1"
 TOO_SHORT_CHARS = 40
@@ -238,6 +242,7 @@ def _build_summary_flags(
     memory_quality: dict[str, Any],
     response_mode_quality: dict[str, Any],
     validator_quality: dict[str, Any],
+    writer_move_compliance: dict[str, Any],
 ) -> list[str]:
     flags: list[str] = []
 
@@ -265,6 +270,11 @@ def _build_summary_flags(
     if validator_quality.get("blocked"):
         flags.append("validator_blocked")
 
+    violations = list(writer_move_compliance.get("violations", []) or [])
+    if violations:
+        flags.append("writer_move_violation")
+        flags.extend(f"writer_move_{item}" for item in violations)
+
     return flags
 
 
@@ -285,12 +295,20 @@ def build_quality_trace(
         answer_quality=answer,
     )
     validator = _build_validator_quality(validation_result=validation_result)
+    writer_move_instructions = build_writer_move_instructions_v1(
+        getattr(writer_contract, "diagnostic_card", None)
+    )
+    writer_move_compliance = build_writer_move_compliance_trace_v1(
+        final_answer=final_answer,
+        instructions=writer_move_instructions,
+    )
     summary_flags = _build_summary_flags(
         answer_quality=answer,
         thread_quality=thread,
         memory_quality=memory,
         response_mode_quality=response_mode,
         validator_quality=validator,
+        writer_move_compliance=writer_move_compliance,
     )
 
     return {
@@ -301,6 +319,7 @@ def build_quality_trace(
         "memory": memory,
         "continuity": continuity,
         "response_mode": response_mode,
+        "writer_move_compliance": writer_move_compliance,
         "validator": validator,
         "summary_flags": summary_flags,
     }

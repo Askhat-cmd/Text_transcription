@@ -63,6 +63,16 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
                 "summary_flags": ["generic_phrase_risk"],
                 "state": {"openness": "mixed", "ok_position": "I+W+"},
                 "thread": {"continuity_score": 0.12},
+                "writer_move_compliance": {
+                    "version": "writer_move_compliance_trace_v1",
+                    "move": "reflect_pattern_once",
+                    "max_sentences": 6,
+                    "max_questions": 1,
+                    "sentence_count": 3,
+                    "question_count": 0,
+                    "violations": [],
+                    "risk_flags": [],
+                },
             },
             "thread_diagnostics_version": "thread_diagnostics_v1",
             "thread_diagnostics": {
@@ -134,6 +144,8 @@ def test_extract_debug_summary_has_nested_state_thread_writer_blocks() -> None:
     assert summary["context_package_summary"]["recent_summarized_count"] == 1
     assert summary["diagnostic_card_version"] == "diagnostic_card_v1"
     assert summary["diagnostic_card_summary"]["situation_label"] == "semantic_continuation"
+    assert summary["writer_move_compliance"]["version"] == "writer_move_compliance_trace_v1"
+    assert summary["writer_move_compliance"]["move"] == "reflect_pattern_once"
     assert latency_ms == 321.0
 
 

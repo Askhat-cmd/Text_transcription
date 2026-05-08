@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from ..context_assembly import format_context_for_writer
+from ..writer_move_compliance import build_writer_move_instructions_v1
 from .context_package import ContextAssemblyPackage
 from .diagnostic_card import DiagnosticCard
 from .memory_bundle import MemoryBundle
@@ -79,6 +80,13 @@ class WriterContract:
                 "risk_flags": [],
             }
         )
+        writer_move_instructions = build_writer_move_instructions_v1(self.diagnostic_card)
+        writer_move_summary = (
+            f"move={writer_move_instructions.get('move')}; "
+            f"max_sentences={writer_move_instructions.get('max_sentences')}; "
+            f"max_questions={writer_move_instructions.get('max_questions')}; "
+            f"style={writer_move_instructions.get('style')}"
+        )
 
         return {
             "user_message": self.user_message,
@@ -126,4 +134,8 @@ class WriterContract:
                 if self.diagnostic_card is not None
                 else []
             ),
+            "writer_move_instructions": writer_move_instructions,
+            "writer_move_instruction_summary": writer_move_summary,
+            "writer_move_must_do": list(writer_move_instructions.get("must_do", []) or []),
+            "writer_move_must_not_do": list(writer_move_instructions.get("must_not_do", []) or []),
         }

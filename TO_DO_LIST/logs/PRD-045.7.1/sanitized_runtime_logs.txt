@@ -1,0 +1,27 @@
+﻿# PRD-045.7.1 sanitized runtime logs
+
+## Commands executed
+- python -m pytest bot_psychologist/tests/test_writer_move_compliance.py -q
+- python -m pytest bot_psychologist/tests/test_diagnostic_card.py -q
+- python -m pytest bot_psychologist/tests/test_writer_contract_diagnostic_card.py -q
+- python -m pytest bot_psychologist/tests/test_writer_contract_context_package.py -q
+- python -m pytest bot_psychologist/tests/test_context_assembly.py -q
+- python -m pytest bot_psychologist/tests/evaluation/test_quality_baseline_runner.py -q
+- python -m pytest bot_psychologist/tests/multiagent/test_quality_trace.py -q
+- python -m pytest bot_psychologist/tests/multiagent -q
+- python bot_psychologist/scripts/run_quality_baseline.py --mode direct --case-ids QB-002,QB-005,QB-010,QB-015 --output TO_DO_LIST/reports/PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json --markdown-output TO_DO_LIST/reports/PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.md
+
+## Results summary
+- Targeted tests: pass
+- Multiagent regression: `228 passed`
+- Direct baseline smoke: `errors_count=0`
+- Generic-risk flags across QB-002/QB-005/QB-010/QB-015: `1` (before PRD-045.7.1 baseline: `3`)
+
+## Writer move compliance summary (direct smoke)
+- QB-002: move=regulate_first, max_questions=0, question_count=0, violations=[]
+- QB-005: move=offer_one_micro_step, max_questions=0, question_count=0, violations=[]
+- QB-010: move=regulate_first, max_questions=0, question_count=0, violations=[]
+- QB-015: move=reflect_pattern_once, max_questions=1, question_count=1, violations=[]
+
+## Safety
+- Sanitized: no API keys, no tokens, no raw private dialogue dumps.

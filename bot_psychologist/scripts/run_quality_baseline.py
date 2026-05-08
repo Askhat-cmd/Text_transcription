@@ -288,6 +288,11 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
     )
     qt_state = quality_trace.get("state") if isinstance(quality_trace.get("state"), dict) else {}
     qt_thread = quality_trace.get("thread") if isinstance(quality_trace.get("thread"), dict) else {}
+    writer_move_compliance = (
+        quality_trace.get("writer_move_compliance")
+        if isinstance(quality_trace.get("writer_move_compliance"), dict)
+        else {}
+    )
 
     latency_seconds = response.get("processing_time_seconds")
     latency_ms: float | None = None
@@ -384,6 +389,7 @@ def _extract_debug_summary(response: dict[str, Any], session_id: str) -> tuple[d
         "context_package_summary": context_package_summary,
         "diagnostic_card_version": trace.get("diagnostic_card_version"),
         "diagnostic_card_summary": diagnostic_card_summary,
+        "writer_move_compliance": writer_move_compliance,
         "pattern_core": thread_block.get("pattern_core"),
         "active_frame": thread_block.get("active_frame"),
         "semantic_frame_summary": semantic_frame_diag,
@@ -678,6 +684,19 @@ def _markdown_from_report(report: dict[str, Any]) -> str:
             + f"suggested_writer_move={diagnostic_card_summary.get('suggested_writer_move')}, "
             + f"confidence={diagnostic_card_summary.get('confidence')}, "
             + f"risk_flags={json.dumps(diagnostic_card_summary.get('risk_flags', []), ensure_ascii=False)}"
+        )
+        writer_move_compliance = (
+            final_debug.get("writer_move_compliance")
+            if isinstance(final_debug.get("writer_move_compliance"), dict)
+            else {}
+        )
+        lines.append(
+            "- Writer move compliance: "
+            + f"move={writer_move_compliance.get('move')}, "
+            + f"max_questions={writer_move_compliance.get('max_questions')}, "
+            + f"question_count={writer_move_compliance.get('question_count')}, "
+            + f"sentence_count={writer_move_compliance.get('sentence_count')}, "
+            + f"violations={json.dumps(writer_move_compliance.get('violations', []), ensure_ascii=False)}"
         )
         semantic_frame = thread_summary.get("semantic_frame") if isinstance(thread_summary.get("semantic_frame"), dict) else {}
         lines.append(

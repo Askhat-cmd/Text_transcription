@@ -66,6 +66,7 @@ def test_quality_trace_returns_dict_and_expected_top_keys() -> None:
         "memory",
         "continuity",
         "response_mode",
+        "writer_move_compliance",
         "validator",
         "summary_flags",
     }
@@ -107,6 +108,17 @@ def test_quality_trace_practice_mode_flag_when_no_step() -> None:
     )
     assert "practice_without_step" in trace["response_mode"]["mode_risk_flags"]
     assert "practice_without_step" in trace["summary_flags"]
+
+
+def test_quality_trace_contains_writer_move_compliance_trace() -> None:
+    trace = build_quality_trace(
+        final_answer="Сделай вдох. Как стало? Что дальше?",
+        writer_contract=_contract(response_mode="validate"),
+        validation_result=ValidationResult(is_blocked=False),
+    )
+    compliance = trace["writer_move_compliance"]
+    assert compliance["version"] == "writer_move_compliance_trace_v1"
+    assert isinstance(compliance["violations"], list)
 
 
 def test_quality_trace_has_no_raw_user_text_or_raw_context() -> None:

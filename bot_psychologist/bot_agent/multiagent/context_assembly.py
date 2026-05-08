@@ -1,4 +1,4 @@
-"""Context assembly helpers for Writer context package."""
+﻿"""Context assembly helpers for Writer context package."""
 
 from __future__ import annotations
 
@@ -19,27 +19,193 @@ from .contracts.thread_state import ThreadState
 
 CONTEXT_ASSEMBLY_TRACE_VERSION = "context_assembly_trace_v1"
 TURN_MICRO_SUMMARY_METHOD_V1 = "deterministic_extractive_v1"
-RECENT_FULL_TURN_MAX_CHARS = 320
+RECENT_FULL_TURN_MAX_CHARS = 1200
 MICRO_SUMMARY_MAX_CHARS = 360
 CONTEXT_BUDGET_MAX_CHARS = 8000
 MAX_MEMORY_HITS_PER_SOURCE = 3
+
+SUMMARY_USER_MARKERS = (
+    "я ",
+    "мне",
+    "меня",
+    "моё",
+    "хочу",
+    "не хочу",
+    "не могу",
+    "не получается",
+    "сил нет",
+    "устал",
+    "устала",
+    "страшно",
+    "боюсь",
+    "стыдно",
+    "злюсь",
+    "не знаю",
+    "важно",
+    "задевает",
+    "больно",
+    "один",
+    "одна",
+    "никому не нужен",
+    "никому не нужна",
+    "должен",
+    "надо",
+)
+SUMMARY_ASSISTANT_MARKERS = (
+    "можно попробовать",
+    "первый шаг",
+    "микро-шаг",
+    "на 1 минуту",
+    "практика",
+    "заметь",
+    "проверь",
+    "вопрос",
+    "если коротко",
+    "смысл",
+    "важно",
+)
+SUMMARY_UNIVERSAL_MARKERS = (
+    "?",
+    "!",
+    "но",
+    "при этом",
+    "самое важное",
+    "главное",
+)
 
 
 def _normalize_text(text: str) -> str:
     return " ".join((text or "").strip().split())
 
 
-def _extract_important_quote(text: str, max_chars: int = 120) -> str | None:
-    match = re.search(r"[\"'«“](.{8,200}?)[\"'»”]", text)
-    if not match:
-        return None
-    quote = _normalize_text(match.group(1))
-    return quote[:max_chars] if quote else None
+def _has_quoted_text(text: str) -> bool:
+    return re.search(r"[\"'«“](.{8,200}?)[\"'»”]", text or "") is not None
 
 
 def _split_sentences(text: str) -> list[str]:
-    chunks = re.findall(r"[^.!?]+[.!?]?", text)
+    chunks = re.findall(r"[^.!?\n]+[.!?]?", text)
     return [_normalize_text(chunk) for chunk in chunks if _normalize_text(chunk)]
+
+
+def _score_fragment(role: str, fragment: str) -> int:
+    lowered = fragment.lower()
+    markers = SUMMARY_ASSISTANT_MARKERS if role == "assistant" else SUMMARY_USER_MARKERS
+
+    score = 0
+    for marker in markers:
+        if marker in lowered:
+            score += 2
+    for marker in SUMMARY_UNIVERSAL_MARKERS:
+        if marker in lowered:
+            score += 1
+
+    if "?" in fragment:
+        score += 1
+    if 20 <= len(fragment) <= 220:
+        score += 1
+    return score
+
+
+def _select_summary_fragments(
+    *,
+    role: str,
+    fragments: list[str],
+    max_summary_chars: int,
+) -> tuple[str, list[tuple[int, str, int]]]:
+    if not fragments:
+        return "", []
+
+    scored: list[tuple[int, str, int]] = []
+    meaningful_indexes = [idx for idx, fragment in enumerate(fragments) if len(fragment) >= 12]
+    if not meaningful_indexes:
+        meaningful_indexes = list(range(len(fragments)))
+    first_meaningful = meaningful_indexes[0]
+    last_meaningful = meaningful_indexes[-1]
+
+    for idx, fragment in enumerate(fragments):
+        score = _score_fragment(role, fragment)
+        if idx == first_meaningful:
+            score += 1
+        if idx == last_meaningful:
+            score += 1
+        scored.append((idx, fragment, score))
+
+    target_count = max(2, min(4, len(scored)))
+    ranked = sorted(scored, key=lambda item: (-item[2], -len(item[1]), item[0]))
+    selected = ranked[:target_count]
+    selected.sort(key=lambda item: item[0])
+
+    summary_parts: list[str] = []
+    for _, fragment, _ in selected:
+        candidate = " ".join(summary_parts + [fragment]).strip()
+        if len(candidate) <= max_summary_chars:
+            summary_parts.append(fragment)
+            continue
+
+        used_chars = len(" ".join(summary_parts))
+        remain = max_summary_chars - used_chars - (1 if summary_parts else 0)
+        if remain >= 40:
+            summary_parts.append(fragment[:remain].rstrip())
+        break
+
+    if not summary_parts:
+        summary_parts.append(selected[0][1][:max_summary_chars].rstrip())
+
+    return " ".join(summary_parts).strip(), scored
+
+
+def _is_technical_fragment(fragment: str) -> bool:
+    lowered = fragment.lower()
+    technical_markers = (
+        "http://",
+        "https://",
+        "chunk_id",
+        "turn_id",
+        "trace",
+        "json",
+        ".py",
+        "error:",
+    )
+    return any(marker in lowered for marker in technical_markers)
+
+
+def _extract_important_quote(
+    *,
+    text: str,
+    role: str,
+    scored_fragments: list[tuple[int, str, int]],
+    max_chars: int = 120,
+) -> tuple[str | None, bool]:
+    match = re.search(r"[\"'«“](.{8,200}?)[\"'»”]", text)
+    if match:
+        quote = _normalize_text(match.group(1))
+        return (quote[:max_chars], False) if quote else (None, False)
+
+    if role != "user":
+        return None, False
+
+    ranked = sorted(scored_fragments, key=lambda item: (-item[2], len(item[1]), item[0]))
+    for _, fragment, _ in ranked:
+        quote = _normalize_text(fragment)
+        if len(quote) < 20 or len(quote) > 160:
+            continue
+        if _is_technical_fragment(quote):
+            continue
+        return quote[:max_chars], True
+
+    return None, False
+
+
+def _tokenize_for_overlap(text: str) -> set[str]:
+    return {tok for tok in re.findall(r"\w+", (text or "").lower()) if len(tok) >= 2}
+
+
+def _token_overlap_ratio(left: set[str], right: set[str]) -> float:
+    if not left or not right:
+        return 0.0
+    common = len(left.intersection(right))
+    base = min(len(left), len(right))
+    return (common / float(base)) if base else 0.0
 
 
 def build_turn_micro_summary_v1(
@@ -52,29 +218,38 @@ def build_turn_micro_summary_v1(
     """Create deterministic extractive micro-summary for one long turn."""
     normalized = _normalize_text(content)
     raw_chars = len(content or "")
+
     if not normalized:
         summary_text = ""
+        scored_fragments: list[tuple[int, str, int]] = []
     else:
-        sentences = _split_sentences(normalized)
-        if not sentences:
+        fragments = _split_sentences(normalized)
+        if not fragments:
             summary_text = normalized[:max_summary_chars]
-        elif len(sentences) == 1:
-            summary_text = sentences[0][:max_summary_chars]
+            scored_fragments = [(0, summary_text, _score_fragment(role, summary_text))]
+        elif len(fragments) == 1:
+            one = fragments[0]
+            summary_text = one[:max_summary_chars]
+            scored_fragments = [(0, one, _score_fragment(role, one))]
         else:
-            first = sentences[0]
-            last = sentences[-1]
-            if first == last:
-                summary_text = first
-            else:
-                summary_text = f"{first} {last}"
-            if len(summary_text) > max_summary_chars:
-                summary_text = summary_text[:max_summary_chars].rstrip()
+            summary_text, scored_fragments = _select_summary_fragments(
+                role=role,
+                fragments=fragments,
+                max_summary_chars=max_summary_chars,
+            )
+
+    important_quote, _ = _extract_important_quote(
+        text=normalized,
+        role=role,
+        scored_fragments=scored_fragments,
+    )
+
     summary_chars = len(summary_text)
     return TurnMicroSummary(
         turn_id=turn_id,
         role=role,
         summary=summary_text,
-        important_quote=_extract_important_quote(normalized),
+        important_quote=important_quote,
         raw_chars=raw_chars,
         summary_chars=summary_chars,
         was_truncated=raw_chars > summary_chars,
@@ -109,17 +284,41 @@ def _deduplicate_hits(
     recent_texts: set[str],
     semantic_hits: list[dict[str, Any]],
     knowledge_hits: list[dict[str, Any]],
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]], int]:
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], int, list[str]]:
     duplicates_removed = 0
     seen = set(recent_texts)
+    reasons: list[str] = []
+
+    recent_candidates = [item for item in recent_texts if item]
+    recent_tokens = [(item, _tokenize_for_overlap(item)) for item in recent_candidates]
+
+    def classify_duplicate(content: str, source: str) -> str | None:
+        for recent in recent_candidates:
+            if len(recent) >= 40 and recent in content:
+                return f"{source}_duplicate_recent_substring"
+
+        hit_tokens = _tokenize_for_overlap(content)
+        for _, tokens in recent_tokens:
+            if _token_overlap_ratio(tokens, hit_tokens) >= 0.75:
+                return f"{source}_duplicate_token_overlap"
+        return None
+
     clean_semantic: list[dict[str, Any]] = []
     for hit in semantic_hits:
         content = _normalize_text(str(hit.get("content", "") or ""))
         if not content:
             continue
+
+        duplicate_reason = classify_duplicate(content, "semantic")
+        if duplicate_reason:
+            duplicates_removed += 1
+            reasons.append(duplicate_reason)
+            continue
+
         if content in seen:
             duplicates_removed += 1
             continue
+
         seen.add(content)
         clean_semantic.append(hit)
 
@@ -128,13 +327,21 @@ def _deduplicate_hits(
         content = _normalize_text(str(hit.get("content", "") or ""))
         if not content:
             continue
+
+        duplicate_reason = classify_duplicate(content, "knowledge")
+        if duplicate_reason:
+            duplicates_removed += 1
+            reasons.append(duplicate_reason)
+            continue
+
         if content in seen:
             duplicates_removed += 1
             continue
+
         seen.add(content)
         clean_knowledge.append(hit)
 
-    return clean_semantic, clean_knowledge, duplicates_removed
+    return clean_semantic, clean_knowledge, duplicates_removed, reasons
 
 
 def _used_chars(
@@ -169,8 +376,10 @@ def build_context_assembly_package_v1(
     recent_turns_raw = list(getattr(memory_bundle, "recent_turns", []) or [])
     pairs = _recent_turn_pairs(recent_turns_raw)
 
+    reasons: list[str] = []
     full_items: list[TurnContextItem] = []
     summarized_items: list[TurnMicroSummary] = []
+
     for turn_id, role, content in pairs:
         raw_chars = len(content)
         if raw_chars <= RECENT_FULL_TURN_MAX_CHARS:
@@ -185,15 +394,20 @@ def build_context_assembly_package_v1(
                     was_truncated=False,
                 )
             )
-        else:
-            summarized_items.append(
-                build_turn_micro_summary_v1(
-                    turn_id=turn_id,
-                    role=role,
-                    content=content,
-                    max_summary_chars=MICRO_SUMMARY_MAX_CHARS,
-                )
-            )
+            if raw_chars > 320:
+                reasons.append("medium_turn_kept_full")
+            continue
+
+        micro_summary = build_turn_micro_summary_v1(
+            turn_id=turn_id,
+            role=role,
+            content=content,
+            max_summary_chars=MICRO_SUMMARY_MAX_CHARS,
+        )
+        summarized_items.append(micro_summary)
+        reasons.append("summary_marker_scored")
+        if role == "user" and micro_summary.important_quote and not _has_quoted_text(content):
+            reasons.append("important_quote_fallback_used")
 
     pattern_core = str(thread_state.pattern_core or "")
     active_frame = dict(thread_state.active_frame or {})
@@ -222,13 +436,13 @@ def build_context_assembly_package_v1(
         for item in summarized_items
         if _normalize_text(item.summary)
     )
-    semantic_hits, knowledge_hits, duplicates_removed = _deduplicate_hits(
+    semantic_hits, knowledge_hits, duplicates_removed, dedup_reasons = _deduplicate_hits(
         recent_texts=recent_texts,
         semantic_hits=semantic_raw,
         knowledge_hits=knowledge_raw,
     )
+    reasons.extend(dedup_reasons)
 
-    reasons: list[str] = []
     dropped_count = 0
     used = _used_chars(
         user_message=user_message,

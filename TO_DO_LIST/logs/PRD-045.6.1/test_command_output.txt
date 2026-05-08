@@ -1,0 +1,1311 @@
+﻿
+
+>>> python -m pytest bot_psychologist/tests/test_context_assembly.py -q
+
+.......                                                                  [100%]
+
+============================== warnings summary ===============================
+
+tests/test_context_assembly.py::test_context_assembly_short_turns_stay_full
+
+tests/test_context_assembly.py::test_context_assembly_medium_turn_remains_full
+
+tests/test_context_assembly.py::test_context_assembly_long_turn_keeps_middle_meaning
+
+tests/test_context_assembly.py::test_context_assembly_real_semantic_duplicate_removed
+
+tests/test_context_assembly.py::test_context_assembly_dedup_and_budget_limit
+
+tests/test_context_assembly.py::test_context_assembly_package_serialization_roundtrip
+
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+tests/test_context_assembly.py::test_context_assembly_short_turns_stay_full
+
+tests/test_context_assembly.py::test_context_assembly_medium_turn_remains_full
+
+tests/test_context_assembly.py::test_context_assembly_long_turn_keeps_middle_meaning
+
+tests/test_context_assembly.py::test_context_assembly_real_semantic_duplicate_removed
+
+tests/test_context_assembly.py::test_context_assembly_dedup_and_budget_limit
+
+tests/test_context_assembly.py::test_context_assembly_package_serialization_roundtrip
+
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+7 passed, 12 warnings in 0.11s
+
+
+>>> python -m pytest bot_psychologist/tests/test_writer_contract_context_package.py -q
+
+..                                                                       [100%]
+
+============================== warnings summary ===============================
+
+tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+
+tests/test_writer_contract_context_package.py::test_writer_contract_keeps_backward_compat_without_context_package
+
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+tests/test_writer_contract_context_package.py::test_writer_contract_uses_context_package_for_prompt_context
+
+tests/test_writer_contract_context_package.py::test_writer_contract_keeps_backward_compat_without_context_package
+
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+2 passed, 4 warnings in 0.09s
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_memory_retrieval.py -q
+
+.................................                                        [100%]
+
+============================== warnings summary ===============================
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    updated_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\storage\session_manager.py:391: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+
+    "embedding": pickle.loads(item["embedding"]),
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py:1558: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+
+    continue
+
+  Enable tracemalloc to get traceback where the object was allocated.
+
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\stash.py:104: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+
+    del self._storage[key]
+
+  Enable tracemalloc to get traceback where the object was allocated.
+
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+33 passed, 68 warnings in 18.20s
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_writer_contract.py -q
+
+.                                                                        [100%]
+
+============================== warnings summary ===============================
+
+tests/multiagent/test_writer_contract.py::test_writer_contract_prompt_context_contains_semantic_fields
+
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+tests/multiagent/test_writer_contract.py::test_writer_contract_prompt_context_contains_semantic_fields
+
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+1 passed, 2 warnings in 0.09s
+
+
+>>> python -m pytest bot_psychologist/tests/evaluation/test_quality_baseline_runner.py -q
+
+....                                                                     [100%]
+
+4 passed in 4.23s
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 32%]
+
+........................................................................ [ 64%]
+
+........................................................................ [ 96%]
+
+........                                                                 [100%]
+
+============================== warnings summary ===============================
+
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+
+tests/multiagent/test_thread_manager.py: 4 warnings
+
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+
+tests/multiagent/test_thread_storage.py: 24 warnings
+
+tests/multiagent/test_writer_contract.py: 1 warning
+
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+
+tests/multiagent/test_thread_manager.py: 4 warnings
+
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+
+tests/multiagent/test_thread_storage.py: 24 warnings
+
+tests/multiagent/test_writer_contract.py: 1 warning
+
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+
+
+tests/multiagent/test_low_resource_continuity.py: 11 warnings
+
+tests/multiagent/test_thread_manager.py: 5 warnings
+
+tests/multiagent/test_thread_manager_diagnostics.py: 7 warnings
+
+tests/multiagent/test_thread_manager_pattern_core.py: 5 warnings
+
+tests/multiagent/test_thread_manager_response_mode.py: 4 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:244: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    updated_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+tests/multiagent/test_memory_retrieval.py::test_mr_01_bundle_fields
+
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\storage\session_manager.py:391: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+
+    "embedding": pickle.loads(item["embedding"]),
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\openai\_base_client.py:1558: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+
+    continue
+
+  Enable tracemalloc to get traceback where the object was allocated.
+
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\_pytest\stash.py:104: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+
+    del self._storage[key]
+
+  Enable tracemalloc to get traceback where the object was allocated.
+
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+
+
+tests/multiagent/test_orchestrator_e2e.py: 17 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_orchestrator_e2e.py::test_e2e_11_new_thread_archived
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    archived_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_returns_dict_and_expected_top_keys
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_marks_questions_list_and_generic_risk
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_confidence_and_continuity_buckets
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_practice_mode_flag_when_no_step
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_has_no_raw_user_text_or_raw_context
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_quality_trace.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_safety_detection.py::test_sd_07_safe_override_mode_activated
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_safety_detection.py:76: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:64: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:65: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    updated_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_thread_manager.py::test_return_to_old_restores_archived_thread
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager.py:94: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    archived_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_low_continuity_new_thread_flag
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_followup_marker_reason
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_branch_marker_hit
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_low_resource_continuation_marker_diagnostics
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_diagnostics.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_thread_manager_pattern_core.py::test_continue_preserves_existing_pattern_core
+
+tests/multiagent/test_thread_manager_pattern_core.py::test_safety_patch_preserves_pattern_core_and_sets_safety_need
+
+tests/multiagent/test_thread_manager_pattern_core.py::test_diagnostics_contains_semantic_frame_block
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_pattern_core.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_thread_state_contracts.py::test_thread_state_updated_not_earlier_than_created
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_contracts.py:67: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created = datetime.utcnow()
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:43: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "created_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:44: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "updated_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "created_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "updated_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_from_dict_backward_compatible
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:74: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "archived_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_invalid_active_frame_is_normalized
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:89: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    "archived_at": datetime.utcnow().isoformat(),
+
+
+
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\thread_storage.py:87: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    archived_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_thread_storage_persistence.py::test_ts_01_save_then_load_same_instance
+
+tests/multiagent/test_thread_storage_persistence.py::test_ts_02_save_then_load_new_instance
+
+tests/multiagent/test_thread_storage_persistence.py::test_ts_05_continuity_scenario
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_storage_persistence.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    now = datetime.utcnow()
+
+
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:40: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    updated_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    created_at=datetime.utcnow(),
+
+
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:78: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+    updated_at=datetime.utcnow(),
+
+
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+
+224 passed, 312 warnings in 19.30s
+
+python : 2026-05-08 10:05:42,275 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_prac
+
+tice\Text_transcription\bot_psychologist\data\threads
+
+At line:2 char:1
+
++ python bot_psychologist/scripts/run_quality_baseline.py --mode direct ...
+
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    + CategoryInfo          : NotSpecified: (2026-05-08 10:0...st\data\threads:String) [], RemoteException
+
+    + FullyQualifiedErrorId : NativeCommandError
+
+ 
+
+2026-05-08 10:05:42,277 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+
+gacy_graph: disabled
+
+2026-05-08 10:05:46,840 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:05:46,987 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=baseline_direct_qb-00
+
+2_1778216742
+
+2026-05-08 10:05:46,988 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=baseline_direct_qb-00
+
+2_1778216742
+
+2026-05-08 10:05:46,997 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=baseline_direct_qb
+
+-002_1778216742
+
+2026-05-08 10:05:46,999 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-002
+
+_1778216742 turns=0
+
+2026-05-08 10:05:47,112 | bot_agent.retriever | INFO | [RETRIEVAL] query='эя эяэяэяэяэя эяэяэяэяэя, эяэяэяэяэяэя эяэяэяэя эяэяэяэяэяэяэяэя эяэяэяэя эяэяэяэя
+
+эяэяэяэяэя эяэяэяэя' top_k=4 source=api
+
+2026-05-08 10:05:56,191 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:06:05,495 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying t
+
+o unpickle estimator TfidfTransformer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or 
+
+invalid results. Use at your own risk. For more info please refer to:
+
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+
+  warnings.warn(
+
+C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying t
+
+o unpickle estimator TfidfVectorizer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or i
+
+nvalid results. Use at your own risk. For more info please refer to:
+
+https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+
+  warnings.warn(
+
+2026-05-08 10:06:06,862 | bot_agent.retriever | INFO | [RETRIEVAL] TF-IDF loaded from cache (hash match)
+
+2026-05-08 10:06:12,712 | datasets | INFO | PyTorch version 2.8.0 available.
+
+2026-05-08 10:06:13,233 | sentence_transformers.SentenceTransformer | INFO | Load pretrained SentenceTransformer: intfl
+
+oat/multilingual-e5-base
+
+2026-05-08 10:06:18,624 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:06:18,624 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.8449 block_id=1bf29208-60d2-4d31-9509-
+
+4cab8d9167a7 title=5. эяэяэяэяэяэя эяэяэяэяэяэяэяэя. эяэя эяэяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэя эяэяэяэяэя. эяэяэя эяэяэяэяэяэя
+
+2026-05-08 10:06:18,624 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.8341 block_id=eb51e411-250c-49c8-abb0-
+
+99bf253ce5b7 title=6. эяэяэяэяэя эяэяэяэяэя эяэяэяэяэя эя эяэяэяэяэяэя эяэяэяэяэя. эяэяэяэяэяэя: эяэя эяэя эяэяэяэяэя. эяэя
+
+2026-05-08 10:06:18,624 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.8321 block_id=6113183d-aa70-47b6-9c89-
+
+9df1ec7aaf04 title=6. эя эяэяэяэяэя эяэяэяэяэя эяэяэяэя эяэяэяэя эяэяэяэяэяэя: эяэяэяэя эяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэяэя 
+
+2026-05-08 10:06:18,625 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.8318 block_id=f8d0e1f3-1ecd-4c82-9f79-
+
+b08d001e067b title=4. эяэяэяэя эяэяэяэяэяэя эяэяэяэяэяэяэяэя эяэяэя эяэяэяэя эяэяэяэяэяэяэяэяэя эя эяэяэяэяэяэяэяэя. эяэяэяэяэя
+
+2026-05-08 10:06:18,625 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эя эяэяэяэяэя эяэяэяэяэя, 
+
+эяэяэяэяэяэя эяэяэяэя эяэяэяэяэяэяэяэя эяэяэяэя эяэяэяэяэяэяэяэяэя...'
+
+2026-05-08 10:06:18,625 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-002
+
+_1778216742 turns=0
+
+2026-05-08 10:06:18,625 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-002
+
+_1778216742 turns=0
+
+2026-05-08 10:06:18,625 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-002
+
+_1778216742 turns=0
+
+2026-05-08 10:06:18,625 | bot_agent.semantic_memory | INFO | [SEMANTIC] loading embedding model: intfloat/multilingual-
+
+e5-base
+
+2026-05-08 10:06:18,628 | sentence_transformers.SentenceTransformer | INFO | Load pretrained SentenceTransformer: intfl
+
+oat/multilingual-e5-base
+
+2026-05-08 10:06:23,021 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding model loaded
+
+2026-05-08 10:06:23,021 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-002_177
+
+8216742 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:06:28,376 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:06:28,382 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-002
+
+_1778216742 turns=0
+
+2026-05-08 10:06:28,382 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-002_17782
+
+16742 turns_before=0
+
+2026-05-08 10:06:28,382 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-002_177
+
+8216742 turn_index=1
+
+2026-05-08 10:06:28,382 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+02_1778216742 turn_index=1
+
+2026-05-08 10:06:28,549 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=1
+
+2026-05-08 10:06:28,562 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-002_1778216742
+
+ turns=1 reason=addturn
+
+2026-05-08 10:06:28,572 | openai._base_client | INFO | Retrying request to /responses in 0.404010 seconds
+
+2026-05-08 10:06:32,365 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:06:32,367 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=baseline_direct_qb-00
+
+5_1778216788
+
+2026-05-08 10:06:32,368 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=baseline_direct_qb-00
+
+5_1778216788
+
+2026-05-08 10:06:32,378 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=baseline_direct_qb
+
+-005_1778216788
+
+2026-05-08 10:06:32,379 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-005
+
+_1778216788 turns=0
+
+2026-05-08 10:06:32,379 | bot_agent.retriever | INFO | [RETRIEVAL] query='эяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэяэяэя эяэяэяэяэяэя эяэяэя, эяэяэяэяэя эяэяэяэяэяэя
+
+эяэяэя эяэяэяэяэяэяэяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэяэяэя' top_k=4 source=api
+
+2026-05-08 10:06:41,394 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:06:50,633 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:06:50,687 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:06:50,687 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.8322 block_id=38447c8c-255b-4423-82d2-
+
+ab9106bec6fa title=эяэяэяэяэяэяэя эя эяэяэяэяэяэя
+
+2026-05-08 10:06:50,687 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.8277 block_id=bfa832fd-9008-4e4d-b600-
+
+3e316533e40e title=5. эяэя эяэяэяэяэяэяэяэяэяэяэяэя эяэяэя эяэяэяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэя эяэяэяэя эяэяэя-эяэя эя эяэя
+
+2026-05-08 10:06:50,687 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.8245 block_id=c5b928f5-e611-4885-9fc7-
+
+3b9954dc1fca title=эяэяэяэяэяэяэяэя 7: эяэяэяэяэяэя эяэя эяэяэяэяэяэя
+
+2026-05-08 10:06:50,687 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.8235 block_id=8c753eaa-49a0-423d-a1ac-
+
+7886b322674e title=3. эяэяэяэяэя эя эяэя эяэяэяэяэяэяэяэяэя. эяэя эяэяэяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэяэяэя. эяэяэяэяэяэяэя.
+
+2026-05-08 10:06:50,687 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эяэяэя эяэяэяэяэя эяэяэяэяэя
+
+эяэяэяэяэя эяэяэяэяэяэя эяэяэя, эяэяэяэяэя эяэяэяэяэяэяэяэяэя эя...'
+
+2026-05-08 10:06:50,687 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-005
+
+_1778216788 turns=0
+
+2026-05-08 10:06:50,688 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-005
+
+_1778216788 turns=0
+
+2026-05-08 10:06:50,688 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-005
+
+_1778216788 turns=0
+
+2026-05-08 10:06:50,688 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-005_177
+
+8216788 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:06:50,690 | openai._base_client | INFO | Retrying request to /responses in 0.432826 seconds
+
+2026-05-08 10:06:59,886 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:06:59,888 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-005
+
+_1778216788 turns=0
+
+2026-05-08 10:06:59,888 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-005_17782
+
+16788 turns_before=0
+
+2026-05-08 10:06:59,888 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-005_177
+
+8216788 turn_index=1
+
+2026-05-08 10:06:59,888 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+05_1778216788 turn_index=1
+
+2026-05-08 10:07:00,007 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=1
+
+2026-05-08 10:07:00,021 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-005_1778216788
+
+ turns=1 reason=addturn
+
+2026-05-08 10:07:00,030 | openai._base_client | INFO | Retrying request to /responses in 0.456891 seconds
+
+2026-05-08 10:07:03,764 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:07:03,767 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=baseline_direct_qb-01
+
+0_1778216820
+
+2026-05-08 10:07:03,767 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=baseline_direct_qb-01
+
+0_1778216820
+
+2026-05-08 10:07:03,777 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=baseline_direct_qb
+
+-010_1778216820
+
+2026-05-08 10:07:03,778 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=0
+
+2026-05-08 10:07:03,779 | bot_agent.retriever | INFO | [RETRIEVAL] query='эяэяэя эяэяэяэяэя эяэяэя.' top_k=4 source=api
+
+2026-05-08 10:07:12,820 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:07:22,098 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:07:22,153 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:07:22,153 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.7993 block_id=1bf29208-60d2-4d31-9509-
+
+4cab8d9167a7 title=5. эяэяэяэяэяэя эяэяэяэяэяэяэяэя. эяэя эяэяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэя эяэяэяэяэя. эяэяэя эяэяэяэяэяэя
+
+2026-05-08 10:07:22,153 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.7979 block_id=47e1b2d5-9646-4ca7-a433-
+
+03dc71572b60 title=эяэяэяэяэяэяэяэя 3: эяэяэяэяэяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:07:22,153 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.7979 block_id=b7cce72f-0938-4789-9d49-
+
+8c1885e41d70 title=эяэяэяэяэяэяэяэяэя = эяэяэяэяэяэяэяэяэяэяэяэя
+
+2026-05-08 10:07:22,153 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.7968 block_id=89a49bba-279a-4b46-b7f4-
+
+01a5ccc36f7b title=эяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:07:22,153 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эяэяэя эяэяэяэяэя эяэяэя..
+
+..'
+
+2026-05-08 10:07:22,153 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=0
+
+2026-05-08 10:07:22,153 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=0
+
+2026-05-08 10:07:22,154 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=0
+
+2026-05-08 10:07:22,154 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-010_177
+
+8216820 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:07:22,156 | openai._base_client | INFO | Retrying request to /responses in 0.475103 seconds
+
+2026-05-08 10:07:27,495 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:07:27,507 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=0
+
+2026-05-08 10:07:27,507 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-010_17782
+
+16820 turns_before=0
+
+2026-05-08 10:07:27,507 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-010_177
+
+8216820 turn_index=1
+
+2026-05-08 10:07:27,507 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+10_1778216820 turn_index=1
+
+2026-05-08 10:07:27,627 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=1
+
+2026-05-08 10:07:27,644 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-010_1778216820
+
+ turns=1 reason=addturn
+
+2026-05-08 10:07:30,673 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:07:30,676 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:30,676 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:30,676 | bot_agent.retriever | INFO | [RETRIEVAL] query='эяэяэяэя эяэяэяэяэяэяэяэя эяэяэяэяэяэя. эяэяэя эяэяэяэяэя эяэяэя.' top_k=4
+
+ source=api
+
+2026-05-08 10:07:39,733 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:07:48,971 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:07:49,030 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:07:49,030 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.8207 block_id=1bf29208-60d2-4d31-9509-
+
+4cab8d9167a7 title=5. эяэяэяэяэяэя эяэяэяэяэяэяэяэя. эяэя эяэяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэя эяэяэяэяэя. эяэяэя эяэяэяэяэяэя
+
+2026-05-08 10:07:49,030 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.8201 block_id=8d0af82b-b98c-4118-9a0e-
+
+b33121c21e7d title=эяэяэяэяэяэяэя 1: эяэяэяэяэя эяэяэяэяэяэяэя
+
+2026-05-08 10:07:49,030 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.8157 block_id=e7ff6e37-6e4b-4074-aeef-
+
+77b529905f6e title=6. эяэяэя эяэя эяэяэяэяэяэя? эяэяэя эяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэяэяэя эя эя эяэяэяэя эяэя эяэяэяэяэя
+
+2026-05-08 10:07:49,030 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.8148 block_id=89a49bba-279a-4b46-b7f4-
+
+01a5ccc36f7b title=эяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:07:49,030 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эяэяэяэя эяэяэяэяэяэяэяэя эя
+
+эяэяэяэяэя. эяэяэя эяэяэяэяэя эяэяэя....'
+
+2026-05-08 10:07:49,031 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:49,031 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:49,031 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:49,031 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-010_177
+
+8216820 top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:07:49,089 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=1
+
+2026-05-08 10:07:49,089 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=baseline_direct_qb-010_1778
+
+216820 results=1 threshold=0.600 max_similarity=0.778
+
+2026-05-08 10:07:49,089 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=1 similarity=0.778
+
+2026-05-08 10:07:55,107 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:07:55,119 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=1
+
+2026-05-08 10:07:55,119 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-010_17782
+
+16820 turns_before=1
+
+2026-05-08 10:07:55,119 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-010_177
+
+8216820 turn_index=2
+
+2026-05-08 10:07:55,119 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+10_1778216820 turn_index=2
+
+2026-05-08 10:07:55,229 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=2
+
+2026-05-08 10:07:55,243 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-010_1778216820
+
+ turns=2 reason=addturn
+
+2026-05-08 10:08:00,332 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:08:00,334 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:00,334 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:00,335 | bot_agent.retriever | INFO | [RETRIEVAL] query='эяэяэяэяэя эяэяэя-эяэя эяэяэяэяэяэя эяэяэяэяэяэяэя эяэя эяэяэяэяэяэя? эяэяэя эяэя
+
+эяэяэя эяэяэя.' top_k=4 source=api
+
+2026-05-08 10:08:09,466 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:08:18,691 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:08:18,757 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:08:18,757 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.8291 block_id=e7ff6e37-6e4b-4074-aeef-
+
+77b529905f6e title=6. эяэяэя эяэя эяэяэяэяэяэя? эяэяэя эяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэяэяэя эя эя эяэяэяэя эяэя эяэяэяэяэя
+
+2026-05-08 10:08:18,757 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.8257 block_id=8d0af82b-b98c-4118-9a0e-
+
+b33121c21e7d title=эяэяэяэяэяэяэя 1: эяэяэяэяэя эяэяэяэяэяэяэя
+
+2026-05-08 10:08:18,757 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.8253 block_id=36af4079-14cf-4189-ac36-
+
+5e2db8eb0139 title=4. эяэяэяэя эяэяэяэяэяэя: эяэяэяэя эяэяэя эяэяэяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэя эяэяэяэяэя эяэяэяэяэяэя эя 
+
+2026-05-08 10:08:18,757 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.8225 block_id=65ab6053-7d74-4b6d-be36-
+
+4c183e330a64 title=6. эяэяэя эяэяэя, эяэяэяэяэяэяэя эяэяэяэяэяэя эяэяэяэяэяэяэя эяэяэяэяэяэя: эяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:08:18,758 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эяэяэяэяэя эяэяэя-эяэя эяэя
+
+эяэяэяэя эяэяэяэяэяэяэя эяэя эяэяэяэяэяэя? эяэяэя эяэяэяэяэя эя...'
+
+2026-05-08 10:08:18,758 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:18,758 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:18,758 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:18,758 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-010_177
+
+8216820 top_k=3 min_similarity=0.600 total_embeddings=2 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:08:18,826 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=2
+
+2026-05-08 10:08:18,826 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=baseline_direct_qb-010_1778
+
+216820 results=2 threshold=0.600 max_similarity=0.814
+
+2026-05-08 10:08:18,827 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.814
+
+2026-05-08 10:08:18,827 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=1 similarity=0.799
+
+2026-05-08 10:08:27,951 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:08:27,953 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-010
+
+_1778216820 turns=2
+
+2026-05-08 10:08:27,953 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-010_17782
+
+16820 turns_before=2
+
+2026-05-08 10:08:27,953 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-010_177
+
+8216820 turn_index=3
+
+2026-05-08 10:08:27,953 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+10_1778216820 turn_index=3
+
+2026-05-08 10:08:28,068 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=3
+
+2026-05-08 10:08:28,082 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-010_1778216820
+
+ turns=3 reason=addturn
+
+2026-05-08 10:08:28,091 | openai._base_client | INFO | Retrying request to /responses in 0.403828 seconds
+
+2026-05-08 10:08:31,586 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:08:31,588 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=baseline_direct_qb-01
+
+5_1778216908
+
+2026-05-08 10:08:31,588 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=baseline_direct_qb-01
+
+5_1778216908
+
+2026-05-08 10:08:31,598 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=baseline_direct_qb
+
+-015_1778216908
+
+2026-05-08 10:08:31,599 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=0
+
+2026-05-08 10:08:31,600 | bot_agent.retriever | INFO | [RETRIEVAL] query='эяэяэя эяэяэяэяэяэяэя эяэяэяэяэяэяэяэя эяэяэяэяэяэяэяэя.' top_k=4 sourc
+
+e=api
+
+2026-05-08 10:08:40,662 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:08:49,909 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:08:49,964 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:08:49,964 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.8152 block_id=b2f0b63d-dd7c-4ab5-ada8-
+
+a3a821030015 title=эяэяэяэяэяэяэя эя эяэяэяэяэяэя
+
+2026-05-08 10:08:49,964 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.8065 block_id=89a49bba-279a-4b46-b7f4-
+
+01a5ccc36f7b title=эяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:08:49,964 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.8045 block_id=9e208486-6b68-459b-8e68-
+
+52931dfc1e1d title=эяэяэяэяэяэяэяэяэя эя эяэяэяэяэя 7: эяэяэяэя эяэяэяэяэяэяэя эяэяэяэяэяэя эяэя эяэяэяэяэяэяэя
+
+2026-05-08 10:08:49,964 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.8035 block_id=e7ff6e37-6e4b-4074-aeef-
+
+77b529905f6e title=6. эяэяэя эяэя эяэяэяэяэяэя? эяэяэя эяэяэяэяэяэяэя эяэя эяэяэяэяэяэяэяэяэя эя эя эяэяэяэя эяэя эяэяэяэяэя
+
+2026-05-08 10:08:49,964 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эяэяэя эяэяэяэяэяэяэя эяэяэя
+
+эяэяэяэяэя эяэяэяэяэяэяэяэя....'
+
+2026-05-08 10:08:49,964 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=0
+
+2026-05-08 10:08:49,964 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=0
+
+2026-05-08 10:08:49,965 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=0
+
+2026-05-08 10:08:49,965 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-015_177
+
+8216908 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:08:49,967 | openai._base_client | INFO | Retrying request to /responses in 0.449942 seconds
+
+2026-05-08 10:08:58,669 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:08:58,681 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=0
+
+2026-05-08 10:08:58,681 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-015_17782
+
+16908 turns_before=0
+
+2026-05-08 10:08:58,681 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-015_177
+
+8216908 turn_index=1
+
+2026-05-08 10:08:58,681 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+15_1778216908 turn_index=1
+
+2026-05-08 10:08:58,774 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=1
+
+2026-05-08 10:08:58,787 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-015_1778216908
+
+ turns=1 reason=addturn
+
+2026-05-08 10:09:01,646 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:09:01,649 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:01,649 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:01,649 | bot_agent.retriever | INFO | [RETRIEVAL] query='эя эяэяэяэяэя эяэяэя эяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэяэя эяэяэяэяэяэяэяэяэяэя.' t
+
+op_k=4 source=api
+
+2026-05-08 10:09:10,706 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:09:19,964 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:09:20,024 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:09:20,024 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.7995 block_id=b36255b9-54dd-49ea-8c11-
+
+2f76084c7041 title=эяэяэяэяэяэяэяэяэя эя эяэяэяэяэя 2: эяэяэяэяэя эяэяэяэяэяэяэя
+
+2026-05-08 10:09:20,024 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.7968 block_id=52ea832b-73b4-4cd1-bcfd-
+
+a9b1690e1930 title=эяэяэяэяэяэяэяэяэя эя эяэяэяэяэя 3
+
+2026-05-08 10:09:20,024 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.7869 block_id=1e41c60b-32fa-4db0-95b6-
+
+f11f70742d5a title=эяэяэяэяэяэяэяэяэя эя эяэяэяэяэя 4: эяэяэяэя эяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:09:20,025 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.7863 block_id=60eaac5b-6cd0-4a7c-9e7f-
+
+52b182d2542d title=4. эяэяэяэяэяэяэя: эяэяэяэя эяэя эяэяэяэяэя эя эяэяэяэяэя эяэяэяэяэя эя эяэяэяэя эяэяэяэяэяэяэя эяэяэяэя 
+
+2026-05-08 10:09:20,025 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эя эяэяэяэяэя эяэяэя эяэяэя
+
+эяэяэяэяэяэяэяэя эяэяэяэяэяэя эяэяэяэяэяэяэяэяэяэя....'
+
+2026-05-08 10:09:20,025 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:20,025 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:20,025 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:20,025 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-015_177
+
+8216908 top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:09:20,088 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=1
+
+2026-05-08 10:09:20,088 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=baseline_direct_qb-015_1778
+
+216908 results=1 threshold=0.600 max_similarity=0.782
+
+2026-05-08 10:09:20,088 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=1 similarity=0.782
+
+2026-05-08 10:09:27,131 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:09:27,151 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=1
+
+2026-05-08 10:09:27,151 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-015_17782
+
+16908 turns_before=1
+
+2026-05-08 10:09:27,151 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-015_177
+
+8216908 turn_index=2
+
+2026-05-08 10:09:27,151 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+15_1778216908 turn_index=2
+
+2026-05-08 10:09:27,250 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=2
+
+2026-05-08 10:09:27,264 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-015_1778216908
+
+ turns=2 reason=addturn
+
+2026-05-08 10:09:30,144 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:09:30,147 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:30,148 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:30,148 | bot_agent.retriever | INFO | [RETRIEVAL] query='эя эяэяэяэяэяэя эяэяэяэяэя эяэяэяэя эяэяэяэяэяэяэяэя.' top_k=4 source
+
+=api
+
+2026-05-08 10:09:39,232 | bot_agent.retriever | WARNING | [RETRIEVAL] API retry 1/2 after transient error kind=connect
+
+2026-05-08 10:09:48,521 | bot_agent.retriever | WARNING | [RETRIEVAL] API fallback: kind=connect message=Bot_data_base 
+
+эяэяэяэяэяэяэяэяэяэя: http://localhost:8003
+
+2026-05-08 10:09:48,577 | bot_agent.retriever | INFO | [RETRIEVAL] semantic fallback found 4 blocks
+
+2026-05-08 10:09:48,577 | bot_agent.retriever | INFO | [RETRIEVAL]   [1] score=0.7955 block_id=8c753eaa-49a0-423d-a1ac-
+
+7886b322674e title=3. эяэяэяэяэя эя эяэя эяэяэяэяэяэяэяэяэя. эяэя эяэяэяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэяэяэя. эяэяэяэяэяэяэя.
+
+2026-05-08 10:09:48,577 | bot_agent.retriever | INFO | [RETRIEVAL]   [2] score=0.7932 block_id=6113183d-aa70-47b6-9c89-
+
+9df1ec7aaf04 title=6. эя эяэяэяэяэя эяэяэяэяэя эяэяэяэя эяэяэяэя эяэяэяэяэяэя: эяэяэяэя эяэяэя эяэяэяэяэя эяэяэяэяэяэяэяэяэя 
+
+2026-05-08 10:09:48,577 | bot_agent.retriever | INFO | [RETRIEVAL]   [3] score=0.7883 block_id=65ab6053-7d74-4b6d-be36-
+
+4c183e330a64 title=6. эяэяэя эяэяэя, эяэяэяэяэяэяэя эяэяэяэяэяэя эяэяэяэяэяэяэя эяэяэяэяэяэя: эяэяэяэяэяэяэяэяэяэяэя эяэяэяэяэя
+
+2026-05-08 10:09:48,577 | bot_agent.retriever | INFO | [RETRIEVAL]   [4] score=0.7820 block_id=cfa2dc97-c263-4714-bd74-
+
+2b5d77f25332 title=4. эяэяэяэяэяэяэяэяэя 4 эяэяэяэя
+
+2026-05-08 10:09:48,578 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='эя эяэяэяэяэяэя эяэяэяэяэя 
+
+эяэяэяэя эяэяэяэяэяэяэяэя....'
+
+2026-05-08 10:09:48,578 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:48,578 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:48,578 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:48,578 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=baseline_direct_qb-015_177
+
+8216908 top_k=3 min_similarity=0.600 total_embeddings=2 exclude_last_n=1 effective_exclude=0
+
+2026-05-08 10:09:48,639 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=2
+
+2026-05-08 10:09:48,640 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=baseline_direct_qb-015_1778
+
+216908 results=2 threshold=0.600 max_similarity=0.782
+
+2026-05-08 10:09:48,640 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.782
+
+2026-05-08 10:09:48,640 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=1 similarity=0.771
+
+2026-05-08 10:09:58,751 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+
+2026-05-08 10:09:58,756 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=baseline_direct_qb-015
+
+_1778216908 turns=2
+
+2026-05-08 10:09:58,757 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=baseline_direct_qb-015_17782
+
+16908 turns_before=2
+
+2026-05-08 10:09:58,757 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=baseline_direct_qb-015_177
+
+8216908 turn_index=3
+
+2026-05-08 10:09:58,757 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=baseline_direct_qb-0
+
+15_1778216908 turn_index=3
+
+2026-05-08 10:09:58,863 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=3
+
+2026-05-08 10:09:58,878 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=baseline_direct_qb-015_1778216908
+
+ turns=3 reason=addturn
+
+[OK] direct report JSON: C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.6.1_BASELINE_DIRECT_SMOKE_REPORT.json
+
+[OK] direct report MD:   C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.6.1_BASELINE_DIRECT_SMOKE_REPORT.md
+
+
+

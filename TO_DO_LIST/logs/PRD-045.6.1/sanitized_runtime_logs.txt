@@ -1,0 +1,20 @@
+﻿PRD-045.6.1 sanitized runtime log
+Generated UTC: 2026-05-08T05:10:56Z
+Runner timestamp UTC: 2026-05-08T05:09:58.886152Z
+Git SHA (runner): 89dd571
+Mode: direct
+Cases executed: 4
+Errors count: 0
+Average latency ms: 32000.62
+API retry count: 0
+API fallback count: 0
+
+Per-case diagnostics (sanitized):
+- QB-002: relation=new_thread, phase=clarify, mode=validate, duplicates_removed=0, reasons=
+- QB-005: relation=new_thread, phase=clarify, mode=practice, duplicates_removed=0, reasons=
+- QB-010: relation=continue, phase=clarify, mode=validate, duplicates_removed=2, reasons=semantic_duplicate_recent_substring,semantic_duplicate_token_overlap
+- QB-015: relation=new_thread, phase=clarify, mode=reflect, duplicates_removed=2, reasons=medium_turn_kept_full,semantic_duplicate_recent_substring
+
+Notes:
+- Raw user/assistant texts and keys intentionally omitted.
+- Baseline command produced reports successfully even though shell returned non-zero due stderr logging mode in PowerShell.

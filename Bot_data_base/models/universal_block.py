@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field, asdict
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 import uuid
 
 
@@ -44,6 +44,8 @@ class UniversalBlock:
     # === Служебные ===
     created_at: str = field(default_factory=lambda: datetime.utcnow().isoformat())
     pipeline_version: str = "bot_data_base_v1.0"
+    governance: dict[str, Any] = field(default_factory=dict)
+    chunking_quality: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -71,5 +73,7 @@ class UniversalBlock:
                 "chapter_title": self.chapter_title,
                 "chunk_index": self.chunk_index,
                 "source_type": self.source_type,
+                "governance": self.governance or {},
+                "chunking_quality": self.chunking_quality or {},
             },
         }

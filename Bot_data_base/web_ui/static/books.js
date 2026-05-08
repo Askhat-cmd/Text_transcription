@@ -75,6 +75,8 @@ document.getElementById('book-submit').addEventListener('click', async () => {
   form.append('author_id', document.getElementById('book-author-id').value);
   form.append('book_title', document.getElementById('book-title').value);
   form.append('language', document.getElementById('book-lang').value);
+  form.append('governance_profile', document.getElementById('book-governance-profile').value);
+  form.append('source_kind', document.getElementById('book-source-kind').value);
 
   const slot = document.getElementById('book-job');
   const job = await postForm('/api/ingest/book', form);

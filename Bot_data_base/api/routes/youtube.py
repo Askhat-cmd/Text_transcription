@@ -6,6 +6,7 @@ from jobs.job_manager import JobManager
 from pipeline_runner import PipelineRunner
 
 router = APIRouter()
+ALLOWED_GOVERNANCE_PROFILES = {"general_book", "practice_manual", "architecture_notes", "transcript"}
 
 _job_manager = JobManager()
 _runner: PipelineRunner | None = None
@@ -26,6 +27,14 @@ def _job_to_response(job) -> JobResponse:
 
 @router.post("/youtube", response_model=JobResponse)
 async def ingest_youtube(request: YouTubeIngestRequest, background_tasks: BackgroundTasks):
+    warnings: list[str] = []
+    profile = (request.governance_profile or "").strip().lower()
+    if profile not in ALLOWED_GOVERNANCE_PROFILES:
+        warnings.append(
+            f"invalid governance_profile '{request.governance_profile}' -> fallback 'transcript'"
+        )
+        profile = "transcript"
+
     runner = get_runner()
     ing = YouTubeIngestor()
     video_id = ing.extract_video_id(request.url)
@@ -40,7 +49,11 @@ async def ingest_youtube(request: YouTubeIngestRequest, background_tasks: Backgr
             author=request.author,
             author_id=request.author_id,
             job_id=job_id,
+            governance_profile=profile,
+            source_kind=request.source_kind or "transcript",
         )
+        if warnings:
+            result.setdefault("warnings", []).extend(warnings)
         await _job_manager.update_job(
             job_id=job_id,
             status=result.get("status", "done"),

@@ -14,6 +14,8 @@ from ingestors.book_ingestor import BookIngestor
 from ingestors.youtube_ingestor import YouTubeIngestor
 from jobs.job_manager import JobManager
 from models.universal_block import UniversalBlock
+from governance.chunking_quality import build_chunking_quality_v1
+from governance.governance_adapter import apply_governance_to_blocks_v1, normalize_governance_profile
 from processors.block_normalizer import BlockNormalizer
 from processors.sd_labeler import SDLabeler
 from storage.chroma_manager import ChromaManager
@@ -64,7 +66,15 @@ class PipelineRunner:
 
         self.job_manager = job_manager
 
-    async def run_youtube(self, url: str, author: str, author_id: str, job_id: str) -> dict:
+    async def run_youtube(
+        self,
+        url: str,
+        author: str,
+        author_id: str,
+        job_id: str,
+        governance_profile: str | None = "transcript",
+        source_kind: str | None = "transcript",
+    ) -> dict:
         await self._update_progress(job_id, 0, "downloading")
         video_id = self.youtube_ingestor.extract_video_id(url)
         if not video_id:
@@ -115,7 +125,20 @@ class PipelineRunner:
             await self._update_progress(job_id, 60, "normalizing")
             blocks = self.block_normalizer.normalize(blocks)
 
-            await self._update_progress(job_id, 75, "exporting")
+            await self._update_progress(job_id, 70, "governance")
+            profile = normalize_governance_profile(governance_profile, fallback="transcript")
+            blocks = apply_governance_to_blocks_v1(
+                blocks=blocks,
+                source_id=video_id,
+                source_title=metadata.get("title", ""),
+                source_type="youtube",
+                source_kind=source_kind or "transcript",
+                governance_profile=profile,
+            )
+            for block in blocks:
+                block.chunking_quality = build_chunking_quality_v1(block)
+
+            await self._update_progress(job_id, 78, "exporting")
             json_path = self.json_exporter.export(blocks, video_id, "youtube")
 
             await self._update_progress(job_id, 90, "indexing")
@@ -158,6 +181,8 @@ class PipelineRunner:
         book_title: str,
         language: str,
         job_id: str,
+        governance_profile: str | None = "general_book",
+        source_kind: str | None = "book",
     ) -> dict:
         await self._update_progress(job_id, 0, "validating")
         valid, err = self.book_ingestor.validate_file(file_path)
@@ -207,7 +232,20 @@ class PipelineRunner:
             await self._update_progress(job_id, 70, "normalizing")
             blocks = self.block_normalizer.normalize(blocks)
 
-            await self._update_progress(job_id, 80, "exporting")
+            await self._update_progress(job_id, 76, "governance")
+            profile = normalize_governance_profile(governance_profile, fallback="general_book")
+            blocks = apply_governance_to_blocks_v1(
+                blocks=blocks,
+                source_id=source_id,
+                source_title=book_title,
+                source_type="book",
+                source_kind=source_kind or "book",
+                governance_profile=profile,
+            )
+            for block in blocks:
+                block.chunking_quality = build_chunking_quality_v1(block)
+
+            await self._update_progress(job_id, 82, "exporting")
             json_path = self.json_exporter.export(blocks, source_id, "book")
 
             await self._update_progress(job_id, 90, "indexing")

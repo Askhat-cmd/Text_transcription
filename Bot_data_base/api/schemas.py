@@ -6,6 +6,8 @@ class YouTubeIngestRequest(BaseModel):
     url: str
     author: str
     author_id: str
+    governance_profile: Optional[str] = "transcript"
+    source_kind: Optional[str] = "transcript"
 
 
 class BookIngestRequest(BaseModel):
@@ -62,6 +64,7 @@ class ChunkResult(BaseModel):
     end_time: Optional[int] = None
     block_title: Optional[str] = None
     keywords: List[str]
+    governance: dict = Field(default_factory=dict)
 
 
 class QueryResponse(BaseModel):

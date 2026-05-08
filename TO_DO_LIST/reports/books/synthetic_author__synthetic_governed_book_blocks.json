@@ -1,0 +1,195 @@
+{
+  "schema_version": "bot_data_base_v1.0",
+  "source_id": "synthetic_author__synthetic_governed_book",
+  "source_type": "book",
+  "generated_at": "2026-05-08T09:46:39.283717",
+  "blocks_count": 3,
+  "blocks": [
+    {
+      "id": "59ae9073-1656-47b9-aa7f-29b6a2fe9bbf",
+      "text": "??????? ????????? ????? ???????? ??? ??????????? ?????????? ?????? ????????.",
+      "title": "????? 1. ?????????",
+      "summary": "",
+      "sd_level": "GREEN",
+      "sd_confidence": 0.0,
+      "complexity": 0.5,
+      "source": "book:synthetic_author__synthetic_governed_book",
+      "metadata": {
+        "author": "Synthetic Author",
+        "author_id": "synthetic_author",
+        "source_title": "Synthetic Governed Book",
+        "language": "ru",
+        "published_date": "",
+        "chapter_title": "????? 1. ?????????",
+        "chunk_index": 0,
+        "source_type": "book",
+        "governance": {
+          "schema_version": "governance_v1",
+          "chunk_type": "theory",
+          "allowed_use": [
+            "diagnostic_lens",
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "requires_grounding",
+            "not_for_direct_quote"
+          ],
+          "lens_family": [],
+          "tags": [
+            "theory"
+          ],
+          "practice_metadata": {},
+          "governance_notes": [],
+          "source_trace": {
+            "source_id": "synthetic_author__synthetic_governed_book",
+            "source_title": "Synthetic Governed Book",
+            "source_type": "book",
+            "source_kind": "practice_manual",
+            "chunk_index": 0,
+            "adapter": "bot_data_base_governance_adapter_v1"
+          }
+        },
+        "chunking_quality": {
+          "schema_version": "chunking_quality_v1",
+          "char_count": 76,
+          "approx_token_count": 19,
+          "has_heading": true,
+          "has_summary": false,
+          "possible_practice_split": false,
+          "possible_context_fragment": false,
+          "too_short": true,
+          "too_long": false,
+          "quality_notes": [
+            "too_short",
+            "missing_summary"
+          ]
+        }
+      }
+    },
+    {
+      "id": "819487d6-ce57-49e4-a83f-05ef1a6bd68f",
+      "text": "????: ???????? ???? ? ??????? ????????.\n?????: 3 ??????.\n??? 1: ?????????? ?????.\n??? 2: ?????? ????????? ?????.\n??? 3: ?????? ???? ????????? ????????? ???.",
+      "title": "????????: 3 ?????? ??????????? ? ????",
+      "summary": "",
+      "sd_level": "GREEN",
+      "sd_confidence": 0.0,
+      "complexity": 0.5,
+      "source": "book:synthetic_author__synthetic_governed_book",
+      "metadata": {
+        "author": "Synthetic Author",
+        "author_id": "synthetic_author",
+        "source_title": "Synthetic Governed Book",
+        "language": "ru",
+        "published_date": "",
+        "chapter_title": "????????: 3 ?????? ??????????? ? ????",
+        "chunk_index": 1,
+        "source_type": "book",
+        "governance": {
+          "schema_version": "governance_v1",
+          "chunk_type": "theory",
+          "allowed_use": [
+            "diagnostic_lens",
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "requires_grounding",
+            "not_for_direct_quote"
+          ],
+          "lens_family": [],
+          "tags": [
+            "theory"
+          ],
+          "practice_metadata": {},
+          "governance_notes": [],
+          "source_trace": {
+            "source_id": "synthetic_author__synthetic_governed_book",
+            "source_title": "Synthetic Governed Book",
+            "source_type": "book",
+            "source_kind": "practice_manual",
+            "chunk_index": 1,
+            "adapter": "bot_data_base_governance_adapter_v1"
+          }
+        },
+        "chunking_quality": {
+          "schema_version": "chunking_quality_v1",
+          "char_count": 156,
+          "approx_token_count": 39,
+          "has_heading": true,
+          "has_summary": false,
+          "possible_practice_split": false,
+          "possible_context_fragment": false,
+          "too_short": true,
+          "too_long": false,
+          "quality_notes": [
+            "too_short",
+            "missing_summary"
+          ]
+        }
+      }
+    },
+    {
+      "id": "1506796f-7c51-43cb-b843-60e823df8fc0",
+      "text": "??? ???????? ?? ???????? ??????????? ? ?? ???????????? ??? ?????? ???????.",
+      "title": "????????????",
+      "summary": "",
+      "sd_level": "GREEN",
+      "sd_confidence": 0.0,
+      "complexity": 0.5,
+      "source": "book:synthetic_author__synthetic_governed_book",
+      "metadata": {
+        "author": "Synthetic Author",
+        "author_id": "synthetic_author",
+        "source_title": "Synthetic Governed Book",
+        "language": "ru",
+        "published_date": "",
+        "chapter_title": "????????????",
+        "chunk_index": 2,
+        "source_type": "book",
+        "governance": {
+          "schema_version": "governance_v1",
+          "chunk_type": "theory",
+          "allowed_use": [
+            "diagnostic_lens",
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "requires_grounding",
+            "not_for_direct_quote"
+          ],
+          "lens_family": [],
+          "tags": [
+            "theory"
+          ],
+          "practice_metadata": {},
+          "governance_notes": [],
+          "source_trace": {
+            "source_id": "synthetic_author__synthetic_governed_book",
+            "source_title": "Synthetic Governed Book",
+            "source_type": "book",
+            "source_kind": "practice_manual",
+            "chunk_index": 2,
+            "adapter": "bot_data_base_governance_adapter_v1"
+          }
+        },
+        "chunking_quality": {
+          "schema_version": "chunking_quality_v1",
+          "char_count": 74,
+          "approx_token_count": 18,
+          "has_heading": true,
+          "has_summary": false,
+          "possible_practice_split": false,
+          "possible_context_fragment": false,
+          "too_short": true,
+          "too_long": false,
+          "quality_notes": [
+            "too_short",
+            "missing_summary"
+          ]
+        }
+      }
+    }
+  ]
+}

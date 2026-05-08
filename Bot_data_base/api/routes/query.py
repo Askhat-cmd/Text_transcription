@@ -72,6 +72,30 @@ def _build_where_filter(request: QueryRequest) -> dict:
     return where_filter
 
 
+def _split_csv(value: object) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    raw = str(value).strip()
+    if not raw:
+        return []
+    return [part.strip() for part in raw.split(",") if part.strip()]
+
+
+def _parse_bool(value: object) -> bool | None:
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    normalized = str(value).strip().lower()
+    if normalized in {"1", "true", "yes", "on"}:
+        return True
+    if normalized in {"0", "false", "no", "off"}:
+        return False
+    return None
+
+
 def _extract_candidates(results: dict) -> List[dict]:
     documents = (results.get("documents") or [[]])[0]
     metadatas = (results.get("metadatas") or [[]])[0]
@@ -143,6 +167,22 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
                 author_name = source.author
         except Exception:
             author_name = author_name or ""
+    governance_schema = str(meta.get("governance_schema_version") or "").strip()
+    governance = {}
+    if governance_schema:
+        governance = {
+            "schema_version": governance_schema,
+            "chunk_type": str(meta.get("governance_chunk_type") or "").strip(),
+            "allowed_use": _split_csv(meta.get("governance_allowed_use")),
+            "safety_flags": _split_csv(meta.get("governance_safety_flags")),
+            "lens_family": _split_csv(meta.get("governance_lens_family")),
+            "low_resource_safe": _parse_bool(meta.get("governance_low_resource_safe")),
+            "not_for_direct_quote": _parse_bool(meta.get("governance_not_for_direct_quote")),
+            "source_style_not_user_facing": _parse_bool(
+                meta.get("governance_source_style_not_user_facing")
+            ),
+        }
+
     return ChunkResult(
         chunk_id=candidate.get("chunk_id") or "",
         content=candidate.get("content") or "",
@@ -156,6 +196,7 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
         end_time=meta.get("end_time"),
         block_title=meta.get("title") or meta.get("chapter_title") or meta.get("source_title"),
         keywords=meta.get("keywords") or [],
+        governance=governance,
     )
 
 

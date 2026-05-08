@@ -69,6 +69,18 @@ class ChromaManager:
         return bool(res and res.get("ids"))
 
     def _to_metadata(self, block: UniversalBlock) -> dict:
+        governance = block.governance or {}
+        allowed_use = governance.get("allowed_use") or []
+        safety_flags = governance.get("safety_flags") or []
+        lens_family = governance.get("lens_family") or []
+        practice_metadata = governance.get("practice_metadata") or {}
+
+        def _csv(items: list) -> str:
+            return ",".join([str(item).strip() for item in items if str(item).strip()])
+
+        def _bool_to_str(value: object) -> str:
+            return "true" if bool(value) else "false"
+
         return {
             "sd_level": block.sd_level,
             "author_id": block.author_id,
@@ -81,6 +93,20 @@ class ChromaManager:
             "source_title": block.source_title,
             "chapter_title": block.chapter_title,
             "chunk_index": block.chunk_index,
+            "governance_schema_version": str(governance.get("schema_version") or ""),
+            "governance_chunk_type": str(governance.get("chunk_type") or ""),
+            "governance_allowed_use": _csv(allowed_use),
+            "governance_safety_flags": _csv(safety_flags),
+            "governance_lens_family": _csv(lens_family),
+            "governance_low_resource_safe": _bool_to_str(
+                practice_metadata.get("low_resource_safe")
+            ),
+            "governance_not_for_direct_quote": _bool_to_str(
+                "not_for_direct_quote" in safety_flags
+            ),
+            "governance_source_style_not_user_facing": _bool_to_str(
+                "source_style_not_user_facing" in safety_flags
+            ),
         }
 
     def _init_embedding_model(self) -> SentenceTransformer:

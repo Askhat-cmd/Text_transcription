@@ -1,0 +1,58 @@
+{
+  "source_id": "synthetic_author__synthetic_governed_book",
+  "blocks_count": 3,
+  "json_export_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\books\\synthetic_author__synthetic_governed_book_blocks.json",
+  "query_status": 200,
+  "query_total_found": 3,
+  "returned_chunks": 3,
+  "first_chunk_governance": {
+    "schema_version": "governance_v1",
+    "chunk_type": "theory",
+    "allowed_use": [
+      "diagnostic_lens",
+      "writer_context",
+      "practice_suggestion"
+    ],
+    "safety_flags": [
+      "requires_grounding",
+      "not_for_direct_quote"
+    ],
+    "lens_family": [],
+    "low_resource_safe": false,
+    "not_for_direct_quote": true,
+    "source_style_not_user_facing": false
+  },
+  "chunk_type_counts": {
+    "theory": 3
+  },
+  "allowed_use_counts": {
+    "diagnostic_lens": 3,
+    "writer_context": 3,
+    "practice_suggestion": 3
+  },
+  "safety_flag_counts": {
+    "requires_grounding": 3,
+    "not_for_direct_quote": 3
+  },
+  "sample_chroma_metadata": {
+    "source_id": "synthetic_author__synthetic_governed_book",
+    "author_id": "synthetic_author",
+    "governance_not_for_direct_quote": "true",
+    "language": "ru",
+    "chapter_title": "????? 1. ?????????",
+    "governance_safety_flags": "requires_grounding,not_for_direct_quote",
+    "governance_source_style_not_user_facing": "false",
+    "title": "????? 1. ?????????",
+    "author": "Synthetic Author",
+    "governance_low_resource_safe": "false",
+    "governance_lens_family": "",
+    "governance_chunk_type": "theory",
+    "complexity": 0.5,
+    "governance_allowed_use": "diagnostic_lens,writer_context,practice_suggestion",
+    "governance_schema_version": "governance_v1",
+    "source_type": "book",
+    "sd_level": "GREEN",
+    "source_title": "Synthetic Governed Book",
+    "chunk_index": 0
+  }
+}

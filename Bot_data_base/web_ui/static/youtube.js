@@ -38,11 +38,19 @@ document.getElementById('yt-submit').addEventListener('click', async () => {
   const urls = document.getElementById('yt-urls').value.split('\n').map(u => u.trim()).filter(Boolean);
   const author = document.getElementById('yt-author').value;
   const authorId = document.getElementById('yt-author-id').value;
+  const governanceProfile = document.getElementById('yt-governance-profile').value;
+  const sourceKind = document.getElementById('yt-source-kind').value;
   const jobs = document.getElementById('yt-jobs');
   jobs.innerHTML = '';
 
   for (const url of urls) {
-    const job = await postJSON('/api/ingest/youtube', { url, author, author_id: authorId });
+    const job = await postJSON('/api/ingest/youtube', {
+      url,
+      author,
+      author_id: authorId,
+      governance_profile: governanceProfile,
+      source_kind: sourceKind,
+    });
     const slot = document.createElement('div');
     jobs.appendChild(slot);
     slot.appendChild(renderJob(job));

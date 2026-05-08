@@ -33,6 +33,7 @@ class RetrievedChunk:
     end_time: Optional[int]
     block_title: Optional[str]
     keywords: List[str]
+    governance: Optional[dict] = None
 
 
 class DBApiUnavailableError(RuntimeError):

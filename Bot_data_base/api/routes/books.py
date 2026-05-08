@@ -6,6 +6,7 @@ from jobs.job_manager import JobManager
 from pipeline_runner import PipelineRunner
 
 router = APIRouter()
+ALLOWED_GOVERNANCE_PROFILES = {"general_book", "practice_manual", "architecture_notes", "transcript"}
 
 _job_manager = JobManager()
 _runner: PipelineRunner | None = None
@@ -31,8 +32,16 @@ async def ingest_book(
     author_id: str = Form(...),
     book_title: str = Form(...),
     language: str = Form("ru"),
+    governance_profile: str = Form("general_book"),
+    source_kind: str = Form("book"),
     file: UploadFile = File(...),
 ):
+    warnings: list[str] = []
+    profile = (governance_profile or "").strip().lower()
+    if profile not in ALLOWED_GOVERNANCE_PROFILES:
+        warnings.append(f"invalid governance_profile '{governance_profile}' -> fallback 'general_book'")
+        profile = "general_book"
+
     runner = get_runner()
     temp_dir = "data/uploads/books"
     os.makedirs(temp_dir, exist_ok=True)
@@ -51,7 +60,11 @@ async def ingest_book(
             book_title=book_title,
             language=language,
             job_id=job_id,
+            governance_profile=profile,
+            source_kind=source_kind,
         )
+        if warnings:
+            result.setdefault("warnings", []).extend(warnings)
         await _job_manager.update_job(
             job_id=job_id,
             status=result.get("status", "done"),

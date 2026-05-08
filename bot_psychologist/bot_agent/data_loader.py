@@ -106,6 +106,8 @@ class Block:
     author_id: str = ""
     chunk_index: int = 0
     language: str = "ru"
+    governance: Dict = field(default_factory=dict)
+    chunking_quality: Dict = field(default_factory=dict)
 
     def __post_init__(self):
         if self.graph_entities is None:
@@ -493,6 +495,12 @@ class DataLoader:
                     youtube_link="",
                     keywords=[],
                     graph_entities=[],
+                    governance=meta.get("governance", {}) if isinstance(meta.get("governance"), dict) else {},
+                    chunking_quality=(
+                        meta.get("chunking_quality", {})
+                        if isinstance(meta.get("chunking_quality"), dict)
+                        else {}
+                    ),
                 )
                 blocks.append(block)
                 self._block_id_to_block[block.block_id] = block
@@ -689,6 +697,16 @@ class DataLoader:
             youtube_link="",
             keywords=block_data.get("keywords", []),
             graph_entities=block_data.get("graph_entities", []),
+            governance=(
+                block_data.get("governance", {})
+                if isinstance(block_data.get("governance"), dict)
+                else {}
+            ),
+            chunking_quality=(
+                block_data.get("chunking_quality", {})
+                if isinstance(block_data.get("chunking_quality"), dict)
+                else {}
+            ),
         )
 
     def _load_from_chromadb(self) -> None:

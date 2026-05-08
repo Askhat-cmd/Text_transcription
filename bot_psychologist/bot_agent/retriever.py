@@ -328,6 +328,8 @@ class SimpleRetriever:
             author_id=chunk.author_id or "",
             chunk_index=0,
             language="ru",
+            governance=chunk.governance or {},
+            chunking_quality={},
         )
 
     def _api_retrieve(

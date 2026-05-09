@@ -135,6 +135,8 @@ class SessionManager:
             conn.execute("ALTER TABLE conversation_turns ADD COLUMN user_feedback TEXT")
         if "user_rating" not in columns:
             conn.execute("ALTER TABLE conversation_turns ADD COLUMN user_rating INTEGER")
+        if "turn_metadata" not in columns:
+            conn.execute("ALTER TABLE conversation_turns ADD COLUMN turn_metadata TEXT")
 
     def create_session(
         self,
@@ -171,6 +173,7 @@ class SessionManager:
         user_state: Optional[str] = None,
         user_feedback: Optional[str] = None,
         user_rating: Optional[int] = None,
+        turn_metadata: Optional[Dict[str, Any]] = None,
         embedding: Optional[np.ndarray] = None,
     ) -> None:
         if timestamp is None:
@@ -182,8 +185,8 @@ class SessionManager:
                 """
                 INSERT INTO conversation_turns (
                     session_id, turn_number, user_input, bot_response, mode, timestamp,
-                    confidence, chunks_used, reasoning, user_state, user_feedback, user_rating
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    confidence, chunks_used, reasoning, user_state, user_feedback, user_rating, turn_metadata
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(session_id, turn_number) DO UPDATE SET
                     user_input = excluded.user_input,
                     bot_response = excluded.bot_response,
@@ -194,7 +197,8 @@ class SessionManager:
                     reasoning = excluded.reasoning,
                     user_state = excluded.user_state,
                     user_feedback = excluded.user_feedback,
-                    user_rating = excluded.user_rating
+                    user_rating = excluded.user_rating,
+                    turn_metadata = excluded.turn_metadata
                 """,
                 (
                     session_id,
@@ -209,6 +213,7 @@ class SessionManager:
                     user_state,
                     user_feedback,
                     user_rating,
+                    self._json_dumps(turn_metadata),
                 ),
             )
 
@@ -346,7 +351,7 @@ class SessionManager:
                 """
                 SELECT
                     turn_number, user_input, bot_response, mode, timestamp, confidence,
-                    chunks_used, reasoning, user_state, user_feedback, user_rating
+                    chunks_used, reasoning, user_state, user_feedback, user_rating, turn_metadata
                 FROM conversation_turns
                 WHERE session_id = ?
                 ORDER BY turn_number ASC
@@ -380,6 +385,9 @@ class SessionManager:
                     "user_state": turn["user_state"],
                     "user_feedback": turn["user_feedback"],
                     "user_rating": turn["user_rating"],
+                    "turn_metadata": (
+                        json.loads(turn["turn_metadata"]) if turn["turn_metadata"] else {}
+                    ),
                 }
             )
 

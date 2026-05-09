@@ -1,0 +1,10 @@
+﻿{
+  "fixture": "bot_psychologist/tests/fixtures/turn_summary_eval_cases.json",
+  "cases_total": 3,
+  "assertions": [
+    "pending -> deterministic fallback",
+    "ready -> llm_abstractive used",
+    "failed/hash_mismatch -> deterministic fallback"
+  ],
+  "generated_at": "2026-05-09"
+}

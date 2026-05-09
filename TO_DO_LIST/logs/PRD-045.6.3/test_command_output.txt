@@ -1,0 +1,8 @@
+﻿Command results:
+- pytest test_turn_llm_summary_*: 14 passed
+- pytest test_context_assembly.py: 7 passed
+- pytest test_writer_contract_context_package.py: 2 passed
+- pytest tests/multiagent/test_memory_retrieval.py: 33 passed
+- pytest tests/multiagent/test_orchestrator_e2e.py: 15 passed
+- pytest tests/multiagent -q: 232 passed
+- pytest test_knowledge_policy.py: 8 passed

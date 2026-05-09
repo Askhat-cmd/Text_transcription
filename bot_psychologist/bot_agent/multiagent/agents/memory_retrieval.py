@@ -250,6 +250,11 @@ class MemoryRetrievalAgent:
                         "user_input": str(getattr(turn, "user_input", "") or ""),
                         "bot_response": str(getattr(turn, "bot_response", "") or ""),
                         "user_state": str(getattr(turn, "user_state", "") or ""),
+                        "turn_llm_summary": (
+                            dict(getattr(turn, "turn_llm_summary", {}) or {})
+                            if isinstance(getattr(turn, "turn_llm_summary", None), dict)
+                            else {}
+                        ),
                     }
                 )
             return result

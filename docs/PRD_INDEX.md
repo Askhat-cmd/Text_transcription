@@ -21,6 +21,7 @@
 | PRD-046.0.5-RUN1-HF2 | Lens/validator real calibration | done | af63952 | unknown lens blocker removed, gate still failed on low-resource rule | TO_DO_LIST/reports/PRD-046.0.5-RUN1-HF2_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.5-RUN1-HF3 | Low-resource avoid_when calibration | done | c42a12c | hard validation 0/60 fails, production-candidate-ready | TO_DO_LIST/reports/PRD-046.0.5-RUN1-HF3_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.5-APPLY1 | Apply real enrichment overlay + Chroma refresh | done | 1ee5f12 | applied advisory llm_enrichment metadata (60 blocks), reindex 229 blocks, API/bot retrieval enrichment smoke | TO_DO_LIST/reports/PRD-046.0.5-APPLY1_IMPLEMENTATION_REPORT.md |
+| PRD-045.6.3 | Async Turn LLM Summary Store v1 | done | pending | async turn summary contract/service/processor + context assembly selection with deterministic fallback | TO_DO_LIST/reports/PRD-045.6.3_IMPLEMENTATION_REPORT.md |
 | PRD-DOCS-001 | Living project documentation v1 | done | 8912bb2 | create docs layer + report hygiene | TO_DO_LIST/reports/PRD-DOCS-001_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule

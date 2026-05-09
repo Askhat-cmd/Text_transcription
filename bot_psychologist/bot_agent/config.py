@@ -196,6 +196,20 @@ class Config:
     SUMMARIZER_FALLBACK_ON_EMPTY = os.getenv("SUMMARIZER_FALLBACK_ON_EMPTY", "True").lower() == "true"
     SUMMARIZER_FALLBACK_RETRIES = int(os.getenv("SUMMARIZER_FALLBACK_RETRIES", "2"))
 
+    # === Async turn LLM summary (PRD-045.6.3) ===
+    TURN_LLM_SUMMARY_ENABLED = os.getenv("TURN_LLM_SUMMARY_ENABLED", "False").lower() == "true"
+    TURN_LLM_SUMMARY_USE_IN_CONTEXT = (
+        os.getenv("TURN_LLM_SUMMARY_USE_IN_CONTEXT", "True").lower() == "true"
+    )
+    TURN_LLM_SUMMARY_PROVIDER = os.getenv("TURN_LLM_SUMMARY_PROVIDER", "disabled")
+    TURN_LLM_SUMMARY_MODEL = os.getenv("TURN_LLM_SUMMARY_MODEL", "gpt-4o-mini")
+    TURN_LLM_SUMMARY_MAX_INPUT_CHARS = int(os.getenv("TURN_LLM_SUMMARY_MAX_INPUT_CHARS", "6000"))
+    TURN_LLM_SUMMARY_MAX_SUMMARY_CHARS = int(os.getenv("TURN_LLM_SUMMARY_MAX_SUMMARY_CHARS", "700"))
+    TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN = int(os.getenv("TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN", "10"))
+    TURN_LLM_SUMMARY_TIMEOUT_SECONDS = float(os.getenv("TURN_LLM_SUMMARY_TIMEOUT_SECONDS", "20"))
+    TURN_LLM_SUMMARY_MAX_RETRIES = int(os.getenv("TURN_LLM_SUMMARY_MAX_RETRIES", "1"))
+    TURN_LLM_SUMMARY_DEBUG_PREVIEW_CHARS = int(os.getenv("TURN_LLM_SUMMARY_DEBUG_PREVIEW_CHARS", "160"))
+
     # === Session storage ===
     ENABLE_SESSION_STORAGE = os.getenv("ENABLE_SESSION_STORAGE", "True").lower() == "true"
     BOT_DB_PATH = Path(os.getenv("BOT_DB_PATH", "data/bot_sessions.db"))

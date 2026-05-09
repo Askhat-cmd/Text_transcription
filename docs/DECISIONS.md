@@ -39,8 +39,8 @@ Consequences: можно улучшать summaries без потери перв
 ## ADR-007 - Turn LLM summary must be async with deterministic fallback
 Status: accepted
 Context: синхронная summary-генерация может блокировать response path и деградировать UX.
-Decision: planned async turn summary with deterministic fallback.
-Consequences: улучшение semantic continuity без риска потери ответа при сбоях LLM.
+Decision: async per-turn summary реализуется как additive слой (`pending|ready|failed`) и используется в context assembly только при `ready+valid+hash-match`; иначе deterministic fallback.
+Consequences: semantic continuity улучшается без блокировки user-response path и без риска потери контекста при сбоях LLM/provider.
 
 ## ADR-008 - Diagnostic Center deferred until readiness gates pass
 Status: accepted

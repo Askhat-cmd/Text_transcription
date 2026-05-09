@@ -21,6 +21,11 @@ from .config import config
 from .semantic_memory import get_semantic_memory, SemanticMemory, TurnEmbedding
 from .storage import SessionManager
 from .working_state import WorkingState
+from .multiagent.turn_summary_service import (
+    build_pending_turn_summary_record,
+    generate_turn_llm_summary_v1,
+    should_summarize_turn,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -36,6 +41,7 @@ class ConversationTurn:
     concepts: List[str] = field(default_factory=list)
     user_feedback: Optional[str] = None  # positive/negative/neutral
     user_rating: Optional[int] = None  # 1-5
+    turn_llm_summary: Optional[Dict[str, Any]] = None
 
 
 class ConversationMemory:
@@ -167,6 +173,11 @@ class ConversationMemory:
                         concepts=concepts,
                         user_feedback=turn.get("user_feedback"),
                         user_rating=turn.get("user_rating"),
+                        turn_llm_summary=(
+                            dict((turn.get("turn_metadata") or {}).get("turn_llm_summary") or {})
+                            if isinstance((turn.get("turn_metadata") or {}).get("turn_llm_summary"), dict)
+                            else None
+                        ),
                     )
                 )
 
@@ -415,8 +426,21 @@ class ConversationMemory:
             user_state=user_state,
             bot_response=bot_response,
             blocks_used=blocks_used,
-            concepts=concepts or []
+            concepts=concepts or [],
+            turn_llm_summary=None,
         )
+
+        if should_summarize_turn(user_input, bot_response):
+            try:
+                pending = build_pending_turn_summary_record(
+                    user_input=user_input,
+                    assistant_response=bot_response,
+                    provider=str(getattr(config, "TURN_LLM_SUMMARY_PROVIDER", "disabled") or "disabled"),
+                    model=str(getattr(config, "TURN_LLM_SUMMARY_MODEL", "") or config.LLM_MODEL),
+                )
+                turn.turn_llm_summary = pending.to_dict()
+            except Exception as exc:
+                logger.warning("[TURN_SUMMARY] pending record build failed: %s", exc)
         
         self.turns.append(turn)
         turn_index = len(self.turns)
@@ -485,6 +509,11 @@ class ConversationMemory:
                 user_state=turn.user_state,
                 user_feedback=turn.user_feedback,
                 user_rating=turn.user_rating,
+                turn_metadata=(
+                    {"turn_llm_summary": dict(turn.turn_llm_summary)}
+                    if isinstance(turn.turn_llm_summary, dict)
+                    else {}
+                ),
                 embedding=embedding,
             )
         except Exception as exc:
@@ -537,9 +566,77 @@ class ConversationMemory:
                 user_state=turn.user_state,
                 user_feedback=turn.user_feedback,
                 user_rating=turn.user_rating,
+                turn_metadata=(
+                    {"turn_llm_summary": dict(turn.turn_llm_summary)}
+                    if isinstance(turn.turn_llm_summary, dict)
+                    else {}
+                ),
             )
         except Exception as exc:
             logger.error(f"SessionManager feedback update error: {exc}")
+
+    async def process_pending_turn_summaries(
+        self,
+        *,
+        limit: int | None = None,
+        provider: str | None = None,
+    ) -> dict[str, int]:
+        """Process pending per-turn LLM summaries asynchronously."""
+        if not bool(getattr(config, "TURN_LLM_SUMMARY_ENABLED", False)):
+            return {"pending_count": 0, "ready_count": 0, "failed_count": 0, "processed_count": 0}
+
+        max_limit = int(getattr(config, "TURN_LLM_SUMMARY_MAX_PENDING_PER_RUN", 10) or 10)
+        safe_limit = max(1, min(int(limit or max_limit), max_limit))
+
+        pending_indexes: list[int] = []
+        for idx, turn in enumerate(self.turns):
+            payload = turn.turn_llm_summary if isinstance(turn.turn_llm_summary, dict) else {}
+            if str(payload.get("status", "")).lower() == "pending":
+                pending_indexes.append(idx)
+            if len(pending_indexes) >= safe_limit:
+                break
+
+        ready_count = 0
+        failed_count = 0
+        processed_count = 0
+        provider_name = provider or str(getattr(config, "TURN_LLM_SUMMARY_PROVIDER", "disabled") or "disabled")
+
+        for idx in pending_indexes:
+            turn = self.turns[idx]
+            result = await generate_turn_llm_summary_v1(
+                user_input=str(turn.user_input or ""),
+                assistant_response=str(turn.bot_response or ""),
+                provider=provider_name,
+                model=str(getattr(config, "TURN_LLM_SUMMARY_MODEL", "") or config.LLM_MODEL),
+            )
+            turn.turn_llm_summary = result.to_dict()
+            processed_count += 1
+            if result.status == "ready":
+                ready_count += 1
+            elif result.status == "failed":
+                failed_count += 1
+
+            self._persist_turn_to_session_storage(
+                turn_index=idx + 1,
+                turn=turn,
+                embedding=None,
+            )
+
+        if processed_count:
+            self.save_to_disk(reason="turn_llm_summary_processor")
+
+        pending_left = 0
+        for turn in self.turns:
+            payload = turn.turn_llm_summary if isinstance(turn.turn_llm_summary, dict) else {}
+            if str(payload.get("status", "")).lower() == "pending":
+                pending_left += 1
+
+        return {
+            "pending_count": pending_left,
+            "ready_count": ready_count,
+            "failed_count": failed_count,
+            "processed_count": processed_count,
+        }
     
     def get_last_turns(self, n: int = 5) -> List[ConversationTurn]:
         """
@@ -1215,4 +1312,3 @@ def get_conversation_memory(user_id: str = "default") -> ConversationMemory:
         )
     
     return _memory_instances[user_id]
-

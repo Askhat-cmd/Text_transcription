@@ -6,6 +6,7 @@ import json
 import re
 from typing import Any
 
+from ..config import config
 from .contracts.context_package import (
     ContextAssemblyPackage,
     ContextAssemblyTrace,
@@ -13,12 +14,15 @@ from .contracts.context_package import (
     TurnContextItem,
     TurnMicroSummary,
 )
+from .contracts.turn_llm_summary import validate_turn_llm_summary
 from .contracts.memory_bundle import MemoryBundle
 from .contracts.thread_state import ThreadState
+from .turn_summary_service import compute_turn_source_hash
 
 
 CONTEXT_ASSEMBLY_TRACE_VERSION = "context_assembly_trace_v1"
 TURN_MICRO_SUMMARY_METHOD_V1 = "deterministic_extractive_v1"
+TURN_LLM_SUMMARY_METHOD_V1 = "llm_abstractive_v1"
 RECENT_FULL_TURN_MAX_CHARS = 1200
 MICRO_SUMMARY_MAX_CHARS = 360
 CONTEXT_BUDGET_MAX_CHARS = 8000
@@ -257,16 +261,35 @@ def build_turn_micro_summary_v1(
     )
 
 
-def _recent_turn_pairs(raw_turns: list[dict[str, Any]]) -> list[tuple[str, str, str]]:
-    pairs: list[tuple[str, str, str]] = []
+def _recent_turn_pairs(raw_turns: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    pairs: list[dict[str, Any]] = []
     for idx, turn in enumerate(raw_turns, start=1):
         turn_index = int(turn.get("turn_index", idx) or idx)
         user_text = str(turn.get("user_input", "") or "").strip()
         bot_text = str(turn.get("bot_response", "") or "").strip()
+        turn_llm_summary = turn.get("turn_llm_summary")
+        summary_payload = dict(turn_llm_summary) if isinstance(turn_llm_summary, dict) else {}
+        source_hash = compute_turn_source_hash(user_text, bot_text)
         if user_text:
-            pairs.append((f"turn_{turn_index}_user", "user", user_text))
+            pairs.append(
+                {
+                    "turn_id": f"turn_{turn_index}_user",
+                    "role": "user",
+                    "content": user_text,
+                    "turn_llm_summary": summary_payload,
+                    "turn_source_hash": source_hash,
+                }
+            )
         if bot_text:
-            pairs.append((f"turn_{turn_index}_assistant", "assistant", bot_text))
+            pairs.append(
+                {
+                    "turn_id": f"turn_{turn_index}_assistant",
+                    "role": "assistant",
+                    "content": bot_text,
+                    "turn_llm_summary": summary_payload,
+                    "turn_source_hash": source_hash,
+                }
+            )
     return pairs
 
 
@@ -384,7 +407,16 @@ def build_context_assembly_package_v1(
     full_items: list[TurnContextItem] = []
     summarized_items: list[TurnMicroSummary] = []
 
-    for turn_id, role, content in pairs:
+    for pair in pairs:
+        turn_id = str(pair.get("turn_id", "") or "")
+        role = str(pair.get("role", "") or "")
+        content = str(pair.get("content", "") or "")
+        turn_summary_payload = (
+            dict(pair.get("turn_llm_summary", {}))
+            if isinstance(pair.get("turn_llm_summary"), dict)
+            else {}
+        )
+        turn_source_hash = str(pair.get("turn_source_hash", "") or "")
         raw_chars = len(content)
         if raw_chars <= RECENT_FULL_TURN_MAX_CHARS:
             full_items.append(
@@ -402,6 +434,34 @@ def build_context_assembly_package_v1(
                 reasons.append("medium_turn_kept_full")
             continue
 
+        use_llm_in_context = bool(getattr(config, "TURN_LLM_SUMMARY_USE_IN_CONTEXT", True))
+        if use_llm_in_context:
+            is_valid, validity_reason = validate_turn_llm_summary(turn_summary_payload, turn_source_hash)
+            if is_valid:
+                llm_summary = str(turn_summary_payload.get("summary", "") or "").strip()
+                important_quote = str(turn_summary_payload.get("important_quote", "") or "").strip() or None
+                summarized_items.append(
+                    TurnMicroSummary(
+                        turn_id=turn_id,
+                        role=role,
+                        summary=llm_summary[:MICRO_SUMMARY_MAX_CHARS],
+                        important_quote=(important_quote[:120] if isinstance(important_quote, str) else None),
+                        raw_chars=raw_chars,
+                        summary_chars=min(len(llm_summary), MICRO_SUMMARY_MAX_CHARS),
+                        was_truncated=raw_chars > min(len(llm_summary), MICRO_SUMMARY_MAX_CHARS),
+                        summary_method=TURN_LLM_SUMMARY_METHOD_V1,
+                    )
+                )
+                reasons.append("llm_summary_ready_used")
+                continue
+
+            if validity_reason == "pending":
+                reasons.append("llm_summary_pending")
+            elif validity_reason == "failed":
+                reasons.append("llm_summary_failed")
+            elif validity_reason == "source_hash_mismatch":
+                reasons.append("llm_summary_source_hash_mismatch")
+
         micro_summary = build_turn_micro_summary_v1(
             turn_id=turn_id,
             role=role,
@@ -409,6 +469,7 @@ def build_context_assembly_package_v1(
             max_summary_chars=MICRO_SUMMARY_MAX_CHARS,
         )
         summarized_items.append(micro_summary)
+        reasons.append("llm_summary_fallback_deterministic")
         reasons.append("summary_marker_scored")
         if role == "user" and micro_summary.important_quote and not _has_quoted_text(content):
             reasons.append("important_quote_fallback_used")

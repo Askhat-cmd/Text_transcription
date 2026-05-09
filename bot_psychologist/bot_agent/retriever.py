@@ -8,9 +8,9 @@ Simple TF-IDF Retriever
 
 import hashlib
 import logging
-from time import sleep
+from time import monotonic, sleep
 from pathlib import Path
-from typing import List, Tuple, Optional
+from typing import Any, List, Tuple, Optional
 
 import joblib
 import numpy as np
@@ -54,7 +54,57 @@ class SimpleRetriever:
         self.db_client = DBApiClient(
             base_url=config.BOT_DB_URL,
             timeout=float(getattr(config, "BOT_DB_TIMEOUT", 10.0)),
+            retries=1,
         )
+        self._bot_db_circuit_open_until: float = 0.0
+        self._bot_db_last_error_kind: str = ""
+        self._bot_db_last_error_message: str = ""
+        self._bot_db_last_status_code: Optional[int] = None
+        self._last_retrieval_debug: dict[str, Any] = {}
+
+    @staticmethod
+    def _now() -> float:
+        return float(monotonic())
+
+    def _circuit_enabled(self) -> bool:
+        return bool(getattr(config, "BOT_DB_CIRCUIT_BREAKER_ENABLED", True))
+
+    def _circuit_ttl_seconds(self) -> float:
+        return float(getattr(config, "BOT_DB_CIRCUIT_BREAKER_TTL_SECONDS", 60.0))
+
+    def _fast_fail_on_503(self) -> bool:
+        return bool(getattr(config, "BOT_DB_FAST_FAIL_ON_503", True))
+
+    def _is_circuit_open(self) -> bool:
+        return self._circuit_enabled() and self._now() < float(self._bot_db_circuit_open_until or 0.0)
+
+    def _open_circuit(self, *, exc: DBApiUnavailableError, reason: str) -> None:
+        ttl = max(1.0, self._circuit_ttl_seconds())
+        self._bot_db_circuit_open_until = self._now() + ttl
+        self._bot_db_last_error_kind = str(exc.kind or "unknown")
+        self._bot_db_last_error_message = str(exc)
+        self._bot_db_last_status_code = int(exc.status_code) if exc.status_code is not None else None
+        logger.warning(
+            "[RETRIEVAL] BotDB circuit open: skip api for %ss reason=%s -> semantic fallback",
+            int(ttl),
+            reason,
+        )
+
+    def _should_open_circuit(self, exc: DBApiUnavailableError) -> tuple[bool, str]:
+        kind = str(exc.kind or "").lower()
+        message = str(exc or "").lower()
+        if kind in {"connect", "timeout"}:
+            return True, kind
+        if kind == "http_status":
+            status = int(exc.status_code or 0)
+            if status == 503 and self._fast_fail_on_503():
+                if "chromadb unavailable" in message:
+                    return True, "http_503_chromadb_unavailable"
+                return True, "http_503"
+        return False, ""
+
+    def get_last_retrieval_debug(self) -> dict[str, Any]:
+        return dict(self._last_retrieval_debug)
     
     def build_index(self) -> None:
         """
@@ -370,6 +420,12 @@ class SimpleRetriever:
                 )
             except DBApiUnavailableError as exc:
                 last_exc = exc
+                if (
+                    exc.kind == "http_status"
+                    and int(exc.status_code or 0) == 503
+                    and self._fast_fail_on_503()
+                ):
+                    raise
                 if exc.kind not in {"timeout", "connect", "http_status"} or attempt >= max_attempts:
                     raise
                 logger.warning(
@@ -426,6 +482,39 @@ class SimpleRetriever:
         # Активируется только для KNOWLEDGE_SOURCE=api|chromadb
         # ================================================================
         if config.KNOWLEDGE_SOURCE in ("api", "chromadb"):
+            self._last_retrieval_debug = {
+                "retrieval_source_attempted": "api",
+                "retrieval_source_used": "api",
+                "bot_db_circuit_open": self._is_circuit_open(),
+                "bot_db_last_error_kind": self._bot_db_last_error_kind or None,
+                "bot_db_last_status_code": self._bot_db_last_status_code,
+                "bot_db_last_error_class": (
+                    "ChromaDB unavailable"
+                    if "chromadb unavailable" in (self._bot_db_last_error_message or "").lower()
+                    else None
+                ),
+            }
+            if self._is_circuit_open():
+                ttl_left = int(max(0.0, self._bot_db_circuit_open_until - self._now()))
+                logger.warning(
+                    "[RETRIEVAL] BotDB circuit open: skip api for %ss reason=%s -> semantic fallback",
+                    ttl_left,
+                    self._bot_db_last_error_kind or "unknown",
+                )
+                self._last_retrieval_debug.update(
+                    {
+                        "retrieval_source_used": "semantic_fallback",
+                        "bot_db_circuit_open": True,
+                    }
+                )
+                if feature_flags.enabled("ENABLE_EMBEDDING_PROVIDER"):
+                    semantic_results = self._semantic_fallback(query, top_k)
+                    if semantic_results:
+                        return semantic_results
+                else:
+                    logger.info("[RETRIEVAL] semantic fallback disabled by feature flag")
+                self._last_retrieval_debug["retrieval_source_used"] = "tfidf_fallback"
+                return self._tfidf_fallback(query, top_k)
             try:
                 api_results = self._api_retrieve_with_retry(
                     query=query,
@@ -434,8 +523,16 @@ class SimpleRetriever:
                 )
                 if api_results:
                     logger.info("[RETRIEVAL] API search: %d блоков", len(api_results))
+                    self._bot_db_circuit_open_until = 0.0
+                    self._last_retrieval_debug.update(
+                        {
+                            "retrieval_source_used": "api",
+                            "bot_db_circuit_open": False,
+                        }
+                    )
                     return api_results
                 logger.info("[RETRIEVAL] API search вернул 0 результатов → TF-IDF fallback")
+                self._last_retrieval_debug["retrieval_source_used"] = "tfidf_fallback"
             except DBApiUnavailableError as exc:
                 if exc.kind == "http_status":
                     logger.warning(
@@ -450,12 +547,32 @@ class SimpleRetriever:
                         exc.kind,
                         exc,
                     )
+                self._bot_db_last_error_kind = str(exc.kind or "unknown")
+                self._bot_db_last_error_message = str(exc)
+                self._bot_db_last_status_code = int(exc.status_code) if exc.status_code is not None else None
+                self._last_retrieval_debug.update(
+                    {
+                        "retrieval_source_used": "semantic_fallback",
+                        "bot_db_last_error_kind": self._bot_db_last_error_kind,
+                        "bot_db_last_status_code": self._bot_db_last_status_code,
+                        "bot_db_last_error_class": (
+                            "ChromaDB unavailable"
+                            if "chromadb unavailable" in (self._bot_db_last_error_message or "").lower()
+                            else None
+                        ),
+                    }
+                )
+                should_open, reason = self._should_open_circuit(exc)
+                if should_open:
+                    self._open_circuit(exc=exc, reason=reason)
+                    self._last_retrieval_debug["bot_db_circuit_open"] = True
             if feature_flags.enabled("ENABLE_EMBEDDING_PROVIDER"):
                 semantic_results = self._semantic_fallback(query, top_k)
                 if semantic_results:
                     return semantic_results
             else:
                 logger.info("[RETRIEVAL] semantic fallback disabled by feature flag")
+            self._last_retrieval_debug["retrieval_source_used"] = "tfidf_fallback"
         # ================================================================
 
         return self._tfidf_fallback(query, top_k)

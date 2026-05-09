@@ -57,6 +57,17 @@ class Config:
     CHROMA_COLLECTION: str = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
     BOT_DB_URL: str = os.getenv("BOT_DB_URL", "http://localhost:8003")
     BOT_DB_TIMEOUT: float = float(os.getenv("BOT_DB_TIMEOUT", "10.0"))
+    BOT_DB_CIRCUIT_BREAKER_ENABLED: bool = os.getenv(
+        "BOT_DB_CIRCUIT_BREAKER_ENABLED",
+        "True",
+    ).lower() == "true"
+    BOT_DB_CIRCUIT_BREAKER_TTL_SECONDS: float = float(
+        os.getenv("BOT_DB_CIRCUIT_BREAKER_TTL_SECONDS", "60")
+    )
+    BOT_DB_FAST_FAIL_ON_503: bool = os.getenv(
+        "BOT_DB_FAST_FAIL_ON_503",
+        "True",
+    ).lower() == "true"
 
     # === Direct merged JSON path (CRITICAL for CHUNKS fix) ===
     # Абсолютный путь к all_blocks_merged.json (Bot_data_base/data/processed/books/)

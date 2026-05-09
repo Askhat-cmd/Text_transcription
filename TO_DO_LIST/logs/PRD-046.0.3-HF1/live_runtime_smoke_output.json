@@ -1,0 +1,44 @@
+{
+  "generated_at": "2026-05-09T08:36:20.124947+00:00",
+  "results": [
+    {
+      "query": "??????",
+      "status": "ok",
+      "answer_preview": "Вижу у тебя много вопросительных знаков — в сообщении слышна растерянность. Если хочешь, напиши чуть подробнее, и я постараюсь поддержать.",
+      "answer_len": 138,
+      "writer_api_mode": "chat_completions_compat",
+      "writer_error": null,
+      "writer_fallback_used": false,
+      "state_analyzer_error": null,
+      "state_analyzer_api_mode": "heuristic",
+      "total_latency_ms": 63341,
+      "memory_retrieval_ms": 51145
+    },
+    {
+      "query": "??? ????? ??????????????? ? ???????? ?? ? ???? ???????????? ??? ????? ???? ???????????",
+      "status": "ok",
+      "answer_preview": "Вижу снова много вопросительных знаков — в сообщении слышна растерянность. Я рядом и готов(а) слушать. Хочешь написать чуть подробнее или просто побыть услышанным?",
+      "answer_len": 163,
+      "writer_api_mode": "chat_completions_compat",
+      "writer_error": null,
+      "writer_fallback_used": false,
+      "state_analyzer_error": null,
+      "state_analyzer_api_mode": "heuristic",
+      "total_latency_ms": 10366,
+      "memory_retrieval_ms": 1471
+    },
+    {
+      "query": "???? ????? ?????",
+      "status": "ok",
+      "answer_preview": "Вижу снова много вопросительных знаков — в сообщении слышна растерянность. Я рядом и готов(а) слушать. Хочешь написать чуть подробнее или просто, чтобы я был(а) рядом?",
+      "answer_len": 167,
+      "writer_api_mode": "chat_completions_compat",
+      "writer_error": null,
+      "writer_fallback_used": false,
+      "state_analyzer_error": null,
+      "state_analyzer_api_mode": "heuristic",
+      "total_latency_ms": 9543,
+      "memory_retrieval_ms": 1053
+    }
+  ]
+}

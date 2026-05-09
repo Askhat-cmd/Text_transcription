@@ -343,6 +343,12 @@ class MemoryRetrievalAgent:
 
             retriever = get_retriever()
             results = retriever.retrieve(query, top_k=RAG_N_RESULTS)
+            retrieval_debug = {}
+            if hasattr(retriever, "get_last_retrieval_debug"):
+                try:
+                    retrieval_debug = retriever.get_last_retrieval_debug()  # type: ignore[assignment]
+                except Exception:
+                    retrieval_debug = {}
             hits: list[SemanticHit] = []
             for item in results:
                 if isinstance(item, tuple) and len(item) >= 2:
@@ -373,7 +379,13 @@ class MemoryRetrievalAgent:
                         chunking_quality=chunking_quality if isinstance(chunking_quality, dict) else {},
                     )
                 )
-            logger.info("[MRA] rag hits=%d query='%s...'", len(hits), query[:50])
+            logger.info(
+                "[MRA] rag hits=%d query='%s...' retrieval_source_used=%s circuit_open=%s",
+                len(hits),
+                query[:50],
+                str(retrieval_debug.get("retrieval_source_used", "unknown")),
+                bool(retrieval_debug.get("bot_db_circuit_open", False)),
+            )
             return hits
         except Exception as exc:
             logger.warning("[MRA] rag load error: %s", exc)

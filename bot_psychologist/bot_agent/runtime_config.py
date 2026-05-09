@@ -767,6 +767,13 @@ class RuntimeConfig(Config):
         self.KNOWLEDGE_SOURCE = os.getenv("KNOWLEDGE_SOURCE", "json")
         self.BOT_DB_URL = os.getenv("BOT_DB_URL", "http://localhost:8003")
         self.BOT_DB_TIMEOUT = float(os.getenv("BOT_DB_TIMEOUT", "10.0"))
+        self.BOT_DB_CIRCUIT_BREAKER_ENABLED = (
+            os.getenv("BOT_DB_CIRCUIT_BREAKER_ENABLED", "true").lower() == "true"
+        )
+        self.BOT_DB_CIRCUIT_BREAKER_TTL_SECONDS = float(
+            os.getenv("BOT_DB_CIRCUIT_BREAKER_TTL_SECONDS", "60")
+        )
+        self.BOT_DB_FAST_FAIL_ON_503 = os.getenv("BOT_DB_FAST_FAIL_ON_503", "true").lower() == "true"
         self.CHROMA_API_URL = os.getenv("CHROMA_API_URL", "http://localhost:8004")
         self.CHROMA_COLLECTION = os.getenv("CHROMA_COLLECTION", "bot_knowledge")
         self.ALL_BLOCKS_MERGED_PATH = os.getenv("ALL_BLOCKS_MERGED_PATH", "")

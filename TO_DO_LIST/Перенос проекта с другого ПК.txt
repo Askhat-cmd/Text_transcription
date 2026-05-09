@@ -1,0 +1,107 @@
+Вопрос:
+прежде чем я отдал ПРД агенту ИДЕ, ответь на вопрос, я скопировал проект и перенес его на другой ПК, не может ли эти баги быть связаны с этим
+ответ:
+Да, **очень может быть связано именно с переносом проекта на другой ПК**. По симптомам это даже похоже не на архитектурную поломку после PRD, а на **runtime/environment mismatch**.
+
+Главные признаки:
+
+### 1. Ошибка `AsyncOpenAI has no attribute responses`
+
+Это почти наверняка связано с окружением нового ПК.
+
+Смысл ошибки:
+
+```text
+'AsyncOpenAI' object has no attribute 'responses'
+```
+
+Значит код ожидает OpenAI SDK, где есть `client.responses.create(...)`, а на новом ПК установлен SDK, где такого метода нет.
+
+Вероятные причины:
+
+* на новом ПК другой `.venv`;
+* зависимости установились не из того `requirements`;
+* версия пакета `openai` старее, чем на прошлом ПК;
+* IDE запускает проект не из того Python-интерпретатора;
+* переменные `.env` отличаются, например выбрана `gpt-5-mini`, а клиентская библиотека старая.
+
+Проверка на новом ПК:
+
+```bash
+cd C:\My_practice\Text_transcription\bot_psychologist
+python -m pip show openai
+python -c "from openai import AsyncOpenAI; c=AsyncOpenAI(api_key='test'); print(hasattr(c, 'responses'))"
+```
+
+Если вывод будет:
+
+```text
+False
+```
+
+то причина найдена: окружение не поддерживает Responses API.
+
+### 2. Ошибка `ChromaDB unavailable`
+
+Это тоже очень похоже на перенос проекта.
+
+У тебя в логах была проблема:
+
+```text
+HTTP 503 from Bot_data_base: {"detail":"ChromaDB unavailable"}
+```
+
+На новом ПК это может быть из-за того, что:
+
+* `Bot_data_base` не запущен;
+* ChromaDB не запущена;
+* база Chroma не скопировалась;
+* пути в `.env` указывают на старый диск/старую папку;
+* `all_blocks_merged.json` или processed data отсутствуют;
+* порт `8003` или `8004` занят/не тот;
+* проект запущен не из той рабочей директории.
+
+Проверка:
+
+```bash
+cd C:\My_practice\Text_transcription\Bot_data_base
+python -m uvicorn api.main:app --host 127.0.0.1 --port 8003
+```
+
+И отдельно открыть:
+
+```text
+http://localhost:8003/api/status/
+http://localhost:8003/api/registry/
+```
+
+Если там ошибка по Chroma — значит проблема не в боте, а в поднятии базы знаний.
+
+### 3. Почему бот отвечает “Я слышу тебя”
+
+Это fallback. То есть не Writer нормально решил так ответить, а **LLM-вызов упал**, и система отдала безопасную заглушку.
+
+На скрине это видно косвенно: `LLM response` пустой, токены `—`, а ответ короткий fallback.
+
+### Что я бы сделал перед передачей PRD агенту
+
+Сначала не отдавал бы большой hotfix как “чинить код”. Я бы сначала дал агенту короткую задачу:
+
+```text
+Проверь live environment после переноса проекта:
+1. Python interpreter / venv path.
+2. Версию openai SDK.
+3. Есть ли AsyncOpenAI.responses.
+4. Загружен ли .env.
+5. Какой PRIMARY_MODEL.
+6. Работает ли Bot_data_base на 8003.
+7. Работает ли Chroma / registry / query.
+8. Есть ли all_blocks_merged.json.
+9. Совпадают ли пути C:\My_practice\Text_transcription\...
+10. Сделай ENVIRONMENT_AUDIT_REPORT.md.
+```
+
+То есть сначала **аудит окружения**, а не сразу правка архитектуры.
+
+Мой вывод:
+**да, баги вполне могли появиться из-за переноса на другой ПК.** Особенно ошибка `client.responses` почти точно указывает на несовпадение Python-зависимостей или интерпретатора. А `ChromaDB unavailable` — на неподнятый/неперенесённый `Bot_data_base` runtime.

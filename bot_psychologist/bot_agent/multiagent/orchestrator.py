@@ -249,7 +249,7 @@ class MultiAgentOrchestrator:
                 thread_state=updated_thread,
             )
         )
-        total_latency_ms = int((time.perf_counter() - t_total_start) * 1000)
+        total_latency_ms = int(t_state + t_thread + t_memory + t_writer + t_validator)
         semantic_hits_detail = []
         for raw_hit in memory_bundle.semantic_hits:
             if hasattr(raw_hit, "to_dict"):

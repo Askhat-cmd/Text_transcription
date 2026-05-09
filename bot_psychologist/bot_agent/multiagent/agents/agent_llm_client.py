@@ -7,9 +7,21 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import logging
 from typing import Any, Optional
 
 from ...config import config
+
+logger = logging.getLogger(__name__)
+
+_JSON_INSTRUCTION = (
+    "Return ONLY valid JSON.\n"
+    "Use double quotes for all keys and string values.\n"
+    "No markdown.\n"
+    "No comments.\n"
+    "No trailing commas."
+)
+_SDK_CAPABILITY_LOG_KEYS: set[tuple[str, bool, bool, str]] = set()
 
 
 @dataclass
@@ -18,7 +30,7 @@ class AgentLLMResult:
 
     text: str
     model: str
-    api_mode: str  # "chat_completions" | "responses"
+    api_mode: str  # "chat_completions" | "responses" | "chat_completions_compat"
     tokens_prompt: Optional[int] = None
     tokens_completion: Optional[int] = None
     tokens_total: Optional[int] = None
@@ -98,6 +110,101 @@ def _extract_usage_responses(response: Any) -> tuple[Optional[int], Optional[int
     return prompt, completion, total
 
 
+def _extract_text_from_chat(response: Any) -> str:
+    return str(
+        _get_value(
+            _get_value(_get_value(response, "choices", [{}])[0], "message", {}),
+            "content",
+            "",
+        )
+        or ""
+    ).strip()
+
+
+def _client_has_path(client: Any, attr: str, nested_attr: str) -> bool:
+    try:
+        root = getattr(client, attr, None)
+        nested = getattr(root, nested_attr, None)
+        return callable(nested)
+    except Exception:
+        return False
+
+
+def _detect_capabilities(client: Any) -> tuple[bool, bool]:
+    has_responses = _client_has_path(client, "responses", "create")
+    has_chat_completions = False
+    try:
+        chat = getattr(client, "chat", None)
+        completions = getattr(chat, "completions", None)
+        create = getattr(completions, "create", None)
+        has_chat_completions = callable(create)
+    except Exception:
+        has_chat_completions = False
+    return has_responses, has_chat_completions
+
+
+def _log_capabilities_once(
+    *,
+    model: str,
+    has_responses: bool,
+    has_chat_completions: bool,
+    selected_mode: str,
+) -> None:
+    key = (str(model), bool(has_responses), bool(has_chat_completions), str(selected_mode))
+    if key in _SDK_CAPABILITY_LOG_KEYS:
+        return
+    _SDK_CAPABILITY_LOG_KEYS.add(key)
+    logger.info(
+        "[AGENT_LLM] sdk_capabilities has_responses=%s has_chat_completions=%s model=%s selected_mode=%s",
+        has_responses,
+        has_chat_completions,
+        model,
+        selected_mode,
+    )
+
+
+def _append_json_instruction(messages: list[dict[str, str]]) -> list[dict[str, str]]:
+    if not messages:
+        return [{"role": "user", "content": _JSON_INSTRUCTION}]
+    patched = [dict(msg) for msg in messages]
+    last = dict(patched[-1])
+    content = str(last.get("content", "") or "")
+    if _JSON_INSTRUCTION not in content:
+        content = f"{content}\n\n{_JSON_INSTRUCTION}".strip()
+    last["content"] = content
+    patched[-1] = last
+    return patched
+
+
+async def _call_chat_with_compat(
+    *,
+    client: Any,
+    request_kwargs: dict[str, Any],
+) -> Any:
+    try:
+        return await client.chat.completions.create(**request_kwargs)
+    except TypeError as exc:
+        # Some fake/legacy clients don't accept response_format kwarg.
+        fallback_kwargs = dict(request_kwargs)
+        retried = False
+        err_text = str(exc)
+        if "response_format" in fallback_kwargs and "response_format" in err_text:
+            fallback_kwargs.pop("response_format", None)
+            retried = True
+        # Older SDK chat.completions may reject max_completion_tokens.
+        # In compat mode drop the limit instead of sending unsupported max_tokens
+        # for reasoning models (server can reject max_tokens for gpt-5 family).
+        if (
+            "max_completion_tokens" in fallback_kwargs
+            and "max_completion_tokens" in err_text
+        ):
+            fallback_kwargs.pop("max_completion_tokens", None)
+            retried = True
+        if not retried:
+            raise
+        return await client.chat.completions.create(**fallback_kwargs)
+
+
 async def create_agent_completion(
     *,
     client: Any,
@@ -110,6 +217,10 @@ async def create_agent_completion(
     require_json: bool = False,
 ) -> AgentLLMResult:
     """Execute model call with model-family-aware API routing."""
+    has_responses, has_chat_completions = _detect_capabilities(client)
+
+    if not has_responses and not has_chat_completions:
+        raise RuntimeError("OpenAI client has neither responses.create nor chat.completions.create")
 
     if config.supports_custom_temperature(model):
         token_param = config.get_token_param_name(model)
@@ -126,8 +237,16 @@ async def create_agent_completion(
         if temperature is not None:
             request_kwargs["temperature"] = float(temperature)
 
-        response = await client.chat.completions.create(**request_kwargs)
-        text = str(_get_value(_get_value(_get_value(response, "choices", [{}])[0], "message", {}), "content", "") or "").strip()
+        if not has_chat_completions:
+            raise RuntimeError("OpenAI client has neither responses.create nor chat.completions.create")
+        _log_capabilities_once(
+            model=model,
+            has_responses=has_responses,
+            has_chat_completions=has_chat_completions,
+            selected_mode="chat_completions",
+        )
+        response = await _call_chat_with_compat(client=client, request_kwargs=request_kwargs)
+        text = _extract_text_from_chat(response)
         tokens_prompt, tokens_completion, tokens_total = _extract_usage_chat(response)
         return AgentLLMResult(
             text=text,
@@ -141,14 +260,7 @@ async def create_agent_completion(
 
     input_text = messages_to_input(messages)
     if require_json:
-        input_text = (
-            f"{input_text}\n\n"
-            "Return ONLY valid JSON.\n"
-            "Use double quotes for all keys and string values.\n"
-            "No markdown.\n"
-            "No comments.\n"
-            "No trailing commas."
-        )
+        input_text = f"{input_text}\n\n{_JSON_INSTRUCTION}"
 
     request_kwargs = {
         "model": model,
@@ -162,15 +274,59 @@ async def create_agent_completion(
     if timeout is not None:
         request_kwargs["timeout"] = timeout
 
-    response = await client.responses.create(**request_kwargs)
-    text = _extract_text_from_responses(response)
-    tokens_prompt, tokens_completion, tokens_total = _extract_usage_responses(response)
-    return AgentLLMResult(
-        text=text,
+    if has_responses:
+        _log_capabilities_once(
+            model=model,
+            has_responses=has_responses,
+            has_chat_completions=has_chat_completions,
+            selected_mode="responses",
+        )
+        response = await client.responses.create(**request_kwargs)
+        text = _extract_text_from_responses(response)
+        tokens_prompt, tokens_completion, tokens_total = _extract_usage_responses(response)
+        return AgentLLMResult(
+            text=text,
+            model=model,
+            api_mode="responses",
+            tokens_prompt=tokens_prompt,
+            tokens_completion=tokens_completion,
+            tokens_total=tokens_total,
+            raw_response=response,
+        )
+
+    if not has_chat_completions:
+        raise RuntimeError("OpenAI client has neither responses.create nor chat.completions.create")
+
+    compat_messages = _append_json_instruction(messages) if require_json else list(messages)
+    compat_kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": compat_messages,
+    }
+    token_param = config.get_token_param_name(model)
+    if max_tokens is not None:
+        compat_kwargs[token_param] = int(max_tokens)
+    if timeout is not None:
+        compat_kwargs["timeout"] = timeout
+    if response_format is not None:
+        compat_kwargs["response_format"] = response_format
+    elif require_json:
+        compat_kwargs["response_format"] = {"type": "json_object"}
+
+    _log_capabilities_once(
         model=model,
-        api_mode="responses",
+        has_responses=has_responses,
+        has_chat_completions=has_chat_completions,
+        selected_mode="chat_completions_compat",
+    )
+    compat_response = await _call_chat_with_compat(client=client, request_kwargs=compat_kwargs)
+    compat_text = _extract_text_from_chat(compat_response)
+    tokens_prompt, tokens_completion, tokens_total = _extract_usage_chat(compat_response)
+    return AgentLLMResult(
+        text=compat_text,
+        model=model,
+        api_mode="chat_completions_compat",
         tokens_prompt=tokens_prompt,
         tokens_completion=tokens_completion,
         tokens_total=tokens_total,
-        raw_response=response,
+        raw_response=compat_response,
     )

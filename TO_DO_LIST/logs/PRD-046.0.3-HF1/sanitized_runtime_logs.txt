@@ -1,0 +1,20 @@
+# PRD-046.0.3-HF1 sanitized runtime logs
+
+## Environment
+- python runner for tests: bot_psychologist/.venv/Scripts/python.exe
+- initial global python had no pytest (environment mismatch after migration)
+
+## BotDB health probe
+- GET /api/status/ -> 200 with jobs=[]
+- POST /api/query/ -> 503 {"detail":"ChromaDB unavailable"}
+- local all_blocks_merged.json exists and contains 229 blocks
+
+## Runtime smoke summary
+- case 1: api_mode=chat_completions_compat writer_error=None fallback=False total_ms=63341 memory_ms=51145
+- case 2: api_mode=chat_completions_compat writer_error=None fallback=False total_ms=10366 memory_ms=1471
+- case 3: api_mode=chat_completions_compat writer_error=None fallback=False total_ms=9543 memory_ms=1053
+
+## Key HF1 signals
+- no AttributeError on missing client.responses
+- writer runs in chat_completions_compat mode
+- retrieval logs show BotDB circuit open and semantic fallback

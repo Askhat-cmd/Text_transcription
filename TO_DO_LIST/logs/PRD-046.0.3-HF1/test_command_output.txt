@@ -1,0 +1,42 @@
+﻿# PRD-046.0.3-HF1 test command output
+# Generated: 2026-05-09T11:42:05.6728509+03:00
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_agent_llm_client_compat.py -q
+
+......                                                                   [100%]
+6 passed in 0.38s
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_retriever_botdb_circuit_breaker.py -q
+
+.....                                                                    [100%]
+5 passed in 0.78s
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+........................................................................ [ 93%]
+...............                                                          [100%]
+231 passed in 69.43s (0:01:09)
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_context_assembly.py -q
+
+.......                                                                  [100%]
+7 passed in 0.61s
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+.......                                                                  [100%]
+7 passed in 0.35s
+
+
+## COMMAND: .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_db_api_governance_pass_through.py -q
+
+..                                                                       [100%]
+2 passed in 0.90s
+

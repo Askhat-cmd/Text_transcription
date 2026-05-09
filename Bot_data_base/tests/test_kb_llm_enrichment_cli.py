@@ -104,6 +104,14 @@ def test_run_enrichment_dry_run_no_mutation_and_no_raw_leaks(tmp_path: Path, mon
 
     candidates_path = output_dir / "enrichment_candidates.jsonl"
     assert candidates_path.exists()
+    assert (output_dir / "enrichment_calibration_candidates.jsonl").exists()
+    assert (output_dir / "enrichment_calibration_validation_report.json").exists()
+    assert (output_dir / "enrichment_calibration_diff_summary.json").exists()
+    assert (output_dir / "failed_candidate_examples_sanitized.jsonl").exists()
+    overlay_readiness = json.loads((output_dir / "overlay_readiness_report.json").read_text(encoding="utf-8"))
+    assert overlay_readiness["run_kind"] == "mock"
+    assert overlay_readiness["production_ready"] is False
+    assert overlay_readiness["promotion_allowed"] is False
     lines = [json.loads(line) for line in candidates_path.read_text(encoding="utf-8").splitlines() if line.strip()]
     assert lines
     blob = json.dumps(lines, ensure_ascii=False).lower()
@@ -140,4 +148,3 @@ def test_write_overlay_requires_confirm(tmp_path: Path, monkeypatch: pytest.Monk
             max_retries=1,
             timeout_seconds=5.0,
         )
-

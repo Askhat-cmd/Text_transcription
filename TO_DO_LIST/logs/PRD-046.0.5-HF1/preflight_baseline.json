@@ -1,0 +1,10 @@
+{
+  "generated_at": "2026-05-09T16:46:47.963756Z",
+  "source_validation_report": "TO_DO_LIST/logs/PRD-046.0.5/enrichment_validation_report.json",
+  "validation_passed_before": 2,
+  "validation_failed_before": 28,
+  "summary_direct_quote_risk_before": 28,
+  "unknown_lens_candidates_before": 0,
+  "invariant_violations_before": 0,
+  "raw_text_leak_check_before": "pass"
+}

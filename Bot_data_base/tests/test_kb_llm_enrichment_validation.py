@@ -50,6 +50,7 @@ def test_validate_candidate_detects_long_quote_risk() -> None:
     candidate = _candidate(summary_candidate=source_text + " Дополнительный хвост.")
     result = validate_candidate(candidate=candidate, source_text=source_text)
     assert "summary_direct_quote_risk" in result.reasons
+    assert result.reason_details.get("summary_direct_quote_risk") == "prefix_overlap"
 
 
 def test_validate_governance_invariants() -> None:
@@ -75,4 +76,3 @@ def test_check_forbidden_keys_recursive() -> None:
     hits = check_forbidden_keys(payload)
     assert "raw_llm_prompt_with_text" in hits
     assert "api_key" in hits
-

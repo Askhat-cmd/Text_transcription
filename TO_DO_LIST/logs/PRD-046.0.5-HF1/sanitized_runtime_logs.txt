@@ -1,0 +1,12 @@
+[2026-05-09T16:46:57.498160+00:00] PRD-046.0.5 enrichment run
+real_llm_run=False
+mock_llm_run=True
+llm_mode_reason=mock_requested
+chunks_selected=30
+validation_failed=0
+needs_human_review=0
+overlay_production_ready=False
+overlay_promotion_allowed=False
+production_blocks_mutated=false
+chroma_reindex_performed=false
+runtime_behavior_changed=false

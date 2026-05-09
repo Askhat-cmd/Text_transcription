@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from .enrichment_contracts import EnrichmentCandidate
@@ -56,6 +56,8 @@ FORBIDDEN_ARTIFACT_KEYS = (
 )
 
 _LOW_RESOURCE_TERMS = ("low resource", "мало сил", "нет сил", "кризис", "нестабил")
+SUMMARY_DIRECT_QUOTE_PREFIX_CHARS = 80
+SUMMARY_DIRECT_QUOTE_MIN_LENGTH = 80
 
 
 @dataclass
@@ -63,6 +65,7 @@ class ValidationResult:
     passed: bool
     reasons: list[str]
     warnings: list[str]
+    reason_details: dict[str, str] = field(default_factory=dict)
 
 
 def _normalize_tag(value: str) -> str:
@@ -72,12 +75,14 @@ def _normalize_tag(value: str) -> str:
     return raw
 
 
-def _looks_like_long_quote(candidate_summary: str, source_text: str) -> bool:
+def _looks_like_long_quote(candidate_summary: str, source_text: str) -> tuple[bool, str]:
     summary = " ".join(str(candidate_summary or "").split())
-    if len(summary) < 80:
-        return False
+    if len(summary) < SUMMARY_DIRECT_QUOTE_MIN_LENGTH:
+        return False, ""
     source = " ".join(str(source_text or "").split())
-    return summary[:80] in source
+    if summary[:SUMMARY_DIRECT_QUOTE_PREFIX_CHARS] in source:
+        return True, "prefix_overlap"
+    return False, ""
 
 
 def validate_candidate(
@@ -87,6 +92,7 @@ def validate_candidate(
 ) -> ValidationResult:
     reasons: list[str] = []
     warnings: list[str] = []
+    reason_details: dict[str, str] = {}
 
     summary = str(candidate.summary_candidate or "").strip()
     if not summary:
@@ -98,8 +104,10 @@ def validate_candidate(
     summary_lower = summary.lower()
     if any(summary_lower.startswith(prefix) for prefix in SUMMARY_BANNED_PREFIXES):
         reasons.append("summary_generic_prefix")
-    if _looks_like_long_quote(summary, source_text):
+    has_quote_risk, quote_risk_detail = _looks_like_long_quote(summary, source_text)
+    if has_quote_risk:
         reasons.append("summary_direct_quote_risk")
+        reason_details["summary_direct_quote_risk"] = quote_risk_detail or "detected"
 
     unknown_lens = [x for x in candidate.lens_family_candidates if x not in LENS_FAMILY_ALLOWLIST]
     if unknown_lens:
@@ -127,7 +135,7 @@ def validate_candidate(
         warnings.append("chunk_type_original_unexpected")
 
     passed = len(reasons) == 0
-    return ValidationResult(passed=passed, reasons=reasons, warnings=warnings)
+    return ValidationResult(passed=passed, reasons=reasons, warnings=warnings, reason_details=reason_details)
 
 
 def validate_governance_invariants(

@@ -55,6 +55,8 @@ SAMPLE_QUERIES = (
     "я злюсь на себя, потому что опять не сделал обещанное",
     "я чувствую вину, когда выбираю себя",
 )
+SUMMARY_MIN_LENGTH = 120
+SUMMARY_MAX_LENGTH = 500
 
 
 def _utc_now() -> str:
@@ -66,6 +68,12 @@ def _safe_preview(text: str, limit: int = 160) -> str:
     if len(cleaned) <= limit:
         return cleaned
     return cleaned[: max(0, limit - 3)].rstrip() + "..."
+
+
+def _sanitize_label(value: str, fallback: str = "unknown") -> str:
+    cleaned = re.sub(r"[^a-zA-Z0-9а-яА-Я_]+", "_", str(value or "").strip().lower())
+    cleaned = re.sub(r"_+", "_", cleaned).strip("_")
+    return cleaned or fallback
 
 
 def _normalize_list(value: Any) -> list[str]:
@@ -215,16 +223,16 @@ class _MockLLMClient:
         low = text.lower()
         guessed: list[str] = []
         keyword_map = {
-            "shame": ("стыд", "стыдно"),
-            "guilt": ("вина", "виноват"),
-            "self_criticism": ("критик", "недостат"),
-            "procrastination": ("откладыв", "прокрастин"),
-            "avoidance": ("избега", "уклон"),
-            "body_awareness": ("тело", "дых"),
-            "low_resource": ("нет сил", "пусто"),
-            "anger": ("злю", "гнев", "раздраж"),
-            "boundaries": ("границ", "нет"),
-            "meaning": ("смысл", "пустота"),
+            "shame": ("????", "??????"),
+            "guilt": ("????", "???????"),
+            "self_criticism": ("??????", "????????"),
+            "procrastination": ("????????", "??????????"),
+            "avoidance": ("??????", "?????"),
+            "body_awareness": ("????", "???"),
+            "low_resource": ("??? ???", "?????"),
+            "anger": ("???", "????", "???????"),
+            "boundaries": ("??????", "???"),
+            "meaning": ("?????", "???????"),
         }
         for lens, markers in keyword_map.items():
             if any(marker in low for marker in markers):
@@ -241,20 +249,57 @@ class _MockLLMClient:
             guessed.extend(by_type.get(chunk_type, ["meaning"]))
         return [x for x in _dedupe(guessed) if x in LENS_FAMILY_ALLOWLIST][:4]
 
+    @staticmethod
+    def _build_mock_paraphrase_summary(context: dict[str, Any], lens: list[str]) -> str:
+        chunk_type = str(context.get("chunk_type_original") or "theory")
+        title = str(context.get("title") or "").strip()
+        chapter_title = str(context.get("chapter_title") or "").strip()
+        mixed_intent = str(context.get("mixed_intent_severity") or "none").strip().lower()
+        flags = _normalize_list(context.get("safety_flags_original"))
+        current_lens = _normalize_list(context.get("lens_family_current"))
+
+        lens_tokens = _dedupe(lens + current_lens)[:3]
+        lens_text = ", ".join(lens_tokens) if lens_tokens else "baseline internal lens"
+        title_text = f"Section '{title}'" if title else "This fragment"
+        chapter_text = f" from chapter '{chapter_title}'" if chapter_title else ""
+        chunk_focus = {
+            "practice": "helps select a safe practice-application format without overload",
+            "safety": "defines safe-application boundaries and conditions requiring caution",
+            "lens": "clarifies a psychological lens useful for accurate pattern reflection",
+            "case": "supports recognition of recurring real-life scenario patterns",
+            "style": "preserves voice and framing style without turning into user advice",
+            "theory": "explains the working mechanism and contextual meaning of the pattern",
+        }.get(chunk_type, "clarifies the block role inside context assembly")
+        mixed_note = {
+            "high": "The fragment carries high mixed-intent density, so it should be used for gentle context structuring rather than directive guidance.",
+            "medium": "The fragment combines several semantic lines, so it works best as a controlled lens for narrowing conversational focus.",
+        }.get(
+            mixed_intent,
+            "The fragment provides a stable frame for recognizing the mechanism and selecting a safe next conversational move.",
+        )
+        low_resource_note = (
+            " When low resource is present, prioritize stabilization, reduced cognitive load, and no forcing."
+            if "practice_requires_low_resource_check" in flags
+            else ""
+        )
+        summary = (
+            f"{title_text}{chapter_text} {chunk_focus}. Retrieval value: link this block to lenses {lens_text} so the dialog can pick context "
+            f"that matches the pattern without quoting source phrasing. {mixed_note}{low_resource_note}"
+        ).strip()
+        if len(summary) < SUMMARY_MIN_LENGTH:
+            summary = (
+                summary
+                + " Use it as internal context support only, not as direct user-facing instruction."
+            ).strip()
+        if len(summary) > SUMMARY_MAX_LENGTH:
+            summary = summary[:SUMMARY_MAX_LENGTH].rstrip(" .,;:") + "."
+        return summary
+
     def enrich(self, context: dict[str, Any]) -> dict[str, Any]:
         excerpt = str(context.get("content_excerpt") or "")
         chunk_type = str(context.get("chunk_type_original") or "theory")
-        summary = _safe_preview(excerpt, limit=320)
-        if len(summary) < 120:
-            summary = (summary + " " + str(context.get("current_summary") or "")).strip()
-            summary = _safe_preview(summary, limit=320)
-        if len(summary) < 120:
-            summary = (
-                "Фрагмент описывает психологический паттерн и условия его проявления, "
-                "задавая безопасную внутреннюю линзу для дальнейшего осмысления и выбора следующего шага."
-            )
-
         lens = self._guess_lens(excerpt, chunk_type)
+        summary = self._build_mock_paraphrase_summary(context, lens)
         tags = _dedupe(
             [
                 chunk_type,
@@ -264,16 +309,16 @@ class _MockLLMClient:
             ]
         )[:8]
         use_when = {
-            "practice": ["когда нужен мягкий структурный шаг без перегруза"],
-            "safety": ["когда нужно удержать контакт и не форсировать интерпретации"],
-            "lens": ["когда полезно увидеть повторяющийся механизм реакции"],
-            "case": ["когда нужно распознать знакомый паттерн в живой ситуации"],
-            "style": ["когда нужна внутренняя опора на язык и тон рамки"],
-            "theory": ["когда нужно объяснение механизма без директивности"],
-        }.get(chunk_type, ["когда нужен аккуратный фокус на механизме переживания"])
-        avoid_when = ["когда состояние остро нестабильно и нужен кризисный протокол"]
+            "practice": ["when a low-pressure structured practice step is needed"],
+            "safety": ["when emotional containment is required without forcing interpretation"],
+            "lens": ["when a recurring reaction pattern needs clear reflection"],
+            "case": ["when a familiar real-life pattern needs quick recognition"],
+            "style": ["when internal phrasing and tone consistency are required"],
+            "theory": ["when a mechanism explanation is needed without directives"],
+        }.get(chunk_type, ["when careful pattern-focused context is needed"])
+        avoid_when = ["when state is acutely unstable and crisis protocol is required"]
         if "practice_requires_low_resource_check" in _normalize_list(context.get("safety_flags_original")):
-            avoid_when.append("когда мало ресурса или выраженная перегрузка")
+            avoid_when.append("when low resource or severe overload is present")
 
         return {
             "summary_candidate": summary,
@@ -282,8 +327,8 @@ class _MockLLMClient:
             "use_when": use_when[:4],
             "avoid_when": _dedupe(avoid_when)[:4],
             "self_contained_score": 0.74,
-            "self_contained_reason": "Кандидат отражает ядро смысла и условия применения без цитирования.",
-            "split_merge_suggestion": {"action": "keep", "reason": "Содержательная целостность сохранена."},
+            "self_contained_reason": "Candidate preserves mechanism and usage conditions without direct quotation.",
+            "split_merge_suggestion": {"action": "keep", "reason": "Semantic integrity is preserved."},
             "confidence": 0.72,
             "needs_human_review": False,
             "review_reasons": [],
@@ -413,17 +458,78 @@ def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _write_jsonl(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+
+
+def _build_overlay_readiness_report(
+    *,
+    overlay_path: Path,
+    real_llm_run: bool,
+    validation_report: dict[str, Any],
+) -> dict[str, Any]:
+    chunks_enriched = int(validation_report.get("chunks_enriched") or 0)
+    validation_failed = int(validation_report.get("validation_failed") or 0)
+    failed_ratio = (validation_failed / chunks_enriched) if chunks_enriched else 1.0
+    reasons_distribution = validation_report.get("validation_reasons_distribution") or {}
+    summary_quote_risk_count = int(
+        reasons_distribution.get("summary_direct_quote_risk", 0)
+        + reasons_distribution.get("summary_direct_quote_risk:prefix_overlap", 0)
+    )
+    unknown_lens = int(validation_report.get("unknown_lens_candidates") or 0)
+    invariant_violations = int(validation_report.get("safety_governance_invariant_violations") or 0)
+    raw_text_leak = str(validation_report.get("raw_text_leak_check") or "fail")
+
+    reasons: list[str] = []
+    if not real_llm_run:
+        reasons.append("mock_run_not_production_eligible")
+    if failed_ratio > 0.20:
+        reasons.append("validation_failed_ratio_above_threshold")
+    if summary_quote_risk_count > 3:
+        reasons.append("summary_direct_quote_risk_above_threshold")
+    if unknown_lens != 0:
+        reasons.append("unknown_lens_candidates_present")
+    if invariant_violations != 0:
+        reasons.append("safety_governance_invariant_violations_present")
+    if raw_text_leak != "pass":
+        reasons.append("raw_text_leak_check_failed")
+
+    production_ready = len(reasons) == 0
+    return {
+        "overlay_path": str(overlay_path),
+        "run_kind": "real" if real_llm_run else "mock",
+        "validation_passed": int(validation_report.get("validation_passed") or 0),
+        "validation_failed": validation_failed,
+        "validation_failed_ratio": round(failed_ratio, 4),
+        "summary_direct_quote_risk_count": summary_quote_risk_count,
+        "unknown_lens_candidates": unknown_lens,
+        "safety_governance_invariant_violations": invariant_violations,
+        "raw_text_leak_check": raw_text_leak,
+        "calibration_passed": failed_ratio <= 0.20
+        and summary_quote_risk_count <= 3
+        and unknown_lens == 0
+        and invariant_violations == 0
+        and raw_text_leak == "pass",
+        "production_ready": production_ready,
+        "promotion_allowed": production_ready,
+        "reasons": reasons,
+    }
+
+
 def _select_report_recommendation(
     *,
     real_llm_run: bool,
-    validation_failed: int,
-    unknown_lens_count: int,
+    calibration_passed: bool,
+    production_ready: bool,
 ) -> str:
-    if validation_failed > 0 or unknown_lens_count > 0:
-        return "PRD-046.0.5-HF1 - Enrichment Prompt/Validator Calibration"
-    if not real_llm_run:
+    if calibration_passed and not real_llm_run:
         return "PRD-046.0.5-RUN1 - Real LLM Enrichment Batch Run"
-    return "PRD-046.0.5.1 - Full Enrichment Apply + Chroma Refresh v1"
+    if calibration_passed and real_llm_run and production_ready:
+        return "PRD-046.0.6 - Knowledge Retrieval Eval Set v1"
+    return "PRD-046.0.5-HF2 - Enrichment Calibration Follow-up"
 
 
 def run_enrichment(
@@ -461,6 +567,7 @@ def run_enrichment(
         "blocks_path": str(blocks_path),
         "output_dir": str(output_dir),
         "reports_dir": str(reports_dir),
+        "prompt_path": str(prompt_path),
         "limit": limit,
         "offset": offset,
         "chunk_type_filter": chunk_type_filter,
@@ -496,6 +603,7 @@ def run_enrichment(
         raise RuntimeError("No chunks selected for enrichment.")
 
     prompt_text = prompt_path.read_text(encoding="utf-8") if prompt_path.exists() else ""
+    prompt_version = _sanitize_label(prompt_path.stem, fallback="kb_enrichment_v1")
     model_name = os.getenv("KB_ENRICHMENT_MODEL") or "gpt-4o-mini"
     llm_mode_reason = ""
     if mock_llm:
@@ -536,7 +644,7 @@ def run_enrichment(
         llm_metadata = LLMMetadata(
             provider=str(getattr(llm_client, "provider", "mock")),
             model=str(getattr(llm_client, "model", "mock-kb-enrichment-v1")),
-            prompt_version="kb_enrichment_v1",
+            prompt_version=prompt_version,
             generated_at=_utc_now(),
             mock=bool(getattr(llm_client, "mock", True)),
         )
@@ -574,6 +682,9 @@ def run_enrichment(
             validation_failed += 1
         for reason in review_reasons:
             validation_reasons_counter[reason] += 1
+        for reason_key, reason_detail in result.reason_details.items():
+            detail_value = _sanitize_label(reason_detail, fallback="detail")
+            validation_reasons_counter[f"{reason_key}:{detail_value}"] += 1
         unknown_lens = [lens for lens in candidate.lens_family_candidates if lens not in LENS_FAMILY_ALLOWLIST]
         if unknown_lens:
             unknown_lens_count += 1
@@ -582,6 +693,7 @@ def run_enrichment(
         payload["validation"] = {
             "passed": result.passed and len(invariant_reasons) == 0,
             "reasons": result.reasons,
+            "reason_details": result.reason_details,
             "warnings": result.warnings,
             "invariant_violations": invariant_reasons,
         }
@@ -594,9 +706,7 @@ def run_enrichment(
         raise RuntimeError(f"Forbidden raw keys detected in artifacts: {sorted(set(forbidden_hits))}")
 
     candidates_path = output_dir / "enrichment_candidates.jsonl"
-    with candidates_path.open("w", encoding="utf-8") as handle:
-        for row in candidates:
-            handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+    _write_jsonl(candidates_path, candidates)
 
     if write_overlay and confirm:
         DEFAULT_OVERLAY_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -610,6 +720,8 @@ def run_enrichment(
     validation_report = {
         "generated_at": _utc_now(),
         "schema_version": ENRICHMENT_SCHEMA_VERSION,
+        "prompt_version": prompt_version,
+        "run_kind": "real" if real_llm_run else "mock",
         "chunks_selected": len(selected_blocks),
         "chunks_enriched": len(candidates),
         "validation_passed": len(candidates) - validation_failed,
@@ -621,7 +733,8 @@ def run_enrichment(
         "validation_reasons_distribution": dict(sorted(validation_reasons_counter.items())),
         "raw_text_leak_check": "pass" if not forbidden_hits else "fail",
     }
-    _write_json(output_dir / "enrichment_validation_report.json", validation_report)
+    validation_report_path = output_dir / "enrichment_validation_report.json"
+    _write_json(validation_report_path, validation_report)
 
     diff_summary = {
         "generated_at": _utc_now(),
@@ -641,7 +754,41 @@ def run_enrichment(
         "production_blocks_mutated": False,
         "chroma_reindex_performed": False,
     }
-    _write_json(output_dir / "enrichment_diff_summary.json", diff_summary)
+    diff_summary_path = output_dir / "enrichment_diff_summary.json"
+    _write_json(diff_summary_path, diff_summary)
+
+    calibration_candidates_path = output_dir / "enrichment_calibration_candidates.jsonl"
+    calibration_validation_path = output_dir / "enrichment_calibration_validation_report.json"
+    calibration_diff_path = output_dir / "enrichment_calibration_diff_summary.json"
+    _write_jsonl(calibration_candidates_path, candidates)
+    _write_json(calibration_validation_path, validation_report)
+    _write_json(calibration_diff_path, diff_summary)
+
+    failed_examples = []
+    for row in candidates:
+        validation = row.get("validation") if isinstance(row.get("validation"), dict) else {}
+        reasons = validation.get("reasons") if isinstance(validation.get("reasons"), list) else []
+        if not reasons:
+            continue
+        failed_examples.append(
+            {
+                "block_id": str(row.get("block_id") or ""),
+                "chunk_type_original": str(row.get("chunk_type_original") or ""),
+                "source_title": str(row.get("source_title") or ""),
+                "validation_reasons": [str(r) for r in reasons],
+                "summary_candidate_preview": _safe_preview(str(row.get("summary_candidate") or ""), limit=160),
+                "source_preview": _safe_preview(str(row.get("source_preview") or ""), limit=160),
+            }
+        )
+    _write_jsonl(output_dir / "failed_candidate_examples_sanitized.jsonl", failed_examples)
+
+    overlay_effective_path = DEFAULT_OVERLAY_PATH if overlay_written else output_dir / "enrichment_candidates.jsonl"
+    overlay_readiness_report = _build_overlay_readiness_report(
+        overlay_path=overlay_effective_path,
+        real_llm_run=real_llm_run,
+        validation_report=validation_report,
+    )
+    _write_json(output_dir / "overlay_readiness_report.json", overlay_readiness_report)
 
     (output_dir / "sanitized_runtime_logs.txt").write_text(
         "\n".join(
@@ -653,6 +800,8 @@ def run_enrichment(
                 f"chunks_selected={len(selected_blocks)}",
                 f"validation_failed={validation_failed}",
                 f"needs_human_review={needs_human_review_count}",
+                f"overlay_production_ready={overlay_readiness_report.get('production_ready')}",
+                f"overlay_promotion_allowed={overlay_readiness_report.get('promotion_allowed')}",
                 "production_blocks_mutated=false",
                 "chroma_reindex_performed=false",
                 "runtime_behavior_changed=false",
@@ -664,8 +813,8 @@ def run_enrichment(
 
     next_prd = _select_report_recommendation(
         real_llm_run=real_llm_run,
-        validation_failed=validation_failed,
-        unknown_lens_count=unknown_lens_count,
+        calibration_passed=bool(overlay_readiness_report.get("calibration_passed")),
+        production_ready=bool(overlay_readiness_report.get("production_ready")),
     )
 
     _write_reports(
@@ -676,6 +825,7 @@ def run_enrichment(
         next_prd=next_prd,
         llm_mode_reason=llm_mode_reason,
         overlay_written=overlay_written,
+        overlay_readiness_report=overlay_readiness_report,
         real_llm_run=real_llm_run,
         mock_llm_run=mock_llm_run,
     )
@@ -689,6 +839,9 @@ def run_enrichment(
         "chunks_enriched": len(candidates),
         "validation_failed": validation_failed,
         "needs_human_review": needs_human_review_count,
+        "calibration_passed": bool(overlay_readiness_report.get("calibration_passed")),
+        "production_ready": bool(overlay_readiness_report.get("production_ready")),
+        "overlay_readiness_report_path": str(output_dir / "overlay_readiness_report.json"),
         "next_prd": next_prd,
         "candidates_path": str(candidates_path),
     }
@@ -703,6 +856,7 @@ def _write_reports(
     next_prd: str,
     llm_mode_reason: str,
     overlay_written: bool,
+    overlay_readiness_report: dict[str, Any],
     real_llm_run: bool,
     mock_llm_run: bool,
 ) -> None:
@@ -750,6 +904,9 @@ def _write_reports(
                 "",
                 "## Overlay",
                 f"- overlay_written: `{overlay_written}`",
+                f"- calibration_passed: `{overlay_readiness_report.get('calibration_passed')}`",
+                f"- production_ready: `{overlay_readiness_report.get('production_ready')}`",
+                f"- promotion_allowed: `{overlay_readiness_report.get('promotion_allowed')}`",
                 "",
                 "## Commit / Push",
                 "- Commit hash: `pending`",

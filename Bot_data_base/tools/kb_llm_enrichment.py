@@ -470,6 +470,7 @@ def _build_overlay_readiness_report(
     overlay_path: Path,
     real_llm_run: bool,
     validation_report: dict[str, Any],
+    hold_promotion: bool = False,
 ) -> dict[str, Any]:
     chunks_enriched = int(validation_report.get("chunks_enriched") or 0)
     validation_failed = int(validation_report.get("validation_failed") or 0)
@@ -498,6 +499,10 @@ def _build_overlay_readiness_report(
         reasons.append("raw_text_leak_check_failed")
 
     production_ready = len(reasons) == 0
+    promotion_allowed = production_ready and not hold_promotion
+    promotion_reason = ""
+    if production_ready and hold_promotion:
+        promotion_reason = "real_batch_ready_but_full_apply_requires_next_prd"
     return {
         "overlay_path": str(overlay_path),
         "run_kind": "real" if real_llm_run else "mock",
@@ -514,7 +519,8 @@ def _build_overlay_readiness_report(
         and invariant_violations == 0
         and raw_text_leak == "pass",
         "production_ready": production_ready,
-        "promotion_allowed": production_ready,
+        "promotion_allowed": promotion_allowed,
+        "promotion_reason": promotion_reason,
         "reasons": reasons,
     }
 
@@ -522,14 +528,16 @@ def _build_overlay_readiness_report(
 def _select_report_recommendation(
     *,
     real_llm_run: bool,
-    calibration_passed: bool,
+    validation_failed: int,
     production_ready: bool,
 ) -> str:
-    if calibration_passed and not real_llm_run:
-        return "PRD-046.0.5-RUN1 - Real LLM Enrichment Batch Run"
-    if calibration_passed and real_llm_run and production_ready:
-        return "PRD-046.0.6 - Knowledge Retrieval Eval Set v1"
-    return "PRD-046.0.5-HF2 - Enrichment Calibration Follow-up"
+    if not real_llm_run:
+        return "PRD-046.0.5-RUN1-HF1 - Real LLM Availability / Client Fix"
+    if validation_failed > 0:
+        return "PRD-046.0.5-RUN1-HF2 - Real LLM Prompt/Validator Calibration"
+    if production_ready:
+        return "PRD-046.0.5.1 - Full Enrichment Apply + Chroma Refresh v1"
+    return "PRD-046.0.5-RUN1-HF2 - Real LLM Prompt/Validator Calibration"
 
 
 def run_enrichment(
@@ -547,6 +555,8 @@ def run_enrichment(
     apply_changes: bool,
     confirm: bool,
     mock_llm: bool,
+    require_real_llm: bool,
+    overlay_path: Path | None,
     max_concurrency: int,  # noqa: ARG001 - reserved for v2 async path
     max_retries: int,
     timeout_seconds: float,
@@ -558,6 +568,8 @@ def run_enrichment(
         raise RuntimeError("Write-overlay mode requires --confirm.")
     if apply_changes and not confirm:
         raise RuntimeError("Apply mode requires --confirm.")
+    if require_real_llm and mock_llm:
+        raise RuntimeError("`--require-real-llm` cannot be combined with `--mock-llm`.")
 
     preflight = _evaluate_preflight()
     run_config = {
@@ -576,6 +588,8 @@ def run_enrichment(
         "apply": apply_changes,
         "confirm": confirm,
         "mock_llm_requested": mock_llm,
+        "require_real_llm": require_real_llm,
+        "overlay_path": str(overlay_path) if overlay_path else "",
         "production_blocks_mutated": False,
         "chroma_reindex_performed": False,
         "runtime_behavior_changed": False,
@@ -622,7 +636,14 @@ def run_enrichment(
             real_llm_run = True
             mock_llm_run = False
             llm_mode_reason = "real_llm_available"
-        except Exception:
+        except Exception as exc:
+            if require_real_llm:
+                return {
+                    "status": "blocked",
+                    "reason": "real_llm_unavailable",
+                    "error": _safe_preview(str(exc), limit=200),
+                    "run_config_path": str(output_dir / "enrichment_run_config.json"),
+                }
             llm_client = _MockLLMClient()
             real_llm_run = False
             mock_llm_run = True
@@ -652,6 +673,14 @@ def run_enrichment(
             llm_payload = llm_client.enrich(context)
             llm_error = ""
         except Exception as exc:
+            if require_real_llm:
+                return {
+                    "status": "blocked",
+                    "reason": "real_llm_call_failed",
+                    "block_id": block_id,
+                    "error": _safe_preview(str(exc), limit=200),
+                    "run_config_path": str(output_dir / "enrichment_run_config.json"),
+                }
             llm_payload = _MockLLMClient().enrich(context)
             llm_error = str(exc)
             llm_metadata.mock = True
@@ -708,9 +737,10 @@ def run_enrichment(
     candidates_path = output_dir / "enrichment_candidates.jsonl"
     _write_jsonl(candidates_path, candidates)
 
+    effective_overlay_path = overlay_path or DEFAULT_OVERLAY_PATH
     if write_overlay and confirm:
-        DEFAULT_OVERLAY_PATH.parent.mkdir(parents=True, exist_ok=True)
-        with DEFAULT_OVERLAY_PATH.open("w", encoding="utf-8") as handle:
+        effective_overlay_path.parent.mkdir(parents=True, exist_ok=True)
+        with effective_overlay_path.open("w", encoding="utf-8") as handle:
             for row in candidates:
                 handle.write(json.dumps(row, ensure_ascii=False) + "\n")
         overlay_written = True
@@ -782,11 +812,12 @@ def run_enrichment(
         )
     _write_jsonl(output_dir / "failed_candidate_examples_sanitized.jsonl", failed_examples)
 
-    overlay_effective_path = DEFAULT_OVERLAY_PATH if overlay_written else output_dir / "enrichment_candidates.jsonl"
+    overlay_effective_path = effective_overlay_path if overlay_written else output_dir / "enrichment_candidates.jsonl"
     overlay_readiness_report = _build_overlay_readiness_report(
         overlay_path=overlay_effective_path,
         real_llm_run=real_llm_run,
         validation_report=validation_report,
+        hold_promotion=require_real_llm,
     )
     _write_json(output_dir / "overlay_readiness_report.json", overlay_readiness_report)
 
@@ -813,7 +844,7 @@ def run_enrichment(
 
     next_prd = _select_report_recommendation(
         real_llm_run=real_llm_run,
-        calibration_passed=bool(overlay_readiness_report.get("calibration_passed")),
+        validation_failed=validation_failed,
         production_ready=bool(overlay_readiness_report.get("production_ready")),
     )
 
@@ -1011,9 +1042,11 @@ def main() -> int:
     parser.add_argument("--chunk-type", default="")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--write-overlay", action="store_true")
+    parser.add_argument("--overlay-path", default="")
     parser.add_argument("--apply", action="store_true")
     parser.add_argument("--confirm", action="store_true")
     parser.add_argument("--mock-llm", action="store_true")
+    parser.add_argument("--require-real-llm", action="store_true")
     parser.add_argument("--resume", action="store_true")  # noqa: ARG001 - reserved for future
     parser.add_argument("--max-concurrency", type=int, default=1)
     parser.add_argument("--max-retries", type=int, default=2)
@@ -1034,6 +1067,8 @@ def main() -> int:
         apply_changes=bool(args.apply),
         confirm=bool(args.confirm),
         mock_llm=bool(args.mock_llm),
+        require_real_llm=bool(args.require_real_llm),
+        overlay_path=Path(args.overlay_path) if str(args.overlay_path or "").strip() else None,
         max_concurrency=max(1, int(args.max_concurrency)),
         max_retries=max(1, int(args.max_retries)),
         timeout_seconds=max(1.0, float(args.timeout_seconds)),

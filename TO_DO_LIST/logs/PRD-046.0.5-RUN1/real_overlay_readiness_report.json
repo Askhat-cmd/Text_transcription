@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-05-09T17:18:28.679378+00:00",
+  "run_kind": "real",
+  "real_llm_run": true,
+  "mock_llm_run": false,
+  "prompt_version": "kb_enrichment_v1_1",
+  "overlay_path": "Bot_data_base\\data\\processed\\enrichment_overlays\\kuznitsa_llm_enrichment_real_batch_v1.jsonl",
+  "chunks_selected": 60,
+  "chunks_enriched": 60,
+  "validation_passed": 6,
+  "validation_failed": 54,
+  "validation_failed_ratio": 0.9,
+  "summary_direct_quote_risk_count": 0,
+  "unknown_lens_candidates": 54,
+  "safety_governance_invariant_violations": 0,
+  "raw_text_leak_check": "pass",
+  "needs_human_review": 60,
+  "production_ready": false,
+  "promotion_allowed": false,
+  "promotion_reason": "real_batch_not_ready_requires_hf2",
+  "reasons": [
+    "validation_failed_ratio_above_threshold",
+    "unknown_lens_candidates_present"
+  ]
+}

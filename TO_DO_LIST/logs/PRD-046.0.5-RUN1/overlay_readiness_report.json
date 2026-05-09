@@ -1,0 +1,19 @@
+{
+  "overlay_path": "Bot_data_base\\data\\processed\\enrichment_overlays\\kuznitsa_llm_enrichment_real_batch_v1.jsonl",
+  "run_kind": "real",
+  "validation_passed": 6,
+  "validation_failed": 54,
+  "validation_failed_ratio": 0.9,
+  "summary_direct_quote_risk_count": 0,
+  "unknown_lens_candidates": 54,
+  "safety_governance_invariant_violations": 0,
+  "raw_text_leak_check": "pass",
+  "calibration_passed": false,
+  "production_ready": false,
+  "promotion_allowed": false,
+  "promotion_reason": "",
+  "reasons": [
+    "validation_failed_ratio_above_threshold",
+    "unknown_lens_candidates_present"
+  ]
+}

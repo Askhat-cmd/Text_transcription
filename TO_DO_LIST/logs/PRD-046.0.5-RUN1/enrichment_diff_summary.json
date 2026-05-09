@@ -1,0 +1,23 @@
+{
+  "generated_at": "2026-05-09T17:15:32.523909+00:00",
+  "chunks_total": 60,
+  "summary_changed_count": 60,
+  "lens_candidates_distribution": {
+    "0": 1,
+    "4": 11,
+    "5": 28,
+    "6": 15,
+    "7": 5
+  },
+  "chunk_type_distribution_selected": {
+    "case": 18,
+    "lens": 18,
+    "practice": 8,
+    "safety": 5,
+    "style": 8,
+    "theory": 3
+  },
+  "mixed_intent_selected_medium_high": 14,
+  "production_blocks_mutated": false,
+  "chroma_reindex_performed": false
+}

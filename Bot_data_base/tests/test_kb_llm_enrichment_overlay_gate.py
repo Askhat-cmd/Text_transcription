@@ -38,9 +38,10 @@ def test_real_overlay_production_ready_when_all_thresholds_pass() -> None:
             "raw_text_leak_check": "pass",
             "validation_reasons_distribution": {"summary_direct_quote_risk": 2},
         },
+        hold_promotion=True,
     )
     assert report["calibration_passed"] is True
     assert report["production_ready"] is True
-    assert report["promotion_allowed"] is True
+    assert report["promotion_allowed"] is False
+    assert report["promotion_reason"] == "real_batch_ready_but_full_apply_requires_next_prd"
     assert report["reasons"] == []
-

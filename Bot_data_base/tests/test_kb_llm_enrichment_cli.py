@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -93,6 +93,8 @@ def test_run_enrichment_dry_run_no_mutation_and_no_raw_leaks(tmp_path: Path, mon
         apply_changes=False,
         confirm=False,
         mock_llm=True,
+        require_real_llm=False,
+        overlay_path=None,
         max_concurrency=1,
         max_retries=2,
         timeout_seconds=10.0,
@@ -144,7 +146,82 @@ def test_write_overlay_requires_confirm(tmp_path: Path, monkeypatch: pytest.Monk
             apply_changes=False,
             confirm=False,
             mock_llm=True,
+            require_real_llm=False,
+            overlay_path=None,
             max_concurrency=1,
             max_retries=1,
             timeout_seconds=5.0,
         )
+
+
+def test_require_real_llm_blocks_fallback(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    blocks_path = tmp_path / "all_blocks_merged.json"
+    blocks_path.write_text(json.dumps({"blocks": [_mk_block("b1", "theory")]}), encoding="utf-8")
+    monkeypatch.setattr(
+        kb_llm_enrichment,
+        "_evaluate_preflight",
+        lambda: {"preflight_passed": True, "reasons": [], "observed": {}},
+    )
+
+    class _FailingClient:
+        def __init__(self, **_: object) -> None:
+            raise RuntimeError("api key missing")
+
+    monkeypatch.setattr(kb_llm_enrichment, "_OpenAILLMClient", _FailingClient)
+
+    result = run_enrichment(
+        source_hint="КУЗНИЦА ДУХА",
+        blocks_path=blocks_path,
+        output_dir=tmp_path / "logs",
+        reports_dir=tmp_path / "reports",
+        prompt_path=tmp_path / "prompt.md",
+        limit=1,
+        offset=0,
+        chunk_type_filter="",
+        dry_run=True,
+        write_overlay=False,
+        apply_changes=False,
+        confirm=False,
+        mock_llm=False,
+        require_real_llm=True,
+        overlay_path=None,
+        max_concurrency=1,
+        max_retries=1,
+        timeout_seconds=5.0,
+    )
+    assert result["status"] == "blocked"
+    assert result["reason"] == "real_llm_unavailable"
+
+
+def test_overlay_path_writes_to_explicit_location(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    blocks_path = tmp_path / "all_blocks_merged.json"
+    blocks_path.write_text(json.dumps({"blocks": [_mk_block("b1", "theory")]}), encoding="utf-8")
+    monkeypatch.setattr(
+        kb_llm_enrichment,
+        "_evaluate_preflight",
+        lambda: {"preflight_passed": True, "reasons": [], "observed": {}},
+    )
+    overlay_path = tmp_path / "custom_overlay.jsonl"
+
+    result = run_enrichment(
+        source_hint="КУЗНИЦА ДУХА",
+        blocks_path=blocks_path,
+        output_dir=tmp_path / "logs",
+        reports_dir=tmp_path / "reports",
+        prompt_path=tmp_path / "prompt.md",
+        limit=1,
+        offset=0,
+        chunk_type_filter="",
+        dry_run=False,
+        write_overlay=True,
+        apply_changes=False,
+        confirm=True,
+        mock_llm=True,
+        require_real_llm=False,
+        overlay_path=overlay_path,
+        max_concurrency=1,
+        max_retries=1,
+        timeout_seconds=5.0,
+    )
+    assert result["status"] == "done"
+    assert overlay_path.exists()

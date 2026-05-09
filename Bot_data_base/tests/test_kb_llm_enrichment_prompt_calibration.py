@@ -129,10 +129,11 @@ def test_mock_calibration_batch_is_mostly_valid(tmp_path: Path, monkeypatch: pyt
         apply_changes=False,
         confirm=False,
         mock_llm=True,
+        require_real_llm=False,
+        overlay_path=None,
         max_concurrency=1,
         max_retries=2,
         timeout_seconds=10.0,
     )
     assert result["status"] == "done"
     assert result["validation_failed"] <= 6
-

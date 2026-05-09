@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-09T17:05:18.377555+00:00",
+  "preflight_passed": true,
+  "reasons": [],
+  "observed": {
+    "validation_passed_after": 30,
+    "validation_failed_after": 0,
+    "summary_direct_quote_risk_after": 0,
+    "raw_text_leak_check_after": "pass",
+    "hf1_calibration_passed": true,
+    "hf1_production_ready": false,
+    "hf1_reasons": [
+      "mock_run_not_production_eligible"
+    ]
+  }
+}

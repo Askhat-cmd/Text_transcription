@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-09T14:48:31.732904+00:00",
+  "schema_version": "kb_llm_enrichment_v1",
+  "chunks_selected": 30,
+  "chunks_enriched": 30,
+  "validation_passed": 2,
+  "validation_failed": 28,
+  "needs_human_review": 28,
+  "unknown_lens_candidates": 0,
+  "summary_quality_warnings": 0,
+  "safety_governance_invariant_violations": 0,
+  "validation_reasons_distribution": {
+    "summary_direct_quote_risk": 28
+  },
+  "raw_text_leak_check": "pass"
+}

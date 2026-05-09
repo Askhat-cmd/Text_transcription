@@ -1,0 +1,7 @@
+[2026-05-09T09:58:43.349821+00:00] PRD-046.0.4 audit run
+focus_blocks=229
+query_status=None
+collection_count=None
+local_blocks_count=229
+recommended_next_prd=PRD-046.0.4.1 — BotDB Chroma Recovery / Index Consistency v1
+chroma_probe_error=object of type 'int' has no len()

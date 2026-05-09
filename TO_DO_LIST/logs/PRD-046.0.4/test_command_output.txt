@@ -1,0 +1,68 @@
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests/test_kb_quality_audit_metrics.py -q
+
+........                                                                 [100%]
+8 passed in 0.12s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests/test_chroma_readiness_audit.py -q
+
+..                                                                       [100%]
+2 passed in 2.65s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests -q
+
+........................................................................ [ 70%]
+..............................                                           [100%]
+102 passed in 26.02s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.24s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+........................................................................ [ 93%]
+................                                                         [100%]
+232 passed in 46.58s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe Bot_data_base/tools/kb_quality_audit.py --source-title " ”«Õ»÷¿" --output-dir TO_DO_LIST/logs/PRD-046.0.4 --reports-dir TO_DO_LIST/reports
+
+{
+  "source_inventory_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\source_inventory.json",
+  "kb_metrics_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\kb_quality_metrics.json",
+  "chunk_findings_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\chunk_quality_findings.json",
+  "manual_candidates_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\manual_review_candidates.json",
+  "chroma_probe_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\chroma_readiness_probe.json",
+  "retrieval_snapshot_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\retrieval_probe_snapshot.json",
+  "runtime_logs_path": "TO_DO_LIST\\logs\\PRD-046.0.4\\sanitized_runtime_logs.txt",
+  "manual_queue_size": 50,
+  "focus_blocks_count": 229,
+  "recommended_next_prd": "PRD-046.0.4.1 ? BotDB Chroma Recovery / Index Consistency v1"
+}
+
+
+[exit_code=0]
+

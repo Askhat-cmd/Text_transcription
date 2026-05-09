@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-05-09T09:58:07.804469+00:00",
+  "sources": [
+    {
+      "source_id": "123__кузница_духа",
+      "source": "book:123__кузница_духа",
+      "title": "Кузница Духа",
+      "author": "Саламат Сарсекенов",
+      "author_id": "123",
+      "source_type": "book",
+      "blocks_count": 229,
+      "from_blocks": true,
+      "from_registry": true,
+      "registry_status": "done",
+      "is_focus_source": true,
+      "is_architecture_internal_risk": false,
+      "processed_exports": [
+        "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "source": "book:avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "author_id": "avtor",
+      "source_type": "book",
+      "blocks_count": 0,
+      "from_blocks": false,
+      "from_registry": true,
+      "registry_status": "processing",
+      "is_focus_source": false,
+      "is_architecture_internal_risk": false,
+      "processed_exports": [
+        "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\avtor__книга_blocks.json"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "source": "youtube:test123",
+      "title": "",
+      "author": "Автор",
+      "author_id": "avtor",
+      "source_type": "youtube",
+      "blocks_count": 0,
+      "from_blocks": false,
+      "from_registry": true,
+      "registry_status": "processing",
+      "is_focus_source": false,
+      "is_architecture_internal_risk": false,
+      "processed_exports": []
+    }
+  ],
+  "focus_source_ids": [
+    "123__кузница_духа"
+  ],
+  "suspicious_internal_sources": []
+}

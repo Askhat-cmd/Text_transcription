@@ -1,0 +1,558 @@
+{
+  "generated_at": "2026-05-09T09:58:43.135354+00:00",
+  "queries": [
+    {
+      "query": "я злюсь на себя, потому что опять не сделал обещанное",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты…"
+        },
+        {
+          "chunk_id": "d30311b4-b5ae-4236-b4b7-6df930ef3921",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Это самый тонкий и при этом самый важный механизм. В мозге есть **опиоидная система** — та же самая, на которую действу…"
+        },
+        {
+          "chunk_id": "50d4a2a5-2af7-4709-b61e-c040934c1326",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Здесь — важная оговорка. Потому что знание о спиральной динамике может стать новым инструментом программы. Программа «н…"
+        },
+        {
+          "chunk_id": "fb69647b-a0fe-41aa-80fd-797ce327ab3c",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Теперь — про раздражение. Когда что-то в другом человеке вызывает у тебя сильную эмоциональную реакцию — злость, отвращ…"
+        },
+        {
+          "chunk_id": "d7e63f68-6fd8-44e0-920a-b28a9cec0e21",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**В: Я понимаю всё, что описано в книге. Но в жизни это не работает. Что я делаю не так?** Ничего не делаешь не так. По…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "я боюсь показать проект и снова хочу отложить",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "c2d5f62f-0d20-4cf9-a97e-844b1a196d0c",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Большинство людей думают, что дофамин — это про удовольствие. «Получил что-то хорошее — получил дофамин». Это популярно…"
+        },
+        {
+          "chunk_id": "fd886228-effa-4902-a43c-4dd204608087",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Страх появляется не случайно. У каждого страха есть конкретное содержание — конкретная угроза, которую нервная система…"
+        },
+        {
+          "chunk_id": "413026dc-7212-48e7-b679-fceba697700a",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуа…"
+        },
+        {
+          "chunk_id": "6cbe79ab-635b-483c-9fd5-840e5186d03a",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Если информационный метаболизм — это процесс переработки опыта, то **интегративная саморегуляция** — это когда этот про…"
+        },
+        {
+          "chunk_id": "2810ca82-994b-4a3e-bf16-f723421ddd15",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Есть парадокс, который возникает у большинства людей, добравшихся до этого места. С одной стороны — всё, о чём говорит…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "нет сил, не хочу анализа, просто поддержи",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "671e4e15-2854-423f-9867-8ca82e926b2c",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "*** **— Вы говорите, что мозг зависим от страдания. Но тогда получается, что я не могу это изменить? Если это химия — з…"
+        },
+        {
+          "chunk_id": "b539e87f-18e3-4422-9681-6080f4fa3e55",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Мантра:** «Я — сам. Кто сильнее — тот прав». **Что важно:** власть, автономия, немедленное удовлетворение желаний. Не…"
+        },
+        {
+          "chunk_id": "716779b8-a368-450b-8925-cface8742214",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** найти золотую тень — вытесненные позитивные качества. **Время:** 20–30 минут. Та же структура — но теперь про…"
+        },
+        {
+          "chunk_id": "766d3526-14b1-4adb-9e08-74c21ae2d4a9",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "> **Из сессии** > > **Алексей, 41 год:** Я понял, что у меня доминирует социальный инстинкт. Я буквально не могу принят…"
+        },
+        {
+          "chunk_id": "f06fe924-0d2f-438a-b2b6-fd704ed275c5",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**В: Я всё понимаю про непереваренный опыт — но как его «переварить»? Это же не кнопка.** С: Правильно, кнопки нет. Ест…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "я всё время стараюсь быть лучше и не могу остановиться",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "57db9c78-4cdb-4767-8bae-d0f2687d1e18",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** научиться слышать внутренний нарратив — и отделять его от себя. **Время:** 7 минут в любое время. В течение д…"
+        },
+        {
+          "chunk_id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты…"
+        },
+        {
+          "chunk_id": "a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер…"
+        },
+        {
+          "chunk_id": "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четв…"
+        },
+        {
+          "chunk_id": "00e93996-a59a-4364-8720-970e6a34035b",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "я чувствую вину, когда выбираю себя",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "b73a61d9-dd8e-4759-a8b8-d235e79ecdb4",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "У каждого человека один из трёх инстинктивных центров — **доминирующий**. Это не выбор и не характер. Это результат ран…"
+        },
+        {
+          "chunk_id": "88d99ba5-ee12-4681-ae38-698b811cb517",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Когда говорят о страхе, обычно упоминают два состояния: «бей или беги». Но есть третье — и для многих людей оно самое р…"
+        },
+        {
+          "chunk_id": "81e0860c-56da-44a1-9b8a-67e34a485dfa",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Ключевой принцип — и он идёт вразрез с большинством популярных советов: **Страх уменьшается не от избегания и не от сил…"
+        },
+        {
+          "chunk_id": "d7e63f68-6fd8-44e0-920a-b28a9cec0e21",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**В: Я понимаю всё, что описано в книге. Но в жизни это не работает. Что я делаю не так?** Ничего не делаешь не так. По…"
+        },
+        {
+          "chunk_id": "56b73db8-ff8b-4da6-8046-ffeccd840ab2",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Базовая установка:** «Результат не важен. Важно бесконечное усилие» Ребёнок приносит рисунок. Родитель: «Хорошо, но м…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "что делать, если я снова прокрастинирую",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "57db9c78-4cdb-4767-8bae-d0f2687d1e18",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** научиться слышать внутренний нарратив — и отделять его от себя. **Время:** 7 минут в любое время. В течение д…"
+        },
+        {
+          "chunk_id": "6cbe79ab-635b-483c-9fd5-840e5186d03a",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Если информационный метаболизм — это процесс переработки опыта, то **интегративная саморегуляция** — это когда этот про…"
+        },
+        {
+          "chunk_id": "56b73db8-ff8b-4da6-8046-ffeccd840ab2",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Базовая установка:** «Результат не важен. Важно бесконечное усилие» Ребёнок приносит рисунок. Родитель: «Хорошо, но м…"
+        },
+        {
+          "chunk_id": "92a7a24b-5ff2-4a1c-a60b-b61061179f0f",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** создать быстрый якорь — короткое телесное упражнение, которое работает в любой момент дня. **Время:** 5 минут…"
+        },
+        {
+          "chunk_id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "мне стыдно за то, что я ничего не сделал",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "05a51d0f-88a3-4fbe-aded-c2613bfc691f",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Здесь важное различие — и оно принципиальное. Современная психология часто говорит: «прими свою тень». Прими злость. Пр…"
+        },
+        {
+          "chunk_id": "8d6dcb84-bbbf-4b44-981c-5cc0b014b0ce",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по…"
+        },
+        {
+          "chunk_id": "00e93996-a59a-4364-8720-970e6a34035b",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала…"
+        },
+        {
+          "chunk_id": "413026dc-7212-48e7-b679-fceba697700a",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуа…"
+        },
+        {
+          "chunk_id": "81e0860c-56da-44a1-9b8a-67e34a485dfa",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "safe_preview": "Ключевой принцип — и он идёт вразрез с большинством популярных советов: **Страх уменьшается не от избегания и не от сил…"
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-05-09T09:58:32.487389+00:00",
+  "api_status": {
+    "ok": false,
+    "status_code": null,
+    "body": null,
+    "error": "timed out"
+  },
+  "api_registry": {
+    "ok": false,
+    "status_code": null,
+    "body": null,
+    "error": "timed out"
+  },
+  "api_query": {
+    "ok": false,
+    "status_code": null,
+    "body": null,
+    "error": "timed out"
+  },
+  "chroma_db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "collection_exists": true,
+  "collection_count": null,
+  "chroma_probe_error": "object of type 'int' has no len()",
+  "all_blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "all_blocks_exists": true,
+  "local_blocks_count": 229,
+  "registry_count": 13,
+  "embedding_model_configured": "intfloat/multilingual-e5-large",
+  "possible_embedding_dimension_mismatch": true,
+  "safe_reset_or_reindex_recommended": true
+}

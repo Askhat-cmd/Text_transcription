@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-05-09",
+  "results": [
+    {
+      "path": "docs/ARCHITECTURE_OVERVIEW.md",
+      "links": [],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "links": [],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "links": [],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "links": [],
+      "missing": [],
+      "ok": true
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "links": [],
+      "missing": [],
+      "ok": true
+    }
+  ]
+}

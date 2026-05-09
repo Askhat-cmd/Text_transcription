@@ -1,0 +1,10 @@
+﻿[2026-05-09] PRD-DOCS-001 documentation cycle
+runtime_behavior_changed=false
+writer_changed=false
+diagnosticcard_changed=false
+state_analyzer_changed=false
+thread_manager_changed=false
+knowledge_pipeline_changed=false
+chroma_reindex_performed=false
+all_blocks_merged_mutated=false
+notes=created docs layer and fixed HF3 report hygiene artifacts

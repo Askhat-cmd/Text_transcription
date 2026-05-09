@@ -1,0 +1,21 @@
+﻿[CMD] git status --short
+ M TO_DO_LIST/reports/PRD-046.0.5-RUN1-HF3_NEXT_PRD_RECOMMENDATION.md
+?? TO_DO_LIST/PRD-DOCS-001_Living_Project_Documentation_v1.md
+?? TO_DO_LIST/PRD-DOCS-001_TASK_LIST.md
+?? TO_DO_LIST/logs/PRD-DOCS-001/
+?? docs/
+
+[CMD] git diff --stat
+ ...PRD-046.0.5-RUN1-HF3_NEXT_PRD_RECOMMENDATION.md | 129 +++------------------
+ 1 file changed, 18 insertions(+), 111 deletions(-)
+
+[CMD] docs python checks
+docs checks passed
+docs/PROJECT_STATE.md chars=4018
+docs/ARCHITECTURE_OVERVIEW.md chars=3151
+docs/ROADMAP.md chars=1756
+docs/DECISIONS.md chars=2685
+docs/PRD_INDEX.md chars=3114
+
+[CMD] secret scan
+no secret markers found

@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-05-09",
+  "files": [
+    {
+      "path": "docs/ARCHITECTURE_OVERVIEW.md",
+      "chars": 3151,
+      "lines": 46
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "chars": 2685,
+      "lines": 49
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "chars": 3114,
+      "lines": 30
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "chars": 4018,
+      "lines": 70
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "chars": 1756,
+      "lines": 34
+    }
+  ]
+}

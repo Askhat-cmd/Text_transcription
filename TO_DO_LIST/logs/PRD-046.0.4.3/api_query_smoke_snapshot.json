@@ -1,0 +1,539 @@
+[
+  {
+    "query": "я всё время стараюсь быть лучше и не могу остановиться",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "1c942f2a-99ab-4848-b354-219a7b66030b",
+        "score_or_distance": 0.5288631852678775,
+        "source_title": "Почему программа так устойчива",
+        "chapter_title": "Почему программа так устойчива",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "shame",
+          "guilt",
+          "hyperarousal",
+          "body_awareness"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что запис…"
+      },
+      {
+        "id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+        "score_or_distance": 0.5195151919798028,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "guilt",
+          "self_criticism",
+          "relationships",
+          "boundaries",
+          "achievement",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё поня…"
+      },
+      {
+        "id": "e623328f-43b3-43f1-a147-15c56a412291",
+        "score_or_distance": 0.5180784952466725,
+        "source_title": "5. Какой драйвер включился?",
+        "chapter_title": "5. Какой драйвер включился?",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "achievement"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "- «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других…"
+      }
+    ]
+  },
+  {
+    "query": "я злюсь на себя, потому что опять не сделал обещанное",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "038faec5-a743-4130-a73a-ce7c4ccc751f",
+        "score_or_distance": 0.537145571718857,
+        "source_title": "Механизм 3: Искажение (Distortion)",
+        "chapter_title": "Механизм 3: Искажение (Distortion)",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "relationships",
+          "meaning",
+          "fear_of_rejection"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Мозг **переписывает** факт — добавляет к нему смысл, которого в самом факте не было. Коллега не поздоровался → «он на меня злится». Партнёр помолчал вечером →…"
+      },
+      {
+        "id": "00e93996-a59a-4364-8720-970e6a34035b",
+        "score_or_distance": 0.5284875969547568,
+        "source_title": "Практика 7: Письмо программе",
+        "chapter_title": "Практика 7: Письмо программе",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "boundaries",
+          "inner_parts",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить. **Время:** 20–30 минут. Один раз…"
+      },
+      {
+        "id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+        "score_or_distance": 0.5216989224837817,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "guilt",
+          "self_criticism",
+          "relationships",
+          "boundaries",
+          "achievement",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё поня…"
+      }
+    ]
+  },
+  {
+    "query": "я чувствую вину, когда выбираю себя",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "840fcd63-c3c2-47eb-a923-80038199f0dd",
+        "score_or_distance": 0.5201323458609867,
+        "source_title": "Практика 2: Карта перехватов",
+        "chapter_title": "Практика 2: Карта перехватов",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "avoidance",
+          "hyperarousal"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** отследить, в каких конкретных ситуациях твой доминирующий инстинкт перехватывает управление. **Время:** 5 минут в конце дня. Неделю подряд. Каждый ве…"
+      },
+      {
+        "id": "b539e87f-18e3-4422-9681-6080f4fa3e55",
+        "score_or_distance": 0.5065567799940988,
+        "source_title": "Красный: сила и власть",
+        "chapter_title": "Красный: сила и власть",
+        "chunk_index": null,
+        "chunk_type": "safety",
+        "allowed_use": [
+          "internal_only",
+          "safety_protocol"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "body_awareness",
+          "boundaries",
+          "meaning"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "**Мантра:** «Я — сам. Кто сильнее — тот прав». **Что важно:** власть, автономия, немедленное удовлетворение желаний. Нет чувства вины — есть только «хочу» и «м…"
+      },
+      {
+        "id": "efdef947-ad5b-4b45-b1a3-0536bebc5dde",
+        "score_or_distance": 0.50433093965009,
+        "source_title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и буквально говорит нижнему этажу: «угрозы нет».",
+        "chapter_title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и буквально говорит нижнему этажу: «угрозы нет».",
+        "chunk_index": null,
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "boundaries"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "Вот и всё. Это не про «взять себя в руки». Это про создание **зазора** между триггером и реакцией. Сначала зазор — доли секунды. Потом — секунда. Потом — три.…"
+      }
+    ]
+  },
+  {
+    "query": "нет сил, не хочу анализа, просто поддержи",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "83954dce-f8b2-42a8-a8d6-2fc3c5107d0f",
+        "score_or_distance": 0.5703417681486357,
+        "source_title": "5. Оставайся с этим 5 минут.",
+        "chapter_title": "5. Оставайся с этим 5 минут.",
+        "chunk_index": null,
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "После: запиши одним предложением — что произошло. Не анализируй. Просто запиши. ***"
+      },
+      {
+        "id": "154b301d-a578-4210-86b3-9cfb88ee3e7d",
+        "score_or_distance": 0.552152600576426,
+        "source_title": "Практика 3: Тело как карта тени",
+        "chapter_title": "Практика 3: Тело как карта тени",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "body_awareness"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** найти тень через телесные паттерны. **Время:** 15–20 минут. В тихом месте. Сядь удобно. Закрой глаза. Начни медленно сканировать тело — от макушки до…"
+      },
+      {
+        "id": "1bf07a78-db5a-4924-b64e-952856963f42",
+        "score_or_distance": 0.5507521886315775,
+        "source_title": "4. Откуда это берётся: три волны",
+        "chapter_title": "4. Откуда это берётся: три волны",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "body_awareness",
+          "boundaries"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чу…"
+      }
+    ]
+  },
+  {
+    "query": "я боюсь показать проект и снова хочу отложить",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "fd886228-effa-4902-a43c-4dd204608087",
+        "score_or_distance": 0.5138532966945154,
+        "source_title": "2. Страх как информация: что он на самом деле говорит",
+        "chapter_title": "2. Страх как информация: что он на самом деле говорит",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "hyperarousal",
+          "body_awareness",
+          "boundaries",
+          "meaning",
+          "identity"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Страх появляется не случайно. У каждого страха есть конкретное содержание — конкретная угроза, которую нервная система зарегистрировала. Проблема в том, что со…"
+      },
+      {
+        "id": "89672f95-0594-487f-aad0-5806001aa5ad",
+        "score_or_distance": 0.5077790627514587,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "avoidance",
+          "body_awareness",
+          "relationships",
+          "boundaries",
+          "meaning",
+          "achievement",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Один вопрос, который меняет рамку: «Если бы неудача этого проекта ничего не говорила обо мне как о человеке — только о проекте — ты бы начал?» Почти всегда отв…"
+      },
+      {
+        "id": "81e0860c-56da-44a1-9b8a-67e34a485dfa",
+        "score_or_distance": 0.5042204714719835,
+        "source_title": "7. Работа со страхом: не избегать, а встречать",
+        "chapter_title": "7. Работа со страхом: не избегать, а встречать",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "avoidance",
+          "boundaries",
+          "control",
+          "anger",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Ключевой принцип — и он идёт вразрез с большинством популярных советов: **Страх уменьшается не от избегания и не от силового преодоления. Он уменьшается от вст…"
+      }
+    ]
+  },
+  {
+    "query": "я раздражаюсь на близкого человека сильнее, чем ситуация того стоит",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "fb69647b-a0fe-41aa-80fd-797ce327ab3c",
+        "score_or_distance": 0.5612883130970111,
+        "source_title": "3. Проекция: почему раздражает в других то, что есть в нас",
+        "chapter_title": "3. Проекция: почему раздражает в других то, что есть в нас",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "shame",
+          "body_awareness",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Теперь — про раздражение. Когда что-то в другом человеке вызывает у тебя сильную эмоциональную реакцию — злость, отвращение, презрение, зависть — это сигнал. Н…"
+      },
+      {
+        "id": "550e7452-c024-4a12-bfd1-676135098937",
+        "score_or_distance": 0.5470296840110442,
+        "source_title": "Вводная часть",
+        "chapter_title": "Вводная часть",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "inner_parts",
+          "meaning",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Есть человек, который тебя раздражает. Сильно. Может быть, коллега — он всегда хочет быть в центре внимания. Может быть, знакомый — он постоянно жалуется и ище…"
+      },
+      {
+        "id": "1586860f-8734-469d-b148-cb12a0fc1121",
+        "score_or_distance": 0.5436217779260148,
+        "source_title": "Практика 1: Список раздражения",
+        "chapter_title": "Практика 1: Список раздражения",
+        "chunk_index": null,
+        "chunk_type": "practice",
+        "allowed_use": [
+          "practice_suggestion"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** найти входы в тень через реакции на других людей. **Время:** 20–30 минут. Один раз как исследование. Возьми лист бумаги. Раздели на две колонки. В пе…"
+      }
+    ]
+  }
+]

@@ -1,0 +1,21 @@
+﻿[2026-05-09T14:15:00Z] PRD-046.0.4.3 chroma recovery run completed
+actions=['collection_reset','reindex_from_json']
+mutation_blocked=false
+reindex_allowed=true
+gate_before=ready
+gate_after=ready
+local_blocks_count=229
+indexed_blocks_count=229
+collection_count_before=0
+collection_count_after=229
+dimension_mismatch=false
+api_base_url_primary=http://127.0.0.1:8003
+api_primary_status=unstable_timeout_observed
+api_smoke_verified_on=http://127.0.0.1:8005
+api_status_code=200
+api_registry_code=200
+api_query_code=200
+api_query_hits_positive=6_of_6
+bot_retrieval_source=botdb_api
+bot_fallback_used=false
+bot_circuit_breaker_open=false

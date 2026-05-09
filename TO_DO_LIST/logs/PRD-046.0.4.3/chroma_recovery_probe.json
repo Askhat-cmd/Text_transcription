@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-05-09T14:15:00.516056+00:00",
+  "report_prefix": "PRD-046.0.4.3",
+  "config_path": "Bot_data_base\\config.yaml",
+  "api_base_url": "http://127.0.0.1:8003",
+  "chroma_db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "embedding_model_configured": "intfloat/multilingual-e5-large",
+  "blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "local_blocks_count": 229,
+  "mode": {
+    "probe_only": false,
+    "dry_run": false,
+    "reset": true,
+    "reindex_from_json": true,
+    "confirm": true
+  },
+  "actions": [
+    "collection_reset",
+    "reindex_from_json"
+  ],
+  "mutation_blocked": false,
+  "mutation_reason": "",
+  "indexed_blocks_count": 229,
+  "before_health": {
+    "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "embedding_model_name": "intfloat/multilingual-e5-large",
+    "collection_exists": true,
+    "collection_count": 0,
+    "collection_count_error": null,
+    "embedding_probe_dimension": 1024,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false
+  },
+  "after_health": {
+    "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "embedding_model_name": "intfloat/multilingual-e5-large",
+    "collection_exists": true,
+    "collection_count": 229,
+    "collection_count_error": null,
+    "embedding_probe_dimension": 1024,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": 1024,
+    "collection_dimension_detection_reason": "sample_embedding",
+    "dimension_mismatch": false
+  },
+  "audit_probe": {
+    "generated_at": "2026-05-09T13:43:24.782481+00:00",
+    "api_status": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "timed out"
+    },
+    "api_registry": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "timed out"
+    },
+    "api_query": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "timed out"
+    },
+    "chroma_db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "collection_exists": true,
+    "collection_count": 0,
+    "collection_count_error": null,
+    "embedding_probe_dimension": null,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false,
+    "chroma_probe_error": null,
+    "all_blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+    "all_blocks_exists": true,
+    "local_blocks_count": 229,
+    "registry_count": 23,
+    "embedding_model_configured": "intfloat/multilingual-e5-large",
+    "possible_embedding_dimension_mismatch": false,
+    "safe_reset_or_reindex_recommended": true
+  },
+  "governed_gate_status_before": "ready",
+  "governed_gate_status_after": "ready",
+  "reindex_allowed": true,
+  "preflight_reason": "gate_passed"
+}

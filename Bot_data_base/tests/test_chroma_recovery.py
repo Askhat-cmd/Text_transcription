@@ -181,6 +181,7 @@ def test_reset_requires_confirm(tmp_path: Path, monkeypatch) -> None:
     result = chroma_recovery.run_recovery(
         config_path=cfg,
         output_dir=tmp_path / "out",
+        report_prefix="PRD-046.0.4.3",
         api_base_url="http://127.0.0.1:8003",
         blocks_path=blocks,
         probe_only=False,
@@ -200,7 +201,31 @@ def test_reindex_dry_run_does_not_mutate(tmp_path: Path, monkeypatch) -> None:
         encoding="utf-8",
     )
     blocks = tmp_path / "all_blocks_merged.json"
-    blocks.write_text(json.dumps({"blocks": [{"id": "1", "text": "SECRET_TEXT", "source": "book:s"}]}), encoding="utf-8")
+    blocks.write_text(
+        json.dumps(
+            {
+                "blocks": [
+                    {
+                        "id": "1",
+                        "text": "SECRET_TEXT",
+                        "summary": "краткое безопасное summary для governed gate",
+                        "source": "book:s",
+                        "metadata": {
+                            "boundary_confidence": 0.9,
+                            "governance": {
+                                "schema_version": "governance_v1",
+                                "chunk_type": "theory",
+                                "allowed_use": ["writer_context"],
+                                "safety_flags": ["not_for_direct_quote"],
+                                "lens_family": ["shame"],
+                            },
+                        },
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
 
     class FakeManager:
         def __init__(self, *args, **kwargs):  # noqa: ARG002
@@ -234,6 +259,7 @@ def test_reindex_dry_run_does_not_mutate(tmp_path: Path, monkeypatch) -> None:
     result = chroma_recovery.run_recovery(
         config_path=cfg,
         output_dir=out_dir,
+        report_prefix="PRD-046.0.4.3",
         api_base_url="http://127.0.0.1:8003",
         blocks_path=blocks,
         probe_only=False,
@@ -249,3 +275,114 @@ def test_reindex_dry_run_does_not_mutate(tmp_path: Path, monkeypatch) -> None:
     probe_content = (out_dir / "chroma_recovery_probe.json").read_text(encoding="utf-8")
     assert "SECRET_TEXT" not in probe_content
 
+
+def test_gate_block_prevents_mutation_even_with_confirm(tmp_path: Path, monkeypatch) -> None:
+    cfg = tmp_path / "config.yaml"
+    cfg.write_text(
+        "storage:\n  chroma_db_path: data/chroma_db\n  collection_name: test_col\nembedding:\n  model: model\n",
+        encoding="utf-8",
+    )
+    blocks = tmp_path / "all_blocks_merged.json"
+    blocks.write_text(
+        json.dumps({"blocks": [{"id": "1", "text": "x", "summary": "", "source": "book:s"}]}),
+        encoding="utf-8",
+    )
+
+    class FakeManager:
+        def __init__(self, *args, **kwargs):  # noqa: ARG002
+            self.reset_called = False
+            self.add_called = False
+
+        def probe_collection_health(self):
+            return {"collection_count": 0, "dimension_mismatch": False}
+
+        def reset_collection(self):
+            self.reset_called = True
+
+        def add_blocks(self, blocks):  # noqa: ARG002
+            self.add_called = True
+            return 1
+
+    fake_manager = FakeManager()
+    monkeypatch.setattr(chroma_recovery, "ChromaManager", lambda *args, **kwargs: fake_manager)
+    monkeypatch.setattr(
+        chroma_recovery,
+        "probe_chroma_readiness",
+        lambda **kwargs: {"api_query": {"status_code": 503}, "api_status": {"status_code": 200}},
+    )
+    monkeypatch.setattr(
+        chroma_recovery,
+        "run_retrieval_probe_snapshot",
+        lambda **kwargs: {"queries": []},
+    )
+
+    result = chroma_recovery.run_recovery(
+        config_path=cfg,
+        output_dir=tmp_path / "out",
+        report_prefix="PRD-046.0.4.3",
+        api_base_url="http://127.0.0.1:8003",
+        blocks_path=blocks,
+        probe_only=False,
+        dry_run=False,
+        do_reset=True,
+        do_reindex=True,
+        confirm=True,
+    )
+    assert result["mutation_blocked"] is True
+    assert result["reindex_allowed"] is False
+    assert fake_manager.reset_called is False
+    assert fake_manager.add_called is False
+
+
+def test_write_reports_uses_report_prefix(tmp_path: Path) -> None:
+    reports_dir = tmp_path / "reports"
+    report_prefix = "PRD-046.0.4.3"
+    result = {
+        "reindex_allowed": True,
+        "local_blocks_count": 2,
+        "indexed_blocks_count": 2,
+        "collection_count_before": 0,
+        "collection_count_after": 2,
+        "gate_status_after": "ready",
+        "recommended_next_prd": "PRD-046.0.5",
+    }
+    recovery_probe = {
+        "mode": {
+            "probe_only": False,
+            "dry_run": False,
+            "reset": True,
+            "reindex_from_json": True,
+            "confirm": True,
+        },
+        "mutation_blocked": False,
+        "mutation_reason": "",
+        "reindex_allowed": True,
+        "preflight_reason": "gate_passed",
+        "before_health": {"collection_count": 0, "dimension_mismatch": False},
+        "after_health": {"collection_count": 2, "dimension_mismatch": False},
+        "audit_probe": {"api_status": {"status_code": 200}, "api_query": {"status_code": 200}},
+        "local_blocks_count": 2,
+        "indexed_blocks_count": 2,
+    }
+    gate_data = {
+        "after": {
+            "status": "ready",
+            "blocker_reasons": [],
+            "warnings": [],
+            "metrics": {"total_blocks": 2},
+            "recommended_next_prd": "PRD-046.0.5",
+        }
+    }
+
+    chroma_recovery.write_reports(
+        reports_dir=reports_dir,
+        report_prefix=report_prefix,
+        result=result,
+        recovery_probe=recovery_probe,
+        gate_data=gate_data,
+    )
+
+    assert (reports_dir / "PRD-046.0.4.3_CHROMA_REINDEX_REPORT.md").exists()
+    assert (reports_dir / "PRD-046.0.4.3_GOVERNED_INDEX_GATE_REPORT.md").exists()
+    assert (reports_dir / "PRD-046.0.4.3_IMPLEMENTATION_REPORT.md").exists()
+    assert not (reports_dir / "PRD-046.0.4.1_CHROMA_RECOVERY_REPORT.md").exists()

@@ -25,6 +25,9 @@ from tools.kb_quality_audit import (
     run_retrieval_probe_snapshot,
 )
 
+DEFAULT_REPORT_PREFIX = "PRD-046.0.4.1"
+DEFAULT_OUTPUT_DIR = f"TO_DO_LIST/logs/{DEFAULT_REPORT_PREFIX}"
+
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -83,6 +86,7 @@ def run_recovery(
     *,
     config_path: Path,
     output_dir: Path,
+    report_prefix: str,
     api_base_url: str,
     blocks_path: Path | None,
     probe_only: bool,
@@ -112,6 +116,27 @@ def run_recovery(
     before_health = manager.probe_collection_health()
     raw_blocks = load_processed_blocks(effective_blocks_path)
     gate_before = evaluate_governed_index_gate(blocks=raw_blocks, source_label="КУЗНИЦА ДУХА")
+    gate_status_before = str(gate_before.get("status") or "")
+    gate_blockers = list(gate_before.get("blocker_reasons") or [])
+    gate_allow_status = gate_status_before in {"ready", "degraded"}
+    reindex_allowed = bool(gate_allow_status and not gate_blockers and len(raw_blocks) > 0)
+    preflight_gate = {
+        "generated_at": _utc_now(),
+        "report_prefix": report_prefix,
+        "blocks_path": str(effective_blocks_path),
+        "local_blocks_count": len(raw_blocks),
+        "gate_status": gate_status_before,
+        "blocker_reasons": gate_blockers,
+        "warnings": list(gate_before.get("warnings") or []),
+        "metrics": gate_before.get("metrics") or {},
+        "thresholds": gate_before.get("thresholds") or {},
+        "reindex_allowed": reindex_allowed,
+        "reason": (
+            "gate_passed"
+            if reindex_allowed
+            else "gate_blocked_or_empty_blocks"
+        ),
+    }
     registry_records = []
     if registry_path.exists():
         registry_records = json.loads(registry_path.read_text(encoding="utf-8"))
@@ -128,7 +153,14 @@ def run_recovery(
     mutation_reason = ""
     indexed_blocks_count = 0
     if do_reset or do_reindex:
-        if not confirm:
+        if not reindex_allowed:
+            mutation_blocked = True
+            mutation_reason = (
+                f"Governed gate blocked mutation: status={gate_status_before},"
+                f" blockers={gate_blockers}, local_blocks_count={len(raw_blocks)}"
+            )
+            actions.append("blocked_by_gate")
+        elif not confirm:
             mutation_blocked = True
             mutation_reason = "Destructive operations require --confirm."
         elif dry_run:
@@ -155,6 +187,7 @@ def run_recovery(
 
     recovery_probe = {
         "generated_at": _utc_now(),
+        "report_prefix": report_prefix,
         "config_path": str(config_path),
         "api_base_url": api_base_url,
         "chroma_db_path": chroma_db_path,
@@ -163,7 +196,7 @@ def run_recovery(
         or os.getenv("SENTENCE_TRANSFORMERS_MODEL")
         or "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
         "blocks_path": str(effective_blocks_path),
-        "blocks_count": len(raw_blocks),
+        "local_blocks_count": len(raw_blocks),
         "mode": {
             "probe_only": probe_only,
             "dry_run": dry_run,
@@ -180,8 +213,13 @@ def run_recovery(
         "audit_probe": audit_probe,
         "governed_gate_status_before": gate_before.get("status"),
         "governed_gate_status_after": gate_after.get("status"),
+        "reindex_allowed": reindex_allowed,
+        "preflight_reason": preflight_gate.get("reason"),
     }
 
+    (output_dir / "preflight_gate.json").write_text(
+        json.dumps(preflight_gate, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     (output_dir / "chroma_recovery_probe.json").write_text(
         json.dumps(recovery_probe, ensure_ascii=False, indent=2), encoding="utf-8"
     )
@@ -192,12 +230,16 @@ def run_recovery(
     (output_dir / "query_smoke_snapshot.json").write_text(
         json.dumps(query_smoke, ensure_ascii=False, indent=2), encoding="utf-8"
     )
+    (output_dir / "chroma_reindex_snapshot.json").write_text(
+        json.dumps(recovery_probe, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
     (output_dir / "sanitized_runtime_logs.txt").write_text(
         "\n".join(
             [
-                f"[{_utc_now()}] PRD-046.0.4.1 chroma recovery run",
+                f"[{_utc_now()}] {report_prefix} chroma recovery run",
                 f"actions={actions}",
                 f"mutation_blocked={mutation_blocked}",
+                f"reindex_allowed={reindex_allowed}",
                 f"gate_before={gate_before.get('status')}",
                 f"gate_after={gate_after.get('status')}",
                 f"api_query_status={(audit_probe.get('api_query') or {}).get('status_code')}",
@@ -210,29 +252,37 @@ def run_recovery(
     )
 
     return {
+        "preflight_gate_path": str(output_dir / "preflight_gate.json"),
         "recovery_probe_path": str(output_dir / "chroma_recovery_probe.json"),
+        "reindex_snapshot_path": str(output_dir / "chroma_reindex_snapshot.json"),
         "governed_gate_path": str(output_dir / "governed_index_gate.json"),
         "query_smoke_path": str(output_dir / "query_smoke_snapshot.json"),
         "gate_status_after": gate_after.get("status"),
         "recommended_next_prd": gate_after.get("recommended_next_prd"),
         "mutation_blocked": mutation_blocked,
+        "reindex_allowed": reindex_allowed,
+        "local_blocks_count": len(raw_blocks),
+        "indexed_blocks_count": indexed_blocks_count,
+        "collection_count_before": before_health.get("collection_count"),
+        "collection_count_after": after_health.get("collection_count"),
     }
 
 
 def write_reports(
     *,
     reports_dir: Path,
+    report_prefix: str,
     result: dict[str, Any],
     recovery_probe: dict[str, Any],
     gate_data: dict[str, Any],
 ) -> None:
     reports_dir.mkdir(parents=True, exist_ok=True)
-    recovery_report = reports_dir / "PRD-046.0.4.1_CHROMA_RECOVERY_REPORT.md"
-    gate_report = reports_dir / "PRD-046.0.4.1_GOVERNED_INDEX_GATE_REPORT.md"
-    impl_report = reports_dir / "PRD-046.0.4.1_IMPLEMENTATION_REPORT.md"
+    recovery_report = reports_dir / f"{report_prefix}_CHROMA_REINDEX_REPORT.md"
+    gate_report = reports_dir / f"{report_prefix}_GOVERNED_INDEX_GATE_REPORT.md"
+    impl_report = reports_dir / f"{report_prefix}_IMPLEMENTATION_REPORT.md"
 
     recovery_lines = [
-        "# PRD-046.0.4.1 Chroma Recovery Report",
+        f"# {report_prefix} Chroma Reindex Report",
         "",
         "## Mode",
         f"- probe_only: `{(recovery_probe.get('mode') or {}).get('probe_only')}`",
@@ -244,6 +294,8 @@ def write_reports(
         "## Safety",
         f"- mutation_blocked: `{recovery_probe.get('mutation_blocked')}`",
         f"- mutation_reason: `{recovery_probe.get('mutation_reason')}`",
+        f"- reindex_allowed: `{recovery_probe.get('reindex_allowed')}`",
+        f"- preflight_reason: `{recovery_probe.get('preflight_reason')}`",
         "",
         "## Health Before/After",
         f"- collection_count_before: `{(recovery_probe.get('before_health') or {}).get('collection_count')}`",
@@ -256,7 +308,7 @@ def write_reports(
         f"- /api/query code: `{((recovery_probe.get('audit_probe') or {}).get('api_query') or {}).get('status_code')}`",
         "",
         "## Indexed Blocks",
-        f"- blocks_count: `{recovery_probe.get('blocks_count')}`",
+        f"- local_blocks_count: `{recovery_probe.get('local_blocks_count')}`",
         f"- indexed_blocks_count: `{recovery_probe.get('indexed_blocks_count')}`",
         "",
         "## Recommendation",
@@ -267,7 +319,7 @@ def write_reports(
     gate_after = gate_data.get("after") or {}
     gate_metrics = gate_after.get("metrics") or {}
     gate_lines = [
-        "# PRD-046.0.4.1 Governed Index Gate Report",
+        f"# {report_prefix} Governed Index Gate Report",
         "",
         "## Gate Status",
         f"- status: `{gate_after.get('status')}`",
@@ -291,19 +343,26 @@ def write_reports(
     gate_report.write_text("\n".join(gate_lines) + "\n", encoding="utf-8")
 
     impl_lines = [
-        "# PRD-046.0.4.1 IMPLEMENTATION REPORT",
+        f"# {report_prefix} IMPLEMENTATION REPORT",
         "",
         "## Status",
-        "- Implementation: done (Chroma recovery + governed index gate)",
+        "- Implementation: done (Chroma reindex + governed gate preflight)",
         "- Branch: `main`",
         "",
         "## Artifacts",
-        "- `TO_DO_LIST/logs/PRD-046.0.4.1/chroma_recovery_probe.json`",
-        "- `TO_DO_LIST/logs/PRD-046.0.4.1/governed_index_gate.json`",
-        "- `TO_DO_LIST/logs/PRD-046.0.4.1/query_smoke_snapshot.json`",
-        "- `TO_DO_LIST/logs/PRD-046.0.4.1/sanitized_runtime_logs.txt`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/preflight_gate.json`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/chroma_recovery_probe.json`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/chroma_reindex_snapshot.json`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/governed_index_gate.json`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/query_smoke_snapshot.json`",
+        f"- `TO_DO_LIST/logs/{report_prefix}/sanitized_runtime_logs.txt`",
         "",
         "## Outcome",
+        f"- reindex_allowed: `{result.get('reindex_allowed')}`",
+        f"- local_blocks_count: `{result.get('local_blocks_count')}`",
+        f"- indexed_blocks_count: `{result.get('indexed_blocks_count')}`",
+        f"- collection_count_before: `{result.get('collection_count_before')}`",
+        f"- collection_count_after: `{result.get('collection_count_after')}`",
         f"- gate_status_after: `{result.get('gate_status_after')}`",
         f"- recommended_next_prd: `{result.get('recommended_next_prd')}`",
         "",
@@ -315,10 +374,13 @@ def write_reports(
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="PRD-046.0.4.1 Chroma recovery and governed index gate CLI.")
+    parser = argparse.ArgumentParser(
+        description="Chroma recovery and governed index gate CLI with report prefix isolation."
+    )
     parser.add_argument("--config-path", default="Bot_data_base/config.yaml")
-    parser.add_argument("--output-dir", default="TO_DO_LIST/logs/PRD-046.0.4.1")
+    parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--reports-dir", default="TO_DO_LIST/reports")
+    parser.add_argument("--report-prefix", default=DEFAULT_REPORT_PREFIX)
     parser.add_argument("--api-base-url", default="http://127.0.0.1:8003")
     parser.add_argument("--blocks-path", default="")
     parser.add_argument("--probe-only", action="store_true")
@@ -329,7 +391,11 @@ def main() -> int:
     args = parser.parse_args()
 
     config_path = Path(args.config_path)
-    output_dir = Path(args.output_dir)
+    output_dir_arg = str(args.output_dir).strip()
+    if output_dir_arg == DEFAULT_OUTPUT_DIR and str(args.report_prefix).strip() != DEFAULT_REPORT_PREFIX:
+        output_dir = Path("TO_DO_LIST") / "logs" / str(args.report_prefix).strip()
+    else:
+        output_dir = Path(output_dir_arg)
     reports_dir = Path(args.reports_dir)
     blocks_path = Path(args.blocks_path) if str(args.blocks_path).strip() else None
 
@@ -339,6 +405,7 @@ def main() -> int:
     result = run_recovery(
         config_path=config_path,
         output_dir=output_dir,
+        report_prefix=str(args.report_prefix).strip() or DEFAULT_REPORT_PREFIX,
         api_base_url=args.api_base_url.rstrip("/"),
         blocks_path=blocks_path,
         probe_only=bool(args.probe_only),
@@ -352,6 +419,7 @@ def main() -> int:
     gate_data = json.loads((output_dir / "governed_index_gate.json").read_text(encoding="utf-8"))
     write_reports(
         reports_dir=reports_dir,
+        report_prefix=str(args.report_prefix).strip() or DEFAULT_REPORT_PREFIX,
         result=result,
         recovery_probe=recovery_probe,
         gate_data=gate_data,
@@ -362,4 +430,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

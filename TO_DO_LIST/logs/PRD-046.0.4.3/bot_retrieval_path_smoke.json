@@ -1,0 +1,240 @@
+{
+  "generated_at": "2026-05-09T14:19:14.818222+00:00",
+  "api_base_url": "http://127.0.0.1:8005",
+  "botdb_api_attempted": true,
+  "botdb_api_status": "ok",
+  "retrieval_source": "botdb_api",
+  "fallback_used": false,
+  "circuit_breaker_open": false,
+  "knowledge_hits_count": [
+    4,
+    4,
+    4
+  ],
+  "queries": [
+    {
+      "query": "я всё время стараюсь быть лучше и не могу остановиться",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+          "score": 0.526498417558811,
+          "title": "Драйвер 2: «Будь лучшим»",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "achievement",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А…"
+        },
+        {
+          "id": "f688cbf9-a35a-4c49-8a95-6f84bc55f407",
+          "score": 0.5045991047560571,
+          "title": "Операционная система страдания",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "relationships",
+            "fear_of_rejection"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macO…"
+        },
+        {
+          "id": "e8ef0a3d-3908-466c-93a1-d176546db87e",
+          "score": 0.50417637210759,
+          "title": "Инстинкт самосохранения",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "hyperarousal",
+            "body_awareness",
+            "boundaries"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Базовый вопрос:** «Достаточно ли у меня ресурсов, чтобы выжить?» **Что он отслеживает:** безопасность, здоровье, деньги, еда, комфорт, жильё, энергия, стабил…"
+        }
+      ]
+    },
+    {
+      "query": "я злюсь на себя, потому что опять всё откладываю",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "0de9d1b7-8493-49b7-aac1-6bd0ab530362",
+          "score": 0.5077762887482785,
+          "title": "Третий слой: «Быть взрослым»",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "relationships",
+            "control"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Зрелость добавляет свой слой. Профессиональная среда говорит: «здесь не место эмоциям». Партнёрские отношения говорят: «ты слишком много требуешь». Социальные…"
+        },
+        {
+          "id": "687423eb-e9da-46bc-b5f6-d70032f9788c",
+          "score": 0.49361866056186776,
+          "title": "Вводная часть",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "body_awareness"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Ты принял решение. Взвешенное, обдуманное. Составил аргументы. Спросил совета. Всё указывало в одну сторону. А потом что-то внутри дёрнуло — и ты сделал иначе.…"
+        },
+        {
+          "id": "413026dc-7212-48e7-b679-fceba697700a",
+          "score": 0.48962957937762314,
+          "title": "3. Страх как тюрьма: когда сигнал становится стеной",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "avoidance",
+            "boundaries",
+            "control",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная си…"
+        }
+      ]
+    },
+    {
+      "query": "мне пусто и нет сил, не хочу анализа",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "4b6f3bfd-589c-4ac5-abb4-3c5b94d6e498",
+          "score": 0.5316324247275155,
+          "title": "5. Нижняя часть тела — есть контакт с опорой? Ты вообще чувствуешь, что сидишь?",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "body_awareness"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "После прохождения — один вопрос: *Какое общее послание несёт тело прямо сейчас?* Не анализируй. Просто услышь. > Из сессии: > > **Нурлан, 44 года:** Я попробов…"
+        },
+        {
+          "id": "1bf29208-60d2-4d31-9509-4cab8d9167a7",
+          "score": 0.5267942061423484,
+          "title": "5. Выходи медленно. Не хватайся за телефон сразу. Дай несколько секунд.",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "body_awareness"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что чт…"
+        },
+        {
+          "id": "5a68a977-7d9c-4775-b088-7e9cedf0e273",
+          "score": 0.5156379472234227,
+          "title": "5. Freeze Response: когда мозг замирает",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "procrastination",
+            "freeze",
+            "body_awareness",
+            "grief"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Есть ещё один механизм, о котором говорят реже — но он работает у очень многих. Кроме «бей или беги» у нервной системы есть третья реакция на угрозу — **замира…"
+        }
+      ]
+    }
+  ]
+}

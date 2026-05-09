@@ -1,0 +1,86 @@
+{
+  "before": {
+    "version": "governed_index_gate_v1",
+    "source_label": "КУЗНИЦА ДУХА",
+    "status": "ready",
+    "blocker_reasons": [],
+    "warnings": [],
+    "metrics": {
+      "total_blocks": 229,
+      "governance_present_count": 229,
+      "allowed_use_present_count": 229,
+      "safety_flags_present_count": 229,
+      "lens_family_present_count": 170,
+      "summary_present_count": 229,
+      "boundary_confidence_present_count": 229,
+      "not_for_direct_quote_count": 229,
+      "governance_present_ratio": 1.0,
+      "allowed_use_present_ratio": 1.0,
+      "safety_flags_present_ratio": 1.0,
+      "lens_family_present_ratio": 0.7424,
+      "summary_present_ratio": 1.0,
+      "boundary_confidence_present_ratio": 1.0,
+      "not_for_direct_quote_ratio": 1.0,
+      "chunk_type_distribution": {
+        "case": 4,
+        "lens": 55,
+        "practice": 113,
+        "safety": 26,
+        "style": 3,
+        "theory": 28
+      }
+    },
+    "thresholds": {
+      "governance_present_ratio_min": 0.95,
+      "allowed_use_present_ratio_min": 0.95,
+      "safety_flags_present_ratio_min": 0.95,
+      "not_for_direct_quote_ratio_min": 0.95,
+      "summary_present_ratio_min": 0.95,
+      "boundary_confidence_present_ratio_min": 0.8,
+      "lens_family_present_ratio_desired": 0.5
+    },
+    "recommended_next_prd": "PRD-046.0.5 — Offline LLM Summary + Lens Enrichment v1"
+  },
+  "after": {
+    "version": "governed_index_gate_v1",
+    "source_label": "КУЗНИЦА ДУХА",
+    "status": "ready",
+    "blocker_reasons": [],
+    "warnings": [],
+    "metrics": {
+      "total_blocks": 229,
+      "governance_present_count": 229,
+      "allowed_use_present_count": 229,
+      "safety_flags_present_count": 229,
+      "lens_family_present_count": 170,
+      "summary_present_count": 229,
+      "boundary_confidence_present_count": 229,
+      "not_for_direct_quote_count": 229,
+      "governance_present_ratio": 1.0,
+      "allowed_use_present_ratio": 1.0,
+      "safety_flags_present_ratio": 1.0,
+      "lens_family_present_ratio": 0.7424,
+      "summary_present_ratio": 1.0,
+      "boundary_confidence_present_ratio": 1.0,
+      "not_for_direct_quote_ratio": 1.0,
+      "chunk_type_distribution": {
+        "case": 60,
+        "lens": 70,
+        "practice": 26,
+        "safety": 19,
+        "style": 29,
+        "theory": 25
+      }
+    },
+    "thresholds": {
+      "governance_present_ratio_min": 0.95,
+      "allowed_use_present_ratio_min": 0.95,
+      "safety_flags_present_ratio_min": 0.95,
+      "not_for_direct_quote_ratio_min": 0.95,
+      "summary_present_ratio_min": 0.95,
+      "boundary_confidence_present_ratio_min": 0.8,
+      "lens_family_present_ratio_desired": 0.5
+    },
+    "recommended_next_prd": "PRD-046.0.5 — Offline LLM Summary + Lens Enrichment v1"
+  }
+}

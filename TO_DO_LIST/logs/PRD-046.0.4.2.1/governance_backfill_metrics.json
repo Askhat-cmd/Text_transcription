@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-09T11:35:25.984544+00:00",
+  "source_hint": "КУЗНИЦА ДУХА",
+  "source_id": "123__кузница_духа",
+  "source_title": "Кузница Духа",
+  "target_blocks_before": 229,
+  "target_blocks_after": 229,
+  "chunk_type_distribution": {
+    "case": 60,
+    "lens": 70,
+    "practice": 26,
+    "safety": 19,
+    "style": 29,
+    "theory": 25
+  },
+  "allowed_use_distribution": {
+    "diagnostic_lens": 99,
+    "internal_only": 48,
+    "practice_suggestion": 26,
+    "safety_protocol": 19,
+    "style_guidance": 29,
+    "writer_context": 155
+  },
+  "safety_flags_distribution": {
+    "clinical_risk": 4,
+    "do_not_use": 14,
+    "needs_review": 19,
+    "not_for_direct_quote": 229,
+    "practice_requires_low_resource_check": 113,
+    "source_style_not_user_facing": 94
+  },
+  "manual_review_items_total": 170,
+  "manual_review_p0_total": 24
+}

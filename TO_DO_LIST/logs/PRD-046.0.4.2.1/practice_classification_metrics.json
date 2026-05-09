@@ -1,0 +1,39 @@
+{
+  "version": "practice_classification_metrics_v1",
+  "source": "Кузница Духа",
+  "before": {
+    "chunk_type_distribution": {
+      "case": 4,
+      "lens": 55,
+      "practice": 113,
+      "safety": 26,
+      "style": 3,
+      "theory": 28
+    },
+    "manual_review_total": 172,
+    "manual_review_p0": 91
+  },
+  "after": {
+    "chunk_type_distribution": {
+      "case": 60,
+      "lens": 70,
+      "practice": 26,
+      "safety": 19,
+      "style": 29,
+      "theory": 25
+    },
+    "manual_review_total": 170,
+    "manual_review_p0": 24
+  },
+  "reclassified": {
+    "practice_to_case": 26,
+    "practice_to_lens": 38,
+    "practice_to_safety": 5,
+    "practice_to_style": 12,
+    "practice_to_theory": 6
+  },
+  "targets": {
+    "p0_reduction_min_ratio": 0.3,
+    "practice_suggestion_only_on_practice": true
+  }
+}

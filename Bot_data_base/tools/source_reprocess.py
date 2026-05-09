@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import copy
@@ -24,40 +24,127 @@ from governance.governance_adapter import apply_governance_to_blocks_v1
 from models.universal_block import UniversalBlock
 from tools.kb_quality_audit import evaluate_governed_index_gate, load_processed_blocks
 
-TARGET_TAG = "PRD-046.0.4.2"
+TARGET_TAG = "PRD-046.0.4.2.1"
+
+PRACTICE_GOAL_MARKERS = ("\u0446\u0435\u043b\u044c:", "\u0437\u0430\u0434\u0430\u0447\u0430:", "\u0434\u043b\u044f \u0447\u0435\u0433\u043e:")
+PRACTICE_DURATION_MARKERS = (
+    "\u0432\u0440\u0435\u043c\u044f:",
+    "\u043c\u0438\u043d\u0443\u0442",
+    "\u0441\u0435\u043a\u0443\u043d\u0434",
+    "\u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 \u0434\u043d\u044f",
+    "\u043e\u0434\u0438\u043d \u0440\u0430\u0437 \u043a\u0430\u043a \u0438\u0441\u0441\u043b\u0435\u0434\u043e\u0432\u0430\u043d\u0438\u0435",
+)
+PRACTICE_INSTRUCTION_VERBS = (
+    "\u0432\u043e\u0437\u044c\u043c\u0438",
+    "\u0437\u0430\u043f\u0438\u0448\u0438",
+    "\u0441\u044f\u0434\u044c",
+    "\u0437\u0430\u043a\u0440\u043e\u0439",
+    "\u043f\u043e\u043f\u0440\u043e\u0431\u0443\u0439",
+    "\u0437\u0430\u043c\u0435\u0442\u044c",
+    "\u0432\u044b\u0431\u0435\u0440\u0438",
+    "\u043d\u0430\u0437\u043e\u0432\u0438",
+    "\u043e\u0441\u0442\u0430\u043d\u043e\u0432\u0438\u0441\u044c",
+    "\u0441\u0434\u0435\u043b\u0430\u0439",
+)
+PRACTICE_INTEGRATION_MARKERS = (
+    "\u043f\u043e\u0441\u043b\u0435 \u0432\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0438\u044f",
+    "\u0432 \u043a\u043e\u043d\u0446\u0435",
+    "\u0447\u0442\u043e \u0438\u0437\u043c\u0435\u043d\u0438\u043b\u043e\u0441\u044c",
+    "\u0437\u0430\u043f\u0438\u0448\u0438 \u0432\u044b\u0432\u043e\u0434",
+    "\u0441\u043c\u044b\u043a\u0430\u043d\u0438\u0435",
+)
+CASE_OVERRIDE_MARKERS = (
+    "\u0438\u0437 \u0441\u0435\u0441\u0441\u0438\u0438",
+    "\u043a\u043b\u0438\u0435\u043d\u0442",
+    "\u043f\u0440\u0438\u043c\u0435\u0440:",
+    "\u0438\u0441\u0442\u043e\u0440\u0438\u044f:",
+    "\u0434\u0438\u0430\u043b\u043e\u0433:",
+    "> **",
+)
+QA_OVERRIDE_MARKERS = ("\u0432\u043e\u043f\u0440\u043e\u0441:", "\u043e\u0442\u0432\u0435\u0442:", "q:", "a:")
+THEORY_OVERRIDE_MARKERS = (
+    "\u0442\u0440\u0438 \u043f\u0440\u0438\u0447\u0438\u043d\u044b",
+    "\u043f\u043e\u0447\u0435\u043c\u0443",
+    "\u043c\u0435\u0445\u0430\u043d\u0438\u0437\u043c",
+    "\u043d\u0435\u0439\u0440\u043e\u043f\u043b\u0430\u0441\u0442\u0438\u0447",
+    "\u043a\u043e\u0440\u0442\u0438\u0437\u043e\u043b",
+    "\u0434\u043e\u0444\u0430\u043c\u0438\u043d",
+    "\u043a\u0430\u043a \u044d\u0442\u043e \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442",
+)
+NOISE_ONLY_PATTERN = re.compile(r"^[\s\-\*\._#=~`|:;]+$")
 
 LENS_KEYWORDS: dict[str, tuple[str, ...]] = {
-    "shame": ("стыд", "недостаточ", "со мной что-то не так"),
-    "guilt": ("вина", "виноват", "виновата"),
-    "self_criticism": ("самокритик", "критикую себя", "недостаточ"),
-    "perfectionism": ("идеал", "перфекц", "лучше всех", "безошиб"),
-    "procrastination": ("прокрастин", "откладыва", "не могу начать"),
-    "avoidance": ("избега", "уклоня", "прячусь"),
-    "low_resource": ("нет сил", "пустота", "выгорел", "истощ"),
-    "freeze": ("замер", "freeze", "ступор"),
-    "hyperarousal": ("тревог", "паник", "перевозбуж"),
-    "body_awareness": ("тело", "дыхани", "ощущ", "заземл"),
-    "emotional_regulation": ("регуляц", "успоко", "самоподдерж"),
-    "relationships": ("отношен", "партнер", "близост"),
-    "boundaries": ("границ", "нет", "угожда"),
-    "inner_parts": ("часть меня", "внутренний ребенок", "части личности"),
-    "meaning": ("смысл", "пустота", "ценност"),
-    "spiritual_bypass": ("духовн", "просветл", "обход боли"),
-    "control": ("контрол", "держать все"),
-    "achievement": ("достич", "успех", "результат"),
-    "fear_of_rejection": ("отверг", "не примут", "стыдно показывать"),
-    "anger": ("злюсь", "гнев", "раздраж"),
-    "grief": ("горе", "утрат", "потер"),
-    "identity": ("кто я", "идентич", "образ себя"),
+    "shame": ("СЃС‚С‹Рґ", "РЅРµРґРѕСЃС‚Р°С‚РѕС‡", "СЃРѕ РјРЅРѕР№ С‡С‚Рѕ-С‚Рѕ РЅРµ С‚Р°Рє"),
+    "guilt": ("РІРёРЅР°", "РІРёРЅРѕРІР°С‚", "РІРёРЅРѕРІР°С‚Р°"),
+    "self_criticism": ("СЃР°РјРѕРєСЂРёС‚РёРє", "РєСЂРёС‚РёРєСѓСЋ СЃРµР±СЏ", "РЅРµРґРѕСЃС‚Р°С‚РѕС‡"),
+    "perfectionism": ("РёРґРµР°Р»", "РїРµСЂС„РµРєС†", "Р»СѓС‡С€Рµ РІСЃРµС…", "Р±РµР·РѕС€РёР±"),
+    "procrastination": ("РїСЂРѕРєСЂР°СЃС‚РёРЅ", "РѕС‚РєР»Р°РґС‹РІР°", "РЅРµ РјРѕРіСѓ РЅР°С‡Р°С‚СЊ"),
+    "avoidance": ("РёР·Р±РµРіР°", "СѓРєР»РѕРЅСЏ", "РїСЂСЏС‡СѓСЃСЊ"),
+    "low_resource": ("РЅРµС‚ СЃРёР»", "РїСѓСЃС‚РѕС‚Р°", "РІС‹РіРѕСЂРµР»", "РёСЃС‚РѕС‰"),
+    "freeze": ("Р·Р°РјРµСЂ", "freeze", "СЃС‚СѓРїРѕСЂ"),
+    "hyperarousal": ("С‚СЂРµРІРѕРі", "РїР°РЅРёРє", "РїРµСЂРµРІРѕР·Р±СѓР¶"),
+    "body_awareness": ("С‚РµР»Рѕ", "РґС‹С…Р°РЅРё", "РѕС‰СѓС‰", "Р·Р°Р·РµРјР»"),
+    "emotional_regulation": ("СЂРµРіСѓР»СЏС†", "СѓСЃРїРѕРєРѕ", "СЃР°РјРѕРїРѕРґРґРµСЂР¶"),
+    "relationships": ("РѕС‚РЅРѕС€РµРЅ", "РїР°СЂС‚РЅРµСЂ", "Р±Р»РёР·РѕСЃС‚"),
+    "boundaries": ("РіСЂР°РЅРёС†", "РЅРµС‚", "СѓРіРѕР¶РґР°"),
+    "inner_parts": ("С‡Р°СЃС‚СЊ РјРµРЅСЏ", "РІРЅСѓС‚СЂРµРЅРЅРёР№ СЂРµР±РµРЅРѕРє", "С‡Р°СЃС‚Рё Р»РёС‡РЅРѕСЃС‚Рё"),
+    "meaning": ("СЃРјС‹СЃР»", "РїСѓСЃС‚РѕС‚Р°", "С†РµРЅРЅРѕСЃС‚"),
+    "spiritual_bypass": ("РґСѓС…РѕРІРЅ", "РїСЂРѕСЃРІРµС‚Р»", "РѕР±С…РѕРґ Р±РѕР»Рё"),
+    "control": ("РєРѕРЅС‚СЂРѕР»", "РґРµСЂР¶Р°С‚СЊ РІСЃРµ"),
+    "achievement": ("РґРѕСЃС‚РёС‡", "СѓСЃРїРµС…", "СЂРµР·СѓР»СЊС‚Р°С‚"),
+    "fear_of_rejection": ("РѕС‚РІРµСЂРі", "РЅРµ РїСЂРёРјСѓС‚", "СЃС‚С‹РґРЅРѕ РїРѕРєР°Р·С‹РІР°С‚СЊ"),
+    "anger": ("Р·Р»СЋСЃСЊ", "РіРЅРµРІ", "СЂР°Р·РґСЂР°Р¶"),
+    "grief": ("РіРѕСЂРµ", "СѓС‚СЂР°С‚", "РїРѕС‚РµСЂ"),
+    "identity": ("РєС‚Рѕ СЏ", "РёРґРµРЅС‚РёС‡", "РѕР±СЂР°Р· СЃРµР±СЏ"),
 }
 
-PRACTICE_MARKERS = ("практик", "практикум", "шаг", "время:", "цель:", "сделай", "запиши", "попробуй")
-LENS_MARKERS = ("механизм", "почему", "схема", "паттерн", "драйвер", "программа", "как это работает")
-SAFETY_MARKERS = ("важно", "если тяжело", "не форсируй", "сбавь темп", "обратись за помощью", "экстренн")
-CASE_MARKERS = ("из сессии", "кейс", "пример клиента", "диалог")
-STYLE_MARKERS = ("архитектур", "writer", "diagnostic", "contract", "prompt")
-RISK_MARKERS = ("суицид", "самоповрежд", "медицин", "диагноз", "регресс")
-AUTHOR_STYLE_MARKERS = ("кузница духа", "программа", "духовн", "автор")
+PRACTICE_MARKERS = (
+    "\u043f\u0440\u0430\u043a\u0442\u0438\u043a",
+    "\u043f\u0440\u0430\u043a\u0442\u0438\u043a\u0443\u043c",
+    "\u0448\u0430\u0433",
+    "\u0432\u0440\u0435\u043c\u044f:",
+    "\u0446\u0435\u043b\u044c:",
+    "\u0441\u0434\u0435\u043b\u0430\u0439",
+    "\u0437\u0430\u043f\u0438\u0448\u0438",
+    "\u043f\u043e\u043f\u0440\u043e\u0431\u0443\u0439",
+)
+LENS_MARKERS = (
+    "\u043c\u0435\u0445\u0430\u043d\u0438\u0437\u043c",
+    "\u043f\u043e\u0447\u0435\u043c\u0443",
+    "\u0441\u0445\u0435\u043c\u0430",
+    "\u043f\u0430\u0442\u0442\u0435\u0440\u043d",
+    "\u0434\u0440\u0430\u0439\u0432\u0435\u0440",
+    "\u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430",
+    "\u043a\u0430\u043a \u044d\u0442\u043e \u0440\u0430\u0431\u043e\u0442\u0430\u0435\u0442",
+)
+SAFETY_MARKERS = (
+    "\u0432\u0430\u0436\u043d\u043e",
+    "\u0435\u0441\u043b\u0438 \u0442\u044f\u0436\u0435\u043b\u043e",
+    "\u043d\u0435 \u0444\u043e\u0440\u0441\u0438\u0440\u0443\u0439",
+    "\u0441\u0431\u0430\u0432\u044c \u0442\u0435\u043c\u043f",
+    "\u043e\u0431\u0440\u0430\u0442\u0438\u0441\u044c \u0437\u0430 \u043f\u043e\u043c\u043e\u0449\u044c\u044e",
+    "\u044d\u043a\u0441\u0442\u0440\u0435\u043d\u043d",
+)
+CASE_MARKERS = (
+    "\u0438\u0437 \u0441\u0435\u0441\u0441\u0438\u0438",
+    "\u043a\u0435\u0439\u0441",
+    "\u043f\u0440\u0438\u043c\u0435\u0440 \u043a\u043b\u0438\u0435\u043d\u0442\u0430",
+    "\u0434\u0438\u0430\u043b\u043e\u0433",
+)
+STYLE_MARKERS = ("\u0430\u0440\u0445\u0438\u0442\u0435\u043a\u0442\u0443\u0440", "writer", "diagnostic", "contract", "prompt")
+RISK_MARKERS = (
+    "\u0441\u0443\u0438\u0446\u0438\u0434",
+    "\u0441\u0430\u043c\u043e\u043f\u043e\u0432\u0440\u0435\u0436\u0434",
+    "\u043c\u0435\u0434\u0438\u0446\u0438\u043d",
+    "\u0434\u0438\u0430\u0433\u043d\u043e\u0437",
+    "\u0440\u0435\u0433\u0440\u0435\u0441\u0441",
+)
+AUTHOR_STYLE_MARKERS = (
+    "\u043a\u0443\u0437\u043d\u0438\u0446\u0430 \u0434\u0443\u0445\u0430",
+    "\u043f\u0440\u043e\u0433\u0440\u0430\u043c\u043c\u0430",
+    "\u0434\u0443\u0445\u043e\u0432\u043d",
+    "\u0430\u0432\u0442\u043e\u0440",
+)
 
 
 def _utc_now() -> str:
@@ -68,7 +155,7 @@ def _safe_preview(text: str, limit: int = 160) -> str:
     value = re.sub(r"\s+", " ", str(text or "").strip())
     if len(value) <= limit:
         return value
-    return value[: max(0, limit - 1)].rstrip() + "…"
+    return value[: max(0, limit - 1)].rstrip() + "вЂ¦"
 
 
 def _dedupe(items: list[str]) -> list[str]:
@@ -106,7 +193,7 @@ def _to_float(value: Any) -> float | None:
 def _slugify(value: str) -> str:
     raw = str(value or "").strip().lower()
     raw = re.sub(r"\s+", "_", raw)
-    return re.sub(r"[^0-9a-zа-я_]+", "", raw)
+    return re.sub(r"[^0-9a-zР°-СЏ_]+", "", raw)
 
 
 def _hash_parent(source_id: str, heading_path: list[str], chunk_index: int) -> str:
@@ -130,6 +217,157 @@ def _is_target_block(raw_block: dict[str, Any], source_hint: str) -> bool:
     source_title = str(metadata.get("source_title") or "").lower()
     joined = " ".join([source, source_id, source_title])
     return hint in joined if hint else False
+
+
+def _count_occurrences(text: str, markers: tuple[str, ...]) -> int:
+    value = (text or "").lower()
+    return sum(1 for marker in markers if marker in value)
+
+
+def _has_numbered_or_bulleted_steps(text: str) -> bool:
+    return bool(re.search(r"(?m)^\s*(?:\d+[\).]|[-*вЂў])\s+", text or ""))
+
+
+def _has_dialogue_pattern(text: str) -> bool:
+    return bool(re.search(r"(?m)^\s*[вЂ”-]\s*\S+", text or ""))
+
+
+def _is_noise_chunk(text: str) -> bool:
+    stripped = re.sub(r"\s+", "", text or "")
+    if not stripped:
+        return True
+    if NOISE_ONLY_PATTERN.match(stripped):
+        return True
+    return stripped in {"***", "---", "___"}
+
+
+def _extract_duration_minutes(duration_text: str, full_text: str) -> int | None:
+    candidate = f"{duration_text} {full_text}".lower()
+    match = re.search(r"(?:время|duration)\s*:?\s*([0-9]{1,3})", candidate)
+    if match:
+        try:
+            return int(match.group(1))
+        except Exception:
+            return None
+    match = re.search(r"([0-9]{1,3})\s*(?:мин|minute|min)", candidate)
+    if match:
+        try:
+            return int(match.group(1))
+        except Exception:
+            return None
+    all_numbers = [int(x) for x in re.findall(r"\b([0-9]{1,3})\b", candidate)]
+    if not all_numbers:
+        return None
+    return max(all_numbers)
+
+
+def _classify_chunk_v1(*, text: str, title: str, role_hint: str, heading_path: list[str]) -> dict[str, Any]:
+    low = f"{title}\n{' > '.join(heading_path)}\n{text}".lower()
+
+    goal_marker = _count_occurrences(low, PRACTICE_GOAL_MARKERS) > 0 or "\u043f\u0440\u0430\u043a\u0442\u0438\u043a" in (title or "").lower()
+    duration_marker = _count_occurrences(low, PRACTICE_DURATION_MARKERS) > 0
+    instruction_marker = (
+        _count_occurrences(low, PRACTICE_INSTRUCTION_VERBS) > 0
+        or _has_numbered_or_bulleted_steps(text)
+        or bool(re.search(r"(?:шаг|step)\s*\d+", low))
+    )
+    integration_marker = _count_occurrences(low, PRACTICE_INTEGRATION_MARKERS) > 0
+    case_marker = _count_occurrences(low, CASE_OVERRIDE_MARKERS) > 0
+    qa_marker = _count_occurrences(low, QA_OVERRIDE_MARKERS) > 0 or _has_dialogue_pattern(text)
+    theory_marker = _count_occurrences(low, THEORY_OVERRIDE_MARKERS) > 0
+    safety_marker = _count_occurrences(low, SAFETY_MARKERS) > 0
+    style_hits = _count_occurrences(low, STYLE_MARKERS + AUTHOR_STYLE_MARKERS)
+    style_marker = style_hits > 0
+    explicit_source_style = (
+        style_hits >= 2
+        or "нейросталкинг" in low
+        or "спиральная динамика" in low
+        or "авторская методология" in low
+    )
+    noise_marker = _is_noise_chunk(text)
+
+    candidate_scores = {
+        "practice": 0,
+        "case": 0,
+        "lens": 0,
+        "safety": 0,
+        "style": 0,
+        "theory": 0,
+    }
+    positive_markers: list[str] = []
+    negative_markers: list[str] = []
+
+    practice_feature_count = sum(1 for x in [goal_marker, duration_marker, instruction_marker, integration_marker] if x)
+    candidate_scores["practice"] = practice_feature_count * 2
+    if goal_marker:
+        positive_markers.append("goal_marker")
+    if duration_marker:
+        positive_markers.append("duration_marker")
+    if instruction_marker:
+        positive_markers.append("instruction_marker")
+    if integration_marker:
+        positive_markers.append("integration_marker")
+
+    candidate_scores["case"] = (3 if case_marker else 0) + (1 if qa_marker else 0)
+    candidate_scores["lens"] = (2 if theory_marker else 0) + (1 if qa_marker else 0) + _count_occurrences(low, LENS_MARKERS)
+    candidate_scores["safety"] = 2 if safety_marker else 0
+    candidate_scores["style"] = (3 if style_marker else 0) + (4 if noise_marker else 0)
+    candidate_scores["theory"] = 1 + (2 if theory_marker else 0)
+
+    decision_reason = "fallback_theory"
+    final_chunk_type = "theory"
+
+    if noise_marker:
+        final_chunk_type = "style"
+        decision_reason = "noise_chunk"
+        negative_markers.append("noise_override")
+    elif case_marker:
+        final_chunk_type = "case"
+        decision_reason = "case_override"
+        negative_markers.append("case_override")
+    elif qa_marker and not instruction_marker:
+        final_chunk_type = "lens" if theory_marker else "case"
+        decision_reason = "qa_fragment_not_practice"
+        negative_markers.append("qa_override")
+    elif style_marker and explicit_source_style and practice_feature_count < 3:
+        final_chunk_type = "style"
+        decision_reason = "source_style_not_user_facing"
+        negative_markers.append("style_override")
+    elif practice_feature_count >= 2 and goal_marker and duration_marker and instruction_marker and not qa_marker:
+        final_chunk_type = "practice"
+        decision_reason = "self_contained_practice"
+    elif practice_feature_count >= 2 and (goal_marker or duration_marker) and not instruction_marker:
+        final_chunk_type = "lens"
+        decision_reason = "practice_candidate_missing_steps"
+        negative_markers.append("missing_instruction_marker")
+    elif safety_marker and not instruction_marker:
+        final_chunk_type = "safety"
+        decision_reason = "safety_guidance"
+    elif theory_marker:
+        final_chunk_type = "lens"
+        decision_reason = "theory_fragment_not_practice"
+        negative_markers.append("theory_override")
+    else:
+        final_chunk_type = "lens" if candidate_scores["lens"] >= candidate_scores["theory"] else "theory"
+        decision_reason = "default_ranked_scores"
+
+    score_sum = sum(candidate_scores.values()) or 1
+    confidence = round(max(candidate_scores.values()) / score_sum, 3)
+    if role_hint in {"practice", "lens", "case", "safety", "style", "theory"} and decision_reason == "default_ranked_scores":
+        decision_reason = f"role_hint_{role_hint}"
+
+    return {
+        "version": "chunk_classification_trace_v1",
+        "final_chunk_type": final_chunk_type,
+        "candidate_scores": candidate_scores,
+        "positive_markers": _dedupe(positive_markers),
+        "negative_markers": _dedupe(negative_markers),
+        "decision_reason": decision_reason,
+        "confidence": confidence,
+        "practice_feature_count": practice_feature_count,
+        "safe_preview_len": min(160, len((text or "").strip())),
+        "heading_path_tail": heading_path[-1] if heading_path else "",
+    }
 
 
 def _infer_chunk_type(text: str, title: str, role_hint: str) -> str:
@@ -171,6 +409,13 @@ def _extract_practice_metadata(text: str) -> dict[str, Any]:
             goal = line_norm.split(":", 1)[-1].strip()
         if not duration and line_low.startswith("время:"):
             duration = line_norm.split(":", 1)[-1].strip()
+    if not goal:
+        m_goal = re.search(r"цель:\s*([^.\n]+)", low)
+        goal = m_goal.group(1).strip() if m_goal else ""
+    if not duration:
+        m = re.search(r"время:\s*([^.\n]+)", low)
+        if m:
+            duration = m.group(1).strip()
     if not duration:
         m = re.search(r"(\d{1,3}\s*(?:мин|minute|min))", low)
         duration = m.group(1) if m else ""
@@ -181,13 +426,7 @@ def _extract_practice_metadata(text: str) -> dict[str, Any]:
 
     body_based = any(marker in low for marker in ("дых", "тело", "зазем", "ощущ"))
     requires_journaling = any(marker in low for marker in ("запиши", "дневник", "письменно"))
-    minutes: int | None = None
-    m_num = re.search(r"(\d{1,3})\s*(?:мин|minute|min)", duration or low)
-    if m_num:
-        try:
-            minutes = int(m_num.group(1))
-        except Exception:
-            minutes = None
+    minutes = _extract_duration_minutes(duration, text)
 
     low_resource_safe = bool(
         body_based and steps_count > 0 and steps_count <= 3 and minutes is not None and minutes <= 10 and not requires_journaling
@@ -230,9 +469,9 @@ def _build_summary(
     role = section_role_hint or "unknown"
     uses = ",".join(allowed_use) if allowed_use else "internal_only"
     if lens_family:
-        summary = f"{chunk_type}: {tail}. Темы: {', '.join(lens_family)}. Роль: {role}. Использование: {uses}."
+        summary = f"{chunk_type}: {tail}. РўРµРјС‹: {', '.join(lens_family)}. Р РѕР»СЊ: {role}. РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ: {uses}."
     else:
-        summary = f"{chunk_type}: {tail}. Роль: {role}. Нужна ручная проверка темы. Использование: {uses}."
+        summary = f"{chunk_type}: {tail}. Р РѕР»СЊ: {role}. РќСѓР¶РЅР° СЂСѓС‡РЅР°СЏ РїСЂРѕРІРµСЂРєР° С‚РµРјС‹. РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ: {uses}."
     return summary[:240].strip()
 
 
@@ -270,7 +509,11 @@ def _to_universal_block(raw: dict[str, Any]) -> UniversalBlock:
     )
 
 
-def _backfill_block(raw: dict[str, Any], source_profile: str = "practice_manual") -> tuple[dict[str, Any], dict[str, Any]]:
+def _backfill_block(
+    raw: dict[str, Any],
+    source_profile: str = "practice_manual",
+    force_reclassify: bool = False,
+) -> tuple[dict[str, Any], dict[str, Any]]:
     block = copy.deepcopy(raw)
     md = block.setdefault("metadata", {})
     text = str(block.get("text") or "")
@@ -289,9 +532,18 @@ def _backfill_block(raw: dict[str, Any], source_profile: str = "practice_manual"
 
     role_hint = str(md.get("section_role_hint") or "").strip().lower()
     gov = md.get("governance") if isinstance(md.get("governance"), dict) else {}
-    existing_chunk_type = str(gov.get("chunk_type") or "").strip().lower()
-    chunk_type = existing_chunk_type if existing_chunk_type else _infer_chunk_type(text, title, role_hint)
-    if not role_hint:
+    previous_chunk_type = str(gov.get("chunk_type") or "").strip().lower()
+
+    classification = _classify_chunk_v1(
+        text=text,
+        title=title,
+        role_hint=role_hint,
+        heading_path=heading_path,
+    )
+    inferred_chunk_type = str(classification.get("final_chunk_type") or "theory")
+    chunk_type = inferred_chunk_type if force_reclassify or not previous_chunk_type else previous_chunk_type
+
+    if not role_hint or force_reclassify:
         role_hint = chunk_type
 
     boundary_confidence = _to_float(md.get("boundary_confidence"))
@@ -315,6 +567,7 @@ def _backfill_block(raw: dict[str, Any], source_profile: str = "practice_manual"
     safety_flags = _normalize_list(gov.get("safety_flags"))
     safety_flags.append("not_for_direct_quote")
     low = f"{title}\n{text}".lower()
+
     if chunk_type in {"style"} or any(marker in low for marker in AUTHOR_STYLE_MARKERS):
         safety_flags.append("source_style_not_user_facing")
     if any(marker in low for marker in RISK_MARKERS):
@@ -327,13 +580,18 @@ def _backfill_block(raw: dict[str, Any], source_profile: str = "practice_manual"
             safety_flags.append("practice_requires_low_resource_check")
     else:
         practice_metadata = practice_metadata if isinstance(practice_metadata, dict) else {}
+        if classification.get("decision_reason") == "practice_candidate_missing_steps":
+            safety_flags.append("needs_review")
+
+    if classification.get("decision_reason") == "noise_chunk":
+        safety_flags.extend(["do_not_use", "source_style_not_user_facing"])
 
     allowed_use = _build_allowed_use(chunk_type, is_sanitized_case=True)
     if "needs_review" in safety_flags and "internal_only" not in allowed_use and chunk_type in {"safety", "style"}:
         allowed_use = _dedupe(allowed_use + ["internal_only"])
 
     tags = _dedupe(_normalize_list(gov.get("tags")) + [chunk_type] + lens_family)
-    governance_notes = _dedupe(_normalize_list(gov.get("governance_notes")) + ["deterministic_backfill_v1"])
+    governance_notes = _dedupe(_normalize_list(gov.get("governance_notes")) + ["deterministic_backfill_v1", "practice_precision_calibration_v1"])
 
     source_trace = gov.get("source_trace") if isinstance(gov.get("source_trace"), dict) else {}
     source_trace = {
@@ -383,26 +641,53 @@ def _backfill_block(raw: dict[str, Any], source_profile: str = "practice_manual"
     ub.parent_section_id = parent_section_id
     ub.governance = md["governance"]
     ub.chunking_quality = build_chunking_quality_v1(ub)
-    md["chunking_quality"] = ub.chunking_quality
+
+    cq = dict(ub.chunking_quality or {})
+    cq["classification_trace_v1"] = classification
+    md["chunking_quality"] = cq
 
     reasons: list[str] = []
-    if not lens_family:
-        reasons.append("lens_family_low_confidence")
-    if ub.chunking_quality.get("mixed_intent_severity") == "high":
-        reasons.append("mixed_intent_high")
-    if chunk_type == "practice" and int(practice_metadata.get("steps_count", 0) or 0) == 0:
-        reasons.append("practice_incomplete")
+    if previous_chunk_type == "practice" and chunk_type != "practice":
+        reasons.append("false_practice_candidate")
+        if chunk_type == "case":
+            reasons.append("case_fragment_not_practice")
+        elif classification.get("decision_reason") == "qa_fragment_not_practice":
+            reasons.append("qa_fragment_not_practice")
+        elif chunk_type in {"lens", "theory"}:
+            reasons.append("theory_fragment_not_practice")
+
+    if chunk_type == "practice":
+        steps = int((practice_metadata or {}).get("steps_count", 0) or 0)
+        if steps <= 0:
+            reasons.append("practice_candidate_missing_steps")
+        if not bool((practice_metadata or {}).get("low_resource_safe", False)):
+            reasons.append("practice_requires_low_resource_check")
+            minutes = _extract_duration_minutes(str((practice_metadata or {}).get("duration") or ""), text)
+            if minutes is not None and minutes >= 20:
+                reasons.append("long_practice_requires_review")
+
+    if classification.get("decision_reason") == "noise_chunk":
+        reasons.append("noise_chunk")
     if "source_style_not_user_facing" in md["governance"].get("safety_flags", []):
         reasons.append("source_style_not_user_facing")
+    if not lens_family:
+        reasons.append("lens_family_low_confidence")
+    if len(str(block.get("summary") or "").strip()) < 40:
+        reasons.append("summary_placeholder_low_quality")
     if float(boundary_confidence) < 0.45:
         reasons.append("boundary_confidence_low")
+    if str(cq.get("mixed_intent_severity") or "").lower() == "high":
+        reasons.append("mixed_intent_high")
 
     return block, {
+        "previous_chunk_type": previous_chunk_type or "",
         "chunk_type": chunk_type,
+        "reclassified": bool(previous_chunk_type and previous_chunk_type != chunk_type),
+        "decision_reason": str(classification.get("decision_reason") or ""),
         "allowed_use": md["governance"]["allowed_use"],
         "safety_flags": md["governance"]["safety_flags"],
         "summary_added": bool(block.get("summary")),
-        "needs_manual_review_reasons": reasons,
+        "needs_manual_review_reasons": _dedupe(reasons),
     }
 
 
@@ -412,49 +697,79 @@ def _build_manual_review_queue(source_name: str, blocks: list[dict[str, Any]]) -
         md = raw.get("metadata") or {}
         gov = md.get("governance") or {}
         cq = md.get("chunking_quality") or {}
+        trace = cq.get("classification_trace_v1") if isinstance(cq.get("classification_trace_v1"), dict) else {}
         reasons: list[str] = []
 
         summary = str(raw.get("summary") or "").strip()
         if not summary:
             reasons.append("summary_missing")
+        elif len(summary) < 40:
+            reasons.append("summary_placeholder_low_quality")
 
         lens_family = _normalize_list(gov.get("lens_family"))
         if not lens_family:
             reasons.append("lens_family_low_confidence")
 
-        if str(cq.get("mixed_intent_severity") or "").lower() == "high":
-            reasons.append("mixed_intent_high")
-
         chunk_type = str(gov.get("chunk_type") or "").lower()
-        practice_steps = int((gov.get("practice_metadata") or {}).get("steps_count", 0) or 0)
-        if chunk_type == "practice" and practice_steps <= 0:
-            reasons.append("practice_incomplete")
+        safety_flags = _normalize_list(gov.get("safety_flags"))
+        allowed_use = _normalize_list(gov.get("allowed_use"))
 
-        if "source_style_not_user_facing" in _normalize_list(gov.get("safety_flags")):
+        decision_reason = str(trace.get("decision_reason") or "")
+        if decision_reason == "practice_candidate_missing_steps":
+            reasons.append("practice_candidate_missing_steps")
+        if decision_reason == "qa_fragment_not_practice":
+            reasons.append("qa_fragment_not_practice")
+        if decision_reason == "theory_fragment_not_practice":
+            reasons.append("theory_fragment_not_practice")
+        if decision_reason == "noise_chunk":
+            reasons.append("noise_chunk")
+
+        practice_meta = gov.get("practice_metadata") if isinstance(gov.get("practice_metadata"), dict) else {}
+        if chunk_type == "practice":
+            steps = int(practice_meta.get("steps_count", 0) or 0)
+            if steps <= 0:
+                reasons.append("practice_candidate_missing_steps")
+            low_resource_safe = bool(practice_meta.get("low_resource_safe", False))
+            if not low_resource_safe:
+                reasons.append("practice_requires_low_resource_check")
+                minutes = _extract_duration_minutes(str(practice_meta.get("duration") or ""), str(raw.get("text") or ""))
+                if minutes is not None and minutes >= 20:
+                    reasons.append("long_practice_requires_review")
+
+        if "source_style_not_user_facing" in safety_flags:
             reasons.append("source_style_not_user_facing")
 
         boundary = _to_float(md.get("boundary_confidence"))
         if boundary is not None and boundary < 0.45:
             reasons.append("boundary_confidence_low")
 
+        if str(cq.get("mixed_intent_severity") or "").lower() == "high":
+            reasons.append("mixed_intent_high")
+
+        reasons = _dedupe(reasons)
         if not reasons:
             continue
 
-        safety_flags = _normalize_list(gov.get("safety_flags"))
-        allowed_use = _normalize_list(gov.get("allowed_use"))
         is_p0 = False
-        if "practice_incomplete" in reasons or "mixed_intent_high" in reasons:
+        if "mixed_intent_high" in reasons:
             is_p0 = True
-        if "needs_review" in safety_flags or "clinical_risk" in safety_flags:
+        if "clinical_risk" in safety_flags:
+            is_p0 = True
+        if chunk_type == "practice" and "practice_candidate_missing_steps" in reasons:
+            is_p0 = True
+        if "noise_chunk" in reasons and "internal_only" not in allowed_use:
             is_p0 = True
         if not safety_flags or not allowed_use:
             is_p0 = True
-        if boundary is not None and boundary < 0.35:
-            is_p0 = True
-        priority = "P0" if is_p0 else ("P1" if "lens_family_low_confidence" in reasons else "P2")
 
-        if "practice_incomplete" in reasons:
+        priority = "P0" if is_p0 else "P1"
+        if not is_p0 and reasons == ["summary_placeholder_low_quality"]:
+            priority = "P2"
+
+        if "practice_candidate_missing_steps" in reasons:
             action = "review_practice_completeness"
+        elif "qa_fragment_not_practice" in reasons or "theory_fragment_not_practice" in reasons:
+            action = "review_chunk_type"
         elif "lens_family_low_confidence" in reasons:
             action = "review_lens_family"
         elif "boundary_confidence_low" in reasons:
@@ -468,7 +783,7 @@ def _build_manual_review_queue(source_name: str, blocks: list[dict[str, Any]]) -
                 "block_id": str(raw.get("id") or ""),
                 "heading_path": md.get("heading_path") if isinstance(md.get("heading_path"), list) else [],
                 "chunk_type": chunk_type or "unknown",
-                "reasons": _dedupe(reasons),
+                "reasons": reasons,
                 "safe_preview": _safe_preview(raw.get("text") or "", 160),
                 "recommended_action": action,
             }
@@ -497,6 +812,31 @@ def _load_json(path: Path) -> dict[str, Any]:
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _read_json_if_exists(path: Path) -> dict[str, Any]:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _load_prd_046042_baseline_metrics() -> dict[str, Any]:
+    queue_path = Path("TO_DO_LIST/logs/PRD-046.0.4.2/manual_review_queue.json")
+    governance_path = Path("TO_DO_LIST/logs/PRD-046.0.4.2/governance_backfill_metrics.json")
+    queue = _read_json_if_exists(queue_path)
+    governance = _read_json_if_exists(governance_path)
+    items = queue.get("items") if isinstance(queue.get("items"), list) else []
+    manual_total = len(items)
+    manual_p0 = sum(1 for item in items if str(item.get("priority") or "") == "P0")
+    dist = governance.get("chunk_type_distribution") if isinstance(governance.get("chunk_type_distribution"), dict) else {}
+    return {
+        "chunk_type_distribution": dist,
+        "manual_review_total": manual_total,
+        "manual_review_p0": manual_p0,
+    }
 
 
 def _find_source_export_file(processed_dir: Path, source_id: str) -> Path | None:
@@ -589,7 +929,7 @@ def run_source_reprocess(
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     reports_dir.mkdir(parents=True, exist_ok=True)
-    if mode in {"reprocess", "backfill_only"} and not confirm:
+    if mode in {"reprocess", "backfill_only", "calibrate_classification"} and not confirm:
         raise RuntimeError("Mutation mode requires --confirm.")
 
     payload = _load_json(all_blocks_path)
@@ -633,13 +973,13 @@ def run_source_reprocess(
             config_path=config_path,
         )
         for raw in updated_target_blocks:
-            _, signal = _backfill_block(raw)
+            _, signal = _backfill_block(raw, force_reclassify=False)
             backfill_signals.append(signal)
     else:
         for raw in source_export_blocks:
             if not _is_target_block(raw, source_hint):
                 continue
-            updated, signal = _backfill_block(raw)
+            updated, signal = _backfill_block(raw, force_reclassify=mode == "calibrate_classification")
             updated_target_blocks.append(updated)
             backfill_signals.append(signal)
 
@@ -682,7 +1022,34 @@ def run_source_reprocess(
         "manual_review_p0_total": sum(1 for x in manual_queue.get("items", []) if x.get("priority") == "P0"),
     }
 
-    should_mutate = mode in {"reprocess", "backfill_only"}
+    baseline = _load_prd_046042_baseline_metrics()
+    reclassified = Counter()
+    for signal in backfill_signals:
+        prev = str(signal.get("previous_chunk_type") or "")
+        curr = str(signal.get("chunk_type") or "")
+        if prev == "practice" and curr and curr != "practice":
+            reclassified[f"practice_to_{curr}"] += 1
+    practice_metrics = {
+        "version": "practice_classification_metrics_v1",
+        "source": source_name,
+        "before": {
+            "chunk_type_distribution": baseline.get("chunk_type_distribution", {}),
+            "manual_review_total": baseline.get("manual_review_total", 0),
+            "manual_review_p0": baseline.get("manual_review_p0", 0),
+        },
+        "after": {
+            "chunk_type_distribution": dict(sorted(type_dist.items())),
+            "manual_review_total": len(manual_queue.get("items", [])),
+            "manual_review_p0": sum(1 for x in manual_queue.get("items", []) if x.get("priority") == "P0"),
+        },
+        "reclassified": dict(sorted(reclassified.items())),
+        "targets": {
+            "p0_reduction_min_ratio": 0.30,
+            "practice_suggestion_only_on_practice": True,
+        },
+    }
+
+    should_mutate = mode in {"reprocess", "backfill_only", "calibrate_classification"}
     if should_mutate:
         if not dry_run:
             backup_dir = processed_dir / "backups"
@@ -726,6 +1093,7 @@ def run_source_reprocess(
 
     _write_json(output_dir / "source_reprocess_metrics.json", source_reprocess_metrics)
     _write_json(output_dir / "governance_backfill_metrics.json", governance_metrics)
+    _write_json(output_dir / "practice_classification_metrics.json", practice_metrics)
     _write_json(output_dir / "governed_index_gate.json", {"before": before_gate, "after": after_gate})
     _write_json(output_dir / "manual_review_queue.json", manual_queue)
     (output_dir / "sanitized_runtime_logs.txt").write_text(
@@ -746,17 +1114,16 @@ def run_source_reprocess(
         encoding="utf-8",
     )
 
-    impl_report = reports_dir / "PRD-046.0.4.2_IMPLEMENTATION_REPORT.md"
-    src_report = reports_dir / "PRD-046.0.4.2_SOURCE_REPROCESS_REPORT.md"
-    backfill_report = reports_dir / "PRD-046.0.4.2_GOVERNANCE_BACKFILL_REPORT.md"
-    gate_report = reports_dir / "PRD-046.0.4.2_GOVERNED_INDEX_GATE_REPORT.md"
-    manual_report = reports_dir / "PRD-046.0.4.2_MANUAL_REVIEW_QUEUE.md"
-    next_prd_report = reports_dir / "PRD-046.0.4.2_NEXT_PRD_RECOMMENDATION.md"
+    impl_report = reports_dir / f"{TARGET_TAG}_IMPLEMENTATION_REPORT.md"
+    classification_report = reports_dir / f"{TARGET_TAG}_PRACTICE_CLASSIFICATION_REPORT.md"
+    reduction_report = reports_dir / f"{TARGET_TAG}_MANUAL_REVIEW_REDUCTION_REPORT.md"
+    gate_report = reports_dir / f"{TARGET_TAG}_GOVERNED_INDEX_GATE_REPORT.md"
+    next_prd_report = reports_dir / f"{TARGET_TAG}_NEXT_PRD_RECOMMENDATION.md"
 
-    src_report.write_text(
+    classification_report.write_text(
         "\n".join(
             [
-                "# PRD-046.0.4.2 Source Reprocess Report",
+                f"# {TARGET_TAG} Practice Classification Report",
                 "",
                 "## Audit",
                 f"- source_hint: `{source_hint}`",
@@ -775,19 +1142,20 @@ def run_source_reprocess(
                 f"- mutation_performed: `{mutation_performed}`",
                 f"- backup_created: `{backup_created}`",
                 "",
-                "## Reasoning",
-                "- Existing merged export had legacy chunks without governance payload and summary.",
-                "- Current pipeline supports governance/chunking fields, so deterministic backfill was applied for immediate gate recovery.",
+                "## Precision Metrics",
+                f"- before_manual_review_p0: `{practice_metrics['before']['manual_review_p0']}`",
+                f"- after_manual_review_p0: `{practice_metrics['after']['manual_review_p0']}`",
+                f"- reclassified: `{practice_metrics['reclassified']}`",
             ]
         )
         + "\n",
         encoding="utf-8",
     )
 
-    backfill_report.write_text(
+    reduction_report.write_text(
         "\n".join(
             [
-                "# PRD-046.0.4.2 Governance Backfill Report",
+                f"# {TARGET_TAG} Manual Review Reduction Report",
                 "",
                 "## Coverage",
                 f"- target_blocks_before: `{governance_metrics['target_blocks_before']}`",
@@ -799,8 +1167,10 @@ def run_source_reprocess(
                 f"- safety_flags_distribution: `{governance_metrics['safety_flags_distribution']}`",
                 "",
                 "## Manual Review",
-                f"- total_items: `{governance_metrics['manual_review_items_total']}`",
-                f"- p0_items: `{governance_metrics['manual_review_p0_total']}`",
+                f"- before_total: `{practice_metrics['before']['manual_review_total']}`",
+                f"- before_p0: `{practice_metrics['before']['manual_review_p0']}`",
+                f"- after_total: `{practice_metrics['after']['manual_review_total']}`",
+                f"- after_p0: `{practice_metrics['after']['manual_review_p0']}`",
             ]
         )
         + "\n",
@@ -811,7 +1181,7 @@ def run_source_reprocess(
     gate_report.write_text(
         "\n".join(
             [
-                "# PRD-046.0.4.2 Governed Index Gate Report",
+                f"# {TARGET_TAG} Governed Index Gate Report",
                 "",
                 "## Status",
                 f"- before: `{before_gate.get('status')}`",
@@ -833,31 +1203,16 @@ def run_source_reprocess(
         encoding="utf-8",
     )
 
-    sample_items = manual_queue.get("items", [])[:30]
-    lines = [
-        "# PRD-046.0.4.2 Manual Review Queue",
-        "",
-        f"- source: `{source_name}`",
-        f"- total_items: `{len(manual_queue.get('items', []))}`",
-        "",
-        "## Sample",
-    ]
-    for item in sample_items:
-        lines.append(
-            f"- `{item.get('priority')}` `{item.get('block_id')}` `{item.get('chunk_type')}` reasons={item.get('reasons')} action={item.get('recommended_action')} preview=`{item.get('safe_preview')}`"
-        )
-    manual_report.write_text("\n".join(lines) + "\n", encoding="utf-8")
-
-    next_prd = "PRD-046.0.4.3 — Chroma Reindex from Governed Blocks / API Query Restore v1"
+    next_prd = "PRD-046.0.4.3 вЂ” Chroma Reindex from Governed Blocks / API Query Restore v1"
     status_after = str(after_gate.get("status") or "")
     if status_after == "degraded":
-        next_prd = "PRD-046.0.5 — Offline LLM Summary + Lens Enrichment v1"
+        next_prd = "PRD-046.0.5 вЂ” Offline LLM Summary + Lens Enrichment v1"
     if status_after == "not_ready":
-        next_prd = "PRD-046.0.4.2-HF1 — Backfill Coverage Fix / Missing Governance Fields"
+        next_prd = "PRD-046.0.4.2.1-HF1 вЂ” Practice Classification False Positive Fix"
     next_prd_report.write_text(
         "\n".join(
             [
-                "# PRD-046.0.4.2 Next PRD Recommendation",
+                f"# {TARGET_TAG} Next PRD Recommendation",
                 "",
                 f"- gate_status_after: `{status_after}`",
                 f"- recommendation: `{next_prd}`",
@@ -870,7 +1225,7 @@ def run_source_reprocess(
     impl_report.write_text(
         "\n".join(
             [
-                "# PRD-046.0.4.2 IMPLEMENTATION REPORT",
+                f"# {TARGET_TAG} IMPLEMENTATION REPORT",
                 "",
                 "## Status",
                 "- Implementation: done",
@@ -882,12 +1237,13 @@ def run_source_reprocess(
                 "",
                 "## Files changed",
                 "- `Bot_data_base/tools/source_reprocess.py`",
+                "- `Bot_data_base/tests/test_practice_classification_precision.py`",
                 "- `Bot_data_base/tests/test_source_reprocess_governance.py`",
                 "- `Bot_data_base/tests/test_governance_backfill.py`",
                 "- `Bot_data_base/tools/kb_quality_audit.py` (gate threshold alignment)",
                 "",
                 "## Commands run",
-                "- `python Bot_data_base/tools/source_reprocess.py --source \"КУЗНИЦА ДУХА\" --backfill-only --confirm`",
+                "- `python Bot_data_base/tools/source_reprocess.py --source \"РљРЈР—РќРР¦Рђ Р”РЈРҐРђ\" --calibrate-classification --confirm`",
                 "",
                 "## Outcome",
                 f"- source_reprocess_mode: `{mode}`",
@@ -895,6 +1251,8 @@ def run_source_reprocess(
                 f"- gate_before: `{before_gate.get('status')}`",
                 f"- gate_after: `{after_gate.get('status')}`",
                 f"- manual_review_items: `{len(manual_queue.get('items', []))}`",
+                f"- manual_review_p0_before: `{practice_metrics['before']['manual_review_p0']}`",
+                f"- manual_review_p0_after: `{practice_metrics['after']['manual_review_p0']}`",
                 "",
                 "## Known limitations",
                 "- Backfill is deterministic and conservative; semantic quality is intentionally delegated to next enrichment PRD.",
@@ -920,6 +1278,8 @@ def run_source_reprocess(
         "gate_before": before_gate.get("status"),
         "gate_after": after_gate.get("status"),
         "manual_review_items": len(manual_queue.get("items", [])),
+        "manual_review_p0_before": practice_metrics["before"]["manual_review_p0"],
+        "manual_review_p0_after": practice_metrics["after"]["manual_review_p0"],
         "next_prd_recommendation": next_prd,
     }
 
@@ -932,26 +1292,31 @@ def _resolve_mode(args: argparse.Namespace) -> str:
         selected.append("reprocess")
     if args.backfill_only:
         selected.append("backfill_only")
+    if args.calibrate_classification:
+        selected.append("calibrate_classification")
     if not selected:
         return "audit_only"
     if len(selected) > 1:
-        raise RuntimeError("Use only one mode flag: --audit-only / --reprocess / --backfill-only")
+        raise RuntimeError(
+            "Use only one mode flag: --audit-only / --reprocess / --backfill-only / --calibrate-classification"
+        )
     return selected[0]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="PRD-046.0.4.2 source reprocess / governance backfill CLI.")
-    parser.add_argument("--source", default="КУЗНИЦА ДУХА")
+    parser = argparse.ArgumentParser(description=f"{TARGET_TAG} source reprocess / governance backfill CLI.")
+    parser.add_argument("--source", default="РљРЈР—РќРР¦Рђ Р”РЈРҐРђ")
     parser.add_argument("--audit-only", action="store_true")
     parser.add_argument("--reprocess", action="store_true")
     parser.add_argument("--backfill-only", action="store_true")
+    parser.add_argument("--calibrate-classification", action="store_true")
     parser.add_argument("--confirm", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--config-path", default="Bot_data_base/config.yaml")
     parser.add_argument("--registry-path", default="Bot_data_base/data/registry.json")
     parser.add_argument("--all-blocks-path", default="Bot_data_base/data/processed/all_blocks_merged.json")
     parser.add_argument("--processed-dir", default="Bot_data_base/data/processed")
-    parser.add_argument("--output-dir", default="TO_DO_LIST/logs/PRD-046.0.4.2")
+    parser.add_argument("--output-dir", default=f"TO_DO_LIST/logs/{TARGET_TAG}")
     parser.add_argument("--reports-dir", default="TO_DO_LIST/reports")
     parser.add_argument("--raw-markdown-path", default="")
     args = parser.parse_args()
@@ -977,3 +1342,7 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+

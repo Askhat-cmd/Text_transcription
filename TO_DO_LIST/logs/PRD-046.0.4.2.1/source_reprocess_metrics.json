@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-05-09T11:35:26.203416+00:00",
+  "source_hint": "КУЗНИЦА ДУХА",
+  "mode": "calibrate_classification",
+  "confirm": true,
+  "dry_run": false,
+  "mutation_performed": true,
+  "backup_created": true,
+  "backup_path": "Bot_data_base\\data\\processed\\backups\\all_blocks_merged__before_PRD-046.0.4.2.1__20260509_143525.json",
+  "blocks_before": 229,
+  "blocks_after": 229,
+  "gate_before": "ready",
+  "gate_after": "ready",
+  "all_blocks_path": "Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "source_export_path": "Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json"
+}

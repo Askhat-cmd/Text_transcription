@@ -27,8 +27,8 @@ def _mk_raw_block(*, block_id: str, text: str, title: str, role_hint: str = "") 
 def test_backfill_adds_required_governance_fields_and_summary() -> None:
     raw = _mk_raw_block(
         block_id="p1",
-        title="Практика заземления",
-        text="Цель: снизить тревогу. Время: 5 минут. Шаг 1: медленный выдох. Шаг 2: опора в теле.",
+        title="\u041f\u0440\u0430\u043a\u0442\u0438\u043a\u0430 \u0437\u0430\u0437\u0435\u043c\u043b\u0435\u043d\u0438\u044f",
+        text="\u0426\u0435\u043b\u044c: \u0441\u043d\u0438\u0437\u0438\u0442\u044c \u0442\u0440\u0435\u0432\u043e\u0433\u0443. \u0412\u0440\u0435\u043c\u044f: 5 \u043c\u0438\u043d\u0443\u0442. \u0428\u0430\u0433 1: \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u0439 \u0432\u044b\u0434\u043e\u0445. \u0428\u0430\u0433 2: \u043e\u043f\u043e\u0440\u0430 \u0432 \u0442\u0435\u043b\u0435.",
         role_hint="practice",
     )
     updated, _signal = _backfill_block(raw)
@@ -58,4 +58,3 @@ def test_backfill_practice_suggestion_only_for_practice_chunks() -> None:
     updated, _signal = _backfill_block(raw)
     allowed = updated["metadata"]["governance"]["allowed_use"]
     assert "practice_suggestion" not in allowed
-

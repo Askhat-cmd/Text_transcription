@@ -81,6 +81,28 @@ def test_reprocess_without_confirm_is_blocked(tmp_path: Path) -> None:
         )
 
 
+def test_calibrate_without_confirm_is_blocked(tmp_path: Path) -> None:
+    all_blocks = tmp_path / "processed" / "all_blocks_merged.json"
+    source_file = tmp_path / "processed" / "books" / "123__кузница_духа_blocks.json"
+    payload = {"blocks": [_mk_block("b1")]}
+    _write_json(all_blocks, payload)
+    _write_json(source_file, payload)
+
+    with pytest.raises(RuntimeError, match="requires --confirm"):
+        run_source_reprocess(
+            source_hint="КУЗНИЦА ДУХА",
+            all_blocks_path=all_blocks,
+            processed_dir=tmp_path / "processed",
+            output_dir=tmp_path / "logs",
+            reports_dir=tmp_path / "reports",
+            config_path=tmp_path / "config.yaml",
+            registry_path=tmp_path / "registry.json",
+            mode="calibrate_classification",
+            confirm=False,
+            dry_run=False,
+        )
+
+
 def test_backup_created_before_mutation(tmp_path: Path) -> None:
     all_blocks = tmp_path / "processed" / "all_blocks_merged.json"
     source_file = tmp_path / "processed" / "books" / "123__кузница_духа_blocks.json"
@@ -105,4 +127,3 @@ def test_backup_created_before_mutation(tmp_path: Path) -> None:
     assert result["backup_created"] is True
     assert result["backup_path"]
     assert Path(result["backup_path"]).exists()
-

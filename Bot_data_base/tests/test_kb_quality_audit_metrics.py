@@ -256,3 +256,23 @@ def test_governed_index_gate_passes_on_governed_fixture() -> None:
     assert result["status"] in {"ready", "degraded"}
     assert result["metrics"]["governance_present_ratio"] >= 0.95
     assert result["metrics"]["not_for_direct_quote_ratio"] >= 0.95
+
+
+def test_governed_index_gate_requires_high_summary_coverage() -> None:
+    blocks = []
+    for idx in range(20):
+        blocks.append(
+            _mk_block(
+                chunk_id=f"s{idx}",
+                text="контент",
+                summary="ok" if idx < 18 else "",
+                chunk_type="theory",
+                allowed_use=["writer_context"],
+                safety_flags=["not_for_direct_quote"],
+                lens_family=["shame"],
+                boundary_confidence=0.8,
+            )
+        )
+    result = evaluate_governed_index_gate(blocks=blocks, source_label="test")
+    assert result["metrics"]["summary_present_ratio"] == 0.9
+    assert "summary_missing" in result["blocker_reasons"]

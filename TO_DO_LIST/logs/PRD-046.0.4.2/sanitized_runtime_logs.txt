@@ -1,0 +1,9 @@
+[2026-05-09T11:06:02.768056+00:00] PRD-046.0.4.2 source reprocess run
+mode=backfill_only
+mutation_performed=True
+backup_created=True
+blocks_before=229
+blocks_after=229
+gate_before=not_ready
+gate_after=ready
+manual_review_items=172

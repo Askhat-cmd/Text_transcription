@@ -836,7 +836,7 @@ def evaluate_governed_index_gate(
         "allowed_use_present_ratio_min": 0.95,
         "safety_flags_present_ratio_min": 0.95,
         "not_for_direct_quote_ratio_min": 0.95,
-        "summary_present_ratio_min": 0.60,
+        "summary_present_ratio_min": 0.95,
         "boundary_confidence_present_ratio_min": 0.80,
         "lens_family_present_ratio_desired": 0.50,
     }

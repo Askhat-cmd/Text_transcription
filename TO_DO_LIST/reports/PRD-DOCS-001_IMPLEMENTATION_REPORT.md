@@ -43,6 +43,7 @@
 - PRD-046.0.5-APPLY1 - Apply Real LLM Enrichment Overlay + Chroma Refresh v1
 
 ## Commit / Push
-- Commit hash: `filled_after_commit`
-- Push status: `filled_after_push`
-- Report sync: `filled_after_push`
+- Commit hash: `8912bb2`
+- Push status: `pushed to main`
+- Report sync: `post-push sync committed`
+

@@ -33,6 +33,6 @@
 - [x] git diff stat capture
 
 ## Finalization
-- [ ] Commit
-- [ ] Push main
-- [ ] Post-push report sync commit
+- [x] Commit
+- [x] Push main
+- [x] Post-push report sync commit

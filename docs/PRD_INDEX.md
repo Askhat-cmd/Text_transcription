@@ -20,7 +20,7 @@
 | PRD-046.0.5-RUN1 | Real LLM enrichment batch run | done | historical | first real batch, blocker discovery | see report |
 | PRD-046.0.5-RUN1-HF2 | Lens/validator real calibration | done | af63952 | unknown lens blocker removed, gate still failed on low-resource rule | TO_DO_LIST/reports/PRD-046.0.5-RUN1-HF2_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.5-RUN1-HF3 | Low-resource avoid_when calibration | done | c42a12c | hard validation 0/60 fails, production-candidate-ready | TO_DO_LIST/reports/PRD-046.0.5-RUN1-HF3_IMPLEMENTATION_REPORT.md |
-| PRD-DOCS-001 | Living project documentation v1 | in progress | pending | create docs layer + report hygiene | TO_DO_LIST/reports/PRD-DOCS-001_IMPLEMENTATION_REPORT.md |
+| PRD-DOCS-001 | Living project documentation v1 | done | 8912bb2 | create docs layer + report hygiene | TO_DO_LIST/reports/PRD-DOCS-001_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -28,3 +28,4 @@
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+

@@ -1,0 +1,22 @@
+{
+  "overlay_path": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF3\\real_enrichment_candidates.jsonl",
+  "run_kind": "real",
+  "validation_passed": 60,
+  "validation_failed": 0,
+  "validation_failed_ratio": 0.0,
+  "hard_validation_failed": 0,
+  "soft_review_warnings": 60,
+  "summary_direct_quote_risk_count": 0,
+  "unknown_lens_candidates": 0,
+  "unknown_lens_suggestions": 3,
+  "safety_governance_invariant_violations": 0,
+  "raw_text_leak_check": "pass",
+  "calibration_passed": true,
+  "production_candidate_ready": true,
+  "production_ready": true,
+  "promotion_allowed": false,
+  "promotion_reasons": [
+    "requires_separate_apply_prd"
+  ],
+  "reasons": []
+}

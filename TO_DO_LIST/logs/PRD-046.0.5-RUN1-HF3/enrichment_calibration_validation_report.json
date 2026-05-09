@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-05-09T18:32:12.966200+00:00",
+  "schema_version": "kb_llm_enrichment_v1",
+  "prompt_version": "kb_enrichment_v1_3",
+  "run_kind": "real",
+  "chunks_selected": 60,
+  "chunks_enriched": 60,
+  "validation_passed": 60,
+  "validation_failed": 0,
+  "hard_validation_failed": 0,
+  "soft_review_warnings": 60,
+  "unmapped_review_notes_count": 0,
+  "needs_human_review": 60,
+  "unknown_lens_candidates": 0,
+  "unknown_lens_suggestions": 3,
+  "low_resource_avoid_autofilled": 0,
+  "summary_quality_warnings": 4,
+  "safety_governance_invariant_violations": 0,
+  "validation_reasons_distribution": {
+    "insufficient_context": 8,
+    "lens_mapping_uncertain": 7,
+    "low_confidence": 5,
+    "mixed_intent_unclear": 37,
+    "practice_context_unclear": 13,
+    "safety_context_unclear": 2,
+    "summary_quality_uncertain": 20
+  },
+  "raw_text_leak_check": "pass"
+}

@@ -105,6 +105,10 @@ REVIEW_REASON_SYNONYM_MAP = {
     "\u043d\u0435\u0443\u0432\u0435\u0440\u0435\u043d\u043d\u043e\u0435_\u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e_summary": "summary_quality_uncertain",
 }
 
+LOW_RESOURCE_CANONICAL_AVOID_WHEN = (
+    "\u043f\u0440\u0438 \u043d\u0438\u0437\u043a\u043e\u043c \u0440\u0435\u0441\u0443\u0440\u0441\u0435, \u0438\u0441\u0442\u043e\u0449\u0435\u043d\u0438\u0438 \u0438\u043b\u0438 \u043e\u0441\u0442\u0440\u043e\u0439 \u043d\u0435\u0441\u0442\u0430\u0431\u0438\u043b\u044c\u043d\u043e\u0441\u0442\u0438"
+)
+
 
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
@@ -189,6 +193,19 @@ def _normalize_review_reasons(values: list[str]) -> tuple[list[str], list[str]]:
         else:
             notes.append(_safe_preview(raw, limit=160))
     return _dedupe(controlled), _dedupe(notes)
+
+
+def _ensure_low_resource_avoid_when(
+    *,
+    avoid_when: list[str],
+    safety_flags: list[str],
+) -> tuple[list[str], bool]:
+    if "practice_requires_low_resource_check" not in set(_normalize_list(safety_flags)):
+        return _dedupe(avoid_when), False
+    joined = " ".join(_normalize_list(avoid_when)).lower()
+    if any(term in joined for term in ("low resource", "\u043c\u0430\u043b\u043e \u0441\u0438\u043b", "\u043a\u0440\u0438\u0437\u0438\u0441", "\u043d\u0435\u0441\u0442\u0430\u0431\u0438\u043b")):
+        return _dedupe(avoid_when), False
+    return _dedupe([*avoid_when, LOW_RESOURCE_CANONICAL_AVOID_WHEN])[:4], True
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -593,7 +610,7 @@ def _build_overlay_readiness_report(
     production_candidate_ready = len(reasons) == 0
     promotion_reasons: list[str] = []
     if production_candidate_ready and not allow_promotion_candidate:
-        promotion_reasons.append("manual_promotion_not_requested")
+        promotion_reasons.append("requires_separate_apply_prd")
     if not production_candidate_ready:
         promotion_reasons.extend(reasons)
     promotion_allowed = production_candidate_ready and allow_promotion_candidate
@@ -625,12 +642,17 @@ def _build_overlay_readiness_report(
 
 def _select_report_recommendation(
     *,
+    run_tag: str,
     real_llm_run: bool,
     validation_failed_ratio: float,
     unknown_lens_candidates: int,
     production_candidate_ready: bool,
     promotion_allowed: bool,
 ) -> str:
+    if "RUN1-HF3" in run_tag:
+        if production_candidate_ready:
+            return "PRD-045.6.3 - Async Turn LLM Summary Store v1"
+        return "PRD-046.0.5-RUN1-HF4 - Targeted Enrichment Gate Calibration"
     if not real_llm_run:
         return "PRD-046.0.5-RUN1-HF1 - Real LLM Availability / Client Fix"
     if unknown_lens_candidates > 0 or validation_failed_ratio > 0.10:
@@ -760,6 +782,7 @@ def run_enrichment(
     needs_human_review_count = 0
     unknown_lens_count = 0
     unknown_lens_suggestions_count = 0
+    low_resource_avoid_autofilled_count = 0
     soft_review_warnings = 0
     unmapped_review_notes_count = 0
     invariant_violations = 0
@@ -818,6 +841,13 @@ def run_enrichment(
             unmapped_review_notes_count += 1
             candidate.review_reasons = _dedupe(candidate.review_reasons + ["summary_quality_uncertain"])
 
+        candidate.avoid_when, low_resource_autofilled = _ensure_low_resource_avoid_when(
+            avoid_when=candidate.avoid_when,
+            safety_flags=candidate.safety_flags_original,
+        )
+        if low_resource_autofilled:
+            low_resource_avoid_autofilled_count += 1
+
         result = validate_candidate(candidate=candidate, source_text=str(raw.get("text") or ""))
         if result.warnings:
             summary_warnings += 1
@@ -870,6 +900,11 @@ def run_enrichment(
             "unmapped": lens_normalization["unmapped"],
         }
         payload["llm_review_notes"] = llm_review_notes
+        payload["normalization_trace"] = {
+            "avoid_when_low_resource_guard_autofilled": low_resource_autofilled,
+            "lens_normalization_applied": True,
+            "review_reason_normalization_applied": True,
+        }
         payload["source_preview"] = _safe_preview(str(raw.get("text") or ""), limit=160)
         payload["llm_error"] = _safe_preview(llm_error, limit=160)
         candidates.append(payload)
@@ -906,6 +941,7 @@ def run_enrichment(
         "needs_human_review": needs_human_review_count,
         "unknown_lens_candidates": unknown_lens_count,
         "unknown_lens_suggestions": unknown_lens_suggestions_count,
+        "low_resource_avoid_autofilled": low_resource_avoid_autofilled_count,
         "summary_quality_warnings": summary_warnings,
         "safety_governance_invariant_violations": invariant_violations,
         "validation_reasons_distribution": dict(sorted(validation_reasons_counter.items())),
@@ -999,6 +1035,7 @@ def run_enrichment(
     )
 
     next_prd = _select_report_recommendation(
+        run_tag=run_tag,
         real_llm_run=real_llm_run,
         validation_failed_ratio=float(overlay_readiness_report.get("validation_failed_ratio") or 1.0),
         unknown_lens_candidates=int(overlay_readiness_report.get("unknown_lens_candidates") or 0),
@@ -1143,6 +1180,7 @@ def _write_reports(
                 f"- needs_human_review: `{validation_report.get('needs_human_review')}`",
                 f"- unknown_lens_candidates: `{validation_report.get('unknown_lens_candidates')}`",
                 f"- unknown_lens_suggestions: `{validation_report.get('unknown_lens_suggestions')}`",
+                f"- low_resource_avoid_autofilled: `{validation_report.get('low_resource_avoid_autofilled')}`",
                 "",
                 "## Runtime Invariants",
                 "- runtime_behavior_changed: false",
@@ -1151,6 +1189,14 @@ def _write_reports(
                 "- thread_manager_changed: false",
                 "- state_analyzer_changed: false",
                 "- chroma_reindex_performed: false",
+                "",
+                "## Additional Metrics",
+                f"- chunk_type_distribution: `{diff_summary.get('chunk_type_distribution_selected')}`",
+                f"- low_resource_avoid_when_missing: `{(validation_report.get('validation_reasons_distribution') or {}).get('low_resource_avoid_when_missing', 0)}`",
+                f"- lens_mapping_uncertain: `{(validation_report.get('validation_reasons_distribution') or {}).get('lens_mapping_uncertain', 0)}`",
+                f"- summary_direct_quote_risk_count: `{overlay_readiness_report.get('summary_direct_quote_risk_count')}`",
+                f"- raw_text_leak_check: `{validation_report.get('raw_text_leak_check')}`",
+                f"- promotion_decision: `allowed={overlay_readiness_report.get('promotion_allowed')}; reasons={overlay_readiness_report.get('promotion_reasons')}`",
             ]
         )
         + "\n",

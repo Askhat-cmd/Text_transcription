@@ -45,7 +45,7 @@ def test_real_overlay_production_ready_when_all_thresholds_pass() -> None:
     assert report["calibration_passed"] is True
     assert report["production_candidate_ready"] is True
     assert report["promotion_allowed"] is False
-    assert "manual_promotion_not_requested" in report["promotion_reasons"]
+    assert "requires_separate_apply_prd" in report["promotion_reasons"]
     assert report["reasons"] == []
 
 

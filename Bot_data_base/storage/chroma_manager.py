@@ -166,10 +166,16 @@ class ChromaManager:
     def _to_metadata(self, block: UniversalBlock) -> dict:
         governance = block.governance or {}
         chunking_quality = block.chunking_quality or {}
+        llm_enrichment = block.llm_enrichment or {}
         allowed_use = governance.get("allowed_use") or []
         safety_flags = governance.get("safety_flags") or []
         lens_family = governance.get("lens_family") or []
         practice_metadata = governance.get("practice_metadata") or {}
+        enrichment_llm_metadata = (
+            llm_enrichment.get("llm_metadata")
+            if isinstance(llm_enrichment.get("llm_metadata"), dict)
+            else {}
+        )
 
         def _csv(items: list) -> str:
             return ",".join([str(item).strip() for item in items if str(item).strip()])
@@ -214,6 +220,35 @@ class ChromaManager:
             "mixed_intent_primary_role": str(chunking_quality.get("primary_role") or ""),
             "mixed_intent_secondary_roles": _csv(chunking_quality.get("secondary_role_markers") or []),
             "mixed_intent_reason": str(chunking_quality.get("mixed_intent_reason") or ""),
+            "llm_enrichment_schema_version": str(llm_enrichment.get("schema_version") or ""),
+            "llm_enrichment_applied_from_prd": str(llm_enrichment.get("applied_from_prd") or ""),
+            "llm_enrichment_source_overlay": str(llm_enrichment.get("source_overlay") or ""),
+            "llm_enrichment_status": str(llm_enrichment.get("status") or ""),
+            "llm_enrichment_review_status": str(llm_enrichment.get("review_status") or ""),
+            "llm_enrichment_summary": str(llm_enrichment.get("summary") or ""),
+            "llm_enrichment_lens_family_candidates": _csv(
+                llm_enrichment.get("lens_family_candidates") or []
+            ),
+            "llm_enrichment_tags": _csv(llm_enrichment.get("tags") or []),
+            "llm_enrichment_use_when": _csv(llm_enrichment.get("use_when") or []),
+            "llm_enrichment_avoid_when": _csv(llm_enrichment.get("avoid_when") or []),
+            "llm_enrichment_self_contained_score": float(
+                llm_enrichment.get("self_contained_score") or 0.0
+            ),
+            "llm_enrichment_self_contained_reason": str(
+                llm_enrichment.get("self_contained_reason") or ""
+            ),
+            "llm_enrichment_confidence": float(llm_enrichment.get("confidence") or 0.0),
+            "llm_enrichment_needs_human_review": _bool_to_str(
+                llm_enrichment.get("needs_human_review")
+            ),
+            "llm_enrichment_review_reasons": _csv(llm_enrichment.get("review_reasons") or []),
+            "llm_enrichment_provider": str(enrichment_llm_metadata.get("provider") or ""),
+            "llm_enrichment_model": str(enrichment_llm_metadata.get("model") or ""),
+            "llm_enrichment_prompt_version": str(
+                enrichment_llm_metadata.get("prompt_version") or ""
+            ),
+            "llm_enrichment_mock": _bool_to_str(enrichment_llm_metadata.get("mock")),
         }
 
     def _init_embedding_model(self) -> SentenceTransformer:

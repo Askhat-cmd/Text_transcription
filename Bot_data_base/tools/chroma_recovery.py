@@ -79,6 +79,11 @@ def _to_universal_block(raw: dict[str, Any]) -> UniversalBlock:
         parent_section_id=str(metadata.get("parent_section_id") or ""),
         governance=(metadata.get("governance") or {}),
         chunking_quality=(metadata.get("chunking_quality") or {}),
+        llm_enrichment=(
+            metadata.get("llm_enrichment")
+            if isinstance(metadata.get("llm_enrichment"), dict)
+            else {}
+        ),
     )
 
 

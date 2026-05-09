@@ -47,3 +47,9 @@ Status: accepted
 Context: преждевременный запуск Diagnostic Center при неготовом KB/context даст ложную уверенность.
 Decision: запуск только после APPLY1, retrieval eval и context-quality прогресса.
 Consequences: более надежный и интерпретируемый диагностический слой.
+
+## ADR-009 - Applied enrichment stored as advisory metadata only
+Status: accepted
+Context: после real LLM calibration появился production-candidate overlay, но governance authority должна оставаться deterministic.
+Decision: APPLY1 записывает enrichment только в `metadata.llm_enrichment` и retrieval metadata pass-through, не меняя `text/chunk_type/allowed_use/safety_flags`.
+Consequences: можно использовать enrichment для контекстного улучшения retrieval без подмены safety/governance контрактов.

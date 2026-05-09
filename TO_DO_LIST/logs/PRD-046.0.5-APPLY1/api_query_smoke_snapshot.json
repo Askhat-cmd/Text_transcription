@@ -1,0 +1,711 @@
+[
+  {
+    "query": "я всё время стараюсь быть лучше и не могу остановиться",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+        "score_or_distance": 0.5245561099888161,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "guilt",
+          "self_criticism",
+          "relationships",
+          "boundaries",
+          "achievement",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё поня…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "f688cbf9-a35a-4c49-8a95-6f84bc55f407",
+        "score_or_distance": 0.5128933783843705,
+        "source_title": "Операционная система страдания",
+        "chapter_title": "Операционная система страдания",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "relationships",
+          "fear_of_rejection"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macO…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "3b853a90-4c73-4243-b021-647a41f8051e",
+        "score_or_distance": 0.5076057198249698,
+        "source_title": "Практика 5: Сканер страдания",
+        "chapter_title": "Практика 5: Сканер страдания",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "hyperarousal",
+          "body_awareness",
+          "relationships",
+          "boundaries",
+          "achievement"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** увидеть, в чём именно твоя программа черпает «топливо» — и насколько часто. **Время:** 15–20 минут. Делать один раз — как исследование. Это немного д…",
+        "llm_enrichment_summary": "Практика 5 помогает выявить источники страдания в различных сферах жизни, таких как работа, отношения, самооценка, физическое состояние и будущее. Участникам предлагается оценить уровень страдания по шкале от 0 до 10 и проанализировать, какие ситуации вызывают наибольшее беспокойство. Это позволяет создать четкую карту страданий и понять, где они наиболее выражены, а также выявить области, свободные от страданий.",
+        "llm_enrichment_tags": [
+          "самоанализ",
+          "осознание",
+          "практика"
+        ],
+        "llm_enrichment_use_when": [
+          "когда нужно понять источники страдания и тревоги"
+        ],
+        "llm_enrichment_avoid_when": [
+          "при низком ресурсе",
+          "истощении или острой нестабильности"
+        ],
+        "llm_enrichment_confidence": 0.0,
+        "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+        "llm_enrichment_needs_human_review": true
+      }
+    ]
+  },
+  {
+    "query": "я злюсь на себя, потому что опять не сделал обещанное",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "038faec5-a743-4130-a73a-ce7c4ccc751f",
+        "score_or_distance": 0.5363619830965808,
+        "source_title": "Механизм 3: Искажение (Distortion)",
+        "chapter_title": "Механизм 3: Искажение (Distortion)",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "relationships",
+          "meaning",
+          "fear_of_rejection"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Мозг **переписывает** факт — добавляет к нему смысл, которого в самом факте не было. Коллега не поздоровался → «он на меня злится». Партнёр помолчал вечером →…",
+        "llm_enrichment_summary": "Искажение фактов происходит, когда мозг добавляет смысл к событиям, которых на самом деле не было. Например, если коллега не поздоровался, это может быть интерпретировано как злость, хотя на самом деле причина может быть совершенно иной. Часто такие искажения подтверждают негативные убеждения о себе, создавая ложное ощущение реальности. Это приводит к страданиям, как в случае с Зариной, которая мучилась из-за своих домыслов о подруге, вместо того чтобы принять реальную ситуацию.",
+        "llm_enrichment_tags": [
+          "искажение",
+          "психология",
+          "отношения"
+        ],
+        "llm_enrichment_use_when": [
+          "для понимания механизмов искажений в восприятии"
+        ],
+        "llm_enrichment_avoid_when": [
+          "при низком ресурсе",
+          "истощении или острой нестабильности"
+        ],
+        "llm_enrichment_confidence": 0.0,
+        "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+        "llm_enrichment_needs_human_review": true
+      },
+      {
+        "id": "00e93996-a59a-4364-8720-970e6a34035b",
+        "score_or_distance": 0.5282067352761111,
+        "source_title": "Практика 7: Письмо программе",
+        "chapter_title": "Практика 7: Письмо программе",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "boundaries",
+          "inner_parts",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** установить осознанный контакт с программой — не как с врагом, а как с частью себя, которая когда-то помогала выжить. **Время:** 20–30 минут. Один раз…",
+        "llm_enrichment_summary": "Практика письма программе помогает установить осознанный контакт с частью себя, которая когда-то способствовала выживанию. В процессе написания письма важно честно выразить свои чувства и мысли о том, как эта часть повлияла на жизнь. Это может вызвать различные эмоции, такие как слезы или злость, что является нормальным. Письмо становится возможностью для диалога с собой, позволяя понять, что эта часть не враг, а старый друг, который нуждается в признании и понимании.",
+        "llm_enrichment_tags": [
+          "письмо",
+          "осознанность",
+          "внутренний_диалог"
+        ],
+        "llm_enrichment_use_when": [
+          "когда нужно установить контакт с внутренними частями себя"
+        ],
+        "llm_enrichment_avoid_when": [
+          "при низком ресурсе",
+          "истощении или острой нестабильности"
+        ],
+        "llm_enrichment_confidence": 0.0,
+        "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+        "llm_enrichment_needs_human_review": true
+      },
+      {
+        "id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+        "score_or_distance": 0.5210241018640538,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "guilt",
+          "self_criticism",
+          "relationships",
+          "boundaries",
+          "achievement",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё поня…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      }
+    ]
+  },
+  {
+    "query": "я чувствую вину, когда выбираю себя",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "840fcd63-c3c2-47eb-a923-80038199f0dd",
+        "score_or_distance": 0.5201323458609867,
+        "source_title": "Практика 2: Карта перехватов",
+        "chapter_title": "Практика 2: Карта перехватов",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "avoidance",
+          "hyperarousal"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** отследить, в каких конкретных ситуациях твой доминирующий инстинкт перехватывает управление. **Время:** 5 минут в конце дня. Неделю подряд. Каждый ве…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "b539e87f-18e3-4422-9681-6080f4fa3e55",
+        "score_or_distance": 0.5065567799940988,
+        "source_title": "Красный: сила и власть",
+        "chapter_title": "Красный: сила и власть",
+        "chunk_index": null,
+        "chunk_type": "safety",
+        "allowed_use": [
+          "internal_only",
+          "safety_protocol"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "body_awareness",
+          "boundaries",
+          "meaning"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "**Мантра:** «Я — сам. Кто сильнее — тот прав». **Что важно:** власть, автономия, немедленное удовлетворение желаний. Нет чувства вины — есть только «хочу» и «м…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "efdef947-ad5b-4b45-b1a3-0536bebc5dde",
+        "score_or_distance": 0.50433093965009,
+        "source_title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и буквально говорит нижнему этажу: «угрозы нет».",
+        "chapter_title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и буквально говорит нижнему этажу: «угрозы нет».",
+        "chunk_index": null,
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "boundaries"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "medium",
+        "heading_path_text": null,
+        "content_preview": "Вот и всё. Это не про «взять себя в руки». Это про создание **зазора** между триггером и реакцией. Сначала зазор — доли секунды. Потом — секунда. Потом — три.…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      }
+    ]
+  },
+  {
+    "query": "нет сил, не хочу анализа, просто поддержи",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "83954dce-f8b2-42a8-a8d6-2fc3c5107d0f",
+        "score_or_distance": 0.5773529561267381,
+        "source_title": "5. Оставайся с этим 5 минут.",
+        "chapter_title": "5. Оставайся с этим 5 минут.",
+        "chunk_index": null,
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "После: запиши одним предложением — что произошло. Не анализируй. Просто запиши. ***",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "1bf07a78-db5a-4924-b64e-952856963f42",
+        "score_or_distance": 0.5532344539544338,
+        "source_title": "4. Откуда это берётся: три волны",
+        "chapter_title": "4. Откуда это берётся: три волны",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "body_awareness",
+          "boundaries"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чу…",
+        "llm_enrichment_summary": "Развитие программы происходит постепенно, начиная с раннего детства. В первые два года формируется базовое ощущение безопасности, зависящее от стабильности взрослых. С 2 до 4 лет ребенок начинает осознавать свои границы, а поддержка родителей способствует формированию уверенности. В возрасте 4-6 лет происходят записи драйверов через эмоциональный опыт, что влияет на восприятие себя и окружающего мира. Важно понимать, что родители также были подвержены влиянию своих собственных родителей.",
+        "llm_enrichment_tags": [
+          "развитие",
+          "детство",
+          "психология"
+        ],
+        "llm_enrichment_use_when": [
+          "для понимания формирования личных границ и самоощущения"
+        ],
+        "llm_enrichment_avoid_when": [
+          "при низком ресурсе",
+          "истощении или острой нестабильности"
+        ],
+        "llm_enrichment_confidence": 0.0,
+        "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+        "llm_enrichment_needs_human_review": true
+      },
+      {
+        "id": "f8d0e1f3-1ecd-4c82-9f79-b08d001e067b",
+        "score_or_distance": 0.5482969247295741,
+        "source_title": "4. Если внутри возникло «не хочу страдать» — останови. Спроси: кто это «не хочу»? Это ты — или это тоже программа?",
+        "chapter_title": "4. Если внутри возникло «не хочу страдать» — останови. Спроси: кто это «не хочу»? Это ты — или это тоже программа?",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "После: не надо делать выводов. Просто посиди минуту в тишине. ***",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      }
+    ]
+  },
+  {
+    "query": "я боюсь показать проект и снова хочу отложить",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "fd886228-effa-4902-a43c-4dd204608087",
+        "score_or_distance": 0.5135726114126289,
+        "source_title": "2. Страх как информация: что он на самом деле говорит",
+        "chapter_title": "2. Страх как информация: что он на самом деле говорит",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "hyperarousal",
+          "body_awareness",
+          "boundaries",
+          "meaning",
+          "identity"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Страх появляется не случайно. У каждого страха есть конкретное содержание — конкретная угроза, которую нервная система зарегистрировала. Проблема в том, что со…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "89672f95-0594-487f-aad0-5806001aa5ad",
+        "score_or_distance": 0.5078671589773492,
+        "source_title": "Вопросы и ответы",
+        "chapter_title": "Вопросы и ответы",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "avoidance",
+          "body_awareness",
+          "relationships",
+          "boundaries",
+          "meaning",
+          "achievement",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Один вопрос, который меняет рамку: «Если бы неудача этого проекта ничего не говорила обо мне как о человеке — только о проекте — ты бы начал?» Почти всегда отв…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "81e0860c-56da-44a1-9b8a-67e34a485dfa",
+        "score_or_distance": 0.5039910640338288,
+        "source_title": "7. Работа со страхом: не избегать, а встречать",
+        "chapter_title": "7. Работа со страхом: не избегать, а встречать",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "avoidance",
+          "boundaries",
+          "control",
+          "anger",
+          "grief"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "low",
+        "heading_path_text": null,
+        "content_preview": "Ключевой принцип — и он идёт вразрез с большинством популярных советов: **Страх уменьшается не от избегания и не от силового преодоления. Он уменьшается от вст…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      }
+    ]
+  },
+  {
+    "query": "я раздражаюсь на близкого человека сильнее, чем ситуация того стоит",
+    "status": "ok",
+    "http_status": 200,
+    "error": null,
+    "hits_count": 5,
+    "top_hits": [
+      {
+        "id": "fb69647b-a0fe-41aa-80fd-797ce327ab3c",
+        "score_or_distance": 0.5600748330053292,
+        "source_title": "3. Проекция: почему раздражает в других то, что есть в нас",
+        "chapter_title": "3. Проекция: почему раздражает в других то, что есть в нас",
+        "chunk_index": null,
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "shame",
+          "body_awareness",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Теперь — про раздражение. Когда что-то в другом человеке вызывает у тебя сильную эмоциональную реакцию — злость, отвращение, презрение, зависть — это сигнал. Н…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "550e7452-c024-4a12-bfd1-676135098937",
+        "score_or_distance": 0.5460871186659807,
+        "source_title": "Вводная часть",
+        "chapter_title": "Вводная часть",
+        "chunk_index": null,
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "inner_parts",
+          "meaning",
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": true,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "Есть человек, который тебя раздражает. Сильно. Может быть, коллега — он всегда хочет быть в центре внимания. Может быть, знакомый — он постоянно жалуется и ище…",
+        "llm_enrichment_summary": null,
+        "llm_enrichment_tags": [],
+        "llm_enrichment_use_when": [],
+        "llm_enrichment_avoid_when": [],
+        "llm_enrichment_confidence": null,
+        "llm_enrichment_review_status": null,
+        "llm_enrichment_needs_human_review": null
+      },
+      {
+        "id": "1586860f-8734-469d-b148-cb12a0fc1121",
+        "score_or_distance": 0.5438621782237781,
+        "source_title": "Практика 1: Список раздражения",
+        "chapter_title": "Практика 1: Список раздражения",
+        "chunk_index": null,
+        "chunk_type": "practice",
+        "allowed_use": [
+          "practice_suggestion"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "anger"
+        ],
+        "not_for_direct_quote": true,
+        "source_style_not_user_facing": false,
+        "boundary_confidence": null,
+        "mixed_intent_severity": "none",
+        "heading_path_text": null,
+        "content_preview": "**Цель:** найти входы в тень через реакции на других людей. **Время:** 20–30 минут. Один раз как исследование. Возьми лист бумаги. Раздели на две колонки. В пе…",
+        "llm_enrichment_summary": "Практика помогает выявить скрытые аспекты своей тени через анализ раздражения на других. Участник составляет список людей, вызывающих сильные негативные эмоции, и сопоставляет их качества с собственными чертами, которые он не может или не хочет проявлять. Это позволяет лучше понять свои внутренние конфликты и темы, требующие внимания.",
+        "llm_enrichment_tags": [
+          "самоанализ",
+          "раздражение",
+          "тень"
+        ],
+        "llm_enrichment_use_when": [
+          "когда нужно исследовать свои реакции на других"
+        ],
+        "llm_enrichment_avoid_when": [
+          "при низком ресурсе",
+          "истощении или острой нестабильности"
+        ],
+        "llm_enrichment_confidence": 0.0,
+        "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+        "llm_enrichment_needs_human_review": true
+      }
+    ]
+  }
+]

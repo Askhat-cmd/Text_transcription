@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-05-09T19:14:31.660524+00:00",
+  "run_tag": "PRD-046.0.5-APPLY1",
+  "blocks_total": 229,
+  "overlay_rows_total": 60,
+  "matched_blocks": 60,
+  "updated_blocks": 60,
+  "unmatched_overlay_rows": 0,
+  "forbidden_overlay_rows": 0,
+  "unchanged_blocks": 169,
+  "text_changed_count": 0,
+  "chunk_type_changed_count": 0,
+  "allowed_use_changed_count": 0,
+  "safety_flags_changed_count": 0,
+  "governance_invariant_violations": 0,
+  "top_level_summary_changed_count": 0,
+  "metadata_llm_enrichment_present_count": 60,
+  "needs_human_review_count": 60,
+  "review_status": "machine_candidate_needs_human_review",
+  "immutable_fields_checked": [
+    "governance.allowed_use",
+    "governance.chunk_type",
+    "governance.safety_flags",
+    "text"
+  ],
+  "unmatched_overlay_block_ids_sample": [],
+  "raw_text_leak_check": "pass",
+  "forbidden_leak_keys_present": false,
+  "overlay_candidate_preview": [
+    {
+      "block_id": "00e93996-a59a-4364-8720-970e6a34035b",
+      "summary_preview": "Практика письма программе помогает установить осознанный контакт с частью себя, которая когда-то способствовала выживан…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear",
+        "summary_quality_uncertain"
+      ]
+    },
+    {
+      "block_id": "0286388e-0f3c-482e-9da9-643b9db426d1",
+      "summary_preview": "Практика 6 предлагает возможность переосмыслить значимые события в жизни, такие как успехи или потери. Она направлена н…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear",
+        "practice_context_unclear"
+      ]
+    },
+    {
+      "block_id": "125ed059-4f25-45cf-8cb3-ad0b90102187",
+      "summary_preview": "Данная практика направлена на выявление факторов, которые отвлекают и истощают ресурсы в повседневной жизни. Она предпо…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear",
+        "practice_context_unclear"
+      ]
+    },
+    {
+      "block_id": "038faec5-a743-4130-a73a-ce7c4ccc751f",
+      "summary_preview": "Искажение фактов происходит, когда мозг добавляет смысл к событиям, которых на самом деле не было. Например, если колле…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear"
+      ]
+    },
+    {
+      "block_id": "05a4b396-0402-44f9-8e16-480e25d5f4b1",
+      "summary_preview": "Социальный инстинкт включает в себя вопросы о принадлежности к группе и восприятии себя другими. Он проявляется в спосо…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear"
+      ]
+    },
+    {
+      "block_id": "05a51d0f-88a3-4fbe-aded-c2613bfc691f",
+      "summary_preview": "В работе с тенью важно не просто принять свои эмоции, такие как злость или зависть, а увидеть их без оценки. Это означа…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "low_confidence"
+      ]
+    },
+    {
+      "block_id": "0de9d1b7-8493-49b7-aac1-6bd0ab530362",
+      "summary_preview": "Зрелость накладывает дополнительные ограничения, заставляя скрывать свои эмоции ради соответствия ожиданиям окружающих.…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear"
+      ]
+    },
+    {
+      "block_id": "15a45077-4aeb-45f3-a449-51ea3c3533fb",
+      "summary_preview": "В теле накапливаются вытесненные эмоции, что подтверждается нейрофизиологией. Хроническое напряжение в различных частях…",
+      "needs_human_review": true,
+      "review_reasons": [
+        "mixed_intent_unclear",
+        "summary_quality_uncertain"
+      ]
+    }
+  ],
+  "apply_mode": "apply",
+  "would_change_output": true,
+  "output_sha256_before": "da5104410b8f7b539ac87146967a44cfcd82058e3e692d025afe84e54bad1c4e",
+  "output_sha256_after": "6a967939c8e3b9d208b10b3941ea671f30010c99ca9fd8f2d1b0d60230b42699"
+}

@@ -36,6 +36,7 @@ def _preview(text: str, limit: int = 160) -> str:
 def _summarize_hit(item: tuple[Any, float]) -> dict[str, Any]:
     block, score = item
     governance = getattr(block, "governance", {}) or {}
+    enrichment = governance.get("llm_enrichment") if isinstance(governance.get("llm_enrichment"), dict) else {}
     return {
         "id": str(getattr(block, "block_id", "") or ""),
         "score": float(score or 0.0),
@@ -47,6 +48,18 @@ def _summarize_hit(item: tuple[Any, float]) -> dict[str, Any]:
         "lens_family": list(governance.get("lens_family") or []),
         "not_for_direct_quote": bool("not_for_direct_quote" in (governance.get("safety_flags") or [])),
         "content_preview": _preview(str(getattr(block, "content", "") or "")),
+        "llm_enrichment_summary": governance.get("llm_enrichment_summary") or enrichment.get("summary"),
+        "llm_enrichment_tags": governance.get("llm_enrichment_tags") or enrichment.get("tags") or [],
+        "llm_enrichment_use_when": governance.get("llm_enrichment_use_when") or enrichment.get("use_when") or [],
+        "llm_enrichment_avoid_when": governance.get("llm_enrichment_avoid_when") or enrichment.get("avoid_when") or [],
+        "llm_enrichment_confidence": governance.get("llm_enrichment_confidence")
+        if governance.get("llm_enrichment_confidence") is not None
+        else enrichment.get("confidence"),
+        "llm_enrichment_review_status": governance.get("llm_enrichment_review_status")
+        or enrichment.get("review_status"),
+        "llm_enrichment_needs_human_review": governance.get("llm_enrichment_needs_human_review")
+        if governance.get("llm_enrichment_needs_human_review") is not None
+        else enrichment.get("needs_human_review"),
     }
 
 

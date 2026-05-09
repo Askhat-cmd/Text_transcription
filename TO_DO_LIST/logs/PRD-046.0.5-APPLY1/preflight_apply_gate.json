@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-05-09T19:14:31.626524+00:00",
+  "run_tag": "PRD-046.0.5-APPLY1",
+  "preflight_passed": true,
+  "reasons": [],
+  "paths": {
+    "readiness_path": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF3\\real_overlay_readiness_report.json",
+    "overlay_path": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF3\\real_enrichment_candidates.jsonl",
+    "blocks_path": "Bot_data_base\\data\\processed\\all_blocks_merged.json"
+  },
+  "readiness_report": {
+    "overlay_path": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF3\\real_enrichment_candidates.jsonl",
+    "run_kind": "real",
+    "validation_passed": 60,
+    "validation_failed": 0,
+    "validation_failed_ratio": 0.0,
+    "hard_validation_failed": 0,
+    "soft_review_warnings": 60,
+    "summary_direct_quote_risk_count": 0,
+    "unknown_lens_candidates": 0,
+    "unknown_lens_suggestions": 3,
+    "safety_governance_invariant_violations": 0,
+    "raw_text_leak_check": "pass",
+    "calibration_passed": true,
+    "production_candidate_ready": true,
+    "production_ready": true,
+    "promotion_allowed": false,
+    "promotion_reasons": [
+      "requires_separate_apply_prd"
+    ],
+    "reasons": []
+  },
+  "governed_gate": {
+    "status": "ready",
+    "blocker_reasons": [],
+    "warnings": [],
+    "metrics": {
+      "total_blocks": 229,
+      "governance_present_count": 229,
+      "allowed_use_present_count": 229,
+      "safety_flags_present_count": 229,
+      "lens_family_present_count": 170,
+      "summary_present_count": 229,
+      "boundary_confidence_present_count": 229,
+      "not_for_direct_quote_count": 229,
+      "governance_present_ratio": 1.0,
+      "allowed_use_present_ratio": 1.0,
+      "safety_flags_present_ratio": 1.0,
+      "lens_family_present_ratio": 0.7424,
+      "summary_present_ratio": 1.0,
+      "boundary_confidence_present_ratio": 1.0,
+      "not_for_direct_quote_ratio": 1.0,
+      "chunk_type_distribution": {
+        "case": 60,
+        "lens": 70,
+        "practice": 26,
+        "safety": 19,
+        "style": 29,
+        "theory": 25
+      }
+    }
+  }
+}

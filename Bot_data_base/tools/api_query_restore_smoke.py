@@ -67,6 +67,7 @@ def _normalize_query_row(query: str, response: dict[str, Any]) -> dict[str, Any]
         governance = chunk.get("governance") if isinstance(chunk, dict) else {}
         governance = governance if isinstance(governance, dict) else {}
         chunking_quality = governance.get("chunking_quality") if isinstance(governance.get("chunking_quality"), dict) else {}
+        enrichment = governance.get("llm_enrichment") if isinstance(governance.get("llm_enrichment"), dict) else {}
         top_hits.append(
             {
                 "id": chunk.get("chunk_id"),
@@ -84,6 +85,18 @@ def _normalize_query_row(query: str, response: dict[str, Any]) -> dict[str, Any]
                 "mixed_intent_severity": chunking_quality.get("mixed_intent_severity"),
                 "heading_path_text": None,
                 "content_preview": _preview(chunk.get("content") or ""),
+                "llm_enrichment_summary": governance.get("llm_enrichment_summary") or enrichment.get("summary"),
+                "llm_enrichment_tags": governance.get("llm_enrichment_tags") or enrichment.get("tags") or [],
+                "llm_enrichment_use_when": governance.get("llm_enrichment_use_when") or enrichment.get("use_when") or [],
+                "llm_enrichment_avoid_when": governance.get("llm_enrichment_avoid_when") or enrichment.get("avoid_when") or [],
+                "llm_enrichment_confidence": governance.get("llm_enrichment_confidence")
+                if governance.get("llm_enrichment_confidence") is not None
+                else enrichment.get("confidence"),
+                "llm_enrichment_review_status": governance.get("llm_enrichment_review_status")
+                or enrichment.get("review_status"),
+                "llm_enrichment_needs_human_review": governance.get("llm_enrichment_needs_human_review")
+                if governance.get("llm_enrichment_needs_human_review") is not None
+                else enrichment.get("needs_human_review"),
             }
         )
     return {

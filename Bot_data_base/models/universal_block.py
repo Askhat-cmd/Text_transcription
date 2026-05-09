@@ -51,6 +51,7 @@ class UniversalBlock:
     pipeline_version: str = "bot_data_base_v1.0"
     governance: dict[str, Any] = field(default_factory=dict)
     chunking_quality: dict[str, Any] = field(default_factory=dict)
+    llm_enrichment: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -85,5 +86,6 @@ class UniversalBlock:
                 "parent_section_id": self.parent_section_id,
                 "governance": self.governance or {},
                 "chunking_quality": self.chunking_quality or {},
+                "llm_enrichment": self.llm_enrichment or {},
             },
         }

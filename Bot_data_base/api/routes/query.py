@@ -96,6 +96,15 @@ def _parse_bool(value: object) -> bool | None:
     return None
 
 
+def _parse_float(value: object) -> float | None:
+    if value is None:
+        return None
+    try:
+        return float(value)
+    except Exception:
+        return None
+
+
 def _extract_candidates(results: dict) -> List[dict]:
     documents = (results.get("documents") or [[]])[0]
     metadatas = (results.get("metadatas") or [[]])[0]
@@ -168,6 +177,7 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
         except Exception:
             author_name = author_name or ""
     governance_schema = str(meta.get("governance_schema_version") or "").strip()
+    enrichment_schema = str(meta.get("llm_enrichment_schema_version") or "").strip()
     governance = {}
     if governance_schema:
         governance = {
@@ -193,6 +203,44 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
                 "split_reason": str(meta.get("split_reason") or "").strip(),
             },
         }
+        if enrichment_schema:
+            enrichment_payload = {
+                "schema_version": enrichment_schema,
+                "applied_from_prd": str(meta.get("llm_enrichment_applied_from_prd") or "").strip(),
+                "source_overlay": str(meta.get("llm_enrichment_source_overlay") or "").strip(),
+                "status": str(meta.get("llm_enrichment_status") or "").strip(),
+                "review_status": str(meta.get("llm_enrichment_review_status") or "").strip(),
+                "summary": str(meta.get("llm_enrichment_summary") or "").strip(),
+                "lens_family_candidates": _split_csv(
+                    meta.get("llm_enrichment_lens_family_candidates")
+                ),
+                "tags": _split_csv(meta.get("llm_enrichment_tags")),
+                "use_when": _split_csv(meta.get("llm_enrichment_use_when")),
+                "avoid_when": _split_csv(meta.get("llm_enrichment_avoid_when")),
+                "self_contained_score": _parse_float(meta.get("llm_enrichment_self_contained_score")),
+                "self_contained_reason": str(
+                    meta.get("llm_enrichment_self_contained_reason") or ""
+                ).strip(),
+                "confidence": _parse_float(meta.get("llm_enrichment_confidence")),
+                "needs_human_review": _parse_bool(meta.get("llm_enrichment_needs_human_review")),
+                "review_reasons": _split_csv(meta.get("llm_enrichment_review_reasons")),
+                "llm_metadata": {
+                    "provider": str(meta.get("llm_enrichment_provider") or "").strip(),
+                    "model": str(meta.get("llm_enrichment_model") or "").strip(),
+                    "prompt_version": str(meta.get("llm_enrichment_prompt_version") or "").strip(),
+                    "mock": _parse_bool(meta.get("llm_enrichment_mock")),
+                },
+            }
+            governance["llm_enrichment"] = enrichment_payload
+            governance["llm_enrichment_summary"] = enrichment_payload["summary"]
+            governance["llm_enrichment_tags"] = list(enrichment_payload["tags"])
+            governance["llm_enrichment_use_when"] = list(enrichment_payload["use_when"])
+            governance["llm_enrichment_avoid_when"] = list(enrichment_payload["avoid_when"])
+            governance["llm_enrichment_confidence"] = enrichment_payload["confidence"]
+            governance["llm_enrichment_review_status"] = enrichment_payload["review_status"]
+            governance["llm_enrichment_needs_human_review"] = enrichment_payload[
+                "needs_human_review"
+            ]
 
     return ChunkResult(
         chunk_id=candidate.get("chunk_id") or "",

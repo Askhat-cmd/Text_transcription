@@ -1,0 +1,341 @@
+{
+  "generated_at": "2026-05-09T20:01:58.527626+00:00",
+  "api_base_url": "http://127.0.0.1:8013",
+  "botdb_api_attempted": true,
+  "botdb_api_status": "ok",
+  "retrieval_source": "botdb_api",
+  "fallback_used": false,
+  "circuit_breaker_open": false,
+  "knowledge_hits_count": [
+    4,
+    4,
+    4
+  ],
+  "queries": [
+    {
+      "query": "я всё время стараюсь быть лучше и не могу остановиться",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+          "score": 0.526498417558811,
+          "title": "Драйвер 2: «Будь лучшим»",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "achievement",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А…",
+          "llm_enrichment_summary": "Драйвер «Будь лучшим» формирует установку, что любовь и принятие зависят от достижений. Сравнения и похвала за успехи в детстве приводят к ощущению, что ценность человека определяется его результатами. Взрослые продолжают стремиться к успеху, испытывая внутреннее напряжение и страх перед отсутствием достижений. Это может привести к кризису идентичности, когда человек не знает, кто он без своих успехов. Работа над собой помогает научиться просто быть, а не достигать.",
+          "llm_enrichment_tags": [
+            "достижения",
+            "идентичность",
+            "внутреннее_напряжение"
+          ],
+          "llm_enrichment_use_when": [
+            "для понимания влияния достижений на самооценку",
+            "в контексте работы над идентичностью"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности",
+            "когда нужна срочная кризисная поддержка вместо исследования"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        },
+        {
+          "id": "f688cbf9-a35a-4c49-8a95-6f84bc55f407",
+          "score": 0.5045991047560571,
+          "title": "Операционная система страдания",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "relationships",
+            "fear_of_rejection"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macO…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "e8ef0a3d-3908-466c-93a1-d176546db87e",
+          "score": 0.50417637210759,
+          "title": "Инстинкт самосохранения",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "hyperarousal",
+            "body_awareness",
+            "boundaries"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Базовый вопрос:** «Достаточно ли у меня ресурсов, чтобы выжить?» **Что он отслеживает:** безопасность, здоровье, деньги, еда, комфорт, жильё, энергия, стабил…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    },
+    {
+      "query": "я злюсь на себя, потому что опять всё откладываю",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "0de9d1b7-8493-49b7-aac1-6bd0ab530362",
+          "score": 0.5074099322365269,
+          "title": "Третий слой: «Быть взрослым»",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "relationships",
+            "control"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Зрелость добавляет свой слой. Профессиональная среда говорит: «здесь не место эмоциям». Партнёрские отношения говорят: «ты слишком много требуешь». Социальные…",
+          "llm_enrichment_summary": "Зрелость накладывает дополнительные ограничения, заставляя скрывать свои эмоции ради соответствия ожиданиям окружающих. Это приводит к тому, что подавленные чувства, такие как злость, не исчезают, а трансформируются, влияя на тело и отношения. Примеры из жизни показывают, как восприятие себя и реакций на критику формируется под давлением мнений других, что создает внутренний конфликт и затрудняет самовыражение.",
+          "llm_enrichment_tags": [
+            "зрелость",
+            "эмоции",
+            "самовыражение"
+          ],
+          "llm_enrichment_use_when": [
+            "в контексте исследования зрелости и эмоционального самовыражения"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        },
+        {
+          "id": "efdef947-ad5b-4b45-b1a3-0536bebc5dde",
+          "score": 0.49351230595176093,
+          "title": "3. Сделай три медленных выдоха — длиннее, чем вдох. Выдох активирует парасимпатическую систему и буквально говорит нижнему этажу: «угрозы нет».",
+          "source_type": "book",
+          "chunk_type": "theory",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "boundaries"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Вот и всё. Это не про «взять себя в руки». Это про создание **зазора** между триггером и реакцией. Сначала зазор — доли секунды. Потом — секунда. Потом — три.…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "413026dc-7212-48e7-b679-fceba697700a",
+          "score": 0.4897347303132199,
+          "title": "3. Страх как тюрьма: когда сигнал становится стеной",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "avoidance",
+            "boundaries",
+            "control",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная си…",
+          "llm_enrichment_summary": "Страх может стать тюрьмой из-за избегания, когда человек уклоняется от пугающих ситуаций. Это приводит к тому, что нервная система фиксирует избегание как успешную стратегию, что в свою очередь усиливает страх и сужает жизненное пространство. Каждый раз, когда страх останавливает действия, мозг запоминает это как безопасное решение, хотя на самом деле это лишь укрепляет паттерн избегания. В итоге, человек оказывается в ловушке, где каждое избегание кажется разумным, но в сумме создает клетку.",
+          "llm_enrichment_tags": [
+            "избегание",
+            "страх",
+            "психология"
+          ],
+          "llm_enrichment_use_when": [
+            "для понимания механизмов страха и избегания"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности",
+            "когда нужна срочная кризисная поддержка вместо исследования"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        }
+      ]
+    },
+    {
+      "query": "мне пусто и нет сил, не хочу анализа",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 4,
+      "top_hits": [
+        {
+          "id": "4b6f3bfd-589c-4ac5-abb4-3c5b94d6e498",
+          "score": 0.5308785729568831,
+          "title": "5. Нижняя часть тела — есть контакт с опорой? Ты вообще чувствуешь, что сидишь?",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "body_awareness"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "После прохождения — один вопрос: *Какое общее послание несёт тело прямо сейчас?* Не анализируй. Просто услышь. > Из сессии: > > **Нурлан, 44 года:** Я попробов…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "1bf29208-60d2-4d31-9509-4cab8d9167a7",
+          "score": 0.5256664487084937,
+          "title": "5. Выходи медленно. Не хватайся за телефон сразу. Дай несколько секунд.",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "body_awareness"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "> **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что чт…",
+          "llm_enrichment_summary": "Важно медленно выходить из состояния пустоты, не спеша хвататься за телефон. Это время для осознания и остановки, когда нервная система получает возможность отдохнуть. Остановка не является проблемой, а наоборот, может быть необходимым этапом. Страх перед пустотой отличается от самой пустоты, и важно сначала встретиться с ней, чтобы понять, что это не враг, а переходное состояние.",
+          "llm_enrichment_tags": [
+            "пауза",
+            "осознанность",
+            "пустота"
+          ],
+          "llm_enrichment_use_when": [
+            "когда нужно осознать свои чувства и дать себе время"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        },
+        {
+          "id": "5a68a977-7d9c-4775-b088-7e9cedf0e273",
+          "score": 0.5144111025475584,
+          "title": "5. Freeze Response: когда мозг замирает",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "procrastination",
+            "freeze",
+            "body_awareness",
+            "grief"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Есть ещё один механизм, о котором говорят реже — но он работает у очень многих. Кроме «бей или беги» у нервной системы есть третья реакция на угрозу — **замира…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    }
+  ]
+}

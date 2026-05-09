@@ -39,6 +39,17 @@ LENS_FAMILY_ALLOWLIST = {
     "practice_integration",
 }
 
+REVIEW_REASON_ALLOWLIST = {
+    "low_confidence",
+    "insufficient_context",
+    "mixed_intent_unclear",
+    "split_merge_unclear",
+    "lens_mapping_uncertain",
+    "practice_context_unclear",
+    "safety_context_unclear",
+    "summary_quality_uncertain",
+}
+
 SUMMARY_BANNED_PREFIXES = (
     "в данном тексте",
     "автор говорит",
@@ -72,6 +83,13 @@ def _normalize_tag(value: str) -> str:
     raw = str(value or "").strip().lower()
     raw = re.sub(r"\s+", "_", raw)
     raw = re.sub(r"[^a-z0-9а-я_]+", "", raw)
+    return raw
+
+
+def normalize_enum_token(value: str) -> str:
+    raw = str(value or "").strip().lower()
+    raw = re.sub(r"\s+", "_", raw)
+    raw = re.sub(r"_+", "_", raw).strip("_")
     return raw
 
 

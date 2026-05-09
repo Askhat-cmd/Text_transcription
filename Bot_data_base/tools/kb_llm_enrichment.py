@@ -26,7 +26,9 @@ from knowledge_governance.enrichment_contracts import (  # noqa: E402
 )
 from knowledge_governance.enrichment_validators import (  # noqa: E402
     LENS_FAMILY_ALLOWLIST,
+    REVIEW_REASON_ALLOWLIST,
     check_forbidden_keys,
+    normalize_enum_token,
     validate_candidate,
     validate_governance_invariants,
 )
@@ -57,6 +59,51 @@ SAMPLE_QUERIES = (
 )
 SUMMARY_MIN_LENGTH = 120
 SUMMARY_MAX_LENGTH = 500
+
+LENS_SYNONYM_MAP = {
+    "\u0441\u0430\u043c\u043e\u043a\u0440\u0438\u0442\u0438\u043a\u0430": "self_criticism",
+    "\u0441\u0442\u044b\u0434": "shame",
+    "\u0432\u0438\u043d\u0430": "guilt",
+    "\u0437\u043b\u043e\u0441\u0442\u044c": "anger",
+    "\u0433\u043d\u0435\u0432": "anger",
+    "\u0433\u043e\u0440\u0435": "grief",
+    "\u0441\u0442\u0440\u0430\u0445_\u043e\u0442\u0432\u0435\u0440\u0436\u0435\u043d\u0438\u044f": "fear_of_rejection",
+    "\u0438\u0437\u0431\u0435\u0433\u0430\u043d\u0438\u0435": "avoidance",
+    "\u043f\u0440\u043e\u043a\u0440\u0430\u0441\u0442\u0438\u043d\u0430\u0446\u0438\u044f": "procrastination",
+    "\u043f\u0435\u0440\u0444\u0435\u043a\u0446\u0438\u043e\u043d\u0438\u0437\u043c": "perfectionism",
+    "\u0434\u043e\u0441\u0442\u0438\u0436\u0435\u043d\u0438\u044f": "achievement",
+    "\u0433\u0440\u0430\u043d\u0438\u0446\u044b": "boundaries",
+    "\u043e\u0442\u043d\u043e\u0448\u0435\u043d\u0438\u044f": "relationships",
+    "\u043f\u0440\u0438\u0432\u044f\u0437\u0430\u043d\u043d\u043e\u0441\u0442\u044c": "attachment",
+    "\u043e\u0434\u0438\u043d\u043e\u0447\u0435\u0441\u0442\u0432\u043e": "loneliness",
+    "\u0442\u0435\u043b\u0435\u0441\u043d\u043e\u0441\u0442\u044c": "body_awareness",
+    "\u0442\u0435\u043b\u043e": "body_awareness",
+    "\u0433\u0438\u043f\u0435\u0440\u0432\u043e\u0437\u0431\u0443\u0436\u0434\u0435\u043d\u0438\u0435": "hyperarousal",
+    "\u0433\u0438\u043f\u043e\u0432\u043e\u0437\u0431\u0443\u0436\u0434\u0435\u043d\u0438\u0435": "hypoarousal",
+    "\u043d\u0438\u0437\u043a\u0438\u0439_\u0440\u0435\u0441\u0443\u0440\u0441": "low_resource",
+    "\u0432\u044b\u0433\u043e\u0440\u0430\u043d\u0438\u0435": "burnout",
+    "\u043a\u043e\u043d\u0442\u0440\u043e\u043b\u044c": "control",
+    "\u0447\u0430\u0441\u0442\u0438": "inner_parts",
+    "\u0438\u0434\u0435\u043d\u0442\u0438\u0447\u043d\u043e\u0441\u0442\u044c": "identity",
+    "\u0441\u043c\u044b\u0441\u043b": "meaning",
+    "\u0446\u0435\u043d\u043d\u043e\u0441\u0442\u0438": "values",
+    "\u0440\u0443\u043c\u0438\u043d\u0430\u0446\u0438\u044f": "rumination",
+    "\u0442\u0440\u0435\u0432\u043e\u0433\u0430": "anxiety",
+    "\u0437\u0430\u043c\u0438\u0440\u0430\u043d\u0438\u0435": "freeze",
+    "\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c": "safety",
+    "\u0438\u043d\u0442\u0435\u0433\u0440\u0430\u0446\u0438\u044f_\u043f\u0440\u0430\u043a\u0442\u0438\u043a\u0438": "practice_integration",
+}
+
+REVIEW_REASON_SYNONYM_MAP = {
+    "\u043d\u0438\u0437\u043a\u0430\u044f_\u0443\u0432\u0435\u0440\u0435\u043d\u043d\u043e\u0441\u0442\u044c": "low_confidence",
+    "\u043d\u0435\u0445\u0432\u0430\u0442\u043a\u0430_\u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442\u0430": "insufficient_context",
+    "\u043d\u0435\u044f\u0441\u043d\u044b\u0439_\u0441\u043c\u0435\u0448\u0430\u043d\u043d\u044b\u0439_\u0438\u043d\u0442\u0435\u043d\u0442": "mixed_intent_unclear",
+    "\u043d\u0435\u044f\u0441\u043d\u044b\u0435_split_merge": "split_merge_unclear",
+    "\u043d\u0435\u044f\u0441\u043d\u043e\u0435_\u0441\u043e\u043f\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u0438\u0435_lens": "lens_mapping_uncertain",
+    "\u043d\u0435\u044f\u0441\u043d\u044b\u0439_\u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442_\u043f\u0440\u0430\u043a\u0442\u0438\u043a\u0438": "practice_context_unclear",
+    "\u043d\u0435\u044f\u0441\u043d\u044b\u0439_\u043a\u043e\u043d\u0442\u0435\u043a\u0441\u0442_\u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u0438": "safety_context_unclear",
+    "\u043d\u0435\u0443\u0432\u0435\u0440\u0435\u043d\u043d\u043e\u0435_\u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e_summary": "summary_quality_uncertain",
+}
 
 
 def _utc_now() -> str:
@@ -97,6 +144,51 @@ def _dedupe(values: list[str]) -> list[str]:
         seen.add(item)
         out.append(item)
     return out
+
+
+def _normalize_lens_token(value: str) -> str:
+    token = normalize_enum_token(str(value or "")).replace("-", "_")
+    token = re.sub(r"_+", "_", token).strip("_")
+    return token
+
+
+def _normalize_lens_candidates(values: list[str]) -> dict[str, list[str]]:
+    raw = _dedupe([str(value).strip() for value in values if str(value).strip()])
+    normalized_raw: list[str] = []
+    canonical: list[str] = []
+    unmapped: list[str] = []
+
+    for source_value in raw:
+        token = _normalize_lens_token(source_value)
+        mapped = LENS_SYNONYM_MAP.get(token, token)
+        normalized_raw.append(mapped)
+        if mapped in LENS_FAMILY_ALLOWLIST:
+            canonical.append(mapped)
+        else:
+            unmapped.append(source_value)
+
+    return {
+        "raw": raw,
+        "normalized": _dedupe(normalized_raw),
+        "allowed": _dedupe(canonical),
+        "unmapped": _dedupe(unmapped),
+    }
+
+
+def _normalize_review_reasons(values: list[str]) -> tuple[list[str], list[str]]:
+    controlled: list[str] = []
+    notes: list[str] = []
+    for value in values:
+        raw = str(value or "").strip()
+        if not raw:
+            continue
+        token = normalize_enum_token(raw).replace("-", "_")
+        mapped = REVIEW_REASON_SYNONYM_MAP.get(token, token)
+        if mapped in REVIEW_REASON_ALLOWLIST:
+            controlled.append(mapped)
+        else:
+            notes.append(_safe_preview(raw, limit=160))
+    return _dedupe(controlled), _dedupe(notes)
 
 
 def _load_yaml(path: Path) -> dict[str, Any]:
@@ -470,10 +562,10 @@ def _build_overlay_readiness_report(
     overlay_path: Path,
     real_llm_run: bool,
     validation_report: dict[str, Any],
-    hold_promotion: bool = False,
+    allow_promotion_candidate: bool = False,
 ) -> dict[str, Any]:
     chunks_enriched = int(validation_report.get("chunks_enriched") or 0)
-    validation_failed = int(validation_report.get("validation_failed") or 0)
+    validation_failed = int(validation_report.get("hard_validation_failed") or validation_report.get("validation_failed") or 0)
     failed_ratio = (validation_failed / chunks_enriched) if chunks_enriched else 1.0
     reasons_distribution = validation_report.get("validation_reasons_distribution") or {}
     summary_quote_risk_count = int(
@@ -487,10 +579,10 @@ def _build_overlay_readiness_report(
     reasons: list[str] = []
     if not real_llm_run:
         reasons.append("mock_run_not_production_eligible")
-    if failed_ratio > 0.20:
+    if failed_ratio > 0.10:
         reasons.append("validation_failed_ratio_above_threshold")
-    if summary_quote_risk_count > 3:
-        reasons.append("summary_direct_quote_risk_above_threshold")
+    if summary_quote_risk_count > 0:
+        reasons.append("summary_direct_quote_risk_present")
     if unknown_lens != 0:
         reasons.append("unknown_lens_candidates_present")
     if invariant_violations != 0:
@@ -498,29 +590,35 @@ def _build_overlay_readiness_report(
     if raw_text_leak != "pass":
         reasons.append("raw_text_leak_check_failed")
 
-    production_ready = len(reasons) == 0
-    promotion_allowed = production_ready and not hold_promotion
-    promotion_reason = ""
-    if production_ready and hold_promotion:
-        promotion_reason = "real_batch_ready_but_full_apply_requires_next_prd"
+    production_candidate_ready = len(reasons) == 0
+    promotion_reasons: list[str] = []
+    if production_candidate_ready and not allow_promotion_candidate:
+        promotion_reasons.append("manual_promotion_not_requested")
+    if not production_candidate_ready:
+        promotion_reasons.extend(reasons)
+    promotion_allowed = production_candidate_ready and allow_promotion_candidate
     return {
         "overlay_path": str(overlay_path),
         "run_kind": "real" if real_llm_run else "mock",
         "validation_passed": int(validation_report.get("validation_passed") or 0),
         "validation_failed": validation_failed,
         "validation_failed_ratio": round(failed_ratio, 4),
+        "hard_validation_failed": validation_failed,
+        "soft_review_warnings": int(validation_report.get("soft_review_warnings") or 0),
         "summary_direct_quote_risk_count": summary_quote_risk_count,
         "unknown_lens_candidates": unknown_lens,
+        "unknown_lens_suggestions": int(validation_report.get("unknown_lens_suggestions") or 0),
         "safety_governance_invariant_violations": invariant_violations,
         "raw_text_leak_check": raw_text_leak,
-        "calibration_passed": failed_ratio <= 0.20
-        and summary_quote_risk_count <= 3
+        "calibration_passed": failed_ratio <= 0.10
+        and summary_quote_risk_count == 0
         and unknown_lens == 0
         and invariant_violations == 0
         and raw_text_leak == "pass",
-        "production_ready": production_ready,
+        "production_candidate_ready": production_candidate_ready,
+        "production_ready": production_candidate_ready,
         "promotion_allowed": promotion_allowed,
-        "promotion_reason": promotion_reason,
+        "promotion_reasons": _dedupe(promotion_reasons),
         "reasons": reasons,
     }
 
@@ -528,20 +626,25 @@ def _build_overlay_readiness_report(
 def _select_report_recommendation(
     *,
     real_llm_run: bool,
-    validation_failed: int,
-    production_ready: bool,
+    validation_failed_ratio: float,
+    unknown_lens_candidates: int,
+    production_candidate_ready: bool,
+    promotion_allowed: bool,
 ) -> str:
     if not real_llm_run:
         return "PRD-046.0.5-RUN1-HF1 - Real LLM Availability / Client Fix"
-    if validation_failed > 0:
-        return "PRD-046.0.5-RUN1-HF2 - Real LLM Prompt/Validator Calibration"
-    if production_ready:
-        return "PRD-046.0.5.1 - Full Enrichment Apply + Chroma Refresh v1"
+    if unknown_lens_candidates > 0 or validation_failed_ratio > 0.10:
+        return "PRD-046.0.5-RUN1-HF3 - Enrichment Taxonomy / Contract Hardening"
+    if production_candidate_ready and not promotion_allowed:
+        return "PRD-046.0.5-RUN2 - Full Real LLM Enrichment Overlay Candidate v1"
+    if production_candidate_ready and promotion_allowed:
+        return "PRD-046.0.5-RUN2 - Full Real LLM Enrichment Overlay Candidate v1"
     return "PRD-046.0.5-RUN1-HF2 - Real LLM Prompt/Validator Calibration"
 
 
 def run_enrichment(
     *,
+    run_tag: str,
     source_hint: str,
     blocks_path: Path,
     output_dir: Path,
@@ -556,6 +659,7 @@ def run_enrichment(
     confirm: bool,
     mock_llm: bool,
     require_real_llm: bool,
+    allow_promotion_candidate: bool,
     overlay_path: Path | None,
     max_concurrency: int,  # noqa: ARG001 - reserved for v2 async path
     max_retries: int,
@@ -574,7 +678,7 @@ def run_enrichment(
     preflight = _evaluate_preflight()
     run_config = {
         "generated_at": _utc_now(),
-        "tag": TARGET_TAG,
+        "tag": run_tag,
         "source_hint": source_hint,
         "blocks_path": str(blocks_path),
         "output_dir": str(output_dir),
@@ -589,6 +693,7 @@ def run_enrichment(
         "confirm": confirm,
         "mock_llm_requested": mock_llm,
         "require_real_llm": require_real_llm,
+        "allow_promotion_candidate": allow_promotion_candidate,
         "overlay_path": str(overlay_path) if overlay_path else "",
         "production_blocks_mutated": False,
         "chroma_reindex_performed": False,
@@ -651,8 +756,12 @@ def run_enrichment(
 
     candidates: list[dict[str, Any]] = []
     validation_failed = 0
+    hard_validation_failed = 0
     needs_human_review_count = 0
     unknown_lens_count = 0
+    unknown_lens_suggestions_count = 0
+    soft_review_warnings = 0
+    unmapped_review_notes_count = 0
     invariant_violations = 0
     summary_warnings = 0
     validation_reasons_counter: Counter[str] = Counter()
@@ -696,19 +805,47 @@ def run_enrichment(
             safety_flags_original=_normalize_list(governance.get("safety_flags")),
             llm_metadata=llm_metadata,
         )
+        lens_normalization = _normalize_lens_candidates(candidate.lens_family_candidates)
+        candidate.lens_family_candidates = lens_normalization["allowed"]
+        if lens_normalization["unmapped"]:
+            unknown_lens_suggestions_count += 1
+
+        normalized_review_reasons, llm_review_notes = _normalize_review_reasons(candidate.review_reasons)
+        candidate.review_reasons = normalized_review_reasons
+        if lens_normalization["unmapped"]:
+            candidate.review_reasons = _dedupe(candidate.review_reasons + ["lens_mapping_uncertain"])
+        if llm_review_notes:
+            unmapped_review_notes_count += 1
+            candidate.review_reasons = _dedupe(candidate.review_reasons + ["summary_quality_uncertain"])
+
         result = validate_candidate(candidate=candidate, source_text=str(raw.get("text") or ""))
         if result.warnings:
             summary_warnings += 1
         invariant_reasons = validate_governance_invariants(candidate=candidate, source_block=raw)
         if invariant_reasons:
             invariant_violations += 1
-        review_reasons = _dedupe(candidate.review_reasons + result.reasons + invariant_reasons)
+
+        hard_reasons = _dedupe(result.reasons + invariant_reasons)
+        if lens_normalization["raw"] and not candidate.lens_family_candidates:
+            hard_reasons = _dedupe(hard_reasons + ["unknown_lens_candidate_after_normalization"])
+
+        soft_reasons = _dedupe(candidate.review_reasons)
+        review_reasons = _dedupe(soft_reasons + hard_reasons)
         candidate.review_reasons = review_reasons
-        candidate.needs_human_review = bool(candidate.needs_human_review or review_reasons)
+        candidate.needs_human_review = bool(
+            candidate.needs_human_review
+            or soft_reasons
+            or llm_review_notes
+            or lens_normalization["unmapped"]
+            or hard_reasons
+        )
         if candidate.needs_human_review:
             needs_human_review_count += 1
-        if not result.passed or invariant_reasons:
+        if hard_reasons:
             validation_failed += 1
+            hard_validation_failed += 1
+        if soft_reasons or llm_review_notes or lens_normalization["unmapped"]:
+            soft_review_warnings += 1
         for reason in review_reasons:
             validation_reasons_counter[reason] += 1
         for reason_key, reason_detail in result.reason_details.items():
@@ -720,12 +857,19 @@ def run_enrichment(
 
         payload = candidate.to_dict()
         payload["validation"] = {
-            "passed": result.passed and len(invariant_reasons) == 0,
-            "reasons": result.reasons,
+            "passed": len(hard_reasons) == 0,
+            "reasons": hard_reasons,
+            "soft_review_reasons": soft_reasons,
             "reason_details": result.reason_details,
             "warnings": result.warnings,
             "invariant_violations": invariant_reasons,
         }
+        payload["lens_normalization"] = {
+            "raw": lens_normalization["raw"],
+            "normalized": lens_normalization["normalized"],
+            "unmapped": lens_normalization["unmapped"],
+        }
+        payload["llm_review_notes"] = llm_review_notes
         payload["source_preview"] = _safe_preview(str(raw.get("text") or ""), limit=160)
         payload["llm_error"] = _safe_preview(llm_error, limit=160)
         candidates.append(payload)
@@ -756,8 +900,12 @@ def run_enrichment(
         "chunks_enriched": len(candidates),
         "validation_passed": len(candidates) - validation_failed,
         "validation_failed": validation_failed,
+        "hard_validation_failed": hard_validation_failed,
+        "soft_review_warnings": soft_review_warnings,
+        "unmapped_review_notes_count": unmapped_review_notes_count,
         "needs_human_review": needs_human_review_count,
         "unknown_lens_candidates": unknown_lens_count,
+        "unknown_lens_suggestions": unknown_lens_suggestions_count,
         "summary_quality_warnings": summary_warnings,
         "safety_governance_invariant_violations": invariant_violations,
         "validation_reasons_distribution": dict(sorted(validation_reasons_counter.items())),
@@ -808,6 +956,7 @@ def run_enrichment(
                 "validation_reasons": [str(r) for r in reasons],
                 "summary_candidate_preview": _safe_preview(str(row.get("summary_candidate") or ""), limit=160),
                 "source_preview": _safe_preview(str(row.get("source_preview") or ""), limit=160),
+                "lens_normalization": row.get("lens_normalization"),
             }
         )
     _write_jsonl(output_dir / "failed_candidate_examples_sanitized.jsonl", failed_examples)
@@ -817,21 +966,28 @@ def run_enrichment(
         overlay_path=overlay_effective_path,
         real_llm_run=real_llm_run,
         validation_report=validation_report,
-        hold_promotion=require_real_llm,
+        allow_promotion_candidate=allow_promotion_candidate,
     )
     _write_json(output_dir / "overlay_readiness_report.json", overlay_readiness_report)
+    if real_llm_run:
+        _write_jsonl(output_dir / "real_enrichment_candidates.jsonl", candidates)
+        _write_json(output_dir / "real_enrichment_validation_report.json", validation_report)
+        _write_json(output_dir / "real_enrichment_diff_summary.json", diff_summary)
+        _write_json(output_dir / "real_overlay_readiness_report.json", overlay_readiness_report)
 
     (output_dir / "sanitized_runtime_logs.txt").write_text(
         "\n".join(
             [
-                f"[{_utc_now()}] {TARGET_TAG} enrichment run",
+                f"[{_utc_now()}] {run_tag} enrichment run",
                 f"real_llm_run={real_llm_run}",
                 f"mock_llm_run={mock_llm_run}",
                 f"llm_mode_reason={llm_mode_reason}",
                 f"chunks_selected={len(selected_blocks)}",
                 f"validation_failed={validation_failed}",
+                f"hard_validation_failed={hard_validation_failed}",
+                f"soft_review_warnings={soft_review_warnings}",
                 f"needs_human_review={needs_human_review_count}",
-                f"overlay_production_ready={overlay_readiness_report.get('production_ready')}",
+                f"overlay_production_candidate_ready={overlay_readiness_report.get('production_candidate_ready')}",
                 f"overlay_promotion_allowed={overlay_readiness_report.get('promotion_allowed')}",
                 "production_blocks_mutated=false",
                 "chroma_reindex_performed=false",
@@ -844,11 +1000,14 @@ def run_enrichment(
 
     next_prd = _select_report_recommendation(
         real_llm_run=real_llm_run,
-        validation_failed=validation_failed,
-        production_ready=bool(overlay_readiness_report.get("production_ready")),
+        validation_failed_ratio=float(overlay_readiness_report.get("validation_failed_ratio") or 1.0),
+        unknown_lens_candidates=int(overlay_readiness_report.get("unknown_lens_candidates") or 0),
+        production_candidate_ready=bool(overlay_readiness_report.get("production_candidate_ready")),
+        promotion_allowed=bool(overlay_readiness_report.get("promotion_allowed")),
     )
 
     _write_reports(
+        run_tag=run_tag,
         reports_dir=reports_dir,
         run_config=run_config,
         validation_report=validation_report,
@@ -869,9 +1028,13 @@ def run_enrichment(
         "chunks_selected": len(selected_blocks),
         "chunks_enriched": len(candidates),
         "validation_failed": validation_failed,
+        "hard_validation_failed": hard_validation_failed,
+        "soft_review_warnings": soft_review_warnings,
         "needs_human_review": needs_human_review_count,
         "calibration_passed": bool(overlay_readiness_report.get("calibration_passed")),
+        "production_candidate_ready": bool(overlay_readiness_report.get("production_candidate_ready")),
         "production_ready": bool(overlay_readiness_report.get("production_ready")),
+        "promotion_allowed": bool(overlay_readiness_report.get("promotion_allowed")),
         "overlay_readiness_report_path": str(output_dir / "overlay_readiness_report.json"),
         "next_prd": next_prd,
         "candidates_path": str(candidates_path),
@@ -880,6 +1043,7 @@ def run_enrichment(
 
 def _write_reports(
     *,
+    run_tag: str,
     reports_dir: Path,
     run_config: dict[str, Any],
     validation_report: dict[str, Any],
@@ -893,15 +1057,16 @@ def _write_reports(
 ) -> None:
     reports_dir.mkdir(parents=True, exist_ok=True)
 
-    impl_report = reports_dir / f"{TARGET_TAG}_IMPLEMENTATION_REPORT.md"
-    llm_report = reports_dir / f"{TARGET_TAG}_LLM_ENRICHMENT_REPORT.md"
-    audit_report = reports_dir / f"{TARGET_TAG}_ENRICHMENT_QUALITY_AUDIT.md"
-    next_report = reports_dir / f"{TARGET_TAG}_NEXT_PRD_RECOMMENDATION.md"
+    impl_report = reports_dir / f"{run_tag}_IMPLEMENTATION_REPORT.md"
+    llm_report = reports_dir / f"{run_tag}_REAL_LLM_ENRICHMENT_REPORT.md"
+    audit_report = reports_dir / f"{run_tag}_CALIBRATION_REPORT.md"
+    overlay_report = reports_dir / f"{run_tag}_OVERLAY_READINESS_REPORT.md"
+    next_report = reports_dir / f"{run_tag}_NEXT_PRD_RECOMMENDATION.md"
 
     impl_report.write_text(
         "\n".join(
             [
-                f"# {TARGET_TAG} IMPLEMENTATION REPORT",
+                f"# {run_tag} IMPLEMENTATION REPORT",
                 "",
                 "## Status",
                 "- Implementation: done",
@@ -925,7 +1090,12 @@ def _write_reports(
                 f"- chunks_enriched: `{validation_report.get('chunks_enriched')}`",
                 f"- validation_passed: `{validation_report.get('validation_passed')}`",
                 f"- validation_failed: `{validation_report.get('validation_failed')}`",
+                f"- hard_validation_failed: `{validation_report.get('hard_validation_failed')}`",
+                f"- soft_review_warnings: `{validation_report.get('soft_review_warnings')}`",
+                f"- unmapped_review_notes_count: `{validation_report.get('unmapped_review_notes_count')}`",
                 f"- needs_human_review: `{validation_report.get('needs_human_review')}`",
+                f"- unknown_lens_candidates: `{validation_report.get('unknown_lens_candidates')}`",
+                f"- unknown_lens_suggestions: `{validation_report.get('unknown_lens_suggestions')}`",
                 "",
                 "## Safety Invariants",
                 "- allowed_use mutated: false",
@@ -936,13 +1106,14 @@ def _write_reports(
                 "## Overlay",
                 f"- overlay_written: `{overlay_written}`",
                 f"- calibration_passed: `{overlay_readiness_report.get('calibration_passed')}`",
-                f"- production_ready: `{overlay_readiness_report.get('production_ready')}`",
+                f"- production_candidate_ready: `{overlay_readiness_report.get('production_candidate_ready')}`",
                 f"- promotion_allowed: `{overlay_readiness_report.get('promotion_allowed')}`",
+                f"- promotion_reasons: `{overlay_readiness_report.get('promotion_reasons')}`",
                 "",
                 "## Commit / Push",
-                "- Commit hash: `pending`",
-                "- Push status: `pending`",
-                "- Report sync: `pending`",
+                "- Commit hash: `filled_after_commit`",
+                "- Push status: `filled_after_push`",
+                "- Report sync: `filled_after_push`",
             ]
         )
         + "\n",
@@ -952,7 +1123,7 @@ def _write_reports(
     llm_report.write_text(
         "\n".join(
             [
-                f"# {TARGET_TAG} LLM ENRICHMENT REPORT",
+                f"# {run_tag} REAL LLM ENRICHMENT REPORT",
                 "",
                 "## Run Mode",
                 f"- dry_run: `{run_config.get('dry_run')}`",
@@ -967,8 +1138,11 @@ def _write_reports(
                 f"- chunks_enriched: `{validation_report.get('chunks_enriched')}`",
                 f"- validation_passed: `{validation_report.get('validation_passed')}`",
                 f"- validation_failed: `{validation_report.get('validation_failed')}`",
+                f"- hard_validation_failed: `{validation_report.get('hard_validation_failed')}`",
+                f"- soft_review_warnings: `{validation_report.get('soft_review_warnings')}`",
                 f"- needs_human_review: `{validation_report.get('needs_human_review')}`",
                 f"- unknown_lens_candidates: `{validation_report.get('unknown_lens_candidates')}`",
+                f"- unknown_lens_suggestions: `{validation_report.get('unknown_lens_suggestions')}`",
                 "",
                 "## Runtime Invariants",
                 "- runtime_behavior_changed: false",
@@ -986,11 +1160,13 @@ def _write_reports(
     audit_report.write_text(
         "\n".join(
             [
-                f"# {TARGET_TAG} ENRICHMENT QUALITY AUDIT",
+                f"# {run_tag} CALIBRATION REPORT",
                 "",
                 "## Validation Metrics",
                 f"- validation_passed: `{validation_report.get('validation_passed')}`",
                 f"- validation_failed: `{validation_report.get('validation_failed')}`",
+                f"- hard_validation_failed: `{validation_report.get('hard_validation_failed')}`",
+                f"- soft_review_warnings: `{validation_report.get('soft_review_warnings')}`",
                 f"- needs_human_review: `{validation_report.get('needs_human_review')}`",
                 f"- summary_quality_warnings: `{validation_report.get('summary_quality_warnings')}`",
                 f"- invariant_violations: `{validation_report.get('safety_governance_invariant_violations')}`",
@@ -1011,10 +1187,30 @@ def _write_reports(
         encoding="utf-8",
     )
 
+    overlay_report.write_text(
+        "\n".join(
+            [
+                f"# {run_tag} OVERLAY READINESS REPORT",
+                "",
+                f"- calibration_passed: `{overlay_readiness_report.get('calibration_passed')}`",
+                f"- production_candidate_ready: `{overlay_readiness_report.get('production_candidate_ready')}`",
+                f"- promotion_allowed: `{overlay_readiness_report.get('promotion_allowed')}`",
+                f"- promotion_reasons: `{overlay_readiness_report.get('promotion_reasons')}`",
+                f"- validation_failed_ratio: `{overlay_readiness_report.get('validation_failed_ratio')}`",
+                f"- unknown_lens_candidates: `{overlay_readiness_report.get('unknown_lens_candidates')}`",
+                f"- summary_direct_quote_risk_count: `{overlay_readiness_report.get('summary_direct_quote_risk_count')}`",
+                f"- safety_governance_invariant_violations: `{overlay_readiness_report.get('safety_governance_invariant_violations')}`",
+                f"- raw_text_leak_check: `{overlay_readiness_report.get('raw_text_leak_check')}`",
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
     next_report.write_text(
         "\n".join(
             [
-                f"# {TARGET_TAG} NEXT PRD RECOMMENDATION",
+                f"# {run_tag} NEXT PRD RECOMMENDATION",
                 "",
                 f"- Recommended: `{next_prd}`",
                 "",
@@ -1032,6 +1228,7 @@ def _write_reports(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=f"{TARGET_TAG} offline LLM summary/lens enrichment CLI.")
+    parser.add_argument("--run-tag", default=TARGET_TAG)
     parser.add_argument("--source", default=TARGET_SOURCE_DEFAULT)
     parser.add_argument("--blocks-path", default=str(DEFAULT_BLOCKS_PATH))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
@@ -1047,6 +1244,7 @@ def main() -> int:
     parser.add_argument("--confirm", action="store_true")
     parser.add_argument("--mock-llm", action="store_true")
     parser.add_argument("--require-real-llm", action="store_true")
+    parser.add_argument("--allow-promotion-candidate", action="store_true")
     parser.add_argument("--resume", action="store_true")  # noqa: ARG001 - reserved for future
     parser.add_argument("--max-concurrency", type=int, default=1)
     parser.add_argument("--max-retries", type=int, default=2)
@@ -1054,6 +1252,7 @@ def main() -> int:
     args = parser.parse_args()
 
     result = run_enrichment(
+        run_tag=str(args.run_tag or TARGET_TAG),
         source_hint=str(args.source),
         blocks_path=Path(args.blocks_path),
         output_dir=Path(args.output_dir),
@@ -1068,6 +1267,7 @@ def main() -> int:
         confirm=bool(args.confirm),
         mock_llm=bool(args.mock_llm),
         require_real_llm=bool(args.require_real_llm),
+        allow_promotion_candidate=bool(args.allow_promotion_candidate),
         overlay_path=Path(args.overlay_path) if str(args.overlay_path or "").strip() else None,
         max_concurrency=max(1, int(args.max_concurrency)),
         max_retries=max(1, int(args.max_retries)),

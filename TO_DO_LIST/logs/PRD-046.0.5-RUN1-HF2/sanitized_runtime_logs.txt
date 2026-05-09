@@ -1,0 +1,14 @@
+[2026-05-09T18:13:59.713101+00:00] PRD-046.0.5-RUN1-HF2 enrichment run
+real_llm_run=True
+mock_llm_run=False
+llm_mode_reason=real_llm_available
+chunks_selected=60
+validation_failed=28
+hard_validation_failed=28
+soft_review_warnings=17
+needs_human_review=40
+overlay_production_candidate_ready=False
+overlay_promotion_allowed=False
+production_blocks_mutated=false
+chroma_reindex_performed=false
+runtime_behavior_changed=false

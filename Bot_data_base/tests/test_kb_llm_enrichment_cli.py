@@ -80,6 +80,7 @@ def test_run_enrichment_dry_run_no_mutation_and_no_raw_leaks(tmp_path: Path, mon
     prompt_path.write_text("json only", encoding="utf-8")
 
     result = run_enrichment(
+        run_tag="PRD-046.0.5-RUN1-HF2",
         source_hint="КУЗНИЦА ДУХА",
         blocks_path=blocks_path,
         output_dir=output_dir,
@@ -94,6 +95,7 @@ def test_run_enrichment_dry_run_no_mutation_and_no_raw_leaks(tmp_path: Path, mon
         confirm=False,
         mock_llm=True,
         require_real_llm=False,
+        allow_promotion_candidate=False,
         overlay_path=None,
         max_concurrency=1,
         max_retries=2,
@@ -133,6 +135,7 @@ def test_write_overlay_requires_confirm(tmp_path: Path, monkeypatch: pytest.Monk
 
     with pytest.raises(RuntimeError, match="requires --confirm"):
         run_enrichment(
+            run_tag="PRD-046.0.5-RUN1-HF2",
             source_hint="КУЗНИЦА ДУХА",
             blocks_path=blocks_path,
             output_dir=tmp_path / "logs",
@@ -147,6 +150,7 @@ def test_write_overlay_requires_confirm(tmp_path: Path, monkeypatch: pytest.Monk
             confirm=False,
             mock_llm=True,
             require_real_llm=False,
+            allow_promotion_candidate=False,
             overlay_path=None,
             max_concurrency=1,
             max_retries=1,
@@ -170,6 +174,7 @@ def test_require_real_llm_blocks_fallback(tmp_path: Path, monkeypatch: pytest.Mo
     monkeypatch.setattr(kb_llm_enrichment, "_OpenAILLMClient", _FailingClient)
 
     result = run_enrichment(
+        run_tag="PRD-046.0.5-RUN1-HF2",
         source_hint="КУЗНИЦА ДУХА",
         blocks_path=blocks_path,
         output_dir=tmp_path / "logs",
@@ -184,6 +189,7 @@ def test_require_real_llm_blocks_fallback(tmp_path: Path, monkeypatch: pytest.Mo
         confirm=False,
         mock_llm=False,
         require_real_llm=True,
+        allow_promotion_candidate=False,
         overlay_path=None,
         max_concurrency=1,
         max_retries=1,
@@ -204,6 +210,7 @@ def test_overlay_path_writes_to_explicit_location(tmp_path: Path, monkeypatch: p
     overlay_path = tmp_path / "custom_overlay.jsonl"
 
     result = run_enrichment(
+        run_tag="PRD-046.0.5-RUN1-HF2",
         source_hint="КУЗНИЦА ДУХА",
         blocks_path=blocks_path,
         output_dir=tmp_path / "logs",
@@ -218,6 +225,7 @@ def test_overlay_path_writes_to_explicit_location(tmp_path: Path, monkeypatch: p
         confirm=True,
         mock_llm=True,
         require_real_llm=False,
+        allow_promotion_candidate=False,
         overlay_path=overlay_path,
         max_concurrency=1,
         max_retries=1,

@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-05-09T18:13:59.673102+00:00",
+  "schema_version": "kb_llm_enrichment_v1",
+  "prompt_version": "kb_enrichment_v1_2",
+  "run_kind": "real",
+  "chunks_selected": 60,
+  "chunks_enriched": 60,
+  "validation_passed": 32,
+  "validation_failed": 28,
+  "hard_validation_failed": 28,
+  "soft_review_warnings": 17,
+  "unmapped_review_notes_count": 0,
+  "needs_human_review": 40,
+  "unknown_lens_candidates": 0,
+  "unknown_lens_suggestions": 3,
+  "summary_quality_warnings": 6,
+  "safety_governance_invariant_violations": 0,
+  "validation_reasons_distribution": {
+    "lens_mapping_uncertain": 16,
+    "low_resource_avoid_when_missing": 28,
+    "mixed_intent_unclear": 1
+  },
+  "raw_text_leak_check": "pass"
+}

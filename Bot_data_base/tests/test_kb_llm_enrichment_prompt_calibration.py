@@ -116,6 +116,7 @@ def test_mock_calibration_batch_is_mostly_valid(tmp_path: Path, monkeypatch: pyt
 
     prompt_path = Path("Bot_data_base/knowledge_governance/prompts/kb_enrichment_v1_1.md")
     result = run_enrichment(
+        run_tag="PRD-046.0.5-RUN1-HF2",
         source_hint="123__",
         blocks_path=blocks_path,
         output_dir=tmp_path / "logs",
@@ -130,6 +131,7 @@ def test_mock_calibration_batch_is_mostly_valid(tmp_path: Path, monkeypatch: pyt
         confirm=False,
         mock_llm=True,
         require_real_llm=False,
+        allow_promotion_candidate=False,
         overlay_path=None,
         max_concurrency=1,
         max_retries=2,

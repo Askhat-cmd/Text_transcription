@@ -1,0 +1,15 @@
+﻿{
+    "source_prd":  "PRD-046.0.5-RUN1",
+    "real_llm_run":  true,
+    "prompt_version_before":  "kb_enrichment_v1_1",
+    "chunks_selected_before":  60,
+    "validation_passed_before":  6,
+    "validation_failed_before":  54,
+    "unknown_lens_candidates_before":  54,
+    "summary_direct_quote_risk_before":  0,
+    "invariant_violations_before":  0,
+    "raw_text_leak_check_before":  "pass",
+    "production_ready_before":  false,
+    "promotion_allowed_before":  false,
+    "primary_blocker":  "unknown_lens_candidates"
+}

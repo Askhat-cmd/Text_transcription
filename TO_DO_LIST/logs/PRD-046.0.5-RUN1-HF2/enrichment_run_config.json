@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-09T18:05:44.397233+00:00",
+  "tag": "PRD-046.0.5-RUN1-HF2",
+  "source_hint": "КУЗНИЦА ДУХА",
+  "blocks_path": "Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "output_dir": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF2",
+  "reports_dir": "TO_DO_LIST\\reports",
+  "prompt_path": "Bot_data_base\\knowledge_governance\\prompts\\kb_enrichment_v1_2.md",
+  "limit": 60,
+  "offset": 0,
+  "chunk_type_filter": "",
+  "dry_run": false,
+  "write_overlay": true,
+  "apply": false,
+  "confirm": true,
+  "mock_llm_requested": false,
+  "require_real_llm": true,
+  "allow_promotion_candidate": false,
+  "overlay_path": "TO_DO_LIST\\logs\\PRD-046.0.5-RUN1-HF2\\real_enrichment_candidates.jsonl",
+  "production_blocks_mutated": false,
+  "chroma_reindex_performed": false,
+  "runtime_behavior_changed": false,
+  "preflight": {
+    "preflight_passed": true,
+    "reasons": [],
+    "observed": {
+      "api_hits_positive": 6,
+      "reindex_indexed_blocks_count": 229,
+      "collection_count_after": 229,
+      "bot_fallback_used": false,
+      "bot_retrieval_source": "botdb_api"
+    }
+  }
+}

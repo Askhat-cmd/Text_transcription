@@ -1,0 +1,10 @@
+# PRD-046.0.3.1 sanitized runtime logs
+generated_at_utc=2026-05-09T09:04:43.001912+00:00
+knowledge_policy_trace_version=knowledge_policy_trace_v1
+semantic_hits_raw_redacted=true
+content_full_present_in_detail=false
+internal_only_marker_leaked=false
+detail_count=2
+writer_action_count=1
+drop_action_count=0
+internal_action_count=1

@@ -1,5 +1,6 @@
 ﻿from __future__ import annotations
 
+import json
 from pathlib import Path
 import sys
 
@@ -110,3 +111,19 @@ def test_legacy_no_governance_kept_with_risk_flag() -> None:
     d = decisions[0]
     assert d.action == "include_writer_context"
     assert "legacy_no_governance" in d.risk_flags
+
+def test_policy_trace_does_not_leak_raw_internal_content() -> None:
+    marker = "INTERNAL_ONLY_RAW_TEXT_SHOULD_NOT_LEAK_046031"
+    hit = _hit(
+        chunk_id="c9",
+        content=f"secret {marker} secret",
+        governance={
+            "chunk_type": "style",
+            "allowed_use": ["internal_only", "diagnostic_lens"],
+            "safety_flags": ["source_style_not_user_facing"],
+        },
+    )
+    _, trace = apply_knowledge_policy_v1([hit])
+    serialized = json.dumps(trace, ensure_ascii=False)
+    assert marker not in serialized
+    assert "content_full" not in serialized

@@ -96,6 +96,8 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
         return SimpleNamespace(
             nervous_state="calm",
             intent="support",
+            openness="open",
+            ok_position="I+W+",
             safety_flag=False,
             confidence=0.91,
         )
@@ -107,6 +109,12 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             response_mode="presence",
             relation_to_thread="continue",
             continuity_score=0.77,
+            pattern_core="",
+            active_frame={},
+            open_loops=[],
+            closed_loops=[],
+            must_avoid=[],
+            safety_active=False,
         )
 
     async def fake_assemble(**_kwargs):
@@ -116,6 +124,8 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             conversation_context="User: привет\nAssistant: привет!",
             rag_query="привет поддержка",
             user_profile=SimpleNamespace(patterns=["p1"], values=["v1"], progress_notes=["n1"]),
+            knowledge_policy_trace={},
+            knowledge_rag_hits=[],
             semantic_hits=[
                 {
                     "chunk_id": "h1",

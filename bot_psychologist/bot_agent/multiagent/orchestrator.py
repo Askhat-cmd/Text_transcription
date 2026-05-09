@@ -19,6 +19,7 @@ from .context_assembly import (
 )
 from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
+from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
 
@@ -250,29 +251,10 @@ class MultiAgentOrchestrator:
             )
         )
         total_latency_ms = int(t_state + t_thread + t_memory + t_writer + t_validator)
-        semantic_hits_detail = []
-        for raw_hit in memory_bundle.semantic_hits:
-            if hasattr(raw_hit, "to_dict"):
-                hit = raw_hit.to_dict()  # type: ignore[assignment]
-            elif isinstance(raw_hit, dict):
-                hit = raw_hit
-            else:
-                hit = {
-                    "chunk_id": "",
-                    "source": "unknown",
-                    "score": 0.0,
-                    "content": str(raw_hit),
-                }
-            content_full = str(hit.get("content", "") or "")
-            semantic_hits_detail.append(
-                {
-                    "chunk_id": str(hit.get("chunk_id", "")),
-                    "source": str(hit.get("source", "unknown")),
-                    "score": float(hit.get("score", 0.0) or 0.0),
-                    "content_preview": content_full[:200],
-                    "content_full": content_full,
-                }
-            )
+        semantic_hits_detail = build_safe_knowledge_debug_detail_v1(
+            semantic_hits=list(memory_bundle.semantic_hits or []),
+            knowledge_policy_trace=dict(memory_bundle.knowledge_policy_trace or {}),
+        )
 
         return {
             "status": "ok",
@@ -295,6 +277,7 @@ class MultiAgentOrchestrator:
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
                 "semantic_hits_detail": semantic_hits_detail,
+                "semantic_hits_raw_redacted": True,
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,

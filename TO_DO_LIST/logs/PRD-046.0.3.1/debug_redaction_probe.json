@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-05-09T09:04:42.999905+00:00",
+  "decisions": [
+    {
+      "chunk_id": "internal_1",
+      "source": "architecture",
+      "score": 0.91,
+      "action": "internal_only",
+      "allowed_for_writer": false,
+      "allowed_for_diagnostic": true,
+      "allowed_for_practice": false,
+      "reasons": [
+        "internal_only_or_style_not_user_facing"
+      ],
+      "risk_flags": [],
+      "sanitized_content_len": 0
+    },
+    {
+      "chunk_id": "writer_1",
+      "source": "book",
+      "score": 0.85,
+      "action": "include_writer_context",
+      "allowed_for_writer": true,
+      "allowed_for_diagnostic": false,
+      "allowed_for_practice": false,
+      "reasons": [
+        "content_sanitized_not_for_direct_quote"
+      ],
+      "risk_flags": [],
+      "sanitized_content_len": 240
+    }
+  ],
+  "detail": [
+    {
+      "chunk_id": "internal_1",
+      "source": "architecture",
+      "score": 0.91,
+      "content_preview": "",
+      "content_len": 61,
+      "content_redacted": true,
+      "governance_summary": {
+        "chunk_type": "style",
+        "allowed_use": [
+          "internal_only",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "source_style_not_user_facing"
+        ]
+      },
+      "policy_action": "internal_only",
+      "policy_reasons": [
+        "internal_only_or_style_not_user_facing"
+      ],
+      "risk_flags": []
+    },
+    {
+      "chunk_id": "writer_1",
+      "source": "book",
+      "score": 0.85,
+      "content_preview": "quoted long text long text long text long text long text long text long text...",
+      "content_len": 409,
+      "content_redacted": true,
+      "governance_summary": {
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ]
+      },
+      "policy_action": "include_writer_context",
+      "policy_reasons": [
+        "content_sanitized_not_for_direct_quote"
+      ],
+      "risk_flags": []
+    }
+  ],
+  "marker_leaked": false,
+  "content_full_present": false
+}

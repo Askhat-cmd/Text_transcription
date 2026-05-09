@@ -8,6 +8,8 @@ from typing import Any
 
 KNOWLEDGE_POLICY_TRACE_VERSION = "knowledge_policy_trace_v1"
 _POLICY_SANITIZED_MAX_CHARS = 240
+_DEBUG_PREVIEW_MAX_CHARS = 120
+_DEBUG_PREVIEW_QUOTE_MAX_CHARS = 80
 
 
 @dataclass
@@ -75,6 +77,20 @@ class KnowledgePolicyDecision:
             },
         }
 
+    def to_safe_debug_dict(self) -> dict[str, Any]:
+        return {
+            "chunk_id": self.chunk_id,
+            "source": self.source,
+            "score": float(self.score),
+            "action": self.action,
+            "allowed_for_writer": bool(self.allowed_for_writer),
+            "allowed_for_diagnostic": bool(self.allowed_for_diagnostic),
+            "allowed_for_practice": bool(self.allowed_for_practice),
+            "reasons": list(self.reasons or []),
+            "risk_flags": list(self.risk_flags or []),
+            "sanitized_content_len": len(self.sanitized_content or ""),
+        }
+
 
 def _split_csv(value: object) -> list[str]:
     if value is None:
@@ -96,6 +112,40 @@ def _sanitize_preview(text: str, *, max_chars: int = _POLICY_SANITIZED_MAX_CHARS
     if len(normalized) <= max_chars:
         return normalized
     return normalized[: max(0, max_chars - 3)].rstrip() + "..."
+
+
+def safe_knowledge_debug_preview_v1(
+    text: str,
+    governance: dict[str, Any],
+    *,
+    policy_action: str = "",
+    max_chars: int = _DEBUG_PREVIEW_MAX_CHARS,
+) -> str:
+    allowed_use = _split_csv(governance.get("allowed_use"))
+    safety_flags = _split_csv(governance.get("safety_flags"))
+    action = str(policy_action or "").strip().lower()
+    if action in {"drop", "internal_only"}:
+        return ""
+    if "do_not_use" in allowed_use:
+        return ""
+    if "internal_only" in allowed_use:
+        return ""
+    if "source_style_not_user_facing" in safety_flags:
+        return ""
+
+    normalized = _normalize_content(text)
+    normalized = (
+        normalized.replace('"', "")
+        .replace("'", "")
+        .replace("«", "")
+        .replace("»", "")
+    )
+    if not normalized:
+        return ""
+    limit = int(max_chars)
+    if "not_for_direct_quote" in safety_flags:
+        limit = min(limit, _DEBUG_PREVIEW_QUOTE_MAX_CHARS)
+    return _sanitize_preview(normalized, max_chars=max(1, limit))
 
 
 def _safe_governance_dict(governance: object) -> dict[str, Any]:
@@ -142,14 +192,7 @@ def _build_trace(decisions: list[KnowledgePolicyDecision]) -> dict[str, Any]:
         for flag in decision.risk_flags:
             risk_flags_count[flag] = risk_flags_count.get(flag, 0) + 1
         safe_decisions.append(
-            {
-                "chunk_id": decision.chunk_id,
-                "source": decision.source,
-                "score": float(decision.score),
-                "action": decision.action,
-                "reasons": list(decision.reasons),
-                "risk_flags": list(decision.risk_flags),
-            }
+            decision.to_safe_debug_dict()
         )
 
     return {
@@ -316,3 +359,61 @@ def apply_knowledge_policy_v1(hits: list[Any]) -> tuple[list[KnowledgePolicyDeci
 
     trace = _build_trace(decisions)
     return decisions, trace
+
+
+def build_safe_knowledge_debug_detail_v1(
+    *,
+    semantic_hits: list[Any],
+    knowledge_policy_trace: dict[str, Any],
+) -> list[dict[str, Any]]:
+    decisions = knowledge_policy_trace.get("decisions", [])
+    decisions_by_chunk_id: dict[str, dict[str, Any]] = {}
+    if isinstance(decisions, list):
+        for raw_decision in decisions:
+            if not isinstance(raw_decision, dict):
+                continue
+            chunk_id = str(raw_decision.get("chunk_id", "") or "")
+            if chunk_id and chunk_id not in decisions_by_chunk_id:
+                decisions_by_chunk_id[chunk_id] = raw_decision
+
+    safe_details: list[dict[str, Any]] = []
+    for raw_hit in list(semantic_hits or []):
+        if hasattr(raw_hit, "to_dict"):
+            hit = raw_hit.to_dict()
+        elif isinstance(raw_hit, dict):
+            hit = dict(raw_hit)
+        else:
+            hit = {"chunk_id": "", "source": "unknown", "score": 0.0, "content": str(raw_hit)}
+
+        chunk_id = str(hit.get("chunk_id", "") or "")
+        governance = _safe_governance_dict(hit.get("governance"))
+        decision = decisions_by_chunk_id.get(chunk_id, {})
+        policy_action = str(decision.get("action", "") or "")
+        reasons = [str(x) for x in decision.get("reasons", [])] if isinstance(decision.get("reasons"), list) else []
+        risk_flags = [str(x) for x in decision.get("risk_flags", [])] if isinstance(decision.get("risk_flags"), list) else []
+        content_raw = str(hit.get("content", "") or "")
+        preview = safe_knowledge_debug_preview_v1(
+            content_raw,
+            governance,
+            policy_action=policy_action,
+            max_chars=_DEBUG_PREVIEW_MAX_CHARS,
+        )
+        safe_details.append(
+            {
+                "chunk_id": chunk_id,
+                "source": str(hit.get("source", "unknown") or "unknown"),
+                "score": float(hit.get("score", 0.0) or 0.0),
+                "content_preview": preview,
+                "content_len": len(content_raw),
+                "content_redacted": True,
+                "governance_summary": {
+                    "chunk_type": str(governance.get("chunk_type", "") or ""),
+                    "allowed_use": list(governance.get("allowed_use", []) or []),
+                    "safety_flags": list(governance.get("safety_flags", []) or []),
+                },
+                "policy_action": policy_action,
+                "policy_reasons": reasons,
+                "risk_flags": risk_flags,
+            }
+        )
+    return safe_details

@@ -1,0 +1,398 @@
+{
+  "generated_at": "2026-05-09T10:45:01.728123+00:00",
+  "config_path": "Bot_data_base\\config.yaml",
+  "api_base_url": "http://127.0.0.1:8003",
+  "chroma_db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "embedding_model_configured": "intfloat/multilingual-e5-large",
+  "blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "blocks_count": 229,
+  "mode": {
+    "probe_only": false,
+    "dry_run": true,
+    "reset": true,
+    "reindex_from_json": true,
+    "confirm": true
+  },
+  "actions": [
+    "dry_run_no_mutation"
+  ],
+  "mutation_blocked": false,
+  "mutation_reason": "",
+  "indexed_blocks_count": 0,
+  "before_health": {
+    "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "embedding_model_name": "intfloat/multilingual-e5-large",
+    "collection_exists": true,
+    "collection_count": null,
+    "collection_count_error": "object of type 'int' has no len()",
+    "embedding_probe_dimension": 1024,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false
+  },
+  "after_health": {
+    "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "embedding_model_name": "intfloat/multilingual-e5-large",
+    "collection_exists": true,
+    "collection_count": null,
+    "collection_count_error": "object of type 'int' has no len()",
+    "embedding_probe_dimension": 1024,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false
+  },
+  "audit_probe": {
+    "generated_at": "2026-05-09T10:44:56.185113+00:00",
+    "api_status": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "jobs": []
+      }
+    },
+    "api_registry": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 17,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-03-13T04:45:18.951270",
+            "blocks_count": 229,
+            "sd_distribution": {
+              "GREEN": 113,
+              "BLUE": 16,
+              "YELLOW": 67,
+              "RED": 4,
+              "ORANGE": 7,
+              "BEIGE": 9,
+              "PURPLE": 2,
+              "TURQUOISE": 1,
+              "UNCERTAIN": 10
+            },
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "failed",
+            "added_at": "2026-05-08T09:43:22.273607",
+            "processed_at": "2026-05-09T10:43:20.624459",
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": "ERROR: [youtube:truncated_id] test123: Incomplete YouTube ID test123. URL https://www.youtube.com/watch?v=test123 looks truncated.",
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "failed",
+            "added_at": "2026-05-08T09:43:22.442757",
+            "processed_at": "2026-05-09T10:43:22.676888",
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": "object of type 'int' has no len()",
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-08T10:55:17.881409",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-08T10:55:18.043551",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-08T10:57:42.452235",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-08T10:57:42.672781",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-09T09:48:11.107631",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-09T09:48:11.608792",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-09T09:51:22.281932",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-09T09:51:22.703591",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-09T09:54:52.929384",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-09T09:54:53.339225",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-09T10:39:27.410734",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-09T10:39:27.906577",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-09T10:43:20.361950",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-09T10:43:20.762310",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0"
+          }
+        ]
+      }
+    },
+    "api_query": {
+      "ok": false,
+      "status_code": 503,
+      "body": {
+        "detail": "ChromaDB unavailable"
+      },
+      "error": "HTTP Error 503: Service Unavailable"
+    },
+    "chroma_db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "collection_exists": true,
+    "collection_count": null,
+    "collection_count_error": "object of type 'int' has no len()",
+    "embedding_probe_dimension": null,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false,
+    "chroma_probe_error": null,
+    "all_blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+    "all_blocks_exists": true,
+    "local_blocks_count": 229,
+    "registry_count": 17,
+    "embedding_model_configured": "intfloat/multilingual-e5-large",
+    "possible_embedding_dimension_mismatch": false,
+    "safe_reset_or_reindex_recommended": true
+  },
+  "governed_gate_status_before": "not_ready",
+  "governed_gate_status_after": "not_ready"
+}

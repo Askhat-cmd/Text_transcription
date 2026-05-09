@@ -5,6 +5,7 @@ from tools.kb_quality_audit import (
     audit_practice_completeness,
     audit_structure_boundaries,
     build_manual_review_candidates,
+    evaluate_governed_index_gate,
 )
 
 
@@ -216,3 +217,42 @@ def test_reports_do_not_include_long_raw_content_in_queue() -> None:
     assert queue
     assert len(queue[0]["safe_preview"]) <= 160
 
+
+def test_governed_index_gate_fails_on_ungoverned_fixture() -> None:
+    blocks = [
+        _mk_block(chunk_id="g1", text="без governance", chunk_type="", allowed_use=[], safety_flags=[]),
+        _mk_block(chunk_id="g2", text="без summary", chunk_type="", allowed_use=[], safety_flags=[]),
+    ]
+    result = evaluate_governed_index_gate(blocks=blocks, source_label="test")
+    assert result["status"] == "not_ready"
+    assert "allowed_use_missing" in result["blocker_reasons"]
+    assert "safety_flags_missing" in result["blocker_reasons"]
+
+
+def test_governed_index_gate_passes_on_governed_fixture() -> None:
+    blocks = [
+        _mk_block(
+            chunk_id="ok1",
+            text="контент",
+            summary="содержательный summary с сутью практики и условиями применения",
+            chunk_type="practice",
+            allowed_use=["practice_suggestion", "writer_context"],
+            safety_flags=["not_for_direct_quote"],
+            lens_family=["procrastination"],
+            boundary_confidence=0.9,
+        ),
+        _mk_block(
+            chunk_id="ok2",
+            text="контент 2",
+            summary="достаточно длинный summary с маркерами роли и контекстом",
+            chunk_type="theory",
+            allowed_use=["writer_context"],
+            safety_flags=["not_for_direct_quote"],
+            lens_family=["shame"],
+            boundary_confidence=0.8,
+        ),
+    ]
+    result = evaluate_governed_index_gate(blocks=blocks, source_label="test")
+    assert result["status"] in {"ready", "degraded"}
+    assert result["metrics"]["governance_present_ratio"] >= 0.95
+    assert result["metrics"]["not_for_direct_quote_ratio"] >= 0.95

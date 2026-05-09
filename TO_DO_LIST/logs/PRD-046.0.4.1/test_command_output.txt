@@ -1,0 +1,73 @@
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests/test_chroma_recovery.py -q
+
+.....                                                                    [100%]
+5 passed in 14.10s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests/test_chroma_readiness_audit.py -q
+
+..                                                                       [100%]
+2 passed in 2.45s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests/test_kb_quality_audit_metrics.py -q
+
+..........                                                               [100%]
+10 passed in 0.11s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest Bot_data_base/tests -q
+
+........................................................................ [ 66%]
+.....................................                                    [100%]
+109 passed in 24.34s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.21s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 31%]
+........................................................................ [ 62%]
+........................................................................ [ 93%]
+................                                                         [100%]
+232 passed in 46.70s
+
+
+[exit_code=0]
+
+
+$ .\bot_psychologist\.venv\Scripts\python.exe Bot_data_base/tools/chroma_recovery.py --dry-run --reset --reindex-from-json --confirm --output-dir TO_DO_LIST/logs/PRD-046.0.4.1 --reports-dir TO_DO_LIST/reports
+
+{
+  "recovery_probe_path": "TO_DO_LIST\\logs\\PRD-046.0.4.1\\chroma_recovery_probe.json",
+  "governed_gate_path": "TO_DO_LIST\\logs\\PRD-046.0.4.1\\governed_index_gate.json",
+  "query_smoke_path": "TO_DO_LIST\\logs\\PRD-046.0.4.1\\query_smoke_snapshot.json",
+  "gate_status_after": "not_ready",
+  "recommended_next_prd": "PRD-046.0.4.2 ? Source Reprocess / Governance Backfill v1",
+  "mutation_blocked": false
+}
+
+
+[exit_code=0]
+

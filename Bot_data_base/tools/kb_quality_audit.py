@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import traceback
 from collections import Counter, defaultdict
@@ -777,6 +778,127 @@ def audit_no_citation_readiness(blocks: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def evaluate_governed_index_gate(
+    *,
+    blocks: list[dict[str, Any]],
+    source_label: str = "КУЗНИЦА ДУХА",
+) -> dict[str, Any]:
+    total = len(blocks)
+    if total <= 0:
+        return {
+            "version": "governed_index_gate_v1",
+            "source_label": source_label,
+            "status": "degraded",
+            "blocker_reasons": ["no_blocks_for_gate"],
+            "metrics": {"total_blocks": 0},
+            "thresholds": {},
+            "recommended_next_prd": "PRD-046.0.4.1-HF1 — Chroma Runtime Failure Fix",
+        }
+
+    governance_present_count = 0
+    allowed_use_present_count = 0
+    safety_flags_present_count = 0
+    lens_family_present_count = 0
+    summary_present_count = 0
+    boundary_confidence_present_count = 0
+    not_for_direct_quote_count = 0
+    chunk_type_distribution = Counter()
+
+    for raw in blocks:
+        view = _get_block_view(raw)
+        chunk_type = _extract_chunk_type(view)
+        allowed_use = _extract_allowed_use(view)
+        safety_flags = _extract_safety_flags(view)
+        lens_family = _extract_lens_family(view)
+        summary = _normalize_str(view.summary)
+
+        chunk_type_distribution[chunk_type] += 1
+        if isinstance(view.governance, dict) and bool(view.governance):
+            governance_present_count += 1
+        if allowed_use and allowed_use != ["unknown/empty"]:
+            allowed_use_present_count += 1
+        if safety_flags and safety_flags != ["unknown/empty"]:
+            safety_flags_present_count += 1
+        if lens_family and lens_family != ["unknown/empty"]:
+            lens_family_present_count += 1
+        if summary:
+            summary_present_count += 1
+        if view.boundary_confidence is not None:
+            boundary_confidence_present_count += 1
+        if "not_for_direct_quote" in safety_flags:
+            not_for_direct_quote_count += 1
+
+    def _ratio(value: int) -> float:
+        return round(value / total, 4)
+
+    thresholds = {
+        "governance_present_ratio_min": 0.95,
+        "allowed_use_present_ratio_min": 0.95,
+        "safety_flags_present_ratio_min": 0.95,
+        "not_for_direct_quote_ratio_min": 0.95,
+        "summary_present_ratio_min": 0.60,
+        "boundary_confidence_present_ratio_min": 0.80,
+        "lens_family_present_ratio_desired": 0.50,
+    }
+    metrics = {
+        "total_blocks": total,
+        "governance_present_count": governance_present_count,
+        "allowed_use_present_count": allowed_use_present_count,
+        "safety_flags_present_count": safety_flags_present_count,
+        "lens_family_present_count": lens_family_present_count,
+        "summary_present_count": summary_present_count,
+        "boundary_confidence_present_count": boundary_confidence_present_count,
+        "not_for_direct_quote_count": not_for_direct_quote_count,
+        "governance_present_ratio": _ratio(governance_present_count),
+        "allowed_use_present_ratio": _ratio(allowed_use_present_count),
+        "safety_flags_present_ratio": _ratio(safety_flags_present_count),
+        "lens_family_present_ratio": _ratio(lens_family_present_count),
+        "summary_present_ratio": _ratio(summary_present_count),
+        "boundary_confidence_present_ratio": _ratio(boundary_confidence_present_count),
+        "not_for_direct_quote_ratio": _ratio(not_for_direct_quote_count),
+        "chunk_type_distribution": dict(sorted(chunk_type_distribution.items())),
+    }
+
+    blockers = []
+    if metrics["governance_present_ratio"] < thresholds["governance_present_ratio_min"]:
+        blockers.append("governance_missing")
+    if metrics["allowed_use_present_ratio"] < thresholds["allowed_use_present_ratio_min"]:
+        blockers.append("allowed_use_missing")
+    if metrics["safety_flags_present_ratio"] < thresholds["safety_flags_present_ratio_min"]:
+        blockers.append("safety_flags_missing")
+    if metrics["not_for_direct_quote_ratio"] < thresholds["not_for_direct_quote_ratio_min"]:
+        blockers.append("not_for_direct_quote_missing")
+    if metrics["summary_present_ratio"] < thresholds["summary_present_ratio_min"]:
+        blockers.append("summary_missing")
+    if metrics["boundary_confidence_present_ratio"] < thresholds["boundary_confidence_present_ratio_min"]:
+        blockers.append("boundary_confidence_missing")
+
+    warnings = []
+    if metrics["lens_family_present_ratio"] < thresholds["lens_family_present_ratio_desired"]:
+        warnings.append("lens_family_coverage_low")
+
+    status = "ready"
+    if blockers:
+        status = "not_ready"
+    elif warnings:
+        status = "degraded"
+
+    return {
+        "version": "governed_index_gate_v1",
+        "source_label": source_label,
+        "status": status,
+        "blocker_reasons": blockers,
+        "warnings": warnings,
+        "metrics": metrics,
+        "thresholds": thresholds,
+        "recommended_next_prd": (
+            "PRD-046.0.4.2 — Source Reprocess / Governance Backfill v1"
+            if blockers
+            else "PRD-046.0.5 — Offline LLM Summary + Lens Enrichment v1"
+        ),
+    }
+
+
 def audit_source_markdown_readiness(markdown_path: Path | None) -> dict[str, Any]:
     if markdown_path is None or not markdown_path.exists():
         return {
@@ -861,6 +983,7 @@ def probe_chroma_readiness(
     config: dict[str, Any],
     all_blocks_path: Path,
     registry_records: list[dict[str, Any]],
+    compute_embedding_probe: bool = False,
 ) -> dict[str, Any]:
     status_resp = _http_json("GET", f"{api_base_url}/api/status/")
     registry_resp = _http_json("GET", f"{api_base_url}/api/registry/")
@@ -882,8 +1005,14 @@ def probe_chroma_readiness(
 
     collection_exists = None
     collection_count = None
+    collection_count_error = None
     chroma_probe_error = None
     possible_embedding_mismatch = False
+    embedding_probe_dimension = None
+    embedding_probe_error = None
+    collection_dimension_detected = None
+    collection_dimension_detection_reason = "not_available"
+    dimension_mismatch = False
     try:
         import chromadb
         from chromadb.config import Settings
@@ -905,7 +1034,47 @@ def probe_chroma_readiness(
         collection_exists = collection_name in names if collection_name else False
         if collection_exists and collection_name:
             collection = client.get_collection(name=collection_name)
-            collection_count = int(collection.count())
+            metadata = getattr(collection, "metadata", None)
+            if isinstance(metadata, dict):
+                dim = metadata.get("dimension") or metadata.get("embedding_dimension")
+                if dim is not None:
+                    try:
+                        collection_dimension_detected = int(dim)
+                        collection_dimension_detection_reason = "collection_metadata"
+                    except Exception:
+                        collection_dimension_detected = None
+            try:
+                collection_count = int(collection.count())
+            except Exception as exc:
+                collection_count_error = str(exc)
+                try:
+                    sample = collection.get(limit=1, include=["embeddings"])
+                    embeddings = sample.get("embeddings") if isinstance(sample, dict) else None
+                    if embeddings and isinstance(embeddings, list) and embeddings[0]:
+                        collection_dimension_detected = int(len(embeddings[0]))
+                        collection_dimension_detection_reason = "sample_embedding"
+                except Exception as nested_exc:
+                    if not collection_count_error:
+                        collection_count_error = str(nested_exc)
+
+        if compute_embedding_probe:
+            try:
+                if os.getenv("BOT_DB_DISABLE_EMBEDDINGS") == "1":
+                    embedding_probe_dimension = 3
+                else:
+                    from sentence_transformers import SentenceTransformer
+
+                    model_name = _normalize_str(embedding_cfg.get("model")) or _normalize_str(
+                        os.getenv("SENTENCE_TRANSFORMERS_MODEL")
+                    ) or "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+                    model = SentenceTransformer(model_name)
+                    probe = model.encode(["probe"], convert_to_numpy=True)
+                    if hasattr(probe, "tolist"):
+                        probe = probe.tolist()
+                    if probe and probe[0]:
+                        embedding_probe_dimension = int(len(probe[0]))
+            except Exception as exc:
+                embedding_probe_error = str(exc)
     except Exception as exc:
         chroma_probe_error = str(exc)
         if "dimension" in chroma_probe_error.lower() or "len()" in chroma_probe_error.lower():
@@ -918,7 +1087,15 @@ def probe_chroma_readiness(
 
     query_works = bool(query_resp.get("ok")) and int(query_resp.get("status_code") or 0) == 200
     query_503 = int(query_resp.get("status_code") or 0) == 503
-    needs_recovery = query_503 or not query_works or (
+    if (
+        embedding_probe_dimension is not None
+        and collection_dimension_detected is not None
+        and int(embedding_probe_dimension) != int(collection_dimension_detected)
+    ):
+        dimension_mismatch = True
+        possible_embedding_mismatch = True
+
+    needs_recovery = query_503 or not query_works or dimension_mismatch or (
         collection_count is not None and local_blocks_count and collection_count != local_blocks_count
     )
 
@@ -931,6 +1108,12 @@ def probe_chroma_readiness(
         "collection_name": collection_name,
         "collection_exists": collection_exists,
         "collection_count": collection_count,
+        "collection_count_error": collection_count_error,
+        "embedding_probe_dimension": embedding_probe_dimension,
+        "embedding_probe_error": embedding_probe_error,
+        "collection_dimension_detected": collection_dimension_detected,
+        "collection_dimension_detection_reason": collection_dimension_detection_reason,
+        "dimension_mismatch": dimension_mismatch,
         "chroma_probe_error": chroma_probe_error,
         "all_blocks_path": str(all_blocks_path),
         "all_blocks_exists": all_blocks_path.exists(),
@@ -993,6 +1176,7 @@ def run_retrieval_probe_snapshot(
                         "lens_family": _normalize_list(gov.get("lens_family")) or ["unknown/empty"],
                         "allowed_use": _normalize_list(gov.get("allowed_use")) or ["unknown/empty"],
                         "safety_flags": _normalize_list(gov.get("safety_flags")) or ["unknown/empty"],
+                        "content_preview_len": min(120, len(_normalize_str(chunk.get("content")))),
                     }
                 )
             row["metadata_plausible"] = bool(row["top_chunks"])
@@ -1016,7 +1200,7 @@ def run_retrieval_probe_snapshot(
                     "lens_family": _extract_lens_family(view),
                     "allowed_use": _extract_allowed_use(view),
                     "safety_flags": _extract_safety_flags(view),
-                    "safe_preview": _safe_preview(view.text, 120),
+                    "content_preview_len": min(120, len(view.text)),
                 }
             )
         row["metadata_plausible"] = bool(row["top_chunks"])

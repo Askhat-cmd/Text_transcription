@@ -1,0 +1,321 @@
+{
+  "generated_at": "2026-05-09T10:45:01.728123+00:00",
+  "queries": [
+    {
+      "query": "я злюсь на себя, потому что опять не сделал обещанное",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "d30311b4-b5ae-4236-b4b7-6df930ef3921",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "50d4a2a5-2af7-4709-b61e-c040934c1326",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "fb69647b-a0fe-41aa-80fd-797ce327ab3c",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "d7e63f68-6fd8-44e0-920a-b28a9cec0e21",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "я боюсь показать проект и снова хочу отложить",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "c2d5f62f-0d20-4cf9-a97e-844b1a196d0c",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "fd886228-effa-4902-a43c-4dd204608087",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "413026dc-7212-48e7-b679-fceba697700a",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "6cbe79ab-635b-483c-9fd5-840e5186d03a",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "2810ca82-994b-4a3e-bf16-f723421ddd15",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "нет сил, не хочу анализа, просто поддержи",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "671e4e15-2854-423f-9867-8ca82e926b2c",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "b539e87f-18e3-4422-9681-6080f4fa3e55",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "716779b8-a368-450b-8925-cface8742214",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "766d3526-14b1-4adb-9e08-74c21ae2d4a9",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "f06fe924-0d2f-438a-b2b6-fd704ed275c5",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    },
+    {
+      "query": "я всё время стараюсь быть лучше и не могу остановиться",
+      "source_path_used": "local_fallback_lexical",
+      "top_chunks": [
+        {
+          "chunk_id": "57db9c78-4cdb-4767-8bae-d0f2687d1e18",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "fb4abb4a-f2e3-4f4b-b4a4-104fff40ba0b",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "a0edeb3f-7a4d-4e67-aaa4-39f6485c3dd6",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+          "chunk_type": "unknown/empty",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        },
+        {
+          "chunk_id": "00e93996-a59a-4364-8720-970e6a34035b",
+          "chunk_type": "practice",
+          "lens_family": [
+            "unknown/empty"
+          ],
+          "allowed_use": [
+            "unknown/empty"
+          ],
+          "safety_flags": [
+            "unknown/empty"
+          ],
+          "content_preview_len": 120
+        }
+      ],
+      "api_status_code": 503,
+      "api_error": "HTTP Error 503: Service Unavailable",
+      "metadata_plausible": true
+    }
+  ]
+}

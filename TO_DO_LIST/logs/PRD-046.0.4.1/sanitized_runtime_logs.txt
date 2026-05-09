@@ -1,0 +1,8 @@
+[2026-05-09T10:45:01.734122+00:00] PRD-046.0.4.1 chroma recovery run
+actions=['dry_run_no_mutation']
+mutation_blocked=False
+gate_before=not_ready
+gate_after=not_ready
+api_query_status=503
+collection_count_before=None
+collection_count_after=None

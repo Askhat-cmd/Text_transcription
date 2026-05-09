@@ -1,0 +1,96 @@
+{
+  "before": {
+    "version": "governed_index_gate_v1",
+    "source_label": "КУЗНИЦА ДУХА",
+    "status": "not_ready",
+    "blocker_reasons": [
+      "governance_missing",
+      "allowed_use_missing",
+      "safety_flags_missing",
+      "not_for_direct_quote_missing",
+      "summary_missing",
+      "boundary_confidence_missing"
+    ],
+    "warnings": [
+      "lens_family_coverage_low"
+    ],
+    "metrics": {
+      "total_blocks": 229,
+      "governance_present_count": 0,
+      "allowed_use_present_count": 0,
+      "safety_flags_present_count": 0,
+      "lens_family_present_count": 0,
+      "summary_present_count": 0,
+      "boundary_confidence_present_count": 0,
+      "not_for_direct_quote_count": 0,
+      "governance_present_ratio": 0.0,
+      "allowed_use_present_ratio": 0.0,
+      "safety_flags_present_ratio": 0.0,
+      "lens_family_present_ratio": 0.0,
+      "summary_present_ratio": 0.0,
+      "boundary_confidence_present_ratio": 0.0,
+      "not_for_direct_quote_ratio": 0.0,
+      "chunk_type_distribution": {
+        "practice": 99,
+        "unknown/empty": 130
+      }
+    },
+    "thresholds": {
+      "governance_present_ratio_min": 0.95,
+      "allowed_use_present_ratio_min": 0.95,
+      "safety_flags_present_ratio_min": 0.95,
+      "not_for_direct_quote_ratio_min": 0.95,
+      "summary_present_ratio_min": 0.6,
+      "boundary_confidence_present_ratio_min": 0.8,
+      "lens_family_present_ratio_desired": 0.5
+    },
+    "recommended_next_prd": "PRD-046.0.4.2 — Source Reprocess / Governance Backfill v1"
+  },
+  "after": {
+    "version": "governed_index_gate_v1",
+    "source_label": "КУЗНИЦА ДУХА",
+    "status": "not_ready",
+    "blocker_reasons": [
+      "governance_missing",
+      "allowed_use_missing",
+      "safety_flags_missing",
+      "not_for_direct_quote_missing",
+      "summary_missing",
+      "boundary_confidence_missing"
+    ],
+    "warnings": [
+      "lens_family_coverage_low"
+    ],
+    "metrics": {
+      "total_blocks": 229,
+      "governance_present_count": 0,
+      "allowed_use_present_count": 0,
+      "safety_flags_present_count": 0,
+      "lens_family_present_count": 0,
+      "summary_present_count": 0,
+      "boundary_confidence_present_count": 0,
+      "not_for_direct_quote_count": 0,
+      "governance_present_ratio": 0.0,
+      "allowed_use_present_ratio": 0.0,
+      "safety_flags_present_ratio": 0.0,
+      "lens_family_present_ratio": 0.0,
+      "summary_present_ratio": 0.0,
+      "boundary_confidence_present_ratio": 0.0,
+      "not_for_direct_quote_ratio": 0.0,
+      "chunk_type_distribution": {
+        "practice": 99,
+        "unknown/empty": 130
+      }
+    },
+    "thresholds": {
+      "governance_present_ratio_min": 0.95,
+      "allowed_use_present_ratio_min": 0.95,
+      "safety_flags_present_ratio_min": 0.95,
+      "not_for_direct_quote_ratio_min": 0.95,
+      "summary_present_ratio_min": 0.6,
+      "boundary_confidence_present_ratio_min": 0.8,
+      "lens_family_present_ratio_desired": 0.5
+    },
+    "recommended_next_prd": "PRD-046.0.4.2 — Source Reprocess / Governance Backfill v1"
+  }
+}

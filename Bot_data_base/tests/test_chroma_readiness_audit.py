@@ -22,6 +22,8 @@ def test_chroma_readiness_handles_api_unavailable(tmp_path: Path, monkeypatch) -
     assert result["api_status"]["status_code"] is None
     assert result["all_blocks_exists"] is True
     assert result["local_blocks_count"] == 1
+    assert "collection_dimension_detected" in result
+    assert "embedding_probe_dimension" in result
 
 
 def test_chroma_readiness_handles_query_503_and_count_mismatch(
@@ -86,4 +88,5 @@ def test_chroma_readiness_handles_query_503_and_count_mismatch(
     assert result["local_blocks_count"] == 3
     assert result["safe_reset_or_reindex_recommended"] is True
     assert result["possible_embedding_dimension_mismatch"] is True
-
+    assert "collection_count_error" in result
+    assert "collection_dimension_detection_reason" in result

@@ -44,6 +44,7 @@ class PipelineRunner:
         self.chroma_manager = ChromaManager(
             self._resolve_path(self.config["storage"]["chroma_db_path"]),
             self.config["storage"]["collection_name"],
+            embedding_model_name=self.config.get("embedding", {}).get("model"),
         )
         if os.getenv("BOT_DB_DISABLE_EMBEDDINGS") == "1":
             class _DummyModel:

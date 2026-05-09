@@ -14,9 +14,22 @@ logger = logging.getLogger(__name__)
 
 
 class ChromaManager:
-    def __init__(self, db_path: str, collection_name: str) -> None:
+    def __init__(
+        self,
+        db_path: str,
+        collection_name: str,
+        embedding_model_name: str | None = None,
+    ) -> None:
         self.db_path = db_path
         self.collection_name = collection_name
+        self.embedding_model_name = (
+            str(embedding_model_name).strip()
+            if embedding_model_name is not None and str(embedding_model_name).strip()
+            else os.getenv(
+                "SENTENCE_TRANSFORMERS_MODEL",
+                "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+            )
+        )
 
         settings = Settings(anonymized_telemetry=False, allow_reset=True)
         if db_path == ":memory:":
@@ -26,6 +39,88 @@ class ChromaManager:
 
         self._collection = self.client.get_or_create_collection(name=self.collection_name)
         self._model = self._init_embedding_model()
+
+    def probe_collection_health(self) -> dict:
+        collection_exists = False
+        collection_count = None
+        collection_count_error = None
+        collection_dimension_detected = None
+        collection_dimension_detection_reason = "not_available"
+
+        try:
+            names = []
+            try:
+                collections = self.client.list_collections()
+            except Exception:
+                collections = []
+            for collection in collections:
+                if hasattr(collection, "name"):
+                    names.append(str(collection.name))
+                elif isinstance(collection, str):
+                    names.append(collection)
+            collection_exists = self.collection_name in names
+        except Exception:
+            collection_exists = False
+
+        try:
+            collection_count = int(self._collection.count())
+        except Exception as exc:
+            collection_count_error = str(exc)
+
+        metadata = getattr(self._collection, "metadata", None)
+        if isinstance(metadata, dict):
+            dim = metadata.get("dimension") or metadata.get("embedding_dimension")
+            if dim is not None:
+                try:
+                    collection_dimension_detected = int(dim)
+                    collection_dimension_detection_reason = "collection_metadata"
+                except Exception:
+                    collection_dimension_detected = None
+
+        if collection_dimension_detected is None:
+            try:
+                sample = self._collection.get(limit=1, include=["embeddings"])
+                embeddings = sample.get("embeddings") if isinstance(sample, dict) else None
+                if embeddings and isinstance(embeddings, list) and embeddings[0]:
+                    collection_dimension_detected = int(len(embeddings[0]))
+                    collection_dimension_detection_reason = "sample_embedding"
+            except Exception as exc:
+                if not collection_count_error:
+                    collection_count_error = str(exc)
+
+        embedding_probe_dimension = None
+        embedding_probe_error = None
+        try:
+            probe = self._embed_texts(["probe"])
+            if probe and probe[0]:
+                embedding_probe_dimension = int(len(probe[0]))
+        except Exception as exc:
+            embedding_probe_error = str(exc)
+
+        return {
+            "db_path": self.db_path,
+            "collection_name": self.collection_name,
+            "embedding_model_name": self.embedding_model_name,
+            "collection_exists": collection_exists,
+            "collection_count": collection_count,
+            "collection_count_error": collection_count_error,
+            "embedding_probe_dimension": embedding_probe_dimension,
+            "embedding_probe_error": embedding_probe_error,
+            "collection_dimension_detected": collection_dimension_detected,
+            "collection_dimension_detection_reason": collection_dimension_detection_reason,
+            "dimension_mismatch": (
+                embedding_probe_dimension is not None
+                and collection_dimension_detected is not None
+                and embedding_probe_dimension != collection_dimension_detected
+            ),
+        }
+
+    def reset_collection(self) -> None:
+        try:
+            self.client.delete_collection(name=self.collection_name)
+        except Exception:
+            pass
+        self._collection = self.client.get_or_create_collection(name=self.collection_name)
 
     def add_blocks(self, blocks: List[UniversalBlock]) -> int:
         if not blocks:
@@ -129,12 +224,8 @@ class ChromaManager:
                     return np.zeros((len(texts), 3), dtype=float)
 
             return _DummyModel()
-        model_name = os.getenv(
-            "SENTENCE_TRANSFORMERS_MODEL",
-            "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
-        )
         try:
-            return SentenceTransformer(model_name)
+            return SentenceTransformer(self.embedding_model_name)
         except Exception as exc:
             logger.error(f"[ChromaManager] failed to load embedding model: {exc}")
             raise

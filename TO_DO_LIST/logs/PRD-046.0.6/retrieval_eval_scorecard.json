@@ -1,0 +1,17 @@
+{
+  "cases_total": 24,
+  "api_status_ok": true,
+  "api_registry_ok": true,
+  "queries_ok": 24,
+  "queries_failed": 0,
+  "top1_semantic_match_rate": 0.7917,
+  "top3_semantic_match_rate": 0.9583,
+  "top5_semantic_match_rate": 1.0,
+  "top5_governance_present_rate": 1.0,
+  "top5_allowed_use_present_rate": 1.0,
+  "top5_safety_flags_present_rate": 1.0,
+  "raw_full_text_leak_detected": false,
+  "internal_only_unsafe_exposure_count": 4,
+  "enrichment_metadata_seen_count": 21,
+  "weak_cases_count": 3
+}

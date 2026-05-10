@@ -7,12 +7,13 @@
 - PRD-046.0..046.0.4.x: knowledge governance, Chroma recovery, governed reindex and API query restore.
 - PRD-046.0.5 + HF1 + RUN1 + HF2 + HF3: offline/real LLM enrichment pipeline calibrated to production-candidate quality on controlled batch.
 - PRD-046.0.5-APPLY1: controlled apply overlay + Chroma refresh + API/bot enrichment retrieval smoke.
+- PRD-046.0.6: retrieval eval dataset + deterministic runner + scorecard + weak-case queue (safety gap found).
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.0.6 - Knowledge Retrieval Eval Set v1.
+1. PRD-046.0.6-HF1 - Retrieval Governance Safety Fix v1.
 2. PRD-046.0.7 - Admin Review Workflow v1.
 3. Diagnostic Center rollout PRD after readiness gates.
 

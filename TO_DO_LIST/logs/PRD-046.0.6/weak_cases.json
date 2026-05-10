@@ -1,0 +1,248 @@
+[
+  {
+    "id": "KR-002",
+    "query": "если я не лучший, я будто никто",
+    "category": "self_criticism_achievement",
+    "why_failed": [
+      "disallowed_allowed_use_present",
+      "internal_only_exposure_non_safety_case"
+    ],
+    "top_summaries": [
+      {
+        "hit_id": "e623328f-43b3-43f1-a147-15c56a412291",
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "achievement"
+        ],
+        "content_preview": "- «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других» — подавил своё, согласился с чужим? - «Старайся сильнее» — почувствовал, что с…",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "b539e87f-18e3-4422-9681-6080f4fa3e55",
+        "chunk_type": "safety",
+        "allowed_use": [
+          "internal_only",
+          "safety_protocol"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "body_awareness",
+          "boundaries",
+          "meaning"
+        ],
+        "content_preview": "**Мантра:** «Я — сам. Кто сильнее — тот прав». **Что важно:** власть, автономия, немедленное удовлетворение желаний. Нет чувства вины — есть только «хочу» и «могу». Импульсивность. Сила как главная ценность. Уважение завоёвывается через де…",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "550e7452-c024-4a12-bfd1-676135098937",
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing"
+        ],
+        "lens_family": [
+          "inner_parts",
+          "meaning",
+          "anger"
+        ],
+        "content_preview": "Есть человек, который тебя раздражает. Сильно. Может быть, коллега — он всегда хочет быть в центре внимания. Может быть, знакомый — он постоянно жалуется и ищет сочувствия. Может быть, публичная фигура — её самоуверенность выводит тебя из…",
+        "llm_enrichment_summary": ""
+      }
+    ],
+    "missing_expected": {
+      "lens_family": [
+        "self_criticism",
+        "shame",
+        "identity"
+      ],
+      "chunk_type": [
+        "lens",
+        "theory"
+      ],
+      "allowed_use": [
+        "writer_context",
+        "diagnostic_lens"
+      ]
+    },
+    "recommendation": "retrieval calibration needed"
+  },
+  {
+    "id": "KR-013",
+    "query": "я замираю и будто не чувствую тело",
+    "category": "body_awareness_freeze",
+    "why_failed": [
+      "disallowed_allowed_use_present",
+      "internal_only_exposure_non_safety_case"
+    ],
+    "top_summaries": [
+      {
+        "hit_id": "4f9acaed-8e0c-4277-a6fd-df9f439f36a0",
+        "chunk_type": "theory",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "body_awareness"
+        ],
+        "content_preview": "*Тело не обманывает. Оно показывает то, что голова уже давно «договорилась не замечать».* ***",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "cdac4aca-6757-41c6-a66c-2e92153d1b6f",
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "source_style_not_user_facing",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "body_awareness",
+          "boundaries"
+        ],
+        "content_preview": "**Цель:** дать нейронной сети по умолчанию паузу — и заметить, что происходит, когда нарратив «я» замолкает. **Время:** 10 минут. Сядь удобно. Поставь таймер на 10 минут. Задача одна: **воспринимать без слов**. Слушать звуки — не называя и…",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "88d99ba5-ee12-4681-ae38-698b811cb517",
+        "chunk_type": "case",
+        "allowed_use": [
+          "writer_context"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "procrastination",
+          "freeze",
+          "body_awareness",
+          "relationships",
+          "boundaries",
+          "grief"
+        ],
+        "content_preview": "Когда говорят о страхе, обычно упоминают два состояния: «бей или беги». Но есть третье — и для многих людей оно самое распространённое. Нейробиолог **Стивен Порджес** в своей **Поливагальной теории** описал три режима нервной системы: **Ре…",
+        "llm_enrichment_summary": ""
+      }
+    ],
+    "missing_expected": {
+      "lens_family": [
+        "somatic",
+        "freeze",
+        "body_awareness"
+      ],
+      "chunk_type": [
+        "practice",
+        "lens",
+        "theory"
+      ],
+      "allowed_use": [
+        "writer_context",
+        "practice_suggestion"
+      ]
+    },
+    "recommendation": "retrieval calibration needed"
+  },
+  {
+    "id": "KR-022",
+    "query": "дай идею как поддержать человека, но без прямых цитат источника",
+    "category": "internal_style_not_quote",
+    "why_failed": [
+      "disallowed_allowed_use_present",
+      "internal_only_exposure_non_safety_case"
+    ],
+    "top_summaries": [
+      {
+        "hit_id": "e623328f-43b3-43f1-a147-15c56a412291",
+        "chunk_type": "lens",
+        "allowed_use": [
+          "writer_context",
+          "diagnostic_lens"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote"
+        ],
+        "lens_family": [
+          "shame",
+          "self_criticism",
+          "achievement"
+        ],
+        "content_preview": "- «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других» — подавил своё, согласился с чужим? - «Старайся сильнее» — почувствовал, что с…",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "e1543a35-c55f-4e35-bf3c-d89bd3b61185",
+        "chunk_type": "practice",
+        "allowed_use": [
+          "practice_suggestion"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "body_awareness",
+          "anger"
+        ],
+        "content_preview": "**Цель:** прямой контакт с вытесненным содержанием. **Время:** 30 минут. Желательно письменно. Выбери одно качество из своей тени — то, которое ты уже определил через первые две практики. Что-то, что точно есть в тебе — и что ты давно не п…",
+        "llm_enrichment_summary": ""
+      },
+      {
+        "hit_id": "a8918565-d886-47a5-91b8-6860953f814a",
+        "chunk_type": "practice",
+        "allowed_use": [
+          "practice_suggestion"
+        ],
+        "safety_flags": [
+          "not_for_direct_quote",
+          "practice_requires_low_resource_check"
+        ],
+        "lens_family": [
+          "body_awareness"
+        ],
+        "content_preview": "**Цель:** восстановить контакт с телом — с тем, что оно несёт и что хочет сказать. **Время:** 30 минут. Один раз — как практика этой главы. Тело хранит то, что ум не смог переработать. Хронические напряжения, боли «ниоткуда», усталость без…",
+        "llm_enrichment_summary": ""
+      }
+    ],
+    "missing_expected": {
+      "lens_family": [
+        "style",
+        "support",
+        "practice"
+      ],
+      "chunk_type": [
+        "practice",
+        "lens",
+        "case"
+      ],
+      "allowed_use": [
+        "writer_context",
+        "practice_suggestion"
+      ]
+    },
+    "recommendation": "retrieval calibration needed"
+  }
+]

@@ -59,3 +59,9 @@ Status: accepted
 Context: базовая проверка `ready/hash/version` недостаточна для безопасного использования summary в context assembly.
 Decision: validator для turn summaries обязан отклонять diagnosis assertions, direct advice/action voice, transcript-style dumps и overlong quote/summary payloads.
 Consequences: unsafe summaries автоматически уходят в deterministic fallback, а контекстный слой остаётся устойчивым перед запуском retrieval-eval цикла.
+
+## ADR-011 - Retrieval eval gate is mandatory before Diagnostic Center/Admin Review scale-up
+Status: accepted
+Context: после APPLY1 качество retrieval должно подтверждаться воспроизводимо, иначе downstream diagnostic/review workflows будут опираться на случайный контекст.
+Decision: перед расширением в `PRD-046.0.7` обязателен deterministic retrieval eval gate (dataset + runner + scorecard + weak-case queue) и закрытие safety-gap по `internal_only` exposure.
+Consequences: запуск Admin Review/Diagnostic Center откладывается до закрытия `PRD-046.0.6-HF1`, даже при хорошем semantic/gov coverage.

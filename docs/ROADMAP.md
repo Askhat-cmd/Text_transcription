@@ -9,12 +9,13 @@
 - PRD-046.0.5-APPLY1: controlled apply overlay + Chroma refresh + API/bot enrichment retrieval smoke.
 - PRD-046.0.6: retrieval eval dataset + deterministic runner + scorecard + weak-case queue (safety gap found).
 - PRD-046.0.6-HF1: retrieval governance safety fix; internal_only leakage closed (`4 -> 0`) with unchanged eval dataset.
+- PRD-046.0.7: admin review workflow v1 delivered (sanitized review queue + decision contract validation, no KB mutation).
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.0.7 - Admin Review Workflow v1.
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
 2. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later

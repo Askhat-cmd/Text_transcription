@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.6-HF1 retrieval safety stabilization: API retrieval policy откалиброван, `internal_only` утечки в non-safety top-k закрыты, eval-gates по semantic/governance/safety пройдены.
+Проект находится на стадии post-PRD-046.0.7 admin review workflow baseline: retrieval safety стабилизирован, а поверх него добавлен безопасный CLI/report workflow для human review enrichment-артефактов без мутации production KB.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -30,13 +30,13 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Diagnostic Card + Writer Move Compliance contracts.
 - Governance-first KB policy and redaction-safe trace.
 - BotDB/Chroma retrieval restore path.
+- Admin Review Workflow v1 (contracts + sanitizer + queue/decision validation CLI).
 
 ## Experimental / In Progress Modules
-- Admin Review workflow preparation (`PRD-046.0.7`).
-- Расширенные soft-review workflows для enrichment (manual review queue).
+- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`).
 
 ## Not Implemented Yet
-- Admin Review workflow for enrichment gating (`PRD-046.0.7`).
+- Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
 
 ## Known Risks
@@ -46,7 +46,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
 
 ## Next Planned PRDs
-1. PRD-046.0.7 - Admin Review Workflow v1.
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
 2. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
@@ -64,4 +64,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-10
-- Source cycle: PRD-046.0.6-HF1
+- Source cycle: PRD-046.0.7

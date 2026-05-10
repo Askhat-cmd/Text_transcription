@@ -71,3 +71,9 @@ Status: accepted
 Context: PRD-046.0.6 показал утечку `internal_only` hits в non-safety top-k при сохранении хорошего semantic качества.
 Decision: API-side retrieval policy (`retrieval_governance_safety_v1`) исключает `internal_only` hits из финального top-k для non-safety запросов; для safety-context allowance сохраняется.
 Consequences: закрыт safety-gate (`internal_only_unsafe_exposure_count=0`) без ослабления dataset и без мутации KB/governance authority.
+
+## ADR-013 - Human review decisions are stored as separate overlays before any KB apply step
+Status: accepted
+Context: после APPLY1 enrichment advisory metadata требует human-review, но прямое применение review решений в production KB без отдельного controlled apply шага повышает риск governance drift и неаудируемых мутаций.
+Decision: workflow `PRD-046.0.7` ограничивается безопасным сбором review queue и валидацией decisions overlay; решения хранятся отдельно и не применяются к `all_blocks_merged.json`/Chroma в рамках этого цикла.
+Consequences: review процесс становится воспроизводимым и проверяемым (sanitized artifacts + no-mutation proof), а фактический apply переносится в отдельный PRD с preflight/dry-run safety gates.

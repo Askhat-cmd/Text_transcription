@@ -1,0 +1,40 @@
+[PRD-046.0.6-HF1] Retrieval Governance Safety Fix runtime log (sanitized)
+timestamp_utc=2026-05-10T02:55:00Z
+api_base_url=http://127.0.0.1:8003
+dataset=Bot_data_base/eval/retrieval_eval_v1.json
+
+preflight:
+- baseline_internal_only_unsafe_exposure_count=4
+- baseline_weak_cases=[KR-002, KR-013, KR-022]
+- baseline_top5_semantic_match_rate=1.0
+- baseline_raw_full_text_leak_detected=false
+
+commands:
+1) python -m pytest Bot_data_base/tests/test_retrieval_governance_policy.py -q
+2) python -m pytest Bot_data_base/tests/test_api_query_internal_only_filter.py -q
+3) python Bot_data_base/tools/run_retrieval_eval.py --dataset Bot_data_base/eval/retrieval_eval_v1.json --api-base-url http://127.0.0.1:8003 --top-k 5 --timeout-seconds 20 --output-dir TO_DO_LIST/logs/PRD-046.0.6-HF1 --include-sanitized-previews
+4) python bot_psychologist/tools/botdb_retrieval_path_smoke.py --api-base-url http://127.0.0.1:8003 --top-k 5 --queries-file TO_DO_LIST/logs/PRD-046.0.6-HF1/policy_smoke_queries.txt --output TO_DO_LIST/logs/PRD-046.0.6-HF1/bot_retrieval_policy_smoke.json
+5) python -m pytest Bot_data_base/tests -q
+6) python -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+7) python -m pytest bot_psychologist/tests/multiagent -q
+
+hf1_scorecard:
+- cases_total=24
+- queries_failed=0
+- top1_semantic_match_rate=0.75
+- top3_semantic_match_rate=0.9583
+- top5_semantic_match_rate=1.0
+- top5_governance_present_rate=1.0
+- raw_full_text_leak_detected=false
+- internal_only_unsafe_exposure_count=0
+- weak_cases_count=0
+
+bot_smoke:
+- botdb_api_attempted=true
+- botdb_api_status=ok
+- retrieval_source=botdb_api
+- fallback_used=false
+- circuit_breaker_open=false
+
+note:
+- No `content_full` / `full_text` / raw KB dumps were written to HF1 reports/logs.

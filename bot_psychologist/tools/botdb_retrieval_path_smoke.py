@@ -63,14 +63,15 @@ def _summarize_hit(item: tuple[Any, float]) -> dict[str, Any]:
     }
 
 
-def run_smoke(*, api_base_url: str, top_k: int) -> dict[str, Any]:
+def run_smoke(*, api_base_url: str, top_k: int, prompts: list[str] | None = None) -> dict[str, Any]:
     config.KNOWLEDGE_SOURCE = "api"
     config.BOT_DB_URL = api_base_url.rstrip("/")
     retriever = SimpleRetriever()
+    prompt_list = list(prompts) if prompts else list(SMOKE_PROMPTS)
 
     rows: list[dict[str, Any]] = []
     api_path_ok = 0
-    for prompt in SMOKE_PROMPTS:
+    for prompt in prompt_list:
         hits = retriever.retrieve(prompt, top_k=top_k)
         retrieval_debug = retriever.get_last_retrieval_debug()
         retrieval_source_used = str(retrieval_debug.get("retrieval_source_used") or "")
@@ -112,9 +113,19 @@ def main() -> int:
         "--output",
         default="TO_DO_LIST/logs/PRD-046.0.4.3/bot_retrieval_path_smoke.json",
     )
+    parser.add_argument("--queries-file", default="")
     args = parser.parse_args()
 
-    payload = run_smoke(api_base_url=args.api_base_url, top_k=max(1, int(args.top_k)))
+    prompts = None
+    if str(args.queries_file or "").strip():
+        lines = Path(args.queries_file).read_text(encoding="utf-8").splitlines()
+        prompts = [line.strip() for line in lines if line.strip()]
+
+    payload = run_smoke(
+        api_base_url=args.api_base_url,
+        top_k=max(1, int(args.top_k)),
+        prompts=prompts,
+    )
     output_path = Path(args.output)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

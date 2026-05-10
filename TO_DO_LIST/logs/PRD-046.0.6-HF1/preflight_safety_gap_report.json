@@ -1,0 +1,10 @@
+﻿{
+    "baseline_internal_only_unsafe_exposure_count":  4,
+    "baseline_weak_cases":  [
+                                "KR-002",
+                                "KR-013",
+                                "KR-022"
+                            ],
+    "baseline_top5_semantic_match_rate":  1,
+    "baseline_raw_full_text_leak_detected":  false
+}

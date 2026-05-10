@@ -6,6 +6,7 @@ from typing import List, Optional
 from fastapi import APIRouter, HTTPException
 
 from api.schemas import QueryRequest, QueryResponse, ChunkResult
+from api.retrieval_policy import apply_retrieval_governance_policy
 from pipeline_runner import PipelineRunner
 from utils.reranker import VoyageReranker
 
@@ -180,10 +181,11 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
     enrichment_schema = str(meta.get("llm_enrichment_schema_version") or "").strip()
     governance = {}
     if governance_schema:
+        allowed_use = _split_csv(meta.get("governance_allowed_use"))
         governance = {
             "schema_version": governance_schema,
             "chunk_type": str(meta.get("governance_chunk_type") or "").strip(),
-            "allowed_use": _split_csv(meta.get("governance_allowed_use")),
+            "allowed_use": allowed_use,
             "safety_flags": _split_csv(meta.get("governance_safety_flags")),
             "lens_family": _split_csv(meta.get("governance_lens_family")),
             "low_resource_safe": _parse_bool(meta.get("governance_low_resource_safe")),
@@ -191,6 +193,7 @@ def _build_chunk_result(candidate: dict) -> ChunkResult:
             "source_style_not_user_facing": _parse_bool(
                 meta.get("governance_source_style_not_user_facing")
             ),
+            "internal_use_only": "internal_only" in {item.lower() for item in allowed_use},
             "chunking_quality": {
                 "section_role_hint": str(meta.get("section_role_hint") or "").strip(),
                 "heading_path_present": bool(str(meta.get("heading_path_text") or "").strip()),
@@ -269,6 +272,8 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
     where_filter = _build_where_filter(request)
     sd_filter_applied = request.sd_level > 0 and bool(where_filter.get("sd_level"))
 
+    raw_fetch_k = max(int(request.pre_filter_k), int(request.top_k) * 3, int(request.top_k) + 10)
+
     try:
         collection = _get_collection()
         query_embedding = _get_runner().chroma_manager._embed_texts([request.query])
@@ -279,7 +284,7 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
     def _query_collection(active_filter: Optional[dict]):
         return collection.query(
             query_embeddings=query_embedding,
-            n_results=request.pre_filter_k,
+            n_results=raw_fetch_k,
             where=active_filter if active_filter else None,
             include=["documents", "metadatas", "distances"],
         )
@@ -334,12 +339,16 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
             logger.warning("[QUERY] Voyage rerank failed: %s", exc)
             reranked = False
 
-    # Top-K
+    # Top-K + retrieval governance policy.
     candidates = sorted(candidates, key=lambda c: float(c.get("score") or 0.0), reverse=True)
-    top_candidates = candidates[: request.top_k]
+    top_candidates, policy_trace = apply_retrieval_governance_policy(
+        request.query,
+        candidates,
+        top_k=int(request.top_k),
+    )
 
     chunks = [_build_chunk_result(c) for c in top_candidates]
-    total_found = len(candidates)
+    total_found = len(top_candidates)
     query_time_ms = int((time.time() - start_ts) * 1000)
 
     log_level = os.getenv("LOG_LEVEL", "INFO").upper()
@@ -358,6 +367,8 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
             "where_filter": where_filter,
             "candidates": len(candidates),
             "pre_filter_k": request.pre_filter_k,
+            "raw_fetch_k": raw_fetch_k,
+            "retrieval_policy_trace": policy_trace,
         }
 
     return QueryResponse(

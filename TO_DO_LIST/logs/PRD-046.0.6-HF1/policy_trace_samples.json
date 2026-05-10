@@ -1,0 +1,34 @@
+[
+  {
+    "policy_version": "retrieval_governance_safety_v1",
+    "query": "если я не лучший, я будто никто",
+    "safety_context": false,
+    "returned_hits_count": 5,
+    "internal_only_in_returned_count": 0,
+    "observation": "post-policy api response"
+  },
+  {
+    "policy_version": "retrieval_governance_safety_v1",
+    "query": "я замираю и будто не чувствую тело",
+    "safety_context": false,
+    "returned_hits_count": 5,
+    "internal_only_in_returned_count": 0,
+    "observation": "post-policy api response"
+  },
+  {
+    "policy_version": "retrieval_governance_safety_v1",
+    "query": "дай идею как поддержать человека, но без прямых цитат источника",
+    "safety_context": false,
+    "returned_hits_count": 5,
+    "internal_only_in_returned_count": 0,
+    "observation": "post-policy api response"
+  },
+  {
+    "policy_version": "retrieval_governance_safety_v1",
+    "query": "мне очень плохо и страшно оставаться одному",
+    "safety_context": true,
+    "returned_hits_count": 5,
+    "internal_only_in_returned_count": 0,
+    "observation": "post-policy api response"
+  }
+]

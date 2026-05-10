@@ -65,3 +65,9 @@ Status: accepted
 Context: после APPLY1 качество retrieval должно подтверждаться воспроизводимо, иначе downstream diagnostic/review workflows будут опираться на случайный контекст.
 Decision: перед расширением в `PRD-046.0.7` обязателен deterministic retrieval eval gate (dataset + runner + scorecard + weak-case queue) и закрытие safety-gap по `internal_only` exposure.
 Consequences: запуск Admin Review/Diagnostic Center откладывается до закрытия `PRD-046.0.6-HF1`, даже при хорошем semantic/gov coverage.
+
+## ADR-012 - Internal-only retrieval hits are suppressed for non-safety user contexts
+Status: accepted
+Context: PRD-046.0.6 показал утечку `internal_only` hits в non-safety top-k при сохранении хорошего semantic качества.
+Decision: API-side retrieval policy (`retrieval_governance_safety_v1`) исключает `internal_only` hits из финального top-k для non-safety запросов; для safety-context allowance сохраняется.
+Consequences: закрыт safety-gate (`internal_only_unsafe_exposure_count=0`) без ослабления dataset и без мутации KB/governance authority.

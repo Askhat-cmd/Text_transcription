@@ -1,0 +1,418 @@
+{
+  "generated_at": "2026-05-10T02:51:02.064817+00:00",
+  "api_base_url": "http://127.0.0.1:8003",
+  "botdb_api_attempted": true,
+  "botdb_api_status": "ok",
+  "retrieval_source": "botdb_api",
+  "fallback_used": false,
+  "circuit_breaker_open": false,
+  "knowledge_hits_count": [
+    5,
+    5,
+    5,
+    5
+  ],
+  "queries": [
+    {
+      "query": "если я не лучший, я будто никто",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 5,
+      "top_hits": [
+        {
+          "id": "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+          "score": 0.5197588493706651,
+          "title": "Драйвер 2: «Будь лучшим»",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "achievement",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А…",
+          "llm_enrichment_summary": "Драйвер «Будь лучшим» формирует установку, что любовь и принятие зависят от достижений. Сравнения и похвала за успехи в детстве приводят к ощущению, что ценность человека определяется его результатами. Взрослые продолжают стремиться к успеху, испытывая внутреннее напряжение и страх перед отсутствием достижений. Это может привести к кризису идентичности, когда человек не знает, кто он без своих успехов. Работа над собой помогает научиться просто быть, а не достигать.",
+          "llm_enrichment_tags": [
+            "достижения",
+            "идентичность",
+            "внутреннее_напряжение"
+          ],
+          "llm_enrichment_use_when": [
+            "для понимания влияния достижений на самооценку",
+            "в контексте работы над идентичностью"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности",
+            "когда нужна срочная кризисная поддержка вместо исследования"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        },
+        {
+          "id": "e623328f-43b3-43f1-a147-15c56a412291",
+          "score": 0.5116610762745101,
+          "title": "5. Какой драйвер включился?",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "achievement"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "- «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "7df31d93-b90a-4c64-aef4-6842efe88039",
+          "score": 0.5009191726117234,
+          "title": "Страдание = идентичность",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "body_awareness",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Ещё более тонкая история: **твоё страдание стало частью твоей личности**. Ты так долго живёшь с ощущением «я недостаточен», что оно стало своим. Знакомым. И ес…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    },
+    {
+      "query": "я замираю и будто не чувствую тело",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 5,
+      "top_hits": [
+        {
+          "id": "88d99ba5-ee12-4681-ae38-698b811cb517",
+          "score": 0.5328680669962218,
+          "title": "5. Страх и тело: три режима нервной системы",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ],
+          "lens_family": [
+            "procrastination",
+            "freeze",
+            "body_awareness",
+            "relationships",
+            "boundaries",
+            "grief"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Когда говорят о страхе, обычно упоминают два состояния: «бей или беги». Но есть третье — и для многих людей оно самое распространённое. Нейробиолог **Стивен По…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "5a68a977-7d9c-4775-b088-7e9cedf0e273",
+          "score": 0.5026030707621161,
+          "title": "5. Freeze Response: когда мозг замирает",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "procrastination",
+            "freeze",
+            "body_awareness",
+            "grief"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Есть ещё один механизм, о котором говорят реже — но он работает у очень многих. Кроме «бей или беги» у нервной системы есть третья реакция на угрозу — **замира…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "4d82fe1b-05b0-472d-8586-66c002806f6b",
+          "score": 0.4882143975074078,
+          "title": "Практика 7: Сидеть в пустоте",
+          "source_type": "book",
+          "chunk_type": "practice",
+          "allowed_use": [
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [],
+          "not_for_direct_quote": true,
+          "content_preview": "**Цель:** научиться находиться в состоянии анестетической депрессии — не борясь с ней и не заполняя её. **Время:** 15–20 минут. Повторять, когда приходит это с…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    },
+    {
+      "query": "дай идею как поддержать человека, но без прямых цитат источника",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 5,
+      "top_hits": [
+        {
+          "id": "e1543a35-c55f-4e35-bf3c-d89bd3b61185",
+          "score": 0.5352905792710604,
+          "title": "Практика 4: Диалог с теневым «я»",
+          "source_type": "book",
+          "chunk_type": "practice",
+          "allowed_use": [
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "body_awareness",
+            "anger"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Цель:** прямой контакт с вытесненным содержанием. **Время:** 30 минут. Желательно письменно. Выбери одно качество из своей тени — то, которое ты уже определи…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "4a03ff01-2d1c-4d60-9cd0-a3a3d5947297",
+          "score": 0.5016440093852619,
+          "title": "Практика 6. «Письмо из шестой перспективы»",
+          "source_type": "book",
+          "chunk_type": "practice",
+          "allowed_use": [
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [],
+          "not_for_direct_quote": true,
+          "content_preview": "**Цель:** Соприкосновение с точкой зрения, которая шире «я» **Время:** 20–30 минут Возьми лист бумаги. Подумай о ситуации в своей жизни, которая сейчас сложная…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "e623328f-43b3-43f1-a147-15c56a412291",
+          "score": 0.49183536554998175,
+          "title": "5. Какой драйвер включился?",
+          "source_type": "book",
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "achievement"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "- «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    },
+    {
+      "query": "мне очень плохо и страшно оставаться одному",
+      "retrieval_source_attempted": "api",
+      "retrieval_source_used": "api",
+      "bot_db_circuit_open": false,
+      "bot_db_last_error_kind": null,
+      "bot_db_last_status_code": null,
+      "knowledge_hits_count": 5,
+      "top_hits": [
+        {
+          "id": "413026dc-7212-48e7-b679-fceba697700a",
+          "score": 0.510547414873859,
+          "title": "3. Страх как тюрьма: когда сигнал становится стеной",
+          "source_type": "book",
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "source_style_not_user_facing"
+          ],
+          "lens_family": [
+            "shame",
+            "self_criticism",
+            "avoidance",
+            "boundaries",
+            "control",
+            "identity"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная си…",
+          "llm_enrichment_summary": "Страх может стать тюрьмой из-за избегания, когда человек уклоняется от пугающих ситуаций. Это приводит к тому, что нервная система фиксирует избегание как успешную стратегию, что в свою очередь усиливает страх и сужает жизненное пространство. Каждый раз, когда страх останавливает действия, мозг запоминает это как безопасное решение, хотя на самом деле это лишь укрепляет паттерн избегания. В итоге, человек оказывается в ловушке, где каждое избегание кажется разумным, но в сумме создает клетку.",
+          "llm_enrichment_tags": [
+            "избегание",
+            "страх",
+            "психология"
+          ],
+          "llm_enrichment_use_when": [
+            "для понимания механизмов страха и избегания"
+          ],
+          "llm_enrichment_avoid_when": [
+            "при низком ресурсе",
+            "истощении или острой нестабильности",
+            "когда нужна срочная кризисная поддержка вместо исследования"
+          ],
+          "llm_enrichment_confidence": 0.0,
+          "llm_enrichment_review_status": "machine_candidate_needs_human_review",
+          "llm_enrichment_needs_human_review": true
+        },
+        {
+          "id": "7fbefd54-5286-4490-8d0f-64dac45de07a",
+          "score": 0.5051948492911842,
+          "title": "Практика 1: Карта страхов",
+          "source_type": "book",
+          "chunk_type": "practice",
+          "allowed_use": [
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "shame",
+            "relationships",
+            "boundaries",
+            "achievement",
+            "grief"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Цель:** выйти из отношений со страхом через называние и классификацию. **Время:** 30–40 минут. Один раз как исследование. Возьми лист бумаги. Напиши все стра…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        },
+        {
+          "id": "56f469a5-7720-432c-9457-88157141a9f2",
+          "score": 0.5017174002644642,
+          "title": "Практика 4: Встреча с малым страхом",
+          "source_type": "book",
+          "chunk_type": "practice",
+          "allowed_use": [
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ],
+          "lens_family": [
+            "boundaries"
+          ],
+          "not_for_direct_quote": true,
+          "content_preview": "**Цель:** начать обновлять нейронную оценку угрозы через малые шаги. **Время:** по ситуации. Регулярно — в течение нескольких недель. Выбери один маленький стр…",
+          "llm_enrichment_summary": null,
+          "llm_enrichment_tags": [],
+          "llm_enrichment_use_when": [],
+          "llm_enrichment_avoid_when": [],
+          "llm_enrichment_confidence": null,
+          "llm_enrichment_review_status": null,
+          "llm_enrichment_needs_human_review": null
+        }
+      ]
+    }
+  ]
+}

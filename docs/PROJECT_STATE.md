@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.6 retrieval-eval gating: real LLM enrichment overlay применен к governed processed blocks, API retrieval подтвержден на eval-наборе, quality thresholds по semantic/governance пройдены, но safety-gate по `internal_only` экспозиции в non-safety кейсах требует HF-калибровки.
+Проект находится на стадии post-PRD-046.0.6-HF1 retrieval safety stabilization: API retrieval policy откалиброван, `internal_only` утечки в non-safety top-k закрыты, eval-gates по semantic/governance/safety пройдены.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -32,12 +32,11 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - BotDB/Chroma retrieval restore path.
 
 ## Experimental / In Progress Modules
-- Retrieval governance safety calibration (`PRD-046.0.6-HF1`) для закрытия `internal_only` exposure.
+- Admin Review workflow preparation (`PRD-046.0.7`).
 - Расширенные soft-review workflows для enrichment (manual review queue).
 
 ## Not Implemented Yet
-- Retrieval governance safety HF-cycle после eval (`PRD-046.0.6-HF1`).
-- Admin Review workflow for enrichment gating (planned PRD-046.0.7, после HF1).
+- Admin Review workflow for enrichment gating (`PRD-046.0.7`).
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
 
 ## Known Risks
@@ -47,9 +46,8 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
 
 ## Next Planned PRDs
-1. PRD-046.0.6-HF1 - Retrieval Governance Safety Fix v1.
-2. PRD-046.0.7 - Admin Review Workflow v1.
-3. Diagnostic Center rollout PRD (deferred, after gates).
+1. PRD-046.0.7 - Admin Review Workflow v1.
+2. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -66,4 +64,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-10
-- Source cycle: PRD-046.0.6
+- Source cycle: PRD-046.0.6-HF1

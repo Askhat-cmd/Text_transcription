@@ -25,7 +25,7 @@
 | PRD-045.6.3-HF1 | Turn Summary Eval/Validator/Processor Evidence Calibration | done | 2469aee | eval dataset >=5, stronger validator guards, real pending->ready processor evidence | TO_DO_LIST/reports/PRD-045.6.3-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-DOCS-001 | Living project documentation v1 | done | 8912bb2 | create docs layer + report hygiene | TO_DO_LIST/reports/PRD-DOCS-001_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.6 | Knowledge Retrieval Eval Set v1 | done | b5e115f | deterministic retrieval eval dataset/runner, scorecard and weak-case queue; safety gap on internal_only exposure detected | TO_DO_LIST/reports/PRD-046.0.6_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.6-HF1 | Retrieval Governance Safety Fix v1 | done | pending post-push sync | API-side retrieval policy suppresses internal_only in non-safety top-k; eval gate closed (`internal_only_unsafe_exposure_count=0`) | TO_DO_LIST/reports/PRD-046.0.6-HF1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.6-HF1 | Retrieval Governance Safety Fix v1 | done | 64ec628 | API-side retrieval policy suppresses internal_only in non-safety top-k; eval gate closed (`internal_only_unsafe_exposure_count=0`) | TO_DO_LIST/reports/PRD-046.0.6-HF1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

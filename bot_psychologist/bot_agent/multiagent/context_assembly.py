@@ -461,6 +461,15 @@ def build_context_assembly_package_v1(
                 reasons.append("llm_summary_failed")
             elif validity_reason == "source_hash_mismatch":
                 reasons.append("llm_summary_source_hash_mismatch")
+            elif validity_reason in {
+                "diagnosis_language",
+                "direct_advice_voice",
+                "transcript_style_dump",
+                "summary_too_long",
+                "quote_too_long",
+                "empty_summary",
+            }:
+                reasons.append("llm_summary_invalid_content")
 
         micro_summary = build_turn_micro_summary_v1(
             turn_id=turn_id,

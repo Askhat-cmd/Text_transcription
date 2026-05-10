@@ -3,6 +3,7 @@
 ## Done
 - PRD-045.x: foundation runtime quality chain (multiagent contracts, context assembly baseline, diagnostic card and writer compliance alignment).
 - PRD-045.6.3: async turn LLM summary store integrated with deterministic fallback and context assembly trace reasons.
+- PRD-045.6.3-HF1: acceptance completion (eval>=5, validator safety guards, processor pending->ready evidence).
 - PRD-046.0..046.0.4.x: knowledge governance, Chroma recovery, governed reindex and API query restore.
 - PRD-046.0.5 + HF1 + RUN1 + HF2 + HF3: offline/real LLM enrichment pipeline calibrated to production-candidate quality on controlled batch.
 - PRD-046.0.5-APPLY1: controlled apply overlay + Chroma refresh + API/bot enrichment retrieval smoke.

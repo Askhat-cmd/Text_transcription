@@ -1,0 +1,58 @@
+{
+  "version": "turn_summary_trace_v1",
+  "cases": [
+    {
+      "case": "ready",
+      "summary_methods": [
+        "llm_abstractive_v1"
+      ],
+      "trace_reasons": [
+        "llm_summary_ready_used"
+      ]
+    },
+    {
+      "case": "pending",
+      "summary_methods": [
+        "deterministic_extractive_v1"
+      ],
+      "trace_reasons": [
+        "llm_summary_pending",
+        "llm_summary_fallback_deterministic",
+        "summary_marker_scored"
+      ]
+    },
+    {
+      "case": "failed",
+      "summary_methods": [
+        "deterministic_extractive_v1"
+      ],
+      "trace_reasons": [
+        "llm_summary_failed",
+        "llm_summary_fallback_deterministic",
+        "summary_marker_scored"
+      ]
+    },
+    {
+      "case": "hash_mismatch",
+      "summary_methods": [
+        "deterministic_extractive_v1"
+      ],
+      "trace_reasons": [
+        "llm_summary_source_hash_mismatch",
+        "llm_summary_fallback_deterministic",
+        "summary_marker_scored"
+      ]
+    },
+    {
+      "case": "unsafe",
+      "summary_methods": [
+        "deterministic_extractive_v1"
+      ],
+      "trace_reasons": [
+        "llm_summary_invalid_content",
+        "llm_summary_fallback_deterministic",
+        "summary_marker_scored"
+      ]
+    }
+  ]
+}

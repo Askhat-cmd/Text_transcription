@@ -1,0 +1,11 @@
+{
+  "cases_total": 5,
+  "required_case_types": [
+    "assistant_already_gave_practice",
+    "fear_of_evaluation_project",
+    "low_resource_no_analysis",
+    "open_loop_question",
+    "self_criticism_after_broken_promise"
+  ],
+  "all_required_case_types_present": true
+}

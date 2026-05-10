@@ -1,0 +1,11 @@
+{
+  "status": "ok",
+  "provider": "mock",
+  "test_user_id": "prd_04563_hf1_smoke",
+  "pending_before": 1,
+  "processed_count": 1,
+  "ready_count": 1,
+  "failed_count": 0,
+  "pending_after": 0,
+  "source_hash_match": true
+}

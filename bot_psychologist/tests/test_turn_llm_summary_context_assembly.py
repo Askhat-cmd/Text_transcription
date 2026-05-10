@@ -127,3 +127,26 @@ def test_context_assembly_ready_summary_hash_mismatch_fallback(monkeypatch) -> N
     methods = {item.summary_method for item in package.recent_turns_summarized}
     assert "deterministic_extractive_v1" in methods
     assert "llm_summary_source_hash_mismatch" in package.trace.reasons
+
+
+def test_context_assembly_unsafe_summary_falls_back_to_deterministic(monkeypatch) -> None:
+    monkeypatch.setattr(config, "TURN_LLM_SUMMARY_USE_IN_CONTEXT", True)
+    source_hash = compute_turn_source_hash(_long_user_text(), "Я рядом. Давай выберем один мягкий шаг.")
+    turn = _turn_with_summary(
+        {
+            "status": "ready",
+            "summary": "У пользователя депрессия и тебе нужно срочно действовать.",
+            "summary_version": "turn_llm_summary_v1",
+            "summary_method": "llm_abstractive_v1",
+            "source_hash": source_hash,
+            "created_at": "2026-05-09T00:00:00+00:00",
+        }
+    )
+    package = build_context_assembly_package_v1(
+        user_message="новое сообщение",
+        thread_state=_thread(),
+        memory_bundle=MemoryBundle(recent_turns=[turn]),
+    )
+    methods = {item.summary_method for item in package.recent_turns_summarized}
+    assert "deterministic_extractive_v1" in methods
+    assert "llm_summary_invalid_content" in package.trace.reasons

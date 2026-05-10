@@ -1,0 +1,3 @@
+﻿[INFO] PRD-045.6.3-HF1 runtime evidence is sanitized.
+[INFO] Artifacts include only counters, statuses, hashes, and trace reasons.
+[INFO] Raw full user/bot turn dumps are not included in HF1 reports/logs.

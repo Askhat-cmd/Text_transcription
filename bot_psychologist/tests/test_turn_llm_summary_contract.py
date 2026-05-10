@@ -54,3 +54,35 @@ def test_turn_llm_summary_contract_pending_fails_for_context_use() -> None:
     ok, reason = validate_turn_llm_summary(record, "abc123")
     assert ok is False
     assert reason == "pending"
+
+
+def test_turn_llm_summary_contract_rejects_diagnosis_language() -> None:
+    record = _ready_payload("abc123")
+    record.summary = "У пользователя депрессия, поэтому ему сложно начать разговор."
+    ok, reason = validate_turn_llm_summary(record, "abc123")
+    assert ok is False
+    assert reason == "diagnosis_language"
+
+
+def test_turn_llm_summary_contract_rejects_direct_advice_voice() -> None:
+    record = _ready_payload("abc123")
+    record.summary = "Тебе нужно срочно изменить поведение и обязательно сделай это сегодня."
+    ok, reason = validate_turn_llm_summary(record, "abc123")
+    assert ok is False
+    assert reason == "direct_advice_voice"
+
+
+def test_turn_llm_summary_contract_rejects_transcript_dump() -> None:
+    record = _ready_payload("abc123")
+    record.summary = "USER: мне тревожно ASSISTANT: давай подышим вместе"
+    ok, reason = validate_turn_llm_summary(record, "abc123")
+    assert ok is False
+    assert reason == "transcript_style_dump"
+
+
+def test_turn_llm_summary_contract_rejects_overlong_quote() -> None:
+    record = _ready_payload("abc123")
+    record.important_quote = "x" * 170
+    ok, reason = validate_turn_llm_summary(record, "abc123")
+    assert ok is False
+    assert reason == "quote_too_long"

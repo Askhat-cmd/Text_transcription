@@ -53,3 +53,9 @@ Status: accepted
 Context: после real LLM calibration появился production-candidate overlay, но governance authority должна оставаться deterministic.
 Decision: APPLY1 записывает enrichment только в `metadata.llm_enrichment` и retrieval metadata pass-through, не меняя `text/chunk_type/allowed_use/safety_flags`.
 Consequences: можно использовать enrichment для контекстного улучшения retrieval без подмены safety/governance контрактов.
+
+## ADR-010 - Turn summary validator must include safety-content guards
+Status: accepted
+Context: базовая проверка `ready/hash/version` недостаточна для безопасного использования summary в context assembly.
+Decision: validator для turn summaries обязан отклонять diagnosis assertions, direct advice/action voice, transcript-style dumps и overlong quote/summary payloads.
+Consequences: unsafe summaries автоматически уходят в deterministic fallback, а контекстный слой остаётся устойчивым перед запуском retrieval-eval цикла.

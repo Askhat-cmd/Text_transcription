@@ -95,31 +95,30 @@ class TestQueryEndpointBasic:
             assert "author_id" in chunk
 
 
-class TestQueryEndpointSDFilter:
-    def test_sd_level_0_returns_all_levels(self):
+class TestQueryEndpointLegacySD:
+    def test_sd_level_0_keeps_filter_off(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
         with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "практики", "sd_level": 0})
         assert response.json()["sd_filter_applied"] is False
 
-    def test_sd_level_4_applies_filter(self):
+    def test_sd_level_4_is_ignored_and_query_still_works(self):
         mock_collection = MagicMock()
         mock_collection.query.return_value = _mock_results()
         with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "практики", "sd_level": 4})
         assert response.status_code == 200
+        assert response.json()["sd_filter_applied"] is False
 
-    def test_fallback_when_no_sd_chunks(self):
+    def test_no_sd_fallback_retry_path(self):
         mock_collection = MagicMock()
-        mock_collection.query.side_effect = [
-            {"documents": [[]], "metadatas": [[]], "distances": [[]], "ids": [[]]},
-            _mock_results(),
-        ]
+        mock_collection.query.return_value = {"documents": [[]], "metadatas": [[]], "distances": [[]], "ids": [[]]}
         with _patched_query_runtime(mock_collection):
             response = client.post("/api/query/", json={"query": "редкий запрос xyz", "sd_level": 8})
         assert response.status_code == 200
         assert response.json()["sd_filter_applied"] is False
+        assert mock_collection.query.call_count == 1
 
 
 class TestQueryEndpointAuthorFilter:

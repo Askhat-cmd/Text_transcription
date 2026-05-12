@@ -17,16 +17,16 @@ router = APIRouter()
 _runner: PipelineRunner | None = None
 chroma_collection = None
 
-SD_LEVELS_ORDER = [
-    "BEIGE",
-    "PURPLE",
-    "RED",
-    "BLUE",
-    "ORANGE",
-    "GREEN",
-    "YELLOW",
-    "TURQUOISE",
-]
+SD_LEVEL_TO_INT = {
+    "BEIGE": 1,
+    "PURPLE": 2,
+    "RED": 3,
+    "BLUE": 4,
+    "ORANGE": 5,
+    "GREEN": 6,
+    "YELLOW": 7,
+    "TURQUOISE": 8,
+}
 
 
 def _get_runner() -> PipelineRunner:
@@ -43,34 +43,21 @@ def _get_collection():
     return chroma_collection
 
 
-def _sd_int_to_names(sd_level: int) -> List[str]:
-    if sd_level <= 0:
-        return []
-    allowed = [sd_level - 1, sd_level, sd_level + 1]
-    allowed = [l for l in allowed if 1 <= l <= 8]
-    return [SD_LEVELS_ORDER[l - 1] for l in allowed]
-
-
 def _sd_name_to_int(value: object) -> int:
     if isinstance(value, int):
         return value
     if not isinstance(value, str):
         return 0
     normalized = value.strip().upper()
-    if normalized in SD_LEVELS_ORDER:
-        return SD_LEVELS_ORDER.index(normalized) + 1
-    return 0
+    return int(SD_LEVEL_TO_INT.get(normalized, 0))
 
 
-def _build_where_filter(request: QueryRequest) -> dict:
+def _build_where_filter(request: QueryRequest) -> tuple[dict, bool]:
     where_filter: dict = {}
-    if request.sd_level > 0:
-        allowed_names = _sd_int_to_names(request.sd_level)
-        if allowed_names:
-            where_filter["sd_level"] = {"$in": allowed_names}
+    sd_level_ignored = request.sd_level > 0
     if request.author_id:
         where_filter["author_id"] = {"$eq": request.author_id}
-    return where_filter
+    return where_filter, sd_level_ignored
 
 
 def _split_csv(value: object) -> list[str]:
@@ -269,8 +256,8 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
     Основной эндпоинт для bot_psychologist.
     """
     start_ts = time.time()
-    where_filter = _build_where_filter(request)
-    sd_filter_applied = request.sd_level > 0 and bool(where_filter.get("sd_level"))
+    where_filter, sd_level_ignored = _build_where_filter(request)
+    sd_filter_applied = False
 
     raw_fetch_k = max(int(request.pre_filter_k), int(request.top_k) * 3, int(request.top_k) + 10)
 
@@ -297,23 +284,11 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
         raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
     # Fallback: если SD-фильтр дал слишком мало результатов
-    if request.sd_level > 0 and len(candidates) < 2:
-        logger.warning(
-            "[QUERY] SD-filter fallback: sd_level=%s results=%s -> retry without filter",
+    if request.sd_level > 0:
+        logger.info(
+            "[QUERY] legacy sd_level=%s ignored (SD decommission, no active filter)",
             request.sd_level,
-            len(candidates),
         )
-        sd_filter_applied = False
-        try:
-            results = _query_collection(
-                {"author_id": where_filter["author_id"]}
-                if where_filter.get("author_id")
-                else None
-            )
-            candidates = _extract_candidates(results)
-        except Exception as exc:
-            logger.error("[QUERY] Chroma query failed on fallback: %s", exc)
-            raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
     # Scoring
     if request.search_mode == "hybrid":
@@ -368,6 +343,9 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
             "candidates": len(candidates),
             "pre_filter_k": request.pre_filter_k,
             "raw_fetch_k": raw_fetch_k,
+            "legacy_sd_deprecated": True,
+            "sd_filter_applied": False,
+            "sd_level_ignored": sd_level_ignored,
             "retrieval_policy_trace": policy_trace,
         }
 

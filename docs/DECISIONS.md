@@ -77,3 +77,15 @@ Status: accepted
 Context: после APPLY1 enrichment advisory metadata требует human-review, но прямое применение review решений в production KB без отдельного controlled apply шага повышает риск governance drift и неаудируемых мутаций.
 Decision: workflow `PRD-046.0.7` ограничивается безопасным сбором review queue и валидацией decisions overlay; решения хранятся отдельно и не применяются к `all_blocks_merged.json`/Chroma в рамках этого цикла.
 Consequences: review процесс становится воспроизводимым и проверяемым (sanitized artifacts + no-mutation proof), а фактический apply переносится в отдельный PRD с preflight/dry-run safety gates.
+
+## ADR-014 - Legacy SD classification is decommissioned from active BotDB admin/query path
+Status: accepted
+Context: SD-поля исторически присутствуют в данных, но их активное использование в BotDB Admin/UI/API как production-сигнала создаёт ложную модель состояния KB и мешает hygiene/reprocess readiness этапу.
+Decision: для BotDB admin/query surfaces SD больше не используется как active filter/signal; в `/api/query` `sd_level` переводится в deprecated no-op с явным debug trace, а SD-визуалы удаляются из dashboard/registry UI.
+Consequences: снижен риск ошибочного operational решения на SD-сигналах; совместимость клиентов сохранена через backward-compatible поле без влияния на retrieval.
+
+## ADR-015 - Source registry cleanup must go through snapshot+archive workflow before clean reprocess
+Status: accepted
+Context: ручные удаления и смешанные test/stale источники в registry приводят к непрозрачному состоянию и блокируют безопасный clean reprocess.
+Decision: cleanup выполняется через контролируемый `audit -> plan -> dry-run/apply` процесс с обязательной защитой focus source и запретом hard-delete источников с `blocks_count > 0`; перед mutation обязателен snapshot.
+Consequences: улучшена воспроизводимость и обратимость hygiene-операций; readiness gate может детерминированно объяснять blockers/warnings перед запуском reprocess.

@@ -4,21 +4,21 @@
   return resp.json();
 }
 
-function buildSdBars(sd) {
-  const container = document.getElementById('sd-bars');
+function renderGovernanceReadiness(readiness) {
+  const container = document.getElementById('governance-readiness');
   if (!container) return;
   container.innerHTML = '';
-  const entries = Object.entries(sd || {});
+  const entries = Object.entries(readiness || {});
   if (!entries.length) {
     container.innerHTML = '<div class="muted">Нет данных</div>';
     return;
   }
-  entries.forEach(([level, count]) => {
+  entries.forEach(([label, count]) => {
     const row = document.createElement('div');
     row.className = 'sd-bar';
     const bar = document.createElement('span');
-    bar.style.width = `${Math.min(100, count * 6)}px`;
-    row.innerHTML = `<strong>${level}</strong>`;
+    bar.style.width = `${Math.min(100, Number(count || 0) * 10)}px`;
+    row.innerHTML = `<strong>${label}</strong>`;
     row.appendChild(bar);
     row.appendChild(document.createTextNode(`${count}`));
     container.appendChild(row);
@@ -31,7 +31,7 @@ async function loadDashboard() {
     document.getElementById('stat-sources').textContent = stats.total_sources ?? 0;
     document.getElementById('stat-blocks').textContent = stats.total_blocks ?? 0;
     document.getElementById('stat-chroma').textContent = stats.chroma_total ?? 0;
-    buildSdBars(stats.sd_distribution);
+    renderGovernanceReadiness(stats.governance_readiness);
 
     const reg = await fetchJSON('/api/registry/');
     const list = document.getElementById('recent-list');

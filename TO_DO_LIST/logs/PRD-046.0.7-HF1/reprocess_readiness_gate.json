@@ -1,0 +1,23 @@
+{
+  "schema_version": "reprocess_readiness_gate_v1",
+  "source_prd": "PRD-046.0.7-HF1",
+  "generated_at": "2026-05-12T09:34:53.188784+00:00",
+  "ready_for_clean_reprocess": false,
+  "status": "not_ready",
+  "blockers": [
+    "multiple_active_sources_without_allowlist"
+  ],
+  "warnings": [],
+  "active_source_count": 3,
+  "active_source_id": "123__кузница_духа",
+  "active_source_title": "Кузница Духа",
+  "legacy_sd_active": false,
+  "registry_stale_sources_count": 2,
+  "empty_sources_count": 6,
+  "processing_stale_count": 2,
+  "raw_source_found": true,
+  "processed_blocks_count": 229,
+  "chroma_count": 229,
+  "review_queue_items_count": 87,
+  "recommendation": "Сначала закрыть blockers/warnings из readiness gate."
+}

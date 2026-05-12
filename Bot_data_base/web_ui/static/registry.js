@@ -8,6 +8,8 @@ async function loadRegistry() {
   const body = document.getElementById('registry-body');
   body.innerHTML = '';
   (data.sources || []).forEach((s) => {
+    const hygieneReason = Array.isArray(s.hygiene_reason) ? s.hygiene_reason.join(', ') : '';
+    const canDelete = (Number(s.blocks_count || 0) === 0) && !s.is_focus_source;
     const row = document.createElement('tr');
     row.innerHTML = `
       <td>${s.source_type}</td>
@@ -15,10 +17,10 @@ async function loadRegistry() {
       <td>${s.title || s.source_id}</td>
       <td>${s.language || ''}</td>
       <td>${s.blocks_count ?? 0}</td>
-      <td>${JSON.stringify(s.sd_distribution || {})}</td>
+      <td><strong>${s.recommended_hygiene_action || 'manual_review'}</strong><br><span class="muted">${hygieneReason}</span></td>
       <td>${s.status}</td>
       <td>${s.added_at}</td>
-      <td><button class="btn secondary" data-id="${s.source_id}">Удалить</button></td>
+      <td><button class="btn secondary" data-id="${s.source_id}" ${canDelete ? '' : 'disabled'}>${canDelete ? 'Удалить' : 'Защищено'}</button></td>
     `;
     body.appendChild(row);
   });
@@ -26,7 +28,11 @@ async function loadRegistry() {
   body.querySelectorAll('button[data-id]').forEach((btn) => {
     btn.addEventListener('click', async () => {
       const id = btn.getAttribute('data-id');
-      await fetch(`/api/registry/${id}`, { method: 'DELETE' });
+      const resp = await fetch(`/api/registry/${id}`, { method: 'DELETE' });
+      if (!resp.ok) {
+        const payload = await resp.json().catch(() => ({}));
+        alert(payload.detail || 'Удаление отклонено политикой гигиены');
+      }
       await loadRegistry();
     });
   });

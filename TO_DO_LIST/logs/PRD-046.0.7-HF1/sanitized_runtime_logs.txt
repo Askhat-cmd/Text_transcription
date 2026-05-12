@@ -1,0 +1,8 @@
+[2026-05-12] PRD-046.0.7-HF1 run
+source_hygiene_audit.mode=normal
+source_hygiene_apply.mode=dry_run
+source_hygiene_apply.registry_mutated=false
+legacy_sd_filter_still_active=false
+reprocess_readiness.status=not_ready
+reprocess_readiness.blockers=multiple_active_sources_without_allowlist
+note=No reprocess, no Chroma reset/reindex, no runtime-writer changes.

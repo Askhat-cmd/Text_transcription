@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.7 admin review workflow baseline: retrieval safety стабилизирован, а поверх него добавлен безопасный CLI/report workflow для human review enrichment-артефактов без мутации production KB.
+Проект находится на стадии post-PRD-046.0.7-HF1 admin source hygiene + legacy SD decommission baseline: SD активный фильтр в BotDB API/UI отключён, source hygiene audit/plan/gate внедрены, но clean reprocess пока заблокирован readiness-blocker'ом по множественным active sources.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -31,11 +31,14 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Governance-first KB policy and redaction-safe trace.
 - BotDB/Chroma retrieval restore path.
 - Admin Review Workflow v1 (contracts + sanitizer + queue/decision validation CLI).
+- BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`).
+- Source hygiene blocker-fix cycle before clean reprocess (`PRD-046.0.7-HF2`).
+- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) отложен после clean-reprocess chain.
 
 ## Not Implemented Yet
+- Clean source reprocess from single active source (`PRD-046.0.8`).
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
 
@@ -44,10 +47,14 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - В окружениях с нестабильной кодировкой входа возможны искажения текстовых сигналов; safety-guards должны сохраняться conservative.
 - Premature Diagnostic Center launch создаст ложную уверенность в диагностике при неготовом context-quality слое.
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
+- До закрытия hygiene blocker (`multiple_active_sources_without_allowlist`) запуск clean reprocess рискован.
 
 ## Next Planned PRDs
-1. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
-2. Diagnostic Center rollout PRD (deferred, after gates).
+1. PRD-046.0.7-HF2 - Source Hygiene Blocker Fix v1.
+2. PRD-046.0.8 - Clean Source Reprocess from Single Active Source v1.
+3. PRD-046.0.8.1 - Chroma Reindex + KB Quality Re-Audit after Reprocess.
+4. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+5. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -63,5 +70,5 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 5. TO_DO_LIST остается детальным архивом, docs — краткая operational map.
 
 ## Last Updated
-- Date: 2026-05-10
-- Source cycle: PRD-046.0.7
+- Date: 2026-05-12
+- Source cycle: PRD-046.0.7-HF1

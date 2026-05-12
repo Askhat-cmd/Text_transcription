@@ -39,10 +39,13 @@ class StatsResponse(BaseModel):
     chroma_total: int
     sd_distribution: dict
     sources_by_type: dict
+    legacy_sd_active: bool = False
+    governance_readiness: dict = Field(default_factory=dict)
 
 
 class QueryRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=2000)
+    # Legacy compatibility field: accepted but ignored in retrieval filtering.
     sd_level: int = Field(default=0, ge=0, le=8)
     top_k: int = Field(default=5, ge=1, le=50)
     pre_filter_k: int = Field(default=20, ge=5, le=100)
@@ -72,6 +75,7 @@ class QueryResponse(BaseModel):
     total_found: int
     reranked: bool
     search_mode: str
+    # Always false in v1.1+: SD filter is deprecated and no longer active.
     sd_filter_applied: bool
     query_time_ms: int
     debug: Optional[dict] = None

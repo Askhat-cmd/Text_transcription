@@ -1,0 +1,98 @@
+{
+  "schema_version": "source_hygiene_plan_v1",
+  "source_prd": "PRD-046.0.7-HF1",
+  "generated_at": "2026-05-12T09:34:31.251916+00:00",
+  "mode": "dry_run",
+  "valid": true,
+  "focus_source_protected": true,
+  "planned_actions": [
+    {
+      "source_id": "123__кузница_духа",
+      "status": "done",
+      "blocks_count": 229,
+      "is_focus_source": true,
+      "action": "keep",
+      "reason": [
+        "focus_source_protected"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "failed",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "failed",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "processing",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "processing",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "processing",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "processing",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    }
+  ],
+  "planned_archive_count": 6,
+  "planned_safe_delete_zero_block_count": 0,
+  "blocked_actions_count": 0,
+  "errors": [],
+  "warnings": []
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "source_hygiene_apply_result_v1",
+  "source_prd": "PRD-046.0.7-HF1",
+  "generated_at": "2026-05-12T09:34:31.251916+00:00",
+  "mode": "dry_run",
+  "valid": true,
+  "mutated": false,
+  "registry_mutated": false,
+  "focus_source_protected": true,
+  "planned_archive_count": 6,
+  "planned_safe_delete_zero_block_count": 0,
+  "blocked_actions_count": 0,
+  "applied_mutation_count": 0,
+  "errors": [],
+  "warnings": []
+}

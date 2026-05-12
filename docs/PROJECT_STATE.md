@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.8-HF1 candidate governance calibration: для единственного active source (`123__кузница_духа`) собран candidate без мутаций production (`all_blocks_merged/registry/chroma`), direct-practice misclassification закрыт (`0`), gate остается `candidate_needs_governance_calibration` из-за non-critical mixed-intent warnings.
+Проект находится на стадии post-PRD-046.0.8-HF2 candidate warning calibration: для единственного active source (`123__кузница_духа`) candidate повторно откалиброван без мутаций production (`all_blocks_merged/registry/chroma`), direct-practice/mixed-intent blockers закрыты, governance gate `passed`, `candidate_ready_for_apply=true`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -34,7 +34,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Remaining candidate governance warning calibration (`PRD-046.0.8-HF2`).
+- Controlled candidate apply + Chroma reindex подготовка (`PRD-046.0.8.1`).
 - Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) отложен после clean-reprocess chain.
 
 ## Not Implemented Yet
@@ -47,12 +47,12 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - В окружениях с нестабильной кодировкой входа возможны искажения текстовых сигналов; safety-guards должны сохраняться conservative.
 - Premature Diagnostic Center launch создаст ложную уверенность в диагностике при неготовом context-quality слое.
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
-- До закрытия `PRD-046.0.8-HF2` сохраняются mixed-intent warning кейсы в candidate-reprocess наборе.
+- Переход к `PRD-046.0.8.1` требует строгого соблюдения no-mutation preflight discipline до controlled apply шага.
 
 ## Next Planned PRDs
-1. PRD-046.0.8-HF2 - Remaining Candidate Governance Warning Calibration v1.
-2. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
-3. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+1. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+3. Diagnostic Center rollout PRD (deferred, after gates).
 4. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
@@ -70,4 +70,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-12
-- Source cycle: PRD-046.0.8-HF1
+- Source cycle: PRD-046.0.8-HF2

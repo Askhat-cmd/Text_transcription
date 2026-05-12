@@ -748,6 +748,163 @@ def build_practice_like_report(
     }
 
 
+def _is_dialogue_or_case_text(text: str) -> bool:
+    low = _normalize(text).lower()
+    if low.lstrip().startswith(">"):
+        return True
+    return any(marker in low for marker in CASE_OR_DIALOGUE_MARKERS)
+
+
+def _mixed_intent_resolution_for_block(block: dict[str, Any]) -> dict[str, Any] | None:
+    meta = block.get("metadata") or {}
+    quality = meta.get("chunking_quality") if isinstance(meta.get("chunking_quality"), dict) else {}
+    if not isinstance(quality, dict):
+        return None
+    if not bool(quality.get("mixed_intent_risk")):
+        return None
+    severity_before = _normalize(quality.get("mixed_intent_severity")).lower()
+    if severity_before not in {"high", "medium"}:
+        return None
+
+    governance = meta.get("governance") if isinstance(meta.get("governance"), dict) else {}
+    text = _normalize(block.get("text"))
+    taxonomy = (quality.get("practice_taxonomy_v1") or {}).get("label")
+    if not taxonomy:
+        taxonomy, _ = _practice_taxonomy_for_text(text)
+    chunk_type_before = _normalize(governance.get("chunk_type")) or _normalize(quality.get("primary_role")) or "unknown"
+    secondary_before = _as_list(quality.get("secondary_role_markers"))
+    if not secondary_before and _practice_markers(text):
+        secondary_before = ["practice"]
+
+    is_direct = _is_direct_practice_protocol(text)
+    is_dialogue_case = _is_dialogue_or_case_text(text)
+    is_quote = _normalize(text).startswith(">")
+
+    resolution = "primary_role_resolved"
+    split_merge_suggestion = "no_split_required"
+    review_reasons: list[str] = []
+    primary_after = chunk_type_before
+    secondary_after = _dedupe(secondary_before)
+    severity_after = "low"
+    mixed_risk_after = False
+
+    if is_direct and is_dialogue_case:
+        resolution = "review_only"
+        split_merge_suggestion = "manual_review_no_auto_split"
+        review_reasons = ["dialogue_contains_instructional_segments"]
+        primary_after = "case"
+        secondary_after = _dedupe(secondary_after + ["practice"])
+        severity_after = "low"
+        mixed_risk_after = False
+    elif is_dialogue_case and not is_direct:
+        resolution = "false_positive"
+        split_merge_suggestion = "no_split_required"
+        review_reasons = []
+        primary_after = "case" if not is_quote else "quote"
+        secondary_after = _dedupe([marker for marker in secondary_after if marker != "practice"])
+    elif is_direct and ("цель:" in text.lower() and "время:" in text.lower() and "шаг 1" in text.lower()):
+        # Protocol + long narrative in one block can require manual split.
+        resolution = "split_required"
+        split_merge_suggestion = "candidate_manual_split_review"
+        review_reasons = ["direct_practice_with_heavy_narrative_context"]
+        primary_after = "practice"
+        secondary_after = _dedupe(secondary_after + ["case"])
+        severity_after = "high"
+        mixed_risk_after = True
+    else:
+        resolution = "primary_role_resolved"
+        split_merge_suggestion = "no_split_required"
+        review_reasons = []
+        primary_after = chunk_type_before
+        secondary_after = _dedupe(secondary_after)
+
+    if primary_after and primary_after != "unknown" and isinstance(governance, dict):
+        governance["chunk_type"] = primary_after
+        allowed_use = _as_list(governance.get("allowed_use"))
+        safety_flags = _as_list(governance.get("safety_flags"))
+        if primary_after != "practice" and "practice_suggestion" in allowed_use:
+            allowed_use = [item for item in allowed_use if item != "practice_suggestion"]
+        governance["allowed_use"] = _dedupe(allowed_use)
+        governance["safety_flags"] = _dedupe(safety_flags + ["not_for_direct_quote"])
+        meta["governance"] = governance
+
+    quality["mixed_intent_resolution"] = resolution
+    quality["primary_role_after"] = primary_after
+    quality["secondary_role_markers_after"] = secondary_after
+    quality["split_merge_suggestion"] = split_merge_suggestion
+    quality["review_reasons"] = review_reasons
+    quality["mixed_intent_severity_before"] = severity_before
+    quality["mixed_intent_severity_after"] = severity_after
+    quality["mixed_intent_risk_before"] = True
+    quality["mixed_intent_risk"] = mixed_risk_after
+    quality["mixed_intent_severity"] = severity_after
+    quality["mixed_intent_reason_after"] = "resolved_by_candidate_calibration"
+    meta["chunking_quality"] = quality
+    block["metadata"] = meta
+
+    return {
+        "block_id": _normalize(block.get("id")),
+        "current_chunk_type": chunk_type_before,
+        "primary_role_before": _normalize(quality.get("primary_role")) or chunk_type_before,
+        "secondary_role_markers_before": secondary_before,
+        "mixed_intent_severity_before": severity_before,
+        "taxonomy": taxonomy or "unknown",
+        "recommended_resolution": resolution,
+        "safe_preview": _safe_preview(text, 220),
+        "primary_role_after": primary_after,
+        "secondary_role_markers_after": secondary_after,
+        "mixed_intent_severity_after": severity_after,
+        "review_reasons": review_reasons,
+    }
+
+
+def build_mixed_intent_audit_report(
+    *,
+    source_prd: str,
+    candidate_blocks: list[dict[str, Any]],
+) -> dict[str, Any]:
+    mixed_intent_cases: list[dict[str, Any]] = []
+    mixed_intent_alerts_before = 0
+    split_required_count = 0
+    review_only_count = 0
+    false_positive_count = 0
+    primary_role_resolved_count = 0
+    unresolved_count = 0
+
+    for block in candidate_blocks:
+        row = _mixed_intent_resolution_for_block(block)
+        if row is None:
+            continue
+        mixed_intent_alerts_before += 1
+        mixed_intent_cases.append(row)
+        resolution = _normalize(row.get("recommended_resolution"))
+        if resolution == "split_required":
+            split_required_count += 1
+            unresolved_count += 1
+        elif resolution == "review_only":
+            review_only_count += 1
+        elif resolution == "false_positive":
+            false_positive_count += 1
+        elif resolution == "primary_role_resolved":
+            primary_role_resolved_count += 1
+        else:
+            unresolved_count += 1
+
+    return {
+        "schema_version": "candidate_mixed_intent_audit_v1",
+        "source_prd": source_prd,
+        "generated_at": _utc_now(),
+        "candidate_blocks_count": len(candidate_blocks),
+        "mixed_intent_alerts_before": mixed_intent_alerts_before,
+        "mixed_intent_unresolved_count": unresolved_count,
+        "mixed_intent_split_required_count": split_required_count,
+        "mixed_intent_review_only_count": review_only_count,
+        "mixed_intent_false_positive_count": false_positive_count,
+        "mixed_intent_primary_role_resolved_count": primary_role_resolved_count,
+        "mixed_intent_cases": mixed_intent_cases,
+    }
+
+
 def build_no_mutation_check(
     *,
     source_prd: str,
@@ -786,6 +943,7 @@ def build_candidate_governance_gate(
     no_mutation_check: dict[str, Any],
     candidate_blocks: list[dict[str, Any]],
     practice_taxonomy_report: dict[str, Any] | None = None,
+    mixed_intent_audit_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     blockers: list[str] = []
     warnings: list[str] = []
@@ -830,6 +988,67 @@ def build_candidate_governance_gate(
         warnings.append("contextual_false_positive_detected")
     if unsafe_practice_suggestion_count > 0:
         warnings.append("unsafe_practice_suggestion_detected")
+
+    if mixed_intent_audit_report is not None:
+        mixed_before = _to_int(mixed_intent_audit_report.get("mixed_intent_alerts_before"))
+        mixed_unresolved = _to_int(mixed_intent_audit_report.get("mixed_intent_unresolved_count"))
+        mixed_split_required = _to_int(mixed_intent_audit_report.get("mixed_intent_split_required_count"))
+        mixed_review_only = _to_int(mixed_intent_audit_report.get("mixed_intent_review_only_count"))
+        mixed_false_positive = _to_int(mixed_intent_audit_report.get("mixed_intent_false_positive_count"))
+        if mixed_review_only > 0:
+            warnings.append("review_only_mixed_intent_detected")
+
+        candidate_ready_for_apply = (
+            len(blockers) == 0
+            and misclassified_count == 0
+            and unsafe_practice_suggestion_count == 0
+            and contextual_false_positive_count == 0
+            and mixed_unresolved == 0
+            and mixed_split_required == 0
+            and float(candidate_stats.get("source_id_consistency_rate") or 0.0) == 1.0
+            and float(candidate_stats.get("governance_present_rate") or 0.0) == 1.0
+            and float(candidate_stats.get("chunking_quality_present_rate") or 0.0) == 1.0
+            and float(candidate_stats.get("allowed_use_present_rate") or 0.0) == 1.0
+            and float(candidate_stats.get("safety_flags_present_rate") or 0.0) == 1.0
+            and not bool(candidate_stats.get("sd_labeling_active"))
+            and bool(no_mutation_check.get("passed"))
+        )
+
+        if blockers:
+            status = "failed"
+            next_prd = "PRD-046.0.8-HF2-BLOCKER — Candidate Governance Blocker Fix v1"
+        elif mixed_split_required > 0:
+            status = "candidate_needs_manual_split_review"
+            next_prd = "PRD-046.0.8-HF3 — Candidate Manual Split Review / Deterministic Split v1"
+        elif misclassified_count > 0 or unsafe_practice_suggestion_count > 0 or mixed_unresolved > 0:
+            status = "candidate_needs_governance_calibration"
+            next_prd = "PRD-046.0.8-HF2-FIX — Remaining Governance Calibration Fix v1"
+        elif candidate_ready_for_apply:
+            status = "passed"
+            next_prd = "PRD-046.0.8.1 — Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1"
+        else:
+            status = "candidate_needs_governance_calibration"
+            next_prd = "PRD-046.0.8-HF2-FIX — Remaining Governance Calibration Fix v1"
+
+        return {
+            "schema_version": "candidate_governance_gate_v3",
+            "source_prd": source_prd,
+            "generated_at": _utc_now(),
+            "status": status,
+            "blockers": blockers,
+            "warnings": warnings,
+            "direct_practice_misclassified_count": misclassified_count,
+            "unsafe_practice_suggestion_count": unsafe_practice_suggestion_count,
+            "contextual_false_positive_count": contextual_false_positive_count,
+            "mixed_intent_alerts_before": mixed_before,
+            "mixed_intent_unresolved_count": mixed_unresolved,
+            "mixed_intent_split_required_count": mixed_split_required,
+            "mixed_intent_review_only_count": mixed_review_only,
+            "mixed_intent_false_positive_count": mixed_false_positive,
+            "candidate_ready_for_apply": candidate_ready_for_apply,
+            "mixed_intent_alerts": mixed_intent_alerts,
+            "next_recommended_prd": next_prd,
+        }
 
     if blockers:
         status = "failed"
@@ -932,7 +1151,12 @@ def _render_governance_gate_report(gate: dict[str, Any], source_prd: str) -> str
         f"- direct_practice_misclassified_count: `{gate.get('direct_practice_misclassified_count', gate.get('practice_like_misclassified_count'))}`",
         f"- unsafe_practice_suggestion_count: `{gate.get('unsafe_practice_suggestion_count', 0)}`",
         f"- contextual_false_positive_count: `{gate.get('contextual_false_positive_count', 0)}`",
-        f"- mixed_intent_alerts: `{gate.get('mixed_intent_alerts')}`",
+        f"- mixed_intent_alerts_before: `{gate.get('mixed_intent_alerts_before', gate.get('mixed_intent_alerts'))}`",
+        f"- mixed_intent_unresolved_count: `{gate.get('mixed_intent_unresolved_count', 0)}`",
+        f"- mixed_intent_split_required_count: `{gate.get('mixed_intent_split_required_count', 0)}`",
+        f"- mixed_intent_review_only_count: `{gate.get('mixed_intent_review_only_count', 0)}`",
+        f"- mixed_intent_false_positive_count: `{gate.get('mixed_intent_false_positive_count', 0)}`",
+        f"- candidate_ready_for_apply: `{gate.get('candidate_ready_for_apply', False)}`",
         f"- next_recommended_prd: `{gate.get('next_recommended_prd')}`",
         "",
         "## Blockers",
@@ -998,6 +1222,32 @@ def _render_practice_taxonomy_report(report: dict[str, Any], source_prd: str) ->
     return "\n".join(lines)
 
 
+def _render_mixed_intent_audit_report(report: dict[str, Any], source_prd: str) -> str:
+    lines = [
+        f"# {source_prd} MIXED INTENT AUDIT REPORT",
+        "",
+        "## Metrics",
+        f"- candidate_blocks_count: `{report.get('candidate_blocks_count')}`",
+        f"- mixed_intent_alerts_before: `{report.get('mixed_intent_alerts_before')}`",
+        f"- mixed_intent_unresolved_count: `{report.get('mixed_intent_unresolved_count')}`",
+        f"- mixed_intent_split_required_count: `{report.get('mixed_intent_split_required_count')}`",
+        f"- mixed_intent_review_only_count: `{report.get('mixed_intent_review_only_count')}`",
+        f"- mixed_intent_false_positive_count: `{report.get('mixed_intent_false_positive_count')}`",
+        "",
+        "## Cases",
+    ]
+    rows = report.get("mixed_intent_cases") or []
+    if not rows:
+        lines.append("- none")
+    else:
+        for row in rows[:20]:
+            lines.append(
+                f"- `{row.get('block_id')}` severity_before=`{row.get('mixed_intent_severity_before')}` resolution=`{row.get('recommended_resolution')}` primary_after=`{row.get('primary_role_after')}`"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def _render_no_mutation_report(report: dict[str, Any], source_prd: str) -> str:
     lines = [
         f"# {source_prd} NO-MUTATION REPORT",
@@ -1033,9 +1283,11 @@ def _render_implementation_report(
     source_prd: str,
     candidate_stats: dict[str, Any],
     practice_taxonomy_report: dict[str, Any],
+    mixed_intent_audit_report: dict[str, Any] | None,
     governance_gate: dict[str, Any],
     no_mutation_check: dict[str, Any],
 ) -> str:
+    mixed = mixed_intent_audit_report or {}
     return "\n".join(
         [
             f"# {source_prd} IMPLEMENTATION REPORT",
@@ -1053,7 +1305,7 @@ def _render_implementation_report(
             "- Registry mutated: false",
             "- Chroma reindex performed: false",
             "- Production apply performed: false",
-            "- Reprocess mode: candidate calibration",
+            "- Reprocess mode: candidate warning calibration",
             "",
             "## Candidate",
             f"- candidate_blocks_count: `{candidate_stats.get('candidate_blocks_count')}`",
@@ -1071,8 +1323,16 @@ def _render_implementation_report(
             f"- contextual_false_positive_count: `{practice_taxonomy_report.get('contextual_false_positive_count')}`",
             f"- unsafe_practice_suggestion_count: `{practice_taxonomy_report.get('unsafe_practice_suggestion_count')}`",
             "",
+            "## Mixed Intent",
+            f"- mixed_intent_alerts_before: `{mixed.get('mixed_intent_alerts_before', governance_gate.get('mixed_intent_alerts_before', governance_gate.get('mixed_intent_alerts')) )}`",
+            f"- mixed_intent_unresolved_count: `{governance_gate.get('mixed_intent_unresolved_count', mixed.get('mixed_intent_unresolved_count', 0))}`",
+            f"- mixed_intent_split_required_count: `{governance_gate.get('mixed_intent_split_required_count', mixed.get('mixed_intent_split_required_count', 0))}`",
+            f"- mixed_intent_review_only_count: `{governance_gate.get('mixed_intent_review_only_count', mixed.get('mixed_intent_review_only_count', 0))}`",
+            f"- mixed_intent_false_positive_count: `{governance_gate.get('mixed_intent_false_positive_count', mixed.get('mixed_intent_false_positive_count', 0))}`",
+            "",
             "## Governance Gate",
             f"- status: `{governance_gate.get('status')}`",
+            f"- candidate_ready_for_apply: `{governance_gate.get('candidate_ready_for_apply', False)}`",
             f"- blockers: `{governance_gate.get('blockers')}`",
             f"- warnings: `{governance_gate.get('warnings')}`",
             f"- next_recommended_prd: `{governance_gate.get('next_recommended_prd')}`",
@@ -1136,7 +1396,7 @@ def run_clean_source_reprocess_cli(
 
     if not bool(preflight.get("passed")):
         failed_gate = {
-            "schema_version": "candidate_governance_gate_v2",
+            "schema_version": "candidate_governance_gate_v3",
             "source_prd": source_prd,
             "generated_at": _utc_now(),
             "status": "failed",
@@ -1145,9 +1405,15 @@ def run_clean_source_reprocess_cli(
             "direct_practice_misclassified_count": 0,
             "unsafe_practice_suggestion_count": 0,
             "contextual_false_positive_count": 0,
+            "mixed_intent_alerts_before": 0,
+            "mixed_intent_unresolved_count": 0,
+            "mixed_intent_split_required_count": 0,
+            "mixed_intent_review_only_count": 0,
+            "mixed_intent_false_positive_count": 0,
+            "candidate_ready_for_apply": False,
             "practice_like_misclassified_count": 0,
             "mixed_intent_alerts": 0,
-            "next_recommended_prd": "PRD-046.0.8-HF1-FIX — Candidate Governance Blocker Fix v1",
+            "next_recommended_prd": "PRD-046.0.8-HF2-BLOCKER — Candidate Governance Blocker Fix v1",
         }
         _save_json(output_dir / "governance_gate.json", failed_gate)
         _save_markdown(
@@ -1212,6 +1478,16 @@ def run_clean_source_reprocess_cli(
         reports_dir / f"{source_prd}_PRACTICE_LIKE_REPORT.md",
         _render_practice_like_report(practice_like_report, source_prd),
     )
+    mixed_intent_audit_report = build_mixed_intent_audit_report(
+        source_prd=source_prd,
+        candidate_blocks=candidate_blocks,
+    )
+    _save_json(output_dir / "mixed_intent_audit.json", mixed_intent_audit_report)
+    _save_markdown(
+        reports_dir / f"{source_prd}_MIXED_INTENT_AUDIT_REPORT.md",
+        _render_mixed_intent_audit_report(mixed_intent_audit_report, source_prd),
+    )
+    _save_json(output_dir / "clean_reprocess_candidate.json", candidate_payload)
 
     hash_after = _snapshot_hashes(
         all_blocks_path=all_blocks_path,
@@ -1240,6 +1516,7 @@ def run_clean_source_reprocess_cli(
         no_mutation_check=no_mutation_check,
         candidate_blocks=candidate_blocks,
         practice_taxonomy_report=practice_taxonomy_report,
+        mixed_intent_audit_report=mixed_intent_audit_report,
     )
     _save_json(output_dir / "governance_gate.json", governance_gate)
     _save_markdown(
@@ -1256,6 +1533,7 @@ def run_clean_source_reprocess_cli(
             source_prd=source_prd,
             candidate_stats=candidate_stats,
             practice_taxonomy_report=practice_taxonomy_report,
+            mixed_intent_audit_report=mixed_intent_audit_report,
             governance_gate=governance_gate,
             no_mutation_check=no_mutation_check,
         ),
@@ -1269,6 +1547,8 @@ def run_clean_source_reprocess_cli(
                 f"source_id={source_id}",
                 f"candidate_blocks_count={candidate_stats.get('candidate_blocks_count')}",
                 f"direct_practice_misclassified_count={practice_taxonomy_report.get('direct_practice_misclassified_count')}",
+                f"mixed_intent_alerts_before={mixed_intent_audit_report.get('mixed_intent_alerts_before')}",
+                f"mixed_intent_unresolved_count={mixed_intent_audit_report.get('mixed_intent_unresolved_count')}",
                 f"governance_gate_status={governance_gate.get('status')}",
                 f"no_mutation_passed={no_mutation_check.get('passed')}",
             ]

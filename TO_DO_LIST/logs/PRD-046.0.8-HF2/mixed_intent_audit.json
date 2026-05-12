@@ -1,0 +1,46 @@
+{
+  "schema_version": "candidate_mixed_intent_audit_v1",
+  "source_prd": "PRD-046.0.8-HF2",
+  "generated_at": "2026-05-12T12:18:05.071371+00:00",
+  "candidate_blocks_count": 247,
+  "mixed_intent_alerts_before": 2,
+  "mixed_intent_unresolved_count": 0,
+  "mixed_intent_split_required_count": 0,
+  "mixed_intent_review_only_count": 0,
+  "mixed_intent_false_positive_count": 2,
+  "mixed_intent_primary_role_resolved_count": 0,
+  "mixed_intent_cases": [
+    {
+      "block_id": "c781ff12-ea81-4d19-9bb1-e36e63574f1e",
+      "current_chunk_type": "theory",
+      "primary_role_before": "theory",
+      "secondary_role_markers_before": [
+        "practice"
+      ],
+      "mixed_intent_severity_before": "medium",
+      "taxonomy": "case_or_dialogue_about_practice",
+      "recommended_resolution": "false_positive",
+      "safe_preview": "После прохождения — один вопрос: *Какое общее послание несёт тело прямо сейчас?* Не анализируй. Просто услышь. > Из сессии: > > **Нурлан, 44 года:** Я попробовал эту практику — и вдруг понял, что не чувствовал свой жи...",
+      "primary_role_after": "case",
+      "secondary_role_markers_after": [],
+      "mixed_intent_severity_after": "low",
+      "review_reasons": []
+    },
+    {
+      "block_id": "35fa3df5-190b-4901-9308-5400165c4906",
+      "current_chunk_type": "theory",
+      "primary_role_before": "theory",
+      "secondary_role_markers_before": [
+        "practice"
+      ],
+      "mixed_intent_severity_before": "medium",
+      "taxonomy": "unknown",
+      "recommended_resolution": "false_positive",
+      "safe_preview": "> Из сессии: > > **Айгерим, 33 года:** Это звучит слишком просто. У меня серьёзная тревога. Пять вдохов её не уберут. > > **Саламат:** Правильно. Не уберут. Задача не убрать тревогу. Задача — на пять секунд выйти из е...",
+      "primary_role_after": "quote",
+      "secondary_role_markers_after": [],
+      "mixed_intent_severity_after": "low",
+      "review_reasons": []
+    }
+  ]
+}

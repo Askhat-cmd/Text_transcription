@@ -1,0 +1,19 @@
+{
+  "schema_version": "candidate_governance_gate_v3",
+  "source_prd": "PRD-046.0.8-HF2",
+  "generated_at": "2026-05-12T12:18:05.093180+00:00",
+  "status": "passed",
+  "blockers": [],
+  "warnings": [],
+  "direct_practice_misclassified_count": 0,
+  "unsafe_practice_suggestion_count": 0,
+  "contextual_false_positive_count": 0,
+  "mixed_intent_alerts_before": 2,
+  "mixed_intent_unresolved_count": 0,
+  "mixed_intent_split_required_count": 0,
+  "mixed_intent_review_only_count": 0,
+  "mixed_intent_false_positive_count": 2,
+  "candidate_ready_for_apply": true,
+  "mixed_intent_alerts": 0,
+  "next_recommended_prd": "PRD-046.0.8.1 — Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1"
+}

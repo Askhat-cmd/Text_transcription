@@ -1,0 +1,66 @@
+{
+  "schema_version": "clean_reprocess_preflight_v1",
+  "source_prd": "PRD-046.0.8-HF2",
+  "generated_at": "2026-05-12T12:18:04.474394+00:00",
+  "passed": true,
+  "blockers": [],
+  "ready_for_clean_reprocess": true,
+  "active_source_count": 1,
+  "active_source_id": "123__кузница_духа",
+  "active_source_title": "Кузница Духа",
+  "active_source_type": "book",
+  "legacy_sd_active": false,
+  "raw_markdown_found": true,
+  "raw_markdown_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\uploads\\books\\КУЗНИЦА ДУХА v.2.md",
+  "old_processed_blocks_count": 229,
+  "old_registry_blocks_count": 229,
+  "chroma_count_before": 229,
+  "hash_before": {
+    "all_blocks_merged": {
+      "exists": true,
+      "sha256": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f"
+    },
+    "registry": {
+      "exists": true,
+      "sha256": "b1fdbe8b742c5af433035d93ef2f4d03e92ac93217217393d264ea0528c87117"
+    },
+    "review_queue": {
+      "exists": true,
+      "sha256": "a8628c74a583ab9510938891d459e3e0fd4c17f9ff8ffe72d68c1505a326a848"
+    },
+    "readiness_gate_hf2": {
+      "exists": true,
+      "sha256": "e046bf3ce074a4e977f7198dabacc7f9e1f7b8b913d613d911e0588bbe37afa8"
+    }
+  },
+  "_registry_row": {
+    "source_id": "123__кузница_духа",
+    "source_type": "book",
+    "title": "Кузница Духа",
+    "author": "Саламат Сарсекенов",
+    "author_id": "123",
+    "language": "ru",
+    "status": "done",
+    "added_at": "2026-03-13T04:38:44.281566",
+    "processed_at": "2026-03-13T04:45:18.951270",
+    "blocks_count": 229,
+    "sd_distribution": {
+      "GREEN": 113,
+      "BLUE": 16,
+      "YELLOW": 67,
+      "RED": 4,
+      "ORANGE": 7,
+      "BEIGE": 9,
+      "PURPLE": 2,
+      "TURQUOISE": 1,
+      "UNCERTAIN": 10
+    },
+    "file_paths": {
+      "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+      "chroma": true,
+      "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  }
+}

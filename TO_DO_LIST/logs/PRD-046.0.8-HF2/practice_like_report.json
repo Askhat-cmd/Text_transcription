@@ -1,0 +1,9 @@
+{
+  "schema_version": "practice_like_report_v1",
+  "source_prd": "PRD-046.0.8-HF2",
+  "generated_at": "2026-05-12T12:18:05.069193+00:00",
+  "practice_like_candidates_count": 92,
+  "practice_like_as_practice_count": 43,
+  "practice_like_misclassified_count": 0,
+  "misclassified_examples": []
+}

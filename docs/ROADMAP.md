@@ -14,15 +14,15 @@
 - PRD-046.0.7-HF2: blocker fix delivered; controlled archive apply completed, `active_source_count=1`, readiness gate switched to `ready` for clean reprocess.
 - PRD-046.0.8: clean source reprocess executed in candidate-only mode; production data unchanged; gate result `candidate_needs_governance_calibration`.
 - PRD-046.0.8-HF1: candidate practice taxonomy/governance calibration delivered; `direct_practice_misclassified_count=0`, `unsafe_practice_suggestion_count=0`, gate remains `candidate_needs_governance_calibration` due non-critical mixed-intent warnings.
+- PRD-046.0.8-HF2: remaining mixed-intent warnings calibrated (`2 -> 0` unresolved), governance gate `passed`, `candidate_ready_for_apply=true`, production remains unchanged.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.0.8-HF2 - Remaining Candidate Governance Warning Calibration v1.
-2. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
-3. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
-4. Diagnostic Center rollout PRD after readiness gates.
+1. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+3. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

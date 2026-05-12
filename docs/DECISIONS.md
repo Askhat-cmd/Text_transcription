@@ -89,3 +89,9 @@ Status: accepted
 Context: ручные удаления и смешанные test/stale источники в registry приводят к непрозрачному состоянию и блокируют безопасный clean reprocess.
 Decision: cleanup выполняется через контролируемый `audit -> plan -> dry-run/apply` процесс с обязательной защитой focus source и запретом hard-delete источников с `blocks_count > 0`; перед mutation обязателен snapshot.
 Consequences: улучшена воспроизводимость и обратимость hygiene-операций; readiness gate может детерминированно объяснять blockers/warnings перед запуском reprocess.
+
+## ADR-016 - Clean source reprocess must be candidate-first before any production apply/reindex
+Status: accepted
+Context: после закрытия hygiene blocker нужно пересобрать knowledge source из raw markdown, но прямой apply в production (`all_blocks_merged`/Chroma/registry) без измеримого candidate quality увеличивает риск regression и не даёт изолировать причину деградации.
+Decision: этап `PRD-046.0.8` выполняется только в `candidate` режиме: reprocess строится из single active source, формируются preflight/stats/diff/governance gate/practice-like/no-mutation артефакты, при этом production data и runtime path не мутируются.
+Consequences: решение о reindex/apply переносится в отдельный PRD на основе gate-результата; при проблемах классификации запускается HF-калибровка вместо опасной production мутации.

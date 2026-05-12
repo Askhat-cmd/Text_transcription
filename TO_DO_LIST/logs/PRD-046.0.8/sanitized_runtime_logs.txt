@@ -1,0 +1,6 @@
+[2026-05-12T10:53:34.401073+00:00] PRD-046.0.8 candidate clean reprocess run
+mode=candidate
+source_id=123__кузница_духа
+candidate_blocks_count=247
+governance_gate_status=candidate_needs_governance_calibration
+no_mutation_passed=True

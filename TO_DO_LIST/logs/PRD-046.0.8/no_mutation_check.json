@@ -1,0 +1,13 @@
+{
+  "schema_version": "no_mutation_check_v1",
+  "source_prd": "PRD-046.0.8",
+  "generated_at": "2026-05-12T10:53:34.396063+00:00",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "review_queue_mutated": false,
+  "readiness_hf2_mutated": false,
+  "chroma_count_before": 229,
+  "chroma_count_after": 229,
+  "chroma_mutated": false,
+  "passed": true
+}

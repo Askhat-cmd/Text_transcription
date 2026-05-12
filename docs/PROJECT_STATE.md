@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.7-HF2 hygiene blocker fix: SD активный фильтр в BotDB API/UI отключён, source hygiene apply выполнен в guarded режиме, readiness gate переведён в `ready` для clean reprocess из единственного active source.
+Проект находится на стадии post-PRD-046.0.8 candidate clean reprocess: для единственного active source (`123__кузница_духа`) собран staged candidate без мутаций production (`all_blocks_merged/registry/chroma`), а governance gate зафиксирован как `candidate_needs_governance_calibration`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -34,11 +34,11 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Clean source reprocess planning from single active source (`PRD-046.0.8`).
+- Candidate governance/practice calibration для clean reprocess (`PRD-046.0.8-HF1`).
 - Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) отложен после clean-reprocess chain.
 
 ## Not Implemented Yet
-- Clean source reprocess from single active source (`PRD-046.0.8`).
+- Controlled candidate apply + Chroma reindex + post-reprocess KB quality re-audit (`PRD-046.0.8.1`).
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
 
@@ -47,11 +47,11 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - В окружениях с нестабильной кодировкой входа возможны искажения текстовых сигналов; safety-guards должны сохраняться conservative.
 - Premature Diagnostic Center launch создаст ложную уверенность в диагностике при неготовом context-quality слое.
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
-- Clean reprocess остаётся high-risk операцией и требует строгого выполнения preflight/checkpoint дисциплины в `PRD-046.0.8`.
+- До закрытия `PRD-046.0.8-HF1` сохраняется риск некорректной practice/lens классификации в candidate-reprocess наборе.
 
 ## Next Planned PRDs
-1. PRD-046.0.8 - Clean Source Reprocess from Single Active Source v1.
-2. PRD-046.0.8.1 - Chroma Reindex + KB Quality Re-Audit after Reprocess.
+1. PRD-046.0.8-HF1 - Candidate Governance / Practice Classification Calibration v1.
+2. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
 3. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
 4. Diagnostic Center rollout PRD (deferred, after gates).
 
@@ -70,4 +70,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-12
-- Source cycle: PRD-046.0.7-HF2
+- Source cycle: PRD-046.0.8

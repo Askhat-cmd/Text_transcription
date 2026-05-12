@@ -1,0 +1,52 @@
+{
+  "schema_version": "candidate_stats_v1",
+  "source_prd": "PRD-046.0.8",
+  "generated_at": "2026-05-12T10:53:34.381029+00:00",
+  "source_id": "123__кузница_духа",
+  "candidate_blocks_count": 247,
+  "old_processed_blocks_count": 229,
+  "block_count_delta": 18,
+  "source_id_consistency_rate": 1.0,
+  "governance_present_rate": 1.0,
+  "chunking_quality_present_rate": 1.0,
+  "allowed_use_present_rate": 1.0,
+  "safety_flags_present_rate": 1.0,
+  "not_for_direct_quote_present_count": 247,
+  "source_style_not_user_facing_present_count": 0,
+  "chunk_type_distribution": {
+    "case": 8,
+    "lens": 33,
+    "practice": 67,
+    "quote": 90,
+    "safety": 2,
+    "style": 1,
+    "theory": 46
+  },
+  "allowed_use_distribution": {
+    "diagnostic_lens": 41,
+    "practice_suggestion": 67,
+    "safety_protocol": 2,
+    "style_guidance": 1,
+    "writer_context": 247
+  },
+  "safety_flags_distribution": {
+    "not_for_direct_quote": 247,
+    "practice_requires_low_resource_check": 67,
+    "requires_grounding": 33
+  },
+  "lens_family_distribution": {
+    "avoidance": 4,
+    "safety": 2,
+    "self_worth": 2,
+    "somatic": 67
+  },
+  "sd_labeling_active": false,
+  "old_distribution": {
+    "chunk_type_distribution": {
+      "unknown": 229
+    },
+    "allowed_use_distribution": {},
+    "safety_flags_distribution": {}
+  },
+  "candidate_ready_for_next_step": true
+}

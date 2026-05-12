@@ -1,0 +1,13 @@
+{
+  "schema_version": "governance_gate_v1",
+  "source_prd": "PRD-046.0.8",
+  "generated_at": "2026-05-12T10:53:34.397763+00:00",
+  "status": "candidate_needs_governance_calibration",
+  "blockers": [],
+  "warnings": [
+    "mixed_intent_high_medium_detected"
+  ],
+  "practice_like_misclassified_count": 11,
+  "mixed_intent_alerts": 2,
+  "next_recommended_prd": "PRD-046.0.8-HF1 — Candidate Governance / Practice Classification Calibration v1"
+}

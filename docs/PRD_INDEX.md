@@ -27,7 +27,7 @@
 | PRD-046.0.6 | Knowledge Retrieval Eval Set v1 | done | b5e115f | deterministic retrieval eval dataset/runner, scorecard and weak-case queue; safety gap on internal_only exposure detected | TO_DO_LIST/reports/PRD-046.0.6_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.6-HF1 | Retrieval Governance Safety Fix v1 | done | 64ec628 | API-side retrieval policy suppresses internal_only in non-safety top-k; eval gate closed (`internal_only_unsafe_exposure_count=0`) | TO_DO_LIST/reports/PRD-046.0.6-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.7 | Admin Review Workflow v1 | done | 4b24388 | review contracts/sanitizer + CLI queue builder/decision validator + sanitized review artifacts with no-mutation proof | TO_DO_LIST/reports/PRD-046.0.7_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.7-HF1 | BotDB Admin Source Hygiene / Legacy SD Decommission / Reprocess Readiness Gate | done | pending | source hygiene audit/apply dry-run + SD decommission in admin/query + readiness gate (`not_ready` blocker surfaced) | TO_DO_LIST/reports/PRD-046.0.7-HF1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.7-HF1 | BotDB Admin Source Hygiene / Legacy SD Decommission / Reprocess Readiness Gate | done | b7c630f | source hygiene audit/apply dry-run + SD decommission in admin/query + readiness gate (`not_ready` blocker surfaced) | TO_DO_LIST/reports/PRD-046.0.7-HF1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

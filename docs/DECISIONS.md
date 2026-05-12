@@ -95,3 +95,9 @@ Status: accepted
 Context: после закрытия hygiene blocker нужно пересобрать knowledge source из raw markdown, но прямой apply в production (`all_blocks_merged`/Chroma/registry) без измеримого candidate quality увеличивает риск regression и не даёт изолировать причину деградации.
 Decision: этап `PRD-046.0.8` выполняется только в `candidate` режиме: reprocess строится из single active source, формируются preflight/stats/diff/governance gate/practice-like/no-mutation артефакты, при этом production data и runtime path не мутируются.
 Consequences: решение о reindex/apply переносится в отдельный PRD на основе gate-результата; при проблемах классификации запускается HF-калибровка вместо опасной production мутации.
+
+## ADR-017 - Direct practice protocols require deterministic classification before candidate apply
+Status: accepted
+Context: после `PRD-046.0.8` candidate показал practice-like ambiguity (`practice_like_misclassified_count > 0`), что делало переход к controlled apply/reindex рискованным.
+Decision: для candidate-governance вводится deterministic practice taxonomy (`direct_practice_protocol`, `practice_context_or_theory`, `case_or_dialogue_about_practice`, `quote_or_source_fragment_with_practice_terms`) и gate v2 с отдельными метриками `direct_practice_misclassified_count` и `unsafe_practice_suggestion_count`. Direct practice обязан иметь `chunk_type=practice`, `practice_suggestion` в `allowed_use`, а также safety bundle (`not_for_direct_quote`, `practice_requires_low_resource_check`).
+Consequences: candidate apply/reindex запрещен, пока direct-practice misclassification не равен `0`; contextual/mixed-intent warnings обрабатываются отдельным HF-warning циклом без мутации production данных.

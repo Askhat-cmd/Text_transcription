@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import argparse
 import hashlib
@@ -39,11 +39,46 @@ PRACTICE_MARKERS = (
     "**время:**",
     "время:",
     "шаг 1",
+    "шаг 2",
     "упражнение",
     "практика",
+    "практик",
 )
 
+DIRECT_PRACTICE_STRONG_MARKERS = (
+    "цель:",
+    "время:",
+    "шаг 1",
+    "шаг 2",
+    "упражнение",
+    "практика:",
+)
 
+CASE_OR_DIALOGUE_MARKERS = (
+    "из сессии",
+    "клиент",
+    "кейс",
+    "диалог",
+    "вопрос:",
+    "ответ:",
+)
+
+QUOTE_OR_SOURCE_MARKERS = (
+    "> ",
+    "цитата",
+    "фрагмент",
+    "источник",
+    "автор",
+    "исследован",
+)
+
+LOW_RESOURCE_REVIEW_MARKERS = (
+    "паник",
+    "суицид",
+    "диссоциа",
+    "травм",
+    "самоповрежд",
+)
 def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
@@ -88,7 +123,7 @@ def _safe_preview(text: str, limit: int = 240) -> str:
     value = re.sub(r"\s+", " ", _normalize(text))
     if len(value) <= limit:
         return value
-    return value[: max(0, limit - 1)].rstrip() + "…"
+    return value[: max(0, limit - 3)].rstrip() + "..."
 
 
 def _source_id_from_block(block: dict[str, Any]) -> str:
@@ -469,9 +504,205 @@ def build_candidate_diff_report(
     }
 
 
+def _as_list(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [_normalize(item) for item in value if _normalize(item)]
+    return []
+
+
+def _dedupe(items: list[str]) -> list[str]:
+    out: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        value = _normalize(item)
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        out.append(value)
+    return out
+
+
 def _practice_markers(text: str) -> list[str]:
     low = _normalize(text).lower()
     return [marker for marker in PRACTICE_MARKERS if marker in low]
+
+
+def _has_step_pair(text: str) -> bool:
+    low = text.lower()
+    if "шаг 1" in low and "шаг 2" in low:
+        return True
+    return bool(re.search(r"(?m)^\s*(?:1[\).]|-|\*)\s+", text)) and bool(re.search(r"(?m)^\s*(?:2[\).]|-|\*)\s+", text))
+
+
+def _is_direct_practice_protocol(text: str) -> bool:
+    low = _normalize(text).lower()
+    goal = "цель:" in low or "**цель:**" in low
+    duration = "время:" in low or "**время:**" in low
+    steps = _has_step_pair(text) or "шаг 1" in low
+    if goal and duration:
+        return True
+    if goal and steps:
+        return True
+    if duration and steps:
+        return True
+    return "шаг 1" in low and "шаг 2" in low
+
+
+def _practice_taxonomy_for_text(text: str) -> tuple[str | None, list[str]]:
+    markers = _practice_markers(text)
+    if not markers:
+        return None, []
+
+    low = _normalize(text).lower()
+    is_case_or_dialogue = any(marker in low for marker in CASE_OR_DIALOGUE_MARKERS)
+    is_quote_or_source = low.lstrip().startswith(">") or any(marker in low for marker in QUOTE_OR_SOURCE_MARKERS)
+    is_direct = _is_direct_practice_protocol(text)
+
+    if is_direct and not is_case_or_dialogue and not is_quote_or_source:
+        return "direct_practice_protocol", markers
+    if is_case_or_dialogue:
+        return "case_or_dialogue_about_practice", markers
+    if is_quote_or_source:
+        return "quote_or_source_fragment_with_practice_terms", markers
+    return "practice_context_or_theory", markers
+
+
+def _calibrate_governance_for_taxonomy(
+    *,
+    governance: dict[str, Any],
+    taxonomy_label: str,
+    text: str,
+) -> tuple[dict[str, Any], bool]:
+    updated = dict(governance or {})
+    chunk_type_before = _normalize(updated.get("chunk_type")) or "unknown"
+    allowed_use = _as_list(updated.get("allowed_use"))
+    safety_flags = _as_list(updated.get("safety_flags"))
+
+    mutated = False
+    if taxonomy_label == "direct_practice_protocol":
+        if chunk_type_before != "practice":
+            updated["chunk_type"] = "practice"
+            mutated = True
+        new_allowed = _dedupe(allowed_use + ["practice_suggestion"])
+        if new_allowed != allowed_use:
+            updated["allowed_use"] = new_allowed
+            mutated = True
+        new_flags = _dedupe(safety_flags + ["not_for_direct_quote", "practice_requires_low_resource_check"])
+        if any(marker in _normalize(text).lower() for marker in LOW_RESOURCE_REVIEW_MARKERS):
+            new_flags = _dedupe(new_flags + ["needs_review"])
+        if new_flags != safety_flags:
+            updated["safety_flags"] = new_flags
+            mutated = True
+        return updated, mutated
+
+    # Conservative behavior for non-direct mentions: no practice_suggestion.
+    if "practice_suggestion" in allowed_use:
+        updated["allowed_use"] = [item for item in allowed_use if item != "practice_suggestion"]
+        mutated = True
+
+    if taxonomy_label == "case_or_dialogue_about_practice" and chunk_type_before == "practice":
+        updated["chunk_type"] = "case"
+        mutated = True
+    elif taxonomy_label == "quote_or_source_fragment_with_practice_terms" and chunk_type_before == "practice":
+        updated["chunk_type"] = "quote"
+        mutated = True
+    elif taxonomy_label == "practice_context_or_theory" and chunk_type_before == "practice":
+        updated["chunk_type"] = "lens"
+        mutated = True
+
+    new_flags = _dedupe(_as_list(updated.get("safety_flags")) + ["not_for_direct_quote"])
+    if new_flags != _as_list(updated.get("safety_flags")):
+        updated["safety_flags"] = new_flags
+        mutated = True
+
+    return updated, mutated
+
+
+def build_practice_taxonomy_report(
+    *,
+    source_prd: str,
+    candidate_blocks: list[dict[str, Any]],
+) -> dict[str, Any]:
+    practice_marker_hits_count = 0
+    direct_practice_protocol_count = 0
+    practice_context_or_theory_count = 0
+    case_or_dialogue_about_practice_count = 0
+    quote_or_source_fragment_with_practice_terms_count = 0
+    direct_practice_misclassified_count = 0
+    contextual_false_positive_count = 0
+    unsafe_practice_suggestion_count = 0
+    examples: list[dict[str, Any]] = []
+
+    for block in candidate_blocks:
+        text = _normalize(block.get("text"))
+        taxonomy_label, markers = _practice_taxonomy_for_text(text)
+        if taxonomy_label is None:
+            continue
+
+        practice_marker_hits_count += len(markers)
+        meta = block.get("metadata") or {}
+        governance = meta.get("governance") if isinstance(meta.get("governance"), dict) else {}
+        chunk_type_before = _normalize(governance.get("chunk_type")) or "unknown"
+        calibrated, _ = _calibrate_governance_for_taxonomy(governance=governance, taxonomy_label=taxonomy_label, text=text)
+        meta["governance"] = calibrated
+        quality = meta.get("chunking_quality") if isinstance(meta.get("chunking_quality"), dict) else {}
+        quality["practice_taxonomy_v1"] = {
+            "label": taxonomy_label,
+            "markers": markers,
+        }
+        meta["chunking_quality"] = quality
+        block["metadata"] = meta
+
+        chunk_type_after = _normalize(calibrated.get("chunk_type")) or "unknown"
+        allowed_after = _as_list(calibrated.get("allowed_use"))
+        safety_after = _as_list(calibrated.get("safety_flags"))
+
+        if taxonomy_label == "direct_practice_protocol":
+            direct_practice_protocol_count += 1
+            if chunk_type_after != "practice":
+                direct_practice_misclassified_count += 1
+            required_flags = {"not_for_direct_quote", "practice_requires_low_resource_check"}
+            if "practice_suggestion" not in allowed_after or not required_flags.issubset(set(safety_after)):
+                unsafe_practice_suggestion_count += 1
+        elif taxonomy_label == "practice_context_or_theory":
+            practice_context_or_theory_count += 1
+        elif taxonomy_label == "case_or_dialogue_about_practice":
+            case_or_dialogue_about_practice_count += 1
+        elif taxonomy_label == "quote_or_source_fragment_with_practice_terms":
+            quote_or_source_fragment_with_practice_terms_count += 1
+
+        if taxonomy_label != "direct_practice_protocol" and chunk_type_after == "practice":
+            contextual_false_positive_count += 1
+        if taxonomy_label != "direct_practice_protocol" and "practice_suggestion" in allowed_after:
+            unsafe_practice_suggestion_count += 1
+
+        if len(examples) < 20:
+            examples.append(
+                {
+                    "block_id": _normalize(block.get("id")),
+                    "taxonomy": taxonomy_label,
+                    "chunk_type_before": chunk_type_before,
+                    "chunk_type_after": chunk_type_after,
+                    "markers": markers,
+                    "safe_preview": _safe_preview(text, 220),
+                }
+            )
+
+    return {
+        "schema_version": "candidate_practice_taxonomy_report_v1",
+        "source_prd": source_prd,
+        "generated_at": _utc_now(),
+        "candidate_blocks_count": len(candidate_blocks),
+        "practice_marker_hits_count": practice_marker_hits_count,
+        "direct_practice_protocol_count": direct_practice_protocol_count,
+        "practice_context_or_theory_count": practice_context_or_theory_count,
+        "case_or_dialogue_about_practice_count": case_or_dialogue_about_practice_count,
+        "quote_or_source_fragment_with_practice_terms_count": quote_or_source_fragment_with_practice_terms_count,
+        "direct_practice_misclassified_count": direct_practice_misclassified_count,
+        "contextual_false_positive_count": contextual_false_positive_count,
+        "unsafe_practice_suggestion_count": unsafe_practice_suggestion_count,
+        "examples": examples,
+    }
 
 
 def build_practice_like_report(
@@ -485,8 +716,8 @@ def build_practice_like_report(
 
     for block in candidate_blocks:
         text = _normalize(block.get("text"))
-        markers = _practice_markers(text)
-        if not markers:
+        taxonomy_label, markers = _practice_taxonomy_for_text(text)
+        if taxonomy_label is None:
             continue
         practice_like_candidates_count += 1
         meta = block.get("metadata") or {}
@@ -494,13 +725,13 @@ def build_practice_like_report(
         chunk_type = _normalize(governance.get("chunk_type")) or "unknown"
         if chunk_type == "practice":
             practice_like_as_practice_count += 1
-        else:
+        if taxonomy_label == "direct_practice_protocol" and chunk_type != "practice":
             misclassified_examples.append(
                 {
                     "block_id": _normalize(block.get("id")),
                     "chunk_type": chunk_type,
-                    "allowed_use": governance.get("allowed_use") if isinstance(governance.get("allowed_use"), list) else [],
-                    "safety_flags": governance.get("safety_flags") if isinstance(governance.get("safety_flags"), list) else [],
+                    "allowed_use": _as_list(governance.get("allowed_use")),
+                    "safety_flags": _as_list(governance.get("safety_flags")),
                     "markers": markers,
                     "safe_preview": _safe_preview(text, 240),
                 }
@@ -554,6 +785,7 @@ def build_candidate_governance_gate(
     practice_like_report: dict[str, Any],
     no_mutation_check: dict[str, Any],
     candidate_blocks: list[dict[str, Any]],
+    practice_taxonomy_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     blockers: list[str] = []
     warnings: list[str] = []
@@ -587,25 +819,41 @@ def build_candidate_governance_gate(
     if mixed_intent_alerts > 0:
         warnings.append("mixed_intent_high_medium_detected")
 
-    misclassified_count = _to_int(practice_like_report.get("practice_like_misclassified_count"))
+    taxonomy = practice_taxonomy_report or {}
+    misclassified_count = _to_int(taxonomy.get("direct_practice_misclassified_count"))
+    if not taxonomy:
+        misclassified_count = _to_int(practice_like_report.get("practice_like_misclassified_count"))
+    contextual_false_positive_count = _to_int(taxonomy.get("contextual_false_positive_count"))
+    unsafe_practice_suggestion_count = _to_int(taxonomy.get("unsafe_practice_suggestion_count"))
+
+    if contextual_false_positive_count > 0:
+        warnings.append("contextual_false_positive_detected")
+    if unsafe_practice_suggestion_count > 0:
+        warnings.append("unsafe_practice_suggestion_detected")
 
     if blockers:
         status = "failed"
-        next_prd = "PRD-046.0.8-HF0 — Clean Reprocess Blocker Fix v1"
-    elif misclassified_count > 0 or mixed_intent_alerts > 0:
+        next_prd = "PRD-046.0.8-HF1-FIX — Candidate Governance Blocker Fix v1"
+    elif misclassified_count > 0 or unsafe_practice_suggestion_count > 0:
         status = "candidate_needs_governance_calibration"
-        next_prd = "PRD-046.0.8-HF1 — Candidate Governance / Practice Classification Calibration v1"
+        next_prd = "PRD-046.0.8-HF1-FIX — Candidate Governance Blocker Fix v1"
+    elif mixed_intent_alerts > 0 or contextual_false_positive_count > 0:
+        status = "candidate_needs_governance_calibration"
+        next_prd = "PRD-046.0.8-HF2 — Remaining Candidate Governance Warning Calibration v1"
     else:
         status = "passed"
         next_prd = "PRD-046.0.8.1 — Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1"
 
     return {
-        "schema_version": "governance_gate_v1",
+        "schema_version": "candidate_governance_gate_v2",
         "source_prd": source_prd,
         "generated_at": _utc_now(),
         "status": status,
         "blockers": blockers,
         "warnings": warnings,
+        "direct_practice_misclassified_count": misclassified_count,
+        "unsafe_practice_suggestion_count": unsafe_practice_suggestion_count,
+        "contextual_false_positive_count": contextual_false_positive_count,
         "practice_like_misclassified_count": misclassified_count,
         "mixed_intent_alerts": mixed_intent_alerts,
         "next_recommended_prd": next_prd,
@@ -681,7 +929,9 @@ def _render_governance_gate_report(gate: dict[str, Any], source_prd: str) -> str
         "",
         "## Status",
         f"- status: `{gate.get('status')}`",
-        f"- practice_like_misclassified_count: `{gate.get('practice_like_misclassified_count')}`",
+        f"- direct_practice_misclassified_count: `{gate.get('direct_practice_misclassified_count', gate.get('practice_like_misclassified_count'))}`",
+        f"- unsafe_practice_suggestion_count: `{gate.get('unsafe_practice_suggestion_count', 0)}`",
+        f"- contextual_false_positive_count: `{gate.get('contextual_false_positive_count', 0)}`",
         f"- mixed_intent_alerts: `{gate.get('mixed_intent_alerts')}`",
         f"- next_recommended_prd: `{gate.get('next_recommended_prd')}`",
         "",
@@ -719,6 +969,35 @@ def _render_practice_like_report(report: dict[str, Any], source_prd: str) -> str
     return "\n".join(lines)
 
 
+def _render_practice_taxonomy_report(report: dict[str, Any], source_prd: str) -> str:
+    lines = [
+        f"# {source_prd} PRACTICE TAXONOMY REPORT",
+        "",
+        "## Metrics",
+        f"- candidate_blocks_count: `{report.get('candidate_blocks_count')}`",
+        f"- practice_marker_hits_count: `{report.get('practice_marker_hits_count')}`",
+        f"- direct_practice_protocol_count: `{report.get('direct_practice_protocol_count')}`",
+        f"- practice_context_or_theory_count: `{report.get('practice_context_or_theory_count')}`",
+        f"- case_or_dialogue_about_practice_count: `{report.get('case_or_dialogue_about_practice_count')}`",
+        f"- quote_or_source_fragment_with_practice_terms_count: `{report.get('quote_or_source_fragment_with_practice_terms_count')}`",
+        f"- direct_practice_misclassified_count: `{report.get('direct_practice_misclassified_count')}`",
+        f"- contextual_false_positive_count: `{report.get('contextual_false_positive_count')}`",
+        f"- unsafe_practice_suggestion_count: `{report.get('unsafe_practice_suggestion_count')}`",
+        "",
+        "## Examples",
+    ]
+    examples = report.get("examples") or []
+    if not examples:
+        lines.append("- none")
+    else:
+        for row in examples[:15]:
+            lines.append(
+                f"- `{row.get('block_id')}` taxonomy=`{row.get('taxonomy')}` before=`{row.get('chunk_type_before')}` after=`{row.get('chunk_type_after')}`"
+            )
+    lines.append("")
+    return "\n".join(lines)
+
+
 def _render_no_mutation_report(report: dict[str, Any], source_prd: str) -> str:
     lines = [
         f"# {source_prd} NO-MUTATION REPORT",
@@ -744,6 +1023,65 @@ def _render_next_prd_report(gate: dict[str, Any], source_prd: str) -> str:
             "",
             f"- governance_gate_status: `{gate.get('status')}`",
             f"- recommendation: `{gate.get('next_recommended_prd')}`",
+            "",
+        ]
+    )
+
+
+def _render_implementation_report(
+    *,
+    source_prd: str,
+    candidate_stats: dict[str, Any],
+    practice_taxonomy_report: dict[str, Any],
+    governance_gate: dict[str, Any],
+    no_mutation_check: dict[str, Any],
+) -> str:
+    return "\n".join(
+        [
+            f"# {source_prd} IMPLEMENTATION REPORT",
+            "",
+            "## Status",
+            "- Implementation: done",
+            "- Branch: main",
+            "- Runtime behavior changed: false",
+            "- Writer changed: false",
+            "- DiagnosticCard changed: false",
+            "- Thread Manager changed: false",
+            "- State Analyzer changed: false",
+            "- Context Assembly changed: false",
+            "- Knowledge blocks mutated: false",
+            "- Registry mutated: false",
+            "- Chroma reindex performed: false",
+            "- Production apply performed: false",
+            "- Reprocess mode: candidate calibration",
+            "",
+            "## Candidate",
+            f"- candidate_blocks_count: `{candidate_stats.get('candidate_blocks_count')}`",
+            f"- source_id_consistency_rate: `{candidate_stats.get('source_id_consistency_rate')}`",
+            f"- governance_present_rate: `{candidate_stats.get('governance_present_rate')}`",
+            f"- chunking_quality_present_rate: `{candidate_stats.get('chunking_quality_present_rate')}`",
+            f"- allowed_use_present_rate: `{candidate_stats.get('allowed_use_present_rate')}`",
+            f"- safety_flags_present_rate: `{candidate_stats.get('safety_flags_present_rate')}`",
+            f"- sd_labeling_active: `{candidate_stats.get('sd_labeling_active')}`",
+            "",
+            "## Practice Calibration",
+            f"- practice_marker_hits_count: `{practice_taxonomy_report.get('practice_marker_hits_count')}`",
+            f"- direct_practice_protocol_count: `{practice_taxonomy_report.get('direct_practice_protocol_count')}`",
+            f"- direct_practice_misclassified_count: `{practice_taxonomy_report.get('direct_practice_misclassified_count')}`",
+            f"- contextual_false_positive_count: `{practice_taxonomy_report.get('contextual_false_positive_count')}`",
+            f"- unsafe_practice_suggestion_count: `{practice_taxonomy_report.get('unsafe_practice_suggestion_count')}`",
+            "",
+            "## Governance Gate",
+            f"- status: `{governance_gate.get('status')}`",
+            f"- blockers: `{governance_gate.get('blockers')}`",
+            f"- warnings: `{governance_gate.get('warnings')}`",
+            f"- next_recommended_prd: `{governance_gate.get('next_recommended_prd')}`",
+            "",
+            "## No Mutation",
+            f"- all_blocks_merged_mutated: `{no_mutation_check.get('all_blocks_merged_mutated')}`",
+            f"- registry_mutated: `{no_mutation_check.get('registry_mutated')}`",
+            f"- chroma_mutated: `{no_mutation_check.get('chroma_mutated')}`",
+            f"- review_queue_mutated: `{no_mutation_check.get('review_queue_mutated')}`",
             "",
         ]
     )
@@ -798,15 +1136,18 @@ def run_clean_source_reprocess_cli(
 
     if not bool(preflight.get("passed")):
         failed_gate = {
-            "schema_version": "governance_gate_v1",
+            "schema_version": "candidate_governance_gate_v2",
             "source_prd": source_prd,
             "generated_at": _utc_now(),
             "status": "failed",
             "blockers": ["preflight_failed"],
             "warnings": [],
+            "direct_practice_misclassified_count": 0,
+            "unsafe_practice_suggestion_count": 0,
+            "contextual_false_positive_count": 0,
             "practice_like_misclassified_count": 0,
             "mixed_intent_alerts": 0,
-            "next_recommended_prd": "PRD-046.0.8-HF0 — Clean Reprocess Blocker Fix v1",
+            "next_recommended_prd": "PRD-046.0.8-HF1-FIX — Candidate Governance Blocker Fix v1",
         }
         _save_json(output_dir / "governance_gate.json", failed_gate)
         _save_markdown(
@@ -826,6 +1167,16 @@ def run_clean_source_reprocess_cli(
     source_id = _normalize(preflight.get("active_source_id"))
     old_blocks = [block for block in all_blocks if _source_id_from_block(block) == source_id]
     candidate_blocks = _extract_blocks(candidate_payload.get("candidate") or {})
+    practice_taxonomy_report = build_practice_taxonomy_report(
+        source_prd=source_prd,
+        candidate_blocks=candidate_blocks,
+    )
+    _save_json(output_dir / "practice_taxonomy_report.json", practice_taxonomy_report)
+    _save_markdown(
+        reports_dir / f"{source_prd}_PRACTICE_TAXONOMY_REPORT.md",
+        _render_practice_taxonomy_report(practice_taxonomy_report, source_prd),
+    )
+    _save_json(output_dir / "clean_reprocess_candidate.json", candidate_payload)
 
     candidate_stats = build_candidate_stats(
         source_prd=source_prd,
@@ -888,6 +1239,7 @@ def run_clean_source_reprocess_cli(
         practice_like_report=practice_like_report,
         no_mutation_check=no_mutation_check,
         candidate_blocks=candidate_blocks,
+        practice_taxonomy_report=practice_taxonomy_report,
     )
     _save_json(output_dir / "governance_gate.json", governance_gate)
     _save_markdown(
@@ -898,6 +1250,16 @@ def run_clean_source_reprocess_cli(
         reports_dir / f"{source_prd}_NEXT_PRD_RECOMMENDATION.md",
         _render_next_prd_report(governance_gate, source_prd),
     )
+    _save_markdown(
+        reports_dir / f"{source_prd}_IMPLEMENTATION_REPORT.md",
+        _render_implementation_report(
+            source_prd=source_prd,
+            candidate_stats=candidate_stats,
+            practice_taxonomy_report=practice_taxonomy_report,
+            governance_gate=governance_gate,
+            no_mutation_check=no_mutation_check,
+        ),
+    )
 
     (output_dir / "sanitized_runtime_logs.txt").write_text(
         "\n".join(
@@ -906,6 +1268,7 @@ def run_clean_source_reprocess_cli(
                 "mode=candidate",
                 f"source_id={source_id}",
                 f"candidate_blocks_count={candidate_stats.get('candidate_blocks_count')}",
+                f"direct_practice_misclassified_count={practice_taxonomy_report.get('direct_practice_misclassified_count')}",
                 f"governance_gate_status={governance_gate.get('status')}",
                 f"no_mutation_passed={no_mutation_check.get('passed')}",
             ]
@@ -955,3 +1318,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

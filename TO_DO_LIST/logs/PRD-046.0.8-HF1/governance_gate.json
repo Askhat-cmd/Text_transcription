@@ -1,0 +1,16 @@
+{
+  "schema_version": "candidate_governance_gate_v2",
+  "source_prd": "PRD-046.0.8-HF1",
+  "generated_at": "2026-05-12T11:37:24.877184+00:00",
+  "status": "candidate_needs_governance_calibration",
+  "blockers": [],
+  "warnings": [
+    "mixed_intent_high_medium_detected"
+  ],
+  "direct_practice_misclassified_count": 0,
+  "unsafe_practice_suggestion_count": 0,
+  "contextual_false_positive_count": 0,
+  "practice_like_misclassified_count": 0,
+  "mixed_intent_alerts": 2,
+  "next_recommended_prd": "PRD-046.0.8-HF2 — Remaining Candidate Governance Warning Calibration v1"
+}

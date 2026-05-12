@@ -1,0 +1,7 @@
+[2026-05-12T11:37:24.880276+00:00] PRD-046.0.8-HF1 candidate clean reprocess run
+mode=candidate
+source_id=123__кузница_духа
+candidate_blocks_count=247
+direct_practice_misclassified_count=0
+governance_gate_status=candidate_needs_governance_calibration
+no_mutation_passed=True

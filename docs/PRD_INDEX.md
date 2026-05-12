@@ -29,7 +29,7 @@
 | PRD-046.0.7 | Admin Review Workflow v1 | done | 4b24388 | review contracts/sanitizer + CLI queue builder/decision validator + sanitized review artifacts with no-mutation proof | TO_DO_LIST/reports/PRD-046.0.7_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.7-HF1 | BotDB Admin Source Hygiene / Legacy SD Decommission / Reprocess Readiness Gate | done | b7c630f | source hygiene audit/apply dry-run + SD decommission in admin/query + readiness gate (`not_ready` blocker surfaced) | TO_DO_LIST/reports/PRD-046.0.7-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.7-HF2 | Source Hygiene Blocker Fix v1 | done | 1760f88 | controlled archive apply completed; blocker `multiple_active_sources_without_allowlist` closed; readiness gate -> `ready` | TO_DO_LIST/reports/PRD-046.0.7-HF2_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.8 | Clean Source Reprocess from Single Active Source v1 | done | pending | staged candidate-only clean reprocess built (`247` blocks), no production mutation; gate=`candidate_needs_governance_calibration` | TO_DO_LIST/reports/PRD-046.0.8_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.8 | Clean Source Reprocess from Single Active Source v1 | done | ac587d5 | staged candidate-only clean reprocess built (`247` blocks), no production mutation; gate=`candidate_needs_governance_calibration` | TO_DO_LIST/reports/PRD-046.0.8_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

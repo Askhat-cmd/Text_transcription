@@ -1,0 +1,135 @@
+{
+  "schema_version": "source_hygiene_plan_v1",
+  "source_prd": "PRD-046.0.7-HF2",
+  "generated_at": "2026-05-12T10:24:17.824212+00:00",
+  "mode": "apply",
+  "valid": true,
+  "focus_source_protected": true,
+  "planned_actions": [
+    {
+      "source_id": "123__кузница_духа",
+      "status": "done",
+      "blocks_count": 229,
+      "is_focus_source": true,
+      "action": "keep",
+      "reason": [
+        "focus_source_protected"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "done",
+      "blocks_count": 1,
+      "is_focus_source": false,
+      "action": "archive",
+      "reason": [
+        "registry_only_blocks_test_like"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "status": "archived",
+      "blocks_count": 0,
+      "is_focus_source": false,
+      "action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    }
+  ],
+  "planned_archive_count": 1,
+  "planned_safe_delete_zero_block_count": 0,
+  "blocked_actions_count": 0,
+  "errors": [],
+  "warnings": []
+}

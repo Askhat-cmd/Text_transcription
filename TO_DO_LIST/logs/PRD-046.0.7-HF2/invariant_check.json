@@ -1,0 +1,17 @@
+{
+  "schema_version": "invariant_check_v1",
+  "source_prd": "PRD-046.0.7-HF2",
+  "generated_at": "2026-05-12T10:24:41.474272+00:00",
+  "all_blocks_merged_sha_before": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+  "all_blocks_merged_sha_after": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+  "all_blocks_merged_mutated": false,
+  "chroma_count_before": 229,
+  "chroma_count_after": 229,
+  "processed_blocks_before": 229,
+  "processed_blocks_after": 229,
+  "review_queue_sha_before": "a8628c74a583ab9510938891d459e3e0fd4c17f9ff8ffe72d68c1505a326a848",
+  "review_queue_sha_after": "a8628c74a583ab9510938891d459e3e0fd4c17f9ff8ffe72d68c1505a326a848",
+  "review_queue_mutated": false,
+  "focus_source_id_before": "123__кузница_духа",
+  "focus_source_id_after": "123__кузница_духа"
+}

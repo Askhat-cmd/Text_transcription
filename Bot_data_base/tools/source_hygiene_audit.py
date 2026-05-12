@@ -124,15 +124,16 @@ def _is_test_like(title: str, source_id: str, author: str, source_type: str, blo
     hay = f"{title} {source_id} {author}".lower()
     if any(token in hay for token in ("test", "test123")):
         return True
-    if title.strip().lower() in {"книга", "book", ""} and source_type in {"book", "youtube"} and blocks_count == 0:
+    if title.strip().lower() in {"книга", "book", ""} and source_type in {"book", "youtube"} and blocks_count <= 1:
         return True
-    if author.strip().lower() in {"автор", "author"} and blocks_count == 0:
+    if author.strip().lower() in {"автор", "author"} and blocks_count <= 1:
         return True
     return False
 
 
 def _detect_action(
     *,
+    status: str,
     is_focus: bool,
     blocks_count: int,
     chroma_count: int,
@@ -142,10 +143,15 @@ def _detect_action(
     is_orphaned: bool,
 ) -> tuple[str, list[str]]:
     reasons: list[str] = []
+    if status == "archived":
+        return "keep", ["already_archived"]
+
     if is_focus:
         return "keep", ["focus_source_protected"]
 
     if blocks_count > 0 or chroma_count > 0:
+        if chroma_count == 0 and blocks_count <= 1 and is_test_like:
+            return "archive", ["registry_only_blocks_test_like"]
         reasons.append("has_blocks_or_index_data")
         return "manual_review", reasons
 
@@ -216,6 +222,7 @@ def build_source_hygiene_audit(
         is_orphaned = (not raw_exists) and (not processed_export_exists) and blocks_count <= 0 and chroma_count <= 0
 
         action, reasons = _detect_action(
+            status=status,
             is_focus=is_focus,
             blocks_count=blocks_count,
             chroma_count=chroma_count,
@@ -270,8 +277,16 @@ def build_source_hygiene_audit(
         "total_sources": len(registry_records),
         "unique_source_ids": len([sid for sid in by_source_id.keys() if sid]),
         "active_sources": len(active_ids),
-        "sources_with_blocks": sum(1 for row in registry_records if _to_int(row.get("blocks_count")) > 0),
-        "sources_zero_blocks": sum(1 for row in registry_records if _to_int(row.get("blocks_count")) <= 0),
+        "sources_with_blocks": sum(
+            1
+            for row in registry_records
+            if _to_int(row.get("blocks_count")) > 0 and _normalize(row.get("status")) != "archived"
+        ),
+        "sources_zero_blocks": sum(
+            1
+            for row in registry_records
+            if _to_int(row.get("blocks_count")) <= 0 and _normalize(row.get("status")) != "archived"
+        ),
         "processing_sources": sum(1 for row in registry_records if _normalize(row.get("status")) == "processing"),
         "processing_stale_sources": len(processing_stale_ids),
         "archived_sources": len(archived_ids),

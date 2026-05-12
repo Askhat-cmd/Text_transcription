@@ -129,22 +129,42 @@ def _apply_archive(
     registry_records: list[dict[str, Any]],
     plan: dict[str, Any],
 ) -> tuple[list[dict[str, Any]], int]:
-    by_source_action = {
-        _normalize(item.get("source_id")): _normalize(item.get("action"))
-        for item in plan.get("planned_actions") or []
-    }
+    by_source_plan: dict[str, dict[str, Any]] = {}
+    for item in plan.get("planned_actions") or []:
+        source_id = _normalize(item.get("source_id"))
+        if not source_id:
+            continue
+        action = _normalize(item.get("action"))
+        slot = by_source_plan.setdefault(
+            source_id,
+            {"action": "keep", "is_focus_source": False, "reason": []},
+        )
+        slot["is_focus_source"] = bool(slot.get("is_focus_source")) or bool(item.get("is_focus_source"))
+        current_action = _normalize(slot.get("action"))
+        if action == "archive":
+            slot["action"] = "archive"
+        elif action == "safe_delete_zero_block" and current_action not in {"archive"}:
+            slot["action"] = "safe_delete_zero_block"
+        elif action == "manual_review" and current_action not in {"archive", "safe_delete_zero_block"}:
+            slot["action"] = "manual_review"
+        for reason in item.get("reason") or []:
+            value = str(reason)
+            if value not in slot["reason"]:
+                slot["reason"].append(value)
+
     mutated = 0
     updated: list[dict[str, Any]] = []
     for row in registry_records:
         source_id = _normalize(row.get("source_id"))
-        action = by_source_action.get(source_id, "")
+        source_plan = by_source_plan.get(source_id) or {}
+        action = _normalize(source_plan.get("action"))
         blocks_count = _to_int(row.get("blocks_count"))
-        is_focus = any(
-            _normalize(item.get("source_id")) == source_id and bool(item.get("is_focus_source"))
-            for item in (plan.get("planned_actions") or [])
-        )
+        is_focus = bool(source_plan.get("is_focus_source"))
+        reasons = [str(value) for value in (source_plan.get("reason") or [])]
+        allow_archive_registry_only = "registry_only_blocks_test_like" in reasons
 
-        if action == "archive" and not is_focus and blocks_count <= 0 and _normalize(row.get("status")) != "archived":
+        can_archive = blocks_count <= 0 or allow_archive_registry_only
+        if action == "archive" and not is_focus and can_archive and _normalize(row.get("status")) != "archived":
             row = dict(row)
             row["status"] = "archived"
             mutated += 1
@@ -153,8 +173,9 @@ def _apply_archive(
 
 
 def _render_plan_report(plan: dict[str, Any], result: dict[str, Any], source_prd: str) -> str:
+    heading = "SOURCE HYGIENE APPLY REPORT" if _normalize(result.get("mode")) == "apply" else "SOURCE HYGIENE PLAN REPORT"
     lines = [
-        f"# {source_prd} SOURCE HYGIENE PLAN REPORT",
+        f"# {source_prd} {heading}",
         "",
         "## Plan Summary",
         f"- mode: `{result.get('mode')}`",

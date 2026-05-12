@@ -117,3 +117,74 @@ def test_run_apply_cli_requires_confirm_for_apply(tmp_path: Path, monkeypatch) -
     )
     assert result["valid"] is False
     assert "confirm_required_for_apply_mode" in result["errors"]
+
+
+def test_run_apply_cli_archives_registry_only_test_like_small_block_source(tmp_path: Path, monkeypatch) -> None:
+    repo_root = tmp_path
+    botdb = repo_root / "Bot_data_base"
+    (botdb / "data").mkdir(parents=True, exist_ok=True)
+    registry_path = botdb / "data" / "registry.json"
+    registry_path.write_text(
+        json.dumps(
+            [
+                {
+                    "source_id": "avtor__книга",
+                    "source_type": "book",
+                    "title": "Книга",
+                    "author": "Автор",
+                    "author_id": "avtor",
+                    "language": "ru",
+                    "status": "done",
+                    "added_at": "2026-05-10T00:00:00",
+                    "processed_at": None,
+                    "blocks_count": 1,
+                    "sd_distribution": {},
+                    "file_paths": {},
+                    "error_message": None,
+                    "pipeline_version": "v1",
+                }
+            ],
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    audit_json = repo_root / "out" / "audit.json"
+    audit_json.parent.mkdir(parents=True, exist_ok=True)
+    audit_json.write_text(
+        json.dumps(
+            {
+                "sources": [
+                    {
+                        "source_id": "avtor__книга",
+                        "is_focus_source": False,
+                        "recommended_hygiene_action": "archive",
+                        "status": "done",
+                        "blocks_count": 1,
+                        "reason": ["registry_only_blocks_test_like"],
+                    }
+                ]
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    monkeypatch.chdir(repo_root)
+    result = run_apply_cli(
+        audit_json=audit_json,
+        plan_json=repo_root / "out" / "plan.json",
+        apply_result_json=repo_root / "out" / "apply_result.json",
+        report_md=repo_root / "out" / "apply.md",
+        source_prd="PRD-046.0.7-HF2",
+        mode="apply",
+        confirm=True,
+        allow_safe_delete_zero_block=False,
+    )
+
+    assert result["valid"] is True
+    assert result["mutated"] is True
+    assert result["applied_mutation_count"] == 1
+    assert json.loads(registry_path.read_text(encoding="utf-8"))[0]["status"] == "archived"

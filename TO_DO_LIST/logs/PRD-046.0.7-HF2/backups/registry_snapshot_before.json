@@ -1,0 +1,222 @@
+[
+  {
+    "source_id": "123__кузница_духа",
+    "source_type": "book",
+    "title": "Кузница Духа",
+    "author": "Саламат Сарсекенов",
+    "author_id": "123",
+    "language": "ru",
+    "status": "done",
+    "added_at": "2026-03-13T04:38:44.281566",
+    "processed_at": "2026-03-13T04:45:18.951270",
+    "blocks_count": 229,
+    "sd_distribution": {
+      "GREEN": 113,
+      "BLUE": 16,
+      "YELLOW": 67,
+      "RED": 4,
+      "ORANGE": 7,
+      "BEIGE": 9,
+      "PURPLE": 2,
+      "TURQUOISE": 1,
+      "UNCERTAIN": 10
+    },
+    "file_paths": {
+      "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+      "chroma": true,
+      "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-08T09:43:22.273607",
+    "processed_at": "2026-05-12T09:37:57.145234",
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": "No subtitles found for video",
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "done",
+    "added_at": "2026-05-08T09:43:22.442757",
+    "processed_at": "2026-05-12T09:37:09.641545",
+    "blocks_count": 1,
+    "sd_distribution": {
+      "BEIGE": 1
+    },
+    "file_paths": {
+      "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\avtor__книга_blocks.json",
+      "chroma": true,
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-08T10:55:17.881409",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "archived",
+    "added_at": "2026-05-08T10:55:18.043551",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-08T10:57:42.452235",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "archived",
+    "added_at": "2026-05-08T10:57:42.672781",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-12T09:35:46.488360",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "archived",
+    "added_at": "2026-05-12T09:35:46.552570",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-12T09:37:05.313409",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "archived",
+    "added_at": "2026-05-12T09:37:05.375408",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "archived",
+    "added_at": "2026-05-12T09:37:57.143232",
+    "processed_at": null,
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "schema_version": "source_hygiene_apply_result_v1",
+  "source_prd": "PRD-046.0.7-HF2",
+  "generated_at": "2026-05-12T10:24:17.827892+00:00",
+  "mode": "apply",
+  "valid": true,
+  "mutated": true,
+  "registry_mutated": true,
+  "focus_source_protected": true,
+  "planned_archive_count": 1,
+  "planned_safe_delete_zero_block_count": 0,
+  "blocked_actions_count": 0,
+  "applied_mutation_count": 1,
+  "errors": [],
+  "warnings": [],
+  "apply_after": {
+    "schema_version": "source_hygiene_apply_after_v1",
+    "source_prd": "PRD-046.0.7-HF2",
+    "generated_at": "2026-05-12T10:24:17.827043+00:00",
+    "records_count": 12,
+    "archived_count": 11
+  }
+}

@@ -19,7 +19,15 @@ def test_reprocess_gate_ready_when_single_focus_and_sd_disabled(tmp_path: Path) 
             "status": "done",
             "blocks_count": 2,
             "file_paths": {"upload": "data/uploads/books/КУЗНИЦА ДУХА v.2.md"},
-        }
+        },
+        {
+            "source_id": "test123",
+            "title": "",
+            "source_type": "youtube",
+            "status": "archived",
+            "blocks_count": 0,
+            "file_paths": {},
+        },
     ]
     blocks = [
         {"source": "book:123__кузница_духа", "text": "a", "metadata": {"source_id": "123__кузница_духа"}},
@@ -37,6 +45,7 @@ def test_reprocess_gate_ready_when_single_focus_and_sd_disabled(tmp_path: Path) 
     )
     assert payload["ready_for_clean_reprocess"] is True
     assert payload["status"] == "ready"
+    assert payload["active_source_count"] == 1
     assert payload["blockers"] == []
 
 

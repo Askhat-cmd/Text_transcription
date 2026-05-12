@@ -1,0 +1,12 @@
+{
+  "captured_at": "2026-05-12T10:23:29.803300+00:00",
+  "focus_source_id": "123__кузница_духа",
+  "all_blocks_merged_exists": true,
+  "all_blocks_merged_sha256": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+  "processed_blocks_total": 229,
+  "focus_blocks_processed": 229,
+  "chroma_count_proxy": 229,
+  "focus_blocks_registry": 229,
+  "review_queue_exists": true,
+  "review_queue_sha256": "a8628c74a583ab9510938891d459e3e0fd4c17f9ff8ffe72d68c1505a326a848"
+}

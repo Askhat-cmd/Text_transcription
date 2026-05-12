@@ -38,9 +38,11 @@ def _classify_hygiene(source_row: dict) -> tuple[str, list[str]]:
 
     if is_focus:
         return "keep", ["focus_source_protected"]
+    if status == "archived":
+        return "keep", ["already_archived"]
 
     hay = f"{source_id} {title} {author}".lower()
-    is_test_like = ("test" in hay) or (title.lower() in {"книга", "book", ""} and blocks_count == 0)
+    is_test_like = ("test" in hay) or (title.lower() in {"книга", "book", ""} and blocks_count <= 1)
     is_processing_stale = status == "processing" and blocks_count == 0
     is_empty = blocks_count == 0
 
@@ -55,6 +57,8 @@ def _classify_hygiene(source_row: dict) -> tuple[str, list[str]]:
         reasons.append("failed_status")
 
     if blocks_count > 0:
+        if is_test_like and blocks_count <= 1:
+            return "archive", ["registry_only_blocks_test_like"]
         return "manual_review", ["has_blocks_or_index_data"]
     if reasons:
         return "archive", reasons

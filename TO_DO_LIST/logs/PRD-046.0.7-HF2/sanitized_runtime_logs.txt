@@ -1,0 +1,9 @@
+[PRD-046.0.7-HF2] sanitized runtime notes
+timestamp_utc: 2026-05-12T10:25:00Z
+
+- Source hygiene apply executed in guarded mode: `--apply --confirm`.
+- Focus source remained protected: `123__кузница_духа`.
+- No runtime bot path changes were made.
+- No writer/state/context/diagnostic contract changes were made.
+- Readiness gate after apply: `ready`.
+- Invariant check: `all_blocks_merged` hash unchanged, review queue hash unchanged, chroma proxy count unchanged (229).

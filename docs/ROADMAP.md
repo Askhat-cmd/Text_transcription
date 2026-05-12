@@ -11,16 +11,16 @@
 - PRD-046.0.6-HF1: retrieval governance safety fix; internal_only leakage closed (`4 -> 0`) with unchanged eval dataset.
 - PRD-046.0.7: admin review workflow v1 delivered (sanitized review queue + decision contract validation, no KB mutation).
 - PRD-046.0.7-HF1: source hygiene/readiness layer delivered; legacy SD decommissioned from BotDB admin/API active path; readiness gate reports blocker `multiple_active_sources_without_allowlist`.
+- PRD-046.0.7-HF2: blocker fix delivered; controlled archive apply completed, `active_source_count=1`, readiness gate switched to `ready` for clean reprocess.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.0.7-HF2 - Source Hygiene Blocker Fix v1.
-2. PRD-046.0.8 - Clean Source Reprocess from Single Active Source v1.
-3. PRD-046.0.8.1 - Chroma Reindex + KB Quality Re-Audit after Reprocess.
-4. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
-5. Diagnostic Center rollout PRD after readiness gates.
+1. PRD-046.0.8 - Clean Source Reprocess from Single Active Source v1.
+2. PRD-046.0.8.1 - Chroma Reindex + KB Quality Re-Audit after Reprocess.
+3. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+4. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

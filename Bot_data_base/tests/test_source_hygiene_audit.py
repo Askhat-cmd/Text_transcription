@@ -72,3 +72,33 @@ def test_run_audit_cli_degraded_when_inputs_missing(tmp_path: Path, monkeypatch)
     assert output_md.exists()
     dumped = json.loads(output_json.read_text(encoding="utf-8"))
     assert dumped["schema_version"] == "source_hygiene_audit_v1"
+
+
+def test_audit_archives_registry_only_test_like_small_block_source(tmp_path: Path) -> None:
+    botdb_dir = tmp_path / "Bot_data_base"
+    (botdb_dir / "data" / "processed" / "books").mkdir(parents=True, exist_ok=True)
+    (botdb_dir / "data" / "uploads" / "books").mkdir(parents=True, exist_ok=True)
+    (botdb_dir / "data" / "uploads" / "books" / "book.md").write_text("stub", encoding="utf-8")
+    (botdb_dir / "data" / "processed" / "books" / "avtor__книга_blocks.json").write_text("[]", encoding="utf-8")
+
+    payload = build_source_hygiene_audit(
+        registry_records=[
+            {
+                "source_id": "avtor__книга",
+                "title": "Книга",
+                "author": "Автор",
+                "source_type": "book",
+                "status": "done",
+                "blocks_count": 1,
+                "file_paths": {
+                    "upload": "data/uploads/books/book.md",
+                    "json": "data/processed/books/avtor__книга_blocks.json",
+                },
+            }
+        ],
+        processed_blocks=[],
+        botdb_dir=botdb_dir,
+    )
+
+    assert payload["sources"][0]["recommended_hygiene_action"] == "archive"
+    assert "registry_only_blocks_test_like" in payload["sources"][0]["reason"]

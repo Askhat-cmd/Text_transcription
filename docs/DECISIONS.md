@@ -113,3 +113,9 @@ Status: accepted
 Context: переход candidate (`PRD-046.0.8-HF2`) в production несет высокий риск несогласованности между `all_blocks_merged`, registry и Chroma, а также риск некорректного повторного использования устаревших review artifacts.
 Decision: apply разрешается только через staged workflow: `preflight -> dry-run apply plan -> mandatory backups -> controlled production mutation -> Chroma reindex/recovery -> post-apply consistency/quality/retrieval gates`.
 Consequences: production KB становится аудируемым и воспроизводимым после reprocess; старые review queues помечаются stale, а дальнейший review/apply цикл должен опираться на новые block ids.
+
+## ADR-020 - Post-reprocess enrichment and review must be regenerated against current block ids
+Status: accepted
+Context: после boundary-changing reprocess (`PRD-046.0.8.1`) старые enrichment/review артефакты стали семантически и технически stale, даже при частичном тематическом совпадении текста.
+Decision: для post-reprocess этапа обязателен fresh baseline (`PRD-046.0.9`) с preflight, inventory, overlay validation и review queue rebaseline, привязанными к текущим block ids/hash. Старые решения не применяются без явного remap+hash proof.
+Consequences: review/apply цикл остается трассируемым и безопасным; исключается silent перенос старых решений на новые границы чанков; LLM enrichment сохраняет advisory роль и не может мутировать deterministic governance authority.

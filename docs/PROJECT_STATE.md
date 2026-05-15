@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.8.1 controlled apply completion: candidate для единственного active source (`123__кузница_духа`) применен в production KB, `all_blocks_merged` и registry обновлены до `247` блоков, Chroma переиндексирована и восстановлена после локальной SQLite-поломки.
+Проект находится на стадии post-PRD-046.0.9 rebaseline completion: после controlled apply (`PRD-046.0.8.1`) выполнен новый post-reprocess enrichment/review baseline для текущих `247` production blocks без production мутаций и без Chroma reindex в этом цикле.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -34,12 +34,10 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) требует rebaseline под новые block ids.
-- Post-reprocess enrichment/review rebaseline (`PRD-046.0.9`) pending.
+- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) требует решений только по fresh review queue post-reprocess цикла.
 
 ## Not Implemented Yet
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
-- Post-reprocess enrichment/review rebaseline (`PRD-046.0.9`).
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
 
 ## Known Risks
@@ -51,7 +49,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
 
 ## Next Planned PRDs
-1. PRD-046.0.9 - Post-Reprocess LLM Enrichment + Review Queue Rebaseline v1.
+1. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
 2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только для решений, привязанных к новым block ids).
 3. Diagnostic Center rollout PRD (deferred, after gates).
 
@@ -70,4 +68,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-15
-- Source cycle: PRD-046.0.8.1
+- Source cycle: PRD-046.0.9

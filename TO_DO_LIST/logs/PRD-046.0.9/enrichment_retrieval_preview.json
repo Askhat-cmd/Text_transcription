@@ -1,0 +1,12 @@
+{
+  "schema_version": "post_reprocess_enrichment_retrieval_preview_v1",
+  "source_prd": "PRD-046.0.9",
+  "generated_at": "2026-05-15T04:31:30.295896+00:00",
+  "queries_total": 24,
+  "queries_ok": 24,
+  "top_k_before_summary_available": 0,
+  "top_k_overlay_summary_available": 0,
+  "overlay_candidate_useful_count": 0,
+  "overlay_candidate_noise_count": 0,
+  "examples": []
+}

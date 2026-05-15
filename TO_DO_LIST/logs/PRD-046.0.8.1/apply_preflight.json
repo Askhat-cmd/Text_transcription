@@ -1,0 +1,29 @@
+{
+  "schema_version": "controlled_candidate_apply_preflight_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.670883+00:00",
+  "passed": true,
+  "blockers": [],
+  "warnings": [],
+  "hf2_gate_status": "passed",
+  "candidate_ready_for_apply": true,
+  "active_source_id": "123__кузница_духа",
+  "candidate_source_ids": [
+    "123__кузница_духа"
+  ],
+  "candidate_blocks_count": 247,
+  "production_blocks_before": 229,
+  "chroma_count_before": 229,
+  "legacy_sd_active": false,
+  "mixed_intent_unresolved_count": 0,
+  "direct_practice_misclassified_count": 0,
+  "unsafe_practice_suggestion_count": 0,
+  "completeness": {
+    "candidate_blocks_count": 247,
+    "source_id_consistency_rate": 1.0,
+    "governance_present_rate": 1.0,
+    "chunking_quality_present_rate": 1.0,
+    "allowed_use_present_rate": 1.0,
+    "safety_flags_present_rate": 1.0
+  }
+}

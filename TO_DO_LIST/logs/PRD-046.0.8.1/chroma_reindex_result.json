@@ -1,0 +1,15 @@
+{
+  "schema_version": "candidate_apply_chroma_reindex_result_v1",
+  "generated_at": "2026-05-15T03:56:57.433175+00:00",
+  "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "embedding_model_name": "intfloat/multilingual-e5-large",
+  "source_id_expected": "123__???????_????",
+  "indexed_source_ids": [
+    "123__кузница_духа"
+  ],
+  "chroma_count_before": 0,
+  "chroma_count_after": 247,
+  "indexed_blocks_count": 247,
+  "status": "passed"
+}

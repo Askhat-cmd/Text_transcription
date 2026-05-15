@@ -1,0 +1,24 @@
+{
+  "schema_version": "controlled_candidate_apply_result_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.707463+00:00",
+  "mode": "apply",
+  "mutated": true,
+  "registry_update": {
+    "updated_index": 0,
+    "updated_source_id": "123__кузница_духа"
+  },
+  "mutation_check": {
+    "mutated_paths": [
+      "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+      "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+      "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\registry.json"
+    ],
+    "unexpected_mutations": [],
+    "passed": true
+  },
+  "all_blocks_hash_before": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+  "all_blocks_hash_after": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+  "registry_hash_before": "fc57fef74195f4447c46afc8cdf02a14499e97dc2945c2e3da82761c4e24a41e",
+  "registry_hash_after": "9d7c05f927bb501533976401d0229ad4871889c16b7023abf4dfe99d2b8467f2"
+}

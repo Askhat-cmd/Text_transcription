@@ -1,0 +1,14 @@
+{
+  "schema_version": "review_queue_staleness_report_v1",
+  "generated_at": "2026-05-15T03:43:28.779197+00:00",
+  "old_review_queue_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.7\\review_queue.json",
+  "old_review_queue_exists": true,
+  "old_review_items_count": 87,
+  "old_input_sha256_before": "5bd5be4421b6301b0c22920ca2a73765f254d60b65457cb075f160a649cb5d0f",
+  "all_blocks_sha_before_apply": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+  "all_blocks_sha_after_apply": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+  "candidate_blocks_count": 247,
+  "stale": true,
+  "reason": "block_boundaries_changed_after_reprocess",
+  "action": "rebuild_new_review_queue_baseline"
+}

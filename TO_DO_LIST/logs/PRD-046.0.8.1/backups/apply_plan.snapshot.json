@@ -1,0 +1,51 @@
+{
+  "schema_version": "controlled_candidate_apply_plan_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.675552+00:00",
+  "preflight_passed": true,
+  "production_blocks_before": 229,
+  "candidate_blocks_after": 247,
+  "block_count_delta": 18,
+  "affected_source_id": "123__кузница_духа",
+  "files_to_mutate": [
+    "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+    "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\registry.json",
+    "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json"
+  ],
+  "registry_fields_to_update": [
+    "blocks_count",
+    "status",
+    "processed_at",
+    "pipeline_version",
+    "file_paths.json",
+    "sd_distribution"
+  ],
+  "chroma_operation_plan": {
+    "action": "reset_and_reindex",
+    "expected_chroma_count_after": 247
+  },
+  "review_queue_stale_handling": {
+    "old_queue_mutated": false,
+    "new_artifact": "review_queue_staleness_report.json",
+    "new_baseline": "review_queue_new_baseline.json"
+  },
+  "backup_paths": {
+    "all_blocks_merged_before": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\all_blocks_merged.before.json",
+    "registry_before": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\registry.before.json",
+    "review_queue_before": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\review_queue.before.json",
+    "chroma_manifest_before": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\chroma_manifest.before.json",
+    "candidate_snapshot": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\candidate_to_apply.snapshot.json",
+    "apply_plan_snapshot": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.0.8.1\\backups\\apply_plan.snapshot.json"
+  },
+  "expected_post_apply_counts": {
+    "production_blocks_after": 247,
+    "registry_focus_blocks_after": 247,
+    "chroma_count_after": 247
+  },
+  "forbidden_mutation_checks": [
+    "raw_markdown_unchanged",
+    "runtime_logic_unchanged",
+    "writer_unchanged",
+    "diagnostic_center_unchanged"
+  ]
+}

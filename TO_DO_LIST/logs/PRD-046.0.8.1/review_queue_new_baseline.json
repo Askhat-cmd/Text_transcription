@@ -1,0 +1,24 @@
+{
+  "schema_version": "kb_review_queue_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.925403+00:00",
+  "input_file": "C:/My_practice/Text_transcription/Bot_data_base/data/processed/all_blocks_merged.json",
+  "input_file_sha256_before": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+  "input_file_sha256_after": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+  "source_mutated": false,
+  "total_blocks_scanned": 247,
+  "review_items_count": 0,
+  "priority_counts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0
+  },
+  "recommended_action_counts": {
+    "approve": 0,
+    "reject": 0,
+    "needs_edit": 0,
+    "split_merge_review": 0,
+    "defer": 0
+  },
+  "items": []
+}

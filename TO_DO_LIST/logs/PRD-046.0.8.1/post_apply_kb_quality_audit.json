@@ -1,0 +1,13 @@
+{
+  "schema_version": "post_apply_kb_quality_audit_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.801413+00:00",
+  "completeness": {
+    "candidate_blocks_count": 247,
+    "source_id_consistency_rate": 1.0,
+    "governance_present_rate": 1.0,
+    "chunking_quality_present_rate": 1.0,
+    "allowed_use_present_rate": 1.0,
+    "safety_flags_present_rate": 1.0
+  }
+}

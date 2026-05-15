@@ -1,0 +1,369 @@
+{
+  "schema_version": "api_retrieval_smoke_v1",
+  "generated_at": "2026-05-15T03:58:01.995031+00:00",
+  "api_base_url": "http://127.0.0.1:8003",
+  "status_ok": true,
+  "status_http": 200,
+  "query_rows": [
+    {
+      "label": "semantic_basic",
+      "status": "ok",
+      "http_status": 200,
+      "hits_count": 5,
+      "sd_filter_applied": false,
+      "error": null,
+      "top_hits": [
+        {
+          "id": "10d71e05-91c3-449c-aaca-87378af60dab",
+          "score": 0.515046854247588,
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "8e8eae66-7d04-4b55-b0ee-0b5c29c6d750",
+          "score": 0.5069101489044536,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        },
+        {
+          "id": "1090c2c2-2985-458f-9619-8372a820eba1",
+          "score": 0.5068327639910574,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "201ad0be-2cbf-4499-b92f-f0fc86ee09c0",
+          "score": 0.504800115230401,
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "5b2166ea-e098-4b49-9857-274d64ec70c0",
+          "score": 0.5047132365361853,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "sd_level_compat",
+      "status": "ok",
+      "http_status": 200,
+      "hits_count": 5,
+      "sd_filter_applied": false,
+      "error": null,
+      "top_hits": [
+        {
+          "id": "f4535025-fce3-4d6a-b955-22c968f758c9",
+          "score": 0.5428154607956096,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "49f52f32-1157-4450-b155-e268e89b2248",
+          "score": 0.5350508299991833,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "42396949-f3a8-41b1-b53d-5570a18854a5",
+          "score": 0.5226778643177002,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "35fa3df5-190b-4901-9308-5400165c4906",
+          "score": 0.5182501343224021,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        },
+        {
+          "id": "d12e0b29-0ff5-4720-9c06-3f6f6fb9be9d",
+          "score": 0.5161635326792361,
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "practice_like",
+      "status": "ok",
+      "http_status": 200,
+      "hits_count": 5,
+      "sd_filter_applied": false,
+      "error": null,
+      "top_hits": [
+        {
+          "id": "2ce481d9-57df-45ee-aca3-543652eaa87f",
+          "score": 0.5111675754789623,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "8e6478bc-f679-45f7-8da8-2be60726d1b4",
+          "score": 0.5050713311786715,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        },
+        {
+          "id": "42396949-f3a8-41b1-b53d-5570a18854a5",
+          "score": 0.4933624508859819,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "90f9393b-7ae3-42e3-a5f5-29c20451c2a9",
+          "score": 0.4914386463223088,
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "6be87955-f6fe-49f2-9991-1b76f80c5bb0",
+          "score": 0.4910153989421966,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "theory_lens",
+      "status": "ok",
+      "http_status": 200,
+      "hits_count": 5,
+      "sd_filter_applied": false,
+      "error": null,
+      "top_hits": [
+        {
+          "id": "d527d369-beb2-4113-b370-cb2738e76b55",
+          "score": 0.5375999285889095,
+          "chunk_type": "lens",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "requires_grounding"
+          ]
+        },
+        {
+          "id": "f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+          "score": 0.5254774512005762,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "requires_grounding",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "b4bfea36-667a-447f-9631-0049b0f96f2f",
+          "score": 0.520572354957021,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        },
+        {
+          "id": "121bdc40-8633-469e-9837-ea9949f73de3",
+          "score": 0.5184619426832643,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "18eb49da-1d55-418f-b668-883c3b411270",
+          "score": 0.5148533315450269,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "non_safety",
+      "status": "ok",
+      "http_status": 200,
+      "hits_count": 5,
+      "sd_filter_applied": false,
+      "error": null,
+      "top_hits": [
+        {
+          "id": "cac73d71-7e71-4c0a-aa17-7ad4960fdec7",
+          "score": 0.5059381128456079,
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context",
+            "diagnostic_lens"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        },
+        {
+          "id": "a2c87ed5-8c7c-4494-9a12-02bc07cc4b58",
+          "score": 0.5057507065064739,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "4723933e-21e6-4d6a-9490-2501a6a7c931",
+          "score": 0.4929510170377053,
+          "chunk_type": "practice",
+          "allowed_use": [
+            "writer_context",
+            "practice_suggestion"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "201ad0be-2cbf-4499-b92f-f0fc86ee09c0",
+          "score": 0.4896679596017128,
+          "chunk_type": "case",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote",
+            "practice_requires_low_resource_check"
+          ]
+        },
+        {
+          "id": "6754e5d2-b622-47ad-ae78-b75ebf3412f4",
+          "score": 0.4882561929048765,
+          "chunk_type": "quote",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    }
+  ],
+  "query_hits_positive": 5,
+  "sd_filter_applied_true_count": 0,
+  "internal_only_unsafe_exposure_count": 0,
+  "governance_missing_count": 0
+}

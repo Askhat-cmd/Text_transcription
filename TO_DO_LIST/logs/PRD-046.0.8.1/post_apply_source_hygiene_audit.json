@@ -1,0 +1,517 @@
+{
+  "schema_version": "source_hygiene_audit_v1",
+  "generated_at": "2026-05-15T03:43:28.883916+00:00",
+  "summary": {
+    "total_sources": 22,
+    "unique_source_ids": 3,
+    "active_sources": 3,
+    "sources_with_blocks": 2,
+    "sources_zero_blocks": 11,
+    "processing_sources": 10,
+    "processing_stale_sources": 2,
+    "archived_sources": 2,
+    "orphaned_sources": 1,
+    "duplicate_title_sources": 1,
+    "duplicate_source_id_sources": 2,
+    "focus_source_candidates": 1,
+    "test_source_candidates": 2
+  },
+  "focus_source_candidates": [
+    "123__кузница_духа"
+  ],
+  "test_source_candidates": [
+    "avtor__книга",
+    "test123"
+  ],
+  "processing_stale_source_ids": [
+    "avtor__книга",
+    "test123"
+  ],
+  "stale_source_ids": [
+    "test123"
+  ],
+  "orphaned_source_ids": [
+    "test123"
+  ],
+  "duplicate_title_values": [
+    "книга"
+  ],
+  "duplicate_source_id_values": [
+    "avtor__книга",
+    "test123"
+  ],
+  "sources": [
+    {
+      "source_id": "123__кузница_духа",
+      "title": "Кузница Духа",
+      "author": "Саламат Сарсекенов",
+      "source_type": "book",
+      "status": "done",
+      "blocks_count": 247,
+      "chroma_indexed_blocks_count": 247,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": true,
+      "is_test_like": false,
+      "is_empty": false,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "focus_source_protected"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "failed",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "failed",
+      "blocks_count": 1,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": false,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "registry_only_blocks_test_like"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "archived",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": false,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "keep",
+      "reason": [
+        "already_archived"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "test123",
+      "title": "",
+      "author": "Автор",
+      "source_type": "youtube",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": false,
+      "processed_export_exists": false,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": true,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "orphaned_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    },
+    {
+      "source_id": "avtor__книга",
+      "title": "Книга",
+      "author": "Автор",
+      "source_type": "book",
+      "status": "processing",
+      "blocks_count": 0,
+      "chroma_indexed_blocks_count": 0,
+      "raw_file_exists": true,
+      "processed_export_exists": true,
+      "is_focus_source": false,
+      "is_test_like": true,
+      "is_empty": true,
+      "is_processing_stale": true,
+      "is_orphaned": false,
+      "recommended_hygiene_action": "archive",
+      "reason": [
+        "processing_stale_zero_blocks",
+        "test_like_zero_blocks",
+        "empty_zero_blocks"
+      ]
+    }
+  ],
+  "source_prd": "PRD-046.0.8.1",
+  "registry_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\registry.json",
+  "processed_blocks_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\all_blocks_merged.json",
+  "degraded_reasons": [],
+  "mode": "normal"
+}

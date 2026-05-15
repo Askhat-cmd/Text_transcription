@@ -15,13 +15,15 @@
 - PRD-046.0.8: clean source reprocess executed in candidate-only mode; production data unchanged; gate result `candidate_needs_governance_calibration`.
 - PRD-046.0.8-HF1: candidate practice taxonomy/governance calibration delivered; `direct_practice_misclassified_count=0`, `unsafe_practice_suggestion_count=0`, gate remains `candidate_needs_governance_calibration` due non-critical mixed-intent warnings.
 - PRD-046.0.8-HF2: remaining mixed-intent warnings calibrated (`2 -> 0` unresolved), governance gate `passed`, `candidate_ready_for_apply=true`, production remains unchanged.
+- PRD-046.0.8.1: controlled apply completed (`all_blocks_merged/registry 229 -> 247`), Chroma reindexed to `247`, post-apply consistency/quality/retrieval gates regenerated; legacy review queue marked stale and new baseline queue rebuilt.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
+- Post-reprocess rebaseline planning for enrichment/review cycle.
 
 ## Next
-1. PRD-046.0.8.1 - Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1.
-2. PRD-046.0.7.1 - Controlled Review Decision Apply v1.
+1. PRD-046.0.9 - Post-Reprocess LLM Enrichment + Review Queue Rebaseline v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (new block ids only).
 3. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later

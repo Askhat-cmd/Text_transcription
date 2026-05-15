@@ -107,3 +107,9 @@ Status: accepted
 Context: после `PRD-046.0.8-HF1` оставались mixed-intent high/medium warnings, что сохраняло риск неочевидного governance-поведения при переходе к apply/reindex.
 Decision: вводится candidate mixed-intent audit+resolution taxonomy (`split_required`, `primary_role_resolved`, `review_only`, `false_positive`) и gate v3 с полями `mixed_intent_unresolved_count`, `mixed_intent_split_required_count`, `candidate_ready_for_apply`. Production apply/reindex разрешается только при `status=passed` и `candidate_ready_for_apply=true`.
 Consequences: unresolved/split-required mixed-intent кейсы блокируют apply; false-positive и review-only сценарии остаются прозрачными через candidate metadata без мутации production контуров.
+
+## ADR-019 - Candidate apply to production requires preflight, backups, controlled reindex, and post-apply retrieval gates
+Status: accepted
+Context: переход candidate (`PRD-046.0.8-HF2`) в production несет высокий риск несогласованности между `all_blocks_merged`, registry и Chroma, а также риск некорректного повторного использования устаревших review artifacts.
+Decision: apply разрешается только через staged workflow: `preflight -> dry-run apply plan -> mandatory backups -> controlled production mutation -> Chroma reindex/recovery -> post-apply consistency/quality/retrieval gates`.
+Consequences: production KB становится аудируемым и воспроизводимым после reprocess; старые review queues помечаются stale, а дальнейший review/apply цикл должен опираться на новые block ids.

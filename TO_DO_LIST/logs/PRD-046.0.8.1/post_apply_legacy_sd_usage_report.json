@@ -1,0 +1,167 @@
+{
+  "schema_version": "legacy_sd_usage_report_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.904121+00:00",
+  "files_scanned_count": 6,
+  "active_legacy_sd_hits_count": 0,
+  "api_query_legacy_hits_count": 0,
+  "ui_legacy_hits_count": 0,
+  "legacy_sd_filter_still_active": false,
+  "files": [
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "exists": true,
+      "hit_count": 19,
+      "active_hit_count": 0,
+      "hits": [
+        {
+          "line": 21,
+          "pattern": "BEIGE",
+          "text": "\"BEIGE\": 1,"
+        },
+        {
+          "line": 22,
+          "pattern": "PURPLE",
+          "text": "\"PURPLE\": 2,"
+        },
+        {
+          "line": 23,
+          "pattern": "RED",
+          "text": "\"RED\": 3,"
+        },
+        {
+          "line": 24,
+          "pattern": "BLUE",
+          "text": "\"BLUE\": 4,"
+        },
+        {
+          "line": 25,
+          "pattern": "ORANGE",
+          "text": "\"ORANGE\": 5,"
+        },
+        {
+          "line": 26,
+          "pattern": "GREEN",
+          "text": "\"GREEN\": 6,"
+        },
+        {
+          "line": 27,
+          "pattern": "YELLOW",
+          "text": "\"YELLOW\": 7,"
+        },
+        {
+          "line": 28,
+          "pattern": "TURQUOISE",
+          "text": "\"TURQUOISE\": 8,"
+        },
+        {
+          "line": 57,
+          "pattern": "sd_level",
+          "text": "sd_level_ignored = request.sd_level > 0"
+        },
+        {
+          "line": 60,
+          "pattern": "sd_level",
+          "text": "return where_filter, sd_level_ignored"
+        },
+        {
+          "line": 158,
+          "pattern": "sd_level",
+          "text": "sd_value = _sd_name_to_int(meta.get(\"sd_level\"))"
+        },
+        {
+          "line": 239,
+          "pattern": "sd_level",
+          "text": "sd_level=sd_value,"
+        },
+        {
+          "line": 259,
+          "pattern": "sd_level",
+          "text": "where_filter, sd_level_ignored = _build_where_filter(request)"
+        },
+        {
+          "line": 287,
+          "pattern": "sd_level",
+          "text": "if request.sd_level > 0:"
+        },
+        {
+          "line": 289,
+          "pattern": "sd_level",
+          "text": "\"[QUERY] legacy sd_level=%s ignored (SD decommission, no active filter)\","
+        },
+        {
+          "line": 290,
+          "pattern": "sd_level",
+          "text": "request.sd_level,"
+        },
+        {
+          "line": 331,
+          "pattern": "sd_level",
+          "text": "\"[QUERY] time_ms=%s total=%s reranked=%s sd_level=%s search_mode=%s\","
+        },
+        {
+          "line": 335,
+          "pattern": "sd_level",
+          "text": "request.sd_level,"
+        },
+        {
+          "line": 348,
+          "pattern": "sd_level",
+          "text": "\"sd_level_ignored\": sd_level_ignored,"
+        }
+      ],
+      "active_hits": []
+    },
+    {
+      "path": "Bot_data_base/api/schemas.py",
+      "exists": true,
+      "hit_count": 2,
+      "active_hit_count": 0,
+      "hits": [
+        {
+          "line": 49,
+          "pattern": "sd_level",
+          "text": "sd_level: int = Field(default=0, ge=0, le=8)"
+        },
+        {
+          "line": 61,
+          "pattern": "sd_level",
+          "text": "sd_level: int"
+        }
+      ],
+      "active_hits": []
+    },
+    {
+      "path": "Bot_data_base/web_ui/index.html",
+      "exists": true,
+      "hit_count": 0,
+      "active_hit_count": 0,
+      "hits": [],
+      "active_hits": []
+    },
+    {
+      "path": "Bot_data_base/web_ui/registry.html",
+      "exists": true,
+      "hit_count": 0,
+      "active_hit_count": 0,
+      "hits": [],
+      "active_hits": []
+    },
+    {
+      "path": "Bot_data_base/web_ui/static/app.js",
+      "exists": true,
+      "hit_count": 0,
+      "active_hit_count": 0,
+      "hits": [],
+      "active_hits": []
+    },
+    {
+      "path": "Bot_data_base/web_ui/static/registry.js",
+      "exists": true,
+      "hit_count": 0,
+      "active_hit_count": 0,
+      "hits": [],
+      "active_hits": []
+    }
+  ]
+}

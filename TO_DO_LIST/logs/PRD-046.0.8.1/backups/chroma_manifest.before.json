@@ -1,0 +1,32 @@
+{
+  "generated_at": "2026-05-15T03:43:28.666132+00:00",
+  "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "embedding_model_name": "intfloat/multilingual-e5-large",
+  "collection_count": 229,
+  "ids_sample": [
+    "b5a58a85-182a-4668-a701-2100f579ab8d",
+    "89a49bba-279a-4b46-b7f4-01a5ccc36f7b",
+    "f688cbf9-a35a-4c49-8a95-6f84bc55f407",
+    "664d5ad6-46da-4fab-ae34-1717398b40af",
+    "dcb26573-48cf-4a70-8d6e-ccd0ff679533",
+    "1c942f2a-99ab-4848-b354-219a7b66030b",
+    "1c3efec7-63fb-4749-9a40-3b6493eb6422",
+    "8d0af82b-b98c-4118-9a0e-b33121c21e7d",
+    "1605d8bf-0986-4ba2-ab55-d0377c4731c4",
+    "2964827b-39de-454c-b614-a33ce144121b",
+    "56b73db8-ff8b-4da6-8046-ffeccd840ab2",
+    "cd321187-93e2-4298-9709-e4e21acd9c02",
+    "9f9e6b21-a41a-468e-838e-b85d818f76e9",
+    "8d6dcb84-bbbf-4b44-981c-5cc0b014b0ce",
+    "bca9b984-37f0-49c5-8ef2-1ec748968500",
+    "1bf07a78-db5a-4924-b64e-952856963f42",
+    "8b76182c-377d-497c-b6d5-dd9e2cc584dd",
+    "b7cce72f-0938-4789-9d49-8c1885e41d70",
+    "7df31d93-b90a-4c64-aef4-6842efe88039",
+    "1654f6b8-b65e-4000-9677-41f444dbaced"
+  ],
+  "source_ids_sample": [
+    "123__кузница_духа"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "candidate_mixed_intent_audit_v1",
+  "source_prd": "PRD-046.0.8.1",
+  "generated_at": "2026-05-15T03:43:28.857774+00:00",
+  "candidate_blocks_count": 247,
+  "mixed_intent_alerts_before": 0,
+  "mixed_intent_unresolved_count": 0,
+  "mixed_intent_split_required_count": 0,
+  "mixed_intent_review_only_count": 0,
+  "mixed_intent_false_positive_count": 0,
+  "mixed_intent_primary_role_resolved_count": 0,
+  "mixed_intent_cases": []
+}

@@ -142,6 +142,11 @@ body {
   margin-top: 8px;
 }
 
+.card-meta {
+  margin-top: 8px;
+  font-size: 12px;
+}
+
 .card-header {
   display: flex;
   align-items: center;
@@ -162,6 +167,10 @@ body {
 .recent-list li {
   padding: 12px 0;
   border-bottom: 1px solid var(--border);
+}
+
+#dashboard-errors-list li {
+  color: #ffd18a;
 }
 
 .recent-list li:last-child {

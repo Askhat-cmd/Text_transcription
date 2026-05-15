@@ -1,0 +1,18 @@
+{
+  "schema_version": "dashboard_smoke_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF1",
+  "dashboard_endpoint_status": "ok",
+  "dashboard_endpoint_http_status": 200,
+  "sources_total": 30,
+  "blocks_total": 248,
+  "chroma_count": 247,
+  "governance_readiness": "ready",
+  "enrichment_provider_status": "called",
+  "review_queue_items_count": 87,
+  "p0": 0,
+  "p1": 1,
+  "p2": 86,
+  "registry_endpoint_status": "ok",
+  "ui_render_smoke": "ok",
+  "errors": []
+}

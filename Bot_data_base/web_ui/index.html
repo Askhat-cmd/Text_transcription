@@ -31,19 +31,34 @@
       <div class="card">
         <div class="card-label">Источников</div>
         <div class="card-value" id="stat-sources">—</div>
+        <div class="card-meta muted" id="stat-sources-meta"></div>
       </div>
       <div class="card">
         <div class="card-label">Блоков</div>
         <div class="card-value" id="stat-blocks">—</div>
+        <div class="card-meta muted" id="stat-blocks-meta"></div>
       </div>
       <div class="card">
         <div class="card-label">ChromaDB</div>
         <div class="card-value" id="stat-chroma">—</div>
+        <div class="card-meta muted" id="stat-chroma-meta"></div>
+      </div>
+      <div class="card">
+        <div class="card-label">Enrichment / Review</div>
+        <div class="card-value" id="stat-enrichment">—</div>
+        <div class="card-meta muted" id="stat-enrichment-meta"></div>
       </div>
       <div class="card wide">
         <div class="card-label">Governance readiness</div>
         <div class="sd-bars" id="governance-readiness"></div>
       </div>
+    </section>
+
+    <section class="card list" id="dashboard-errors" style="display:none;">
+      <div class="card-header">
+        <h2>Состояние Dashboard</h2>
+      </div>
+      <ul id="dashboard-errors-list" class="recent-list"></ul>
     </section>
 
     <section class="card list" id="recent">

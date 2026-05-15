@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9-RUN1 real-provider enrichment completion: baseline `PRD-046.0.9` успешно продолжен реальным provider run (`247/247`), с нулевым `missing_real_provider_output_count` и без production мутаций.
+Проект находится на стадии post-PRD-046.0.9-RUN1-HF1: после успешного real-provider enrichment run (`247/247`) восстановлен read-only dashboard summary contract и возвращена видимость enrichment/review metrics в BotDB Admin без production мутаций.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -22,6 +22,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - HF3 закрыл low_resource avoid_when hard-fail.
 Текущее состояние: advisory enrichment metadata записана в `metadata.llm_enrichment` для 60 блоков батча APPLY1 без мутации governance authority полей.
 Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`; в `PRD-046.0.9-RUN1` выполнен реальный enrichment run: `items_completed=247`, `validation_errors_count=0`, `review_queue_items_count=87`, `provider_status=called`.
+В `PRD-046.0.9-RUN1-HF1` dashboard получает enrichment/review состояние из артефактов RUN1 через единый endpoint `/api/dashboard/` и показывает явные warning/error причины вместо немых пустых карточек.
 
 ## Stable Modules
 - Multiagent runtime orchestration.
@@ -69,4 +70,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-15
-- Source cycle: PRD-046.0.9-RUN1
+- Source cycle: PRD-046.0.9-RUN1-HF1

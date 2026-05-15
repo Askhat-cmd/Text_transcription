@@ -17,6 +17,7 @@
 - PRD-046.0.8-HF2: remaining mixed-intent warnings calibrated (`2 -> 0` unresolved), governance gate `passed`, `candidate_ready_for_apply=true`, production remains unchanged.
 - PRD-046.0.8.1: controlled apply completed (`all_blocks_merged/registry 229 -> 247`), Chroma reindexed to `247`, post-apply consistency/quality/retrieval gates regenerated; legacy review queue marked stale and new baseline queue rebuilt.
 - PRD-046.0.9: post-reprocess enrichment/review rebaseline completed in candidate mode (no apply/reindex); generated fresh inventory/overlay/validation/review queue/scorecard/retrieval preview for current 247 block ids.
+- PRD-046.0.9-RUN1-HF1: BotDB Admin dashboard summary contract restored (`/api/dashboard/`), enrichment/review visibility returned, explicit warning/error surfacing added, no production mutations.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.

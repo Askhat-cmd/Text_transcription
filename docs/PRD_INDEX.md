@@ -35,6 +35,7 @@
 | PRD-046.0.8.1 | Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1 | done | a593507 | candidate applied to production (`229 -> 247`), registry synced, Chroma reindexed/recovered to `247`, post-apply quality/retrieval gates regenerated | TO_DO_LIST/reports/PRD-046.0.8.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9 | Post-Reprocess LLM Enrichment + Review Queue Rebaseline v1 | done | 85b2d22 | rebuilt fresh enrichment/review baseline for current `247` block ids in candidate mode; no production apply and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9-RUN1 | Real Provider Enrichment Run after Post-Reprocess Rebaseline v1 | done | e3f9e37 | rerun with provider key succeeded (`247/247`, `missing_real_provider_output_count=0`), real review queue rebuilt (`87` items), no production mutation and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9-RUN1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.9-RUN1-HF1 | BotDB Admin Dashboard Metrics Restore + Enrichment Review Visibility v1 | done | pending | restored read-only `/api/dashboard/` contract, returned dashboard enrichment/review visibility, added explicit warning/error surfacing, no production mutation | TO_DO_LIST/reports/PRD-046.0.9-RUN1-HF1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

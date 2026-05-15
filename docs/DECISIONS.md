@@ -119,3 +119,9 @@ Status: accepted
 Context: после boundary-changing reprocess (`PRD-046.0.8.1`) старые enrichment/review артефакты стали семантически и технически stale, даже при частичном тематическом совпадении текста.
 Decision: для post-reprocess этапа обязателен fresh baseline (`PRD-046.0.9`) с preflight, inventory, overlay validation и review queue rebaseline, привязанными к текущим block ids/hash. Старые решения не применяются без явного remap+hash proof.
 Consequences: review/apply цикл остается трассируемым и безопасным; исключается silent перенос старых решений на новые границы чанков; LLM enrichment сохраняет advisory роль и не может мутировать deterministic governance authority.
+
+## ADR-021 - BotDB Admin Dashboard must use explicit read-only summary contract
+Status: accepted
+Context: после `PRD-046.0.9-RUN1` registry отражал актуальные данные, но dashboard показывал пустые карточки из-за хрупкой сборки состояния из разрозненных вызовов и отсутствия явной деградации при проблемах источников данных.
+Decision: dashboard переводится на единый read-only контракт `/api/dashboard/` (`botdb_dashboard_summary_v1`), который агрегирует registry/chroma/governance/enrichment/review state и возвращает явные `warnings` при частичной недоступности артефактов.
+Consequences: admin UI отображает достоверное операционное состояние, не мутирует production данные и не маскирует ошибки немыми `—` карточками.

@@ -20,12 +20,12 @@
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.0.9-RUN1: real provider enrichment run blocked by provider preflight (`api_key_missing`); waiting for credential restore and rerun.
+- PRD-046.0.9.1 planning: human review decisioning over real post-reprocess enrichment queue (`87` items).
 
 ## Next
-1. PRD-046.0.9-RUN1-FIX - Provider/Budget Configuration Fix v1.
-2. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
-3. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (new block ids only).
+1. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (new block ids only).
+3. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

@@ -34,7 +34,7 @@
 | PRD-046.0.8-HF2 | Remaining Candidate Governance Warning Calibration v1 | done | historical | mixed-intent warning calibration (`mixed_intent_unresolved_count=0`), governance gate v3 passed, `candidate_ready_for_apply=true`, no production mutation | TO_DO_LIST/reports/PRD-046.0.8-HF2_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.8.1 | Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1 | done | a593507 | candidate applied to production (`229 -> 247`), registry synced, Chroma reindexed/recovered to `247`, post-apply quality/retrieval gates regenerated | TO_DO_LIST/reports/PRD-046.0.8.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9 | Post-Reprocess LLM Enrichment + Review Queue Rebaseline v1 | done | 85b2d22 | rebuilt fresh enrichment/review baseline for current `247` block ids in candidate mode; no production apply and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.9-RUN1 | Real Provider Enrichment Run after Post-Reprocess Rebaseline v1 | blocked_by_provider | 0558f49 | implemented provider preflight/pilot/real RUN1 pipeline; run blocked on `api_key_missing`, no production mutation and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9-RUN1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.9-RUN1 | Real Provider Enrichment Run after Post-Reprocess Rebaseline v1 | done | pending | rerun with provider key succeeded (`247/247`, `missing_real_provider_output_count=0`), real review queue rebuilt (`87` items), no production mutation and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9-RUN1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

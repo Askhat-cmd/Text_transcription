@@ -1,8 +1,20 @@
 {
   "schema_version": "real_enrichment_validation_v1",
   "source_prd": "PRD-046.0.9-RUN1",
-  "validation_status": "blocked_by_provider",
+  "generated_at": "2026-05-15T05:36:41.148457+00:00",
+  "expected_items": 247,
+  "overlay_items": 247,
+  "errors": [],
+  "warnings": [],
   "validation_errors_count": 0,
   "validation_warnings_count": 0,
-  "missing_real_provider_output_count": 247
+  "passed": true,
+  "raw_full_text_leak_detected": false,
+  "governance_authority_mutated": false,
+  "provider_status": "called",
+  "validation_status": "passed_with_review_queue",
+  "items_attempted": 247,
+  "items_completed": 247,
+  "items_failed": 0,
+  "missing_real_provider_output_count": 0
 }

@@ -1,0 +1,8 @@
+{
+  "schema_version": "real_provider_no_mutation_check_v1",
+  "source_prd": "PRD-046.0.9-RUN1",
+  "generated_at": "2026-05-15T05:36:41.186453+00:00",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "chroma_mutated": false
+}

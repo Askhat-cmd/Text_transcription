@@ -1,12 +1,59 @@
 {
-  "schema_version": "real_enrichment_retrieval_preview_v1",
-  "source_prd": "PRD-046.0.9-RUN1",
-  "status": "blocked_by_provider",
-  "queries_total": 0,
-  "queries_ok": 0,
+  "schema_version": "post_reprocess_enrichment_retrieval_preview_v1",
+  "source_prd": "PRD-046.0.9",
+  "generated_at": "2026-05-15T05:36:41.172470+00:00",
+  "queries_total": 24,
+  "queries_ok": 24,
   "top_k_before_summary_available": 0,
-  "top_k_overlay_summary_available": 0,
-  "overlay_candidate_useful_count": 0,
-  "overlay_candidate_noise_count": 0,
-  "examples": []
+  "top_k_overlay_summary_available": 120,
+  "overlay_candidate_useful_count": 55,
+  "overlay_candidate_noise_count": 65,
+  "examples": [
+    {
+      "case_id": "KR-001",
+      "query_preview": "я всё время стараюсь быть лучше и не могу остановиться",
+      "block_id": "b70ae542-7b02-463b-bfc3-46bfd37a0a19",
+      "overlay_summary_preview": "Анализ поведения, связанного с внутренними конфликтами и социальным давлением, которое может привести к подавлению собственных эмоций и потребностей.",
+      "overlap_terms": [
+        "и"
+      ]
+    },
+    {
+      "case_id": "KR-001",
+      "query_preview": "я всё время стараюсь быть лучше и не могу остановиться",
+      "block_id": "cc979440-d02f-4bff-8920-59982597b4cc",
+      "overlay_summary_preview": "Анализ ситуации, в которой человек испытывает давление из-за ожиданий начальства, приводит к эмоциональным реакциям и внутренним конфликтам. Важно осознавать свои паттерны повед...",
+      "overlap_terms": [
+        "и"
+      ]
+    },
+    {
+      "case_id": "KR-001",
+      "query_preview": "я всё время стараюсь быть лучше и не могу остановиться",
+      "block_id": "9ea9b99b-923b-4ca6-b8b6-037d55cab02b",
+      "overlay_summary_preview": "Обсуждение о восприятии состояний и их временной природе, а также о том, как осознание этих состояний связано с личной идентичностью.",
+      "overlap_terms": [
+        "и"
+      ]
+    },
+    {
+      "case_id": "KR-001",
+      "query_preview": "я всё время стараюсь быть лучше и не могу остановиться",
+      "block_id": "2e021b62-6bee-4584-b1cf-c79bcb833153",
+      "overlay_summary_preview": "Практика осознанности включает в себя способность замечать, когда ум отвлекается, и возвращаться к текущему моменту. Это не означает подавление мыслей, а скорее осознание их при...",
+      "overlap_terms": [
+        "и",
+        "не"
+      ]
+    },
+    {
+      "case_id": "KR-001",
+      "query_preview": "я всё время стараюсь быть лучше и не могу остановиться",
+      "block_id": "5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+      "overlay_summary_preview": "В раннем возрасте формируется восприятие себя как недостаточного, что может влиять на дальнейшее развитие личности и самооценку. Этот паттерн может стать основой для различных п...",
+      "overlap_terms": [
+        "и"
+      ]
+    }
+  ]
 }

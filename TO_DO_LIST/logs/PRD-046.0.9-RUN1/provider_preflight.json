@@ -1,22 +1,20 @@
 {
   "schema_version": "provider_preflight_v1",
   "source_prd": "PRD-046.0.9-RUN1",
-  "generated_at": "2026-05-15T04:57:51.937123+00:00",
-  "passed": false,
+  "generated_at": "2026-05-15T05:08:02.793572+00:00",
+  "passed": true,
   "provider": "openai",
   "model": "gpt-4o-mini",
-  "api_key_present": false,
-  "client_init_ok": false,
-  "test_call_ok": false,
-  "test_call_tokens_input": 0,
-  "test_call_tokens_output": 0,
+  "api_key_present": true,
+  "client_init_ok": true,
+  "test_call_ok": true,
+  "test_call_tokens_input": 22,
+  "test_call_tokens_output": 5,
   "estimated_blocks_to_process": 247,
   "estimated_max_input_tokens": 45818,
   "estimated_max_output_tokens": 54340,
   "configured_budget_usd": 2.0,
   "hard_stop_budget_usd": 3.0,
   "estimated_cost_usd": 0.039477,
-  "blockers": [
-    "api_key_missing"
-  ]
+  "blockers": []
 }

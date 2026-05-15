@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9-RUN1 provider-gated enrichment: baseline `PRD-046.0.9` готов, но реальный provider run заблокирован preflight-ом (`api_key_missing`), поэтому текущий статус цикла — `blocked_by_provider` без production мутаций.
+Проект находится на стадии post-PRD-046.0.9-RUN1 real-provider enrichment completion: baseline `PRD-046.0.9` успешно продолжен реальным provider run (`247/247`), с нулевым `missing_real_provider_output_count` и без production мутаций.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -21,7 +21,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - HF2 закрыл unknown lens и quote/invariant риски.
 - HF3 закрыл low_resource avoid_when hard-fail.
 Текущее состояние: advisory enrichment metadata записана в `metadata.llm_enrichment` для 60 блоков батча APPLY1 без мутации governance authority полей.
-Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`, а `PRD-046.0.9-RUN1` сейчас остановлен на provider preflight (`OPENAI_API_KEY` отсутствует), поэтому real advisory enrichment для 247 блоков ещё не выполнен.
+Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`; в `PRD-046.0.9-RUN1` выполнен реальный enrichment run: `items_completed=247`, `validation_errors_count=0`, `review_queue_items_count=87`, `provider_status=called`.
 
 ## Stable Modules
 - Multiagent runtime orchestration.
@@ -35,8 +35,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) требует решений только по fresh review queue post-reprocess цикла.
-- Real-provider enrichment run for post-reprocess baseline (`PRD-046.0.9-RUN1`) ожидает provider credential restore.
+- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) требует решений только по fresh review queue post-reprocess real-enrichment цикла.
 
 ## Not Implemented Yet
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
@@ -51,9 +50,9 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
 
 ## Next Planned PRDs
-1. PRD-046.0.9-RUN1-FIX - Provider/Budget Configuration Fix v1.
-2. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
-3. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только для решений, привязанных к новым block ids).
+1. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только для решений, привязанных к новым block ids).
+3. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.

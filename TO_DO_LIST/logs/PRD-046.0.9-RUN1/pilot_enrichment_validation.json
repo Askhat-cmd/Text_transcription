@@ -1,0 +1,14 @@
+{
+  "schema_version": "post_reprocess_enrichment_validation_v1",
+  "source_prd": "PRD-046.0.9",
+  "generated_at": "2026-05-15T05:08:35.599512+00:00",
+  "expected_items": 5,
+  "overlay_items": 5,
+  "errors": [],
+  "warnings": [],
+  "validation_errors_count": 0,
+  "validation_warnings_count": 0,
+  "passed": true,
+  "raw_full_text_leak_detected": false,
+  "governance_authority_mutated": false
+}

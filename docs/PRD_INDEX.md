@@ -32,7 +32,7 @@
 | PRD-046.0.8 | Clean Source Reprocess from Single Active Source v1 | done | ac587d5 | staged candidate-only clean reprocess built (`247` blocks), no production mutation; gate=`candidate_needs_governance_calibration` | TO_DO_LIST/reports/PRD-046.0.8_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.8-HF1 | Candidate Governance / Practice Classification Calibration v1 | done | historical | deterministic practice taxonomy + governance gate v2; `direct_practice_misclassified_count=0`, `unsafe_practice_suggestion_count=0`; no production mutation | TO_DO_LIST/reports/PRD-046.0.8-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.8-HF2 | Remaining Candidate Governance Warning Calibration v1 | done | historical | mixed-intent warning calibration (`mixed_intent_unresolved_count=0`), governance gate v3 passed, `candidate_ready_for_apply=true`, no production mutation | TO_DO_LIST/reports/PRD-046.0.8-HF2_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.8.1 | Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1 | done | pending | candidate applied to production (`229 -> 247`), registry synced, Chroma reindexed/recovered to `247`, post-apply quality/retrieval gates regenerated | TO_DO_LIST/reports/PRD-046.0.8.1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.8.1 | Controlled Candidate Apply + Chroma Reindex + KB Quality Re-Audit v1 | done | a593507 | candidate applied to production (`229 -> 247`), registry synced, Chroma reindexed/recovered to `247`, post-apply quality/retrieval gates regenerated | TO_DO_LIST/reports/PRD-046.0.8.1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

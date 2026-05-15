@@ -1,0 +1,19 @@
+{
+  "schema_version": "writer_kb_snippet_boundary_audit_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF2",
+  "generated_at": "2026-05-15T08:43:10.501322+00:00",
+  "issue_confirmed": true,
+  "root_cause": "knowledge_policy._sanitize_preview fixed-length clipping",
+  "source_of_truncation": "bot_psychologist/bot_agent/multiagent/knowledge_policy.py",
+  "fix_applied": "boundary-aware truncation with sentence/word boundary + ellipsis",
+  "production_block_text_mutated": false,
+  "retrieval_budget_changed": false,
+  "examples_before": [
+    "????? ?????????",
+    "??? ?? ??"
+  ],
+  "examples_after": [
+    "????? ???????????",
+    "??? ?? ?????"
+  ]
+}

@@ -125,3 +125,15 @@ Status: accepted
 Context: после `PRD-046.0.9-RUN1` registry отражал актуальные данные, но dashboard показывал пустые карточки из-за хрупкой сборки состояния из разрозненных вызовов и отсутствия явной деградации при проблемах источников данных.
 Decision: dashboard переводится на единый read-only контракт `/api/dashboard/` (`botdb_dashboard_summary_v1`), который агрегирует registry/chroma/governance/enrichment/review state и возвращает явные `warnings` при частичной недоступности артефактов.
 Consequences: admin UI отображает достоверное операционное состояние, не мутирует production данные и не маскирует ошибки немыми `—` карточками.
+
+## ADR-022 - Admin UI acceptance requires runtime/browser-visible smoke, not only TestClient
+Status: accepted
+Context: после HF1 API unit tests были зелёными, но ручная проверка браузерного runtime всё ещё показывала устаревший/пустой dashboard UI.
+Decision: для Admin UI hotfix-циклов обязательны runtime-oriented smoke checks: статический contract (HTML script version, JS fetch path), endpoint slash/no-slash compatibility и явный UI fallback на API/payload ошибки.
+Consequences: acceptance не завершается только TestClient-уровнем; PRD считается закрытым после подтверждения browser-visible контракта.
+
+## ADR-023 - Writer KB snippets must be boundary-aware and never cut Cyrillic words mid-token
+Status: accepted
+Context: в runtime prompt `ЗНАНИЯ ИЗ БАЗЫ` фиксировались обрезанные фрагменты (`Добро пожаловат`, `Ешь на бе`), ухудшающие качество контекста для Writer.
+Decision: sanitization/truncation для writer-facing KB snippets должна резать по sentence/word boundary и добавлять ellipsis `…`, а не использовать raw fixed-char clipping.
+Consequences: снижается шум и двусмысленность в writer prompt при сохранении budget limits и без мутации production block text.

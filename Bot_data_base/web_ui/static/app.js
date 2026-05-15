@@ -26,7 +26,7 @@ function renderGovernanceReadiness(governance) {
 
   const statusRow = document.createElement('div');
   statusRow.className = 'sd-bar';
-  statusRow.innerHTML = `<strong>status</strong>`;
+  statusRow.innerHTML = '<strong>status</strong>';
   const statusLabel = document.createElement('span');
   statusLabel.style.width = `${readiness === 'ready' ? 100 : 35}px`;
   statusRow.appendChild(statusLabel);
@@ -100,6 +100,18 @@ function renderWarnings(warnings) {
   section.style.display = 'block';
 }
 
+function validateSummaryPayload(summary) {
+  const missing = [];
+  if (!summary || typeof summary !== 'object') return ['payload_not_object'];
+  if (!summary.sources || typeof summary.sources !== 'object') missing.push('sources');
+  if (!summary.blocks || typeof summary.blocks !== 'object') missing.push('blocks');
+  if (!summary.chroma || typeof summary.chroma !== 'object') missing.push('chroma');
+  if (!summary.governance || typeof summary.governance !== 'object') missing.push('governance');
+  if (!summary.enrichment || typeof summary.enrichment !== 'object') missing.push('enrichment');
+  if (!Array.isArray(summary.recent_sources)) missing.push('recent_sources');
+  return missing;
+}
+
 function renderUnavailable(reason) {
   setText('stat-sources', '—');
   setText('stat-blocks', '—');
@@ -116,7 +128,12 @@ function renderUnavailable(reason) {
 
 async function loadDashboard() {
   try {
-    const summary = await fetchJSON('/api/dashboard/');
+    const summary = await fetchJSON('/api/dashboard');
+    const missing = validateSummaryPayload(summary);
+    if (missing.length > 0) {
+      renderUnavailable(`Dashboard payload malformed: ${missing.join(', ')}`);
+      return;
+    }
 
     const sources = summary.sources || {};
     const blocks = summary.blocks || {};
@@ -127,7 +144,7 @@ async function loadDashboard() {
     setText('stat-sources-meta', `active: ${sources.active ?? 0}, protected: ${sources.protected ?? 0}`);
 
     setText('stat-blocks', String(blocks.production_total ?? 0));
-    setText('stat-blocks-meta', `active source blocks: ${blocks.active_source_blocks ?? 0}`);
+    setText('stat-blocks-meta', `active source blocks: ${blocks.active_source_blocks ?? 0}, registry total blocks: ${blocks.registry_total ?? 0}`);
 
     setText('stat-chroma', String(chroma.count ?? 0));
     setText('stat-chroma-meta', `status: ${chroma.status || 'unknown'}`);
@@ -150,7 +167,7 @@ async function loadDashboard() {
     renderWarnings(warnings);
   } catch (err) {
     console.error(err);
-    renderUnavailable('API unavailable');
+    renderUnavailable('Dashboard API недоступен');
   }
 }
 

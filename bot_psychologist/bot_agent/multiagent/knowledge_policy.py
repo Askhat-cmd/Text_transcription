@@ -107,11 +107,39 @@ def _normalize_content(text: str) -> str:
     return " ".join((text or "").split())
 
 
+def _trim_to_word_boundary(text: str, max_chars: int) -> str:
+    normalized = _normalize_content(text)
+    if len(normalized) <= max_chars:
+        return normalized
+    if max_chars <= 1:
+        return "…"
+
+    hard_limit = max(1, max_chars - 1)
+    candidate = normalized[:hard_limit].rstrip()
+    if not candidate:
+        return "…"
+
+    # Prefer sentence boundary near the tail.
+    sentence_boundary = max(candidate.rfind("."), candidate.rfind("!"), candidate.rfind("?"))
+    if sentence_boundary >= max(12, int(hard_limit * 0.6)):
+        candidate = candidate[: sentence_boundary + 1].rstrip()
+        if candidate:
+            return candidate + "…"
+
+    # Fallback to last word boundary.
+    word_boundary = max(candidate.rfind(" "), candidate.rfind("\t"), candidate.rfind("\n"))
+    if word_boundary >= max(8, int(hard_limit * 0.45)):
+        candidate = candidate[:word_boundary].rstrip()
+    if not candidate:
+        candidate = normalized[:hard_limit].rstrip()
+    return candidate + "…"
+
+
 def _sanitize_preview(text: str, *, max_chars: int = _POLICY_SANITIZED_MAX_CHARS) -> str:
     normalized = _normalize_content(text)
     if len(normalized) <= max_chars:
         return normalized
-    return normalized[: max(0, max_chars - 3)].rstrip() + "..."
+    return _trim_to_word_boundary(normalized, max_chars)
 
 
 def safe_knowledge_debug_preview_v1(

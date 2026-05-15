@@ -200,15 +200,24 @@ def _build_recent_sources(raw_sources: list[dict[str, Any]]) -> list[dict[str, A
     return recent
 
 
-def _get_runner() -> PipelineRunner:
-    global _runner
-    if _runner is None:
-        _runner = PipelineRunner(config_path="config.yaml")
-    return _runner
+def _is_payload_valid(payload: dict[str, Any]) -> tuple[bool, list[str]]:
+    missing: list[str] = []
+    if not isinstance(payload.get("sources"), dict):
+        missing.append("sources")
+    if not isinstance(payload.get("blocks"), dict):
+        missing.append("blocks")
+    if not isinstance(payload.get("chroma"), dict):
+        missing.append("chroma")
+    if not isinstance(payload.get("governance"), dict):
+        missing.append("governance")
+    if not isinstance(payload.get("enrichment"), dict):
+        missing.append("enrichment")
+    if not isinstance(payload.get("recent_sources"), list):
+        missing.append("recent_sources")
+    return len(missing) == 0, missing
 
 
-@router.get("/")
-async def get_dashboard_summary() -> dict[str, Any]:
+def _build_dashboard_summary() -> dict[str, Any]:
     runner = _get_runner()
     warnings: list[str] = []
 
@@ -224,6 +233,18 @@ async def get_dashboard_summary() -> dict[str, Any]:
         for row in raw_sources
         if _normalize(row.get("status")).lower() in {"done", "processing"} and _to_int(row.get("blocks_count")) > 0
     )
+
+    focus_source_blocks = sum(
+        _to_int(row.get("blocks_count"))
+        for row in raw_sources
+        if _normalize(row.get("status")).lower() in {"done", "processing"} and _is_focus_source(row)
+    )
+    active_source_blocks = sum(
+        _to_int(row.get("blocks_count"))
+        for row in raw_sources
+        if _normalize(row.get("status")).lower() in {"done", "processing"}
+    )
+    production_blocks = focus_source_blocks if focus_source_blocks > 0 else active_source_blocks
 
     chroma_status = "ok"
     chroma_count = 0
@@ -256,7 +277,7 @@ async def get_dashboard_summary() -> dict[str, Any]:
     if enrichment["provider_status"] == "unknown":
         warnings.append("enrichment_state_unknown")
 
-    return {
+    payload = {
         "schema_version": "botdb_dashboard_summary_v1",
         "status": "ok",
         "generated_at": _utc_now(),
@@ -269,12 +290,9 @@ async def get_dashboard_summary() -> dict[str, Any]:
             "zero_block": zero_block_sources,
         },
         "blocks": {
-            "production_total": _to_int(stats.get("total_blocks")),
-            "active_source_blocks": sum(
-                _to_int(row.get("blocks_count"))
-                for row in raw_sources
-                if _normalize(row.get("status")).lower() in {"done", "processing"}
-            ),
+            "production_total": production_blocks,
+            "active_source_blocks": active_source_blocks,
+            "registry_total": _to_int(stats.get("total_blocks")),
         },
         "chroma": {
             "status": chroma_status,
@@ -286,3 +304,21 @@ async def get_dashboard_summary() -> dict[str, Any]:
         "recent_sources": _build_recent_sources(raw_sources),
         "warnings": sorted(set(warnings)),
     }
+    valid, missing = _is_payload_valid(payload)
+    if not valid:
+        payload["status"] = "warning"
+        payload["warnings"] = sorted(set(list(payload.get("warnings", [])) + [f"missing_fields:{','.join(missing)}"]))
+    return payload
+
+
+def _get_runner() -> PipelineRunner:
+    global _runner
+    if _runner is None:
+        _runner = PipelineRunner(config_path="config.yaml")
+    return _runner
+
+
+@router.get("")
+@router.get("/")
+async def get_dashboard_summary() -> dict[str, Any]:
+    return _build_dashboard_summary()

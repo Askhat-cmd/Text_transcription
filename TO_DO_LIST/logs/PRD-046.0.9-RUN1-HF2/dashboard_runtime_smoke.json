@@ -1,0 +1,14 @@
+{
+  "schema_version": "dashboard_runtime_smoke_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF2",
+  "generated_at": "2026-05-15T08:41:38.667107+00:00",
+  "root_page_status": 200,
+  "app_js_status": 200,
+  "dashboard_api_status": 200,
+  "dashboard_api_payload_ok": true,
+  "dashboard_html_has_script_version": true,
+  "dashboard_js_has_load_dashboard": true,
+  "dashboard_js_fetch_url": "/api/dashboard",
+  "render_contract_ok": true,
+  "errors": []
+}

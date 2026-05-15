@@ -1,0 +1,37 @@
+﻿[2026-05-15] PRD-046.0.9-RUN1-HF2 test command output
+
+$ python -m pytest Bot_data_base/tests/test_admin_dashboard_summary.py -q
+1 passed
+
+$ python -m pytest Bot_data_base/tests/test_admin_dashboard_enrichment_state.py -q
+1 passed
+
+$ python -m pytest Bot_data_base/tests/test_admin_dashboard_no_mutation.py -q
+1 passed
+
+$ python -m pytest Bot_data_base/tests/test_admin_dashboard_runtime_contract.py -q
+1 passed
+
+$ python -m pytest Bot_data_base/tests/test_registry_delete_hygiene_policy.py -q
+3 passed
+
+$ python -m pytest Bot_data_base/tests/test_registry_delete_no_production_mutation.py -q
+2 passed
+
+$ python -m pytest Bot_data_base/tests/test_retrieval_snippet_boundaries.py -q
+2 passed
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_writer_kb_snippet_boundaries.py -q
+2 passed
+
+$ python -m pytest Bot_data_base/tests -q
+250 passed, 173 warnings
+
+$ python -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+8 passed
+
+$ python -m pytest bot_psychologist/tests/multiagent -q
+234 passed, 324 warnings
+
+Notes:
+- Warnings are from pre-existing deprecation/runtime warnings and not introduced by HF2.

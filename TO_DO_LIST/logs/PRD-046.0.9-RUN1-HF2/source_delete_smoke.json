@@ -1,0 +1,14 @@
+{
+  "schema_version": "source_delete_smoke_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF2",
+  "generated_at": "2026-05-15T08:43:10.501098+00:00",
+  "focus_delete_forbidden": true,
+  "zero_block_test_delete_supported": true,
+  "registry_only_one_block_test_policy": "allowed_if_safe",
+  "url_encoding_test_passed": true,
+  "backup_created_before_delete": true,
+  "production_source_unchanged": true,
+  "production_blocks_unchanged": true,
+  "chroma_count_unchanged": true,
+  "errors": []
+}

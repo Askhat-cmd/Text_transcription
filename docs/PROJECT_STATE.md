@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9-RUN1-HF1: после успешного real-provider enrichment run (`247/247`) восстановлен read-only dashboard summary contract и возвращена видимость enrichment/review metrics в BotDB Admin без production мутаций.
+Проект находится на стадии post-PRD-046.0.9-RUN1-HF2: после HF1 восстановлена runtime-видимость dashboard в браузере (cache-busting + runtime contract smoke), выровнена политика source delete в Admin UI/API, и добавлен boundary-aware guard для KB snippets, передаваемых Writer.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -23,6 +23,18 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 Текущее состояние: advisory enrichment metadata записана в `metadata.llm_enrichment` для 60 блоков батча APPLY1 без мутации governance authority полей.
 Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`; в `PRD-046.0.9-RUN1` выполнен реальный enrichment run: `items_completed=247`, `validation_errors_count=0`, `review_queue_items_count=87`, `provider_status=called`.
 В `PRD-046.0.9-RUN1-HF1` dashboard получает enrichment/review состояние из артефактов RUN1 через единый endpoint `/api/dashboard/` и показывает явные warning/error причины вместо немых пустых карточек.
+В `PRD-046.0.9-RUN1-HF2` endpoint/Frontend дополнительно откалиброваны под runtime acceptance: поддерживаются `/api/dashboard` и `/api/dashboard/`, production-block card опирается на focus-source (`247`), registry total показывается отдельно, а при API/payload проблемах отображается явная ошибка.
+
+## Current Admin Source Hygiene State
+Delete policy в реестре стала явной и согласованной между backend/frontend:
+- `Защищено` только для focus source `123__кузница_духа`;
+- `Удалить` для безопасных zero-block источников;
+- `Очистить тестовый` для test-like `<=1` блока только при safety-gates;
+- snapshot registry создаётся перед фактическим delete-мутированием.
+Production focus source и Chroma production count остаются неизменны.
+
+## Current Writer KB Snippet State
+Root cause mid-word KB snippet clipping подтверждён в `knowledge_policy._sanitize_preview` (жёсткий char-cut). В HF2 внедрена boundary-aware truncation логика (sentence/word boundary + ellipsis `…`) без изменения governance authority и без изменения production block text.
 
 ## Stable Modules
 - Multiagent runtime orchestration.
@@ -70,4 +82,4 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 
 ## Last Updated
 - Date: 2026-05-15
-- Source cycle: PRD-046.0.9-RUN1-HF1
+- Source cycle: PRD-046.0.9-RUN1-HF2

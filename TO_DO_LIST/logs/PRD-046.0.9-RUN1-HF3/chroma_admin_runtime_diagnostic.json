@@ -1,0 +1,14 @@
+{
+  "schema_version": "chroma_admin_runtime_diagnostic_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF3",
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "registry_stats_chroma_total": 247,
+  "chroma_manager_stats_ok": true,
+  "chroma_path_resolved": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "expected_count": 247,
+  "matches_expected": true,
+  "errors": [],
+  "warnings": []
+}

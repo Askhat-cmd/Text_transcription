@@ -104,6 +104,34 @@ def _load_production_source_ids(runner: PipelineRunner) -> set[str]:
     return {sid for sid in (_extract_source_id(block) for block in blocks) if sid}
 
 
+def _safe_chroma_source_exists(runner: PipelineRunner, source_id: str) -> tuple[bool | None, str | None]:
+    normalized = _normalize(source_id)
+    if not normalized:
+        return False, None
+
+    chroma = getattr(runner, "chroma_manager", None)
+    if chroma is None:
+        return None, "chroma_manager_unavailable"
+
+    source_exists = getattr(chroma, "source_exists", None)
+    if callable(source_exists):
+        try:
+            return bool(source_exists(normalized)), None
+        except Exception as exc:
+            return None, f"source_exists_error:{exc}"
+
+    collection = getattr(chroma, "_collection", None)
+    if collection is not None:
+        try:
+            queried = collection.get(where={"source_id": normalized})
+            ids = queried.get("ids", []) if isinstance(queried, dict) else []
+            return bool(ids), "fallback_collection_where_scan"
+        except Exception as exc:
+            return None, f"fallback_collection_scan_error:{exc}"
+
+    return None, "chroma_source_exists_unavailable"
+
+
 def _classify_hygiene(source_row: dict[str, Any]) -> tuple[str, list[str]]:
     status = _normalize(source_row.get("status")).lower()
     blocks_count = _to_int(source_row.get("blocks_count"))
@@ -136,18 +164,45 @@ def _classify_hygiene(source_row: dict[str, Any]) -> tuple[str, list[str]]:
     return "manual_review", ["unknown_needs_review"]
 
 
-def _build_sources_payload(raw_sources: list[dict[str, Any]], *, runner: PipelineRunner) -> list[dict[str, Any]]:
+def _build_sources_payload(
+    raw_sources: list[dict[str, Any]],
+    *,
+    runner: PipelineRunner,
+    warnings: list[str] | None = None,
+) -> list[dict[str, Any]]:
     payload: list[dict[str, Any]] = []
     production_ids = _load_production_source_ids(runner)
 
-    for row in raw_sources:
+    for index, row in enumerate(raw_sources):
         item = dict(row)
-        action, reasons = _classify_hygiene(item)
-        item["is_focus_source"] = _is_focus_source(item)
-        item["is_test_like"] = _is_test_like_source(item)
-        item["recommended_hygiene_action"] = action
-        item["hygiene_reason"] = reasons
-        policy = _resolve_delete_policy(item, production_source_ids=production_ids, runner=runner)
+        source_id = _normalize(item.get("source_id")) or f"row_{index}"
+
+        try:
+            action, reasons = _classify_hygiene(item)
+            item["is_focus_source"] = _is_focus_source(item)
+            item["is_test_like"] = _is_test_like_source(item)
+            item["recommended_hygiene_action"] = action
+            item["hygiene_reason"] = reasons
+        except Exception as exc:
+            item["is_focus_source"] = False
+            item["is_test_like"] = False
+            item["recommended_hygiene_action"] = "manual_review"
+            item["hygiene_reason"] = ["classification_error"]
+            if warnings is not None:
+                warnings.append(f"row_classification_error:{source_id}:{exc}")
+
+        try:
+            policy = _resolve_delete_policy(item, production_source_ids=production_ids, runner=runner)
+        except Exception as exc:
+            policy = {
+                "allowed": False,
+                "state": "unavailable",
+                "reason": f"Ошибка политики: {exc}",
+                "code": "row_policy_error",
+            }
+            if warnings is not None:
+                warnings.append(f"row_policy_error:{source_id}:{exc}")
+
         item["delete_policy"] = policy
         item["delete_allowed"] = bool(policy.get("allowed"))
         payload.append(item)
@@ -190,12 +245,20 @@ def _resolve_delete_policy(
                 "reason": "Источник присутствует в production блоках",
                 "code": "present_in_production",
             }
-        if runner.chroma_manager.source_exists(source_id):
+        chroma_exists, chroma_reason = _safe_chroma_source_exists(runner, source_id)
+        if chroma_exists is True:
             return {
                 "allowed": False,
                 "state": "unavailable",
                 "reason": "Источник имеет записи в Chroma, требуется ручная проверка",
                 "code": "chroma_has_source",
+            }
+        if chroma_exists is None:
+            return {
+                "allowed": False,
+                "state": "unavailable",
+                "reason": f"Проверка Chroma недоступна: {chroma_reason or 'unknown'}",
+                "code": "chroma_source_exists_unavailable",
             }
         return {
             "allowed": True,
@@ -231,7 +294,7 @@ def _create_registry_snapshot(runner: PipelineRunner, reason: str) -> str:
     registry_path = Path(runner.registry.registry_path)
     if not registry_path.exists():
         return ""
-    out_dir = _resolve_existing_path("TO_DO_LIST/logs/PRD-046.0.9-RUN1-HF2")
+    out_dir = _resolve_existing_path("TO_DO_LIST/logs/PRD-046.0.9-RUN1-HF3")
     out_dir.mkdir(parents=True, exist_ok=True)
     safe_reason = "".join(ch for ch in reason if ch.isalnum() or ch in {"_", "-"}) or "delete"
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
@@ -243,8 +306,9 @@ def _create_registry_snapshot(runner: PipelineRunner, reason: str) -> str:
 @router.get("/", response_model=RegistryListResponse)
 async def list_sources():
     runner = _get_runner()
-    payload_sources = _build_sources_payload([s.to_dict() for s in runner.registry.list_all()], runner=runner)
-    return {"total": len(payload_sources), "sources": payload_sources}
+    warnings: list[str] = []
+    payload_sources = _build_sources_payload([s.to_dict() for s in runner.registry.list_all()], runner=runner, warnings=warnings)
+    return {"total": len(payload_sources), "sources": payload_sources, "warnings": warnings}
 
 
 @router.get("/stats", response_model=StatsResponse)
@@ -254,7 +318,9 @@ async def get_stats():
     chroma_stats = runner.chroma_manager.get_stats()
     sources = [s.to_dict() for s in runner.registry.list_all()]
     focus_sources = [row for row in sources if _is_focus_source(row)]
-    classified = _build_sources_payload(sources, runner=runner)
+
+    classification_warnings: list[str] = []
+    classified = _build_sources_payload(sources, runner=runner, warnings=classification_warnings)
     archive_candidates = sum(
         1 for row in classified if _normalize(row.get("recommended_hygiene_action")) == "archive"
     )
@@ -285,6 +351,7 @@ async def get_stats():
             "archive_candidate_sources": archive_candidates,
             "processing_stale_sources": processing_stale,
             "review_queue_items": review_queue_items,
+            "row_policy_errors_count": sum(1 for w in classification_warnings if "row_policy_error:" in w),
         },
     }
 
@@ -327,10 +394,10 @@ async def delete_source(source_id: str):
         dir_path = base_dir / subdir
         if not dir_path.exists():
             continue
-        for f in dir_path.glob(f"*{source_id}*"):
-            if f.exists():
-                f.unlink()
-                files_deleted.append(str(f.as_posix()))
+        for file_path in dir_path.glob(f"*{source_id}*"):
+            if file_path.exists():
+                file_path.unlink()
+                files_deleted.append(str(file_path.as_posix()))
 
     return {
         "deleted": int(chroma_deleted),

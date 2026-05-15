@@ -37,6 +37,7 @@
 | PRD-046.0.9-RUN1 | Real Provider Enrichment Run after Post-Reprocess Rebaseline v1 | done | e3f9e37 | rerun with provider key succeeded (`247/247`, `missing_real_provider_output_count=0`), real review queue rebuilt (`87` items), no production mutation and no Chroma reindex | TO_DO_LIST/reports/PRD-046.0.9-RUN1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9-RUN1-HF1 | BotDB Admin Dashboard Metrics Restore + Enrichment Review Visibility v1 | done | 0f1d8a5 | restored read-only `/api/dashboard/` contract, returned dashboard enrichment/review visibility, added explicit warning/error surfacing, no production mutation | TO_DO_LIST/reports/PRD-046.0.9-RUN1-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9-RUN1-HF2 | Admin Runtime UI Fix + Source Delete Hygiene + Writer KB Snippet Boundary Audit v1 | done | f7447fd | runtime dashboard render contract fixed (cache busting + payload guard), registry delete policy aligned with UI/backend safety gates, boundary-aware KB snippet truncation for Writer | TO_DO_LIST/reports/PRD-046.0.9-RUN1-HF2_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.9-RUN1-HF3 | Registry Runtime Render Fix + Admin Data Consistency Gate v1 | done | pending | registry row-isolation + safe Chroma source-exists fallback + explicit registry loading/error/empty states; consistency gate passed (`247/247`, review `87`) | TO_DO_LIST/reports/PRD-046.0.9-RUN1-HF3_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

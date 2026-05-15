@@ -1,0 +1,16 @@
+{
+  "schema_version": "admin_consistency_gate_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF3",
+  "status": "passed",
+  "dashboard_sources_total": 34,
+  "registry_sources_total": 34,
+  "dashboard_blocks": 247,
+  "registry_focus_blocks": 247,
+  "dashboard_chroma_count": 247,
+  "registry_chroma_count": 247,
+  "enrichment_review_items": 87,
+  "focus_source_visible_in_registry": true,
+  "registry_rows_renderable": true,
+  "blockers": [],
+  "warnings": []
+}

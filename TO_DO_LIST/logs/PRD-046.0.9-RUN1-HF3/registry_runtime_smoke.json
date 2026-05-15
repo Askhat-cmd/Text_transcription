@@ -1,0 +1,16 @@
+{
+  "schema_version": "registry_runtime_smoke_v1",
+  "source_prd": "PRD-046.0.9-RUN1-HF3",
+  "registry_api_status": 200,
+  "registry_payload_ok": true,
+  "sources_count": 34,
+  "focus_source_visible": true,
+  "focus_source_blocks": 247,
+  "zero_block_sources_visible": true,
+  "row_policy_errors_count": 0,
+  "registry_js_status": 200,
+  "registry_html_has_script_version": true,
+  "registry_js_has_error_renderer": true,
+  "errors": [],
+  "warnings": []
+}

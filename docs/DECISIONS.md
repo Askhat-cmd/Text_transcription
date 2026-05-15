@@ -137,3 +137,9 @@ Status: accepted
 Context: в runtime prompt `ЗНАНИЯ ИЗ БАЗЫ` фиксировались обрезанные фрагменты (`Добро пожаловат`, `Ешь на бе`), ухудшающие качество контекста для Writer.
 Decision: sanitization/truncation для writer-facing KB snippets должна резать по sentence/word boundary и добавлять ellipsis `…`, а не использовать raw fixed-char clipping.
 Consequences: снижается шум и двусмысленность в writer prompt при сохранении budget limits и без мутации production block text.
+
+## ADR-024 - Admin source registry must be row-isolated and never fail silently
+Status: accepted
+Context: при runtime-проверке после HF2 registry page могла открываться с пустой таблицей, хотя источники в системе были; один проблемный row/policy path потенциально ронял весь payload, а frontend не показывал явный error state.
+Decision: endpoint `/api/registry/` обязан обрабатывать ошибки на уровне строки (row-level isolation), возвращать частичный список с `delete_policy.state=unavailable` и причинами, а frontend обязан иметь явные loading/error/empty states вместо silent empty table.
+Consequences: отказ одной строки больше не блокирует весь admin registry, а browser-visible диагностика делает runtime проблемы воспроизводимыми и проверяемыми до перехода к human-review циклам.

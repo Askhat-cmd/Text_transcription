@@ -31,6 +31,7 @@ class JobResponse(BaseModel):
 class RegistryListResponse(BaseModel):
     total: int
     sources: list
+    warnings: List[str] = Field(default_factory=list)
 
 
 class StatsResponse(BaseModel):

@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9-RUN1-HF2: после HF1 восстановлена runtime-видимость dashboard в браузере (cache-busting + runtime contract smoke), выровнена политика source delete в Admin UI/API, и добавлен boundary-aware guard для KB snippets, передаваемых Writer.
+Проект находится на стадии post-PRD-046.0.9-RUN1-HF3: устранён runtime blocker пустого registry table, добавлены row-isolation и safe delete-policy fallback для Chroma-check path, подтверждена admin consistency синхронизация Dashboard/Registry/Chroma (`247/247`) перед переходом к human review.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -24,6 +24,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`; в `PRD-046.0.9-RUN1` выполнен реальный enrichment run: `items_completed=247`, `validation_errors_count=0`, `review_queue_items_count=87`, `provider_status=called`.
 В `PRD-046.0.9-RUN1-HF1` dashboard получает enrichment/review состояние из артефактов RUN1 через единый endpoint `/api/dashboard/` и показывает явные warning/error причины вместо немых пустых карточек.
 В `PRD-046.0.9-RUN1-HF2` endpoint/Frontend дополнительно откалиброваны под runtime acceptance: поддерживаются `/api/dashboard` и `/api/dashboard/`, production-block card опирается на focus-source (`247`), registry total показывается отдельно, а при API/payload проблемах отображается явная ошибка.
+В `PRD-046.0.9-RUN1-HF3` registry endpoint стал row-isolated (одна плохая строка больше не роняет весь список), frontend реестра получил явные loading/error/empty состояния, а consistency gate подтвердил browser-visible состояние без reindex/apply.
 
 ## Current Admin Source Hygiene State
 Delete policy в реестре стала явной и согласованной между backend/frontend:
@@ -82,4 +83,4 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-15
-- Source cycle: PRD-046.0.9-RUN1-HF2
+- Source cycle: PRD-046.0.9-RUN1-HF3

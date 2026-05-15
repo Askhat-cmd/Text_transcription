@@ -19,6 +19,7 @@
 - PRD-046.0.9: post-reprocess enrichment/review rebaseline completed in candidate mode (no apply/reindex); generated fresh inventory/overlay/validation/review queue/scorecard/retrieval preview for current 247 block ids.
 - PRD-046.0.9-RUN1-HF1: BotDB Admin dashboard summary contract restored (`/api/dashboard/`), enrichment/review visibility returned, explicit warning/error surfacing added, no production mutations.
 - PRD-046.0.9-RUN1-HF2: runtime dashboard acceptance fix (cache-busting + `/api/dashboard` slash/no-slash + production-block semantics), registry delete hygiene policy alignment (UI/backend + snapshot-before-delete), Writer KB snippet boundary guard (no mid-word Cyrillic clipping).
+- PRD-046.0.9-RUN1-HF3: registry runtime render fix delivered (row-level isolation + safe Chroma source-exists fallback + explicit registry loading/error/empty UI states), admin consistency gate passed (`Dashboard/Registry/Chroma = 247`, review queue `87`).
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.

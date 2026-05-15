@@ -1,0 +1,7 @@
+{
+  "schema_version": "real_enrichment_candidate_overlay_v1",
+  "source_prd": "PRD-046.0.9-RUN1",
+  "status": "blocked_by_provider",
+  "reason": "provider_preflight_failed",
+  "items": []
+}

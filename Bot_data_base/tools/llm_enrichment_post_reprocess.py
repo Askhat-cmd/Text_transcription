@@ -17,6 +17,9 @@ if str(BOTDB_DIR) not in sys.path:
 
 from knowledge_governance.enrichment_validators import check_forbidden_keys
 from tools.kb_quality_audit import load_processed_blocks
+DEFAULT_MODEL = "gpt-4o-mini"
+DEFAULT_INPUT_PRICE_PER_1K = 0.00015
+DEFAULT_OUTPUT_PRICE_PER_1K = 0.0006
 
 try:
     from openai import OpenAI
@@ -1166,7 +1169,7 @@ def run_post_reprocess_enrichment(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="PRD-046.0.9 post-reprocess enrichment + review rebaseline tool.")
-    parser.add_argument("--mode", choices=["dry-run", "real", "validate-existing"], default="dry-run")
+    parser.add_argument("--mode", choices=["dry-run", "real", "validate-existing", "preflight", "pilot"], default="dry-run")
     parser.add_argument("--blocks-path", default=str(DEFAULT_BLOCKS_PATH))
     parser.add_argument("--registry-path", default=str(DEFAULT_REGISTRY_PATH))
     parser.add_argument("--logs-dir", default=str(DEFAULT_LOGS_DIR))
@@ -1174,12 +1177,52 @@ def main() -> int:
     parser.add_argument("--overlay-input", default="")
     parser.add_argument("--batch-size", type=int, default=20)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--model", default="gpt-4o-mini")
+    parser.add_argument("--model", default=DEFAULT_MODEL)
     parser.add_argument("--timeout-seconds", type=float, default=30.0)
+    parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--run-tag", default=RUN_TAG)
+    parser.add_argument("--configured-budget-usd", type=float, default=2.0)
+    parser.add_argument("--hard-stop-budget-usd", type=float, default=3.0)
+    parser.add_argument("--input-price-per-1k", type=float, default=DEFAULT_INPUT_PRICE_PER_1K)
+    parser.add_argument("--output-price-per-1k", type=float, default=DEFAULT_OUTPUT_PRICE_PER_1K)
     args = parser.parse_args()
 
+    mode = str(args.mode)
+    run_tag = str(args.run_tag or RUN_TAG)
+    if run_tag == "PRD-046.0.9-RUN1" or mode in {"preflight", "pilot"}:
+        from tools.real_provider_enrichment_run import run_real_provider_cycle
+
+        run1_logs = Path(args.logs_dir)
+        run1_reports = Path(args.reports_dir)
+        if str(args.logs_dir) == str(DEFAULT_LOGS_DIR):
+            run1_logs = Path("TO_DO_LIST/logs/PRD-046.0.9-RUN1")
+        if str(args.reports_dir) == str(DEFAULT_REPORTS_DIR):
+            run1_reports = Path("TO_DO_LIST/reports")
+        result = run_real_provider_cycle(
+            mode=mode,
+            model=str(args.model),
+            blocks_path=Path(args.blocks_path),
+            registry_path=Path(args.registry_path),
+            base_rebaseline_logs_dir=Path("TO_DO_LIST/logs/PRD-046.0.9"),
+            logs_dir=run1_logs,
+            reports_dir=run1_reports,
+            overlay_input_path=Path(args.overlay_input) if str(args.overlay_input).strip() else None,
+            batch_size=max(1, int(args.batch_size)),
+            resume=bool(args.resume),
+            limit=max(0, int(args.limit)),
+            force=bool(args.force),
+            timeout_seconds=max(1.0, float(args.timeout_seconds)),
+            configured_budget_usd=float(args.configured_budget_usd),
+            hard_stop_budget_usd=float(args.hard_stop_budget_usd),
+            input_price_per_1k=float(args.input_price_per_1k),
+            output_price_per_1k=float(args.output_price_per_1k),
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0 if result.get("status") in {"done", "partial", "blocked_by_provider", "blocked_by_budget"} else 2
+
     result = run_post_reprocess_enrichment(
-        mode=str(args.mode),
+        mode=mode,
         blocks_path=Path(args.blocks_path),
         registry_path=Path(args.registry_path),
         logs_dir=Path(args.logs_dir),

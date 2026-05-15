@@ -1,0 +1,17 @@
+{
+  "schema_version": "post_reprocess_enrichment_preflight_v1",
+  "source_prd": "PRD-046.0.9",
+  "generated_at": "2026-05-15T04:57:51.891287+00:00",
+  "passed": true,
+  "blockers": [],
+  "production_blocks_count": 247,
+  "registry_blocks_count": 247,
+  "chroma_count": 247,
+  "active_source_ids": [
+    "123__кузница_духа"
+  ],
+  "legacy_sd_active": false,
+  "old_review_queue_stale": true,
+  "new_review_queue_baseline_exists": true,
+  "retrieval_eval_status": "ok"
+}

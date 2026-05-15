@@ -1,0 +1,31 @@
+{
+  "schema_version": "real_enrichment_scorecard_v1",
+  "source_prd": "PRD-046.0.9-RUN1",
+  "blocks_total": 247,
+  "provider_status": "blocked_by_provider",
+  "items_attempted": 0,
+  "items_completed": 0,
+  "items_failed": 0,
+  "validation_errors_count": 0,
+  "validation_warnings_count": 0,
+  "missing_real_provider_output_count": 247,
+  "needs_human_review_count": 247,
+  "review_queue_items_count": 0,
+  "avg_confidence": 0.0,
+  "avg_self_contained_score": 0.0,
+  "summary_present_rate": 0.0,
+  "tags_present_rate": 0.0,
+  "use_when_present_rate": 0.0,
+  "avoid_when_present_rate": 0.0,
+  "lens_family_candidates_present_rate": 0.0,
+  "raw_full_text_leak_detected": false,
+  "governance_authority_mutated": false,
+  "production_apply_performed": false,
+  "chroma_reindex_performed": false,
+  "provider_usage": {
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "requests": 0,
+    "estimated_cost_usd": 0.0
+  }
+}

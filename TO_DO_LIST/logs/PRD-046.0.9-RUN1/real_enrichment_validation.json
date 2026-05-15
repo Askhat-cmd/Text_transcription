@@ -1,0 +1,8 @@
+{
+  "schema_version": "real_enrichment_validation_v1",
+  "source_prd": "PRD-046.0.9-RUN1",
+  "validation_status": "blocked_by_provider",
+  "validation_errors_count": 0,
+  "validation_warnings_count": 0,
+  "missing_real_provider_output_count": 247
+}

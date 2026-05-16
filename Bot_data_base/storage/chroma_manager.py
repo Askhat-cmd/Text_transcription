@@ -144,8 +144,8 @@ class ChromaManager:
         return len(ids)
 
     def get_stats(self) -> dict:
-        data = self._collection.get()
-        total = len(data.get("ids", [])) if data else 0
+        total = int(self._collection.count())
+        data = self._collection.get(limit=max(1, total), include=["metadatas"]) if total > 0 else {"metadatas": []}
         by_sd_level: Dict[str, int] = {}
         by_source_type: Dict[str, int] = {}
         for meta in data.get("metadatas", []) if data else []:

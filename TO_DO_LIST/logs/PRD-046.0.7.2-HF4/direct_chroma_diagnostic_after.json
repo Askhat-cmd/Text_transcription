@@ -1,0 +1,31 @@
+{
+  "schema_version": "direct_chroma_diagnostic_v1",
+  "source_prd": "PRD-046.0.7.2-HF4",
+  "generated_at": "2026-05-16T18:56:10.326257+00:00",
+  "status": "ok",
+  "collection_name": "bot_knowledge_base",
+  "persist_directory": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "total_count": 247,
+  "source_ids": [
+    "123__кузница_духа"
+  ],
+  "count_by_source_id": {
+    "123__кузница_духа": 247
+  },
+  "sample_ids_count": 10,
+  "sample_ids": [
+    "00a10081-935a-4c17-a000-d91c7420ce7f",
+    "02850e6b-1f41-4f94-8413-cdec8c45479b",
+    "02967da0-f163-4b5d-a732-6630dfeb0957",
+    "029c5523-f014-40b4-86a8-66480ecd0304",
+    "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+    "03f54db1-0941-4dfa-8727-d2d43e4b4c5e",
+    "0674108a-c3e0-4a64-838e-da0017627a23",
+    "0b3494cd-7acb-46cc-881b-7e478b72513e",
+    "0d62f141-572d-4386-b02d-d7f9a46fa27f",
+    "0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2"
+  ],
+  "raw_text_leak_detected": false,
+  "errors": [],
+  "warnings": []
+}

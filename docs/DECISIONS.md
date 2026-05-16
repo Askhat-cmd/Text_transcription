@@ -167,3 +167,9 @@ Status: accepted
 Context: HF3 показал, что `dashboard.chroma.count=229` при `blocks=247` может быть замаскирован historical proof (`247`) и дать ложный green readiness signal.
 Decision: для post-apply readiness gate действует strict live contract: historical/local proof используется только как диагностическое evidence и никогда не может перевести `dashboard_chroma_count_mismatch` в `passed`. При live mismatch статус обязан быть `blocked_chroma_count_mismatch` с итогом `done_with_chroma_count_blocker`.
 Consequences: readiness к Diagnostic Center остаётся честно заблокированной до reconciliation/recovery шага; устраняется риск ложноположительного gate-pass из-за stale артефактов.
+
+## ADR-029 - Dashboard Chroma total must use collection.count() as authoritative source
+Status: accepted
+Context: в HF4 после controlled reindex direct Chroma diagnostic уже показывал `247`, но dashboard временно отображал `0` из-за вычисления total через `collection.get()` выборку, что давало runtime drift.
+Decision: для admin/dashboard runtime total Chroma count берётся из `collection.count()`; выборка `get(..., include=['metadatas'])` используется только для распределений/составов и не как источник total.
+Consequences: dashboard Chroma total синхронизирован с direct diagnostic и strict gate, уменьшается риск ложного blocker/passed статуса из-за особенностей выборки API.

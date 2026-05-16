@@ -1,0 +1,15 @@
+{
+  "schema_version": "chroma_recovery_plan_v1",
+  "source_prd": "PRD-046.0.7.2-HF4",
+  "generated_at": "2026-05-16T18:57:16.800758+00:00",
+  "route": "already_consistent",
+  "expected_source_id": "123__кузница_духа",
+  "expected_blocks": 247,
+  "dashboard_chroma_count_before": 247,
+  "direct_chroma_count_before": 247,
+  "dashboard_chroma_count_after": 247,
+  "direct_chroma_count_after": 247,
+  "reindex_performed": false,
+  "issues": [],
+  "warnings": []
+}

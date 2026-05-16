@@ -1,0 +1,76 @@
+{
+  "schema_version": "post_apply_retrieval_quality_smoke_v1",
+  "generated_at": "2026-05-16T18:57:16.643073+00:00",
+  "source_ids": [
+    "123__кузница_духа"
+  ],
+  "query_results": {
+    "страх": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "d527d369-beb2-4113-b370-cb2738e76b55",
+        "47928bce-3306-4351-862e-290b3edeea59",
+        "36350a15-7144-4bc9-b79f-fe227d2b39ee",
+        "c781ff12-ea81-4d19-9bb1-e36e63574f1e",
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "219977d2-c5b7-419b-88ef-d16e11ab8048",
+        "33747757-5b99-4cb6-a4c4-99154d889205",
+        "8e8eae66-7d04-4b55-b0ee-0b5c29c6d750",
+        "99c31e75-b401-40df-96e5-c82c5cb11569",
+        "56c62ae3-7bce-4525-b460-a64f86441657"
+      ]
+    },
+    "тень": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e",
+        "85521862-35cb-43cc-b228-38853ba2e9ee",
+        "56c62ae3-7bce-4525-b460-a64f86441657",
+        "70fd2535-78e4-4f64-82d5-43381fc4774d",
+        "b05b4278-62cd-44e1-936e-24346e45b6ac",
+        "f5716360-1635-4026-8568-3404b4569d2a",
+        "5bd68e84-d34a-487b-ab73-7cd1ac889e7a",
+        "91fb2fc9-362b-4972-bc36-39a93983332c",
+        "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+        "ea352b73-0522-469b-bd7b-551e9bd2341b"
+      ]
+    },
+    "границы": {
+      "hits_count": 3,
+      "block_ids_sample": [
+        "39f6eafa-7403-4450-80b8-9b94097035b2",
+        "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "789d6641-76c2-49ca-ae5d-fb9fcbd0ad08"
+      ]
+    },
+    "практика": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "5fd8958c-8585-468e-85ef-374bffc05dd5",
+        "e913b172-4295-4288-ac66-aaddd65be3db",
+        "95c58778-e710-4ac7-95ae-9530bf55f3b1",
+        "f4535025-fce3-4d6a-b955-22c968f758c9",
+        "121bdc40-8633-469e-9837-ea9949f73de3",
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "0674108a-c3e0-4a64-838e-da0017627a23",
+        "dffb96ef-f898-4153-9593-6d0cf3dd12b9",
+        "4250b53d-c65a-4bb8-8481-0bcd29aac3b2",
+        "cb798df0-e1dc-4225-b216-d8b8e6979d7c"
+      ]
+    },
+    "внутренний голос": {
+      "hits_count": 2,
+      "block_ids_sample": [
+        "e913b172-4295-4288-ac66-aaddd65be3db",
+        "201ad0be-2cbf-4499-b92f-f0fc86ee09c0"
+      ]
+    }
+  },
+  "quote_violation_ids": [],
+  "practice_guardrail_missing_ids": [],
+  "internal_only_unsafe_exposure_count": 0,
+  "forbidden_key_hits": [],
+  "secret_like_hits": [],
+  "raw_full_text_leak_detected": false,
+  "retrieval_quality_passed": true
+}

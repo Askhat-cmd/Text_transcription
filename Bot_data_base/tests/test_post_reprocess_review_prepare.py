@@ -148,3 +148,82 @@ def test_prepare_cli_creates_manifest_workbench_and_no_mutation_proof(tmp_path: 
     assert no_mutation["all_blocks_merged_mutated"] is False
     assert no_mutation["all_blocks_merged_hash_before"] == blocks_before
     assert no_mutation["all_blocks_merged_hash_after"] == blocks_before
+
+
+def test_prepare_require_aligned_fails_when_queue_ids_missing(tmp_path: Path) -> None:
+    queue_path = tmp_path / "review_queue_after_real_enrichment.json"
+    blocks_path = tmp_path / "all_blocks_merged.json"
+    registry_path = tmp_path / "registry.json"
+    chroma_path = tmp_path / "chroma_admin_runtime_diagnostic.json"
+    out_dir = tmp_path / "out"
+
+    queue_payload = _sample_queue_payload()
+    queue_payload["items"].append(
+        {
+            "review_item_id": "post_reprocess::b3",
+            "block_id": "b3",
+            "source_id": "123__кузница_духа",
+            "source_title": "Кузница Духа",
+            "chunk_type": "lens",
+            "review_priority": "P2",
+            "review_reasons": ["needs_human_review"],
+            "recommended_action": "defer",
+            "safe_preview": "preview three",
+            "advisory_summary_preview": "summary three",
+        }
+    )
+    _write_json(queue_path, queue_payload)
+    _write_json(blocks_path, _sample_blocks_payload())
+    _write_json(registry_path, [{"source_id": "123__кузница_духа", "blocks_count": 2}])
+    _write_json(chroma_path, {"dashboard_chroma_count": 2})
+
+    cmd = [
+        sys.executable,
+        str(REPO_ROOT / "Bot_data_base" / "tools" / "prepare_human_review_decisions.py"),
+        "--review-queue",
+        str(queue_path),
+        "--blocks",
+        str(blocks_path),
+        "--out-dir",
+        str(out_dir),
+        "--registry",
+        str(registry_path),
+        "--chroma-snapshot",
+        str(chroma_path),
+        "--require-aligned",
+    ]
+    completed = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True)
+    assert completed.returncode != 0
+    manifest = json.loads((out_dir / "review_source_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["queue_block_ids_missing_in_blocks_count"] == 1
+
+
+def test_prepare_require_aligned_passes_when_queue_ids_present(tmp_path: Path) -> None:
+    queue_path = tmp_path / "review_queue_after_real_enrichment.json"
+    blocks_path = tmp_path / "all_blocks_merged.json"
+    registry_path = tmp_path / "registry.json"
+    chroma_path = tmp_path / "chroma_admin_runtime_diagnostic.json"
+    out_dir = tmp_path / "out"
+
+    _write_json(queue_path, _sample_queue_payload())
+    _write_json(blocks_path, _sample_blocks_payload())
+    _write_json(registry_path, [{"source_id": "123__кузница_духа", "blocks_count": 2}])
+    _write_json(chroma_path, {"dashboard_chroma_count": 2})
+
+    cmd = [
+        sys.executable,
+        str(REPO_ROOT / "Bot_data_base" / "tools" / "prepare_human_review_decisions.py"),
+        "--review-queue",
+        str(queue_path),
+        "--blocks",
+        str(blocks_path),
+        "--out-dir",
+        str(out_dir),
+        "--registry",
+        str(registry_path),
+        "--chroma-snapshot",
+        str(chroma_path),
+        "--require-aligned",
+    ]
+    completed = subprocess.run(cmd, cwd=REPO_ROOT, capture_output=True, text=True)
+    assert completed.returncode == 0, completed.stderr or completed.stdout

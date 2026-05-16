@@ -1,0 +1,29 @@
+{
+  "schema_version": "blocks_snapshot_alignment_restore_plan_v1",
+  "source_prd": "PRD-046.0.9.1-HF1",
+  "generated_at": "2026-05-16T12:06:46.967719+00:00",
+  "audit_status": "not_aligned",
+  "authoritative_candidate": {
+    "path": "TO_DO_LIST/logs/PRD-046.0.8.1/backups/candidate_to_apply.snapshot.json",
+    "sha256": "2cca2efa5df985bd714b567c58a550ae6b947f75f93041d0dbac20ac8d426e47",
+    "blocks_total": 247,
+    "queue_block_ids_present_count": 87,
+    "queue_block_ids_missing_count": 0,
+    "source_ids": [
+      "123__кузница_духа"
+    ],
+    "governance_present_rate": 1.0,
+    "allowed_use_present_rate": 1.0,
+    "safety_flags_present_rate": 1.0,
+    "raw_full_text_leak_detected": false,
+    "candidate_is_authoritative": true,
+    "reasons": []
+  },
+  "apply_allowed": true,
+  "blocks_path": "Bot_data_base/data/processed/all_blocks_merged.json",
+  "registry_path": "Bot_data_base/data/registry.json",
+  "backup_paths": {
+    "all_blocks_before_restore": "TO_DO_LIST/logs/PRD-046.0.9.1-HF1/backups/all_blocks_merged.before_restore.json",
+    "registry_before_restore": "TO_DO_LIST/logs/PRD-046.0.9.1-HF1/backups/registry.before_restore.json"
+  }
+}

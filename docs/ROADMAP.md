@@ -21,14 +21,16 @@
 - PRD-046.0.9-RUN1-HF2: runtime dashboard acceptance fix (cache-busting + `/api/dashboard` slash/no-slash + production-block semantics), registry delete hygiene policy alignment (UI/backend + snapshot-before-delete), Writer KB snippet boundary guard (no mid-word Cyrillic clipping).
 - PRD-046.0.9-RUN1-HF3: registry runtime render fix delivered (row-level isolation + safe Chroma source-exists fallback + explicit registry loading/error/empty UI states), admin consistency gate passed (`Dashboard/Registry/Chroma = 247`, review queue `87`).
 - PRD-046.0.9.1: human review decisions layer delivered for fresh RUN1 queue (prepare/workbench/template/validator/no-mutation artifacts + tests), production KB/registry/Chroma unchanged; apply step blocked until queue/block-id alignment is restored in current workspace snapshot.
+- PRD-046.0.9.1-HF1: blocks snapshot alignment restored (`229 -> 247`) via authoritative candidate audit + staged restore with backups; strict `--require-aligned` gate added; rerun confirms queue coverage `87/87`.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- Queue/block-id re-alignment before controlled apply PRD (`PRD-046.0.7.1`).
+- Human review pass to fill real decisions over aligned queue (`PRD-046.0.9.2`).
 
 ## Next
-1. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (only after queue/block-id alignment and filled real decisions).
-2. Diagnostic Center rollout PRD after readiness gates.
+1. PRD-046.0.9.2 - Human Review Pass / Fill Real Decisions v1.
+2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (only after filled and validated real decisions).
+3. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

@@ -1,0 +1,140 @@
+{
+  "schema_version": "blocks_snapshot_alignment_audit_v1",
+  "source_prd": "PRD-046.0.9.1-HF1",
+  "generated_at": "2026-05-16T12:06:46.967719+00:00",
+  "review_queue_path": "TO_DO_LIST/logs/PRD-046.0.9-RUN1/review_queue_after_real_enrichment.json",
+  "review_queue_source_prd": "PRD-046.0.9-RUN1",
+  "review_queue_hash": "b9a22f31759dccc9c27994ededd665ceeff3b4cb002964754fde05455db65311",
+  "blocks_path": "Bot_data_base/data/processed/all_blocks_merged.json",
+  "blocks_hash": "5bd5be4421b6301b0c22920ca2a73765f254d60b65457cb075f160a649cb5d0f",
+  "registry_path": "Bot_data_base/data/registry.json",
+  "registry_hash": "b48330f9d36554944d8aa1b91a33d1ffd571336a1eccc77031026204d95af255",
+  "expected_blocks_total": 247,
+  "expected_source_id": "123__кузница_духа",
+  "blocks_total": 229,
+  "queue_items_count": 87,
+  "queue_block_ids_present_count": 0,
+  "queue_block_ids_missing_count": 87,
+  "chroma_count": 247,
+  "registry_focus_blocks": 229,
+  "status": "not_aligned",
+  "authoritative_candidates_found": 1,
+  "authoritative_candidates": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8.1/backups/candidate_to_apply.snapshot.json",
+      "sha256": "2cca2efa5df985bd714b567c58a550ae6b947f75f93041d0dbac20ac8d426e47",
+      "blocks_total": 247,
+      "queue_block_ids_present_count": 87,
+      "queue_block_ids_missing_count": 0,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 1.0,
+      "allowed_use_present_rate": 1.0,
+      "safety_flags_present_rate": 1.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": true,
+      "reasons": []
+    }
+  ],
+  "candidate_snapshots": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8.1/backups/candidate_to_apply.snapshot.json",
+      "sha256": "2cca2efa5df985bd714b567c58a550ae6b947f75f93041d0dbac20ac8d426e47",
+      "blocks_total": 247,
+      "queue_block_ids_present_count": 87,
+      "queue_block_ids_missing_count": 0,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 1.0,
+      "allowed_use_present_rate": 1.0,
+      "safety_flags_present_rate": 1.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": true,
+      "reasons": []
+    },
+    {
+      "path": "Bot_data_base/data/processed/all_blocks_merged.json",
+      "sha256": "5bd5be4421b6301b0c22920ca2a73765f254d60b65457cb075f160a649cb5d0f",
+      "blocks_total": 229,
+      "queue_block_ids_present_count": 0,
+      "queue_block_ids_missing_count": 87,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 1.0,
+      "allowed_use_present_rate": 1.0,
+      "safety_flags_present_rate": 1.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": false,
+      "reasons": [
+        "blocks_total_mismatch",
+        "queue_block_ids_missing"
+      ]
+    },
+    {
+      "path": "Bot_data_base/data/processed/backups/all_blocks_merged__before_PRD-046.0.4.2.1__20260509_143525.json",
+      "sha256": "da1f3cf7d4ab8480dfd2994a9e675391891e5ccbe93d16a8f32262633d8f0614",
+      "blocks_total": 229,
+      "queue_block_ids_present_count": 0,
+      "queue_block_ids_missing_count": 87,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 1.0,
+      "allowed_use_present_rate": 1.0,
+      "safety_flags_present_rate": 1.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": false,
+      "reasons": [
+        "blocks_total_mismatch",
+        "queue_block_ids_missing"
+      ]
+    },
+    {
+      "path": "Bot_data_base/data/processed/backups/all_blocks_merged__before_PRD-046.0.4.2__20260509_140602.json",
+      "sha256": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+      "blocks_total": 229,
+      "queue_block_ids_present_count": 0,
+      "queue_block_ids_missing_count": 87,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 0.0,
+      "allowed_use_present_rate": 0.0,
+      "safety_flags_present_rate": 0.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": false,
+      "reasons": [
+        "blocks_total_mismatch",
+        "queue_block_ids_missing",
+        "governance_missing",
+        "allowed_use_missing",
+        "safety_flags_missing"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8.1/backups/all_blocks_merged.before.json",
+      "sha256": "2f637e2d3eb3195c0a310f485c752b3bc3f55f7b93b9c43344a2414c18b6c28f",
+      "blocks_total": 229,
+      "queue_block_ids_present_count": 0,
+      "queue_block_ids_missing_count": 87,
+      "source_ids": [
+        "123__кузница_духа"
+      ],
+      "governance_present_rate": 0.0,
+      "allowed_use_present_rate": 0.0,
+      "safety_flags_present_rate": 0.0,
+      "raw_full_text_leak_detected": false,
+      "candidate_is_authoritative": false,
+      "reasons": [
+        "blocks_total_mismatch",
+        "queue_block_ids_missing",
+        "governance_missing",
+        "allowed_use_missing",
+        "safety_flags_missing"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "source_id": "123__кузница_духа",
+    "source_type": "book",
+    "title": "Кузница Духа",
+    "author": "Саламат Сарсекенов",
+    "author_id": "123",
+    "language": "ru",
+    "status": "done",
+    "added_at": "2026-03-13T04:38:44.281566",
+    "processed_at": "2026-03-13T04:45:18.951270",
+    "blocks_count": 229,
+    "sd_distribution": {
+      "GREEN": 113,
+      "BLUE": 16,
+      "YELLOW": 67,
+      "RED": 4,
+      "ORANGE": 7,
+      "BEIGE": 9,
+      "PURPLE": 2,
+      "TURQUOISE": 1,
+      "UNCERTAIN": 10
+    },
+    "file_paths": {
+      "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+      "chroma": true,
+      "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+    },
+    "error_message": null,
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "test123",
+    "source_type": "youtube",
+    "title": "",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "",
+    "status": "failed",
+    "added_at": "2026-05-16T11:40:21.461822",
+    "processed_at": "2026-05-16T11:40:21.857828",
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {},
+    "error_message": "ERROR: [youtube:truncated_id] test123: Incomplete YouTube ID test123. URL https://www.youtube.com/watch?v=test123 looks truncated.",
+    "pipeline_version": "bot_data_base_v1.0"
+  },
+  {
+    "source_id": "avtor__книга",
+    "source_type": "book",
+    "title": "Книга",
+    "author": "Автор",
+    "author_id": "avtor",
+    "language": "ru",
+    "status": "failed",
+    "added_at": "2026-05-16T11:40:22.074831",
+    "processed_at": "2026-05-16T11:40:26.045278",
+    "blocks_count": 0,
+    "sd_distribution": {},
+    "file_paths": {
+      "upload": "data/uploads/books\\book.md"
+    },
+    "error_message": "Embedding dimension 3 does not match collection dimensionality 1024",
+    "pipeline_version": "bot_data_base_v1.0"
+  }
+]

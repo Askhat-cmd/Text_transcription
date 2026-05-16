@@ -1,0 +1,70 @@
+﻿
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_blocks_snapshot_alignment_audit.py -q
+
+..                                                                       [100%]
+2 passed in 0.18s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_blocks_snapshot_alignment_restore.py -q
+
+...                                                                      [100%]
+3 passed in 1.42s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_post_reprocess_review_prepare.py -q
+
+...                                                                      [100%]
+3 passed in 1.08s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_post_reprocess_review_decisions_validator.py -q
+
+.............                                                            [100%]
+13 passed in 0.16s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests -q
+
+........................................................................ [ 26%]
+........................................................................ [ 52%]
+........................................................................ [ 78%]
+............................................................             [100%]
+276 passed in 71.87s (0:01:11)
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe" -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.29s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe" -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 92%]
+..................                                                       [100%]
+234 passed in 89.82s (0:01:29)
+
+EXIT_CODE=0
+

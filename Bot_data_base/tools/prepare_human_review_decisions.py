@@ -61,6 +61,7 @@ def main() -> int:
         "--chroma-snapshot",
         default="TO_DO_LIST/logs/PRD-046.0.9-RUN1-HF3/chroma_admin_runtime_diagnostic.json",
     )
+    parser.add_argument("--require-aligned", action="store_true")
     args = parser.parse_args()
 
     out_dir = Path(args.out_dir)
@@ -144,21 +145,26 @@ def main() -> int:
     )
     write_text(out_dir / "sanitized_runtime_logs.txt", "\n".join(runtime_lines) + "\n")
 
+    strict_alignment_failed = bool(args.require_aligned) and int(
+        manifest.get("queue_block_ids_missing_in_blocks_count") or 0
+    ) > 0
+
     print(
         json.dumps(
             {
-                "ok": True,
+                "ok": not strict_alignment_failed,
                 "source_prd": args.source_prd,
                 "queue_path": queue_path.as_posix(),
                 "queue_items_count": summary.get("queue_items_count"),
                 "queue_block_ids_missing_in_blocks_count": manifest.get("queue_block_ids_missing_in_blocks_count"),
+                "require_aligned": bool(args.require_aligned),
                 "out_dir": out_dir.as_posix(),
             },
             ensure_ascii=False,
             indent=2,
         )
     )
-    return 0
+    return 3 if strict_alignment_failed else 0
 
 
 if __name__ == "__main__":

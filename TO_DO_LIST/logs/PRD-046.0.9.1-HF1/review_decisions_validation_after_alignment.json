@@ -1,0 +1,17 @@
+{
+  "schema_version": "kb_review_decisions_validation_v1",
+  "source_prd": "PRD-046.0.9.1-HF1",
+  "validated_at": "2026-05-16T12:12:04.696477+00:00",
+  "queue_items_count": 87,
+  "decisions_count": 0,
+  "valid": true,
+  "errors": [],
+  "warnings": [],
+  "decision_counts": {},
+  "forbidden_key_hits": [],
+  "secret_like_hits": [],
+  "duplicate_review_item_ids": [],
+  "unknown_review_item_ids": [],
+  "block_id_mismatches": [],
+  "authority_field_mutation_attempts": []
+}

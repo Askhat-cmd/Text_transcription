@@ -1,0 +1,41 @@
+{
+  "schema_version": "blocks_snapshot_alignment_restore_result_v1",
+  "source_prd": "PRD-046.0.9.1-HF1",
+  "mode": "apply",
+  "status": "restored",
+  "apply_performed": true,
+  "candidate_selected": {
+    "path": "TO_DO_LIST/logs/PRD-046.0.8.1/backups/candidate_to_apply.snapshot.json",
+    "sha256": "2cca2efa5df985bd714b567c58a550ae6b947f75f93041d0dbac20ac8d426e47",
+    "blocks_total": 247,
+    "queue_block_ids_present_count": 87,
+    "queue_block_ids_missing_count": 0,
+    "source_ids": [
+      "123__кузница_духа"
+    ],
+    "governance_present_rate": 1.0,
+    "allowed_use_present_rate": 1.0,
+    "safety_flags_present_rate": 1.0,
+    "raw_full_text_leak_detected": false,
+    "candidate_is_authoritative": true,
+    "reasons": []
+  },
+  "blocks_hash_before": "5bd5be4421b6301b0c22920ca2a73765f254d60b65457cb075f160a649cb5d0f",
+  "registry_hash_before": "b48330f9d36554944d8aa1b91a33d1ffd571336a1eccc77031026204d95af255",
+  "blocks_hash_after": "b2c1f4d105d299f6a18cd5f71b0e3b86665b8afe6b1018deb99bc8c59b4236b6",
+  "registry_hash_after": "227210b2dcacb6a8057e179545e3b98c467a01753187987b2b4badacce0f88f6",
+  "blocks_mutated": true,
+  "registry_mutated": true,
+  "production_apply_performed": false,
+  "chroma_reindex_performed": false,
+  "registry_focus_row_updated": true,
+  "post_restore_audit": {
+    "status": "aligned",
+    "blocks_total": 247,
+    "queue_items_count": 87,
+    "queue_block_ids_present_count": 87,
+    "queue_block_ids_missing_count": 0,
+    "registry_focus_blocks": 247,
+    "chroma_count": 247
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "kb_review_decisions_v1",
+  "source_prd": "PRD-046.0.9.1-HF1",
+  "synthetic_example": true,
+  "created_at": "2026-05-16T12:12:04.737318+00:00",
+  "decisions": [
+    {
+      "review_item_id": "post_reprocess::66d0f456-a695-4c50-881c-0ce7643baf69",
+      "block_id": "66d0f456-a695-4c50-881c-0ce7643baf69",
+      "decision": "approved",
+      "reviewer": "human",
+      "reason": "",
+      "approved_fields": [
+        "summary",
+        "tags"
+      ],
+      "rejected_fields": [],
+      "edited_fields": {},
+      "created_at": "2026-05-16T12:12:04.737318+00:00",
+      "source_prd": "PRD-046.0.9.1-HF1"
+    },
+    {
+      "review_item_id": "post_reprocess::00a10081-935a-4c17-a000-d91c7420ce7f",
+      "block_id": "00a10081-935a-4c17-a000-d91c7420ce7f",
+      "decision": "needs_edit",
+      "reviewer": "admin",
+      "reason": "sample edit for contract demonstration",
+      "approved_fields": [],
+      "rejected_fields": [
+        "avoid_when"
+      ],
+      "edited_fields": {
+        "avoid_when": [
+          "sample safe rewrite"
+        ]
+      },
+      "created_at": "2026-05-16T12:12:04.737318+00:00",
+      "source_prd": "PRD-046.0.9.1-HF1"
+    }
+  ]
+}

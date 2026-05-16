@@ -1,0 +1,9 @@
+source_prd=PRD-046.0.9.1-HF1
+queue_path=TO_DO_LIST/logs/PRD-046.0.9-RUN1/review_queue_after_real_enrichment.json
+queue_items_count=87
+queue_source_prd=PRD-046.0.9-RUN1
+expected_source_prd=PRD-046.0.9-RUN1
+queue_source_prd_match=True
+queue_block_ids_missing_in_blocks_count=0
+production_apply_performed=False
+chroma_reindex_performed=False

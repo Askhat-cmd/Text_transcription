@@ -1,0 +1,18 @@
+{
+  "schema_version": "post_apply_quality_gate_hf2_v1",
+  "source_prd": "PRD-046.0.7.2-HF2",
+  "generated_at": "2026-05-16T17:32:30.826645+00:00",
+  "data_consistency_passed": true,
+  "apply_route_consistency_passed": true,
+  "retrieval_quality_passed": true,
+  "writer_kb_policy_passed": true,
+  "admin_consistency_passed": true,
+  "admin_runtime_status": "passed",
+  "quality_gate_passed": true,
+  "diagnostic_center_ready": true,
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "provider_called": false,
+  "chroma_reindex_performed": false,
+  "final_status": "passed"
+}

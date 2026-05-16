@@ -281,23 +281,28 @@ def _terminate_process(proc: subprocess.Popen[str]) -> str:
 def run_admin_live_smoke(
     *,
     admin_base_url: str,
+    source_prd: str = "PRD-046.0.7.2-HF1",
     expected_source_id: str = DEFAULT_SOURCE_ID,
     expected_blocks_total: int = DEFAULT_BLOCKS_TOTAL,
     require_admin_api: bool = True,
     try_start_server: bool = False,
     startup_timeout_sec: int = 30,
+    http_timeout_sec: float = 12.0,
     repo_root: Path,
     http_get: Callable[[str], dict[str, Any]] | None = None,
     discover_launch: Callable[..., dict[str, Any]] | None = None,
     process_factory: Callable[[list[str], Path, Path], subprocess.Popen[str]] | None = None,
 ) -> dict[str, Any]:
-    fetch = http_get or _http_json
+    if http_get is not None:
+        fetch = http_get
+    else:
+        fetch = lambda url: _http_json(url, timeout=float(http_timeout_sec))
     discover = discover_launch or discover_canonical_launch_command
     botdb_dir = repo_root / "Bot_data_base"
 
     manifest: dict[str, Any] = {
         "schema_version": "admin_launch_manifest_v1",
-        "source_prd": "PRD-046.0.7.2-HF1",
+        "source_prd": source_prd,
         "generated_at": utc_now_iso(),
         "admin_base_url": admin_base_url,
         "detected_existing_server": False,
@@ -307,6 +312,7 @@ def run_admin_live_smoke(
         "server_launch_mode": "not_started",
         "server_started_by_hf1": False,
         "startup_timeout_sec": int(startup_timeout_sec),
+        "http_timeout_sec": float(http_timeout_sec),
         "readiness_poll_attempts": 0,
         "readiness_passed": False,
         "shutdown_performed": False,
@@ -316,7 +322,8 @@ def run_admin_live_smoke(
     server_process: subprocess.Popen[str] | None = None
     launch_blocker = False
     launch_blocker_reason = ""
-    server_log_path = Path(tempfile.gettempdir()) / f"prd_046_0_7_2_hf1_admin_{int(time.time() * 1000)}.log"
+    safe_prd_slug = re.sub(r"[^a-zA-Z0-9._-]+", "_", source_prd).strip("_").lower() or "prd"
+    server_log_path = Path(tempfile.gettempdir()) / f"{safe_prd_slug}_admin_{int(time.time() * 1000)}.log"
 
     initial_status = fetch(f"{admin_base_url.rstrip('/')}/api/status")
     if bool(initial_status.get("ok")) and int(initial_status.get("status_code") or 0) == 200 and isinstance(initial_status.get("body"), dict):
@@ -371,6 +378,16 @@ def run_admin_live_smoke(
     for endpoint in ENDPOINTS:
         checks[endpoint] = fetch(f"{admin_base_url.rstrip('/')}{endpoint}")
 
+    status_check = checks.get("/api/status") if isinstance(checks.get("/api/status"), dict) else {}
+    status_body = status_check.get("body")
+    status_ok = bool(status_check.get("ok")) and int(status_check.get("status_code") or 0) == 200 and isinstance(status_body, dict)
+    if not bool(manifest.get("server_started_by_hf1")) and status_ok:
+        manifest["detected_existing_server"] = True
+        manifest["readiness_passed"] = True
+        manifest["readiness_poll_attempts"] = max(1, int(manifest.get("readiness_poll_attempts") or 0))
+        if str(manifest.get("server_launch_mode") or "") == "not_started":
+            manifest["server_launch_mode"] = "external_existing"
+
     evaluated = evaluate_admin_contract(
         api_checks=checks,
         expected_source_id=expected_source_id,
@@ -407,7 +424,7 @@ def run_admin_live_smoke(
 
     smoke = {
         "schema_version": "admin_live_smoke_v1",
-        "source_prd": "PRD-046.0.7.2-HF1",
+        "source_prd": source_prd,
         "generated_at": utc_now_iso(),
         "admin_base_url": admin_base_url,
         "require_admin_api": require_admin_api,

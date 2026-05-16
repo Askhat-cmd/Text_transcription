@@ -1,0 +1,14 @@
+{
+  "schema_version": "post_apply_quality_gate_no_mutation_proof_v1",
+  "source_prd": "PRD-046.0.7.2-HF2",
+  "generated_at": "2026-05-16T17:32:30.825546+00:00",
+  "all_blocks_merged_hash_before": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+  "all_blocks_merged_hash_after": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+  "registry_hash_before": "8c4e38ae9a5e87f7794de60ac75b093d09c8a2eefd1b8ce294b1d48e7eef0d2b",
+  "registry_hash_after": "8c4e38ae9a5e87f7794de60ac75b093d09c8a2eefd1b8ce294b1d48e7eef0d2b",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "provider_called": false,
+  "chroma_reindex_performed": false,
+  "production_apply_performed": false
+}

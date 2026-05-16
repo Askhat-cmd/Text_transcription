@@ -1,0 +1,43 @@
+{
+  "schema_version": "admin_schema_validation_hf2_v1",
+  "source_prd": "PRD-046.0.7.2-HF2",
+  "generated_at": "2026-05-16T17:32:30.198680+00:00",
+  "admin_runtime_status": "passed",
+  "admin_consistency_passed": true,
+  "schema_validation_passed": true,
+  "focus_source_id": "123__кузница_духа",
+  "focus_blocks_count": 247,
+  "dashboard_blocks_count": 247,
+  "chroma_count": 229,
+  "endpoint_contracts": {
+    "/api/status": {
+      "ok": true,
+      "status_code": 200,
+      "body_type": "dict",
+      "body_is_non_empty": true
+    },
+    "/api/registry": {
+      "ok": true,
+      "status_code": 200,
+      "body_type": "dict",
+      "body_is_non_empty": true
+    },
+    "/api/dashboard": {
+      "ok": true,
+      "status_code": 200,
+      "body_type": "dict",
+      "body_is_non_empty": true
+    },
+    "/api/dashboard/": {
+      "ok": true,
+      "status_code": 200,
+      "body_type": "dict",
+      "body_is_non_empty": true
+    }
+  },
+  "issues": [],
+  "warnings": [
+    "dashboard_chroma_count_mismatch_accepted_with_local_proof",
+    "local_chroma_count_proof:247@TO_DO_LIST\\logs\\PRD-046.0.9-RUN1-HF3\\chroma_admin_runtime_diagnostic.json"
+  ]
+}

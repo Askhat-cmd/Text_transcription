@@ -163,11 +163,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
 
     live = run_admin_live_smoke(
         admin_base_url=str(args.admin_base_url),
+        source_prd=str(args.source_prd),
         expected_source_id=str(args.source_id),
         expected_blocks_total=int(args.expected_blocks),
         require_admin_api=bool(args.require_admin_api),
         try_start_server=bool(args.try_start_server),
         startup_timeout_sec=int(args.startup_timeout_sec),
+        http_timeout_sec=float(args.http_timeout_sec),
         repo_root=REPO_ROOT,
     )
     manifest = live["manifest"]
@@ -256,6 +258,7 @@ def main() -> int:
     parser.add_argument("--try-start-server", action="store_true", default=False)
     parser.add_argument("--no-start-server", dest="try_start_server", action="store_false")
     parser.add_argument("--startup-timeout-sec", type=int, default=30)
+    parser.add_argument("--http-timeout-sec", type=float, default=12.0)
     parser.add_argument("--source-id", default="123__кузница_духа")
     parser.add_argument("--expected-blocks", type=int, default=247)
     parser.add_argument("--blocks", default="Bot_data_base/data/processed/all_blocks_merged.json")

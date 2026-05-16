@@ -1,0 +1,411 @@
+{
+  "schema_version": "admin_live_smoke_v1",
+  "source_prd": "PRD-046.0.7.2-HF2",
+  "generated_at": "2026-05-16T17:32:30.197828+00:00",
+  "admin_base_url": "http://127.0.0.1:8003",
+  "require_admin_api": true,
+  "try_start_server": false,
+  "startup_timeout_sec": 30,
+  "server_launch_mode": "external_existing",
+  "server_started_by_hf1": false,
+  "detected_existing_server": true,
+  "readiness_poll_attempts": 1,
+  "readiness_passed": true,
+  "api_checks": {
+    "/api/status": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "jobs": []
+      },
+      "error": null
+    },
+    "/api/registry": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 5,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-03-13T04:45:18.951270",
+            "blocks_count": 247,
+            "sd_distribution": {
+              "GREEN": 113,
+              "BLUE": 16,
+              "YELLOW": 67,
+              "RED": 4,
+              "ORANGE": 7,
+              "BEIGE": 9,
+              "PURPLE": 2,
+              "TURQUOISE": 1,
+              "UNCERTAIN": 10
+            },
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "failed",
+            "added_at": "2026-05-16T11:40:21.461822",
+            "processed_at": "2026-05-16T12:09:27.241628",
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": "ERROR: [youtube:truncated_id] test123: Incomplete YouTube ID test123. URL https://www.youtube.com/watch?v=test123 looks truncated.",
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "zero_blocks",
+              "failed_status"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete"
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "failed",
+            "added_at": "2026-05-16T11:40:22.074831",
+            "processed_at": "2026-05-16T12:09:31.855973",
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": "Embedding dimension 3 does not match collection dimensionality 1024",
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "zero_blocks",
+              "failed_status"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete"
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "test123",
+            "source_type": "youtube",
+            "title": "",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "",
+            "status": "processing",
+            "added_at": "2026-05-16T12:09:26.721678",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {},
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete"
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-16T12:09:27.467630",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete"
+            },
+            "delete_allowed": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-16T17:32:30.027639+00:00",
+        "sources": {
+          "total": 5,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 2,
+          "zero_block": 4
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 229,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "failed",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "test123",
+            "title": "test123",
+            "status": "failed",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "test123",
+            "title": "test123",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-16T17:32:30.191454+00:00",
+        "sources": {
+          "total": 5,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 2,
+          "zero_block": 4
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 229,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "failed",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "test123",
+            "title": "test123",
+            "status": "failed",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "test123",
+            "title": "test123",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    }
+  },
+  "reachable_endpoints": [
+    "/api/status",
+    "/api/registry",
+    "/api/dashboard",
+    "/api/dashboard/"
+  ],
+  "unreachable_endpoints": [],
+  "focus_source_id": "123__кузница_духа",
+  "focus_blocks_count": 247,
+  "dashboard_blocks_count": 247,
+  "chroma_count": 229,
+  "admin_runtime_status": "passed",
+  "admin_consistency_passed": true,
+  "issues": [],
+  "warnings": [
+    "dashboard_chroma_count_mismatch_accepted_with_local_proof",
+    "local_chroma_count_proof:247@TO_DO_LIST\\logs\\PRD-046.0.9-RUN1-HF3\\chroma_admin_runtime_diagnostic.json"
+  ],
+  "local_chroma_count_proof": {
+    "available": true,
+    "count": 247,
+    "path": "TO_DO_LIST\\logs\\PRD-046.0.9-RUN1-HF3\\chroma_admin_runtime_diagnostic.json"
+  }
+}

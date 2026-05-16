@@ -155,3 +155,9 @@ Status: accepted
 Context: для post-apply readiness gate требуется проверять реальный runtime admin endpoints; при этом сервер может быть уже запущен пользователем или должен подниматься временно агентом.
 Decision: HF1 live smoke использует dual strategy: `external_existing` (не запускать второй сервер на том же порту) и `hf1_subprocess` (detected canonical launch command + startup polling + controlled shutdown). Если readiness не достигнут или запуск невозможен, статус обязан оставаться blocker (`blocked_admin_launch_failed`), без ложного green.
 Consequences: gate становится воспроизводимым и трассируемым (manifest + sanitized logs + explicit blocker reason) без мутации production данных.
+
+## ADR-027 - Admin gate may accept dashboard Chroma mismatch only with explicit local proof
+Status: accepted
+Context: в HF2 live runtime dashboard мог возвращать `chroma.count`, отличающийся от ожидаемого production count, хотя отдельная локальная Chroma diagnostics-проверка подтверждала корректный `247` для focus source.
+Decision: quality gate не блокируется только при наличии явного локального proof-артефакта с ожидаемым count; mismatch без proof остаётся schema blocker. Принятие mismatch всегда фиксируется предупреждением в artifacts/reports.
+Consequences: сохраняется строгий gate по умолчанию, но исключается ложный blocker при совместимом runtime contract drift и подтвержденной локальной диагностике.

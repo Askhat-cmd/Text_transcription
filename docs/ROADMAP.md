@@ -20,15 +20,15 @@
 - PRD-046.0.9-RUN1-HF1: BotDB Admin dashboard summary contract restored (`/api/dashboard/`), enrichment/review visibility returned, explicit warning/error surfacing added, no production mutations.
 - PRD-046.0.9-RUN1-HF2: runtime dashboard acceptance fix (cache-busting + `/api/dashboard` slash/no-slash + production-block semantics), registry delete hygiene policy alignment (UI/backend + snapshot-before-delete), Writer KB snippet boundary guard (no mid-word Cyrillic clipping).
 - PRD-046.0.9-RUN1-HF3: registry runtime render fix delivered (row-level isolation + safe Chroma source-exists fallback + explicit registry loading/error/empty UI states), admin consistency gate passed (`Dashboard/Registry/Chroma = 247`, review queue `87`).
+- PRD-046.0.9.1: human review decisions layer delivered for fresh RUN1 queue (prepare/workbench/template/validator/no-mutation artifacts + tests), production KB/registry/Chroma unchanged; apply step blocked until queue/block-id alignment is restored in current workspace snapshot.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.0.9.1 planning: human review decisioning over real post-reprocess enrichment queue (`87` items).
+- Queue/block-id re-alignment before controlled apply PRD (`PRD-046.0.7.1`).
 
 ## Next
-1. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
-2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (new block ids only).
-3. Diagnostic Center rollout PRD after readiness gates.
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (only after queue/block-id alignment and filled real decisions).
+2. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

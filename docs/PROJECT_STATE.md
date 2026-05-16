@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9-RUN1-HF3: устранён runtime blocker пустого registry table, добавлены row-isolation и safe delete-policy fallback для Chroma-check path, подтверждена admin consistency синхронизация Dashboard/Registry/Chroma (`247/247`) перед переходом к human review.
+Проект находится на стадии post-PRD-046.0.9.1: слой human review decisions для post-reprocess enrichment реализован (prepare/workbench/template/validator/no-mutation proof), но зафиксирован data-alignment blocker — текущий `all_blocks_merged.json` в workspace содержит `229` blocks, тогда как fresh RUN1 review queue привязан к `87` block ids из набора `247`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -25,6 +25,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 В `PRD-046.0.9-RUN1-HF1` dashboard получает enrichment/review состояние из артефактов RUN1 через единый endpoint `/api/dashboard/` и показывает явные warning/error причины вместо немых пустых карточек.
 В `PRD-046.0.9-RUN1-HF2` endpoint/Frontend дополнительно откалиброваны под runtime acceptance: поддерживаются `/api/dashboard` и `/api/dashboard/`, production-block card опирается на focus-source (`247`), registry total показывается отдельно, а при API/payload проблемах отображается явная ошибка.
 В `PRD-046.0.9-RUN1-HF3` registry endpoint стал row-isolated (одна плохая строка больше не роняет весь список), frontend реестра получил явные loading/error/empty состояния, а consistency gate подтвердил browser-visible состояние без reindex/apply.
+В `PRD-046.0.9.1` добавлены CLI `prepare_human_review_decisions.py` и `validate_human_review_decisions.py`, артефакты review-workbench/template/validation/no-mutation сгенерированы, deterministic safety checks по decisions overlay включены (forbidden/raw/private keys, secret-like values, authority-mutation attempts, duplicate/unknown/mismatch guards). Production apply/reindex не выполнялись.
 
 ## Current Admin Source Hygiene State
 Delete policy в реестре стала явной и согласованной между backend/frontend:
@@ -49,7 +50,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) требует решений только по fresh review queue post-reprocess real-enrichment цикла.
+- Controlled apply workflow для validated review decisions (`PRD-046.0.7.1`) заблокирован до восстановления согласования fresh queue block ids с текущим `all_blocks_merged.json`.
 
 ## Not Implemented Yet
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
@@ -61,12 +62,12 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Premature Diagnostic Center launch создаст ложную уверенность в диагностике при неготовом context-quality слое.
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
 - Старый review queue (`PRD-046.0.7`) устарел после смены block boundaries и не может применяться напрямую.
+- Даже fresh queue `PRD-046.0.9-RUN1` нельзя применять, пока текущий production blocks snapshot в workspace не синхронизирован с `247` block baseline.
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
 
 ## Next Planned PRDs
-1. PRD-046.0.9.1 - Human Review Decisions for Post-Reprocess Enrichment v1.
-2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только для решений, привязанных к новым block ids).
-3. Diagnostic Center rollout PRD (deferred, after gates).
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только после queue/blocks re-alignment и заполнения реальных human decisions).
+2. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -82,5 +83,5 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 5. TO_DO_LIST остается детальным архивом, docs — краткая operational map.
 
 ## Last Updated
-- Date: 2026-05-15
-- Source cycle: PRD-046.0.9-RUN1-HF3
+- Date: 2026-05-16
+- Source cycle: PRD-046.0.9.1

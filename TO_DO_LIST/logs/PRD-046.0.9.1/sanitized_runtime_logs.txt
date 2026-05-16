@@ -1,0 +1,10 @@
+source_prd=PRD-046.0.9.1
+queue_path=TO_DO_LIST/logs/PRD-046.0.9-RUN1/review_queue_after_real_enrichment.json
+decisions_path=TO_DO_LIST/logs/PRD-046.0.9.1/review_decisions_template.json
+queue_items_count=87
+decisions_count=0
+valid=True
+errors_count=0
+warnings_count=0
+production_apply_performed=False
+chroma_reindex_performed=False

@@ -1,0 +1,81 @@
+﻿
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_kb_review_contracts.py -q
+
+.......                                                                  [100%]
+7 passed in 0.16s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_kb_review_decisions.py -q
+
+........                                                                 [100%]
+8 passed in 0.15s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_post_reprocess_review_prepare.py -q
+
+.                                                                        [100%]
+1 passed in 0.46s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests/test_post_reprocess_review_decisions_validator.py -q
+
+.............                                                            [100%]
+13 passed in 0.22s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe" -m pytest Bot_data_base/tests -q
+
+........................................................................ [ 26%]
+........................................................................ [ 53%]
+........................................................................ [ 80%]
+.....................................................                    [100%]
+269 passed in 35.27s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe" -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.38s
+
+EXIT_CODE=0
+
+
+=== CMD ===
+"c:\My_practice\Text_transcription\bot_psychologist\.venv\Scripts\python.exe" -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 92%]
+..................                                                       [100%]
+234 passed in 47.79s
+cmd : Task was destroyed but it is pending!
+At line:14 char:13
++   $output = cmd /c $cmd 2>&1;
++             ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Task was destroyed but it is pending!:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+task: <Task pending name='Task-84' coro=<ConversationMemory._run_summary_task() running at C:\My_practice\Text_transcri
+ption\bot_psychologist\bot_agent\conversation_memory.py:1026> wait_for=<Future pending cb=[_chain_future.<locals>._call
+_check_cancel() at C:\Users\user\AppData\Local\Programs\Python\Python310\lib\asyncio\futures.py:385, Task.task_wakeup()
+]>>
+
+EXIT_CODE=0
+

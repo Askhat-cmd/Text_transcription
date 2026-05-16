@@ -47,11 +47,11 @@ function renderGovernanceReadiness(governance) {
   if (governance?.legacy_sd_active) {
     const row = document.createElement('div');
     row.className = 'sd-bar';
-    row.innerHTML = '<strong>legacy_sd</strong>';
+    row.innerHTML = '<strong>legacy_sd_metadata</strong>';
     const bar = document.createElement('span');
-    bar.style.width = '100px';
+    bar.style.width = '40px';
     row.appendChild(bar);
-    row.appendChild(document.createTextNode('active'));
+    row.appendChild(document.createTextNode('debug-only'));
     container.appendChild(row);
   }
 }

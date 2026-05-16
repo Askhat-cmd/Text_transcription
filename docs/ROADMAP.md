@@ -30,13 +30,14 @@
 - PRD-046.0.7.2-HF2: admin launch/schema hotfix closure delivered (`run_admin_live_smoke_hf2.py` + external-existing runtime path), all required endpoints reached on live backend, schema/quality/no-mutation gates passed, final status `passed` without production apply/reindex.
 - PRD-046.0.7.2-HF3: strict dashboard/chroma reconciliation gate delivered (`run_admin_live_smoke_hf3.py` + strict contract tests); stale historical proof override removed, live `chroma.count=229` mismatch preserved as blocker (`done_with_chroma_count_blocker`), no production mutation/reindex/provider call.
 - PRD-046.0.7.2-HF4: Chroma recovery cycle completed; direct diagnostic confirmed real mismatch (`229`), controlled focus-only reindex with backup restored direct count (`247`), dashboard count source corrected (`ChromaManager.get_stats` uses `collection.count()`), strict live gate passed (`247/247/247`) with no `all_blocks_merged`/`registry` mutation.
+- PRD-046.0.10: legacy SD cleanup/docs alignment completed; SD labeling disabled by default with explicit legacy gate only, dashboard readiness detached from SD, BotDB README and new internal docs pack (`Bot_data_base/docs/*`) aligned to live `:8003` runtime and focus-source `247/247/247`.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
 1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
-2. PRD-046.0.10 - Final Runtime Readiness Summary v1 (optional before PRD-046.1).
+2. PRD-046.0.11 - Final Runtime Readiness Summary v1 (optional before PRD-046.1).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

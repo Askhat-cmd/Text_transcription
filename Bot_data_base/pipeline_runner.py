@@ -2,6 +2,7 @@
 
 import os
 import copy
+import logging
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -21,6 +22,8 @@ from processors.sd_labeler import SDLabeler
 from storage.chroma_manager import ChromaManager
 from storage.json_export import JSONExporter
 from storage.registry import SourceRecord, SourceRegistry
+
+logger = logging.getLogger(__name__)
 
 
 class PipelineRunner:
@@ -62,7 +65,9 @@ class PipelineRunner:
 
         self.semantic_chunker = SemanticChunker(self.config.get("chunking", {}).get("youtube", {}))
         self.book_chunker = BookChunker(self.config.get("chunking", {}).get("book", {}))
-        self.sd_labeler = SDLabeler(self.config.get("sd_labeling", {}))
+        self._legacy_sd_cfg = self._legacy_sd_settings()
+        self.sd_labeler = SDLabeler(self._legacy_sd_cfg)
+        self.legacy_sd_enabled = self._is_legacy_sd_enabled(self._legacy_sd_cfg)
         self.block_normalizer = BlockNormalizer()
 
         self.job_manager = job_manager
@@ -121,7 +126,10 @@ class PipelineRunner:
                 b.published_date = metadata.get("published_date", "")
 
             await self._update_progress(job_id, 40, "sd_labeling")
-            blocks = self.sd_labeler.label_blocks(blocks)
+            if self.legacy_sd_enabled:
+                blocks = self.sd_labeler.label_blocks(blocks)
+            else:
+                logger.debug("[PIPELINE] legacy SD labeling skipped (disabled by default)")
 
             await self._update_progress(job_id, 60, "normalizing")
             blocks = self.block_normalizer.normalize(blocks)
@@ -145,7 +153,7 @@ class PipelineRunner:
             await self._update_progress(job_id, 90, "indexing")
             added = self.chroma_manager.add_blocks(blocks)
 
-            sd_dist = self._sd_distribution(blocks)
+            sd_dist = self._sd_distribution(blocks) if self.legacy_sd_enabled else {}
             self.registry.update_status(
                 video_id,
                 "done",
@@ -228,7 +236,10 @@ class PipelineRunner:
             )
 
             await self._update_progress(job_id, 50, "sd_labeling")
-            blocks = self.sd_labeler.label_blocks(blocks)
+            if self.legacy_sd_enabled:
+                blocks = self.sd_labeler.label_blocks(blocks)
+            else:
+                logger.debug("[PIPELINE] legacy SD labeling skipped (disabled by default)")
 
             await self._update_progress(job_id, 70, "normalizing")
             blocks = self.block_normalizer.normalize(blocks)
@@ -252,7 +263,7 @@ class PipelineRunner:
             await self._update_progress(job_id, 90, "indexing")
             added = self.chroma_manager.add_blocks(blocks)
 
-            sd_dist = self._sd_distribution(blocks)
+            sd_dist = self._sd_distribution(blocks) if self.legacy_sd_enabled else {}
             self.registry.update_status(
                 source_id,
                 "done",
@@ -372,6 +383,9 @@ class PipelineRunner:
         set_if_env(["sd_labeling", "max_tokens"], "SD_LABELING_MAX_TOKENS", to_int)
         set_if_env(["sd_labeling", "min_confidence"], "SD_LABELING_MIN_CONFIDENCE", to_float)
         set_if_env(["sd_labeling", "batch_size"], "SD_LABELING_BATCH_SIZE", to_int)
+        set_if_env(["sd_labeling", "explicit_legacy_mode"], "SD_LABELING_EXPLICIT_LEGACY_MODE", to_bool)
+        set_if_env(["legacy_sd_labeling", "enabled"], "LEGACY_SD_LABELING_ENABLED", to_bool)
+        set_if_env(["legacy_sd_labeling", "explicit_legacy_mode"], "LEGACY_SD_EXPLICIT_MODE", to_bool)
 
         # Embeddings
         set_if_env(["embedding", "model"], "SENTENCE_TRANSFORMERS_MODEL")
@@ -398,6 +412,22 @@ class PipelineRunner:
         if os.path.isabs(value):
             return value
         return os.path.abspath(os.path.join(self.base_dir, value))
+
+    def _legacy_sd_settings(self) -> dict:
+        sd_cfg = self.config.get("sd_labeling", {})
+        legacy_cfg = self.config.get("legacy_sd_labeling", {})
+        merged: dict = {}
+        if isinstance(sd_cfg, dict):
+            merged.update(sd_cfg)
+        if isinstance(legacy_cfg, dict):
+            merged.update(legacy_cfg)
+        return merged
+
+    @staticmethod
+    def _is_legacy_sd_enabled(cfg: dict) -> bool:
+        enabled = bool(cfg.get("enabled", False))
+        explicit_mode = bool(cfg.get("explicit_legacy_mode", False))
+        return enabled and explicit_mode
 
     def _sd_distribution(self, blocks: List[UniversalBlock]) -> Dict[str, int]:
         dist: Dict[str, int] = {}

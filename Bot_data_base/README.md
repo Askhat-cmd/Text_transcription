@@ -1,26 +1,49 @@
 ﻿# Bot_data_base
 
-Минимальный запуск (3 команды):
+`Bot_data_base` - ingestion/retrieval runtime для KB слоя проекта.
+Текущий live режим: локальный API на `:8003`, focus-source only, строгая сверка blocks/Chroma.
 
-```bash
-cd Bot_data_base
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+## Live Run (ПК_2)
+```powershell
+cd C:\My_practice\Text_transcription\Bot_data_base
+.venv\Scripts\Activate.ps1
+python -m uvicorn api.main:app --reload --port 8003
 ```
 
-Запуск сервера:
+## Runtime URLs
+- `http://localhost:8003/`
+- `http://localhost:8003/api/registry/`
+- `http://localhost:8003/api/dashboard`
+- `http://localhost:8003/api/dashboard/`
+- `http://localhost:8003/api/status`
 
-```bash
-.\.venv\Scripts\python.exe -m uvicorn api.main:app --reload --port 8003
-```
+## Environment Baseline
+- Python: `3.10` for `Bot_data_base`.
+- Focus source: `123__кузница_духа` (`Кузница Духа`, `Саламат Сарсекенов`).
+- Expected operational counts:
+  - `sources = 1`
+  - `blocks = 247`
+  - `chroma = 247`
+- Strict gate expectation: `247/247/247` for registry blocks, dashboard blocks, dashboard chroma.
 
-Тесты:
+## Legacy SD Status
+- SD слой находится в `legacy/deprecated` режиме.
+- По умолчанию legacy SD labeling отключен.
+- SD не является authority слоем runtime/retrieval/readiness.
+- `sd_level` / `sd_distribution` в старых артефактах сохраняются как backward-compatible metadata.
 
-```bash
-.\.venv\Scripts\python.exe -m pytest tests/ -v --tb=short
-```
+Legacy SD env vars (deprecated, disabled by default):
+- `SD_LABELING_ENABLED=false`
+- `SD_LABELING_EXPLICIT_LEGACY_MODE=false`
+- `SD_LABELING_MODEL`
+- `SD_LABELING_TEMPERATURE`
+- `SD_LABELING_MAX_TOKENS`
+- `SD_LABELING_MIN_CONFIDENCE`
+- `SD_LABELING_BATCH_SIZE`
+- `LEGACY_SD_LABELING_ENABLED=false`
+- `LEGACY_SD_EXPLICIT_MODE=false`
 
-Переменные окружения:
+## Core Env Vars
 - `OPENAI_API_KEY`
 - `PRIMARY_MODEL`
 - `REFINE_MODEL`
@@ -43,13 +66,6 @@ python -m venv .venv
 - `CHUNKING_BOOK_MAX_TOKENS`
 - `CHUNKING_BOOK_OVERLAP_TOKENS`
 - `CHUNKING_YOUTUBE_MIN_TOKENS`
-- `CHUNKING_YOUTUBE_MAX_TOKENS`
-- `SD_LABELING_ENABLED`
-- `SD_LABELING_MODEL`
-- `SD_LABELING_TEMPERATURE`
-- `SD_LABELING_MAX_TOKENS`
-- `SD_LABELING_MIN_CONFIDENCE`
-- `SD_LABELING_BATCH_SIZE`
 - `CHROMA_DB_PATH`
 - `CHROMA_COLLECTION_NAME`
 - `JSON_EXPORT_DIR`
@@ -57,9 +73,15 @@ python -m venv .venv
 - `LOG_LEVEL`
 - `LOG_FILE`
 
-Файл `.env` загружается автоматически при старте API и пайплайна. Пример — в `.env.example`.
+`.env` автоматически загружается при старте API/пайплайна. Шаблон: `.env.example`.
 
-Примечания:
-- Для SD-разметки нужен `OPENAI_API_KEY`.
-- Для ускорения тестов и локальной разработки можно отключить эмбеддинги:
-  `set BOT_DB_DISABLE_EMBEDDINGS=1`
+## Internal Docs
+- `docs/README.md`
+- `docs/ARCHITECTURE.md`
+- `docs/RUNBOOK.md`
+- `docs/API_CONTRACTS.md`
+- `docs/DATA_CONTRACTS.md`
+- `docs/CHROMA_RECOVERY.md`
+- `docs/SOURCE_HYGIENE.md`
+- `docs/LEGACY_SD.md`
+- `docs/PROJECT_STATE.md`

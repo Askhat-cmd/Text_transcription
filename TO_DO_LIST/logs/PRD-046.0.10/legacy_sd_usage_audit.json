@@ -1,0 +1,2054 @@
+{
+  "schema_version": "legacy_sd_usage_audit_v1",
+  "source_prd": "PRD-046.0.10",
+  "generated_at": "2026-05-16T19:47:05.853008+00:00",
+  "files_scanned_count": 237,
+  "sd_mentions_total": 299,
+  "active_mentions_total": 6,
+  "categories": {
+    "active_runtime": 3,
+    "active_ingestion": 3,
+    "api_backward_compat": 13,
+    "dashboard_display": 5,
+    "legacy_metadata": 140,
+    "docs_active": 12,
+    "docs_legacy": 10,
+    "tests": 113,
+    "safe_comment": 0
+  },
+  "hits": [
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 39,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_ENABLED=false"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 40,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_EXPLICIT_LEGACY_MODE=false"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 41,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_MODEL=gpt-4o-mini"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 42,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_TEMPERATURE=0.1"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 43,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_MAX_TOKENS=300"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 44,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_MIN_CONFIDENCE=0.5"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 45,
+      "category": "legacy_metadata",
+      "text": "SD_LABELING_BATCH_SIZE=5"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 46,
+      "category": "legacy_metadata",
+      "text": "LEGACY_SD_LABELING_ENABLED=false"
+    },
+    {
+      "path": "Bot_data_base/.env.example",
+      "line": 47,
+      "category": "legacy_metadata",
+      "text": "LEGACY_SD_EXPLICIT_MODE=false"
+    },
+    {
+      "path": "Bot_data_base/api/routes/dashboard.py",
+      "line": 105,
+      "category": "dashboard_display",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/dashboard.py",
+      "line": 111,
+      "category": "dashboard_display",
+      "text": "legacy_sd_active = False"
+    },
+    {
+      "path": "Bot_data_base/api/routes/dashboard.py",
+      "line": 124,
+      "category": "dashboard_display",
+      "text": "if \"sd_level\" in governance or \"sd_distribution\" in governance:"
+    },
+    {
+      "path": "Bot_data_base/api/routes/dashboard.py",
+      "line": 125,
+      "category": "dashboard_display",
+      "text": "legacy_sd_active = True"
+    },
+    {
+      "path": "Bot_data_base/api/routes/dashboard.py",
+      "line": 139,
+      "category": "dashboard_display",
+      "text": "\"legacy_sd_active\": legacy_sd_active,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 57,
+      "category": "api_backward_compat",
+      "text": "sd_level_ignored = request.sd_level > 0"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 158,
+      "category": "api_backward_compat",
+      "text": "sd_value = _sd_name_to_int(meta.get(\"sd_level\"))"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 239,
+      "category": "api_backward_compat",
+      "text": "sd_level=sd_value,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 287,
+      "category": "api_backward_compat",
+      "text": "if request.sd_level > 0:"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 289,
+      "category": "api_backward_compat",
+      "text": "\"[QUERY] legacy sd_level=%s ignored (SD decommission, no active filter)\","
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 290,
+      "category": "api_backward_compat",
+      "text": "request.sd_level,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 331,
+      "category": "api_backward_compat",
+      "text": "\"[QUERY] time_ms=%s total=%s reranked=%s sd_level=%s search_mode=%s\","
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 335,
+      "category": "api_backward_compat",
+      "text": "request.sd_level,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/query.py",
+      "line": 346,
+      "category": "api_backward_compat",
+      "text": "\"legacy_sd_deprecated\": True,"
+    },
+    {
+      "path": "Bot_data_base/api/routes/registry.py",
+      "line": 345,
+      "category": "legacy_metadata",
+      "text": "\"sd_distribution\": {},"
+    },
+    {
+      "path": "Bot_data_base/api/routes/registry.py",
+      "line": 347,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/api/schemas.py",
+      "line": 41,
+      "category": "api_backward_compat",
+      "text": "sd_distribution: dict"
+    },
+    {
+      "path": "Bot_data_base/api/schemas.py",
+      "line": 43,
+      "category": "api_backward_compat",
+      "text": "legacy_sd_active: bool = False"
+    },
+    {
+      "path": "Bot_data_base/api/schemas.py",
+      "line": 50,
+      "category": "api_backward_compat",
+      "text": "sd_level: int = Field(default=0, ge=0, le=8)"
+    },
+    {
+      "path": "Bot_data_base/api/schemas.py",
+      "line": 62,
+      "category": "api_backward_compat",
+      "text": "sd_level: int"
+    },
+    {
+      "path": "Bot_data_base/config.yaml",
+      "line": 17,
+      "category": "legacy_metadata",
+      "text": "sd_labeling:"
+    },
+    {
+      "path": "Bot_data_base/config.yaml",
+      "line": 26,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_labeling:"
+    },
+    {
+      "path": "Bot_data_base/docs/API_CONTRACTS.md",
+      "line": 23,
+      "category": "docs_active",
+      "text": "- `sd_level` принимается для backward compatibility."
+    },
+    {
+      "path": "Bot_data_base/docs/API_CONTRACTS.md",
+      "line": 24,
+      "category": "docs_legacy",
+      "text": "- `sd_level` игнорируется как retrieval filter (deprecated legacy signal)."
+    },
+    {
+      "path": "Bot_data_base/docs/ARCHITECTURE.md",
+      "line": 23,
+      "category": "docs_legacy",
+      "text": "`sd_level` / `sd_distribution` - legacy metadata для обратной совместимости."
+    },
+    {
+      "path": "Bot_data_base/docs/DATA_CONTRACTS.md",
+      "line": 18,
+      "category": "docs_active",
+      "text": "- `sd_level`"
+    },
+    {
+      "path": "Bot_data_base/docs/DATA_CONTRACTS.md",
+      "line": 19,
+      "category": "docs_active",
+      "text": "- `sd_distribution`"
+    },
+    {
+      "path": "Bot_data_base/docs/LEGACY_SD.md",
+      "line": 4,
+      "category": "docs_legacy",
+      "text": "SD (Spiral Dynamics) - исторический semantic слой ранних версий проекта."
+    },
+    {
+      "path": "Bot_data_base/docs/LEGACY_SD.md",
+      "line": 13,
+      "category": "docs_legacy",
+      "text": "- historical blocks metadata (`sd_level`)"
+    },
+    {
+      "path": "Bot_data_base/docs/LEGACY_SD.md",
+      "line": 14,
+      "category": "docs_legacy",
+      "text": "- registry historical aggregates (`sd_distribution`)"
+    },
+    {
+      "path": "Bot_data_base/docs/PROJECT_STATE.md",
+      "line": 15,
+      "category": "docs_active",
+      "text": "- `sd_level` query input remains compatibility-only and ignored for filtering"
+    },
+    {
+      "path": "Bot_data_base/docs/README.md",
+      "line": 12,
+      "category": "docs_legacy",
+      "text": "- `LEGACY_SD.md` - legacy SD статус и правила использования."
+    },
+    {
+      "path": "Bot_data_base/LAUNCH.md",
+      "line": 215,
+      "category": "docs_active",
+      "text": "SD_LABELING_ENABLED=false"
+    },
+    {
+      "path": "Bot_data_base/models/universal_block.py",
+      "line": 26,
+      "category": "legacy_metadata",
+      "text": "sd_level: str = \"GREEN\"  # BEIGE|PURPLE|RED|BLUE|ORANGE|GREEN|YELLOW|TURQUOISE"
+    },
+    {
+      "path": "Bot_data_base/models/universal_block.py",
+      "line": 62,
+      "category": "legacy_metadata",
+      "text": "ВАЖНО: бот читает поля text, sd_level, complexity, source, metadata."
+    },
+    {
+      "path": "Bot_data_base/models/universal_block.py",
+      "line": 69,
+      "category": "legacy_metadata",
+      "text": "\"sd_level\": self.sd_level,"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 21,
+      "category": "legacy_metadata",
+      "text": "from processors.sd_labeler import SDLabeler"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 68,
+      "category": "legacy_metadata",
+      "text": "self._legacy_sd_cfg = self._legacy_sd_settings()"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 69,
+      "category": "legacy_metadata",
+      "text": "self.sd_labeler = SDLabeler(self._legacy_sd_cfg)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 70,
+      "category": "legacy_metadata",
+      "text": "self.legacy_sd_enabled = self._is_legacy_sd_enabled(self._legacy_sd_cfg)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 105,
+      "category": "legacy_metadata",
+      "text": "sd_distribution={},"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 128,
+      "category": "legacy_metadata",
+      "text": "await self._update_progress(job_id, 40, \"sd_labeling\")"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 129,
+      "category": "legacy_metadata",
+      "text": "if self.legacy_sd_enabled:"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 130,
+      "category": "active_ingestion",
+      "text": "blocks = self.sd_labeler.label_blocks(blocks)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 156,
+      "category": "legacy_metadata",
+      "text": "sd_dist = self._sd_distribution(blocks) if self.legacy_sd_enabled else {}"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 162,
+      "category": "legacy_metadata",
+      "text": "sd_distribution=sd_dist,"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 218,
+      "category": "legacy_metadata",
+      "text": "sd_distribution={},"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 238,
+      "category": "legacy_metadata",
+      "text": "await self._update_progress(job_id, 50, \"sd_labeling\")"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 239,
+      "category": "legacy_metadata",
+      "text": "if self.legacy_sd_enabled:"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 240,
+      "category": "active_ingestion",
+      "text": "blocks = self.sd_labeler.label_blocks(blocks)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 266,
+      "category": "legacy_metadata",
+      "text": "sd_dist = self._sd_distribution(blocks) if self.legacy_sd_enabled else {}"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 272,
+      "category": "legacy_metadata",
+      "text": "sd_distribution=sd_dist,"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 380,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"enabled\"], \"SD_LABELING_ENABLED\", to_bool)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 381,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"model\"], \"SD_LABELING_MODEL\")"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 382,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"temperature\"], \"SD_LABELING_TEMPERATURE\", to_float)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 383,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"max_tokens\"], \"SD_LABELING_MAX_TOKENS\", to_int)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 384,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"min_confidence\"], \"SD_LABELING_MIN_CONFIDENCE\", to_float)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 385,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"batch_size\"], \"SD_LABELING_BATCH_SIZE\", to_int)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 386,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"sd_labeling\", \"explicit_legacy_mode\"], \"SD_LABELING_EXPLICIT_LEGACY_MODE\", to_bool)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 387,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"legacy_sd_labeling\", \"enabled\"], \"LEGACY_SD_LABELING_ENABLED\", to_bool)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 388,
+      "category": "legacy_metadata",
+      "text": "set_if_env([\"legacy_sd_labeling\", \"explicit_legacy_mode\"], \"LEGACY_SD_EXPLICIT_MODE\", to_bool)"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 416,
+      "category": "legacy_metadata",
+      "text": "def _legacy_sd_settings(self) -> dict:"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 417,
+      "category": "legacy_metadata",
+      "text": "sd_cfg = self.config.get(\"sd_labeling\", {})"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 418,
+      "category": "legacy_metadata",
+      "text": "legacy_cfg = self.config.get(\"legacy_sd_labeling\", {})"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 427,
+      "category": "legacy_metadata",
+      "text": "def _is_legacy_sd_enabled(cfg: dict) -> bool:"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 432,
+      "category": "legacy_metadata",
+      "text": "def _sd_distribution(self, blocks: List[UniversalBlock]) -> Dict[str, int]:"
+    },
+    {
+      "path": "Bot_data_base/pipeline_runner.py",
+      "line": 435,
+      "category": "legacy_metadata",
+      "text": "level = b.sd_level or \"\""
+    },
+    {
+      "path": "Bot_data_base/processors/block_normalizer.py",
+      "line": 49,
+      "category": "legacy_metadata",
+      "text": "if (block.sd_level or \"\").strip() not in self.VALID_SD_LEVELS:"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 22,
+      "category": "legacy_metadata",
+      "text": "SD_LABELER_SYSTEM_PROMPT = \"\"\""
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 44,
+      "category": "legacy_metadata",
+      "text": "{\"sd_level\": \"GREEN\", \"sd_secondary\": \"YELLOW\", \"sd_confidence\": 0.85, \"complexity\": 0.45},"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 45,
+      "category": "legacy_metadata",
+      "text": "{\"sd_level\": \"BLUE\",  \"sd_secondary\": null,     \"sd_confidence\": 0.90, \"complexity\": 0.30}"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 82,
+      "category": "legacy_metadata",
+      "text": "sd_level = label.get(\"sd_level\", \"GREEN\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 89,
+      "category": "legacy_metadata",
+      "text": "f\"[SD_LABELER] low confidence {sd_confidence:.2f} for block {block.block_id}\""
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 91,
+      "category": "legacy_metadata",
+      "text": "sd_level = \"UNCERTAIN\""
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 93,
+      "category": "legacy_metadata",
+      "text": "block.sd_level = sd_level"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 108,
+      "category": "legacy_metadata",
+      "text": "logger.error(f\"[SD_LABELER] API error attempt {attempt + 1}/3: {exc}\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 109,
+      "category": "legacy_metadata",
+      "text": "logger.error(f\"[SD_LABELER] giving up after retries: {last_error}\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 128,
+      "category": "legacy_metadata",
+      "text": "{\"role\": \"system\", \"content\": SD_LABELER_SYSTEM_PROMPT},"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 135,
+      "category": "legacy_metadata",
+      "text": "logger.debug(f\"[SD_LABELER] raw response: {raw[:200]}\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 137,
+      "category": "legacy_metadata",
+      "text": "logger.warning(\"[SD_LABELER] empty LLM response, using defaults\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 145,
+      "category": "legacy_metadata",
+      "text": "logger.warning(f\"[SD_LABELER] JSON parse error: {exc}\")"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 155,
+      "category": "legacy_metadata",
+      "text": "f\"[SD_LABELER] response size mismatch: {len(data)} != {expected_len}\""
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 171,
+      "category": "legacy_metadata",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 180,
+      "category": "legacy_metadata",
+      "text": "if \"sd_labeling\" in config and isinstance(config.get(\"sd_labeling\"), dict):"
+    },
+    {
+      "path": "Bot_data_base/processors/sd_labeler.py",
+      "line": 181,
+      "category": "legacy_metadata",
+      "text": "return config[\"sd_labeling\"]"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 33,
+      "category": "docs_active",
+      "text": "- `sd_level` / `sd_distribution` в старых артефактах сохраняются как backward-compatible metadata."
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 36,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_ENABLED=false`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 37,
+      "category": "docs_legacy",
+      "text": "- `SD_LABELING_EXPLICIT_LEGACY_MODE=false`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 38,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_MODEL`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 39,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_TEMPERATURE`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 40,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_MAX_TOKENS`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 41,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_MIN_CONFIDENCE`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 42,
+      "category": "docs_active",
+      "text": "- `SD_LABELING_BATCH_SIZE`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 43,
+      "category": "docs_legacy",
+      "text": "- `LEGACY_SD_LABELING_ENABLED=false`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 44,
+      "category": "docs_legacy",
+      "text": "- `LEGACY_SD_EXPLICIT_MODE=false`"
+    },
+    {
+      "path": "Bot_data_base/README.md",
+      "line": 86,
+      "category": "docs_legacy",
+      "text": "- `docs/LEGACY_SD.md`"
+    },
+    {
+      "path": "Bot_data_base/storage/chroma_manager.py",
+      "line": 152,
+      "category": "legacy_metadata",
+      "text": "sd = meta.get(\"sd_level\") if meta else None"
+    },
+    {
+      "path": "Bot_data_base/storage/chroma_manager.py",
+      "line": 187,
+      "category": "legacy_metadata",
+      "text": "\"sd_level\": block.sd_level,"
+    },
+    {
+      "path": "Bot_data_base/storage/registry.py",
+      "line": 22,
+      "category": "legacy_metadata",
+      "text": "sd_distribution: Dict[str, int]"
+    },
+    {
+      "path": "Bot_data_base/storage/registry.py",
+      "line": 82,
+      "category": "legacy_metadata",
+      "text": "sd_distribution: Dict[str, int] = {}"
+    },
+    {
+      "path": "Bot_data_base/storage/registry.py",
+      "line": 86,
+      "category": "legacy_metadata",
+      "text": "for k, v in (r.sd_distribution or {}).items():"
+    },
+    {
+      "path": "Bot_data_base/storage/registry.py",
+      "line": 87,
+      "category": "legacy_metadata",
+      "text": "sd_distribution[k] = sd_distribution.get(k, 0) + int(v)"
+    },
+    {
+      "path": "Bot_data_base/storage/registry.py",
+      "line": 92,
+      "category": "legacy_metadata",
+      "text": "\"sd_distribution\": sd_distribution,"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_book_pipeline.py",
+      "line": 8,
+      "category": "tests",
+      "text": "from processors.sd_labeler import SDLabeler"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_book_pipeline.py",
+      "line": 27,
+      "category": "tests",
+      "text": "\"sd_labeling\": {\"batch_size\": 5, \"min_confidence\": 0.5},"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_book_pipeline.py",
+      "line": 49,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_book_pipeline.py",
+      "line": 81,
+      "category": "tests",
+      "text": "assert first_block[\"sd_level\"] in {\"BEIGE\",\"PURPLE\",\"RED\",\"BLUE\",\"ORANGE\",\"GREEN\",\"YELLOW\",\"TURQUOISE\",\"UNCERTAIN\"}"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_book_pipeline.py",
+      "line": 91,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+      "line": 8,
+      "category": "tests",
+      "text": "from processors.sd_labeler import SDLabeler"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+      "line": 28,
+      "category": "tests",
+      "text": "\"sd_labeling\": {\"batch_size\": 5, \"min_confidence\": 0.5},"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+      "line": 50,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+      "line": 83,
+      "category": "tests",
+      "text": "assert all(b[\"sd_level\"] != \"\" for b in data[\"blocks\"])"
+    },
+    {
+      "path": "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+      "line": 93,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_admin_dashboard_enrichment_state.py",
+      "line": 38,
+      "category": "tests",
+      "text": "return {\"total_sources\": 1, \"total_blocks\": 247, \"sd_distribution\": {}, \"sources_by_type\": {\"book\": 1}}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_admin_dashboard_no_mutation.py",
+      "line": 43,
+      "category": "tests",
+      "text": "return {\"total_sources\": 1, \"total_blocks\": 247, \"sd_distribution\": {}, \"sources_by_type\": {\"book\": 1}}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_admin_dashboard_runtime_contract.py",
+      "line": 38,
+      "category": "tests",
+      "text": "return {\"total_sources\": 1, \"total_blocks\": 248, \"sd_distribution\": {}, \"sources_by_type\": {\"book\": 1}}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_admin_dashboard_summary.py",
+      "line": 51,
+      "category": "tests",
+      "text": "return {\"total_sources\": 2, \"total_blocks\": 247, \"sd_distribution\": {}, \"sources_by_type\": {\"book\": 2}}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_api_query_enrichment_metadata.py",
+      "line": 34,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_api_query_internal_only_filter.py",
+      "line": 33,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_api_query_internal_only_filter.py",
+      "line": 48,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_apply_enrichment_overlay.py",
+      "line": 23,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_botdb_docs_presence.py",
+      "line": 15,
+      "category": "tests",
+      "text": "\"Bot_data_base/docs/LEGACY_SD.md\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_candidate_governance_gate_v2.py",
+      "line": 14,
+      "category": "tests",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_candidate_governance_gate_v3.py",
+      "line": 14,
+      "category": "tests",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_chroma_enrichment_metadata.py",
+      "line": 20,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_chroma_metadata_governance.py",
+      "line": 22,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_chroma_recovery.py",
+      "line": 102,
+      "category": "tests",
+      "text": "\"sd_labeling: {}\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_candidate.py",
+      "line": 36,
+      "category": "tests",
+      "text": "assert payload[\"processing\"][\"sd_labeling_active\"] is False"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_governance_gate.py",
+      "line": 17,
+      "category": "tests",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_governance_gate.py",
+      "line": 37,
+      "category": "tests",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_governance_gate.py",
+      "line": 57,
+      "category": "tests",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_no_mutation.py",
+      "line": 47,
+      "category": "tests",
+      "text": "\"sd_distribution\": {},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_no_mutation.py",
+      "line": 81,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_preflight.py",
+      "line": 36,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_preflight.py",
+      "line": 56,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_clean_reprocess_preflight.py",
+      "line": 80,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_controlled_candidate_apply_preflight.py",
+      "line": 23,
+      "category": "tests",
+      "text": "monkeypatch.setattr(\"tools.controlled_candidate_apply._contains_active_legacy_sd\", lambda: False)"
+    },
+    {
+      "path": "Bot_data_base/tests/test_controlled_candidate_apply_preflight.py",
+      "line": 52,
+      "category": "tests",
+      "text": "monkeypatch.setattr(\"tools.controlled_candidate_apply._contains_active_legacy_sd\", lambda: False)"
+    },
+    {
+      "path": "Bot_data_base/tests/test_dashboard_legacy_sd_not_readiness.py",
+      "line": 6,
+      "category": "tests",
+      "text": "def test_legacy_sd_presence_does_not_block_readiness() -> None:"
+    },
+    {
+      "path": "Bot_data_base/tests/test_dashboard_legacy_sd_not_readiness.py",
+      "line": 13,
+      "category": "tests",
+      "text": "\"sd_distribution\": {\"GREEN\": 1},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_dashboard_legacy_sd_not_readiness.py",
+      "line": 20,
+      "category": "tests",
+      "text": "assert summary[\"legacy_sd_active\"] is True"
+    },
+    {
+      "path": "Bot_data_base/tests/test_governance_adapter.py",
+      "line": 13,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_governance_adapter.py",
+      "line": 66,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_governance_backfill.py",
+      "line": 10,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_json_export_governance.py",
+      "line": 14,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 10,
+      "category": "tests",
+      "text": "from tools.legacy_sd_usage_audit import run_legacy_sd_usage_audit"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 34,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 42,
+      "category": "tests",
+      "text": "\"sd_level\": \"BLUE\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 63,
+      "category": "tests",
+      "text": "json={\"query\": \"практики\", \"sd_level\": 7, \"author_id\": \"a1\", \"use_rerank\": False},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 69,
+      "category": "tests",
+      "text": "assert payload[\"debug\"][\"legacy_sd_deprecated\"] is True"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 75,
+      "category": "tests",
+      "text": "def test_legacy_sd_usage_report_marks_active_filter_disabled(tmp_path) -> None:"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 76,
+      "category": "tests",
+      "text": "output_json = tmp_path / \"legacy_sd_usage_report.json\""
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 77,
+      "category": "tests",
+      "text": "output_md = tmp_path / \"legacy_sd_report.md\""
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 78,
+      "category": "tests",
+      "text": "payload = run_legacy_sd_usage_audit("
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_decommission.py",
+      "line": 85,
+      "category": "tests",
+      "text": "assert payload[\"legacy_sd_filter_still_active\"] is False"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 62,
+      "category": "tests",
+      "text": "def _build_runner(tmp_path: Path, *, legacy_sd_enabled: bool) -> tuple[PipelineRunner, _DummyLabeler, _DummyRegistry]:"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 65,
+      "category": "tests",
+      "text": "runner.legacy_sd_enabled = legacy_sd_enabled"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 69,
+      "category": "tests",
+      "text": "runner.sd_labeler = labeler"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 80,
+      "category": "tests",
+      "text": "assert cfg[\"sd_labeling\"][\"enabled\"] is False"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 81,
+      "category": "tests",
+      "text": "assert cfg[\"sd_labeling\"][\"explicit_legacy_mode\"] is False"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 84,
+      "category": "tests",
+      "text": "def test_pipeline_skips_sd_labeler_when_legacy_disabled(monkeypatch, tmp_path: Path) -> None:"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 92,
+      "category": "tests",
+      "text": "runner, labeler, registry = _build_runner(tmp_path, legacy_sd_enabled=False)"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+      "line": 107,
+      "category": "tests",
+      "text": "assert registry.last_update_kwargs[\"sd_distribution\"] == {}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+      "line": 30,
+      "category": "tests",
+      "text": "block.sd_level = \"BLUE\""
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+      "line": 65,
+      "category": "tests",
+      "text": "runner.legacy_sd_enabled = True"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+      "line": 69,
+      "category": "tests",
+      "text": "runner.sd_labeler = labeler"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+      "line": 78,
+      "category": "tests",
+      "text": "def test_legacy_sd_explicit_mode_calls_labeler(monkeypatch, tmp_path: Path) -> None:"
+    },
+    {
+      "path": "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+      "line": 101,
+      "category": "tests",
+      "text": "assert registry.last_update_kwargs[\"sd_distribution\"] == {\"BLUE\": 1}"
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_no_mutation.py",
+      "line": 42,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 29,
+      "category": "tests",
+      "text": "legacy_path = tmp_path / \"post_apply_legacy_sd_usage_report.json\""
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 38,
+      "category": "tests",
+      "text": "legacy_path.write_text(json.dumps({\"legacy_sd_filter_still_active\": False}, ensure_ascii=False), encoding=\"utf-8\")"
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 47,
+      "category": "tests",
+      "text": "legacy_sd_usage_report_path=legacy_path,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 59,
+      "category": "tests",
+      "text": "legacy_path = tmp_path / \"post_apply_legacy_sd_usage_report.json\""
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 67,
+      "category": "tests",
+      "text": "legacy_path.write_text(json.dumps({\"legacy_sd_filter_still_active\": True}, ensure_ascii=False), encoding=\"utf-8\")"
+    },
+    {
+      "path": "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+      "line": 76,
+      "category": "tests",
+      "text": "legacy_sd_usage_report_path=legacy_path,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_practice_classification_precision.py",
+      "line": 10,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 31,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 39,
+      "category": "tests",
+      "text": "\"sd_level\": \"BLUE\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 94,
+      "category": "tests",
+      "text": "assert \"sd_level\" in chunk"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 103,
+      "category": "tests",
+      "text": "response = client.post(\"/api/query/\", json={\"query\": \"практики\", \"sd_level\": 0})"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 110,
+      "category": "tests",
+      "text": "response = client.post(\"/api/query/\", json={\"query\": \"практики\", \"sd_level\": 4})"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_endpoint.py",
+      "line": 118,
+      "category": "tests",
+      "text": "response = client.post(\"/api/query/\", json={\"query\": \"редкий запрос xyz\", \"sd_level\": 8})"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_governance_schema.py",
+      "line": 34,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_governance_schema.py",
+      "line": 77,
+      "category": "tests",
+      "text": "\"sd_level\": \"BLUE\","
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_ignores_legacy_sd_filter.py",
+      "line": 32,
+      "category": "tests",
+      "text": "{\"sd_level\": \"GREEN\", \"author_id\": \"a1\", \"author\": \"Author\", \"source_type\": \"book\"},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_ignores_legacy_sd_filter.py",
+      "line": 33,
+      "category": "tests",
+      "text": "{\"sd_level\": \"BLUE\", \"author_id\": \"a1\", \"author\": \"Author\", \"source_type\": \"book\"},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_ignores_legacy_sd_filter.py",
+      "line": 48,
+      "category": "tests",
+      "text": "json={\"query\": \"практика\", \"sd_level\": 6, \"author_id\": \"a1\", \"use_rerank\": False},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_query_ignores_legacy_sd_filter.py",
+      "line": 54,
+      "category": "tests",
+      "text": "assert payload[\"debug\"][\"legacy_sd_deprecated\"] is True"
+    },
+    {
+      "path": "Bot_data_base/tests/test_real_provider_enrichment_no_mutation.py",
+      "line": 47,
+      "category": "tests",
+      "text": "\"legacy_sd_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tests/test_reprocess_readiness_gate.py",
+      "line": 42,
+      "category": "tests",
+      "text": "legacy_sd_report={\"legacy_sd_filter_still_active\": False},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_reprocess_readiness_gate.py",
+      "line": 81,
+      "category": "tests",
+      "text": "legacy_sd_report={\"legacy_sd_filter_still_active\": True},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_reprocess_readiness_gate.py",
+      "line": 88,
+      "category": "tests",
+      "text": "assert \"legacy_sd_filter_still_active\" in payload[\"blockers\"]"
+    },
+    {
+      "path": "Bot_data_base/tests/test_source_hygiene_apply.py",
+      "line": 47,
+      "category": "tests",
+      "text": "\"sd_distribution\": {},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_source_hygiene_apply.py",
+      "line": 141,
+      "category": "tests",
+      "text": "\"sd_distribution\": {},"
+    },
+    {
+      "path": "Bot_data_base/tests/test_source_reprocess_governance.py",
+      "line": 15,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_block_normalizer.py",
+      "line": 24,
+      "category": "tests",
+      "text": "block = UniversalBlock(text=\"test\", sd_level=\"INVALID\", author=\"A\")"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_chroma_manager.py",
+      "line": 16,
+      "category": "tests",
+      "text": "UniversalBlock(text=f\"Блок {i}\", sd_level=\"GREEN\", source_id=\"src1\", source_type=\"book\")"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_chroma_manager.py",
+      "line": 27,
+      "category": "tests",
+      "text": "UniversalBlock(text=\"test\", source_id=\"src1\", source_type=\"book\", sd_level=\"GREEN\")"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_json_export.py",
+      "line": 14,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_json_export.py",
+      "line": 28,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_json_export.py",
+      "line": 38,
+      "category": "tests",
+      "text": "assert \"sd_level\" in data[\"blocks\"][0]"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_json_export.py",
+      "line": 46,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_json_export.py",
+      "line": 57,
+      "category": "tests",
+      "text": "for field in [\"text\", \"sd_level\", \"complexity\", \"source\", \"metadata\"]:"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_registry.py",
+      "line": 17,
+      "category": "tests",
+      "text": "sd_distribution={\"GREEN\": 8, \"BLUE\": 2},"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_registry.py",
+      "line": 45,
+      "category": "tests",
+      "text": "sd_distribution={},"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 5,
+      "category": "tests",
+      "text": "from processors.sd_labeler import SDLabeler"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 8,
+      "category": "tests",
+      "text": "def test_sd_labeler_assigns_level():"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 14,
+      "category": "tests",
+      "text": "return_value='{\"sd_level\":\"GREEN\",\"sd_secondary\":\"\",\"sd_confidence\":0.8,\"complexity\":0.4,\"reasoning\":\"test\"}',"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 17,
+      "category": "tests",
+      "text": "assert result[0].sd_level == \"GREEN\""
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 27,
+      "category": "tests",
+      "text": "return_value='{\"sd_level\":\"BLUE\",\"sd_secondary\":\"\",\"sd_confidence\":0.3,\"complexity\":0.5,\"reasoning\":\"unclear\"}',"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 30,
+      "category": "tests",
+      "text": "assert result[0].sd_level == \"UNCERTAIN\""
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_sd_labeler.py",
+      "line": 40,
+      "category": "tests",
+      "text": "\"sd_level\": \"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_universal_block.py",
+      "line": 7,
+      "category": "tests",
+      "text": "assert block.sd_level == \"GREEN\""
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_universal_block.py",
+      "line": 14,
+      "category": "tests",
+      "text": "sd_level=\"GREEN\","
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_universal_block.py",
+      "line": 26,
+      "category": "tests",
+      "text": "assert \"sd_level\" in bot_fmt"
+    },
+    {
+      "path": "Bot_data_base/tests/unit/test_universal_block.py",
+      "line": 30,
+      "category": "tests",
+      "text": "assert bot_fmt[\"sd_level\"] == \"GREEN\""
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 12,
+      "category": "legacy_metadata",
+      "text": "DEFAULT_OUTPUT_JSON = \"TO_DO_LIST/logs/PRD-046.0.10/legacy_sd_usage_audit.json\""
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 13,
+      "category": "legacy_metadata",
+      "text": "DEFAULT_OUTPUT_MD = \"TO_DO_LIST/reports/PRD-046.0.10_LEGACY_SD_USAGE_AUDIT.md\""
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 16,
+      "category": "legacy_metadata",
+      "text": "r\"\\bsd_level\\b|sd_distribution|sd_label|spiral_dynamics|spiral dynamics|spiral|legacy_sd\","
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 21,
+      "category": "active_runtime",
+      "text": "'where_filter[\"sd_level\"]',"
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 22,
+      "category": "active_runtime",
+      "text": "\"where_filter['sd_level']\","
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 24,
+      "category": "legacy_metadata",
+      "text": "\"$gte\\\": request.sd_level\","
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 27,
+      "category": "active_ingestion",
+      "text": "\"sd_labeler.label_blocks(\","
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 134,
+      "category": "legacy_metadata",
+      "text": "def run_audit_legacy_sd_usage(*, source_prd: str, output_json: Path, output_md: Path) -> dict[str, Any]:"
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 149,
+      "category": "legacy_metadata",
+      "text": "\"schema_version\": \"legacy_sd_usage_audit_v1\","
+    },
+    {
+      "path": "Bot_data_base/tools/audit_legacy_sd_usage.py",
+      "line": 192,
+      "category": "legacy_metadata",
+      "text": "payload = run_audit_legacy_sd_usage("
+    },
+    {
+      "path": "Bot_data_base/tools/chroma_recovery.py",
+      "line": 65,
+      "category": "legacy_metadata",
+      "text": "sd_level=str(raw.get(\"sd_level\") or \"GREEN\"),"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 209,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_active = bool(readiness_payload.get(\"legacy_sd_active\"))"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 218,
+      "category": "legacy_metadata",
+      "text": "if legacy_sd_active:"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 219,
+      "category": "legacy_metadata",
+      "text": "blockers.append(\"legacy_sd_active\")"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 247,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_active\": legacy_sd_active,"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 331,
+      "category": "legacy_metadata",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 432,
+      "category": "legacy_metadata",
+      "text": "\"sd_labeling_active\": False,"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 965,
+      "category": "legacy_metadata",
+      "text": "if bool(candidate_stats.get(\"sd_labeling_active\")):"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 966,
+      "category": "legacy_metadata",
+      "text": "blockers.append(\"sd_labeling_active_detected\")"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 1013,
+      "category": "legacy_metadata",
+      "text": "and not bool(candidate_stats.get(\"sd_labeling_active\"))"
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 1092,
+      "category": "legacy_metadata",
+      "text": "f\"- legacy_sd_active: `{preflight.get('legacy_sd_active')}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 1120,
+      "category": "legacy_metadata",
+      "text": "f\"- sd_labeling_active: `{stats.get('sd_labeling_active')}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/clean_source_reprocess.py",
+      "line": 1317,
+      "category": "legacy_metadata",
+      "text": "f\"- sd_labeling_active: `{candidate_stats.get('sd_labeling_active')}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 30,
+      "category": "legacy_metadata",
+      "text": "from tools.legacy_sd_usage_audit import ACTIVE_SD_PATTERNS, TARGET_FILES, run_legacy_sd_usage_audit"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 125,
+      "category": "legacy_metadata",
+      "text": "def _contains_active_legacy_sd() -> bool:"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 310,
+      "category": "legacy_metadata",
+      "text": "if _contains_active_legacy_sd():"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 311,
+      "category": "legacy_metadata",
+      "text": "blockers.append(\"legacy_sd_active_detected\")"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 336,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_active\": _contains_active_legacy_sd(),"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 385,
+      "category": "legacy_metadata",
+      "text": "\"sd_distribution\","
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 437,
+      "category": "legacy_metadata",
+      "text": "row[\"sd_distribution\"] = {}"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 557,
+      "category": "legacy_metadata",
+      "text": "sd_level=str(raw.get(\"sd_level\") or \"GREEN\"),"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 618,
+      "category": "legacy_metadata",
+      "text": "{\"label\": \"sd_level_compat\", \"payload\": {\"query\": \"мне нужна безопасная практика за 5 минут\", \"top_k\": 5, \"pre_filter_k\": 20, \"use_rerank\": False, \"sd_level\": 6}},"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 899,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_json = output_dir / \"post_apply_legacy_sd_usage_report.json\""
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 900,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_md = reports_dir / \"PRD-046.0.8.1_LEGACY_SD_USAGE_REPORT.md\""
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 901,
+      "category": "legacy_metadata",
+      "text": "legacy_sd = run_legacy_sd_usage_audit("
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 903,
+      "category": "legacy_metadata",
+      "text": "output_json=legacy_sd_json,"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 904,
+      "category": "legacy_metadata",
+      "text": "output_md=legacy_sd_md,"
+    },
+    {
+      "path": "Bot_data_base/tools/controlled_candidate_apply.py",
+      "line": 1028,
+      "category": "legacy_metadata",
+      "text": "f\"- legacy_sd_filter_still_active: `{legacy_sd.get('legacy_sd_filter_still_active')}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 13,
+      "category": "legacy_metadata",
+      "text": "\"sd_level\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 15,
+      "category": "legacy_metadata",
+      "text": "\"spiral\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 16,
+      "category": "legacy_metadata",
+      "text": "\"spiral_dynamics\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 28,
+      "category": "active_runtime",
+      "text": "'where_filter[\"sd_level\"]',"
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 77,
+      "category": "legacy_metadata",
+      "text": "def run_legacy_sd_usage_audit(*, source_prd: str, output_json: Path, output_md: Path) -> dict[str, Any]:"
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 109,
+      "category": "legacy_metadata",
+      "text": "\"schema_version\": \"legacy_sd_usage_report_v1\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 113,
+      "category": "legacy_metadata",
+      "text": "\"active_legacy_sd_hits_count\": active_hits,"
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 116,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_filter_still_active\": int(query_hits.get(\"active_hit_count\", 0) or 0) > 0,"
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 126,
+      "category": "legacy_metadata",
+      "text": "f\"- active_legacy_sd_hits_count: `{payload['active_legacy_sd_hits_count']}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 129,
+      "category": "legacy_metadata",
+      "text": "f\"- legacy_sd_filter_still_active: `{payload['legacy_sd_filter_still_active']}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 155,
+      "category": "legacy_metadata",
+      "text": "default=\"TO_DO_LIST/logs/PRD-046.0.7-HF1/legacy_sd_usage_report.json\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 159,
+      "category": "legacy_metadata",
+      "text": "default=\"TO_DO_LIST/reports/PRD-046.0.7-HF1_LEGACY_SD_DECOMMISSION_REPORT.md\","
+    },
+    {
+      "path": "Bot_data_base/tools/legacy_sd_usage_audit.py",
+      "line": 164,
+      "category": "legacy_metadata",
+      "text": "payload = run_legacy_sd_usage_audit("
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 151,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_usage_report_path: Path,"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 165,
+      "category": "legacy_metadata",
+      "text": "legacy_payload = _load_json(legacy_sd_usage_report_path, {})"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 166,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_active = bool(legacy_payload.get(\"legacy_sd_filter_still_active\")) if isinstance(legacy_payload, dict) else True"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 177,
+      "category": "legacy_metadata",
+      "text": "if legacy_sd_active:"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 178,
+      "category": "legacy_metadata",
+      "text": "blockers.append(\"legacy_sd_still_active\")"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 196,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_active\": legacy_sd_active,"
+    },
+    {
+      "path": "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+      "line": 1069,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_usage_report_path=Path(\"TO_DO_LIST/logs/PRD-046.0.8.1/post_apply_legacy_sd_usage_report.json\"),"
+    },
+    {
+      "path": "Bot_data_base/tools/real_provider_enrichment_run.py",
+      "line": 436,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_usage_report_path=Path(\"TO_DO_LIST/logs/PRD-046.0.8.1/post_apply_legacy_sd_usage_report.json\"),"
+    },
+    {
+      "path": "Bot_data_base/tools/reindex_focus_source_chroma_controlled.py",
+      "line": 79,
+      "category": "legacy_metadata",
+      "text": "sd_level=str(raw.get(\"sd_level\") or \"GREEN\"),"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 64,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report: dict[str, Any] | None,"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 119,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_active = bool((legacy_sd_report or {}).get(\"legacy_sd_filter_still_active\"))"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 120,
+      "category": "legacy_metadata",
+      "text": "if legacy_sd_active:"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 121,
+      "category": "legacy_metadata",
+      "text": "blockers.append(\"legacy_sd_filter_still_active\")"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 164,
+      "category": "legacy_metadata",
+      "text": "\"legacy_sd_active\": legacy_sd_active,"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 186,
+      "category": "legacy_metadata",
+      "text": "f\"- legacy_sd_active: `{payload.get('legacy_sd_active')}`\","
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 210,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report_json: Path | None,"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 222,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report = None"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 240,
+      "category": "legacy_metadata",
+      "text": "if legacy_sd_report_json and legacy_sd_report_json.exists():"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 241,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report = _load_json(legacy_sd_report_json)"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 251,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report=legacy_sd_report,"
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 283,
+      "category": "legacy_metadata",
+      "text": "default=\"TO_DO_LIST/logs/PRD-046.0.7-HF1/legacy_sd_usage_report.json\","
+    },
+    {
+      "path": "Bot_data_base/tools/reprocess_readiness_gate.py",
+      "line": 299,
+      "category": "legacy_metadata",
+      "text": "legacy_sd_report_json=Path(args.legacy_sd_report_json) if args.legacy_sd_report_json else None,"
+    },
+    {
+      "path": "Bot_data_base/tools/source_reprocess.py",
+      "line": 492,
+      "category": "legacy_metadata",
+      "text": "sd_level=str(raw.get(\"sd_level\") or \"GREEN\"),"
+    }
+  ],
+  "files_scanned": [
+    "Bot_data_base/.env.example",
+    "Bot_data_base/.pytest_cache/README.md",
+    "Bot_data_base/api/__init__.py",
+    "Bot_data_base/api/main.py",
+    "Bot_data_base/api/retrieval_policy.py",
+    "Bot_data_base/api/routes/__init__.py",
+    "Bot_data_base/api/routes/blocks.py",
+    "Bot_data_base/api/routes/books.py",
+    "Bot_data_base/api/routes/dashboard.py",
+    "Bot_data_base/api/routes/query.py",
+    "Bot_data_base/api/routes/registry.py",
+    "Bot_data_base/api/routes/status.py",
+    "Bot_data_base/api/routes/youtube.py",
+    "Bot_data_base/api/schemas.py",
+    "Bot_data_base/chunkers/__init__.py",
+    "Bot_data_base/chunkers/book_chunker.py",
+    "Bot_data_base/chunkers/semantic_chunker.py",
+    "Bot_data_base/chunkers/structure_parser.py",
+    "Bot_data_base/config.yaml",
+    "Bot_data_base/docs/API_CONTRACTS.md",
+    "Bot_data_base/docs/ARCHITECTURE.md",
+    "Bot_data_base/docs/CHROMA_RECOVERY.md",
+    "Bot_data_base/docs/DATA_CONTRACTS.md",
+    "Bot_data_base/docs/LEGACY_SD.md",
+    "Bot_data_base/docs/PROJECT_STATE.md",
+    "Bot_data_base/docs/README.md",
+    "Bot_data_base/docs/RUNBOOK.md",
+    "Bot_data_base/docs/SOURCE_HYGIENE.md",
+    "Bot_data_base/governance/__init__.py",
+    "Bot_data_base/governance/chunking_quality.py",
+    "Bot_data_base/governance/governance_adapter.py",
+    "Bot_data_base/ingestors/__init__.py",
+    "Bot_data_base/ingestors/book_ingestor.py",
+    "Bot_data_base/ingestors/youtube_ingestor.py",
+    "Bot_data_base/jobs/__init__.py",
+    "Bot_data_base/jobs/job_manager.py",
+    "Bot_data_base/knowledge_governance/__init__.py",
+    "Bot_data_base/knowledge_governance/enrichment_contracts.py",
+    "Bot_data_base/knowledge_governance/enrichment_validators.py",
+    "Bot_data_base/knowledge_governance/prompts/kb_enrichment_v1.md",
+    "Bot_data_base/knowledge_governance/prompts/kb_enrichment_v1_1.md",
+    "Bot_data_base/knowledge_governance/prompts/kb_enrichment_v1_2.md",
+    "Bot_data_base/knowledge_governance/prompts/kb_enrichment_v1_3.md",
+    "Bot_data_base/LAUNCH.md",
+    "Bot_data_base/models/__init__.py",
+    "Bot_data_base/models/universal_block.py",
+    "Bot_data_base/pipeline_runner.py",
+    "Bot_data_base/processors/__init__.py",
+    "Bot_data_base/processors/block_normalizer.py",
+    "Bot_data_base/processors/sd_labeler.py",
+    "Bot_data_base/README.md",
+    "Bot_data_base/review/__init__.py",
+    "Bot_data_base/review/admin_live_smoke.py",
+    "Bot_data_base/review/architect_auto_decision_policy.py",
+    "Bot_data_base/review/architect_review_pass.py",
+    "Bot_data_base/review/blocks_snapshot_alignment.py",
+    "Bot_data_base/review/controlled_review_decision_apply.py",
+    "Bot_data_base/review/dashboard_chroma_reconciliation.py",
+    "Bot_data_base/review/post_apply_quality_gate.py",
+    "Bot_data_base/review/post_reprocess_review_decisions.py",
+    "Bot_data_base/review/README.md",
+    "Bot_data_base/review/review_contracts.py",
+    "Bot_data_base/review/review_decision_validator.py",
+    "Bot_data_base/review/review_queue_builder.py",
+    "Bot_data_base/review/review_sanitizer.py",
+    "Bot_data_base/storage/__init__.py",
+    "Bot_data_base/storage/chroma_manager.py",
+    "Bot_data_base/storage/json_export.py",
+    "Bot_data_base/storage/registry.py",
+    "Bot_data_base/tests/__init__.py",
+    "Bot_data_base/tests/conftest.py",
+    "Bot_data_base/tests/fixtures/sample_book.md",
+    "Bot_data_base/tests/integration/test_api_endpoints.py",
+    "Bot_data_base/tests/integration/test_book_pipeline.py",
+    "Bot_data_base/tests/integration/test_youtube_pipeline.py",
+    "Bot_data_base/tests/test_admin_chroma_runtime_consistency.py",
+    "Bot_data_base/tests/test_admin_consistency_gate.py",
+    "Bot_data_base/tests/test_admin_dashboard_enrichment_state.py",
+    "Bot_data_base/tests/test_admin_dashboard_no_mutation.py",
+    "Bot_data_base/tests/test_admin_dashboard_runtime_contract.py",
+    "Bot_data_base/tests/test_admin_dashboard_summary.py",
+    "Bot_data_base/tests/test_admin_live_smoke_hf3_strict_chroma_gate.py",
+    "Bot_data_base/tests/test_admin_live_smoke_launch_modes.py",
+    "Bot_data_base/tests/test_admin_live_smoke_no_mutation.py",
+    "Bot_data_base/tests/test_admin_live_smoke_quality_gate_logic.py",
+    "Bot_data_base/tests/test_admin_live_smoke_schema_validation.py",
+    "Bot_data_base/tests/test_allowed_use_policy.py",
+    "Bot_data_base/tests/test_api_query_enrichment_metadata.py",
+    "Bot_data_base/tests/test_api_query_internal_only_filter.py",
+    "Bot_data_base/tests/test_api_query_restore_smoke.py",
+    "Bot_data_base/tests/test_apply_enrichment_overlay.py",
+    "Bot_data_base/tests/test_architect_auto_decision_policy.py",
+    "Bot_data_base/tests/test_architect_decisions_overlay.py",
+    "Bot_data_base/tests/test_architect_review_batches.py",
+    "Bot_data_base/tests/test_blocks_snapshot_alignment_audit.py",
+    "Bot_data_base/tests/test_blocks_snapshot_alignment_restore.py",
+    "Bot_data_base/tests/test_book_chunker_structure_aware.py",
+    "Bot_data_base/tests/test_botdb_docs_presence.py",
+    "Bot_data_base/tests/test_candidate_governance_calibration.py",
+    "Bot_data_base/tests/test_candidate_governance_gate_v2.py",
+    "Bot_data_base/tests/test_candidate_governance_gate_v3.py",
+    "Bot_data_base/tests/test_candidate_mixed_intent_audit.py",
+    "Bot_data_base/tests/test_candidate_mixed_intent_resolution.py",
+    "Bot_data_base/tests/test_candidate_practice_taxonomy.py",
+    "Bot_data_base/tests/test_chroma_enrichment_metadata.py",
+    "Bot_data_base/tests/test_chroma_metadata_governance.py",
+    "Bot_data_base/tests/test_chroma_readiness_audit.py",
+    "Bot_data_base/tests/test_chroma_recovery.py",
+    "Bot_data_base/tests/test_chroma_reindex_after_candidate_apply.py",
+    "Bot_data_base/tests/test_chunking_quality_structure_trace.py",
+    "Bot_data_base/tests/test_clean_reprocess_candidate.py",
+    "Bot_data_base/tests/test_clean_reprocess_governance_gate.py",
+    "Bot_data_base/tests/test_clean_reprocess_no_mutation.py",
+    "Bot_data_base/tests/test_clean_reprocess_practice_like.py",
+    "Bot_data_base/tests/test_clean_reprocess_preflight.py",
+    "Bot_data_base/tests/test_controlled_candidate_apply_no_unplanned_mutation.py",
+    "Bot_data_base/tests/test_controlled_candidate_apply_plan.py",
+    "Bot_data_base/tests/test_controlled_candidate_apply_preflight.py",
+    "Bot_data_base/tests/test_controlled_candidate_apply_registry.py",
+    "Bot_data_base/tests/test_controlled_review_decision_apply_cli.py",
+    "Bot_data_base/tests/test_controlled_review_decision_apply_invariants.py",
+    "Bot_data_base/tests/test_controlled_review_decision_apply_plan.py",
+    "Bot_data_base/tests/test_dashboard_chroma_reconciliation.py",
+    "Bot_data_base/tests/test_dashboard_legacy_sd_not_readiness.py",
+    "Bot_data_base/tests/test_generate_architect_auto_decisions.py",
+    "Bot_data_base/tests/test_governance_adapter.py",
+    "Bot_data_base/tests/test_governance_backfill.py",
+    "Bot_data_base/tests/test_hf4_chroma_recovery_plan.py",
+    "Bot_data_base/tests/test_hf4_direct_chroma_diagnostic.py",
+    "Bot_data_base/tests/test_hf4_no_mutation.py",
+    "Bot_data_base/tests/test_hf4_source_hygiene_preflight.py",
+    "Bot_data_base/tests/test_hf4_strict_gate.py",
+    "Bot_data_base/tests/test_json_export_governance.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_cli.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_contracts.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_lens_normalization.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_low_resource_normalization.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_overlay_gate.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_prompt_calibration.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_review_reason_normalization.py",
+    "Bot_data_base/tests/test_kb_llm_enrichment_validation.py",
+    "Bot_data_base/tests/test_kb_quality_audit_metrics.py",
+    "Bot_data_base/tests/test_kb_review_contracts.py",
+    "Bot_data_base/tests/test_kb_review_decisions.py",
+    "Bot_data_base/tests/test_kb_review_queue.py",
+    "Bot_data_base/tests/test_legacy_sd_decommission.py",
+    "Bot_data_base/tests/test_legacy_sd_disabled_by_default.py",
+    "Bot_data_base/tests/test_legacy_sd_explicit_mode.py",
+    "Bot_data_base/tests/test_mixed_intent_calibration.py",
+    "Bot_data_base/tests/test_post_apply_quality_gate_admin_api.py",
+    "Bot_data_base/tests/test_post_apply_quality_gate_apply_routes.py",
+    "Bot_data_base/tests/test_post_apply_quality_gate_data_consistency.py",
+    "Bot_data_base/tests/test_post_apply_quality_gate_no_mutation.py",
+    "Bot_data_base/tests/test_post_apply_quality_gate_writer_policy.py",
+    "Bot_data_base/tests/test_post_reprocess_enrichment_inventory.py",
+    "Bot_data_base/tests/test_post_reprocess_enrichment_no_mutation.py",
+    "Bot_data_base/tests/test_post_reprocess_enrichment_preflight.py",
+    "Bot_data_base/tests/test_post_reprocess_enrichment_validator.py",
+    "Bot_data_base/tests/test_post_reprocess_review_decisions_validator.py",
+    "Bot_data_base/tests/test_post_reprocess_review_prepare.py",
+    "Bot_data_base/tests/test_post_reprocess_review_queue_rebaseline.py",
+    "Bot_data_base/tests/test_practice_classification_precision.py",
+    "Bot_data_base/tests/test_query_endpoint.py",
+    "Bot_data_base/tests/test_query_governance_schema.py",
+    "Bot_data_base/tests/test_query_ignores_legacy_sd_filter.py",
+    "Bot_data_base/tests/test_real_provider_enrichment_no_mutation.py",
+    "Bot_data_base/tests/test_real_provider_enrichment_pilot.py",
+    "Bot_data_base/tests/test_real_provider_enrichment_preflight.py",
+    "Bot_data_base/tests/test_real_provider_enrichment_review_queue.py",
+    "Bot_data_base/tests/test_real_provider_enrichment_validation.py",
+    "Bot_data_base/tests/test_registry_delete_hygiene_policy.py",
+    "Bot_data_base/tests/test_registry_delete_no_production_mutation.py",
+    "Bot_data_base/tests/test_registry_error_render_contract.py",
+    "Bot_data_base/tests/test_registry_policy_row_isolation.py",
+    "Bot_data_base/tests/test_registry_runtime_contract.py",
+    "Bot_data_base/tests/test_reprocess_readiness_gate.py",
+    "Bot_data_base/tests/test_retrieval_eval_dataset.py",
+    "Bot_data_base/tests/test_retrieval_eval_runner.py",
+    "Bot_data_base/tests/test_retrieval_governance_policy.py",
+    "Bot_data_base/tests/test_retrieval_snippet_boundaries.py",
+    "Bot_data_base/tests/test_review_queue_staleness_after_reprocess.py",
+    "Bot_data_base/tests/test_source_hygiene_apply.py",
+    "Bot_data_base/tests/test_source_hygiene_audit.py",
+    "Bot_data_base/tests/test_source_reprocess_governance.py",
+    "Bot_data_base/tests/test_structure_parser.py",
+    "Bot_data_base/tests/test_voyage_reranker.py",
+    "Bot_data_base/tests/unit/test_block_normalizer.py",
+    "Bot_data_base/tests/unit/test_book_chunker.py",
+    "Bot_data_base/tests/unit/test_book_ingestor.py",
+    "Bot_data_base/tests/unit/test_chroma_manager.py",
+    "Bot_data_base/tests/unit/test_json_export.py",
+    "Bot_data_base/tests/unit/test_registry.py",
+    "Bot_data_base/tests/unit/test_sd_labeler.py",
+    "Bot_data_base/tests/unit/test_semantic_chunker.py",
+    "Bot_data_base/tests/unit/test_text_utils.py",
+    "Bot_data_base/tests/unit/test_universal_block.py",
+    "Bot_data_base/tests/unit/test_youtube_ingestor.py",
+    "Bot_data_base/tools/__init__.py",
+    "Bot_data_base/tools/api_query_restore_smoke.py",
+    "Bot_data_base/tools/apply_enrichment_overlay.py",
+    "Bot_data_base/tools/apply_review_decisions_controlled.py",
+    "Bot_data_base/tools/audit_blocks_snapshot_alignment.py",
+    "Bot_data_base/tools/audit_legacy_sd_usage.py",
+    "Bot_data_base/tools/chroma_recovery.py",
+    "Bot_data_base/tools/clean_source_reprocess.py",
+    "Bot_data_base/tools/controlled_candidate_apply.py",
+    "Bot_data_base/tools/diagnose_chroma_runtime_count.py",
+    "Bot_data_base/tools/generate_architect_auto_decisions.py",
+    "Bot_data_base/tools/invariant_check.py",
+    "Bot_data_base/tools/kb_llm_enrichment.py",
+    "Bot_data_base/tools/kb_quality_audit.py",
+    "Bot_data_base/tools/kb_review_decisions.py",
+    "Bot_data_base/tools/kb_review_queue.py",
+    "Bot_data_base/tools/legacy_sd_usage_audit.py",
+    "Bot_data_base/tools/llm_enrichment_post_reprocess.py",
+    "Bot_data_base/tools/plan_review_decision_apply.py",
+    "Bot_data_base/tools/preflight_review_decision_apply.py",
+    "Bot_data_base/tools/prepare_architect_review_batches.py",
+    "Bot_data_base/tools/prepare_human_review_decisions.py",
+    "Bot_data_base/tools/real_provider_enrichment_run.py",
+    "Bot_data_base/tools/reindex_focus_source_chroma_controlled.py",
+    "Bot_data_base/tools/reprocess_readiness_gate.py",
+    "Bot_data_base/tools/restore_blocks_snapshot_alignment.py",
+    "Bot_data_base/tools/run_admin_live_smoke.py",
+    "Bot_data_base/tools/run_admin_live_smoke_hf2.py",
+    "Bot_data_base/tools/run_admin_live_smoke_hf3.py",
+    "Bot_data_base/tools/run_chroma_recovery_hf4.py",
+    "Bot_data_base/tools/run_post_apply_quality_gate.py",
+    "Bot_data_base/tools/run_retrieval_eval.py",
+    "Bot_data_base/tools/source_hygiene_apply.py",
+    "Bot_data_base/tools/source_hygiene_audit.py",
+    "Bot_data_base/tools/source_reprocess.py",
+    "Bot_data_base/tools/validate_architect_decisions_overlay.py",
+    "Bot_data_base/tools/validate_human_review_decisions.py",
+    "Bot_data_base/utils/__init__.py",
+    "Bot_data_base/utils/reranker.py",
+    "Bot_data_base/utils/text_utils.py"
+  ]
+}

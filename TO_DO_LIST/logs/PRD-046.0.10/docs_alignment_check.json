@@ -1,0 +1,15 @@
+﻿{
+    "schema_version":  "docs_alignment_check_v1",
+    "source_prd":  "PRD-046.0.10",
+    "generated_at":  "2026-05-16T19:47:25.7023136Z",
+    "required_docs_count":  9,
+    "docs_present_count":  9,
+    "missing_docs":  [
+
+                     ],
+    "readme_has_port_8003":  true,
+    "readme_has_python_310":  true,
+    "readme_has_focus_source":  true,
+    "readme_has_legacy_sd_status":  true,
+    "passed":  true
+}

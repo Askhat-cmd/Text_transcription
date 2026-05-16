@@ -127,7 +127,9 @@ def _governance_summary(blocks: list[dict[str, Any]]) -> dict[str, Any]:
     governance_rate = governance_present / total
     allowed_rate = allowed_use_present / total
     safety_rate = safety_flags_present / total
-    readiness = "ready" if governance_rate >= 1.0 and allowed_rate >= 1.0 and safety_rate >= 1.0 and not legacy_sd_active else "warning"
+    # Legacy SD metadata may still be present in historical blocks, but it is not
+    # an active readiness authority signal.
+    readiness = "ready" if governance_rate >= 1.0 and allowed_rate >= 1.0 and safety_rate >= 1.0 else "warning"
 
     return {
         "readiness": readiness,

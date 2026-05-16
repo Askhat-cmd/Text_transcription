@@ -1,0 +1,50 @@
+{
+  "schema_version": "controlled_review_decision_apply_preflight_v1",
+  "source_prd": "PRD-046.0.7.1",
+  "generated_at": "2026-05-16T14:28:06.796527+00:00",
+  "preflight_passed": false,
+  "blockers": [
+    "authoritative_run1_enrichment_not_unique"
+  ],
+  "warnings": [],
+  "blocks_total": 5,
+  "queue_items_count": 4,
+  "decisions_count": 4,
+  "overlay_primary_fallback_equal": true,
+  "queue_block_ids_present": 4,
+  "queue_block_ids_missing": 0,
+  "overlay_validation": {
+    "schema_version": "architect_review_decisions_validation_v1",
+    "source_prd": "PRD-046.0.9.3",
+    "validated_at": "2026-05-16T14:28:06.796422+00:00",
+    "queue_items_count": 4,
+    "decisions_count": 4,
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "decision_counts": {
+      "approved": 1,
+      "defer": 1,
+      "needs_edit": 1,
+      "rejected": 1
+    },
+    "forbidden_key_hits": [],
+    "secret_like_hits": [],
+    "duplicate_review_item_ids": [],
+    "unknown_review_item_ids": [],
+    "block_id_mismatches": [],
+    "authority_field_mutation_attempts": [],
+    "decision_owner": "architect_auto_policy",
+    "coverage": {
+      "queue_items_count": 4,
+      "decisions_count": 4,
+      "unique_review_item_ids_count": 4,
+      "remaining_items_count": 0,
+      "coverage_percent": 100.0
+    },
+    "ready_for_architect_review": false,
+    "apply_ready": true,
+    "invalid_decision_values": []
+  },
+  "run1_authoritative_candidates": []
+}

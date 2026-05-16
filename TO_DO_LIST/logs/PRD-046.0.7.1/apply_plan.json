@@ -1,0 +1,47 @@
+{
+  "status": "ok",
+  "plan": {
+    "schema_version": "controlled_review_decision_apply_plan_v1",
+    "source_prd": "PRD-046.0.7.1",
+    "generated_at": "2026-05-16T14:27:36.045579+00:00",
+    "total_blocks": 247,
+    "review_items_count": 87,
+    "safe_non_review_apply_candidates": 160,
+    "review_approved_apply_candidates": 28,
+    "review_needs_edit_apply_candidates": 12,
+    "review_rejected_skip": 1,
+    "review_defer_skip": 46,
+    "max_expected_apply_candidates": 200,
+    "actual_apply_candidates": 200,
+    "authority_mutation_planned": false,
+    "text_mutation_planned": false,
+    "governance_mutation_planned": false,
+    "expected_safe_non_review_candidates": 160,
+    "duplicate_decision_ids": [],
+    "plan_warnings": [],
+    "counters": {
+      "review_approved_apply_candidates": 28,
+      "review_defer_skip": 46,
+      "review_items_total": 87,
+      "review_needs_edit_apply_candidates": 12,
+      "review_rejected_skip": 1,
+      "safe_non_review_apply_candidates": 160,
+      "safe_non_review_total": 160
+    }
+  },
+  "plan_validation": {
+    "schema_version": "controlled_review_decision_apply_plan_validation_v1",
+    "validated_at": "2026-05-16T14:27:36.050762+00:00",
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "forbidden_key_hits": [],
+    "secret_like_hits": [],
+    "authority_field_hits": [],
+    "route_counts": {
+      "review_approved_apply": 28,
+      "review_needs_edit_apply": 12,
+      "safe_non_review_apply": 160
+    }
+  }
+}

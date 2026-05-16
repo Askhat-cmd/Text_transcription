@@ -1,0 +1,19 @@
+{
+  "schema_version": "controlled_review_decision_no_authority_mutation_proof_v1",
+  "source_prd": "PRD-046.0.7.1",
+  "generated_at": "2026-05-16T14:27:36.234646+00:00",
+  "all_blocks_merged_hash_before": "b2c1f4d105d299f6a18cd5f71b0e3b86665b8afe6b1018deb99bc8c59b4236b6",
+  "all_blocks_merged_hash_after": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+  "registry_hash_before": "8c4e38ae9a5e87f7794de60ac75b093d09c8a2eefd1b8ce294b1d48e7eef0d2b",
+  "registry_hash_after": "8c4e38ae9a5e87f7794de60ac75b093d09c8a2eefd1b8ce294b1d48e7eef0d2b",
+  "text_changed_count": 0,
+  "chunk_type_changed_count": 0,
+  "allowed_use_changed_count": 0,
+  "safety_flags_changed_count": 0,
+  "source_id_changed_count": 0,
+  "block_id_changed_count": 0,
+  "governance_invariant_violations": 0,
+  "authority_mutation_detected": false,
+  "production_apply_performed": true,
+  "chroma_reindex_performed": false
+}

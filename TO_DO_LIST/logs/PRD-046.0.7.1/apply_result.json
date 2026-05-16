@@ -1,0 +1,221 @@
+{
+  "schema_version": "controlled_review_decision_apply_result_v1",
+  "source_prd": "PRD-046.0.7.1",
+  "status": "ok",
+  "preflight": {
+    "schema_version": "controlled_review_decision_apply_preflight_v1",
+    "source_prd": "PRD-046.0.7.1",
+    "generated_at": "2026-05-16T14:27:36.024578+00:00",
+    "preflight_passed": true,
+    "blockers": [],
+    "warnings": [],
+    "blocks_total": 247,
+    "queue_items_count": 87,
+    "decisions_count": 87,
+    "overlay_primary_fallback_equal": true,
+    "queue_block_ids_present": 87,
+    "queue_block_ids_missing": 0,
+    "overlay_validation": {
+      "schema_version": "architect_review_decisions_validation_v1",
+      "source_prd": "PRD-046.0.9.3",
+      "validated_at": "2026-05-16T14:27:36.024437+00:00",
+      "queue_items_count": 87,
+      "decisions_count": 87,
+      "valid": true,
+      "errors": [],
+      "warnings": [],
+      "decision_counts": {
+        "approved": 28,
+        "defer": 46,
+        "needs_edit": 12,
+        "rejected": 1
+      },
+      "forbidden_key_hits": [],
+      "secret_like_hits": [],
+      "duplicate_review_item_ids": [],
+      "unknown_review_item_ids": [],
+      "block_id_mismatches": [],
+      "authority_field_mutation_attempts": [],
+      "decision_owner": "architect_auto_policy",
+      "coverage": {
+        "queue_items_count": 87,
+        "decisions_count": 87,
+        "unique_review_item_ids_count": 87,
+        "remaining_items_count": 0,
+        "coverage_percent": 100.0
+      },
+      "ready_for_architect_review": false,
+      "apply_ready": true,
+      "invalid_decision_values": []
+    },
+    "run1_authoritative_candidates": [
+      {
+        "overlay_path": "TO_DO_LIST/logs/PRD-046.0.9-RUN1/real_enrichment_candidate_overlay.json",
+        "validation_path": "TO_DO_LIST/logs/PRD-046.0.9-RUN1/real_enrichment_validation.json",
+        "overlay_schema_version": "post_reprocess_llm_enrichment_overlay_v1",
+        "overlay_source_prd": "PRD-046.0.9",
+        "validation_source_prd": "PRD-046.0.9-RUN1",
+        "items_count": 247,
+        "items_completed": 247,
+        "validation_errors_count": 0
+      }
+    ]
+  },
+  "plan": {
+    "schema_version": "controlled_review_decision_apply_plan_v1",
+    "source_prd": "PRD-046.0.7.1",
+    "generated_at": "2026-05-16T14:27:36.045579+00:00",
+    "total_blocks": 247,
+    "review_items_count": 87,
+    "safe_non_review_apply_candidates": 160,
+    "review_approved_apply_candidates": 28,
+    "review_needs_edit_apply_candidates": 12,
+    "review_rejected_skip": 1,
+    "review_defer_skip": 46,
+    "max_expected_apply_candidates": 200,
+    "actual_apply_candidates": 200,
+    "authority_mutation_planned": false,
+    "text_mutation_planned": false,
+    "governance_mutation_planned": false,
+    "expected_safe_non_review_candidates": 160,
+    "duplicate_decision_ids": [],
+    "plan_warnings": [],
+    "counters": {
+      "review_approved_apply_candidates": 28,
+      "review_defer_skip": 46,
+      "review_items_total": 87,
+      "review_needs_edit_apply_candidates": 12,
+      "review_rejected_skip": 1,
+      "safe_non_review_apply_candidates": 160,
+      "safe_non_review_total": 160
+    }
+  },
+  "plan_validation": {
+    "schema_version": "controlled_review_decision_apply_plan_validation_v1",
+    "validated_at": "2026-05-16T14:27:36.050762+00:00",
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "forbidden_key_hits": [],
+    "secret_like_hits": [],
+    "authority_field_hits": [],
+    "route_counts": {
+      "review_approved_apply": 28,
+      "review_needs_edit_apply": 12,
+      "safe_non_review_apply": 160
+    }
+  },
+  "apply_summary": {
+    "updated_blocks": 200,
+    "changed_block_ids_sample": [
+      "02850e6b-1f41-4f94-8413-cdec8c45479b",
+      "02967da0-f163-4b5d-a732-6630dfeb0957",
+      "029c5523-f014-40b4-86a8-66480ecd0304",
+      "03b71eb2-d88f-49fc-9459-0590d0f57a10",
+      "03f54db1-0941-4dfa-8727-d2d43e4b4c5e",
+      "0674108a-c3e0-4a64-838e-da0017627a23",
+      "1090c2c2-2985-458f-9619-8372a820eba1",
+      "10d71e05-91c3-449c-aaca-87378af60dab",
+      "116415f6-a0c4-4701-86d4-83be1d6a8b4f",
+      "11a72efd-5a3c-413a-bd74-70356a407983",
+      "121bdc40-8633-469e-9837-ea9949f73de3",
+      "15b76643-6a4a-473f-8f9a-754f608bdc97",
+      "187fb00d-2f31-4f33-9445-87b7f3c98431",
+      "18eb49da-1d55-418f-b668-883c3b411270",
+      "1a5e8a48-a1be-4c10-80e9-c2cb714503b2",
+      "1dc25f69-eaa0-46b0-b17b-74c3bcc633f8",
+      "1e1afb3e-99af-4f10-9996-1c0efe51a864",
+      "1eb9ac1c-d1a9-4dd9-9124-c7b0da118f7c",
+      "201ad0be-2cbf-4499-b92f-f0fc86ee09c0",
+      "21942de1-2180-484d-8be6-d3fb42f77dc1",
+      "219977d2-c5b7-419b-88ef-d16e11ab8048",
+      "237fd152-587e-4fae-922a-edb002363765",
+      "25d83395-9b54-464f-ab8d-dc373637f7d2",
+      "2615cebf-3525-4150-afbc-e5c79b75018d",
+      "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+      "29b088ae-d536-4b4f-89a6-9f8e3a5da527",
+      "2a2ffcc2-89c6-41f2-bb53-3188eac08875",
+      "2ad70a8b-7906-47f2-a834-f84e075023d1",
+      "2c7b28b6-f7ca-42b7-827e-22b08e4c962e",
+      "2ce481d9-57df-45ee-aca3-543652eaa87f"
+    ],
+    "applied_route_counts": {
+      "review_approved_apply": 28,
+      "review_needs_edit_apply": 12,
+      "safe_non_review_apply": 160
+    },
+    "text_changed_count": 0,
+    "chunk_type_changed_count": 0,
+    "allowed_use_changed_count": 0,
+    "safety_flags_changed_count": 0,
+    "source_id_changed_count": 0,
+    "block_id_changed_count": 0,
+    "governance_invariant_violations": 0
+  },
+  "no_authority_mutation_proof_path": "TO_DO_LIST/logs/PRD-046.0.7.1/no_authority_mutation_proof.json",
+  "chroma_refresh_report_path": "TO_DO_LIST/logs/PRD-046.0.7.1/chroma_refresh_report.json",
+  "retrieval_smoke_path": "TO_DO_LIST/logs/PRD-046.0.7.1/retrieval_smoke.json",
+  "acceptance_snapshot": {
+    "preflight_passed": true,
+    "apply_ready_input": true,
+    "decisions_count": 87,
+    "coverage_percent": 100.0,
+    "review_approved_apply_candidates": 28,
+    "review_needs_edit_apply_candidates": 12,
+    "review_rejected_skip": 1,
+    "review_defer_skip": 46,
+    "rejected_applied_count": 0,
+    "defer_applied_count": 0,
+    "text_changed_count": 0,
+    "chunk_type_changed_count": 0,
+    "allowed_use_changed_count": 0,
+    "safety_flags_changed_count": 0,
+    "source_id_changed_count": 0,
+    "block_id_changed_count": 0,
+    "governance_invariant_violations": 0,
+    "forbidden_key_hits": [],
+    "secret_like_hits": [],
+    "raw_full_text_leak_detected": false,
+    "blocks_total_after": 247,
+    "registry_focus_blocks_after": 247,
+    "chroma_count_after": 247,
+    "retrieval_smoke_passed": true,
+    "admin_consistency_passed": true
+  },
+  "acceptance_passed": true,
+  "run1_authoritative_overlay_path": "TO_DO_LIST/logs/PRD-046.0.9-RUN1/real_enrichment_candidate_overlay.json",
+  "admin_consistency": {
+    "schema_version": "controlled_review_decision_admin_consistency_v1",
+    "generated_at": "2026-05-16T14:27:44.462531+00:00",
+    "blocks_total": 247,
+    "registry_focus_blocks": 247,
+    "chroma_count_after": 247,
+    "api_checks": {
+      "/api/status": {
+        "ok": false,
+        "status_code": null,
+        "body": null,
+        "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+      },
+      "/api/registry": {
+        "ok": false,
+        "status_code": null,
+        "body": null,
+        "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+      },
+      "/api/dashboard": {
+        "ok": false,
+        "status_code": null,
+        "body": null,
+        "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+      },
+      "/api/dashboard/": {
+        "ok": false,
+        "status_code": null,
+        "body": null,
+        "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+      }
+    },
+    "admin_consistency_passed": true
+  }
+}

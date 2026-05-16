@@ -1,0 +1,77 @@
+{
+  "schema_version": "controlled_review_decision_retrieval_smoke_v1",
+  "source_prd": "PRD-046.0.7.1",
+  "generated_at": "2026-05-16T14:27:36.264073+00:00",
+  "source_ids": [
+    "123__кузница_духа"
+  ],
+  "query_results": {
+    "страх": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "d527d369-beb2-4113-b370-cb2738e76b55",
+        "36350a15-7144-4bc9-b79f-fe227d2b39ee",
+        "c781ff12-ea81-4d19-9bb1-e36e63574f1e",
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+        "219977d2-c5b7-419b-88ef-d16e11ab8048",
+        "33747757-5b99-4cb6-a4c4-99154d889205",
+        "8e8eae66-7d04-4b55-b0ee-0b5c29c6d750",
+        "99c31e75-b401-40df-96e5-c82c5cb11569",
+        "56c62ae3-7bce-4525-b460-a64f86441657",
+        "d9f6dfb9-e6fe-4417-8df3-9c8991661af4"
+      ]
+    },
+    "тень": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e",
+        "85521862-35cb-43cc-b228-38853ba2e9ee",
+        "56c62ae3-7bce-4525-b460-a64f86441657",
+        "70fd2535-78e4-4f64-82d5-43381fc4774d",
+        "b05b4278-62cd-44e1-936e-24346e45b6ac",
+        "f5716360-1635-4026-8568-3404b4569d2a",
+        "5bd68e84-d34a-487b-ab73-7cd1ac889e7a",
+        "91fb2fc9-362b-4972-bc36-39a93983332c",
+        "295a3a28-389d-4cc5-9c15-e8bf4010eb3c",
+        "ea352b73-0522-469b-bd7b-551e9bd2341b"
+      ]
+    },
+    "границ": {
+      "hits_count": 7,
+      "block_ids_sample": [
+        "39f6eafa-7403-4450-80b8-9b94097035b2",
+        "5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "02850e6b-1f41-4f94-8413-cdec8c45479b",
+        "cb98214b-1a7d-45ab-87ec-4a801f1b391c",
+        "789d6641-76c2-49ca-ae5d-fb9fcbd0ad08",
+        "648f6960-e5cf-4558-a111-fcd668b2096a",
+        "de3a88e9-0c75-4c05-9d54-761c959acd6c"
+      ]
+    },
+    "практик": {
+      "hits_count": 20,
+      "block_ids_sample": [
+        "7f156d38-ec33-48a2-9646-83971eac3421",
+        "7292f9ff-3e15-4258-a8dc-e4860f1cc103",
+        "15b76643-6a4a-473f-8f9a-754f608bdc97",
+        "c781ff12-ea81-4d19-9bb1-e36e63574f1e",
+        "e913b172-4295-4288-ac66-aaddd65be3db",
+        "95c58778-e710-4ac7-95ae-9530bf55f3b1",
+        "49f52f32-1157-4450-b155-e268e89b2248",
+        "f4535025-fce3-4d6a-b955-22c968f758c9",
+        "121bdc40-8633-469e-9837-ea9949f73de3",
+        "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b"
+      ]
+    },
+    "quote": {
+      "hits_count": 0,
+      "block_ids_sample": []
+    }
+  },
+  "quote_violation_ids": [],
+  "practice_guardrail_missing_ids": [],
+  "internal_only_unsafe_exposure_count": 0,
+  "forbidden_key_hits": [],
+  "secret_like_hits": [],
+  "retrieval_smoke_passed": true
+}

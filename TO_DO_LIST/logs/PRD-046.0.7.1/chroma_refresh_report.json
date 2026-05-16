@@ -1,0 +1,10 @@
+{
+  "schema_version": "controlled_review_decision_chroma_refresh_report_v1",
+  "source_prd": "PRD-046.0.7.1",
+  "generated_at": "2026-05-16T14:27:36.238625+00:00",
+  "reindex_performed": false,
+  "chroma_count_before": null,
+  "chroma_count_after": 247,
+  "count_unchanged": false,
+  "rationale": "No Chroma reindex performed: apply changed advisory metadata only, without text/id/governance changes."
+}

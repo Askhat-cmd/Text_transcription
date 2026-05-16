@@ -10,7 +10,7 @@ from review.post_apply_quality_gate import build_no_mutation_proof, sha256_file
 def _online_contract_fetch(url: str) -> dict:
     if url.endswith("/api/status"):
         return {"ok": True, "status_code": 200, "body": {"ok": True}, "error": None}
-    if url.endswith("/api/registry"):
+    if url.endswith("/api/registry") or url.endswith("/api/registry/"):
         return {
             "ok": True,
             "status_code": 200,

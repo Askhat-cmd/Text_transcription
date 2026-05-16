@@ -30,7 +30,7 @@ def _online_fetch(_: str) -> dict:
 def _online_contract_fetch(url: str) -> dict:
     if url.endswith("/api/status"):
         return {"ok": True, "status_code": 200, "body": {"ok": True}, "error": None}
-    if url.endswith("/api/registry"):
+    if url.endswith("/api/registry") or url.endswith("/api/registry/"):
         return {
             "ok": True,
             "status_code": 200,

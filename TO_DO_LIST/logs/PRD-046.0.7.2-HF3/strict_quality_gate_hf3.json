@@ -1,0 +1,19 @@
+{
+  "schema_version": "strict_quality_gate_hf3_v1",
+  "source_prd": "PRD-046.0.7.2-HF3",
+  "generated_at": "2026-05-16T17:59:29.153506+00:00",
+  "data_consistency_passed": true,
+  "apply_route_consistency_passed": true,
+  "retrieval_quality_passed": true,
+  "writer_kb_policy_passed": true,
+  "admin_consistency_passed": false,
+  "admin_runtime_status": "blocked_chroma_count_mismatch",
+  "quality_gate_passed": false,
+  "diagnostic_center_ready": false,
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "provider_called": false,
+  "chroma_reindex_performed": false,
+  "final_status": "done_with_chroma_count_blocker",
+  "strict_chroma_count_passed": false
+}

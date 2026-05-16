@@ -75,3 +75,19 @@ def test_admin_schema_blocker_status_mapping() -> None:
     assert snapshot["quality_gate_passed"] is False
     assert snapshot["diagnostic_center_ready"] is False
     assert snapshot["final_status"] == "done_with_admin_schema_blocker"
+
+
+def test_chroma_count_blocker_status_mapping() -> None:
+    payloads = _base_payloads()
+    snapshot = build_quality_gate_snapshot(
+        source_prd="PRD-046.0.7.2-HF3",
+        data_consistency=payloads["data_consistency"],
+        apply_route_consistency=payloads["apply_route"],
+        retrieval_quality=payloads["retrieval"],
+        writer_policy=payloads["writer"],
+        admin_runtime={"admin_consistency_passed": False, "admin_runtime_status": "blocked_chroma_count_mismatch"},
+        no_mutation_proof=payloads["no_mutation"],
+    )
+    assert snapshot["quality_gate_passed"] is False
+    assert snapshot["diagnostic_center_ready"] is False
+    assert snapshot["final_status"] == "done_with_chroma_count_blocker"

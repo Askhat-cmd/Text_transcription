@@ -272,22 +272,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     smoke = live["smoke"]
 
     chroma_proof = _load_local_chroma_count_proof(int(args.expected_blocks))
-    issues = list(smoke.get("issues") or [])
-    if (
-        "dashboard_chroma_count_mismatch" in issues
-        and chroma_proof.get("available")
-        and int(chroma_proof.get("count") or -1) == int(args.expected_blocks)
-        and int(smoke.get("focus_blocks_count") or 0) == int(args.expected_blocks)
-        and len(list(smoke.get("unreachable_endpoints") or [])) == 0
-    ):
-        issues = [item for item in issues if item != "dashboard_chroma_count_mismatch"]
+    if chroma_proof.get("available"):
         warnings = list(smoke.get("warnings") or [])
-        warnings.append("dashboard_chroma_count_mismatch_accepted_with_local_proof")
-        warnings.append(f"local_chroma_count_proof:{chroma_proof.get('count')}@{chroma_proof.get('path')}")
+        warnings.append(f"local_chroma_count_proof_observed:{chroma_proof.get('count')}@{chroma_proof.get('path')}")
+        warnings.append("historical_proof_is_diagnostic_only_no_override")
         smoke["warnings"] = sorted(set(warnings))
-        smoke["issues"] = sorted(set(issues))
-        smoke["admin_consistency_passed"] = True
-        smoke["admin_runtime_status"] = "passed"
         smoke["local_chroma_count_proof"] = chroma_proof
 
     schema_validation = _build_schema_validation(smoke)
@@ -395,6 +384,7 @@ def main() -> int:
         "done_with_admin_api_blocker",
         "done_with_admin_launch_blocker",
         "done_with_admin_schema_blocker",
+        "done_with_chroma_count_blocker",
     }:
         return 0
     return 2

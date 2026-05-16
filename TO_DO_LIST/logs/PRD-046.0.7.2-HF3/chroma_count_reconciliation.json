@@ -1,0 +1,28 @@
+{
+  "schema_version": "dashboard_chroma_count_reconciliation_v1",
+  "source_prd": "PRD-046.0.7.2-HF3",
+  "generated_at": "2026-05-16T17:59:28.518397+00:00",
+  "admin_base_url": "http://127.0.0.1:8003",
+  "expected_source_id": "123__кузница_духа",
+  "expected_blocks": 247,
+  "registry_focus_blocks": 247,
+  "dashboard_blocks_count": 247,
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 229,
+  "dashboard_indexed_source_ids": [
+    "123__кузница_духа"
+  ],
+  "direct_chroma_count": null,
+  "historical_chroma_count": 247,
+  "historical_proof_path": "TO_DO_LIST\\logs\\PRD-046.0.9-RUN1-HF3\\chroma_admin_runtime_diagnostic.json",
+  "reconciliation_status": "blocked_live_dashboard_chroma_mismatch",
+  "strict_gate_passed": false,
+  "issues": [
+    "dashboard_chroma_count_mismatch"
+  ],
+  "warnings": [
+    "chromadb_not_available",
+    "historical_chroma_count_differs_from_live",
+    "historical_proof_cannot_override_live_dashboard_mismatch"
+  ]
+}

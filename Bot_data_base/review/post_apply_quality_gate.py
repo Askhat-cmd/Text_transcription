@@ -652,6 +652,8 @@ def build_quality_gate_snapshot(
         final_status = "done_with_admin_launch_blocker"
     elif admin_runtime_status == "failed_schema_validation":
         final_status = "done_with_admin_schema_blocker"
+    elif admin_runtime_status == "blocked_chroma_count_mismatch":
+        final_status = "done_with_chroma_count_blocker"
     elif admin_runtime_status == "skipped_offline_explicit":
         final_status = "done_with_admin_api_blocker"
 

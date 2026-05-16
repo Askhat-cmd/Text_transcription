@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.0.7.2-HF2-admin-gate-passed`: live admin smoke выполнен против уже запущенного backend (`external_existing`), обязательные endpoints доступны, schema/checks пройдены, итог `admin_runtime_status=passed`, `quality_gate_passed=true`, `diagnostic_center_ready=true`.
+Проект находится на стадии `post-PRD-046.0.7.2-HF3-with-chroma-count-blocker`: live admin smoke на `http://127.0.0.1:8003` подтвердил доступность обязательных endpoints, но strict gate зафиксировал `dashboard.chroma.count=229` при ожидаемом `247`; итог `admin_runtime_status=blocked_chroma_count_mismatch`, `quality_gate_passed=false`, `diagnostic_center_ready=false`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -33,6 +33,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 В `PRD-046.0.7.2` добавлены `post_apply_quality_gate.py` и `run_post_apply_quality_gate.py` с артефактами quality gate; подтверждены `data_consistency_passed=true`, `apply_route_consistency_passed=true`, `retrieval_quality_passed=true`, `writer_kb_policy_passed=true` и no-mutation proof (`all_blocks_merged_mutated=false`, `registry_mutated=false`) без reindex/provider вызовов.
 В `PRD-046.0.7.2-HF1` добавлены `admin_live_smoke.py` и `run_admin_live_smoke.py` с launch manifest/readiness polling/schema checks/no-mutation proof; зафиксирован честный blocker `done_with_admin_launch_blocker` после неуспешного startup/readiness (`/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/` недоступны), при этом production hashes не изменились.
 В `PRD-046.0.7.2-HF2` добавлен HF2 runner `run_admin_live_smoke_hf2.py`, закрыт runtime blocker на внешнем сервере (`http://127.0.0.1:8003`), сформированы live/scheme/quality/no-mutation артефакты и отчёты; quality gate переведён в `passed` без production apply/reindex/provider вызовов.
+В `PRD-046.0.7.2-HF3` внедрён strict chroma reconciliation gate (`run_admin_live_smoke_hf3.py` + `dashboard_chroma_reconciliation.py`), добавлены `/api/registry/` compatibility checks и запрет historical-proof override; live mismatch `dashboard.chroma.count=229` честно зафиксирован как blocker `done_with_chroma_count_blocker` без production мутаций.
 
 ## Current Admin Source Hygiene State
 Delete policy в реестре стала явной и согласованной между backend/frontend:
@@ -57,7 +58,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Нет активных blocker-hotfix модулей по Admin runtime; этап HF2 закрыт.
+- PRD-046.0.7.2-HF4: Chroma Count Recovery / Controlled Reindex (следующий шаг после HF3 blocker).
 
 ## Not Implemented Yet
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
@@ -69,10 +70,12 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Overlay apply без отдельного controlled PRD нарушит release discipline.
 - Старый review queue (`PRD-046.0.7`) устарел после смены block boundaries и не может применяться напрямую.
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
+- Live dashboard Chroma count mismatch (`229` vs expected `247`) означает, что retrieval/admin runtime readiness не может считаться полностью подтверждённой.
+- Historical Chroma proof больше не может override live runtime mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
-2. PRD-046.0.10 - Final Runtime Readiness Summary v1 (опционально перед PRD-046.1).
+1. PRD-046.0.7.2-HF4 - Chroma Count Recovery / Controlled Reindex v1.
+2. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD (только после закрытия HF4 blocker).
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -89,4 +92,4 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-16
-- Source cycle: PRD-046.0.7.2-HF2
+- Source cycle: PRD-046.0.7.2-HF3

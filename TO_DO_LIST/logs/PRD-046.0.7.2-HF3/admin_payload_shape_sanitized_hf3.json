@@ -1,0 +1,543 @@
+{
+  "schema_version": "admin_payload_shape_sanitized_hf3_v1",
+  "source_prd": "PRD-046.0.7.2-HF3",
+  "generated_at": "2026-05-16T17:59:28.518610+00:00",
+  "payload_shapes": {
+    "/api/status": {
+      "status_code": 200,
+      "ok": true,
+      "body_shape": {
+        "type": "dict",
+        "keys_count": 1,
+        "keys": {
+          "jobs": {
+            "type": "list",
+            "length": 0,
+            "item_shape": null
+          }
+        }
+      },
+      "error_type": null
+    },
+    "/api/registry": {
+      "status_code": 200,
+      "ok": true,
+      "body_shape": {
+        "type": "dict",
+        "keys_count": 3,
+        "keys": {
+          "sources": {
+            "type": "list",
+            "length": 3,
+            "item_shape": {
+              "type": "dict",
+              "keys_count": 20,
+              "keys": {
+                "added_at": {
+                  "type": "str"
+                },
+                "author": {
+                  "type": "str"
+                },
+                "author_id": {
+                  "type": "str"
+                },
+                "blocks_count": {
+                  "type": "int"
+                },
+                "delete_allowed": {
+                  "type": "bool"
+                },
+                "delete_policy": {
+                  "type": "dict"
+                },
+                "error_message": {
+                  "type": "NoneType"
+                },
+                "file_paths": {
+                  "type": "dict"
+                },
+                "hygiene_reason": {
+                  "type": "list"
+                },
+                "is_focus_source": {
+                  "type": "bool"
+                },
+                "is_test_like": {
+                  "type": "bool"
+                },
+                "language": {
+                  "type": "str"
+                },
+                "pipeline_version": {
+                  "type": "str"
+                },
+                "processed_at": {
+                  "type": "str"
+                },
+                "recommended_hygiene_action": {
+                  "type": "str"
+                },
+                "sd_distribution": {
+                  "type": "dict"
+                },
+                "source_id": {
+                  "type": "str"
+                },
+                "source_type": {
+                  "type": "str"
+                },
+                "status": {
+                  "type": "str"
+                },
+                "title": {
+                  "type": "str"
+                }
+              }
+            }
+          },
+          "total": {
+            "type": "int"
+          },
+          "warnings": {
+            "type": "list",
+            "length": 0,
+            "item_shape": null
+          }
+        }
+      },
+      "error_type": null
+    },
+    "/api/registry/": {
+      "status_code": 200,
+      "ok": true,
+      "body_shape": {
+        "type": "dict",
+        "keys_count": 3,
+        "keys": {
+          "sources": {
+            "type": "list",
+            "length": 3,
+            "item_shape": {
+              "type": "dict",
+              "keys_count": 20,
+              "keys": {
+                "added_at": {
+                  "type": "str"
+                },
+                "author": {
+                  "type": "str"
+                },
+                "author_id": {
+                  "type": "str"
+                },
+                "blocks_count": {
+                  "type": "int"
+                },
+                "delete_allowed": {
+                  "type": "bool"
+                },
+                "delete_policy": {
+                  "type": "dict"
+                },
+                "error_message": {
+                  "type": "NoneType"
+                },
+                "file_paths": {
+                  "type": "dict"
+                },
+                "hygiene_reason": {
+                  "type": "list"
+                },
+                "is_focus_source": {
+                  "type": "bool"
+                },
+                "is_test_like": {
+                  "type": "bool"
+                },
+                "language": {
+                  "type": "str"
+                },
+                "pipeline_version": {
+                  "type": "str"
+                },
+                "processed_at": {
+                  "type": "str"
+                },
+                "recommended_hygiene_action": {
+                  "type": "str"
+                },
+                "sd_distribution": {
+                  "type": "dict"
+                },
+                "source_id": {
+                  "type": "str"
+                },
+                "source_type": {
+                  "type": "str"
+                },
+                "status": {
+                  "type": "str"
+                },
+                "title": {
+                  "type": "str"
+                }
+              }
+            }
+          },
+          "total": {
+            "type": "int"
+          },
+          "warnings": {
+            "type": "list",
+            "length": 0,
+            "item_shape": null
+          }
+        }
+      },
+      "error_type": null
+    },
+    "/api/dashboard": {
+      "status_code": 200,
+      "ok": true,
+      "body_shape": {
+        "type": "dict",
+        "keys_count": 10,
+        "keys": {
+          "blocks": {
+            "type": "dict",
+            "keys_count": 3,
+            "keys": {
+              "active_source_blocks": {
+                "type": "int"
+              },
+              "production_total": {
+                "type": "int"
+              },
+              "registry_total": {
+                "type": "int"
+              }
+            }
+          },
+          "chroma": {
+            "type": "dict",
+            "keys_count": 3,
+            "keys": {
+              "count": {
+                "type": "int"
+              },
+              "indexed_source_ids": {
+                "type": "list",
+                "length": 1,
+                "item_shape": {
+                  "type": "str"
+                }
+              },
+              "status": {
+                "type": "str",
+                "length": 2
+              }
+            }
+          },
+          "enrichment": {
+            "type": "dict",
+            "keys_count": 9,
+            "keys": {
+              "items_completed": {
+                "type": "int"
+              },
+              "p0": {
+                "type": "int"
+              },
+              "p1": {
+                "type": "int"
+              },
+              "p2": {
+                "type": "int"
+              },
+              "production_apply_performed": {
+                "type": "bool"
+              },
+              "provider_status": {
+                "type": "str",
+                "length": 6
+              },
+              "review_queue_items_count": {
+                "type": "int"
+              },
+              "validation_errors_count": {
+                "type": "int"
+              },
+              "validation_warnings_count": {
+                "type": "int"
+              }
+            }
+          },
+          "generated_at": {
+            "type": "str",
+            "length": 32
+          },
+          "governance": {
+            "type": "dict",
+            "keys_count": 5,
+            "keys": {
+              "allowed_use_present_rate": {
+                "type": "float"
+              },
+              "governance_present_rate": {
+                "type": "float"
+              },
+              "legacy_sd_active": {
+                "type": "bool"
+              },
+              "readiness": {
+                "type": "str",
+                "length": 5
+              },
+              "safety_flags_present_rate": {
+                "type": "float"
+              }
+            }
+          },
+          "recent_sources": {
+            "type": "list",
+            "length": 3,
+            "item_shape": {
+              "type": "dict",
+              "keys_count": 6,
+              "keys": {
+                "blocks": {
+                  "type": "int"
+                },
+                "hygiene_action": {
+                  "type": "str"
+                },
+                "protected": {
+                  "type": "bool"
+                },
+                "source_id": {
+                  "type": "str"
+                },
+                "status": {
+                  "type": "str"
+                },
+                "title": {
+                  "type": "str"
+                }
+              }
+            }
+          },
+          "schema_version": {
+            "type": "str",
+            "length": 26
+          },
+          "sources": {
+            "type": "dict",
+            "keys_count": 6,
+            "keys": {
+              "active": {
+                "type": "int"
+              },
+              "archived": {
+                "type": "int"
+              },
+              "failed": {
+                "type": "int"
+              },
+              "protected": {
+                "type": "int"
+              },
+              "total": {
+                "type": "int"
+              },
+              "zero_block": {
+                "type": "int"
+              }
+            }
+          },
+          "status": {
+            "type": "str",
+            "length": 2
+          },
+          "warnings": {
+            "type": "list",
+            "length": 0,
+            "item_shape": null
+          }
+        }
+      },
+      "error_type": null
+    },
+    "/api/dashboard/": {
+      "status_code": 200,
+      "ok": true,
+      "body_shape": {
+        "type": "dict",
+        "keys_count": 10,
+        "keys": {
+          "blocks": {
+            "type": "dict",
+            "keys_count": 3,
+            "keys": {
+              "active_source_blocks": {
+                "type": "int"
+              },
+              "production_total": {
+                "type": "int"
+              },
+              "registry_total": {
+                "type": "int"
+              }
+            }
+          },
+          "chroma": {
+            "type": "dict",
+            "keys_count": 3,
+            "keys": {
+              "count": {
+                "type": "int"
+              },
+              "indexed_source_ids": {
+                "type": "list",
+                "length": 1,
+                "item_shape": {
+                  "type": "str"
+                }
+              },
+              "status": {
+                "type": "str",
+                "length": 2
+              }
+            }
+          },
+          "enrichment": {
+            "type": "dict",
+            "keys_count": 9,
+            "keys": {
+              "items_completed": {
+                "type": "int"
+              },
+              "p0": {
+                "type": "int"
+              },
+              "p1": {
+                "type": "int"
+              },
+              "p2": {
+                "type": "int"
+              },
+              "production_apply_performed": {
+                "type": "bool"
+              },
+              "provider_status": {
+                "type": "str",
+                "length": 6
+              },
+              "review_queue_items_count": {
+                "type": "int"
+              },
+              "validation_errors_count": {
+                "type": "int"
+              },
+              "validation_warnings_count": {
+                "type": "int"
+              }
+            }
+          },
+          "generated_at": {
+            "type": "str",
+            "length": 32
+          },
+          "governance": {
+            "type": "dict",
+            "keys_count": 5,
+            "keys": {
+              "allowed_use_present_rate": {
+                "type": "float"
+              },
+              "governance_present_rate": {
+                "type": "float"
+              },
+              "legacy_sd_active": {
+                "type": "bool"
+              },
+              "readiness": {
+                "type": "str",
+                "length": 5
+              },
+              "safety_flags_present_rate": {
+                "type": "float"
+              }
+            }
+          },
+          "recent_sources": {
+            "type": "list",
+            "length": 3,
+            "item_shape": {
+              "type": "dict",
+              "keys_count": 6,
+              "keys": {
+                "blocks": {
+                  "type": "int"
+                },
+                "hygiene_action": {
+                  "type": "str"
+                },
+                "protected": {
+                  "type": "bool"
+                },
+                "source_id": {
+                  "type": "str"
+                },
+                "status": {
+                  "type": "str"
+                },
+                "title": {
+                  "type": "str"
+                }
+              }
+            }
+          },
+          "schema_version": {
+            "type": "str",
+            "length": 26
+          },
+          "sources": {
+            "type": "dict",
+            "keys_count": 6,
+            "keys": {
+              "active": {
+                "type": "int"
+              },
+              "archived": {
+                "type": "int"
+              },
+              "failed": {
+                "type": "int"
+              },
+              "protected": {
+                "type": "int"
+              },
+              "total": {
+                "type": "int"
+              },
+              "zero_block": {
+                "type": "int"
+              }
+            }
+          },
+          "status": {
+            "type": "str",
+            "length": 2
+          },
+          "warnings": {
+            "type": "list",
+            "length": 0,
+            "item_shape": null
+          }
+        }
+      },
+      "error_type": null
+    }
+  }
+}

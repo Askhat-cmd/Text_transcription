@@ -278,6 +278,7 @@ def main() -> int:
         "done_with_admin_api_blocker",
         "done_with_admin_launch_blocker",
         "done_with_admin_schema_blocker",
+        "done_with_chroma_count_blocker",
     }:
         return 0
     return 2

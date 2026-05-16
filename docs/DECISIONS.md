@@ -157,7 +157,13 @@ Decision: HF1 live smoke использует dual strategy: `external_existing`
 Consequences: gate становится воспроизводимым и трассируемым (manifest + sanitized logs + explicit blocker reason) без мутации production данных.
 
 ## ADR-027 - Admin gate may accept dashboard Chroma mismatch only with explicit local proof
-Status: accepted
+Status: superseded_by_adr_028
 Context: в HF2 live runtime dashboard мог возвращать `chroma.count`, отличающийся от ожидаемого production count, хотя отдельная локальная Chroma diagnostics-проверка подтверждала корректный `247` для focus source.
 Decision: quality gate не блокируется только при наличии явного локального proof-артефакта с ожидаемым count; mismatch без proof остаётся schema blocker. Принятие mismatch всегда фиксируется предупреждением в artifacts/reports.
 Consequences: сохраняется строгий gate по умолчанию, но исключается ложный blocker при совместимом runtime contract drift и подтвержденной локальной диагностике.
+
+## ADR-028 - Historical Chroma proof cannot override live dashboard mismatch in strict gate
+Status: accepted
+Context: HF3 показал, что `dashboard.chroma.count=229` при `blocks=247` может быть замаскирован historical proof (`247`) и дать ложный green readiness signal.
+Decision: для post-apply readiness gate действует strict live contract: historical/local proof используется только как диагностическое evidence и никогда не может перевести `dashboard_chroma_count_mismatch` в `passed`. При live mismatch статус обязан быть `blocked_chroma_count_mismatch` с итогом `done_with_chroma_count_blocker`.
+Consequences: readiness к Diagnostic Center остаётся честно заблокированной до reconciliation/recovery шага; устраняется риск ложноположительного gate-pass из-за stale артефактов.

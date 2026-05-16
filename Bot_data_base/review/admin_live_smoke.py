@@ -16,7 +16,7 @@ from urllib.request import Request, urlopen
 from .review_sanitizer import contains_secret_like_value
 
 
-ENDPOINTS = ["/api/status", "/api/registry", "/api/dashboard", "/api/dashboard/"]
+ENDPOINTS = ["/api/status", "/api/registry", "/api/registry/", "/api/dashboard", "/api/dashboard/"]
 DEFAULT_SOURCE_ID = "123__кузница_духа"
 DEFAULT_BLOCKS_TOTAL = 247
 
@@ -186,11 +186,23 @@ def evaluate_admin_contract(
             "chroma_count": None,
         }
 
-    non_200 = [
-        endpoint
-        for endpoint, response in api_checks.items()
-        if not bool(response.get("ok")) or int(response.get("status_code") or 0) != 200
-    ]
+    def _ok_200(response: Any) -> bool:
+        return isinstance(response, dict) and bool(response.get("ok")) and int(response.get("status_code") or 0) == 200
+
+    registry_main = api_checks.get("/api/registry")
+    registry_slash = api_checks.get("/api/registry/")
+    registry_main_ok = _ok_200(registry_main)
+    registry_slash_ok = _ok_200(registry_slash)
+
+    non_200: list[str] = []
+    for endpoint, response in api_checks.items():
+        if endpoint in {"/api/registry", "/api/registry/"}:
+            continue
+        if not _ok_200(response):
+            non_200.append(endpoint)
+    if not registry_main_ok and not registry_slash_ok:
+        non_200.append("/api/registry")
+        non_200.append("/api/registry/")
     if non_200:
         return {
             "admin_runtime_status": "blocked_admin_api_unavailable",
@@ -206,7 +218,7 @@ def evaluate_admin_contract(
         }
 
     status_body = (api_checks.get("/api/status") or {}).get("body")
-    registry_body = (api_checks.get("/api/registry") or {}).get("body")
+    registry_body = (registry_main if registry_main_ok else registry_slash or {}).get("body")
     dashboard_body = (api_checks.get("/api/dashboard") or {}).get("body")
     dashboard_slash_body = (api_checks.get("/api/dashboard/") or {}).get("body")
 
@@ -214,6 +226,10 @@ def evaluate_admin_contract(
         issues.append("status_payload_invalid")
     if not isinstance(registry_body, (dict, list)):
         issues.append("registry_payload_invalid")
+    if registry_main_ok and not registry_slash_ok:
+        warnings.append("registry_slash_endpoint_unavailable_using_non_slash")
+    if registry_slash_ok and not registry_main_ok:
+        warnings.append("registry_non_slash_endpoint_unavailable_using_slash")
     if not isinstance(dashboard_body, dict) or not dashboard_body:
         issues.append("dashboard_payload_invalid")
     if not isinstance(dashboard_slash_body, dict) or not dashboard_slash_body:
@@ -236,8 +252,11 @@ def evaluate_admin_contract(
         issues.append("dashboard_chroma_count_mismatch")
 
     admin_consistency_passed = len(issues) == 0
+    runtime_status = "passed" if admin_consistency_passed else "failed_schema_validation"
+    if "dashboard_chroma_count_mismatch" in issues:
+        runtime_status = "blocked_chroma_count_mismatch"
     return {
-        "admin_runtime_status": "passed" if admin_consistency_passed else "failed_schema_validation",
+        "admin_runtime_status": runtime_status,
         "admin_consistency_passed": admin_consistency_passed,
         "issues": sorted(set(issues)),
         "warnings": sorted(set(warnings)),

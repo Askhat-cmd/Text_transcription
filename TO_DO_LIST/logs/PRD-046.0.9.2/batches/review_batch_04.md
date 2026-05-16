@@ -1,0 +1,271 @@
+# Architect Review Batch 04 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::6d0c2432-96ca-4293-beec-9bf337955a7a / 6d0c2432-96ca-4293-beec-9bf337955a7a
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. Пять драйверов выживания > Драйвер 2: «Будь лучшим»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неверного толкования
+- recommended_action: defer
+- safe_preview: **Базовая установка:** «Любовь нужно заслужить достижениями» Родители хвалят только за успехи. «Пятёрка — молодец! Четвёрка — мог бы лучше». Или сравнивают: «А вот Маша в классе учится на отлично». Мозг ребёнка делает вывод: **«Меня любят…
+- llm_enrichment:
+  - summary: Формирование представления о любви как о чем-то, что нужно заслужить, может негативно сказаться на самооценке и эмоциональном состоянии человека. Важно понимать, что любовь и принятие не зависят от достижений.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6d484c8a-f7f0-407e-99e5-d35048f7b48d / 6d484c8a-f7f0-407e-99e5-d35048f7b48d
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 1. Нейрофизиология страха: что происходит за 0,07 секунды
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка точности научных данных, проверка на соответствие контексту использования
+- recommended_action: defer
+- safe_preview: Страх — самая быстрая из всех эмоций. Быстрее злости, быстрее радости, быстрее любви. Это не случайность — это архитектура выживания. Вот что происходит, когда нервная система регистрирует угрозу: **0–70 миллисекунд:** сигнал от органов чу…
+- llm_enrichment:
+  - summary: Страх является одной из самых быстрых эмоций, активирующихся в ответ на угрозу. Этот процесс происходит мгновенно, когда сигнал от органов чувств достигает таламуса и передается в миндалину, что запускает стрессовую р...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6db17c5b-638d-452e-8a9c-8384c9ed78a4 / 6db17c5b-638d-452e-8a9c-8384c9ed78a4
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. Пять драйверов выживания
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на точность интерпретаций
+- recommended_action: defer
+- safe_preview: Программа «несовершенное Я» — не монолит. Она говорит разными голосами. У каждого человека один-два из них звучат особенно громко. Посмотри на каждый — ты узнаешь свой. ***
+- llm_enrichment:
+  - summary: Программа «несовершенное Я» представляет собой многогранный проект, который исследует различные аспекты человеческой идентичности и самовосприятия. Каждый участник может обнаружить в себе уникальные голоса, отражающие...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::71ca41f6-57de-4f57-badb-35e34e8bd9c6 / 71ca41f6-57de-4f57-badb-35e34e8bd9c6
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 6. Пропасть между потребностями и бытием: анестетическая депрессия
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие этическим стандартам, Потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: > **Из сессии** > > **Мария, 39 лет, топ-менеджер:** Я не понимаю, что со мной. Всё есть — работа, деньги, отношения, здоровье. Я занимаюсь всем, чем «надо»: терапия, медитация, книги. И при этом — ощущение, что меня нет. Как будто я смотр…
+- llm_enrichment:
+  - summary: Клиент испытывает чувство пустоты и отсутствия эмоциональной связи с жизнью, несмотря на наличие всех внешних факторов успеха. Это может указывать на депрессию или эмоциональное выгорание.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::7292f9ff-3e15-4258-a8dc-e4860f1cc103 / 7292f9ff-3e15-4258-a8dc-e4860f1cc103
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 5. Зачем программе нужно страдание
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретаций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: И вот самый неудобный вопрос. Тот, который легко обойти стороной. Если тебе так плохо от этой программы — почему она до сих пор работает? Ты умный человек. Читал, практиковал, осознавал. **Почему ничего не изменилось?** Потому что программ…
+- llm_enrichment:
+  - summary: Вопрос о том, почему программа продолжает функционировать, несмотря на негативные последствия для пользователей, поднимает важные аспекты о выгодах и мотивациях систем. Это может указывать на то, что программа оптимиз...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::7451908b-565b-4d40-a214-88c5adfceac4 / 7451908b-565b-4d40-a214-88c5adfceac4
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Бежевый: инстинкты и выживание
+- chunk_type: safety
+- allowed_use: writer_context, safety_protocol
+- safety_flags: not_for_direct_quote
+- lens_family: safety
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретации концепций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: **Мантра:** «Выжить. Сейчас». **Что важно:** еда, тепло, безопасность, вода. Нет «я» в социальном смысле — только биологическое существо. Нет планирования — только момент. Нет морали — только нужда. Исторически это уровень раннего человека…
+- llm_enrichment:
+  - summary: В условиях острого кризиса, когда базовые потребности становятся приоритетом, важно сосредоточиться на выживании. Это состояние требует минимализма в социальных взаимодействиях и акцентирования на физиологических нуждах.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::760cd26e-e9c1-4d42-90b8-5726aa9fd129 / 760cd26e-e9c1-4d42-90b8-5726aa9fd129
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 10. НейроСталкинг — жизнь из присутствия > 3. После — не удерживай. Не думай «надо запомнить». Отпусти.
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на точность интерпретации
+- recommended_action: defer
+- safe_preview: Это не медитация. Это тренировка способности вкусить — не присвоить. Разница небольшая. Но она меняет качество жизни фундаментально. ***
+- llm_enrichment:
+  - summary: Тренировка способности воспринимать опыт без привязки и присвоения может значительно улучшить качество жизни. Это требует осознанности и практики.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::7b61940d-f6ff-46f8-9514-797efaf0ad00 / 7b61940d-f6ff-46f8-9514-797efaf0ad00
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > Вопросы и ответы
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на соответствие безопасности, проверка на корректность интерпретации вопросов
+- recommended_action: defer
+- safe_preview: *Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё понял про программу. Но как её убрать? Должен же быть какой-то метод.** — Смотри, «у…
+- llm_enrichment:
+  - summary: Участники сессий задают вопросы о том, как изменить или убрать программу, что указывает на их желание понять механизмы работы и управления программами. Это подчеркивает важность осознания иронии в том, что программа с...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::7b658406-6fa8-4d88-84dc-1b49ebf53465 / 7b658406-6fa8-4d88-84dc-1b49ebf53465
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > Кейс из сессии
+- chunk_type: case
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость в дополнительной проверке чувствительности темы, потенциальные риски неверного толкования
+- recommended_action: defer
+- safe_preview: > **Надежда**, 41 год, предприниматель. > > — Я занималась разными практиками. Медитация, работа с телом, расстановки. Мне кажется, я проработала своё прошлое. Но что-то всё равно продолжает мешать. Как будто под слоем уже есть ещё слой. >…
+- llm_enrichment:
+  - summary: Клиентка, предприниматель, ощущает, что несмотря на проведенные практики самопознания и проработки прошлого, ей все еще мешают внутренние барьеры. Она осознает свои паттерны, но чувствует, что под ними скрываются боле...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::87df2063-9514-4bf6-b833-6815fc1652d3 / 87df2063-9514-4bf6-b833-6815fc1652d3
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Оценка оригинальности и актуальности, Проверка на соответствие контексту
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Данный блок представляет собой теоретическую основу, которая может быть использована для обогащения контента. Он содержит ключевые концепции и идеи, которые могут быть полезны для создания более глубокого и информатив...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::8e8eae66-7d04-4b55-b0ee-0b5c29c6d750 / 8e8eae66-7d04-4b55-b0ee-0b5c29c6d750
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Красный: сила и власть
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима оценка контекста использования, потенциальные риски неверной интерпретации
+- recommended_action: defer
+- safe_preview: **Мантра:** «Я — сам. Кто сильнее — тот прав». **Что важно:** власть, автономия, немедленное удовлетворение желаний. Нет чувства вины — есть только «хочу» и «могу». Импульсивность. Сила как главная ценность. Уважение завоёвывается через де…
+- llm_enrichment:
+  - summary: Данная мантра подчеркивает важность автономии и силы в межличностных отношениях, акцентируя внимание на импульсивности и тактическом подходе к взаимодействию с окружающими. В здоровом проявлении эти качества могут спо...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

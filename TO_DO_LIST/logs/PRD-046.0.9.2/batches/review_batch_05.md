@@ -1,0 +1,271 @@
+# Architect Review Batch 05 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::90f9393b-7ae3-42e3-a5f5-29c20451c2a9 / 90f9393b-7ae3-42e3-a5f5-29c20451c2a9
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > 5. Из сегодняшнего «я» скажи этому прошлому себе что-то — что ты хотел бы тогда услышать. Не «всё будет хорошо» — а что-то конкретное и честное.
+- chunk_type: lens
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие безопасности, проверка на соответствие этическим стандартам
+- recommended_action: defer
+- safe_preview: *Эта практика не погружение в травму. Это встреча с тем, что застряло — с позиции того, кто уже прошёл через это.* ***
+- llm_enrichment:
+  - summary: Данная практика направлена на работу с застрявшими эмоциями и переживаниями, обеспечивая поддержку и понимание без углубления в травматические события.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::95c58778-e710-4ac7-95ae-9530bf55f3b1 / 95c58778-e710-4ac7-95ae-9530bf55f3b1
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 4. *Теперь — напиши ответ этому голосу.* Не в духе «да, ты прав» и не в духе «заткнись». В духе честного разговора: «Я слышу тебя. Я понимаю, зачем ты это делаешь. Но прямо сейчас это не помогает».
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка точности интерпретации нейрофизиологических аспектов.
+- recommended_action: defer
+- safe_preview: > Из сессии: > > **Марина, 41 год:** Когда я написала, что это голос похож на мою маму — я просто замерла. Я все эти годы думала, что это **я** так думаю. А это она всё это время говорила внутри меня. > > **Саламат:** Точно. И это не мисти…
+- llm_enrichment:
+  - summary: Обсуждение о влиянии голосов значимых людей на формирование нейронных паттернов и восприятие собственных мыслей.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::98527f7c-9223-4751-ae11-f201e6dc6558 / 98527f7c-9223-4751-ae11-f201e6dc6558
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > Практикум к главе 5: семь практик работы с тенью > Практика 5: Три проекции в одном конфликте
+- chunk_type: practice
+- allowed_use: writer_context, practice_suggestion
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, оценка качества самоанализа, проверка на соответствие безопасности
+- recommended_action: defer
+- safe_preview: **Цель:** разобрать конкретный конфликт через линзу тени и проекции. **Время:** 20–30 минут. Возьми один реальный конфликт, который тебя беспокоит прямо сейчас. С конкретным человеком. Ответь письменно на три вопроса: **Вопрос 1:** Что име…
+- llm_enrichment:
+  - summary: Разбор конфликта с использованием линз тени и проекции, направленный на понимание собственных реакций и эмоций в отношении другого человека.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::99c31e75-b401-40df-96e5-c82c5cb11569 / 99c31e75-b401-40df-96e5-c82c5cb11569
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 5. Выходи медленно. Не хватайся за телефон сразу. Дай несколько секунд.
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на соответствие безопасности, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: > **Из сессии** > > **Сергей, 44 года:** Я три месяца в этой пустоте. Пробовал всё — новый проект, поездки, смена работы. Всё равно пусто. Начал думать, что что-то сломалось. > > **Саламат:** А что если ничего не сломалось? Что если ты про…
+- llm_enrichment:
+  - summary: Сергей испытывает чувство пустоты и неопределенности после нескольких попыток изменить свою жизнь. Саламат предлагает рассмотреть ситуацию как возможность для остановки и саморазмышления.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::9ddf6440-7f67-4ad9-bfa9-dd6be134f8ec / 9ddf6440-7f67-4ad9-bfa9-dd6be134f8ec
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 3. **Что бы я сделал, если бы не боялся?** Не «что правильно» — а что бы сделал без инстинктивного давления. > Практика 7: Инстинкт в теле — заземление
+- chunk_type: practice
+- allowed_use: writer_context, practice_suggestion
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на соответствие безопасности, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: **Цель:** снизить интенсивность инстинктивной реакции через телесное заземление. **Время:** 5–10 минут в момент острой инстинктивной реакции. Когда инстинкт захватил — и ты это заметил — не пытайся думать его обратно. Кора не победит лимби…
+- llm_enrichment:
+  - summary: Рекомендация по снижению интенсивности инстинктивной реакции через телесное заземление. Практика направлена на использование физических ощущений для управления эмоциональными реакциями в моменты стресса.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::a15d79f8-0ac0-42fc-9bc3-6985a529fb07 / a15d79f8-0ac0-42fc-9bc3-6985a529fb07
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 3. Страх как тюрьма: когда сигнал становится стеной
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: avoidance
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности научных интерпретаций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: Страх становится тюрьмой не сам по себе — а через один конкретный механизм: **избегание**. Когда человек избегает ситуации, которая вызывает страх — нервная система запоминает: «избегание сработало, угроза прошла». Это подкрепляет избегани…
+- llm_enrichment:
+  - summary: Избегание как механизм реакции на страх приводит к его усилению и сужению зоны жизни человека. Это явление объясняется нейропсихологическими процессами, которые закрепляют избегание как стратегию.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e / a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > Вопросы и ответы
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретации, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: **— Я понял, что живу в оранжевом. Как перейти в зелёный?** — Никак. Не напрямую. Переход происходит, когда оранжевые инструменты исчерпывают себя перед реальным вызовом. Не в теории — на практике. Когда ты достиг всего — и внутри пусто. К…
+- llm_enrichment:
+  - summary: Переход от состояния оранжевого к зелёному происходит не через прямые действия, а через осознание и принятие внутренней пустоты, возникающей после достижения успеха. Это процесс, требующий времени и саморефлексии.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::ae905f5d-9ca4-40ed-88e4-d43f73e9afa8 / ae905f5d-9ca4-40ed-88e4-d43f73e9afa8
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 10. НейроСталкинг — жизнь из присутствия
+- chunk_type: lens
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на соответствие контексту, потенциальная сложность интерпретации
+- recommended_action: defer
+- safe_preview: *** Девять глав до этой — это была карта. Подробная, с масштабом, с легендой. Ты изучил рельеф: программу несовершенного Я, химию страдания, фильтры восприятия, тени, инстинкты, страхи, потоковые состояния. Ты понял, как работает автопилот…
+- llm_enrichment:
+  - summary: Текст обсуждает концепцию самосознания и восприятия реальности, акцентируя внимание на различии между теоретическим пониманием и практическим опытом. Он исследует внутренние механизмы, которые влияют на поведение и во...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::b05b4278-62cd-44e1-936e-24346e45b6ac / b05b4278-62cd-44e1-936e-24346e45b6ac
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > 2. Как формируется тень: три слоя вытеснения > Первый слой: «Быть хорошим»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка точности интерпретаций, Убедиться в соответствии с этическими стандартами
+- recommended_action: defer
+- safe_preview: Самый ранний и самый плотный слой. Ребёнок усваивает: есть качества, которые «хорошие», и есть — которые «плохие». Злость — плохая. Послушание — хорошее. Эгоизм — плохой. Забота о других — хорошая. Сексуальность — стыдная. Чистота — правил…
+- llm_enrichment:
+  - summary: Ранние этапы формирования моральных качеств у детей связаны с усвоением понятий о 'хорошем' и 'плохом'. Эти категории влияют на эмоциональное развитие и восприятие себя и окружающих.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::b26c589d-4531-4cbb-b8ed-0d3c34d685c4 / b26c589d-4531-4cbb-b8ed-0d3c34d685c4
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > Вопросы и ответы
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: avoidance
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретаций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: Один вопрос, который меняет рамку: «Если бы неудача этого проекта ничего не говорила обо мне как о человеке — только о проекте — ты бы начал?» Почти всегда ответ — «да». Потому что страх не в провале проекта. Страх в идентификации себя с р…
+- llm_enrichment:
+  - summary: Страх близости в отношениях часто связан с опасениями быть уязвимым и потерять контроль. Понимание этих страхов может помочь в их преодолении и улучшении взаимодействия с партнёром.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::b4bfea36-667a-447f-9631-0049b0f96f2f / b4bfea36-667a-447f-9631-0049b0f96f2f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя > 2. Три механизма, которые лепят твою версию реальности > Механизм 3: Искажение (Distortion)
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка на точность интерпретаций, Убедиться в отсутствии личных предположений
+- recommended_action: defer
+- safe_preview: Мозг **переписывает** факт — добавляет к нему смысл, которого в самом факте не было. Коллега не поздоровался → «он на меня злится». Партнёр помолчал вечером → «что-то не так в наших отношениях». Руководитель написал коротко → «он недоволен…
+- llm_enrichment:
+  - summary: Человек склонен интерпретировать факты, добавляя к ним личные эмоции и предположения, что может привести к искажению реальности и негативным выводам о себе.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

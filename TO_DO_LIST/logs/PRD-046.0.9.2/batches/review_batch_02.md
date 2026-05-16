@@ -1,0 +1,271 @@
+# Architect Review Batch 02 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::28d35b6b-6b5c-4c5a-bb14-0b8a3f2b5d37 / 28d35b6b-6b5c-4c5a-bb14-0b8a3f2b5d37
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 4. Почему уровни не разговаривают друг с другом
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на точность интерпретации
+- recommended_action: defer
+- safe_preview: Теперь самое важное для практики. Каждый уровень — это **замкнутая система смыслов**. У каждого своя «очевидная правда», которая внутри уровня не ставится под вопрос. И именно поэтому люди с разных уровней не просто не соглашаются — они не…
+- llm_enrichment:
+  - summary: Разные уровни восприятия создают барьеры в коммуникации, что затрудняет понимание и согласие между людьми с различными взглядами.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::33747757-5b99-4cb6-a4c4-99154d889205 / 33747757-5b99-4cb6-a4c4-99154d889205
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Фиолетовый: магия племени
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности культурных интерпретаций, учет контекста при использовании информации
+- recommended_action: defer
+- safe_preview: **Мантра:** «Мы — одно целое. Духи защищают нас». **Что важно:** принадлежность к племени — семье, роду, этносу, клану. Магическое мышление: духи, ритуалы, приметы, заговоры. Авторитет — старейшины, традиция. Страх — быть изгнанным из плем…
+- llm_enrichment:
+  - summary: Культура, основанная на коллективной идентичности и магическом мышлении, подчеркивает важность принадлежности к племени и традициям. Взаимодействие с духами и ритуалами играет ключевую роль в жизни сообщества, а старе...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::36350a15-7144-4bc9-b79f-fe227d2b39ee / 36350a15-7144-4bc9-b79f-fe227d2b39ee
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 4. Живот и солнечное сплетение — расслаблен или сжат?
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретаций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: - Если сжат — это тревога или страх? - Если пустота — что это за пустота?
+- llm_enrichment:
+  - summary: Исследование эмоциональных состояний, таких как тревога и страх, а также концепция пустоты и её возможные интерпретации. Обсуждение различных подходов к пониманию этих состояний в контексте психологии.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::40de9766-584b-4fd7-a6e9-fadd34146e91 / 40de9766-584b-4fd7-a6e9-fadd34146e91
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 4. *Что ты хочешь ей сказать сейчас?* Не «убирайся», не «спасибо за всё». Что-то честное. Своё.
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие эмоциональному контексту, проверка на возможность использования в других контекстах
+- recommended_action: defer
+- safe_preview: Нет правильного письма. Нет неправильного. Единственное условие — не лгать себе ни в одном предложении. После того как написал — прочитай вслух. Если возникают слёзы, злость, облегчение — это нормально. Это не «надломился». Это просто что-…
+- llm_enrichment:
+  - summary: Письмо отражает важность самовыражения и признательности, а также эмоциональную нагрузку, связанную с процессом написания. Это может быть полезным для понимания собственных чувств и улучшения коммуникации.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::49f52f32-1157-4450-b155-e268e89b2248 / 49f52f32-1157-4450-b155-e268e89b2248
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 4. *Теперь — напиши ответ этому голосу.* Не в духе «да, ты прав» и не в духе «заткнись». В духе честного разговора: «Я слышу тебя. Я понимаю, зачем ты это делаешь. Но прямо сейчас это не помогает». > Практика 5: Сканер страдания
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, оценка актуальности и полезности, проверка на соответствие безопасности
+- recommended_action: defer
+- safe_preview: **Цель:** увидеть, в чём именно твоя программа черпает «топливо» — и насколько часто. **Время:** 15–20 минут. Делать один раз — как исследование. Это немного длиннее остальных практик. Зато она даёт очень точную карту. Возьми лист бумаги.…
+- llm_enrichment:
+  - summary: Исследование для понимания источников эмоционального состояния и частоты их влияния на жизнь.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::537704a8-d617-476e-8ae2-bc48d1c3d09f / 537704a8-d617-476e-8ae2-bc48d1c3d09f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > Вводная часть
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту и безопасности.
+- recommended_action: defer
+- safe_preview: Есть вещи, которые ты не делаешь. Не потому что не хочешь — а потому что страшно. Разговор, который давно нужен. Решение, которое давно созрело. Шаг, который уже виден — но нога не двигается. Ты знаешь это ощущение. Все знают. Первый рефле…
+- llm_enrichment:
+  - summary: Обсуждение страха и его влияния на действия человека. Рассматривается необходимость преодоления страха для достижения целей, а также критика традиционных подходов к мотивации.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::538dcd01-2545-4ecf-9e7e-a8699ca76164 / 538dcd01-2545-4ecf-9e7e-a8699ca76164
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 2. Химия клетки: почему мозг зависит от страдания > Важно знать: freeze — это не финал. Это сигнал. И с ним можно работать.
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима оценка контекста и чувствительности информации.
+- recommended_action: defer
+- safe_preview: > Из сессии: > > **Максим, 40 лет:** Я несколько месяцев в каком-то странном состоянии. Ничего не хочу, ничего не радует, ничего не делаю — хотя дела есть. Просто лежу. Думал — депрессия. > > **Саламат:** Расскажи, что было до этого. Полго…
+- llm_enrichment:
+  - summary: Клиент описывает состояние апатии и отсутствие интереса к жизни после периода высокой нагрузки и стресса. Это может указывать на возможные симптомы депрессии или выгорания.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::56c62ae3-7bce-4525-b460-a64f86441657 / 56c62ae3-7bce-4525-b460-a64f86441657
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > 1. Что такое тень на уровне нейрофизиологии
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретаций, потенциальные недопонимания концепции
+- recommended_action: defer
+- safe_preview: Юнг ввёл понятие тени в начале XX века. Но только в последние десятилетия нейронаука дала этому понятию конкретный механизм. **Тень** — это не «плохая часть» личности. Это совокупность психических содержаний, которые были **вытеснены из ос…
+- llm_enrichment:
+  - summary: Концепция тени, введенная Юнгом, описывает вытесненные аспекты личности, которые могут быть опасными или неприемлемыми в социальной среде. Нейронаука предоставляет механизмы, объясняющие это явление.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::5808a31f-2872-4e48-826c-b318bf0d60b0 / 5808a31f-2872-4e48-826c-b318bf0d60b0
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 4. Откуда это берётся: три волны
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретации, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: Программа не возникает в один момент. Она складывается постепенно. **От рождения до 2 лет — базовое ощущение мира** Ребёнок ещё не думает словами. Он просто чувствует и запоминает телом: *мир безопасен или нет*. Если рядом был стабильный,…
+- llm_enrichment:
+  - summary: Программа развития ребенка формируется постепенно, начиная с раннего возраста. В первые два года жизни базовые ощущения мира формируются через взаимодействие с взрослыми. Стабильные и предсказуемые взрослые способству...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::5943bece-db10-460a-bc21-7e23e6485925 / 5943bece-db10-460a-bc21-7e23e6485925
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 10. НейроСталкинг — жизнь из присутствия > НеоСталкинг: когда личность перестаёт быть центром вселенной
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: self_worth
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на точность, потенциальные риски интерпретации
+- recommended_action: defer
+- safe_preview: НейроСталкинг и НеоСталкинг — это два уровня одного процесса. **НейроСталкинг** — это работа с первым этажом. Паттерны, триггеры, автоматические реакции, нейрофизиология страдания. Здесь ты исследуешь, как работает программа. Смотришь на н…
+- llm_enrichment:
+  - summary: НейроСталкинг и НеоСталкинг представляют собой два уровня анализа и взаимодействия с программами. НейроСталкинг фокусируется на первичных реакциях и паттернах, в то время как НеоСталкинг предлагает более глубокую перс...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::5bd68e84-d34a-487b-ab73-7cd1ac889e7a / 5bd68e84-d34a-487b-ab73-7cd1ac889e7a
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > 2. Как формируется тень: три слоя вытеснения > Третий слой: «Быть взрослым»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: Зрелость добавляет свой слой. Профессиональная среда говорит: «здесь не место эмоциям». Партнёрские отношения говорят: «ты слишком много требуешь». Социальные роли говорят: «мужчины так себя не ведут», «матери так не думают». Каждый раз, к…
+- llm_enrichment:
+  - summary: Зрелость и социальные роли могут создавать давление, заставляя людей скрывать свои эмоции и истинные чувства, что приводит к внутреннему конфликту и самоограничению.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

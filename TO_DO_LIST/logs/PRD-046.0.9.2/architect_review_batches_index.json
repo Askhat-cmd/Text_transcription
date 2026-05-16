@@ -1,0 +1,196 @@
+{
+  "schema_version": "architect_review_batches_index_v1",
+  "source_prd": "PRD-046.0.9.2",
+  "generated_at": "2026-05-16T13:02:51.907753+00:00",
+  "queue_source_prd": "PRD-046.0.9-RUN1",
+  "queue_items_count": 87,
+  "batch_size_requested": 11,
+  "batches_count": 8,
+  "batches": [
+    {
+      "batch_id": 1,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_01.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::66d0f456-a695-4c50-881c-0ce7643baf69",
+        "post_reprocess::00a10081-935a-4c17-a000-d91c7420ce7f",
+        "post_reprocess::02850e6b-1f41-4f94-8413-cdec8c45479b",
+        "post_reprocess::0b3494cd-7acb-46cc-881b-7e478b72513e",
+        "post_reprocess::0d62f141-572d-4386-b02d-d7f9a46fa27f",
+        "post_reprocess::0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2",
+        "post_reprocess::116415f6-a0c4-4701-86d4-83be1d6a8b4f",
+        "post_reprocess::1243381f-27fe-4f5e-95bb-605b8ba64c1a",
+        "post_reprocess::15b76643-6a4a-473f-8f9a-754f608bdc97",
+        "post_reprocess::1a5e8a48-a1be-4c10-80e9-c2cb714503b2",
+        "post_reprocess::201ad0be-2cbf-4499-b92f-f0fc86ee09c0"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 1,
+        "P2": 10
+      }
+    },
+    {
+      "batch_id": 2,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_02.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::28d35b6b-6b5c-4c5a-bb14-0b8a3f2b5d37",
+        "post_reprocess::33747757-5b99-4cb6-a4c4-99154d889205",
+        "post_reprocess::36350a15-7144-4bc9-b79f-fe227d2b39ee",
+        "post_reprocess::40de9766-584b-4fd7-a6e9-fadd34146e91",
+        "post_reprocess::49f52f32-1157-4450-b155-e268e89b2248",
+        "post_reprocess::537704a8-d617-476e-8ae2-bc48d1c3d09f",
+        "post_reprocess::538dcd01-2545-4ecf-9e7e-a8699ca76164",
+        "post_reprocess::56c62ae3-7bce-4525-b460-a64f86441657",
+        "post_reprocess::5808a31f-2872-4e48-826c-b318bf0d60b0",
+        "post_reprocess::5943bece-db10-460a-bc21-7e23e6485925",
+        "post_reprocess::5bd68e84-d34a-487b-ab73-7cd1ac889e7a"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 3,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_03.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::5be3f5b0-a073-4c15-8ed6-429ad22c029b",
+        "post_reprocess::5d1fc4fd-0fe3-430e-be38-37aa453a5bf0",
+        "post_reprocess::5d99473f-b1e2-4f20-b169-1e578c64fd51",
+        "post_reprocess::6248b3d0-7fd6-4d9e-8b0b-5bc604b0bf98",
+        "post_reprocess::6440c58d-424c-4d15-9856-0775b2baa161",
+        "post_reprocess::648f6960-e5cf-4558-a111-fcd668b2096a",
+        "post_reprocess::650e5ee6-4072-449e-9b93-bc2729e553db",
+        "post_reprocess::677843aa-2939-4b07-9a57-d2fe14337291",
+        "post_reprocess::6af86446-6b2e-4fed-a4b2-c44cc378e1fa",
+        "post_reprocess::6b2cc0f2-32e5-4b1e-8ae1-82e611b285aa",
+        "post_reprocess::6bf8b1df-463c-4fd0-9e34-289518dd849d"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 4,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_04.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::6d0c2432-96ca-4293-beec-9bf337955a7a",
+        "post_reprocess::6d484c8a-f7f0-407e-99e5-d35048f7b48d",
+        "post_reprocess::6db17c5b-638d-452e-8a9c-8384c9ed78a4",
+        "post_reprocess::71ca41f6-57de-4f57-badb-35e34e8bd9c6",
+        "post_reprocess::7292f9ff-3e15-4258-a8dc-e4860f1cc103",
+        "post_reprocess::7451908b-565b-4d40-a214-88c5adfceac4",
+        "post_reprocess::760cd26e-e9c1-4d42-90b8-5726aa9fd129",
+        "post_reprocess::7b61940d-f6ff-46f8-9514-797efaf0ad00",
+        "post_reprocess::7b658406-6fa8-4d88-84dc-1b49ebf53465",
+        "post_reprocess::87df2063-9514-4bf6-b833-6815fc1652d3",
+        "post_reprocess::8e8eae66-7d04-4b55-b0ee-0b5c29c6d750"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 5,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_05.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::90f9393b-7ae3-42e3-a5f5-29c20451c2a9",
+        "post_reprocess::95c58778-e710-4ac7-95ae-9530bf55f3b1",
+        "post_reprocess::98527f7c-9223-4751-ae11-f201e6dc6558",
+        "post_reprocess::99c31e75-b401-40df-96e5-c82c5cb11569",
+        "post_reprocess::9ddf6440-7f67-4ad9-bfa9-dd6be134f8ec",
+        "post_reprocess::a15d79f8-0ac0-42fc-9bc3-6985a529fb07",
+        "post_reprocess::a601e45d-9bef-4d6e-90df-0e8b6a1c8c1e",
+        "post_reprocess::ae905f5d-9ca4-40ed-88e4-d43f73e9afa8",
+        "post_reprocess::b05b4278-62cd-44e1-936e-24346e45b6ac",
+        "post_reprocess::b26c589d-4531-4cbb-b8ed-0d3c34d685c4",
+        "post_reprocess::b4bfea36-667a-447f-9631-0049b0f96f2f"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 6,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_06.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::b70ae542-7b02-463b-bfc3-46bfd37a0a19",
+        "post_reprocess::b870528b-313c-46ef-b5a1-5266a4bedf2c",
+        "post_reprocess::bb6d02e4-e12c-4e53-adf3-e854c53f382b",
+        "post_reprocess::bba54eed-9d56-461b-bf0c-bac28893ebb5",
+        "post_reprocess::c3757cbe-4cfc-4e47-9a78-5fb785654f28",
+        "post_reprocess::cb02003e-69b1-46da-9935-d7c29f67640b",
+        "post_reprocess::cb98214b-1a7d-45ab-87ec-4a801f1b391c",
+        "post_reprocess::cc979440-d02f-4bff-8920-59982597b4cc",
+        "post_reprocess::cf618346-aa79-49e4-8756-0be86e889897",
+        "post_reprocess::d13ec321-be95-42ff-8ebc-87e903f7e9ce",
+        "post_reprocess::d24c9855-d738-4ef6-aead-c6051be65dce"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 7,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_07.md",
+      "items_count": 11,
+      "review_item_ids": [
+        "post_reprocess::d4b3595f-b34e-47d1-ae3f-c5b293082f3c",
+        "post_reprocess::d527d369-beb2-4113-b370-cb2738e76b55",
+        "post_reprocess::d60e5a31-835c-4ce9-b14b-40b1706b6353",
+        "post_reprocess::d8911af4-919c-4ea5-808c-5efada1eb0ca",
+        "post_reprocess::d9f6dfb9-e6fe-4417-8df3-9c8991661af4",
+        "post_reprocess::dca9489e-c183-4b91-b55d-9f05372898cb",
+        "post_reprocess::e0d0659a-e21e-467c-9f22-97cdd4721ced",
+        "post_reprocess::e49d8638-4f2d-4185-8e50-1726081a1654",
+        "post_reprocess::e796cd02-6301-489f-906b-716f76e8cd63",
+        "post_reprocess::e7b8c0fd-aafd-47df-85d5-603b2ce5ae7f",
+        "post_reprocess::ebf047f2-c678-40a1-8747-b98dfae1a2ea"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 11
+      }
+    },
+    {
+      "batch_id": 8,
+      "path": "TO_DO_LIST/logs/PRD-046.0.9.2/batches/review_batch_08.md",
+      "items_count": 10,
+      "review_item_ids": [
+        "post_reprocess::ec985517-5548-4d75-b7f5-24d7e1de79ab",
+        "post_reprocess::ee024cf7-74d8-4cab-8b58-ce89e2cd880c",
+        "post_reprocess::eed49fa0-58cb-475a-b72d-3eca72995c9b",
+        "post_reprocess::f3299182-733f-4c63-8622-b7cc456f68f7",
+        "post_reprocess::f5716360-1635-4026-8568-3404b4569d2a",
+        "post_reprocess::f648d244-df01-4d43-a130-bea5dada3ccf",
+        "post_reprocess::f68050f9-d789-4d8b-b5b1-d6302ddfb88e",
+        "post_reprocess::f6cbdc2c-0bf7-4d5e-a828-b305fdb72c89",
+        "post_reprocess::fb24a1e9-848d-452d-a160-d4020fa727cd",
+        "post_reprocess::fb92553a-a1b4-4c6f-81c5-47f29c3e2dd6"
+      ],
+      "priority_counts": {
+        "P0": 0,
+        "P1": 0,
+        "P2": 10
+      }
+    }
+  ],
+  "forbidden_batch_keys_detected": [],
+  "sanitized": true
+}

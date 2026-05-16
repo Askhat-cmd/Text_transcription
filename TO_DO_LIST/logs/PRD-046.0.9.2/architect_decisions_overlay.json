@@ -1,0 +1,12 @@
+{
+  "schema_version": "kb_review_decisions_v1",
+  "source_prd": "PRD-046.0.9.2",
+  "source_review_queue_prd": "PRD-046.0.9-RUN1",
+  "review_queue_hash": "b9a22f31759dccc9c27994ededd665ceeff3b4cb002964754fde05455db65311",
+  "blocks_hash_before": "b2c1f4d105d299f6a18cd5f71b0e3b86665b8afe6b1018deb99bc8c59b4236b6",
+  "decision_owner": "architect_chatgpt",
+  "created_at": "2026-05-16T13:02:51.917004+00:00",
+  "ready_for_architect_review": true,
+  "apply_ready": false,
+  "decisions": []
+}

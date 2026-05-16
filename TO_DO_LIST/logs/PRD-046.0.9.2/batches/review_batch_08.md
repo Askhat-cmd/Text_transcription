@@ -1,0 +1,247 @@
+# Architect Review Batch 08 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 10
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::ec985517-5548-4d75-b7f5-24d7e1de79ab / ec985517-5548-4d75-b7f5-24d7e1de79ab
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 4. Инстинкт против программы: в чём разница
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретаций, потенциальные нюансы в понимании концепций
+- recommended_action: defer
+- safe_preview: Это тонкое, но важное различие. **Программа «несовершенное Я»** — это психологический слой. Она формируется в детстве через опыт, отношения, послания среды. Она работает с образом себя: «я недостаточно хороший». **Инстинкт** — это биологич…
+- llm_enrichment:
+  - summary: Различие между психологическим слоем, формируемым в детстве, и биологическим слоем инстинктов, существующим с древних времен. Психологический слой связан с образом себя, в то время как инстинкты ориентированы на выжив...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::ee024cf7-74d8-4cab-8b58-ce89e2cd880c / ee024cf7-74d8-4cab-8b58-ce89e2cd880c
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 3. Программа «несовершенное Я» на каждом уровне
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, обеспечение соответствия безопасности, проверка точности интерпретаций
+- recommended_action: defer
+- safe_preview: Вот то, о чём редко говорят — и что меняет всё. Программа «несовершенное Я» не исчезает при переходе на «следующий уровень». Она **меняет костюм**. | Уровень | Что говорит программа | | :-- | :-- | | Красный | «Ты недостаточно сильный — до…
+- llm_enrichment:
+  - summary: Программа 'несовершенное Я' продолжает влиять на восприятие себя на разных уровнях, изменяя внутренние установки и самооценку.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::eed49fa0-58cb-475a-b72d-3eca72995c9b / eed49fa0-58cb-475a-b72d-3eca72995c9b
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 2. Химия клетки: почему мозг зависит от страдания > Практикум к главе 2: шесть практик
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на возможность использования в других контекстах
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Данный блок содержит теоретическую информацию, которая может быть полезна для понимания определенных концепций. Он предназначен для использования в контексте написания и не должен использоваться в качестве прямых цитат.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::f3299182-733f-4c63-8622-b7cc456f68f7 / f3299182-733f-4c63-8622-b7cc456f68f7
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 5. Через несколько минут — вопрос к ощущению: «Что ты хочешь, чтобы я знал?» > Практика 7: Сидеть на пороге
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие этическим стандартам, Проверка на наличие потенциальных рисков для клиентов
+- recommended_action: defer
+- safe_preview: **Цель:** встретиться со страхом потери идентичности — намеренно и постепенно. **Время:** 15–20 минут. Для тех, кто работает с вопросами идентичности. Сядь в тишине. Закрой глаза. Начни с простого наблюдения: замечай мысли, которые приходя…
+- llm_enrichment:
+  - summary: Методика для работы с страхом потери идентичности, основанная на наблюдении за мыслями и внутреннем диалоге. Рекомендуется проводить в тишине, сосредоточившись на процессе осознания.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::f5716360-1635-4026-8568-3404b4569d2a / f5716360-1635-4026-8568-3404b4569d2a
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > 2. Как формируется тень: три слоя вытеснения > Второй слой: «Быть собой»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту и целям использования.
+- recommended_action: defer
+- safe_preview: Позже — подростковый возраст, социальная среда — ребёнок начинает понимать, кем «надо быть» в своей группе. Если ты растёшь в среде, где «умный — значит слабый», интеллект идёт в тень. Если среда говорит «чувствовать — стыдно», чувства ухо…
+- llm_enrichment:
+  - summary: В подростковом возрасте социальная среда начинает оказывать значительное влияние на самоидентификацию и восприятие себя. Важно понимать, как культурные и социальные нормы могут формировать представления о том, что счи...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::f648d244-df01-4d43-a130-bea5dada3ccf / f648d244-df01-4d43-a130-bea5dada3ccf
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. Пять драйверов выживания > Драйвер 5: «Спеши»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неверного толкования
+- recommended_action: defer
+- safe_preview: **Базовая установка:** «Времени всегда мало. Надо успеть» Атмосфера вечного цейтнота. «Быстрее! Мы опаздываем! Ты как черепаха!». Вывод: **«Времени всегда не хватает. Я всегда опаздываю»**. Во взрослой жизни — ты не можешь быть в настоящем…
+- llm_enrichment:
+  - summary: В современном мире люди часто испытывают нехватку времени, что приводит к постоянному стрессу и невозможности сосредоточиться на настоящем моменте. Это создает атмосферу спешки и тревоги, где внимание сосредоточено на...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::f68050f9-d789-4d8b-b5b1-d6302ddfb88e / f68050f9-d789-4d8b-b5b1-d6302ddfb88e
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 3. Как программа берёт управление > Триггер → Программа → Реакция
+- chunk_type: practice
+- allowed_use: writer_context, diagnostic_lens, practice_suggestion
+- safety_flags: not_for_direct_quote, requires_grounding, practice_requires_low_resource_check
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на соответствие безопасности, потенциальные эмоциональные триггеры
+- recommended_action: defer
+- safe_preview: **Шаг 1: Триггер** Что-то случается — начальник делает замечание, партнёр не отвечает, кто-то посмотрел не так. Само по себе — просто факт. Нейтральное событие. **Шаг 2: Мгновенная оценка (0,2 секунды)** Лимбическая система мгновенно скани…
+- llm_enrichment:
+  - summary: Процесс реагирования на триггеры включает в себя мгновенную оценку ситуации, основанную на предыдущем опыте, что может привести к эмоциональной реакции.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::f6cbdc2c-0bf7-4d5e-a828-b305fdb72c89 / f6cbdc2c-0bf7-4d5e-a828-b305fdb72c89
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Оранжевый: достижение и успех
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Оценка безопасности использования, Проверка на соответствие контексту
+- recommended_action: defer
+- safe_preview: **Мантра:** «Я могу добиться всего, если приложу усилия. Результат важнее правил». **Что важно:** личный успех, конкуренция, рациональность, прогресс. Законы природы познаваемы и используемы. Наука, технологии, рынок — инструменты достижен…
+- llm_enrichment:
+  - summary: Данный блок фокусируется на личном успехе и стратегическом мышлении, подчеркивая важность усилий и рационального подхода к достижению целей. Он рассматривает использование науки и технологий как инструменты для прогре...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::fb24a1e9-848d-452d-a160-d4020fa727cd / fb24a1e9-848d-452d-a160-d4020fa727cd
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 2. Три базовых инстинкта: карта управления > Инстинкт самосохранения
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие безопасности, проверка на наличие потенциально тревожного контента
+- recommended_action: defer
+- safe_preview: **Базовый вопрос:** «Достаточно ли у меня ресурсов, чтобы выжить?» **Что он отслеживает:** безопасность, здоровье, деньги, еда, комфорт, жильё, энергия, стабильность. Постоянный фоновый мониторинг: «у меня достаточно? я в безопасности? что…
+- llm_enrichment:
+  - summary: Пользователь задает вопрос о достаточности ресурсов для выживания, что отражает его стремление к безопасности и стабильности. Важно отслеживать состояние здоровья, финансов, продовольствия и жилья.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::fb92553a-a1b4-4c6f-81c5-47f29c3e2dd6 / fb92553a-a1b4-4c6f-81c5-47f29c3e2dd6
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > Практикум к главе 5: семь практик работы с тенью > Практика 2: Список восхищения
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка на эмоциональную целостность, Убедиться в отсутствии директивных указаний
+- recommended_action: defer
+- safe_preview: **Цель:** найти золотую тень — вытесненные позитивные качества. **Время:** 20–30 минут. Та же структура — но теперь про восхищение. Напиши имена или описания людей, которыми ты восхищаешься непропорционально. Не просто «уважаю» — а что-то…
+- llm_enrichment:
+  - summary: Исследование восхищения и вытесненных позитивных качеств, направленное на выявление личных качеств, которые вызывают сильные эмоции и стремление к их достижению.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

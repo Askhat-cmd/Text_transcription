@@ -1,0 +1,271 @@
+# Architect Review Batch 03 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::5be3f5b0-a073-4c15-8ed6-429ad22c029b / 5be3f5b0-a073-4c15-8ed6-429ad22c029b
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 1. Что такое программа «несовершенное Я» > Операционная система страдания
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, обеспечение соответствия этическим стандартам, проверка точности психологических интерпретаций
+- recommended_action: defer
+- safe_preview: Представь, что твой мозг — это компьютер. В возрасте примерно от 2 до 6 лет на этот компьютер устанавливается операционная система. Но это не Windows и не macOS. Это **OS «Я недостаточен»**. Эта операционная система запускает один базовый…
+- llm_enrichment:
+  - summary: В раннем возрасте формируется восприятие себя как недостаточного, что может влиять на дальнейшее развитие личности и самооценку. Этот паттерн может стать основой для различных психологических проблем и потребности в с...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::5d1fc4fd-0fe3-430e-be38-37aa453a5bf0 / 5d1fc4fd-0fe3-430e-be38-37aa453a5bf0
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. *Каким тоном он говорил?*
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие стандартам коммуникации, Потенциально чувствительный контент
+- recommended_action: defer
+- safe_preview: - Обвиняющим? — «ты снова облажался» - Тревожным? — «всё идёт не так, надо срочно что-то делать» - Сравнивающим? — «у других получается, а у тебя нет» - Требующим? — «нужно быстрее, больше, лучше»
+- llm_enrichment:
+  - summary: В данном контексте рассматриваются различные типы обвинений и их эмоциональная окраска. Важно понимать, как такие фразы могут влиять на восприятие и взаимодействие в команде.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::5d99473f-b1e2-4f20-b169-1e578c64fd51 / 5d99473f-b1e2-4f20-b169-1e578c64fd51
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 10. НейроСталкинг — жизнь из присутствия > 4. Если запустил — это не провал. Это информация. Снова 90 секунд.
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка точности научных данных, проверка на соответствие этическим стандартам
+- recommended_action: defer
+- safe_preview: Это работает. Не потому что красиво звучит — потому что так устроена нейрохимия. ***
+- llm_enrichment:
+  - summary: Нейрохимия играет ключевую роль в формировании нашего восприятия и поведения. Понимание этих процессов может помочь в разработке более эффективных стратегий для улучшения психического здоровья и благополучия.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6248b3d0-7fd6-4d9e-8b0b-5bc604b0bf98 / 6248b3d0-7fd6-4d9e-8b0b-5bc604b0bf98
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя > 2. Три механизма, которые лепят твою версию реальности
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, обеспечение соответствия контексту, проверка точности теоретических интерпретаций
+- recommended_action: defer
+- safe_preview: Коржибский описал язык как главный инструмент искажения. Нейролингвистика пошла дальше и выделила три базовых механизма, через которые мозг превращает сырую реальность в «личную версию»: ***
+- llm_enrichment:
+  - summary: Коржибский подчеркивает, что язык является ключевым инструментом искажения восприятия реальности. Нейролингвистика развивает эту идею, выделяя три основных механизма, через которые мозг интерпретирует окружающий мир.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6440c58d-424c-4d15-9856-0775b2baa161 / 6440c58d-424c-4d15-9856-0775b2baa161
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 5. *Будущее* — сколько тревоги занимает мысль о том, что будет? 0, 5, 10?
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие этическим стандартам, Проверка на чувствительность содержания
+- recommended_action: defer
+- safe_preview: После заполнения — посмотри на карту целиком. Три вопроса: - *Где больше всего страдания?* - *Это страдание «живое» — то есть связано с реальной текущей ситуацией — или оно «хроническое», фоновое, непонятно откуда?* - *Есть ли области, где…
+- llm_enrichment:
+  - summary: Анализ эмоционального состояния пользователя с акцентом на области страдания и благополучия. Важно исследовать, где страдания наиболее выражены и как они соотносятся с текущими и хроническими переживаниями.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::648f6960-e5cf-4558-a111-fcd668b2096a / 648f6960-e5cf-4558-a111-fcd668b2096a
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 10. НейроСталкинг — жизнь из присутствия > Безусловная любовь — не концепция и не чувство
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретации, потенциальная сложность концепции
+- recommended_action: defer
+- safe_preview: Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое. Здесь — другое. Безусловная любовь в понимании НеоСталкинга — это не эмоция. Не решение «любить всех». Не духовная практика. Это…
+- llm_enrichment:
+  - summary: Безусловная любовь в контексте НеоСталкинга рассматривается как качество восприятия, а не как эмоция или духовная практика. Это состояние, возникающее при отстранении от программы.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::650e5ee6-4072-449e-9b93-bc2729e553db / 650e5ee6-4072-449e-9b93-bc2729e553db
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя > 2. Три механизма, которые лепят твою версию реальности > Механизм 1: Удаление (Deletion)
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, обеспечение контекстуальной корректности, проверка точности интерпретаций
+- recommended_action: defer
+- safe_preview: Мозг **удаляет** часть информации — просто не замечает её. Как в примере с Бекзатом: похвала была — мозг её удалил. Удаление работает по принципу: **важно то, что соответствует текущей программе**. Это объясняет, почему два человека в одно…
+- llm_enrichment:
+  - summary: Мозг фильтрует информацию в зависимости от текущих приоритетов и программ, что приводит к различным восприятиям одних и тех же событий у разных людей.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::677843aa-2939-4b07-9a57-d2fe14337291 / 677843aa-2939-4b07-9a57-d2fe14337291
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 2. Химия клетки: почему мозг зависит от страдания
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на актуальность теоретических концепций
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Данный блок содержит теоретическую информацию, которая может быть использована для обогащения контекста написания. Он предлагает идеи и концепции, которые могут быть полезны для дальнейшего анализа и разработки.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6af86446-6b2e-4fed-a4b2-c44cc378e1fa / 6af86446-6b2e-4fed-a4b2-c44cc378e1fa
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 3. **Что страх говорит тебе «нельзя» — что на самом деле «важно»?**
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на точность интерпретации, потенциальные нюансы в контексте
+- recommended_action: defer
+- safe_preview: Посмотри на список целиком. Есть ли тема, которая повторяется? Один центральный страх, который порождает несколько других? ***
+- llm_enrichment:
+  - summary: Анализ повторяющихся тем и центральных страхов в контексте теории. Выявление взаимосвязей между различными страхами и их корнями.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6b2cc0f2-32e5-4b1e-8ae1-82e611b285aa / 6b2cc0f2-32e5-4b1e-8ae1-82e611b285aa
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие внутренним стандартам, Проверка на возможность применения в конкретных контекстах
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Представленный теоретический блок предлагает анализ и рекомендации по улучшению процессов управления и взаимодействия в организации. Он подчеркивает важность гибкости и адаптивности в управлении, а также необходимость...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::6bf8b1df-463c-4fd0-9e34-289518dd849d / 6bf8b1df-463c-4fd0-9e34-289518dd849d
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя > 3. *Версия наблюдателя* — как бы это увидел человек, который тебя знает и искренне за тебя рад?
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неправильной интерпретации
+- recommended_action: defer
+- safe_preview: После трёх версий — посмотри на них рядом. Версия программы — это правда о реальности? Или это одна из нескольких возможных интерпретаций? ***
+- llm_enrichment:
+  - summary: Обсуждение различных версий программы и их интерпретаций в контексте реальности. Важно рассмотреть, как разные версии могут влиять на восприятие и понимание информации.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

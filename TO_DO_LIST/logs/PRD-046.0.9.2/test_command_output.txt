@@ -1,0 +1,591 @@
+﻿[PRD-046.0.9.2 test run started 2026-05-16T16:04:00.7804078+03:00]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_kb_review_contracts.py -q ===
+.......                                                                  [100%]
+7 passed in 0.13s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_kb_review_decisions.py -q ===
+........                                                                 [100%]
+8 passed in 0.13s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_post_reprocess_review_prepare.py -q ===
+...                                                                      [100%]
+3 passed in 0.96s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_post_reprocess_review_decisions_validator.py -q ===
+.............                                                            [100%]
+13 passed in 0.15s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_architect_review_batches.py -q ===
+..                                                                       [100%]
+2 passed in 0.68s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests/test_architect_decisions_overlay.py -q ===
+...                                                                      [100%]
+3 passed in 0.12s
+[exit_code=0]
+
+=== CMD: python -m pytest Bot_data_base/tests -q ===
+
+=================================== ERRORS ====================================
+___ ERROR collecting Bot_data_base/tests/integration/test_api_endpoints.py ____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\integration\test_api_endpoints.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\integration\test_api_endpoints.py:7: in <module>
+    from api.main import app
+Bot_data_base\api\main.py:1: in <module>
+    from fastapi import FastAPI, Request
+E   ModuleNotFoundError: No module named 'fastapi'
+___ ERROR collecting Bot_data_base/tests/integration/test_book_pipeline.py ____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\integration\test_book_pipeline.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\integration\test_book_pipeline.py:7: in <module>
+    from pipeline_runner import PipelineRunner
+Bot_data_base\pipeline_runner.py:21: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+__ ERROR collecting Bot_data_base/tests/integration/test_youtube_pipeline.py __
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\integration\test_youtube_pipeline.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\integration\test_youtube_pipeline.py:7: in <module>
+    from pipeline_runner import PipelineRunner
+Bot_data_base\pipeline_runner.py:21: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_admin_chroma_runtime_consistency.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_chroma_runtime_consistency.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_chroma_runtime_consistency.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_____ ERROR collecting Bot_data_base/tests/test_admin_consistency_gate.py _____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_consistency_gate.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_consistency_gate.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_admin_dashboard_enrichment_state.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_dashboard_enrichment_state.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_dashboard_enrichment_state.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+__ ERROR collecting Bot_data_base/tests/test_admin_dashboard_no_mutation.py ___
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_dashboard_no_mutation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_dashboard_no_mutation.py:8: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_admin_dashboard_runtime_contract.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_dashboard_runtime_contract.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_dashboard_runtime_contract.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+____ ERROR collecting Bot_data_base/tests/test_admin_dashboard_summary.py _____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_admin_dashboard_summary.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_admin_dashboard_summary.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_api_query_enrichment_metadata.py __
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_api_query_enrichment_metadata.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_api_query_enrichment_metadata.py:25: in <module>
+    from api.routes.query import _build_chunk_result
+Bot_data_base\api\routes\query.py:6: in <module>
+    from fastapi import APIRouter, HTTPException
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_api_query_internal_only_filter.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_api_query_internal_only_filter.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_api_query_internal_only_filter.py:7: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+___ ERROR collecting Bot_data_base/tests/test_chroma_enrichment_metadata.py ___
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_chroma_enrichment_metadata.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_chroma_enrichment_metadata.py:4: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+___ ERROR collecting Bot_data_base/tests/test_chroma_metadata_governance.py ___
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_chroma_metadata_governance.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_chroma_metadata_governance.py:4: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+________ ERROR collecting Bot_data_base/tests/test_chroma_recovery.py _________
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_chroma_recovery.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_chroma_recovery.py:4: in <module>
+    import pipeline_runner
+Bot_data_base\pipeline_runner.py:21: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_chroma_reindex_after_candidate_apply.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_chroma_reindex_after_candidate_apply.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_chroma_reindex_after_candidate_apply.py:5: in <module>
+    from tools import controlled_candidate_apply
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_controlled_candidate_apply_no_unplanned_mutation.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_controlled_candidate_apply_no_unplanned_mutation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_controlled_candidate_apply_no_unplanned_mutation.py:3: in <module>
+    from tools.controlled_candidate_apply import verify_no_unplanned_mutation
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_controlled_candidate_apply_plan.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_controlled_candidate_apply_plan.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_controlled_candidate_apply_plan.py:5: in <module>
+    from tools.controlled_candidate_apply import build_apply_plan
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_controlled_candidate_apply_preflight.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_controlled_candidate_apply_preflight.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_controlled_candidate_apply_preflight.py:3: in <module>
+    from tools.controlled_candidate_apply import build_apply_preflight
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_ ERROR collecting Bot_data_base/tests/test_controlled_candidate_apply_registry.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_controlled_candidate_apply_registry.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_controlled_candidate_apply_registry.py:5: in <module>
+    from tools.controlled_candidate_apply import build_registry_update
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+_____ ERROR collecting Bot_data_base/tests/test_legacy_sd_decommission.py _____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_legacy_sd_decommission.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_legacy_sd_decommission.py:7: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_________ ERROR collecting Bot_data_base/tests/test_query_endpoint.py _________
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_query_endpoint.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_query_endpoint.py:5: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+____ ERROR collecting Bot_data_base/tests/test_query_governance_schema.py _____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_query_governance_schema.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_query_governance_schema.py:25: in <module>
+    from api.routes.query import _build_chunk_result
+Bot_data_base\api\routes\query.py:6: in <module>
+    from fastapi import APIRouter, HTTPException
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_registry_delete_hygiene_policy.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_registry_delete_hygiene_policy.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_registry_delete_hygiene_policy.py:7: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_registry_delete_no_production_mutation.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_registry_delete_no_production_mutation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_registry_delete_no_production_mutation.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_registry_error_render_contract.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_registry_error_render_contract.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_registry_error_render_contract.py:3: in <module>
+    from api.routes import registry
+Bot_data_base\api\routes\registry.py:8: in <module>
+    from fastapi import APIRouter, HTTPException
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_registry_policy_row_isolation.py __
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_registry_policy_row_isolation.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_registry_policy_row_isolation.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+___ ERROR collecting Bot_data_base/tests/test_registry_runtime_contract.py ____
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_registry_runtime_contract.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_registry_runtime_contract.py:6: in <module>
+    from fastapi.testclient import TestClient
+E   ModuleNotFoundError: No module named 'fastapi'
+_ ERROR collecting Bot_data_base/tests/test_review_queue_staleness_after_reprocess.py _
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\test_review_queue_staleness_after_reprocess.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\test_review_queue_staleness_after_reprocess.py:5: in <module>
+    from tools.controlled_candidate_apply import build_review_queue_staleness_report
+Bot_data_base\tools\controlled_candidate_apply.py:25: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+______ ERROR collecting Bot_data_base/tests/unit/test_chroma_manager.py _______
+ImportError while importing test module 'C:\My_practice\Text_transcription\Bot_data_base\tests\unit\test_chroma_manager.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Bot_data_base\tests\unit\test_chroma_manager.py:4: in <module>
+    from storage.chroma_manager import ChromaManager
+Bot_data_base\storage\chroma_manager.py:9: in <module>
+    from sentence_transformers import SentenceTransformer
+E   ModuleNotFoundError: No module named 'sentence_transformers'
+=========================== short test summary info ===========================
+ERROR Bot_data_base/tests/integration/test_api_endpoints.py
+ERROR Bot_data_base/tests/integration/test_book_pipeline.py
+ERROR Bot_data_base/tests/integration/test_youtube_pipeline.py
+ERROR Bot_data_base/tests/test_admin_chroma_runtime_consistency.py
+ERROR Bot_data_base/tests/test_admin_consistency_gate.py
+ERROR Bot_data_base/tests/test_admin_dashboard_enrichment_state.py
+ERROR Bot_data_base/tests/test_admin_dashboard_no_mutation.py
+ERROR Bot_data_base/tests/test_admin_dashboard_runtime_contract.py
+ERROR Bot_data_base/tests/test_admin_dashboard_summary.py
+ERROR Bot_data_base/tests/test_api_query_enrichment_metadata.py
+ERROR Bot_data_base/tests/test_api_query_internal_only_filter.py
+ERROR Bot_data_base/tests/test_chroma_enrichment_metadata.py
+ERROR Bot_data_base/tests/test_chroma_metadata_governance.py
+ERROR Bot_data_base/tests/test_chroma_recovery.py
+ERROR Bot_data_base/tests/test_chroma_reindex_after_candidate_apply.py
+ERROR Bot_data_base/tests/test_controlled_candidate_apply_no_unplanned_mutation.py
+ERROR Bot_data_base/tests/test_controlled_candidate_apply_plan.py
+ERROR Bot_data_base/tests/test_controlled_candidate_apply_preflight.py
+ERROR Bot_data_base/tests/test_controlled_candidate_apply_registry.py
+ERROR Bot_data_base/tests/test_legacy_sd_decommission.py
+ERROR Bot_data_base/tests/test_query_endpoint.py
+ERROR Bot_data_base/tests/test_query_governance_schema.py
+ERROR Bot_data_base/tests/test_registry_delete_hygiene_policy.py
+ERROR Bot_data_base/tests/test_registry_delete_no_production_mutation.py
+ERROR Bot_data_base/tests/test_registry_error_render_contract.py
+ERROR Bot_data_base/tests/test_registry_policy_row_isolation.py
+ERROR Bot_data_base/tests/test_registry_runtime_contract.py
+ERROR Bot_data_base/tests/test_review_queue_staleness_after_reprocess.py
+ERROR Bot_data_base/tests/unit/test_chroma_manager.py
+!!!!!!!!!!!!!!!!!! Interrupted: 29 errors during collection !!!!!!!!!!!!!!!!!!!
+29 errors in 4.16s
+[exit_code=2]
+
+=== CMD: python -m pytest bot_psychologist/tests/test_knowledge_policy.py -q ===
+........                                                                 [100%]
+8 passed in 0.26s
+[exit_code=0]
+
+=== CMD: python -m pytest bot_psychologist/tests/multiagent -q ===
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 92%]
+..................                                                       [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+tests/multiagent/test_memory_retrieval_knowledge_policy.py: 1 warning
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+tests/multiagent/test_thread_manager.py: 4 warnings
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+tests/multiagent/test_thread_storage.py: 24 warnings
+tests/multiagent/test_writer_contract.py: 1 warning
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+tests/multiagent/test_memory_retrieval_knowledge_policy.py: 1 warning
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+tests/multiagent/test_thread_manager.py: 4 warnings
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+tests/multiagent/test_thread_storage.py: 24 warnings
+tests/multiagent/test_writer_contract.py: 1 warning
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_low_resource_continuity.py: 11 warnings
+tests/multiagent/test_thread_manager.py: 5 warnings
+tests/multiagent/test_thread_manager_diagnostics.py: 10 warnings
+tests/multiagent/test_thread_manager_pattern_core.py: 5 warnings
+tests/multiagent/test_thread_manager_response_mode.py: 4 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:358: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py: 70 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\storage\session_manager.py:399: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+    "embedding": pickle.loads(item["embedding"]),
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+  C:\Users\user\AppData\Roaming\Python\Python313\site-packages\_pytest\stash.py:108: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+    del self._storage[key]
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/multiagent/test_orchestrator_e2e.py: 17 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_orchestrator_e2e.py::test_e2e_11_new_thread_archived
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_orchestrator_knowledge_debug_redaction.py::test_orchestrator_knowledge_debug_redaction
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_knowledge_debug_redaction.py:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_returns_dict_and_expected_top_keys
+tests/multiagent/test_quality_trace.py::test_quality_trace_marks_questions_list_and_generic_risk
+tests/multiagent/test_quality_trace.py::test_quality_trace_confidence_and_continuity_buckets
+tests/multiagent/test_quality_trace.py::test_quality_trace_practice_mode_flag_when_no_step
+tests/multiagent/test_quality_trace.py::test_quality_trace_contains_writer_move_compliance_trace
+tests/multiagent/test_quality_trace.py::test_quality_trace_has_no_raw_user_text_or_raw_context
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_quality_trace.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_safety_detection.py::test_sd_07_safe_override_mode_activated
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_safety_detection.py:76: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:64: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:65: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_manager.py::test_return_to_old_restores_archived_thread
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager.py:94: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_low_continuity_new_thread_flag
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_followup_marker_reason
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_branch_marker_hit
+tests/multiagent/test_thread_manager_diagnostics.py::test_low_resource_continuation_marker_diagnostics
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_diagnostics.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_positive
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_negative_unrelated
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_branch_priority
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_diagnostics.py:41: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_manager_pattern_core.py::test_continue_preserves_existing_pattern_core
+tests/multiagent/test_thread_manager_pattern_core.py::test_safety_patch_preserves_pattern_core_and_sets_safety_need
+tests/multiagent/test_thread_manager_pattern_core.py::test_diagnostics_contains_semantic_frame_block
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_pattern_core.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_state_contracts.py::test_thread_state_updated_not_earlier_than_created
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_contracts.py:67: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created = datetime.utcnow()
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:43: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "created_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:44: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "updated_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "created_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "updated_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_from_dict_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:74: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "archived_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_invalid_active_frame_is_normalized
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:89: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "archived_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\thread_storage.py:87: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_storage_persistence.py::test_ts_01_save_then_load_same_instance
+tests/multiagent/test_thread_storage_persistence.py::test_ts_02_save_then_load_new_instance
+tests/multiagent/test_thread_storage_persistence.py::test_ts_05_continuity_scenario
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_storage_persistence.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:40: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:78: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_llm_client_compat.py::test_writer_uses_chat_compat_when_responses_missing
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_llm_client_compat.py:47: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_llm_client_compat.py::test_writer_uses_chat_compat_when_responses_missing
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_llm_client_compat.py:48: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+234 passed, 384 warnings in 8.14s
+[exit_code=0]
+
+[PRD-046.0.9.2 test run finished 2026-05-16T16:04:30.4888524+03:00]

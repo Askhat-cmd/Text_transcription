@@ -40,6 +40,7 @@
 | PRD-046.0.9-RUN1-HF3 | Registry Runtime Render Fix + Admin Data Consistency Gate v1 | done | f0b7078 | registry row-isolation + safe Chroma source-exists fallback + explicit registry loading/error/empty states; consistency gate passed (`247/247`, review `87`) | TO_DO_LIST/reports/PRD-046.0.9-RUN1-HF3_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9.1 | Human Review Decisions for Post-Reprocess Enrichment v1 | done | 4331da8 | delivered fresh-queue review decisioning layer (manifest/workbench/template/validator/no-mutation/tests) without production mutation; detected queue/block-id alignment blocker (`87` missing in current `229` blocks snapshot) | TO_DO_LIST/reports/PRD-046.0.9.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.9.1-HF1 | Blocks Snapshot Alignment Audit / Restore v1 | done | 7115d62 | added alignment audit+restore tooling, restored blocks snapshot to `247` with backup proof, enabled strict `--require-aligned` gate, rerun achieved queue coverage `87/87` | TO_DO_LIST/reports/PRD-046.0.9.1-HF1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.9.2 | Architect Semantic Review Pass v1 | done | pending_after_main_push | prepared sanitized architect review batches (`87` items, `8` files), created architect decisions template/overlay, added overlay validator with coverage/apply-ready flags, generated no-mutation proof (`ready_for_architect_review=true`, `apply_ready=false`) | TO_DO_LIST/reports/PRD-046.0.9.2_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

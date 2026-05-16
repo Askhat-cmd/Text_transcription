@@ -1,0 +1,271 @@
+# Architect Review Batch 07 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::d4b3595f-b34e-47d1-ae3f-c5b293082f3c / d4b3595f-b34e-47d1-ae3f-c5b293082f3c
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 2. Химия клетки: почему мозг зависит от страдания > 1. Молекулярный след памяти
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на точность интерпретаций, Потенциальные искажения в представлении информации
+- recommended_action: defer
+- safe_preview: Начнём с фундамента. Каждый раз, когда ты что-то переживаешь — мозг записывает не само событие. Он записывает **твоё психоэмоциональное отношение к нему**. Это ключевое различие. Условно говоря: два человека попадают в одну и ту же ситуаци…
+- llm_enrichment:
+  - summary: Психоэмоциональное восприятие событий влияет на формирование воспоминаний и самооценки. Разные реакции на одни и те же ситуации могут привести к различным внутренним убеждениям.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d527d369-beb2-4113-b370-cb2738e76b55 / d527d369-beb2-4113-b370-cb2738e76b55
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 1. Что такое программа «несовершенное Я» > Почему программа так устойчива
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, обеспечение соответствия безопасности, проверка точности интерпретации
+- recommended_action: defer
+- safe_preview: Три причины, по которым программа «несовершенное Я» держится так крепко: **1. Нейропластичность в критический период** Мозг ребёнка — пластилин. Всё, что записалось в возрасте от 2 до 6 лет, записалось **на уровне базовой архитектуры**. Эт…
+- llm_enrichment:
+  - summary: Программа 'несовершенное Я' сохраняется благодаря нейропластичности в критический период и эмоциональной окраске, что влияет на формирование базовой архитектуры мозга и восприятие информации.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d60e5a31-835c-4ce9-b14b-40b1706b6353 / d60e5a31-835c-4ce9-b14b-40b1706b6353
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Оценка качества рекомендаций, Проверка на соответствие безопасности
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Этот блок предоставляет рекомендации по использованию диагностических линз для улучшения контекста написания. Он акцентирует внимание на необходимости соблюдения безопасности и требует дополнительной проверки.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d8911af4-919c-4ea5-808c-5efada1eb0ca / d8911af4-919c-4ea5-808c-5efada1eb0ca
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка на соответствие безопасности, Убедиться в отсутствии директивных указаний
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Предоставление рекомендаций по улучшению теоретических основ в контексте управления и анализа. Фокус на безопасных подходах к обогащению знаний без изменения существующих структур власти.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d9f6dfb9-e6fe-4417-8df3-9c8991661af4 / d9f6dfb9-e6fe-4417-8df3-9c8991661af4
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > 6. Как тень проявляется в теле
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка точности интерпретации исследований.
+- recommended_action: defer
+- safe_preview: Вытесненное содержание тени хранится не только в психике — оно хранится в теле. Это не метафора — это нейрофизиология. Исследования **Бессел ван дер Колка**, автора книги «Тело помнит всё», показали: травматические и вытесненные эмоциональ…
+- llm_enrichment:
+  - summary: Исследования показывают, что вытесненные эмоциональные паттерны могут проявляться в теле через хроническое напряжение, что связано с нейрофизиологией.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::dca9489e-c183-4b91-b55d-9f05372898cb / dca9489e-c183-4b91-b55d-9f05372898cb
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Бирюзовый: холизм и бытие
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка на соответствие безопасности, Убедиться в корректности интерпретации концепций
+- recommended_action: defer
+- safe_preview: **Мантра:** «Жизнь сакральна. Я — часть живого целого». **Что важно:** глобальные живые системы, сознание как основа реальности, холистическое восприятие. Разграничение «я» и «мир» ощущается как искусственное. Это редкое состояние — не кон…
+- llm_enrichment:
+  - summary: Тема рассматривает сакральность жизни и единство с глобальными живыми системами, подчеркивая важность холистического восприятия реальности. Ощущение единства между 'я' и 'миром' представляется как живое переживание, а...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::e0d0659a-e21e-467c-9f22-97cdd4721ced / e0d0659a-e21e-467c-9f22-97cdd4721ced
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > Символическое питание: почему мы едим, но не насыщаемся
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неверной интерпретации концепции
+- recommended_action: defer
+- safe_preview: Есть ещё один уровень информационного метаболизма, который почти никто не замечает. Мы живём в мире, где информации бесконечно много. Новости, соцсети, подкасты, книги, разговоры, видео. Каждый день — терабайты входящего. И мы потребляем в…
+- llm_enrichment:
+  - summary: Обсуждается концепция символического питания, которая относится к быстрому и поверхностному потреблению информации в современном мире, где доступно огромное количество контента.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::e49d8638-4f2d-4185-8e50-1726081a1654 / e49d8638-4f2d-4185-8e50-1726081a1654
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 2. Архитектура спирали: восемь уровней сознания > Синий: порядок и долг
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, оценка соответствия контексту, проверка точности интерпретации
+- recommended_action: defer
+- safe_preview: **Мантра:** «Есть правила — и им нужно следовать. Есть высший смысл». **Что важно:** дисциплина, ответственность, иерархия, долг. Правильное и неправильное — чётко разграничены. Есть высший авторитет: Бог, закон, традиция, государство. Жер…
+- llm_enrichment:
+  - summary: Текст подчеркивает важность дисциплины, ответственности и иерархии в обществе. Он акцентирует внимание на необходимости следовать установленным правилам и высшему авторитету, который может быть представлен в виде Бога...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::e796cd02-6301-489f-906b-716f76e8cd63 / e796cd02-6301-489f-906b-716f76e8cd63
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 6. Пропасть между потребностями и бытием: анестетическая депрессия
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Проверка на точность интерпретации
+- recommended_action: defer
+- safe_preview: Здесь необходимо остановиться отдельно. Это то место, которое не описано в большинстве книг по спиральной динамике — но именно здесь застревают умные, ищущие люди. Между **зелёным** и **жёлтым** — не просто очередной переход. Это **разрыв…
+- llm_enrichment:
+  - summary: Переход между зелёным и жёлтым уровнями в спиральной динамике представляет собой значимый разрыв, который требует глубокого понимания и осознания. Этот этап может быть сложным для людей, стремящихся к самосовершенство...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::e7b8c0fd-aafd-47df-85d5-603b2ce5ae7f / e7b8c0fd-aafd-47df-85d5-603b2ce5ae7f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 8. Страх потери идентичности: что за ним стоит
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость уточнения контекста, проверка на соответствие безопасности
+- recommended_action: defer
+- safe_preview: Вернёмся к лиссофобии — страху потерять себя при исследовании себя. Потому что это не просто страх, о котором можно рассказать и пойти дальше. Это структурный вопрос всей работы с сознанием. Когда человек начинает видеть свои программы — о…
+- llm_enrichment:
+  - summary: Лиссофобия представляет собой глубокий страх, связанный с самопознанием и осознанием своих автоматических реакций и убеждений. Это явление может быть как освобождающим, так и пугающим, поскольку требует переосмысления...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::ebf047f2-c678-40a1-8747-b98dfae1a2ea / ebf047f2-c678-40a1-8747-b98dfae1a2ea
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. Пять драйверов выживания > Драйвер 1: «Будь сильным»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неверного понимания
+- recommended_action: defer
+- safe_preview: **Базовая установка:** «Показывать слабость = опасно» Ребёнок плачет. Родитель говорит: «Не реви. Ты же мальчик» / «Хватит ныть, ты уже большая». Или просто игнорирует — показывает всем своим видом, что чувства неуместны. Мозг ребёнка дела…
+- llm_enrichment:
+  - summary: Детские эмоции часто подавляются родителями, что формирует у ребенка убеждение о неприемлемости своих чувств. Это может привести к трудностям во взрослом возрасте, включая неспособность просить о помощи.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

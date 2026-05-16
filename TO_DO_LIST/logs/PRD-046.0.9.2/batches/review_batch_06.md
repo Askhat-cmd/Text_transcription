@@ -1,0 +1,271 @@
+# Architect Review Batch 06 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::b70ae542-7b02-463b-bfc3-46bfd37a0a19 / b70ae542-7b02-463b-bfc3-46bfd37a0a19
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 5. Какой драйвер включился?
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие контексту, Потенциальные риски неверного понимания
+- recommended_action: defer
+- safe_preview: - «Будь сильным» — закрылся, не попросил помощи, сделал вид что всё нормально? - «Будь лучшим» — начал оправдываться, обесценил свой результат? - «Радуй других» — подавил своё, согласился с чужим? - «Старайся сильнее» — почувствовал, что с…
+- llm_enrichment:
+  - summary: Анализ поведения, связанного с внутренними конфликтами и социальным давлением, которое может привести к подавлению собственных эмоций и потребностей.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::b870528b-313c-46ef-b5a1-5266a4bedf2c / b870528b-313c-46ef-b5a1-5266a4bedf2c
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 8. Что делать с этим знанием
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие этическим стандартам, Потенциальные риски неправильного понимания
+- recommended_action: defer
+- safe_preview: Здесь — важная оговорка. Потому что знание о спиральной динамике может стать новым инструментом программы. Программа «несовершенное Я» немедленно захватывает эту модель и начинает использовать её для сортировки людей: «он — синий, с ним бе…
+- llm_enrichment:
+  - summary: Использование модели спиральной динамики в программе может привести к неправильной интерпретации и оценке людей, что создает риск социальной дистанции и предвзятости.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::bb6d02e4-e12c-4e53-adf3-e854c53f382b / bb6d02e4-e12c-4e53-adf3-e854c53f382b
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > Почему терапия не всегда помогает — и что с этим делать
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на точность научных данных, проверка на соответствие контексту
+- recommended_action: defer
+- safe_preview: Многие люди годами ходят на терапию — и при этом чувствуют, что топчутся на месте. «Я всё понимаю, но ничего не меняется». Это не значит, что терапия плохая. Это значит, что работа идёт преимущественно через **вербальный канал** — через сл…
+- llm_enrichment:
+  - summary: Терапия может не всегда приводить к изменениям, если работа ведется преимущественно через вербальный канал. Непереваренный опыт может храниться вне слов, что требует дополнительных подходов для обработки.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::bba54eed-9d56-461b-bf0c-bac28893ebb5 / bba54eed-9d56-461b-bf0c-bac28893ebb5
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > 6. Для тех, которые нельзя закрыть сейчас: сознательно «отметь» их как «не требующие немедленного решения». Мозгу нужно буквально это разрешение. > Практика 2: «Телесный архив»
+- chunk_type: practice
+- allowed_use: writer_context, practice_suggestion
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка на соответствие внутренним стандартам, Потенциальные риски неправильной интерпретации
+- recommended_action: defer
+- safe_preview: **Цель:** обнаружить, где в теле хранится непереваренный опыт. **Время:** 20–25 минут.
+- llm_enrichment:
+  - summary: Рекомендуется провести анализ текста для выявления непереваренного опыта, что может помочь в улучшении понимания и интеграции информации. Процесс займет 20–25 минут.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::c3757cbe-4cfc-4e47-9a78-5fb785654f28 / c3757cbe-4cfc-4e47-9a78-5fb785654f28
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > Практикум к главе 6: семь практик работы с инстинктами
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, проверка на точность и актуальность информации
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Данный блок содержит теоретическую информацию, которая может быть полезна для понимания определенных концепций. Он предназначен для использования в контексте написания и не должен использоваться в качестве прямой цитаты.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::cb02003e-69b1-46da-9935-d7c29f67640b / cb02003e-69b1-46da-9935-d7c29f67640b
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 2. Химия клетки: почему мозг зависит от страдания > Вводная часть
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, оценка подхода к чувствительным темам, проверка точности научных данных
+- recommended_action: defer
+- safe_preview: Ты уже видишь программу. Видишь драйверы. Замечаешь, как она включается. И всё равно — тянет обратно. Что-то тянет в знакомую тревогу, в привычное беспокойство, в старое «со мной что-то не так». Это не слабость воли. Это химия. В этой глав…
+- llm_enrichment:
+  - summary: Глава исследует связь между мозгом и страданием на молекулярном уровне, подчеркивая, что зависимость от негативных эмоций имеет биологическую основу.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::cb98214b-1a7d-45ab-87ec-4a801f1b391c / cb98214b-1a7d-45ab-87ec-4a801f1b391c
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > Вопросы и ответы
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретаций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: Работа с тенью движется линейно: «я вижу это в себе — и это меняет мои реакции». Фокус — на конкретных паттернах. Результат — реальные изменения в поведении и в отношениях. Простой тест: после сессии работы с тенью ты стал ближе к людям —…
+- llm_enrichment:
+  - summary: Работа с тенью предполагает линейное развитие самосознания, что может привести к изменениям в поведении и отношениях. Важно оценивать, как эти изменения влияют на близость к окружающим.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::cc979440-d02f-4bff-8920-59982597b4cc / cc979440-d02f-4bff-8920-59982597b4cc
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 7. 5–10 минут тишины в конце. Просто посиди с тем, что увидел. Не нужно ничего решать.
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретации эмоций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: > Пример: > *Ситуация:* начальник сказал, что отчёт можно было сделать лучше. > *Тело:* сжатие в груди, жар в лице. > *Мысль:* «я облажался». > *Реакция:* начал оправдываться, пообещал переделать. > *Драйвер:* «будь лучшим» + «старайся сил…
+- llm_enrichment:
+  - summary: Анализ ситуации, в которой человек испытывает давление из-за ожиданий начальства, приводит к эмоциональным реакциям и внутренним конфликтам. Важно осознавать свои паттерны поведения и реакции на критику.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::cf618346-aa79-49e4-8756-0be86e889897 / cf618346-aa79-49e4-8756-0be86e889897
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 5. Зачем программе нужно страдание > Страдание = идентичность
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки на чувствительность, потенциальные риски неправильного толкования
+- recommended_action: defer
+- safe_preview: Ещё более тонкая история: **твоё страдание стало частью твоей личности**. Ты так долго живёшь с ощущением «я недостаточен», что оно стало своим. Знакомым. И если убрать его — кто ты тогда? > Из сессии: > > — Устал страдать. Реально устал.…
+- llm_enrichment:
+  - summary: Исследование связи между личной идентичностью и хроническим страданием. Обсуждение того, как страдание может стать частью самовосприятия и как это влияет на желание изменить свою жизнь.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d13ec321-be95-42ff-8ebc-87e903f7e9ce / d13ec321-be95-42ff-8ebc-87e903f7e9ce
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > Кейс из сессии
+- chunk_type: case
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретации эмоциональных реакций, потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: > **Азиз**, 33 года, менеджер в крупной компании. > > — Я не понимаю, почему меня так сильно задевает критика. Я знаю, что она конструктивная. Я умом понимаю, что начальник прав. Но у меня внутри — как будто меня ударили. > > — Ты помнишь,…
+- llm_enrichment:
+  - summary: Клиент испытывает сильные эмоциональные реакции на конструктивную критику, что может быть связано с детскими переживаниями. Важно исследовать корни этих реакций и их влияние на текущую жизнь.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::d24c9855-d738-4ef6-aead-c6051be65dce / d24c9855-d738-4ef6-aead-c6051be65dce
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 4. Как я реагирую в этой области, когда что-то идёт не по плану? Что включается первым? > Практика 4: Конфликт через линзу уровней
+- chunk_type: practice
+- allowed_use: writer_context, practice_suggestion
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, оценка качества анализа, проверка на соответствие безопасности
+- recommended_action: defer
+- safe_preview: **Цель:** взять один реальный конфликт — и увидеть его как межуровневый, а не как личный. **Время:** 20–30 минут. Выбери один конфликт, в котором давно не можешь договориться. С партнёром, родителем, коллегой, другом. Ответь письменно:
+- llm_enrichment:
+  - summary: Анализ конфликта с фокусом на межуровневые аспекты, а не на личные. Участникам предлагается выбрать конфликт, который долго не удается разрешить, и описать его в письменной форме, чтобы выявить различные уровни взаимо...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

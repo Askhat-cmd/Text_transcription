@@ -1,0 +1,271 @@
+# Architect Review Batch 01 - PRD-046.0.9.2
+
+## Batch Context
+- source_prd: PRD-046.0.9.2
+- queue_source_prd: PRD-046.0.9-RUN1
+- items_in_batch: 11
+- decision_values: approved | rejected | needs_edit | defer
+
+## post_reprocess::66d0f456-a695-4c50-881c-0ce7643baf69 / 66d0f456-a695-4c50-881c-0ce7643baf69
+- source_id: 123__кузница_духа
+- heading_path: Глава 8: Информационный метаболизм — как ты переживаешь опыт > 6. Когда волна спала — сделай выдох. Заметь: ты на месте. Ничего не случилось. > Практика 4: «Незавершённый разговор»
+- chunk_type: practice
+- allowed_use: writer_context, practice_suggestion
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P1
+- review_reasons: low_confidence
+- recommended_action: needs_edit
+- safe_preview: **Цель:** переварить застрявшую ситуацию с другим человеком. **Время:** 30 минут.
+- llm_enrichment:
+  - summary: Рекомендуется использовать активное слушание и эмпатию для разрешения конфликтов. Важно создать безопасное пространство для открытого диалога, где обе стороны могут выразить свои чувства и мысли.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::00a10081-935a-4c17-a000-d91c7420ce7f / 00a10081-935a-4c17-a000-d91c7420ce7f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 2. Три базовых инстинкта: карта управления > Сексуальный инстинкт (инстинкт слияния)
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретаций, потенциальные риски неправильного понимания
+- recommended_action: defer
+- safe_preview: Важно сразу: это название вводит в заблуждение. Речь не только о сексе. Речь о **влечении к интенсивному единению** — с человеком, идеей, проектом, переживанием. **Базовый вопрос:** «Есть ли в моей жизни то, что захватывает меня целиком?»…
+- llm_enrichment:
+  - summary: Данный блок обсуждает концепцию влечения к интенсивному единению, акцентируя внимание на важности страсти и интенсивности в жизни. Он поднимает вопросы о том, что действительно захватывает человека и как это влияет на...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::02850e6b-1f41-4f94-8413-cdec8c45479b / 02850e6b-1f41-4f94-8413-cdec8c45479b
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 5. Тени: то, что мы не видим в себе > Вопросы и ответы
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки точности интерпретации, сложность темы
+- recommended_action: defer
+- safe_preview: *** **— Я знаю о своей тени уже много лет. Хожу на терапию, читал Юнга. Но она всё равно управляет. Почему знания недостаточно?** — Потому что тень живёт не в знании — она живёт в теле и в эмоциональной памяти. Знать про злость — и встрети…
+- llm_enrichment:
+  - summary: Понимание своей тени требует не только знания, но и эмоционального опыта. Эмоциональная память и телесные переживания играют ключевую роль в интеграции тени.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::0b3494cd-7acb-46cc-881b-7e478b72513e / 0b3494cd-7acb-46cc-881b-7e478b72513e
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 7. Работа со страхом: не избегать, а встречать
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, оценка безопасности рекомендаций, проверка точности научных терминов
+- recommended_action: defer
+- safe_preview: Ключевой принцип — и он идёт вразрез с большинством популярных советов: **Страх уменьшается не от избегания и не от силового преодоления. Он уменьшается от встречи.** Это нейрофизиологически обоснованный факт. Механизм называется **экспози…
+- llm_enrichment:
+  - summary: Страх уменьшается через встречу с ним в безопасных условиях, что подтверждается нейрофизиологическими исследованиями. Этот подход лежит в основе когнитивно-поведенческой терапии и называется экспозицией с реципрокным...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::0d62f141-572d-4386-b02d-d7f9a46fa27f / 0d62f141-572d-4386-b02d-d7f9a46fa27f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 7. Страх: союзник, которого ты превратил во врага > 4. Лиссофобия: страх потерять себя
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходима проверка точности интерпретации страха.
+- recommended_action: defer
+- safe_preview: Один из самых распространённых страхов, с которыми приходят на сессии Саламата — и один из наименее обсуждаемых публично. **Лиссофобия** — в широком смысле это страх сойти с ума, потерять контроль над собственным разумом. Но в практике раб…
+- llm_enrichment:
+  - summary: Лиссофобия представляет собой страх потери контроля над разумом и идентичностью, что является распространённым, но редко обсуждаемым страхом. Этот страх может затруднять работу с сознанием и требует внимательного подх...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2 / 0dbf25dc-c955-49f9-b3b8-eab4e3bbeed2
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 3. Карта — не территория: почему ты видишь не мир, а себя > Практикум к главе 3
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Оценка актуальности теоретических основ, Проверка на соответствие принципам безопасности
+- recommended_action: defer
+- safe_preview: ***
+- llm_enrichment:
+  - summary: Данный блок содержит теоретические основы, которые могут быть использованы для обогащения внутреннего консультирования. Он подчеркивает важность соблюдения принципов безопасности и конфиденциальности при работе с данн...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::116415f6-a0c4-4701-86d4-83be1d6a8b4f / 116415f6-a0c4-4701-86d4-83be1d6a8b4f
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 3. **Что бы я сделал, если бы не боялся?** Не «что правильно» — а что бы сделал без инстинктивного давления. > Практика 5: Вторичный инстинкт как ресурс
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка на соответствие контексту, потенциальные риски неверной интерпретации
+- recommended_action: defer
+- safe_preview: **Цель:** использовать менее развитые инстинктивные центры как дополнительный ресурс. **Время:** 20–30 минут как исследование. У каждого есть не только доминирующий инстинкт, но и наименее развитый — «слепое пятно». Именно он чаще всего со…
+- llm_enrichment:
+  - summary: Исследование менее развитых инстинктивных центров может помочь в понимании своих слабых сторон и улучшении личной эффективности. Важно осознать, что каждый человек имеет доминирующий инстинкт и менее развитый, который...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::1243381f-27fe-4f5e-95bb-605b8ba64c1a / 1243381f-27fe-4f5e-95bb-605b8ba64c1a
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 2. Пять драйверов выживания > Драйвер 3: «Радуй других»
+- chunk_type: quote
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, Необходимость проверки интерпретаций, Потенциальная чувствительность темы
+- recommended_action: defer
+- safe_preview: **Базовая установка:** «Мои потребности неважны. Важны потребности других» Ребёнок выражает своё желание. Родитель реагирует раздражением или игнорированием. Вывод: **«Мои желания создают проблемы. Чтобы быть любимым — надо угождать»**. Во…
+- llm_enrichment:
+  - summary: Данный блок описывает влияние детских установок на взрослую жизнь, где потребности индивида игнорируются в пользу угождения другим. Это может привести к трудностям в установлении границ и выражении собственных желаний.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::15b76643-6a4a-473f-8f9a-754f608bdc97 / 15b76643-6a4a-473f-8f9a-754f608bdc97
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот > 5. Зачем программе нужно страдание > Практикум к главе 1: семь точек входа
+- chunk_type: lens
+- allowed_use: writer_context, diagnostic_lens
+- safety_flags: not_for_direct_quote, requires_grounding
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходимость проверки интерпретации, потенциальная сложность в понимании
+- recommended_action: defer
+- safe_preview: Теория без практики — это просто информация. Ты можешь понять всё написанное выше, согласиться, кивнуть — и ничего не изменится. Потому что программа работает не на уровне понимания. Она работает на уровне **опыта**. То, что ниже — не упра…
+- llm_enrichment:
+  - summary: Данный блок подчеркивает важность практического опыта в обучении и исследовании. Он акцентирует внимание на том, что теоретические знания без практического применения не приводят к изменениям. Предлагается рассмотреть...
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::1a5e8a48-a1be-4c10-80e9-c2cb714503b2 / 1a5e8a48-a1be-4c10-80e9-c2cb714503b2
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 6. Инстинкты: древние хозяева современного человека > 4. В чём твоя **сила** в отношениях с людьми? Ты надёжный и практичный? Ты социально умный и чуткий? Ты интенсивный и глубокий?
+- chunk_type: theory
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote
+- lens_family: 
+- review_priority: P2
+- review_reasons: needs_human_review, необходима проверка интерпретаций, потенциальные ошибки в выводах
+- recommended_action: defer
+- safe_preview: Посмотри на ответы в целом. Где повторяется одна тема — там и доминирующий инстинкт.
+- llm_enrichment:
+  - summary: Анализируя ответы, можно выделить повторяющиеся темы, которые указывают на доминирующие инстинкты. Это может помочь в понимании мотивации и поведения участников.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:
+
+## post_reprocess::201ad0be-2cbf-4499-b92f-f0fc86ee09c0 / 201ad0be-2cbf-4499-b92f-f0fc86ee09c0
+- source_id: 123__кузница_духа
+- heading_path: ГЛАВА 4. Спиральная динамика: почему мы не можем понять друг друга > 4. Как я реагирую в этой области, когда что-то идёт не по плану? Что включается первым? > Практика 2: Найди уровень своей программы
+- chunk_type: case
+- allowed_use: writer_context
+- safety_flags: not_for_direct_quote, practice_requires_low_resource_check
+- lens_family: somatic
+- review_priority: P2
+- review_reasons: needs_human_review, Проверка на соответствие эмоциональной безопасности, Убедиться в отсутствии потенциально чувствительных тем
+- recommended_action: defer
+- safe_preview: **Цель:** определить, в каком «костюме» сейчас ходит твоя программа «несовершенное Я». **Время:** 10 минут. Вспомни, что в последние дни говорил внутренний голос программы. Не общие ощущения — конкретные фразы, которые ты слышал внутри. Те…
+- llm_enrichment:
+  - summary: Определение текущего состояния внутреннего голоса программы 'несовершенное Я' с акцентом на конкретные фразы и их эмоциональную окраску.
+  - tags: 
+  - lens_family_candidates: 
+  - use_when: 
+  - avoid_when: 
+  - self_contained_score: None
+  - self_contained_reason: 
+  - confidence: None
+- architect_decision_slot:
+- architect_reason_slot:
+- architect_edits_slot:

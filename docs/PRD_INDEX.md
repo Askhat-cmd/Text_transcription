@@ -49,7 +49,7 @@
 | PRD-046.0.7.2-HF3 | Dashboard Chroma Count Reconciliation / Strict Gate v1 | done_with_chroma_count_blocker | b59f791 | delivered strict live gate on `:8003` with `/api/registry/` compatibility checks and no historical-proof override; live dashboard still reports `chroma.count=229` vs expected `247`, so final status is honest blocker (`admin_runtime_status=blocked_chroma_count_mismatch`) with no production mutation/reindex | TO_DO_LIST/reports/PRD-046.0.7.2-HF3_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.7.2-HF4 | Chroma Count Recovery / Controlled Reindex v1 | done | b9b5b78 | implemented direct Chroma diagnostic + controlled focus-only reindex + HF4 orchestrator; confirmed source hygiene focus-only, restored direct Chroma to `247`, fixed dashboard count source via `collection.count()`, and closed strict live gate on `:8003` (`registry/dashboard/chroma=247`) without `all_blocks_merged`/`registry` mutation | TO_DO_LIST/reports/PRD-046.0.7.2-HF4_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.10 | BotDB Legacy SD Cleanup / Docs Alignment v1 | done | eb082e1 | disabled legacy SD by default with explicit legacy gate, detached dashboard readiness from SD, added `audit_legacy_sd_usage.py`, aligned `Bot_data_base/README.md` and created `Bot_data_base/docs/*`, runtime smoke `:8003` and no-mutation proof passed | TO_DO_LIST/reports/PRD-046.0.10_IMPLEMENTATION_REPORT.md |
-| PRD-046.0.10-HF1 | BotDB SD Config / Encoding Finalization v1 | done | pending_main_commit | finalized canonical SD defaults (`sd_labeling.enabled=false`), prevented env override persistence into `config.yaml`, added UTF-8 runtime smoke/check tooling and anti-mojibake tests/reports, runtime/no-mutation gates remained green (`1/247/247`) | TO_DO_LIST/reports/PRD-046.0.10-HF1_IMPLEMENTATION_REPORT.md |
+| PRD-046.0.10-HF1 | BotDB SD Config / Encoding Finalization v1 | done | f0561cd | finalized canonical SD defaults (`sd_labeling.enabled=false`), prevented env override persistence into `config.yaml`, added UTF-8 runtime smoke/check tooling and anti-mojibake tests/reports, runtime/no-mutation gates remained green (`1/247/247`) | TO_DO_LIST/reports/PRD-046.0.10-HF1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -57,6 +57,7 @@
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
 
 
 

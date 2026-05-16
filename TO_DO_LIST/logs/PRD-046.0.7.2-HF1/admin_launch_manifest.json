@@ -1,0 +1,17 @@
+{
+  "schema_version": "admin_launch_manifest_v1",
+  "source_prd": "PRD-046.0.7.2-HF1",
+  "generated_at": "2026-05-16T16:55:09.740661+00:00",
+  "admin_base_url": "http://127.0.0.1:8000",
+  "detected_existing_server": false,
+  "canonical_launch_command_found": true,
+  "canonical_launch_command": "C:\\My_practice\\Text_transcription\\Bot_data_base\\.venv\\Scripts\\python.exe -m uvicorn api.main:app --host 127.0.0.1 --port 8000",
+  "launch_command_source": "Bot_data_base\\README.md:14",
+  "server_launch_mode": "hf1_subprocess",
+  "server_started_by_hf1": true,
+  "startup_timeout_sec": 30,
+  "readiness_poll_attempts": 9,
+  "readiness_passed": false,
+  "shutdown_performed": true,
+  "shutdown_status": "ok"
+}

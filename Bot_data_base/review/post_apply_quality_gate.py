@@ -606,6 +606,7 @@ def build_no_mutation_proof(
         "registry_mutated": registry_hash_before != registry_hash_after,
         "provider_called": False,
         "chroma_reindex_performed": False,
+        "production_apply_performed": False,
     }
 
 
@@ -647,6 +648,10 @@ def build_quality_gate_snapshot(
         final_status = "passed"
     elif admin_runtime_status == "blocked_admin_api_unavailable":
         final_status = "done_with_admin_api_blocker"
+    elif admin_runtime_status == "blocked_admin_launch_failed":
+        final_status = "done_with_admin_launch_blocker"
+    elif admin_runtime_status == "failed_schema_validation":
+        final_status = "done_with_admin_schema_blocker"
     elif admin_runtime_status == "skipped_offline_explicit":
         final_status = "done_with_admin_api_blocker"
 

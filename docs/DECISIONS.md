@@ -149,3 +149,9 @@ Status: accepted
 Context: после controlled apply data-level проверки могли быть зелёными даже при `connection refused` на admin endpoints, что создавало ложный signal готовности перед следующим архитектурным этапом.
 Decision: post-apply quality gate обязан разделять data consistency и admin runtime consistency; при недоступности `/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/` статус должен быть `blocked_admin_api_unavailable` (или `skipped_offline_explicit` при явном offline-режиме), но не `passed`.
 Consequences: readiness к Diagnostic Center не может стать `true` без подтверждённой доступности admin/API runtime, а отчёты корректно отражают blocker вместо ложного green.
+
+## ADR-026 - Live admin runtime smoke uses dual launch mode with readiness polling
+Status: accepted
+Context: для post-apply readiness gate требуется проверять реальный runtime admin endpoints; при этом сервер может быть уже запущен пользователем или должен подниматься временно агентом.
+Decision: HF1 live smoke использует dual strategy: `external_existing` (не запускать второй сервер на том же порту) и `hf1_subprocess` (detected canonical launch command + startup polling + controlled shutdown). Если readiness не достигнут или запуск невозможен, статус обязан оставаться blocker (`blocked_admin_launch_failed`), без ложного green.
+Consequences: gate становится воспроизводимым и трассируемым (manifest + sanitized logs + explicit blocker reason) без мутации production данных.

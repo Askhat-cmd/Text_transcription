@@ -1,0 +1,208 @@
+﻿# PRD-046.0.7.2-HF1 test command output
+
+
+## python -m pytest Bot_data_base/tests/test_admin_live_smoke_launch_modes.py -q
+
+....                                                                     [100%]
+4 passed in 0.41s
+
+## python -m pytest Bot_data_base/tests/test_admin_live_smoke_schema_validation.py -q
+
+...                                                                      [100%]
+3 passed in 0.36s
+
+## python -m pytest Bot_data_base/tests/test_admin_live_smoke_quality_gate_logic.py -q
+
+....                                                                     [100%]
+4 passed in 0.27s
+
+## python -m pytest Bot_data_base/tests/test_admin_live_smoke_no_mutation.py -q
+
+.                                                                        [100%]
+1 passed in 0.31s
+
+## python -m pytest Bot_data_base/tests/test_post_apply_quality_gate_admin_api.py -q
+
+...                                                                      [100%]
+3 passed in 0.32s
+
+## python -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.49s
+
+## python -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 30%]
+........................................................................ [ 61%]
+........................................................................ [ 92%]
+..................                                                       [100%]
+============================== warnings summary ===============================
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+tests/multiagent/test_memory_retrieval_knowledge_policy.py: 1 warning
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+tests/multiagent/test_thread_manager.py: 4 warnings
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+tests/multiagent/test_thread_storage.py: 24 warnings
+tests/multiagent/test_writer_contract.py: 1 warning
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_agent_hot_swap.py: 2 warnings
+tests/multiagent/test_memory_retrieval_knowledge_policy.py: 1 warning
+tests/multiagent/test_post_cutover_model_guard.py: 2 warnings
+tests/multiagent/test_thread_manager.py: 4 warnings
+tests/multiagent/test_thread_state_contracts.py: 2 warnings
+tests/multiagent/test_thread_state_pattern_core.py: 2 warnings
+tests/multiagent/test_thread_storage.py: 24 warnings
+tests/multiagent/test_writer_contract.py: 1 warning
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_low_resource_continuity.py: 11 warnings
+tests/multiagent/test_thread_manager.py: 5 warnings
+tests/multiagent/test_thread_manager_diagnostics.py: 10 warnings
+tests/multiagent/test_thread_manager_pattern_core.py: 5 warnings
+tests/multiagent/test_thread_manager_response_mode.py: 4 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\thread_manager.py:358: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:38: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py: 28 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_memory_retrieval.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_memory_retrieval.py: 70 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\storage\session_manager.py:399: DeprecationWarning: numpy.core.numeric is deprecated and has been renamed to numpy._core.numeric. The numpy._core namespace contains private NumPy internals and its use is discouraged, as NumPy internals can change without warning in any release. In practice, most real-world usage of numpy.core is to access functionality in the public NumPy API. If that is the case, use the public NumPy API. If not, you are using NumPy internals. If you would still like to access an internal attribute, use numpy._core.numeric._frombuffer.
+    "embedding": pickle.loads(item["embedding"]),
+
+tests/multiagent/test_memory_retrieval.py::test_mr_26_orchestrator_integration
+tests/multiagent/test_memory_retrieval.py::test_mr_27_orchestrator_debug
+  C:\Users\user\AppData\Roaming\Python\Python313\site-packages\_pytest\stash.py:108: RuntimeWarning: coroutine 'connect_tcp.<locals>.try_connect' was never awaited
+    del self._storage[key]
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+
+tests/multiagent/test_orchestrator_e2e.py: 17 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_orchestrator_e2e.py::test_e2e_11_new_thread_archived
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_e2e.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_orchestrator_knowledge_debug_redaction.py::test_orchestrator_knowledge_debug_redaction
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_orchestrator_knowledge_debug_redaction.py:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_quality_trace.py::test_quality_trace_returns_dict_and_expected_top_keys
+tests/multiagent/test_quality_trace.py::test_quality_trace_marks_questions_list_and_generic_risk
+tests/multiagent/test_quality_trace.py::test_quality_trace_confidence_and_continuity_buckets
+tests/multiagent/test_quality_trace.py::test_quality_trace_practice_mode_flag_when_no_step
+tests/multiagent/test_quality_trace.py::test_quality_trace_contains_writer_move_compliance_trace
+tests/multiagent/test_quality_trace.py::test_quality_trace_has_no_raw_user_text_or_raw_context
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_quality_trace.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_safety_detection.py::test_sd_07_safe_override_mode_activated
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_safety_detection.py:76: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:64: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_state_analyzer.py::test_previous_thread_context_in_prompt_for_responses
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_state_analyzer.py:65: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_manager.py::test_return_to_old_restores_archived_thread
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager.py:94: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_low_continuity_new_thread_flag
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_followup_marker_reason
+tests/multiagent/test_thread_manager_diagnostics.py::test_diagnostics_branch_marker_hit
+tests/multiagent/test_thread_manager_diagnostics.py::test_low_resource_continuation_marker_diagnostics
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_diagnostics.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_positive
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_negative_unrelated
+tests/multiagent/test_thread_manager_diagnostics.py::test_active_frame_semantic_continuity_guard_branch_priority
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_diagnostics.py:41: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_manager_pattern_core.py::test_continue_preserves_existing_pattern_core
+tests/multiagent/test_thread_manager_pattern_core.py::test_safety_patch_preserves_pattern_core_and_sets_safety_need
+tests/multiagent/test_thread_manager_pattern_core.py::test_diagnostics_contains_semantic_frame_block
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_manager_pattern_core.py:28: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_thread_state_contracts.py::test_thread_state_updated_not_earlier_than_created
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_contracts.py:67: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created = datetime.utcnow()
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:43: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "created_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_is_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:44: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "updated_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "created_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_thread_state_from_dict_normalizes_invalid_active_frame
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "updated_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_from_dict_backward_compatible
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:74: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "archived_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_state_pattern_core.py::test_archived_thread_invalid_active_frame_is_normalized
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_state_pattern_core.py:89: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    "archived_at": datetime.utcnow().isoformat(),
+
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+tests/multiagent/test_thread_storage.py::test_archive_thread_accumulates
+  C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\thread_storage.py:87: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    archived_at=datetime.utcnow(),
+
+tests/multiagent/test_thread_storage_persistence.py::test_ts_01_save_then_load_same_instance
+tests/multiagent/test_thread_storage_persistence.py::test_ts_02_save_then_load_new_instance
+tests/multiagent/test_thread_storage_persistence.py::test_ts_05_continuity_scenario
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_thread_storage_persistence.py:18: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.utcnow()
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:39: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_validator_agent.py: 33 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_validator_agent.py:40: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:77: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_agent.py: 13 warnings
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:78: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_llm_client_compat.py::test_writer_uses_chat_compat_when_responses_missing
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_llm_client_compat.py:47: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/multiagent/test_writer_llm_client_compat.py::test_writer_uses_chat_compat_when_responses_missing
+  C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_llm_client_compat.py:48: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+234 passed, 384 warnings in 13.53s

@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.0.7.2-with-admin-api-blocker`: post-apply quality gate выполнен и подтвердил data/retrieval/policy консистентность после controlled apply, но admin runtime gate заблокирован из-за недоступного локального API (`admin_runtime_status=blocked_admin_api_unavailable`, `quality_gate_passed=false`, `diagnostic_center_ready=false`).
+Проект находится на стадии `post-PRD-046.0.7.2-HF1-with-admin-launch-blocker`: live admin smoke выполнен в dual-mode (`external_existing`/`hf1_subprocess`), canonical launch command найден, но локальный admin backend не вышел в readiness timeout, поэтому итог `admin_runtime_status=blocked_admin_launch_failed`, `quality_gate_passed=false`, `diagnostic_center_ready=false`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -31,6 +31,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 В `PRD-046.0.9.3` добавлены `architect_auto_decision_policy.py` и `generate_architect_auto_decisions.py`; сгенерирован auto-decisions overlay (`87` решений), validation прошло с `coverage_percent=100.0`, `remaining_items_count=0`, `apply_ready=true`, официальный overlay обновлён, no-mutation proof подтверждён (`all_blocks/registry/chroma` без изменений).
 В `PRD-046.0.7.1` добавлены `controlled_review_decision_apply.py` и CLI `preflight_review_decision_apply.py` / `plan_review_decision_apply.py` / `apply_review_decisions_controlled.py`; выполнен controlled apply (`updated_blocks=200`) с backup/proof/smoke артефактами, инварианты authority сохранены (`text/chunk_type/allowed_use/safety_flags/source_id/block_id/governance` неизменны), acceptance snapshot `passed=true`.
 В `PRD-046.0.7.2` добавлены `post_apply_quality_gate.py` и `run_post_apply_quality_gate.py` с артефактами quality gate; подтверждены `data_consistency_passed=true`, `apply_route_consistency_passed=true`, `retrieval_quality_passed=true`, `writer_kb_policy_passed=true` и no-mutation proof (`all_blocks_merged_mutated=false`, `registry_mutated=false`) без reindex/provider вызовов.
+В `PRD-046.0.7.2-HF1` добавлены `admin_live_smoke.py` и `run_admin_live_smoke.py` с launch manifest/readiness polling/schema checks/no-mutation proof; зафиксирован честный blocker `done_with_admin_launch_blocker` после неуспешного startup/readiness (`/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/` недоступны), при этом production hashes не изменились.
 
 ## Current Admin Source Hygiene State
 Delete policy в реестре стала явной и согласованной между backend/frontend:
@@ -55,7 +56,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- PRD-046.0.7.2-HF1: Admin Runtime Gate Fix / Live Smoke (ожидается подтверждение доступности `/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/`).
+- PRD-046.0.7.2-HF2: Admin API Launch/Schema Fix (следующий blocker-resolution шаг после HF1).
 
 ## Not Implemented Yet
 - Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
@@ -69,7 +70,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
 
 ## Next Planned PRDs
-1. PRD-046.0.7.2-HF1 - Admin Runtime Gate Fix / Live Smoke v1.
+1. PRD-046.0.7.2-HF2 - Admin API Launch/Schema Fix v1.
 2. Diagnostic Center rollout PRD (deferred until full gate pass).
 
 ## Do Not Do Yet
@@ -87,4 +88,4 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-16
-- Source cycle: PRD-046.0.7.2
+- Source cycle: PRD-046.0.7.2-HF1

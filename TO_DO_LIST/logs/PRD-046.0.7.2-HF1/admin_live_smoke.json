@@ -1,0 +1,58 @@
+{
+  "schema_version": "admin_live_smoke_v1",
+  "source_prd": "PRD-046.0.7.2-HF1",
+  "generated_at": "2026-05-16T16:55:52.241790+00:00",
+  "admin_base_url": "http://127.0.0.1:8000",
+  "require_admin_api": true,
+  "try_start_server": true,
+  "startup_timeout_sec": 30,
+  "server_launch_mode": "hf1_subprocess",
+  "server_started_by_hf1": true,
+  "detected_existing_server": false,
+  "readiness_poll_attempts": 9,
+  "readiness_passed": false,
+  "api_checks": {
+    "/api/status": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/registry": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/dashboard": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/dashboard/": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    }
+  },
+  "reachable_endpoints": [],
+  "unreachable_endpoints": [
+    "/api/status",
+    "/api/registry",
+    "/api/dashboard",
+    "/api/dashboard/"
+  ],
+  "focus_source_id": "123__кузница_духа",
+  "focus_blocks_count": 0,
+  "dashboard_blocks_count": null,
+  "chroma_count": null,
+  "admin_runtime_status": "blocked_admin_launch_failed",
+  "admin_consistency_passed": false,
+  "issues": [
+    "admin_api_unavailable",
+    "admin_startup_timeout_or_readiness_failed"
+  ],
+  "warnings": []
+}

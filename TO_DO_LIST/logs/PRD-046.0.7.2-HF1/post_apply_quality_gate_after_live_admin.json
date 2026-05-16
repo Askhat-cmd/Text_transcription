@@ -1,0 +1,18 @@
+{
+  "schema_version": "post_apply_quality_gate_after_live_admin_v1",
+  "source_prd": "PRD-046.0.7.2-HF1",
+  "generated_at": "2026-05-16T16:55:53.566321+00:00",
+  "data_consistency_passed": true,
+  "apply_route_consistency_passed": true,
+  "retrieval_quality_passed": true,
+  "writer_kb_policy_passed": true,
+  "admin_consistency_passed": false,
+  "admin_runtime_status": "blocked_admin_launch_failed",
+  "quality_gate_passed": false,
+  "diagnostic_center_ready": false,
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "provider_called": false,
+  "chroma_reindex_performed": false,
+  "final_status": "done_with_admin_launch_blocker"
+}

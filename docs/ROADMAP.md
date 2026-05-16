@@ -26,13 +26,14 @@
 - PRD-046.0.9.3: review automation policy delivered; conservative auto-decisions generated for all `87` items (`approved/needs_edit/rejected/defer` mix), validation passed (`coverage=100%`, `apply_ready=true`), official overlay updated, no production mutation and no Chroma reindex.
 - PRD-046.0.7.1: controlled review decision apply completed; validated RUN1 enrichment + architect auto-decisions applied to production advisory metadata (`updated_blocks=200`) with backups, no-authority-mutation proof, retrieval/admin smoke, no Chroma reindex.
 - PRD-046.0.7.2: post-apply quality gate delivered (`post_apply_quality_gate.py` + CLI + tests + artifacts); data/apply-route/retrieval/writer gates passed with strict no-mutation proof, final status `done_with_admin_api_blocker` because admin API runtime was unreachable.
+- PRD-046.0.7.2-HF1: admin live smoke/launch gate delivered (`admin_live_smoke.py` + `run_admin_live_smoke.py` + tests/artifacts); canonical launch command detected, subprocess startup attempted, final status `done_with_admin_launch_blocker` due readiness timeout and unreachable live endpoints; production hashes unchanged.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.0.7.2-HF1: Admin Runtime Gate Fix / Live Smoke.
+- PRD-046.0.7.2-HF2: Admin API Launch/Schema Fix.
 
 ## Next
-1. PRD-046.0.7.2-HF1 - Admin Runtime Gate Fix / Live Smoke v1.
+1. PRD-046.0.7.2-HF2 - Admin API Launch/Schema Fix v1.
 2. Diagnostic Center rollout PRD after full readiness gates.
 
 ## Later

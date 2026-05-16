@@ -1,0 +1,46 @@
+{
+  "schema_version": "post_apply_admin_api_runtime_smoke_v1",
+  "generated_at": "2026-05-16T15:13:57.909128+00:00",
+  "admin_base_url": "http://127.0.0.1:8000",
+  "require_admin_api": true,
+  "allow_offline_admin_checks": false,
+  "api_checks": {
+    "/api/status": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/registry": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/dashboard": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    },
+    "/api/dashboard/": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>"
+    }
+  },
+  "reachable_endpoints": [],
+  "unreachable_endpoints": [
+    "/api/status",
+    "/api/registry",
+    "/api/dashboard",
+    "/api/dashboard/"
+  ],
+  "admin_runtime_status": "blocked_admin_api_unavailable",
+  "admin_consistency_passed": false,
+  "issues": [
+    "admin_api_unavailable"
+  ],
+  "warnings": []
+}

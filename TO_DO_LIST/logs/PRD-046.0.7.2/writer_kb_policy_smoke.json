@@ -1,0 +1,13 @@
+{
+  "schema_version": "post_apply_writer_kb_policy_smoke_v1",
+  "generated_at": "2026-05-16T15:13:49.682512+00:00",
+  "evaluated_hits_count": 120,
+  "policy_trace_version": "knowledge_policy_trace_v1",
+  "direct_quote_risk_count": 0,
+  "internal_only_exposed_count": 0,
+  "practice_without_guardrail_count": 0,
+  "snippet_midword_cut_count": 1,
+  "authority_reference_count": 0,
+  "writer_kb_policy_passed": true,
+  "status": "ok"
+}

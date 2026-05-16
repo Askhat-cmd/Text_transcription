@@ -1,0 +1,20 @@
+{
+  "schema_version": "post_apply_data_consistency_gate_v1",
+  "generated_at": "2026-05-16T15:13:49.255881+00:00",
+  "blocks_total": 247,
+  "registry_focus_blocks": 247,
+  "source_ids": [
+    "123__кузница_духа"
+  ],
+  "governance_present_rate": 1.0,
+  "allowed_use_present_rate": 1.0,
+  "safety_flags_present_rate": 1.0,
+  "text_changed_count": 0,
+  "chunk_type_changed_count": 0,
+  "allowed_use_changed_count": 0,
+  "safety_flags_changed_count": 0,
+  "source_id_changed_count": 0,
+  "block_id_changed_count": 0,
+  "governance_invariant_violations": 0,
+  "data_consistency_passed": true
+}

@@ -143,3 +143,9 @@ Status: accepted
 Context: при runtime-проверке после HF2 registry page могла открываться с пустой таблицей, хотя источники в системе были; один проблемный row/policy path потенциально ронял весь payload, а frontend не показывал явный error state.
 Decision: endpoint `/api/registry/` обязан обрабатывать ошибки на уровне строки (row-level isolation), возвращать частичный список с `delete_policy.state=unavailable` и причинами, а frontend обязан иметь явные loading/error/empty states вместо silent empty table.
 Consequences: отказ одной строки больше не блокирует весь admin registry, а browser-visible диагностика делает runtime проблемы воспроизводимыми и проверяемыми до перехода к human-review циклам.
+
+## ADR-025 - Admin/API runtime gate cannot pass when required endpoints are unreachable
+Status: accepted
+Context: после controlled apply data-level проверки могли быть зелёными даже при `connection refused` на admin endpoints, что создавало ложный signal готовности перед следующим архитектурным этапом.
+Decision: post-apply quality gate обязан разделять data consistency и admin runtime consistency; при недоступности `/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/` статус должен быть `blocked_admin_api_unavailable` (или `skipped_offline_explicit` при явном offline-режиме), но не `passed`.
+Consequences: readiness к Diagnostic Center не может стать `true` без подтверждённой доступности admin/API runtime, а отчёты корректно отражают blocker вместо ложного green.

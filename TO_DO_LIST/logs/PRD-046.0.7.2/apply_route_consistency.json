@@ -1,0 +1,34 @@
+{
+  "schema_version": "post_apply_route_consistency_v1",
+  "generated_at": "2026-05-16T15:13:49.258501+00:00",
+  "queue_items_count": 87,
+  "decisions_count": 87,
+  "decision_counts": {
+    "approved": 28,
+    "defer": 46,
+    "needs_edit": 12,
+    "rejected": 1
+  },
+  "plan_counts": {
+    "safe_non_review_apply_candidates": 160,
+    "review_approved_apply_candidates": 28,
+    "review_needs_edit_apply_candidates": 12,
+    "review_rejected_skip": 1,
+    "review_defer_skip": 46,
+    "updated_blocks": 200
+  },
+  "applied_route_counts": {
+    "review_approved_apply": 28,
+    "review_needs_edit_apply": 12,
+    "safe_non_review_apply": 160
+  },
+  "rejected_applied_count": 0,
+  "defer_applied_count": 0,
+  "provenance_markers_found_count": 0,
+  "provenance_marker_block_ids_sample": [],
+  "forbidden_route_markers": [],
+  "warnings": [
+    "no_apply_provenance_markers_found"
+  ],
+  "apply_route_consistency_passed": true
+}

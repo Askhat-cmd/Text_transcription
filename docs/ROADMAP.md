@@ -25,14 +25,15 @@
 - PRD-046.0.9.2: architect semantic review preparation delivered (sanitized batches for all `87` aligned items, architect decisions template/overlay, overlay validator with coverage/apply-ready flags, no-mutation proof); mode A completed with `ready_for_architect_review=true`, `apply_ready=false`.
 - PRD-046.0.9.3: review automation policy delivered; conservative auto-decisions generated for all `87` items (`approved/needs_edit/rejected/defer` mix), validation passed (`coverage=100%`, `apply_ready=true`), official overlay updated, no production mutation and no Chroma reindex.
 - PRD-046.0.7.1: controlled review decision apply completed; validated RUN1 enrichment + architect auto-decisions applied to production advisory metadata (`updated_blocks=200`) with backups, no-authority-mutation proof, retrieval/admin smoke, no Chroma reindex.
+- PRD-046.0.7.2: post-apply quality gate delivered (`post_apply_quality_gate.py` + CLI + tests + artifacts); data/apply-route/retrieval/writer gates passed with strict no-mutation proof, final status `done_with_admin_api_blocker` because admin API runtime was unreachable.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- Post-apply retrieval/admin quality gate planning (`PRD-046.0.7.2`).
+- PRD-046.0.7.2-HF1: Admin Runtime Gate Fix / Live Smoke.
 
 ## Next
-1. PRD-046.0.7.2 - Post-Apply Retrieval/Admin Quality Gate v1.
-2. Diagnostic Center rollout PRD after readiness gates.
+1. PRD-046.0.7.2-HF1 - Admin Runtime Gate Fix / Live Smoke v1.
+2. Diagnostic Center rollout PRD after full readiness gates.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

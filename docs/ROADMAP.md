@@ -31,6 +31,7 @@
 - PRD-046.0.7.2-HF3: strict dashboard/chroma reconciliation gate delivered (`run_admin_live_smoke_hf3.py` + strict contract tests); stale historical proof override removed, live `chroma.count=229` mismatch preserved as blocker (`done_with_chroma_count_blocker`), no production mutation/reindex/provider call.
 - PRD-046.0.7.2-HF4: Chroma recovery cycle completed; direct diagnostic confirmed real mismatch (`229`), controlled focus-only reindex with backup restored direct count (`247`), dashboard count source corrected (`ChromaManager.get_stats` uses `collection.count()`), strict live gate passed (`247/247/247`) with no `all_blocks_merged`/`registry` mutation.
 - PRD-046.0.10: legacy SD cleanup/docs alignment completed; SD labeling disabled by default with explicit legacy gate only, dashboard readiness detached from SD, BotDB README and new internal docs pack (`Bot_data_base/docs/*`) aligned to live `:8003` runtime and focus-source `247/247/247`.
+- PRD-046.0.10-HF1: SD config/encoding finalization completed; canonical config fixed to default-disabled (`sd_labeling.enabled=false`), env overrides no longer persist back into `config.yaml`, UTF-8 runtime smoke artifacts and anti-mojibake gate added, runtime/no-mutation invariants preserved.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.

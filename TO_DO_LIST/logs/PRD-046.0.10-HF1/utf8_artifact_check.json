@@ -1,0 +1,12 @@
+{
+  "schema_version": "utf8_artifact_check_v1",
+  "source_prd": "PRD-046.0.10-HF1",
+  "generated_at": "2026-05-16T20:44:30.769894+00:00",
+  "markers_checked": [
+    "Гђ",
+    "Г‘",
+    "\\u0085"
+  ],
+  "mojibake_markers_found": [],
+  "passed": true
+}

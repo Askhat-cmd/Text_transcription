@@ -31,6 +31,7 @@ python -m uvicorn api.main:app --reload --port 8003
 - По умолчанию legacy SD labeling отключен.
 - SD не является authority слоем runtime/retrieval/readiness.
 - `sd_level` / `sd_distribution` в старых артефактах сохраняются как backward-compatible metadata.
+- Конфиг-файл хранит default-disabled состояние (`sd_labeling.enabled=false`), а env overrides применяются только в runtime и не должны перезаписывать `config.yaml`.
 
 Legacy SD env vars (deprecated, disabled by default):
 - `SD_LABELING_ENABLED=false`

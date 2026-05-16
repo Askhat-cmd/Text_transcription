@@ -1,4 +1,4 @@
-pipeline:
+﻿pipeline:
   youtube:
     output_dir: data/processed/youtube
     subtitles_dir: data/uploads/subtitles
@@ -15,7 +15,7 @@ chunking:
     min_tokens: 200
     max_tokens: 800
 sd_labeling:
-  enabled: true
+  enabled: false
   explicit_legacy_mode: false
   deprecated: true
   model: gpt-4o-mini

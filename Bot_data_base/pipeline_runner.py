@@ -1,7 +1,6 @@
 ﻿from __future__ import annotations
 
 import os
-import copy
 import logging
 from datetime import datetime
 from typing import Dict, List, Optional
@@ -66,8 +65,8 @@ class PipelineRunner:
         self.semantic_chunker = SemanticChunker(self.config.get("chunking", {}).get("youtube", {}))
         self.book_chunker = BookChunker(self.config.get("chunking", {}).get("book", {}))
         self._legacy_sd_cfg = self._legacy_sd_settings()
-        self.sd_labeler = SDLabeler(self._legacy_sd_cfg)
         self.legacy_sd_enabled = self._is_legacy_sd_enabled(self._legacy_sd_cfg)
+        self.sd_labeler = SDLabeler(self._legacy_sd_cfg) if self.legacy_sd_enabled else None
         self.block_normalizer = BlockNormalizer()
 
         self.job_manager = job_manager
@@ -126,7 +125,7 @@ class PipelineRunner:
                 b.published_date = metadata.get("published_date", "")
 
             await self._update_progress(job_id, 40, "sd_labeling")
-            if self.legacy_sd_enabled:
+            if self.legacy_sd_enabled and self.sd_labeler is not None:
                 blocks = self.sd_labeler.label_blocks(blocks)
             else:
                 logger.debug("[PIPELINE] legacy SD labeling skipped (disabled by default)")
@@ -236,7 +235,7 @@ class PipelineRunner:
             )
 
             await self._update_progress(job_id, 50, "sd_labeling")
-            if self.legacy_sd_enabled:
+            if self.legacy_sd_enabled and self.sd_labeler is not None:
                 blocks = self.sd_labeler.label_blocks(blocks)
             else:
                 logger.debug("[PIPELINE] legacy SD labeling skipped (disabled by default)")
@@ -317,11 +316,7 @@ class PipelineRunner:
     def _load_config(self, path: str) -> dict:
         with open(path, "r", encoding="utf-8") as f:
             cfg = yaml.safe_load(f) or {}
-        before = copy.deepcopy(cfg)
-        cfg = self._apply_env_overrides(cfg)
-        if cfg != before:
-            self._persist_config(path, cfg)
-        return cfg
+        return self._apply_env_overrides(cfg)
 
     def _persist_config(self, path: str, cfg: dict) -> None:
         try:

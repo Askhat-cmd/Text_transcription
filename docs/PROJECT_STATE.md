@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии post-PRD-046.0.9.2 (Mode A): architect semantic review batches подготовлены для aligned RUN1 queue, decisions overlay пока пустой и ожидает финальные решения архитектора. Alignment остается чистым (`247` blocks, queue coverage `87/87`, missing `0`).
+Проект находится на стадии post-PRD-046.0.9.3: policy-автоматизация review решений завершена для aligned RUN1 queue. Overlay закрыт на `87/87`, validation=`valid=true`, `apply_ready=true`; при этом production apply/reindex не выполнялись. Alignment остается чистым (`247` blocks, queue coverage `87/87`, missing `0`).
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -28,6 +28,7 @@ Offline LLM enrichment pipeline внедрен и откалиброван, за
 В `PRD-046.0.9.1` добавлены CLI `prepare_human_review_decisions.py` и `validate_human_review_decisions.py`, артефакты review-workbench/template/validation/no-mutation сгенерированы, deterministic safety checks по decisions overlay включены (forbidden/raw/private keys, secret-like values, authority-mutation attempts, duplicate/unknown/mismatch guards). Production apply/reindex не выполнялись.
 В `PRD-046.0.9.1-HF1` добавлены `audit_blocks_snapshot_alignment.py` и `restore_blocks_snapshot_alignment.py`, найден authoritative snapshot (`candidate_to_apply.snapshot.json`) и восстановлен blocks snapshot до `247` с backup proof. Добавлен strict gate `prepare_human_review_decisions.py --require-aligned`.
 В `PRD-046.0.9.2` добавлены `prepare_architect_review_batches.py` и `validate_architect_decisions_overlay.py`; сформированы sanitized architect review batches (`8` batch-файлов на `87` items), `architect_decisions_template/overlay`, validation report с `ready_for_architect_review=true` и `apply_ready=false`, а также no-mutation proof без production/apply/reindex.
+В `PRD-046.0.9.3` добавлены `architect_auto_decision_policy.py` и `generate_architect_auto_decisions.py`; сгенерирован auto-decisions overlay (`87` решений), validation прошло с `coverage_percent=100.0`, `remaining_items_count=0`, `apply_ready=true`, официальный overlay обновлён, no-mutation proof подтверждён (`all_blocks/registry/chroma` без изменений).
 
 ## Current Admin Source Hygiene State
 Delete policy в реестре стала явной и согласованной между backend/frontend:
@@ -52,7 +53,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Architect semantic decisions fill pass для `PRD-046.0.9.2` overlay (после подготовки batch-пакетов).
+- Controlled apply pass for validated review decisions overlay (`PRD-046.0.7.1`).
 
 ## Not Implemented Yet
 - Controlled application of validated review decisions to KB metadata (`PRD-046.0.7.1`).
@@ -67,8 +68,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
 
 ## Next Planned PRDs
-1. Architect semantic decisions fill pass for `PRD-046.0.9.2` overlay.
-2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (только после `apply_ready=true` по всем `87` item).
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (`apply_ready=true` уже достигнут на overlay из `PRD-046.0.9.3`).
 3. Diagnostic Center rollout PRD (deferred, after gates).
 
 ## Do Not Do Yet
@@ -86,4 +86,4 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-16
-- Source cycle: PRD-046.0.9.2
+- Source cycle: PRD-046.0.9.3

@@ -1,0 +1,101 @@
+{
+  "policy_version": "architect_auto_decision_policy_v1",
+  "items_total": 87,
+  "approved_count": 28,
+  "needs_edit_count": 12,
+  "rejected_count": 1,
+  "defer_count": 46,
+  "by_chunk_type": {
+    "case": 8,
+    "lens": 22,
+    "practice": 6,
+    "quote": 32,
+    "safety": 1,
+    "theory": 18
+  },
+  "by_review_priority": {
+    "P1": 1,
+    "P2": 86
+  },
+  "by_reason_code": {
+    "generic_or_insufficient_summary_defer": 4,
+    "practice_guardrails_needs_edit": 12,
+    "quote_conservative_defer": 32,
+    "safe_advisory_approved": 28,
+    "safety_chunk_defer": 1,
+    "sensitive_theme_defer": 8,
+    "spiritual_authority_defer": 1,
+    "unsafe_diagnostic_or_promise_reject": 1
+  },
+  "practice_items_count": 6,
+  "quote_items_count": 32,
+  "sensitive_items_count": 18,
+  "samples": {
+    "approved": [
+      {
+        "review_item_id": "post_reprocess::02850e6b-1f41-4f94-8413-cdec8c45479b",
+        "block_id": "02850e6b-1f41-4f94-8413-cdec8c45479b",
+        "decision": "approved",
+        "reason": "Advisory metadata is sufficiently safe and useful for internal lens usage.",
+        "edited_fields_keys": []
+      },
+      {
+        "review_item_id": "post_reprocess::15b76643-6a4a-473f-8f9a-754f608bdc97",
+        "block_id": "15b76643-6a4a-473f-8f9a-754f608bdc97",
+        "decision": "approved",
+        "reason": "Advisory metadata is sufficiently safe and useful for internal lens usage.",
+        "edited_fields_keys": []
+      }
+    ],
+    "needs_edit": [
+      {
+        "review_item_id": "post_reprocess::66d0f456-a695-4c50-881c-0ce7643baf69",
+        "block_id": "66d0f456-a695-4c50-881c-0ce7643baf69",
+        "decision": "needs_edit",
+        "reason": "Practice/case metadata routed through low-resource guardrail edits before controlled apply.",
+        "edited_fields_keys": [
+          "avoid_when",
+          "summary",
+          "use_when"
+        ]
+      },
+      {
+        "review_item_id": "post_reprocess::116415f6-a0c4-4701-86d4-83be1d6a8b4f",
+        "block_id": "116415f6-a0c4-4701-86d4-83be1d6a8b4f",
+        "decision": "needs_edit",
+        "reason": "Practice/case metadata routed through low-resource guardrail edits before controlled apply.",
+        "edited_fields_keys": [
+          "avoid_when",
+          "summary",
+          "use_when"
+        ]
+      }
+    ],
+    "rejected": [
+      {
+        "review_item_id": "post_reprocess::d60e5a31-835c-4ce9-b14b-40b1706b6353",
+        "block_id": "d60e5a31-835c-4ce9-b14b-40b1706b6353",
+        "decision": "rejected",
+        "reason": "Unsafe diagnostic or therapeutic-promise signal detected in advisory metadata.",
+        "edited_fields_keys": []
+      }
+    ],
+    "defer": [
+      {
+        "review_item_id": "post_reprocess::00a10081-935a-4c17-a000-d91c7420ce7f",
+        "block_id": "00a10081-935a-4c17-a000-d91c7420ce7f",
+        "decision": "defer",
+        "reason": "Quote chunk kept in conservative defer mode to avoid user-facing doctrine/quotation risk.",
+        "edited_fields_keys": []
+      },
+      {
+        "review_item_id": "post_reprocess::0b3494cd-7acb-46cc-881b-7e478b72513e",
+        "block_id": "0b3494cd-7acb-46cc-881b-7e478b72513e",
+        "decision": "defer",
+        "reason": "Sensitive theme detected; auto-policy routes to defer for safety-first handling.",
+        "edited_fields_keys": []
+      }
+    ]
+  },
+  "official_overlay_updated": true
+}

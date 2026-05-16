@@ -1,7 +1,7 @@
 {
   "schema_version": "architect_review_batches_index_v1",
   "source_prd": "PRD-046.0.9.2",
-  "generated_at": "2026-05-16T13:02:51.907753+00:00",
+  "generated_at": "2026-05-16T13:41:23.927208+00:00",
   "queue_source_prd": "PRD-046.0.9-RUN1",
   "queue_items_count": 87,
   "batch_size_requested": 11,

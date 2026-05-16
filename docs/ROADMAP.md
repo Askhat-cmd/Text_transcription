@@ -23,14 +23,14 @@
 - PRD-046.0.9.1: human review decisions layer delivered for fresh RUN1 queue (prepare/workbench/template/validator/no-mutation artifacts + tests), production KB/registry/Chroma unchanged; apply step blocked until queue/block-id alignment is restored in current workspace snapshot.
 - PRD-046.0.9.1-HF1: blocks snapshot alignment restored (`229 -> 247`) via authoritative candidate audit + staged restore with backups; strict `--require-aligned` gate added; rerun confirms queue coverage `87/87`.
 - PRD-046.0.9.2: architect semantic review preparation delivered (sanitized batches for all `87` aligned items, architect decisions template/overlay, overlay validator with coverage/apply-ready flags, no-mutation proof); mode A completed with `ready_for_architect_review=true`, `apply_ready=false`.
+- PRD-046.0.9.3: review automation policy delivered; conservative auto-decisions generated for all `87` items (`approved/needs_edit/rejected/defer` mix), validation passed (`coverage=100%`, `apply_ready=true`), official overlay updated, no production mutation and no Chroma reindex.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- Architect semantic decisions fill pass over prepared `PRD-046.0.9.2` overlay.
+- Controlled review decision apply planning (`PRD-046.0.7.1`).
 
 ## Next
-1. Architect semantic decisions fill pass for `PRD-046.0.9.2` (`87` final decisions).
-2. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (only after `apply_ready=true`).
+1. PRD-046.0.7.1 - Controlled Review Decision Apply v1 (overlay gate `apply_ready=true` is now satisfied).
 3. Diagnostic Center rollout PRD after readiness gates.
 
 ## Later

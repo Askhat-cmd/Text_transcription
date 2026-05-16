@@ -1,0 +1,16 @@
+source_prd=PRD-046.0.9.3
+review_queue_path=TO_DO_LIST/logs/PRD-046.0.9-RUN1/review_queue_after_real_enrichment.json
+queue_items_count=87
+batches_index_queue_items_count=87
+decisions_count=87
+validation_valid=True
+coverage_percent=100.0
+remaining_items_count=0
+apply_ready=True
+official_overlay_updated=True
+approved_count=28
+needs_edit_count=12
+rejected_count=1
+defer_count=46
+production_apply_performed=False
+chroma_reindex_performed=False

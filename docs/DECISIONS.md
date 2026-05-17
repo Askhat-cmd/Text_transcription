@@ -185,3 +185,9 @@ Status: accepted
 Context: в `PRD-046.1.1` Diagnostic Center впервые подключается к runtime. Без жёстких ограничений shadow path мог бы незаметно повлиять на WriterContract, writer prompt или final answer.
 Decision: Diagnostic Center в runtime допускается только в trace-only shadow режиме. Shadow output строится на реальных runtime сигналах, но не передаётся в WriterContract, не меняет writer prompt, не меняет validation path и не влияет на final answer. При ошибке shadow runtime продолжает основной ответ без блокировки.
 Consequences: система получает измеримые divergence-метрики для следующего PRD, сохраняя инварианты user-path безопасности (`writer_contract_changed=false`, `writer_prompt_changed_by_shadow=false`, `final_answer_changed_by_shadow=false`).
+
+## ADR-032 - Planner Bridge remains shadow-only until explicit compliance integration PRD
+Status: accepted
+Context: после trace-only Diagnostic Center shadow появился рабочий путь нормализации сигналов в candidate planning constraints, но прямое подключение к Writer Move Compliance без divergence-калибровки и отдельного integration PRD увеличивает риск user-path regressions.
+Decision: Planner Bridge v1 реализуется только как shadow/eval contract слой. Он может формировать candidate constraints и trace, но `apply_to_writer=false`, `apply_to_writer_contract=false`, `activation_mode=shadow_only` до отдельного PRD-046.1.3.
+Consequences: архитектура получает готовый мост для следующего шага интеграции, сохраняя no-user-path-effect и предотвращая преждевременное влияние Diagnostic Center/Planner Bridge на final answer.

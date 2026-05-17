@@ -54,6 +54,7 @@
 
 | PRD-046.1 | Diagnostic Center v1 Readiness / Architecture PRD | passed | c680e14 | delivered internal Diagnostic Center v1 contract layer (input/output schemas, deterministic dry-run builder, 10 eval cases, contract audit + no-mutation proof), runtime path unchanged (diagnostic_center_runtime_enabled=false) | TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.1 | Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval | passed | 21e8628 | integrated Diagnostic Center in runtime as trace-only shadow path (no writer contract injection), added divergence metrics/runtime smoke/eval runner, passed shadow gates (`10/10`, `user_path_effect_count=0`, `runtime_smoke_ok=true`) with no-mutation proof | TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.2 | Diagnostic Center v1 Shadow Divergence Calibration / Planner Bridge | passed | TBD (set in micro-push) | added divergence taxonomy module + Planner Bridge v1 contracts/builder + expanded fixture (`24` cases) + planner bridge eval runner; passed `24/24` with `planner_bridge_contract_ready=true`, `apply_to_writer_count=0`, no-mutation proof | TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

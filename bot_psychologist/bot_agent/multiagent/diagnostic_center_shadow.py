@@ -11,6 +11,7 @@ from .contracts.diagnostic_center_v1 import DiagnosticCenterInput, DiagnosticCen
 from .contracts.memory_bundle import MemoryBundle
 from .contracts.state_snapshot import StateSnapshot
 from .contracts.thread_state import ThreadState
+from .diagnostic_center_divergence import evaluate_diagnostic_center_divergence_v1
 from .diagnostic_center_v1_builder import build_diagnostic_center_output_v1
 
 
@@ -136,95 +137,13 @@ def build_diagnostic_center_shadow_divergence_v1(
     state_snapshot: StateSnapshot,
     kb_sanitization: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    expected_safety = bool(state_snapshot.safety_flag or thread_state.safety_active) or (
-        state_snapshot.nervous_state in {"hyper", "hypo"}
+    return evaluate_diagnostic_center_divergence_v1(
+        diagnostic_card=diagnostic_card,
+        diagnostic_center_output=diagnostic_center_output,
+        thread_state=thread_state,
+        state_snapshot=state_snapshot,
+        kb_sanitization=kb_sanitization,
     )
-    depth_allowed = diagnostic_center_output.next_micro_shift.depth_allowed
-    safety_priority_match = (
-        diagnostic_center_output.status == "safety_first"
-        if expected_safety
-        else diagnostic_center_output.status in {"ok", "safety_first"}
-    )
-    depth_compatible = True
-    if expected_safety:
-        depth_compatible = depth_allowed in {"none", "low"}
-
-    move = diagnostic_card.suggested_writer_move
-    goal = diagnostic_center_output.next_micro_shift.response_goal
-    writer_move_compatible = True
-    if move in {"safe_override", "regulate_first"}:
-        writer_move_compatible = goal in {"safety_redirect", "ground_and_reduce_load"}
-    elif move == "offer_one_micro_step":
-        writer_move_compatible = goal in {"clarify_before_action", "clarify"}
-    elif move in {"clarify_one_point", "reflect_pattern_once"}:
-        writer_move_compatible = goal in {
-            "stabilize_authorship",
-            "clarify",
-            "deepen_and_integrate",
-            "decenter_without_shaming",
-        }
-
-    response_mode_compatible = True
-    if thread_state.response_mode == "safe_override":
-        response_mode_compatible = diagnostic_center_output.next_micro_shift.response_mode in {
-            "ground_then_one_step",
-            "minimal_support",
-        }
-    relation_to_thread_match = diagnostic_center_output.relation_to_thread == thread_state.relation_to_thread
-    phase_match = diagnostic_center_output.phase == thread_state.phase
-    pattern_core_present = bool(str(thread_state.pattern_core or "").strip())
-    kb_usage_mode = diagnostic_center_output.trace.kb_usage_mode
-    must_not_quote_source = bool(diagnostic_center_output.trace.must_not_quote_source)
-    raw_kb_text_exposed = bool(_safe_dict(kb_sanitization).get("raw_kb_text_exposed", False))
-    kb_boundary_ok = kb_usage_mode in {"internal_lens_only", "disabled"} and must_not_quote_source and not raw_kb_text_exposed
-    thread_risk = "none"
-
-    warnings: list[str] = []
-    if not writer_move_compatible:
-        warnings.append("writer_move_compatible_false")
-    if not response_mode_compatible:
-        warnings.append("response_mode_compatible_false")
-    if not phase_match:
-        warnings.append("phase_match_false")
-    if not pattern_core_present:
-        warnings.append("pattern_core_missing")
-
-    return {
-        "safety_priority_match": bool(safety_priority_match),
-        "depth_compatible": bool(depth_compatible),
-        "writer_move_compatible": bool(writer_move_compatible),
-        "response_mode_compatible": bool(response_mode_compatible),
-        "relation_to_thread_match": bool(relation_to_thread_match),
-        "phase_match": bool(phase_match),
-        "pattern_core_present": bool(pattern_core_present),
-        "kb_boundary_ok": bool(kb_boundary_ok),
-        "raw_kb_text_exposed": bool(raw_kb_text_exposed),
-        "thread_risk": thread_risk,
-        "warnings": warnings,
-        "diagnostic_card_alignment": {
-            "safety_priority_match": bool(safety_priority_match),
-            "low_resource_depth_match": bool(depth_compatible),
-            "writer_move_compatible": bool(writer_move_compatible),
-            "response_mode_compatible": bool(response_mode_compatible),
-        },
-        "thread_alignment": {
-            "relation_to_thread_match": bool(relation_to_thread_match),
-            "phase_match": bool(phase_match),
-            "pattern_core_present": bool(pattern_core_present),
-            "continuity_risk": thread_risk,
-        },
-        "kb_boundary": {
-            "kb_usage_mode": kb_usage_mode,
-            "must_not_quote_source": must_not_quote_source,
-            "raw_kb_text_exposed": bool(raw_kb_text_exposed),
-        },
-        "user_path": {
-            "writer_contract_changed": False,
-            "writer_prompt_changed_by_shadow": False,
-            "final_answer_changed_by_shadow": False,
-            "diagnostic_center_output_passed_to_writer": False,
-        },
-    }
 
 
 def build_diagnostic_center_shadow_v1(

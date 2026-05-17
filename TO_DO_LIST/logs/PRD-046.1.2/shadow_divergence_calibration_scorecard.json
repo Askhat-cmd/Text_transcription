@@ -1,0 +1,19 @@
+{
+  "schema_version": "diagnostic_center_planner_bridge_scorecard_v1",
+  "prd": "PRD-046.1.2",
+  "generated_at_utc": "2026-05-17T05:14:32.557667+00:00",
+  "cases_total": 24,
+  "cases_passed": 24,
+  "hard_blocker_count": 0,
+  "unexpected_soft_warning_count": 0,
+  "expected_divergence_count": 9,
+  "needs_review_count": 1,
+  "safety_bridge_pass_rate": 1.0,
+  "kb_boundary_violation_count": 0,
+  "raw_kb_text_exposure_count": 0,
+  "user_path_effect_count": 0,
+  "planner_bridge_apply_to_writer_count": 0,
+  "planner_bridge_contract_ready": true,
+  "final_status": "passed",
+  "next_prd": "PRD-046.1.3"
+}

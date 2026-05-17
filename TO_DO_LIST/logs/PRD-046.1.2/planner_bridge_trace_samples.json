@@ -1,0 +1,723 @@
+[
+  {
+    "case_id": "pb_case_01_safety_hyper",
+    "divergence_severity": "expected_divergence",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": true,
+      "confidence": 0.8,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "limited",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "safety_redirect",
+      "response_mode_candidate": "ground_then_one_step",
+      "depth_limit": "none",
+      "max_questions": 0,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "grounding",
+        "short_sentence",
+        "one_step_only"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework",
+        "deep_analysis",
+        "multiple_questions"
+      ],
+      "safety_constraints": [
+        "safety_first"
+      ],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.8,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "expected_divergence",
+        "rules_applied": [
+          "shadow_only_guardrail",
+          "safety_limited_mode"
+        ],
+        "warnings": [],
+        "expected_divergence": true
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_02_safety_hypo",
+    "divergence_severity": "expected_divergence",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": true,
+      "confidence": 0.8,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "limited",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "safety_redirect",
+      "response_mode_candidate": "ground_then_one_step",
+      "depth_limit": "none",
+      "max_questions": 0,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "grounding",
+        "short_sentence",
+        "one_step_only"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework",
+        "deep_analysis",
+        "multiple_questions"
+      ],
+      "safety_constraints": [
+        "safety_first"
+      ],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.8,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "expected_divergence",
+        "rules_applied": [
+          "shadow_only_guardrail",
+          "safety_limited_mode"
+        ],
+        "warnings": [],
+        "expected_divergence": true
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_03_crisis_marker",
+    "divergence_severity": "expected_divergence",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": true,
+      "confidence": 0.8,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "limited",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "safety_redirect",
+      "response_mode_candidate": "ground_then_one_step",
+      "depth_limit": "none",
+      "max_questions": 0,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "grounding",
+        "short_sentence",
+        "one_step_only"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework",
+        "deep_analysis",
+        "multiple_questions"
+      ],
+      "safety_constraints": [
+        "safety_first"
+      ],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.8,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "expected_divergence",
+        "rules_applied": [
+          "shadow_only_guardrail",
+          "safety_limited_mode"
+        ],
+        "warnings": [],
+        "expected_divergence": true
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_04_iw_plus_defensive_directive",
+    "divergence_severity": "compatible",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": false,
+      "confidence": 0.62,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "candidate",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "stabilize_authorship",
+      "response_mode_candidate": "reflect_then_one_question",
+      "depth_limit": "low_to_medium",
+      "max_questions": 1,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "validate_feeling",
+        "name_one_mechanism_softly"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework",
+        "give_directive_certainty"
+      ],
+      "safety_constraints": [],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.62,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "compatible",
+        "rules_applied": [
+          "shadow_only_guardrail"
+        ],
+        "warnings": [],
+        "expected_divergence": false
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_05_iw_plus_open",
+    "divergence_severity": "compatible",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": false,
+      "confidence": 0.62,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "candidate",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "clarify",
+      "response_mode_candidate": "reflect_then_one_question",
+      "depth_limit": "low_to_medium",
+      "max_questions": 1,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "validate_feeling"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework"
+      ],
+      "safety_constraints": [],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.62,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "compatible",
+        "rules_applied": [
+          "shadow_only_guardrail"
+        ],
+        "warnings": [],
+        "expected_divergence": false
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_06_iw_plus_mixed",
+    "divergence_severity": "compatible",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": false,
+      "confidence": 0.62,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "candidate",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "clarify",
+      "response_mode_candidate": "reflect_then_one_question",
+      "depth_limit": "low_to_medium",
+      "max_questions": 1,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "validate_feeling"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework"
+      ],
+      "safety_constraints": [],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.62,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "compatible",
+        "rules_applied": [
+          "shadow_only_guardrail"
+        ],
+        "warnings": [],
+        "expected_divergence": false
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_07_i_plus_w_minus_defensive",
+    "divergence_severity": "compatible",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": false,
+      "confidence": 0.62,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "candidate",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "decenter_without_shaming",
+      "response_mode_candidate": "validate_then_reframe_softly",
+      "depth_limit": "low_to_medium",
+      "max_questions": 1,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "validate_feeling",
+        "validate_feeling_without_confirming_frame"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework",
+        "join_accusation"
+      ],
+      "safety_constraints": [],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.62,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "compatible",
+        "rules_applied": [
+          "shadow_only_guardrail"
+        ],
+        "warnings": [],
+        "expected_divergence": false
+      }
+    }
+  },
+  {
+    "case_id": "pb_case_08_i_plus_w_minus_open",
+    "divergence_severity": "compatible",
+    "shadow_status": "ok",
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "hard_blocker_reasons": [],
+      "expected_divergence": false,
+      "confidence": 0.62,
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    },
+    "bridge": {
+      "schema_version": "planner_bridge_output_v1",
+      "status": "candidate",
+      "activation_mode": "shadow_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "response_goal_candidate": "clarify",
+      "response_mode_candidate": "reflect_then_one_question",
+      "depth_limit": "low_to_medium",
+      "max_questions": 1,
+      "max_concepts": 1,
+      "must_do_candidates": [
+        "validate_feeling"
+      ],
+      "must_not_do_candidates": [
+        "give_final_advice",
+        "quote_kb_directly",
+        "introduce_new_framework"
+      ],
+      "safety_constraints": [],
+      "kb_constraints": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "confidence": 0.62,
+      "blocked_reasons": [],
+      "guardrails": {
+        "apply_to_writer": false,
+        "apply_to_writer_contract": false,
+        "activation_mode": "shadow_only",
+        "user_path_effect": "none"
+      },
+      "trace": {
+        "version": "planner_bridge_trace_v1",
+        "builder": "planner_bridge_candidate_v1",
+        "divergence_severity": "compatible",
+        "rules_applied": [
+          "shadow_only_guardrail"
+        ],
+        "warnings": [],
+        "expected_divergence": false
+      }
+    }
+  }
+]

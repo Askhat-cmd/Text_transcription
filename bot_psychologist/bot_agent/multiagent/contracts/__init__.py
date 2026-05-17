@@ -10,6 +10,12 @@ from .diagnostic_center_v1 import (
     NextMicroShift,
 )
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
+from .planner_bridge_v1 import (
+    PlannerBridgeGuardrails,
+    PlannerBridgeInput,
+    PlannerBridgeOutput,
+    PlannerBridgeTrace,
+)
 from .state_snapshot import StateSnapshot
 from .thread_state import ArchivedThread, ThreadState
 from .validation_result import ValidationResult
@@ -26,6 +32,10 @@ __all__ = [
     "DiagnosticHypothesis",
     "DiagnosticLensSignal",
     "MemoryBundle",
+    "PlannerBridgeGuardrails",
+    "PlannerBridgeInput",
+    "PlannerBridgeOutput",
+    "PlannerBridgeTrace",
     "SemanticHit",
     "StateSnapshot",
     "ThreadState",

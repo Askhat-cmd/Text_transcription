@@ -1,0 +1,36 @@
+{
+  "schema_version": "prompt_constraint_production_limited_execution_v1",
+  "prd": "PRD-046.1.13",
+  "source_plan_prd": "PRD-046.1.12",
+  "execution_mode": "production_limited_controlled_window",
+  "execution_window": {
+    "type": "single_short_manual_window",
+    "automatic_background_execution": false
+  },
+  "target": {
+    "user_id": "prod_limited_operator_001",
+    "source": "synthetic_operator",
+    "real_user_count": 0,
+    "synthetic_operator_user_count": 1,
+    "allowlisted": true
+  },
+  "baseline_defaults_preserved": true,
+  "results": {
+    "trace_samples_count": 5,
+    "production_limited_apply_count": 1,
+    "normal_user_cases_total": 2
+  },
+  "decision": "continue_limited",
+  "source_plan_status": "passed",
+  "source_plan_decision": "ready_for_production_limited_execution_prd",
+  "execution_window_count": 1,
+  "automatic_background_execution": false,
+  "target_user_count": 1,
+  "real_user_count": 0,
+  "synthetic_operator_user_count": 1,
+  "target_user_id": "prod_limited_operator_001",
+  "normal_control_user_count": 2,
+  "provider_allowed": false,
+  "production_mutation_allowed": false,
+  "generated_at": "2026-05-17T17:44:45.252541+00:00"
+}

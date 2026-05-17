@@ -62,6 +62,15 @@ from .prompt_constraint_production_limited_rollout_plan_v1 import (
     PromptConstraintProductionLimitedRollbackPlanV1,
     PromptConstraintProductionLimitedRolloutPlanV1,
 )
+from .prompt_constraint_production_limited_execution_v1 import (
+    PromptConstraintProductionLimitedDecisionV1 as PromptConstraintProductionLimitedExecutionDecisionV1,
+    PromptConstraintProductionLimitedExecutionRunV1,
+    PromptConstraintProductionLimitedExecutionTargetV1,
+    PromptConstraintProductionLimitedMonitoringMetricsV1,
+    PromptConstraintProductionLimitedPreflightResultV1,
+    PromptConstraintProductionLimitedRollbackProofV1,
+    PromptConstraintProductionLimitedTraceSampleV1,
+)
 from .prompt_constraint_supervised_rollout_v1 import (
     PromptConstraintRolloutAbortCriteriaV1,
     PromptConstraintRolloutCohortV1,
@@ -129,6 +138,13 @@ __all__ = [
     "PromptConstraintProductionLimitedPreflightGateV1",
     "PromptConstraintProductionLimitedRollbackPlanV1",
     "PromptConstraintProductionLimitedRolloutPlanV1",
+    "PromptConstraintProductionLimitedExecutionRunV1",
+    "PromptConstraintProductionLimitedExecutionTargetV1",
+    "PromptConstraintProductionLimitedExecutionDecisionV1",
+    "PromptConstraintProductionLimitedMonitoringMetricsV1",
+    "PromptConstraintProductionLimitedPreflightResultV1",
+    "PromptConstraintProductionLimitedRollbackProofV1",
+    "PromptConstraintProductionLimitedTraceSampleV1",
     "PromptConstraintRolloutAbortCriteriaV1",
     "PromptConstraintRolloutCohortV1",
     "PromptConstraintRolloutDecisionV1",

@@ -1,0 +1,13 @@
+{
+  "source_plan_gate_passed": true,
+  "operator_checklist_complete": true,
+  "monitoring_plan_ready": true,
+  "rollback_plan_ready": true,
+  "abort_criteria_ready": true,
+  "allowlist_ready": true,
+  "target_user_count_allowed": true,
+  "normal_user_controls_ready": true,
+  "config_defaults_conservative": true,
+  "force_disabled_available": true,
+  "preflight_passed": true
+}

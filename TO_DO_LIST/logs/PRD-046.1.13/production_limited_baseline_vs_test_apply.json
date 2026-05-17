@@ -1,0 +1,15 @@
+{
+  "schema_version": "prompt_constraint_production_limited_baseline_vs_test_apply_v1",
+  "prd": "PRD-046.1.13",
+  "cases_compared": 1,
+  "production_limited_apply_count": 1,
+  "candidate_weaker_than_baseline_count": 0,
+  "safety_regression_count": 0,
+  "kb_policy_regression_count": 0,
+  "prompt_bloat_regression_count": 0,
+  "constraint_conflict_regression_count": 0,
+  "raw_kb_text_exposure_count": 0,
+  "internal_only_exposure_count": 0,
+  "not_for_direct_quote_violation_count": 0,
+  "provider_called_by_execution_count": 0
+}

@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1.12-production-limited-rollout-plan-ready`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, `planner_bridge_writer_contract_pilot` остаётся `pilot_shadow_only`, `writer_prompt_replay` остаётся `offline_replay_only`, а prompt-constraint pilot runtime остаётся default-off limited allowlisted test path. Для pilot-а подготовлен production-limited plan, но execution ещё не выполнялся.
+Проект находится на стадии `post-PRD-046.1.13-production-limited-execution-cycle-passed`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, `planner_bridge_writer_contract_pilot` остаётся `pilot_shadow_only`, `writer_prompt_replay` остаётся `offline_replay_only`, а prompt-constraint pilot runtime остаётся default-off limited allowlisted test path. Выполнен один production-limited execution cycle с rollback-first контролем и без broad rollout.
 В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
 В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
 В `PRD-046.1.3` добавлены compare-mode contract/builder/eval runner для сопоставления `writer_move_instructions` и `planner_bridge_candidate` в `shadow_compare_only` режиме. Подтверждены `cases_passed=30/30`, `hard_blocker_count=0`, `unexpected_blocked_count=0`, `safety_compatibility_pass_rate=1.0`, `user_path_effect_count=0`, `writer_prompt_changed_by_bridge_count=0`, `writer_contract_changed_by_bridge_count=0`, `final_answer_changed_by_bridge_count=0`, `planner_bridge_apply_to_writer_count=0`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
@@ -14,6 +14,7 @@
 В `PRD-046.1.10` выполнен второй supervised continuation cycle на расширенном allowlisted cohort (`6`: `pilot_alpha/pilot_beta/pilot_gamma/pilot_delta/pilot_epsilon/pilot_zeta`) через `run_prompt_constraint_supervised_continuation_gate.py`. Подтверждены `final_status=passed`, `decision=continue_supervised`, `scenario_coverage_passed=true` (`6/6`), `test_apply_applied_count=6`, `normal_user_apply_count=0` (2 normal control cases), `rollback_failure_count=0`, `stale_apply_after_force_disabled_count=0`, `candidate_weaker_than_baseline_count=0`, `raw_kb_text_exposure_count=0`, `provider_called_by_continuation_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
 В `PRD-046.1.11` выполнен supervised results consolidation / rollout decision gate (`run_prompt_constraint_supervised_consolidation_gate.py`) по артефактам `PRD-046.1.9` и `PRD-046.1.10` без нового execution цикла. Подтверждены `final_status=passed`, `decision=prepare_production_limited_rollout_plan`, `cycles_total=2`, `cycles_passed=2`, `total_test_apply_applied_count=9`, `total_cases_compared=9`, `reproducibility_passed=true`, `risk_register_has_blockers=false`, `provider_called_total=0`, `production_mutation_detected_any=false`, `artifact_encoding_hygiene_all_passed=true`.
 В `PRD-046.1.12` построен production-limited rollout plan (`run_prompt_constraint_production_limited_rollout_plan.py`) без execution: сформированы `cohort_policy`, `preflight_gates`, `operator_checklist`, `monitoring_plan`, `rollback_plan`, `abort_criteria`, `readiness_gate` и `operator_runbook`. Подтверждены `final_status=passed`, `decision=ready_for_production_limited_execution_prd`, `execution_performed=false`, `provider_called_by_plan=false`, `production_mutation_detected=false`, `default_flags_changed=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.13` выполнен один controlled production-limited execution/monitoring gate (`run_prompt_constraint_production_limited_execution_gate.py`) с единственным target user (`prod_limited_operator_001`) и двумя normal-user controls. Подтверждены `final_status=passed`, `decision=continue_limited`, `execution_window_count=1`, `target_user_count=1`, `production_limited_apply_count=1`, `normal_user_apply_count=0`, `default_off_user_path_effect_count=0`, `rollback_failure_count=0`, `stale_apply_after_force_disabled_count=0`, `safety_regression_count=0`, `kb_policy_regression_count=0`, `raw_kb_text_exposure_count=0`, `provider_called_by_execution_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -76,7 +77,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Diagnostic Center v1 shadow + Planner Bridge contract in shadow/eval-only mode (no writer/user-path effect).
 
 ## Not Implemented Yet
-- Production-limited execution/monitoring gate phase with one manual limited window and strict rollback proof (`PRD-046.1.13`).
+- Post-run production-limited results consolidation / rollback & quality gate (`PRD-046.1.14`).
 
 ## Known Risks
 - Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
@@ -88,7 +89,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1.13 - Production-Limited Prompt-Constraint Pilot Execution / Monitoring Gate v1.
+1. PRD-046.1.14 - Production-Limited Prompt-Constraint Pilot Results / Rollback & Quality Gate v1.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -105,7 +106,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.1.12
+- Source cycle: PRD-046.1.13
 
 
 

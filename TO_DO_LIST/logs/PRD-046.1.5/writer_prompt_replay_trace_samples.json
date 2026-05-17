@@ -1,0 +1,243 @@
+{
+  "schema_version": "writer_prompt_replay_trace_samples_v1",
+  "prd": "PRD-046.1.5",
+  "generated_at": "2026-05-17T09:54:43.555859+00:00",
+  "samples": [
+    {
+      "case_id": "wpr_01_normal_reflective",
+      "description": "normal reflective",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2057,
+        "candidate_serialized_chars": 2615,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2712688381137579,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_02_clarify_one_point",
+      "description": "clarify one point",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2057,
+        "candidate_serialized_chars": 2615,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2712688381137579,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_03_validate_briefly",
+      "description": "validate briefly",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2070,
+        "candidate_serialized_chars": 2642,
+        "size_delta_chars": 572,
+        "size_delta_ratio": 0.2763285024154589,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_04_regulate_first",
+      "description": "regulate first",
+      "quality_status": "needs_review",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2245,
+        "candidate_serialized_chars": 2963,
+        "size_delta_chars": 718,
+        "size_delta_ratio": 0.3198218262806236,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [
+        "pilot_activation_readiness_not_ready"
+      ],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_05_safe_override",
+      "description": "safe override",
+      "quality_status": "needs_review",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2053,
+        "candidate_serialized_chars": 2687,
+        "size_delta_chars": 634,
+        "size_delta_ratio": 0.3088163662932294,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [
+        "pilot_activation_readiness_not_ready"
+      ],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_06_low_resource_contact",
+      "description": "low resource contact",
+      "quality_status": "needs_review",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2246,
+        "candidate_serialized_chars": 2964,
+        "size_delta_chars": 718,
+        "size_delta_ratio": 0.3196794300979519,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [
+        "pilot_activation_readiness_not_ready"
+      ],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_07_practical_step",
+      "description": "practical step",
+      "quality_status": "needs_review",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2129,
+        "candidate_serialized_chars": 2725,
+        "size_delta_chars": 596,
+        "size_delta_ratio": 0.2799436355096289,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [
+        "candidate_questions_increased_vs_baseline"
+      ],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_08_branch_thread",
+      "description": "branch thread",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2054,
+        "candidate_serialized_chars": 2612,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.27166504381694256,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_09_new_thread",
+      "description": "new thread",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2048,
+        "candidate_serialized_chars": 2606,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2724609375,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_10_semantic_continuation",
+      "description": "semantic continuation",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2059,
+        "candidate_serialized_chars": 2617,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2710053423992229,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_11_kb_internal_lens",
+      "description": "KB internal lens only",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2122,
+        "candidate_serialized_chars": 2680,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2629594721960415,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    },
+    {
+      "case_id": "wpr_12_kb_practice_candidate",
+      "description": "KB practice candidate only",
+      "quality_status": "passed",
+      "comparison": {
+        "schema_version": "writer_prompt_replay_comparison_v1",
+        "added_fields_count": 1,
+        "removed_fields_count": 0,
+        "changed_fields_count": 0,
+        "baseline_serialized_chars": 2131,
+        "candidate_serialized_chars": 2689,
+        "size_delta_chars": 558,
+        "size_delta_ratio": 0.2618488972313468,
+        "forbidden_field_hits": [],
+        "conflict_rules": []
+      },
+      "warnings": [],
+      "blocked_reasons": []
+    }
+  ]
+}

@@ -1,11 +1,12 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1.4-writer-contract-pilot-shadow-ready`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, и добавлен контролируемый `planner_bridge_writer_contract_pilot` overlay в режиме `pilot_shadow_only` без влияния на Writer/user-path.
+Проект находится на стадии `post-PRD-046.1.5-writer-prompt-replay-ready`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, `planner_bridge_writer_contract_pilot` остаётся `pilot_shadow_only`, а новый `writer_prompt_replay` работает только в `offline_replay_only` режиме без влияния на Writer/user-path.
 В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
 В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
 В `PRD-046.1.3` добавлены compare-mode contract/builder/eval runner для сопоставления `writer_move_instructions` и `planner_bridge_candidate` в `shadow_compare_only` режиме. Подтверждены `cases_passed=30/30`, `hard_blocker_count=0`, `unexpected_blocked_count=0`, `safety_compatibility_pass_rate=1.0`, `user_path_effect_count=0`, `writer_prompt_changed_by_bridge_count=0`, `writer_contract_changed_by_bridge_count=0`, `final_answer_changed_by_bridge_count=0`, `planner_bridge_apply_to_writer_count=0`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
 В `PRD-046.1.4` добавлен controlled Writer-Contract pilot (`planner_bridge_writer_contract_pilot`) как non-mutating compare-only overlay: `cases_passed=36/36`, `hard_blocker_count=0`, `safety_pilot_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `writer_contract_changed_by_pilot_count=0`, `writer_prompt_changed_by_pilot_count=0`, `final_answer_changed_by_pilot_count=0`, `pilot_apply_to_writer_contract_count=0`, `pilot_apply_to_writer_prompt_count=0`, `pilot_apply_to_final_answer_count=0`, `runtime_smoke_ok=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
+В `PRD-046.1.5` добавлен offline replay/eval слой `writer_prompt_replay` для сравнения baseline prompt-context и pilot candidate namespace без production activation. Подтверждены `cases_passed=40/40`, `hard_blocker_count=0`, `safety_replay_pass_rate=1.0`, `kb_boundary_violation_count=0`, `constraint_conflict_count=0`, `prompt_bloat_blocker_count=0`, `writer_contract_changed_by_replay_count=0`, `writer_prompt_changed_by_replay_count=0`, `final_answer_changed_by_replay_count=0`, `provider_called_count=0`, `runtime_smoke_ok=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -68,7 +69,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Diagnostic Center v1 shadow + Planner Bridge contract in shadow/eval-only mode (no writer/user-path effect).
 
 ## Not Implemented Yet
-- Controlled Writer prompt replay / offline quality eval before any production influence on final answer (`PRD-046.1.5`).
+- Controlled prompt-constraint pilot with limited runtime flag before any broad production influence on final answer (`PRD-046.1.6`).
 
 ## Known Risks
 - Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
@@ -80,7 +81,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1.5 - Controlled Writer Prompt Replay / Quality Eval v1.
+1. PRD-046.1.6 - Controlled Prompt-Constraint Pilot / Limited Runtime Flag v1.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -97,7 +98,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.1.4
+- Source cycle: PRD-046.1.5
 
 
 

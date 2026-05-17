@@ -203,3 +203,9 @@ Status: accepted
 Context: после PRD-046.1.3 появилась готовность строить candidate constraints для WriterContract, но прямое применение overlay к production Writer path в этом цикле создаёт риск незаметных regressions в prompt/final answer.
 Decision: в PRD-046.1.4 вводится только controlled pilot overlay (`pilot_shadow_only`) с фиксированными guardrails: `apply_to_writer_contract=false`, `apply_to_writer_prompt=false`, `apply_to_final_answer=false`. Pilot обязан доказывать immutability через deterministic hash (`before/after`) и сохранять runtime trace/eval artifacts без provider calls.
 Consequences: Diagnostic Center/Planner Bridge получают измеримый контрактный мост к Writer без production activation; следующий шаг допускается только как offline replay/eval PRD (PRD-046.1.5), а не прямое влияние на пользовательский ответ.
+
+## ADR-035 - Writer Prompt Replay remains offline-only before any prompt activation
+Status: accepted
+Context: после PRD-046.1.4 появилась возможность оценивать candidate constraints на уровне prompt-context, но любое прямое подключение replay-кандидата в production Writer path преждевременно и рискованно без отдельного controlled rollout.
+Decision: в PRD-046.1.5 replay слой ограничен `offline_replay_only`: baseline и candidate prompt-context сравниваются детерминированно (safety/KB/conflict/prompt-bloat/non-mutation), но replay не имеет права менять production WriterContract, writer prompt или final answer и не вызывает provider.
+Consequences: проект получает измеримый quality-eval фундамент для следующего ограниченного runtime-эксперимента (PRD-046.1.6) с жёсткими rollback/safety gates вместо немедленной активации для всех пользователей.

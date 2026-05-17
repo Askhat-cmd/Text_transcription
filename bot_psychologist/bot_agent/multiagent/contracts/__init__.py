@@ -23,6 +23,14 @@ from .planner_bridge_writer_contract_pilot_v1 import (
     PlannerBridgeWriterContractPilotResult,
     PlannerBridgeWriterContractPilotTrace,
 )
+from .writer_prompt_replay_v1 import (
+    WriterPromptReplayCandidateContext,
+    WriterPromptReplayComparison,
+    WriterPromptReplayInput,
+    WriterPromptReplayQuality,
+    WriterPromptReplayResult,
+    WriterPromptReplayTrace,
+)
 from .state_snapshot import StateSnapshot
 from .thread_state import ArchivedThread, ThreadState
 from .validation_result import ValidationResult
@@ -55,4 +63,10 @@ __all__ = [
     "ValidationResult",
     "NextMicroShift",
     "WriterContract",
+    "WriterPromptReplayCandidateContext",
+    "WriterPromptReplayComparison",
+    "WriterPromptReplayInput",
+    "WriterPromptReplayQuality",
+    "WriterPromptReplayResult",
+    "WriterPromptReplayTrace",
 ]

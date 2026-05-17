@@ -39,12 +39,13 @@
 - PRD-046.1.2-HF1: artifact encoding hygiene closed for PRD-046.1.2; `test_command_output.txt` regenerated as clean UTF-8, reusable artifact validator added with tests, hygiene report passed (`nul/utf8/json/debug-dir` gates green), no production/runtime mutation.
 - PRD-046.1.3: Planner Bridge Shadow-to-Compliance integration delivered in compare-only mode; runtime trace now includes `planner_bridge_candidate` and `planner_bridge_compliance_shadow` with strict no-user-path-effect gates, eval `30/30` passed, runtime smoke + artifact encoding hygiene + no-mutation proofs passed, ADR-033 added.
 - PRD-046.1.4: controlled Writer-Contract pilot delivered in `pilot_shadow_only` mode; added candidate overlay contract/builder/runtime trace/eval runner (`36/36`), immutability hash proof, no-user-path-effect gates (`writer_contract/prompt/final_answer unchanged`), runtime smoke + encoding hygiene + no-mutation proofs passed, ADR-034 added.
+- PRD-046.1.5: controlled Writer Prompt Replay / Quality Eval delivered as offline-only layer; baseline vs candidate prompt-context replay runner + fixtures (`40/40`) added with deterministic safety/KB/conflict/prompt-bloat/non-mutation checks, runtime smoke passed, provider-call and apply flags remained false, ADR-035 added.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.5 - Controlled Writer Prompt Replay / Quality Eval v1.
+1. PRD-046.1.6 - Controlled Prompt-Constraint Pilot / Limited Runtime Flag v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

@@ -1,0 +1,41 @@
+{
+  "schema_version": "writer_prompt_replay_runtime_smoke_v1",
+  "prd": "PRD-046.1.5",
+  "ok": true,
+  "generated_at": "2026-05-17T09:54:43.559552+00:00",
+  "cases": [
+    {
+      "case_id": "runtime_smoke_normal",
+      "status": "ok",
+      "answer_exists": true,
+      "replay_exists": true,
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false
+    },
+    {
+      "case_id": "runtime_smoke_safety",
+      "status": "ok",
+      "answer_exists": true,
+      "replay_exists": true,
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false
+    },
+    {
+      "case_id": "runtime_smoke_kb_lens",
+      "status": "ok",
+      "answer_exists": true,
+      "replay_exists": true,
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false
+    }
+  ]
+}

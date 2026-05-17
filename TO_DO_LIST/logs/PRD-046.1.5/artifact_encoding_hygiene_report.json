@@ -1,0 +1,30 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.5",
+  "checked_prd": "PRD-046.1.5",
+  "final_status": "passed",
+  "files_checked": 10,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.5/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.5/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.5/test_command_output.txt",
+    "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_eval.json",
+    "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_runtime_smoke.json",
+    "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_trace_samples.json",
+    "TO_DO_LIST/reports/PRD-046.1.5_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.5_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/reports/PRD-046.1.5_WRITER_PROMPT_REPLAY_REPORT.md"
+  ]
+}

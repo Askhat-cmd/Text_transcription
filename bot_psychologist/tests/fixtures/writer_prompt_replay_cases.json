@@ -1,0 +1,1770 @@
+[
+  {
+    "case_id": "wpr_01_normal_reflective",
+    "description": "normal reflective",
+    "user_message": "Replay case 1: normal reflective.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_02_clarify_one_point",
+    "description": "clarify one point",
+    "user_message": "Replay case 2: clarify one point.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_03_validate_briefly",
+    "description": "validate briefly",
+    "user_message": "Replay case 3: validate briefly.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "validate_briefly",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_04_regulate_first",
+    "description": "regulate first",
+    "user_message": "Replay case 4: regulate first.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "clarify",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review",
+      "quality.safety_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_05_safe_override",
+    "description": "safe override",
+    "user_message": "Replay case 5: safe override.",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review",
+      "quality.safety_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_06_low_resource_contact",
+    "description": "low resource contact",
+    "user_message": "Replay case 6: low resource contact.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "contact",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review",
+      "quality.safety_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_07_practical_step",
+    "description": "practical step",
+    "user_message": "Replay case 7: practical step.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "solution",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "practice",
+      "response_goal": "clarify_before_action",
+      "pattern_core": "practical",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "offer_one_micro_step",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_08_branch_thread",
+    "description": "branch thread",
+    "user_message": "Replay case 8: branch thread.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "branch",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "branch_pattern",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_09_new_thread",
+    "description": "new thread",
+    "user_message": "Replay case 9: new thread.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "fresh_start",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_10_semantic_continuation",
+    "description": "semantic continuation",
+    "user_message": "Replay case 10: semantic continuation.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "continuity",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {
+      "conversation_context": "continuation context",
+      "context_turns": 7
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_11_kb_internal_lens",
+    "description": "KB internal lens only",
+    "user_message": "Replay case 11: KB internal lens only.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "insufficient_self",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "content": "safe lens summary",
+          "lens_family": "insufficient_self"
+        }
+      ]
+    },
+    "memory_bundle": {
+      "has_relevant_knowledge": true
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_12_kb_practice_candidate",
+    "description": "KB practice candidate only",
+    "user_message": "Replay case 12: KB practice candidate only.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "practice",
+      "response_goal": "clarify",
+      "pattern_core": "practice",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "content": "safe practice candidate",
+          "lens_family": "practice"
+        }
+      ]
+    },
+    "memory_bundle": {
+      "has_relevant_knowledge": true
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_13_blocked_kb_boundary_case",
+    "description": "blocked KB boundary case",
+    "user_message": "Replay case 13: blocked KB boundary case.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "blocked_kb",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review"
+    },
+    "compliance_shadow_override": {
+      "compatibility": {
+        "overall_status": "blocked",
+        "kb_boundary_compatible": true
+      },
+      "blocked_reasons": [
+        "simulated_blocked_kb_boundary_case"
+      ]
+    }
+  },
+  {
+    "case_id": "wpr_14_prompt_bloat_case",
+    "description": "prompt bloat case",
+    "user_message": "Replay case 14: prompt bloat case.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "prompt_bloat",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review",
+      "quality.prompt_bloat_ok": false
+    },
+    "pilot_overlay_override": {
+      "overlay": {
+        "candidate_constraints": {
+          "must_do": [
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          ],
+          "must_not_do": [
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+            "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "case_id": "wpr_15_conflict_case_resolved",
+    "description": "must_do/must_not conflict case",
+    "user_message": "Replay case 15: must_do/must_not conflict case.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "conflict_resolved",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    },
+    "pilot_overlay_override": {
+      "overlay": {
+        "candidate_constraints": {
+          "must_do": [
+            "do_a",
+            "do_b"
+          ],
+          "must_not_do": [
+            "not_a",
+            "not_b"
+          ]
+        }
+      }
+    }
+  },
+  {
+    "case_id": "wpr_16_collapsed_openness",
+    "description": "collapsed openness case",
+    "user_message": "Replay case 16: collapsed openness case.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true,
+      "quality.quality_status": "needs_review"
+    }
+  },
+  {
+    "case_id": "wpr_17_ok_i_w_minus",
+    "description": "ok position I-W-",
+    "user_message": "Replay case 17: ok position I-W-.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "ok_iw-",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I-W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_18_ok_i_w_plus",
+    "description": "ok position I-W+",
+    "user_message": "Replay case 18: ok position I-W+.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "ok_iw+",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_19_ok_i_plus_w_minus",
+    "description": "ok position I+W-",
+    "user_message": "Replay case 19: ok position I+W-.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "ok_i+w-",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_20_ok_i_plus_w_plus",
+    "description": "ok position I+W+",
+    "user_message": "Replay case 20: ok position I+W+.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "ok_i+w+",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_21_extra_21",
+    "description": "extra coverage case 21",
+    "user_message": "Replay case 21: extra coverage case 21.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "clarify",
+      "pattern_core": "extra_21",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_22_extra_22",
+    "description": "extra coverage case 22",
+    "user_message": "Replay case 22: extra coverage case 22.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_22",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_23_extra_23",
+    "description": "extra coverage case 23",
+    "user_message": "Replay case 23: extra coverage case 23.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_23",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_24_extra_24",
+    "description": "extra coverage case 24",
+    "user_message": "Replay case 24: extra coverage case 24.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_24",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_25_extra_25",
+    "description": "extra coverage case 25",
+    "user_message": "Replay case 25: extra coverage case 25.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_25",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_26_extra_26",
+    "description": "extra coverage case 26",
+    "user_message": "Replay case 26: extra coverage case 26.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_26",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_27_extra_27",
+    "description": "extra coverage case 27",
+    "user_message": "Replay case 27: extra coverage case 27.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "clarify",
+      "pattern_core": "extra_27",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_28_extra_28",
+    "description": "extra coverage case 28",
+    "user_message": "Replay case 28: extra coverage case 28.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_28",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_29_extra_29",
+    "description": "extra coverage case 29",
+    "user_message": "Replay case 29: extra coverage case 29.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_29",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_30_extra_30",
+    "description": "extra coverage case 30",
+    "user_message": "Replay case 30: extra coverage case 30.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_30",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_31_extra_31",
+    "description": "extra coverage case 31",
+    "user_message": "Replay case 31: extra coverage case 31.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_31",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_32_extra_32",
+    "description": "extra coverage case 32",
+    "user_message": "Replay case 32: extra coverage case 32.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_32",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_33_extra_33",
+    "description": "extra coverage case 33",
+    "user_message": "Replay case 33: extra coverage case 33.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "clarify",
+      "pattern_core": "extra_33",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_34_extra_34",
+    "description": "extra coverage case 34",
+    "user_message": "Replay case 34: extra coverage case 34.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_34",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_35_extra_35",
+    "description": "extra coverage case 35",
+    "user_message": "Replay case 35: extra coverage case 35.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_35",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_36_extra_36",
+    "description": "extra coverage case 36",
+    "user_message": "Replay case 36: extra coverage case 36.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_36",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_37_extra_37",
+    "description": "extra coverage case 37",
+    "user_message": "Replay case 37: extra coverage case 37.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "extra_37",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_38_extra_38",
+    "description": "extra coverage case 38",
+    "user_message": "Replay case 38: extra coverage case 38.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_38",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_39_extra_39",
+    "description": "extra coverage case 39",
+    "user_message": "Replay case 39: extra coverage case 39.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "clarify",
+      "pattern_core": "extra_39",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  },
+  {
+    "case_id": "wpr_40_extra_40",
+    "description": "extra coverage case 40",
+    "user_message": "Replay case 40: extra coverage case 40.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "extra_40",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_replay": {
+      "activation_mode": "offline_replay_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "provider_called": false,
+      "quality.non_mutating_ok": true,
+      "quality.kb_boundary_ok": true,
+      "quality.constraint_conflict_ok": true
+    }
+  }
+]

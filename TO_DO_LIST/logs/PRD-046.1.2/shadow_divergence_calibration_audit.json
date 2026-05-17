@@ -1,7 +1,7 @@
 {
   "schema_version": "shadow_divergence_calibration_audit_v1",
   "prd": "PRD-046.1.2",
-  "generated_at_utc": "2026-05-17T05:14:32.564665+00:00",
+  "generated_at_utc": "2026-05-17T05:41:38.277109+00:00",
   "cases_file": "bot_psychologist/tests/fixtures/diagnostic_center_planner_bridge_cases.json",
   "case_results": [
     {

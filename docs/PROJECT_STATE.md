@@ -1,8 +1,9 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1.2-diagnostic-center-planner-bridge-contract-ready`: Diagnostic Center v1 остаётся trace-only shadow слоем, при этом divergence taxonomy и Planner Bridge contract откалиброваны на расширенном eval-наборе без user-path эффектов.
+Проект находится на стадии `post-PRD-046.1.2-HF1-artifact-encoding-hygiene-passed`: Diagnostic Center v1 остаётся trace-only shadow слоем, divergence taxonomy + Planner Bridge contract откалиброваны, а PRD artifacts дополнительно очищены и валидированы по UTF-8 hygiene gate.
 В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
+В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -94,7 +95,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.1.2
+- Source cycle: PRD-046.1.2-HF1
 
 
 

@@ -1,0 +1,45 @@
+PRD-046.1.2-HF1 command run started: 2026-05-17T05:42:29.910239+00:00
+
+>>> C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/tools/test_validate_prd_artifact_encoding.py -q
+exit_code: 0
+stdout:
+.....                                                                    [100%]
+5 passed in 0.52s
+
+>>> C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.2 --logs-dir TO_DO_LIST/logs/PRD-046.1.2 --reports-dir TO_DO_LIST/reports --out-dir TO_DO_LIST/logs/PRD-046.1.2-HF1 --report-prd PRD-046.1.2-HF1 --fixed-file TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt
+exit_code: 0
+stdout:
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.2-HF1",
+  "checked_prd": "PRD-046.1.2",
+  "final_status": "passed",
+  "files_checked": 10,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [
+    "TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt"
+  ],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.2/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_contract_eval.json",
+    "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_trace_samples.json",
+    "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_audit.json",
+    "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt",
+    "TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.2_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/reports/PRD-046.1.2_PLANNER_BRIDGE_CONTRACT_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.2_SHADOW_DIVERGENCE_CALIBRATION_REPORT.md"
+  ]
+}
+
+PRD-046.1.2-HF1 command run finished: 2026-05-17T05:42:33.789305+00:00

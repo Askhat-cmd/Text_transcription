@@ -1,12 +1,12 @@
 {
   "schema_version": "planner_bridge_contract_eval_v1",
   "prd": "PRD-046.1.2",
-  "generated_at_utc": "2026-05-17T05:14:32.581668+00:00",
+  "generated_at_utc": "2026-05-17T05:41:38.291106+00:00",
   "planner_bridge_contract_ready": true,
   "scorecard": {
     "schema_version": "diagnostic_center_planner_bridge_scorecard_v1",
     "prd": "PRD-046.1.2",
-    "generated_at_utc": "2026-05-17T05:14:32.557667+00:00",
+    "generated_at_utc": "2026-05-17T05:41:38.271103+00:00",
     "cases_total": 24,
     "cases_passed": 24,
     "hard_blocker_count": 0,

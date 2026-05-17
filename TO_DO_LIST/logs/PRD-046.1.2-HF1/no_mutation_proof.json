@@ -1,26 +1,21 @@
 {
-  "schema_version": "planner_bridge_no_mutation_proof_v1",
-  "prd": "PRD-046.1.2",
-  "generated_at_utc": "2026-05-17T05:41:38.277109+00:00",
+  "schema_version": "planner_bridge_hf1_no_mutation_proof_v1",
+  "prd": "PRD-046.1.2-HF1",
+  "checked_prd": "PRD-046.1.2",
+  "generated_at_utc": "2026-05-17T05:42:13.984433+00:00",
   "all_blocks_merged_mutated": false,
   "registry_mutated": false,
   "config_mutated": false,
   "chroma_reindex_performed": false,
-  "provider_called_by_planner_bridge": false,
+  "provider_called": false,
   "production_apply_performed": false,
   "writer_prompt_production_changed": false,
   "writer_contract_changed": false,
   "final_answer_changed_by_bridge": false,
   "diagnostic_center_active_in_writer": false,
   "planner_bridge_apply_to_writer": false,
-  "diagnostic_center_user_facing_enabled": false,
   "legacy_sd_enabled": false,
-  "hash_before": {
-    "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
-    "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
-    "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
-  },
-  "hash_after": {
+  "hash_current": {
     "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
     "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
     "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"

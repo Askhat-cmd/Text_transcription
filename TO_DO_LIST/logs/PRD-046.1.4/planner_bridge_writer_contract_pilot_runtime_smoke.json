@@ -1,0 +1,47 @@
+{
+  "schema_version": "planner_bridge_writer_contract_pilot_runtime_smoke_v1",
+  "prd": "PRD-046.1.4",
+  "ok": true,
+  "generated_at": "2026-05-17T09:27:39.071100+00:00",
+  "cases": [
+    {
+      "case_id": "runtime_smoke_normal_reflective",
+      "status": "ok",
+      "answer_exists": true,
+      "planner_bridge_writer_contract_pilot_exists": true,
+      "activation_mode": "pilot_shadow_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "writer_contract_changed": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false
+    },
+    {
+      "case_id": "runtime_smoke_safety_hyper",
+      "status": "ok",
+      "answer_exists": true,
+      "planner_bridge_writer_contract_pilot_exists": true,
+      "activation_mode": "pilot_shadow_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "writer_contract_changed": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false
+    },
+    {
+      "case_id": "runtime_smoke_kb_internal",
+      "status": "ok",
+      "answer_exists": true,
+      "planner_bridge_writer_contract_pilot_exists": true,
+      "activation_mode": "pilot_shadow_only",
+      "apply_to_writer_contract": false,
+      "apply_to_writer_prompt": false,
+      "apply_to_final_answer": false,
+      "writer_contract_changed": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false
+    }
+  ]
+}

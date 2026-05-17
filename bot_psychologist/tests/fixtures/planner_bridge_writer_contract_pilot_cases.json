@@ -1,0 +1,1709 @@
+[
+  {
+    "case_id": "pbwcp_01_normal_reflective_open",
+    "description": "normal reflective open case",
+    "user_message": "Pilot case 1: normal reflective open case.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_core",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_02_iwp_defensive_authorship",
+    "description": "I-W+ defensive authorship stabilization",
+    "user_message": "Pilot case 2: I-W+ defensive authorship stabilization.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "authorship",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "current_need": "stabilize_authorship",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_03_ipw_defensive_decenter",
+    "description": "I+W- defensive decenter",
+    "user_message": "Pilot case 3: I+W- defensive decenter.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "decenter_without_shaming",
+      "pattern_core": "decenter",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "decenter_without_shaming",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_04_iwm_collapsed_low_resource",
+    "description": "I-W- collapsed low resource",
+    "user_message": "Pilot case 4: I-W- collapsed low resource.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "ground_and_reduce_load",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "not_ready",
+        "blocked"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_05_hyper_state",
+    "description": "hyper state",
+    "user_message": "Pilot case 5: hyper state.",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "contact",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "acute",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "current_need": "safety",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "not_ready",
+        "blocked"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_06_hypo_state",
+    "description": "hypo state",
+    "user_message": "Pilot case 6: hypo state.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "contact",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "shutdown",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "ground_and_reduce_load",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "not_ready",
+        "blocked"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_07_crisis_safety_flag",
+    "description": "crisis/safety flag",
+    "user_message": "Pilot case 7: crisis/safety flag.",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "contact",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "crisis",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "current_need": "safety",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "not_ready",
+        "blocked"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_08_kb_lens_internal_only",
+    "description": "KB lens internal-only",
+    "user_message": "Pilot case 8: KB lens internal-only.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "insufficient_self",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {
+      "has_relevant_knowledge": true,
+      "knowledge_rag_hits": [
+        {
+          "lens_family": "insufficient_self",
+          "score": 0.91,
+          "content": "safe preview"
+        }
+      ]
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_09_kb_practice_candidate_only",
+    "description": "KB practice candidate only",
+    "user_message": "Pilot case 9: KB practice candidate only.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "practice",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {
+      "has_relevant_knowledge": true,
+      "knowledge_rag_hits": [
+        {
+          "lens_family": "practice",
+          "score": 0.88,
+          "content": "safe practice hint"
+        }
+      ]
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_10_branch_same_pattern_core",
+    "description": "branch with same pattern_core",
+    "user_message": "Pilot case 10: branch with same pattern_core.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "branch",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "same_pattern",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_11_new_thread_switch",
+    "description": "new thread true switch",
+    "user_message": "Pilot case 11: new thread true switch.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "fresh_start",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_12_directive_practical",
+    "description": "directive/practical request",
+    "user_message": "Pilot case 12: directive/practical request.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "solution",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "practice",
+      "response_goal": "clarify_before_action",
+      "pattern_core": "practical",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "offer_one_micro_step",
+      "current_need": "clarify_before_action",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_13_low_confidence_hypothesis",
+    "description": "low confidence Diagnostic Center hypothesis",
+    "user_message": "Pilot case 13: low confidence Diagnostic Center hypothesis.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.52
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "low_confidence",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.52
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "pilot_ready",
+        "not_ready"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_14_planner_bridge_blocked",
+    "description": "planner bridge blocked",
+    "user_message": "Pilot case 14: planner bridge blocked.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "blocked_bridge",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness": "blocked"
+    },
+    "compliance_shadow_override": {
+      "compatibility": {
+        "overall_status": "blocked",
+        "kb_boundary_compatible": true
+      },
+      "blocked_reasons": [
+        "manual_blocked_for_pilot_case"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_15_compliance_tightens",
+    "description": "compliance status tightens_constraints",
+    "user_message": "Pilot case 15: compliance status tightens_constraints.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "tightens",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    },
+    "compliance_shadow_override": {
+      "compatibility": {
+        "overall_status": "tightens_constraints"
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_16_compliance_expected_divergence",
+    "description": "compliance expected_divergence",
+    "user_message": "Pilot case 16: compliance expected_divergence.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "expected_divergence",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness_one_of": [
+        "not_ready",
+        "pilot_ready"
+      ]
+    },
+    "compliance_shadow_override": {
+      "compatibility": {
+        "overall_status": "expected_divergence"
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_17_compliance_blocked",
+    "description": "compliance blocked",
+    "user_message": "Pilot case 17: compliance blocked.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "compliance_blocked",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.activation_readiness": "blocked"
+    },
+    "compliance_shadow_override": {
+      "compatibility": {
+        "overall_status": "blocked"
+      },
+      "blocked_reasons": [
+        "compliance_blocked_case"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_18_writer_move_safe_override",
+    "description": "writer move safe_override",
+    "user_message": "Pilot case 18: writer move safe_override.",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "safe_override_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.candidate_constraints.max_questions": 0
+    }
+  },
+  {
+    "case_id": "pbwcp_19_writer_move_regulate_first",
+    "description": "writer move regulate_first",
+    "user_message": "Pilot case 19: writer move regulate_first.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": true,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "regulate_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.candidate_constraints.max_questions": 0
+    }
+  },
+  {
+    "case_id": "pbwcp_20_writer_move_validate_briefly",
+    "description": "writer move validate_briefly",
+    "user_message": "Pilot case 20: writer move validate_briefly.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "validate_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "validate_briefly",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_21_writer_move_offer_micro",
+    "description": "writer move offer_one_micro_step",
+    "user_message": "Pilot case 21: writer move offer_one_micro_step.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "practice",
+      "response_goal": "clarify_before_action",
+      "pattern_core": "micro_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "offer_one_micro_step",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_22_writer_move_reflect_once",
+    "description": "writer move reflect_pattern_once",
+    "user_message": "Pilot case 22: writer move reflect_pattern_once.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "reflect_once",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_23_writer_move_clarify",
+    "description": "writer move clarify_one_point",
+    "user_message": "Pilot case 23: writer move clarify_one_point.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "clarify_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_24_writer_move_explore",
+    "description": "writer move explore_carefully",
+    "user_message": "Pilot case 24: writer move explore_carefully.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "explore_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_25_max_questions_tightening",
+    "description": "max_questions tightening",
+    "user_message": "Pilot case 25: max_questions tightening.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "question_tightening",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.candidate_constraints.max_questions": 0
+    },
+    "compliance_shadow_override": {
+      "planner_bridge_candidate": {
+        "max_questions": 0
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_26_depth_tightening",
+    "description": "depth tightening",
+    "user_message": "Pilot case 26: depth tightening.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "depth_tightening",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.candidate_constraints.depth_limit": "low"
+    },
+    "compliance_shadow_override": {
+      "planner_bridge_candidate": {
+        "depth_limit": "low"
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_27_must_not_do_addition",
+    "description": "must_not_do addition",
+    "user_message": "Pilot case 27: must_not_do addition.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "must_not_add",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    },
+    "compliance_shadow_override": {
+      "planner_bridge_candidate": {
+        "must_not_do_candidates": [
+          "do_not_over_explain"
+        ]
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_28_must_do_addition",
+    "description": "must_do addition",
+    "user_message": "Pilot case 28: must_do addition.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "must_do_add",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    },
+    "compliance_shadow_override": {
+      "planner_bridge_candidate": {
+        "must_do_candidates": [
+          "name_one_pattern"
+        ]
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_29_conflicting_must_do_not",
+    "description": "conflicting must_do/must_not_do",
+    "user_message": "Pilot case 29: conflicting must_do/must_not_do.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "conflict_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.contract_conflict_risk": "high"
+    },
+    "compliance_shadow_override": {
+      "planner_bridge_candidate": {
+        "must_do_candidates": [
+          "do_not_analyze_deeply"
+        ],
+        "must_not_do_candidates": [
+          "do_not_analyze_deeply"
+        ]
+      }
+    }
+  },
+  {
+    "case_id": "pbwcp_30_raw_kb_forbidden_fields",
+    "description": "raw KB forbidden fields present in input",
+    "user_message": "Pilot case 30: raw KB forbidden fields present in input.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "raw_kb_input",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "raw_text": "forbidden raw",
+          "content": "safe summary"
+        }
+      ]
+    },
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "overlay.risk_assessment.kb_boundary_risk_one_of": [
+        "none",
+        "low",
+        "medium"
+      ]
+    }
+  },
+  {
+    "case_id": "pbwcp_31_no_kb_hits",
+    "description": "no KB hits",
+    "user_message": "Pilot case 31: no KB hits.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "no_kb",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {
+      "has_relevant_knowledge": false,
+      "knowledge_rag_hits": []
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_32_sparse_context",
+    "description": "sparse context",
+    "user_message": "Pilot case 32: sparse context.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "sparse",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {
+      "semantic_memory_hits": [],
+      "knowledge_rag_hits": []
+    },
+    "memory_bundle": {
+      "conversation_context": ""
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_33_dense_context",
+    "description": "dense context",
+    "user_message": "Pilot case 33: dense context.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "dense",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {
+      "semantic_memory_hits": [
+        {
+          "content": "line1"
+        },
+        {
+          "content": "line2"
+        },
+        {
+          "content": "line3"
+        }
+      ],
+      "knowledge_rag_hits": [
+        {
+          "content": "k1"
+        },
+        {
+          "content": "k2"
+        }
+      ]
+    },
+    "memory_bundle": {
+      "context_turns": 12
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_34_utf8_cyrillic",
+    "description": "UTF-8 Cyrillic case",
+    "user_message": "??? ?????? ?????????? ?????, ?????? ????? ????????? ???.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "cyrillic_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_35_mojibake_protected",
+    "description": "mojibake-like input protected by existing normalization",
+    "user_message": "???????????? ?????? ????????????, ?????? ?? ????????????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "mojibake_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "pbwcp_36_no_mutation_baseline",
+    "description": "no mutation / no user-path effect baseline",
+    "user_message": "Pilot case 36: no mutation / no user-path effect baseline.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.82
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "no_mutation",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "current_need": "clarify",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_pilot": {
+      "overlay.activation_mode": "pilot_shadow_only",
+      "overlay.apply_to_writer_contract": false,
+      "overlay.apply_to_writer_prompt": false,
+      "overlay.apply_to_final_answer": false,
+      "overlay.guardrails.writer_contract_changed": false,
+      "overlay.guardrails.writer_prompt_changed": false,
+      "overlay.guardrails.final_answer_changed": false,
+      "overlay.guardrails.provider_called": false,
+      "overlay.candidate_constraints.must_not_quote_source": true,
+      "writer_contract_changed_by_pilot": false
+    }
+  }
+]

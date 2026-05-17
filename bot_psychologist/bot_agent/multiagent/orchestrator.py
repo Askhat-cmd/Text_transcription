@@ -24,6 +24,9 @@ from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .planner_bridge_compliance_shadow import (
     build_planner_bridge_compliance_runtime_shadow_v1,
 )
+from .planner_bridge_writer_contract_pilot import (
+    build_planner_bridge_writer_contract_pilot_runtime_shadow_v1,
+)
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
 
@@ -218,6 +221,17 @@ class MultiAgentOrchestrator:
             context_package=context_package,
             diagnostic_card=diagnostic_card,
         )
+        planner_bridge_writer_contract_pilot = (
+            build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
+                writer_contract=writer_contract,
+                planner_bridge_compliance_shadow=planner_bridge_shadow.get(
+                    "planner_bridge_compliance_shadow", {}
+                ),
+                diagnostic_card=diagnostic_card,
+                thread_state=updated_thread,
+                state_snapshot=state_snapshot,
+            )
+        )
         t0 = time.perf_counter()
         draft_answer = await writer_agent.write(writer_contract)
         t_writer = int((time.perf_counter() - t0) * 1000)
@@ -343,6 +357,7 @@ class MultiAgentOrchestrator:
                 "planner_bridge_compliance_shadow": planner_bridge_shadow.get(
                     "planner_bridge_compliance_shadow", {}
                 ),
+                "planner_bridge_writer_contract_pilot": planner_bridge_writer_contract_pilot,
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),

@@ -197,3 +197,9 @@ Status: accepted
 Context: после PRD-046.1.2/046.1.2-HF1 проекту нужно сравнить candidate constraints Planner Bridge с текущими Writer Move Compliance rules, но без риска скрытого влияния на WriterContract/prompt/final answer.
 Decision: вводится только shadow compare integration: Planner Bridge candidate + compliance comparison пишутся в runtime trace как `planner_bridge_compliance_shadow`, при этом `apply_to_writer=false`, `apply_to_writer_contract=false`, writer prompt и final answer path остаются неизменными.
 Consequences: система получает измеримый compatibility слой (compatible/tightens/expected_divergence/needs_review/blocked) и готовность к следующему controlled pilot PRD, не нарушая user-path safety gates.
+
+## ADR-034 - Writer-Contract Pilot remains non-mutating until offline replay PRD
+Status: accepted
+Context: после PRD-046.1.3 появилась готовность строить candidate constraints для WriterContract, но прямое применение overlay к production Writer path в этом цикле создаёт риск незаметных regressions в prompt/final answer.
+Decision: в PRD-046.1.4 вводится только controlled pilot overlay (`pilot_shadow_only`) с фиксированными guardrails: `apply_to_writer_contract=false`, `apply_to_writer_prompt=false`, `apply_to_final_answer=false`. Pilot обязан доказывать immutability через deterministic hash (`before/after`) и сохранять runtime trace/eval artifacts без provider calls.
+Consequences: Diagnostic Center/Planner Bridge получают измеримый контрактный мост к Writer без production activation; следующий шаг допускается только как offline replay/eval PRD (PRD-046.1.5), а не прямое влияние на пользовательский ответ.

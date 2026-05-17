@@ -1,0 +1,20 @@
+{
+  "schema_version": "planner_bridge_writer_contract_pilot_no_mutation_proof_v1",
+  "prd": "PRD-046.1.4",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "provider_called_by_writer_contract_pilot": false,
+  "production_apply_performed": false,
+  "writer_prompt_production_changed": false,
+  "writer_contract_changed": false,
+  "final_answer_changed_by_pilot": false,
+  "diagnostic_center_active_in_writer": false,
+  "planner_bridge_apply_to_writer": false,
+  "pilot_apply_to_writer_contract": false,
+  "pilot_apply_to_writer_prompt": false,
+  "pilot_apply_to_final_answer": false,
+  "diagnostic_center_user_facing_enabled": false,
+  "legacy_sd_enabled": false
+}

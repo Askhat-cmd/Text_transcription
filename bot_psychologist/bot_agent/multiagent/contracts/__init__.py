@@ -17,6 +17,12 @@ from .planner_bridge_v1 import (
     PlannerBridgeTrace,
 )
 from .planner_bridge_compliance_v1 import PlannerBridgeComplianceShadow
+from .planner_bridge_writer_contract_pilot_v1 import (
+    PlannerBridgeWriterContractPilotInput,
+    PlannerBridgeWriterContractPilotOverlay,
+    PlannerBridgeWriterContractPilotResult,
+    PlannerBridgeWriterContractPilotTrace,
+)
 from .state_snapshot import StateSnapshot
 from .thread_state import ArchivedThread, ThreadState
 from .validation_result import ValidationResult
@@ -35,6 +41,10 @@ __all__ = [
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",
+    "PlannerBridgeWriterContractPilotInput",
+    "PlannerBridgeWriterContractPilotOverlay",
+    "PlannerBridgeWriterContractPilotResult",
+    "PlannerBridgeWriterContractPilotTrace",
     "PlannerBridgeInput",
     "PlannerBridgeOutput",
     "PlannerBridgeTrace",

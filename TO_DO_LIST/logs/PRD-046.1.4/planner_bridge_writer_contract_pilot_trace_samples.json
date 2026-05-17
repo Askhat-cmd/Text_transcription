@@ -1,0 +1,865 @@
+{
+  "schema_version": "planner_bridge_writer_contract_pilot_trace_samples_v1",
+  "prd": "PRD-046.1.4",
+  "generated_at": "2026-05-17T09:27:39.069418+00:00",
+  "samples": [
+    {
+      "case_id": "pbwcp_01_normal_reflective_open",
+      "description": "normal reflective open case",
+      "compliance_status": "tightens_constraints",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 2,
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective",
+            "reflect_one_key_point",
+            "ask_one_specific_question"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "do_not_open_multiple_threads"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "none",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_02_iwp_defensive_authorship",
+      "description": "I-W+ defensive authorship stabilization",
+      "compliance_status": "tightens_constraints",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "stabilize_authorship",
+          "response_mode": "reflect_then_one_question",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_feeling",
+            "name_one_mechanism_softly",
+            "name_one_repeated_pattern_gently",
+            "connect_to_recent_context",
+            "return_authority_to_user"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "give_directive_certainty",
+            "do_not_list_multiple_hypotheses",
+            "do_not_rewrite_full_history",
+            "do_not_over_explain"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "none",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_03_ipw_defensive_decenter",
+      "description": "I+W- defensive decenter",
+      "compliance_status": "tightens_constraints",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "decenter_without_shaming",
+          "response_mode": "validate_then_reframe_softly",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_feeling",
+            "validate_feeling_without_confirming_frame",
+            "offer_one_hypothesis_as_hypothesis",
+            "avoid_strong_interpretation"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "join_accusation",
+            "do_not_turn_into_lecture",
+            "do_not_add_second_hypothesis"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "none",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_04_iwm_collapsed_low_resource",
+      "description": "I-W- collapsed low resource",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "depth_limit": "none",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only",
+            "offer_one_simple_body_action",
+            "keep_language_short",
+            "reduce_pressure"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions",
+            "do_not_analyze",
+            "do_not_explain_pattern",
+            "do_not_ask_followup_question",
+            "do_not_offer_multiple_steps",
+            "do_not_analyze_deeply",
+            "do_not_ask_multiple_questions"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "low",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "not_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof",
+          "safety_context_checked"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_05_hyper_state",
+      "description": "hyper state",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "depth_limit": "none",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only",
+            "prioritize_safety_protocol",
+            "use_short_direct_support"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions",
+            "do_not_explore",
+            "do_not_analyze",
+            "do_not_analyze_deeply",
+            "do_not_ask_multiple_questions"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "low",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "not_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof",
+          "safety_context_checked"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_06_hypo_state",
+      "description": "hypo state",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "depth_limit": "none",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only",
+            "offer_one_simple_body_action",
+            "keep_language_short",
+            "reduce_pressure"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions",
+            "do_not_analyze",
+            "do_not_explain_pattern",
+            "do_not_ask_followup_question",
+            "do_not_offer_multiple_steps",
+            "do_not_analyze_deeply",
+            "do_not_ask_multiple_questions"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "low",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "not_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof",
+          "safety_context_checked"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_07_crisis_safety_flag",
+      "description": "crisis/safety flag",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "depth_limit": "none",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only",
+            "prioritize_safety_protocol",
+            "use_short_direct_support"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions",
+            "do_not_explore",
+            "do_not_analyze",
+            "do_not_analyze_deeply",
+            "do_not_ask_multiple_questions"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "low",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "not_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof",
+          "safety_context_checked"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_08_kb_lens_internal_only",
+      "description": "KB lens internal-only",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 2,
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective",
+            "reflect_one_key_point",
+            "ask_one_specific_question"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "do_not_open_multiple_threads"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_09_kb_practice_candidate_only",
+      "description": "KB practice candidate only",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 2,
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective",
+            "reflect_one_key_point",
+            "ask_one_specific_question"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "do_not_open_multiple_threads"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_10_branch_same_pattern_core",
+      "description": "branch with same pattern_core",
+      "compliance_status": "expected_divergence",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 2,
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective",
+            "reflect_one_key_point",
+            "ask_one_specific_question"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "do_not_open_multiple_threads"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "medium",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_11_new_thread_switch",
+      "description": "new thread true switch",
+      "compliance_status": "tightens_constraints",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 2,
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective",
+            "reflect_one_key_point",
+            "ask_one_specific_question"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "do_not_open_multiple_threads"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "none",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "case_id": "pbwcp_12_directive_practical",
+      "description": "directive/practical request",
+      "compliance_status": "tightens_constraints",
+      "overlay": {
+        "schema_version": "planner_bridge_writer_contract_pilot_overlay_v1",
+        "activation_mode": "pilot_shadow_only",
+        "apply_to_writer_contract": false,
+        "apply_to_writer_prompt": false,
+        "apply_to_final_answer": false,
+        "candidate_constraints": {
+          "response_goal": "clarify_before_action",
+          "response_mode": "one_clarifying_question",
+          "depth_limit": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_feeling",
+            "clarify_goal",
+            "offer_one_executable_micro_step",
+            "include_time_or_start_condition"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "give_directive_certainty",
+            "do_not_offer_list",
+            "do_not_expand_theory"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "merge_policy": {
+          "mode": "non_mutating_compare_only",
+          "allowed_fields": [],
+          "blocked_fields": [
+            "thread_state",
+            "memory_bundle",
+            "context_package",
+            "diagnostic_card",
+            "response_language",
+            "writer_prompt",
+            "final_answer"
+          ]
+        },
+        "risk_assessment": {
+          "safety_risk": "none",
+          "contract_conflict_risk": "none",
+          "kb_boundary_risk": "none",
+          "activation_readiness": "pilot_ready"
+        },
+        "guardrails": {
+          "writer_contract_changed": false,
+          "writer_prompt_changed": false,
+          "final_answer_changed": false,
+          "provider_called": false
+        }
+      },
+      "trace": {
+        "schema_version": "planner_bridge_writer_contract_pilot_trace_v1",
+        "builder": "planner_bridge_writer_contract_pilot_v1",
+        "rules_applied": [
+          "pilot_shadow_only_guardrail",
+          "non_mutating_compare_only",
+          "writer_contract_hash_proof"
+        ],
+        "warnings": []
+      }
+    }
+  ]
+}

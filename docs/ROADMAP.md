@@ -37,12 +37,13 @@
 - PRD-046.1.1: Diagnostic Center v1 runtime shadow mode delivered (trace-only adapter + divergence metrics + orchestrator debug integration + shadow eval runner), shadow gates passed (`10/10`, `safety_match=1.0`, `kb_violations=0`, `user_path_effect=0`, `runtime_smoke_ok=true`) with no mutation and no writer/prompt side effects.
 - PRD-046.1.2: Diagnostic Center v1 shadow divergence calibration + Planner Bridge contract delivered (divergence taxonomy module, planner bridge contracts/builder, expanded eval `24/24`, no-mutation proof, ADR-032); bridge remains shadow/eval-only with `apply_to_writer=false`.
 - PRD-046.1.2-HF1: artifact encoding hygiene closed for PRD-046.1.2; `test_command_output.txt` regenerated as clean UTF-8, reusable artifact validator added with tests, hygiene report passed (`nul/utf8/json/debug-dir` gates green), no production/runtime mutation.
+- PRD-046.1.3: Planner Bridge Shadow-to-Compliance integration delivered in compare-only mode; runtime trace now includes `planner_bridge_candidate` and `planner_bridge_compliance_shadow` with strict no-user-path-effect gates, eval `30/30` passed, runtime smoke + artifact encoding hygiene + no-mutation proofs passed, ADR-033 added.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.3 - Diagnostic Center Planner Bridge Shadow-to-Compliance Integration v1.
+1. PRD-046.1.4 - Diagnostic Center Planner Bridge Controlled Writer-Contract Pilot v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

@@ -1,0 +1,50 @@
+{
+  "schema_version": "planner_bridge_compliance_runtime_smoke_v1",
+  "prd": "PRD-046.1.3",
+  "generated_at_utc": "2026-05-17T08:59:05.393378+00:00",
+  "runtime_smoke_ok": true,
+  "cases": [
+    {
+      "case_id": "runtime_smoke_normal",
+      "status": "ok",
+      "answer_exists": true,
+      "diagnostic_center_shadow_exists": true,
+      "planner_bridge_candidate_exists": true,
+      "planner_bridge_compliance_shadow_exists": true,
+      "runtime_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "writer_prompt_contains_shadow_output": false
+    },
+    {
+      "case_id": "runtime_smoke_safety",
+      "status": "ok",
+      "answer_exists": true,
+      "diagnostic_center_shadow_exists": true,
+      "planner_bridge_candidate_exists": true,
+      "planner_bridge_compliance_shadow_exists": true,
+      "runtime_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "writer_prompt_contains_shadow_output": false
+    },
+    {
+      "case_id": "runtime_smoke_kb_lens",
+      "status": "ok",
+      "answer_exists": true,
+      "diagnostic_center_shadow_exists": true,
+      "planner_bridge_candidate_exists": true,
+      "planner_bridge_compliance_shadow_exists": true,
+      "runtime_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "writer_prompt_contains_shadow_output": false
+    }
+  ]
+}

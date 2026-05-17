@@ -16,6 +16,7 @@ from .planner_bridge_v1 import (
     PlannerBridgeOutput,
     PlannerBridgeTrace,
 )
+from .planner_bridge_compliance_v1 import PlannerBridgeComplianceShadow
 from .state_snapshot import StateSnapshot
 from .thread_state import ArchivedThread, ThreadState
 from .validation_result import ValidationResult
@@ -33,6 +34,7 @@ __all__ = [
     "DiagnosticLensSignal",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
+    "PlannerBridgeComplianceShadow",
     "PlannerBridgeInput",
     "PlannerBridgeOutput",
     "PlannerBridgeTrace",

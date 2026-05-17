@@ -191,3 +191,9 @@ Status: accepted
 Context: после trace-only Diagnostic Center shadow появился рабочий путь нормализации сигналов в candidate planning constraints, но прямое подключение к Writer Move Compliance без divergence-калибровки и отдельного integration PRD увеличивает риск user-path regressions.
 Decision: Planner Bridge v1 реализуется только как shadow/eval contract слой. Он может формировать candidate constraints и trace, но `apply_to_writer=false`, `apply_to_writer_contract=false`, `activation_mode=shadow_only` до отдельного PRD-046.1.3.
 Consequences: архитектура получает готовый мост для следующего шага интеграции, сохраняя no-user-path-effect и предотвращая преждевременное влияние Diagnostic Center/Planner Bridge на final answer.
+
+## ADR-033 - Planner Bridge can compare with Writer Move Compliance only in shadow_compare mode
+Status: accepted
+Context: после PRD-046.1.2/046.1.2-HF1 проекту нужно сравнить candidate constraints Planner Bridge с текущими Writer Move Compliance rules, но без риска скрытого влияния на WriterContract/prompt/final answer.
+Decision: вводится только shadow compare integration: Planner Bridge candidate + compliance comparison пишутся в runtime trace как `planner_bridge_compliance_shadow`, при этом `apply_to_writer=false`, `apply_to_writer_contract=false`, writer prompt и final answer path остаются неизменными.
+Consequences: система получает измеримый compatibility слой (compatible/tightens/expected_divergence/needs_review/blocked) и готовность к следующему controlled pilot PRD, не нарушая user-path safety gates.

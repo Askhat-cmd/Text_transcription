@@ -21,6 +21,9 @@ from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
+from .planner_bridge_compliance_shadow import (
+    build_planner_bridge_compliance_runtime_shadow_v1,
+)
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
 
@@ -201,6 +204,12 @@ class MultiAgentOrchestrator:
             thread_debug=thread_debug,
             enabled=True,
         )
+        planner_bridge_shadow = build_planner_bridge_compliance_runtime_shadow_v1(
+            diagnostic_center_shadow=diagnostic_center_shadow,
+            diagnostic_card=diagnostic_card,
+            thread_state=updated_thread,
+            state_snapshot=state_snapshot,
+        )
 
         writer_contract = WriterContract(
             user_message=query,
@@ -330,6 +339,10 @@ class MultiAgentOrchestrator:
                     "risk_flags": list(diagnostic_card.risk_flags),
                 },
                 "diagnostic_center_shadow": diagnostic_center_shadow,
+                "planner_bridge_candidate": planner_bridge_shadow.get("planner_bridge_candidate", {}),
+                "planner_bridge_compliance_shadow": planner_bridge_shadow.get(
+                    "planner_bridge_compliance_shadow", {}
+                ),
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),

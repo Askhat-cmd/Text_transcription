@@ -1,0 +1,1392 @@
+[
+  {
+    "case_id": "pbcs_01_compatible_baseline",
+    "description": "compatible baseline",
+    "user_message": "???? ????? ????????? ????? 1.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_1",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_02_compatible_baseline",
+    "description": "compatible baseline",
+    "user_message": "???? ????? ????????? ????? 2.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_2",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_03_compatible_baseline",
+    "description": "compatible baseline",
+    "user_message": "???? ????? ????????? ????? 3.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_3",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_04_compatible_baseline",
+    "description": "compatible baseline",
+    "user_message": "???? ????? ????????? ????? 4.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "baseline_4",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_05_safety_hyper",
+    "description": "safety hyper",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "contact",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": true,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "acute_activation",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_06_safety_hypo",
+    "description": "safety hypo",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "contact",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": true,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_active": true
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_07_low_resource",
+    "description": "I-W- collapsed low-resource",
+    "user_message": "??? ???, ?????? ?????????.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "regulate",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource_7",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_08_low_resource",
+    "description": "I-W- collapsed low-resource",
+    "user_message": "??? ???, ?????? ?????????.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "regulate",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource_8",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_09_low_resource",
+    "description": "I-W- collapsed low-resource",
+    "user_message": "??? ???, ?????? ?????????.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "regulate",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource_9",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "collapsed",
+      "ok_position": "I-W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_10_iw_plus_defensive",
+    "description": "I-W+ defensive authorship",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "authorship_10",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_11_iw_plus_defensive",
+    "description": "I-W+ defensive authorship",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "authorship_11",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_12_iw_plus_defensive",
+    "description": "I-W+ defensive authorship",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "authorship_12",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_13_iw_minus_defensive",
+    "description": "I+W- defensive decentering",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "validate",
+      "response_goal": "decenter_without_shaming",
+      "pattern_core": "decentering_13",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I+W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_14_iw_minus_defensive",
+    "description": "I+W- defensive decentering",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "validate",
+      "response_goal": "decenter_without_shaming",
+      "pattern_core": "decentering_14",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I+W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_15_iw_minus_defensive",
+    "description": "I+W- defensive decentering",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "validate",
+      "response_goal": "decenter_without_shaming",
+      "pattern_core": "decentering_15",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "defensive",
+      "ok_position": "I+W-"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_16_i_plus_w_plus",
+    "description": "I+W+ open integration",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "integrate",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "integration_16",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_17_i_plus_w_plus",
+    "description": "I+W+ open integration",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "integrate",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "integration_17",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_18_i_plus_w_plus",
+    "description": "I+W+ open integration",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "integrate",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "integration_18",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_19_branch_same_core",
+    "description": "branch same pattern core",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "branch",
+      "response_mode": "reflect",
+      "response_goal": "continuity",
+      "pattern_core": "fear_of_judgment",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_20_branch_same_core",
+    "description": "branch same pattern core",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "branch",
+      "response_mode": "reflect",
+      "response_goal": "continuity",
+      "pattern_core": "fear_of_judgment",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_21_new_thread_switch",
+    "description": "new thread true switch",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "new_topic_21",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_22_new_thread_switch",
+    "description": "new thread true switch",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "new_topic_22",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_23_kb_lens_internal",
+    "description": "KB lens internal-only",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "insufficient_self_23",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "chunk_id": "kb_23",
+          "score": 0.9,
+          "lens_family": "insufficient_self",
+          "content": "safe preview",
+          "content_full": "forbidden long raw",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    },
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_24_kb_lens_internal",
+    "description": "KB lens internal-only",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "insufficient_self_24",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "chunk_id": "kb_24",
+          "score": 0.9,
+          "lens_family": "insufficient_self",
+          "content": "safe preview",
+          "content_full": "forbidden long raw",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    },
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "expected_divergence"
+    }
+  },
+  {
+    "case_id": "pbcs_25_kb_boundary_violation",
+    "description": "KB boundary violation simulation",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "kb_block_25",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.3,
+      "risk_flags": [
+        "low_confidence"
+      ]
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_26_kb_boundary_violation",
+    "description": "KB boundary violation simulation",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "kb_block_26",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.3,
+      "risk_flags": [
+        "low_confidence"
+      ]
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_27_low_confidence_needs_review",
+    "description": "low confidence needs_review",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "clarify",
+      "pattern_core": "",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "blocked"
+    }
+  },
+  {
+    "case_id": "pbcs_28_planner_blocked",
+    "description": "planner bridge blocked",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "blocked_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.1
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_29_tightens_questions",
+    "description": "candidate tightens constraints",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "tighten_case",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "open",
+      "ok_position": "I+W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  },
+  {
+    "case_id": "pbcs_30_no_user_path_effect",
+    "description": "no-user-path-effect regression",
+    "user_message": "???????? ?????????",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "clarify",
+      "pattern_core": "no_user_path",
+      "continuity_score": 0.8,
+      "must_avoid": [],
+      "openness": "mixed",
+      "ok_position": "I-W+"
+    },
+    "context_package": {},
+    "memory_bundle": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point",
+      "avoid_list": [],
+      "confidence": 0.8
+    },
+    "expected_bridge": {
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false
+    },
+    "expected_compliance": {
+      "activation_mode": "shadow_compare_only",
+      "apply_to_writer": false,
+      "apply_to_writer_contract": false,
+      "writer_prompt_changed": false,
+      "final_answer_changed": false,
+      "compatibility.kb_boundary_compatible": true,
+      "compatibility.safety_compatible": true,
+      "compatibility.overall_status": "tightens_constraints"
+    }
+  }
+]

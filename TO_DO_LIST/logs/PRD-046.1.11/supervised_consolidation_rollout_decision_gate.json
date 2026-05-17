@@ -1,0 +1,20 @@
+{
+  "schema_version": "prompt_constraint_supervised_consolidation_rollout_decision_gate_v1",
+  "prd": "PRD-046.1.11",
+  "final_status": "passed",
+  "decision": "prepare_production_limited_rollout_plan",
+  "source_cycles_passed": true,
+  "aggregate_metrics_passed": true,
+  "reproducibility_passed": true,
+  "risk_register_has_blockers": false,
+  "normal_user_apply_total": 0,
+  "rollback_failure_total": 0,
+  "safety_regression_total": 0,
+  "kb_policy_regression_total": 0,
+  "raw_kb_text_exposure_total": 0,
+  "provider_called_total": 0,
+  "production_mutation_detected_any": false,
+  "recommended_next_prd": "PRD-046.1.12 - Production-Limited Prompt-Constraint Pilot Rollout Plan v1",
+  "blockers": [],
+  "warnings": []
+}

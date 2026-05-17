@@ -1,0 +1,21 @@
+{
+  "prd": "PRD-046.1.11",
+  "schema_version": "prompt_constraint_supervised_consolidation_manifest_v1",
+  "source_cycles": [
+    {
+      "prd": "PRD-046.1.9",
+      "final_status": "passed",
+      "decision": "continue_supervised"
+    },
+    {
+      "prd": "PRD-046.1.10",
+      "final_status": "passed",
+      "decision": "continue_supervised"
+    }
+  ],
+  "consolidation_mode": "evidence_only_no_execution",
+  "provider_allowed": false,
+  "production_mutation_allowed": false,
+  "source_cycles_passed": true,
+  "generated_at": "2026-05-17T17:10:43.018269+00:00"
+}

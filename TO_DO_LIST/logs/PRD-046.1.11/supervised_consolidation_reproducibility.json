@@ -1,0 +1,16 @@
+{
+  "schema_version": "prompt_constraint_supervised_consolidation_reproducibility_v1",
+  "prd": "PRD-046.1.11",
+  "both_cycles_passed": true,
+  "both_cycles_continue_supervised": true,
+  "normal_user_no_effect_repeated": true,
+  "rollback_success_repeated": true,
+  "no_safety_regression_repeated": true,
+  "no_kb_regression_repeated": true,
+  "no_prompt_bloat_repeated": true,
+  "no_constraint_conflict_repeated": true,
+  "no_raw_kb_exposure_repeated": true,
+  "provider_free_repeated": true,
+  "no_mutation_repeated": true,
+  "reproducibility_passed": true
+}

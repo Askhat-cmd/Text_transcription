@@ -1,0 +1,64 @@
+{
+  "schema_version": "prompt_constraint_supervised_consolidation_risk_register_v1",
+  "prd": "PRD-046.1.11",
+  "risks": [
+    {
+      "risk_id": "limited_evidence_size",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Expand supervised evidence in rollout planning phase with strict abort criteria.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "synthetic_test_only_cohort",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Keep pilot allowlisted and define production-limited safeguards before any rollout execution.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "runtime_env_drift",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Re-run runtime smoke and endpoint readiness checks in each next PRD stage.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "prompt_bloat_under_real_long_context",
+      "severity": "low",
+      "status": "accepted",
+      "mitigation": "Keep prompt delta limits and monitor long-context outliers in supervised telemetry.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "unexpected_diagnostic_center_divergence",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Retain trace-only Diagnostic Center mode and compare-layer observability gates.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "rollback_operator_error",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Enforce rollback-first operator checklist with explicit force-disabled verification.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "trace_artifact_leakage",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Continue sanitized artifact policy and run artifact encoding/hygiene validator each cycle.",
+      "blocks_next_step": false
+    },
+    {
+      "risk_id": "overfitting_to_eval_fixtures",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Add broader scenario variance in planning PRD while preserving no-effect gates.",
+      "blocks_next_step": false
+    }
+  ],
+  "blocking_risk_count": 0,
+  "risk_register_has_blockers": false
+}

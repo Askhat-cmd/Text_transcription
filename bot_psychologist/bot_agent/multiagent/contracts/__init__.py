@@ -44,6 +44,14 @@ from .prompt_constraint_supervised_continuation_v1 import (
     PromptConstraintSupervisedContinuationRollbackV1,
     PromptConstraintSupervisedContinuationRunV1,
 )
+from .prompt_constraint_supervised_consolidation_v1 import (
+    PromptConstraintRolloutDecisionGateV1,
+    PromptConstraintRolloutDecisionV1,
+    PromptConstraintSupervisedAggregateMetricsV1,
+    PromptConstraintSupervisedConsolidationRunV1,
+    PromptConstraintSupervisedCycleEvidenceV1,
+    PromptConstraintSupervisedRiskRegisterV1,
+)
 from .prompt_constraint_supervised_rollout_v1 import (
     PromptConstraintRolloutAbortCriteriaV1,
     PromptConstraintRolloutCohortV1,
@@ -97,6 +105,12 @@ __all__ = [
     "PromptConstraintSupervisedContinuationDecisionV1",
     "PromptConstraintSupervisedContinuationRollbackV1",
     "PromptConstraintSupervisedContinuationRunV1",
+    "PromptConstraintRolloutDecisionGateV1",
+    "PromptConstraintRolloutDecisionV1",
+    "PromptConstraintSupervisedAggregateMetricsV1",
+    "PromptConstraintSupervisedConsolidationRunV1",
+    "PromptConstraintSupervisedCycleEvidenceV1",
+    "PromptConstraintSupervisedRiskRegisterV1",
     "PromptConstraintRolloutAbortCriteriaV1",
     "PromptConstraintRolloutCohortV1",
     "PromptConstraintRolloutDecisionV1",

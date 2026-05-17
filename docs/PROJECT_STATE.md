@@ -1,12 +1,12 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1-diagnostic-center-contract-ready`: Diagnostic Center v1 contract/readiness слой внедрён в dry-run режиме и подтверждён eval/audit артефактами без runtime activation.
-В `PRD-046.1` добавлены Diagnostic Center v1 contracts + deterministic dry-run builder + audit runner + eval cases (`10/10`) с `final_status=passed`, `diagnostic_center_contract_ready=true`, `diagnostic_center_runtime_enabled=false`, `kb_usage_mode=internal_lens_only`, `must_not_quote_source=true`, и строгим no-mutation proof (`all_blocks/registry/config` без изменений).
+Проект находится на стадии `post-PRD-046.1.1-diagnostic-center-shadow-eval-passed`: Diagnostic Center v1 подключён в runtime только как trace-only shadow слой, прошёл shadow eval/smoke без влияния на user-facing ответ.
+В `PRD-046.1.1` добавлены runtime shadow adapter + divergence metrics + orchestrator trace integration + shadow eval runner, подтверждены `cases_passed=10/10`, `safety_priority_match_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `runtime_smoke_ok=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
 
 ## Current Runtime Architecture
 Активный user-path:
-User message -> State Analyzer -> Thread Manager -> Memory Retrieval -> Context Assembly -> Diagnostic Card -> Writer Move Compliance -> Writer -> Validator/Trace -> Memory Update.
+User message -> State Analyzer -> Thread Manager -> Memory Retrieval -> Context Assembly -> Diagnostic Card -> Diagnostic Center Shadow (trace-only) -> Writer Move Compliance -> Writer -> Validator/Trace -> Memory Update.
 
 Runtime работает без cascade legacy режима и опирается на управляемый pipeline с диагностическим trace, где Writer не является единственным диагностическим узлом.
 
@@ -62,10 +62,10 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Diagnostic Center v1 contract/readiness layer (internal dry-run only, not wired to active user response path).
+- Diagnostic Center v1 shadow layer (runtime trace-only, no writer/user-path effect).
 
 ## Not Implemented Yet
-- Diagnostic Center v1 runtime shadow integration (`PRD-046.1.1`) and any user-path activation.
+- Diagnostic Center v1 divergence calibration and planner bridge (`PRD-046.1.2`) before any active planning integration.
 
 ## Known Risks
 - Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
@@ -77,7 +77,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1.1 - Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval.
+1. PRD-046.1.2 - Diagnostic Center v1 Shadow Divergence Calibration / Planner Bridge.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -94,7 +94,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.1
+- Source cycle: PRD-046.1.1
 
 
 

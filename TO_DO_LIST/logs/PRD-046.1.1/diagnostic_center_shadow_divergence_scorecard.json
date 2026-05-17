@@ -1,0 +1,19 @@
+{
+  "schema_version": "diagnostic_center_shadow_scorecard_v1",
+  "prd": "PRD-046.1.1",
+  "generated_at_utc": "2026-05-17T04:39:03.137906+00:00",
+  "cases_total": 10,
+  "cases_passed": 10,
+  "shadow_build_error_count": 0,
+  "hard_blocker_count": 0,
+  "soft_warning_count": 0,
+  "safety_priority_match_rate": 1.0,
+  "kb_boundary_violation_count": 0,
+  "raw_kb_text_exposure_count": 0,
+  "user_path_effect_count": 0,
+  "writer_prompt_changed_by_shadow": false,
+  "diagnostic_center_active_in_writer": false,
+  "runtime_smoke_ok": true,
+  "final_status": "passed",
+  "next_prd": "PRD-046.1.2"
+}

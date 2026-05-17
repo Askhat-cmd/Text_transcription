@@ -1,0 +1,421 @@
+[
+  {
+    "case_id": "shadow_case_01_i_minus_w_plus_defensive_directive",
+    "user_message": "Скажи как правильно поступить, я опять всё делаю не так?",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "solution",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "external_confirmation_seek"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "chunk_id": "k1",
+          "score": 0.91,
+          "lens_family": "insufficient_self",
+          "content": "short safe preview"
+        }
+      ]
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_02_i_minus_w_plus_open_reflection",
+    "user_message": "Похоже я ищу подтверждение. Помоги увидеть где мой механизм.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.79
+    },
+    "thread_state": {
+      "phase": "explore",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_with_support",
+      "pattern_core": "external_confirmation_seek"
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_03_i_plus_w_minus_defensive_accusation",
+    "user_message": "Почему люди вокруг такие неадекватные, я же нормально объясняю?",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "safety_flag": false,
+      "confidence": 0.77
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "validate",
+      "response_goal": "decenter_without_shaming",
+      "pattern_core": "externalization_frame"
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_04_i_minus_w_minus_collapsed",
+    "user_message": "Ничего уже не поможет. Я не справляюсь.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.86
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "regulate",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource"
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.status": "safety_first",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_05_i_plus_w_plus_open",
+    "user_message": "Какие варианты я не учел? Хочу посмотреть шире.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "safety_flag": false,
+      "confidence": 0.71
+    },
+    "thread_state": {
+      "phase": "integrate",
+      "relation_to_thread": "continue",
+      "response_mode": "explore",
+      "response_goal": "deepen_and_integrate",
+      "pattern_core": "integration_ready"
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "explore_carefully"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_06_hyper_activation",
+    "user_message": "Все рушится, срочно скажи что делать!",
+    "state_snapshot": {
+      "nervous_state": "hyper",
+      "intent": "contact",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.88
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "ground",
+      "pattern_core": "acute_activation",
+      "safety_active": true
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.status": "safety_first",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_07_hypo_low_resource",
+    "user_message": "Пусто, даже думать не могу.",
+    "state_snapshot": {
+      "nervous_state": "hypo",
+      "intent": "contact",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "safety_flag": false,
+      "confidence": 0.83
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "regulate",
+      "response_goal": "ground_and_reduce_load",
+      "pattern_core": "low_resource"
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "regulate_first"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.status": "safety_first",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_08_crisis_safety_flag",
+    "user_message": "Я в полном тупике и не вижу выхода.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "contact",
+      "openness": "mixed",
+      "ok_position": "I-W-",
+      "safety_flag": true,
+      "confidence": 0.9
+    },
+    "thread_state": {
+      "phase": "stabilize",
+      "relation_to_thread": "continue",
+      "response_mode": "safe_override",
+      "response_goal": "safety",
+      "pattern_core": "safety_case",
+      "safety_active": true
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "safe_override"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.status": "safety_first",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_09_branch_same_pattern_core",
+    "user_message": "Тема меняется на работу, но страх оценки тот же.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.74
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "branch",
+      "response_mode": "reflect",
+      "response_goal": "continuity",
+      "pattern_core": "fear_of_external_judgment"
+    },
+    "thread_debug": {
+      "relation": {
+        "continuity_risk": "none"
+      },
+      "action": {
+        "thread_action": "branch_keep_pattern"
+      }
+    },
+    "context_package": {},
+    "diagnostic_card": {
+      "suggested_writer_move": "reflect_pattern_once"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  },
+  {
+    "case_id": "shadow_case_10_kb_lens_quote_forbidden",
+    "user_message": "Я опять недостаточно постарался.",
+    "state_snapshot": {
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "safety_flag": false,
+      "confidence": 0.8
+    },
+    "thread_state": {
+      "phase": "clarify",
+      "relation_to_thread": "continue",
+      "response_mode": "reflect",
+      "response_goal": "stabilize_authorship",
+      "pattern_core": "insufficient_self"
+    },
+    "context_package": {
+      "knowledge_rag_hits": [
+        {
+          "chunk_id": "kb_lens_1",
+          "score": 0.87,
+          "lens_family": "insufficient_self",
+          "content": "safe short summary",
+          "content_full": "forbidden long raw text that must be removed",
+          "allowed_use": [
+            "writer_context"
+          ],
+          "safety_flags": [
+            "not_for_direct_quote"
+          ]
+        }
+      ]
+    },
+    "diagnostic_card": {
+      "suggested_writer_move": "clarify_one_point"
+    },
+    "expected_shadow": {
+      "status_one_of": [
+        "ok",
+        "safety_first"
+      ],
+      "runtime_mode": "shadow_only",
+      "user_path_effect": "none",
+      "output.diagnostic_center_runtime_enabled": false,
+      "output.user_facing_text_generated": false
+    },
+    "expected_divergence": {
+      "safety_priority_match": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false
+    }
+  }
+]

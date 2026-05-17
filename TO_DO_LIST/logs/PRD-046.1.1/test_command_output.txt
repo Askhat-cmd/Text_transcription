@@ -1,0 +1,180 @@
+﻿PRD-046.1.1 command run started: 2026-05-17T07:37:31.7014112+03:00
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_contracts.py -q
+
+..                                                                       [100%]
+2 passed in 0.37s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_rules.py -q
+
+...                                                                      [100%]
+3 passed in 0.44s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_safety_priority.py -q
+
+...                                                                      [100%]
+3 passed in 0.37s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_kb_boundaries.py -q
+
+..                                                                       [100%]
+2 passed in 0.36s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_eval_cases.py -q
+
+..                                                                       [100%]
+2 passed in 0.44s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_adapter.py -q
+
+..                                                                       [100%]
+2 passed in 0.53s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_trace.py -q
+
+..                                                                       [100%]
+2 passed in 0.38s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_non_blocking.py -q
+
+.                                                                        [100%]
+1 passed in 0.38s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_no_user_path_effect.py -q
+
+.                                                                        [100%]
+1 passed in 0.40s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_kb_sanitization.py -q
+
+.                                                                        [100%]
+1 passed in 0.32s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_eval_runner.py -q
+
+..                                                                       [100%]
+2 passed in 0.37s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 28%]
+........................................................................ [ 56%]
+........................................................................ [ 84%]
+.......................................                                  [100%]
+255 passed in 42.09s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.35s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m bot_psychologist.tools.run_diagnostic_center_shadow_eval --out-dir TO_DO_LIST/logs/PRD-046.1.1
+
+2026-05-17 07:39:03,063 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-17 07:39:03,069 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{
+  "status": "passed",
+  "scorecard": {
+    "schema_version": "diagnostic_center_shadow_scorecard_v1",
+    "prd": "PRD-046.1.1",
+    "generated_at_utc": "2026-05-17T04:39:03.137906+00:00",
+    "cases_total": 10,
+    "cases_passed": 10,
+    "shadow_build_error_count": 0,
+    "hard_blocker_count": 0,
+    "soft_warning_count": 0,
+    "safety_priority_match_rate": 1.0,
+    "kb_boundary_violation_count": 0,
+    "raw_kb_text_exposure_count": 0,
+    "user_path_effect_count": 0,
+    "writer_prompt_changed_by_shadow": false,
+    "diagnostic_center_active_in_writer": false,
+    "runtime_smoke_ok": true,
+    "final_status": "passed",
+    "next_prd": "PRD-046.1.2"
+  },
+  "runtime_smoke_ok": true,
+  "no_mutation": {
+    "schema_version": "diagnostic_center_shadow_no_mutation_proof_v1",
+    "prd": "PRD-046.1.1",
+    "generated_at_utc": "2026-05-17T04:39:03.130832+00:00",
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "chroma_reindex_performed": false,
+    "provider_called_by_shadow": false,
+    "production_apply_performed": false,
+    "writer_prompt_production_changed": false,
+    "diagnostic_center_active_in_writer": false,
+    "diagnostic_center_shadow_enabled": true,
+    "diagnostic_center_user_facing_enabled": false,
+    "legacy_sd_enabled": false,
+    "hash_before": {
+      "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+      "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+      "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+    },
+    "hash_after": {
+      "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+      "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+      "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+    }
+  }
+}
+
+--- EXIT CODE: 0 ---
+
+PRD-046.1.1 command run finished: 2026-05-17T07:39:03.2928207+03:00

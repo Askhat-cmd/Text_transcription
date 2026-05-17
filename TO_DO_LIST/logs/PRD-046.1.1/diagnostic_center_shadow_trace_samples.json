@@ -1,0 +1,543 @@
+[
+  {
+    "case_id": "shadow_case_01_i_minus_w_plus_defensive_directive",
+    "shadow_status": "ok",
+    "output": {
+      "schema_version": "diagnostic_center_output_v1",
+      "status": "ok",
+      "nervous_state": "window",
+      "intent": "practical_step",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "clarify",
+      "working_hypothesis": {
+        "pattern_candidate": "confirmation_seeking_under_uncertainty",
+        "mechanism_summary": "user may seek external permission instead of internal authorship",
+        "blind_spot_candidate": "question format can hide need for permission",
+        "confidence": 0.62,
+        "evidence": [
+          "nervous_state:window",
+          "intent:practical_step",
+          "openness:defensive",
+          "ok_position:I-W+",
+          "relation_to_thread:continue",
+          "phase:clarify",
+          "pattern_core:external_confirmation_seek",
+          "lens_hint:insufficient_self"
+        ],
+        "counter_evidence": [],
+        "risk_flags": []
+      },
+      "lens_signals": [
+        {
+          "lens_family": "insufficient_self",
+          "score": 0.91,
+          "source": "knowledge_hits",
+          "rationale": "retrieval metadata hint"
+        }
+      ],
+      "next_micro_shift": {
+        "response_goal": "stabilize_authorship",
+        "response_mode": "reflect_then_one_question",
+        "target_micro_shift": "return authorship without pressure",
+        "must_do": [
+          "validate_feeling",
+          "name_one_mechanism_softly"
+        ],
+        "must_not_do": [
+          "give_final_advice",
+          "quote_kb_directly",
+          "introduce_new_framework",
+          "give_directive_certainty"
+        ],
+        "depth_allowed": "low_to_medium",
+        "max_questions": 1,
+        "max_concepts": 1
+      },
+      "trace": {
+        "version": "diagnostic_center_trace_v1",
+        "builder": "diagnostic_center_dry_run_v1",
+        "rules_applied": [
+          "deterministic_dry_run_v1",
+          "internal_only_contract",
+          "kb_lens_internal_rule",
+          "must_not_quote_source_rule"
+        ],
+        "safety_priority_applied": false,
+        "evidence_sources": [
+          "state_snapshot",
+          "thread_state",
+          "context_package",
+          "knowledge_hits"
+        ],
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "diagnostic_center_runtime_enabled": false,
+      "user_facing_text_generated": false
+    },
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    }
+  },
+  {
+    "case_id": "shadow_case_02_i_minus_w_plus_open_reflection",
+    "shadow_status": "ok",
+    "output": {
+      "schema_version": "diagnostic_center_output_v1",
+      "status": "ok",
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "explore",
+      "working_hypothesis": {
+        "pattern_candidate": "confirmation_seeking_under_uncertainty",
+        "mechanism_summary": "user may seek external permission instead of internal authorship",
+        "blind_spot_candidate": "question format can hide need for permission",
+        "confidence": 0.62,
+        "evidence": [
+          "nervous_state:window",
+          "intent:explore",
+          "openness:open",
+          "ok_position:I-W+",
+          "relation_to_thread:continue",
+          "phase:explore",
+          "pattern_core:external_confirmation_seek"
+        ],
+        "counter_evidence": [],
+        "risk_flags": []
+      },
+      "lens_signals": [],
+      "next_micro_shift": {
+        "response_goal": "clarify",
+        "response_mode": "reflect_then_one_question",
+        "target_micro_shift": "maintain thread and gently clarify current need",
+        "must_do": [
+          "validate_feeling"
+        ],
+        "must_not_do": [
+          "give_final_advice",
+          "quote_kb_directly",
+          "introduce_new_framework"
+        ],
+        "depth_allowed": "low_to_medium",
+        "max_questions": 1,
+        "max_concepts": 1
+      },
+      "trace": {
+        "version": "diagnostic_center_trace_v1",
+        "builder": "diagnostic_center_dry_run_v1",
+        "rules_applied": [
+          "deterministic_dry_run_v1",
+          "internal_only_contract",
+          "must_not_quote_source_rule"
+        ],
+        "safety_priority_applied": false,
+        "evidence_sources": [
+          "state_snapshot",
+          "thread_state",
+          "context_package",
+          "knowledge_hits"
+        ],
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "diagnostic_center_runtime_enabled": false,
+      "user_facing_text_generated": false
+    },
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    }
+  },
+  {
+    "case_id": "shadow_case_03_i_plus_w_minus_defensive_accusation",
+    "shadow_status": "ok",
+    "output": {
+      "schema_version": "diagnostic_center_output_v1",
+      "status": "ok",
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "relation_to_thread": "continue",
+      "phase": "clarify",
+      "working_hypothesis": {
+        "pattern_candidate": "decentering_needed_under_externalization",
+        "mechanism_summary": "framing may externalize agency to others",
+        "blind_spot_candidate": "accusation frame can block self-observation",
+        "confidence": 0.62,
+        "evidence": [
+          "nervous_state:window",
+          "intent:vent",
+          "openness:defensive",
+          "ok_position:I+W-",
+          "relation_to_thread:continue",
+          "phase:clarify",
+          "pattern_core:externalization_frame"
+        ],
+        "counter_evidence": [],
+        "risk_flags": []
+      },
+      "lens_signals": [],
+      "next_micro_shift": {
+        "response_goal": "decenter_without_shaming",
+        "response_mode": "validate_then_reframe_softly",
+        "target_micro_shift": "reduce accusation frame and restore dialogue",
+        "must_do": [
+          "validate_feeling",
+          "validate_feeling_without_confirming_frame"
+        ],
+        "must_not_do": [
+          "give_final_advice",
+          "quote_kb_directly",
+          "introduce_new_framework",
+          "join_accusation"
+        ],
+        "depth_allowed": "low_to_medium",
+        "max_questions": 1,
+        "max_concepts": 1
+      },
+      "trace": {
+        "version": "diagnostic_center_trace_v1",
+        "builder": "diagnostic_center_dry_run_v1",
+        "rules_applied": [
+          "deterministic_dry_run_v1",
+          "internal_only_contract",
+          "must_not_quote_source_rule"
+        ],
+        "safety_priority_applied": false,
+        "evidence_sources": [
+          "state_snapshot",
+          "thread_state",
+          "context_package",
+          "knowledge_hits"
+        ],
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "diagnostic_center_runtime_enabled": false,
+      "user_facing_text_generated": false
+    },
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    }
+  },
+  {
+    "case_id": "shadow_case_04_i_minus_w_minus_collapsed",
+    "shadow_status": "ok",
+    "output": {
+      "schema_version": "diagnostic_center_output_v1",
+      "status": "safety_first",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "relation_to_thread": "continue",
+      "phase": "stabilize",
+      "working_hypothesis": {
+        "pattern_candidate": "high_activation_or_crisis_guard",
+        "mechanism_summary": "safety-sensitive state likely limits capacity for deep exploration",
+        "blind_spot_candidate": "depth may overwhelm before stabilization",
+        "confidence": 0.8,
+        "evidence": [
+          "nervous_state:hypo",
+          "intent:vent",
+          "openness:collapsed",
+          "ok_position:I-W-",
+          "relation_to_thread:continue",
+          "phase:stabilize",
+          "pattern_core:low_resource"
+        ],
+        "counter_evidence": [],
+        "risk_flags": [
+          "safety_first"
+        ]
+      },
+      "lens_signals": [],
+      "next_micro_shift": {
+        "response_goal": "safety_redirect",
+        "response_mode": "ground_then_one_step",
+        "target_micro_shift": "reduce activation and keep user safe",
+        "must_do": [
+          "grounding",
+          "short_sentence",
+          "one_step_only"
+        ],
+        "must_not_do": [
+          "give_final_advice",
+          "quote_kb_directly",
+          "introduce_new_framework",
+          "deep_analysis",
+          "multiple_questions"
+        ],
+        "depth_allowed": "none",
+        "max_questions": 0,
+        "max_concepts": 1
+      },
+      "trace": {
+        "version": "diagnostic_center_trace_v1",
+        "builder": "diagnostic_center_dry_run_v1",
+        "rules_applied": [
+          "deterministic_dry_run_v1",
+          "internal_only_contract",
+          "safety_priority_rule",
+          "must_not_quote_source_rule"
+        ],
+        "safety_priority_applied": true,
+        "evidence_sources": [
+          "state_snapshot",
+          "thread_state",
+          "context_package",
+          "knowledge_hits"
+        ],
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "diagnostic_center_runtime_enabled": false,
+      "user_facing_text_generated": false
+    },
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    }
+  },
+  {
+    "case_id": "shadow_case_05_i_plus_w_plus_open",
+    "shadow_status": "ok",
+    "output": {
+      "schema_version": "diagnostic_center_output_v1",
+      "status": "ok",
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "relation_to_thread": "continue",
+      "phase": "integrate",
+      "working_hypothesis": {
+        "pattern_candidate": "integration_ready_exploration",
+        "mechanism_summary": "user appears able to tolerate perspective broadening",
+        "blind_spot_candidate": "premature advice may reduce reflective quality",
+        "confidence": 0.62,
+        "evidence": [
+          "nervous_state:window",
+          "intent:explore",
+          "openness:open",
+          "ok_position:I+W+",
+          "relation_to_thread:continue",
+          "phase:integrate",
+          "pattern_core:integration_ready"
+        ],
+        "counter_evidence": [],
+        "risk_flags": []
+      },
+      "lens_signals": [],
+      "next_micro_shift": {
+        "response_goal": "deepen_and_integrate",
+        "response_mode": "reflect_plus_alternative",
+        "target_micro_shift": "expand perspective while preserving agency",
+        "must_do": [
+          "validate_feeling",
+          "offer_alternative_perspective"
+        ],
+        "must_not_do": [
+          "give_final_advice",
+          "quote_kb_directly",
+          "introduce_new_framework"
+        ],
+        "depth_allowed": "medium|high",
+        "max_questions": 1,
+        "max_concepts": 2
+      },
+      "trace": {
+        "version": "diagnostic_center_trace_v1",
+        "builder": "diagnostic_center_dry_run_v1",
+        "rules_applied": [
+          "deterministic_dry_run_v1",
+          "internal_only_contract",
+          "must_not_quote_source_rule"
+        ],
+        "safety_priority_applied": false,
+        "evidence_sources": [
+          "state_snapshot",
+          "thread_state",
+          "context_package",
+          "knowledge_hits"
+        ],
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true
+      },
+      "diagnostic_center_runtime_enabled": false,
+      "user_facing_text_generated": false
+    },
+    "divergence": {
+      "safety_priority_match": true,
+      "depth_compatible": true,
+      "writer_move_compatible": true,
+      "response_mode_compatible": true,
+      "relation_to_thread_match": true,
+      "phase_match": true,
+      "pattern_core_present": true,
+      "kb_boundary_ok": true,
+      "raw_kb_text_exposed": false,
+      "thread_risk": "none",
+      "warnings": [],
+      "diagnostic_card_alignment": {
+        "safety_priority_match": true,
+        "low_resource_depth_match": true,
+        "writer_move_compatible": true,
+        "response_mode_compatible": true
+      },
+      "thread_alignment": {
+        "relation_to_thread_match": true,
+        "phase_match": true,
+        "pattern_core_present": true,
+        "continuity_risk": "none"
+      },
+      "kb_boundary": {
+        "kb_usage_mode": "internal_lens_only",
+        "must_not_quote_source": true,
+        "raw_kb_text_exposed": false
+      },
+      "user_path": {
+        "writer_contract_changed": false,
+        "writer_prompt_changed_by_shadow": false,
+        "final_answer_changed_by_shadow": false,
+        "diagnostic_center_output_passed_to_writer": false
+      }
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "schema_version": "diagnostic_center_shadow_no_mutation_proof_v1",
+  "prd": "PRD-046.1.1",
+  "generated_at_utc": "2026-05-17T04:39:03.130832+00:00",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "provider_called_by_shadow": false,
+  "production_apply_performed": false,
+  "writer_prompt_production_changed": false,
+  "diagnostic_center_active_in_writer": false,
+  "diagnostic_center_shadow_enabled": true,
+  "diagnostic_center_user_facing_enabled": false,
+  "legacy_sd_enabled": false,
+  "hash_before": {
+    "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+    "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+    "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+  },
+  "hash_after": {
+    "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+    "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+    "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+  }
+}

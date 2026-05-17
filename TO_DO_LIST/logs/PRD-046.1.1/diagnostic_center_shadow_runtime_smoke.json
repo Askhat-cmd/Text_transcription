@@ -1,0 +1,28 @@
+{
+  "schema_version": "diagnostic_center_shadow_runtime_smoke_v1",
+  "prd": "PRD-046.1.1",
+  "generated_at_utc": "2026-05-17T04:39:03.133007+00:00",
+  "runtime_smoke_ok": true,
+  "cases": [
+    {
+      "case_id": "runtime_smoke_1",
+      "status": "ok",
+      "answer_exists": true,
+      "shadow_exists": true,
+      "shadow_runtime_mode": "shadow_only",
+      "shadow_user_path_effect": "none",
+      "shadow_status": "ok",
+      "writer_prompt_contains_shadow_output": false
+    },
+    {
+      "case_id": "runtime_smoke_2",
+      "status": "ok",
+      "answer_exists": true,
+      "shadow_exists": true,
+      "shadow_runtime_mode": "shadow_only",
+      "shadow_user_path_effect": "none",
+      "shadow_status": "ok",
+      "writer_prompt_contains_shadow_output": false
+    }
+  ]
+}

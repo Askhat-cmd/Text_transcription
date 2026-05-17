@@ -179,3 +179,9 @@ Status: accepted
 Context: проект перешёл к Diagnostic Center после readiness-gates, но есть риск превратить новый слой в отдельного user-facing LLM-агента, который начнёт писать пользователю, подменять Writer и принимать authority-решения по KB/governance.
 Decision: Diagnostic Center v1 закреплён как internal map-making layer. Он собирает `DiagnosticCenterOutput` из существующих сигналов (State Analyzer / Thread Manager / Context Assembly / governed retrieval metadata) и формирует `working_hypothesis + next_micro_shift`. Diagnostic Center не генерирует финальный пользовательский текст, не цитирует KB напрямую, не меняет governance authority и не включается в active runtime без отдельного PRD.
 Consequences: диагностическая логика становится тестируемой независимо от Writer, runtime сохраняет multiagent-дисциплину, а следующий шаг (`PRD-046.1.1`) может подключать слой только в shadow-mode с отдельными eval/gate проверками.
+
+## ADR-031 - Diagnostic Center shadow mode cannot affect user-facing output
+Status: accepted
+Context: в `PRD-046.1.1` Diagnostic Center впервые подключается к runtime. Без жёстких ограничений shadow path мог бы незаметно повлиять на WriterContract, writer prompt или final answer.
+Decision: Diagnostic Center в runtime допускается только в trace-only shadow режиме. Shadow output строится на реальных runtime сигналах, но не передаётся в WriterContract, не меняет writer prompt, не меняет validation path и не влияет на final answer. При ошибке shadow runtime продолжает основной ответ без блокировки.
+Consequences: система получает измеримые divergence-метрики для следующего PRD, сохраняя инварианты user-path безопасности (`writer_contract_changed=false`, `writer_prompt_changed_by_shadow=false`, `final_answer_changed_by_shadow=false`).

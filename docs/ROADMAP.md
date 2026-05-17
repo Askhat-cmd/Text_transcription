@@ -34,12 +34,13 @@
 - PRD-046.0.10-HF1: SD config/encoding finalization completed; canonical config fixed to default-disabled (`sd_labeling.enabled=false`), env overrides no longer persist back into `config.yaml`, UTF-8 runtime smoke artifacts and anti-mojibake gate added, runtime/no-mutation invariants preserved.
 - PRD-046.0.11: final runtime readiness summary completed; live runtime/admin gates (`:8003`) revalidated, KB/chroma focus-source consistency reconfirmed (`1 / 247 / 247 / 247`), retrieval/governance/legacy-SD/UTF-8/docs gates passed, no-mutation proof captured, Diagnostic Center prerequisites confirmed.
 - PRD-046.1: Diagnostic Center v1 readiness architecture layer delivered (strict contracts, deterministic dry-run builder, 10 golden/eval cases, contract audit runner, no-mutation proof, ADR-030); final status passed, runtime activation remained disabled.
+- PRD-046.1.1: Diagnostic Center v1 runtime shadow mode delivered (trace-only adapter + divergence metrics + orchestrator debug integration + shadow eval runner), shadow gates passed (`10/10`, `safety_match=1.0`, `kb_violations=0`, `user_path_effect=0`, `runtime_smoke_ok=true`) with no mutation and no writer/prompt side effects.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.1 - Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval.
+1. PRD-046.1.2 - Diagnostic Center v1 Shadow Divergence Calibration / Planner Bridge.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

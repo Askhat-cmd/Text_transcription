@@ -53,6 +53,7 @@
 | PRD-046.0.11 | Final Runtime Readiness Summary v1 | passed | ec68299 | delivered final readiness runner/artifacts/report before Diagnostic Center: live endpoints on `:8003` validated, runtime/admin/kb/chroma/retrieval/governance/legacy-SD/UTF-8/docs gates passed, strict counts reconfirmed (`active_source=1`, `blocks/chroma=247/247/247`), no-mutation proof captured | TO_DO_LIST/reports/PRD-046.0.11_IMPLEMENTATION_REPORT.md |
 
 | PRD-046.1 | Diagnostic Center v1 Readiness / Architecture PRD | passed | c680e14 | delivered internal Diagnostic Center v1 contract layer (input/output schemas, deterministic dry-run builder, 10 eval cases, contract audit + no-mutation proof), runtime path unchanged (diagnostic_center_runtime_enabled=false) | TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.1 | Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval | passed | pending_post_push_sync | integrated Diagnostic Center in runtime as trace-only shadow path (no writer contract injection), added divergence metrics/runtime smoke/eval runner, passed shadow gates (`10/10`, `user_path_effect_count=0`, `runtime_smoke_ok=true`) with no-mutation proof | TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.

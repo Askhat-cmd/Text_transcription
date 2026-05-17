@@ -1,0 +1,10 @@
+{
+  "schema_version": "prompt_constraint_supervised_execution_rollback_proof_v1",
+  "prd": "PRD-046.1.9",
+  "rollback_cases_total": 3,
+  "rollback_cases_passed": 3,
+  "rollback_failure_count": 0,
+  "stale_apply_after_force_disabled_count": 0,
+  "force_disabled_absolute_priority": true,
+  "rollback_restores_no_apply": true
+}

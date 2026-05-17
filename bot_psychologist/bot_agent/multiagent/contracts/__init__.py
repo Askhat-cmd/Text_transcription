@@ -28,6 +28,14 @@ from .prompt_constraint_pilot_runtime_v1 import (
     PromptConstraintPilotRuntimeInput,
     PromptConstraintPilotRuntimeTrace,
 )
+from .prompt_constraint_supervised_execution_v1 import (
+    PromptConstraintSupervisedExecutionCaseV1,
+    PromptConstraintSupervisedExecutionComparisonV1,
+    PromptConstraintSupervisedExecutionDecisionV1,
+    PromptConstraintSupervisedExecutionRollbackProofV1,
+    PromptConstraintSupervisedExecutionRunV1,
+    PromptConstraintSupervisedExecutionTraceV1,
+)
 from .prompt_constraint_supervised_rollout_v1 import (
     PromptConstraintRolloutAbortCriteriaV1,
     PromptConstraintRolloutCohortV1,
@@ -69,6 +77,12 @@ __all__ = [
     "PromptConstraintPilotRuntimeDecision",
     "PromptConstraintPilotRuntimeInput",
     "PromptConstraintPilotRuntimeTrace",
+    "PromptConstraintSupervisedExecutionCaseV1",
+    "PromptConstraintSupervisedExecutionComparisonV1",
+    "PromptConstraintSupervisedExecutionDecisionV1",
+    "PromptConstraintSupervisedExecutionRollbackProofV1",
+    "PromptConstraintSupervisedExecutionRunV1",
+    "PromptConstraintSupervisedExecutionTraceV1",
     "PromptConstraintRolloutAbortCriteriaV1",
     "PromptConstraintRolloutCohortV1",
     "PromptConstraintRolloutDecisionV1",

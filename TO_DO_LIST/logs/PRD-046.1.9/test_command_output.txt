@@ -1,0 +1,649 @@
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_contract.py . [100%]
+
+============================== 1 passed in 0.41s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_runner.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_runner.py . [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_runner.py: 10 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_runner.py: 10 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 20 warnings in 0.54s ========================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_source_plan_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_source_plan_gate.py . [ 50%]
+.                                                                        [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_source_plan_gate.py: 20 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_source_plan_gate.py: 20 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 2 passed, 40 warnings in 0.69s ========================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_normal_user_no_effect.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_normal_user_no_effect.py . [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_normal_user_no_effect.py: 10 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_normal_user_no_effect.py: 10 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 20 warnings in 0.50s ========================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_rollback.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_rollback.py . [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_rollback.py: 10 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_rollback.py: 10 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 20 warnings in 0.50s ========================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_quality_comparison.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_quality_comparison.py . [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_quality_comparison.py: 10 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_quality_comparison.py: 10 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 20 warnings in 0.49s ========================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_execution_no_mutation.py . [100%]
+
+============================== warnings summary ===============================
+tests/multiagent/test_prompt_constraint_supervised_execution_no_mutation.py: 10 warnings
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/multiagent/test_prompt_constraint_supervised_execution_no_mutation.py: 10 warnings
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 1 passed, 20 warnings in 0.50s ========================
+
+
+
+>>> python -m bot_psychologist.tools.run_prompt_constraint_supervised_execution_gate --plan-dir TO_DO_LIST/logs/PRD-046.1.8 --output-dir TO_DO_LIST/logs/PRD-046.1.9 --strict
+python : 2026-05-17 19:20:58,935 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_prac
+tice\Text_transcription\bot_psychologist\data\threads
+At line:1 char:1
++ python -m bot_psychologist.tools.run_prompt_constraint_supervised_exe ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-17 19:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-17 19:20:58,940 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "continue_supervised",
+  "scorecard": {
+    "prd": "PRD-046.1.9",
+    "final_status": "passed",
+    "decision": "continue_supervised",
+    "source_plan_gate_passed": true,
+    "cohort_size": 3,
+    "cohort_limit_respected": true,
+    "test_apply_applied_count": 3,
+    "normal_user_apply_count": 0,
+    "rollback_failure_count": 0,
+    "safety_regression_count": 0,
+    "kb_policy_regression_count": 0,
+    "prompt_bloat_regression_count": 0,
+    "constraint_conflict_regression_count": 0,
+    "candidate_weaker_than_baseline_count": 0,
+    "raw_kb_text_exposure_count": 0,
+    "provider_called_by_execution_count": 0,
+    "allowlist_violation_count": 0,
+    "stale_apply_after_force_disabled_count": 0,
+    "production_mutation_detected": false,
+    "artifact_encoding_hygiene_passed": true,
+    "recommended_next_prd": "PRD-046.1.10 - Supervised Prompt-Constraint Pilot Continuation / Expanded Eval Cohort v1",
+    "blockers": [],
+    "warnings": []
+  },
+  "preflight": {
+    "required": {
+      "supervised_rollout_plan": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\supervised_rollout_plan.json",
+      "supervised_rollout_readiness_gate": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\supervised_rollout_readiness_gate.json",
+      "supervised_rollout_abort_criteria": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\supervised_rollout_abort_criteria.json",
+      "supervised_rollout_toggle_matrix": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\supervised_rollout_toggle_matrix.json",
+      "supervised_rollout_operator_runbook": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\supervised_rollout_operator_runbook.json",
+      "no_mutation": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\no_mutation_proof.json",
+      "encoding_hygiene": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.8\\artifact_encoding_hygiene_report.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "supervised_rollout_plan": {
+        "schema_version": "prompt_constraint_supervised_rollout_plan_v1",
+        "prd": "PRD-046.1.8",
+        "baseline_defaults": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow|test_apply"
+        },
+        "rollout_stage": "plan_only",
+        "allowed_scope": {
+          "allowlisted_user_ids_only": true,
+          "test_user_prefix_only": true,
+          "max_cohort_size": 3,
+          "normal_users_allowed": false,
+          "explicit_allowlisted_user_ids": [
+            "pilot_user"
+          ],
+          "required_test_user_prefix": "pilot_"
+        },
+        "required_preflight_gates": [
+          {
+            "gate_id": "source_prd_046_1_7_passed",
+            "required": true,
+            "passed": true,
+            "details": "Requires PRD-046.1.7 final_status=passed and decision=supervised_rollout_candidate."
+          },
+          {
+            "gate_id": "default_flags_conservative",
+            "required": true,
+            "passed": true,
+            "details": "Default values must remain enabled=false, force_disabled=true, mode in shadow/test_apply."
+          },
+          {
+            "gate_id": "rollback_first_preserved",
+            "required": true,
+            "passed": true,
+            "details": "Rollback failure and stale apply counts must remain zero."
+          },
+          {
+            "gate_id": "normal_user_no_effect",
+            "required": true,
+            "passed": true,
+            "details": "No apply and no default-off side effect on normal users."
+          }
+        ],
+        "runtime_observation_requirements": [
+          {
+            "metric_id": "normal_user_apply_count",
+            "source": "PRD-046.1.7 scorecard/gate verification",
+            "target": "0",
+            "required": true
+          },
+          {
+            "metric_id": "rollback_failure_count",
+            "source": "PRD-046.1.7 rollback matrix",
+            "target": "0",
+            "required": true
+          },
+          {
+            "metric_id": "safety_kb_regression_counts",
+            "source": "PRD-046.1.7 quality delta",
+            "target": "all zero",
+            "required": true
+          },
+          {
+            "metric_id": "trace_samples_count",
+            "source": "PRD-046.1.7 runtime evidence audit",
+            "target": ">=10",
+            "required": true
+          }
+        ],
+        "abort_criteria": {
+          "schema_version": "prompt_constraint_supervised_rollout_abort_criteria_v1",
+          "hard_abort_conditions": [
+            "normal_user_apply_count > 0",
+            "allowlist_violation_count > 0",
+            "default_off_user_path_effect_count > 0",
+            "rollback_failure_count > 0",
+            "stale_apply_after_force_disabled_count > 0",
+            "raw_kb_text_exposure_count > 0",
+            "internal_only_exposure_count > 0",
+            "not_for_direct_quote_violation_count > 0",
+            "safety_regression_count > 0",
+            "kb_policy_regression_count > 0",
+            "candidate_weaker_than_baseline_count > 0",
+            "prompt_bloat_regression_count > 0",
+            "constraint_conflict_regression_count > 0",
+            "provider_called_by_gate_count > 0",
+            "production_mutation_detected=true"
+          ],
+          "warning_conditions": [
+            "trace_samples_count < expected_minimum",
+            "candidate_tighter_than_baseline_count lower than expected",
+            "datetime.utcnow deprecation warnings remain",
+            "operator_runbook_missing_optional_markdown"
+          ],
+          "rollback_steps": [
+            "Set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true immediately.",
+            "Set PROMPT_CONSTRAINT_PILOT_ENABLED=false immediately.",
+            "Keep PROMPT_CONSTRAINT_PILOT_MODE=shadow for inspection-only traces.",
+            "Collect trace artifacts and verify normal_user_apply_count=0.",
+            "Re-run supervised rollout gates before any re-enable request."
+          ],
+          "ready": true
+        },
+        "rollback_steps": [
+          "Set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true immediately.",
+          "Set PROMPT_CONSTRAINT_PILOT_ENABLED=false immediately.",
+          "Keep PROMPT_CONSTRAINT_PILOT_MODE=shadow for inspection-only traces.",
+          "Collect trace artifacts and verify normal_user_apply_count=0.",
+          "Re-run supervised rollout gates before any re-enable request."
+        ],
+        "success_criteria": [
+          "All required rollout gates passed.",
+          "Normal user path remains unchanged.",
+          "Rollback-first policy preserved.",
+          "No production mutation and no provider-dependent acceptance."
+        ],
+        "next_decision_options": [
+          "execution_blocked",
+          "ready_for_supervised_execution_prd",
+          "hotfix_required"
+        ],
+        "generated_at": "2026-05-17T15:51:55.089332+00:00",
+        "source_prd": "PRD-046.1.7",
+        "source_scorecard_snapshot": {
+          "final_status": "passed",
+          "decision": "supervised_rollout_candidate",
+          "evidence_quality": "sufficient"
+        }
+      },
+      "supervised_rollout_readiness_gate": {
+        "prd": "PRD-046.1.8",
+        "final_status": "passed",
+        "decision": "ready_for_supervised_execution_prd",
+        "source_gate": {
+          "prd_046_1_7_final_status": "passed",
+          "prd_046_1_7_decision": "supervised_rollout_candidate"
+        },
+        "default_safety": {
+          "enabled_default_false": true,
+          "force_disabled_default_true": true,
+          "normal_user_apply_count": 0,
+          "default_off_user_path_effect_count": 0
+        },
+        "rollback": {
+          "rollback_first_policy_preserved": true,
+          "force_disabled_absolute_priority": true,
+          "toggle_matrix_ready": true
+        },
+        "scope": {
+          "normal_users_allowed": false,
+          "allowlist_required": true,
+          "test_prefix_required": true,
+          "max_initial_cohort_size": 3
+        },
+        "quality": {
+          "requires_baseline_vs_test_apply_comparison": true,
+          "requires_trace_samples": true,
+          "requires_no_safety_regression": true,
+          "requires_no_kb_policy_regression": true
+        },
+        "mutation": {
+          "production_apply_performed": false,
+          "config_mutated": false,
+          "registry_mutated": false,
+          "all_blocks_merged_mutated": false,
+          "chroma_reindex_performed": false
+        },
+        "blockers": [],
+        "warnings": [
+          "datetime_utcnow_deprecation_warnings_possible"
+        ]
+      },
+      "supervised_rollout_abort_criteria": {
+        "schema_version": "prompt_constraint_supervised_rollout_abort_criteria_v1",
+        "hard_abort_conditions": [
+          "normal_user_apply_count > 0",
+          "allowlist_violation_count > 0",
+          "default_off_user_path_effect_count > 0",
+          "rollback_failure_count > 0",
+          "stale_apply_after_force_disabled_count > 0",
+          "raw_kb_text_exposure_count > 0",
+          "internal_only_exposure_count > 0",
+          "not_for_direct_quote_violation_count > 0",
+          "safety_regression_count > 0",
+          "kb_policy_regression_count > 0",
+          "candidate_weaker_than_baseline_count > 0",
+          "prompt_bloat_regression_count > 0",
+          "constraint_conflict_regression_count > 0",
+          "provider_called_by_gate_count > 0",
+          "production_mutation_detected=true"
+        ],
+        "warning_conditions": [
+          "trace_samples_count < expected_minimum",
+          "candidate_tighter_than_baseline_count lower than expected",
+          "datetime.utcnow deprecation warnings remain",
+          "operator_runbook_missing_optional_markdown"
+        ],
+        "rollback_steps": [
+          "Set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true immediately.",
+          "Set PROMPT_CONSTRAINT_PILOT_ENABLED=false immediately.",
+          "Keep PROMPT_CONSTRAINT_PILOT_MODE=shadow for inspection-only traces.",
+          "Collect trace artifacts and verify normal_user_apply_count=0.",
+          "Re-run supervised rollout gates before any re-enable request."
+        ],
+        "ready": true,
+        "prd": "PRD-046.1.8",
+        "generated_at": "2026-05-17T15:51:55.089254+00:00"
+      },
+      "supervised_rollout_toggle_matrix": {
+        "schema_version": "prompt_constraint_supervised_rollout_toggle_matrix_v1",
+        "prd": "PRD-046.1.8",
+        "toggle_matrix_ready": true,
+        "rows": [
+          {
+            "case_id": "false_true_shadow_normal",
+            "enabled": false,
+            "force_disabled": true,
+            "mode": "shadow",
+            "user": "normal_user",
+            "expected": "disabled/no_apply"
+          },
+          {
+            "case_id": "true_true_test_apply_allowlisted",
+            "enabled": true,
+            "force_disabled": true,
+            "mode": "test_apply",
+            "user": "pilot_user",
+            "expected": "disabled/no_apply"
+          },
+          {
+            "case_id": "true_false_shadow_allowlisted",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "shadow",
+            "user": "pilot_user",
+            "expected": "shadow_only/no_apply"
+          },
+          {
+            "case_id": "true_false_test_apply_normal",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "normal_user",
+            "expected": "shadow_only/no_apply"
+          },
+          {
+            "case_id": "true_false_test_apply_non_allowlisted",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "external_user",
+            "expected": "shadow_only/no_apply"
+          },
+          {
+            "case_id": "true_false_test_apply_pilot_prefix",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "pilot_demo",
+            "expected": "apply_if_all_gates_pass"
+          },
+          {
+            "case_id": "true_false_test_apply_explicit_allowlist",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "pilot_user",
+            "expected": "apply_if_all_gates_pass"
+          },
+          {
+            "case_id": "true_false_test_apply_allowlisted_safety_fail",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "pilot_user",
+            "expected": "downgrade_or_block"
+          },
+          {
+            "case_id": "true_false_test_apply_allowlisted_kb_fail",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "pilot_user",
+            "expected": "downgrade_or_block"
+          },
+          {
+            "case_id": "true_false_test_apply_allowlisted_bloat_conflict_fail",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user": "pilot_user",
+            "expected": "downgrade_or_block"
+          }
+        ],
+        "generated_at": "2026-05-17T15:51:55.089290+00:00"
+      },
+      "supervised_rollout_operator_runbook": {
+        "schema_version": "prompt_constraint_supervised_rollout_operator_runbook_v1",
+        "prd": "PRD-046.1.8",
+        "runbook_stage": "plan_only_no_execution",
+        "steps": [
+          "Run preflight and verify PRD-046.1.7 final_status=passed and decision=supervised_rollout_candidate.",
+          "Keep defaults conservative: enabled=false and force_disabled=true before any supervised request.",
+          "For supervised execution PRD, manually set flags only for the approved session cohort.",
+          "Keep initial cohort size <= 3 and allowlisted/test-prefix only.",
+          "Capture trace artifacts after each supervised run and verify normal_user_apply_count=0.",
+          "Verify rollback matrix by toggling force_disabled=true and confirming no stale apply.",
+          "Disable pilot immediately by setting force_disabled=true and enabled=false if any abort condition is hit.",
+          "Store rollout artifacts: scorecard, gate verification, quality delta, no-mutation proof, encoding report.",
+          "Compare baseline vs test_apply metrics for every supervised cycle before continuation.",
+          "Block next supervised step automatically if any hard abort condition is triggered."
+        ],
+        "required_flags_for_future_execution": [
+          "PROMPT_CONSTRAINT_PILOT_ENABLED",
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED",
+          "PROMPT_CONSTRAINT_PILOT_MODE",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX"
+        ],
+        "rollback_off_steps": [
+          "Set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true immediately.",
+          "Set PROMPT_CONSTRAINT_PILOT_ENABLED=false immediately.",
+          "Keep PROMPT_CONSTRAINT_PILOT_MODE=shadow for inspection-only traces.",
+          "Collect trace artifacts and verify normal_user_apply_count=0.",
+          "Re-run supervised rollout gates before any re-enable request."
+        ],
+        "ready": true
+      },
+      "no_mutation": {
+        "schema_version": "prompt_constraint_supervised_rollout_no_mutation_proof_v1",
+        "prd": "PRD-046.1.8",
+        "tracked_paths": {
+          "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+          "registry": "Bot_data_base/data/registry.json",
+          "config": "Bot_data_base/config.yaml"
+        },
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "production_apply_performed": false,
+        "provider_called_by_plan": false
+      },
+      "encoding_hygiene": {
+        "schema_version": "artifact_encoding_hygiene_report_v1",
+        "prd": "PRD-046.1.8",
+        "checked_prd": "PRD-046.1.8",
+        "final_status": "passed",
+        "files_checked": 9,
+        "utf8_decode_error_count": 0,
+        "nul_byte_file_count": 0,
+        "nul_char_file_count": 0,
+        "replacement_char_warning_count": 0,
+        "mojibake_warning_count": 0,
+        "json_parse_error_count": 0,
+        "empty_text_artifact_count": 0,
+        "unexpected_debug_dir_count": 0,
+        "fixed_files": [],
+        "warnings": [],
+        "blockers": [],
+        "checked_files": [
+          "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+          "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt"
+        ]
+      }
+    }
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.9",
+    "checked_prd": "PRD-046.1.9",
+    "final_status": "passed",
+    "files_checked": 9,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.9/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_baseline_vs_test_apply.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_manifest.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_normal_user_no_effect.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_observability_scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_rollback_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_trace_samples.json",
+      "TO_DO_LIST/logs/PRD-046.1.9/test_command_output.txt"
+    ]
+  }
+}
+
+
+
+>>> python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.9 --logs-dir TO_DO_LIST/logs/PRD-046.1.9 --out-dir TO_DO_LIST/logs/PRD-046.1.9 --report-prd PRD-046.1.9 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.9",
+  "checked_prd": "PRD-046.1.9",
+  "final_status": "passed",
+  "files_checked": 9,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.9/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_baseline_vs_test_apply.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_normal_user_no_effect.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_observability_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_rollback_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_trace_samples.json",
+    "TO_DO_LIST/logs/PRD-046.1.9/test_command_output.txt"
+  ]
+}
+
+

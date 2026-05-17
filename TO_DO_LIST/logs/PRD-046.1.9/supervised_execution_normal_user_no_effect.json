@@ -1,0 +1,9 @@
+{
+  "schema_version": "prompt_constraint_supervised_execution_normal_user_no_effect_v1",
+  "prd": "PRD-046.1.9",
+  "normal_user_cases_total": 1,
+  "normal_user_apply_count": 0,
+  "normal_user_prompt_changed_by_pilot_count": 0,
+  "normal_user_final_answer_changed_by_pilot_count": 0,
+  "normal_user_trace_only_or_disabled": true
+}

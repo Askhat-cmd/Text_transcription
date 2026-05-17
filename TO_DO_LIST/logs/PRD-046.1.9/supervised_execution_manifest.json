@@ -1,0 +1,47 @@
+{
+  "schema_version": "prompt_constraint_supervised_execution_v1",
+  "prd": "PRD-046.1.9",
+  "execution_mode": "controlled_harness",
+  "cohort": {
+    "max_size": 3,
+    "size": 3,
+    "user_ids": [
+      "pilot_alpha",
+      "pilot_beta",
+      "pilot_gamma"
+    ],
+    "max_size_allowed": 3,
+    "normal_users_included": false,
+    "normal_users_allowed": false
+  },
+  "baseline_defaults_preserved": true,
+  "supervised_run": {
+    "enabled": true,
+    "force_disabled": false,
+    "mode": "test_apply",
+    "allowlisted_only": true
+  },
+  "rollback_run": {
+    "enabled": true,
+    "force_disabled": true,
+    "mode": "test_apply"
+  },
+  "results": {
+    "trace_samples_count": 10,
+    "cases_compared": 3,
+    "test_apply_applied_count": 3
+  },
+  "decision": "stay_limited",
+  "source_plan_prd": "PRD-046.1.8",
+  "source_plan_status": "passed",
+  "source_plan_decision": "ready_for_supervised_execution_prd",
+  "runtime_flag_scenarios": [
+    "baseline_default_off",
+    "supervised_test_apply",
+    "normal_user_control",
+    "rollback_force_disabled"
+  ],
+  "provider_allowed": false,
+  "production_mutation_allowed": false,
+  "generated_at": "2026-05-17T16:20:58.963536+00:00"
+}

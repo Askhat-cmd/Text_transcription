@@ -173,3 +173,9 @@ Status: accepted
 Context: в HF4 после controlled reindex direct Chroma diagnostic уже показывал `247`, но dashboard временно отображал `0` из-за вычисления total через `collection.get()` выборку, что давало runtime drift.
 Decision: для admin/dashboard runtime total Chroma count берётся из `collection.count()`; выборка `get(..., include=['metadatas'])` используется только для распределений/составов и не как источник total.
 Consequences: dashboard Chroma total синхронизирован с direct diagnostic и strict gate, уменьшается риск ложного blocker/passed статуса из-за особенностей выборки API.
+
+## ADR-030 - Diagnostic Center is a map-making layer, not a user-facing agent
+Status: accepted
+Context: проект перешёл к Diagnostic Center после readiness-gates, но есть риск превратить новый слой в отдельного user-facing LLM-агента, который начнёт писать пользователю, подменять Writer и принимать authority-решения по KB/governance.
+Decision: Diagnostic Center v1 закреплён как internal map-making layer. Он собирает `DiagnosticCenterOutput` из существующих сигналов (State Analyzer / Thread Manager / Context Assembly / governed retrieval metadata) и формирует `working_hypothesis + next_micro_shift`. Diagnostic Center не генерирует финальный пользовательский текст, не цитирует KB напрямую, не меняет governance authority и не включается в active runtime без отдельного PRD.
+Consequences: диагностическая логика становится тестируемой независимо от Writer, runtime сохраняет multiagent-дисциплину, а следующий шаг (`PRD-046.1.1`) может подключать слой только в shadow-mode с отдельными eval/gate проверками.

@@ -1,0 +1,208 @@
+[
+  {
+    "case_id": "case_01_i_minus_w_plus_defensive_directive",
+    "input": {
+      "user_message": "Скажи, как правильно поступить, я опять все делаю не так?",
+      "nervous_state": "window",
+      "intent": "directive",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "clarify",
+      "safety_flag": false,
+      "response_mode": "reflect",
+      "pattern_core": "external_confirmation_loop",
+      "knowledge_hits": [{"lens_family": "insufficient_self", "score": 0.88}]
+    },
+    "expected": {
+      "status": "ok",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "next_micro_shift.response_goal": "stabilize_authorship",
+      "next_micro_shift.must_not_do_contains": ["give_directive_certainty"]
+    }
+  },
+  {
+    "case_id": "case_02_i_minus_w_plus_open",
+    "input": {
+      "user_message": "Похоже, я все время ищу подтверждение. Помоги увидеть, что я не замечаю.",
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "explore",
+      "safety_flag": false,
+      "response_mode": "explore",
+      "pattern_core": "external_confirmation_loop",
+      "knowledge_hits": [{"lens_family": "insufficient_self", "score": 0.91}]
+    },
+    "expected": {
+      "status": "ok",
+      "ok_position": "I-W+",
+      "next_micro_shift.response_goal_one_of": ["clarify", "deepen_and_integrate", "stabilize_authorship"]
+    }
+  },
+  {
+    "case_id": "case_03_i_plus_w_minus_defensive",
+    "input": {
+      "user_message": "Почему люди вокруг такие неадекватные, я же нормально объясняю?",
+      "nervous_state": "window",
+      "intent": "vent",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "relation_to_thread": "continue",
+      "phase": "clarify",
+      "safety_flag": false,
+      "response_mode": "validate"
+    },
+    "expected": {
+      "status": "ok",
+      "ok_position": "I+W-",
+      "next_micro_shift.response_goal": "decenter_without_shaming",
+      "next_micro_shift.must_not_do_contains": ["join_accusation"]
+    }
+  },
+  {
+    "case_id": "case_04_i_minus_w_minus_collapsed",
+    "input": {
+      "user_message": "Ничего уже не поможет. Я не справляюсь и все бессмысленно.",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "relation_to_thread": "continue",
+      "phase": "stabilize",
+      "safety_flag": false,
+      "response_mode": "regulate"
+    },
+    "expected": {
+      "status": "safety_first",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "next_micro_shift.depth_allowed_one_of": ["none", "low"],
+      "next_micro_shift.max_questions_lte": 1
+    }
+  },
+  {
+    "case_id": "case_05_i_plus_w_plus_open",
+    "input": {
+      "user_message": "Какие варианты я не учел? Хочу посмотреть шире.",
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "relation_to_thread": "continue",
+      "phase": "explore",
+      "safety_flag": false,
+      "response_mode": "explore"
+    },
+    "expected": {
+      "status": "ok",
+      "ok_position": "I+W+",
+      "next_micro_shift.response_goal": "deepen_and_integrate",
+      "next_micro_shift.depth_allowed": "medium|high"
+    }
+  },
+  {
+    "case_id": "case_06_hyper_priority",
+    "input": {
+      "user_message": "Я не могу остановиться, все рушится, срочно скажи что делать!!!",
+      "nervous_state": "hyper",
+      "intent": "directive",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "stabilize",
+      "safety_flag": false,
+      "response_mode": "regulate"
+    },
+    "expected": {
+      "status": "safety_first",
+      "next_micro_shift.depth_allowed_one_of": ["none", "low"],
+      "next_micro_shift.max_questions_lte": 1
+    }
+  },
+  {
+    "case_id": "case_07_hypo_priority",
+    "input": {
+      "user_message": "Пусто. Ничего не хочу. Даже думать не могу.",
+      "nervous_state": "hypo",
+      "intent": "contact",
+      "openness": "collapsed",
+      "ok_position": "I-W-",
+      "relation_to_thread": "continue",
+      "phase": "stabilize",
+      "safety_flag": false,
+      "response_mode": "regulate"
+    },
+    "expected": {
+      "status": "safety_first",
+      "next_micro_shift.response_goal": "safety_redirect",
+      "next_micro_shift.must_not_do_contains": ["deep_analysis"]
+    }
+  },
+  {
+    "case_id": "case_08_branch_same_pattern_core",
+    "input": {
+      "user_message": "На работе то же самое, будто снова жду одобрения.",
+      "nervous_state": "window",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "relation_to_thread": "branch",
+      "phase": "clarify",
+      "safety_flag": false,
+      "response_mode": "reflect",
+      "pattern_core": "external_confirmation_loop"
+    },
+    "expected": {
+      "status": "ok",
+      "relation_to_thread": "branch",
+      "trace.rules_applied_contains": ["branch_continuity_rule"]
+    }
+  },
+  {
+    "case_id": "case_09_kb_lens_internal_only",
+    "input": {
+      "user_message": "Я опять недостаточно постарался.",
+      "nervous_state": "window",
+      "intent": "validation",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "relation_to_thread": "continue",
+      "phase": "clarify",
+      "safety_flag": false,
+      "response_mode": "reflect",
+      "knowledge_hits": [
+        {"lens_family": "insufficient_self", "score": 0.93},
+        {"lens_family": "try_harder_loop", "score": 0.77}
+      ]
+    },
+    "expected": {
+      "status": "ok",
+      "trace.kb_usage_mode": "internal_lens_only",
+      "trace.must_not_quote_source": true
+    }
+  },
+  {
+    "case_id": "case_10_true_new_topic_switch",
+    "input": {
+      "user_message": "Новая фактическая задача по планированию бюджета.",
+      "nervous_state": "window",
+      "intent": "practical_step",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "relation_to_thread": "new_thread",
+      "phase": "clarify",
+      "safety_flag": false,
+      "response_mode": "practice",
+      "pattern_core": ""
+    },
+    "expected": {
+      "status": "ok",
+      "relation_to_thread": "new_thread",
+      "next_micro_shift.response_goal_one_of": ["clarify_before_action", "clarify"]
+    }
+  }
+]

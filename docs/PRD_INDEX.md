@@ -52,12 +52,15 @@
 | PRD-046.0.10-HF1 | BotDB SD Config / Encoding Finalization v1 | done | f0561cd | finalized canonical SD defaults (`sd_labeling.enabled=false`), prevented env override persistence into `config.yaml`, added UTF-8 runtime smoke/check tooling and anti-mojibake tests/reports, runtime/no-mutation gates remained green (`1/247/247`) | TO_DO_LIST/reports/PRD-046.0.10-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.11 | Final Runtime Readiness Summary v1 | passed | ec68299 | delivered final readiness runner/artifacts/report before Diagnostic Center: live endpoints on `:8003` validated, runtime/admin/kb/chroma/retrieval/governance/legacy-SD/UTF-8/docs gates passed, strict counts reconfirmed (`active_source=1`, `blocks/chroma=247/247/247`), no-mutation proof captured | TO_DO_LIST/reports/PRD-046.0.11_IMPLEMENTATION_REPORT.md |
 
+| PRD-046.1 | Diagnostic Center v1 Readiness / Architecture PRD | passed | pending_post_push_sync | delivered internal Diagnostic Center v1 contract layer (input/output schemas, deterministic dry-run builder, 10 eval cases, contract audit + no-mutation proof), runtime path unchanged (diagnostic_center_runtime_enabled=false) | TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md |
+
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
 2. Если изменился project stage — обновляется `docs/PROJECT_STATE.md`.
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
 
 
 

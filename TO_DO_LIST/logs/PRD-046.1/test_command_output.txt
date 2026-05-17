@@ -1,0 +1,618 @@
+﻿PRD-046.1 command run started: 2026-05-17T06:36:00.5739788+03:00
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent -q
+
+........................................................................ [ 29%]
+........................................................................ [ 58%]
+........................................................................ [ 87%]
+..............................                                           [100%]
+246 passed in 38.12s
+Task was destroyed but it is pending!
+task: <Task pending name='Task-84' coro=<ConversationMemory._run_summary_task() running at C:\My_practice\Text_transcription\bot_psychologist\bot_agent\conversation_memory.py:1026> wait_for=<Future pending cb=[_chain_future.<locals>._call_check_cancel() at C:\Users\user\AppData\Local\Programs\Python\Python310\lib\asyncio\futures.py:385, Task.task_wakeup()]>>
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+
+........                                                                 [100%]
+8 passed in 0.23s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_contracts.py -q
+
+..                                                                       [100%]
+2 passed in 0.24s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_rules.py -q
+
+...                                                                      [100%]
+3 passed in 0.24s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_safety_priority.py -q
+
+...                                                                      [100%]
+3 passed in 0.24s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_kb_boundaries.py -q
+
+..                                                                       [100%]
+2 passed in 0.24s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_eval_cases.py -q
+
+..                                                                       [100%]
+2 passed in 0.28s
+
+--- EXIT CODE: 0 ---
+
+
+=== COMMAND ===
+C:\My_practice\Text_transcription\Bot_data_base\.venv\Scripts\python.exe -m bot_psychologist.tools.run_diagnostic_center_contract_audit --out-dir TO_DO_LIST/logs/PRD-046.1
+
+2026-05-17 06:36:55,676 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-17 06:36:55,680 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{
+  "status": "passed",
+  "audit": {
+    "schema_version": "diagnostic_center_contract_audit_v1",
+    "prd": "PRD-046.1",
+    "generated_at_utc": "2026-05-17T03:36:55.701056+00:00",
+    "cases_file": "bot_psychologist/tests/fixtures/diagnostic_center_v1_cases.json",
+    "audit_passed": true,
+    "final_status": "passed",
+    "diagnostic_center_contract_ready": true,
+    "diagnostic_center_runtime_enabled": false,
+    "case_results": [
+      {
+        "case_id": "case_01_i_minus_w_plus_defensive_directive",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "directive",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "stabilize_authorship",
+          "response_mode": "reflect_then_one_question",
+          "target_micro_shift": "return authorship without pressure",
+          "must_do": [
+            "validate_feeling",
+            "name_one_mechanism_softly"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "give_directive_certainty"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "kb_lens_internal_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_02_i_minus_w_plus_open",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I-W+",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "clarify",
+          "response_mode": "reflect_then_one_question",
+          "target_micro_shift": "maintain thread and gently clarify current need",
+          "must_do": [
+            "validate_feeling"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "kb_lens_internal_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_03_i_plus_w_minus_defensive",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "vent",
+        "openness": "defensive",
+        "ok_position": "I+W-",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "decenter_without_shaming",
+          "response_mode": "validate_then_reframe_softly",
+          "target_micro_shift": "reduce accusation frame and restore dialogue",
+          "must_do": [
+            "validate_feeling",
+            "validate_feeling_without_confirming_frame"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "join_accusation"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_04_i_minus_w_minus_collapsed",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "safety_first",
+        "nervous_state": "hypo",
+        "intent": "vent",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "target_micro_shift": "reduce activation and keep user safe",
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions"
+          ],
+          "depth_allowed": "none",
+          "max_questions": 0,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "safety_priority_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": true,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_05_i_plus_w_plus_open",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "deepen_and_integrate",
+          "response_mode": "reflect_plus_alternative",
+          "target_micro_shift": "expand perspective while preserving agency",
+          "must_do": [
+            "validate_feeling",
+            "offer_alternative_perspective"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework"
+          ],
+          "depth_allowed": "medium|high",
+          "max_questions": 1,
+          "max_concepts": 2
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_06_hyper_priority",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "safety_first",
+        "nervous_state": "hyper",
+        "intent": "directive",
+        "openness": "defensive",
+        "ok_position": "I-W+",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "target_micro_shift": "reduce activation and keep user safe",
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions"
+          ],
+          "depth_allowed": "none",
+          "max_questions": 0,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "safety_priority_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": true,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_07_hypo_priority",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "safety_first",
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "safety_redirect",
+          "response_mode": "ground_then_one_step",
+          "target_micro_shift": "reduce activation and keep user safe",
+          "must_do": [
+            "grounding",
+            "short_sentence",
+            "one_step_only"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "deep_analysis",
+            "multiple_questions"
+          ],
+          "depth_allowed": "none",
+          "max_questions": 0,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "safety_priority_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": true,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_08_branch_same_pattern_core",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "clarify",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "relation_to_thread": "branch",
+        "next_micro_shift": {
+          "response_goal": "clarify",
+          "response_mode": "reflect_then_one_question",
+          "target_micro_shift": "maintain thread and gently clarify current need",
+          "must_do": [
+            "validate_feeling"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "branch_continuity_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_09_kb_lens_internal_only",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "validation",
+        "openness": "mixed",
+        "ok_position": "I-W+",
+        "relation_to_thread": "continue",
+        "next_micro_shift": {
+          "response_goal": "clarify",
+          "response_mode": "reflect_then_one_question",
+          "target_micro_shift": "maintain thread and gently clarify current need",
+          "must_do": [
+            "validate_feeling"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "kb_lens_internal_rule",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      },
+      {
+        "case_id": "case_10_true_new_topic_switch",
+        "passed": true,
+        "contract_errors": [],
+        "expectation_issues": [],
+        "status": "ok",
+        "nervous_state": "window",
+        "intent": "practical_step",
+        "openness": "open",
+        "ok_position": "I+W+",
+        "relation_to_thread": "new_thread",
+        "next_micro_shift": {
+          "response_goal": "clarify_before_action",
+          "response_mode": "one_clarifying_question",
+          "target_micro_shift": "avoid false certainty and keep guidance bounded",
+          "must_do": [
+            "validate_feeling",
+            "clarify_goal"
+          ],
+          "must_not_do": [
+            "give_final_advice",
+            "quote_kb_directly",
+            "introduce_new_framework",
+            "give_directive_certainty"
+          ],
+          "depth_allowed": "low_to_medium",
+          "max_questions": 1,
+          "max_concepts": 1
+        },
+        "trace": {
+          "version": "diagnostic_center_trace_v1",
+          "builder": "diagnostic_center_dry_run_v1",
+          "rules_applied": [
+            "deterministic_dry_run_v1",
+            "internal_only_contract",
+            "must_not_quote_source_rule"
+          ],
+          "safety_priority_applied": false,
+          "evidence_sources": [
+            "state_snapshot",
+            "thread_state",
+            "context_package",
+            "knowledge_hits"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        }
+      }
+    ]
+  },
+  "scorecard": {
+    "schema_version": "diagnostic_center_eval_scorecard_v1",
+    "prd": "PRD-046.1",
+    "generated_at_utc": "2026-05-17T03:36:55.701056+00:00",
+    "cases_total": 10,
+    "cases_passed": 10,
+    "cases_failed": 0,
+    "contract_pass_rate": 1.0,
+    "failed_case_ids": [],
+    "final_status": "passed",
+    "diagnostic_center_contract_ready": true,
+    "diagnostic_center_runtime_enabled": false,
+    "next_prd": "PRD-046.1.1"
+  },
+  "no_mutation": {
+    "schema_version": "diagnostic_center_no_mutation_proof_v1",
+    "prd": "PRD-046.1",
+    "generated_at_utc": "2026-05-17T03:36:55.700054+00:00",
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "chroma_reindex_performed": false,
+    "provider_called": false,
+    "production_apply_performed": false,
+    "writer_prompt_production_changed": false,
+    "diagnostic_center_runtime_enabled": false,
+    "legacy_sd_enabled": false,
+    "hash_before": {
+      "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+      "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+      "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+    },
+    "hash_after": {
+      "all_blocks": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+      "registry": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+      "config": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523"
+    }
+  }
+}
+
+--- EXIT CODE: 0 ---
+
+PRD-046.1 command run finished: 2026-05-17T06:36:55.7840554+03:00

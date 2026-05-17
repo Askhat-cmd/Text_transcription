@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_eval_scorecard_v1",
+  "prd": "PRD-046.1",
+  "generated_at_utc": "2026-05-17T03:32:19.674416+00:00",
+  "cases_total": 10,
+  "cases_passed": 9,
+  "cases_failed": 1,
+  "contract_pass_rate": 0.9,
+  "failed_case_ids": [
+    "case_10_true_new_topic_switch"
+  ],
+  "final_status": "done_with_eval_blocker",
+  "diagnostic_center_contract_ready": false,
+  "diagnostic_center_runtime_enabled": false,
+  "next_prd": "PRD-046.1.1"
+}

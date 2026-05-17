@@ -33,12 +33,13 @@
 - PRD-046.0.10: legacy SD cleanup/docs alignment completed; SD labeling disabled by default with explicit legacy gate only, dashboard readiness detached from SD, BotDB README and new internal docs pack (`Bot_data_base/docs/*`) aligned to live `:8003` runtime and focus-source `247/247/247`.
 - PRD-046.0.10-HF1: SD config/encoding finalization completed; canonical config fixed to default-disabled (`sd_labeling.enabled=false`), env overrides no longer persist back into `config.yaml`, UTF-8 runtime smoke artifacts and anti-mojibake gate added, runtime/no-mutation invariants preserved.
 - PRD-046.0.11: final runtime readiness summary completed; live runtime/admin gates (`:8003`) revalidated, KB/chroma focus-source consistency reconfirmed (`1 / 247 / 247 / 247`), retrieval/governance/legacy-SD/UTF-8/docs gates passed, no-mutation proof captured, Diagnostic Center prerequisites confirmed.
+- PRD-046.1: Diagnostic Center v1 readiness architecture layer delivered (strict contracts, deterministic dry-run builder, 10 golden/eval cases, contract audit runner, no-mutation proof, ADR-030); final status passed, runtime activation remained disabled.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
+1. PRD-046.1.1 - Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.
@@ -58,3 +59,6 @@
 
 ## Ordering Constraint
 Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуском Diagnostic Center обязательны retrieval eval + review workflow readiness gates.
+
+
+

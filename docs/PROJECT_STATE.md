@@ -1,8 +1,8 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.0.11-final-runtime-readiness-summary`: финальная readiness-сводка перед переходом к Diagnostic Center сформирована и сохранена в machine-readable + human-readable артефактах.
-В `PRD-046.0.11` подтверждены runtime/admin/BotDB/KB/Chroma/retrieval/governance/legacy-SD/UTF-8/docs gates, live endpoints на `http://127.0.0.1:8003` проверены, `focus_source=123__кузница_духа`, `blocks/chroma=247/247/247`, no-mutation proof (`all_blocks/registry/config`) пройден, переход к `PRD-046.1` разрешён.
+Проект находится на стадии `post-PRD-046.1-diagnostic-center-contract-ready`: Diagnostic Center v1 contract/readiness слой внедрён в dry-run режиме и подтверждён eval/audit артефактами без runtime activation.
+В `PRD-046.1` добавлены Diagnostic Center v1 contracts + deterministic dry-run builder + audit runner + eval cases (`10/10`) с `final_status=passed`, `diagnostic_center_contract_ready=true`, `diagnostic_center_runtime_enabled=false`, `kb_usage_mode=internal_lens_only`, `must_not_quote_source=true`, и строгим no-mutation proof (`all_blocks/registry/config` без изменений).
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -62,10 +62,10 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
 
 ## Experimental / In Progress Modules
-- Нет активных blocker-hotfix модулей в post-apply admin/runtime gate.
+- Diagnostic Center v1 contract/readiness layer (internal dry-run only, not wired to active user response path).
 
 ## Not Implemented Yet
-- Diagnostic Center v1 (deferred until KB/retrieval/context readiness confirmed).
+- Diagnostic Center v1 runtime shadow integration (`PRD-046.1.1`) and any user-path activation.
 
 ## Known Risks
 - Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
@@ -77,7 +77,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
+1. PRD-046.1.1 - Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -94,4 +94,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.0.11
+- Source cycle: PRD-046.1
+
+
+

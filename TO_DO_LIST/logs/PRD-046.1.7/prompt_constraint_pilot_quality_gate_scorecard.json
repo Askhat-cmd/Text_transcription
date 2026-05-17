@@ -1,0 +1,20 @@
+{
+  "prd": "PRD-046.1.7",
+  "schema_version": "prompt_constraint_pilot_quality_gate_scorecard_v1",
+  "final_status": "passed",
+  "decision": "supervised_rollout_candidate",
+  "evidence_quality": "sufficient",
+  "rollback_gate_passed": true,
+  "quality_delta_gate_passed": true,
+  "safety_gate_passed": true,
+  "kb_gate_passed": true,
+  "conflict_gate_passed": true,
+  "bloat_gate_passed": true,
+  "default_off_user_path_effect_count": 0,
+  "normal_user_apply_count": 0,
+  "allowlist_violation_count": 0,
+  "raw_kb_text_exposure_count": 0,
+  "provider_called_by_eval_count": 0,
+  "production_mutation_detected": false,
+  "recommended_next_prd": "PRD-046.1.8 Supervised Prompt-Constraint Pilot Rollout Plan v1"
+}

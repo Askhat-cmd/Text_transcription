@@ -1,0 +1,17 @@
+{
+  "schema_version": "baseline_vs_test_apply_quality_delta_v1",
+  "prd": "PRD-046.1.7",
+  "source_prd": "PRD-046.1.6",
+  "cases_total": 50,
+  "cases_compared": 10,
+  "candidate_tighter_than_baseline_count": 10,
+  "candidate_same_as_baseline_count": 0,
+  "candidate_weaker_than_baseline_count": 0,
+  "safety_regression_count": 0,
+  "kb_policy_regression_count": 0,
+  "prompt_bloat_regression_count": 0,
+  "constraint_conflict_regression_count": 0,
+  "max_prompt_delta_chars_observed": 0,
+  "max_prompt_delta_ratio_observed": 0.0,
+  "quality_delta_decision": "pass"
+}

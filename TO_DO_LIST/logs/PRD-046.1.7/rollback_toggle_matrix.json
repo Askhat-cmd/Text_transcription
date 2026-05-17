@@ -1,0 +1,125 @@
+{
+  "prd": "PRD-046.1.7",
+  "schema_version": "rollback_toggle_matrix_v1",
+  "cases_total": 10,
+  "cases_passed": 10,
+  "rollback_cases_total": 10,
+  "rollback_cases_passed": 10,
+  "rollback_failure_count": 0,
+  "stale_apply_after_force_disabled_count": 0,
+  "unexpected_apply_count": 0,
+  "unexpected_disabled_count": 0,
+  "rollback_priority_preserved": true,
+  "cases": [
+    {
+      "case": "default_safe",
+      "enabled": false,
+      "force_disabled": true,
+      "mode": "shadow",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "disabled",
+      "observed_activation_mode": "disabled",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "enabled_but_force_disabled",
+      "enabled": true,
+      "force_disabled": true,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "disabled",
+      "observed_activation_mode": "disabled",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "enabled_shadow_allowlisted",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "shadow",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "shadow_only",
+      "observed_activation_mode": "shadow_only",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "enabled_test_apply_not_allowlisted",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user_id": "normal_user",
+      "expected_activation_mode": "disabled",
+      "observed_activation_mode": "disabled",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "enabled_test_apply_allowlisted",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "test_apply",
+      "observed_activation_mode": "test_apply",
+      "observed_apply": true,
+      "pass": true
+    },
+    {
+      "case": "force_disabled_after_apply_candidate_a",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "test_apply",
+      "observed_activation_mode": "test_apply",
+      "observed_apply": true,
+      "pass": true
+    },
+    {
+      "case": "force_disabled_after_apply_candidate_b",
+      "enabled": true,
+      "force_disabled": true,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "disabled",
+      "observed_activation_mode": "disabled",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "repeated_toggle_stability_1",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "test_apply",
+      "observed_activation_mode": "test_apply",
+      "observed_apply": true,
+      "pass": true
+    },
+    {
+      "case": "repeated_toggle_stability_2",
+      "enabled": true,
+      "force_disabled": true,
+      "mode": "test_apply",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "disabled",
+      "observed_activation_mode": "disabled",
+      "observed_apply": false,
+      "pass": true
+    },
+    {
+      "case": "repeated_toggle_stability_3",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "shadow",
+      "user_id": "pilot_user",
+      "expected_activation_mode": "shadow_only",
+      "observed_activation_mode": "shadow_only",
+      "observed_apply": false,
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.7",
+  "checked_prd": "PRD-046.1.7",
+  "final_status": "passed",
+  "files_checked": 8,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.7/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/baseline_vs_test_apply_quality_delta.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_gate_verification.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_quality_gate_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/rollback_toggle_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/runtime_evidence_audit.json",
+    "TO_DO_LIST/logs/PRD-046.1.7/test_command_output.txt"
+  ]
+}

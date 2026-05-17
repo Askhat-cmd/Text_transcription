@@ -1,0 +1,17 @@
+{
+  "schema_version": "prompt_constraint_pilot_gate_verification_v1",
+  "prd": "PRD-046.1.7",
+  "safety_gate_cases_total": 3,
+  "safety_gate_cases_passed": 3,
+  "kb_gate_cases_total": 13,
+  "kb_gate_cases_passed": 13,
+  "conflict_gate_cases_total": 10,
+  "conflict_gate_cases_passed": 10,
+  "bloat_gate_cases_total": 10,
+  "bloat_gate_cases_passed": 10,
+  "raw_kb_text_exposure_count": 0,
+  "internal_only_exposure_count": 0,
+  "not_for_direct_quote_violation_count": 0,
+  "normal_user_apply_count": 0,
+  "provider_called_by_gate_count": 0
+}

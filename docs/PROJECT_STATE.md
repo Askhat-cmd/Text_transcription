@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1.7-prompt-constraint-quality-gate-passed`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, `planner_bridge_writer_contract_pilot` остаётся `pilot_shadow_only`, `writer_prompt_replay` остаётся `offline_replay_only`, а prompt-constraint pilot runtime остаётся default-off limited allowlisted test path с подтверждённым rollback/quality gate.
+Проект находится на стадии `post-PRD-046.1.8-supervised-rollout-plan-ready`: Diagnostic Center v1 остаётся trace-only shadow слоем, Planner Bridge остаётся candidate-only, compare-слой `planner_bridge_compliance_shadow` остаётся trace-only, `planner_bridge_writer_contract_pilot` остаётся `pilot_shadow_only`, `writer_prompt_replay` остаётся `offline_replay_only`, а prompt-constraint pilot runtime остаётся default-off limited allowlisted test path с plan-first supervised rollout readiness.
 В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
 В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
 В `PRD-046.1.3` добавлены compare-mode contract/builder/eval runner для сопоставления `writer_move_instructions` и `planner_bridge_candidate` в `shadow_compare_only` режиме. Подтверждены `cases_passed=30/30`, `hard_blocker_count=0`, `unexpected_blocked_count=0`, `safety_compatibility_pass_rate=1.0`, `user_path_effect_count=0`, `writer_prompt_changed_by_bridge_count=0`, `writer_contract_changed_by_bridge_count=0`, `final_answer_changed_by_bridge_count=0`, `planner_bridge_apply_to_writer_count=0`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
@@ -9,6 +9,7 @@
 В `PRD-046.1.5` добавлен offline replay/eval слой `writer_prompt_replay` для сравнения baseline prompt-context и pilot candidate namespace без production activation. Подтверждены `cases_passed=40/40`, `hard_blocker_count=0`, `safety_replay_pass_rate=1.0`, `kb_boundary_violation_count=0`, `constraint_conflict_count=0`, `prompt_bloat_blocker_count=0`, `writer_contract_changed_by_replay_count=0`, `writer_prompt_changed_by_replay_count=0`, `final_answer_changed_by_replay_count=0`, `provider_called_count=0`, `runtime_smoke_ok=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
 В `PRD-046.1.6` добавлен controlled runtime decision слой `prompt_constraint_pilot_runtime` с default-off guardrails (`PROMPT_CONSTRAINT_PILOT_ENABLED=false`, `PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true`), allowlisted/test-user `test_apply` режимом и rollback-priority. Подтверждены `cases_passed=50/50`, `default_off_user_path_effect_count=0`, `shadow_mode_apply_count=0`, `test_apply_applied_count=10`, `allowlist_violation_count=0`, `rollback_switch_passed=true`, `safety_apply_blocked_count=3`, `runtime_smoke_ok=true`, `limited_runtime_flag_ready=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
 В `PRD-046.1.7` добавлен runtime evidence/rollback/quality gate runner `run_prompt_constraint_pilot_quality_gate.py` и полный набор артефактов gate-решения. Подтверждены `final_status=passed`, `decision=supervised_rollout_candidate`, `evidence_quality=sufficient`, `rollback_failure_count=0`, `candidate_weaker_than_baseline_count=0`, `raw_kb_text_exposure_count=0`, `normal_user_apply_count=0`, `provider_called_by_eval_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.8` добавлен supervised rollout planning/readiness слой (`run_prompt_constraint_supervised_rollout_plan.py`) и артефакты плана (`supervised_rollout_plan`, `readiness_gate`, `abort_criteria`, `toggle_matrix`, `operator_runbook`). Подтверждены `final_status=passed`, `decision=ready_for_supervised_execution_prd`, `enabled_default_false=true`, `force_disabled_default_true=true`, `normal_users_allowed=false`, `max_initial_cohort_size=3`, `rollback_first_policy_preserved=true`, `toggle_matrix_ready=true`, `production_apply_performed=false`, `provider_called_by_plan=false`, `artifact_encoding_hygiene_passed=true`.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -71,7 +72,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Diagnostic Center v1 shadow + Planner Bridge contract in shadow/eval-only mode (no writer/user-path effect).
 
 ## Not Implemented Yet
-- Supervised prompt-constraint pilot rollout plan and execution after passed PRD-046.1.7 gate (`PRD-046.1.8`).
+- Supervised prompt-constraint pilot execution/observability cycle on minimal allowlisted cohort (`PRD-046.1.9`).
 
 ## Known Risks
 - Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
@@ -83,7 +84,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1.8 - Supervised Prompt-Constraint Pilot Rollout Plan v1.
+1. PRD-046.1.9 - Supervised Prompt-Constraint Pilot Execution / Observability Gate v1.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -100,7 +101,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-17
-- Source cycle: PRD-046.1.7
+- Source cycle: PRD-046.1.8
 
 
 

@@ -1,0 +1,29 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.8",
+  "checked_prd": "PRD-046.1.8",
+  "final_status": "passed",
+  "files_checked": 9,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "prd": "PRD-046.1.8",
+  "final_status": "passed",
+  "decision": "ready_for_supervised_execution_prd",
+  "source_gate": {
+    "prd_046_1_7_final_status": "passed",
+    "prd_046_1_7_decision": "supervised_rollout_candidate"
+  },
+  "default_safety": {
+    "enabled_default_false": true,
+    "force_disabled_default_true": true,
+    "normal_user_apply_count": 0,
+    "default_off_user_path_effect_count": 0
+  },
+  "rollback": {
+    "rollback_first_policy_preserved": true,
+    "force_disabled_absolute_priority": true,
+    "toggle_matrix_ready": true
+  },
+  "scope": {
+    "normal_users_allowed": false,
+    "allowlist_required": true,
+    "test_prefix_required": true,
+    "max_initial_cohort_size": 3
+  },
+  "quality": {
+    "requires_baseline_vs_test_apply_comparison": true,
+    "requires_trace_samples": true,
+    "requires_no_safety_regression": true,
+    "requires_no_kb_policy_regression": true
+  },
+  "mutation": {
+    "production_apply_performed": false,
+    "config_mutated": false,
+    "registry_mutated": false,
+    "all_blocks_merged_mutated": false,
+    "chroma_reindex_performed": false
+  },
+  "blockers": [],
+  "warnings": [
+    "datetime_utcnow_deprecation_warnings_possible"
+  ]
+}

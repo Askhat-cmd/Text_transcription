@@ -42,12 +42,13 @@
 - PRD-046.1.5: controlled Writer Prompt Replay / Quality Eval delivered as offline-only layer; baseline vs candidate prompt-context replay runner + fixtures (`40/40`) added with deterministic safety/KB/conflict/prompt-bloat/non-mutation checks, runtime smoke passed, provider-call and apply flags remained false, ADR-035 added.
 - PRD-046.1.6: controlled Prompt-Constraint Pilot limited runtime flag delivered as default-off/allowlisted layer; added runtime contract/builder/section formatter, orchestrator trace wiring, writer optional apply path, eval runner + fixture (`50/50`), rollback/safety/KB gates and runtime smoke passed with `limited_runtime_flag_ready=true`, ADR-036 added.
 - PRD-046.1.7: prompt-constraint runtime results/rollback/quality gate delivered; added deterministic evidence audit + rollback toggle matrix + baseline-vs-test_apply quality delta + safety/KB/conflict/bloat verification runner/artifacts, strict gate passed with `final_status=passed`, `decision=supervised_rollout_candidate`, default-off/allowlist/no-mutation/provider-free invariants preserved.
+- PRD-046.1.8: supervised prompt-constraint rollout planning/readiness layer delivered; added rollout contract/builder/CLI plus artifacts (`supervised_rollout_plan`, readiness gate, abort criteria, toggle matrix, operator runbook), passed with `decision=ready_for_supervised_execution_prd`, while default flags stayed conservative (`enabled=false`, `force_disabled=true`) and no production mutation/provider calls occurred.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.8 - Supervised Prompt-Constraint Pilot Rollout Plan v1.
+1. PRD-046.1.9 - Supervised Prompt-Constraint Pilot Execution / Observability Gate v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

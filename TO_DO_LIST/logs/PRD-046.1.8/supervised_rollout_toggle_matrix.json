@@ -1,0 +1,88 @@
+{
+  "schema_version": "prompt_constraint_supervised_rollout_toggle_matrix_v1",
+  "prd": "PRD-046.1.8",
+  "toggle_matrix_ready": true,
+  "rows": [
+    {
+      "case_id": "false_true_shadow_normal",
+      "enabled": false,
+      "force_disabled": true,
+      "mode": "shadow",
+      "user": "normal_user",
+      "expected": "disabled/no_apply"
+    },
+    {
+      "case_id": "true_true_test_apply_allowlisted",
+      "enabled": true,
+      "force_disabled": true,
+      "mode": "test_apply",
+      "user": "pilot_user",
+      "expected": "disabled/no_apply"
+    },
+    {
+      "case_id": "true_false_shadow_allowlisted",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "shadow",
+      "user": "pilot_user",
+      "expected": "shadow_only/no_apply"
+    },
+    {
+      "case_id": "true_false_test_apply_normal",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "normal_user",
+      "expected": "shadow_only/no_apply"
+    },
+    {
+      "case_id": "true_false_test_apply_non_allowlisted",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "external_user",
+      "expected": "shadow_only/no_apply"
+    },
+    {
+      "case_id": "true_false_test_apply_pilot_prefix",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "pilot_demo",
+      "expected": "apply_if_all_gates_pass"
+    },
+    {
+      "case_id": "true_false_test_apply_explicit_allowlist",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "pilot_user",
+      "expected": "apply_if_all_gates_pass"
+    },
+    {
+      "case_id": "true_false_test_apply_allowlisted_safety_fail",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "pilot_user",
+      "expected": "downgrade_or_block"
+    },
+    {
+      "case_id": "true_false_test_apply_allowlisted_kb_fail",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "pilot_user",
+      "expected": "downgrade_or_block"
+    },
+    {
+      "case_id": "true_false_test_apply_allowlisted_bloat_conflict_fail",
+      "enabled": true,
+      "force_disabled": false,
+      "mode": "test_apply",
+      "user": "pilot_user",
+      "expected": "downgrade_or_block"
+    }
+  ],
+  "generated_at": "2026-05-17T15:51:55.089290+00:00"
+}

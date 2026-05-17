@@ -28,6 +28,14 @@ from .prompt_constraint_pilot_runtime_v1 import (
     PromptConstraintPilotRuntimeInput,
     PromptConstraintPilotRuntimeTrace,
 )
+from .prompt_constraint_supervised_rollout_v1 import (
+    PromptConstraintRolloutAbortCriteriaV1,
+    PromptConstraintRolloutCohortV1,
+    PromptConstraintRolloutDecisionV1,
+    PromptConstraintRolloutGateV1,
+    PromptConstraintRolloutMetricV1,
+    PromptConstraintSupervisedRolloutPlanV1,
+)
 from .writer_prompt_replay_v1 import (
     WriterPromptReplayCandidateContext,
     WriterPromptReplayComparison,
@@ -61,6 +69,12 @@ __all__ = [
     "PromptConstraintPilotRuntimeDecision",
     "PromptConstraintPilotRuntimeInput",
     "PromptConstraintPilotRuntimeTrace",
+    "PromptConstraintRolloutAbortCriteriaV1",
+    "PromptConstraintRolloutCohortV1",
+    "PromptConstraintRolloutDecisionV1",
+    "PromptConstraintRolloutGateV1",
+    "PromptConstraintRolloutMetricV1",
+    "PromptConstraintSupervisedRolloutPlanV1",
     "PlannerBridgeInput",
     "PlannerBridgeOutput",
     "PlannerBridgeTrace",

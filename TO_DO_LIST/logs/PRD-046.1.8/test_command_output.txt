@@ -1,0 +1,571 @@
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_contract.py . [100%]
+
+============================== 1 passed in 0.38s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_plan_runner.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_plan_runner.py . [100%]
+
+============================== 1 passed in 0.50s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_readiness_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_readiness_gate.py . [ 50%]
+.                                                                        [100%]
+
+============================== 2 passed in 0.66s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_toggle_matrix.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_toggle_matrix.py . [100%]
+
+============================== 1 passed in 0.51s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_abort_criteria.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_abort_criteria.py . [100%]
+
+============================== 1 passed in 0.52s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_no_default_enable.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_no_default_enable.py . [100%]
+
+============================== 1 passed in 0.55s ==============================
+
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_supervised_rollout_no_mutation.py . [100%]
+
+============================== 1 passed in 0.83s ==============================
+
+
+
+>>> python -m bot_psychologist.tools.run_prompt_constraint_supervised_rollout_plan --input-dir TO_DO_LIST/logs/PRD-046.1.7 --output-dir TO_DO_LIST/logs/PRD-046.1.8 --strict
+python : 2026-05-17 18:51:55,058 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_prac
+tice\Text_transcription\bot_psychologist\data\threads
+At line:1 char:1
++ python -m bot_psychologist.tools.run_prompt_constraint_supervised_rol ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-17 18:5...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-17 18:51:55,063 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "ready_for_supervised_execution_prd",
+  "readiness_gate": {
+    "prd": "PRD-046.1.8",
+    "final_status": "passed",
+    "decision": "ready_for_supervised_execution_prd",
+    "source_gate": {
+      "prd_046_1_7_final_status": "passed",
+      "prd_046_1_7_decision": "supervised_rollout_candidate"
+    },
+    "default_safety": {
+      "enabled_default_false": true,
+      "force_disabled_default_true": true,
+      "normal_user_apply_count": 0,
+      "default_off_user_path_effect_count": 0
+    },
+    "rollback": {
+      "rollback_first_policy_preserved": true,
+      "force_disabled_absolute_priority": true,
+      "toggle_matrix_ready": true
+    },
+    "scope": {
+      "normal_users_allowed": false,
+      "allowlist_required": true,
+      "test_prefix_required": true,
+      "max_initial_cohort_size": 3
+    },
+    "quality": {
+      "requires_baseline_vs_test_apply_comparison": true,
+      "requires_trace_samples": true,
+      "requires_no_safety_regression": true,
+      "requires_no_kb_policy_regression": true
+    },
+    "mutation": {
+      "production_apply_performed": false,
+      "config_mutated": false,
+      "registry_mutated": false,
+      "all_blocks_merged_mutated": false,
+      "chroma_reindex_performed": false
+    },
+    "blockers": [],
+    "warnings": [
+      "datetime_utcnow_deprecation_warnings_possible"
+    ]
+  },
+  "decision_payload": {
+    "schema_version": "prompt_constraint_supervised_rollout_decision_v1",
+    "final_status": "passed",
+    "decision": "ready_for_supervised_execution_prd",
+    "blockers": [],
+    "warnings": [
+      "datetime_utcnow_deprecation_warnings_possible"
+    ],
+    "recommended_next_prd": "PRD-046.1.9 - Supervised Prompt-Constraint Pilot Execution / Observability Gate v1"
+  },
+  "no_mutation": {
+    "schema_version": "prompt_constraint_supervised_rollout_no_mutation_proof_v1",
+    "prd": "PRD-046.1.8",
+    "tracked_paths": {
+      "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+      "registry": "Bot_data_base/data/registry.json",
+      "config": "Bot_data_base/config.yaml"
+    },
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "chroma_reindex_performed": false,
+    "production_apply_performed": false,
+    "provider_called_by_plan": false
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.8",
+    "checked_prd": "PRD-046.1.8",
+    "final_status": "passed",
+    "files_checked": 16,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_abort_criteria.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_operator_runbook.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_operator_runbook.md",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_readiness_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_toggle_matrix.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+      "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt"
+    ]
+  },
+  "preflight": {
+    "required": {
+      "runtime_evidence_audit": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\runtime_evidence_audit.json",
+      "rollback_toggle_matrix": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\rollback_toggle_matrix.json",
+      "quality_delta": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\baseline_vs_test_apply_quality_delta.json",
+      "gate_verification": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\prompt_constraint_pilot_gate_verification.json",
+      "quality_gate_scorecard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\prompt_constraint_pilot_quality_gate_scorecard.json",
+      "no_mutation": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\no_mutation_proof.json",
+      "encoding_hygiene": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.7\\artifact_encoding_hygiene_report.json",
+      "report_impl": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.7_IMPLEMENTATION_REPORT.md",
+      "report_gate": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.7_PROMPT_CONSTRAINT_PILOT_QUALITY_GATE_REPORT.md",
+      "project_state": "C:\\My_practice\\Text_transcription\\docs\\PROJECT_STATE.md",
+      "roadmap": "C:\\My_practice\\Text_transcription\\docs\\ROADMAP.md",
+      "prd_index": "C:\\My_practice\\Text_transcription\\docs\\PRD_INDEX.md"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "runtime_evidence_audit": {
+        "prd": "PRD-046.1.7",
+        "source_prd": "PRD-046.1.6",
+        "input_artifacts_found": true,
+        "trace_samples_count": 12,
+        "cases_total": 50,
+        "cases_passed": 50,
+        "default_off_user_path_effect_count": 0,
+        "shadow_mode_apply_count": 0,
+        "test_apply_applied_count": 10,
+        "allowlist_violation_count": 0,
+        "safety_apply_blocked_count": 3,
+        "kb_boundary_violation_count": 0,
+        "raw_kb_text_exposure_count": 0,
+        "prompt_bloat_blocker_count": 0,
+        "constraint_conflict_count": 0,
+        "provider_called_by_eval_count": 0,
+        "evidence_quality": "sufficient",
+        "warnings": [],
+        "blockers": []
+      },
+      "rollback_toggle_matrix": {
+        "prd": "PRD-046.1.7",
+        "schema_version": "rollback_toggle_matrix_v1",
+        "cases_total": 10,
+        "cases_passed": 10,
+        "rollback_cases_total": 10,
+        "rollback_cases_passed": 10,
+        "rollback_failure_count": 0,
+        "stale_apply_after_force_disabled_count": 0,
+        "unexpected_apply_count": 0,
+        "unexpected_disabled_count": 0,
+        "rollback_priority_preserved": true,
+        "cases": [
+          {
+            "case": "default_safe",
+            "enabled": false,
+            "force_disabled": true,
+            "mode": "shadow",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "disabled",
+            "observed_activation_mode": "disabled",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "enabled_but_force_disabled",
+            "enabled": true,
+            "force_disabled": true,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "disabled",
+            "observed_activation_mode": "disabled",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "enabled_shadow_allowlisted",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "shadow",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "shadow_only",
+            "observed_activation_mode": "shadow_only",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "enabled_test_apply_not_allowlisted",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user_id": "normal_user",
+            "expected_activation_mode": "disabled",
+            "observed_activation_mode": "disabled",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "enabled_test_apply_allowlisted",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "test_apply",
+            "observed_activation_mode": "test_apply",
+            "observed_apply": true,
+            "pass": true
+          },
+          {
+            "case": "force_disabled_after_apply_candidate_a",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "test_apply",
+            "observed_activation_mode": "test_apply",
+            "observed_apply": true,
+            "pass": true
+          },
+          {
+            "case": "force_disabled_after_apply_candidate_b",
+            "enabled": true,
+            "force_disabled": true,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "disabled",
+            "observed_activation_mode": "disabled",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "repeated_toggle_stability_1",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "test_apply",
+            "observed_activation_mode": "test_apply",
+            "observed_apply": true,
+            "pass": true
+          },
+          {
+            "case": "repeated_toggle_stability_2",
+            "enabled": true,
+            "force_disabled": true,
+            "mode": "test_apply",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "disabled",
+            "observed_activation_mode": "disabled",
+            "observed_apply": false,
+            "pass": true
+          },
+          {
+            "case": "repeated_toggle_stability_3",
+            "enabled": true,
+            "force_disabled": false,
+            "mode": "shadow",
+            "user_id": "pilot_user",
+            "expected_activation_mode": "shadow_only",
+            "observed_activation_mode": "shadow_only",
+            "observed_apply": false,
+            "pass": true
+          }
+        ]
+      },
+      "quality_delta": {
+        "schema_version": "baseline_vs_test_apply_quality_delta_v1",
+        "prd": "PRD-046.1.7",
+        "source_prd": "PRD-046.1.6",
+        "cases_total": 50,
+        "cases_compared": 10,
+        "candidate_tighter_than_baseline_count": 10,
+        "candidate_same_as_baseline_count": 0,
+        "candidate_weaker_than_baseline_count": 0,
+        "safety_regression_count": 0,
+        "kb_policy_regression_count": 0,
+        "prompt_bloat_regression_count": 0,
+        "constraint_conflict_regression_count": 0,
+        "max_prompt_delta_chars_observed": 0,
+        "max_prompt_delta_ratio_observed": 0.0,
+        "quality_delta_decision": "pass"
+      },
+      "gate_verification": {
+        "schema_version": "prompt_constraint_pilot_gate_verification_v1",
+        "prd": "PRD-046.1.7",
+        "safety_gate_cases_total": 3,
+        "safety_gate_cases_passed": 3,
+        "kb_gate_cases_total": 13,
+        "kb_gate_cases_passed": 13,
+        "conflict_gate_cases_total": 10,
+        "conflict_gate_cases_passed": 10,
+        "bloat_gate_cases_total": 10,
+        "bloat_gate_cases_passed": 10,
+        "raw_kb_text_exposure_count": 0,
+        "internal_only_exposure_count": 0,
+        "not_for_direct_quote_violation_count": 0,
+        "normal_user_apply_count": 0,
+        "provider_called_by_gate_count": 0
+      },
+      "quality_gate_scorecard": {
+        "prd": "PRD-046.1.7",
+        "schema_version": "prompt_constraint_pilot_quality_gate_scorecard_v1",
+        "final_status": "passed",
+        "decision": "supervised_rollout_candidate",
+        "evidence_quality": "sufficient",
+        "rollback_gate_passed": true,
+        "quality_delta_gate_passed": true,
+        "safety_gate_passed": true,
+        "kb_gate_passed": true,
+        "conflict_gate_passed": true,
+        "bloat_gate_passed": true,
+        "default_off_user_path_effect_count": 0,
+        "normal_user_apply_count": 0,
+        "allowlist_violation_count": 0,
+        "raw_kb_text_exposure_count": 0,
+        "provider_called_by_eval_count": 0,
+        "production_mutation_detected": false,
+        "recommended_next_prd": "PRD-046.1.8 Supervised Prompt-Constraint Pilot Rollout Plan v1"
+      },
+      "no_mutation": {
+        "schema_version": "prompt_constraint_pilot_quality_gate_no_mutation_proof_v1",
+        "prd": "PRD-046.1.7",
+        "tracked_paths": {
+          "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+          "registry": "Bot_data_base/data/registry.json",
+          "config": "Bot_data_base/config.yaml"
+        },
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "production_apply_performed": false,
+        "kb_governance_authority_mutated": false,
+        "writer_contract_production_authority_mutated": false,
+        "final_answer_path_mutated_for_default_users": false,
+        "provider_called_by_eval_count": 0
+      },
+      "encoding_hygiene": {
+        "schema_version": "artifact_encoding_hygiene_report_v1",
+        "prd": "PRD-046.1.7",
+        "checked_prd": "PRD-046.1.7",
+        "final_status": "passed",
+        "files_checked": 8,
+        "utf8_decode_error_count": 0,
+        "nul_byte_file_count": 0,
+        "nul_char_file_count": 0,
+        "replacement_char_warning_count": 0,
+        "mojibake_warning_count": 0,
+        "json_parse_error_count": 0,
+        "empty_text_artifact_count": 0,
+        "unexpected_debug_dir_count": 0,
+        "fixed_files": [],
+        "warnings": [],
+        "blockers": [],
+        "checked_files": [
+          "TO_DO_LIST/logs/PRD-046.1.7/artifact_encoding_hygiene_report.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/baseline_vs_test_apply_quality_delta.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/no_mutation_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_gate_verification.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_quality_gate_scorecard.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/rollback_toggle_matrix.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/runtime_evidence_audit.json",
+          "TO_DO_LIST/logs/PRD-046.1.7/test_command_output.txt"
+        ]
+      }
+    }
+  }
+}
+
+
+
+>>> python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.8 --logs-dir TO_DO_LIST/logs/PRD-046.1.8 --out-dir TO_DO_LIST/logs/PRD-046.1.8 --report-prd PRD-046.1.8 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.8",
+  "checked_prd": "PRD-046.1.8",
+  "final_status": "passed",
+  "files_checked": 17,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_operator_runbook.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass/supervised_rollout_toggle_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt"
+  ]
+}
+
+
+
+>>> cleanup_tmp_test_artifacts
+Removed TO_DO_LIST/logs/PRD-046.1.8/_tmp_test_readiness_pass
+
+>>> python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.8 --logs-dir TO_DO_LIST/logs/PRD-046.1.8 --out-dir TO_DO_LIST/logs/PRD-046.1.8 --report-prd PRD-046.1.8 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.8",
+  "checked_prd": "PRD-046.1.8",
+  "final_status": "passed",
+  "files_checked": 9,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt"
+  ]
+}
+

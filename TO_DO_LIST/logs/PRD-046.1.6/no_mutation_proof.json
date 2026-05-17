@@ -1,0 +1,15 @@
+{
+  "schema_version": "prompt_constraint_pilot_runtime_no_mutation_proof_v1",
+  "prd": "PRD-046.1.6",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "provider_called_by_eval": false,
+  "production_apply_performed": false,
+  "writer_prompt_production_changed": false,
+  "writer_contract_default_path_changed": false,
+  "final_answer_default_path_changed": false,
+  "diagnostic_center_user_facing_enabled": false,
+  "legacy_sd_enabled": false
+}

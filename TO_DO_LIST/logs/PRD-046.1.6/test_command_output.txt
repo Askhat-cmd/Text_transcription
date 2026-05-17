@@ -1,0 +1,47 @@
+﻿PRD-046.1.6 command log
+UTC: 2026-05-17T13:39:00Z
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_contract.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_builder.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_default_off.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_allowlist.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_rollback.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_safety.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_kb_boundaries.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_prompt_section.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_no_user_path_effect.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_eval_runner.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/multiagent -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/test_knowledge_policy.py -q
+EXIT_CODE=0
+
+python -m pytest bot_psychologist/tests/tools/test_validate_prd_artifact_encoding.py -q
+EXIT_CODE=0
+
+python -m bot_psychologist.tools.run_prompt_constraint_pilot_runtime_eval --out-dir TO_DO_LIST/logs/PRD-046.1.6
+EXIT_CODE=0
+
+python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.6 --logs-dir TO_DO_LIST/logs/PRD-046.1.6 --reports-dir TO_DO_LIST/reports --out-dir TO_DO_LIST/logs/PRD-046.1.6 --report-prd PRD-046.1.6
+EXIT_CODE=0

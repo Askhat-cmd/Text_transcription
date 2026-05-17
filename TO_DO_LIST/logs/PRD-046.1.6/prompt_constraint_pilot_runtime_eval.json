@@ -1,0 +1,2778 @@
+{
+  "schema_version": "prompt_constraint_pilot_runtime_eval_v1",
+  "prd": "PRD-046.1.6",
+  "generated_at": "2026-05-17T10:39:05.167479+00:00",
+  "cases": [
+    {
+      "case_id": "pcp_default_off_01",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_02",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_03",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_04",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_05",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_06",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_07",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_08",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_09",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_10",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_11",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_12",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_13",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_14",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_default_off_15",
+      "description": "default-off disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "feature_flag_disabled"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_01",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_02",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_03",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_04",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_05",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_06",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_07",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_08",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_09",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_shadow_10",
+      "description": "shadow-only no apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "shadow_mode_no_apply"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_test_apply_pass_01",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_02",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_03",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_3",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_04",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_4",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_05",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_5",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_06",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_6",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_07",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_7",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_08",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_8",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_09",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_9",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_test_apply_pass_10",
+      "description": "allowlisted test_apply pass",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "test_apply",
+        "apply_to_writer_prompt": true,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_10",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 239,
+      "prompt_section_applied": true
+    },
+    {
+      "case_id": "pcp_non_allow_01",
+      "description": "non allowlisted user blocked",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1,pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "user_not_allowlisted"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "allowlist_blocked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_non_allow_02",
+      "description": "non allowlisted user blocked",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1,pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "user_not_allowlisted"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "allowlist_blocked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_non_allow_03",
+      "description": "non allowlisted user blocked",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1,pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "user_not_allowlisted"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "allowlist_blocked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_non_allow_04",
+      "description": "non allowlisted user blocked",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1,pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "user_not_allowlisted"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "allowlist_blocked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_non_allow_05",
+      "description": "non allowlisted user blocked",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": false,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_allow_1,pilot_allow_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "user_not_allowlisted"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "allowlist_blocked"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_rollback_01",
+      "description": "rollback force disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": true,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_roll_1",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "force_disabled_active"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "rollback_priority"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_rollback_02",
+      "description": "rollback force disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": true,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_roll_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "force_disabled_active"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "rollback_priority"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_rollback_03",
+      "description": "rollback force disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": true,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_roll_3",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "force_disabled_active"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "rollback_priority"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_rollback_04",
+      "description": "rollback force disabled",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "disabled",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": true,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_roll_4",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "force_disabled_active"
+        ],
+        "warnings": [],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "rollback_priority"
+          ],
+          "warnings": []
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_safety_block_01",
+      "description": "safety blocks unsafe apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_safety_1",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "safety",
+          "response_mode": "safe_override",
+          "depth_limit": "medium",
+          "max_questions": 2,
+          "max_concepts": 3,
+          "must_do": [
+            "validate_current_state"
+          ],
+          "must_not_do": [],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "unsafe_constraints_for_current_state"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_safety_block_02",
+      "description": "safety blocks unsafe apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_safety_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "safety",
+          "response_mode": "safe_override",
+          "depth_limit": "medium",
+          "max_questions": 2,
+          "max_concepts": 3,
+          "must_do": [
+            "validate_current_state"
+          ],
+          "must_not_do": [],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "unsafe_constraints_for_current_state"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_safety_block_03",
+      "description": "safety blocks unsafe apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_safety_3",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "safety",
+          "response_mode": "safe_override",
+          "depth_limit": "medium",
+          "max_questions": 2,
+          "max_concepts": 3,
+          "must_do": [
+            "validate_current_state"
+          ],
+          "must_not_do": [],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "unsafe_constraints_for_current_state"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_kb_block_01",
+      "description": "kb boundary violation blocks apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_kb_1",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "replay_quality_blocked",
+          "replay_kb_boundary_not_ok",
+          "kb_boundary_violation",
+          "forbidden_kb_fields_detected"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_kb_block_02",
+      "description": "kb boundary violation blocks apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_kb_2",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "replay_quality_blocked",
+          "replay_kb_boundary_not_ok",
+          "kb_boundary_violation",
+          "forbidden_kb_fields_detected"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    },
+    {
+      "case_id": "pcp_kb_block_03",
+      "description": "kb boundary violation blocks apply",
+      "pass": true,
+      "issues": [],
+      "decision": {
+        "schema_version": "prompt_constraint_pilot_runtime_decision_v1",
+        "activation_mode": "shadow_only",
+        "apply_to_writer_prompt": false,
+        "apply_to_writer_contract": false,
+        "apply_to_final_answer": false,
+        "rollback_active": false,
+        "eligible_user": true,
+        "feature_flag_snapshot": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "test_apply",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_kb_3",
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_"
+        },
+        "candidate_constraints": {
+          "response_goal": "clarify",
+          "response_mode": "reflect",
+          "depth_limit": "low",
+          "max_questions": 0,
+          "max_concepts": 1,
+          "must_do": [
+            "validate_current_state",
+            "keep_language_short"
+          ],
+          "must_not_do": [
+            "do_not_analyze_deeply"
+          ],
+          "kb_usage_mode": "internal_lens_only",
+          "must_not_quote_source": true
+        },
+        "blocked_reasons": [
+          "replay_quality_blocked",
+          "replay_kb_boundary_not_ok",
+          "kb_boundary_violation",
+          "forbidden_kb_fields_detected"
+        ],
+        "warnings": [
+          "downgraded_to_shadow_due_to_gates"
+        ],
+        "trace": {
+          "schema_version": "prompt_constraint_pilot_runtime_trace_v1",
+          "builder": "prompt_constraint_pilot_runtime_v1",
+          "rules_applied": [
+            "default_off_guardrail",
+            "force_disabled_guardrail",
+            "allowlist_guardrail",
+            "test_apply_eligibility_checked",
+            "replay_quality_gate_checked",
+            "safety_kb_conflict_bloat_gates_checked"
+          ],
+          "warnings": [
+            "downgraded_to_shadow_due_to_gates"
+          ]
+        }
+      },
+      "prompt_section_chars": 0,
+      "prompt_section_applied": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": "prompt_constraint_pilot_runtime_smoke_v1",
+  "prd": "PRD-046.1.6",
+  "generated_at": "2026-05-17T10:39:05.172933+00:00",
+  "ok": true,
+  "cases": [
+    {
+      "case_id": "default_off_smoke",
+      "answer_exists": true,
+      "activation_mode": "disabled",
+      "applied": false,
+      "prompt_section_chars": 0
+    },
+    {
+      "case_id": "shadow_smoke",
+      "answer_exists": true,
+      "activation_mode": "shadow_only",
+      "applied": false,
+      "prompt_section_chars": 0
+    },
+    {
+      "case_id": "test_apply_smoke",
+      "answer_exists": true,
+      "activation_mode": "test_apply",
+      "applied": true,
+      "prompt_section_chars": 218
+    }
+  ]
+}

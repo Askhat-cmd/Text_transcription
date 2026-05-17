@@ -209,3 +209,9 @@ Status: accepted
 Context: после PRD-046.1.4 появилась возможность оценивать candidate constraints на уровне prompt-context, но любое прямое подключение replay-кандидата в production Writer path преждевременно и рискованно без отдельного controlled rollout.
 Decision: в PRD-046.1.5 replay слой ограничен `offline_replay_only`: baseline и candidate prompt-context сравниваются детерминированно (safety/KB/conflict/prompt-bloat/non-mutation), но replay не имеет права менять production WriterContract, writer prompt или final answer и не вызывает provider.
 Consequences: проект получает измеримый quality-eval фундамент для следующего ограниченного runtime-эксперимента (PRD-046.1.6) с жёсткими rollback/safety gates вместо немедленной активации для всех пользователей.
+
+## ADR-036 - Prompt Constraint Pilot can affect Writer prompt only under default-off allowlisted runtime flag
+Status: accepted
+Context: после offline replay (PRD-046.1.5) нужен ограниченный runtime-эксперимент для проверки prompt constraints, но broad activation в production создаёт риск user-path regressions.
+Decision: в PRD-046.1.6 pilot constraints могут влиять на Writer prompt только при explicit runtime-флагах (`PROMPT_CONSTRAINT_PILOT_ENABLED=true`, `PROMPT_CONSTRAINT_PILOT_MODE=test_apply`), только для allowlisted/test users и только после passed gates (rollback/safety/KB/conflict/prompt-bloat/non-mutation). По умолчанию путь остаётся disabled/shadow; `PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true` имеет абсолютный rollback-приоритет.
+Consequences: production default path остаётся неизменным, runtime-эксперимент трассируется артефактами и может быть мгновенно отключён rollback-флагом; broad rollout запрещён до отдельного PRD-046.1.7+.

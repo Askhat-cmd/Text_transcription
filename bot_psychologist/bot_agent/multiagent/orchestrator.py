@@ -27,8 +27,12 @@ from .planner_bridge_compliance_shadow import (
 from .planner_bridge_writer_contract_pilot import (
     build_planner_bridge_writer_contract_pilot_runtime_shadow_v1,
 )
+from .prompt_constraint_pilot_runtime import (
+    build_prompt_constraint_pilot_runtime_decision_v1,
+)
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
 from .thread_storage import thread_storage
+from .writer_prompt_replay import build_writer_prompt_replay_runtime_shadow_v1
 
 
 logger = logging.getLogger(__name__)
@@ -232,8 +236,34 @@ class MultiAgentOrchestrator:
                 state_snapshot=state_snapshot,
             )
         )
+        writer_prompt_replay_shadow = build_writer_prompt_replay_runtime_shadow_v1(
+            writer_contract=writer_contract,
+            writer_contract_pilot=planner_bridge_writer_contract_pilot,
+            diagnostic_card=diagnostic_card,
+            thread_state=updated_thread,
+            state_snapshot=state_snapshot,
+        )
+        prompt_constraint_pilot_runtime_decision = (
+            build_prompt_constraint_pilot_runtime_decision_v1(
+                user_id=user_id,
+                writer_prompt_replay_result=writer_prompt_replay_shadow,
+                writer_contract_pilot=planner_bridge_writer_contract_pilot,
+                state_snapshot=state_snapshot,
+                thread_state=updated_thread,
+            ).to_dict()
+        )
         t0 = time.perf_counter()
-        draft_answer = await writer_agent.write(writer_contract)
+        if (
+            str(prompt_constraint_pilot_runtime_decision.get("activation_mode", "disabled"))
+            == "test_apply"
+            and bool(prompt_constraint_pilot_runtime_decision.get("apply_to_writer_prompt", False))
+        ):
+            draft_answer = await writer_agent.write(
+                writer_contract,
+                prompt_constraint_decision=prompt_constraint_pilot_runtime_decision,
+            )
+        else:
+            draft_answer = await writer_agent.write(writer_contract)
         t_writer = int((time.perf_counter() - t0) * 1000)
         writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
         self._record_agent_metric(
@@ -358,6 +388,8 @@ class MultiAgentOrchestrator:
                     "planner_bridge_compliance_shadow", {}
                 ),
                 "planner_bridge_writer_contract_pilot": planner_bridge_writer_contract_pilot,
+                "writer_prompt_replay_shadow": writer_prompt_replay_shadow,
+                "prompt_constraint_pilot_runtime": prompt_constraint_pilot_runtime_decision,
                 "writer_system_prompt": str(writer_debug.get("system_prompt", "") or ""),
                 "writer_user_prompt": str(writer_debug.get("user_prompt", "") or ""),
                 "writer_llm_response_raw": str(writer_debug.get("llm_response", "") or ""),

@@ -9,6 +9,7 @@ from typing import Any, Optional
 
 from ...config import config
 from ...feature_flags import feature_flags
+from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
@@ -86,7 +87,12 @@ class WriterAgent:
             "temperature": get_temperature_for_agent("writer"),
         }
 
-    async def write(self, contract: WriterContract) -> str:
+    async def write(
+        self,
+        contract: WriterContract,
+        *,
+        prompt_constraint_decision: dict[str, Any] | None = None,
+    ) -> str:
         """Write one answer text with safe fallback behavior."""
         runtime_settings = self._resolve_runtime_settings()
         self.last_debug = {
@@ -105,13 +111,20 @@ class WriterAgent:
             "duration_ms": None,
             "error": None,
             "fallback_used": False,
+            "prompt_constraint_pilot_activation_mode": "disabled",
+            "prompt_constraint_pilot_applied": False,
+            "prompt_constraint_pilot_blocked_reasons": [],
+            "prompt_constraint_pilot_prompt_section_chars": 0,
         }
         try:
             if contract.thread_state.safety_active:
                 lang = contract.response_language or self._detect_language(contract.user_message)
                 fallback = _SAFE_OVERRIDE_FALLBACKS.get(lang, _SAFE_OVERRIDE_FALLBACKS[_DEFAULT_LANG])
                 try:
-                    result = await self._call_llm(contract)
+                    result = await self._call_llm(
+                        contract,
+                        prompt_constraint_decision=prompt_constraint_decision,
+                    )
                     if not result.strip():
                         self.last_debug["fallback_used"] = True
                         return fallback
@@ -121,7 +134,10 @@ class WriterAgent:
                     self.last_debug["fallback_used"] = True
                     return fallback
 
-            result = await self._call_llm(contract)
+            result = await self._call_llm(
+                contract,
+                prompt_constraint_decision=prompt_constraint_decision,
+            )
             if not result.strip():
                 self.last_debug["fallback_used"] = True
                 return self._static_fallback(contract)
@@ -132,7 +148,12 @@ class WriterAgent:
             self.last_debug["fallback_used"] = True
             return self._static_fallback(contract)
 
-    async def _call_llm(self, contract: WriterContract) -> str:
+    async def _call_llm(
+        self,
+        contract: WriterContract,
+        *,
+        prompt_constraint_decision: dict[str, Any] | None = None,
+    ) -> str:
         client = self._get_client()
         if client is None:
             raise RuntimeError("No LLM client available")
@@ -160,7 +181,29 @@ class WriterAgent:
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
             semantic_hits=self._format_hits(ctx["semantic_hits"]),
         )
+        prompt_section = (
+            format_prompt_constraint_section_v1(prompt_constraint_decision)
+            if prompt_constraint_decision is not None
+            else ""
+        )
+        activation_mode = (
+            str(prompt_constraint_decision.get("activation_mode", "disabled"))
+            if isinstance(prompt_constraint_decision, dict)
+            else "disabled"
+        )
+        blocked_reasons = (
+            list(prompt_constraint_decision.get("blocked_reasons", []))
+            if isinstance(prompt_constraint_decision, dict)
+            and isinstance(prompt_constraint_decision.get("blocked_reasons", []), list)
+            else []
+        )
+        if prompt_section:
+            user_prompt = f"{user_prompt}\n\n{prompt_section}"
         self.last_debug["user_prompt"] = user_prompt
+        self.last_debug["prompt_constraint_pilot_activation_mode"] = activation_mode
+        self.last_debug["prompt_constraint_pilot_applied"] = bool(prompt_section)
+        self.last_debug["prompt_constraint_pilot_blocked_reasons"] = blocked_reasons
+        self.last_debug["prompt_constraint_pilot_prompt_section_chars"] = len(prompt_section)
 
         start_ts = time.perf_counter()
         runtime_settings = self._resolve_runtime_settings()

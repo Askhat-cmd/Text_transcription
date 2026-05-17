@@ -37,6 +37,9 @@ _DEFAULTS: Dict[str, bool] = {
     # Multiagent runtime is always active after PRD-036.
     # Retained only for old tests/tools until PRD-041/PRD-042 cleanup.
     "MULTIAGENT_ENABLED": True,
+    # PRD-046.1.6 controlled prompt-constraint pilot (default-off).
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": False,
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": True,
 }
 
 _STRING_DEFAULTS: Dict[str, str] = {
@@ -52,6 +55,12 @@ _STRING_DEFAULTS: Dict[str, str] = {
     "MEMORY_RAG_MIN_SCORE": "0.45",
     "MEMORY_CONV_TURNS_DEFAULT": "6",
     "THREAD_STORAGE_DIR": "bot_psychologist/data/threads",
+    # PRD-046.1.6 prompt-constraint pilot settings.
+    "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+    "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": "pilot_",
+    "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": "2500",
+    "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": "0.35",
 }
 
 _DEPRECATED_RUNTIME_FLAGS: Dict[str, str] = {

@@ -23,6 +23,11 @@ from .planner_bridge_writer_contract_pilot_v1 import (
     PlannerBridgeWriterContractPilotResult,
     PlannerBridgeWriterContractPilotTrace,
 )
+from .prompt_constraint_pilot_runtime_v1 import (
+    PromptConstraintPilotRuntimeDecision,
+    PromptConstraintPilotRuntimeInput,
+    PromptConstraintPilotRuntimeTrace,
+)
 from .writer_prompt_replay_v1 import (
     WriterPromptReplayCandidateContext,
     WriterPromptReplayComparison,
@@ -53,6 +58,9 @@ __all__ = [
     "PlannerBridgeWriterContractPilotOverlay",
     "PlannerBridgeWriterContractPilotResult",
     "PlannerBridgeWriterContractPilotTrace",
+    "PromptConstraintPilotRuntimeDecision",
+    "PromptConstraintPilotRuntimeInput",
+    "PromptConstraintPilotRuntimeTrace",
     "PlannerBridgeInput",
     "PlannerBridgeOutput",
     "PlannerBridgeTrace",

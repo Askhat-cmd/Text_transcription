@@ -1,0 +1,20 @@
+{
+  "rollback_priority": "force_disabled_absolute_priority",
+  "primary_rollback": {
+    "set_PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+    "expected_apply_count_after_rollback": 0
+  },
+  "secondary_rollback": {
+    "set_PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+    "clear_allowlist": true
+  },
+  "verification": {
+    "run_allowlisted_control_after_rollback": true,
+    "run_normal_user_control_after_rollback": true,
+    "stale_apply_after_force_disabled_must_be": 0
+  },
+  "reporting": {
+    "rollback_proof_required": true,
+    "rollback_failure_blocks_next_step": true
+  }
+}

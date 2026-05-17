@@ -1,0 +1,17 @@
+{
+  "stage": "production_limited_plan_only",
+  "execution_allowed_in_this_prd": false,
+  "max_initial_real_user_count": 1,
+  "max_total_users_in_first_execution_prd": 2,
+  "allowlist_required": true,
+  "manual_operator_approval_required": true,
+  "automatic_enrollment_allowed": false,
+  "normal_user_default_path_unchanged": true,
+  "excluded_user_categories": [
+    "crisis_or_self_harm_context",
+    "minor_or_unknown_age_sensitive_context",
+    "high_emotional_distress_without_safety_review",
+    "users_not_explicitly_allowlisted",
+    "users_without_operator_review"
+  ]
+}

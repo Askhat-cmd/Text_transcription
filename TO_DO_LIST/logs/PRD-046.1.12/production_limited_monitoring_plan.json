@@ -1,0 +1,27 @@
+{
+  "metrics": {
+    "apply_count": "count test_apply activations",
+    "normal_user_apply_count": "must remain 0",
+    "rollback_failure_count": "must remain 0",
+    "safety_regression_count": "must remain 0",
+    "kb_policy_regression_count": "must remain 0",
+    "prompt_bloat_regression_count": "must remain 0",
+    "constraint_conflict_regression_count": "must remain 0",
+    "raw_kb_text_exposure_count": "must remain 0",
+    "internal_only_exposure_count": "must remain 0",
+    "not_for_direct_quote_violation_count": "must remain 0",
+    "provider_called_by_execution_count": "must remain 0 unless explicitly expected and separately approved",
+    "production_mutation_detected": "must remain false"
+  },
+  "trace_requirements": {
+    "sanitized_trace_only": true,
+    "raw_prompt_forbidden": true,
+    "raw_kb_text_forbidden": true,
+    "private_user_text_forbidden": true
+  },
+  "observation_window": {
+    "manual_execution_only": true,
+    "single_short_window": true,
+    "automatic_background_monitoring_not_assumed": true
+  }
+}

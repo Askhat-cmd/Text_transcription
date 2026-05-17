@@ -1,0 +1,23 @@
+{
+  "required_before_execution": {
+    "source_consolidation_passed": true,
+    "operator_checklist_completed": true,
+    "rollback_plan_reviewed": true,
+    "monitoring_plan_ready": true,
+    "abort_criteria_ready": true,
+    "normal_user_control_case_ready": true,
+    "trace_sanitization_ready": true,
+    "no_mutation_baseline_captured": true,
+    "config_default_conservative": true,
+    "force_disabled_rollback_available": true
+  },
+  "blocked_if": [
+    "source_consolidation_missing",
+    "rollback_plan_missing",
+    "operator_checklist_missing",
+    "abort_criteria_missing",
+    "monitoring_plan_missing",
+    "config_defaults_not_conservative",
+    "force_disabled_priority_unclear"
+  ]
+}

@@ -46,12 +46,13 @@
 - PRD-046.1.9: one controlled supervised execution/observability cycle delivered (`run_prompt_constraint_supervised_execution_gate.py` + contracts/tests/artifacts); allowlisted cohort `3` produced `test_apply_applied_count=3`, normal-user no-effect and rollback proofs stayed green, baseline-vs-test_apply showed no regressions, final decision `continue_supervised` with no production mutation/provider call.
 - PRD-046.1.10: second supervised continuation cycle delivered on expanded allowlisted cohort (`6`) with full scenario coverage (`6/6`); continuation harness/runner/tests/artifacts added, baseline-vs-test_apply remained clean (`candidate/safety/kb/conflict/bloat regressions = 0`), normal-user no-effect (`2` controls) and rollback gates passed, final decision `continue_supervised` with no production mutation/provider call.
 - PRD-046.1.11: supervised results consolidation / rollout decision gate delivered; added consolidation contract/module/CLI + tests/artifacts across both supervised cycles (`046.1.9` + `046.1.10`), confirmed reproducibility (`total_test_apply_applied_count=9`, `total_cases_compared=9`, zero safety/KB/rollback/no-mutation/provider regressions), final decision `prepare_production_limited_rollout_plan`.
+- PRD-046.1.12: production-limited rollout planning gate delivered (plan-only, no execution); added rollout plan contract/module/CLI + tests/artifacts (`cohort_policy`, `preflight_gates`, `operator_checklist`, `monitoring_plan`, `rollback_plan`, `abort_criteria`, `readiness_gate`, runbook) with conservative defaults preserved and final decision `ready_for_production_limited_execution_prd`.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.12 - Production-Limited Prompt-Constraint Pilot Rollout Plan v1.
+1. PRD-046.1.13 - Production-Limited Prompt-Constraint Pilot Execution / Monitoring Gate v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

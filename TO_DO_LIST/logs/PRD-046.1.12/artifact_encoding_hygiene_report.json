@@ -1,0 +1,32 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.12",
+  "checked_prd": "PRD-046.1.12",
+  "final_status": "passed",
+  "files_checked": 12,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.12/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt"
+  ]
+}

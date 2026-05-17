@@ -1,0 +1,54 @@
+{
+  "checklist": [
+    {
+      "id": "confirm_scope",
+      "required": true,
+      "description": "Confirm this is production-limited execution, not broad rollout."
+    },
+    {
+      "id": "confirm_allowlist",
+      "required": true,
+      "description": "Confirm only explicitly allowlisted user IDs are included."
+    },
+    {
+      "id": "confirm_force_disabled_start",
+      "required": true,
+      "description": "Confirm FORCE_DISABLED starts as true before any run."
+    },
+    {
+      "id": "capture_baseline_no_mutation",
+      "required": true,
+      "description": "Capture hashes before execution."
+    },
+    {
+      "id": "enable_for_limited_window_only",
+      "required": true,
+      "description": "Enable test_apply only for limited manual window."
+    },
+    {
+      "id": "capture_trace_samples",
+      "required": true,
+      "description": "Capture sanitized trace samples."
+    },
+    {
+      "id": "run_normal_user_control",
+      "required": true,
+      "description": "Verify normal user path remains unchanged."
+    },
+    {
+      "id": "rollback_force_disabled",
+      "required": true,
+      "description": "Set FORCE_DISABLED=true and verify no stale apply."
+    },
+    {
+      "id": "compare_quality",
+      "required": true,
+      "description": "Compare baseline vs production-limited test_apply."
+    },
+    {
+      "id": "final_decision",
+      "required": true,
+      "description": "Choose continue_limited/stay_limited/hotfix/stop after gate."
+    }
+  ]
+}

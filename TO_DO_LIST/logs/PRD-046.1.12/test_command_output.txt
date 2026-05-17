@@ -1,0 +1,460 @@
+﻿PRD-046.1.12 command log start: 2026-05-17 20:28:18
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_plan_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_rollout_plan_contract.py . [100%]
+
+============================== 1 passed in 0.64s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_plan_runner.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_rollout_plan_runner.py . [100%]
+
+============================== 1 passed in 0.71s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_source_gate.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_rollout_source_gate.py . [ 50%]
+.                                                                        [100%]
+
+============================== 2 passed in 0.91s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_cohort_policy.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_cohort_policy.py . [100%]
+
+============================== 1 passed in 0.62s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_preflight_gates.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_preflight_gates.py . [100%]
+
+============================== 1 passed in 0.72s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_operator_checklist.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_operator_checklist.py . [100%]
+
+============================== 1 passed in 0.61s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_monitoring_plan.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_monitoring_plan.py . [100%]
+
+============================== 1 passed in 0.87s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollback_plan.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_rollback_plan.py . [100%]
+
+============================== 1 passed in 0.60s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_abort_criteria.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_abort_criteria.py . [100%]
+
+============================== 1 passed in 0.61s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_no_execution_no_mutation.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-9.0.3, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.9.0, asyncio-1.3.0, typeguard-4.4.2
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_no_execution_no_mutation.py . [100%]
+
+============================== 1 passed in 0.61s ==============================
+
+>>> python -m bot_psychologist.tools.run_prompt_constraint_production_limited_rollout_plan --source-dir TO_DO_LIST/logs/PRD-046.1.11 --output-dir TO_DO_LIST/logs/PRD-046.1.12 --strict
+
+cmd.exe : 2026-05-17 20:28:43,380 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_pra
+ctice\Text_transcription\bot_psychologist\data\threads
+At line:23 char:13
++   $output = & cmd /c $cmd 2>&1
++             ~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-17 20:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-17 20:28:43,386 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "ready_for_production_limited_execution_prd",
+  "readiness_gate": {
+    "prd": "PRD-046.1.12",
+    "final_status": "passed",
+    "decision": "ready_for_production_limited_execution_prd",
+    "source_consolidation_passed": true,
+    "source_decision": "prepare_production_limited_rollout_plan",
+    "rollout_plan_ready": true,
+    "cohort_policy_ready": true,
+    "preflight_gates_ready": true,
+    "operator_checklist_ready": true,
+    "monitoring_plan_ready": true,
+    "rollback_plan_ready": true,
+    "abort_criteria_ready": true,
+    "execution_performed": false,
+    "provider_called_by_plan": false,
+    "production_mutation_detected": false,
+    "default_flags_changed": false,
+    "recommended_next_prd": "PRD-046.1.13 - Production-Limited Prompt-Constraint Pilot Execution / Monitoring Gate v1",
+    "blockers": [],
+    "warnings": []
+  },
+  "decision_payload": {
+    "schema_version": "prompt_constraint_production_limited_rollout_decision_v1",
+    "prd": "PRD-046.1.12",
+    "final_status": "passed",
+    "decision": "ready_for_production_limited_execution_prd",
+    "blockers": [],
+    "warnings": [],
+    "recommended_next_prd": "PRD-046.1.13 - Production-Limited Prompt-Constraint Pilot Execution / Monitoring Gate v1"
+  },
+  "preflight": {
+    "required": {
+      "manifest": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\supervised_consolidation_manifest.json",
+      "aggregate": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\supervised_consolidation_aggregate_metrics.json",
+      "reproducibility": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\supervised_consolidation_reproducibility.json",
+      "risk_register": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\supervised_consolidation_risk_register.json",
+      "decision_gate": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\supervised_consolidation_rollout_decision_gate.json",
+      "no_mutation": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\no_mutation_proof.json",
+      "encoding_hygiene": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.11\\artifact_encoding_hygiene_report.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "manifest": {
+        "prd": "PRD-046.1.11",
+        "schema_version": "prompt_constraint_supervised_consolidation_manifest_v1",
+        "source_cycles": [
+          {
+            "prd": "PRD-046.1.9",
+            "final_status": "passed",
+            "decision": "continue_supervised"
+          },
+          {
+            "prd": "PRD-046.1.10",
+            "final_status": "passed",
+            "decision": "continue_supervised"
+          }
+        ],
+        "consolidation_mode": "evidence_only_no_execution",
+        "provider_allowed": false,
+        "production_mutation_allowed": false,
+        "source_cycles_passed": true,
+        "generated_at": "2026-05-17T17:10:43.018269+00:00"
+      },
+      "aggregate": {
+        "schema_version": "prompt_constraint_supervised_consolidation_aggregate_metrics_v1",
+        "prd": "PRD-046.1.11",
+        "cycles_total": 2,
+        "cycles_passed": 2,
+        "total_test_apply_applied_count": 9,
+        "total_cases_compared": 9,
+        "max_cohort_size_seen": 6,
+        "normal_user_apply_total": 0,
+        "default_off_user_path_effect_total": 0,
+        "rollback_failure_total": 0,
+        "stale_apply_after_force_disabled_total": 0,
+        "candidate_weaker_than_baseline_total": 0,
+        "safety_regression_total": 0,
+        "kb_policy_regression_total": 0,
+        "prompt_bloat_regression_total": 0,
+        "constraint_conflict_regression_total": 0,
+        "raw_kb_text_exposure_total": 0,
+        "internal_only_exposure_total": 0,
+        "not_for_direct_quote_violation_total": 0,
+        "provider_called_total": 0,
+        "production_mutation_detected_any": false,
+        "artifact_encoding_hygiene_all_passed": true
+      },
+      "reproducibility": {
+        "schema_version": "prompt_constraint_supervised_consolidation_reproducibility_v1",
+        "prd": "PRD-046.1.11",
+        "both_cycles_passed": true,
+        "both_cycles_continue_supervised": true,
+        "normal_user_no_effect_repeated": true,
+        "rollback_success_repeated": true,
+        "no_safety_regression_repeated": true,
+        "no_kb_regression_repeated": true,
+        "no_prompt_bloat_repeated": true,
+        "no_constraint_conflict_repeated": true,
+        "no_raw_kb_exposure_repeated": true,
+        "provider_free_repeated": true,
+        "no_mutation_repeated": true,
+        "reproducibility_passed": true
+      },
+      "risk_register": {
+        "schema_version": "prompt_constraint_supervised_consolidation_risk_register_v1",
+        "prd": "PRD-046.1.11",
+        "risks": [
+          {
+            "risk_id": "limited_evidence_size",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Expand supervised evidence in rollout planning phase with strict abort criteria.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "synthetic_test_only_cohort",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Keep pilot allowlisted and define production-limited safeguards before any rollout execution.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "runtime_env_drift",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Re-run runtime smoke and endpoint readiness checks in each next PRD stage.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "prompt_bloat_under_real_long_context",
+            "severity": "low",
+            "status": "accepted",
+            "mitigation": "Keep prompt delta limits and monitor long-context outliers in supervised telemetry.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "unexpected_diagnostic_center_divergence",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Retain trace-only Diagnostic Center mode and compare-layer observability gates.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "rollback_operator_error",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Enforce rollback-first operator checklist with explicit force-disabled verification.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "trace_artifact_leakage",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Continue sanitized artifact policy and run artifact encoding/hygiene validator each cycle.",
+            "blocks_next_step": false
+          },
+          {
+            "risk_id": "overfitting_to_eval_fixtures",
+            "severity": "medium",
+            "status": "needs_mitigation",
+            "mitigation": "Add broader scenario variance in planning PRD while preserving no-effect gates.",
+            "blocks_next_step": false
+          }
+        ],
+        "blocking_risk_count": 0,
+        "risk_register_has_blockers": false
+      },
+      "decision_gate": {
+        "schema_version": "prompt_constraint_supervised_consolidation_rollout_decision_gate_v1",
+        "prd": "PRD-046.1.11",
+        "final_status": "passed",
+        "decision": "prepare_production_limited_rollout_plan",
+        "source_cycles_passed": true,
+        "aggregate_metrics_passed": true,
+        "reproducibility_passed": true,
+        "risk_register_has_blockers": false,
+        "normal_user_apply_total": 0,
+        "rollback_failure_total": 0,
+        "safety_regression_total": 0,
+        "kb_policy_regression_total": 0,
+        "raw_kb_text_exposure_total": 0,
+        "provider_called_total": 0,
+        "production_mutation_detected_any": false,
+        "recommended_next_prd": "PRD-046.1.12 - Production-Limited Prompt-Constraint Pilot Rollout Plan v1",
+        "blockers": [],
+        "warnings": []
+      },
+      "no_mutation": {
+        "schema_version": "prompt_constraint_supervised_consolidation_no_mutation_proof_v1",
+        "prd": "PRD-046.1.11",
+        "tracked_paths": {
+          "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+          "registry": "Bot_data_base/data/registry.json",
+          "config": "Bot_data_base/config.yaml"
+        },
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "production_apply_performed": false,
+        "provider_called_by_consolidation": false
+      },
+      "encoding_hygiene": {
+        "schema_version": "artifact_encoding_hygiene_report_v1",
+        "prd": "PRD-046.1.11",
+        "checked_prd": "PRD-046.1.11",
+        "final_status": "passed",
+        "files_checked": 8,
+        "utf8_decode_error_count": 0,
+        "nul_byte_file_count": 0,
+        "nul_char_file_count": 0,
+        "replacement_char_warning_count": 0,
+        "mojibake_warning_count": 0,
+        "json_parse_error_count": 0,
+        "empty_text_artifact_count": 0,
+        "unexpected_debug_dir_count": 0,
+        "fixed_files": [],
+        "warnings": [],
+        "blockers": [],
+        "checked_files": [
+          "TO_DO_LIST/logs/PRD-046.1.11/artifact_encoding_hygiene_report.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/no_mutation_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_aggregate_metrics.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_manifest.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_reproducibility.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_risk_register.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_rollout_decision_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.11/test_command_output.txt"
+        ]
+      }
+    }
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.12",
+    "checked_prd": "PRD-046.1.12",
+    "final_status": "passed",
+    "files_checked": 11,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt"
+    ]
+  }
+}
+
+>>> python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.12 --logs-dir TO_DO_LIST/logs/PRD-046.1.12 --out-dir TO_DO_LIST/logs/PRD-046.1.12 --report-prd PRD-046.1.12 --repo-root .
+
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.12",
+  "checked_prd": "PRD-046.1.12",
+  "final_status": "passed",
+  "files_checked": 12,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.12/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt"
+  ]
+}

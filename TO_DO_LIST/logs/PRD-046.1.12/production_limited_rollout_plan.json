@@ -1,0 +1,190 @@
+{
+  "schema_version": "prompt_constraint_production_limited_rollout_plan_v1",
+  "prd": "PRD-046.1.12",
+  "source_consolidation_prd": "PRD-046.1.11",
+  "source_decision": "prepare_production_limited_rollout_plan",
+  "rollout_stage": "plan_only",
+  "production_execution_performed": false,
+  "baseline_defaults": {
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true
+  },
+  "cohort_policy": {
+    "stage": "production_limited_plan_only",
+    "execution_allowed_in_this_prd": false,
+    "max_initial_real_user_count": 1,
+    "max_total_users_in_first_execution_prd": 2,
+    "allowlist_required": true,
+    "manual_operator_approval_required": true,
+    "automatic_enrollment_allowed": false,
+    "normal_user_default_path_unchanged": true,
+    "excluded_user_categories": [
+      "crisis_or_self_harm_context",
+      "minor_or_unknown_age_sensitive_context",
+      "high_emotional_distress_without_safety_review",
+      "users_not_explicitly_allowlisted",
+      "users_without_operator_review"
+    ]
+  },
+  "preflight_gates": {
+    "required_before_execution": {
+      "source_consolidation_passed": true,
+      "operator_checklist_completed": true,
+      "rollback_plan_reviewed": true,
+      "monitoring_plan_ready": true,
+      "abort_criteria_ready": true,
+      "normal_user_control_case_ready": true,
+      "trace_sanitization_ready": true,
+      "no_mutation_baseline_captured": true,
+      "config_default_conservative": true,
+      "force_disabled_rollback_available": true
+    },
+    "blocked_if": [
+      "source_consolidation_missing",
+      "rollback_plan_missing",
+      "operator_checklist_missing",
+      "abort_criteria_missing",
+      "monitoring_plan_missing",
+      "config_defaults_not_conservative",
+      "force_disabled_priority_unclear"
+    ]
+  },
+  "operator_checklist": {
+    "checklist": [
+      {
+        "id": "confirm_scope",
+        "required": true,
+        "description": "Confirm this is production-limited execution, not broad rollout."
+      },
+      {
+        "id": "confirm_allowlist",
+        "required": true,
+        "description": "Confirm only explicitly allowlisted user IDs are included."
+      },
+      {
+        "id": "confirm_force_disabled_start",
+        "required": true,
+        "description": "Confirm FORCE_DISABLED starts as true before any run."
+      },
+      {
+        "id": "capture_baseline_no_mutation",
+        "required": true,
+        "description": "Capture hashes before execution."
+      },
+      {
+        "id": "enable_for_limited_window_only",
+        "required": true,
+        "description": "Enable test_apply only for limited manual window."
+      },
+      {
+        "id": "capture_trace_samples",
+        "required": true,
+        "description": "Capture sanitized trace samples."
+      },
+      {
+        "id": "run_normal_user_control",
+        "required": true,
+        "description": "Verify normal user path remains unchanged."
+      },
+      {
+        "id": "rollback_force_disabled",
+        "required": true,
+        "description": "Set FORCE_DISABLED=true and verify no stale apply."
+      },
+      {
+        "id": "compare_quality",
+        "required": true,
+        "description": "Compare baseline vs production-limited test_apply."
+      },
+      {
+        "id": "final_decision",
+        "required": true,
+        "description": "Choose continue_limited/stay_limited/hotfix/stop after gate."
+      }
+    ]
+  },
+  "monitoring_plan": {
+    "metrics": {
+      "apply_count": "count test_apply activations",
+      "normal_user_apply_count": "must remain 0",
+      "rollback_failure_count": "must remain 0",
+      "safety_regression_count": "must remain 0",
+      "kb_policy_regression_count": "must remain 0",
+      "prompt_bloat_regression_count": "must remain 0",
+      "constraint_conflict_regression_count": "must remain 0",
+      "raw_kb_text_exposure_count": "must remain 0",
+      "internal_only_exposure_count": "must remain 0",
+      "not_for_direct_quote_violation_count": "must remain 0",
+      "provider_called_by_execution_count": "must remain 0 unless explicitly expected and separately approved",
+      "production_mutation_detected": "must remain false"
+    },
+    "trace_requirements": {
+      "sanitized_trace_only": true,
+      "raw_prompt_forbidden": true,
+      "raw_kb_text_forbidden": true,
+      "private_user_text_forbidden": true
+    },
+    "observation_window": {
+      "manual_execution_only": true,
+      "single_short_window": true,
+      "automatic_background_monitoring_not_assumed": true
+    }
+  },
+  "rollback_plan": {
+    "rollback_priority": "force_disabled_absolute_priority",
+    "primary_rollback": {
+      "set_PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+      "expected_apply_count_after_rollback": 0
+    },
+    "secondary_rollback": {
+      "set_PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+      "clear_allowlist": true
+    },
+    "verification": {
+      "run_allowlisted_control_after_rollback": true,
+      "run_normal_user_control_after_rollback": true,
+      "stale_apply_after_force_disabled_must_be": 0
+    },
+    "reporting": {
+      "rollback_proof_required": true,
+      "rollback_failure_blocks_next_step": true
+    }
+  },
+  "abort_criteria": {
+    "hard_abort_if": [
+      "normal_user_apply_count > 0",
+      "default_off_user_path_effect_count > 0",
+      "allowlist_violation_count > 0",
+      "rollback_failure_count > 0",
+      "stale_apply_after_force_disabled_count > 0",
+      "safety_regression_count > 0",
+      "kb_policy_regression_count > 0",
+      "prompt_bloat_regression_count > 0",
+      "constraint_conflict_regression_count > 0",
+      "raw_kb_text_exposure_count > 0",
+      "internal_only_exposure_count > 0",
+      "not_for_direct_quote_violation_count > 0",
+      "production_mutation_detected=true",
+      "config_mutated=true",
+      "registry_mutated=true",
+      "all_blocks_merged_mutated=true",
+      "chroma_reindex_performed=true",
+      "trace_sanitization_failed=true",
+      "operator_checklist_incomplete=true"
+    ],
+    "warning_if": [
+      "apply_count lower than expected",
+      "trace_samples_count lower than expected",
+      "manual operator notes missing",
+      "risk_register medium risks unresolved"
+    ]
+  },
+  "decision": "ready_for_production_limited_execution_prd",
+  "source_consolidation_final_status": "passed",
+  "source_consolidation_passed": true,
+  "reproducibility_passed": true,
+  "risk_register_has_blockers": false,
+  "provider_called_total": 0,
+  "production_mutation_detected_any": false,
+  "generated_at": "2026-05-17T17:28:43.409518+00:00"
+}

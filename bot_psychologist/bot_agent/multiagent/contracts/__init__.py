@@ -52,6 +52,16 @@ from .prompt_constraint_supervised_consolidation_v1 import (
     PromptConstraintSupervisedCycleEvidenceV1,
     PromptConstraintSupervisedRiskRegisterV1,
 )
+from .prompt_constraint_production_limited_rollout_plan_v1 import (
+    PromptConstraintProductionLimitedAbortCriteriaV1,
+    PromptConstraintProductionLimitedCohortPolicyV1,
+    PromptConstraintProductionLimitedDecisionV1,
+    PromptConstraintProductionLimitedMonitoringPlanV1,
+    PromptConstraintProductionLimitedOperatorChecklistV1,
+    PromptConstraintProductionLimitedPreflightGateV1,
+    PromptConstraintProductionLimitedRollbackPlanV1,
+    PromptConstraintProductionLimitedRolloutPlanV1,
+)
 from .prompt_constraint_supervised_rollout_v1 import (
     PromptConstraintRolloutAbortCriteriaV1,
     PromptConstraintRolloutCohortV1,
@@ -111,6 +121,14 @@ __all__ = [
     "PromptConstraintSupervisedConsolidationRunV1",
     "PromptConstraintSupervisedCycleEvidenceV1",
     "PromptConstraintSupervisedRiskRegisterV1",
+    "PromptConstraintProductionLimitedAbortCriteriaV1",
+    "PromptConstraintProductionLimitedCohortPolicyV1",
+    "PromptConstraintProductionLimitedDecisionV1",
+    "PromptConstraintProductionLimitedMonitoringPlanV1",
+    "PromptConstraintProductionLimitedOperatorChecklistV1",
+    "PromptConstraintProductionLimitedPreflightGateV1",
+    "PromptConstraintProductionLimitedRollbackPlanV1",
+    "PromptConstraintProductionLimitedRolloutPlanV1",
     "PromptConstraintRolloutAbortCriteriaV1",
     "PromptConstraintRolloutCohortV1",
     "PromptConstraintRolloutDecisionV1",

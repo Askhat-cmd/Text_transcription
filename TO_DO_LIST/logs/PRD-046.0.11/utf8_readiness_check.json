@@ -1,0 +1,27 @@
+{
+  "schema_version": "utf8_readiness_check_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.749337+00:00",
+  "markers_checked": [
+    "Гђ",
+    "Г‘",
+    "\\u0085"
+  ],
+  "runtime_smoke_utf8_exists": true,
+  "utf8_artifact_check_exists": true,
+  "historical_mojibake_markers_found": [],
+  "current_prd_artifacts_scan_files": [
+    "TO_DO_LIST/logs/PRD-046.0.11/docs_alignment_check.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/governance_readiness_check.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/kb_chroma_consistency_check.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/live_admin_runtime_check.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/readiness_sources_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/retrieval_readiness_check.json",
+    "TO_DO_LIST/logs/PRD-046.0.11/sd_config_readiness_check.json"
+  ],
+  "current_prd_artifacts_mojibake_markers_found": [],
+  "status": "passed",
+  "blockers": [],
+  "warnings": []
+}

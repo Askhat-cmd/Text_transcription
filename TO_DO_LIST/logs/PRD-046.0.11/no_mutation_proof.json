@@ -1,0 +1,22 @@
+{
+  "schema_version": "final_runtime_readiness_no_mutation_proof_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.641342+00:00",
+  "all_blocks_path": "Bot_data_base/data/processed/all_blocks_merged.json",
+  "registry_path": "Bot_data_base/data/registry.json",
+  "config_path": "Bot_data_base/config.yaml",
+  "all_blocks_sha256_before": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+  "all_blocks_sha256_after": "199a3ea81fecf94bda076d51f1f7016f4b5c68052961f4244ce28525bfcfd302",
+  "registry_sha256_before": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+  "registry_sha256_after": "db1de1b3627050444d1db8ea8369536a70c50f8931bcc817f54d6c498a6903b5",
+  "config_sha256_before": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523",
+  "config_sha256_after": "290519bacb2a18d4e23aa184778430e20a0742e9ca11e26415369e2b9440c523",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "provider_called": false,
+  "production_apply_performed": false,
+  "source_reprocess_performed": false,
+  "legacy_sd_enabled": false
+}

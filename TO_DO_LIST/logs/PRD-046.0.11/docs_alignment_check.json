@@ -1,0 +1,13 @@
+{
+  "schema_version": "docs_alignment_check_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.623343+00:00",
+  "project_state_updated": true,
+  "roadmap_updated": true,
+  "roadmap_next_first_prd_046_1": true,
+  "prd_index_updated": true,
+  "decisions_updated": false,
+  "status": "passed",
+  "blockers": [],
+  "warnings": []
+}

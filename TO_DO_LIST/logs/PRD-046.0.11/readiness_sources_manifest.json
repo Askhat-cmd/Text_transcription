@@ -1,0 +1,73 @@
+{
+  "schema_version": "readiness_sources_manifest_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:17:53.262450+00:00",
+  "source_artifacts": [
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "kind": "living_doc",
+      "used_for": [
+        "current_stage",
+        "runtime_architecture",
+        "kb_state"
+      ]
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "kind": "living_doc",
+      "used_for": [
+        "next_prd_order"
+      ]
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "kind": "living_doc",
+      "used_for": [
+        "historical_prd_status"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.10-HF1/runtime_smoke_utf8.json",
+      "kind": "runtime_artifact",
+      "used_for": [
+        "utf8_runtime",
+        "counts"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.6-HF1/retrieval_eval_scorecard.json",
+      "kind": "quality_artifact",
+      "used_for": [
+        "retrieval_gate"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7.2-HF4/strict_quality_gate_hf4.json",
+      "kind": "quality_artifact",
+      "used_for": [
+        "chroma_consistency",
+        "no_mutation"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7.1/apply_result.json",
+      "kind": "apply_artifact",
+      "used_for": [
+        "governance_authority_invariants"
+      ]
+    }
+  ],
+  "live_sources": [
+    {
+      "base_url": "http://127.0.0.1:8003",
+      "endpoints": [
+        "/",
+        "/api/status",
+        "/api/registry",
+        "/api/registry/",
+        "/api/dashboard",
+        "/api/dashboard/"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "sd_config_readiness_check_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.621339+00:00",
+  "sd_labeling_enabled": false,
+  "sd_labeling_explicit_legacy_mode": false,
+  "legacy_sd_labeling_enabled": false,
+  "legacy_sd_labeling_explicit_legacy_mode": false,
+  "legacy_sd_enabled_effective": false,
+  "runtime_legacy_sd_active": false,
+  "status": "passed",
+  "blockers": [],
+  "warnings": []
+}

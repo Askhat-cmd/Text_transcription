@@ -1,7 +1,8 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.0.10-HF1-sd-config-utf8-finalized`: live admin/runtime на `http://127.0.0.1:8003` подтверждён, direct Chroma diagnostic и dashboard согласованы (`247/247/247`), строгий gate зелёный (`quality_gate_passed=true`, `diagnostic_center_ready=true`), legacy SD слой финализирован в default-disabled конфиге и UTF-8 runtime artifacts проверены anti-mojibake контролем.
+Проект находится на стадии `post-PRD-046.0.11-final-runtime-readiness-summary`: финальная readiness-сводка перед переходом к Diagnostic Center сформирована и сохранена в machine-readable + human-readable артефактах.
+В `PRD-046.0.11` подтверждены runtime/admin/BotDB/KB/Chroma/retrieval/governance/legacy-SD/UTF-8/docs gates, live endpoints на `http://127.0.0.1:8003` проверены, `focus_source=123__кузница_духа`, `blocks/chroma=247/247/247`, no-mutation proof (`all_blocks/registry/config`) пройден, переход к `PRD-046.1` разрешён.
 
 ## Current Runtime Architecture
 Активный user-path:
@@ -76,8 +77,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.0.11 - Final Runtime Readiness Summary v1.
-2. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
+1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -93,5 +93,5 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 5. TO_DO_LIST остается детальным архивом, docs — краткая operational map.
 
 ## Last Updated
-- Date: 2026-05-16
-- Source cycle: PRD-046.0.10-HF1
+- Date: 2026-05-17
+- Source cycle: PRD-046.0.11

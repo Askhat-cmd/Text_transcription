@@ -1,0 +1,20 @@
+{
+  "schema_version": "governance_readiness_check_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.611342+00:00",
+  "authority_checks": {
+    "text_changed_count": 0,
+    "chunk_type_changed_count": 0,
+    "allowed_use_changed_count": 0,
+    "safety_flags_changed_count": 0,
+    "source_id_changed_count": 0,
+    "block_id_changed_count": 0,
+    "governance_invariant_violations": 0
+  },
+  "deterministic_authority_preserved": true,
+  "llm_enrichment_advisory_only": true,
+  "internal_lens_clause_found": true,
+  "status": "passed",
+  "blockers": [],
+  "warnings": []
+}

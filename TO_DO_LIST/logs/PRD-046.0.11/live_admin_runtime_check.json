@@ -1,0 +1,255 @@
+{
+  "schema_version": "live_admin_runtime_check_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:20.162511+00:00",
+  "base_url": "http://127.0.0.1:8003",
+  "offline_docs_only": false,
+  "strict": true,
+  "api_checks": {
+    "/": {
+      "ok": false,
+      "status_code": null,
+      "body": null,
+      "error": "timed out"
+    },
+    "/api/status": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "jobs": []
+      },
+      "error": null
+    },
+    "/api/registry": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 1,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-03-13T04:45:18.951270",
+            "blocks_count": 247,
+            "sd_distribution": {
+              "GREEN": 113,
+              "BLUE": 16,
+              "YELLOW": 67,
+              "RED": 4,
+              "ORANGE": 7,
+              "BEIGE": 9,
+              "PURPLE": 2,
+              "TURQUOISE": 1,
+              "UNCERTAIN": 10
+            },
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/registry/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 1,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-03-13T04:45:18.951270",
+            "blocks_count": 247,
+            "sd_distribution": {
+              "GREEN": 113,
+              "BLUE": 16,
+              "YELLOW": 67,
+              "RED": 4,
+              "ORANGE": 7,
+              "BEIGE": 9,
+              "PURPLE": 2,
+              "TURQUOISE": 1,
+              "UNCERTAIN": 10
+            },
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-17T03:18:20.003514+00:00",
+        "sources": {
+          "total": 1,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 0,
+          "zero_block": 0
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 247,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-17T03:18:20.159523+00:00",
+        "sources": {
+          "total": 1,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 0,
+          "zero_block": 0
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 247,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    }
+  },
+  "status": "passed",
+  "blockers": [],
+  "warnings": [
+    "root_endpoint_unreachable"
+  ]
+}

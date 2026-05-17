@@ -1,0 +1,99 @@
+{
+  "schema_version": "final_runtime_readiness_summary_v1",
+  "prd": "PRD-046.0.11",
+  "generated_at_utc": "2026-05-17T03:18:23.751335+00:00",
+  "base_url": "http://127.0.0.1:8003",
+  "final_status": "passed",
+  "diagnostic_center_prerequisites_ready": true,
+  "next_prd": "PRD-046.1",
+  "runtime_ready": true,
+  "admin_ready": true,
+  "botdb_ready": true,
+  "kb_ready": true,
+  "retrieval_ready": true,
+  "governance_ready": true,
+  "legacy_sd_disabled": true,
+  "utf8_artifacts_clean": true,
+  "docs_aligned": true,
+  "domains": {
+    "runtime": {
+      "status": "passed",
+      "active_pipeline": [
+        "State Analyzer",
+        "Thread Manager",
+        "Memory Retrieval",
+        "Context Assembly",
+        "Diagnostic Card",
+        "Writer Move Compliance",
+        "Writer",
+        "Validator/Trace",
+        "Memory Update"
+      ]
+    },
+    "admin_api": {
+      "status": "passed",
+      "endpoints": {
+        "/": null,
+        "/api/status": 200,
+        "/api/registry": 200,
+        "/api/registry/": 200,
+        "/api/dashboard": 200,
+        "/api/dashboard/": 200
+      }
+    },
+    "knowledge_base": {
+      "status": "passed",
+      "active_sources": 1,
+      "focus_source_id": "123__кузница_духа",
+      "focus_source_title": "Кузница Духа",
+      "blocks": 247
+    },
+    "chroma": {
+      "status": "passed",
+      "dashboard_count": 247,
+      "registry_count": 247,
+      "direct_count": 247,
+      "dashboard_blocks_count": 247
+    },
+    "retrieval": {
+      "status": "passed",
+      "raw_full_text_leak_detected": false,
+      "internal_only_unsafe_exposure_count": 0,
+      "weak_cases_count": 0
+    },
+    "governance": {
+      "status": "passed",
+      "deterministic_authority_preserved": true,
+      "llm_enrichment_advisory_only": true
+    },
+    "legacy_sd": {
+      "status": "passed",
+      "sd_labeling_enabled": false,
+      "legacy_sd_labeling_enabled": false,
+      "legacy_sd_active": false
+    },
+    "utf8": {
+      "status": "passed",
+      "mojibake_markers_found": []
+    },
+    "docs": {
+      "status": "passed",
+      "project_state_updated": true,
+      "roadmap_updated": true,
+      "prd_index_updated": true,
+      "decisions_updated": false
+    },
+    "no_mutation": {
+      "status": "passed",
+      "all_blocks_merged_mutated": false,
+      "registry_mutated": false,
+      "chroma_reindex_performed": false,
+      "provider_called": false,
+      "production_apply_performed": false
+    }
+  },
+  "blockers": [],
+  "warnings": [
+    "root_endpoint_unreachable"
+  ]
+}

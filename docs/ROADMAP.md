@@ -32,13 +32,13 @@
 - PRD-046.0.7.2-HF4: Chroma recovery cycle completed; direct diagnostic confirmed real mismatch (`229`), controlled focus-only reindex with backup restored direct count (`247`), dashboard count source corrected (`ChromaManager.get_stats` uses `collection.count()`), strict live gate passed (`247/247/247`) with no `all_blocks_merged`/`registry` mutation.
 - PRD-046.0.10: legacy SD cleanup/docs alignment completed; SD labeling disabled by default with explicit legacy gate only, dashboard readiness detached from SD, BotDB README and new internal docs pack (`Bot_data_base/docs/*`) aligned to live `:8003` runtime and focus-source `247/247/247`.
 - PRD-046.0.10-HF1: SD config/encoding finalization completed; canonical config fixed to default-disabled (`sd_labeling.enabled=false`), env overrides no longer persist back into `config.yaml`, UTF-8 runtime smoke artifacts and anti-mojibake gate added, runtime/no-mutation invariants preserved.
+- PRD-046.0.11: final runtime readiness summary completed; live runtime/admin gates (`:8003`) revalidated, KB/chroma focus-source consistency reconfirmed (`1 / 247 / 247 / 247`), retrieval/governance/legacy-SD/UTF-8/docs gates passed, no-mutation proof captured, Diagnostic Center prerequisites confirmed.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
 1. PRD-046.1 - Diagnostic Center v1 Readiness / Architecture PRD.
-2. PRD-046.0.11 - Final Runtime Readiness Summary v1 (optional before PRD-046.1).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

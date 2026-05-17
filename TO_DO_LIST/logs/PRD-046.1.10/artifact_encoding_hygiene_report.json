@@ -1,0 +1,30 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.10",
+  "checked_prd": "PRD-046.1.10",
+  "final_status": "passed",
+  "files_checked": 10,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.10/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_baseline_vs_test_apply.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_normal_user_no_effect.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_observability_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_rollback_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_scenario_coverage.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_trace_samples.json",
+    "TO_DO_LIST/logs/PRD-046.1.10/test_command_output.txt"
+  ]
+}

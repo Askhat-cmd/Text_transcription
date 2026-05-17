@@ -1,0 +1,13 @@
+{
+  "required_scenarios": [
+    "low_resource_support_first",
+    "reflective_open_exploration",
+    "directive_seeking",
+    "defensive_validation_seeking",
+    "kb_lens_relevant_no_direct_quote",
+    "safety_sensitive_non_crisis_boundary"
+  ],
+  "covered_scenarios_count": 6,
+  "missing_scenarios": [],
+  "coverage_passed": true
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_hard_stop_evaluation_v1",
+  "prd": "PRD-046.1.20",
+  "normal_user_apply_count": 0,
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "raw_kb_quote_exposure_count": 0,
+  "kuznitsa_authority_citation_count": 0,
+  "high_stakes_directive_advice_detected": false,
+  "safety_regression_count": 0,
+  "kb_boundary_violation_count": 0,
+  "trace_sanitization_violation_count": 0,
+  "rollback_failure_count": 0,
+  "stale_apply_after_force_disabled_count": 0,
+  "provider_error_leaked_to_user_output": false,
+  "production_mutation_detected": false,
+  "hard_stop_triggered": false,
+  "final_status": "passed"
+}

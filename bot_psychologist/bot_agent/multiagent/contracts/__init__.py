@@ -45,6 +45,11 @@ from .diagnostic_center_runtime_pilot_readiness_v1 import (
     DiagnosticCenterRuntimePilotReadinessDecision,
     DiagnosticCenterRuntimePilotReadinessStatus,
 )
+from .diagnostic_center_runtime_pilot_execution_v1 import (
+    DiagnosticCenterRuntimePilotExecutionBundle,
+    DiagnosticCenterRuntimePilotExecutionDecision,
+    DiagnosticCenterRuntimePilotExecutionStatus,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -173,6 +178,9 @@ __all__ = [
     "DiagnosticCenterRuntimePilotReadinessDecision",
     "DiagnosticCenterRuntimePilotReadinessBundle",
     "DiagnosticCenterPilotCohortPolicy",
+    "DiagnosticCenterRuntimePilotExecutionStatus",
+    "DiagnosticCenterRuntimePilotExecutionDecision",
+    "DiagnosticCenterRuntimePilotExecutionBundle",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

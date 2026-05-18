@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_toggle_state_before_v1",
+  "prd": "PRD-046.1.20",
+  "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+  "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+  "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+  "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "",
+  "final_status": "passed"
+}

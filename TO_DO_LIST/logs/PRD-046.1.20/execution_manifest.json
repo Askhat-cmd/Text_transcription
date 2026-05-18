@@ -1,0 +1,27 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_execution_manifest_v1",
+  "prd": "PRD-046.1.20",
+  "pilot_type": "controlled_limited_live_smoke",
+  "execution_window_count": 1,
+  "target_user_count": 1,
+  "allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "normal_user_control_count": 2,
+  "scenarios_executed": [
+    "low_resource_support",
+    "self_blame_pattern",
+    "directive_request",
+    "anger_externalization",
+    "kb_lens_boundary",
+    "normal_user_control"
+  ],
+  "runtime_activation_mode": "deterministic_runtime_harness",
+  "provider_called_by_execution_count": 0,
+  "provider_call_policy": "not_required_for_this_controlled_runtime_harness",
+  "broad_rollout_allowed": false,
+  "normal_user_apply_allowed": false,
+  "production_mutation_allowed": false,
+  "execution_performed": true,
+  "final_status": "passed"
+}

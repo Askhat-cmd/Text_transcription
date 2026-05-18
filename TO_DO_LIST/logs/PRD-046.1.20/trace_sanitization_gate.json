@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_trace_sanitization_gate_v1",
+  "prd": "PRD-046.1.20",
+  "contains_raw_private_logs": false,
+  "contains_raw_content_full": false,
+  "contains_secret_like_values": false,
+  "contains_env_values": false,
+  "contains_raw_provider_payload": false,
+  "contains_nul_char": false,
+  "contains_mojibake": false,
+  "utf8_clean": true,
+  "json_parseable": true,
+  "trace_sanitization_gate_passed": true,
+  "final_status": "passed"
+}

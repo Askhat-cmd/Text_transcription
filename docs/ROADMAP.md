@@ -56,11 +56,12 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.18: response quality calibration/weak-case closure delivered in offline deterministic mode; added calibration contract/module/CLI + expanded fixtures (`34` scenarios, `8` candidate profiles) + artifacts (source gate, weak-case inventory, calibration plan, expanded catalogs, calibrated eval/scorecards, boundary/no-runtime/no-mutation/hygiene), final decision `response_quality_calibration_passed` with runtime authority unchanged.
 - PRD-046.1.19: runtime pilot readiness plan-only gate delivered; added readiness contract/module/CLI + required artifacts (pilot scope, cohort policy, toggle matrix, preflight requirements, limited live smoke plan, rollback-first runbook, hard stops, monitoring contract, normal-user/KB/trace guards, no-mutation/hygiene), with `execution_performed=false` and final decision `runtime_pilot_readiness_plan_ready`.
 
+- PRD-046.1.20: first controlled runtime pilot execution (limited live smoke) delivered; allowlisted operator-only apply, >=2 normal-user controls, rollback pre/post checks passed, quality/safety/KB/trace gates green, hard-stop not triggered, no-mutation/encoding proofs passed, decision=controlled_runtime_pilot_execution_passed.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.20 - Diagnostic Center Controlled Runtime Pilot Execution / Limited Live Smoke v1.
+1. PRD-046.1.21 - Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.
@@ -81,6 +82,7 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 
 ## Ordering Constraint
 Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуском Diagnostic Center обязательны retrieval eval + review workflow readiness gates.
+
 
 
 

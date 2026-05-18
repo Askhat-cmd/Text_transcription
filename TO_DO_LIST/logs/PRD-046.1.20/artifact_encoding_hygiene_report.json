@@ -1,0 +1,39 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.20",
+  "checked_prd": "PRD-046.1.20",
+  "final_status": "passed",
+  "files_checked": 17,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 1,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [
+    "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt:replacement_chars=11"
+  ],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.20/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/baseline_vs_pilot_quality_delta.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/execution_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/hard_stop_evaluation.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/limited_live_smoke_results.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/monitoring_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/normal_user_control_trace_samples_sanitized.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/pilot_operator_trace_samples_sanitized.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/preflight_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/rollback_postcheck.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/rollback_precheck.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/safety_kb_boundary_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+    "TO_DO_LIST/logs/PRD-046.1.20/toggle_state_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/trace_sanitization_gate.json"
+  ]
+}

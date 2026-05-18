@@ -1,0 +1,607 @@
+﻿=== PRD-046.1.20 command log ===
+UTC: 2026-05-18T14:21:24.0764987+05:00
+
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_contract.py . [100%]
+
+============================== 1 passed in 0.22s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_runner.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_runner.py . [100%]
+
+============================== 1 passed in 0.39s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_source_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_source_gate.py . [100%]
+
+============================== 1 passed in 0.38s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_preflight_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_preflight_gate.py . [100%]
+
+============================== 1 passed in 0.52s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_toggle_and_rollback.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_toggle_and_rollback.py . [100%]
+
+============================== 1 passed in 0.41s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_operator_apply_only.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_operator_apply_only.py . [100%]
+
+============================== 1 passed in 0.54s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_normal_user_controls.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_normal_user_controls.py . [100%]
+
+============================== 1 passed in 0.51s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_quality_delta.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_quality_delta.py .  [100%]
+
+============================== 1 passed in 0.51s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_safety_kb_boundary_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_safety_kb_boundary_gate.py . [100%]
+
+============================== 1 passed in 0.44s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_trace_sanitization_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_trace_sanitization_gate.py . [100%]
+
+============================== 1 passed in 0.41s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_hard_stop_evaluation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_hard_stop_evaluation.py . [100%]
+
+============================== 1 passed in 0.42s ==============================
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_execution_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_execution_no_mutation.py . [100%]
+
+============================== 1 passed in 0.39s ==============================
+
+$ python -m bot_psychologist.tools.run_diagnostic_center_runtime_pilot_execution --repo-root . --source-dir TO_DO_LIST/logs/PRD-046.1.19 --output-dir TO_DO_LIST/logs/PRD-046.1.20 --reports-dir TO_DO_LIST/reports --strict
+cmd : 2026-05-18 14:21:52,618 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practic
+e\Text_transcription\bot_psychologist\data\threads
+At line:22 char:10
++   $out = cmd /c $c 2>&1
++          ~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-18 14:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-18 14:21:52,621 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "controlled_runtime_pilot_execution_passed",
+  "scorecard": {
+    "final_status": "passed",
+    "decision": "controlled_runtime_pilot_execution_passed",
+    "source_gate_passed": true,
+    "preflight_gate_passed": true,
+    "execution_window_count": 1,
+    "target_user_count": 1,
+    "pilot_apply_only_for_allowed_user": true,
+    "normal_user_control_count": 2,
+    "normal_user_apply_count": 0,
+    "writer_prompt_changed_for_normal_user": false,
+    "writer_contract_changed_for_normal_user": false,
+    "final_answer_changed_for_normal_user": false,
+    "rollback_precheck_passed": true,
+    "rollback_postcheck_passed": true,
+    "stale_apply_after_force_disabled_count": 0,
+    "quality_delta_status": "passed",
+    "candidate_weaker_than_baseline_count": 0,
+    "safety_kb_boundary_gate_passed": true,
+    "trace_sanitization_gate_passed": true,
+    "hard_stop_triggered": false,
+    "production_mutation_detected": false,
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "chroma_reindex_performed": false,
+    "runtime_defaults_changed": false,
+    "artifact_encoding_hygiene_passed": true,
+    "docs_synced": true,
+    "raw_kb_quote_exposure_count": 0,
+    "kuznitsa_authority_citation_count": 0,
+    "high_stakes_directive_advice_count": 0,
+    "recommended_next_prd": "PRD-046.1.21 - Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1",
+    "blockers": [],
+    "warnings": []
+  },
+  "decision_payload": {
+    "schema_version": "diagnostic_center_runtime_pilot_execution_decision_v1",
+    "prd_id": "PRD-046.1.20",
+    "final_status": "passed",
+    "decision": "controlled_runtime_pilot_execution_passed",
+    "blockers": [],
+    "warnings": [],
+    "recommended_next_prd": "PRD-046.1.21 - Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1"
+  },
+  "preflight": {
+    "required": {
+      "report:PRD-046.1.19_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.19_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.19_RUNTIME_PILOT_READINESS_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.19_RUNTIME_PILOT_READINESS_REPORT.md",
+      "report:PRD-046.1.19_LIMITED_LIVE_SMOKE_PLAN_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.19_LIMITED_LIVE_SMOKE_PLAN_REPORT.md",
+      "report:PRD-046.1.19_NEXT_PRD_RECOMMENDATION.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.19_NEXT_PRD_RECOMMENDATION.md",
+      "runtime_pilot_readiness_scorecard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\runtime_pilot_readiness_scorecard.json",
+      "cohort_policy": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\cohort_policy.json",
+      "toggle_matrix": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\toggle_matrix.json",
+      "runtime_preflight_requirements": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\runtime_preflight_requirements.json",
+      "limited_live_smoke_plan": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\limited_live_smoke_plan.json",
+      "rollback_first_runbook": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\rollback_first_runbook.json",
+      "hard_stop_criteria": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\hard_stop_criteria.json",
+      "monitoring_artifact_contract": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\monitoring_artifact_contract.json",
+      "normal_user_guard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\normal_user_guard.json",
+      "kb_governance_guard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\kb_governance_guard.json",
+      "trace_sanitization_guard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.19\\trace_sanitization_guard.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "runtime_pilot_readiness_scorecard": {
+        "final_status": "passed",
+        "decision": "runtime_pilot_readiness_plan_ready",
+        "source_gate_passed": true,
+        "pilot_scope_ready": true,
+        "cohort_policy_ready": true,
+        "toggle_matrix_ready": true,
+        "runtime_preflight_requirements_ready": true,
+        "limited_live_smoke_plan_ready": true,
+        "rollback_first_runbook_ready": true,
+        "hard_stop_criteria_ready": true,
+        "monitoring_artifact_contract_ready": true,
+        "normal_user_guard_passed": true,
+        "kb_governance_guard_passed": true,
+        "trace_sanitization_guard_passed": true,
+        "execution_performed": false,
+        "runtime_activation_performed": false,
+        "provider_called": false,
+        "broad_rollout_allowed": false,
+        "normal_user_apply_allowed": false,
+        "future_execution_requires_new_prd": true,
+        "production_mutation_detected": false,
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "runtime_defaults_changed": false,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "recommended_next_prd": "PRD-046.1.20 - Diagnostic Center Controlled Runtime Pilot Execution / Limited Live Smoke v1",
+        "blockers": [],
+        "warnings": []
+      },
+      "cohort_policy": {
+        "max_initial_cohort_size": 1,
+        "allowed_user_ids": [
+          "pilot_runtime_operator_001"
+        ],
+        "normal_user_control_count": 2,
+        "normal_user_apply_allowed": false,
+        "test_user_prefix": "pilot_",
+        "operator_user_required": true,
+        "schema_version": "runtime_pilot_cohort_policy_v1",
+        "prd": "PRD-046.1.19",
+        "ready": true,
+        "final_status": "passed"
+      },
+      "toggle_matrix": {
+        "schema_version": "runtime_pilot_toggle_matrix_v1",
+        "prd": "PRD-046.1.19",
+        "matrix": {
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": {
+            "default_state": "false",
+            "planned_execution_state_for_future_prd": "true",
+            "rollback_state": "false",
+            "hard_stop_state": "false",
+            "normal_user_state": "false"
+          },
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": {
+            "default_state": "true",
+            "planned_execution_state_for_future_prd": "false",
+            "rollback_state": "true",
+            "hard_stop_state": "true",
+            "normal_user_state": "true"
+          },
+          "PROMPT_CONSTRAINT_PILOT_MODE": {
+            "default_state": "shadow",
+            "planned_execution_state_for_future_prd": "test_apply",
+            "rollback_state": "shadow",
+            "hard_stop_state": "shadow",
+            "normal_user_state": "shadow"
+          },
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": {
+            "default_state": "",
+            "planned_execution_state_for_future_prd": "pilot_runtime_operator_001",
+            "rollback_state": "",
+            "hard_stop_state": "",
+            "normal_user_state": ""
+          },
+          "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": {
+            "default_state": "pilot_",
+            "planned_execution_state_for_future_prd": "pilot_",
+            "rollback_state": "pilot_",
+            "hard_stop_state": "pilot_",
+            "normal_user_state": "pilot_"
+          },
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": {
+            "default_state": "600",
+            "planned_execution_state_for_future_prd": "600",
+            "rollback_state": "600",
+            "hard_stop_state": "600",
+            "normal_user_state": "600"
+          },
+          "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": {
+            "default_state": "0.30",
+            "planned_execution_state_for_future_prd": "0.30",
+            "rollback_state": "0.30",
+            "hard_stop_state": "0.30",
+            "normal_user_state": "0.30"
+          }
+        },
+        "force_disabled_absolute_rollback_priority": true,
+        "ready": true,
+        "final_status": "passed"
+      },
+      "runtime_preflight_requirements": {
+        "schema_version": "runtime_pilot_preflight_requirements_v1",
+        "prd": "PRD-046.1.19",
+        "requirements": [
+          "Git working tree clean before execution.",
+          "PROJECT_STATE/ROADMAP/PRD_INDEX synced.",
+          "PRD-046.1.18 scorecard passed.",
+          "Feature flag defaults conservative.",
+          "BotDB admin API reachable when live smoke requires it.",
+          "Chroma focus source consistency confirmed: source=123__�������_����, registry=247, chroma=247.",
+          "KB/internal lens boundary gate passed.",
+          "Trace sanitization gate ready.",
+          "Normal-user control scenarios prepared.",
+          "Rollback-first runbook ready."
+        ],
+        "botdb_launch_reference": [
+          "cd C:\\My_practice\\Text_transcription\\Bot_data_base",
+          ".venv\\Scripts\\Activate.ps1",
+          "python -m uvicorn api.main:app --reload --port 8003"
+        ],
+        "ready": true,
+        "final_status": "passed"
+      },
+      "limited_live_smoke_plan": {
+        "schema_version": "limited_live_smoke_plan_v1",
+        "prd": "PRD-046.1.19",
+        "execution_performed": false,
+        "scenarios": [
+          {
+            "id": "low_resource_support",
+            "expected": "short_stabilizing_non_overanalytical_response"
+          },
+          {
+            "id": "self_blame_pattern",
+            "expected": "separate_person_from_pattern_without_shame"
+          },
+          {
+            "id": "directive_request",
+            "expected": "return_agency_without_directive_life_command"
+          },
+          {
+            "id": "anger_externalization",
+            "expected": "validate_feeling_without_world_blame_alliance"
+          },
+          {
+            "id": "kb_lens_boundary",
+            "expected": "no_raw_quote_no_authority_citation_no_bookish_lecture"
+          },
+          {
+            "id": "normal_user_control",
+            "expected": "no_apply_no_prompt_or_contract_or_final_answer_change"
+          }
+        ],
+        "expected_artifacts_for_execution_prd": [
+          "live_smoke_manifest.json",
+          "pilot_user_trace_samples_sanitized.json",
+          "normal_user_control_trace_samples_sanitized.json",
+          "baseline_vs_pilot_quality_delta.json",
+          "rollback_proof.json",
+          "hard_stop_evaluation.json",
+          "monitoring_scorecard.json",
+          "no_mutation_proof.json",
+          "artifact_encoding_hygiene_report.json"
+        ],
+        "ready": true,
+        "final_status": "passed"
+      },
+      "rollback_first_runbook": {
+        "schema_version": "runtime_pilot_rollback_first_runbook_v1",
+        "prd": "PRD-046.1.19",
+        "before_execution": [
+          "verify_force_disabled_default_true",
+          "capture_pre_execution_hashes",
+          "prepare_operator_allowlist_only"
+        ],
+        "during_execution": [
+          "monitor_normal_user_apply_count",
+          "monitor_boundary_and_safety_regressions",
+          "capture_sanitized_traces_only"
+        ],
+        "if_any_hard_stop": [
+          "set_PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true",
+          "set_PROMPT_CONSTRAINT_PILOT_ENABLED=false",
+          "set_PROMPT_CONSTRAINT_PILOT_MODE=shadow",
+          "clear_PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS"
+        ],
+        "after_execution": [
+          "test_rollback_on_allowlisted_user",
+          "test_rollback_on_normal_user_control",
+          "confirm_stale_apply_after_force_disabled_count=0"
+        ],
+        "post_push_report_sync": [
+          "update_implementation_report_commit_hash",
+          "update_push_status",
+          "verify_docs_sync"
+        ],
+        "rollback_must_be_tested_before_pilot_apply": true,
+        "rollback_must_be_tested_after_pilot_apply": true,
+        "stale_apply_after_force_disabled_is_blocker": true,
+        "normal_user_apply_after_rollback_is_blocker": true,
+        "ready": true,
+        "final_status": "passed"
+      },
+      "hard_stop_criteria": {
+        "schema_version": "runtime_pilot_hard_stop_criteria_v1",
+        "prd": "PRD-046.1.19",
+        "hard_stop_if": [
+          "normal_user_apply_count > 0",
+          "writer_prompt_changed_for_normal_user=true",
+          "writer_contract_changed_for_normal_user=true",
+          "final_answer_changed_for_normal_user=true",
+          "raw_kb_quote_exposure_count > 0",
+          "kuznitsa_authority_citation_count > 0",
+          "high_stakes_directive_advice_detected=true",
+          "safety_regression_count > 0",
+          "kb_boundary_violation_count > 0",
+          "trace_sanitization_violation_count > 0",
+          "rollback_failure_count > 0",
+          "stale_apply_after_force_disabled_count > 0",
+          "provider_error_leaks_into_user_facing_output=true",
+          "production_mutation_detected=true"
+        ],
+        "ready": true,
+        "final_status": "passed"
+      },
+      "monitoring_artifact_contract": {
+        "schema_version": "runtime_pilot_monitoring_artifact_contract_v1",
+        "prd": "PRD-046.1.19",
+        "required_artifacts": [
+          "sanitized_trace_samples",
+          "baseline_vs_pilot_comparison",
+          "response_quality_dimensions",
+          "prompt_delta_size",
+          "safety_and_kb_boundary_results",
+          "normal_user_no_effect_proof",
+          "rollback_proof",
+          "no_mutation_proof",
+          "artifact_encoding_hygiene_report",
+          "final_decision"
+        ],
+        "raw_private_logs_allowed": false,
+        "ready": true,
+        "final_status": "passed"
+      },
+      "normal_user_guard": {
+        "schema_version": "runtime_pilot_normal_user_guard_v1",
+        "prd": "PRD-046.1.19",
+        "normal_user_apply_allowed": false,
+        "normal_user_control_required": true,
+        "normal_user_control_count": 2,
+        "normal_user_prompt_change_allowed": false,
+        "normal_user_contract_change_allowed": false,
+        "normal_user_final_answer_change_allowed": false,
+        "final_status": "passed"
+      },
+      "kb_governance_guard": {
+        "schema_version": "runtime_pilot_kb_governance_guard_v1",
+        "prd": "PRD-046.1.19",
+        "chunk_type_authority": "deterministic",
+        "allowed_use_authority": "deterministic",
+        "safety_flags_authority": "deterministic",
+        "llm_enrichment_role": "advisory",
+        "kuznitsa_duha_role": "internal_lens_library",
+        "raw_quote_allowed": false,
+        "authority_citation_allowed": false,
+        "internal_only_direct_use_allowed": false,
+        "not_for_direct_quote_respected": true,
+        "final_status": "passed"
+      },
+      "trace_sanitization_guard": {
+        "schema_version": "runtime_pilot_trace_sanitization_guard_v1",
+        "prd": "PRD-046.1.19",
+        "raw_private_logs_allowed": false,
+        "raw_content_full_allowed": false,
+        "secret_like_values_allowed": false,
+        "env_values_allowed": false,
+        "sanitized_trace_required": true,
+        "artifact_encoding_hygiene_required": true,
+        "final_status": "passed"
+      }
+    }
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.20",
+    "checked_prd": "PRD-046.1.20",
+    "final_status": "passed",
+    "files_checked": 17,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.20/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/baseline_vs_pilot_quality_delta.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/execution_manifest.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/hard_stop_evaluation.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/limited_live_smoke_results.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/monitoring_scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/normal_user_control_trace_samples_sanitized.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/pilot_operator_trace_samples_sanitized.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/preflight_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/rollback_postcheck.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/rollback_precheck.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/safety_kb_boundary_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/source_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+      "TO_DO_LIST/logs/PRD-046.1.20/toggle_state_before.json",
+      "TO_DO_LIST/logs/PRD-046.1.20/trace_sanitization_gate.json"
+    ]
+  }
+}
+
+$ python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.20 --logs-dir TO_DO_LIST/logs/PRD-046.1.20 --out-dir TO_DO_LIST/logs/PRD-046.1.20 --report-prd PRD-046.1.20 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.20",
+  "checked_prd": "PRD-046.1.20",
+  "final_status": "passed",
+  "files_checked": 17,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 1,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [
+    "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt:replacement_chars=11"
+  ],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.20/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/baseline_vs_pilot_quality_delta.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/execution_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/hard_stop_evaluation.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/limited_live_smoke_results.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/monitoring_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/normal_user_control_trace_samples_sanitized.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/pilot_operator_trace_samples_sanitized.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/preflight_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/rollback_postcheck.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/rollback_precheck.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/safety_kb_boundary_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+    "TO_DO_LIST/logs/PRD-046.1.20/toggle_state_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.20/trace_sanitization_gate.json"
+  ]
+}

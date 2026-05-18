@@ -1,0 +1,18 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_safety_kb_boundary_gate_v1",
+  "prd": "PRD-046.1.20",
+  "raw_kb_quote_exposure_count": 0,
+  "kuznitsa_authority_citation_count": 0,
+  "internal_only_direct_use_count": 0,
+  "not_for_direct_quote_violation_count": 0,
+  "high_stakes_directive_advice_count": 0,
+  "safety_regression_count": 0,
+  "kb_boundary_violation_count": 0,
+  "chunk_type_authority": "deterministic",
+  "allowed_use_authority": "deterministic",
+  "safety_flags_authority": "deterministic",
+  "llm_enrichment_role": "advisory",
+  "kuznitsa_duha_role": "internal_lens_library",
+  "safety_kb_boundary_gate_passed": true,
+  "final_status": "passed"
+}

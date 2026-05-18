@@ -1,0 +1,23 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_limited_live_smoke_results_v1",
+  "prd": "PRD-046.1.20",
+  "pilot_apply_count": 5,
+  "pilot_apply_only_for_allowed_user": true,
+  "prompt_delta_within_limits": true,
+  "safety_regression_count": 0,
+  "kb_boundary_violation_count": 0,
+  "raw_kb_quote_exposure_count": 0,
+  "kuznitsa_authority_citation_count": 0,
+  "high_stakes_directive_advice_detected": false,
+  "trace_sanitization_violation_count": 0,
+  "provider_called_by_execution_count": 0,
+  "provider_calls_limited_to_allowlisted_operator": true,
+  "provider_output_sanitized_in_artifacts": true,
+  "normal_user_apply_count": 0,
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "normal_user_provider_apply_count": 0,
+  "normal_user_trace_sanitized": true,
+  "final_status": "passed"
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_rollback_postcheck_v1",
+  "prd": "PRD-046.1.20",
+  "rollback_postcheck_passed": true,
+  "rollback_state": {
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+    "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": ""
+  },
+  "stale_apply_after_force_disabled_count": 0,
+  "normal_user_apply_after_rollback_count": 0,
+  "rollback_failure_count": 0,
+  "final_status": "passed"
+}

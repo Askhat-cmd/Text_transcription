@@ -1,0 +1,13 @@
+{
+  "schema_version": "runtime_pilot_scope_v1",
+  "prd": "PRD-046.1.19",
+  "pilot_type": "limited_live_smoke_plan_only",
+  "execution_performed": false,
+  "provider_called": false,
+  "runtime_activation_performed": false,
+  "broad_rollout_allowed": false,
+  "normal_user_apply_allowed": false,
+  "future_execution_requires_new_prd": true,
+  "pilot_scope_ready": true,
+  "final_status": "passed"
+}

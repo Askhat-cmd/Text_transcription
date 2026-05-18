@@ -1,0 +1,36 @@
+{
+  "schema_version": "runtime_pilot_rollback_first_runbook_v1",
+  "prd": "PRD-046.1.19",
+  "before_execution": [
+    "verify_force_disabled_default_true",
+    "capture_pre_execution_hashes",
+    "prepare_operator_allowlist_only"
+  ],
+  "during_execution": [
+    "monitor_normal_user_apply_count",
+    "monitor_boundary_and_safety_regressions",
+    "capture_sanitized_traces_only"
+  ],
+  "if_any_hard_stop": [
+    "set_PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true",
+    "set_PROMPT_CONSTRAINT_PILOT_ENABLED=false",
+    "set_PROMPT_CONSTRAINT_PILOT_MODE=shadow",
+    "clear_PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS"
+  ],
+  "after_execution": [
+    "test_rollback_on_allowlisted_user",
+    "test_rollback_on_normal_user_control",
+    "confirm_stale_apply_after_force_disabled_count=0"
+  ],
+  "post_push_report_sync": [
+    "update_implementation_report_commit_hash",
+    "update_push_status",
+    "verify_docs_sync"
+  ],
+  "rollback_must_be_tested_before_pilot_apply": true,
+  "rollback_must_be_tested_after_pilot_apply": true,
+  "stale_apply_after_force_disabled_is_blocker": true,
+  "normal_user_apply_after_rollback_is_blocker": true,
+  "ready": true,
+  "final_status": "passed"
+}

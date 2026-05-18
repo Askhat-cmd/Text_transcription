@@ -1,0 +1,14 @@
+{
+  "schema_version": "runtime_pilot_kb_governance_guard_v1",
+  "prd": "PRD-046.1.19",
+  "chunk_type_authority": "deterministic",
+  "allowed_use_authority": "deterministic",
+  "safety_flags_authority": "deterministic",
+  "llm_enrichment_role": "advisory",
+  "kuznitsa_duha_role": "internal_lens_library",
+  "raw_quote_allowed": false,
+  "authority_citation_allowed": false,
+  "internal_only_direct_use_allowed": false,
+  "not_for_direct_quote_respected": true,
+  "final_status": "passed"
+}

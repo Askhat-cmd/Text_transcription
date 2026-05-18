@@ -1,0 +1,58 @@
+{
+  "schema_version": "runtime_pilot_toggle_matrix_v1",
+  "prd": "PRD-046.1.19",
+  "matrix": {
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": {
+      "default_state": "false",
+      "planned_execution_state_for_future_prd": "true",
+      "rollback_state": "false",
+      "hard_stop_state": "false",
+      "normal_user_state": "false"
+    },
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": {
+      "default_state": "true",
+      "planned_execution_state_for_future_prd": "false",
+      "rollback_state": "true",
+      "hard_stop_state": "true",
+      "normal_user_state": "true"
+    },
+    "PROMPT_CONSTRAINT_PILOT_MODE": {
+      "default_state": "shadow",
+      "planned_execution_state_for_future_prd": "test_apply",
+      "rollback_state": "shadow",
+      "hard_stop_state": "shadow",
+      "normal_user_state": "shadow"
+    },
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": {
+      "default_state": "",
+      "planned_execution_state_for_future_prd": "pilot_runtime_operator_001",
+      "rollback_state": "",
+      "hard_stop_state": "",
+      "normal_user_state": ""
+    },
+    "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX": {
+      "default_state": "pilot_",
+      "planned_execution_state_for_future_prd": "pilot_",
+      "rollback_state": "pilot_",
+      "hard_stop_state": "pilot_",
+      "normal_user_state": "pilot_"
+    },
+    "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_CHARS": {
+      "default_state": "600",
+      "planned_execution_state_for_future_prd": "600",
+      "rollback_state": "600",
+      "hard_stop_state": "600",
+      "normal_user_state": "600"
+    },
+    "PROMPT_CONSTRAINT_PILOT_MAX_PROMPT_DELTA_RATIO": {
+      "default_state": "0.30",
+      "planned_execution_state_for_future_prd": "0.30",
+      "rollback_state": "0.30",
+      "hard_stop_state": "0.30",
+      "normal_user_state": "0.30"
+    }
+  },
+  "force_disabled_absolute_rollback_priority": true,
+  "ready": true,
+  "final_status": "passed"
+}

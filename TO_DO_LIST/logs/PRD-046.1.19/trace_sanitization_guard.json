@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime_pilot_trace_sanitization_guard_v1",
+  "prd": "PRD-046.1.19",
+  "raw_private_logs_allowed": false,
+  "raw_content_full_allowed": false,
+  "secret_like_values_allowed": false,
+  "env_values_allowed": false,
+  "sanitized_trace_required": true,
+  "artifact_encoding_hygiene_required": true,
+  "final_status": "passed"
+}

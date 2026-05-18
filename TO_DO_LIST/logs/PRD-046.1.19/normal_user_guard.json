@@ -1,0 +1,11 @@
+{
+  "schema_version": "runtime_pilot_normal_user_guard_v1",
+  "prd": "PRD-046.1.19",
+  "normal_user_apply_allowed": false,
+  "normal_user_control_required": true,
+  "normal_user_control_count": 2,
+  "normal_user_prompt_change_allowed": false,
+  "normal_user_contract_change_allowed": false,
+  "normal_user_final_answer_change_allowed": false,
+  "final_status": "passed"
+}

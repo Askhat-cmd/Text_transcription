@@ -1,0 +1,14 @@
+{
+  "max_initial_cohort_size": 1,
+  "allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "normal_user_control_count": 2,
+  "normal_user_apply_allowed": false,
+  "test_user_prefix": "pilot_",
+  "operator_user_required": true,
+  "schema_version": "runtime_pilot_cohort_policy_v1",
+  "prd": "PRD-046.1.19",
+  "ready": true,
+  "final_status": "passed"
+}

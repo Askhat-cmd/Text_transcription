@@ -1,0 +1,44 @@
+{
+  "schema_version": "limited_live_smoke_plan_v1",
+  "prd": "PRD-046.1.19",
+  "execution_performed": false,
+  "scenarios": [
+    {
+      "id": "low_resource_support",
+      "expected": "short_stabilizing_non_overanalytical_response"
+    },
+    {
+      "id": "self_blame_pattern",
+      "expected": "separate_person_from_pattern_without_shame"
+    },
+    {
+      "id": "directive_request",
+      "expected": "return_agency_without_directive_life_command"
+    },
+    {
+      "id": "anger_externalization",
+      "expected": "validate_feeling_without_world_blame_alliance"
+    },
+    {
+      "id": "kb_lens_boundary",
+      "expected": "no_raw_quote_no_authority_citation_no_bookish_lecture"
+    },
+    {
+      "id": "normal_user_control",
+      "expected": "no_apply_no_prompt_or_contract_or_final_answer_change"
+    }
+  ],
+  "expected_artifacts_for_execution_prd": [
+    "live_smoke_manifest.json",
+    "pilot_user_trace_samples_sanitized.json",
+    "normal_user_control_trace_samples_sanitized.json",
+    "baseline_vs_pilot_quality_delta.json",
+    "rollback_proof.json",
+    "hard_stop_evaluation.json",
+    "monitoring_scorecard.json",
+    "no_mutation_proof.json",
+    "artifact_encoding_hygiene_report.json"
+  ],
+  "ready": true,
+  "final_status": "passed"
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "runtime_pilot_preflight_requirements_v1",
+  "prd": "PRD-046.1.19",
+  "requirements": [
+    "Git working tree clean before execution.",
+    "PROJECT_STATE/ROADMAP/PRD_INDEX synced.",
+    "PRD-046.1.18 scorecard passed.",
+    "Feature flag defaults conservative.",
+    "BotDB admin API reachable when live smoke requires it.",
+    "Chroma focus source consistency confirmed: source=123__кузница_духа, registry=247, chroma=247.",
+    "KB/internal lens boundary gate passed.",
+    "Trace sanitization gate ready.",
+    "Normal-user control scenarios prepared.",
+    "Rollback-first runbook ready."
+  ],
+  "botdb_launch_reference": [
+    "cd C:\\My_practice\\Text_transcription\\Bot_data_base",
+    ".venv\\Scripts\\Activate.ps1",
+    "python -m uvicorn api.main:app --reload --port 8003"
+  ],
+  "ready": true,
+  "final_status": "passed"
+}

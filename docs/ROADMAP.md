@@ -54,12 +54,13 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.16: final acceptance/runtime governance closure delivered; added final-acceptance contract/module/CLI + artifacts (source gate, boundary matrix, permanent gate confirmation, conservative baseline gate, normal-user no-effect gate, KB boundary gate, trace sanitization gate, closure decision, scorecard, no-mutation/hygiene), accepted as governed shadow layer with `broad_rollout_allowed=false` and `runtime_authority_expansion_allowed=false`.
 - PRD-046.1.17: response quality eval pack delivered in offline deterministic mode; added response-quality contract/module/CLI + curated scenario/rubric/candidate fixtures + artifacts (scenario catalog, rubric validation, eval results, dimension scorecard, weak-case queue, KB/internal lens boundary eval, no-runtime-authority-expansion gate, no-mutation/hygiene), with `hard_fail_detection_rate=1.00` and no runtime activation/provider calls.
 - PRD-046.1.18: response quality calibration/weak-case closure delivered in offline deterministic mode; added calibration contract/module/CLI + expanded fixtures (`34` scenarios, `8` candidate profiles) + artifacts (source gate, weak-case inventory, calibration plan, expanded catalogs, calibrated eval/scorecards, boundary/no-runtime/no-mutation/hygiene), final decision `response_quality_calibration_passed` with runtime authority unchanged.
+- PRD-046.1.19: runtime pilot readiness plan-only gate delivered; added readiness contract/module/CLI + required artifacts (pilot scope, cohort policy, toggle matrix, preflight requirements, limited live smoke plan, rollback-first runbook, hard stops, monitoring contract, normal-user/KB/trace guards, no-mutation/hygiene), with `execution_performed=false` and final decision `runtime_pilot_readiness_plan_ready`.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.19 - Diagnostic Center Controlled Runtime Pilot Readiness / Limited Live Smoke Plan v1.
+1. PRD-046.1.20 - Diagnostic Center Controlled Runtime Pilot Execution / Limited Live Smoke v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

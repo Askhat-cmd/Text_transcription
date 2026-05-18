@@ -39,6 +39,12 @@ from .diagnostic_center_response_quality_calibration_v1 import (
     ResponseQualityCalibrationGroupPlan,
     ResponseQualityCalibrationStatus,
 )
+from .diagnostic_center_runtime_pilot_readiness_v1 import (
+    DiagnosticCenterPilotCohortPolicy,
+    DiagnosticCenterRuntimePilotReadinessBundle,
+    DiagnosticCenterRuntimePilotReadinessDecision,
+    DiagnosticCenterRuntimePilotReadinessStatus,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -163,6 +169,10 @@ __all__ = [
     "ResponseQualityCalibrationDecision",
     "ResponseQualityCalibrationGroupPlan",
     "ResponseQualityCalibrationStatus",
+    "DiagnosticCenterRuntimePilotReadinessStatus",
+    "DiagnosticCenterRuntimePilotReadinessDecision",
+    "DiagnosticCenterRuntimePilotReadinessBundle",
+    "DiagnosticCenterPilotCohortPolicy",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

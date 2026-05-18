@@ -1,0 +1,19 @@
+{
+  "schema_version": "runtime_pilot_monitoring_artifact_contract_v1",
+  "prd": "PRD-046.1.19",
+  "required_artifacts": [
+    "sanitized_trace_samples",
+    "baseline_vs_pilot_comparison",
+    "response_quality_dimensions",
+    "prompt_delta_size",
+    "safety_and_kb_boundary_results",
+    "normal_user_no_effect_proof",
+    "rollback_proof",
+    "no_mutation_proof",
+    "artifact_encoding_hygiene_report",
+    "final_decision"
+  ],
+  "raw_private_logs_allowed": false,
+  "ready": true,
+  "final_status": "passed"
+}

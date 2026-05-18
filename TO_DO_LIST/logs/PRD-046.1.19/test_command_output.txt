@@ -1,0 +1,260 @@
+﻿PRD-046.1.19 command log
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_readiness_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_readiness_contract.py . [100%]
+
+============================== 1 passed in 0.22s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_readiness_runner.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_readiness_runner.py . [100%]
+
+============================== 1 passed in 0.33s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_readiness_source_gate.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_readiness_source_gate.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_scope_plan_only.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_scope_plan_only.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_cohort_policy.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_cohort_policy.py .  [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_toggle_matrix.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_toggle_matrix.py .  [100%]
+
+============================== 1 passed in 0.28s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_preflight_requirements.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_preflight_requirements.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_limited_live_smoke_plan_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_limited_live_smoke_plan_contract.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_rollback_first_runbook.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_rollback_first_runbook.py .       [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_hard_stop_criteria.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_hard_stop_criteria.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_monitoring_artifact_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_monitoring_artifact_contract.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_normal_user_guard.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_normal_user_guard.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_kb_governance_guard.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_kb_governance_guard.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_trace_sanitization_guard.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_trace_sanitization_guard.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_readiness_no_mutation.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_runtime_pilot_readiness_no_mutation.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+PS> python -m bot_psychologist.tools.run_diagnostic_center_runtime_pilot_readiness --repo-root . --source-dir TO_DO_LIST/logs/PRD-046.1.18 --output-dir TO_DO_LIST/logs/PRD-046.1.19 --reports-dir TO_DO_LIST/reports --strict
+

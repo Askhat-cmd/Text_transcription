@@ -44,6 +44,36 @@ class ChromaManager:
         self._collection = self.client.get_or_create_collection(name=self.collection_name)
         return self._collection
 
+    def _sanitize_error_message(self, exc: Exception) -> str:
+        text = str(exc or "").replace("\n", " ").replace("\r", " ").strip()
+        return text[:300] if text else "unknown"
+
+    def refresh_collection_binding(self) -> dict:
+        try:
+            settings = Settings(anonymized_telemetry=False, allow_reset=True)
+            if self.db_path == ":memory:":
+                self.client = chromadb.EphemeralClient(settings=settings)
+            else:
+                self.client = chromadb.PersistentClient(path=self.db_path, settings=settings)
+            self._collection = self.client.get_or_create_collection(name=self.collection_name)
+            return {"status": "ok", "refreshed": True, "error_code": None, "error_message": None}
+        except Exception as exc:
+            return {
+                "status": "failed",
+                "refreshed": False,
+                "error_code": "refresh_collection_binding_failed",
+                "error_message": self._sanitize_error_message(exc),
+            }
+
+    def _is_recoverable_binding_error(self, exc: Exception) -> bool:
+        text = str(exc or "").lower()
+        return (
+            "object of type 'int' has no len()" in text
+            or "_decode_seq_id" in text
+            or "segment" in text
+            or "sqlite" in text
+        )
+
     def probe_collection_health(self) -> dict:
         collection_exists = False
         collection_count = None
@@ -163,6 +193,54 @@ class ChromaManager:
             if st:
                 by_source_type[st] = by_source_type.get(st, 0) + 1
         return {"total": total, "by_sd_level": by_sd_level, "by_source_type": by_source_type}
+
+    def get_stats_safe(self, refresh_on_error: bool = True) -> dict:
+        try:
+            stats = self.get_stats()
+            return {
+                "status": "ok",
+                "total": int(stats.get("total") or 0),
+                "by_sd_level": stats.get("by_sd_level") or {},
+                "by_source_type": stats.get("by_source_type") or {},
+                "error_code": None,
+                "error_message": None,
+                "binding_refreshed": False,
+            }
+        except Exception as exc:
+            should_retry = refresh_on_error and self._is_recoverable_binding_error(exc)
+            if should_retry:
+                refresh = self.refresh_collection_binding()
+                if str(refresh.get("status")) == "ok":
+                    try:
+                        stats = self.get_stats()
+                        return {
+                            "status": "ok",
+                            "total": int(stats.get("total") or 0),
+                            "by_sd_level": stats.get("by_sd_level") or {},
+                            "by_source_type": stats.get("by_source_type") or {},
+                            "error_code": None,
+                            "error_message": None,
+                            "binding_refreshed": True,
+                        }
+                    except Exception as second_exc:
+                        return {
+                            "status": "unavailable",
+                            "total": 0,
+                            "by_sd_level": {},
+                            "by_source_type": {},
+                            "error_code": "chroma_stats_unavailable_after_refresh",
+                            "error_message": self._sanitize_error_message(second_exc),
+                            "binding_refreshed": True,
+                        }
+            return {
+                "status": "unavailable",
+                "total": 0,
+                "by_sd_level": {},
+                "by_source_type": {},
+                "error_code": "chroma_stats_unavailable",
+                "error_message": self._sanitize_error_message(exc),
+                "binding_refreshed": False,
+            }
 
     def source_exists(self, source_id: str) -> bool:
         if not source_id:

@@ -8,6 +8,7 @@ from typing import Any
 from fastapi import APIRouter
 
 from pipeline_runner import PipelineRunner
+from storage.chroma_runtime_health import get_chroma_runtime_health
 
 router = APIRouter()
 
@@ -248,18 +249,21 @@ def _build_dashboard_summary() -> dict[str, Any]:
     )
     production_blocks = focus_source_blocks if focus_source_blocks > 0 else active_source_blocks
 
-    chroma_status = "ok"
-    chroma_count = 0
-    try:
-        chroma_stats = runner.chroma_manager.get_stats()
-        chroma_count = _to_int(chroma_stats.get("total"))
-    except Exception:
-        chroma_status = "unavailable"
+    chroma_health = get_chroma_runtime_health("config.yaml")
+    chroma_status = _normalize(chroma_health.get("status")).lower() or "unavailable"
+    chroma_count = _to_int(chroma_health.get("count"))
+    if chroma_status != "ok":
         warnings.append("Chroma unavailable")
 
     blocks_payload = _load_blocks_payload(runner)
     blocks = blocks_payload.get("blocks") if isinstance((blocks_payload or {}).get("blocks"), list) else []
-    indexed_source_ids = sorted({sid for sid in (_extract_source_id(block) for block in blocks) if sid})
+    indexed_source_ids = [
+        _normalize(item)
+        for item in (chroma_health.get("source_ids") if isinstance(chroma_health.get("source_ids"), list) else [])
+        if _normalize(item)
+    ]
+    if not indexed_source_ids:
+        indexed_source_ids = sorted({sid for sid in (_extract_source_id(block) for block in blocks) if sid})
     if not indexed_source_ids:
         indexed_source_ids = sorted(
             {

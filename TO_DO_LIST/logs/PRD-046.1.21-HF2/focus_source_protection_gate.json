@@ -1,0 +1,11 @@
+{
+  "schema_version": "focus_source_protection_gate_hf2_v1",
+  "generated_at": "2026-05-18T12:34:51.935042+00:00",
+  "focus_source_id": "123__кузница_духа",
+  "focus_source_visible": true,
+  "focus_source_blocks": 247,
+  "focus_source_status": "done",
+  "delete_policy_state": "protected",
+  "delete_allowed": false,
+  "focus_source_protected": true
+}

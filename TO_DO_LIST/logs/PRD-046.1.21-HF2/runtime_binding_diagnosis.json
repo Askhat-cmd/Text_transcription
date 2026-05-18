@@ -1,0 +1,12 @@
+{
+  "schema_version": "runtime_binding_diagnosis_hf2_v1",
+  "generated_at": "2026-05-18T12:34:24.372636+00:00",
+  "direct_chroma_count": 247,
+  "direct_chroma_status": "ok",
+  "dashboard_chroma_count": 0,
+  "dashboard_chroma_status": "unavailable",
+  "registry_stats_chroma_total": 0,
+  "registry_stats_chroma_status": "unavailable",
+  "query_http_status": 503,
+  "runtime_binding_status": "stale_live_chroma_client_or_route_binding"
+}

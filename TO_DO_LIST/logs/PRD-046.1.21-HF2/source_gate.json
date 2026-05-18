@@ -1,0 +1,16 @@
+{
+  "schema_version": "source_gate_hf2_v1",
+  "generated_at": "2026-05-18T12:34:23.530425+00:00",
+  "hf1_artifacts_present": true,
+  "hf1_final_status": "failed",
+  "hf1_reindex_result": "passed",
+  "hf1_direct_chroma_count": 247,
+  "hf1_dashboard_chroma_status": "unavailable",
+  "hf1_dashboard_chroma_count": 0,
+  "hf1_registry_stats_chroma_total": 0,
+  "hf1_query_http_200": false,
+  "hf1_query_http_503_chromadb_unavailable": true,
+  "hf1_botdb_circuit_open_after": true,
+  "source_gate_passed": true,
+  "source_gate_status": "passed"
+}

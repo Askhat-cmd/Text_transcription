@@ -9,6 +9,7 @@ from fastapi import APIRouter, HTTPException
 
 from api.schemas import RegistryListResponse, StatsResponse
 from pipeline_runner import PipelineRunner
+from storage.chroma_runtime_health import get_chroma_runtime_health
 from storage.json_export import JSONExporter
 
 router = APIRouter()
@@ -323,19 +324,16 @@ async def get_stats():
     runner = _get_runner()
     stats = runner.registry.get_statistics()
     warnings: list[str] = []
-    chroma_status = "ok"
+    chroma_health = get_chroma_runtime_health("config.yaml")
+    chroma_status = _normalize(chroma_health.get("status")).lower() or "unavailable"
     chroma_error_code: str | None = None
-    chroma_total = 0
-    try:
-        chroma_stats = runner.chroma_manager.get_stats()
-        chroma_total = _to_int(chroma_stats.get("total"))
-    except Exception as exc:
-        chroma_status = "unavailable"
+    chroma_total = _to_int(chroma_health.get("count"))
+    if chroma_status != "ok":
         chroma_error_code = "chroma_stats_unavailable"
-        warnings.append(
-            "Chroma stats unavailable; registry stats returned in degraded mode"
-        )
-        warnings.append(f"chroma_error:{_sanitize_error_detail(exc)}")
+        warnings.append("Chroma stats unavailable; registry stats returned in degraded mode")
+        health_error = _normalize(chroma_health.get("error_message_sanitized"))
+        if health_error:
+            warnings.append(f"chroma_error:{health_error}")
 
     sources = [s.to_dict() for s in runner.registry.list_all()]
     focus_sources = [row for row in sources if _is_focus_source(row)]

@@ -146,9 +146,25 @@ def _fallback_candidates_from_collection(collection: object, limit: int) -> List
 
 
 def _fallback_candidates_from_blocks_file(query: str, limit: int) -> List[dict]:
-    runner = _get_runner()
-    merged_path = Path(runner.json_exporter.base_dir) / "all_blocks_merged.json"
-    if not merged_path.exists():
+    merged_path: Path | None = None
+    path_candidates: list[Path] = []
+    try:
+        runner = _get_runner()
+        path_candidates.append(Path(runner.json_exporter.base_dir) / "all_blocks_merged.json")
+    except Exception:
+        pass
+    path_candidates.extend(
+        [
+            Path.cwd() / "data" / "processed" / "all_blocks_merged.json",
+            Path(__file__).resolve().parents[2] / "data" / "processed" / "all_blocks_merged.json",
+            Path(__file__).resolve().parents[3] / "Bot_data_base" / "data" / "processed" / "all_blocks_merged.json",
+        ]
+    )
+    for candidate in path_candidates:
+        if candidate.exists():
+            merged_path = candidate
+            break
+    if merged_path is None:
         return []
     try:
         payload = json.loads(merged_path.read_text(encoding="utf-8"))
@@ -332,6 +348,7 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
     start_ts = time.time()
     where_filter, sd_level_ignored = _build_where_filter(request)
     sd_filter_applied = False
+    botdb_query_route_fallback_used = False
 
     raw_fetch_k = max(int(request.pre_filter_k), int(request.top_k) * 3, int(request.top_k) + 10)
 
@@ -346,6 +363,7 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
         candidates = _fallback_candidates_from_blocks_file(request.query, request.top_k)
         if candidates:
             logger.warning("[QUERY] fallback all_blocks_merged path activated due chroma bootstrap failure")
+            botdb_query_route_fallback_used = True
         else:
             raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
@@ -367,13 +385,18 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
                 candidates = _fallback_candidates_from_collection(collection, request.top_k)
                 if candidates:
                     logger.warning("[QUERY] fallback get() path activated due query failure")
+                    botdb_query_route_fallback_used = True
                 else:
                     candidates = _fallback_candidates_from_blocks_file(request.query, request.top_k)
                     if candidates:
                         logger.warning("[QUERY] fallback all_blocks_merged path activated due query failure")
+                        botdb_query_route_fallback_used = True
             except Exception as fallback_exc:
                 logger.error("[QUERY] Chroma fallback failed: %s", fallback_exc)
-                candidates = []
+                candidates = _fallback_candidates_from_blocks_file(request.query, request.top_k)
+                if candidates:
+                    logger.warning("[QUERY] fallback all_blocks_merged path activated after fallback exception")
+                    botdb_query_route_fallback_used = True
             if not candidates:
                 raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
@@ -440,6 +463,7 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
             "legacy_sd_deprecated": True,
             "sd_filter_applied": False,
             "sd_level_ignored": sd_level_ignored,
+            "botdb_query_route_fallback_used": botdb_query_route_fallback_used,
             "retrieval_policy_trace": policy_trace,
         }
 

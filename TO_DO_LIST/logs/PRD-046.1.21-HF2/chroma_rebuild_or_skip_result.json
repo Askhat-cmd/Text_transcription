@@ -1,0 +1,6 @@
+{
+  "schema_version": "chroma_rebuild_or_skip_result_hf2_v1",
+  "generated_at": "2026-05-18T12:34:24.449073+00:00",
+  "rebuild_performed": false,
+  "reason": "direct_chroma_already_ok"
+}

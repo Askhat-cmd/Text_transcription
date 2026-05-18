@@ -221,3 +221,9 @@ Status: accepted
 Context: после PRD-046.1.15 Diagnostic Center v1 и связанный Planner/Prompt-Constraint стек стабилизированы, но остаются риски преждевременного расширения authority в production user-path.
 Decision: PRD-046.1.16 закрепляет Diagnostic Center v1 как внутренний governed shadow/runtime-governance слой с постоянными regression blockers. Broad rollout, изменение Writer prompt/contract/final answer path и расширение runtime authority запрещены без отдельного future PRD с новым controlled rollout, rollback plan и normal-user no-effect доказательствами.
 Consequences: проект получает формально закрытый runtime governance boundary (`trace_only_shadow`, `default_off_limited_allowlisted_test_path`) и стабильную опору для следующего шага качества ответов (PRD-046.1.17) без ослабления safety/KB/privacy/no-mutation инвариантов.
+
+## ADR-038 - Response quality eval must pass before any Diagnostic Center runtime authority expansion
+Status: accepted
+Context: после PRD-046.1.16 проект подтвердил governance/safety/no-mutation boundaries, но это не отвечает на вопрос качества пользовательского ответа в живой траектории.
+Decision: перед любым расширением влияния Diagnostic Center/Planner/Prompt-Constraint на Writer/final-answer path обязателен воспроизводимый offline response-quality eval pack (curated live-like scenarios + rubric + weak/hard-fail detection + KB/internal lens boundary checks).
+Consequences: обсуждение runtime authority expansion переносится только после успешного quality evidence слоя; приоритетом становятся continuity/depth-fit/micro-shift/non-bookishness и сохранение KB boundaries без broad rollout.

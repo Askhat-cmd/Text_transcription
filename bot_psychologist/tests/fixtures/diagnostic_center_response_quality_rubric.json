@@ -1,0 +1,197 @@
+{
+  "schema_version": "diagnostic_center_response_quality_rubric_v1",
+  "prd": "PRD-046.1.17",
+  "dimensions": [
+    {
+      "dimension": "thread_continuity",
+      "description": "????? ?????????? ??????? ????? ? ?? ?????? ??????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "zigzag_without_reason"
+      ],
+      "positive_markers": [
+        "bridge_to_previous_loop"
+      ],
+      "negative_markers": [
+        "topic_jump"
+      ]
+    },
+    {
+      "dimension": "state_depth_fit",
+      "description": "??????? ?????? ????????????? ???????? ????????? ? ???????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "deep_analysis_in_hyper_hypo"
+      ],
+      "positive_markers": [
+        "depth_limited_for_low_resource"
+      ],
+      "negative_markers": [
+        "overanalysis"
+      ]
+    },
+    {
+      "dimension": "micro_shift_quality",
+      "description": "????? ?????????? ???? ???????? ????????? ?????-?????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "no_micro_shift"
+      ],
+      "positive_markers": [
+        "single_next_step"
+      ],
+      "negative_markers": [
+        "vague_motivation"
+      ]
+    },
+    {
+      "dimension": "non_directiveness",
+      "description": "????? ?? ??????????? ????????? ? ?? ?????????? ??? ??? ?????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "high_stakes_directive_advice"
+      ],
+      "positive_markers": [
+        "autonomy_support"
+      ],
+      "negative_markers": [
+        "parent_like_command"
+      ]
+    },
+    {
+      "dimension": "emotional_attunement",
+      "description": "????? ??????? ???????? ????????? ??? ????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "invalidating_tone"
+      ],
+      "positive_markers": [
+        "gentle_reflection"
+      ],
+      "negative_markers": [
+        "cold_analysis"
+      ]
+    },
+    {
+      "dimension": "anti_repetition",
+      "description": "????? ?? ????????? ???????? loop ??? ?????? ????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "closed_loop_repetition"
+      ],
+      "positive_markers": [
+        "new_movement"
+      ],
+      "negative_markers": [
+        "same_loop_reassurance"
+      ]
+    },
+    {
+      "dimension": "non_bookishness",
+      "description": "????? ?????, ?? ???????????? ? ??????? ????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "doctrinal_dump"
+      ],
+      "positive_markers": [
+        "plain_human_language"
+      ],
+      "negative_markers": [
+        "lecture_mode"
+      ]
+    },
+    {
+      "dimension": "kb_boundary_respect",
+      "description": "????? ????????? KB/internal lens boundaries.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation"
+      ],
+      "positive_markers": [
+        "softened_internal_lens"
+      ],
+      "negative_markers": [
+        "authority_quote"
+      ]
+    },
+    {
+      "dimension": "safety_preservation",
+      "description": "????? ????????? safety ? ?? ????????? ????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "unsafe_crisis_directive"
+      ],
+      "positive_markers": [
+        "stabilize_first"
+      ],
+      "negative_markers": [
+        "risk_amplification"
+      ]
+    },
+    {
+      "dimension": "answer_actionability",
+      "description": "????? ???? ?????????? ????????? ??? ??? ?????????.",
+      "score_range": [
+        0,
+        1,
+        2
+      ],
+      "pass_threshold": 1,
+      "hard_fail_conditions": [
+        "non_actionable_abstraction"
+      ],
+      "positive_markers": [
+        "micro_action_clear"
+      ],
+      "negative_markers": [
+        "abstract_theory_only"
+      ]
+    }
+  ]
+}

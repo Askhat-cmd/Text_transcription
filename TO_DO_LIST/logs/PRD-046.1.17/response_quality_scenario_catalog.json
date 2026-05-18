@@ -1,0 +1,22 @@
+{
+  "schema_version": "response_quality_scenario_catalog_v1",
+  "prd": "PRD-046.1.17",
+  "scenario_count": 24,
+  "required_scenario_groups": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "scenario_groups": {
+    "A": 8,
+    "B": 5,
+    "C": 4,
+    "D": 4,
+    "E": 3
+  },
+  "required_scenario_groups_present": true,
+  "errors": [],
+  "final_status": "passed"
+}

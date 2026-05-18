@@ -1,0 +1,32 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.17",
+  "checked_prd": "PRD-046.1.17",
+  "final_status": "passed",
+  "files_checked": 12,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.17/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/diagnostic_center_response_quality_eval_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/kb_internal_lens_response_boundary_eval.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/no_runtime_authority_expansion_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_dimension_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_eval_results.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_rubric_validation.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_scenario_catalog.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_weak_case_queue.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/test_command_output.txt"
+  ]
+}

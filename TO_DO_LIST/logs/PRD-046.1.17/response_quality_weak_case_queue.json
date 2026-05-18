@@ -1,0 +1,390 @@
+{
+  "schema_version": "response_quality_weak_case_queue_v1",
+  "prd": "PRD-046.1.17",
+  "items": [
+    {
+      "scenario_id": "rq_001",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_001",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_001",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_001",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_002",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_002",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_002",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_002",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_003",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_003",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_003",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_003",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_004",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_004",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_004",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_004",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_005",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_005",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_005",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_005",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_006",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_006",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_006",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_006",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_007",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_007",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_007",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_007",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_008",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_008",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_008",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_008",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_009",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_009",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_009",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_009",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_010",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_010",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_010",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_010",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_011",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_011",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_011",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_011",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_012",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_012",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_012",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_012",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_013",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_013",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_013",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_013",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_014",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_014",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_014",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_014",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_015",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_015",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_015",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_015",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_016",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_016",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_016",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_016",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_017",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_017",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_017",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_017",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_018",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_018",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_018",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_018",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_019",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_019",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_019",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_019",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_020",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_020",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_020",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_020",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_021",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_021",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_021",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_021",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_022",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_022",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_022",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_022",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_023",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_023",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_023",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_023",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    },
+    {
+      "scenario_id": "rq_024",
+      "dimension": "thread_continuity",
+      "candidate_id": "weak_rq_024",
+      "failure_reason": "dimension threshold not met",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "high"
+    },
+    {
+      "scenario_id": "rq_024",
+      "dimension": "state_depth_fit",
+      "candidate_id": "hard_fail_rq_024",
+      "failure_reason": "hard fail detected",
+      "recommended_fix_type": "rubric_calibration",
+      "severity": "blocker"
+    }
+  ]
+}

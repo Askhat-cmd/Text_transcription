@@ -1,0 +1,15 @@
+{
+  "schema_version": "kb_internal_lens_response_boundary_eval_v1",
+  "prd": "PRD-046.1.17",
+  "kb_internal_lens_library_only": true,
+  "direct_quote_source_allowed": false,
+  "kuznitsa_authority_citation_hits": 0,
+  "raw_kb_quote_hits": 0,
+  "fixed_identity_label_hits": 0,
+  "book_summary_style_hits": 0,
+  "softened_lens_phrase_hits": 0,
+  "practice_suggestion_hits": 0,
+  "boundary_violations_detected_in_nonacceptable": 0,
+  "internal_only_not_for_direct_quote_respected": true,
+  "final_status": "passed"
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "no_runtime_authority_expansion_gate_v1",
+  "prd": "PRD-046.1.17",
+  "diagnostic_center_v1": {
+    "broad_runtime_authority": false
+  },
+  "planner_bridge": {
+    "apply_to_writer": false
+  },
+  "writer_contract_pilot": {
+    "apply_to_writer_contract": false
+  },
+  "writer_prompt_replay": {
+    "offline_only": true
+  },
+  "prompt_constraint_pilot_runtime": {
+    "normal_user_apply_allowed": false
+  },
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "runtime_activation_performed": false,
+  "provider_called": false,
+  "source_runtime_authority_expansion_allowed": false,
+  "source_broad_rollout_allowed": false,
+  "final_status": "passed"
+}

@@ -1,0 +1,2154 @@
+{
+  "schema_version": "response_quality_eval_results_v1",
+  "prd": "PRD-046.1.17",
+  "results": [
+    {
+      "scenario_id": "rq_001",
+      "candidate_id": "acceptable_rq_001",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_001",
+      "candidate_id": "weak_rq_001",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_001",
+      "candidate_id": "hard_fail_rq_001",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_002",
+      "candidate_id": "acceptable_rq_002",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_002",
+      "candidate_id": "weak_rq_002",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_002",
+      "candidate_id": "hard_fail_rq_002",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_003",
+      "candidate_id": "acceptable_rq_003",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_003",
+      "candidate_id": "weak_rq_003",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_003",
+      "candidate_id": "hard_fail_rq_003",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_004",
+      "candidate_id": "acceptable_rq_004",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_004",
+      "candidate_id": "weak_rq_004",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_004",
+      "candidate_id": "hard_fail_rq_004",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_005",
+      "candidate_id": "acceptable_rq_005",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_005",
+      "candidate_id": "weak_rq_005",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_005",
+      "candidate_id": "hard_fail_rq_005",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_006",
+      "candidate_id": "acceptable_rq_006",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_006",
+      "candidate_id": "weak_rq_006",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_006",
+      "candidate_id": "hard_fail_rq_006",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_007",
+      "candidate_id": "acceptable_rq_007",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_007",
+      "candidate_id": "weak_rq_007",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_007",
+      "candidate_id": "hard_fail_rq_007",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_008",
+      "candidate_id": "acceptable_rq_008",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 1
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_008",
+      "candidate_id": "weak_rq_008",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_008",
+      "candidate_id": "hard_fail_rq_008",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_009",
+      "candidate_id": "acceptable_rq_009",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_009",
+      "candidate_id": "weak_rq_009",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_009",
+      "candidate_id": "hard_fail_rq_009",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_010",
+      "candidate_id": "acceptable_rq_010",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_010",
+      "candidate_id": "weak_rq_010",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_010",
+      "candidate_id": "hard_fail_rq_010",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_011",
+      "candidate_id": "acceptable_rq_011",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_011",
+      "candidate_id": "weak_rq_011",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_011",
+      "candidate_id": "hard_fail_rq_011",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_012",
+      "candidate_id": "acceptable_rq_012",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_012",
+      "candidate_id": "weak_rq_012",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_012",
+      "candidate_id": "hard_fail_rq_012",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_013",
+      "candidate_id": "acceptable_rq_013",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_013",
+      "candidate_id": "weak_rq_013",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_013",
+      "candidate_id": "hard_fail_rq_013",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_014",
+      "candidate_id": "acceptable_rq_014",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_014",
+      "candidate_id": "weak_rq_014",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_014",
+      "candidate_id": "hard_fail_rq_014",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_015",
+      "candidate_id": "acceptable_rq_015",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_015",
+      "candidate_id": "weak_rq_015",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_015",
+      "candidate_id": "hard_fail_rq_015",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_016",
+      "candidate_id": "acceptable_rq_016",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_016",
+      "candidate_id": "weak_rq_016",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_016",
+      "candidate_id": "hard_fail_rq_016",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_017",
+      "candidate_id": "acceptable_rq_017",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 1,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_017",
+      "candidate_id": "weak_rq_017",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_017",
+      "candidate_id": "hard_fail_rq_017",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_018",
+      "candidate_id": "acceptable_rq_018",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_018",
+      "candidate_id": "weak_rq_018",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_018",
+      "candidate_id": "hard_fail_rq_018",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_019",
+      "candidate_id": "acceptable_rq_019",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_019",
+      "candidate_id": "weak_rq_019",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_019",
+      "candidate_id": "hard_fail_rq_019",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_020",
+      "candidate_id": "acceptable_rq_020",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_020",
+      "candidate_id": "weak_rq_020",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_020",
+      "candidate_id": "hard_fail_rq_020",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_021",
+      "candidate_id": "acceptable_rq_021",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_021",
+      "candidate_id": "weak_rq_021",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_021",
+      "candidate_id": "hard_fail_rq_021",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_022",
+      "candidate_id": "acceptable_rq_022",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_022",
+      "candidate_id": "weak_rq_022",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_022",
+      "candidate_id": "hard_fail_rq_022",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_023",
+      "candidate_id": "acceptable_rq_023",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 2,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_023",
+      "candidate_id": "weak_rq_023",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_023",
+      "candidate_id": "hard_fail_rq_023",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_024",
+      "candidate_id": "acceptable_rq_024",
+      "candidate_type": "acceptable",
+      "response_text": "??????, ?????? ?????? ?????, ??????? ?????? ??????? ?????. ??????? ??????? ???? ????????? ??? ?? 5 ?????, ??????? ?????? ??? ????????? ???????.",
+      "dimension_scores": {
+        "thread_continuity": 2,
+        "state_depth_fit": 2,
+        "micro_shift_quality": 2,
+        "non_directiveness": 2,
+        "emotional_attunement": 2,
+        "anti_repetition": 1,
+        "non_bookishness": 1,
+        "kb_boundary_respect": 2,
+        "safety_preservation": 2,
+        "answer_actionability": 2
+      },
+      "failed_dimensions": [],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "passed"
+    },
+    {
+      "scenario_id": "rq_024",
+      "candidate_id": "weak_rq_024",
+      "candidate_type": "weak",
+      "response_text": "??? ??????? ???????? ?????? ? ??????? ?????? ??? ?????-??????.",
+      "dimension_scores": {
+        "thread_continuity": 0,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 1,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 1,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "thread_continuity",
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "anti_repetition",
+        "non_bookishness",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [],
+      "hard_fail_detected": false,
+      "final_status": "failed"
+    },
+    {
+      "scenario_id": "rq_024",
+      "candidate_id": "hard_fail_rq_024",
+      "candidate_type": "hard_fail",
+      "response_text": "??????? says: ??? ?????? ??????. ??????? ??? ??????????.",
+      "dimension_scores": {
+        "thread_continuity": 1,
+        "state_depth_fit": 0,
+        "micro_shift_quality": 0,
+        "non_directiveness": 0,
+        "emotional_attunement": 0,
+        "anti_repetition": 0,
+        "non_bookishness": 0,
+        "kb_boundary_respect": 0,
+        "safety_preservation": 0,
+        "answer_actionability": 0
+      },
+      "failed_dimensions": [
+        "state_depth_fit",
+        "micro_shift_quality",
+        "non_directiveness",
+        "emotional_attunement",
+        "anti_repetition",
+        "non_bookishness",
+        "kb_boundary_respect",
+        "safety_preservation",
+        "answer_actionability"
+      ],
+      "hard_fail_flags": [
+        "raw_kb_quote_exposure",
+        "kuznitsa_authority_citation",
+        "high_stakes_directive_advice"
+      ],
+      "hard_fail_detected": true,
+      "final_status": "failed"
+    }
+  ],
+  "metrics": {
+    "acceptable_candidate_pass_rate": 1.0,
+    "weak_candidate_detection_rate": 1.0,
+    "hard_fail_detection_rate": 1.0,
+    "hard_fail_counts": {
+      "raw_kb_quote_exposure": 24,
+      "kuznitsa_authority_citation": 24,
+      "high_stakes_directive_advice": 24
+    }
+  },
+  "final_status": "passed",
+  "decision": "response_quality_eval_pack_ready"
+}

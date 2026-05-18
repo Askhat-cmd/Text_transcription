@@ -23,6 +23,16 @@ from .diagnostic_center_final_acceptance_v1 import (
     DiagnosticCenterFinalAcceptanceRunV1,
     FinalAcceptanceDecisionV1,
 )
+from .diagnostic_center_response_quality_eval_v1 import (
+    ResponseQualityDimensionScore,
+    ResponseQualityEvalResult,
+    ResponseQualityExpectedState,
+    ResponseQualityGateDecision,
+    ResponseQualityRubric,
+    ResponseQualityScenario,
+    ResponseQualityScorecard,
+    ResponseQualityWeakCase,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -135,6 +145,14 @@ __all__ = [
     "DiagnosticCenterStabilizationRunV1",
     "DiagnosticCenterTransferBriefV1",
     "FinalAcceptanceDecisionV1",
+    "ResponseQualityScenario",
+    "ResponseQualityExpectedState",
+    "ResponseQualityRubric",
+    "ResponseQualityDimensionScore",
+    "ResponseQualityEvalResult",
+    "ResponseQualityWeakCase",
+    "ResponseQualityScorecard",
+    "ResponseQualityGateDecision",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

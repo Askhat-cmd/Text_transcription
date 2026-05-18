@@ -1,0 +1,375 @@
+# PRD-046.1.17 test command output
+# generated_at_utc: 2026-05-18T05:58:21.422275+00:00
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_response_quality_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_diagnostic_center_response_quality_contract.py . [100%]
+
+============================== 1 passed in 0.20s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_response_quality_runner.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_diagnostic_center_response_quality_runner.py . [100%]
+
+============================== 1 passed in 0.25s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_scenario_schema.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_scenario_schema.py . [100%]
+
+============================== 1 passed in 0.21s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_scenario_coverage.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_scenario_coverage.py . [100%]
+
+============================== 1 passed in 0.20s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_rubric_schema.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_rubric_schema.py . [100%]
+
+============================== 1 passed in 0.21s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_candidate_detection.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_candidate_detection.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_hard_fail_detection.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_hard_fail_detection.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_kb_internal_lens_response_boundary_eval.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_kb_internal_lens_response_boundary_eval.py . [100%]
+
+============================== 1 passed in 0.25s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_no_runtime_authority_expansion.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_no_runtime_authority_expansion.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+[exit_code] 0
+
+$ python -m pytest bot_psychologist/tests/multiagent/test_response_quality_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_response_quality_no_mutation.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+[exit_code] 0
+
+$ python -m bot_psychologist.tools.run_diagnostic_center_response_quality_eval --repo-root . --scenarios bot_psychologist/tests/fixtures/diagnostic_center_response_quality_scenarios.json --rubric bot_psychologist/tests/fixtures/diagnostic_center_response_quality_rubric.json --response-candidates bot_psychologist/tests/fixtures/diagnostic_center_response_quality_response_candidates.json --output-dir TO_DO_LIST/logs/PRD-046.1.17 --strict
+{
+  "status": "passed",
+  "decision": "response_quality_eval_pack_ready",
+  "scorecard": {
+    "prd_id": "PRD-046.1.17",
+    "final_status": "passed",
+    "decision": "response_quality_eval_pack_ready",
+    "scenario_count": 24,
+    "required_scenario_groups_present": true,
+    "rubric_dimension_count": 10,
+    "all_required_dimensions_present": true,
+    "acceptable_candidate_pass_rate": 1.0,
+    "weak_candidate_detection_rate": 1.0,
+    "hard_fail_detection_rate": 1.0,
+    "kb_internal_lens_boundary_passed": true,
+    "no_runtime_authority_expansion_passed": true,
+    "no_mutation_proof_passed": true,
+    "artifact_encoding_hygiene_passed": true,
+    "provider_called": false,
+    "runtime_activation_performed": false,
+    "production_mutation_detected": false,
+    "normal_user_apply_count": 0,
+    "writer_prompt_changed_for_normal_user": false,
+    "writer_contract_changed_for_normal_user": false,
+    "final_answer_changed_for_normal_user": false,
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "chroma_reindex_performed": false,
+    "docs_synced": true,
+    "recommended_next_prd": "PRD-046.1.18 - Diagnostic Center Response Quality Calibration / Weak Case Closure v1",
+    "blockers": [],
+    "warnings": []
+  },
+  "decision_payload": {
+    "schema_version": "diagnostic_center_response_quality_eval_decision_v1",
+    "prd_id": "PRD-046.1.17",
+    "final_status": "passed",
+    "decision": "response_quality_eval_pack_ready",
+    "blockers": [],
+    "warnings": []
+  },
+  "preflight": {
+    "required": {
+      "report:PRD-046.1.16_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.16_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.16_DIAGNOSTIC_CENTER_FINAL_ACCEPTANCE_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.16_DIAGNOSTIC_CENTER_FINAL_ACCEPTANCE_REPORT.md",
+      "report:PRD-046.1.16_RUNTIME_GOVERNANCE_CLOSURE_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.16_RUNTIME_GOVERNANCE_CLOSURE_REPORT.md",
+      "report:PRD-046.1.16_NEXT_PRD_RECOMMENDATION.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.16_NEXT_PRD_RECOMMENDATION.md",
+      "closure_decision": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.16\\runtime_governance_closure_decision.json",
+      "source_scorecard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.16\\diagnostic_center_v1_final_acceptance_scorecard.json",
+      "source_no_mutation": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.16\\no_mutation_proof.json",
+      "source_encoding_hygiene": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.16\\artifact_encoding_hygiene_report.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "closure_decision": {
+        "prd_id": "PRD-046.1.16",
+        "final_status": "passed",
+        "decision": "diagnostic_center_v1_accepted_as_governed_shadow_layer",
+        "broad_rollout_allowed": false,
+        "runtime_authority_expansion_allowed": false,
+        "future_rollout_requires_new_prd": true,
+        "permanent_regression_gates_confirmed": true,
+        "conservative_defaults_preserved": true,
+        "no_mutation_proof_passed": true,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "blockers": [],
+        "warnings": []
+      },
+      "source_scorecard": {
+        "prd": "PRD-046.1.16",
+        "final_status": "passed",
+        "decision": "diagnostic_center_v1_accepted_as_governed_shadow_layer",
+        "source_gate_passed": true,
+        "runtime_governance_boundary_matrix_ready": true,
+        "permanent_regression_gates_confirmed": true,
+        "all_required_regression_gates_present": true,
+        "prompt_constraint_conservative_baseline_preserved": true,
+        "normal_user_no_effect_passed": true,
+        "kb_governance_boundary_passed": true,
+        "trace_sanitization_gate_passed": true,
+        "broad_rollout_allowed": false,
+        "runtime_authority_expansion_allowed": false,
+        "future_rollout_requires_new_prd": true,
+        "new_execution_performed": false,
+        "provider_called": false,
+        "production_mutation_detected": false,
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "runtime_files_deleted": false,
+        "regression_gates_deleted": false,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "recommended_next_prd": "PRD-046.1.17 - Diagnostic Center Response Quality Eval Pack v1",
+        "blockers": [],
+        "warnings": []
+      },
+      "source_no_mutation": {
+        "schema_version": "diagnostic_center_final_acceptance_no_mutation_proof_v1",
+        "prd": "PRD-046.1.16",
+        "tracked_paths": {
+          "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+          "registry": "Bot_data_base/data/registry.json",
+          "config": "Bot_data_base/config.yaml",
+          "runtime_do_not_touch": {
+            "orchestrator": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+            "writer_move_compliance": "bot_psychologist/bot_agent/multiagent/writer_move_compliance.py",
+            "prompt_constraint_runtime": "bot_psychologist/bot_agent/multiagent/prompt_constraint_pilot_runtime.py",
+            "diagnostic_center_shadow": "bot_psychologist/bot_agent/multiagent/diagnostic_center_shadow.py"
+          }
+        },
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "runtime_do_not_touch_mutated": false,
+        "runtime_do_not_touch_changed_files": [],
+        "chroma_reindex_performed": false,
+        "production_apply_performed": false,
+        "provider_called": false,
+        "new_execution_performed": false
+      },
+      "source_encoding_hygiene": {
+        "schema_version": "artifact_encoding_hygiene_report_v1",
+        "prd": "PRD-046.1.16",
+        "checked_prd": "PRD-046.1.16",
+        "final_status": "passed",
+        "files_checked": 12,
+        "utf8_decode_error_count": 0,
+        "nul_byte_file_count": 0,
+        "nul_char_file_count": 0,
+        "replacement_char_warning_count": 0,
+        "mojibake_warning_count": 0,
+        "json_parse_error_count": 0,
+        "empty_text_artifact_count": 0,
+        "unexpected_debug_dir_count": 0,
+        "fixed_files": [],
+        "warnings": [],
+        "blockers": [],
+        "checked_files": [
+          "TO_DO_LIST/logs/PRD-046.1.16/artifact_encoding_hygiene_report.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/diagnostic_center_v1_final_acceptance_scorecard.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/final_acceptance_source_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/kb_governance_boundary_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/no_mutation_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/normal_user_no_effect_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/permanent_regression_gate_confirmation.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/prompt_constraint_conservative_baseline_gate.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_boundary_matrix.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_closure_decision.json",
+          "TO_DO_LIST/logs/PRD-046.1.16/test_command_output.txt",
+          "TO_DO_LIST/logs/PRD-046.1.16/trace_sanitization_gate.json"
+        ]
+      }
+    }
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.17",
+    "checked_prd": "PRD-046.1.17",
+    "final_status": "passed",
+    "files_checked": 12,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.17/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/diagnostic_center_response_quality_eval_scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/kb_internal_lens_response_boundary_eval.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/no_runtime_authority_expansion_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/response_quality_dimension_scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/response_quality_eval_results.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/response_quality_rubric_validation.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/response_quality_scenario_catalog.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/response_quality_weak_case_queue.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/source_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.17/test_command_output.txt"
+    ]
+  }
+}
+2026-05-18 10:58:39,939 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-18 10:58:39,942 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+[exit_code] 0
+
+$ python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.17 --logs-dir TO_DO_LIST/logs/PRD-046.1.17 --out-dir TO_DO_LIST/logs/PRD-046.1.17 --report-prd PRD-046.1.17 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.17",
+  "checked_prd": "PRD-046.1.17",
+  "final_status": "passed",
+  "files_checked": 12,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.17/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/diagnostic_center_response_quality_eval_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/kb_internal_lens_response_boundary_eval.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/no_runtime_authority_expansion_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_dimension_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_eval_results.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_rubric_validation.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_scenario_catalog.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/response_quality_weak_case_queue.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.17/test_command_output.txt"
+  ]
+}
+[exit_code] 0

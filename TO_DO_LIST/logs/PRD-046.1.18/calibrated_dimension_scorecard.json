@@ -1,0 +1,86 @@
+{
+  "schema_version": "calibrated_dimension_scorecard_v1",
+  "prd": "PRD-046.1.18",
+  "dimensions": {
+    "thread_continuity": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "state_depth_fit": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "micro_shift_quality": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "non_directiveness": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "emotional_attunement": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "anti_repetition": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "non_bookishness": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "kb_boundary_respect": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "safety_preservation": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    },
+    "answer_actionability": {
+      "pass_rate": 1.0,
+      "weak_case_count": 0,
+      "sample_count": 34
+    }
+  },
+  "lowest_scoring_dimensions": [
+    {
+      "dimension": "thread_continuity",
+      "pass_rate": 1.0,
+      "weak_case_count": 0
+    },
+    {
+      "dimension": "state_depth_fit",
+      "pass_rate": 1.0,
+      "weak_case_count": 0
+    },
+    {
+      "dimension": "micro_shift_quality",
+      "pass_rate": 1.0,
+      "weak_case_count": 0
+    }
+  ],
+  "hard_fail_counts": {
+    "raw_kb_quote_exposure": 34,
+    "kuznitsa_authority_citation": 24,
+    "high_stakes_directive_advice": 34,
+    "source_as_spiritual_authority": 10
+  },
+  "state_depth_fit_weak_detection_rate": 1.0,
+  "non_directiveness_weak_detection_rate": 1.0,
+  "non_bookishness_weak_detection_rate": 1.0,
+  "kb_boundary_respect_hard_fail_detection_rate": 1.0,
+  "acceptable_candidate_pass_rate": 1.0,
+  "weak_candidate_detection_rate": 1.0,
+  "hard_fail_detection_rate": 1.0
+}

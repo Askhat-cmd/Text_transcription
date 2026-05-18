@@ -48,16 +48,18 @@
 - PRD-046.1.11: supervised results consolidation / rollout decision gate delivered; added consolidation contract/module/CLI + tests/artifacts across both supervised cycles (`046.1.9` + `046.1.10`), confirmed reproducibility (`total_test_apply_applied_count=9`, `total_cases_compared=9`, zero safety/KB/rollback/no-mutation/provider regressions), final decision `prepare_production_limited_rollout_plan`.
 - PRD-046.1.12: production-limited rollout planning gate delivered (plan-only, no execution); added rollout plan contract/module/CLI + tests/artifacts (`cohort_policy`, `preflight_gates`, `operator_checklist`, `monitoring_plan`, `rollback_plan`, `abort_criteria`, `readiness_gate`, runbook) with conservative defaults preserved and final decision `ready_for_production_limited_execution_prd`.
 - PRD-046.1.13: one production-limited execution/monitoring cycle delivered; added execution contract/module/CLI + tests/artifacts (manifest, preflight, sanitized traces, baseline-vs-test_apply, normal-user no-effect, rollback proof, monitoring scorecard, no-mutation/hygiene), ran single-target window (	arget_user_count=1) with rollback-first success and decision continue_limited.
-- PRD-046.1.14: post-run production-limited results/rollback/quality gate delivered; added results-gate contract/module/CLI + tests/artifacts (manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene), no new execution performed, final decision eady_for_stabilization_cleanup with no provider calls and no production mutation.
+- PRD-046.1.14: post-run production-limited results/rollback/quality gate delivered; added results-gate contract/module/CLI + tests/artifacts (manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene), no new execution performed, final decision 
+eady_for_stabilization_cleanup with no provider calls and no production mutation.
 - PRD-046.1.15: stabilization/cleanup/eval-harness consolidation delivered; added stabilization contract/module/CLI + tests/artifacts (source gate, module inventory/classification, permanent regression gate catalog, non-destructive cleanup plan, archive manifest, stabilization scorecard, transfer brief, no-mutation/hygiene), with `decision=ready_for_transfer_brief` and no runtime-default/provider/production-state mutation.
 - PRD-046.1.16: final acceptance/runtime governance closure delivered; added final-acceptance contract/module/CLI + artifacts (source gate, boundary matrix, permanent gate confirmation, conservative baseline gate, normal-user no-effect gate, KB boundary gate, trace sanitization gate, closure decision, scorecard, no-mutation/hygiene), accepted as governed shadow layer with `broad_rollout_allowed=false` and `runtime_authority_expansion_allowed=false`.
 - PRD-046.1.17: response quality eval pack delivered in offline deterministic mode; added response-quality contract/module/CLI + curated scenario/rubric/candidate fixtures + artifacts (scenario catalog, rubric validation, eval results, dimension scorecard, weak-case queue, KB/internal lens boundary eval, no-runtime-authority-expansion gate, no-mutation/hygiene), with `hard_fail_detection_rate=1.00` and no runtime activation/provider calls.
+- PRD-046.1.18: response quality calibration/weak-case closure delivered in offline deterministic mode; added calibration contract/module/CLI + expanded fixtures (`34` scenarios, `8` candidate profiles) + artifacts (source gate, weak-case inventory, calibration plan, expanded catalogs, calibrated eval/scorecards, boundary/no-runtime/no-mutation/hygiene), final decision `response_quality_calibration_passed` with runtime authority unchanged.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.18 - Diagnostic Center Response Quality Calibration / Weak Case Closure v1.
+1. PRD-046.1.19 - Diagnostic Center Controlled Runtime Pilot Readiness / Limited Live Smoke Plan v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

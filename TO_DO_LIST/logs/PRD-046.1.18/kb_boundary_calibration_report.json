@@ -1,0 +1,9 @@
+{
+  "schema_version": "kb_boundary_calibration_report_v1",
+  "prd": "PRD-046.1.18",
+  "kb_boundary_respect_hard_fail_detection_rate": 1.0,
+  "acceptable_candidate_raw_quote_hits": 0,
+  "acceptable_candidate_authority_citation_hits": 0,
+  "internal_only_not_for_direct_quote_respected": true,
+  "final_status": "passed"
+}

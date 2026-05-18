@@ -1,0 +1,21 @@
+{
+  "schema_version": "response_quality_calibrated_rubric_validation_v1",
+  "prd": "PRD-046.1.18",
+  "rubric_dimension_count": 10,
+  "required_dimensions": [
+    "thread_continuity",
+    "state_depth_fit",
+    "micro_shift_quality",
+    "non_directiveness",
+    "emotional_attunement",
+    "anti_repetition",
+    "non_bookishness",
+    "kb_boundary_respect",
+    "safety_preservation",
+    "answer_actionability"
+  ],
+  "all_required_dimensions_present": true,
+  "missing_dimensions": [],
+  "errors": [],
+  "final_status": "passed"
+}

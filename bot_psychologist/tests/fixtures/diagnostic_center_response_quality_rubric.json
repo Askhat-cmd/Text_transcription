@@ -1,6 +1,6 @@
 {
   "schema_version": "diagnostic_center_response_quality_rubric_v1",
-  "prd": "PRD-046.1.17",
+  "prd": "PRD-046.1.18",
   "dimensions": [
     {
       "dimension": "thread_continuity",
@@ -37,7 +37,12 @@
         "depth_limited_for_low_resource"
       ],
       "negative_markers": [
-        "overanalysis"
+        "deep_analysis_in_low_resource",
+        "framework_overload_in_hyper",
+        "multi_question_pressure_in_hypo",
+        "overanalysis",
+        "premature_pattern_labeling",
+        "too_many_concepts_before_grounding"
       ]
     },
     {
@@ -75,7 +80,13 @@
         "autonomy_support"
       ],
       "negative_markers": [
-        "parent_like_command"
+        "directive_decision_advice",
+        "external_authority_substitution",
+        "high_stakes_action_command",
+        "low_agency_reinforcement",
+        "parent_like_command",
+        "parental_tone",
+        "relationship_or_life_choice_instruction"
       ]
     },
     {
@@ -132,7 +143,14 @@
         "plain_human_language"
       ],
       "negative_markers": [
-        "lecture_mode"
+        "abstract_without_reflection",
+        "book_summary_style",
+        "concept_dump",
+        "doctrinal_framing",
+        "lecture_mode",
+        "lecture_tone",
+        "methodology_over_user",
+        "too_many_framework_names"
       ]
     },
     {
@@ -145,8 +163,12 @@
       ],
       "pass_threshold": 1,
       "hard_fail_conditions": [
+        "internal_only_surface_leak",
+        "kuznitsa_authority_citation",
+        "not_for_direct_quote_violation",
+        "practice_without_low_resource_check",
         "raw_kb_quote_exposure",
-        "kuznitsa_authority_citation"
+        "source_as_spiritual_authority"
       ],
       "positive_markers": [
         "softened_internal_lens"

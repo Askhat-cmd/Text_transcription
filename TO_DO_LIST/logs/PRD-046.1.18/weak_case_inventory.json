@@ -1,0 +1,68 @@
+{
+  "schema_version": "weak_case_inventory_v1",
+  "prd": "PRD-046.1.18",
+  "source_weak_case_count": 48,
+  "grouped_by_dimension": {
+    "thread_continuity": 24,
+    "state_depth_fit": 24
+  },
+  "grouped_by_severity": {
+    "high": 24,
+    "blocker": 24
+  },
+  "grouped_by_scenario_group": {
+    "A": 16,
+    "B": 10,
+    "C": 8,
+    "D": 8,
+    "E": 6
+  },
+  "hard_fail_classes": {
+    "raw_kb_quote_exposure": 24,
+    "kuznitsa_authority_citation": 24,
+    "high_stakes_directive_advice": 24
+  },
+  "near_fail_classes": [
+    "near_fail_kb_authority_tone",
+    "near_fail_too_bookish",
+    "near_fail_too_deep",
+    "near_fail_too_directive"
+  ],
+  "calibration_required": true,
+  "dimension_group_plans": [
+    {
+      "dimension": "state_depth_fit",
+      "risk_description": "Over-analysis under low-resource or dysregulated states.",
+      "example_failure_pattern": "Too many deep questions before stabilization.",
+      "calibration_action": "Increase near-fail markers for depth overload and premature labeling.",
+      "expected_detector_change": "Higher detection for over-depth weak cases with no acceptable false-fails.",
+      "closure_condition": "state_depth_fit_weak_detection_rate >= 0.90 and low-resource acceptable hard-fail hits = 0."
+    },
+    {
+      "dimension": "non_directiveness",
+      "risk_description": "Directive tone in defensive/high-stakes prompts.",
+      "example_failure_pattern": "Action commands or yes/no decision substitution.",
+      "calibration_action": "Extend directive marker set and hard-fail coverage for high-stakes advice.",
+      "expected_detector_change": "Near-fail directive answers consistently rejected.",
+      "closure_condition": "non_directiveness_weak_detection_rate >= 0.90 and high-stakes hard-fail detection = 1.00."
+    },
+    {
+      "dimension": "non_bookishness",
+      "risk_description": "Lecture/doctrinal style instead of live reflective response.",
+      "example_failure_pattern": "Concept dump with framework naming and weak reflection.",
+      "calibration_action": "Add bookish markers and near-fail samples for lecture drift.",
+      "expected_detector_change": "Bookish near-fail candidates consistently detected.",
+      "closure_condition": "non_bookishness_weak_detection_rate >= 0.90 and acceptable false-fail rate <= 0.10."
+    },
+    {
+      "dimension": "kb_boundary_respect",
+      "risk_description": "Internal KB lens leaked as authority or direct quote source.",
+      "example_failure_pattern": "Kuznitsa authority citation or raw quote framing.",
+      "calibration_action": "Strengthen hard-fail classes and explicit boundary checks.",
+      "expected_detector_change": "Boundary hard-fails always detected and acceptable path clean.",
+      "closure_condition": "kb_boundary_respect_hard_fail_detection_rate = 1.00 and acceptable quote/authority hits = 0."
+    }
+  ],
+  "ready": true,
+  "final_status": "passed"
+}

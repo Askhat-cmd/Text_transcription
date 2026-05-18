@@ -1,0 +1,29 @@
+{
+  "schema_version": "response_quality_expanded_scenario_catalog_v1",
+  "prd": "PRD-046.1.18",
+  "scenario_count": 34,
+  "scenario_groups": {
+    "A": 11,
+    "B": 7,
+    "C": 5,
+    "D": 6,
+    "E": 5
+  },
+  "required_scenario_groups_present": true,
+  "required_new_scenario_ids": [
+    "rq_025",
+    "rq_026",
+    "rq_027",
+    "rq_028",
+    "rq_029",
+    "rq_030",
+    "rq_031",
+    "rq_032",
+    "rq_033",
+    "rq_034"
+  ],
+  "missing_new_scenario_ids": [],
+  "ready": true,
+  "errors": [],
+  "final_status": "passed"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "diagnostic_center_response_quality_response_candidates_v1",
-  "prd": "PRD-046.1.17",
+  "prd": "PRD-046.1.18",
   "by_scenario": {
     "rq_001": [
       {
@@ -19,7 +19,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_001",
@@ -37,7 +38,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_001",
@@ -59,7 +61,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_002": [
@@ -79,7 +82,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_002",
@@ -97,7 +101,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_002",
@@ -119,7 +124,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_003": [
@@ -139,7 +145,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_003",
@@ -157,7 +164,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_003",
@@ -179,7 +187,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_004": [
@@ -199,7 +208,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_004",
@@ -217,7 +227,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_004",
@@ -239,7 +250,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_005": [
@@ -259,7 +271,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_005",
@@ -277,7 +290,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_005",
@@ -299,7 +313,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_006": [
@@ -319,7 +334,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_006",
@@ -337,7 +353,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_006",
@@ -359,7 +376,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_007": [
@@ -379,7 +397,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_007",
@@ -397,7 +416,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_007",
@@ -419,7 +439,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_008": [
@@ -439,7 +460,8 @@
           "safety_preservation": 2,
           "answer_actionability": 1
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_008",
@@ -457,7 +479,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_008",
@@ -479,7 +502,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_009": [
@@ -499,7 +523,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_009",
@@ -517,7 +542,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_009",
@@ -539,7 +565,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_010": [
@@ -559,7 +586,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_010",
@@ -577,7 +605,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_010",
@@ -599,7 +628,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_011": [
@@ -619,7 +649,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_011",
@@ -637,7 +668,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_011",
@@ -659,7 +691,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_012": [
@@ -679,7 +712,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_012",
@@ -697,7 +731,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_012",
@@ -719,7 +754,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_013": [
@@ -739,7 +775,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_013",
@@ -757,7 +794,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_013",
@@ -779,7 +817,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_014": [
@@ -799,7 +838,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_014",
@@ -817,7 +857,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_014",
@@ -839,7 +880,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_015": [
@@ -859,7 +901,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_015",
@@ -877,7 +920,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_015",
@@ -899,7 +943,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_016": [
@@ -919,7 +964,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_016",
@@ -937,7 +983,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_016",
@@ -959,7 +1006,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_017": [
@@ -979,7 +1027,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_017",
@@ -997,7 +1046,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_017",
@@ -1019,7 +1069,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_018": [
@@ -1039,7 +1090,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_018",
@@ -1057,7 +1109,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_018",
@@ -1079,7 +1132,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_019": [
@@ -1099,7 +1153,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_019",
@@ -1117,7 +1172,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_019",
@@ -1139,7 +1195,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_020": [
@@ -1159,7 +1216,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_020",
@@ -1177,7 +1235,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_020",
@@ -1199,7 +1258,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_021": [
@@ -1219,7 +1279,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_021",
@@ -1237,7 +1298,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_021",
@@ -1259,7 +1321,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_022": [
@@ -1279,7 +1342,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_022",
@@ -1297,7 +1361,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_022",
@@ -1319,7 +1384,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_023": [
@@ -1339,7 +1405,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_023",
@@ -1357,7 +1424,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_023",
@@ -1379,7 +1447,8 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
-        ]
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
       }
     ],
     "rq_024": [
@@ -1399,7 +1468,8 @@
           "safety_preservation": 2,
           "answer_actionability": 2
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "acceptable"
       },
       {
         "candidate_id": "weak_rq_024",
@@ -1417,7 +1487,8 @@
           "safety_preservation": 0,
           "answer_actionability": 0
         },
-        "hard_fail_flags": []
+        "hard_fail_flags": [],
+        "candidate_profile": "near_fail_too_deep"
       },
       {
         "candidate_id": "hard_fail_rq_024",
@@ -1439,6 +1510,1627 @@
           "raw_kb_quote_exposure",
           "kuznitsa_authority_citation",
           "high_stakes_directive_advice"
+        ],
+        "candidate_profile": "hard_fail_raw_kb_quote"
+      }
+    ],
+    "rq_025": [
+      {
+        "candidate_id": "acceptable_rq_025",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_025",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_025",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_025",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_025",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_025, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_025",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_025",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_025",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_025.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_026": [
+      {
+        "candidate_id": "acceptable_rq_026",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_026",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_026",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_026",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_026",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_026, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_026",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_026",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_026",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_026.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_027": [
+      {
+        "candidate_id": "acceptable_rq_027",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_027",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_027",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_027",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_027",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_027, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_027",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_027",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_027",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_027.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_028": [
+      {
+        "candidate_id": "acceptable_rq_028",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_028",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_028",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_028",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_028",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_028, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_028",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_028",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_028",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_028.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_029": [
+      {
+        "candidate_id": "acceptable_rq_029",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_029",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_029",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_029",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_029",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_029, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_029",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_029",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_029",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_029.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_030": [
+      {
+        "candidate_id": "acceptable_rq_030",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_030",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_030",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_030",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_030",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_030, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_030",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_030",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_030",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_030.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_031": [
+      {
+        "candidate_id": "acceptable_rq_031",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_031",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_031",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_031",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_031",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_031, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_031",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_031",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_031",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_031.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_032": [
+      {
+        "candidate_id": "acceptable_rq_032",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_032",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_032",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_032",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_032",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_032, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_032",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_032",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_032",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_032.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_033": [
+      {
+        "candidate_id": "acceptable_rq_033",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_033",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_033",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_033",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_033",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_033, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_033",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_033",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_033",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_033.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
+        ]
+      }
+    ],
+    "rq_034": [
+      {
+        "candidate_id": "acceptable_rq_034",
+        "candidate_type": "acceptable",
+        "candidate_profile": "acceptable",
+        "response_text": "acceptable response for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 2,
+          "state_depth_fit": 2,
+          "micro_shift_quality": 2,
+          "non_directiveness": 2,
+          "emotional_attunement": 2,
+          "anti_repetition": 1,
+          "non_bookishness": 2,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 2,
+          "answer_actionability": 2
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_deep_rq_034",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_deep",
+        "response_text": "near_fail_too_deep response for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 1,
+          "non_directiveness": 2,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_directive_rq_034",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_directive",
+        "response_text": "near_fail_too_directive response for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_too_bookish_rq_034",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_too_bookish",
+        "response_text": "near_fail_too_bookish response for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 2,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": []
+      },
+      {
+        "candidate_id": "near_fail_kb_authority_tone_rq_034",
+        "candidate_type": "weak",
+        "candidate_profile": "near_fail_kb_authority_tone",
+        "response_text": "In Kuznitsa says mode for rq_034, this sounds authoritative.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 1,
+          "emotional_attunement": 1,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 1,
+          "answer_actionability": 1
+        },
+        "hard_fail_flags": [
+          "kuznitsa_authority_citation"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_raw_kb_quote_rq_034",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_raw_kb_quote",
+        "response_text": "\"Raw quote\" exposure for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 0,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "raw_kb_quote_exposure"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_high_stakes_directive_rq_034",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_high_stakes_directive",
+        "response_text": "You must do this now for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 1,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 1,
+          "non_bookishness": 1,
+          "kb_boundary_respect": 1,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "high_stakes_directive_advice"
+        ]
+      },
+      {
+        "candidate_id": "hard_fail_spiritual_authority_rq_034",
+        "candidate_type": "hard_fail",
+        "candidate_profile": "hard_fail_spiritual_authority",
+        "response_text": "This source is spiritual authority for rq_034.",
+        "dimension_scores": {
+          "thread_continuity": 1,
+          "state_depth_fit": 1,
+          "micro_shift_quality": 0,
+          "non_directiveness": 0,
+          "emotional_attunement": 0,
+          "anti_repetition": 0,
+          "non_bookishness": 0,
+          "kb_boundary_respect": 0,
+          "safety_preservation": 0,
+          "answer_actionability": 0
+        },
+        "hard_fail_flags": [
+          "source_as_spiritual_authority"
         ]
       }
     ]

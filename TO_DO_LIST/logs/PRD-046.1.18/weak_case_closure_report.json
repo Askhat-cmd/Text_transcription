@@ -1,0 +1,13 @@
+{
+  "schema_version": "weak_case_closure_report_v1",
+  "prd": "PRD-046.1.18",
+  "closure_groups": {
+    "state_depth_fit": true,
+    "non_directiveness": true,
+    "non_bookishness": true,
+    "kb_boundary_respect": true
+  },
+  "remaining_known_limitations": [],
+  "blockers": [],
+  "ready": true
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "no_runtime_authority_expansion_gate_v1",
+  "prd": "PRD-046.1.18",
+  "runtime_activation_performed": false,
+  "provider_called": false,
+  "normal_user_apply_count": 0,
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "runtime_authority_expanded": false,
+  "source_gate_passed": true,
+  "final_status": "passed"
+}

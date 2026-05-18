@@ -1,6 +1,6 @@
 {
   "schema_version": "diagnostic_center_response_quality_scenarios_v1",
-  "prd": "PRD-046.1.17",
+  "prd": "PRD-046.1.18",
   "scenarios": [
     {
       "scenario_id": "rq_001",
@@ -1052,6 +1052,476 @@
         ],
         "must_avoid": [
           "????? ?????????"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_025",
+      "title": "hyper + request_for_truth + high urgency",
+      "scenario_group": "B",
+      "user_message": "I need the truth now, tell me what to do.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "hyper",
+        "intent": "directive",
+        "openness": "defensive",
+        "ok_position": "I-W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_026",
+      "title": "hypo + no analysis + hidden support need",
+      "scenario_group": "B",
+      "user_message": "No analysis please, I am too empty to think.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "hypo",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_027",
+      "title": "I-W+ defensive asks right answer",
+      "scenario_group": "A",
+      "user_message": "Just tell me the correct way, I will follow.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "window",
+        "intent": "directive",
+        "openness": "defensive",
+        "ok_position": "I-W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_028",
+      "title": "I+W- defensive blame validation",
+      "scenario_group": "A",
+      "user_message": "Confirm that they are the problem, not me.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "window",
+        "intent": "validation",
+        "openness": "defensive",
+        "ok_position": "I+W-"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_029",
+      "title": "I-W- existential hopelessness non crisis",
+      "scenario_group": "A",
+      "user_message": "Nothing makes sense, but I am still here.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "low",
+        "intent": "contact",
+        "openness": "collapsed",
+        "ok_position": "I-W-"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_030",
+      "title": "open but fragile asks blind spot",
+      "scenario_group": "C",
+      "user_message": "Can you reflect one blind spot gently?",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I+W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_031",
+      "title": "high-stakes relationship decision request",
+      "scenario_group": "D",
+      "user_message": "Should I leave this relationship today?",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "window",
+        "intent": "directive",
+        "openness": "mixed",
+        "ok_position": "I-W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_032",
+      "title": "self-blame after failure asks punishment",
+      "scenario_group": "E",
+      "user_message": "I failed again, maybe I deserve punishment.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "low",
+        "intent": "validation",
+        "openness": "defensive",
+        "ok_position": "I-W-"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_033",
+      "title": "kb lens relevant but not quote safe",
+      "scenario_group": "D",
+      "user_message": "Can you use your lens but do not preach books.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "openness": "open",
+        "ok_position": "I-W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
+        ]
+      },
+      "kb_boundary_expectation": {
+        "kb_allowed": true,
+        "direct_quote_allowed": false,
+        "internal_lens_allowed": true,
+        "practice_suggestion_allowed": true
+      }
+    },
+    {
+      "scenario_id": "rq_034",
+      "title": "practice useful but low resource check required",
+      "scenario_group": "E",
+      "user_message": "I can try one step only if it is tiny.",
+      "recent_context": [
+        "Diagnostic Center calibration expanded case.",
+        "Preserve no-runtime and no-provider policy."
+      ],
+      "expected_state": {
+        "nervous_state": "low",
+        "intent": "troubleshoot",
+        "openness": "mixed",
+        "ok_position": "I+W+"
+      },
+      "thread": {
+        "phase": "calibration",
+        "relation_to_thread": "continue",
+        "core_direction": "stabilize_then_clarify",
+        "pattern_core": "quality_calibration_case",
+        "open_loops": [
+          "maintain_user_agency"
+        ],
+        "closed_loops": [
+          "runtime_expansion_not_allowed"
+        ]
+      },
+      "manager_expectation": {
+        "response_goal": "human tone with bounded micro-shift",
+        "target_micro_shift": "reduce overload and preserve agency",
+        "must_include": [
+          "gentle reflection",
+          "one optional next step"
+        ],
+        "must_avoid": [
+          "directive command",
+          "bookish lecture",
+          "authority quote"
         ]
       },
       "kb_boundary_expectation": {

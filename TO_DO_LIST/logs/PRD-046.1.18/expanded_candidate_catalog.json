@@ -1,0 +1,30 @@
+{
+  "schema_version": "response_quality_expanded_candidate_catalog_v1",
+  "prd": "PRD-046.1.18",
+  "candidate_count": 152,
+  "candidate_profile_count": 8,
+  "candidate_profiles": {
+    "acceptable": 34,
+    "near_fail_too_deep": 34,
+    "hard_fail_raw_kb_quote": 34,
+    "near_fail_too_directive": 10,
+    "near_fail_too_bookish": 10,
+    "near_fail_kb_authority_tone": 10,
+    "hard_fail_high_stakes_directive": 10,
+    "hard_fail_spiritual_authority": 10
+  },
+  "required_candidate_profiles": [
+    "acceptable",
+    "hard_fail_high_stakes_directive",
+    "hard_fail_raw_kb_quote",
+    "hard_fail_spiritual_authority",
+    "near_fail_kb_authority_tone",
+    "near_fail_too_bookish",
+    "near_fail_too_deep",
+    "near_fail_too_directive"
+  ],
+  "missing_required_candidate_profiles": [],
+  "all_required_candidate_profiles_present": true,
+  "ready": true,
+  "final_status": "passed"
+}

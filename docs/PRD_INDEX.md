@@ -1,4 +1,4 @@
-﻿# PRD Index
+# PRD Index
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
@@ -72,7 +72,7 @@
 | PRD-046.1.16 | Diagnostic Center v1 Final Acceptance / Runtime Governance Closure v1 | passed | 67d419e | added final-acceptance contract/module/CLI + artifacts (source gate, runtime boundary matrix, permanent regression gate confirmation, conservative baseline/normal-user/KB/trace gates, closure decision, final scorecard, no-mutation/hygiene); accepted as governed shadow layer with broad rollout prohibited | TO_DO_LIST/reports/PRD-046.1.16_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.17 | Diagnostic Center Response Quality Eval Pack v1 | passed | 8e0dffa | added offline deterministic response-quality eval layer (24 curated scenarios, 10-dimension rubric, acceptable/weak/hard-fail candidate detection, weak-case queue, KB/internal lens boundary eval, no-runtime-authority-expansion gate, no-mutation/hygiene) without runtime activation/provider calls | TO_DO_LIST/reports/PRD-046.1.17_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.18 | Diagnostic Center Response Quality Calibration / Weak Case Closure v1 | passed | f20e82b | added offline calibration contract/module/CLI, expanded eval fixtures to 34 scenarios and 8 candidate profiles, generated weak-case inventory/calibration plan/calibrated scorecards and confirmed no-runtime/no-mutation/hygiene gates | TO_DO_LIST/reports/PRD-046.1.18_IMPLEMENTATION_REPORT.md |
-| PRD-046.1.19 | Diagnostic Center Controlled Runtime Pilot Readiness / Limited Live Smoke Plan v1 | passed | TBD_MAIN_COMMIT | added plan-only runtime pilot readiness contract/module/CLI and artifacts (scope/cohort/toggles/preflight/smoke-plan/rollback/hard-stop/monitoring/guards) with no execution/provider calls and no production mutation | TO_DO_LIST/reports/PRD-046.1.19_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.19 | Diagnostic Center Controlled Runtime Pilot Readiness / Limited Live Smoke Plan v1 | passed | ee62b49 | added plan-only runtime pilot readiness contract/module/CLI and artifacts (scope/cohort/toggles/preflight/smoke-plan/rollback/hard-stop/monitoring/guards) with no execution/provider calls and no production mutation | TO_DO_LIST/reports/PRD-046.1.19_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -80,6 +80,7 @@
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
 
 
 

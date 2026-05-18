@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_no_mutation_review_v1",
+  "prd": "PRD-046.1.21",
+  "production_mutation_detected": false,
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "runtime_defaults_changed": false,
+  "committed_env_changed": false,
+  "private_config_committed": false,
+  "raw_private_logs_committed": false,
+  "no_mutation_status": "passed"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_artifact_hygiene_review_v1",
+  "prd": "PRD-046.1.21",
+  "source_prd": "PRD-046.1.20",
+  "final_status": "passed",
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "json_parse_error_count": 0,
+  "replacement_char_warning_count": 1,
+  "blockers": [],
+  "artifact_hygiene_status": "passed"
+}

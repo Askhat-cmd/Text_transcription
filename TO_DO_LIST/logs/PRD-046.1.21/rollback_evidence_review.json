@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_rollback_evidence_review_v1",
+  "prd": "PRD-046.1.21",
+  "rollback_precheck_passed": true,
+  "rollback_postcheck_passed": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "normal_user_apply_after_rollback_count": 0,
+  "force_disabled_priority_preserved": true,
+  "rollback_state_restores": {
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+    "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": ""
+  },
+  "rollback_evidence_status": "passed"
+}

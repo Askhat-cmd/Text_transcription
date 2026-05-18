@@ -1,0 +1,21 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_results_source_gate_v1",
+  "prd": "PRD-046.1.21",
+  "source_prd": "PRD-046.1.20",
+  "source_final_status": "passed",
+  "source_decision": "controlled_runtime_pilot_execution_passed",
+  "execution_window_count": 1,
+  "target_user_count": 1,
+  "pilot_apply_only_for_allowed_user": true,
+  "normal_user_apply_count": 0,
+  "rollback_precheck_passed": true,
+  "rollback_postcheck_passed": true,
+  "quality_delta_status": "passed",
+  "safety_kb_boundary_gate_passed": true,
+  "trace_sanitization_gate_passed": true,
+  "hard_stop_triggered": false,
+  "production_mutation_detected": false,
+  "artifact_encoding_hygiene_passed": true,
+  "reports_and_logs_present": true,
+  "source_gate_passed": true
+}

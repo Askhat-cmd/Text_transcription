@@ -1,0 +1,22 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_results_scorecard_v1",
+  "prd": "PRD-046.1.21",
+  "final_status": "passed",
+  "decision": "continue_limited_candidate",
+  "source_gate_passed": true,
+  "execution_evidence_status": "passed",
+  "rollback_evidence_status": "passed",
+  "normal_user_no_effect_status": "passed",
+  "quality_gate_decision": "passed",
+  "safety_kb_boundary_status": "passed",
+  "trace_sanitization_status": "passed",
+  "artifact_hygiene_status": "passed",
+  "encoding_warning_status": "non_blocking",
+  "no_mutation_status": "passed",
+  "hard_stop_triggered": false,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "future_execution_requires_new_prd": true,
+  "recommended_next_prd": "PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1",
+  "generated_at": "2026-05-18T09:46:58.111876+00:00"
+}

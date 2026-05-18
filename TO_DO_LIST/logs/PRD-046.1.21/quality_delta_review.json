@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_quality_delta_review_v1",
+  "prd": "PRD-046.1.21",
+  "quality_delta_status": "passed",
+  "candidate_weaker_than_baseline_count": 0,
+  "state_depth_fit_regression_count": 0,
+  "non_directiveness_regression_count": 0,
+  "non_bookishness_regression_count": 0,
+  "kb_boundary_regression_count": 0,
+  "safety_regression_count": 0,
+  "prompt_bloat_blocker_count": 0,
+  "constraint_conflict_count": 0,
+  "quality_evidence_scope": "limited_synthetic_or_harness_scenarios",
+  "requires_future_real_dialogue_validation": true,
+  "quality_gate_decision": "passed"
+}

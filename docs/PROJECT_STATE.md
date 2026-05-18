@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Проект находится на стадии `post-PRD-046.1.20-controlled-runtime-pilot-execution-passed`: сформирован deterministic offline eval-pack качества ответов (24 curated live-like scenarios, rubric на 10 dimensions, acceptable/weak/hard-fail candidate detection), при этом runtime authority boundaries сохранены без расширения. Broad rollout и runtime authority expansion остаются запрещёнными до отдельного PRD. Runtime path остаётся неизменным: Diagnostic Center trace-only shadow, Planner Bridge candidate-only, `planner_bridge_compliance_shadow` trace-only compare, `planner_bridge_writer_contract_pilot` pilot-shadow-only, `writer_prompt_replay` offline-only, prompt-constraint runtime default-off limited allowlisted test path.
+Проект находится на стадии `post-PRD-046.1.21-runtime-pilot-results-gate-passed`: сформирован deterministic offline eval-pack качества ответов (24 curated live-like scenarios, rubric на 10 dimensions, acceptable/weak/hard-fail candidate detection), при этом runtime authority boundaries сохранены без расширения. Broad rollout и runtime authority expansion остаются запрещёнными до отдельного PRD. Runtime path остаётся неизменным: Diagnostic Center trace-only shadow, Planner Bridge candidate-only, `planner_bridge_compliance_shadow` trace-only compare, `planner_bridge_writer_contract_pilot` pilot-shadow-only, `writer_prompt_replay` offline-only, prompt-constraint runtime default-off limited allowlisted test path.
 В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
 В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
 В `PRD-046.1.3` добавлены compare-mode contract/builder/eval runner для сопоставления `writer_move_instructions` и `planner_bridge_candidate` в `shadow_compare_only` режиме. Подтверждены `cases_passed=30/30`, `hard_blocker_count=0`, `unexpected_blocked_count=0`, `safety_compatibility_pass_rate=1.0`, `user_path_effect_count=0`, `writer_prompt_changed_by_bridge_count=0`, `writer_contract_changed_by_bridge_count=0`, `final_answer_changed_by_bridge_count=0`, `planner_bridge_apply_to_writer_count=0`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
@@ -25,6 +25,7 @@
 
 
 В `PRD-046.1.20` выполнен первый controlled runtime pilot execution (`limited_live_smoke`) через deterministic runtime harness для `pilot_runtime_operator_001` с обязательными normal-user controls (`2`). Подтверждены `final_status=passed`, `decision=controlled_runtime_pilot_execution_passed`, `execution_window_count=1`, `target_user_count=1`, `pilot_apply_only_for_allowed_user=true`, `normal_user_apply_count=0`, `rollback_precheck_passed=true`, `rollback_postcheck_passed=true`, `quality_delta_status=passed`, `safety_kb_boundary_gate_passed=true`, `trace_sanitization_gate_passed=true`, `hard_stop_triggered=false`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`, `docs_synced=true`.
+В `PRD-046.1.21` выполнен post-execution results/rollback/quality gate без нового runtime execution. Консолидированы evidence артефакты `PRD-046.1.20`, подтверждены `execution_evidence_status=passed`, `rollback_evidence_status=passed`, `normal_user_no_effect_status=passed`, `quality_gate_decision=passed`, `safety_kb_boundary_status=passed`, `trace_sanitization_status=passed`, `artifact_hygiene_status=passed`, `encoding_warning_status=non_blocking`, `no_mutation_status=passed`; итог `final_status=passed`, `decision=continue_limited_candidate`, `broad_rollout_allowed=false`, `production_ready=false`.
 ## Current Runtime Architecture
 Активный user-path:
 User message -> State Analyzer -> Thread Manager -> Memory Retrieval -> Context Assembly -> Diagnostic Card -> Diagnostic Center Shadow (trace-only) -> Writer Move Compliance -> Writer -> Validator/Trace -> Memory Update.
@@ -98,7 +99,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 - Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
 
 ## Next Planned PRDs
-1. PRD-046.1.21 - Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1.
+1. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1.
 
 ## Do Not Do Yet
 - Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
@@ -115,7 +116,7 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 ## Last Updated
 - Date: 2026-05-18
-- Source cycle: PRD-046.1.20
+- Source cycle: PRD-046.1.21
 
 
 

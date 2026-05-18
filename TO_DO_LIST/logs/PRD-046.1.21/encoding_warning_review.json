@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_encoding_warning_review_v1",
+  "prd": "PRD-046.1.21",
+  "replacement_char_warning_count": 1,
+  "encoding_warning_status": "non_blocking",
+  "reason": "replacement chars exist only in test_command_output.txt; no decode/NUL/json blockers",
+  "follow_up_required": false
+}

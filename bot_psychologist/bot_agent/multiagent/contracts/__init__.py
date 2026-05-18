@@ -50,6 +50,11 @@ from .diagnostic_center_runtime_pilot_execution_v1 import (
     DiagnosticCenterRuntimePilotExecutionDecision,
     DiagnosticCenterRuntimePilotExecutionStatus,
 )
+from .diagnostic_center_runtime_pilot_results_gate_v1 import (
+    RuntimePilotResultsDecisionV1,
+    RuntimePilotResultsGateRunV1,
+    RuntimePilotResultsGateSourceStatusV1,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -181,6 +186,9 @@ __all__ = [
     "DiagnosticCenterRuntimePilotExecutionStatus",
     "DiagnosticCenterRuntimePilotExecutionDecision",
     "DiagnosticCenterRuntimePilotExecutionBundle",
+    "RuntimePilotResultsGateSourceStatusV1",
+    "RuntimePilotResultsDecisionV1",
+    "RuntimePilotResultsGateRunV1",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

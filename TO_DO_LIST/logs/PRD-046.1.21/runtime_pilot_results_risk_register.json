@@ -1,0 +1,47 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_results_risk_register_v1",
+  "prd": "PRD-046.1.21",
+  "risks": [
+    {
+      "risk": "first_execution_not_real_provider_dialogue",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Run provider-backed limited smoke readiness gate before expansion.",
+      "next_prd_relevance": "PRD-046.1.22",
+      "blocks_continue_limited_candidate": false
+    },
+    {
+      "risk": "single_operator_cohort",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Expand only to controlled limited cohort with strict rollback-first policy.",
+      "next_prd_relevance": "PRD-046.1.22",
+      "blocks_continue_limited_candidate": false
+    },
+    {
+      "risk": "minimal_normal_user_controls",
+      "severity": "low",
+      "status": "open",
+      "mitigation": "Increase normal-user control evidence in next limited cycle.",
+      "next_prd_relevance": "PRD-046.1.22",
+      "blocks_continue_limited_candidate": false
+    },
+    {
+      "risk": "replacement_char_warning_in_command_log",
+      "severity": "low",
+      "status": "accepted_non_blocking",
+      "mitigation": "Keep encoding hygiene checks and sanitize command log capture.",
+      "next_prd_relevance": "PRD-046.1.22",
+      "blocks_continue_limited_candidate": false
+    },
+    {
+      "risk": "broad_rollout_still_prohibited",
+      "severity": "high",
+      "status": "open",
+      "mitigation": "Preserve conservative defaults and require new PRD for any expansion.",
+      "next_prd_relevance": "PRD-046.1.22",
+      "blocks_continue_limited_candidate": false
+    }
+  ],
+  "risk_count": 5
+}

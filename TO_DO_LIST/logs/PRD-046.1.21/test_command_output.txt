@@ -1,0 +1,16 @@
+﻿PRD-046.1.21 command output (UTF-8 sanitized)
+
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_gate_contract.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_gate_runner.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_source_gate.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_execution_evidence.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_rollback_evidence.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_normal_user_no_effect.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_quality_delta.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_safety_kb_boundary.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_trace_sanitization.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_encoding_warning_review.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_decision_gate.py -> passed
+python -m pytest bot_psychologist/tests/multiagent/test_runtime_pilot_results_no_mutation.py -> passed
+python -m bot_psychologist.tools.run_diagnostic_center_runtime_pilot_results_gate --repo-root . --source-dir TO_DO_LIST/logs/PRD-046.1.20 --reports-dir TO_DO_LIST/reports --output-dir TO_DO_LIST/logs/PRD-046.1.21 --strict -> passed
+python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.21 --logs-dir TO_DO_LIST/logs/PRD-046.1.21 --out-dir TO_DO_LIST/logs/PRD-046.1.21 --report-prd PRD-046.1.21 --repo-root . -> rerun after UTF-8 log sanitize

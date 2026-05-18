@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_execution_evidence_review_v1",
+  "prd": "PRD-046.1.21",
+  "execution_window_count": 1,
+  "target_user_count": 1,
+  "allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "runtime_activation_mode": "deterministic_runtime_harness",
+  "provider_called_by_execution_count": 0,
+  "pilot_apply_count": 5,
+  "pilot_apply_only_for_allowed_user": true,
+  "prompt_delta_within_limits": true,
+  "evidence_scope": "deterministic_runtime_harness_only",
+  "not_yet_real_provider_live_dialogue": true,
+  "execution_evidence_status": "passed"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_runtime_pilot_normal_user_no_effect_review_v1",
+  "prd": "PRD-046.1.21",
+  "normal_user_control_count": 2,
+  "normal_user_apply_count": 0,
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "normal_user_provider_apply_count": 0,
+  "normal_user_trace_sanitized": true,
+  "normal_user_no_effect_status": "passed"
+}

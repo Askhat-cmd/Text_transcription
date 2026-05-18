@@ -1,0 +1,62 @@
+{
+  "risks": [
+    {
+      "risk_id": "single_synthetic_operator_target_only",
+      "severity": "medium",
+      "status": "accepted",
+      "mitigation": "Keep default-off policy and avoid broad rollout in this stage.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "limited_real_user_evidence",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Collect additional limited evidence only if required by later gate.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "operator_error_risk",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Retain strict checklist and explicit rollback-first step ordering.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "rollback_drift_risk",
+      "severity": "low",
+      "status": "accepted",
+      "mitigation": "Keep force-disabled absolute-priority invariant in all follow-up gates.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "trace_leakage_risk",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Continue sanitized artifact policy and encoding hygiene validation.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "long_context_prompt_bloat_risk",
+      "severity": "low",
+      "status": "accepted",
+      "mitigation": "Preserve prompt delta checks and monitor future long-context cohorts.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "future_real_user_variability",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Use staged rollout strategy and strict gates before any wider exposure.",
+      "blocks_stabilization": false
+    },
+    {
+      "risk_id": "eval_harness_accumulation_cleanup_risk",
+      "severity": "medium",
+      "status": "needs_mitigation",
+      "mitigation": "Run dedicated stabilization/cleanup PRD to classify archive/runtime artifacts.",
+      "blocks_stabilization": false
+    }
+  ],
+  "risk_register_has_blockers": false,
+  "blocking_risk_count": 0
+}

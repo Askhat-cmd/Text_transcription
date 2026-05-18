@@ -1,0 +1,10 @@
+{
+  "trace_samples_checked": 5,
+  "raw_prompt_saved_count": 0,
+  "raw_kb_text_saved_count": 0,
+  "private_user_text_saved_count": 0,
+  "secret_like_value_count": 0,
+  "provider_payload_dump_count": 0,
+  "trace_sanitization_failed": false,
+  "trace_sanitization_gate_passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "rollback_cases_total": 1,
+  "rollback_cases_passed": 1,
+  "rollback_failure_count": 0,
+  "stale_apply_after_force_disabled_count": 0,
+  "force_disabled_absolute_priority": true,
+  "allowlisted_target_apply_after_rollback": 0,
+  "rollback_gate_passed": true
+}

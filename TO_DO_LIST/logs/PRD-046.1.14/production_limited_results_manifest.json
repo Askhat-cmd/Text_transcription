@@ -1,0 +1,15 @@
+{
+  "prd": "PRD-046.1.14",
+  "schema_version": "production_limited_results_manifest_v1",
+  "source_execution_prd": "PRD-046.1.13",
+  "source_final_status": "passed",
+  "source_decision": "continue_limited",
+  "gate_mode": "post_run_results_only",
+  "new_execution_performed": false,
+  "source_execution_window_count": 1,
+  "source_target_user_count": 1,
+  "source_production_limited_apply_count": 1,
+  "provider_allowed": false,
+  "production_mutation_allowed": false,
+  "generated_at": "2026-05-18T04:12:19.376094+00:00"
+}

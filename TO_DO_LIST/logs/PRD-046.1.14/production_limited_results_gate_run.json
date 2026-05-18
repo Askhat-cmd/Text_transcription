@@ -1,0 +1,119 @@
+{
+  "schema_version": "prompt_constraint_production_limited_results_gate_v1",
+  "prd": "PRD-046.1.14",
+  "source_execution_prd": "PRD-046.1.13",
+  "gate_mode": "post_run_results_only",
+  "new_execution_performed": false,
+  "source_evidence": {
+    "source_execution_prd": "PRD-046.1.13",
+    "source_final_status": "passed",
+    "source_decision": "continue_limited",
+    "source_execution_window_count": 1,
+    "source_target_user_count": 1,
+    "source_production_limited_apply_count": 1
+  },
+  "quality_summary": {
+    "cases_compared": 1,
+    "production_limited_apply_count": 1,
+    "candidate_weaker_than_baseline_count": 0,
+    "safety_regression_count": 0,
+    "kb_policy_regression_count": 0,
+    "prompt_bloat_regression_count": 0,
+    "constraint_conflict_regression_count": 0,
+    "raw_kb_text_exposure_count": 0,
+    "internal_only_exposure_count": 0,
+    "not_for_direct_quote_violation_count": 0,
+    "provider_called_by_execution_count": 0,
+    "quality_gate_passed": true
+  },
+  "rollback_summary": {
+    "rollback_cases_total": 1,
+    "rollback_cases_passed": 1,
+    "rollback_failure_count": 0,
+    "stale_apply_after_force_disabled_count": 0,
+    "force_disabled_absolute_priority": true,
+    "allowlisted_target_apply_after_rollback": 0,
+    "rollback_gate_passed": true
+  },
+  "normal_user_summary": {
+    "normal_user_cases_total": 2,
+    "normal_user_apply_count": 0,
+    "default_off_user_path_effect_count": 0,
+    "normal_user_prompt_changed_by_pilot_count": 0,
+    "normal_user_final_answer_changed_by_pilot_count": 0,
+    "normal_user_gate_passed": true
+  },
+  "trace_sanitization_summary": {
+    "trace_samples_checked": 5,
+    "raw_prompt_saved_count": 0,
+    "raw_kb_text_saved_count": 0,
+    "private_user_text_saved_count": 0,
+    "secret_like_value_count": 0,
+    "provider_payload_dump_count": 0,
+    "trace_sanitization_failed": false,
+    "trace_sanitization_gate_passed": true
+  },
+  "post_run_risk_register": {
+    "risks": [
+      {
+        "risk_id": "single_synthetic_operator_target_only",
+        "severity": "medium",
+        "status": "accepted",
+        "mitigation": "Keep default-off policy and avoid broad rollout in this stage.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "limited_real_user_evidence",
+        "severity": "medium",
+        "status": "needs_mitigation",
+        "mitigation": "Collect additional limited evidence only if required by later gate.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "operator_error_risk",
+        "severity": "medium",
+        "status": "needs_mitigation",
+        "mitigation": "Retain strict checklist and explicit rollback-first step ordering.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "rollback_drift_risk",
+        "severity": "low",
+        "status": "accepted",
+        "mitigation": "Keep force-disabled absolute-priority invariant in all follow-up gates.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "trace_leakage_risk",
+        "severity": "medium",
+        "status": "needs_mitigation",
+        "mitigation": "Continue sanitized artifact policy and encoding hygiene validation.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "long_context_prompt_bloat_risk",
+        "severity": "low",
+        "status": "accepted",
+        "mitigation": "Preserve prompt delta checks and monitor future long-context cohorts.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "future_real_user_variability",
+        "severity": "medium",
+        "status": "needs_mitigation",
+        "mitigation": "Use staged rollout strategy and strict gates before any wider exposure.",
+        "blocks_stabilization": false
+      },
+      {
+        "risk_id": "eval_harness_accumulation_cleanup_risk",
+        "severity": "medium",
+        "status": "needs_mitigation",
+        "mitigation": "Run dedicated stabilization/cleanup PRD to classify archive/runtime artifacts.",
+        "blocks_stabilization": false
+      }
+    ],
+    "risk_register_has_blockers": false,
+    "blocking_risk_count": 0
+  },
+  "decision": "ready_for_stabilization_cleanup"
+}

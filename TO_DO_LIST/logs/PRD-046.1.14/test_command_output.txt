@@ -1,0 +1,490 @@
+﻿
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_gate_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_gate_contract.py . [100%]
+
+============================== 1 passed in 0.19s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_gate_runner.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_gate_runner.py . [100%]
+
+============================== 1 passed in 0.21s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_source_gate.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_source_gate.py . [ 50%]
+.                                                                        [100%]
+
+============================== 2 passed in 0.31s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_quality_summary.py . [100%]
+
+============================== 1 passed in 0.21s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_rollback_summary.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_rollback_summary.py . [100%]
+
+============================== 1 passed in 0.22s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_normal_user_summary.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_normal_user_summary.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_trace_sanitization.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_trace_sanitization.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_risk_register.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_risk_register.py . [ 50%]
+.                                                                        [100%]
+
+============================== 2 passed in 0.18s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_no_execution_no_mutation.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_prompt_constraint_production_limited_results_no_execution_no_mutation.py . [100%]
+
+============================== 1 passed in 0.21s ==============================
+
+>>> python -m bot_psychologist.tools.run_prompt_constraint_production_limited_results_gate --source-dir TO_DO_LIST/logs/PRD-046.1.13 --output-dir TO_DO_LIST/logs/PRD-046.1.14 --strict
+
+{
+  "status": "passed",
+  "decision": "ready_for_stabilization_cleanup",
+  "decision_gate": {
+    "prd": "PRD-046.1.14",
+    "final_status": "passed",
+    "decision": "ready_for_stabilization_cleanup",
+    "source_execution_gate_passed": true,
+    "quality_gate_passed": true,
+    "rollback_gate_passed": true,
+    "normal_user_gate_passed": true,
+    "trace_sanitization_gate_passed": true,
+    "risk_register_has_blockers": false,
+    "new_execution_performed": false,
+    "provider_called_by_results_gate": false,
+    "production_mutation_detected": false,
+    "artifact_encoding_hygiene_passed": true,
+    "recommended_next_prd": "PRD-046.1.15 - Diagnostic Center stabilization / cleanup / eval harness consolidation",
+    "blockers": [],
+    "warnings": []
+  },
+  "preflight": {
+    "required": {
+      "execution_manifest": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_execution_manifest.json",
+      "preflight_result": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_preflight_result.json",
+      "trace_samples": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_trace_samples.json",
+      "baseline_vs_test_apply": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_baseline_vs_test_apply.json",
+      "normal_user_no_effect": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_normal_user_no_effect.json",
+      "rollback_proof": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_rollback_proof.json",
+      "monitoring_scorecard": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\production_limited_monitoring_scorecard.json",
+      "no_mutation_proof": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\no_mutation_proof.json",
+      "encoding_hygiene": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.13\\artifact_encoding_hygiene_report.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "execution_manifest": {
+        "schema_version": "prompt_constraint_production_limited_execution_v1",
+        "prd": "PRD-046.1.13",
+        "source_plan_prd": "PRD-046.1.12",
+        "execution_mode": "production_limited_controlled_window",
+        "execution_window": {
+          "type": "single_short_manual_window",
+          "automatic_background_execution": false
+        },
+        "target": {
+          "user_id": "prod_limited_operator_001",
+          "source": "synthetic_operator",
+          "real_user_count": 0,
+          "synthetic_operator_user_count": 1,
+          "allowlisted": true
+        },
+        "baseline_defaults_preserved": true,
+        "results": {
+          "trace_samples_count": 5,
+          "production_limited_apply_count": 1,
+          "normal_user_cases_total": 2
+        },
+        "decision": "continue_limited",
+        "source_plan_status": "passed",
+        "source_plan_decision": "ready_for_production_limited_execution_prd",
+        "execution_window_count": 1,
+        "automatic_background_execution": false,
+        "target_user_count": 1,
+        "real_user_count": 0,
+        "synthetic_operator_user_count": 1,
+        "target_user_id": "prod_limited_operator_001",
+        "normal_control_user_count": 2,
+        "provider_allowed": false,
+        "production_mutation_allowed": false,
+        "generated_at": "2026-05-17T17:44:45.252541+00:00"
+      },
+      "preflight_result": {
+        "source_plan_gate_passed": true,
+        "operator_checklist_complete": true,
+        "monitoring_plan_ready": true,
+        "rollback_plan_ready": true,
+        "abort_criteria_ready": true,
+        "allowlist_ready": true,
+        "target_user_count_allowed": true,
+        "normal_user_controls_ready": true,
+        "config_defaults_conservative": true,
+        "force_disabled_available": true,
+        "preflight_passed": true
+      },
+      "trace_samples": {
+        "schema_version": "prompt_constraint_production_limited_trace_samples_v1",
+        "prd": "PRD-046.1.13",
+        "samples": [
+          {
+            "case_id": "baseline_target_1",
+            "user_id_kind": "target",
+            "scenario": "baseline_default_off",
+            "activation_mode": "disabled",
+            "applied": false,
+            "apply_allowed": false,
+            "safety_gate_passed": true,
+            "kb_gate_passed": true,
+            "conflict_gate_passed": true,
+            "bloat_gate_passed": true,
+            "prompt_delta_chars": 0,
+            "prompt_delta_ratio": 0.0,
+            "raw_prompt_saved": false,
+            "raw_kb_text_exposed": false,
+            "private_user_text_saved": false,
+            "provider_called": false
+          },
+          {
+            "case_id": "execution_target_1",
+            "user_id_kind": "target",
+            "scenario": "production_limited_test_apply",
+            "activation_mode": "test_apply",
+            "applied": true,
+            "apply_allowed": true,
+            "safety_gate_passed": true,
+            "kb_gate_passed": true,
+            "conflict_gate_passed": true,
+            "bloat_gate_passed": true,
+            "prompt_delta_chars": 120,
+            "prompt_delta_ratio": 0.08,
+            "raw_prompt_saved": false,
+            "raw_kb_text_exposed": false,
+            "private_user_text_saved": false,
+            "provider_called": false
+          },
+          {
+            "case_id": "normal_control_1",
+            "user_id_kind": "normal_control",
+            "scenario": "normal_user_control",
+            "activation_mode": "disabled",
+            "applied": false,
+            "apply_allowed": false,
+            "safety_gate_passed": true,
+            "kb_gate_passed": true,
+            "conflict_gate_passed": true,
+            "bloat_gate_passed": true,
+            "prompt_delta_chars": 0,
+            "prompt_delta_ratio": 0.0,
+            "raw_prompt_saved": false,
+            "raw_kb_text_exposed": false,
+            "private_user_text_saved": false,
+            "provider_called": false
+          },
+          {
+            "case_id": "normal_control_2",
+            "user_id_kind": "normal_control",
+            "scenario": "normal_user_control",
+            "activation_mode": "disabled",
+            "applied": false,
+            "apply_allowed": false,
+            "safety_gate_passed": true,
+            "kb_gate_passed": true,
+            "conflict_gate_passed": true,
+            "bloat_gate_passed": true,
+            "prompt_delta_chars": 0,
+            "prompt_delta_ratio": 0.0,
+            "raw_prompt_saved": false,
+            "raw_kb_text_exposed": false,
+            "private_user_text_saved": false,
+            "provider_called": false
+          },
+          {
+            "case_id": "rollback_target_1",
+            "user_id_kind": "target",
+            "scenario": "rollback_force_disabled",
+            "activation_mode": "disabled",
+            "applied": false,
+            "apply_allowed": false,
+            "safety_gate_passed": true,
+            "kb_gate_passed": true,
+            "conflict_gate_passed": true,
+            "bloat_gate_passed": true,
+            "prompt_delta_chars": 0,
+            "prompt_delta_ratio": 0.0,
+            "raw_prompt_saved": false,
+            "raw_kb_text_exposed": false,
+            "private_user_text_saved": false,
+            "provider_called": false
+          }
+        ]
+      },
+      "baseline_vs_test_apply": {
+        "schema_version": "prompt_constraint_production_limited_baseline_vs_test_apply_v1",
+        "prd": "PRD-046.1.13",
+        "cases_compared": 1,
+        "production_limited_apply_count": 1,
+        "candidate_weaker_than_baseline_count": 0,
+        "safety_regression_count": 0,
+        "kb_policy_regression_count": 0,
+        "prompt_bloat_regression_count": 0,
+        "constraint_conflict_regression_count": 0,
+        "raw_kb_text_exposure_count": 0,
+        "internal_only_exposure_count": 0,
+        "not_for_direct_quote_violation_count": 0,
+        "provider_called_by_execution_count": 0
+      },
+      "normal_user_no_effect": {
+        "schema_version": "prompt_constraint_production_limited_normal_user_no_effect_v1",
+        "prd": "PRD-046.1.13",
+        "normal_user_cases_total": 2,
+        "normal_user_apply_count": 0,
+        "normal_user_prompt_changed_by_pilot_count": 0,
+        "normal_user_final_answer_changed_by_pilot_count": 0,
+        "default_off_user_path_effect_count": 0
+      },
+      "rollback_proof": {
+        "schema_version": "prompt_constraint_production_limited_rollback_proof_v1",
+        "prd": "PRD-046.1.13",
+        "rollback_cases_total": 1,
+        "rollback_cases_passed": 1,
+        "rollback_failure_count": 0,
+        "stale_apply_after_force_disabled_count": 0,
+        "force_disabled_absolute_priority": true,
+        "allowlisted_target_apply_after_rollback": 0
+      },
+      "monitoring_scorecard": {
+        "prd": "PRD-046.1.13",
+        "final_status": "passed",
+        "decision": "continue_limited",
+        "source_plan_gate_passed": true,
+        "execution_window_count": 1,
+        "target_user_count": 1,
+        "target_user_limit_respected": true,
+        "production_limited_apply_count": 1,
+        "normal_user_apply_count": 0,
+        "default_off_user_path_effect_count": 0,
+        "rollback_failure_count": 0,
+        "stale_apply_after_force_disabled_count": 0,
+        "candidate_weaker_than_baseline_count": 0,
+        "safety_regression_count": 0,
+        "kb_policy_regression_count": 0,
+        "prompt_bloat_regression_count": 0,
+        "constraint_conflict_regression_count": 0,
+        "raw_kb_text_exposure_count": 0,
+        "internal_only_exposure_count": 0,
+        "not_for_direct_quote_violation_count": 0,
+        "provider_called_by_execution_count": 0,
+        "trace_sanitization_failed": false,
+        "production_mutation_detected": false,
+        "artifact_encoding_hygiene_passed": true,
+        "recommended_next_prd": "PRD-046.1.14 - Production-Limited Prompt-Constraint Pilot Results / Rollback & Quality Gate v1",
+        "blockers": [],
+        "warnings": []
+      },
+      "no_mutation_proof": {
+        "schema_version": "prompt_constraint_production_limited_execution_no_mutation_proof_v1",
+        "prd": "PRD-046.1.13",
+        "tracked_paths": {
+          "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+          "registry": "Bot_data_base/data/registry.json",
+          "config": "Bot_data_base/config.yaml"
+        },
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "production_apply_performed": false,
+        "provider_called_by_execution": false,
+        "execution_performed": true
+      },
+      "encoding_hygiene": {
+        "schema_version": "artifact_encoding_hygiene_report_v1",
+        "prd": "PRD-046.1.13",
+        "checked_prd": "PRD-046.1.13",
+        "final_status": "passed",
+        "files_checked": 10,
+        "utf8_decode_error_count": 0,
+        "nul_byte_file_count": 0,
+        "nul_char_file_count": 0,
+        "replacement_char_warning_count": 0,
+        "mojibake_warning_count": 0,
+        "json_parse_error_count": 0,
+        "empty_text_artifact_count": 0,
+        "unexpected_debug_dir_count": 0,
+        "fixed_files": [],
+        "warnings": [],
+        "blockers": [],
+        "checked_files": [
+          "TO_DO_LIST/logs/PRD-046.1.13/artifact_encoding_hygiene_report.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/no_mutation_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_baseline_vs_test_apply.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_execution_manifest.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_monitoring_scorecard.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_normal_user_no_effect.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_preflight_result.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_rollback_proof.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/production_limited_trace_samples.json",
+          "TO_DO_LIST/logs/PRD-046.1.13/test_command_output.txt"
+        ]
+      }
+    }
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.14",
+    "checked_prd": "PRD-046.1.14",
+    "final_status": "passed",
+    "files_checked": 11,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.14/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_post_run_risk_register.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_decision_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_gate_run.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_manifest.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+      "TO_DO_LIST/logs/PRD-046.1.14/test_command_output.txt"
+    ]
+  }
+}
+
+>>> python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.14 --logs-dir TO_DO_LIST/logs/PRD-046.1.14 --out-dir TO_DO_LIST/logs/PRD-046.1.14 --report-prd PRD-046.1.14 --repo-root .
+
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.14",
+  "checked_prd": "PRD-046.1.14",
+  "final_status": "passed",
+  "files_checked": 11,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.14/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_post_run_risk_register.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_decision_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_gate_run.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+    "TO_DO_LIST/logs/PRD-046.1.14/test_command_output.txt"
+  ]
+}

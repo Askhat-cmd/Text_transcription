@@ -31,6 +31,13 @@ def _utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _sanitize_error_detail(exc: Exception) -> str:
+    text = str(exc or "").strip().replace("\n", " ").replace("\r", " ")
+    if not text:
+        return "unknown"
+    return text[:200]
+
+
 def _repo_root() -> Path:
     return Path(__file__).resolve().parents[3]
 
@@ -315,7 +322,21 @@ async def list_sources():
 async def get_stats():
     runner = _get_runner()
     stats = runner.registry.get_statistics()
-    chroma_stats = runner.chroma_manager.get_stats()
+    warnings: list[str] = []
+    chroma_status = "ok"
+    chroma_error_code: str | None = None
+    chroma_total = 0
+    try:
+        chroma_stats = runner.chroma_manager.get_stats()
+        chroma_total = _to_int(chroma_stats.get("total"))
+    except Exception as exc:
+        chroma_status = "unavailable"
+        chroma_error_code = "chroma_stats_unavailable"
+        warnings.append(
+            "Chroma stats unavailable; registry stats returned in degraded mode"
+        )
+        warnings.append(f"chroma_error:{_sanitize_error_detail(exc)}")
+
     sources = [s.to_dict() for s in runner.registry.list_all()]
     focus_sources = [row for row in sources if _is_focus_source(row)]
 
@@ -341,7 +362,9 @@ async def get_stats():
     return {
         "total_sources": stats.get("total_sources", 0),
         "total_blocks": stats.get("total_blocks", 0),
-        "chroma_total": chroma_stats.get("total", 0),
+        "chroma_total": chroma_total,
+        "chroma_status": chroma_status,
+        "chroma_error_code": chroma_error_code,
         "sd_distribution": {},
         "sources_by_type": stats.get("sources_by_type", {}),
         "legacy_sd_active": False,
@@ -353,6 +376,7 @@ async def get_stats():
             "review_queue_items": review_queue_items,
             "row_policy_errors_count": sum(1 for w in classification_warnings if "row_policy_error:" in w),
         },
+        "warnings": warnings,
     }
 
 

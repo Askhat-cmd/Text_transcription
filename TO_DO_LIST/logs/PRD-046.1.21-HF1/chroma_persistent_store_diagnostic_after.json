@@ -1,0 +1,47 @@
+{
+  "schema_version": "chroma_persistent_store_diagnostic_hf1_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:12:38.925118+00:00",
+  "persist_directory": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "expected_source_id": "123__кузница_духа",
+  "storage_path_exists": true,
+  "status": "ok",
+  "errors": [],
+  "warnings": [],
+  "health_probe": {
+    "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+    "collection_name": "bot_knowledge_base",
+    "embedding_model_name": "intfloat/multilingual-e5-large",
+    "collection_exists": true,
+    "collection_count": 247,
+    "collection_count_error": "The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()",
+    "embedding_probe_dimension": 1024,
+    "embedding_probe_error": null,
+    "collection_dimension_detected": null,
+    "collection_dimension_detection_reason": "not_available",
+    "dimension_mismatch": false
+  },
+  "checks": {
+    "collection_count": 247,
+    "collection_get_limit_1": {
+      "ids_count": 1,
+      "metadatas_count": 1
+    },
+    "query_smoke": {
+      "hits_count": 1
+    },
+    "source_exists_expected": true,
+    "get_stats": {
+      "total": 247,
+      "by_sd_level": {
+        "GREEN": 247
+      },
+      "by_source_type": {
+        "book": 247
+      }
+    }
+  },
+  "error_count": 0,
+  "matches_int_len_fingerprint": false
+}

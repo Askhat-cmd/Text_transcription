@@ -1,6 +1,8 @@
+import json
 import logging
 import os
 import time
+from pathlib import Path
 from typing import List, Optional
 
 from fastapi import APIRouter, HTTPException
@@ -38,8 +40,11 @@ def _get_runner() -> PipelineRunner:
 
 def _get_collection():
     global chroma_collection
-    if chroma_collection is None:
-        chroma_collection = _get_runner().chroma_manager._collection
+    runner = _get_runner()
+    chroma_collection = runner.chroma_manager.client.get_or_create_collection(
+        name=runner.chroma_manager.collection_name
+    )
+    runner.chroma_manager._collection = chroma_collection
     return chroma_collection
 
 
@@ -113,6 +118,75 @@ def _extract_candidates(results: dict) -> List[dict]:
             }
         )
     return candidates
+
+
+def _fallback_candidates_from_collection(collection: object, limit: int) -> List[dict]:
+    if not hasattr(collection, "get"):
+        return []
+    raw = collection.get(limit=max(1, int(limit)), include=["documents", "metadatas"])
+    if not isinstance(raw, dict):
+        return []
+    ids = raw.get("ids") if isinstance(raw.get("ids"), list) else []
+    docs = raw.get("documents") if isinstance(raw.get("documents"), list) else []
+    metas = raw.get("metadatas") if isinstance(raw.get("metadatas"), list) else []
+
+    candidates: List[dict] = []
+    for idx, content in enumerate(docs):
+        meta = metas[idx] if idx < len(metas) and isinstance(metas[idx], dict) else {}
+        chunk_id = ids[idx] if idx < len(ids) else (meta.get("block_id") or f"fallback_{idx}")
+        candidates.append(
+            {
+                "chunk_id": chunk_id,
+                "content": content or "",
+                "metadata": meta,
+                "distance": None,
+            }
+        )
+    return candidates
+
+
+def _fallback_candidates_from_blocks_file(query: str, limit: int) -> List[dict]:
+    runner = _get_runner()
+    merged_path = Path(runner.json_exporter.base_dir) / "all_blocks_merged.json"
+    if not merged_path.exists():
+        return []
+    try:
+        payload = json.loads(merged_path.read_text(encoding="utf-8"))
+    except Exception:
+        return []
+    blocks = payload.get("blocks") if isinstance(payload, dict) and isinstance(payload.get("blocks"), list) else []
+    if not blocks:
+        return []
+
+    query_terms = [part for part in str(query or "").lower().split() if part]
+    scored: list[tuple[int, dict]] = []
+    for idx, block in enumerate(blocks):
+        if not isinstance(block, dict):
+            continue
+        text = str(block.get("text") or "")
+        if not text.strip():
+            continue
+        text_lower = text.lower()
+        overlap = sum(1 for term in query_terms if term in text_lower)
+        metadata = block.get("metadata") if isinstance(block.get("metadata"), dict) else {}
+        score_base = overlap if overlap > 0 else 0
+        scored.append(
+            (
+                score_base,
+                {
+                    "chunk_id": block.get("id") or block.get("chunk_id") or f"blocks_fallback_{idx}",
+                    "content": text,
+                    "metadata": metadata,
+                    "distance": None,
+                },
+            )
+        )
+
+    if not scored:
+        return []
+    scored.sort(key=lambda item: item[0], reverse=True)
+    # If there is no term overlap, still return deterministic top rows to avoid hard 503 fallback.
+    return [item[1] for item in scored[: max(1, int(limit))]]
 
 
 def _apply_hybrid_scores(query: str, candidates: List[dict]) -> None:
@@ -261,12 +335,19 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
 
     raw_fetch_k = max(int(request.pre_filter_k), int(request.top_k) * 3, int(request.top_k) + 10)
 
+    candidates: List[dict] = []
+    collection = None
+    query_embedding = None
     try:
         collection = _get_collection()
         query_embedding = _get_runner().chroma_manager._embed_texts([request.query])
     except Exception as exc:
         logger.error("[QUERY] ChromaDB unavailable: %s", exc)
-        raise HTTPException(status_code=503, detail="ChromaDB unavailable")
+        candidates = _fallback_candidates_from_blocks_file(request.query, request.top_k)
+        if candidates:
+            logger.warning("[QUERY] fallback all_blocks_merged path activated due chroma bootstrap failure")
+        else:
+            raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
     def _query_collection(active_filter: Optional[dict]):
         return collection.query(
@@ -276,12 +357,25 @@ async def semantic_query(request: QueryRequest) -> QueryResponse:
             include=["documents", "metadatas", "distances"],
         )
 
-    try:
-        results = _query_collection(where_filter)
-        candidates = _extract_candidates(results)
-    except Exception as exc:
-        logger.error("[QUERY] Chroma query failed: %s", exc)
-        raise HTTPException(status_code=503, detail="ChromaDB unavailable")
+    if not candidates:
+        try:
+            results = _query_collection(where_filter)
+            candidates = _extract_candidates(results)
+        except Exception as exc:
+            logger.error("[QUERY] Chroma query failed: %s", exc)
+            try:
+                candidates = _fallback_candidates_from_collection(collection, request.top_k)
+                if candidates:
+                    logger.warning("[QUERY] fallback get() path activated due query failure")
+                else:
+                    candidates = _fallback_candidates_from_blocks_file(request.query, request.top_k)
+                    if candidates:
+                        logger.warning("[QUERY] fallback all_blocks_merged path activated due query failure")
+            except Exception as fallback_exc:
+                logger.error("[QUERY] Chroma fallback failed: %s", fallback_exc)
+                candidates = []
+            if not candidates:
+                raise HTTPException(status_code=503, detail="ChromaDB unavailable")
 
     # Fallback: если SD-фильтр дал слишком мало результатов
     if request.sd_level > 0:

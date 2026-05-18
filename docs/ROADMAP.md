@@ -58,11 +58,13 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 
 - PRD-046.1.20: first controlled runtime pilot execution (limited live smoke) delivered; allowlisted operator-only apply, >=2 normal-user controls, rollback pre/post checks passed, quality/safety/KB/trace gates green, hard-stop not triggered, no-mutation/encoding proofs passed, decision=controlled_runtime_pilot_execution_passed.
 - PRD-046.1.21: post-execution runtime pilot results/rollback/quality gate delivered; consolidated PRD-046.1.20 evidence without new execution/provider calls, passed source/execution/rollback/normal-user/quality/safety/trace/no-mutation gates, captured source encoding warning as non-blocking, decision=continue_limited_candidate.
+- PRD-046.1.21-HF1: emergency BotDB/Admin/Chroma integrity repair cycle delivered (`run_live_botdb_chroma_registry_audit_hf1.py`, persistent-store diagnostic, backup/reindex/hygiene/browser/retrieval/no-mutation artifacts, `/api/registry/stats` degraded-resilience). Live runtime blocker remains on current `:8003`: `/api/query/` still returns `503 ChromaDB unavailable`, so cycle closed as `done_with_query_blocker`.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1.
+1. PRD-046.1.21-HF2 - Chroma Persistent Store Deep Recovery / Rebuild v2.
+2. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1 (after HF2 gate closure).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

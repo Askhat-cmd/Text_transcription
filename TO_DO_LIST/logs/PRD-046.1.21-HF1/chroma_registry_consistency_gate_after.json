@@ -1,0 +1,13 @@
+{
+  "schema_version": "chroma_registry_consistency_gate_hf1_v1",
+  "generated_at": "2026-05-18T11:12:44.344345+00:00",
+  "registry_focus_blocks": 247,
+  "all_blocks_merged_count": 247,
+  "chroma_count": 247,
+  "focus_source_id": "123__кузница_духа",
+  "dashboard_http_200": true,
+  "registry_http_200": true,
+  "registry_stats_http_200": true,
+  "query_http_200": false,
+  "query_http_503_chromadb_unavailable": true
+}

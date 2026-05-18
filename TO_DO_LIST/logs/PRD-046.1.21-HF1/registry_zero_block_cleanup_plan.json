@@ -1,0 +1,22 @@
+{
+  "schema_version": "registry_zero_block_cleanup_plan_hf1_v1",
+  "generated_at": "2026-05-18T11:12:44.375765+00:00",
+  "cleanup_mode": "plan_only",
+  "cleanup_performed": false,
+  "cleanup_plan_ready": true,
+  "next_hygiene_prd_required": true,
+  "allowed_delete_candidates": [
+    "avtor__книга",
+    "test123"
+  ],
+  "blocked_delete_candidates": [
+    "123__кузница_духа",
+    "avtor__книга"
+  ],
+  "rules": {
+    "focus_source_protected": true,
+    "delete_only_zero_block": true,
+    "delete_blocks_gt_zero_forbidden": true,
+    "require_registry_snapshot_before_delete": true
+  }
+}

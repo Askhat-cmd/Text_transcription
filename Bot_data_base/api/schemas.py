@@ -38,10 +38,13 @@ class StatsResponse(BaseModel):
     total_sources: int
     total_blocks: int
     chroma_total: int
+    chroma_status: str | None = None
+    chroma_error_code: str | None = None
     sd_distribution: dict
     sources_by_type: dict
     legacy_sd_active: bool = False
     governance_readiness: dict = Field(default_factory=dict)
+    warnings: List[str] = Field(default_factory=list)
 
 
 class QueryRequest(BaseModel):

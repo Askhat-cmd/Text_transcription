@@ -1,0 +1,7 @@
+{
+  "chroma_unavailable_on_dashboard": true,
+  "registry_stats_http_500": false,
+  "query_http_503_chromadb_unavailable": true,
+  "botdb_circuit_open_detected": false,
+  "semantic_fallback_detected": false
+}

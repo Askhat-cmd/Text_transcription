@@ -1,0 +1,19 @@
+{
+  "schema_version": "bot_retrieval_smoke_hf1_v1",
+  "generated_at": "2026-05-18T11:12:44.752534+00:00",
+  "botdb_api_query_status": 503,
+  "retrieval_source_used": "api",
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": true,
+  "rag_hits_count": 0,
+  "raw_kb_quote_exposure": false,
+  "query_http_503_chromadb_unavailable": true,
+  "response": {
+    "ok": false,
+    "status_code": 503,
+    "body": {
+      "detail": "ChromaDB unavailable"
+    },
+    "error": "HTTPError:HTTP Error 503: Service Unavailable"
+  }
+}

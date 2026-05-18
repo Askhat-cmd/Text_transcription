@@ -1,0 +1,9 @@
+{
+  "schema_version": "chroma_backup_manifest_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:08:43.809421+00:00",
+  "persist_directory": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF1\\chroma_before_reindex\\chroma_before_reindex_20260518_110843",
+  "copied": true,
+  "errors": []
+}

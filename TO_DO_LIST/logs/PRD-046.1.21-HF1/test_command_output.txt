@@ -1,0 +1,185 @@
+﻿HF1 test command output (final rerun) - 2026-05-18T16:07:19.6720191+05:00
+
+### python -m pytest Bot_data_base/tests/test_registry_stats_chroma_resilience_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_registry_stats_chroma_resilience_hf1.py .       [100%]
+
+============================== 1 passed in 9.04s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_chroma_persistent_store_diagnostic_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_chroma_persistent_store_diagnostic_hf1.py .     [100%]
+
+============================== 1 passed in 7.81s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_focus_source_chroma_recovery_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_focus_source_chroma_recovery_hf1.py .           [100%]
+
+============================== 1 passed in 0.02s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_registry_zero_block_hygiene_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_registry_zero_block_hygiene_hf1.py .            [100%]
+
+============================== 1 passed in 8.31s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_admin_live_smoke_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_admin_live_smoke_hf1.py .                       [100%]
+
+============================== 1 passed in 0.02s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_botdb_query_retrieval_smoke_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_botdb_query_retrieval_smoke_hf1.py .            [100%]
+
+============================== 1 passed in 8.06s ==============================
+
+exit_code=0
+
+### python -m pytest Bot_data_base/tests/test_no_governance_mutation_hf1.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+Bot_data_base\tests\test_no_governance_mutation_hf1.py .                 [100%]
+
+============================== 1 passed in 7.99s ==============================
+
+exit_code=0
+
+### python -m Bot_data_base.tools.run_live_botdb_chroma_registry_audit_hf1 --repo-root . --botdb-dir Bot_data_base --admin-base-url http://127.0.0.1:8003 --output-dir TO_DO_LIST/logs/PRD-046.1.21-HF1 --strict
+{
+  "schema_version": "live_botdb_repair_gate_hf1_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:12:44.756247+00:00",
+  "final_status": "failed",
+  "decision": "botdb_chroma_registry_repair_blocked",
+  "source_evidence_gate_passed": true,
+  "live_problem_confirmed_before": true,
+  "registry_stats_resilience_passed": true,
+  "backup_created": true,
+  "chroma_repair_gate_passed": true,
+  "registry_focus_blocks": 247,
+  "all_blocks_merged_count": 247,
+  "chroma_count_after": 247,
+  "focus_source_id": "123__�������_����",
+  "api_dashboard_http_200": true,
+  "api_registry_http_200": true,
+  "api_registry_stats_http_200": true,
+  "api_query_http_200": false,
+  "query_http_503_chromadb_unavailable": true,
+  "semantic_fallback_used_after": false,
+  "botdb_circuit_open_after": true,
+  "admin_browser_visible_smoke_passed": false,
+  "focus_source_protected": true,
+  "no_governance_mutation_proof_passed": true,
+  "artifact_encoding_hygiene_passed": true,
+  "docs_synced": true,
+  "blockers": [
+    "query_still_503_chromadb_unavailable",
+    "botdb_circuit_open_after"
+  ]
+}
+
+exit_code=2
+
+### python -m Bot_data_base.tools.validate_prd_artifact_encoding --prd PRD-046.1.21-HF1 --logs-dir TO_DO_LIST/logs/PRD-046.1.21-HF1 --out-dir TO_DO_LIST/logs/PRD-046.1.21-HF1 --report-prd PRD-046.1.21-HF1 --repo-root .
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.21-HF1",
+  "checked_prd": "PRD-046.1.21-HF1",
+  "final_status": "passed",
+  "files_checked": 24,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 1,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt:replacement_chars=11"
+  ],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/admin_browser_visible_smoke.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/backup_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/bot_retrieval_smoke_after.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_health_probe_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_after.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_registry_consistency_gate_after.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_backup_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_result.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_after.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_symptom_snapshot_before.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/no_governance_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_result.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_hygiene_audit.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/source_evidence_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt",
+    "TO_DO_LIST/reports/PRD-046.1.21-HF1_ADMIN_LIVE_SMOKE_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.21-HF1_CHROMA_REPAIR_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.21-HF1_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.21-HF1_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/reports/PRD-046.1.21-HF1_REGISTRY_HYGIENE_REPORT.md"
+  ]
+}
+
+exit_code=0

@@ -1,0 +1,27 @@
+{
+  "schema_version": "chroma_reindex_result_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:12:38.535596+00:00",
+  "status": "passed",
+  "preflight_issues": [],
+  "confirm": true,
+  "persist_directory": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "all_blocks_total": 247,
+  "focus_source_id": "123__кузница_духа",
+  "focus_source_blocks": 247,
+  "source_ids_from_blocks": [
+    "123__кузница_духа"
+  ],
+  "chroma_count_before": 247,
+  "chroma_source_ids_before": [
+    "123__кузница_духа"
+  ],
+  "reindex_performed": true,
+  "indexed_blocks_count": 247,
+  "chroma_count_after": 247,
+  "chroma_source_ids_after": [
+    "123__кузница_духа"
+  ],
+  "errors": []
+}

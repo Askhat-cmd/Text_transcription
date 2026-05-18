@@ -1,0 +1,12 @@
+{
+  "schema_version": "source_evidence_gate_hf1_v1",
+  "generated_at": "2026-05-18T11:08:31.848793+00:00",
+  "prd_046_1_21_report_exists": true,
+  "prd_046_1_21_scorecard_exists": true,
+  "prd_046_1_21_final_status": "passed",
+  "prd_046_1_21_decision": "continue_limited_candidate",
+  "prd_046_1_21_evidence_scope": "deterministic_runtime_harness_only",
+  "live_botdb_issue_detected": true,
+  "continue_prd_046_1_22_blocked_until_repair": true,
+  "source_evidence_gate_passed": true
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "backup_manifest_hf1_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:08:38.814700+00:00",
+  "backup_created": true,
+  "chroma_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF1\\chroma_db_before_repair_20260518_110838",
+  "registry_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF1\\registry_before_repair_20260518_110838.json",
+  "all_blocks_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF1\\all_blocks_merged_before_repair_20260518_110838.json",
+  "sha256_before": {
+    "registry": "ad14404171a5e0d3e87019e05005682b38ff9e73a8093d53e0a762ceefb9bc79",
+    "all_blocks_merged": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d"
+  },
+  "focus_source_id": "123__кузница_духа",
+  "expected_focus_blocks": 247,
+  "errors": []
+}

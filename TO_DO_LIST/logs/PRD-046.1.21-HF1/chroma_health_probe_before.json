@@ -1,0 +1,13 @@
+{
+  "db_path": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\chroma_db",
+  "collection_name": "bot_knowledge_base",
+  "embedding_model_name": "intfloat/multilingual-e5-large",
+  "collection_exists": true,
+  "collection_count": 247,
+  "collection_count_error": "The truth value of an array with more than one element is ambiguous. Use a.any() or a.all()",
+  "embedding_probe_dimension": 1024,
+  "embedding_probe_error": null,
+  "collection_dimension_detected": null,
+  "collection_dimension_detection_reason": "not_available",
+  "dimension_mismatch": false
+}

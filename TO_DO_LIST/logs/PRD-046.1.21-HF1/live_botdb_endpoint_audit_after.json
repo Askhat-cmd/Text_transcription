@@ -1,0 +1,2453 @@
+{
+  "schema_version": "live_botdb_endpoint_audit_hf1_v1",
+  "generated_at": "2026-05-18T11:12:38.919132+00:00",
+  "admin_base_url": "http://127.0.0.1:8003",
+  "status": "ok",
+  "checks": {
+    "status": {
+      "method": "GET",
+      "endpoint": "/api/status",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "jobs": []
+        },
+        "error": null
+      }
+    },
+    "status_slash": {
+      "method": "GET",
+      "endpoint": "/api/status/",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "jobs": []
+        },
+        "error": null
+      }
+    },
+    "dashboard": {
+      "method": "GET",
+      "endpoint": "/api/dashboard",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "schema_version": "botdb_dashboard_summary_v1",
+          "status": "ok",
+          "generated_at": "2026-05-18T11:12:38.575245+00:00",
+          "sources": {
+            "total": 34,
+            "active": 1,
+            "protected": 1,
+            "archived": 9,
+            "failed": 2,
+            "zero_block": 32
+          },
+          "blocks": {
+            "production_total": 247,
+            "active_source_blocks": 247,
+            "registry_total": 248
+          },
+          "chroma": {
+            "status": "unavailable",
+            "count": 0,
+            "indexed_source_ids": [
+              "123__кузница_духа"
+            ]
+          },
+          "governance": {
+            "readiness": "ready",
+            "governance_present_rate": 1.0,
+            "allowed_use_present_rate": 1.0,
+            "safety_flags_present_rate": 1.0,
+            "legacy_sd_active": false
+          },
+          "enrichment": {
+            "provider_status": "called",
+            "items_completed": 247,
+            "validation_errors_count": 0,
+            "validation_warnings_count": 0,
+            "review_queue_items_count": 87,
+            "p0": 0,
+            "p1": 1,
+            "p2": 86,
+            "production_apply_performed": false
+          },
+          "recent_sources": [
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "failed",
+              "blocks": 1,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "test123",
+              "title": "test123",
+              "status": "failed",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "test123",
+              "title": "test123",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            }
+          ],
+          "warnings": [
+            "Chroma unavailable"
+          ]
+        },
+        "error": null
+      }
+    },
+    "dashboard_slash": {
+      "method": "GET",
+      "endpoint": "/api/dashboard/",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "schema_version": "botdb_dashboard_summary_v1",
+          "status": "ok",
+          "generated_at": "2026-05-18T11:12:38.603248+00:00",
+          "sources": {
+            "total": 34,
+            "active": 1,
+            "protected": 1,
+            "archived": 9,
+            "failed": 2,
+            "zero_block": 32
+          },
+          "blocks": {
+            "production_total": 247,
+            "active_source_blocks": 247,
+            "registry_total": 248
+          },
+          "chroma": {
+            "status": "unavailable",
+            "count": 0,
+            "indexed_source_ids": [
+              "123__кузница_духа"
+            ]
+          },
+          "governance": {
+            "readiness": "ready",
+            "governance_present_rate": 1.0,
+            "allowed_use_present_rate": 1.0,
+            "safety_flags_present_rate": 1.0,
+            "legacy_sd_active": false
+          },
+          "enrichment": {
+            "provider_status": "called",
+            "items_completed": 247,
+            "validation_errors_count": 0,
+            "validation_warnings_count": 0,
+            "review_queue_items_count": 87,
+            "p0": 0,
+            "p1": 1,
+            "p2": 86,
+            "production_apply_performed": false
+          },
+          "recent_sources": [
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "failed",
+              "blocks": 1,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "test123",
+              "title": "test123",
+              "status": "failed",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "test123",
+              "title": "test123",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            },
+            {
+              "source_id": "avtor__книга",
+              "title": "Книга",
+              "status": "processing",
+              "blocks": 0,
+              "hygiene_action": "manual_review",
+              "protected": false
+            }
+          ],
+          "warnings": [
+            "Chroma unavailable"
+          ]
+        },
+        "error": null
+      }
+    },
+    "registry": {
+      "method": "GET",
+      "endpoint": "/api/registry",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "total": 34,
+          "sources": [
+            {
+              "source_id": "123__кузница_духа",
+              "source_type": "book",
+              "title": "Кузница Духа",
+              "author": "Саламат Сарсекенов",
+              "author_id": "123",
+              "language": "ru",
+              "status": "done",
+              "added_at": "2026-03-13T04:38:44.281566",
+              "processed_at": "2026-05-15T03:43:28.740276+00:00",
+              "blocks_count": 247,
+              "sd_distribution": {},
+              "file_paths": {
+                "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+                "chroma": true,
+                "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+              "is_focus_source": true,
+              "is_test_like": false,
+              "recommended_hygiene_action": "keep",
+              "hygiene_reason": [
+                "focus_source_protected"
+              ],
+              "delete_policy": {
+                "allowed": false,
+                "state": "protected",
+                "reason": "Основной источник базы",
+                "code": "focus_source_protected"
+              },
+              "delete_allowed": false
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "failed",
+              "added_at": "2026-05-08T09:43:22.273607",
+              "processed_at": "2026-05-15T09:13:51.861191",
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": "No subtitles found for video",
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "zero_blocks",
+                "failed_status"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "failed",
+              "added_at": "2026-05-08T09:43:22.442757",
+              "processed_at": "2026-05-15T09:13:55.692995",
+              "blocks_count": 1,
+              "sd_distribution": {
+                "BEIGE": 1
+              },
+              "file_paths": {
+                "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\avtor__книга_blocks.json",
+                "chroma": true,
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": "Collection expecting embedding with dimension of 1024, got 3",
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": false,
+                "state": "unavailable",
+                "reason": "Проверка Chroma недоступна: source_exists_error:object of type 'int' has no len()",
+                "code": "chroma_source_exists_unavailable"
+              },
+              "delete_allowed": false
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-08T10:55:17.881409",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-08T10:55:18.043551",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-08T10:57:42.452235",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-08T10:57:42.672781",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:35:46.488360",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-12T09:35:46.552570",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:05.313409",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:05.375408",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:57.143232",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T10:26:05.531310",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T10:26:05.700252",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T10:54:59.790178",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T10:54:59.943634",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T11:38:25.100655",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T11:38:25.253022",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T12:17:04.187712",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T12:17:04.354085",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T03:42:27.097382",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T03:42:27.284004",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T04:29:07.029867",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T04:29:07.173918",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T04:58:41.345834",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T04:58:41.534381",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T05:37:57.763341",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T05:37:57.948669",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T06:05:43.219196",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T06:05:43.380332",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T08:40:00.244075",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T08:40:00.611014",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T09:13:51.857894",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T09:13:52.203035",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            }
+          ],
+          "warnings": []
+        },
+        "error": null
+      }
+    },
+    "registry_slash": {
+      "method": "GET",
+      "endpoint": "/api/registry/",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "total": 34,
+          "sources": [
+            {
+              "source_id": "123__кузница_духа",
+              "source_type": "book",
+              "title": "Кузница Духа",
+              "author": "Саламат Сарсекенов",
+              "author_id": "123",
+              "language": "ru",
+              "status": "done",
+              "added_at": "2026-03-13T04:38:44.281566",
+              "processed_at": "2026-05-15T03:43:28.740276+00:00",
+              "blocks_count": 247,
+              "sd_distribution": {},
+              "file_paths": {
+                "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+                "chroma": true,
+                "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+              "is_focus_source": true,
+              "is_test_like": false,
+              "recommended_hygiene_action": "keep",
+              "hygiene_reason": [
+                "focus_source_protected"
+              ],
+              "delete_policy": {
+                "allowed": false,
+                "state": "protected",
+                "reason": "Основной источник базы",
+                "code": "focus_source_protected"
+              },
+              "delete_allowed": false
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "failed",
+              "added_at": "2026-05-08T09:43:22.273607",
+              "processed_at": "2026-05-15T09:13:51.861191",
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": "No subtitles found for video",
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "zero_blocks",
+                "failed_status"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "failed",
+              "added_at": "2026-05-08T09:43:22.442757",
+              "processed_at": "2026-05-15T09:13:55.692995",
+              "blocks_count": 1,
+              "sd_distribution": {
+                "BEIGE": 1
+              },
+              "file_paths": {
+                "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\avtor__книга_blocks.json",
+                "chroma": true,
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": "Collection expecting embedding with dimension of 1024, got 3",
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": false,
+                "state": "unavailable",
+                "reason": "Проверка Chroma недоступна: source_exists_error:object of type 'int' has no len()",
+                "code": "chroma_source_exists_unavailable"
+              },
+              "delete_allowed": false
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-08T10:55:17.881409",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-08T10:55:18.043551",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-08T10:57:42.452235",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-08T10:57:42.672781",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:35:46.488360",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-12T09:35:46.552570",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:05.313409",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:05.375408",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "archived",
+              "added_at": "2026-05-12T09:37:57.143232",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "registry_only_blocks_test_like"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T10:26:05.531310",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T10:26:05.700252",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T10:54:59.790178",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T10:54:59.943634",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T11:38:25.100655",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T11:38:25.253022",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-12T12:17:04.187712",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-12T12:17:04.354085",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T03:42:27.097382",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T03:42:27.284004",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T04:29:07.029867",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T04:29:07.173918",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T04:58:41.345834",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T04:58:41.534381",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T05:37:57.763341",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T05:37:57.948669",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T06:05:43.219196",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T06:05:43.380332",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T08:40:00.244075",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T08:40:00.611014",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "test123",
+              "source_type": "youtube",
+              "title": "",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "",
+              "status": "processing",
+              "added_at": "2026-05-15T09:13:51.857894",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {},
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            },
+            {
+              "source_id": "avtor__книга",
+              "source_type": "book",
+              "title": "Книга",
+              "author": "Автор",
+              "author_id": "avtor",
+              "language": "ru",
+              "status": "processing",
+              "added_at": "2026-05-15T09:13:52.203035",
+              "processed_at": null,
+              "blocks_count": 0,
+              "sd_distribution": {},
+              "file_paths": {
+                "upload": "data/uploads/books\\book.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0",
+              "is_focus_source": false,
+              "is_test_like": true,
+              "recommended_hygiene_action": "archive",
+              "hygiene_reason": [
+                "test_like",
+                "processing_stale",
+                "zero_blocks"
+              ],
+              "delete_policy": {
+                "allowed": true,
+                "state": "delete",
+                "reason": "Архивный/пустой источник можно удалить",
+                "code": "zero_block_safe_delete"
+              },
+              "delete_allowed": true
+            }
+          ],
+          "warnings": []
+        },
+        "error": null
+      }
+    },
+    "registry_stats": {
+      "method": "GET",
+      "endpoint": "/api/registry/stats",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "total_sources": 34,
+          "total_blocks": 248,
+          "chroma_total": 0,
+          "chroma_status": "unavailable",
+          "chroma_error_code": "chroma_stats_unavailable",
+          "sd_distribution": {},
+          "sources_by_type": {
+            "book": 17,
+            "youtube": 17
+          },
+          "legacy_sd_active": false,
+          "governance_readiness": {
+            "focus_source_count": 1,
+            "focus_source_blocks": 247,
+            "archive_candidate_sources": 33,
+            "processing_stale_sources": 22,
+            "review_queue_items": 87,
+            "row_policy_errors_count": 0
+          },
+          "warnings": [
+            "Chroma stats unavailable; registry stats returned in degraded mode",
+            "chroma_error:object of type 'int' has no len()"
+          ]
+        },
+        "error": null
+      }
+    },
+    "query": {
+      "method": "POST",
+      "endpoint": "/api/query/",
+      "response": {
+        "ok": false,
+        "status_code": 503,
+        "body": {
+          "detail": "ChromaDB unavailable"
+        },
+        "error": "HTTPError:HTTP Error 503: Service Unavailable"
+      }
+    }
+  },
+  "symptoms": {
+    "chroma_unavailable_on_dashboard": true,
+    "registry_stats_http_500": false,
+    "query_http_503_chromadb_unavailable": true,
+    "botdb_circuit_open_detected": false,
+    "semantic_fallback_detected": false
+  }
+}

@@ -40,6 +40,10 @@ class ChromaManager:
         self._collection = self.client.get_or_create_collection(name=self.collection_name)
         self._model = self._init_embedding_model()
 
+    def _ensure_collection(self):
+        self._collection = self.client.get_or_create_collection(name=self.collection_name)
+        return self._collection
+
     def probe_collection_health(self) -> dict:
         collection_exists = False
         collection_count = None
@@ -125,27 +129,30 @@ class ChromaManager:
     def add_blocks(self, blocks: List[UniversalBlock]) -> int:
         if not blocks:
             return 0
+        collection = self._ensure_collection()
         texts = [b.text for b in blocks]
         embeddings = self._embed_texts(texts)
         ids = [b.block_id for b in blocks]
         metadatas = [self._to_metadata(b) for b in blocks]
 
-        self._collection.add(ids=ids, embeddings=embeddings, documents=texts, metadatas=metadatas)
+        collection.add(ids=ids, embeddings=embeddings, documents=texts, metadatas=metadatas)
         return len(blocks)
 
     def delete_source(self, source_id: str) -> int:
         if not source_id:
             return 0
-        existing = self._collection.get(where={"source_id": source_id})
+        collection = self._ensure_collection()
+        existing = collection.get(where={"source_id": source_id})
         ids = existing.get("ids", []) if existing else []
         if not ids:
             return 0
-        self._collection.delete(ids=ids)
+        collection.delete(ids=ids)
         return len(ids)
 
     def get_stats(self) -> dict:
-        total = int(self._collection.count())
-        data = self._collection.get(limit=max(1, total), include=["metadatas"]) if total > 0 else {"metadatas": []}
+        collection = self._ensure_collection()
+        total = int(collection.count())
+        data = collection.get(limit=max(1, total), include=["metadatas"]) if total > 0 else {"metadatas": []}
         by_sd_level: Dict[str, int] = {}
         by_source_type: Dict[str, int] = {}
         for meta in data.get("metadatas", []) if data else []:
@@ -160,7 +167,8 @@ class ChromaManager:
     def source_exists(self, source_id: str) -> bool:
         if not source_id:
             return False
-        res = self._collection.get(where={"source_id": source_id})
+        collection = self._ensure_collection()
+        res = collection.get(where={"source_id": source_id})
         return bool(res and res.get("ids"))
 
     def _to_metadata(self, block: UniversalBlock) -> dict:

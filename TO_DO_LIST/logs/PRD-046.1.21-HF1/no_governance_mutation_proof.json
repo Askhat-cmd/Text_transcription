@@ -1,0 +1,16 @@
+{
+  "schema_version": "no_governance_mutation_proof_hf1_v1",
+  "source_prd": "PRD-046.1.21-HF1",
+  "generated_at": "2026-05-18T11:12:44.755237+00:00",
+  "all_blocks_merged_text_mutated": false,
+  "block_ids_mutated": false,
+  "chunk_type_mutated": false,
+  "allowed_use_mutated": false,
+  "safety_flags_mutated": false,
+  "llm_enrichment_mutated": false,
+  "focus_source_deleted": false,
+  "registry_focus_source_mutated": false,
+  "focus_source_id": "123__кузница_духа",
+  "chroma_reindex_performed": true,
+  "registry_zero_block_cleanup_performed": false
+}

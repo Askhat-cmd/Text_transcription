@@ -68,7 +68,7 @@
 | PRD-046.1.12 | Production-Limited Prompt-Constraint Pilot Rollout Plan v1 | passed | 44e5fa3 | added production-limited rollout planning contract/module/CLI + artifacts (rollout plan, cohort/preflight/checklist/monitoring/rollback/abort/readiness/runbook, no-mutation/hygiene); plan-only gate passed with `decision=ready_for_production_limited_execution_prd`, `execution_performed=false`, and conservative defaults unchanged | TO_DO_LIST/reports/PRD-046.1.12_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.13 | Production-Limited Prompt-Constraint Pilot Execution / Monitoring Gate v1 | passed | 86143ec | added production-limited execution contract/module/CLI + artifacts (execution manifest, preflight result, sanitized traces, baseline-vs-test_apply, normal-user no-effect, rollback proof, monitoring scorecard, no-mutation/hygiene); single-window/single-target cycle passed with decision=continue_limited and no production mutation/provider call | TO_DO_LIST/reports/PRD-046.1.13_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.14 | Production-Limited Prompt-Constraint Pilot Results / Rollback & Quality Gate v1 | passed | 83972a8 | added production-limited post-run results gate contract/module/CLI + artifacts (results manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene); no new execution, evidence from PRD-046.1.13 passed with decision=ready_for_stabilization_cleanup | TO_DO_LIST/reports/PRD-046.1.14_IMPLEMENTATION_REPORT.md |
-| PRD-046.1.15 | Diagnostic Center Stabilization / Cleanup / Eval Harness Consolidation | passed | TBD (update post-push) | added stabilization contract/module/CLI + artifacts (source gate, module inventory/classification, permanent regression gate catalog, non-destructive cleanup plan, archive manifest, stabilization scorecard, transfer brief, no-mutation/hygiene); completed with `decision=ready_for_transfer_brief` and no execution/provider/production-state mutation | TO_DO_LIST/reports/PRD-046.1.15_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.15 | Diagnostic Center Stabilization / Cleanup / Eval Harness Consolidation | passed | 858af56 | added stabilization contract/module/CLI + artifacts (source gate, module inventory/classification, permanent regression gate catalog, non-destructive cleanup plan, archive manifest, stabilization scorecard, transfer brief, no-mutation/hygiene); completed with `decision=ready_for_transfer_brief` and no execution/provider/production-state mutation | TO_DO_LIST/reports/PRD-046.1.15_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -76,6 +76,7 @@
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
 
 
 

@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_stabilization_no_mutation_proof_v1",
+  "prd": "PRD-046.1.15",
+  "tracked_paths": {
+    "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+    "registry": "Bot_data_base/data/registry.json",
+    "config": "Bot_data_base/config.yaml"
+  },
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "production_apply_performed": false,
+  "provider_called": false,
+  "new_execution_performed": false
+}

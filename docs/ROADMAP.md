@@ -48,19 +48,20 @@
 - PRD-046.1.11: supervised results consolidation / rollout decision gate delivered; added consolidation contract/module/CLI + tests/artifacts across both supervised cycles (`046.1.9` + `046.1.10`), confirmed reproducibility (`total_test_apply_applied_count=9`, `total_cases_compared=9`, zero safety/KB/rollback/no-mutation/provider regressions), final decision `prepare_production_limited_rollout_plan`.
 - PRD-046.1.12: production-limited rollout planning gate delivered (plan-only, no execution); added rollout plan contract/module/CLI + tests/artifacts (`cohort_policy`, `preflight_gates`, `operator_checklist`, `monitoring_plan`, `rollback_plan`, `abort_criteria`, `readiness_gate`, runbook) with conservative defaults preserved and final decision `ready_for_production_limited_execution_prd`.
 - PRD-046.1.13: one production-limited execution/monitoring cycle delivered; added execution contract/module/CLI + tests/artifacts (manifest, preflight, sanitized traces, baseline-vs-test_apply, normal-user no-effect, rollback proof, monitoring scorecard, no-mutation/hygiene), ran single-target window (	arget_user_count=1) with rollback-first success and decision continue_limited.
-- PRD-046.1.14: post-run production-limited results/rollback/quality gate delivered; added results-gate contract/module/CLI + tests/artifacts (manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene), no new execution performed, final decision `ready_for_stabilization_cleanup` with no provider calls and no production mutation.
+- PRD-046.1.14: post-run production-limited results/rollback/quality gate delivered; added results-gate contract/module/CLI + tests/artifacts (manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene), no new execution performed, final decision eady_for_stabilization_cleanup with no provider calls and no production mutation.
+- PRD-046.1.15: stabilization/cleanup/eval-harness consolidation delivered; added stabilization contract/module/CLI + tests/artifacts (source gate, module inventory/classification, permanent regression gate catalog, non-destructive cleanup plan, archive manifest, stabilization scorecard, transfer brief, no-mutation/hygiene), with `decision=ready_for_transfer_brief` and no runtime-default/provider/production-state mutation.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.15 - Diagnostic Center stabilization / cleanup / eval harness consolidation.
+1. PRD-046.1.16 - Diagnostic Center v1 Final Acceptance / Runtime Governance Closure v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.
 - Planner-lite for workflow automation.
 - Production hardening cycle (SLO monitoring, operational guardrails, incident playbooks).
-- Diagnostic Center stabilization / cleanup / eval harness consolidation: после controlled rollout отделить production runtime от quality/eval harness и archive artifacts; классифицировать модули как production/eval/archive; удалить или архивировать временные debug/log artifacts; оставить только regression/eval gates, критичные для safety.
+- Post-stabilization governance closure: подтвердить final acceptance на закрепленных permanent regression gates и зафиксировать runtime governance boundaries перед любым расширением rollout.
 
 ## Deferred / Not Yet
 - Full runtime reliance on enriched KB until APPLY1 + retrieval checks complete.
@@ -75,6 +76,7 @@
 
 ## Ordering Constraint
 Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуском Diagnostic Center обязательны retrieval eval + review workflow readiness gates.
+
 
 
 

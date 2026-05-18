@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_module_classification_v1",
+  "prd": "PRD-046.1.15",
+  "category_counts": {
+    "production_runtime": 38,
+    "runtime_contracts": 23,
+    "regression_gates": 20,
+    "eval_harness": 163,
+    "prd_artifacts": 174,
+    "archive_candidates": 4,
+    "docs_living_state": 5,
+    "do_not_touch": 3
+  },
+  "required_categories_present": true
+}

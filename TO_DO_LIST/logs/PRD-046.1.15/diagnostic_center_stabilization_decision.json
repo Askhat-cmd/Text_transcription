@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_stabilization_decision_v1",
+  "prd": "PRD-046.1.15",
+  "final_status": "passed",
+  "decision": "ready_for_transfer_brief",
+  "blockers": [],
+  "warnings": [],
+  "recommended_next_step": "move_to_new_chat_with_transfer_brief"
+}

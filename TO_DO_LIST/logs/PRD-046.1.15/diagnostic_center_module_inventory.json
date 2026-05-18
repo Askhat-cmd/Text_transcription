@@ -1,0 +1,2587 @@
+{
+  "schema_version": "diagnostic_center_module_inventory_v1",
+  "prd": "PRD-046.1.15",
+  "items": [
+    {
+      "path": "Bot_data_base/config.yaml",
+      "classification": "do_not_touch",
+      "reason": "sensitive production state path",
+      "runtime_critical": true
+    },
+    {
+      "path": "Bot_data_base/data/processed/all_blocks_merged.json",
+      "classification": "do_not_touch",
+      "reason": "sensitive production state path",
+      "runtime_critical": true
+    },
+    {
+      "path": "Bot_data_base/data/registry.json",
+      "classification": "do_not_touch",
+      "reason": "sensitive production state path",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/__init__.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/__init__.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/agent_llm_client.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/agent_llm_config.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval_config.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/state_analyzer.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/state_analyzer_prompts.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/thread_manager.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/thread_manager_prompts.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/validator_agent.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/validator_agent_config.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/context_assembly.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/__init__.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/context_package.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_card.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_stabilization_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/memory_bundle.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/planner_bridge_compliance_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/planner_bridge_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/planner_bridge_writer_contract_pilot_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_pilot_runtime_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_production_limited_execution_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_production_limited_results_gate_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_production_limited_rollout_plan_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_supervised_consolidation_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_supervised_continuation_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_supervised_execution_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/prompt_constraint_supervised_rollout_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/state_snapshot.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/thread_state.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/turn_llm_summary.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/validation_result.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/writer_prompt_replay_v1.py",
+      "classification": "runtime_contracts",
+      "reason": "contract compatibility layer",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_divergence.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_shadow.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_stabilization.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_v1_builder.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/knowledge_policy.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/planner_bridge_candidate.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/planner_bridge_compliance_shadow.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/planner_bridge_writer_contract_pilot.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_pilot_runtime.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_production_limited_execution.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_production_limited_results_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_production_limited_rollout_plan.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_section.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_supervised_consolidation.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_supervised_continuation.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_supervised_execution.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompt_constraint_supervised_rollout.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval gated orchestration module",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompts/turn_llm_summary_v1.md",
+      "classification": "production_runtime",
+      "reason": "multiagent runtime module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/quality_trace.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/README.md",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/runtime_adapter.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/thread_storage.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/turn_summary_service.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/writer_move_compliance.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/writer_prompt_replay.py",
+      "classification": "production_runtime",
+      "reason": "runtime-path or runtime-support module",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/__init__.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/fixtures/memory_retrieval_fixtures.json",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/fixtures/state_analyzer_fixtures.json",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/fixtures/validator_agent_fixtures.json",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/fixtures/writer_agent_fixtures.json",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_agent_hot_swap.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_agent_llm_client.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_agent_llm_config.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_archive_manifest.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_cleanup_plan_non_destructive.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_contracts.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_divergence_taxonomy.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_eval_cases.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_module_classification.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_regression_gate_catalog.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_rules.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_safety_priority.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_adapter.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_kb_sanitization.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_non_blocking.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_trace.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_source_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_transfer_brief.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_legacy_rollback.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_low_resource_continuity.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_memory_retrieval.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_memory_retrieval_knowledge_policy.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_multiagent_smoke.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_orchestrator_e2e.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_orchestrator_knowledge_debug_redaction.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_builder.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_builder.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_runtime_smoke.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_compliance_safety.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_safety_guards.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_builder.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_immutability.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_runtime_smoke.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_planner_bridge_writer_contract_pilot_safety.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_post_cutover_model_guard.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_gate_verification.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_quality_delta.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_quality_gate_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_quality_gate_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_rollback_toggle_matrix.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_allowlist.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_builder.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_default_off.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_prompt_section.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_rollback.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_pilot_runtime_safety.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_abort_criteria.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_cohort_policy.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_monitoring_scorecard.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_normal_user_no_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_preflight.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_rollback.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_source_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_target_policy.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_monitoring_plan.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_no_execution_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_operator_checklist.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_preflight_gates.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_gate_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_gate_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_no_execution_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_normal_user_summary.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_risk_register.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_rollback_summary.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_source_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_trace_sanitization.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollback_plan.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_plan_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_plan_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_rollout_source_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_aggregate_metrics.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_decision_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_reproducibility.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_risk_register.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_consolidation_source_gates.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_cohort_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_normal_user_no_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_quality_comparison.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_rollback.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_scenario_coverage.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_continuation_source_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_normal_user_no_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_quality_comparison.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_rollback.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_execution_source_plan_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_abort_criteria.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_no_default_enable.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_no_mutation.py",
+      "classification": "regression_gates",
+      "reason": "test preserves permanent runtime safety invariant",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_plan_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_readiness_gate.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_prompt_constraint_supervised_rollout_toggle_matrix.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_quality_trace.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_safety_detection.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_state_analyzer.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_state_analyzer_calibration_regression.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_state_analyzer_llm_client_compat.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_manager.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_manager_diagnostics.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_manager_pattern_core.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_manager_response_mode.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_state_contracts.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_state_pattern_core.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_storage.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_thread_storage_persistence.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_validator_agent.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_agent.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_kb_snippet_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_llm_client_compat.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_builder.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_contract.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_eval_runner.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_immutability.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_kb_boundaries.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_no_user_path_effect.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_prompt_bloat.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_runtime_smoke.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_writer_prompt_replay_safety.py",
+      "classification": "eval_harness",
+      "reason": "test/eval harness asset",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/botdb_retrieval_path_smoke.py",
+      "classification": "production_runtime",
+      "reason": "runtime/support operational tool",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tools/process_turn_llm_summaries.py",
+      "classification": "production_runtime",
+      "reason": "runtime/support operational tool",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_contract_audit.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_planner_bridge_eval.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_shadow_eval.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_stabilization_cleanup.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_planner_bridge_compliance_shadow_eval.py",
+      "classification": "production_runtime",
+      "reason": "runtime/support operational tool",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tools/run_planner_bridge_writer_contract_pilot_eval.py",
+      "classification": "production_runtime",
+      "reason": "runtime/support operational tool",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_pilot_quality_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_pilot_runtime_eval.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_production_limited_execution_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_production_limited_results_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_production_limited_rollout_plan.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_supervised_consolidation_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_supervised_continuation_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_supervised_execution_gate.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_prompt_constraint_supervised_rollout_plan.py",
+      "classification": "eval_harness",
+      "reason": "PRD/eval orchestration runner",
+      "runtime_critical": false
+    },
+    {
+      "path": "bot_psychologist/tools/run_writer_prompt_replay_eval.py",
+      "classification": "production_runtime",
+      "reason": "runtime/support operational tool",
+      "runtime_critical": true
+    },
+    {
+      "path": "bot_psychologist/tools/validate_prd_artifact_encoding.py",
+      "classification": "regression_gates",
+      "reason": "artifact hygiene permanent gate",
+      "runtime_critical": false
+    },
+    {
+      "path": "docs/ARCHITECTURE_OVERVIEW.md",
+      "classification": "docs_living_state",
+      "reason": "living project documentation",
+      "runtime_critical": false
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "classification": "docs_living_state",
+      "reason": "living project documentation",
+      "runtime_critical": false
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "classification": "docs_living_state",
+      "reason": "living project documentation",
+      "runtime_critical": false
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "classification": "docs_living_state",
+      "reason": "living project documentation",
+      "runtime_critical": false
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "classification": "docs_living_state",
+      "reason": "living project documentation",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_contract_audit.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_eval_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_contract_audit.json",
+      "classification": "archive_candidates",
+      "reason": "historical temporary artifact candidate",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_eval_scorecard.json",
+      "classification": "archive_candidates",
+      "reason": "historical temporary artifact candidate",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_trace_samples.json",
+      "classification": "archive_candidates",
+      "reason": "historical temporary artifact candidate",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/no_mutation_proof.json",
+      "classification": "archive_candidates",
+      "reason": "historical temporary artifact candidate",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_divergence_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_runtime_smoke.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_baseline_vs_test_apply.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_manifest.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_normal_user_no_effect.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_observability_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_rollback_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_scenario_coverage.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_aggregate_metrics.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_manifest.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_reproducibility.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_risk_register.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_rollout_decision_gate.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_baseline_vs_test_apply.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_execution_manifest.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_monitoring_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_normal_user_no_effect.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_preflight_result.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_rollback_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_post_run_risk_register.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_decision_gate.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_gate_run.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_manifest.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_contract_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_audit.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_runtime_smoke.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_runtime_smoke.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_runtime_smoke.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_eval.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_smoke.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/baseline_vs_test_apply_quality_delta.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_gate_verification.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_quality_gate_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/rollback_toggle_matrix.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/runtime_evidence_audit.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/artifact_encoding_hygiene_report.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/no_mutation_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_baseline_vs_test_apply.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_manifest.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_normal_user_no_effect.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_observability_scorecard.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_rollback_proof.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_trace_samples.json",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/test_command_output.txt",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_SUPERVISED_CONTINUATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_SUPERVISED_CONSOLIDATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_PRODUCTION_LIMITED_ROLLOUT_PLAN_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_PRODUCTION_LIMITED_EXECUTION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_PRODUCTION_LIMITED_RESULTS_GATE_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_DIAGNOSTIC_CENTER_SHADOW_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_PLANNER_BRIDGE_CONTRACT_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_SHADOW_DIVERGENCE_CALIBRATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_PLANNER_BRIDGE_COMPLIANCE_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_WRITER_CONTRACT_PILOT_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_WRITER_PROMPT_REPLAY_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_PROMPT_CONSTRAINT_PILOT_RUNTIME_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_PROMPT_CONSTRAINT_PILOT_QUALITY_GATE_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_SUPERVISED_ROLLOUT_PLAN_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_SUPERVISED_EXECUTION_OBSERVABILITY_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_DIAGNOSTIC_CENTER_CONTRACT_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "prd_artifacts",
+      "reason": "historical PRD evidence artifact",
+      "runtime_critical": false
+    }
+  ],
+  "inventory_count": 430
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "diagnostic_center_stabilization_v1",
+  "prd": "PRD-046.1.15",
+  "source_prd": "PRD-046.1.14",
+  "source_decision": "ready_for_stabilization_cleanup",
+  "mode": "stabilization_cleanup_consolidation",
+  "new_execution_performed": false,
+  "provider_called": false,
+  "runtime_defaults_changed": false,
+  "module_inventory": {
+    "inventory_count": 430
+  },
+  "classification_summary": {
+    "schema_version": "diagnostic_center_module_classification_v1",
+    "prd": "PRD-046.1.15",
+    "category_counts": {
+      "production_runtime": 38,
+      "runtime_contracts": 23,
+      "regression_gates": 20,
+      "eval_harness": 163,
+      "prd_artifacts": 174,
+      "archive_candidates": 4,
+      "docs_living_state": 5,
+      "do_not_touch": 3
+    },
+    "required_categories_present": true
+  },
+  "regression_gate_catalog": {
+    "minimum_required_gate_count": 12,
+    "all_required_regression_gates_present": true,
+    "gate_count": 14
+  },
+  "cleanup_plan": {
+    "cleanup_mode": "non_destructive_manifest_first",
+    "physical_deletion_performed": false,
+    "runtime_files_deleted": false,
+    "regression_gates_deleted": false,
+    "kb_registry_chroma_config_mutated": false,
+    "archive_candidates_count": 4,
+    "requires_future_cleanup_prd": true,
+    "future_cleanup_prd_recommended": "PRD-046.1.16 or later"
+  },
+  "archive_manifest": {
+    "archive_mode": "manifest_only",
+    "physical_files_moved": 0,
+    "physical_files_deleted": 0,
+    "items_count": 4
+  },
+  "transfer_brief": {
+    "path": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.15_TRANSFER_BRIEF_TO_NEW_CHAT.md",
+    "ready": true,
+    "required_sections_present": true
+  },
+  "decision": "ready_for_transfer_brief"
+}

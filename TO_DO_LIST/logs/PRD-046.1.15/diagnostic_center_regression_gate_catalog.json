@@ -1,0 +1,163 @@
+{
+  "schema_version": "diagnostic_center_regression_gate_catalog_v1",
+  "permanent_gates": [
+    {
+      "gate_id": "prompt_constraint_default_off_no_effect",
+      "category": "runtime_safety",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_normal_user_summary.py",
+      "source_prds": [
+        "PRD-046.1.6",
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_force_disabled_rollback",
+      "category": "rollback",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_rollback_summary.py",
+      "source_prds": [
+        "PRD-046.1.6",
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_allowlist_enforcement",
+      "category": "runtime_safety",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_execution_target_policy.py",
+      "source_prds": [
+        "PRD-046.1.6",
+        "PRD-046.1.13"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_normal_user_no_effect",
+      "category": "runtime_safety",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_normal_user_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_safety_regression",
+      "category": "quality",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_kb_policy_regression",
+      "category": "quality",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_raw_kb_exposure",
+      "category": "privacy",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_internal_only_exposure",
+      "category": "privacy",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_not_for_direct_quote",
+      "category": "privacy",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_prompt_bloat",
+      "category": "quality",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_conflict",
+      "category": "quality",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_quality_summary.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "prompt_constraint_trace_sanitization",
+      "category": "privacy",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_prompt_constraint_production_limited_results_trace_sanitization.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14"
+      ]
+    },
+    {
+      "gate_id": "artifact_encoding_hygiene",
+      "category": "hygiene",
+      "required": true,
+      "command_or_test": "python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.15 --logs-dir TO_DO_LIST/logs/PRD-046.1.15 --out-dir TO_DO_LIST/logs/PRD-046.1.15 --report-prd PRD-046.1.15 --repo-root .",
+      "source_prds": [
+        "PRD-046.1.2-HF1",
+        "PRD-046.1.14",
+        "PRD-046.1.15"
+      ]
+    },
+    {
+      "gate_id": "production_no_mutation",
+      "category": "runtime_safety",
+      "required": true,
+      "command_or_test": "python -m pytest bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_no_mutation.py",
+      "source_prds": [
+        "PRD-046.1.7",
+        "PRD-046.1.13",
+        "PRD-046.1.14",
+        "PRD-046.1.15"
+      ]
+    }
+  ],
+  "minimum_required_gate_count": 12,
+  "all_required_gates_present": true
+}

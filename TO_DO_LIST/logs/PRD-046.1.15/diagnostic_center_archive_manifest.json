@@ -1,0 +1,43 @@
+{
+  "archive_mode": "manifest_only",
+  "physical_files_moved": 0,
+  "physical_files_deleted": 0,
+  "items": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_contract_audit.json",
+      "classification": "archive_candidate",
+      "reason": "historical temporary artifact candidate",
+      "safe_to_archive_later": true,
+      "moved_now": false,
+      "delete_now": false,
+      "rollback_path": null
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_eval_scorecard.json",
+      "classification": "archive_candidate",
+      "reason": "historical temporary artifact candidate",
+      "safe_to_archive_later": true,
+      "moved_now": false,
+      "delete_now": false,
+      "rollback_path": null
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_trace_samples.json",
+      "classification": "archive_candidate",
+      "reason": "historical temporary artifact candidate",
+      "safe_to_archive_later": true,
+      "moved_now": false,
+      "delete_now": false,
+      "rollback_path": null
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/no_mutation_proof.json",
+      "classification": "archive_candidate",
+      "reason": "historical temporary artifact candidate",
+      "safe_to_archive_later": true,
+      "moved_now": false,
+      "delete_now": false,
+      "rollback_path": null
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "cleanup_mode": "non_destructive_manifest_first",
+  "physical_deletion_performed": false,
+  "runtime_files_deleted": false,
+  "regression_gates_deleted": false,
+  "kb_registry_chroma_config_mutated": false,
+  "archive_candidates_count": 4,
+  "requires_future_cleanup_prd": true,
+  "future_cleanup_prd_recommended": "PRD-046.1.16 or later"
+}

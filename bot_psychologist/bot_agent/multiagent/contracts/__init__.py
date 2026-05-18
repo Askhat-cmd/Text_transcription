@@ -9,6 +9,16 @@ from .diagnostic_center_v1 import (
     DiagnosticLensSignal,
     NextMicroShift,
 )
+from .diagnostic_center_stabilization_v1 import (
+    DiagnosticCenterArchiveCandidateV1,
+    DiagnosticCenterCleanupPlanV1,
+    DiagnosticCenterModuleClassificationV1,
+    DiagnosticCenterModuleInventoryItemV1,
+    DiagnosticCenterRegressionGateV1,
+    DiagnosticCenterStabilizationDecisionV1,
+    DiagnosticCenterStabilizationRunV1,
+    DiagnosticCenterTransferBriefV1,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -109,8 +119,16 @@ __all__ = [
     "DiagnosticCenterTrace",
     "DiagnosticCardTrace",
     "DiagnosticEvidenceRef",
+    "DiagnosticCenterArchiveCandidateV1",
     "DiagnosticHypothesis",
+    "DiagnosticCenterCleanupPlanV1",
     "DiagnosticLensSignal",
+    "DiagnosticCenterModuleClassificationV1",
+    "DiagnosticCenterModuleInventoryItemV1",
+    "DiagnosticCenterRegressionGateV1",
+    "DiagnosticCenterStabilizationDecisionV1",
+    "DiagnosticCenterStabilizationRunV1",
+    "DiagnosticCenterTransferBriefV1",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

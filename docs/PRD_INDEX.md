@@ -74,7 +74,7 @@
 | PRD-046.1.18 | Diagnostic Center Response Quality Calibration / Weak Case Closure v1 | passed | f20e82b | added offline calibration contract/module/CLI, expanded eval fixtures to 34 scenarios and 8 candidate profiles, generated weak-case inventory/calibration plan/calibrated scorecards and confirmed no-runtime/no-mutation/hygiene gates | TO_DO_LIST/reports/PRD-046.1.18_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.19 | Diagnostic Center Controlled Runtime Pilot Readiness / Limited Live Smoke Plan v1 | passed | ee62b49 | added plan-only runtime pilot readiness contract/module/CLI and artifacts (scope/cohort/toggles/preflight/smoke-plan/rollback/hard-stop/monitoring/guards) with no execution/provider calls and no production mutation | TO_DO_LIST/reports/PRD-046.1.19_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.20 | Diagnostic Center Controlled Runtime Pilot Execution / Limited Live Smoke v1 | passed | b256ec1 | executed one controlled limited live smoke for allowlisted operator with normal-user controls, rollback-first proof, quality/safety/KB/trace gates, and no production mutation | TO_DO_LIST/reports/PRD-046.1.20_IMPLEMENTATION_REPORT.md |
-| PRD-046.1.21 | Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1 | passed | pending | added post-execution consolidation contract/module/CLI + artifacts (execution/rollback/normal-user/quality/safety/trace/encoding/no-mutation/risk/decision/scorecard), confirmed no new execution/provider calls and decision `continue_limited_candidate` | TO_DO_LIST/reports/PRD-046.1.21_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.21 | Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1 | passed | 121e92e | added post-execution consolidation contract/module/CLI + artifacts (execution/rollback/normal-user/quality/safety/trace/encoding/no-mutation/risk/decision/scorecard), confirmed no new execution/provider calls and decision `continue_limited_candidate` | TO_DO_LIST/reports/PRD-046.1.21_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -82,6 +82,7 @@
 3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
 
 
 

@@ -1,0 +1,13 @@
+{
+  "schema_version": "normal_user_no_effect_gate_v1",
+  "prd": "PRD-046.1.16",
+  "normal_user_apply_count": 0,
+  "default_off_user_path_effect_count": 0,
+  "writer_prompt_changed_for_normal_user": false,
+  "writer_contract_changed_for_normal_user": false,
+  "final_answer_changed_for_normal_user": false,
+  "new_execution_performed": false,
+  "provider_called": false,
+  "synthetic_gate_only": true,
+  "final_status": "passed"
+}

@@ -1,0 +1,131 @@
+{
+  "schema_version": "permanent_regression_gate_confirmation_v1",
+  "prd": "PRD-046.1.16",
+  "required_gate_classes": [
+    "source gate",
+    "runtime no-user-path-effect gate",
+    "normal-user no-apply gate",
+    "rollback-first gate",
+    "prompt-constraint conservative baseline gate",
+    "safety regression gate",
+    "KB governance boundary gate",
+    "raw KB text exposure gate",
+    "trace sanitization gate",
+    "prompt bloat/conflict gate",
+    "provider-not-called-by-eval gate",
+    "no production mutation gate",
+    "artifact encoding hygiene gate",
+    "documentation sync gate"
+  ],
+  "gate_checks": [
+    {
+      "gate_class": "source gate",
+      "status": "passed",
+      "evidence": [
+        "source_scorecard"
+      ]
+    },
+    {
+      "gate_class": "runtime no-user-path-effect gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "normal-user no-apply gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "rollback-first gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "prompt-constraint conservative baseline gate",
+      "status": "passed",
+      "evidence": [
+        "feature_flags.py",
+        "prompt_constraint_pilot_runtime.py"
+      ]
+    },
+    {
+      "gate_class": "safety regression gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "KB governance boundary gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog",
+        "kb_governance_boundary_gate"
+      ]
+    },
+    {
+      "gate_class": "raw KB text exposure gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "trace sanitization gate",
+      "status": "passed",
+      "evidence": [
+        "trace_sanitization_gate"
+      ]
+    },
+    {
+      "gate_class": "prompt bloat/conflict gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog"
+      ]
+    },
+    {
+      "gate_class": "provider-not-called-by-eval gate",
+      "status": "passed",
+      "evidence": [
+        "source_scorecard",
+        "source_no_mutation"
+      ]
+    },
+    {
+      "gate_class": "no production mutation gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog",
+        "source_no_mutation"
+      ]
+    },
+    {
+      "gate_class": "artifact encoding hygiene gate",
+      "status": "passed",
+      "evidence": [
+        "source_regression_catalog",
+        "source_encoding_hygiene"
+      ]
+    },
+    {
+      "gate_class": "documentation sync gate",
+      "status": "passed",
+      "evidence": [
+        "docs/PROJECT_STATE.md",
+        "docs/ROADMAP.md",
+        "docs/PRD_INDEX.md"
+      ]
+    }
+  ],
+  "all_required_regression_gates_present": true,
+  "permanent_regression_gates_confirmed": true,
+  "final_status": "passed",
+  "blockers": []
+}

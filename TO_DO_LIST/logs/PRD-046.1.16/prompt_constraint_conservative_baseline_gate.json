@@ -1,0 +1,18 @@
+{
+  "schema_version": "prompt_constraint_conservative_baseline_gate_v1",
+  "prd": "PRD-046.1.16",
+  "PROMPT_CONSTRAINT_PILOT_ENABLED_default": false,
+  "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED_default": true,
+  "PROMPT_CONSTRAINT_PILOT_MODE_default": "shadow",
+  "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS_default": "",
+  "PROMPT_CONSTRAINT_PILOT_TEST_USER_PREFIX_default": "pilot_",
+  "mode_is_shadow_or_shadow_test_apply_only": true,
+  "runtime_allowed_modes_exact": [
+    "shadow",
+    "test_apply"
+  ],
+  "normal_users_apply_allowed": false,
+  "force_disabled_priority_preserved": true,
+  "final_status": "passed",
+  "blockers": []
+}

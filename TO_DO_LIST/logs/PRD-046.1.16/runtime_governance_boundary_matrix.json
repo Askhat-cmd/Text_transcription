@@ -1,0 +1,31 @@
+{
+  "schema_version": "runtime_governance_boundary_matrix_v1",
+  "prd": "PRD-046.1.16",
+  "diagnostic_center_v1": {
+    "allowed_state": "trace_only_shadow",
+    "broad_runtime_authority": false,
+    "can_change_writer_prompt": false,
+    "can_change_final_answer": false
+  },
+  "planner_bridge": {
+    "allowed_state": "candidate_only_shadow_eval",
+    "can_apply_to_writer": false
+  },
+  "planner_bridge_compliance_shadow": {
+    "allowed_state": "trace_only_compare",
+    "can_change_writer_contract": false
+  },
+  "planner_bridge_writer_contract_pilot": {
+    "allowed_state": "pilot_shadow_only",
+    "can_change_writer_contract": false
+  },
+  "writer_prompt_replay": {
+    "allowed_state": "offline_replay_only",
+    "can_activate_prompt": false
+  },
+  "prompt_constraint_pilot_runtime": {
+    "allowed_state": "default_off_limited_allowlisted_test_path",
+    "normal_user_apply_allowed": false,
+    "broad_rollout_allowed": false
+  }
+}

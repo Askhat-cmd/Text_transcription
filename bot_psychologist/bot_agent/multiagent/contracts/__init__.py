@@ -19,6 +19,10 @@ from .diagnostic_center_stabilization_v1 import (
     DiagnosticCenterStabilizationRunV1,
     DiagnosticCenterTransferBriefV1,
 )
+from .diagnostic_center_final_acceptance_v1 import (
+    DiagnosticCenterFinalAcceptanceRunV1,
+    FinalAcceptanceDecisionV1,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -122,6 +126,7 @@ __all__ = [
     "DiagnosticCenterArchiveCandidateV1",
     "DiagnosticHypothesis",
     "DiagnosticCenterCleanupPlanV1",
+    "DiagnosticCenterFinalAcceptanceRunV1",
     "DiagnosticLensSignal",
     "DiagnosticCenterModuleClassificationV1",
     "DiagnosticCenterModuleInventoryItemV1",
@@ -129,6 +134,7 @@ __all__ = [
     "DiagnosticCenterStabilizationDecisionV1",
     "DiagnosticCenterStabilizationRunV1",
     "DiagnosticCenterTransferBriefV1",
+    "FinalAcceptanceDecisionV1",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

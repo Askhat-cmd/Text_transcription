@@ -1,0 +1,24 @@
+{
+  "schema_version": "diagnostic_center_final_acceptance_no_mutation_proof_v1",
+  "prd": "PRD-046.1.16",
+  "tracked_paths": {
+    "all_blocks_merged": "Bot_data_base/data/processed/all_blocks_merged.json",
+    "registry": "Bot_data_base/data/registry.json",
+    "config": "Bot_data_base/config.yaml",
+    "runtime_do_not_touch": {
+      "orchestrator": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+      "writer_move_compliance": "bot_psychologist/bot_agent/multiagent/writer_move_compliance.py",
+      "prompt_constraint_runtime": "bot_psychologist/bot_agent/multiagent/prompt_constraint_pilot_runtime.py",
+      "diagnostic_center_shadow": "bot_psychologist/bot_agent/multiagent/diagnostic_center_shadow.py"
+    }
+  },
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "runtime_do_not_touch_mutated": false,
+  "runtime_do_not_touch_changed_files": [],
+  "chroma_reindex_performed": false,
+  "production_apply_performed": false,
+  "provider_called": false,
+  "new_execution_performed": false
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "trace_sanitization_gate_v1",
+  "prd": "PRD-046.1.16",
+  "contains_raw_private_logs": false,
+  "contains_raw_content_full": false,
+  "contains_secret_like_values": false,
+  "contains_env_values": false,
+  "contains_private_key_material": false,
+  "contains_nul_char": false,
+  "contains_mojibake_marker": false,
+  "warnings": [],
+  "utf8_clean_expected": true,
+  "final_status": "passed"
+}

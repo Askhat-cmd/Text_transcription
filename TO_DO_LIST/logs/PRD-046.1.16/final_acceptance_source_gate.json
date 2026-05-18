@@ -1,0 +1,15 @@
+{
+  "source_prd": "PRD-046.1.15",
+  "source_final_status": "passed",
+  "source_decision": "ready_for_transfer_brief",
+  "all_required_regression_gates_present": true,
+  "runtime_files_deleted": false,
+  "regression_gates_deleted": false,
+  "provider_called": false,
+  "artifact_encoding_hygiene_passed": true,
+  "source_no_mutation_passed": true,
+  "reports_and_logs_present": true,
+  "new_execution_performed": false,
+  "provider_called_by_eval": false,
+  "source_gate_passed": true
+}

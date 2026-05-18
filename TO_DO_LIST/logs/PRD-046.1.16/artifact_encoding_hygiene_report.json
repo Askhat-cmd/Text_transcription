@@ -1,0 +1,32 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.16",
+  "checked_prd": "PRD-046.1.16",
+  "final_status": "passed",
+  "files_checked": 12,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.16/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/diagnostic_center_v1_final_acceptance_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/final_acceptance_source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/kb_governance_boundary_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/normal_user_no_effect_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/permanent_regression_gate_confirmation.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/prompt_constraint_conservative_baseline_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_boundary_matrix.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_closure_decision.json",
+    "TO_DO_LIST/logs/PRD-046.1.16/test_command_output.txt",
+    "TO_DO_LIST/logs/PRD-046.1.16/trace_sanitization_gate.json"
+  ]
+}

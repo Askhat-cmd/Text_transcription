@@ -50,12 +50,13 @@
 - PRD-046.1.13: one production-limited execution/monitoring cycle delivered; added execution contract/module/CLI + tests/artifacts (manifest, preflight, sanitized traces, baseline-vs-test_apply, normal-user no-effect, rollback proof, monitoring scorecard, no-mutation/hygiene), ran single-target window (	arget_user_count=1) with rollback-first success and decision continue_limited.
 - PRD-046.1.14: post-run production-limited results/rollback/quality gate delivered; added results-gate contract/module/CLI + tests/artifacts (manifest, quality/rollback/normal-user/trace/risk/decision, no-mutation/hygiene), no new execution performed, final decision eady_for_stabilization_cleanup with no provider calls and no production mutation.
 - PRD-046.1.15: stabilization/cleanup/eval-harness consolidation delivered; added stabilization contract/module/CLI + tests/artifacts (source gate, module inventory/classification, permanent regression gate catalog, non-destructive cleanup plan, archive manifest, stabilization scorecard, transfer brief, no-mutation/hygiene), with `decision=ready_for_transfer_brief` and no runtime-default/provider/production-state mutation.
+- PRD-046.1.16: final acceptance/runtime governance closure delivered; added final-acceptance contract/module/CLI + artifacts (source gate, boundary matrix, permanent gate confirmation, conservative baseline gate, normal-user no-effect gate, KB boundary gate, trace sanitization gate, closure decision, scorecard, no-mutation/hygiene), accepted as governed shadow layer with `broad_rollout_allowed=false` and `runtime_authority_expansion_allowed=false`.
 
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
 
 ## Next
-1. PRD-046.1.16 - Diagnostic Center v1 Final Acceptance / Runtime Governance Closure v1.
+1. PRD-046.1.17 - Diagnostic Center Response Quality Eval Pack v1.
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

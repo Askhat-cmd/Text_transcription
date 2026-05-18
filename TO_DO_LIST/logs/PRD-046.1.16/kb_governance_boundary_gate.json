@@ -1,0 +1,14 @@
+{
+  "schema_version": "kb_governance_boundary_gate_v1",
+  "prd": "PRD-046.1.16",
+  "chunk_type_authority_deterministic": true,
+  "allowed_use_authority_deterministic": true,
+  "safety_flags_authority_deterministic": true,
+  "llm_enrichment_advisory_only": true,
+  "raw_kb_text_exposed_via_prompt_constraint": false,
+  "internal_only_not_for_direct_quote_respected": true,
+  "kuznitsa_duha_internal_lens_only": true,
+  "reindex_performed": false,
+  "governance_authority_mutated": false,
+  "final_status": "passed"
+}

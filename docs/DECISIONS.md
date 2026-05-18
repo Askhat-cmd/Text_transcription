@@ -215,3 +215,9 @@ Status: accepted
 Context: после offline replay (PRD-046.1.5) нужен ограниченный runtime-эксперимент для проверки prompt constraints, но broad activation в production создаёт риск user-path regressions.
 Decision: в PRD-046.1.6 pilot constraints могут влиять на Writer prompt только при explicit runtime-флагах (`PROMPT_CONSTRAINT_PILOT_ENABLED=true`, `PROMPT_CONSTRAINT_PILOT_MODE=test_apply`), только для allowlisted/test users и только после passed gates (rollback/safety/KB/conflict/prompt-bloat/non-mutation). По умолчанию путь остаётся disabled/shadow; `PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true` имеет абсолютный rollback-приоритет.
 Consequences: production default path остаётся неизменным, runtime-эксперимент трассируется артефактами и может быть мгновенно отключён rollback-флагом; broad rollout запрещён до отдельного PRD-046.1.7+.
+
+## ADR-037 - Diagnostic Center v1 accepted as governed shadow layer; runtime authority expansion requires separate PRD
+Status: accepted
+Context: после PRD-046.1.15 Diagnostic Center v1 и связанный Planner/Prompt-Constraint стек стабилизированы, но остаются риски преждевременного расширения authority в production user-path.
+Decision: PRD-046.1.16 закрепляет Diagnostic Center v1 как внутренний governed shadow/runtime-governance слой с постоянными regression blockers. Broad rollout, изменение Writer prompt/contract/final answer path и расширение runtime authority запрещены без отдельного future PRD с новым controlled rollout, rollback plan и normal-user no-effect доказательствами.
+Consequences: проект получает формально закрытый runtime governance boundary (`trace_only_shadow`, `default_off_limited_allowlisted_test_path`) и стабильную опору для следующего шага качества ответов (PRD-046.1.17) без ослабления safety/KB/privacy/no-mutation инвариантов.

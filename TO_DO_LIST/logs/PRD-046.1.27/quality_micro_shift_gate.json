@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_quality_micro_shift_gate_v1",
+  "prd": "PRD-046.1.27",
+  "scenario_count": 12,
+  "target_user_count": 3,
+  "micro_shift_present_rate": 1.0,
+  "forbidden_moves_violation_count": 0,
+  "candidate_weaker_than_baseline_count": 0,
+  "safety_regression_count": 0,
+  "kb_policy_regression_count": 0,
+  "quality_micro_shift_gate_passed": true
+}

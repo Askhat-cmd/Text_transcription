@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_normal_user_no_effect_gate_v1",
+  "prd": "PRD-046.1.27",
+  "normal_user_controls_total": 3,
+  "normal_user_apply_count": 0,
+  "normal_user_provider_calls": 0,
+  "normal_user_prompt_constraint_apply_count": 0,
+  "normal_user_diagnostic_center_apply_count": 0,
+  "normal_user_final_answer_changed_by_pilot_count": 0,
+  "normal_user_no_effect_gate_passed": true
+}

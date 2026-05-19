@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_trace_provider_sanitization_gate_v1",
+  "prd": "PRD-046.1.27",
+  "raw_provider_payload_detected": false,
+  "raw_private_logs_committed": false,
+  "secret_like_values_count": 0,
+  "env_key_exposure_count": 0,
+  "nul_byte_file_count": 0,
+  "utf8_decode_error_count": 0,
+  "json_parse_error_count": 0,
+  "trace_provider_sanitization_gate_passed": true
+}

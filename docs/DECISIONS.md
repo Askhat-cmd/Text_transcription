@@ -285,3 +285,10 @@ Status: accepted
 Context: после двух provider-backed limited smoke циклов (`PRD-046.1.23`, `PRD-046.1.25`) и одного post-run results gate (`PRD-046.1.24`) требовалось архитектурно зафиксировать консолидационный decision gate до расширения когорты.
 Decision: перед любым controlled cohort expansion обязателен cumulative consolidation PRD (`PRD-046.1.26`) без новых provider calls/execution/mutation, который детерминированно подтверждает source chain completeness, provider evidence continuity, normal-user no-effect, rollback-first, safety/KB boundary, trace/provider sanitization, BotDB stability, no-mutation и artifact hygiene. Только при `final_status=passed` и `decision=ready_for_controlled_cohort_expansion_prd` допускается следующий PRD расширения когорты.
 Consequences: расширение провайдерного пилота остаётся evidence-first и обратимым; broad rollout/production-ready/normal-user activation остаются запрещёнными до будущих отдельных gate PRD.
+
+## ADR-047 - Controlled cohort expansion execution remains bounded and non-authoritative
+
+Status: accepted
+Context: после `PRD-046.1.26` было разрешено перейти от single-operator limited smoke к расширенной allowlisted synthetic cohort execution, но существовал риск скрытого перехода к normal-user activation или неявного расширения runtime authority.
+Decision: `PRD-046.1.27` закрепляет execution boundary: только allowlisted synthetic cohort из трёх операторов, provider budget `<=12`, обязательные normal-user controls без apply/provider effects, rollback-first/hard-stop/safety-KB/trace/no-mutation gates и запрет broad rollout/production-ready/normal-user activation.
+Consequences: даже при зелёном execution результате (`ready_for_final_acceptance_and_stabilization_prd`) Diagnostic Center остаётся governed limited layer; расширение authority возможно только через следующий отдельный acceptance/stabilization gate PRD.

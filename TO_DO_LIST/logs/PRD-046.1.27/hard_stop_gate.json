@@ -1,0 +1,6 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_hard_stop_gate_v1",
+  "prd": "PRD-046.1.27",
+  "hard_stop_triggered": false,
+  "triggered_conditions": []
+}

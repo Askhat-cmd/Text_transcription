@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_decision_gate_v1",
+  "prd": "PRD-046.1.27",
+  "final_status": "passed",
+  "decision": "ready_for_final_acceptance_and_stabilization_prd",
+  "blockers": [],
+  "warnings": [],
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "next_recommended_prd": "PRD-046.1.28 - Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1",
+  "hard_stop_triggered": false
+}

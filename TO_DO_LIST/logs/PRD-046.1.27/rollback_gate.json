@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_rollback_gate_v1",
+  "prd": "PRD-046.1.27",
+  "rollback_precheck_passed": true,
+  "rollback_postcheck_passed": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "rollback_failure_count": 0,
+  "rollback_gate_passed": true
+}

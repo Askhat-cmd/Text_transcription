@@ -1,0 +1,95 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_sanitized_trace_v1",
+  "prd": "PRD-046.1.27",
+  "raw_provider_payload_detected": false,
+  "raw_private_logs_committed": false,
+  "secret_like_values_count": 0,
+  "env_key_exposure_count": 0,
+  "redacted_trace_hash": "42db77210f1cf413c418b65d038a869b85e99e89448c600b3212b7350c35bf8a",
+  "sanitized_samples": [
+    {
+      "scenario_id": "op003_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_003",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op003_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_003",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op003_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_003",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op003_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_003",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op004_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_004",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op004_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_004",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op004_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_004",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op004_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_004",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op005_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_005",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op005_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_005",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op005_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_005",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    },
+    {
+      "scenario_id": "op005_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_005",
+      "provider_called": true,
+      "target_micro_shift_present": true,
+      "forbidden_moves_respected": true
+    }
+  ]
+}

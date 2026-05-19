@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_no_mutation_proof_v1",
+  "prd": "PRD-046.1.27",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "runtime_defaults_changed": false,
+  "chroma_persistent_store_mutated": false,
+  "production_mutation_detected": false,
+  "no_mutation_passed": true
+}

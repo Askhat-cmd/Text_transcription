@@ -63,13 +63,14 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.24: provider-backed smoke results/quality/rollback post-run gate delivered with no new execution/provider calls; decision=`continue_limited_candidate`, broad rollout remains prohibited, production-ready remains false.
 - PRD-046.1.25: second provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_002`), six provider-backed scenarios, provider budget `6/6`, normal-user no-effect controls (`2`), rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates passed, decision=`continue_limited_candidate`.
 - PRD-046.1.26: limited provider-backed smoke consolidation/expansion decision gate completed over `PRD-046.1.23 + PRD-046.1.24 + PRD-046.1.25`; cumulative gates passed with decision=`ready_for_controlled_cohort_expansion_prd`, while `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`.
+- PRD-046.1.27: controlled cohort expansion provider-backed execution gate completed on allowlisted cohort (`pilot_runtime_operator_003/004/005`): `target_user_count=3`, `scenario_count=12`, `provider_calls_total=12`, `normal_user_controls_total=3`, rollback/safety/KB/trace/BotDB/no-mutation/encoding gates passed; decision=`ready_for_final_acceptance_and_stabilization_prd`, with broad rollout and production-ready still prohibited.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.1.27: controlled cohort expansion provider-backed execution gate preparation.
+- PRD-046.1.28: final runtime governance acceptance / stabilization readiness gate preparation.
 
 ## Next
-1. PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1.
-2. PRD-046.1.26-HF1 - provider-backed consolidation hotfix (only if blockers are discovered in retrospective evidence).
+1. PRD-046.1.28 - Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1.
+2. PRD-046.1.27-HF1 - controlled cohort expansion hotfix path (only if retrospective blockers/warnings require calibration).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

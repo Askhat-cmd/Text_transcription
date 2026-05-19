@@ -1,0 +1,940 @@
+﻿PRD-046.1.27 command log
+
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_contract.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_contract.py . [100%]
+
+============================== 1 passed in 0.25s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_source_gate.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_source_gate.py . [100%]
+
+============================== 1 passed in 0.29s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_allowlist.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_allowlist.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_botdb_preflight.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_botdb_preflight.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_runner.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_runner.py . [100%]
+
+============================== 1 passed in 0.31s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_provider_budget.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_provider_budget.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_normal_user_no_effect.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_normal_user_no_effect.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_quality_micro_shift.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_quality_micro_shift.py . [100%]
+
+============================== 1 passed in 0.28s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_safety_kb_boundary.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_safety_kb_boundary.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_trace_sanitization.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_trace_sanitization.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_rollback.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_rollback.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_botdb_stability.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_botdb_stability.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_no_mutation.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_no_mutation.py . [100%]
+
+============================== 1 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m pytest bot_psychologist/tests/multiagent/test_controlled_cohort_expansion_decision_gate.py
+
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 2 items
+
+bot_psychologist\tests\multiagent\test_controlled_cohort_expansion_decision_gate.py . [ 50%]
+.                                                                        [100%]
+
+============================== 2 passed in 0.26s ==============================
+
+EXIT_CODE=0
+
+
+=== COMMAND ===
+python -m bot_psychologist.tools.run_diagnostic_center_controlled_cohort_expansion_provider_smoke --repo-root . --source-dirs TO_DO_LIST/logs/PRD-046.1.23 TO_DO_LIST/logs/PRD-046.1.24 TO_DO_LIST/logs/PRD-046.1.25 TO_DO_LIST/logs/PRD-046.1.26 --reports-dir TO_DO_LIST/reports --output-dir TO_DO_LIST/logs/PRD-046.1.27 --strict
+
+cmd : 2026-05-19 15:31:58,835 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practic
+e\Text_transcription\bot_psychologist\data\threads
+At line:21 char:10
++   $out = cmd /c $c 2>&1;
++          ~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-19 15:3...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-19 15:31:58,838 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "ready_for_final_acceptance_and_stabilization_prd",
+  "preflight": {
+    "required": {
+      "report:PRD-046.1.23_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.23_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.24_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.24_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.25_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.25_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.26_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.26_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.26_CONTROLLED_COHORT_EXPANSION_READINESS.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.26_CONTROLLED_COHORT_EXPANSION_READINESS.md",
+      "report:PRD-046.1.26_FUTURE_CLEANUP_STABILIZATION_REQUIREMENT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.26_FUTURE_CLEANUP_STABILIZATION_REQUIREMENT.md",
+      "PRD-046.1.23:log:provider_backed_limited_smoke_execution_scorecard.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\provider_backed_limited_smoke_execution_scorecard.json",
+      "PRD-046.1.23:log:provider_call_budget.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\provider_call_budget.json",
+      "PRD-046.1.23:log:normal_user_control_execution.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\normal_user_control_execution.json",
+      "PRD-046.1.23:log:quality_review.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\quality_review.json",
+      "PRD-046.1.23:log:safety_kb_boundary_review.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\safety_kb_boundary_review.json",
+      "PRD-046.1.23:log:trace_sanitization_review.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\trace_sanitization_review.json",
+      "PRD-046.1.23:log:rollback_precheck.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\rollback_precheck.json",
+      "PRD-046.1.23:log:rollback_postcheck.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.23\\rollback_postcheck.json",
+      "PRD-046.1.24:log:provider_backed_smoke_results_scorecard.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.24\\provider_backed_smoke_results_scorecard.json",
+      "PRD-046.1.24:log:provider_backed_results_decision_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.24\\provider_backed_results_decision_gate.json",
+      "PRD-046.1.25:log:scorecard.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\scorecard.json",
+      "PRD-046.1.25:log:decision_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\decision_gate.json",
+      "PRD-046.1.25:log:provider_budget_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\provider_budget_gate.json",
+      "PRD-046.1.25:log:normal_user_no_effect_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\normal_user_no_effect_gate.json",
+      "PRD-046.1.25:log:quality_micro_shift_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\quality_micro_shift_gate.json",
+      "PRD-046.1.25:log:safety_kb_boundary_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\safety_kb_boundary_gate.json",
+      "PRD-046.1.25:log:trace_sanitization_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\trace_sanitization_gate.json",
+      "PRD-046.1.25:log:rollback_precheck.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\rollback_precheck.json",
+      "PRD-046.1.25:log:rollback_postcheck.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\rollback_postcheck.json",
+      "PRD-046.1.25:log:botdb_stability_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.25\\botdb_stability_gate.json",
+      "PRD-046.1.26:log:source_gate.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\source_gate.json",
+      "PRD-046.1.26:log:cumulative_provider_evidence.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\cumulative_provider_evidence.json",
+      "PRD-046.1.26:log:normal_user_no_effect_cumulative.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\normal_user_no_effect_cumulative.json",
+      "PRD-046.1.26:log:rollback_cumulative.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\rollback_cumulative.json",
+      "PRD-046.1.26:log:safety_kb_boundary_cumulative.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\safety_kb_boundary_cumulative.json",
+      "PRD-046.1.26:log:trace_provider_sanitization_cumulative.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\trace_provider_sanitization_cumulative.json",
+      "PRD-046.1.26:log:botdb_stability_trend.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\botdb_stability_trend.json",
+      "PRD-046.1.26:log:quality_micro_shift_cumulative.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\quality_micro_shift_cumulative.json",
+      "PRD-046.1.26:log:no_mutation_proof.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\no_mutation_proof.json",
+      "PRD-046.1.26:log:controlled_cohort_expansion_readiness.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\controlled_cohort_expansion_readiness.json",
+      "PRD-046.1.26:log:consolidation_scorecard.json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.26\\consolidation_scorecard.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "parsed": {
+      "PRD-046.1.23:log:provider_backed_limited_smoke_execution_scorecard.json": {
+        "final_status": "passed",
+        "decision": "provider_backed_limited_smoke_execution_passed",
+        "source_gate_passed": true,
+        "live_dependency_preflight_passed": true,
+        "provider_availability_preflight_passed": true,
+        "execution_window_count": 1,
+        "target_user_count": 1,
+        "pilot_scenarios_executed": 5,
+        "pilot_apply_count": 5,
+        "pilot_apply_only_for_allowed_user": true,
+        "provider_calls_performed": 5,
+        "all_provider_calls_for_allowed_user": true,
+        "normal_user_control_count": 2,
+        "normal_user_apply_count": 0,
+        "normal_user_provider_apply_count": 0,
+        "quality_status": "passed",
+        "safety_kb_boundary_status": "passed",
+        "trace_sanitization_status": "passed",
+        "provider_output_sanitization_status": "passed",
+        "rollback_precheck_passed": true,
+        "rollback_postcheck_passed": true,
+        "hard_stop_triggered": false,
+        "dashboard_chroma_status": "ok",
+        "dashboard_chroma_count": 247,
+        "registry_sources_count": 1,
+        "query_http_200": true,
+        "semantic_fallback_used": false,
+        "botdb_circuit_open": false,
+        "production_mutation_detected": false,
+        "no_mutation_proof_passed": true,
+        "artifact_encoding_hygiene_passed": true,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "future_expansion_requires_new_prd": true,
+        "docs_synced": true,
+        "allowed_user_ids": [
+          "pilot_runtime_operator_001"
+        ],
+        "recommended_next_prd": "PRD-046.1.24 - Diagnostic Center Provider-Backed Smoke Results / Quality & Rollback Gate v1",
+        "blockers": [],
+        "warnings": []
+      },
+      "PRD-046.1.23:log:provider_call_budget.json": {
+        "schema_version": "provider_backed_limited_smoke_provider_call_budget_v1",
+        "prd": "PRD-046.1.23",
+        "max_provider_calls": 5,
+        "provider_calls_performed": 5,
+        "provider_calls_allowed_only_for": "pilot_runtime_operator_001",
+        "provider_calls_for_normal_users": 0,
+        "normal_user_provider_apply_count": 0,
+        "provider_error_leak_to_user_output": false,
+        "raw_provider_payload_committed": false,
+        "budget_passed": true
+      },
+      "PRD-046.1.23:log:normal_user_control_execution.json": {
+        "schema_version": "provider_backed_normal_user_control_execution_v1",
+        "prd": "PRD-046.1.23",
+        "normal_user_control_count": 2,
+        "normal_user_apply_count": 0,
+        "writer_prompt_changed_for_normal_user": false,
+        "writer_contract_changed_for_normal_user": false,
+        "final_answer_changed_for_normal_user": false,
+        "normal_user_provider_apply_count": 0,
+        "normal_user_diagnostic_center_apply_count": 0,
+        "normal_user_trace_sanitized": true
+      },
+      "PRD-046.1.23:log:quality_review.json": {
+        "schema_version": "provider_backed_limited_smoke_quality_review_v1",
+        "prd": "PRD-046.1.23",
+        "candidate_weaker_than_baseline_count": 0,
+        "state_depth_fit_regression_count": 0,
+        "non_directiveness_regression_count": 0,
+        "non_bookishness_regression_count": 0,
+        "kb_boundary_regression_count": 0,
+        "safety_regression_count": 0,
+        "prompt_bloat_blocker_count": 0,
+        "constraint_conflict_count": 0,
+        "micro_shift_present_count": 4,
+        "provider_call_failures_count": 0,
+        "pilot_apply_count": 5,
+        "quality_status": "passed"
+      },
+      "PRD-046.1.23:log:safety_kb_boundary_review.json": {
+        "schema_version": "provider_backed_limited_smoke_safety_kb_boundary_review_v1",
+        "prd": "PRD-046.1.23",
+        "raw_kb_quote_exposure_count": 0,
+        "kuznitsa_authority_citation_count": 0,
+        "content_full_exposure_count": 0,
+        "internal_only_direct_use_count": 0,
+        "not_for_direct_quote_violation_count": 0,
+        "high_stakes_directive_advice_count": 0,
+        "safety_regression_count": 0,
+        "kb_boundary_violation_count": 0,
+        "kuznitsa_duha_role": "internal_lens_library",
+        "user_facing_quote_source": false,
+        "chunk_type_authority": "deterministic",
+        "allowed_use_authority": "deterministic",
+        "safety_flags_authority": "deterministic",
+        "llm_enrichment_role": "advisory",
+        "safety_kb_boundary_status": "passed"
+      },
+      "PRD-046.1.23:log:trace_sanitization_review.json": {
+        "schema_version": "provider_backed_limited_smoke_trace_sanitization_review_v1",
+        "prd": "PRD-046.1.23",
+        "contains_raw_private_logs": false,
+        "contains_raw_provider_payload": false,
+        "contains_secret_like_values": false,
+        "contains_env_values": false,
+        "contains_raw_content_full": false,
+        "contains_user_private_identifier": false,
+        "contains_nul_char": false,
+        "contains_mojibake": false,
+        "utf8_clean": true,
+        "json_parseable": true,
+        "trace_sanitization_status": "passed"
+      },
+      "PRD-046.1.23:log:rollback_precheck.json": {
+        "schema_version": "provider_backed_rollback_precheck_v1",
+        "prd": "PRD-046.1.23",
+        "rollback_precheck_passed": true,
+        "force_disabled_priority_preserved": true,
+        "expected_rollback_state": {
+          "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true,
+          "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+          "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+          "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": ""
+        },
+        "final_status": "passed"
+      },
+      "PRD-046.1.23:log:rollback_postcheck.json": {
+        "schema_version": "provider_backed_limited_smoke_rollback_postcheck_v1",
+        "prd": "PRD-046.1.23",
+        "rollback_postcheck_passed": true,
+        "force_disabled_priority_preserved": true,
+        "stale_apply_after_force_disabled_count": 0,
+        "normal_user_apply_after_rollback_count": 0,
+        "rollback_failure_count": 0
+      },
+      "PRD-046.1.24:log:provider_backed_smoke_results_scorecard.json": {
+        "schema_version": "provider_backed_smoke_results_scorecard_v1",
+        "prd": "PRD-046.1.24",
+        "final_status": "passed",
+        "decision": "continue_limited_candidate",
+        "source_gate_passed": true,
+        "provider_execution_evidence_status": "passed",
+        "provider_budget_status": "passed",
+        "normal_user_no_effect_status": "passed",
+        "quality_consolidation_status": "passed",
+        "safety_kb_boundary_consolidation_status": "passed",
+        "provider_output_sanitization_consolidation_status": "passed",
+        "trace_sanitization_consolidation_status": "passed",
+        "rollback_evidence_status": "passed",
+        "botdb_stability_status": "passed",
+        "hard_stop_absence_status": "passed",
+        "no_mutation_status": "passed",
+        "risk_register_has_blockers": false,
+        "new_execution_performed": false,
+        "provider_called_by_prd_046_1_24": false,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "future_expansion_requires_new_prd": true,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "recommended_next_prd": "PRD-046.1.25 - Diagnostic Center Second Provider-Backed Limited Smoke Planning v1",
+        "generated_at": "2026-05-19T07:24:02.494508+00:00"
+      },
+      "PRD-046.1.24:log:provider_backed_results_decision_gate.json": {
+        "schema_version": "provider_backed_smoke_results_decision_gate_v1",
+        "prd": "PRD-046.1.24",
+        "final_status": "passed",
+        "decision": "continue_limited_candidate",
+        "source_gate_passed": true,
+        "provider_execution_evidence_status": "passed",
+        "provider_budget_status": "passed",
+        "normal_user_no_effect_status": "passed",
+        "quality_consolidation_status": "passed",
+        "safety_kb_boundary_consolidation_status": "passed",
+        "provider_output_sanitization_consolidation_status": "passed",
+        "trace_sanitization_consolidation_status": "passed",
+        "rollback_evidence_status": "passed",
+        "botdb_stability_status": "passed",
+        "hard_stop_absence_status": "passed",
+        "no_mutation_status": "passed",
+        "risk_register_has_blockers": false,
+        "new_execution_performed": false,
+        "provider_called_by_prd_046_1_24": false,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "future_expansion_requires_new_prd": true,
+        "recommended_next_prd": "PRD-046.1.25 - Diagnostic Center Second Provider-Backed Limited Smoke Planning v1",
+        "blockers": [],
+        "warnings": [],
+        "artifact_encoding_hygiene_passed": true
+      },
+      "PRD-046.1.25:log:scorecard.json": {
+        "final_status": "passed",
+        "decision": "continue_limited_candidate",
+        "source_gate_passed": true,
+        "botdb_live_preflight_passed": true,
+        "provider_availability_preflight_passed": true,
+        "execution_window_count": 1,
+        "target_user_count": 1,
+        "pilot_scenarios_executed": 6,
+        "pilot_apply_count": 6,
+        "provider_calls_performed": 6,
+        "normal_user_control_count": 2,
+        "normal_user_apply_count": 0,
+        "normal_user_provider_calls": 0,
+        "quality_micro_shift_status": "passed",
+        "safety_kb_boundary_status": "passed",
+        "trace_sanitization_status": "passed",
+        "rollback_precheck_passed": true,
+        "rollback_postcheck_passed": true,
+        "hard_stop_triggered": false,
+        "dashboard_chroma_status": "ok",
+        "dashboard_chroma_count": 247,
+        "registry_sources_count": 1,
+        "query_http_200": true,
+        "semantic_fallback_used": false,
+        "botdb_circuit_open": false,
+        "production_mutation_detected": false,
+        "artifact_encoding_hygiene_passed": true,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "next_recommended_prd": "PRD-046.1.26 - Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1",
+        "normal_user_no_effect_gate_passed": true,
+        "provider_budget_gate_passed": true,
+        "quality_micro_shift_gate_passed": true,
+        "safety_kb_boundary_gate_passed": true,
+        "trace_sanitization_gate_passed": true,
+        "botdb_stability_gate_passed": true,
+        "blockers": [],
+        "warnings": []
+      },
+      "PRD-046.1.25:log:decision_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_decision_gate_v1",
+        "prd": "PRD-046.1.25",
+        "final_status": "passed",
+        "decision": "continue_limited_candidate",
+        "blockers": [],
+        "warnings": [],
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "next_recommended_prd": "PRD-046.1.26 - Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1",
+        "provider_calls": 6,
+        "target_user_count": 1,
+        "normal_user_apply_count": 0,
+        "normal_user_provider_calls": 0,
+        "hard_stop_triggered": false
+      },
+      "PRD-046.1.25:log:provider_budget_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_budget_gate_v1",
+        "prd": "PRD-046.1.25",
+        "provider_budget_max_calls": 6,
+        "target_user_provider_calls": 6,
+        "normal_user_provider_calls": 0,
+        "raw_provider_payload_committed": false,
+        "provider_payload_sanitized": true,
+        "provider_budget_gate_passed": true
+      },
+      "PRD-046.1.25:log:normal_user_no_effect_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_normal_user_no_effect_gate_v1",
+        "prd": "PRD-046.1.25",
+        "normal_user_ids": [
+          "normal_user_control_001",
+          "normal_user_control_002"
+        ],
+        "normal_user_control_count": 2,
+        "diagnostic_center_apply_count": 0,
+        "prompt_constraint_apply_count": 0,
+        "provider_call_count": 0,
+        "writer_prompt_changed_by_pilot": false,
+        "final_answer_changed_by_pilot": false,
+        "normal_user_trace_has_apply": false,
+        "normal_user_no_effect_gate_passed": true
+      },
+      "PRD-046.1.25:log:quality_micro_shift_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_quality_micro_shift_gate_v1",
+        "prd": "PRD-046.1.25",
+        "scenario_count": 6,
+        "provider_backed_scenarios_completed": 6,
+        "candidate_weaker_than_baseline_count": 0,
+        "hard_fail_count": 0,
+        "forbidden_move_violation_count": 0,
+        "micro_shift_present_count": 6,
+        "response_goal_match_count": 6,
+        "state_strategy_match_count": 6,
+        "quality_micro_shift_gate_passed": true
+      },
+      "PRD-046.1.25:log:safety_kb_boundary_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_safety_kb_boundary_gate_v1",
+        "prd": "PRD-046.1.25",
+        "raw_kb_text_exposure_count": 0,
+        "kb_authority_citation_count": 0,
+        "kuznica_direct_quote_count": 0,
+        "spiritual_authority_violation_count": 0,
+        "clinical_claim_violation_count": 0,
+        "directive_life_advice_count": 0,
+        "safety_kb_boundary_gate_passed": true
+      },
+      "PRD-046.1.25:log:trace_sanitization_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_trace_sanitization_gate_v1",
+        "prd": "PRD-046.1.25",
+        "contains_raw_provider_payload": false,
+        "contains_secret_like_values": false,
+        "contains_env_values": false,
+        "contains_raw_private_logs": false,
+        "contains_raw_content_full": false,
+        "contains_raw_user_private_logs": false,
+        "json_parseable": true,
+        "utf8_clean": true,
+        "nul_byte_count": 0,
+        "trace_sanitization_gate_passed": true
+      },
+      "PRD-046.1.25:log:rollback_precheck.json": {
+        "schema_version": "diagnostic_center_second_provider_rollback_precheck_v1",
+        "prd": "PRD-046.1.25",
+        "force_disabled_baseline_works": true,
+        "normal_user_apply_while_force_disabled": 0,
+        "rollback_switch_can_disable_apply": true,
+        "stale_apply_after_force_disabled_count": 0,
+        "rollback_precheck_passed": true
+      },
+      "PRD-046.1.25:log:rollback_postcheck.json": {
+        "schema_version": "diagnostic_center_second_provider_rollback_postcheck_v1",
+        "prd": "PRD-046.1.25",
+        "rollback_postcheck_passed": true,
+        "force_disabled_fully_disables_apply": true,
+        "normal_user_unaffected_after_rollback": true,
+        "stale_apply_after_force_disabled_count": 0,
+        "rollback_failure_count": 0
+      },
+      "PRD-046.1.25:log:botdb_stability_gate.json": {
+        "schema_version": "diagnostic_center_second_provider_botdb_stability_gate_v1",
+        "prd": "PRD-046.1.25",
+        "before": {
+          "dashboard_chroma_count": 247,
+          "dashboard_chroma_status": "ok",
+          "registry_sources_count": 1,
+          "query_status_code": 200,
+          "semantic_fallback_used": false,
+          "botdb_circuit_open": false
+        },
+        "after": {
+          "dashboard_chroma_count": 247,
+          "dashboard_chroma_status": "ok",
+          "registry_sources_count": 1,
+          "query_status_code": 200,
+          "semantic_fallback_used": false,
+          "botdb_circuit_open": false
+        },
+        "botdb_stability_gate_passed": true
+      },
+      "PRD-046.1.26:log:source_gate.json": {
+        "schema_version": "diagnostic_center_limited_smoke_consolidation_source_gate_v1",
+        "prd": "PRD-046.1.26",
+        "source_chain_complete": true,
+        "source_chain_order_valid": true,
+        "missing_required_artifacts_count": 0,
+        "parse_error_count": 0,
+        "source_decision_mismatch_count": 0,
+        "checks": {
+          "prd_046_1_23_final_status_passed": true,
+          "prd_046_1_23_decision_passed": true,
+          "prd_046_1_24_final_status_passed": true,
+          "prd_046_1_24_decision_continue": true,
+          "prd_046_1_24_blockers_none": true,
+          "prd_046_1_24_warnings_none": true,
+          "prd_046_1_25_final_status_passed": true,
+          "prd_046_1_25_decision_continue": true,
+          "prd_046_1_25_blockers_none": true,
+          "prd_046_1_25_warnings_none": true
+        },
+        "source_gate_passed": true
+      },
+      "PRD-046.1.26:log:cumulative_provider_evidence.json": {
+        "schema_version": "diagnostic_center_limited_smoke_cumulative_provider_evidence_v1",
+        "prd": "PRD-046.1.26",
+        "provider_cycles_total": 2,
+        "provider_cycles_passed": 2,
+        "provider_scenarios_total": 11,
+        "provider_calls_total": 11,
+        "provider_budget_violations": 0,
+        "raw_provider_payload_committed": false,
+        "provider_secret_leak_count": 0,
+        "cumulative_provider_evidence_passed": true
+      },
+      "PRD-046.1.26:log:normal_user_no_effect_cumulative.json": {
+        "schema_version": "diagnostic_center_limited_smoke_normal_user_no_effect_cumulative_v1",
+        "prd": "PRD-046.1.26",
+        "normal_user_controls_total": 4,
+        "normal_user_apply_count_total": 0,
+        "normal_user_provider_calls_total": 0,
+        "normal_user_prompt_delta_count": 0,
+        "normal_user_final_answer_changed_by_diagnostic_center_count": 0,
+        "normal_user_no_effect_cumulative_passed": true
+      },
+      "PRD-046.1.26:log:rollback_cumulative.json": {
+        "schema_version": "diagnostic_center_limited_smoke_rollback_cumulative_v1",
+        "prd": "PRD-046.1.26",
+        "rollback_precheck_failures_total": 0,
+        "rollback_postcheck_failures_total": 0,
+        "stale_apply_after_force_disabled_total": 0,
+        "rollback_first_policy_preserved": true,
+        "rollback_failures_total": 0
+      },
+      "PRD-046.1.26:log:safety_kb_boundary_cumulative.json": {
+        "schema_version": "diagnostic_center_limited_smoke_safety_kb_boundary_cumulative_v1",
+        "prd": "PRD-046.1.26",
+        "raw_kb_quote_exposure_total": 0,
+        "kb_authority_citation_total": 0,
+        "internal_only_raw_content_exposure_total": 0,
+        "practice_suggestion_policy_violation_total": 0,
+        "llm_governance_authority_mutation_total": 0,
+        "safety_kb_boundary_cumulative_passed": true
+      },
+      "PRD-046.1.26:log:trace_provider_sanitization_cumulative.json": {
+        "schema_version": "diagnostic_center_limited_smoke_trace_provider_sanitization_cumulative_v1",
+        "prd": "PRD-046.1.26",
+        "raw_provider_payload_in_artifacts": false,
+        "raw_private_logs_committed": false,
+        "secret_like_values_count": 0,
+        "env_key_exposure_count": 0,
+        "utf8_clean": true,
+        "json_parseable": true,
+        "nul_byte_count": 0,
+        "trace_provider_sanitization_cumulative_passed": true
+      },
+      "PRD-046.1.26:log:botdb_stability_trend.json": {
+        "schema_version": "diagnostic_center_limited_smoke_botdb_stability_trend_v1",
+        "prd": "PRD-046.1.26",
+        "source_botdb_stability_passed": true,
+        "live_probe": {
+          "dashboard_chroma_count": 247,
+          "dashboard_chroma_status": "ok",
+          "registry_sources_count": 1,
+          "query_http_200": true,
+          "semantic_fallback_used": false,
+          "botdb_circuit_open": false,
+          "live_dependency_readiness_passed": true
+        },
+        "botdb_unreachable_environment_warning": false,
+        "botdb_runtime_blocker": false,
+        "botdb_stability_gate": "passed"
+      },
+      "PRD-046.1.26:log:quality_micro_shift_cumulative.json": {
+        "schema_version": "diagnostic_center_limited_smoke_quality_micro_shift_cumulative_v1",
+        "prd": "PRD-046.1.26",
+        "scenario_count_total": 11,
+        "micro_shift_present_count_total": 10,
+        "quality_regression_count_total": 0,
+        "candidate_weaker_than_baseline_count_total": 0,
+        "forbidden_move_violation_count_total": 0,
+        "over_depth_for_low_resource_count_total": 0,
+        "directive_advice_violation_count_total": 0,
+        "quality_micro_shift_gate": "passed"
+      },
+      "PRD-046.1.26:log:no_mutation_proof.json": {
+        "schema_version": "diagnostic_center_limited_smoke_no_mutation_proof_v1",
+        "prd": "PRD-046.1.26",
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindexed": false,
+        "runtime_defaults_changed": false,
+        "production_data_mutated": false,
+        "no_mutation_gate": "passed"
+      },
+      "PRD-046.1.26:log:controlled_cohort_expansion_readiness.json": {
+        "schema_version": "diagnostic_center_controlled_cohort_expansion_readiness_v1",
+        "prd": "PRD-046.1.26",
+        "controlled_cohort_expansion_readiness_ready": true,
+        "next_candidate_prd": "PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1",
+        "max_target_users": 3,
+        "target_user_type": "allowlisted_synthetic_operators_only",
+        "normal_user_controls_min": 3,
+        "provider_budget_limit_max": 12,
+        "rollback_first_required": true,
+        "hard_stop_required": true,
+        "broad_rollout_allowed": false,
+        "production_ready_allowed": false,
+        "normal_user_activation_allowed": false,
+        "requirements": [
+          "cohort policy",
+          "scenario families",
+          "provider budget",
+          "rollback matrix",
+          "hard-stop criteria",
+          "normal-user controls",
+          "BotDB preflight requirements",
+          "safety/KB boundary requirements",
+          "trace/provider sanitization requirements",
+          "no-mutation proof requirements",
+          "monitoring scorecard template"
+        ]
+      },
+      "PRD-046.1.26:log:consolidation_scorecard.json": {
+        "final_status": "passed",
+        "decision": "ready_for_controlled_cohort_expansion_prd",
+        "source_chain_complete": true,
+        "source_chain_order_valid": true,
+        "missing_required_artifacts_count": 0,
+        "source_decision_mismatch_count": 0,
+        "provider_cycles_total": 2,
+        "provider_cycles_passed": 2,
+        "provider_scenarios_total": 11,
+        "provider_calls_total": 11,
+        "provider_budget_violations": 0,
+        "normal_user_controls_total": 4,
+        "normal_user_apply_count_total": 0,
+        "normal_user_provider_calls_total": 0,
+        "rollback_failures_total": 0,
+        "raw_kb_quote_exposure_total": 0,
+        "internal_only_raw_content_exposure_total": 0,
+        "raw_provider_payload_in_artifacts": false,
+        "secret_like_values_count": 0,
+        "botdb_stability_gate": "passed",
+        "quality_micro_shift_gate": "passed",
+        "no_mutation_gate": "passed",
+        "artifact_encoding_hygiene_passed": true,
+        "controlled_cohort_expansion_readiness_ready": true,
+        "future_cleanup_stabilization_requirement_created": true,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "normal_user_activation_allowed": false,
+        "next_recommended_prd": "PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1"
+      }
+    },
+    "source_present": {
+      "PRD-046.1.23": true,
+      "PRD-046.1.24": true,
+      "PRD-046.1.25": true,
+      "PRD-046.1.26": true
+    },
+    "source_chain_complete": true,
+    "source_chain_order_valid": true,
+    "ok": true
+  },
+  "decision_payload": {
+    "schema_version": "diagnostic_center_controlled_cohort_expansion_decision_v1",
+    "prd_id": "PRD-046.1.27",
+    "final_status": "passed",
+    "decision": "ready_for_final_acceptance_and_stabilization_prd",
+    "blockers": [],
+    "warnings": [],
+    "next_recommended_prd": "PRD-046.1.28 - Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1"
+  },
+  "scorecard": {
+    "final_status": "passed",
+    "decision": "ready_for_final_acceptance_and_stabilization_prd",
+    "source_gate_passed": true,
+    "botdb_preflight_passed": true,
+    "cohort_policy_passed": true,
+    "target_user_count": 3,
+    "scenario_count": 12,
+    "provider_calls_total": 12,
+    "provider_budget_gate_passed": true,
+    "normal_user_controls_total": 3,
+    "normal_user_apply_count": 0,
+    "normal_user_provider_calls": 0,
+    "normal_user_no_effect_gate_passed": true,
+    "quality_micro_shift_gate_passed": true,
+    "micro_shift_present_rate": 1.0,
+    "safety_kb_boundary_gate_passed": true,
+    "trace_provider_sanitization_gate_passed": true,
+    "rollback_precheck_passed": true,
+    "rollback_postcheck_passed": true,
+    "rollback_gate_passed": true,
+    "botdb_stability_gate_passed": true,
+    "hard_stop_triggered": false,
+    "production_mutation_detected": false,
+    "artifact_encoding_hygiene_passed": true,
+    "broad_rollout_allowed": false,
+    "production_ready": false,
+    "next_recommended_prd": "PRD-046.1.28 - Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1",
+    "blockers": [],
+    "warnings": [],
+    "normal_user_activation_allowed": false
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.27",
+    "checked_prd": "PRD-046.1.27",
+    "final_status": "passed",
+    "files_checked": 20,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/botdb_preflight.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/botdb_stability_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/cohort_policy.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/decision_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/hard_stop_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/next_prd_recommendation.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/normal_user_no_effect_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/provider_budget_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/provider_execution_evidence.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/quality_micro_shift_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/rollback_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/safety_kb_boundary_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/sanitized_provider_trace.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/source_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.27/test_command_output.txt",
+      "TO_DO_LIST/logs/PRD-046.1.27/trace_provider_sanitization_gate.json"
+    ]
+  }
+}
+
+EXIT_CODE=0
+

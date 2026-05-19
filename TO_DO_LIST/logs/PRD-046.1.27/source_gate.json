@@ -1,0 +1,24 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_source_gate_v1",
+  "prd": "PRD-046.1.27",
+  "source_chain_complete": true,
+  "source_chain_order_valid": true,
+  "missing_required_artifacts_count": 0,
+  "parse_error_count": 0,
+  "source_decision_mismatch_count": 0,
+  "checks": {
+    "prd_046_1_23_passed": true,
+    "prd_046_1_23_decision_expected": true,
+    "prd_046_1_24_passed": true,
+    "prd_046_1_24_decision_expected": true,
+    "prd_046_1_24_blockers_none": true,
+    "prd_046_1_24_warnings_none": true,
+    "prd_046_1_25_passed": true,
+    "prd_046_1_25_decision_expected": true,
+    "prd_046_1_25_blockers_none": true,
+    "prd_046_1_25_warnings_none": true,
+    "prd_046_1_26_passed": true,
+    "prd_046_1_26_decision_expected": true
+  },
+  "source_gate_passed": true
+}

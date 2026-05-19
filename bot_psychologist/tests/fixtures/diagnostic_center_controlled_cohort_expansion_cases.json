@@ -1,0 +1,114 @@
+﻿{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_cases_v1",
+  "prd": "PRD-046.1.27",
+  "scenarios": [
+    {
+      "scenario_id": "op003_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_003",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "expected_response_goal": "stabilize_and_offer_small_step",
+      "expected_micro_shift": "one_tiny_action_for_today",
+      "forbidden_moves": ["directive_order", "spiritual_authority_quote"]
+    },
+    {
+      "scenario_id": "op003_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_003",
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "expected_response_goal": "downshift_and_grounding",
+      "expected_micro_shift": "short_breath_or_anchor_step",
+      "forbidden_moves": ["urgent_life_decision_command"]
+    },
+    {
+      "scenario_id": "op003_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_003",
+      "nervous_state": "window",
+      "intent": "directive",
+      "expected_response_goal": "preserve_agency_and_offer_options",
+      "expected_micro_shift": "choose_one_option",
+      "forbidden_moves": ["you_must_do_now"]
+    },
+    {
+      "scenario_id": "op003_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_003",
+      "nervous_state": "window",
+      "intent": "explore",
+      "expected_response_goal": "deepen_and_keep_structure",
+      "expected_micro_shift": "single_reflective_step",
+      "forbidden_moves": ["bookish_overload"]
+    },
+    {
+      "scenario_id": "op004_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_004",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "expected_response_goal": "stabilize_and_offer_small_step",
+      "expected_micro_shift": "one_tiny_action_for_today",
+      "forbidden_moves": ["directive_order", "spiritual_authority_quote"]
+    },
+    {
+      "scenario_id": "op004_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_004",
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "expected_response_goal": "downshift_and_grounding",
+      "expected_micro_shift": "short_breath_or_anchor_step",
+      "forbidden_moves": ["urgent_life_decision_command"]
+    },
+    {
+      "scenario_id": "op004_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_004",
+      "nervous_state": "window",
+      "intent": "directive",
+      "expected_response_goal": "preserve_agency_and_offer_options",
+      "expected_micro_shift": "choose_one_option",
+      "forbidden_moves": ["you_must_do_now"]
+    },
+    {
+      "scenario_id": "op004_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_004",
+      "nervous_state": "window",
+      "intent": "explore",
+      "expected_response_goal": "deepen_and_keep_structure",
+      "expected_micro_shift": "single_reflective_step",
+      "forbidden_moves": ["bookish_overload"]
+    },
+    {
+      "scenario_id": "op005_hypo_support_01",
+      "target_user_id": "pilot_runtime_operator_005",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "expected_response_goal": "stabilize_and_offer_small_step",
+      "expected_micro_shift": "one_tiny_action_for_today",
+      "forbidden_moves": ["directive_order", "spiritual_authority_quote"]
+    },
+    {
+      "scenario_id": "op005_hyper_grounding_02",
+      "target_user_id": "pilot_runtime_operator_005",
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "expected_response_goal": "downshift_and_grounding",
+      "expected_micro_shift": "short_breath_or_anchor_step",
+      "forbidden_moves": ["urgent_life_decision_command"]
+    },
+    {
+      "scenario_id": "op005_directive_agency_03",
+      "target_user_id": "pilot_runtime_operator_005",
+      "nervous_state": "window",
+      "intent": "directive",
+      "expected_response_goal": "preserve_agency_and_offer_options",
+      "expected_micro_shift": "choose_one_option",
+      "forbidden_moves": ["you_must_do_now"]
+    },
+    {
+      "scenario_id": "op005_open_depth_04",
+      "target_user_id": "pilot_runtime_operator_005",
+      "nervous_state": "window",
+      "intent": "explore",
+      "expected_response_goal": "deepen_and_keep_structure",
+      "expected_micro_shift": "single_reflective_step",
+      "forbidden_moves": ["bookish_overload"]
+    }
+  ]
+}

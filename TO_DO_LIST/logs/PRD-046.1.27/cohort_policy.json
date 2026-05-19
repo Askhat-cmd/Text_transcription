@@ -1,0 +1,24 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_cohort_policy_v1",
+  "prd": "PRD-046.1.27",
+  "allowlisted_target_users": [
+    "pilot_runtime_operator_003",
+    "pilot_runtime_operator_004",
+    "pilot_runtime_operator_005"
+  ],
+  "normal_control_users": [
+    "normal_user_control_003",
+    "normal_user_control_004",
+    "normal_user_control_005"
+  ],
+  "target_user_count": 3,
+  "scenario_count": 12,
+  "per_target_scenario_count": {
+    "pilot_runtime_operator_003": 4,
+    "pilot_runtime_operator_004": 4,
+    "pilot_runtime_operator_005": 4
+  },
+  "allowlist_violation_count": 0,
+  "unknown_target_users": [],
+  "cohort_policy_passed": true
+}

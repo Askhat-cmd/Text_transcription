@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_provider_budget_gate_v1",
+  "prd": "PRD-046.1.27",
+  "provider_calls_total": 12,
+  "target_provider_calls_total": 12,
+  "normal_user_provider_calls_total": 0,
+  "provider_call_limit": 12,
+  "raw_provider_payload_detected": false,
+  "provider_budget_exceeded": false,
+  "provider_budget_gate_passed": true
+}

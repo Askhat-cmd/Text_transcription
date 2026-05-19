@@ -126,3 +126,5 @@ Root cause mid-word KB snippet clipping подтверждён в `knowledge_pol
 
 
 
+
+В PRD-046.1.21-HF2 closure: BotDB live query recovery подтверждены live invariants: Dashboard Chroma=`247/ok`, Registry stats=`200/247`, Query endpoint=`200` с retrieval hits, bot runtime retrieval через BotDB API без semantic fallback; Diagnostic Center continuation разрешён только через PRD-046.1.22.

@@ -1,0 +1,14 @@
+{
+  "schema_version": "chroma_consistency_gate_hf2_v1",
+  "generated_at": "2026-05-19T04:02:11.648648+00:00",
+  "all_blocks_merged_blocks": 247,
+  "registry_blocks": 247,
+  "dashboard_chroma_count": 247,
+  "registry_stats_chroma_total": 247,
+  "chroma_count": 247,
+  "source_ids_in_chroma": [
+    "123__кузница_духа"
+  ],
+  "focus_source_only_in_chroma": true,
+  "chroma_consistency_passed": true
+}

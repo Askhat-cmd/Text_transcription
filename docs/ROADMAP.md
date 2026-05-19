@@ -61,6 +61,7 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.21-HF1: emergency BotDB/Admin/Chroma integrity repair cycle delivered (`run_live_botdb_chroma_registry_audit_hf1.py`, persistent-store diagnostic, backup/reindex/hygiene/browser/retrieval/no-mutation artifacts, `/api/registry/stats` degraded-resilience). Live runtime blocker remains on current `:8003`: `/api/query/` still returns `503 ChromaDB unavailable`, so cycle closed as `done_with_query_blocker`.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
+- PRD-046.1.21-HF2: live query recovery closure passed; next: PRD-046.1.22 provider-backed limited smoke readiness.
 
 ## Next
 1. PRD-046.1.21-HF2 - Chroma Persistent Store Deep Recovery / Rebuild v2.

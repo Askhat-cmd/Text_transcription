@@ -1,0 +1,17 @@
+{
+  "schema_version": "zero_block_cleanup_plan_hf2_v1",
+  "generated_at": "2026-05-19T04:02:11.773294+00:00",
+  "zero_block_cleanup_plan_ready": true,
+  "safe_delete_candidates_count": 0,
+  "safe_delete_source_ids": [],
+  "blocked_delete_source_ids": [
+    "avtor__книга"
+  ],
+  "focus_source_id": "123__кузница_духа",
+  "rules": {
+    "focus_source_protected": true,
+    "delete_only_zero_block_test_archive_rows": true,
+    "require_no_chroma_records": true,
+    "require_no_all_blocks_records": true
+  }
+}

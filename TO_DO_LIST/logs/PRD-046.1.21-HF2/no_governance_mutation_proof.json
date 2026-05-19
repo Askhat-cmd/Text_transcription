@@ -1,21 +1,16 @@
 {
-  "schema_version": "no_governance_mutation_hf2_v1",
-  "generated_at": "2026-05-18T12:34:51.937903+00:00",
-  "hash_before": {
-    "all_blocks_merged": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
-    "registry": "ad14404171a5e0d3e87019e05005682b38ff9e73a8093d53e0a762ceefb9bc79",
-    "config": "eb617d95061687a2c0005b83c8a1afdd3aee96a1b476f800a610b9956685e8e7"
-  },
-  "hash_after": {
-    "all_blocks_merged": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
-    "registry": "ad14404171a5e0d3e87019e05005682b38ff9e73a8093d53e0a762ceefb9bc79",
-    "config": "eb617d95061687a2c0005b83c8a1afdd3aee96a1b476f800a610b9956685e8e7"
-  },
+  "schema_version": "no_governance_mutation_proof_hf2_closure_v1",
+  "generated_at": "2026-05-19T04:02:11.941633+00:00",
   "all_blocks_merged_text_mutated": false,
-  "registry_focus_source_mutated": false,
-  "config_mutated": false,
-  "governance_authority_mutated": false,
+  "all_blocks_merged_governance_mutated": false,
+  "focus_source_registry_mutated": false,
   "focus_source_deleted": false,
-  "chroma_runtime_rebind_performed": true,
-  "chroma_rebuild_performed": false
+  "chunk_type_mutated": false,
+  "allowed_use_mutated": false,
+  "safety_flags_mutated": false,
+  "config_mutated": false,
+  "private_env_committed": false,
+  "raw_private_logs_committed": false,
+  "registry_zero_block_rows_removed": false,
+  "no_governance_mutation_proof_passed": true
 }

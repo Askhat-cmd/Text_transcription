@@ -1,0 +1,93 @@
+{
+  "schema_version": "bot_runtime_retrieval_smoke_hf2_v1",
+  "generated_at": "2026-05-19T04:02:10.987817+00:00",
+  "retrieval_source_used": "api",
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "rag_hits_count": 4,
+  "http_503_chromadb_unavailable_absent": true,
+  "bot_runtime_retrieval_status": "passed",
+  "raw_smoke": {
+    "generated_at": "2026-05-19T04:02:10.987788+00:00",
+    "api_base_url": "http://127.0.0.1:8003",
+    "botdb_api_attempted": true,
+    "botdb_api_status": "degraded",
+    "retrieval_source": "fallback_or_mixed",
+    "fallback_used": false,
+    "circuit_breaker_open": false,
+    "knowledge_hits_count": [
+      4
+    ],
+    "queries": [
+      {
+        "query": "Что значит быть в потоке?",
+        "retrieval_source_attempted": "api",
+        "retrieval_source_used": "api",
+        "bot_db_circuit_open": false,
+        "bot_db_last_error_kind": null,
+        "bot_db_last_status_code": null,
+        "knowledge_hits_count": 4,
+        "top_hits": [
+          {
+            "id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+            "score": 0.09796734674073267,
+            "title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "source_type": "book",
+            "chunk_type": "",
+            "allowed_use": [],
+            "safety_flags": [],
+            "lens_family": [],
+            "not_for_direct_quote": false,
+            "content_preview": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.* *** **— Я всё поня…",
+            "llm_enrichment_summary": null,
+            "llm_enrichment_tags": [],
+            "llm_enrichment_use_when": [],
+            "llm_enrichment_avoid_when": [],
+            "llm_enrichment_confidence": null,
+            "llm_enrichment_review_status": null,
+            "llm_enrichment_needs_human_review": null
+          },
+          {
+            "id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "score": 0.0917687198347229,
+            "title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "source_type": "book",
+            "chunk_type": "",
+            "allowed_use": [],
+            "safety_flags": [],
+            "lens_family": [],
+            "not_for_direct_quote": false,
+            "content_preview": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный фин…",
+            "llm_enrichment_summary": null,
+            "llm_enrichment_tags": [],
+            "llm_enrichment_use_when": [],
+            "llm_enrichment_avoid_when": [],
+            "llm_enrichment_confidence": null,
+            "llm_enrichment_review_status": null,
+            "llm_enrichment_needs_human_review": null
+          },
+          {
+            "id": "a46d2ec4-c016-40bf-806a-6d404cdfec99",
+            "score": 0.08545645350502158,
+            "title": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+            "source_type": "book",
+            "chunk_type": "",
+            "allowed_use": [],
+            "safety_flags": [],
+            "lens_family": [],
+            "not_for_direct_quote": false,
+            "content_preview": "*** **— Вы говорите, что мозг зависим от страдания. Но тогда получается, что я не могу это изменить? Если это химия — значит, это сильнее меня?** — Химия — это…",
+            "llm_enrichment_summary": null,
+            "llm_enrichment_tags": [],
+            "llm_enrichment_use_when": [],
+            "llm_enrichment_avoid_when": [],
+            "llm_enrichment_confidence": null,
+            "llm_enrichment_review_status": null,
+            "llm_enrichment_needs_human_review": null
+          }
+        ]
+      }
+    ]
+  },
+  "issues": []
+}

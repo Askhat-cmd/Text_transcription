@@ -243,3 +243,10 @@ Consequences: обсуждение runtime authority expansion переноси�
 - Context: after a single controlled execution window, direct cohort expansion without consolidated evidence review can hide rollback drift, normal-user side effects, trace hygiene regressions, or safety/KB boundary violations.
 - Decision: each controlled runtime execution PRD must be followed by a dedicated no-new-execution results gate PRD that deterministically audits source evidence (execution scope, rollback, normal-user no-effect, quality delta, safety/KB, trace sanitization, no-mutation, encoding hygiene) and produces a decision gate: `continue_limited_candidate | fix_required | stop_pilot`.
 - Consequences: rollout progression becomes evidence-first and reversible, broad rollout remains prohibited by default, and any further runtime execution requires an explicit next PRD with preserved rollback-first governance.
+
+## ADR-041 - BotDB recovery closure requires live query proof before Diagnostic Center continuation
+
+Status: accepted
+Context: HF1 restored Chroma counts but left `/api/query` and bot retrieval path ambiguous due live runtime drift.
+Decision: Diagnostic Center continuation is blocked until live proof confirms `dashboard=ok/247`, `registry_stats=200/247`, `/api/query=200` with hits, and bot retrieval path uses API without semantic fallback/circuit-open state.
+Consequences: runtime truth is anchored in live artifacts; continuation PRDs cannot rely on historical/local-only Chroma evidence.

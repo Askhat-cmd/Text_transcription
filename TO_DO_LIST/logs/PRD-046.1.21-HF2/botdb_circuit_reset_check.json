@@ -1,0 +1,8 @@
+{
+  "schema_version": "botdb_circuit_reset_check_hf2_v1",
+  "generated_at": "2026-05-19T04:02:10.988815+00:00",
+  "circuit_open_before": true,
+  "circuit_reset_performed_if_needed": true,
+  "circuit_open_after": false,
+  "stale_circuit_after_chroma_ok": false
+}

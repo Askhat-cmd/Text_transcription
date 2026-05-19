@@ -1,0 +1,24 @@
+{
+  "schema_version": "zero_block_cleanup_apply_result_hf2_v1",
+  "generated_at": "2026-05-19T04:02:11.776442+00:00",
+  "backup_created": true,
+  "registry_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF2\\registry_before_zero_block_cleanup_20260519_040211.json",
+  "chroma_manifest_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF2\\chroma_manifest_before_cleanup_20260519_040211.json",
+  "cleanup_performed": false,
+  "cleanup_reason": "no_safe_candidates",
+  "removed_zero_block_sources_count": 0,
+  "removed_source_ids": [],
+  "registry_zero_block_test_archive_rows_removed": false,
+  "focus_source_deleted": false,
+  "focus_source_mutated": false,
+  "all_blocks_merged_mutated": false,
+  "kb_text_mutated": false,
+  "kb_governance_mutated": false,
+  "safety_gates": {
+    "live_preflight_passed": true,
+    "query_recovery_passed": true,
+    "bot_runtime_retrieval_passed": true,
+    "chroma_consistency_passed": true,
+    "cleanup_allowed": true
+  }
+}

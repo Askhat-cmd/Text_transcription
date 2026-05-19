@@ -1,0 +1,19 @@
+{
+  "schema_version": "provider_backed_smoke_results_source_gate_v1",
+  "prd": "PRD-046.1.24",
+  "source_prd": "PRD-046.1.23",
+  "source_final_status": "passed",
+  "source_decision": "provider_backed_limited_smoke_execution_passed",
+  "source_provider_calls_performed": 5,
+  "source_normal_user_apply_count": 0,
+  "source_quality_status": "passed",
+  "source_safety_kb_boundary_status": "passed",
+  "source_trace_sanitization_status": "passed",
+  "source_provider_output_sanitization_status": "passed",
+  "source_rollback_postcheck_passed": true,
+  "source_hard_stop_triggered": false,
+  "source_broad_rollout_allowed": false,
+  "source_production_ready": false,
+  "reports_and_logs_present": true,
+  "source_gate_passed": true
+}

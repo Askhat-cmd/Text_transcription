@@ -1,0 +1,10 @@
+{
+  "schema_version": "provider_backed_smoke_results_provider_budget_review_v1",
+  "prd": "PRD-046.1.24",
+  "max_provider_calls": 5,
+  "provider_calls_performed": 5,
+  "provider_calls_for_normal_users": 0,
+  "budget_exceeded": false,
+  "provider_error_leak_to_user_output": false,
+  "provider_budget_status": "passed"
+}

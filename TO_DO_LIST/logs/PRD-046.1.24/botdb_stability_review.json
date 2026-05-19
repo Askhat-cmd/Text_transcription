@@ -1,0 +1,21 @@
+{
+  "schema_version": "provider_backed_smoke_results_botdb_stability_review_v1",
+  "prd": "PRD-046.1.24",
+  "botdb_health_during_execution": {
+    "dashboard_chroma_status": "ok",
+    "dashboard_chroma_count": 247,
+    "registry_sources_count": 1,
+    "query_http_200": true,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false
+  },
+  "botdb_health_after_execution": {
+    "dashboard_chroma_status": "ok",
+    "dashboard_chroma_count": 247,
+    "registry_sources_count": 1,
+    "query_http_200": true,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false
+  },
+  "botdb_stability_status": "passed"
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "provider_backed_smoke_results_no_mutation_review_v1",
+  "prd": "PRD-046.1.24",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "runtime_defaults_changed": false,
+  "normal_user_path_changed": false,
+  "writer_contract_changed_for_normal_users": false,
+  "writer_prompt_changed_for_normal_users": false,
+  "final_answer_path_changed_for_normal_users": false,
+  "private_env_committed": false,
+  "raw_private_logs_committed": false,
+  "raw_provider_payload_committed": false,
+  "new_execution_performed": false,
+  "provider_called_by_prd_046_1_24": false,
+  "production_mutation_detected": false,
+  "no_mutation_status": "passed"
+}

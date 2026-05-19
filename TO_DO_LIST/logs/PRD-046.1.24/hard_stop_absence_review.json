@@ -1,0 +1,18 @@
+{
+  "schema_version": "provider_backed_smoke_results_hard_stop_absence_review_v1",
+  "prd": "PRD-046.1.24",
+  "hard_stop_triggered": false,
+  "normal_user_apply_count": 0,
+  "provider_calls_performed": 5,
+  "provider_calls_for_normal_users": 0,
+  "raw_provider_payload_committed": false,
+  "raw_kb_quote_exposure_count": 0,
+  "kuznitsa_authority_citation_count": 0,
+  "safety_regression_count": 0,
+  "kb_boundary_violation_count": 0,
+  "trace_sanitization_violation_count": 0,
+  "rollback_failure_count": 0,
+  "semantic_fallback_used": false,
+  "production_mutation_detected": false,
+  "hard_stop_absence_status": "passed"
+}

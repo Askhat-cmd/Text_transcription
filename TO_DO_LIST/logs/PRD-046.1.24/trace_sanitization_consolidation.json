@@ -1,0 +1,16 @@
+{
+  "schema_version": "provider_backed_smoke_results_trace_sanitization_consolidation_v1",
+  "prd": "PRD-046.1.24",
+  "trace_sanitization_status": "passed",
+  "contains_raw_private_logs": false,
+  "contains_raw_provider_payload": false,
+  "contains_secret_like_values": false,
+  "contains_env_values": false,
+  "contains_raw_content_full": false,
+  "contains_user_private_identifier": false,
+  "contains_nul_char": false,
+  "contains_mojibake": false,
+  "utf8_clean": true,
+  "json_parseable": true,
+  "trace_sanitization_consolidation_status": "passed"
+}

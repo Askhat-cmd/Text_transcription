@@ -1,0 +1,10 @@
+{
+  "schema_version": "provider_backed_smoke_results_rollback_evidence_review_v1",
+  "prd": "PRD-046.1.24",
+  "rollback_precheck_passed": true,
+  "rollback_postcheck_passed": true,
+  "force_disabled_priority_preserved": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "normal_user_apply_after_rollback_count": 0,
+  "rollback_evidence_status": "passed"
+}

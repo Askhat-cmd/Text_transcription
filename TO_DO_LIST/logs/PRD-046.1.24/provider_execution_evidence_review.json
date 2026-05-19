@@ -1,0 +1,18 @@
+{
+  "schema_version": "provider_backed_smoke_results_execution_evidence_review_v1",
+  "prd": "PRD-046.1.24",
+  "execution_window_count": 1,
+  "target_user_count": 1,
+  "allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "pilot_scenarios_executed": 5,
+  "pilot_apply_count": 5,
+  "pilot_apply_only_for_allowed_user": true,
+  "all_provider_calls_for_allowed_user": true,
+  "provider_calls_performed": 5,
+  "evidence_scope": "single_operator_limited_provider_backed_smoke",
+  "production_ready": false,
+  "broad_rollout_allowed": false,
+  "provider_execution_evidence_status": "passed"
+}

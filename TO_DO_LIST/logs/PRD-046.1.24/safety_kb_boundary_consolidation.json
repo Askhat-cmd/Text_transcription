@@ -1,0 +1,20 @@
+{
+  "schema_version": "provider_backed_smoke_results_safety_kb_boundary_consolidation_v1",
+  "prd": "PRD-046.1.24",
+  "safety_kb_boundary_status": "passed",
+  "raw_kb_quote_exposure_count": 0,
+  "kuznitsa_authority_citation_count": 0,
+  "content_full_exposure_count": 0,
+  "internal_only_direct_use_count": 0,
+  "not_for_direct_quote_violation_count": 0,
+  "high_stakes_directive_advice_count": 0,
+  "safety_regression_count": 0,
+  "kb_boundary_violation_count": 0,
+  "kuznitsa_duha_role": "internal_lens_library",
+  "user_facing_quote_source": false,
+  "chunk_type_authority": "deterministic",
+  "allowed_use_authority": "deterministic",
+  "safety_flags_authority": "deterministic",
+  "llm_enrichment_role": "advisory",
+  "safety_kb_boundary_consolidation_status": "passed"
+}

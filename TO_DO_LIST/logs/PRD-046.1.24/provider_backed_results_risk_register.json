@@ -1,0 +1,48 @@
+{
+  "schema_version": "provider_backed_smoke_results_risk_register_v1",
+  "prd": "PRD-046.1.24",
+  "risks": [
+    {
+      "risk": "single_operator_scope_only",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Expand only via next limited provider-backed planning PRD.",
+      "blocks_continue_limited_candidate": false,
+      "next_prd_relevance": "PRD-046.1.25"
+    },
+    {
+      "risk": "scenario_count_limited_to_five",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Keep deterministic scenario pack and broaden only under controlled cohort.",
+      "blocks_continue_limited_candidate": false,
+      "next_prd_relevance": "PRD-046.1.25"
+    },
+    {
+      "risk": "provider_budget_headroom_zero",
+      "severity": "medium",
+      "status": "open",
+      "mitigation": "Retain strict 5-call cap and explicit budget monitoring.",
+      "blocks_continue_limited_candidate": false,
+      "next_prd_relevance": "PRD-046.1.25"
+    },
+    {
+      "risk": "normal_user_controls_minimal",
+      "severity": "low",
+      "status": "open",
+      "mitigation": "Increase normal-user control scenarios in next cycle.",
+      "blocks_continue_limited_candidate": false,
+      "next_prd_relevance": "PRD-046.1.25"
+    },
+    {
+      "risk": "production_ready_still_prohibited",
+      "severity": "high",
+      "status": "open",
+      "mitigation": "Preserve broad-rollout prohibition until dedicated production PRD gate.",
+      "blocks_continue_limited_candidate": false,
+      "next_prd_relevance": "PRD-046.1.25"
+    }
+  ],
+  "risk_count": 5,
+  "risk_register_has_blockers": false
+}

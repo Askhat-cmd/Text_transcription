@@ -1,0 +1,23 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_source_chain_gate_v1",
+  "prd": "PRD-046.1.28",
+  "checks": {
+    "PRD-046.1.23_status_expected": true,
+    "PRD-046.1.23_decision_expected": true,
+    "PRD-046.1.24_status_expected": true,
+    "PRD-046.1.24_decision_expected": true,
+    "PRD-046.1.25_status_expected": true,
+    "PRD-046.1.25_decision_expected": true,
+    "PRD-046.1.26_status_expected": true,
+    "PRD-046.1.26_decision_expected": true,
+    "PRD-046.1.27_status_expected": true,
+    "PRD-046.1.27_decision_expected": true
+  },
+  "source_chain_complete": true,
+  "source_chain_order_valid": true,
+  "missing_required_artifacts_count": 0,
+  "parse_error_count": 0,
+  "source_chain_blocker_count": 0,
+  "source_chain_warning_count": 0,
+  "source_chain_gate_passed": true
+}

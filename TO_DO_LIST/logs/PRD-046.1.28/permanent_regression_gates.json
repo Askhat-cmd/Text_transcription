@@ -1,0 +1,23 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_permanent_regression_gates_v1",
+  "prd": "PRD-046.1.28",
+  "permanent_gate_families": [
+    "normal-user no-effect gate",
+    "rollback-first gate",
+    "safety/KB boundary gate",
+    "trace/provider sanitization gate",
+    "no-mutation gate",
+    "artifact encoding hygiene gate",
+    "BotDB stability gate",
+    "quality/micro-shift gate",
+    "governance authority immutability gate",
+    "feature-flag conservative baseline gate"
+  ],
+  "candidate_archive_families_after_cleanup": [
+    "one-off PRD-specific smoke traces",
+    "duplicate debug snapshots",
+    "temporary transition fixtures",
+    "old redundant runner variants superseded by permanent gates"
+  ],
+  "permanent_regression_gates_report_ready": true
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_cleanup_stabilization_readiness_v1",
+  "prd": "PRD-046.1.28",
+  "zones": [
+    "Production runtime",
+    "Permanent quality / eval / regression tools",
+    "Historical archive",
+    "Temporary/debug artifacts eligible for cleanup"
+  ],
+  "summary": {
+    "production_runtime_candidate": "Diagnostic Center provider-backed limited runtime candidate (governed, non-broad).",
+    "permanent_quality_eval_tools": "normal-user no-effect, rollback-first, safety/KB, trace sanitization, no-mutation, encoding, BotDB stability, quality/micro-shift gates.",
+    "archive_candidates": "one-off smoke traces, duplicate snapshots, temporary transition fixtures.",
+    "manifest_review_required_before_delete": true,
+    "must_keep_modules": [
+      "runtime contracts and gate modules",
+      "permanent regression gate tests",
+      "artifact encoding validator",
+      "no-mutation proofs and required source scorecards"
+    ],
+    "logs_eligible_for_historical_archive": [
+      "raw execution trace samples superseded by sanitized summaries",
+      "transition-only intermediate manifests duplicated in later scorecards"
+    ],
+    "docs_compaction_targets": [
+      "PROJECT_STATE historical duplicates",
+      "ROADMAP duplicate done-items",
+      "PRD_INDEX duplicate late-appended rows"
+    ],
+    "reproducibility_artifacts_to_keep": [
+      "PRD-046.1.23..PRD-046.1.28 scorecards",
+      "decision gates and no-mutation proofs",
+      "test_command_output logs"
+    ],
+    "next_prd_structure": "PRD-046.1.29: inventory -> classification -> archive plan -> cleanup execution plan -> regression guard confirmation."
+  },
+  "cleanup_stabilization_readiness_ready": true
+}

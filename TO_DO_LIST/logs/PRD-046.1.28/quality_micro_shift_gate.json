@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_quality_micro_shift_gate_v1",
+  "prd": "PRD-046.1.28",
+  "provider_scenarios_total": 23,
+  "micro_shift_present_count_total": 22,
+  "micro_shift_required_threshold_count": 20,
+  "candidate_weaker_than_baseline_count_total": 0,
+  "safety_regression_count_total": 0,
+  "kb_policy_regression_count_total": 0,
+  "overdeepening_in_low_resource_count": 0,
+  "directive_advice_violation_count": 0,
+  "spiritual_authority_violation_count": 0,
+  "writer_bloat_blocker_count": 0,
+  "quality_micro_shift_gate_passed": true
+}

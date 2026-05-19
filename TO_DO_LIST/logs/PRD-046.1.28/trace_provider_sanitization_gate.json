@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_trace_provider_sanitization_gate_v1",
+  "prd": "PRD-046.1.28",
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "secret_like_value_count": 0,
+  "env_key_like_value_count": 0,
+  "api_key_like_value_count": 0,
+  "full_user_private_content_leak_count": 0,
+  "trace_json_parseable": true,
+  "trace_utf8_clean": true,
+  "trace_sanitized_preview_only": true,
+  "trace_provider_sanitization_gate_passed": true
+}

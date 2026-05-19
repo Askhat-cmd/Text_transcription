@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_botdb_stability_gate_v1",
+  "prd": "PRD-046.1.28",
+  "dependency_mode": "live",
+  "live_dependency_checked": true,
+  "live_dependency_passed": true,
+  "live_dependency_error": "",
+  "live_unavailable_warning": false,
+  "dashboard_chroma_count": 247,
+  "dashboard_chroma_status": "ok",
+  "registry_source_count": 1,
+  "focus_source_id": "123__кузница_духа",
+  "query_endpoint_status": 200,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "botdb_stability_gate_passed": true
+}

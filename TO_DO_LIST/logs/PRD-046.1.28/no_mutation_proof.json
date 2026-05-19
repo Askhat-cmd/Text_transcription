@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_no_mutation_proof_v1",
+  "prd": "PRD-046.1.28",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "runtime_defaults_changed": false,
+  "production_data_mutated": false,
+  "chroma_reindexed": false,
+  "feature_flags_changed": false,
+  "writer_prompt_defaults_changed": false,
+  "normal_user_runtime_path_changed": false,
+  "no_mutation_proof_passed": true
+}

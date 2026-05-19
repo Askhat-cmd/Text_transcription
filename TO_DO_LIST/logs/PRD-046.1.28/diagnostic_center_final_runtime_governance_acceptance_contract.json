@@ -1,0 +1,239 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_acceptance_v1",
+  "prd_id": "PRD-046.1.28",
+  "final_status": "passed",
+  "decision": "accepted_ready_for_cleanup_stabilization",
+  "source_chain": {
+    "schema_version": "diagnostic_center_final_runtime_governance_source_chain_gate_v1",
+    "prd": "PRD-046.1.28",
+    "checks": {
+      "PRD-046.1.23_status_expected": true,
+      "PRD-046.1.23_decision_expected": true,
+      "PRD-046.1.24_status_expected": true,
+      "PRD-046.1.24_decision_expected": true,
+      "PRD-046.1.25_status_expected": true,
+      "PRD-046.1.25_decision_expected": true,
+      "PRD-046.1.26_status_expected": true,
+      "PRD-046.1.26_decision_expected": true,
+      "PRD-046.1.27_status_expected": true,
+      "PRD-046.1.27_decision_expected": true
+    },
+    "source_chain_complete": true,
+    "source_chain_order_valid": true,
+    "missing_required_artifacts_count": 0,
+    "parse_error_count": 0,
+    "source_chain_blocker_count": 0,
+    "source_chain_warning_count": 0,
+    "source_chain_gate_passed": true
+  },
+  "provider_evidence": {
+    "schema_version": "diagnostic_center_final_runtime_governance_cumulative_provider_evidence_v1",
+    "prd": "PRD-046.1.28",
+    "limited_smoke_cycle_count": 2,
+    "cohort_expansion_cycle_count": 1,
+    "provider_backed_cycles_total": 3,
+    "provider_scenarios_total": 23,
+    "provider_calls_total": 23,
+    "provider_budget_violation_count": 0,
+    "provider_execution_windows_valid": true,
+    "raw_provider_payload_committed": false,
+    "cumulative_provider_evidence_gate_passed": true
+  },
+  "normal_user_no_effect": {
+    "schema_version": "diagnostic_center_final_runtime_governance_normal_user_no_effect_gate_v1",
+    "prd": "PRD-046.1.28",
+    "normal_user_controls_total": 7,
+    "normal_user_apply_count_total": 0,
+    "normal_user_provider_calls_total": 0,
+    "normal_user_prompt_changed_by_diagnostic_center_total": 0,
+    "normal_user_final_answer_changed_by_diagnostic_center_total": 0,
+    "normal_user_runtime_authority_expansion_count": 0,
+    "normal_user_no_effect_gate_passed": true
+  },
+  "rollback_hard_stop": {
+    "schema_version": "diagnostic_center_final_runtime_governance_rollback_hard_stop_gate_v1",
+    "prd": "PRD-046.1.28",
+    "rollback_precheck_passed_all": true,
+    "rollback_postcheck_passed_all": true,
+    "rollback_failure_count_total": 0,
+    "stale_apply_after_force_disabled_count_total": 0,
+    "hard_stop_triggered_total": 0,
+    "hard_stop_ignored_count": 0,
+    "force_disabled_baseline_preserved": true,
+    "rollback_hard_stop_gate_passed": true
+  },
+  "safety_kb_boundary": {
+    "schema_version": "diagnostic_center_final_runtime_governance_safety_kb_boundary_gate_v1",
+    "prd": "PRD-046.1.28",
+    "raw_kb_text_exposure_count_total": 0,
+    "kb_authority_citation_count_total": 0,
+    "direct_quote_from_kuznica_count_total": 0,
+    "governance_authority_mutation_count": 0,
+    "chunk_type_mutation_count": 0,
+    "allowed_use_mutation_count": 0,
+    "safety_flags_mutation_count": 0,
+    "writer_received_raw_internal_only_count": 0,
+    "not_for_direct_quote_violation_count": 0,
+    "kuznica_role": "internal_lens_library_not_quote_source",
+    "safety_kb_boundary_gate_passed": true
+  },
+  "trace_provider_sanitization": {
+    "schema_version": "diagnostic_center_final_runtime_governance_trace_provider_sanitization_gate_v1",
+    "prd": "PRD-046.1.28",
+    "raw_provider_payload_committed": false,
+    "raw_private_logs_committed": false,
+    "secret_like_value_count": 0,
+    "env_key_like_value_count": 0,
+    "api_key_like_value_count": 0,
+    "full_user_private_content_leak_count": 0,
+    "trace_json_parseable": true,
+    "trace_utf8_clean": true,
+    "trace_sanitized_preview_only": true,
+    "trace_provider_sanitization_gate_passed": true
+  },
+  "botdb_stability": {
+    "schema_version": "diagnostic_center_final_runtime_governance_botdb_stability_gate_v1",
+    "prd": "PRD-046.1.28",
+    "dependency_mode": "live",
+    "live_dependency_checked": true,
+    "live_dependency_passed": true,
+    "live_dependency_error": "",
+    "live_unavailable_warning": false,
+    "dashboard_chroma_count": 247,
+    "dashboard_chroma_status": "ok",
+    "registry_source_count": 1,
+    "focus_source_id": "123__кузница_духа",
+    "query_endpoint_status": 200,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false,
+    "botdb_stability_gate_passed": true
+  },
+  "quality_micro_shift": {
+    "schema_version": "diagnostic_center_final_runtime_governance_quality_micro_shift_gate_v1",
+    "prd": "PRD-046.1.28",
+    "provider_scenarios_total": 23,
+    "micro_shift_present_count_total": 22,
+    "micro_shift_required_threshold_count": 20,
+    "candidate_weaker_than_baseline_count_total": 0,
+    "safety_regression_count_total": 0,
+    "kb_policy_regression_count_total": 0,
+    "overdeepening_in_low_resource_count": 0,
+    "directive_advice_violation_count": 0,
+    "spiritual_authority_violation_count": 0,
+    "writer_bloat_blocker_count": 0,
+    "quality_micro_shift_gate_passed": true
+  },
+  "permanent_regression_gates": {
+    "schema_version": "diagnostic_center_final_runtime_governance_permanent_regression_gates_v1",
+    "prd": "PRD-046.1.28",
+    "permanent_gate_families": [
+      "normal-user no-effect gate",
+      "rollback-first gate",
+      "safety/KB boundary gate",
+      "trace/provider sanitization gate",
+      "no-mutation gate",
+      "artifact encoding hygiene gate",
+      "BotDB stability gate",
+      "quality/micro-shift gate",
+      "governance authority immutability gate",
+      "feature-flag conservative baseline gate"
+    ],
+    "candidate_archive_families_after_cleanup": [
+      "one-off PRD-specific smoke traces",
+      "duplicate debug snapshots",
+      "temporary transition fixtures",
+      "old redundant runner variants superseded by permanent gates"
+    ],
+    "permanent_regression_gates_report_ready": true
+  },
+  "runtime_governance_boundaries": {
+    "schema_version": "diagnostic_center_final_runtime_governance_boundary_decision_v1",
+    "prd": "PRD-046.1.28",
+    "diagnostic_center_runtime_status": "accepted_as_governed_limited_runtime_candidate",
+    "broad_rollout_allowed": false,
+    "production_ready": false,
+    "normal_user_activation_allowed": false,
+    "cohort_expansion_beyond_controlled_requires_separate_prd": true,
+    "writer_prompt_authority_mode": "guarded_allowlisted_rollback_first_only",
+    "kb_governance_authority_mode": "deterministic_authority_llm_advisory_only",
+    "cleanup_stabilization_required_next": true,
+    "runtime_governance_boundary_decision_ready": true
+  },
+  "cleanup_stabilization_readiness": {
+    "schema_version": "diagnostic_center_final_runtime_cleanup_stabilization_readiness_v1",
+    "prd": "PRD-046.1.28",
+    "zones": [
+      "Production runtime",
+      "Permanent quality / eval / regression tools",
+      "Historical archive",
+      "Temporary/debug artifacts eligible for cleanup"
+    ],
+    "summary": {
+      "production_runtime_candidate": "Diagnostic Center provider-backed limited runtime candidate (governed, non-broad).",
+      "permanent_quality_eval_tools": "normal-user no-effect, rollback-first, safety/KB, trace sanitization, no-mutation, encoding, BotDB stability, quality/micro-shift gates.",
+      "archive_candidates": "one-off smoke traces, duplicate snapshots, temporary transition fixtures.",
+      "manifest_review_required_before_delete": true,
+      "must_keep_modules": [
+        "runtime contracts and gate modules",
+        "permanent regression gate tests",
+        "artifact encoding validator",
+        "no-mutation proofs and required source scorecards"
+      ],
+      "logs_eligible_for_historical_archive": [
+        "raw execution trace samples superseded by sanitized summaries",
+        "transition-only intermediate manifests duplicated in later scorecards"
+      ],
+      "docs_compaction_targets": [
+        "PROJECT_STATE historical duplicates",
+        "ROADMAP duplicate done-items",
+        "PRD_INDEX duplicate late-appended rows"
+      ],
+      "reproducibility_artifacts_to_keep": [
+        "PRD-046.1.23..PRD-046.1.28 scorecards",
+        "decision gates and no-mutation proofs",
+        "test_command_output logs"
+      ],
+      "next_prd_structure": "PRD-046.1.29: inventory -> classification -> archive plan -> cleanup execution plan -> regression guard confirmation."
+    },
+    "cleanup_stabilization_readiness_ready": true
+  },
+  "no_mutation_proof": {
+    "schema_version": "diagnostic_center_final_runtime_governance_no_mutation_proof_v1",
+    "prd": "PRD-046.1.28",
+    "all_blocks_merged_mutated": false,
+    "registry_mutated": false,
+    "config_mutated": false,
+    "runtime_defaults_changed": false,
+    "production_data_mutated": false,
+    "chroma_reindexed": false,
+    "feature_flags_changed": false,
+    "writer_prompt_defaults_changed": false,
+    "normal_user_runtime_path_changed": false,
+    "no_mutation_proof_passed": true
+  },
+  "artifact_hygiene": {
+    "schema_version": "diagnostic_center_final_runtime_governance_artifact_hygiene_v1",
+    "prd": "PRD-046.1.28",
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "json_parse_error_count": 0,
+    "mojibake_marker_count": 0,
+    "raw_debug_dir_committed": false,
+    "artifact_encoding_hygiene_passed": true
+  },
+  "risk_register": {
+    "schema_version": "diagnostic_center_final_runtime_governance_risk_register_v1",
+    "prd": "PRD-046.1.28",
+    "blockers": [],
+    "warnings": [],
+    "risk_register_has_blockers": false
+  },
+  "next_prd_recommendation": {
+    "schema_version": "diagnostic_center_final_runtime_governance_next_prd_recommendation_v1",
+    "prd": "PRD-046.1.28",
+    "final_status": "passed",
+    "decision": "accepted_ready_for_cleanup_stabilization",
+    "recommended_next_prd": "PRD-046.1.29 - Diagnostic Center Stabilization / Runtime Cleanup / Eval Harness Consolidation v1"
+  }
+}

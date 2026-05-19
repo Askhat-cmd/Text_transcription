@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_cumulative_provider_evidence_v1",
+  "prd": "PRD-046.1.28",
+  "limited_smoke_cycle_count": 2,
+  "cohort_expansion_cycle_count": 1,
+  "provider_backed_cycles_total": 3,
+  "provider_scenarios_total": 23,
+  "provider_calls_total": 23,
+  "provider_budget_violation_count": 0,
+  "provider_execution_windows_valid": true,
+  "raw_provider_payload_committed": false,
+  "cumulative_provider_evidence_gate_passed": true
+}

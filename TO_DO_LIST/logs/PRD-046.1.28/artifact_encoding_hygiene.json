@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_artifact_hygiene_v1",
+  "prd": "PRD-046.1.28",
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "json_parse_error_count": 0,
+  "mojibake_marker_count": 0,
+  "raw_debug_dir_committed": false,
+  "artifact_encoding_hygiene_passed": true
+}

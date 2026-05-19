@@ -1,0 +1,41 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.28",
+  "checked_prd": "PRD-046.1.28",
+  "final_status": "passed",
+  "files_checked": 19,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 1,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [
+    "TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt:replacement_chars=5543"
+  ],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/botdb_stability_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/cleanup_stabilization_readiness.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/cumulative_provider_evidence_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/diagnostic_center_final_runtime_governance_acceptance_contract.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/final_acceptance_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/next_prd_recommendation.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/normal_user_no_effect_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/permanent_regression_gates.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/quality_micro_shift_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/risk_register.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/rollback_hard_stop_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/runtime_governance_boundary_decision.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/safety_kb_boundary_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/source_chain_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt",
+    "TO_DO_LIST/logs/PRD-046.1.28/trace_provider_sanitization_gate.json"
+  ]
+}

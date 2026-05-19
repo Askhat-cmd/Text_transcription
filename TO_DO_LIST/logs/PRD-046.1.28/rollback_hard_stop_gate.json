@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_rollback_hard_stop_gate_v1",
+  "prd": "PRD-046.1.28",
+  "rollback_precheck_passed_all": true,
+  "rollback_postcheck_passed_all": true,
+  "rollback_failure_count_total": 0,
+  "stale_apply_after_force_disabled_count_total": 0,
+  "hard_stop_triggered_total": 0,
+  "hard_stop_ignored_count": 0,
+  "force_disabled_baseline_preserved": true,
+  "rollback_hard_stop_gate_passed": true
+}

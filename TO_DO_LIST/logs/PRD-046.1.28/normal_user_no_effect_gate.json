@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_final_runtime_governance_normal_user_no_effect_gate_v1",
+  "prd": "PRD-046.1.28",
+  "normal_user_controls_total": 7,
+  "normal_user_apply_count_total": 0,
+  "normal_user_provider_calls_total": 0,
+  "normal_user_prompt_changed_by_diagnostic_center_total": 0,
+  "normal_user_final_answer_changed_by_diagnostic_center_total": 0,
+  "normal_user_runtime_authority_expansion_count": 0,
+  "normal_user_no_effect_gate_passed": true
+}

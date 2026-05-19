@@ -292,3 +292,10 @@ Status: accepted
 Context: после `PRD-046.1.26` было разрешено перейти от single-operator limited smoke к расширенной allowlisted synthetic cohort execution, но существовал риск скрытого перехода к normal-user activation или неявного расширения runtime authority.
 Decision: `PRD-046.1.27` закрепляет execution boundary: только allowlisted synthetic cohort из трёх операторов, provider budget `<=12`, обязательные normal-user controls без apply/provider effects, rollback-first/hard-stop/safety-KB/trace/no-mutation gates и запрет broad rollout/production-ready/normal-user activation.
 Consequences: даже при зелёном execution результате (`ready_for_final_acceptance_and_stabilization_prd`) Diagnostic Center остаётся governed limited layer; расширение authority возможно только через следующий отдельный acceptance/stabilization gate PRD.
+
+## ADR-048 - Provider-backed Diagnostic Center phase accepted as governed limited-runtime candidate
+
+Status: accepted
+Context: после двух single-operator provider-backed cycles, cumulative consolidation и controlled cohort expansion (`PRD-046.1.23..PRD-046.1.27`) требовалась финальная архитектурная приёмка без нового execution/call budget роста.
+Decision: `PRD-046.1.28` фиксирует phase acceptance как `accepted_as_governed_limited_runtime_candidate` при обязательных permanent regression gates (normal-user no-effect, rollback-first, safety/KB boundary, trace/provider sanitization, no-mutation, encoding hygiene, BotDB stability, quality/micro-shift) и при жёстких boundary-флагах: `broad_rollout=false`, `production_ready=false`, `normal_user_activation=false`.
+Consequences: provider-backed phase завершена на governance уровне, но broad rollout и production launch запрещены; следующий обязательный шаг — `PRD-046.1.29` stabilization/cleanup/eval-harness consolidation перед любым дальнейшим расширением.

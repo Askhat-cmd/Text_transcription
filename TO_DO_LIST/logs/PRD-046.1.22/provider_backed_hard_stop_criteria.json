@@ -1,0 +1,29 @@
+{
+  "schema_version": "provider_backed_hard_stop_criteria_v1",
+  "prd": "PRD-046.1.22",
+  "hard_stop_if": [
+    "normal_user_apply_count > 0",
+    "provider_error_leaked_to_user_output=true",
+    "raw_provider_payload_committed=true",
+    "raw_kb_quote_exposure_count > 0",
+    "kuznitsa_authority_citation_count > 0",
+    "high_stakes_directive_advice_count > 0",
+    "safety_regression_count > 0",
+    "kb_boundary_violation_count > 0",
+    "trace_sanitization_violation_count > 0",
+    "rollback_failure_count > 0",
+    "stale_apply_after_force_disabled_count > 0",
+    "botdb_query_http_200=false",
+    "semantic_fallback_used=true",
+    "dashboard_chroma_count != 247",
+    "registry_sources_count != 1",
+    "production_mutation_detected=true"
+  ],
+  "hard_stop_criteria_ready": true,
+  "botdb_health_hard_stop_included": true,
+  "kb_boundary_hard_stop_included": true,
+  "provider_error_hard_stop_included": true,
+  "normal_user_hard_stop_included": true,
+  "ready": true,
+  "final_status": "passed"
+}

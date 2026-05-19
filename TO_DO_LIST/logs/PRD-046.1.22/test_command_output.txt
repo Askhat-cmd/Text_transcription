@@ -1,0 +1,590 @@
+﻿PRD-046.1.22 command log
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_readiness_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_readiness_contract.py . [100%]
+
+============================== 1 passed in 0.23s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_readiness_runner.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_readiness_runner.py . [100%]
+
+============================== 1 passed in 1.13s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_source_gates.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_source_gates.py . [100%]
+
+============================== 1 passed in 1.22s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_live_dependency_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_live_dependency_gate.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_cohort_policy.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_cohort_policy.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_toggle_matrix.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_toggle_matrix.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_hard_stop_criteria.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_hard_stop_criteria.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_kb_boundary_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_kb_boundary_contract.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_trace_sanitization_contract.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_trace_sanitization_contract.py . [100%]
+
+============================== 1 passed in 0.24s ==============================
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_provider_backed_smoke_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_provider_backed_smoke_no_mutation.py . [100%]
+
+============================== 1 passed in 1.10s ==============================
+
+>>> python -m bot_psychologist.tools.run_diagnostic_center_provider_backed_smoke_readiness --repo-root . --admin-base-url http://127.0.0.1:8003 --output-dir TO_DO_LIST/logs/PRD-046.1.22 --reports-dir TO_DO_LIST/reports --strict
+2026-05-19 09:56:23,379 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-19 09:56:23,382 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "provider_backed_limited_smoke_readiness_ready",
+  "scorecard": {
+    "final_status": "passed",
+    "decision": "provider_backed_limited_smoke_readiness_ready",
+    "diagnostic_center_source_gate_passed": true,
+    "botdb_recovery_source_gate_passed": true,
+    "live_dependency_readiness_passed": true,
+    "cohort_policy_ready": true,
+    "toggle_matrix_ready": true,
+    "scenario_pack_ready": true,
+    "normal_user_control_plan_ready": true,
+    "rollback_first_runbook_ready": true,
+    "hard_stop_criteria_ready": true,
+    "kb_boundary_contract_ready": true,
+    "trace_sanitization_contract_ready": true,
+    "execution_manifest_template_ready": true,
+    "provider_execution_performed": false,
+    "provider_called": false,
+    "broad_rollout_allowed": false,
+    "production_ready": false,
+    "future_execution_requires_new_prd": true,
+    "no_mutation_proof_passed": true,
+    "artifact_encoding_hygiene_passed": true,
+    "docs_synced": true,
+    "dashboard_chroma_status": "ok",
+    "dashboard_chroma_count": 247,
+    "registry_sources_count": 1,
+    "registry_focus_source_id": "123__�������_����",
+    "query_http_200": true,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false,
+    "recommended_next_prd": "PRD-046.1.23 - Diagnostic Center Provider-Backed Limited Smoke Execution v1",
+    "blockers": [],
+    "warnings": []
+  },
+  "decision_payload": {
+    "schema_version": "diagnostic_center_provider_backed_smoke_readiness_decision_v1",
+    "prd_id": "PRD-046.1.22",
+    "final_status": "passed",
+    "decision": "provider_backed_limited_smoke_readiness_ready",
+    "blockers": [],
+    "warnings": [],
+    "recommended_next_prd": "PRD-046.1.23 - Diagnostic Center Provider-Backed Limited Smoke Execution v1"
+  },
+  "preflight": {
+    "required": {
+      "report:PRD-046.1.20_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.20_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.21_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.21_IMPLEMENTATION_REPORT.md",
+      "scorecard_120": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.20\\monitoring_scorecard.json",
+      "scorecard_121": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.21\\runtime_pilot_results_scorecard.json",
+      "report:PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md",
+      "report:PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\reports\\PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md",
+      "scorecard_hf2": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.21-HF2\\botdb_live_recovery_scorecard.json",
+      "scorecard_hf3": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-046.1.21-HF3\\registry_focus_only_cleanup_scorecard.json"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "ok": true,
+    "parsed": {
+      "scorecard_120": {
+        "final_status": "passed",
+        "decision": "controlled_runtime_pilot_execution_passed",
+        "source_gate_passed": true,
+        "preflight_gate_passed": true,
+        "execution_window_count": 1,
+        "target_user_count": 1,
+        "pilot_apply_only_for_allowed_user": true,
+        "normal_user_control_count": 2,
+        "normal_user_apply_count": 0,
+        "writer_prompt_changed_for_normal_user": false,
+        "writer_contract_changed_for_normal_user": false,
+        "final_answer_changed_for_normal_user": false,
+        "rollback_precheck_passed": true,
+        "rollback_postcheck_passed": true,
+        "stale_apply_after_force_disabled_count": 0,
+        "quality_delta_status": "passed",
+        "candidate_weaker_than_baseline_count": 0,
+        "safety_kb_boundary_gate_passed": true,
+        "trace_sanitization_gate_passed": true,
+        "hard_stop_triggered": false,
+        "production_mutation_detected": false,
+        "all_blocks_merged_mutated": false,
+        "registry_mutated": false,
+        "config_mutated": false,
+        "chroma_reindex_performed": false,
+        "runtime_defaults_changed": false,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "raw_kb_quote_exposure_count": 0,
+        "kuznitsa_authority_citation_count": 0,
+        "high_stakes_directive_advice_count": 0,
+        "recommended_next_prd": "PRD-046.1.21 - Diagnostic Center Runtime Pilot Results / Rollback & Quality Gate v1",
+        "blockers": [],
+        "warnings": [],
+        "schema_version": "diagnostic_center_runtime_pilot_monitoring_scorecard_v1",
+        "prd": "PRD-046.1.20"
+      },
+      "scorecard_121": {
+        "schema_version": "diagnostic_center_runtime_pilot_results_scorecard_v1",
+        "prd": "PRD-046.1.21",
+        "final_status": "passed",
+        "decision": "continue_limited_candidate",
+        "source_gate_passed": true,
+        "execution_evidence_status": "passed",
+        "rollback_evidence_status": "passed",
+        "normal_user_no_effect_status": "passed",
+        "quality_gate_decision": "passed",
+        "safety_kb_boundary_status": "passed",
+        "trace_sanitization_status": "passed",
+        "artifact_hygiene_status": "passed",
+        "encoding_warning_status": "non_blocking",
+        "no_mutation_status": "passed",
+        "hard_stop_triggered": false,
+        "broad_rollout_allowed": false,
+        "production_ready": false,
+        "future_execution_requires_new_prd": true,
+        "recommended_next_prd": "PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1",
+        "generated_at": "2026-05-18T09:46:58.111876+00:00"
+      },
+      "scorecard_hf2": {
+        "schema_version": "botdb_live_recovery_scorecard_hf2_v1",
+        "generated_at": "2026-05-19T04:02:12.262295+00:00",
+        "final_status": "passed",
+        "decision": "botdb_live_query_recovery_closed",
+        "source_hf1_failed": true,
+        "live_preflight_passed": true,
+        "dashboard_chroma_status": "ok",
+        "dashboard_chroma_count": 247,
+        "registry_stats_http_200": true,
+        "registry_stats_chroma_total": 247,
+        "query_http_200": true,
+        "query_recovery_status": "passed",
+        "bot_runtime_retrieval_status": "passed",
+        "semantic_fallback_used": false,
+        "botdb_circuit_open_after": false,
+        "chroma_consistency_passed": true,
+        "zero_block_hygiene_audit_ready": true,
+        "cleanup_apply_status": "not_needed",
+        "focus_source_protected": true,
+        "no_governance_mutation_proof_passed": true,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "recommended_next_prd": "PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1",
+        "commit_hash": "fdaaf2d",
+        "push_status": "pushed to origin/main",
+        "blockers": []
+      },
+      "scorecard_hf3": {
+        "schema_version": "registry_focus_only_cleanup_scorecard_hf3_v1",
+        "generated_at": "2026-05-19T04:34:30.348386+00:00",
+        "final_status": "passed",
+        "decision": "registry_focus_only_cleanup_closed",
+        "source_hf2_passed": true,
+        "live_preflight_passed": true,
+        "cleanup_apply_status": "passed",
+        "remaining_sources_count": 1,
+        "remaining_source_ids": [
+          "123__�������_����"
+        ],
+        "focus_source_protected": true,
+        "non_focus_rows_removed_count": 12,
+        "delete_button_raw_chroma_error_absent": true,
+        "source_exists_int_len_error_absent": true,
+        "dashboard_chroma_status": "ok",
+        "dashboard_chroma_count": 247,
+        "registry_total_blocks": 247,
+        "query_http_200": true,
+        "semantic_fallback_used": false,
+        "botdb_circuit_open": false,
+        "no_governance_mutation_proof_passed": true,
+        "artifact_encoding_hygiene_passed": true,
+        "docs_synced": true,
+        "recommended_next_prd": "PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1",
+        "commit_hash": "35145c4",
+        "push_status": "pushed to origin/main",
+        "blockers": []
+      }
+    }
+  },
+  "live_probe": {
+    "schema_version": "provider_backed_live_dependency_probe_v1",
+    "prd": "PRD-046.1.22",
+    "admin_base_url": "http://127.0.0.1:8003",
+    "checks": {
+      "/api/status/": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "jobs": []
+        },
+        "error": null
+      },
+      "/api/dashboard": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "schema_version": "botdb_dashboard_summary_v1",
+          "status": "ok",
+          "generated_at": "2026-05-19T04:56:23.517976+00:00",
+          "sources": {
+            "total": 1,
+            "active": 1,
+            "protected": 1,
+            "archived": 0,
+            "failed": 0,
+            "zero_block": 0
+          },
+          "blocks": {
+            "production_total": 247,
+            "active_source_blocks": 247,
+            "registry_total": 247
+          },
+          "chroma": {
+            "status": "ok",
+            "count": 247,
+            "indexed_source_ids": [
+              "123__�������_����"
+            ]
+          },
+          "governance": {
+            "readiness": "ready",
+            "governance_present_rate": 1.0,
+            "allowed_use_present_rate": 1.0,
+            "safety_flags_present_rate": 1.0,
+            "legacy_sd_active": false
+          },
+          "enrichment": {
+            "provider_status": "called",
+            "items_completed": 247,
+            "validation_errors_count": 0,
+            "validation_warnings_count": 0,
+            "review_queue_items_count": 87,
+            "p0": 0,
+            "p1": 1,
+            "p2": 86,
+            "production_apply_performed": false
+          },
+          "recent_sources": [
+            {
+              "source_id": "123__�������_����",
+              "title": "������� ����",
+              "status": "done",
+              "blocks": 247,
+              "hygiene_action": "keep",
+              "protected": true
+            }
+          ],
+          "warnings": []
+        },
+        "error": null
+      },
+      "/api/registry/": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "total": 1,
+          "sources": [
+            {
+              "source_id": "123__�������_����",
+              "source_type": "book",
+              "title": "������� ����",
+              "author": "������� ����������",
+              "author_id": "123",
+              "language": "ru",
+              "status": "done",
+              "added_at": "2026-03-13T04:38:44.281566",
+              "processed_at": "2026-05-15T03:43:28.740276+00:00",
+              "blocks_count": 247,
+              "sd_distribution": {},
+              "file_paths": {
+                "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__�������_����_blocks.json",
+                "chroma": true,
+                "upload": "data/uploads/books\\������� ���� v.2.md"
+              },
+              "error_message": null,
+              "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+              "is_focus_source": true,
+              "is_test_like": false,
+              "recommended_hygiene_action": "keep",
+              "hygiene_reason": [
+                "focus_source_protected"
+              ],
+              "delete_policy": {
+                "allowed": false,
+                "state": "protected",
+                "reason": "�������� �������� ����",
+                "code": "focus_source_protected"
+              },
+              "delete_allowed": false
+            }
+          ],
+          "warnings": []
+        },
+        "error": null
+      },
+      "/api/registry/stats": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "total_sources": 1,
+          "total_blocks": 247,
+          "chroma_total": 247,
+          "chroma_status": "ok",
+          "chroma_error_code": null,
+          "sd_distribution": {},
+          "sources_by_type": {
+            "book": 1
+          },
+          "legacy_sd_active": false,
+          "governance_readiness": {
+            "focus_source_count": 1,
+            "focus_source_blocks": 247,
+            "archive_candidate_sources": 0,
+            "processing_stale_sources": 0,
+            "review_queue_items": 87,
+            "row_policy_errors_count": 0
+          },
+          "warnings": []
+        },
+        "error": null
+      },
+      "/api/query/": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "chunks": [
+            {
+              "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+              "content": "����� ��� ���������. ������ ���������������.\n\n� �������� �� 2 �� 6 ��� ���� ������ ��������� � ��������� **�����������������**. ��������� ����� ����������� � �������� ���������. ������ ���� � ����� ��������� �������. ��� ���� ����������� � ��� ������ ��������������.\n\n���������: ������ ������. ���� �������: ��������� ����������!�. ������ ��� �� ����� ������ ���������� � �� �� ����� ������� ���� ����� ������, � �� ������ �����. �� ��������� **���� ������� ��������**: ������ � ������� ���� ������� � ���� ���������.\n\n���� ���� �����������. �����. � �����. � �����.\n\n��������� ������� ������������ � **��������������**. ����������� ���������� �����: **���� ������� = ������ �����������**.\n\n� ���������� ��� ����� ������ � ��� **��������� ������ ������**. ������ ��� ��� �������� ������ �� �������. ������� ���� ��������� ��������� ���������: **��������� �������. ������������. ���� �������**.\n\n��������� ������������ �� �� ������ ������. ��� ������������ �� ������ **����������� �������** � ������� ����� �����, ������� �������� �� ���������. ��� ������� ������ ��������. ������� �������������� �������.\n\n� ��� ��� ������������: **��� ��������� ���������� �������� ��� �����**. ���� ����� ���� 40 ��� � ���� ����� �� ����� ��� ����� ������� ������. ���� ����� �� �������, �����, �������. ��������� �� ����� ������: ��� ������������. �������� �������.\n\n�� ������ ��� ��� ������. � ������ ��� ����� �� ������ ��: ���, ����� �������������.\n\n***",
+              "score": 0.05569820223129469,
+              "sd_level": 0,
+              "author_id": "123",
+              "author_name": "������� ����������",
+              "source_type": "book",
+              "youtube_url": null,
+              "start_time": null,
+              "end_time": null,
+              "block_title": "����� 1. ��������� �������������� ߻: ��� �������� ���������",
+              "keywords": [],
+              "governance": {}
+            },
+            {
+              "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+              "content": "� ��� ���� ������: ���� �� ���� ����������� � ������ ����, ��� ������ �� ����. ����� �� ���� �������� ����� ������� ����� ������ � ��� ����� ���������� �����, ������, �����. �� ���� ����� ���������.\n\n***\n\n**� � ���� ��� ������� ������������ � ������������ �������. �� ���� ���������. ������ ����� ������ ��� ���������?**\n\n� ��� ����� ������ ������. � ����� ������.\n\n����������� ������� �� ������ ���� ����������. ��������� ����������� �� ������ ����� ��������� ������. ��� ����������� ����� **������ ��������� ������� ��������**. ��������, ������� �� �������. �������, ������� �������. ��������, ��� ���� ������� ���� �������� ����� ��� ��� ��������. �� ���� �� ���� �������� � �� ��������. �� �� ���� �����. � ��� ������������.\n\n����������� ������� � ��� ������ �������, � ������� �� ���� ������ �� ���� ��� ����������. �� ��������� �� ������� �� ���� ��� ����������. �� ���������� �������������.\n\n***\n\n**� � ����� ������������ ����������� � � ����� ����. ���� ������, � �� ����� ����. ��� ���������?**\n\n� ��. ��� ���������� ������� ��������.\n\n����� �� �������� � ����� ������� � ��������� � �� ��������� ������ ��, ��� ��� ���� ������. �� ������ ��� ����� ������. � ������ ��� ������ ������ �� �������.\n\n����� ����� � ������, �� ������ ����� ������ ��, ��� ������ �� �������. ��� �� ���������. ��� **���������**.\n\n����� �����-�� ����� � ����� ����������. ������ � �� �� �� �����, ��� ��������. ����� ������ � �� ������. ��� � ���� ������������� � ��������� ��, ��� ����, ��� ���� ����� ���� ���� �����������.\n\n���� ������ ������ � ����� ����. ���� �������� ������ ���. ���� ����� ������ ��������. ���� �� � ����������. ���� � �������� ��������.\n\n***\n\n**� � ��� ���� � ����� ���-�� ��������� ��������, ��� �� ����� � ���� ����������?**\n\n� ������� ������. �������.\n\n������: ���� ����� � ��� �� ���� ��� ������ ���������. ��� �������: ���� ������ ���-�� �������, ����� �� ������. ��� ��� ���� �������� �� ������� � �����. ��� � ���� �������� ���������.\n\n��� �� ������ ��� �����? ���� � ��. ������ ���� � ��. ������ � ��. ������� � ��. �� ������ �� ����� �� �������. �� ��� � ������ ����� ����, ������� ����, ����� �� ������� �������.\n\n� ������ ������: �� ���� ���� �� ����. ���� ��������, ���� ���������, ���� ������ ���� �����. ��� �� ������ � ������� � ��� ������������ � ���������.\n\n� ����� �� � �������. ���� ��, ��� ��� ������ � ���� � �������. ������ ���, ����� � ��� �������������.\n\n***\n\n*� ��������� ����� �� ��������� �� ������� ������ � � ����������. ������ ���� �� ������ ������� � ������� ����������, �� ��������� ������� �� ���� �� ���������� ������. ��� ����������, ����� ������� � �������� ���������� �� ������ ������ � � ������������� ����� ����������.*\n\n***",
+              "score": 0.05279037655038577,
+              "sd_level": 0,
+              "author_id": "123",
+              "author_name": "������� ����������",
+              "source_type": "book",
+              "youtube_url": null,
+              "start_time": null,
+              "end_time": null,
+              "block_title": "����� 1. ��������� �������������� ߻: ��� �������� ���������",
+              "keywords": [],
+              "governance": {}
+            },
+            {
+              "chunk_id": "6754e5d2-b622-47ad-ae78-b75ebf3412f4",
+              "content": "����� ������� � ������, ������ ��������� ��� ���������: ���� ��� ����. �� ���� ������ � � ��� ������ ����� ��� ����� ���������������.\n\n����������� **������ �������** � ����� **������������� ������** ������ ��� ������ ������� �������:\n\n**����� 1: ���������� �������������** � ����������� ����� �������. ������� � ������������, ������ � ��������, �������� � �������� � ����������. ��� ��������� ��� � �������.\n\n**����� 2: ����������� (��� ��� ����)** � ������������� ������� ������� �������. ������ ���������� � ���� ��������� � ��������. ���������, ��������� ������������, ���������� ����. ��� ��������� ������ ������������.\n\n**����� 3: ��������� (freeze/shutdown)** � ���������� ����� �������. ������ ������� ������ ��� ������� ������ � ���� �����������. ������������� ��������, �����������, �������� ����� ���, ��� �� �������.\n\n����������� ����� ����� � ���� ��� ����. �� ������ ����� � ��������� � ����������� ����������� ����, � ��� ����� �� ���������� ������ ��� �����.\n\n�� �������� ���: ��������������, ������, ������������� ������, �������� ������������ �������, ����������� ������� �� ���������. ��� �� ����. ��� ������� ������� � ������ ��������� ����� ����������.\n\n**Freeze** � ��� ����������� ������� ����� �� ������, ������� ���������� �� ��������, �� ������� �� ��. �������� � ������ ����� ���������, ������� ����������� �����. � �������� ��� ���������� ���������. � ����� � ���������������.\n\n� ������ ������� ��� ����� ���������� ����� � ������� ������ ����� ������������ ���� � ��������� ������ ������. ������� � �� ����. ������ � ������. ��� �� ��������� � ����������. ��� ����������� freeze, ������������ �� ��������� �������.\n\n> **�� ������**\n>\n> **�����, 37 ���:** � ���� �� ������. ������, �����, ��������. � ��� ���� � � ������ �� ��������. �������, ����� �� ��������� � ��� �����. ������ ���?\n>\n> **�������:** ��� ���� � ��������� ���-��� ����, ��� ���� ������ ��������� � �� �� ����������?\n>\n> **�����:** ����� �����. ������ ���� �� �������. ���� ������ �����, ����� ����. ��������. ��� ���-��� ������. �� � ���������.\n>\n> **�������:** ��������� � ������ �� ��� ������ � ���� ����� ������?\n>\n> **�����:** ��... �� ���� �������. ���� ���� �����������.\n>\n> **�������:** ������� ������� �� ������. ����� � ����, ������� �� �������� ������ � ��� ������. � � �����-�� ������ �������� ����� ���������� ��, ����� �� ����������. ��� �� �������. ��� ������. ������ ������ ����� ������ ����� ����� � ������.\n>\n> **�����:** � ��� � ���� ������?\n>\n> **�������:** ������� � ��������, ��� ��� ����. �� ����������� � � ����� �������, ���� ������, � ��� ���������. ���� ��� ������ ����� ���������. �� ������� � ���������.\n\n***",
+              "score": 0.04608167481582213,
+              "sd_level": 0,
+              "author_id": "123",
+              "author_name": "������� ����������",
+              "source_type": "book",
+              "youtube_url": null,
+              "start_time": null,
+              "end_time": null,
+              "block_title": "����� 7. �����: �������, �������� �� ��������� �� �����",
+              "keywords": [],
+              "governance": {}
+            }
+          ],
+          "total_found": 3,
+          "reranked": true,
+          "search_mode": "hybrid",
+          "sd_filter_applied": false,
+          "query_time_ms": 631,
+          "debug": {
+            "where_filter": {},
+            "candidates": 3,
+            "pre_filter_k": 10,
+            "raw_fetch_k": 13,
+            "legacy_sd_deprecated": true,
+            "sd_filter_applied": false,
+            "sd_level_ignored": false,
+            "botdb_query_route_fallback_used": true,
+            "retrieval_policy_trace": {
+              "policy_version": "retrieval_governance_safety_v1",
+              "safety_context": false,
+              "raw_hits_count": 3,
+              "internal_only_filtered_count": 0,
+              "returned_hits_count": 3,
+              "filter_reasons": []
+            }
+          }
+        },
+        "error": null
+      }
+    },
+    "botdb_live_reachable": true,
+    "dashboard_chroma_status": "ok",
+    "dashboard_chroma_count": 247,
+    "registry_sources_count": 1,
+    "registry_focus_source_id": "123__�������_����",
+    "registry_focus_source_blocks": 247,
+    "registry_stats_chroma_total": 247,
+    "query_http_200": true,
+    "query_rag_hits_count": 3,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false
+  },
+  "encoding_report": {
+    "schema_version": "artifact_encoding_hygiene_report_v1",
+    "prd": "PRD-046.1.22",
+    "checked_prd": "PRD-046.1.22",
+    "final_status": "passed",
+    "files_checked": 21,
+    "utf8_decode_error_count": 0,
+    "nul_byte_file_count": 0,
+    "nul_char_file_count": 0,
+    "replacement_char_warning_count": 0,
+    "mojibake_warning_count": 0,
+    "json_parse_error_count": 0,
+    "empty_text_artifact_count": 0,
+    "unexpected_debug_dir_count": 0,
+    "fixed_files": [],
+    "warnings": [],
+    "blockers": [],
+    "checked_files": [
+      "TO_DO_LIST/logs/PRD-046.1.22/artifact_encoding_hygiene_report.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/botdb_recovery_source_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/diagnostic_center_source_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/live_dependency_readiness_gate.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/no_mutation_proof.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/normal_user_control_plan.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_cohort_policy.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_execution_manifest_template.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_hard_stop_criteria.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_kb_boundary_contract.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_limited_smoke_readiness_scorecard.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_rollback_first_runbook.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_smoke_scenario_pack.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_toggle_matrix.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_trace_sanitization_contract.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/provider_readiness_policy.json",
+      "TO_DO_LIST/logs/PRD-046.1.22/test_command_output.txt",
+      "TO_DO_LIST/reports/PRD-046.1.22_IMPLEMENTATION_REPORT.md",
+      "TO_DO_LIST/reports/PRD-046.1.22_NEXT_PRD_RECOMMENDATION.md",
+      "TO_DO_LIST/reports/PRD-046.1.22_PROVIDER_BACKED_READINESS_REPORT.md",
+      "TO_DO_LIST/reports/PRD-046.1.22_RUNTIME_SAFETY_BOUNDARY_REPORT.md"
+    ]
+  }
+}

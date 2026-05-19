@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_source_gate_v1",
+  "prd": "PRD-046.1.22",
+  "source_prds": [
+    "PRD-046.1.20",
+    "PRD-046.1.21"
+  ],
+  "prd_120_final_status": "passed",
+  "prd_120_decision": "controlled_runtime_pilot_execution_passed",
+  "prd_121_final_status": "passed",
+  "prd_121_decision": "continue_limited_candidate",
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "future_execution_requires_new_prd": true,
+  "reports_and_logs_present": true,
+  "diagnostic_center_source_gate_passed": true
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "provider_backed_kb_boundary_contract_v1",
+  "prd": "PRD-046.1.22",
+  "kuznitsa_duha_role": "internal_lens_library",
+  "user_facing_quote_source": false,
+  "raw_kb_quote_allowed": false,
+  "content_full_exposure_allowed": false,
+  "chunk_type_authority": "deterministic",
+  "allowed_use_authority": "deterministic",
+  "safety_flags_authority": "deterministic",
+  "llm_enrichment_role": "advisory",
+  "kb_boundary_contract_ready": true,
+  "raw_kb_quote_exposure_allowed": false,
+  "kuznitsa_authority_citation_allowed": false,
+  "ready": true,
+  "final_status": "passed"
+}

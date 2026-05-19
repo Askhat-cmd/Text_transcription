@@ -1,0 +1,18 @@
+{
+  "schema_version": "provider_backed_execution_manifest_template_v1",
+  "prd": "PRD-046.1.22",
+  "execution_performed": false,
+  "future_execution_prd_required": true,
+  "planned_execution_window_count": 1,
+  "planned_target_user_count": 1,
+  "planned_allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "planned_provider_call_budget": 5,
+  "planned_normal_user_controls": 2,
+  "planned_botdb_health_required": true,
+  "planned_registry_focus_only_required": true,
+  "planned_chroma_count_required": 247,
+  "ready": true,
+  "final_status": "passed"
+}

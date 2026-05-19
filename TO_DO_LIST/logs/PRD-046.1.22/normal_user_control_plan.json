@@ -1,0 +1,13 @@
+{
+  "schema_version": "provider_backed_normal_user_control_plan_v1",
+  "prd": "PRD-046.1.22",
+  "normal_user_control_count": 2,
+  "normal_user_apply_expected": 0,
+  "writer_prompt_changed_for_normal_user_expected": false,
+  "writer_contract_changed_for_normal_user_expected": false,
+  "final_answer_changed_for_normal_user_expected": false,
+  "normal_user_provider_apply_expected": 0,
+  "normal_user_trace_sanitized_expected": true,
+  "ready": true,
+  "final_status": "passed"
+}

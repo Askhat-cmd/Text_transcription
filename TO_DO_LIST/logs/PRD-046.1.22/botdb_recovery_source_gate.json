@@ -1,0 +1,25 @@
+{
+  "schema_version": "botdb_recovery_source_gate_v1",
+  "prd": "PRD-046.1.22",
+  "source_prds": [
+    "PRD-046.1.21-HF2",
+    "PRD-046.1.21-HF3"
+  ],
+  "hf2_final_status": "passed",
+  "hf2_decision": "botdb_live_query_recovery_closed",
+  "hf3_final_status": "passed",
+  "hf3_decision": "registry_focus_only_cleanup_closed",
+  "remaining_sources_count": 1,
+  "remaining_source_ids": [
+    "123__кузница_духа"
+  ],
+  "remaining_source_focus_only": true,
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "query_http_200": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "no_governance_mutation_proof_passed": true,
+  "reports_and_logs_present": true,
+  "botdb_recovery_source_gate_passed": true
+}

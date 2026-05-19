@@ -1,0 +1,17 @@
+{
+  "schema_version": "provider_backed_trace_sanitization_contract_v1",
+  "prd": "PRD-046.1.22",
+  "contains_raw_private_logs": false,
+  "contains_raw_provider_payload": false,
+  "contains_secret_like_values": false,
+  "contains_env_values": false,
+  "contains_raw_content_full": false,
+  "contains_user_private_identifier": false,
+  "json_parseable": true,
+  "utf8_clean": true,
+  "trace_sanitization_contract_ready": true,
+  "raw_provider_payload_commit_forbidden": true,
+  "private_user_id_commit_forbidden": true,
+  "ready": true,
+  "final_status": "passed"
+}

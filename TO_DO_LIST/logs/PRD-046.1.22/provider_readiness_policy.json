@@ -1,0 +1,19 @@
+{
+  "schema_version": "provider_backed_readiness_policy_v1",
+  "prd": "PRD-046.1.22",
+  "provider_execution_performed": false,
+  "provider_called_by_prd_046_1_22": false,
+  "provider_backed_smoke_allowed_in_this_prd": false,
+  "future_provider_execution_requires_new_prd": true,
+  "max_provider_calls_next_execution": 5,
+  "max_target_user_count_next_execution": 1,
+  "allowed_user_ids_next_execution": [
+    "pilot_runtime_operator_001"
+  ],
+  "normal_user_control_count_next_execution": 2,
+  "raw_provider_payload_committed": false,
+  "provider_output_sanitization_required": true,
+  "provider_error_leak_to_user_output_allowed": false,
+  "ready": true,
+  "final_status": "passed"
+}

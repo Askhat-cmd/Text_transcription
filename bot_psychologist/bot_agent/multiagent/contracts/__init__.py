@@ -55,6 +55,11 @@ from .diagnostic_center_runtime_pilot_results_gate_v1 import (
     RuntimePilotResultsGateRunV1,
     RuntimePilotResultsGateSourceStatusV1,
 )
+from .diagnostic_center_provider_backed_smoke_readiness_v1 import (
+    ProviderBackedSmokeReadinessBundle,
+    ProviderBackedSmokeReadinessDecision,
+    ProviderBackedSmokeReadinessStatus,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -189,6 +194,9 @@ __all__ = [
     "RuntimePilotResultsGateSourceStatusV1",
     "RuntimePilotResultsDecisionV1",
     "RuntimePilotResultsGateRunV1",
+    "ProviderBackedSmokeReadinessStatus",
+    "ProviderBackedSmokeReadinessDecision",
+    "ProviderBackedSmokeReadinessBundle",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

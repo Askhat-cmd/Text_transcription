@@ -1,0 +1,18 @@
+{
+  "schema_version": "provider_backed_smoke_readiness_no_mutation_proof_v1",
+  "prd": "PRD-046.1.22",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "runtime_defaults_changed": false,
+  "writer_prompt_changed": false,
+  "writer_contract_changed": false,
+  "final_answer_path_changed": false,
+  "normal_user_path_changed": false,
+  "provider_called": false,
+  "provider_execution_performed": false,
+  "private_env_committed": false,
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false
+}

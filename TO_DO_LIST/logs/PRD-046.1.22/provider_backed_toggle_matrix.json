@@ -1,0 +1,28 @@
+{
+  "schema_version": "provider_backed_toggle_matrix_v1",
+  "prd": "PRD-046.1.22",
+  "baseline_conservative_state": {
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": "false",
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": "true",
+    "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": ""
+  },
+  "planned_next_execution_state": {
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": "true",
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": "false",
+    "PROMPT_CONSTRAINT_PILOT_MODE": "provider_backed_limited_smoke",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": "pilot_runtime_operator_001"
+  },
+  "post_execution_rollback_state": {
+    "PROMPT_CONSTRAINT_PILOT_ENABLED": "false",
+    "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": "true",
+    "PROMPT_CONSTRAINT_PILOT_MODE": "shadow",
+    "PROMPT_CONSTRAINT_PILOT_ALLOWED_USER_IDS": ""
+  },
+  "current_defaults_changed": false,
+  "future_execution_state_documented": true,
+  "rollback_state_documented": true,
+  "force_disabled_priority_preserved": true,
+  "ready": true,
+  "final_status": "passed"
+}

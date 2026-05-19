@@ -1,0 +1,15 @@
+{
+  "schema_version": "provider_backed_cohort_policy_v1",
+  "prd": "PRD-046.1.22",
+  "target_user_count": 1,
+  "allowed_user_ids": [
+    "pilot_runtime_operator_001"
+  ],
+  "normal_user_control_count": 2,
+  "real_private_user_ids_committed": false,
+  "normal_users_allowed": false,
+  "broad_rollout_allowed": false,
+  "cohort_expansion_allowed": false,
+  "ready": true,
+  "final_status": "passed"
+}

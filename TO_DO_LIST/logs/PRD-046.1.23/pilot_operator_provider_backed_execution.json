@@ -1,0 +1,16 @@
+{
+  "schema_version": "provider_backed_pilot_operator_execution_v1",
+  "prd": "PRD-046.1.23",
+  "allowed_user_id": "pilot_runtime_operator_001",
+  "target_user_count": 1,
+  "pilot_scenarios_executed": 5,
+  "pilot_apply_count": 5,
+  "pilot_apply_only_for_allowed_user": true,
+  "provider_calls_performed": 5,
+  "provider_call_failures_count": 0,
+  "provider_calls_for_normal_users": 0,
+  "sanitized_by_guardrail_count": 0,
+  "all_provider_calls_for_allowed_user": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false
+}

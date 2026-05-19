@@ -1,0 +1,16 @@
+{
+  "schema_version": "provider_availability_preflight_v1",
+  "prd": "PRD-046.1.23",
+  "provider_mode": "auto",
+  "provider_config_present": true,
+  "provider_model_configured": true,
+  "provider_model_name": "gpt-5-mini",
+  "provider_client_initializable": true,
+  "provider_budget_limit": 5,
+  "raw_api_key_committed": false,
+  "env_values_committed": false,
+  "provider_availability_preflight_passed": true,
+  "decision": "ready",
+  "provider_calls_performed": 0,
+  "recommended_next_prd": "PRD-046.1.24 - Diagnostic Center Provider-Backed Smoke Results / Quality & Rollback Gate v1"
+}

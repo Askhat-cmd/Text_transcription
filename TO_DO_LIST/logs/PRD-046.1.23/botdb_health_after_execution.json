@@ -1,0 +1,11 @@
+{
+  "schema_version": "provider_backed_limited_smoke_botdb_health_snapshot_v1",
+  "prd": "PRD-046.1.23",
+  "stage": "after_execution",
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "registry_sources_count": 1,
+  "query_http_200": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false
+}

@@ -264,3 +264,10 @@ Status: accepted
 Context: after PRD-046.1.21-HF3 recovery closure, Diagnostic Center can continue, but immediate provider-backed execution would couple live dependencies and runtime risk without refreshed rollout policy evidence.
 Decision: PRD-046.1.22 is locked to readiness-only scope: validate source gates, validate live BotDB health (`dashboard=247/ok`, `registry=1`, `query=200`, no semantic fallback), and publish strict contracts (single synthetic allowlisted operator, normal-user controls, rollback-first, hard-stop criteria, KB boundary, trace sanitization) without provider execution.
 Consequences: provider-backed execution remains prohibited in PRD-046.1.22 and can start only in a separate PRD-046.1.23 with explicit execution evidence, rollback proof, and hard-stop enforcement.
+
+## ADR-044 - Provider-backed limited smoke execution is constrained to one allowlisted operator with rollback-first and no normal-user effect
+
+Status: accepted
+Context: readiness PRD-046.1.22 confirmed live dependencies and policy boundaries, but first real provider-backed execution required strict containment to prevent accidental rollout and user-path regressions.
+Decision: PRD-046.1.23 execution is constrained to one synthetic allowlisted operator (`pilot_runtime_operator_001`), five fixed scenarios, provider budget `<=5`, mandatory normal-user controls (`>=2`) with zero apply effect, rollback-first toggles, hard-stop safety/KB/trace gates, and sanitized-only artifacts (no raw provider payload or secrets).
+Consequences: provider-backed runtime path can be validated with real calls while preserving production governance boundaries; broad rollout and production-ready decisions remain explicitly blocked until a dedicated results/quality/rollback gate (PRD-046.1.24).

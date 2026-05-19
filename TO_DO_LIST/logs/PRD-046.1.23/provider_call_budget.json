@@ -1,0 +1,12 @@
+{
+  "schema_version": "provider_backed_limited_smoke_provider_call_budget_v1",
+  "prd": "PRD-046.1.23",
+  "max_provider_calls": 5,
+  "provider_calls_performed": 5,
+  "provider_calls_allowed_only_for": "pilot_runtime_operator_001",
+  "provider_calls_for_normal_users": 0,
+  "normal_user_provider_apply_count": 0,
+  "provider_error_leak_to_user_output": false,
+  "raw_provider_payload_committed": false,
+  "budget_passed": true
+}

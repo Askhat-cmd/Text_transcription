@@ -60,6 +60,11 @@ from .diagnostic_center_provider_backed_smoke_readiness_v1 import (
     ProviderBackedSmokeReadinessDecision,
     ProviderBackedSmokeReadinessStatus,
 )
+from .diagnostic_center_provider_backed_limited_smoke_execution_v1 import (
+    ProviderBackedLimitedSmokeExecutionBundle,
+    ProviderBackedLimitedSmokeExecutionDecision,
+    ProviderBackedLimitedSmokeExecutionStatus,
+)
 from .memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from .planner_bridge_v1 import (
     PlannerBridgeGuardrails,
@@ -197,6 +202,9 @@ __all__ = [
     "ProviderBackedSmokeReadinessStatus",
     "ProviderBackedSmokeReadinessDecision",
     "ProviderBackedSmokeReadinessBundle",
+    "ProviderBackedLimitedSmokeExecutionStatus",
+    "ProviderBackedLimitedSmokeExecutionDecision",
+    "ProviderBackedLimitedSmokeExecutionBundle",
     "MemoryBundle",
     "PlannerBridgeGuardrails",
     "PlannerBridgeComplianceShadow",

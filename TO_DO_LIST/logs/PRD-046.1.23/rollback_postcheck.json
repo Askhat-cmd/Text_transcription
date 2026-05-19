@@ -1,0 +1,9 @@
+{
+  "schema_version": "provider_backed_limited_smoke_rollback_postcheck_v1",
+  "prd": "PRD-046.1.23",
+  "rollback_postcheck_passed": true,
+  "force_disabled_priority_preserved": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "normal_user_apply_after_rollback_count": 0,
+  "rollback_failure_count": 0
+}

@@ -95,3 +95,5 @@ Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуско
 
 
 - PRD-046.1.21-HF3: registry focus-only cleanup and delete-button chroma guard passed
+- PRD-046.1.23: provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_001`), five provider-backed scenarios, normal-user no-effect controls (`2`), rollback-first/hard-stop/KB-boundary/trace-sanitization gates, no-mutation and artifact hygiene proofs, broad rollout still prohibited.
+- PRD-046.1.24: provider-backed smoke results / quality / rollback decision gate (no new execution, no cohort expansion).

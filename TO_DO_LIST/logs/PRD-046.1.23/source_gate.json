@@ -1,0 +1,22 @@
+{
+  "schema_version": "provider_backed_limited_smoke_source_gate_v1",
+  "prd": "PRD-046.1.23",
+  "source_prd": "PRD-046.1.22",
+  "source_final_status": "passed",
+  "source_decision": "provider_backed_limited_smoke_readiness_ready",
+  "diagnostic_center_source_gate_passed": true,
+  "botdb_recovery_source_gate_passed": true,
+  "live_dependency_readiness_passed": true,
+  "cohort_policy_ready": true,
+  "toggle_matrix_ready": true,
+  "scenario_pack_ready": true,
+  "normal_user_control_plan_ready": true,
+  "rollback_first_runbook_ready": true,
+  "hard_stop_criteria_ready": true,
+  "kb_boundary_contract_ready": true,
+  "trace_sanitization_contract_ready": true,
+  "execution_manifest_template_ready": true,
+  "future_execution_requires_new_prd": true,
+  "reports_and_logs_present": true,
+  "source_gate_passed": true
+}

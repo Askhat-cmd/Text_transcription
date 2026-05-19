@@ -1,0 +1,28 @@
+{
+  "schema_version": "provider_backed_limited_smoke_hard_stop_evaluation_v1",
+  "prd": "PRD-046.1.23",
+  "conditions": {
+    "normal_user_apply_count > 0": false,
+    "provider_calls_performed > 5": false,
+    "provider_calls_for_normal_users > 0": false,
+    "provider_error_leaked_to_user_output=true": false,
+    "raw_provider_payload_committed=true": false,
+    "raw_kb_quote_exposure_count > 0": false,
+    "kuznitsa_authority_citation_count > 0": false,
+    "content_full_exposure_count > 0": false,
+    "high_stakes_directive_advice_count > 0": false,
+    "safety_regression_count > 0": false,
+    "kb_boundary_violation_count > 0": false,
+    "trace_sanitization_violation_count > 0": false,
+    "rollback_failure_count > 0": false,
+    "stale_apply_after_force_disabled_count > 0": false,
+    "botdb_query_http_200=false": false,
+    "semantic_fallback_used=true": false,
+    "dashboard_chroma_count != 247": false,
+    "registry_sources_count != 1": false,
+    "production_mutation_detected=true": false
+  },
+  "hard_stop_triggered": false,
+  "quality_status": "passed",
+  "final_status": "passed"
+}

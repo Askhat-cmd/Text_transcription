@@ -1,0 +1,9 @@
+{
+  "schema_version": "provider_backed_limited_smoke_next_prd_recommendation_v1",
+  "prd": "PRD-046.1.23",
+  "final_status": "passed",
+  "decision": "provider_backed_limited_smoke_execution_passed",
+  "recommended_next_prd": "PRD-046.1.24 - Diagnostic Center Provider-Backed Smoke Results / Quality & Rollback Gate v1",
+  "blockers": [],
+  "warnings": []
+}

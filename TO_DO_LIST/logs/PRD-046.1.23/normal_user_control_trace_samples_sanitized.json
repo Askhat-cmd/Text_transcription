@@ -1,0 +1,30 @@
+{
+  "schema_version": "provider_backed_normal_user_control_trace_samples_sanitized_v1",
+  "prd": "PRD-046.1.23",
+  "samples": [
+    {
+      "sample_id": "normal_1",
+      "user_id": "normal_control_user_a",
+      "prompt_constraint_applied": false,
+      "writer_prompt_changed": false,
+      "writer_contract_changed": false,
+      "final_answer_changed": false,
+      "provider_call_performed": false,
+      "diagnostic_center_apply_performed": false,
+      "trace_sanitized": true,
+      "raw_provider_payload_saved": false
+    },
+    {
+      "sample_id": "normal_2",
+      "user_id": "normal_control_user_b",
+      "prompt_constraint_applied": false,
+      "writer_prompt_changed": false,
+      "writer_contract_changed": false,
+      "final_answer_changed": false,
+      "provider_call_performed": false,
+      "diagnostic_center_apply_performed": false,
+      "trace_sanitized": true,
+      "raw_provider_payload_saved": false
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "provider_output_sanitization_review_v1",
+  "prd": "PRD-046.1.23",
+  "raw_provider_request_committed": false,
+  "raw_provider_response_committed": false,
+  "raw_provider_payload_committed": false,
+  "provider_error_stack_committed": false,
+  "secret_like_values_committed": false,
+  "env_values_committed": false,
+  "private_user_ids_committed": false,
+  "sanitized_summary_only": true,
+  "provider_call_error_count": 0,
+  "provider_output_sanitization_status": "passed"
+}

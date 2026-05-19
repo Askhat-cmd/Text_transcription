@@ -1,0 +1,35 @@
+{
+  "schema_version": "diagnostic_center_docs_snapshot_manifest_v1",
+  "prd": "PRD-046.1.29",
+  "created_at_utc": "2026-05-19T11:55:24.458243+00:00",
+  "files": [
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "exists": true,
+      "snapshot_path": "TO_DO_LIST/archive/PRD-046.1.29/docs_before_compaction/PROJECT_STATE.md",
+      "sha256": "54fb263845fb7b72e9e260ef20067ffe1e95d891b8208f735d528dd81e7501f7",
+      "size_bytes": 32374
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "exists": true,
+      "snapshot_path": "TO_DO_LIST/archive/PRD-046.1.29/docs_before_compaction/ROADMAP.md",
+      "sha256": "510bd8e96a741af17bb005895fc3c7ddaa49351956ba8d43658c8cb42fb946c9",
+      "size_bytes": 20648
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "exists": true,
+      "snapshot_path": "TO_DO_LIST/archive/PRD-046.1.29/docs_before_compaction/PRD_INDEX.md",
+      "sha256": "821734e99bdddcb4fd03cd28f0b8b47ed9ee980a166e5d44a25d58988932ecbd",
+      "size_bytes": 28861
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "exists": true,
+      "snapshot_path": "TO_DO_LIST/archive/PRD-046.1.29/docs_before_compaction/DECISIONS.md",
+      "sha256": "b8a2b9f5c05291777e232205fa6c6572433b61583cb212157b9a4523dc98f0cc",
+      "size_bytes": 43963
+    }
+  ]
+}

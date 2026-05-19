@@ -1,0 +1,21 @@
+{
+  "schema_version": "diagnostic_center_permanent_gate_revalidation_v1",
+  "prd": "PRD-046.1.29",
+  "gate_checks": {
+    "final_runtime_governance_acceptance_gate": true,
+    "provider_backed_evidence_gates": true,
+    "normal_user_no_effect_gates": true,
+    "rollback_hard_stop_gates": true,
+    "safety_kb_boundary_gates": true,
+    "trace_provider_sanitization_gates": true,
+    "botdb_stability_gates": true,
+    "no_mutation_proof_flow": true,
+    "artifact_encoding_hygiene_validator": true,
+    "response_quality_eval_calibration_packs": true,
+    "diagnostic_center_contract_tests": true,
+    "prompt_constraint_conservative_baseline_gates": true
+  },
+  "permanent_gate_revalidation_passed": true,
+  "missing_gates": [],
+  "checked_at_utc": "2026-05-19T11:55:24.466731+00:00"
+}

@@ -1,0 +1,3177 @@
+{
+  "schema_version": "diagnostic_center_artifact_inventory_v1",
+  "prd": "PRD-046.1.29",
+  "item_count": 634,
+  "items": [
+    {
+      "path": "Bot_data_base/config.yaml",
+      "size_bytes": 944,
+      "suffix": ".yaml"
+    },
+    {
+      "path": "Bot_data_base/data/processed/all_blocks_merged.json",
+      "size_bytes": 1265235,
+      "suffix": ".json"
+    },
+    {
+      "path": "Bot_data_base/data/registry.json",
+      "size_bytes": 777,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_contract_audit.json",
+      "size_bytes": 15647,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_eval_scorecard.json",
+      "size_bytes": 478,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_trace_samples.json",
+      "size_bytes": 8872,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/no_mutation_proof.json",
+      "size_bytes": 1037,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1314,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/no_mutation_proof.json",
+      "size_bytes": 543,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_baseline_vs_test_apply.json",
+      "size_bytes": 536,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_manifest.json",
+      "size_bytes": 1465,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_normal_user_no_effect.json",
+      "size_bytes": 340,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_observability_scorecard.json",
+      "size_bytes": 1079,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_rollback_proof.json",
+      "size_bytes": 295,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_scenario_coverage.json",
+      "size_bytes": 346,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_trace_samples.json",
+      "size_bytes": 12743,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/test_command_output.txt",
+      "size_bytes": 31744,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1140,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/no_mutation_proof.json",
+      "size_bytes": 545,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_aggregate_metrics.json",
+      "size_bytes": 867,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_manifest.json",
+      "size_bytes": 588,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_reproducibility.json",
+      "size_bytes": 577,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_risk_register.json",
+      "size_bytes": 2354,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_rollout_decision_gate.json",
+      "size_bytes": 744,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/test_command_output.txt",
+      "size_bytes": 32809,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1413,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+      "size_bytes": 576,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+      "size_bytes": 989,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+      "size_bytes": 597,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+      "size_bytes": 1070,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+      "size_bytes": 1550,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+      "size_bytes": 1214,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+      "size_bytes": 725,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+      "size_bytes": 763,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+      "size_bytes": 605,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+      "size_bytes": 6780,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt",
+      "size_bytes": 21779,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1285,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/no_mutation_proof.json",
+      "size_bytes": 577,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_baseline_vs_test_apply.json",
+      "size_bytes": 546,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_execution_manifest.json",
+      "size_bytes": 1209,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_monitoring_scorecard.json",
+      "size_bytes": 1080,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_normal_user_no_effect.json",
+      "size_bytes": 335,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_preflight_result.json",
+      "size_bytes": 392,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_rollback_proof.json",
+      "size_bytes": 345,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_trace_samples.json",
+      "size_bytes": 3013,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/test_command_output.txt",
+      "size_bytes": 43717,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1374,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/no_mutation_proof.json",
+      "size_bytes": 588,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+      "size_bytes": 259,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_post_run_risk_register.json",
+      "size_bytes": 2149,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+      "size_bytes": 465,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_decision_gate.json",
+      "size_bytes": 658,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_gate_run.json",
+      "size_bytes": 4328,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_manifest.json",
+      "size_bytes": 539,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+      "size_bytes": 273,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+      "size_bytes": 292,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/test_command_output.txt",
+      "size_bytes": 21986,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1433,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_archive_manifest.json",
+      "size_bytes": 1430,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_cleanup_plan.json",
+      "size_bytes": 355,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_module_classification.json",
+      "size_bytes": 393,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_module_inventory.json",
+      "size_bytes": 99696,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_regression_gate_catalog.json",
+      "size_bytes": 5677,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_decision.json",
+      "size_bytes": 277,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_run.json",
+      "size_bytes": 1787,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_scorecard.json",
+      "size_bytes": 922,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/no_mutation_proof.json",
+      "size_bytes": 554,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/stabilization_source_gate.json",
+      "size_bytes": 470,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/test_command_output.txt",
+      "size_bytes": 19316,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1416,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/diagnostic_center_v1_final_acceptance_scorecard.json",
+      "size_bytes": 1148,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/final_acceptance_source_gate.json",
+      "size_bytes": 501,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/kb_governance_boundary_gate.json",
+      "size_bytes": 530,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/no_mutation_proof.json",
+      "size_bytes": 1078,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/normal_user_no_effect_gate.json",
+      "size_bytes": 443,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/permanent_regression_gate_confirmation.json",
+      "size_bytes": 3248,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/prompt_constraint_conservative_baseline_gate.json",
+      "size_bytes": 654,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_boundary_matrix.json",
+      "size_bytes": 974,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_closure_decision.json",
+      "size_bytes": 501,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/test_command_output.txt",
+      "size_bytes": 22276,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/trace_sanitization_gate.json",
+      "size_bytes": 426,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1412,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/diagnostic_center_response_quality_eval_scorecard.json",
+      "size_bytes": 1169,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/kb_internal_lens_response_boundary_eval.json",
+      "size_bytes": 528,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/no_mutation_proof.json",
+      "size_bytes": 649,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/no_runtime_authority_expansion_gate.json",
+      "size_bytes": 800,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_dimension_scorecard.json",
+      "size_bytes": 2097,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_eval_results.json",
+      "size_bytes": 69730,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_rubric_validation.json",
+      "size_bytes": 544,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_scenario_catalog.json",
+      "size_bytes": 390,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_weak_case_queue.json",
+      "size_bytes": 12566,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/source_gate.json",
+      "size_bytes": 727,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/test_command_output.txt",
+      "size_bytes": 17623,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1583,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_dimension_scorecard.json",
+      "size_bytes": 2150,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_response_quality_eval_results.json",
+      "size_bytes": 137520,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_rubric_validation.json",
+      "size_bytes": 555,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibration_plan.json",
+      "size_bytes": 2661,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/diagnostic_center_response_quality_calibration_scorecard.json",
+      "size_bytes": 1591,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/expanded_candidate_catalog.json",
+      "size_bytes": 918,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/expanded_scenario_catalog.json",
+      "size_bytes": 554,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/kb_boundary_calibration_report.json",
+      "size_bytes": 330,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/no_mutation_proof.json",
+      "size_bytes": 649,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/no_runtime_authority_expansion_gate.json",
+      "size_bytes": 452,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/source_gate.json",
+      "size_bytes": 491,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/test_command_output.txt",
+      "size_bytes": 39692,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/weak_case_closure_report.json",
+      "size_bytes": 312,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/weak_case_inventory.json",
+      "size_bytes": 2980,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1828,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/cohort_policy.json",
+      "size_bytes": 373,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/hard_stop_criteria.json",
+      "size_bytes": 800,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/kb_governance_guard.json",
+      "size_bytes": 504,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/limited_live_smoke_plan.json",
+      "size_bytes": 1308,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/monitoring_artifact_contract.json",
+      "size_bytes": 537,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/no_mutation_proof.json",
+      "size_bytes": 649,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/normal_user_guard.json",
+      "size_bytes": 383,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/pilot_scope.json",
+      "size_bytes": 410,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/rollback_first_runbook.json",
+      "size_bytes": 1217,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/runtime_pilot_readiness_scorecard.json",
+      "size_bytes": 1216,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/runtime_preflight_requirements.json",
+      "size_bytes": 892,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/source_gate.json",
+      "size_bytes": 577,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/test_command_output.txt",
+      "size_bytes": 9524,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/toggle_matrix.json",
+      "size_bytes": 1976,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/trace_sanitization_guard.json",
+      "size_bytes": 358,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_divergence_scorecard.json",
+      "size_bytes": 610,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_eval.json",
+      "size_bytes": 45973,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_runtime_smoke.json",
+      "size_bytes": 813,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_trace_samples.json",
+      "size_bytes": 17958,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/no_mutation_proof.json",
+      "size_bytes": 1153,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/test_command_output.txt",
+      "size_bytes": 6809,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1295,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/no_mutation_proof.json",
+      "size_bytes": 925,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/test_command_output.txt",
+      "size_bytes": 2110,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1735,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/baseline_vs_pilot_quality_delta.json",
+      "size_bytes": 486,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/execution_manifest.json",
+      "size_bytes": 877,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/hard_stop_evaluation.json",
+      "size_bytes": 777,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/limited_live_smoke_results.json",
+      "size_bytes": 926,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/monitoring_scorecard.json",
+      "size_bytes": 1477,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/no_mutation_proof.json",
+      "size_bytes": 806,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/normal_user_control_trace_samples_sanitized.json",
+      "size_bytes": 1371,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/pilot_operator_trace_samples_sanitized.json",
+      "size_bytes": 3731,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/preflight_gate.json",
+      "size_bytes": 1187,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/rollback_postcheck.json",
+      "size_bytes": 532,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/rollback_precheck.json",
+      "size_bytes": 498,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/safety_kb_boundary_gate.json",
+      "size_bytes": 689,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/source_gate.json",
+      "size_bytes": 859,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+      "size_bytes": 27506,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/toggle_state_before.json",
+      "size_bytes": 331,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/trace_sanitization_gate.json",
+      "size_bytes": 493,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/admin_browser_visible_smoke.json",
+      "size_bytes": 61842,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/artifact_encoding_hygiene_report.json",
+      "size_bytes": 2428,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/backup_manifest.json",
+      "size_bytes": 936,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/bot_retrieval_smoke_after.json",
+      "size_bytes": 545,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_health_probe_before.json",
+      "size_bytes": 584,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_after.json",
+      "size_bytes": 1529,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_before.json",
+      "size_bytes": 1529,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_registry_consistency_gate_after.json",
+      "size_bytes": 443,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_backup_manifest.json",
+      "size_bytes": 436,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_result.json",
+      "size_bytes": 830,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_after.json",
+      "size_bytes": 92257,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_before.json",
+      "size_bytes": 92257,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_symptom_snapshot_before.json",
+      "size_bytes": 215,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/no_governance_mutation_proof.json",
+      "size_bytes": 586,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_plan.json",
+      "size_bytes": 632,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_result.json",
+      "size_bytes": 302,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_hygiene_audit.json",
+      "size_bytes": 469,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/source_evidence_gate.json",
+      "size_bytes": 498,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt",
+      "size_bytes": 7987,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_acceptance.json",
+      "size_bytes": 49132,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_visible_smoke.json",
+      "size_bytes": 27636,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/artifact_encoding_hygiene_report.json",
+      "size_bytes": 2174,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/bot_runtime_retrieval_smoke.json",
+      "size_bytes": 4465,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_circuit_reset_check.json",
+      "size_bytes": 270,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_live_recovery_scorecard.json",
+      "size_bytes": 1105,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_query_acceptance.json",
+      "size_bytes": 19071,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_consistency_gate.json",
+      "size_bytes": 424,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_rebuild_or_skip_result.json",
+      "size_bytes": 193,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_runtime_rebind_result.json",
+      "size_bytes": 95,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/direct_chroma_before.json",
+      "size_bytes": 404,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/focus_source_protection_gate.json",
+      "size_bytes": 374,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_preflight.json",
+      "size_bytes": 23064,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_runtime_after.json",
+      "size_bytes": 46873,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_runtime_before.json",
+      "size_bytes": 46873,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/no_governance_mutation_proof.json",
+      "size_bytes": 595,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/query_recovery_smoke.json",
+      "size_bytes": 19760,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/runtime_binding_diagnosis.json",
+      "size_bytes": 448,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/source_gate.json",
+      "size_bytes": 503,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/test_command_output.txt",
+      "size_bytes": 1263,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_cleanup_apply_result.json",
+      "size_bytes": 1063,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_cleanup_plan.json",
+      "size_bytes": 542,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_registry_hygiene_audit.json",
+      "size_bytes": 3215,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/admin_focus_only_browser_smoke.json",
+      "size_bytes": 566,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1496,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/backup_manifest.json",
+      "size_bytes": 770,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/delete_button_live_smoke.json",
+      "size_bytes": 1227,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/live_preflight.json",
+      "size_bytes": 41902,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/no_governance_mutation_proof.json",
+      "size_bytes": 713,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/query_retrieval_regression_smoke.json",
+      "size_bytes": 23746,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_apply_result.json",
+      "size_bytes": 652,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_audit.json",
+      "size_bytes": 3639,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_plan.json",
+      "size_bytes": 488,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_scorecard.json",
+      "size_bytes": 1139,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/source_gate.json",
+      "size_bytes": 456,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/test_command_output.txt",
+      "size_bytes": 1326,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1609,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/artifact_hygiene_review.json",
+      "size_bytes": 398,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/encoding_warning_review.json",
+      "size_bytes": 333,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/execution_evidence_review.json",
+      "size_bytes": 608,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/no_mutation_proof.json",
+      "size_bytes": 731,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/no_mutation_review.json",
+      "size_bytes": 472,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/normal_user_no_effect_review.json",
+      "size_bytes": 468,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/quality_delta_review.json",
+      "size_bytes": 626,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/rollback_evidence_review.json",
+      "size_bytes": 610,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_decision_gate.json",
+      "size_bytes": 1112,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_risk_register.json",
+      "size_bytes": 1693,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_scorecard.json",
+      "size_bytes": 929,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/safety_kb_boundary_review.json",
+      "size_bytes": 704,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/source_gate.json",
+      "size_bytes": 770,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/test_command_output.txt",
+      "size_bytes": 1810,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/trace_sanitization_review.json",
+      "size_bytes": 508,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/artifact_encoding_hygiene_report.json",
+      "size_bytes": 2081,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/botdb_recovery_source_gate.json",
+      "size_bytes": 778,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/diagnostic_center_source_gate.json",
+      "size_bytes": 547,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/live_dependency_readiness_gate.json",
+      "size_bytes": 19839,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/no_mutation_proof.json",
+      "size_bytes": 620,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/normal_user_control_plan.json",
+      "size_bytes": 492,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_cohort_policy.json",
+      "size_bytes": 414,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_execution_manifest_template.json",
+      "size_bytes": 580,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_hard_stop_criteria.json",
+      "size_bytes": 1038,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_kb_boundary_contract.json",
+      "size_bytes": 611,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_limited_smoke_readiness_scorecard.json",
+      "size_bytes": 1278,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_rollback_first_runbook.json",
+      "size_bytes": 687,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_smoke_scenario_pack.json",
+      "size_bytes": 3575,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_toggle_matrix.json",
+      "size_bytes": 1090,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_trace_sanitization_contract.json",
+      "size_bytes": 581,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_readiness_policy.json",
+      "size_bytes": 704,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/test_command_output.txt",
+      "size_bytes": 43117,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/artifact_encoding_hygiene_report.json",
+      "size_bytes": 2187,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/botdb_health_after_execution.json",
+      "size_bytes": 338,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/botdb_health_during_execution.json",
+      "size_bytes": 339,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/execution_manifest.json",
+      "size_bytes": 446,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/hard_stop_evaluation.json",
+      "size_bytes": 1139,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/live_dependency_preflight.json",
+      "size_bytes": 19848,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/next_prd_recommendation.json",
+      "size_bytes": 366,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/no_mutation_proof.json",
+      "size_bytes": 775,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/normal_user_control_execution.json",
+      "size_bytes": 459,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/normal_user_control_trace_samples_sanitized.json",
+      "size_bytes": 975,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/pilot_operator_provider_backed_execution.json",
+      "size_bytes": 552,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/pilot_operator_trace_samples_sanitized.json",
+      "size_bytes": 8915,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_availability_preflight.json",
+      "size_bytes": 605,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_backed_limited_smoke_execution_scorecard.json",
+      "size_bytes": 1540,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_call_budget.json",
+      "size_bytes": 440,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_output_sanitization_review.json",
+      "size_bytes": 509,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/quality_review.json",
+      "size_bytes": 550,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/rollback_postcheck.json",
+      "size_bytes": 319,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/rollback_precheck.json",
+      "size_bytes": 441,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/safety_kb_boundary_review.json",
+      "size_bytes": 734,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/source_gate.json",
+      "size_bytes": 842,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/test_command_output.txt",
+      "size_bytes": 28732,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/toggle_state_before.json",
+      "size_bytes": 315,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/trace_sanitization_review.json",
+      "size_bytes": 509,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1802,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/botdb_stability_review.json",
+      "size_bytes": 653,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/hard_stop_absence_review.json",
+      "size_bytes": 643,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/no_mutation_proof.json",
+      "size_bytes": 885,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/no_mutation_review.json",
+      "size_bytes": 758,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/normal_user_no_effect_review.json",
+      "size_bytes": 477,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_results_decision_gate.json",
+      "size_bytes": 1149,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_results_risk_register.json",
+      "size_bytes": 1674,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_smoke_results_scorecard.json",
+      "size_bytes": 1186,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_budget_review.json",
+      "size_bytes": 330,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_execution_evidence_review.json",
+      "size_bytes": 613,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_output_sanitization_consolidation.json",
+      "size_bytes": 577,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/quality_consolidation_review.json",
+      "size_bytes": 661,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/rollback_evidence_review.json",
+      "size_bytes": 371,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/safety_kb_boundary_consolidation.json",
+      "size_bytes": 797,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/source_gate.json",
+      "size_bytes": 749,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/test_command_output.txt",
+      "size_bytes": 28732,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/trace_sanitization_consolidation.json",
+      "size_bytes": 572,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/artifact_encoding_hygiene.json",
+      "size_bytes": 1663,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1663,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/botdb_live_preflight.json",
+      "size_bytes": 23109,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/botdb_stability_gate.json",
+      "size_bytes": 614,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/decision_gate.json",
+      "size_bytes": 572,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/execution_manifest.json",
+      "size_bytes": 468,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/no_mutation_proof.json",
+      "size_bytes": 367,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/normal_user_no_effect_gate.json",
+      "size_bytes": 528,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/provider_budget_gate.json",
+      "size_bytes": 334,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/quality_micro_shift_gate.json",
+      "size_bytes": 447,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/rollback_postcheck.json",
+      "size_bytes": 327,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/rollback_precheck.json",
+      "size_bytes": 331,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/safety_kb_boundary_gate.json",
+      "size_bytes": 390,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/sanitized_provider_trace.json",
+      "size_bytes": 3496,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/scorecard.json",
+      "size_bytes": 1473,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/source_gate.json",
+      "size_bytes": 477,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/test_command_output.txt",
+      "size_bytes": 654,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/trace_sanitization_gate.json",
+      "size_bytes": 472,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/artifact_encoding_hygiene.json",
+      "size_bytes": 1642,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1642,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/botdb_stability_trend.json",
+      "size_bytes": 557,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/consolidation_scorecard.json",
+      "size_bytes": 1237,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/controlled_cohort_expansion_readiness.json",
+      "size_bytes": 1017,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/cumulative_provider_evidence.json",
+      "size_bytes": 412,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/future_cleanup_stabilization_requirement.json",
+      "size_bytes": 848,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/next_prd_recommendation.json",
+      "size_bytes": 380,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/no_mutation_proof.json",
+      "size_bytes": 343,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/normal_user_no_effect_cumulative.json",
+      "size_bytes": 401,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/quality_micro_shift_cumulative.json",
+      "size_bytes": 470,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/rollback_cumulative.json",
+      "size_bytes": 320,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/safety_kb_boundary_cumulative.json",
+      "size_bytes": 394,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/source_gate.json",
+      "size_bytes": 785,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/test_command_output.txt",
+      "size_bytes": 1879,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/trace_provider_sanitization_cumulative.json",
+      "size_bytes": 414,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene.json",
+      "size_bytes": 1790,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1790,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/botdb_preflight.json",
+      "size_bytes": 19692,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/botdb_stability_gate.json",
+      "size_bytes": 626,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/cohort_policy.json",
+      "size_bytes": 695,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/decision_gate.json",
+      "size_bytes": 527,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/hard_stop_gate.json",
+      "size_bytes": 183,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/next_prd_recommendation.json",
+      "size_bytes": 395,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/no_mutation_proof.json",
+      "size_bytes": 375,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/normal_user_no_effect_gate.json",
+      "size_bytes": 441,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/provider_budget_gate.json",
+      "size_bytes": 387,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/provider_execution_evidence.json",
+      "size_bytes": 7676,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/quality_micro_shift_gate.json",
+      "size_bytes": 417,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/rollback_gate.json",
+      "size_bytes": 306,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/safety_kb_boundary_gate.json",
+      "size_bytes": 467,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/sanitized_provider_trace.json",
+      "size_bytes": 3205,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/scorecard.json",
+      "size_bytes": 1197,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/source_gate.json",
+      "size_bytes": 827,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/test_command_output.txt",
+      "size_bytes": 43935,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/trace_provider_sanitization_gate.json",
+      "size_bytes": 432,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene.json",
+      "size_bytes": 354,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1942,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/botdb_stability_gate.json",
+      "size_bytes": 589,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/cleanup_stabilization_readiness.json",
+      "size_bytes": 1761,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/cumulative_provider_evidence_gate.json",
+      "size_bytes": 490,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/diagnostic_center_final_runtime_governance_acceptance_contract.json",
+      "size_bytes": 10200,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/final_acceptance_scorecard.json",
+      "size_bytes": 1254,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/next_prd_recommendation.json",
+      "size_bytes": 340,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/no_mutation_proof.json",
+      "size_bytes": 483,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/normal_user_no_effect_gate.json",
+      "size_bytes": 478,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/permanent_regression_gates.json",
+      "size_bytes": 810,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/quality_micro_shift_gate.json",
+      "size_bytes": 595,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/risk_register.json",
+      "size_bytes": 193,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/rollback_hard_stop_gate.json",
+      "size_bytes": 457,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/runtime_governance_boundary_decision.json",
+      "size_bytes": 384,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/safety_kb_boundary_gate.json",
+      "size_bytes": 609,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/source_chain_gate.json",
+      "size_bytes": 828,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt",
+      "size_bytes": 148057,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/trace_provider_sanitization_gate.json",
+      "size_bytes": 520,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.29/source_gate.json",
+      "size_bytes": 607,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.29/test_command_output.txt",
+      "size_bytes": 6339,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/no_mutation_proof.json",
+      "size_bytes": 1231,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_contract_eval.json",
+      "size_bytes": 860,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_trace_samples.json",
+      "size_bytes": 22923,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_audit.json",
+      "size_bytes": 148636,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_scorecard.json",
+      "size_bytes": 621,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt",
+      "size_bytes": 5809,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1252,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/no_mutation_proof.json",
+      "size_bytes": 1252,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_runtime_smoke.json",
+      "size_bytes": 1744,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_eval.json",
+      "size_bytes": 263686,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_scorecard.json",
+      "size_bytes": 973,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_trace_samples.json",
+      "size_bytes": 40838,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/test_command_output.txt",
+      "size_bytes": 10209,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1278,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/no_mutation_proof.json",
+      "size_bytes": 768,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_eval.json",
+      "size_bytes": 120013,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_runtime_smoke.json",
+      "size_bytes": 1584,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_scorecard.json",
+      "size_bytes": 768,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_trace_samples.json",
+      "size_bytes": 29578,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/test_command_output.txt",
+      "size_bytes": 38089,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1213,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/no_mutation_proof.json",
+      "size_bytes": 754,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/test_command_output.txt",
+      "size_bytes": 40628,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_eval.json",
+      "size_bytes": 480489,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_runtime_smoke.json",
+      "size_bytes": 1208,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_scorecard.json",
+      "size_bytes": 724,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_trace_samples.json",
+      "size_bytes": 8010,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1260,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/no_mutation_proof.json",
+      "size_bytes": 544,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_eval.json",
+      "size_bytes": 97472,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_scorecard.json",
+      "size_bytes": 930,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_smoke.json",
+      "size_bytes": 724,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_trace_samples.json",
+      "size_bytes": 22367,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/test_command_output.txt",
+      "size_bytes": 1890,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1098,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/baseline_vs_test_apply_quality_delta.json",
+      "size_bytes": 584,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/no_mutation_proof.json",
+      "size_bytes": 691,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_gate_verification.json",
+      "size_bytes": 559,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_quality_gate_scorecard.json",
+      "size_bytes": 731,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/rollback_toggle_matrix.json",
+      "size_bytes": 3656,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/runtime_evidence_audit.json",
+      "size_bytes": 612,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/test_command_output.txt",
+      "size_bytes": 157740,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1162,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+      "size_bytes": 529,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+      "size_bytes": 1477,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+      "size_bytes": 1830,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+      "size_bytes": 1423,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+      "size_bytes": 4599,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+      "size_bytes": 1243,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+      "size_bytes": 2496,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt",
+      "size_bytes": 25158,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/artifact_encoding_hygiene_report.json",
+      "size_bytes": 1200,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/no_mutation_proof.json",
+      "size_bytes": 536,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_baseline_vs_test_apply.json",
+      "size_bytes": 445,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_manifest.json",
+      "size_bytes": 1233,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_normal_user_no_effect.json",
+      "size_bytes": 339,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_observability_scorecard.json",
+      "size_bytes": 895,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_rollback_proof.json",
+      "size_bytes": 336,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_trace_samples.json",
+      "size_bytes": 5512,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/test_command_output.txt",
+      "size_bytes": 31383,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_contract_audit.json",
+      "size_bytes": 15524,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_eval_scorecard.json",
+      "size_bytes": 421,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_trace_samples.json",
+      "size_bytes": 8872,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/no_mutation_proof.json",
+      "size_bytes": 1037,
+      "suffix": ".json"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/test_command_output.txt",
+      "size_bytes": 21508,
+      "suffix": ".txt"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 7144,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 960,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_SUPERVISED_CONTINUATION_REPORT.md",
+      "size_bytes": 1781,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 6967,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 871,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_SUPERVISED_CONSOLIDATION_REPORT.md",
+      "size_bytes": 1500,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 7564,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 844,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_PRODUCTION_LIMITED_ROLLOUT_PLAN_REPORT.md",
+      "size_bytes": 1357,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 7279,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 704,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_PRODUCTION_LIMITED_EXECUTION_REPORT.md",
+      "size_bytes": 1135,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 7574,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 654,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_PRODUCTION_LIMITED_RESULTS_GATE_REPORT.md",
+      "size_bytes": 1066,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_DIAGNOSTIC_CENTER_STABILIZATION_REPORT.md",
+      "size_bytes": 1097,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 6286,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 758,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_TRANSFER_BRIEF_TO_NEW_CHAT.md",
+      "size_bytes": 3752,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_DIAGNOSTIC_CENTER_FINAL_ACCEPTANCE_REPORT.md",
+      "size_bytes": 1954,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 6527,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 1053,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_RUNTIME_GOVERNANCE_CLOSURE_REPORT.md",
+      "size_bytes": 1599,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 6360,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 1162,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_RESPONSE_QUALITY_EVAL_REPORT.md",
+      "size_bytes": 2018,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_WEAK_CASE_RECOMMENDATIONS.md",
+      "size_bytes": 1870,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 4317,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 726,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_RESPONSE_QUALITY_CALIBRATION_REPORT.md",
+      "size_bytes": 2388,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_WEAK_CASE_CLOSURE_REPORT.md",
+      "size_bytes": 915,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5318,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_LIMITED_LIVE_SMOKE_PLAN_REPORT.md",
+      "size_bytes": 1458,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 829,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_RUNTIME_PILOT_READINESS_REPORT.md",
+      "size_bytes": 2486,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_DIAGNOSTIC_CENTER_SHADOW_REPORT.md",
+      "size_bytes": 1416,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 3436,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 781,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 2701,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 399,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 4504,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_LIMITED_LIVE_SMOKE_RESULTS_REPORT.md",
+      "size_bytes": 1247,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 869,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_RUNTIME_PILOT_EXECUTION_REPORT.md",
+      "size_bytes": 1844,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_ADMIN_LIVE_SMOKE_REPORT.md",
+      "size_bytes": 197,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_CHROMA_REPAIR_REPORT.md",
+      "size_bytes": 168,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 532,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 219,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_REGISTRY_HYGIENE_REPORT.md",
+      "size_bytes": 253,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_ADMIN_BROWSER_ACCEPTANCE_REPORT.md",
+      "size_bytes": 351,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_BOTDB_LIVE_RECOVERY_REPORT.md",
+      "size_bytes": 196,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 1618,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_LIVE_CHROMA_REPAIR_REPORT.md",
+      "size_bytes": 301,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 263,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_REGISTRY_ZERO_BLOCK_CLEANUP_REPORT.md",
+      "size_bytes": 206,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_ADMIN_DELETE_BUTTON_FIX_REPORT.md",
+      "size_bytes": 229,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 1504,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 265,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_REGISTRY_FOCUS_ONLY_CLEANUP_REPORT.md",
+      "size_bytes": 223,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5059,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 840,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_ROLLBACK_AND_QUALITY_GATE_REPORT.md",
+      "size_bytes": 1686,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_RUNTIME_PILOT_RESULTS_GATE_REPORT.md",
+      "size_bytes": 2043,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5112,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 567,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_PROVIDER_BACKED_READINESS_REPORT.md",
+      "size_bytes": 1335,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_RUNTIME_SAFETY_BOUNDARY_REPORT.md",
+      "size_bytes": 1122,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5311,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 604,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_PROVIDER_BACKED_LIMITED_SMOKE_EXECUTION_REPORT.md",
+      "size_bytes": 1205,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_RUNTIME_SAFETY_AND_ROLLBACK_REPORT.md",
+      "size_bytes": 1290,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 3718,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 615,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_PROVIDER_BACKED_SMOKE_RESULTS_GATE_REPORT.md",
+      "size_bytes": 1730,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_QUALITY_ROLLBACK_SAFETY_CONSOLIDATION_REPORT.md",
+      "size_bytes": 1609,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5017,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 789,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_SECOND_PROVIDER_BACKED_SMOKE_REPORT.md",
+      "size_bytes": 1585,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_CONTROLLED_COHORT_EXPANSION_READINESS.md",
+      "size_bytes": 996,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_FUTURE_CLEANUP_STABILIZATION_REQUIREMENT.md",
+      "size_bytes": 1019,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5330,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_LIMITED_SMOKE_CONSOLIDATION_REPORT.md",
+      "size_bytes": 2131,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 922,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_CONTROLLED_COHORT_EXPANSION_EXECUTION_REPORT.md",
+      "size_bytes": 1571,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_CUMULATIVE_PROVIDER_EVIDENCE_REPORT.md",
+      "size_bytes": 1433,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5285,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 948,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_QUALITY_ROLLBACK_SAFETY_REPORT.md",
+      "size_bytes": 1309,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_CUMULATIVE_PROVIDER_EVIDENCE_ACCEPTANCE_REPORT.md",
+      "size_bytes": 860,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_FINAL_RUNTIME_GOVERNANCE_ACCEPTANCE_REPORT.md",
+      "size_bytes": 2472,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 4476,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 265,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_PERMANENT_REGRESSION_GATES_REPORT.md",
+      "size_bytes": 783,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_STABILIZATION_CLEANUP_READINESS_REPORT.md",
+      "size_bytes": 1885,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 4189,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 809,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_PLANNER_BRIDGE_CONTRACT_REPORT.md",
+      "size_bytes": 1090,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_SHADOW_DIVERGENCE_CALIBRATION_REPORT.md",
+      "size_bytes": 980,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5723,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 553,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_PLANNER_BRIDGE_COMPLIANCE_REPORT.md",
+      "size_bytes": 1457,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 3828,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 796,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_WRITER_CONTRACT_PILOT_REPORT.md",
+      "size_bytes": 2022,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 3335,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 797,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_WRITER_PROMPT_REPLAY_REPORT.md",
+      "size_bytes": 1752,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 3814,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 426,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_PROMPT_CONSTRAINT_PILOT_RUNTIME_REPORT.md",
+      "size_bytes": 1140,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 4296,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 832,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_PROMPT_CONSTRAINT_PILOT_QUALITY_GATE_REPORT.md",
+      "size_bytes": 1807,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5236,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 777,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_SUPERVISED_ROLLOUT_PLAN_REPORT.md",
+      "size_bytes": 1540,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 5772,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 817,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_SUPERVISED_EXECUTION_OBSERVABILITY_REPORT.md",
+      "size_bytes": 1397,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_DIAGNOSTIC_CENTER_CONTRACT_REPORT.md",
+      "size_bytes": 2262,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md",
+      "size_bytes": 2590,
+      "suffix": ".md"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_NEXT_PRD_RECOMMENDATION.md",
+      "size_bytes": 856,
+      "suffix": ".md"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_controlled_cohort_expansion_v1.py",
+      "size_bytes": 11321,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_final_acceptance_v1.py",
+      "size_bytes": 5164,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_final_runtime_governance_acceptance_v1.py",
+      "size_bytes": 4739,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_limited_smoke_consolidation_v1.py",
+      "size_bytes": 11563,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_provider_backed_limited_smoke_execution_v1.py",
+      "size_bytes": 13749,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_provider_backed_smoke_readiness_v1.py",
+      "size_bytes": 10637,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_provider_backed_smoke_results_gate_v1.py",
+      "size_bytes": 5899,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_response_quality_calibration_v1.py",
+      "size_bytes": 11794,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_response_quality_eval_v1.py",
+      "size_bytes": 11089,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_runtime_pilot_execution_v1.py",
+      "size_bytes": 12118,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_runtime_pilot_readiness_v1.py",
+      "size_bytes": 11331,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_runtime_pilot_results_gate_v1.py",
+      "size_bytes": 6683,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_second_provider_backed_smoke_v1.py",
+      "size_bytes": 11100,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_stabilization_cleanup_v1.py",
+      "size_bytes": 20653,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_stabilization_v1.py",
+      "size_bytes": 11260,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_v1.py",
+      "size_bytes": 16514,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center.py",
+      "size_bytes": 13851,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_controlled_cohort_expansion.py",
+      "size_bytes": 39326,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_divergence.py",
+      "size_bytes": 8990,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_final_acceptance.py",
+      "size_bytes": 32718,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_final_runtime_governance_acceptance.py",
+      "size_bytes": 45288,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_limited_smoke_consolidation.py",
+      "size_bytes": 34875,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_provider_backed_limited_smoke_execution.py",
+      "size_bytes": 46402,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_provider_backed_smoke_readiness.py",
+      "size_bytes": 33025,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_provider_backed_smoke_results_gate.py",
+      "size_bytes": 47732,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_response_quality_calibration.py",
+      "size_bytes": 31937,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_response_quality_eval.py",
+      "size_bytes": 29217,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_runtime_pilot_execution.py",
+      "size_bytes": 34526,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_runtime_pilot_readiness.py",
+      "size_bytes": 24496,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_runtime_pilot_results_gate.py",
+      "size_bytes": 36146,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_second_provider_backed_smoke.py",
+      "size_bytes": 32876,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_shadow.py",
+      "size_bytes": 9168,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_stabilization.py",
+      "size_bytes": 30929,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_stabilization_cleanup.py",
+      "size_bytes": 40511,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/diagnostic_center_v1_builder.py",
+      "size_bytes": 9937,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_controlled_cohort_expansion_cases.json",
+      "size_bytes": 4325,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_planner_bridge_cases.json",
+      "size_bytes": 36719,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_response_quality_response_candidates.json",
+      "size_bytes": 110090,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_response_quality_rubric.json",
+      "size_bytes": 5434,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_response_quality_scenarios.json",
+      "size_bytes": 47769,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_second_provider_backed_smoke_cases.json",
+      "size_bytes": 2679,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_shadow_cases.json",
+      "size_bytes": 12603,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/fixtures/diagnostic_center_v1_cases.json",
+      "size_bytes": 7047,
+      "suffix": ".json"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_archive_manifest.py",
+      "size_bytes": 864,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_cleanup_plan_non_destructive.py",
+      "size_bytes": 957,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_contracts.py",
+      "size_bytes": 2034,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_divergence_taxonomy.py",
+      "size_bytes": 4322,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_eval_cases.py",
+      "size_bytes": 1234,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_final_acceptance_contract.py",
+      "size_bytes": 512,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_final_acceptance_no_mutation.py",
+      "size_bytes": 1339,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_final_acceptance_runner.py",
+      "size_bytes": 1327,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_final_acceptance_source_gate.py",
+      "size_bytes": 1365,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_kb_boundaries.py",
+      "size_bytes": 1946,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_module_classification.py",
+      "size_bytes": 1052,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_regression_gate_catalog.py",
+      "size_bytes": 1564,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_response_quality_contract.py",
+      "size_bytes": 473,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_response_quality_runner.py",
+      "size_bytes": 1695,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_rules.py",
+      "size_bytes": 1607,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_safety_priority.py",
+      "size_bytes": 1463,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_adapter.py",
+      "size_bytes": 3393,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_eval_runner.py",
+      "size_bytes": 1364,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_kb_sanitization.py",
+      "size_bytes": 2741,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_no_user_path_effect.py",
+      "size_bytes": 3705,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_non_blocking.py",
+      "size_bytes": 2433,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_shadow_trace.py",
+      "size_bytes": 3641,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_contract.py",
+      "size_bytes": 521,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_no_mutation.py",
+      "size_bytes": 1496,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_runner.py",
+      "size_bytes": 1223,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_stabilization_source_gate.py",
+      "size_bytes": 2161,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_diagnostic_center_transfer_brief.py",
+      "size_bytes": 1371,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_contract_audit.py",
+      "size_bytes": 10068,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_controlled_cohort_expansion_provider_smoke.py",
+      "size_bytes": 9189,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_final_acceptance.py",
+      "size_bytes": 11173,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_final_runtime_governance_acceptance_gate.py",
+      "size_bytes": 10860,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_limited_smoke_consolidation_gate.py",
+      "size_bytes": 10666,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_planner_bridge_eval.py",
+      "size_bytes": 17900,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_provider_backed_limited_smoke_execution.py",
+      "size_bytes": 11733,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_provider_backed_smoke_readiness.py",
+      "size_bytes": 9032,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_provider_backed_smoke_results_gate.py",
+      "size_bytes": 10162,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_response_quality_calibration.py",
+      "size_bytes": 10456,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_response_quality_eval.py",
+      "size_bytes": 8493,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_runtime_pilot_execution.py",
+      "size_bytes": 7420,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_runtime_pilot_readiness.py",
+      "size_bytes": 7125,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_runtime_pilot_results_gate.py",
+      "size_bytes": 9731,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_second_provider_backed_limited_smoke.py",
+      "size_bytes": 8503,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_shadow_eval.py",
+      "size_bytes": 21905,
+      "suffix": ".py"
+    },
+    {
+      "path": "bot_psychologist/tools/run_diagnostic_center_stabilization_cleanup.py",
+      "size_bytes": 18586,
+      "suffix": ".py"
+    },
+    {
+      "path": "docs/DECISIONS.md",
+      "size_bytes": 43963,
+      "suffix": ".md"
+    },
+    {
+      "path": "docs/PRD_INDEX.md",
+      "size_bytes": 28861,
+      "suffix": ".md"
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "size_bytes": 32374,
+      "suffix": ".md"
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "size_bytes": 20648,
+      "suffix": ".md"
+    }
+  ]
+}

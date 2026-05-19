@@ -1,0 +1,30 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.29",
+  "checked_prd": "PRD-046.1.29",
+  "final_status": "passed",
+  "files_checked": 10,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.29/archive_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/artifact_classification.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/artifact_inventory.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/cleanup_candidate_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/docs_compaction_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/docs_snapshot_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/no_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/permanent_gate_revalidation.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.29/test_command_output.txt"
+  ]
+}

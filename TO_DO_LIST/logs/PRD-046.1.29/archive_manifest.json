@@ -1,0 +1,3789 @@
+{
+  "schema_version": "diagnostic_center_archive_manifest_v1",
+  "prd": "PRD-046.1.29",
+  "archive_mode": "manifest_only",
+  "physical_files_moved": 0,
+  "physical_files_deleted": 0,
+  "items": [
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_contract_audit.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1-debug__diagnostic_center_contract_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_eval_scorecard.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1-debug__diagnostic_center_eval_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/diagnostic_center_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1-debug__diagnostic_center_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1-debug/no_mutation_proof.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1-debug__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_baseline_vs_test_apply.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_baseline_vs_test_apply.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_normal_user_no_effect.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_normal_user_no_effect.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_observability_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_observability_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_rollback_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_rollback_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_scenario_coverage.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_scenario_coverage.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/supervised_continuation_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__supervised_continuation_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.10/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.10__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_aggregate_metrics.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__supervised_consolidation_aggregate_metrics.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__supervised_consolidation_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_reproducibility.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__supervised_consolidation_reproducibility.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_risk_register.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__supervised_consolidation_risk_register.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/supervised_consolidation_rollout_decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__supervised_consolidation_rollout_decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.11/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.11__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_abort_criteria.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_abort_criteria.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_cohort_policy.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_cohort_policy.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_monitoring_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_monitoring_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_checklist.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_operator_checklist.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_operator_runbook.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_operator_runbook.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_preflight_gates.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_preflight_gates.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_readiness_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_readiness_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollback_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_rollback_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/production_limited_rollout_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__production_limited_rollout_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.12/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.12__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_baseline_vs_test_apply.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_baseline_vs_test_apply.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_execution_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_execution_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_monitoring_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_monitoring_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_normal_user_no_effect.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_normal_user_no_effect.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_preflight_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_preflight_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_rollback_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_rollback_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/production_limited_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__production_limited_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.13/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.13__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_normal_user_summary.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_normal_user_summary.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_post_run_risk_register.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_post_run_risk_register.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_quality_summary.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_quality_summary.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_results_decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_gate_run.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_results_gate_run.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_results_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_results_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_rollback_summary.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_rollback_summary.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/production_limited_trace_sanitization_summary.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__production_limited_trace_sanitization_summary.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.14/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.14__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_archive_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_archive_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_cleanup_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_cleanup_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_module_classification.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_module_classification.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_module_inventory.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_module_inventory.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_regression_gate_catalog.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_regression_gate_catalog.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_decision.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_stabilization_decision.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_run.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_stabilization_run.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/diagnostic_center_stabilization_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__diagnostic_center_stabilization_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/stabilization_source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__stabilization_source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.15/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.15__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/diagnostic_center_v1_final_acceptance_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__diagnostic_center_v1_final_acceptance_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/final_acceptance_source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__final_acceptance_source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/kb_governance_boundary_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__kb_governance_boundary_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/normal_user_no_effect_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__normal_user_no_effect_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/permanent_regression_gate_confirmation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__permanent_regression_gate_confirmation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/prompt_constraint_conservative_baseline_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__prompt_constraint_conservative_baseline_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_boundary_matrix.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__runtime_governance_boundary_matrix.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/runtime_governance_closure_decision.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__runtime_governance_closure_decision.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.16/trace_sanitization_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.16__trace_sanitization_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/diagnostic_center_response_quality_eval_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__diagnostic_center_response_quality_eval_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/kb_internal_lens_response_boundary_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__kb_internal_lens_response_boundary_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/no_runtime_authority_expansion_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__no_runtime_authority_expansion_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_dimension_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__response_quality_dimension_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_eval_results.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__response_quality_eval_results.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_rubric_validation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__response_quality_rubric_validation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_scenario_catalog.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__response_quality_scenario_catalog.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/response_quality_weak_case_queue.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__response_quality_weak_case_queue.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.17/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.17__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_dimension_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__calibrated_dimension_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_response_quality_eval_results.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__calibrated_response_quality_eval_results.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibrated_rubric_validation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__calibrated_rubric_validation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/calibration_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__calibration_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/diagnostic_center_response_quality_calibration_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__diagnostic_center_response_quality_calibration_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/expanded_candidate_catalog.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__expanded_candidate_catalog.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/expanded_scenario_catalog.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__expanded_scenario_catalog.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/kb_boundary_calibration_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__kb_boundary_calibration_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/no_runtime_authority_expansion_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__no_runtime_authority_expansion_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/weak_case_closure_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__weak_case_closure_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.18/weak_case_inventory.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.18__weak_case_inventory.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/cohort_policy.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__cohort_policy.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/hard_stop_criteria.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__hard_stop_criteria.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/kb_governance_guard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__kb_governance_guard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/limited_live_smoke_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__limited_live_smoke_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/monitoring_artifact_contract.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__monitoring_artifact_contract.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/normal_user_guard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__normal_user_guard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/pilot_scope.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__pilot_scope.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/rollback_first_runbook.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__rollback_first_runbook.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/runtime_pilot_readiness_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__runtime_pilot_readiness_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/runtime_preflight_requirements.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__runtime_preflight_requirements.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/toggle_matrix.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__toggle_matrix.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.19/trace_sanitization_guard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.19__trace_sanitization_guard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_divergence_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__diagnostic_center_shadow_divergence_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__diagnostic_center_shadow_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_runtime_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__diagnostic_center_shadow_runtime_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/diagnostic_center_shadow_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__diagnostic_center_shadow_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.1/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.1__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2-HF1__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2-HF1__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2-HF1/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2-HF1__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/baseline_vs_pilot_quality_delta.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__baseline_vs_pilot_quality_delta.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/execution_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__execution_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/hard_stop_evaluation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__hard_stop_evaluation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/limited_live_smoke_results.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__limited_live_smoke_results.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/monitoring_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__monitoring_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/normal_user_control_trace_samples_sanitized.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__normal_user_control_trace_samples_sanitized.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/pilot_operator_trace_samples_sanitized.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__pilot_operator_trace_samples_sanitized.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/preflight_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__preflight_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/rollback_postcheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__rollback_postcheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/rollback_precheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__rollback_precheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/safety_kb_boundary_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__safety_kb_boundary_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/toggle_state_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__toggle_state_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/trace_sanitization_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.20__trace_sanitization_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/admin_browser_visible_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__admin_browser_visible_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/backup_manifest.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__backup_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/bot_retrieval_smoke_after.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__bot_retrieval_smoke_after.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_health_probe_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_health_probe_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_after.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_persistent_store_diagnostic_after.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_persistent_store_diagnostic_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_persistent_store_diagnostic_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_registry_consistency_gate_after.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_registry_consistency_gate_after.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_backup_manifest.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_reindex_backup_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/chroma_reindex_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__chroma_reindex_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_after.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__live_botdb_endpoint_audit_after.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_endpoint_audit_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__live_botdb_endpoint_audit_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/live_botdb_symptom_snapshot_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__live_botdb_symptom_snapshot_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/no_governance_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__no_governance_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__registry_zero_block_cleanup_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_cleanup_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__registry_zero_block_cleanup_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/registry_zero_block_hygiene_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__registry_zero_block_hygiene_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/source_evidence_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__source_evidence_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF1__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_acceptance.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__admin_browser_acceptance.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_visible_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__admin_browser_visible_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/bot_runtime_retrieval_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__bot_runtime_retrieval_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_circuit_reset_check.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__botdb_circuit_reset_check.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_live_recovery_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__botdb_live_recovery_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/botdb_query_acceptance.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__botdb_query_acceptance.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_consistency_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__chroma_consistency_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_rebuild_or_skip_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__chroma_rebuild_or_skip_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/chroma_runtime_rebind_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__chroma_runtime_rebind_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/direct_chroma_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__direct_chroma_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/focus_source_protection_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__focus_source_protection_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__live_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_runtime_after.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__live_runtime_after.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/live_runtime_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__live_runtime_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/no_governance_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__no_governance_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/query_recovery_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__query_recovery_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/runtime_binding_diagnosis.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__runtime_binding_diagnosis.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_cleanup_apply_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__zero_block_cleanup_apply_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_cleanup_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__zero_block_cleanup_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/zero_block_registry_hygiene_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF2__zero_block_registry_hygiene_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/admin_focus_only_browser_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__admin_focus_only_browser_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/backup_manifest.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__backup_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/delete_button_live_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__delete_button_live_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/live_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__live_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/no_governance_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__no_governance_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/query_retrieval_regression_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__query_retrieval_regression_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_apply_result.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__registry_focus_only_cleanup_apply_result.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__registry_focus_only_cleanup_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__registry_focus_only_cleanup_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__registry_focus_only_cleanup_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF3/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21-HF3__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/artifact_hygiene_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__artifact_hygiene_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/encoding_warning_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__encoding_warning_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/execution_evidence_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__execution_evidence_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/no_mutation_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__no_mutation_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/normal_user_no_effect_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__normal_user_no_effect_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/quality_delta_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__quality_delta_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/rollback_evidence_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__rollback_evidence_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__runtime_pilot_results_decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_risk_register.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__runtime_pilot_results_risk_register.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/runtime_pilot_results_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__runtime_pilot_results_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/safety_kb_boundary_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__safety_kb_boundary_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21/trace_sanitization_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.21__trace_sanitization_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/botdb_recovery_source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__botdb_recovery_source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/diagnostic_center_source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__diagnostic_center_source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/live_dependency_readiness_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__live_dependency_readiness_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/normal_user_control_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__normal_user_control_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_cohort_policy.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_cohort_policy.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_execution_manifest_template.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_execution_manifest_template.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_hard_stop_criteria.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_hard_stop_criteria.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_kb_boundary_contract.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_kb_boundary_contract.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_limited_smoke_readiness_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_limited_smoke_readiness_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_rollback_first_runbook.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_rollback_first_runbook.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_smoke_scenario_pack.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_smoke_scenario_pack.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_toggle_matrix.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_toggle_matrix.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_backed_trace_sanitization_contract.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_backed_trace_sanitization_contract.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/provider_readiness_policy.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__provider_readiness_policy.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.22__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/botdb_health_after_execution.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__botdb_health_after_execution.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/botdb_health_during_execution.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__botdb_health_during_execution.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/execution_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__execution_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/hard_stop_evaluation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__hard_stop_evaluation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/live_dependency_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__live_dependency_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/next_prd_recommendation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__next_prd_recommendation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/normal_user_control_execution.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__normal_user_control_execution.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/normal_user_control_trace_samples_sanitized.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__normal_user_control_trace_samples_sanitized.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/pilot_operator_provider_backed_execution.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__pilot_operator_provider_backed_execution.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/pilot_operator_trace_samples_sanitized.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__pilot_operator_trace_samples_sanitized.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_availability_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__provider_availability_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_backed_limited_smoke_execution_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__provider_backed_limited_smoke_execution_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_call_budget.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__provider_call_budget.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/provider_output_sanitization_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__provider_output_sanitization_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/quality_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__quality_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/rollback_postcheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__rollback_postcheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/rollback_precheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__rollback_precheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/safety_kb_boundary_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__safety_kb_boundary_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/toggle_state_before.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__toggle_state_before.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/trace_sanitization_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.23__trace_sanitization_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/botdb_stability_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__botdb_stability_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/hard_stop_absence_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__hard_stop_absence_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/no_mutation_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__no_mutation_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/normal_user_no_effect_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__normal_user_no_effect_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_results_decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_backed_results_decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_results_risk_register.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_backed_results_risk_register.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_backed_smoke_results_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_backed_smoke_results_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_budget_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_budget_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_execution_evidence_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_execution_evidence_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/provider_output_sanitization_consolidation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__provider_output_sanitization_consolidation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/quality_consolidation_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__quality_consolidation_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/rollback_evidence_review.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__rollback_evidence_review.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/safety_kb_boundary_consolidation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__safety_kb_boundary_consolidation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.24/trace_sanitization_consolidation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.24__trace_sanitization_consolidation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/artifact_encoding_hygiene.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__artifact_encoding_hygiene.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/botdb_live_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__botdb_live_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/botdb_stability_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__botdb_stability_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/execution_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__execution_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/normal_user_no_effect_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__normal_user_no_effect_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/provider_budget_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__provider_budget_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/quality_micro_shift_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__quality_micro_shift_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/rollback_postcheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__rollback_postcheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/rollback_precheck.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__rollback_precheck.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/safety_kb_boundary_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__safety_kb_boundary_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/sanitized_provider_trace.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__sanitized_provider_trace.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.25/trace_sanitization_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.25__trace_sanitization_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/artifact_encoding_hygiene.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__artifact_encoding_hygiene.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/botdb_stability_trend.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__botdb_stability_trend.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/consolidation_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__consolidation_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/controlled_cohort_expansion_readiness.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__controlled_cohort_expansion_readiness.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/cumulative_provider_evidence.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__cumulative_provider_evidence.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/future_cleanup_stabilization_requirement.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__future_cleanup_stabilization_requirement.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/next_prd_recommendation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__next_prd_recommendation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/normal_user_no_effect_cumulative.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__normal_user_no_effect_cumulative.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/quality_micro_shift_cumulative.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__quality_micro_shift_cumulative.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/rollback_cumulative.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__rollback_cumulative.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/safety_kb_boundary_cumulative.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__safety_kb_boundary_cumulative.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.26/trace_provider_sanitization_cumulative.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.26__trace_provider_sanitization_cumulative.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__artifact_encoding_hygiene.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/botdb_preflight.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__botdb_preflight.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/botdb_stability_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__botdb_stability_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/cohort_policy.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__cohort_policy.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/decision_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__decision_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/hard_stop_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__hard_stop_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/next_prd_recommendation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__next_prd_recommendation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/normal_user_no_effect_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__normal_user_no_effect_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/provider_budget_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__provider_budget_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/provider_execution_evidence.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__provider_execution_evidence.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/quality_micro_shift_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__quality_micro_shift_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/rollback_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__rollback_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/safety_kb_boundary_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__safety_kb_boundary_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/sanitized_provider_trace.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__sanitized_provider_trace.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.27/trace_provider_sanitization_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.27__trace_provider_sanitization_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__artifact_encoding_hygiene.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/botdb_stability_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__botdb_stability_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/cleanup_stabilization_readiness.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__cleanup_stabilization_readiness.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/cumulative_provider_evidence_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__cumulative_provider_evidence_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/diagnostic_center_final_runtime_governance_acceptance_contract.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__diagnostic_center_final_runtime_governance_acceptance_contract.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/final_acceptance_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__final_acceptance_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/next_prd_recommendation.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__next_prd_recommendation.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/normal_user_no_effect_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__normal_user_no_effect_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/permanent_regression_gates.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__permanent_regression_gates.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/quality_micro_shift_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__quality_micro_shift_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/risk_register.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__risk_register.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/rollback_hard_stop_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__rollback_hard_stop_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/runtime_governance_boundary_decision.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__runtime_governance_boundary_decision.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/safety_kb_boundary_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__safety_kb_boundary_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/source_chain_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__source_chain_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/trace_provider_sanitization_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.28__trace_provider_sanitization_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.29/source_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.29__source_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.29/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.29__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_contract_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__planner_bridge_contract_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/planner_bridge_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__planner_bridge_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__shadow_divergence_calibration_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/shadow_divergence_calibration_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__shadow_divergence_calibration_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.2/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.2__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_runtime_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__planner_bridge_compliance_runtime_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__planner_bridge_compliance_shadow_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_shadow_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__planner_bridge_compliance_shadow_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/planner_bridge_compliance_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__planner_bridge_compliance_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.3/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.3__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__planner_bridge_writer_contract_pilot_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_runtime_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__planner_bridge_writer_contract_pilot_runtime_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__planner_bridge_writer_contract_pilot_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/planner_bridge_writer_contract_pilot_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__planner_bridge_writer_contract_pilot_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.4/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.4__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__writer_prompt_replay_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_runtime_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__writer_prompt_replay_runtime_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__writer_prompt_replay_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.5/writer_prompt_replay_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.5__writer_prompt_replay_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_eval.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__prompt_constraint_pilot_runtime_eval.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__prompt_constraint_pilot_runtime_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_smoke.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__prompt_constraint_pilot_runtime_smoke.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/prompt_constraint_pilot_runtime_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__prompt_constraint_pilot_runtime_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.6/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.6__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/baseline_vs_test_apply_quality_delta.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__baseline_vs_test_apply_quality_delta.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_gate_verification.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__prompt_constraint_pilot_gate_verification.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/prompt_constraint_pilot_quality_gate_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__prompt_constraint_pilot_quality_gate_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/rollback_toggle_matrix.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__rollback_toggle_matrix.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/runtime_evidence_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__runtime_evidence_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.7/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.7__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_abort_criteria.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_abort_criteria.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_operator_runbook.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_operator_runbook.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_operator_runbook.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_plan.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_plan.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_readiness_gate.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_readiness_gate.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/supervised_rollout_toggle_matrix.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__supervised_rollout_toggle_matrix.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.8/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.8__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/artifact_encoding_hygiene_report.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__artifact_encoding_hygiene_report.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_baseline_vs_test_apply.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_baseline_vs_test_apply.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_manifest.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_manifest.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_normal_user_no_effect.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_normal_user_no_effect.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_observability_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_observability_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_rollback_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_rollback_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/supervised_execution_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__supervised_execution_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.9/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1.9__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_contract_audit.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1__diagnostic_center_contract_audit.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_eval_scorecard.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1__diagnostic_center_eval_scorecard.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/diagnostic_center_trace_samples.json",
+      "zone": "cleanup_candidate_manifest_only",
+      "reason": "temporary or debug evidence candidate",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1__diagnostic_center_trace_samples.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/no_mutation_proof.json",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1__no_mutation_proof.json",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1/test_command_output.txt",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__logs__PRD-046.1__test_command_output.txt",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.10_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.10_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.10_SUPERVISED_CONTINUATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.10_SUPERVISED_CONTINUATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.11_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.11_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.11_SUPERVISED_CONSOLIDATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.11_SUPERVISED_CONSOLIDATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.12_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.12_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.12_PRODUCTION_LIMITED_ROLLOUT_PLAN_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.12_PRODUCTION_LIMITED_ROLLOUT_PLAN_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.13_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.13_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.13_PRODUCTION_LIMITED_EXECUTION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.13_PRODUCTION_LIMITED_EXECUTION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.14_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.14_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.14_PRODUCTION_LIMITED_RESULTS_GATE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.14_PRODUCTION_LIMITED_RESULTS_GATE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_DIAGNOSTIC_CENTER_STABILIZATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.15_DIAGNOSTIC_CENTER_STABILIZATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.15_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.15_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.15_TRANSFER_BRIEF_TO_NEW_CHAT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.15_TRANSFER_BRIEF_TO_NEW_CHAT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_DIAGNOSTIC_CENTER_FINAL_ACCEPTANCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.16_DIAGNOSTIC_CENTER_FINAL_ACCEPTANCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.16_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.16_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.16_RUNTIME_GOVERNANCE_CLOSURE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.16_RUNTIME_GOVERNANCE_CLOSURE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.17_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.17_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_RESPONSE_QUALITY_EVAL_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.17_RESPONSE_QUALITY_EVAL_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.17_WEAK_CASE_RECOMMENDATIONS.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.17_WEAK_CASE_RECOMMENDATIONS.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.18_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.18_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_RESPONSE_QUALITY_CALIBRATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.18_RESPONSE_QUALITY_CALIBRATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.18_WEAK_CASE_CLOSURE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.18_WEAK_CASE_CLOSURE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.19_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_LIMITED_LIVE_SMOKE_PLAN_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.19_LIMITED_LIVE_SMOKE_PLAN_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.19_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.19_RUNTIME_PILOT_READINESS_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.19_RUNTIME_PILOT_READINESS_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_DIAGNOSTIC_CENTER_SHADOW_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.1_DIAGNOSTIC_CENTER_SHADOW_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.1_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.1_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.1_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2-HF1_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.20_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_LIMITED_LIVE_SMOKE_RESULTS_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.20_LIMITED_LIVE_SMOKE_RESULTS_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.20_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.20_RUNTIME_PILOT_EXECUTION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.20_RUNTIME_PILOT_EXECUTION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_ADMIN_LIVE_SMOKE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF1_ADMIN_LIVE_SMOKE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_CHROMA_REPAIR_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF1_CHROMA_REPAIR_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF1_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF1_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF1_REGISTRY_HYGIENE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF1_REGISTRY_HYGIENE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_ADMIN_BROWSER_ACCEPTANCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_ADMIN_BROWSER_ACCEPTANCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_BOTDB_LIVE_RECOVERY_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_BOTDB_LIVE_RECOVERY_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_LIVE_CHROMA_REPAIR_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_LIVE_CHROMA_REPAIR_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF2_REGISTRY_ZERO_BLOCK_CLEANUP_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF2_REGISTRY_ZERO_BLOCK_CLEANUP_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_ADMIN_DELETE_BUTTON_FIX_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF3_ADMIN_DELETE_BUTTON_FIX_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF3_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21-HF3_REGISTRY_FOCUS_ONLY_CLEANUP_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21-HF3_REGISTRY_FOCUS_ONLY_CLEANUP_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_ROLLBACK_AND_QUALITY_GATE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21_ROLLBACK_AND_QUALITY_GATE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.21_RUNTIME_PILOT_RESULTS_GATE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.21_RUNTIME_PILOT_RESULTS_GATE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.22_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.22_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_PROVIDER_BACKED_READINESS_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.22_PROVIDER_BACKED_READINESS_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.22_RUNTIME_SAFETY_BOUNDARY_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.22_RUNTIME_SAFETY_BOUNDARY_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.23_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.23_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_PROVIDER_BACKED_LIMITED_SMOKE_EXECUTION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.23_PROVIDER_BACKED_LIMITED_SMOKE_EXECUTION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.23_RUNTIME_SAFETY_AND_ROLLBACK_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.23_RUNTIME_SAFETY_AND_ROLLBACK_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.24_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.24_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_PROVIDER_BACKED_SMOKE_RESULTS_GATE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.24_PROVIDER_BACKED_SMOKE_RESULTS_GATE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.24_QUALITY_ROLLBACK_SAFETY_CONSOLIDATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.24_QUALITY_ROLLBACK_SAFETY_CONSOLIDATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.25_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.25_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.25_SECOND_PROVIDER_BACKED_SMOKE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.25_SECOND_PROVIDER_BACKED_SMOKE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_CONTROLLED_COHORT_EXPANSION_READINESS.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.26_CONTROLLED_COHORT_EXPANSION_READINESS.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_FUTURE_CLEANUP_STABILIZATION_REQUIREMENT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.26_FUTURE_CLEANUP_STABILIZATION_REQUIREMENT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.26_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_LIMITED_SMOKE_CONSOLIDATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.26_LIMITED_SMOKE_CONSOLIDATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.26_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.26_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_CONTROLLED_COHORT_EXPANSION_EXECUTION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.27_CONTROLLED_COHORT_EXPANSION_EXECUTION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_CUMULATIVE_PROVIDER_EVIDENCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.27_CUMULATIVE_PROVIDER_EVIDENCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.27_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.27_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.27_QUALITY_ROLLBACK_SAFETY_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.27_QUALITY_ROLLBACK_SAFETY_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_CUMULATIVE_PROVIDER_EVIDENCE_ACCEPTANCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_CUMULATIVE_PROVIDER_EVIDENCE_ACCEPTANCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_FINAL_RUNTIME_GOVERNANCE_ACCEPTANCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_FINAL_RUNTIME_GOVERNANCE_ACCEPTANCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_PERMANENT_REGRESSION_GATES_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_PERMANENT_REGRESSION_GATES_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.28_STABILIZATION_CLEANUP_READINESS_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.28_STABILIZATION_CLEANUP_READINESS_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_PLANNER_BRIDGE_CONTRACT_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2_PLANNER_BRIDGE_CONTRACT_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.2_SHADOW_DIVERGENCE_CALIBRATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.2_SHADOW_DIVERGENCE_CALIBRATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.3_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.3_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.3_PLANNER_BRIDGE_COMPLIANCE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.3_PLANNER_BRIDGE_COMPLIANCE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.4_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.4_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.4_WRITER_CONTRACT_PILOT_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.4_WRITER_CONTRACT_PILOT_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.5_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.5_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.5_WRITER_PROMPT_REPLAY_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.5_WRITER_PROMPT_REPLAY_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.6_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.6_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.6_PROMPT_CONSTRAINT_PILOT_RUNTIME_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.6_PROMPT_CONSTRAINT_PILOT_RUNTIME_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.7_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.7_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.7_PROMPT_CONSTRAINT_PILOT_QUALITY_GATE_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.7_PROMPT_CONSTRAINT_PILOT_QUALITY_GATE_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.8_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.8_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.8_SUPERVISED_ROLLOUT_PLAN_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.8_SUPERVISED_ROLLOUT_PLAN_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.9_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.9_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1.9_SUPERVISED_EXECUTION_OBSERVABILITY_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1.9_SUPERVISED_EXECUTION_OBSERVABILITY_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_DIAGNOSTIC_CENTER_CONTRACT_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1_DIAGNOSTIC_CENTER_CONTRACT_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1_IMPLEMENTATION_REPORT.md",
+      "delete_now": false
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.1_NEXT_PRD_RECOMMENDATION.md",
+      "zone": "historical_archive",
+      "reason": "historical PRD evidence retained for reproducibility",
+      "archive_target": "TO_DO_LIST/archive/PRD-046.1.29/TO_DO_LIST__reports__PRD-046.1_NEXT_PRD_RECOMMENDATION.md",
+      "delete_now": false
+    }
+  ]
+}

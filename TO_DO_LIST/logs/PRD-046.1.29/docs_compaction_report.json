@@ -1,0 +1,24 @@
+{
+  "schema_version": "diagnostic_center_docs_compaction_plan_v1",
+  "prd": "PRD-046.1.29",
+  "snapshot_required": true,
+  "target_docs": [
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md",
+    "docs/PRD_INDEX.md",
+    "docs/DECISIONS.md"
+  ],
+  "compacted_docs": [
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md",
+    "docs/PRD_INDEX.md",
+    "docs/DECISIONS.md",
+    "docs/DIAGNOSTIC_CENTER_RUNTIME_MAP.md",
+    "docs/DIAGNOSTIC_CENTER_EVAL_HARNESS.md"
+  ],
+  "snapshot_dir": "TO_DO_LIST/archive/PRD-046.1.29/docs_before_compaction",
+  "warnings": [],
+  "docs_compaction_passed": true,
+  "runtime_map_created": true,
+  "eval_harness_map_created": true
+}

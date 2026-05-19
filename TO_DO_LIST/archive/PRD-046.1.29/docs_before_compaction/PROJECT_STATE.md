@@ -1,0 +1,142 @@
+﻿# Project State - Bot Psychologist / Neo MindBot
+
+## Current Stage
+Проект находится на стадии `post-PRD-046.1.21-HF1-botdb-query-blocker`: сформирован deterministic offline eval-pack качества ответов (24 curated live-like scenarios, rubric на 10 dimensions, acceptable/weak/hard-fail candidate detection), при этом runtime authority boundaries сохранены без расширения. Broad rollout и runtime authority expansion остаются запрещёнными до отдельного PRD. Runtime path остаётся неизменным: Diagnostic Center trace-only shadow, Planner Bridge candidate-only, `planner_bridge_compliance_shadow` trace-only compare, `planner_bridge_writer_contract_pilot` pilot-shadow-only, `writer_prompt_replay` offline-only, prompt-constraint runtime default-off limited allowlisted test path.
+В `PRD-046.1.2` добавлены отдельный модуль divergence-классификации, shadow-only Planner Bridge contracts/builder и eval runner с расширенным набором (`24/24`), подтверждены `hard_blocker_count=0`, `safety_bridge_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `user_path_effect_count=0`, `planner_bridge_apply_to_writer_count=0`, `planner_bridge_contract_ready=true`, `final_status=passed`, при сохранении no-mutation proof (`all_blocks/registry/config` без изменений).
+В `PRD-046.1.2-HF1` исправлен encoding-дефект `test_command_output.txt` (NUL-corruption), добавлен reusable validator `validate_prd_artifact_encoding.py`, подтверждено `final_status=passed` для артефактов `PRD-046.1.2` (`utf8_decode_error_count=0`, `nul_byte_file_count=0`, `nul_char_file_count=0`, `json_parse_error_count=0`).
+В `PRD-046.1.3` добавлены compare-mode contract/builder/eval runner для сопоставления `writer_move_instructions` и `planner_bridge_candidate` в `shadow_compare_only` режиме. Подтверждены `cases_passed=30/30`, `hard_blocker_count=0`, `unexpected_blocked_count=0`, `safety_compatibility_pass_rate=1.0`, `user_path_effect_count=0`, `writer_prompt_changed_by_bridge_count=0`, `writer_contract_changed_by_bridge_count=0`, `final_answer_changed_by_bridge_count=0`, `planner_bridge_apply_to_writer_count=0`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
+В `PRD-046.1.4` добавлен controlled Writer-Contract pilot (`planner_bridge_writer_contract_pilot`) как non-mutating compare-only overlay: `cases_passed=36/36`, `hard_blocker_count=0`, `safety_pilot_pass_rate=1.0`, `kb_boundary_violation_count=0`, `raw_kb_text_exposure_count=0`, `writer_contract_changed_by_pilot_count=0`, `writer_prompt_changed_by_pilot_count=0`, `final_answer_changed_by_pilot_count=0`, `pilot_apply_to_writer_contract_count=0`, `pilot_apply_to_writer_prompt_count=0`, `pilot_apply_to_final_answer_count=0`, `runtime_smoke_ok=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
+В `PRD-046.1.5` добавлен offline replay/eval слой `writer_prompt_replay` для сравнения baseline prompt-context и pilot candidate namespace без production activation. Подтверждены `cases_passed=40/40`, `hard_blocker_count=0`, `safety_replay_pass_rate=1.0`, `kb_boundary_violation_count=0`, `constraint_conflict_count=0`, `prompt_bloat_blocker_count=0`, `writer_contract_changed_by_replay_count=0`, `writer_prompt_changed_by_replay_count=0`, `final_answer_changed_by_replay_count=0`, `provider_called_count=0`, `runtime_smoke_ok=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
+В `PRD-046.1.6` добавлен controlled runtime decision слой `prompt_constraint_pilot_runtime` с default-off guardrails (`PROMPT_CONSTRAINT_PILOT_ENABLED=false`, `PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true`), allowlisted/test-user `test_apply` режимом и rollback-priority. Подтверждены `cases_passed=50/50`, `default_off_user_path_effect_count=0`, `shadow_mode_apply_count=0`, `test_apply_applied_count=10`, `allowlist_violation_count=0`, `rollback_switch_passed=true`, `safety_apply_blocked_count=3`, `runtime_smoke_ok=true`, `limited_runtime_flag_ready=true`, `artifact_encoding_hygiene_passed=true`, `final_status=passed`.
+В `PRD-046.1.7` добавлен runtime evidence/rollback/quality gate runner `run_prompt_constraint_pilot_quality_gate.py` и полный набор артефактов gate-решения. Подтверждены `final_status=passed`, `decision=supervised_rollout_candidate`, `evidence_quality=sufficient`, `rollback_failure_count=0`, `candidate_weaker_than_baseline_count=0`, `raw_kb_text_exposure_count=0`, `normal_user_apply_count=0`, `provider_called_by_eval_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.8` добавлен supervised rollout planning/readiness слой (`run_prompt_constraint_supervised_rollout_plan.py`) и артефакты плана (`supervised_rollout_plan`, `readiness_gate`, `abort_criteria`, `toggle_matrix`, `operator_runbook`). Подтверждены `final_status=passed`, `decision=ready_for_supervised_execution_prd`, `enabled_default_false=true`, `force_disabled_default_true=true`, `normal_users_allowed=false`, `max_initial_cohort_size=3`, `rollback_first_policy_preserved=true`, `toggle_matrix_ready=true`, `production_apply_performed=false`, `provider_called_by_plan=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.9` выполнен один controlled supervised execution/observability gate (`run_prompt_constraint_supervised_execution_gate.py`) с cohort `3` (`pilot_alpha/pilot_beta/pilot_gamma`) и отдельным normal-user control case. Подтверждены `final_status=passed`, `decision=continue_supervised`, `test_apply_applied_count=3`, `normal_user_apply_count=0`, `rollback_failure_count=0`, `candidate_weaker_than_baseline_count=0`, `raw_kb_text_exposure_count=0`, `provider_called_by_execution_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.10` выполнен второй supervised continuation cycle на расширенном allowlisted cohort (`6`: `pilot_alpha/pilot_beta/pilot_gamma/pilot_delta/pilot_epsilon/pilot_zeta`) через `run_prompt_constraint_supervised_continuation_gate.py`. Подтверждены `final_status=passed`, `decision=continue_supervised`, `scenario_coverage_passed=true` (`6/6`), `test_apply_applied_count=6`, `normal_user_apply_count=0` (2 normal control cases), `rollback_failure_count=0`, `stale_apply_after_force_disabled_count=0`, `candidate_weaker_than_baseline_count=0`, `raw_kb_text_exposure_count=0`, `provider_called_by_continuation_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.11` выполнен supervised results consolidation / rollout decision gate (`run_prompt_constraint_supervised_consolidation_gate.py`) по артефактам `PRD-046.1.9` и `PRD-046.1.10` без нового execution цикла. Подтверждены `final_status=passed`, `decision=prepare_production_limited_rollout_plan`, `cycles_total=2`, `cycles_passed=2`, `total_test_apply_applied_count=9`, `total_cases_compared=9`, `reproducibility_passed=true`, `risk_register_has_blockers=false`, `provider_called_total=0`, `production_mutation_detected_any=false`, `artifact_encoding_hygiene_all_passed=true`.
+В `PRD-046.1.12` построен production-limited rollout plan (`run_prompt_constraint_production_limited_rollout_plan.py`) без execution: сформированы `cohort_policy`, `preflight_gates`, `operator_checklist`, `monitoring_plan`, `rollback_plan`, `abort_criteria`, `readiness_gate` и `operator_runbook`. Подтверждены `final_status=passed`, `decision=ready_for_production_limited_execution_prd`, `execution_performed=false`, `provider_called_by_plan=false`, `production_mutation_detected=false`, `default_flags_changed=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.13` выполнен один controlled production-limited execution/monitoring gate (`run_prompt_constraint_production_limited_execution_gate.py`) с единственным target user (`prod_limited_operator_001`) и двумя normal-user controls. Подтверждены `final_status=passed`, `decision=continue_limited`, `execution_window_count=1`, `target_user_count=1`, `production_limited_apply_count=1`, `normal_user_apply_count=0`, `default_off_user_path_effect_count=0`, `rollback_failure_count=0`, `stale_apply_after_force_disabled_count=0`, `safety_regression_count=0`, `kb_policy_regression_count=0`, `raw_kb_text_exposure_count=0`, `provider_called_by_execution_count=0`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+
+В `PRD-046.1.14` выполнен post-run results/rollback/quality gate по артефактам `PRD-046.1.13` без нового execution цикла. Подтверждены `final_status=passed`, `decision=ready_for_stabilization_cleanup`, `source_execution_gate_passed=true`, `quality_gate_passed=true`, `rollback_gate_passed=true`, `normal_user_gate_passed=true`, `trace_sanitization_gate_passed=true`, `risk_register_has_blockers=false`, `new_execution_performed=false`, `provider_called_by_results_gate=false`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+
+В `PRD-046.1.15` выполнена stabilization/cleanup/eval-harness consolidation фаза без нового execution. Подтверждены `final_status=passed`, `decision=ready_for_transfer_brief`, `source_gate_passed=true`, `module_inventory_ready=true`, `module_classification_ready=true`, `all_required_regression_gates_present=true`, `cleanup_mode=non_destructive_manifest_first`, `runtime_files_deleted=false`, `regression_gates_deleted=false`, `physical_files_deleted=0`, `new_execution_performed=false`, `provider_called=false`, `kb_registry_chroma_config_mutated=false`, `artifact_encoding_hygiene_passed=true`.
+В `PRD-046.1.16` выполнена финальная приёмка Diagnostic Center v1 и runtime governance closure без нового execution. Подтверждены `final_status=passed`, `decision=diagnostic_center_v1_accepted_as_governed_shadow_layer`, `permanent_regression_gates_confirmed=true`, `prompt_constraint_conservative_baseline_preserved=true`, `normal_user_no_effect_passed=true`, `kb_governance_boundary_passed=true`, `trace_sanitization_gate_passed=true`, `broad_rollout_allowed=false`, `runtime_authority_expansion_allowed=false`, `future_rollout_requires_new_prd=true`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`, `docs_synced=true`.
+В `PRD-046.1.17` создан и пройден `Diagnostic Center Response Quality Eval Pack v1` в offline deterministic режиме без runtime activation. Подтверждены `scenario_count=24`, `required_scenario_groups_present=true`, `rubric_dimension_count=10`, `acceptable_candidate_pass_rate>=0.90`, `weak_candidate_detection_rate>=0.85`, `hard_fail_detection_rate=1.00`, `kb_internal_lens_boundary_passed=true`, `no_runtime_authority_expansion_passed=true`, `provider_called=false`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`.
+
+
+
+В `PRD-046.1.20` выполнен первый controlled runtime pilot execution (`limited_live_smoke`) через deterministic runtime harness для `pilot_runtime_operator_001` с обязательными normal-user controls (`2`). Подтверждены `final_status=passed`, `decision=controlled_runtime_pilot_execution_passed`, `execution_window_count=1`, `target_user_count=1`, `pilot_apply_only_for_allowed_user=true`, `normal_user_apply_count=0`, `rollback_precheck_passed=true`, `rollback_postcheck_passed=true`, `quality_delta_status=passed`, `safety_kb_boundary_gate_passed=true`, `trace_sanitization_gate_passed=true`, `hard_stop_triggered=false`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`, `docs_synced=true`.
+В `PRD-046.1.21` выполнен post-execution results/rollback/quality gate без нового runtime execution. Консолидированы evidence артефакты `PRD-046.1.20`, подтверждены `execution_evidence_status=passed`, `rollback_evidence_status=passed`, `normal_user_no_effect_status=passed`, `quality_gate_decision=passed`, `safety_kb_boundary_status=passed`, `trace_sanitization_status=passed`, `artifact_hygiene_status=passed`, `encoding_warning_status=non_blocking`, `no_mutation_status=passed`; итог `final_status=passed`, `decision=continue_limited_candidate`, `broad_rollout_allowed=false`, `production_ready=false`.
+В `PRD-046.1.21-HF1` добавлены emergency live BotDB/Chroma repair инструменты и resilience hotfix для `/api/registry/stats` (HTTP 200 degraded при падении Chroma). Подтверждены backup/reindex/consistency/no-mutation артефакты (`focus_source=123__кузница_духа`, `all_blocks/chroma=247` по diagnostic runner), но на текущем live runtime `:8003` сохранился blocker: `POST /api/query/ -> 503 ChromaDB unavailable`, `botdb_circuit_open_after=true`; итог HF1 — `done_with_query_blocker`, продолжение Diagnostic Center provider-backed pilot заблокировано до следующего recovery HF.
+## Current Runtime Architecture
+Активный user-path:
+User message -> State Analyzer -> Thread Manager -> Memory Retrieval -> Context Assembly -> Diagnostic Card -> Diagnostic Center Shadow (trace-only) -> Writer Move Compliance -> Writer -> Validator/Trace -> Memory Update.
+
+Runtime работает без cascade legacy режима и опирается на управляемый pipeline с диагностическим trace, где Writer не является единственным диагностическим узлом.
+
+## Current Knowledge Base State
+Knowledge Base governance слой внедрен: chunk_type/allowed_use/safety_flags остаются deterministic authority. Текущее production-состояние: `247` governed blocks для `123__кузница_духа`; Chroma collection также `247` блоков, source set = только `123__кузница_духа`. Источник `КУЗНИЦА ДУХА` трактуется как internal lens library, не как user-facing цитатник.
+В `PRD-046.0.10` legacy SD cleanup завершён: SD labeler отключён по умолчанию и может запускаться только при явном `enabled + explicit_legacy_mode`; API `sd_level` остаётся compatibility-only и игнорируется как retrieval filter; dashboard readiness больше не зависит от legacy SD metadata.
+В `PRD-046.0.10-HF1` закрыт финальный хвост: canonical `config.yaml` закреплён как default-disabled (`sd_labeling.enabled=false`, `legacy_sd_labeling.enabled=false`), env overrides переведены в runtime-only режим без автоперезаписи конфига, runtime smoke artifacts переведены на UTF-8-safe генерацию и проверку маркеров mojibake.
+
+## Current Context / Memory State
+Context Assembly реализован и стабилизирован. Async turn LLM summary additive слой прошел HF1 acceptance-calibration: eval-case coverage расширена, validator safety guards усилены, processor evidence pending->ready подтверждён. Для длинных turns используется `llm_abstractive_v1` при `ready+valid+hash-match`, иначе deterministic fallback `deterministic_extractive_v1`. Raw dialogue history сохраняется полностью, summary-поля остаются добавочным слоем и не подменяют первичные turn records.
+
+## Current LLM Enrichment State
+Offline LLM enrichment pipeline внедрен и откалиброван, затем применен controlled overlay cycle:
+- RUN1 показал blocker по unknown lens.
+- HF2 закрыл unknown lens и quote/invariant риски.
+- HF3 закрыл low_resource avoid_when hard-fail.
+Текущее состояние: advisory enrichment metadata записана в `metadata.llm_enrichment` для 60 блоков батча APPLY1 без мутации governance authority полей.
+Новый post-reprocess baseline (`247` block ids) построен в `PRD-046.0.9`; в `PRD-046.0.9-RUN1` выполнен реальный enrichment run: `items_completed=247`, `validation_errors_count=0`, `review_queue_items_count=87`, `provider_status=called`.
+В `PRD-046.0.9-RUN1-HF1` dashboard получает enrichment/review состояние из артефактов RUN1 через единый endpoint `/api/dashboard/` и показывает явные warning/error причины вместо немых пустых карточек.
+В `PRD-046.0.9-RUN1-HF2` endpoint/Frontend дополнительно откалиброваны под runtime acceptance: поддерживаются `/api/dashboard` и `/api/dashboard/`, production-block card опирается на focus-source (`247`), registry total показывается отдельно, а при API/payload проблемах отображается явная ошибка.
+В `PRD-046.0.9-RUN1-HF3` registry endpoint стал row-isolated (одна плохая строка больше не роняет весь список), frontend реестра получил явные loading/error/empty состояния, а consistency gate подтвердил browser-visible состояние без reindex/apply.
+В `PRD-046.0.9.1` добавлены CLI `prepare_human_review_decisions.py` и `validate_human_review_decisions.py`, артефакты review-workbench/template/validation/no-mutation сгенерированы, deterministic safety checks по decisions overlay включены (forbidden/raw/private keys, secret-like values, authority-mutation attempts, duplicate/unknown/mismatch guards). Production apply/reindex не выполнялись.
+В `PRD-046.0.9.1-HF1` добавлены `audit_blocks_snapshot_alignment.py` и `restore_blocks_snapshot_alignment.py`, найден authoritative snapshot (`candidate_to_apply.snapshot.json`) и восстановлен blocks snapshot до `247` с backup proof. Добавлен strict gate `prepare_human_review_decisions.py --require-aligned`.
+В `PRD-046.0.9.2` добавлены `prepare_architect_review_batches.py` и `validate_architect_decisions_overlay.py`; сформированы sanitized architect review batches (`8` batch-файлов на `87` items), `architect_decisions_template/overlay`, validation report с `ready_for_architect_review=true` и `apply_ready=false`, а также no-mutation proof без production/apply/reindex.
+В `PRD-046.0.9.3` добавлены `architect_auto_decision_policy.py` и `generate_architect_auto_decisions.py`; сгенерирован auto-decisions overlay (`87` решений), validation прошло с `coverage_percent=100.0`, `remaining_items_count=0`, `apply_ready=true`, официальный overlay обновлён, no-mutation proof подтверждён (`all_blocks/registry/chroma` без изменений).
+В `PRD-046.0.7.1` добавлены `controlled_review_decision_apply.py` и CLI `preflight_review_decision_apply.py` / `plan_review_decision_apply.py` / `apply_review_decisions_controlled.py`; выполнен controlled apply (`updated_blocks=200`) с backup/proof/smoke артефактами, инварианты authority сохранены (`text/chunk_type/allowed_use/safety_flags/source_id/block_id/governance` неизменны), acceptance snapshot `passed=true`.
+В `PRD-046.0.7.2` добавлены `post_apply_quality_gate.py` и `run_post_apply_quality_gate.py` с артефактами quality gate; подтверждены `data_consistency_passed=true`, `apply_route_consistency_passed=true`, `retrieval_quality_passed=true`, `writer_kb_policy_passed=true` и no-mutation proof (`all_blocks_merged_mutated=false`, `registry_mutated=false`) без reindex/provider вызовов.
+В `PRD-046.0.7.2-HF1` добавлены `admin_live_smoke.py` и `run_admin_live_smoke.py` с launch manifest/readiness polling/schema checks/no-mutation proof; зафиксирован честный blocker `done_with_admin_launch_blocker` после неуспешного startup/readiness (`/api/status`, `/api/registry`, `/api/dashboard`, `/api/dashboard/` недоступны), при этом production hashes не изменились.
+В `PRD-046.0.7.2-HF2` добавлен HF2 runner `run_admin_live_smoke_hf2.py`, закрыт runtime blocker на внешнем сервере (`http://127.0.0.1:8003`), сформированы live/scheme/quality/no-mutation артефакты и отчёты; quality gate переведён в `passed` без production apply/reindex/provider вызовов.
+В `PRD-046.0.7.2-HF3` внедрён strict chroma reconciliation gate (`run_admin_live_smoke_hf3.py` + `dashboard_chroma_reconciliation.py`), добавлены `/api/registry/` compatibility checks и запрет historical-proof override; live mismatch `dashboard.chroma.count=229` честно зафиксирован как blocker `done_with_chroma_count_blocker` без production мутаций.
+В `PRD-046.0.7.2-HF4` добавлены инструменты `diagnose_chroma_runtime_count.py`, `reindex_focus_source_chroma_controlled.py`, `run_chroma_recovery_hf4.py`; подтверждён actual mismatch (`direct=229`), выполнен controlled focus-only reindex с backup, затем исправлен dashboard count source (`ChromaManager.get_stats -> collection.count()`), после чего live gate прошёл (`dashboard/direct/registry = 247`), без мутации `all_blocks_merged.json` и `registry.json`.
+
+## Current Admin Source Hygiene State
+Delete policy в реестре стала явной и согласованной между backend/frontend:
+- `Защищено` только для focus source `123__кузница_духа`;
+- `Удалить` для безопасных zero-block источников;
+- `Очистить тестовый` для test-like `<=1` блока только при safety-gates;
+- snapshot registry создаётся перед фактическим delete-мутированием.
+Production focus source и Chroma production count остаются неизменны.
+
+## Current Writer KB Snippet State
+Root cause mid-word KB snippet clipping подтверждён в `knowledge_policy._sanitize_preview` (жёсткий char-cut). В HF2 внедрена boundary-aware truncation логика (sentence/word boundary + ellipsis `…`) без изменения governance authority и без изменения production block text.
+
+## Stable Modules
+- Multiagent runtime orchestration.
+- State Analyzer routing/calibration (deterministic contract).
+- Thread Manager diagnostics baseline.
+- Context Assembly v1 deterministic path.
+- Diagnostic Card + Writer Move Compliance contracts.
+- Governance-first KB policy and redaction-safe trace.
+- BotDB/Chroma retrieval restore path.
+- Admin Review Workflow v1 (contracts + sanitizer + queue/decision validation CLI).
+- BotDB source hygiene/readiness tools v1 (`source_hygiene_audit/apply`, `legacy_sd_usage_audit`, `reprocess_readiness_gate`).
+
+## Experimental / In Progress Modules
+- Diagnostic Center v1 shadow + Planner Bridge contract in shadow/eval-only mode (no writer/user-path effect).
+
+## Not Implemented Yet
+- Broad runtime authority expansion для Diagnostic Center/Planner/Prompt-Constraint (только через отдельный controlled rollout PRD).
+
+## Known Risks
+- Без регулярной обработки pending turn summaries возможен возврат к deterministic fallback чаще, чем ожидается.
+- В окружениях с нестабильной кодировкой входа возможны искажения текстовых сигналов; safety-guards должны сохраняться conservative.
+- Premature Diagnostic Center launch создаст ложную уверенность в диагностике при неготовом context-quality слое.
+- Overlay apply без отдельного controlled PRD нарушит release discipline.
+- Старый review queue (`PRD-046.0.7`) устарел после смены block boundaries и не может применяться напрямую.
+- Операции reindex остаются чувствительными к локальной стабильности Chroma SQLite; обязательны backup/manifest + recovery шаги.
+- Исторические Chroma proof-артефакты используются только как diagnostic evidence и не могут override live mismatch в strict gate.
+
+## Next Planned PRDs
+1. PRD-046.1.21-HF2 - Chroma Persistent Store Deep Recovery / Rebuild v2.
+2. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1 (только после закрытия HF2 blocker).
+
+## Do Not Do Yet
+- Не включать Diagnostic Center до завершения async summary + retrieval eval шага.
+- Не менять governance authority (`chunk_type/allowed_use/safety_flags`) через LLM overlay.
+- Не превращать KB в direct-quote source для Writer.
+- Не подменять deterministic governance решения LLM-логикой.
+
+## Documentation Update Rule
+1. PRD, меняющий stage/architecture, обязан обновить PROJECT_STATE.
+2. PRD, меняющий последовательность работ, обязан обновить ROADMAP.
+3. PRD с новым архитектурным решением обязан обновить DECISIONS.
+4. Каждый новый PRD после push обязан обновить PRD_INDEX.
+5. TO_DO_LIST остается детальным архивом, docs — краткая operational map.
+
+## Last Updated
+- Date: 2026-05-18
+- Source cycle: PRD-046.1.21-HF1
+
+
+
+
+
+
+
+
+В PRD-046.1.21-HF2 closure: BotDB live query recovery подтверждены live invariants: Dashboard Chroma=`247/ok`, Registry stats=`200/247`, Query endpoint=`200` с retrieval hits, bot runtime retrieval через BotDB API без semantic fallback; Diagnostic Center continuation разрешён только через PRD-046.1.22.
+
+BotDB Registry focus-only cleanup closed. Only production source remains: `123__кузница_духа / Кузница Духа`; Chroma count remains `247 ok`; query endpoint remains `200`; bot retrieval uses API path without semantic fallback; Diagnostic Center continuation may resume via PRD-046.1.22.
+
+В `PRD-046.1.22` подготовлен provider-backed limited smoke readiness пакет для продолжения Diagnostic Center без выполнения provider smoke в этом PRD. Подтверждены source gates (`PRD-046.1.20`, `PRD-046.1.21`, `PRD-046.1.21-HF2`, `PRD-046.1.21-HF3`), live BotDB dependency (`dashboard=247/ok`, `registry=1`, `query=200`, `semantic_fallback_used=false`), rollout boundaries (single allowlisted synthetic operator, normal-user controls >=2, rollback-first/hard-stop/trace+KB contracts). `provider_execution_performed=false`, `provider_called=false`, broad rollout и production readiness остаются запрещёнными; следующий execution шаг требует отдельного `PRD-046.1.23`.
+
+В `PRD-046.1.23` выполнен provider-backed limited smoke execution для `pilot_runtime_operator_001` (5 сценариев, provider_calls=5, normal-user controls=2, rollback-first, hard-stop gates). Зафиксирован sanitized provider path (без raw payload в artifacts), no-mutation proof сохранён, broad rollout и production-ready по-прежнему запрещены; следующий шаг — PRD-046.1.24 results/quality/rollback gate.
+
+В `PRD-046.1.24` выполнен post-run results gate без нового execution/provider вызовов: подтверждены source/evidence/budget/normal-user-no-effect/quality/safety-KB/trace-sanitization/rollback/BotDB-stability/no-mutation проверки, решение `continue_limited_candidate`. Broad rollout по-прежнему запрещён, production-ready решение не принято; следующий шаг — отдельный planning PRD `PRD-046.1.25`.
+В `PRD-046.1.25` выполнен второй provider-backed limited smoke в controlled режиме: `target_user_count=1` (`pilot_runtime_operator_002`), `provider_calls=6` (в пределах budget), `normal_user_control_count=2`, `normal_user_apply_count=0`, `normal_user_provider_calls=0`, rollback/safety-KB/trace/BotDB/no-mutation/artifact-hygiene gates passed. Итог: `final_status=passed`, `decision=continue_limited_candidate`, `broad_rollout_allowed=false`, `production_ready=false`, следующий шаг — `PRD-046.1.26`.
+В `PRD-046.1.26` выполнен cumulative consolidation/expansion decision gate по evidence циклам `PRD-046.1.23 + PRD-046.1.24 + PRD-046.1.25` без новых provider calls/execution. Подтверждены `source_chain_complete=true`, `provider_cycles_passed=2/2`, `provider_calls_total=11`, `normal_user_apply_count_total=0`, `rollback_failures_total=0`, safety/KB/trace/encoding/no-mutation gates `passed`. Итог: `final_status=passed`, `decision=ready_for_controlled_cohort_expansion_prd`; при этом `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`. Следующий шаг: `PRD-046.1.27`.
+В `PRD-046.1.27` выполнен controlled cohort expansion provider-backed execution gate для allowlisted synthetic cohort (`pilot_runtime_operator_003`, `pilot_runtime_operator_004`, `pilot_runtime_operator_005`) с полным execution объёмом `12` сценариев и budget `12/12`. Подтверждены `source_gate_passed=true`, `botdb_preflight_passed=true` (`247/ok`, `registry=1`, `query=200`, `semantic_fallback_used=false`), `normal_user_controls_total=3`, `normal_user_apply_count=0`, `normal_user_provider_calls=0`, `rollback_gate_passed=true`, `safety_kb_boundary_gate_passed=true`, `trace_provider_sanitization_gate_passed=true`, `botdb_stability_gate_passed=true`, `production_mutation_detected=false`, `artifact_encoding_hygiene_passed=true`. Итог: `final_status=passed`, `decision=ready_for_final_acceptance_and_stabilization_prd`; при этом `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`. Следующий шаг: `PRD-046.1.28`.
+В `PRD-046.1.28` выполнен final runtime governance acceptance/stabilization readiness gate без нового provider execution: подтверждена полная source-chain `PRD-046.1.23..PRD-046.1.27`, cumulative provider evidence (`cycles_total=3`, `provider_scenarios_total=23`, `provider_calls_total=23`), cumulative normal-user no-effect (`controls_total=7`, `apply_count_total=0`, `provider_calls_total=0`), rollback/safety-KB/trace/BotDB/quality/no-mutation/artifact-hygiene gates. Итог: `final_status=passed`, `decision=accepted_ready_for_cleanup_stabilization`, при этом `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`; следующий обязательный шаг: `PRD-046.1.29` cleanup/stabilization.

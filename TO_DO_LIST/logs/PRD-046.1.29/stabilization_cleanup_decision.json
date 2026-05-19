@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_stabilization_cleanup_decision_v1",
+  "prd": "PRD-046.1.29",
+  "final_status": "passed",
+  "decision": "diagnostic_center_stabilized_cleanup_manifested",
+  "blockers": [],
+  "warnings": []
+}

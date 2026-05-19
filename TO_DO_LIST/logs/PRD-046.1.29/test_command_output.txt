@@ -1,0 +1,221 @@
+﻿PRD-046.1.29 test command output
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_source_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_source_gate.py . [100%]
+
+============================== 1 passed in 0.28s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_inventory.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_inventory.py . [100%]
+
+============================== 1 passed in 0.62s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_classification.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_classification.py . [100%]
+
+============================== 1 passed in 0.69s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_archive_manifest.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_archive_manifest.py . [100%]
+
+============================== 1 passed in 0.61s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_docs_snapshot.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_docs_snapshot.py . [100%]
+
+============================== 1 passed in 0.29s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_docs_compaction.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_docs_compaction.py . [100%]
+
+============================== 1 passed in 0.31s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_permanent_gates.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_permanent_gates.py . [100%]
+
+============================== 1 passed in 0.27s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_artifact_hygiene.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_artifact_hygiene.py . [100%]
+
+============================== 1 passed in 0.28s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_no_mutation.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_no_mutation.py . [100%]
+
+============================== 1 passed in 0.28s ==============================
+
+
+>>> python -m pytest bot_psychologist/tests/multiagent/test_stabilization_cleanup_decision_gate.py
+============================= test session starts =============================
+platform win32 -- Python 3.13.2, pytest-7.4.4, pluggy-1.6.0
+rootdir: C:\My_practice\Text_transcription\bot_psychologist
+configfile: pytest.ini
+plugins: anyio-4.10.0, langsmith-0.4.19, asyncio-0.23.8
+asyncio: mode=Mode.STRICT
+collected 1 item
+
+bot_psychologist\tests\multiagent\test_stabilization_cleanup_decision_gate.py . [100%]
+
+============================== 1 passed in 0.62s ==============================
+
+
+>>> python -m bot_psychologist.tools.run_diagnostic_center_stabilization_cleanup --repo-root . --reports-dir TO_DO_LIST/reports --logs-dir TO_DO_LIST/logs --output-dir TO_DO_LIST/logs/PRD-046.1.29 --strict --write-doc-snapshots --compact-docs
+
+PRD-046.1.29 runner summary:
+{"status": "passed", "decision": "diagnostic_center_stabilized_cleanup_manifested"}
+python : 2026-05-19 16:55:24,076 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_prac
+tice\Text_transcription\bot_psychologist\data\threads
+At line:1 char:1
++ python -m bot_psychologist.tools.run_diagnostic_center_stabilization_ ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-19 16:5...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-19 16:55:24,079 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+{
+  "status": "passed",
+  "decision": "diagnostic_center_stabilized_cleanup_manifested",
+  "scorecard": {
+    "schema_version": "diagnostic_center_stabilization_cleanup_scorecard_v1",
+    "prd": "PRD-046.1.29",
+    "source_gate_passed": true,
+    "artifact_inventory_created": true,
+    "artifact_classification_created": true,
+    "archive_manifest_created": true,
+    "cleanup_candidate_manifest_created": true,
+    "docs_snapshots_created": true,
+    "docs_compaction_passed": true,
+    "runtime_map_created": true,
+    "eval_harness_map_created": true,
+    "permanent_gate_revalidation_passed": true,
+    "artifact_hygiene_normalization_passed": true,
+    "no_mutation_proof_passed": true,
+    "physical_runtime_file_deletion_count": 0,
+    "safety_eval_gate_deletion_count": 0,
+    "production_data_mutated": false,
+    "runtime_defaults_changed": false,
+    "provider_called": false,
+    "new_provider_execution_performed": false,
+    "broad_rollout_allowed": false,
+    "production_ready": false,
+    "normal_user_activation_allowed": false,
+    "final_status": "passed",
+    "decision": "diagnostic_center_stabilized_cleanup_manifested",
+    "blockers": [],
+    "warnings": []
+  },
+  "preflight": {
+    "required": {
+      "implementation": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md",
+      "acceptance": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_FINAL_RUNTIME_GOVERNANCE_ACCEPTANCE_REPORT.md",
+      "provider": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_CUMULATIVE_PROVIDER_EVIDENCE_ACCEPTANCE_REPORT.md",
+      "permanent": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_PERMANENT_REGRESSION_GATES_REPORT.md",
+      "cleanup_readiness": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_STABILIZATION_CLEANUP_READINESS_REPORT.md",
+      "next": "C:/My_practice/Text_transcription/TO_DO_LIST/reports/PRD-046.1.28_NEXT_PRD_RECOMMENDATION.md"
+    },
+    "missing": [],
+    "parse_errors": [],
+    "texts": {
+      "implementation": "# PRD-046.1.28 Implementation Report\n\n- PRD ID: `PRD-046.1.28`\n- Final status: `passed`\n- Decision: `accepted_ready_for_cleanup_stabilization`\n- Commit hash: `e514308`\n- Push status: `pushed_to_origin_main`\n\n## Created Files\n- `TO_DO_LIST/PRD-046.1.28_TASK_LIST.md`\n- `bot_psychologist/bot_agent/multiagent/contracts/diagnostic_center_final_runtime_governance_acceptance_v1.py`\n- `bot_psychologist/bot_agent/multiagent/diagnostic_center_final_runtime_governance_acceptance.py`\n- `bot_psychologist/tools/run_diagnostic_center_final_runtime_governance_acceptance_gate.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_contract.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_source_chain.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_provider_evidence.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_normal_user_no_effect.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_rollback_hard_stop.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_safety_kb_boundary.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_trace_provider_sanitization.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_botdb_stability.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_quality_micro_shift.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_permanent_regression_gates.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_boundary_decision.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_cleanup_readiness.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_no_mutation.py`\n- `bot_psychologist/tests/multiagent/test_final_runtime_governance_acceptance_decision_gate.py`\n- `TO_DO_LIST/reports/PRD-046.1.28_FINAL_RUNTIME_GOVERNANCE_ACCEPTANCE_REPORT.md`\n- `TO_DO_LIST/reports/PRD-046.1.28_CUMULATIVE_PROVIDER_EVIDENCE_ACCEPTANCE_REPORT.md`\n- `TO_DO_LIST/reports/PRD-046.1.28_PERMANENT_REGRESSION_GATES_REPORT.md`\n- `TO_DO_LIST/reports/PRD-046.1.28_STABILIZATION_CLEANUP_READINESS_REPORT.md`\n- `TO_DO_LIST/reports/PRD-046.1.28_NEXT_PRD_RECOMMENDATION.md`\n- `TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md`\n\n## Modified Files\n- `docs/PROJECT_STATE.md`\n- `docs/ROADMAP.md`\n- `docs/PRD_INDEX.md`\n- `docs/DECISIONS.md`\n- `TO_DO_LIST/PRD-046.1.28_Diagnostic_Center_Final_Runtime_Governance_Acceptance_Stabilization_Readiness_Gate_v1.md` (post-push closure to be updated)\n\n## Commands\n- All required pytest commands executed.\n- Strict runner executed:\n  - `python -m bot_psychologist.tools.run_diagnostic_center_final_runtime_governance_acceptance_gate --repo-root . --source-dirs TO_DO_LIST/logs/PRD-046.1.23 TO_DO_LIST/logs/PRD-046.1.24 TO_DO_LIST/logs/PRD-046.1.25 TO_DO_LIST/logs/PRD-046.1.26 TO_DO_LIST/logs/PRD-046.1.27 --reports-dir TO_DO_LIST/reports --output-dir TO_DO_LIST/logs/PRD-046.1.28 --strict`\n- Full command outputs saved to:\n  - `TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt`\n\n## Test Summary\n- 14/14 required pytest commands passed.\n- Strict runner final result:\n  - `final_status=passed`\n  - `decision=accepted_ready_for_cleanup_stabilization`\n\n## Gate Summary\n- `source_chain_complete=true`\n- `provider_backed_cycles_total=3`\n- `provider_scenarios_total=23`\n- `provider_calls_total=23`\n- `normal_user_apply_count_total=0`\n- `normal_user_provider_calls_total=0`\n- `rollback_failure_count_total=0`\n- `safety_kb_boundary_gate_passed=true`\n- `trace_provider_sanitization_gate_passed=true`\n- `botdb_stability_gate_passed=true`\n- `quality_micro_shift_gate_passed=true`\n- `no_mutation_proof_passed=true`\n- `artifact_encoding_hygiene_passed=true`\n- `docs_synced=true`\n\n## Blockers / Warnings\n- Blockers: none.\n- Warnings: artifact hygiene warning for replacement characters in command log (non-blocking).\n\n## No-Mutation Proof\n- `all_blocks_merged_mutated=false`\n- `registry_mutated=false`\n- `config_mutated=false`\n- `runtime_defaults_changed=false`\n- `production_data_mutated=false`\n\n## Docs Sync Proof\n- `docs/PROJECT_STATE.md` updated with PRD-046.1.28 completion summary.\n- `docs/ROADMAP.md` moved PRD-046.1.28 to done and set PRD-046.1.29 as next.\n- `docs/PRD_INDEX.md` updated with PRD-046.1.28 entry.\n- `docs/DECISIONS.md` updated with ADR-048.\n",
+      "acceptance": "# PRD-046.1.28 Final Runtime Governance Acceptance Report\n\n- PRD: `PRD-046.1.28`\n- Final status: `passed`\n- Decision: `accepted_ready_for_cleanup_stabilization`\n\n## Source Chain Summary\n- Source chain `PRD-046.1.23 -> PRD-046.1.27` complete.\n- `source_chain_complete=true`\n- `source_chain_order_valid=true`\n- `missing_required_artifacts_count=0`\n- `source_chain_blocker_count=0`\n\n## Provider Evidence Summary\n- `provider_backed_cycles_total=3`\n- `provider_scenarios_total=23`\n- `provider_calls_total=23`\n- `provider_budget_violation_count=0`\n- `provider_execution_windows_valid=true`\n\n## Normal-User No-Effect\n- `normal_user_controls_total=7`\n- `normal_user_apply_count_total=0`\n- `normal_user_provider_calls_total=0`\n- `normal_user_prompt_changed_by_diagnostic_center_total=0`\n- `normal_user_final_answer_changed_by_diagnostic_center_total=0`\n\n## Rollback / Hard-Stop\n- `rollback_failure_count_total=0`\n- `stale_apply_after_force_disabled_count_total=0`\n- `hard_stop_triggered_total=0`\n- `hard_stop_ignored_count=0`\n- `force_disabled_baseline_preserved=true`\n\n## Safety / KB Boundary\n- `raw_kb_text_exposure_count_total=0`\n- `kb_authority_citation_count_total=0`\n- `direct_quote_from_kuznica_count_total=0`\n- `governance_authority_mutation_count=0`\n- `writer_received_raw_internal_only_count=0`\n\n## Trace / Provider Sanitization\n- `raw_provider_payload_committed=false`\n- `raw_private_logs_committed=false`\n- `secret_like_value_count=0`\n- `env_key_like_value_count=0`\n- `trace_json_parseable=true`\n- `trace_utf8_clean=true`\n- `trace_sanitized_preview_only=true`\n\n## BotDB Stability\n- `dashboard_chroma_count=247`\n- `dashboard_chroma_status=ok`\n- `registry_source_count=1`\n- `focus_source_id=123__�������_����`\n- `query_endpoint_status=200`\n- `semantic_fallback_used=false`\n- `botdb_circuit_open=false`\n\n## Quality / Micro-Shift\n- `micro_shift_present_count_total=22`\n- `provider_scenarios_total=23`\n- Coverage ratio above `0.85` threshold.\n- `candidate_weaker_than_baseline_count_total=0`\n- `safety_regression_count_total=0`\n- `kb_policy_regression_count_total=0`\n\n## Governance Boundary Decision\n- `diagnostic_center_runtime_status=accepted_as_governed_limited_runtime_candidate`\n- `broad_rollout_allowed=false`\n- `production_ready=false`\n- `normal_user_activation_allowed=false`\n- `cleanup_stabilization_required_next=true`\n\n## Final Acceptance Decision\n- `final_status=passed`\n- `decision=accepted_ready_for_cleanup_stabilization`\n- `next_prd=PRD-046.1.29`\n",
+      "provider": "# PRD-046.1.28 Cumulative Provider Evidence Acceptance Report\n\n- PRD: `PRD-046.1.28`\n- Gate: `cumulative_provider_evidence_gate`\n- Result: `passed`\n\n## Cycle Coverage\n- Limited smoke cycles: `2`\n- Cohort expansion cycles: `1`\n- Provider-backed cycles total: `3`\n\n## Scenario and Call Totals\n- `PRD-046.1.23`: scenarios=`5`, calls=`5`\n- `PRD-046.1.25`: scenarios=`6`, calls=`6`\n- `PRD-046.1.27`: scenarios=`12`, calls=`12`\n- Total scenarios: `23`\n- Total calls: `23`\n\n## Budget / Sanitization\n- `provider_budget_violation_count=0`\n- `provider_execution_windows_valid=true`\n- `raw_provider_payload_committed=false`\n\n## Acceptance Conclusion\n- Minimum required totals met:\n  - `provider_backed_cycles_total>=3`\n  - `provider_scenarios_total>=23`\n  - `provider_calls_total>=23`\n- Cumulative provider evidence is sufficient for final runtime governance acceptance.\n",
+      "permanent": "# PRD-046.1.28 Permanent Regression Gates Report\n\n- PRD: `PRD-046.1.28`\n- Report status: `ready`\n\n## Permanent Gate Families\n- normal-user no-effect gate\n- rollback-first gate\n- safety/KB boundary gate\n- trace/provider sanitization gate\n- no-mutation gate\n- artifact encoding hygiene gate\n- BotDB stability gate\n- quality/micro-shift gate\n- governance authority immutability gate\n- feature-flag conservative baseline gate\n\n## Candidate for Archive After Cleanup\n- one-off PRD-specific smoke traces\n- duplicate debug snapshots\n- temporary transition fixtures\n- old redundant runner variants superseded by permanent gates\n\n## Notes for PRD-046.1.29\n- Permanent gates above remain mandatory and must be preserved.\n- Archive candidates require manifest-first review before any deletion.\n",
+      "cleanup_readiness": "# PRD-046.1.28 Stabilization / Cleanup Readiness Report\n\n- PRD: `PRD-046.1.28`\n- Readiness status: `ready`\n\n## 1. Production Runtime Candidate\n- Diagnostic Center provider-backed phase is accepted as governed limited-runtime candidate.\n- Broad rollout remains disabled.\n- Production-ready declaration remains disabled.\n- Normal-user activation remains disabled.\n\n## 2. Permanent Quality / Eval Tooling\n- Keep all permanent regression gates and related test coverage.\n- Keep artifact encoding validator and no-mutation proof flow.\n\n## 3. What Should Be Archived\n- one-off smoke traces\n- duplicate debug snapshots\n- temporary transition fixtures\n\n## 4. Deletions Allowed Only After Manifest Review\n- Any temporary/debug artifact eligible for cleanup.\n- Any superseded runner variant not referenced by permanent gates.\n\n## 5. Files/Modules That Must Not Be Removed\n- Runtime governance contracts and deterministic gates.\n- Permanent regression tests and no-mutation artifacts.\n- Source scorecards and decision gates needed for reproducibility.\n\n## 6. Logs Eligible for Historical Archive\n- Older raw trace samples replaced by sanitized scorecards.\n- Intermediate transition manifests duplicated in final reports.\n\n## 7. Docs Compaction Targets\n- Duplicate historical bullet entries in `PROJECT_STATE`.\n- Duplicate done-items in `ROADMAP`.\n- Duplicate late rows in `PRD_INDEX`.\n\n## 8. Reproducibility Artifacts to Keep\n- Scorecards and decisions for `PRD-046.1.23..PRD-046.1.28`.\n- `test_command_output.txt` and hygiene reports.\n- No-mutation proofs and gate JSONs used by strict runner.\n\n## 9. Preliminary PRD-046.1.29 Structure\n- inventory\n- classification\n- archive manifest\n- cleanup execution plan\n- permanent gate re-validation\n\n## Cleanup Zones\n- Production runtime\n- Permanent quality / eval / regression tools\n- Historical archive\n- Temporary/debug artifacts eligible for cleanup\n",
+      "next": "# PRD-046.1.28 Next PRD Recommendation\n\n- PRD: `PRD-046.1.28`\n- Final status: `passed`\n- Decision: `accepted_ready_for_cleanup_stabilization`\n\nRecommended next PRD:\n\n`PRD-046.1.29 - Diagnostic Center Stabilization / Runtime Cleanup / Eval Harness Consolidation v1`\n"
+    },
+    "ok": true
+  },
+  "docs_sync": {
+    "project_state_synced": true,
+    "roadmap_synced": true,
+    "prd_index_synced": true,
+    "adr_049_present": true,
+    "runtime_map_synced": true,
+    "eval_harness_map_synced": true,
+    "docs_synced": true
+  }
+}
+

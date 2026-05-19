@@ -1,4 +1,4 @@
-# PRD Index
+﻿# PRD Index
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
@@ -51,6 +51,7 @@
 | PRD-046.0.10 | BotDB Legacy SD Cleanup / Docs Alignment v1 | done | eb082e1 | disabled legacy SD by default with explicit legacy gate, detached dashboard readiness from SD, added `audit_legacy_sd_usage.py`, aligned `Bot_data_base/README.md` and created `Bot_data_base/docs/*`, runtime smoke `:8003` and no-mutation proof passed | TO_DO_LIST/reports/PRD-046.0.10_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.10-HF1 | BotDB SD Config / Encoding Finalization v1 | done | f0561cd | finalized canonical SD defaults (`sd_labeling.enabled=false`), prevented env override persistence into `config.yaml`, added UTF-8 runtime smoke/check tooling and anti-mojibake tests/reports, runtime/no-mutation gates remained green (`1/247/247`) | TO_DO_LIST/reports/PRD-046.0.10-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.0.11 | Final Runtime Readiness Summary v1 | passed | ec68299 | delivered final readiness runner/artifacts/report before Diagnostic Center: live endpoints on `:8003` validated, runtime/admin/kb/chroma/retrieval/governance/legacy-SD/UTF-8/docs gates passed, strict counts reconfirmed (`active_source=1`, `blocks/chroma=247/247/247`), no-mutation proof captured | TO_DO_LIST/reports/PRD-046.0.11_IMPLEMENTATION_REPORT.md |
+
 | PRD-046.1 | Diagnostic Center v1 Readiness / Architecture PRD | passed | c680e14 | delivered internal Diagnostic Center v1 contract layer (input/output schemas, deterministic dry-run builder, 10 eval cases, contract audit + no-mutation proof), runtime path unchanged (diagnostic_center_runtime_enabled=false) | TO_DO_LIST/reports/PRD-046.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.1 | Diagnostic Center v1 Minimal Runtime Shadow Mode / Contract Eval | passed | 21e8628 | integrated Diagnostic Center in runtime as trace-only shadow path (no writer contract injection), added divergence metrics/runtime smoke/eval runner, passed shadow gates (`10/10`, `user_path_effect_count=0`, `runtime_smoke_ok=true`) with no-mutation proof | TO_DO_LIST/reports/PRD-046.1.1_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.2 | Diagnostic Center v1 Shadow Divergence Calibration / Planner Bridge | passed | 8d6d33a | added divergence taxonomy module + Planner Bridge v1 contracts/builder + expanded fixture (`24` cases) + planner bridge eval runner; passed `24/24` with `planner_bridge_contract_ready=true`, `apply_to_writer_count=0`, no-mutation proof | TO_DO_LIST/reports/PRD-046.1.2_IMPLEMENTATION_REPORT.md |
@@ -78,17 +79,34 @@
 | PRD-046.1.21-HF2 | BotDB Live Query Recovery Closure / Registry Zero-Block Cleanup Gate v1 | passed | fdaaf2d | confirmed live recovery closure (`dashboard/registry/query=247/247/200`, bot retrieval via API without semantic fallback), executed guarded zero-block hygiene cleanup with backups and no-governance-mutation proof, Diagnostic Center continuation unblocked | TO_DO_LIST/reports/PRD-046.1.21-HF2_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.21-HF3 | Registry Focus-Only Cleanup / Delete Button Chroma Guard v1 | passed | 35145c4 | registry reduced to focus-only source (`123__кузница_духа`), delete guard no longer leaks raw Chroma error, query/retrieval remained healthy (`200`, no semantic fallback) | TO_DO_LIST/reports/PRD-046.1.21-HF3_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.22 | Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1 | passed | 2ed33ac | delivered readiness-only provider-backed continuation package (source gates, live dependency gate, policy/cohort/toggle/scenario/runbook/hard-stop/KB/trace contracts, no-mutation/hygiene/docs sync), with `provider_execution_performed=false` and next step delegated to PRD-046.1.23 | TO_DO_LIST/reports/PRD-046.1.22_IMPLEMENTATION_REPORT.md |
+
+## Documentation Update Rule
+1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
+2. Если изменился project stage — обновляется `docs/PROJECT_STATE.md`.
+3. Если изменилась последовательность шагов — обновляется `docs/ROADMAP.md`.
+4. Если принято новое архитектурное решение — обновляется `docs/DECISIONS.md`.
+5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 | PRD-046.1.23 | Diagnostic Center Provider-Backed Limited Smoke Execution v1 | passed | 51e150c | executed one provider-backed limited smoke window (allowlisted operator only, 5 scenarios, provider call budget <=5, rollback-first, normal-user no-effect, no-mutation/hygiene); broad rollout remains prohibited, next step is PRD-046.1.24 results gate | TO_DO_LIST/reports/PRD-046.1.23_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.24 | Diagnostic Center Provider-Backed Smoke Results / Quality & Rollback Gate v1 | passed | 30c4600 | consolidated PRD-046.1.23 evidence without new execution/provider calls; passed source/evidence/budget/normal-user/quality/safety/trace/rollback/BotDB/no-mutation gates, decision `continue_limited_candidate`, broad rollout still prohibited | TO_DO_LIST/reports/PRD-046.1.24_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.25 | Diagnostic Center Second Provider-Backed Limited Smoke Execution & Evidence Gate v1 | passed | ca325d2 | executed second provider-backed limited smoke (`pilot_runtime_operator_002`, 6 scenarios, provider budget `6/6`) with normal-user no-effect, rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates passed; decision `continue_limited_candidate` and rollout still constrained | TO_DO_LIST/reports/PRD-046.1.25_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.26 | Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1 | passed | ee395df | consolidated cumulative evidence from `PRD-046.1.23 + PRD-046.1.24 + PRD-046.1.25` with strict no-new-execution/no-new-provider-calls guard; passed source/provider/normal-user/rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates and produced decision `ready_for_controlled_cohort_expansion_prd` while rollout remains constrained | TO_DO_LIST/reports/PRD-046.1.26_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.27 | Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1 | passed | 6de3a86 | executed first controlled cohort expansion on allowlisted synthetic cohort (`pilot_runtime_operator_003/004/005`) with `12` provider-backed scenarios and budget `12/12`; passed source/BotDB/allowlist/normal-user-no-effect/quality/safety-KB/trace/rollback/BotDB-stability/no-mutation/encoding gates, decision `ready_for_final_acceptance_and_stabilization_prd`, broad rollout still prohibited | TO_DO_LIST/reports/PRD-046.1.27_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.28 | Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1 | passed | e514308 | finalized no-new-execution acceptance over source chain `PRD-046.1.23..PRD-046.1.27`, confirmed cumulative provider evidence (`23` scenarios/calls), normal-user no-effect, rollback/safety-KB/trace/BotDB/no-mutation/encoding/docs gates; decision `accepted_ready_for_cleanup_stabilization`, next step `PRD-046.1.29` | TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md |
-| PRD-046.1.29 | Diagnostic Center Stabilization / Runtime Cleanup / Eval Harness Consolidation v1 | passed | pending | non-destructive stabilization cleanup: source gate, inventory/classification, manifests, docs compaction snapshots, permanent gate revalidation | TO_DO_LIST/reports/PRD-046.1.29_IMPLEMENTATION_REPORT.md |
-
-## Documentation Update Rule
-1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
-2. Если изменился project stage - обновляется `docs/PROJECT_STATE.md`.
-3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
-4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
-5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.

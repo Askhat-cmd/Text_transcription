@@ -2,7 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-046.1.30 | Diagnostic Center Controlled Rollout Planning v1 | passed | pending | created controlled rollout planning package (source/runtime-map/eval-harness gates, cohort/toggle/preflight/hard-stop/rollback/evidence plans) without execution/provider calls | TO_DO_LIST/reports/PRD-046.1.30_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.30 | Diagnostic Center Controlled Rollout Planning v1 | passed | 3e24679 | created controlled rollout planning package (source/runtime-map/eval-harness gates, cohort/toggle/preflight/hard-stop/rollback/evidence plans) without execution/provider calls | TO_DO_LIST/reports/PRD-046.1.30_IMPLEMENTATION_REPORT.md |
 | PRD-045.0..045.7.1 | Runtime quality foundation chain | done | historical | multiagent/runtime diagnostics/context/writer contracts | see TO_DO_LIST/reports |
 | PRD-046.0 | KB preparation governance v1 | done | historical | governance baseline for chunks | see report |
 | PRD-046.0.1 | Admin upload governance adapter | done | historical | ingestion governance wiring | see report |

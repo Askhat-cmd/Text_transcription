@@ -1,0 +1,30 @@
+{
+  "schema_version": "registry_focus_only_cleanup_scorecard_hf3_v1",
+  "generated_at": "2026-05-19T04:34:30.348386+00:00",
+  "final_status": "passed",
+  "decision": "registry_focus_only_cleanup_closed",
+  "source_hf2_passed": true,
+  "live_preflight_passed": true,
+  "cleanup_apply_status": "passed",
+  "remaining_sources_count": 1,
+  "remaining_source_ids": [
+    "123__кузница_духа"
+  ],
+  "focus_source_protected": true,
+  "non_focus_rows_removed_count": 12,
+  "delete_button_raw_chroma_error_absent": true,
+  "source_exists_int_len_error_absent": true,
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "registry_total_blocks": 247,
+  "query_http_200": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "no_governance_mutation_proof_passed": true,
+  "artifact_encoding_hygiene_passed": true,
+  "docs_synced": true,
+  "recommended_next_prd": "PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1",
+  "commit_hash": "pending-main-push",
+  "push_status": "pending-main-push",
+  "blockers": []
+}

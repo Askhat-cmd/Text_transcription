@@ -64,8 +64,8 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.21-HF2: live query recovery closure passed; next: PRD-046.1.22 provider-backed limited smoke readiness.
 
 ## Next
-1. PRD-046.1.21-HF2 - Chroma Persistent Store Deep Recovery / Rebuild v2.
-2. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1 (after HF2 gate closure).
+1. PRD-046.1.22 - Diagnostic Center Controlled Runtime Pilot Continuation / Provider-Backed Limited Smoke Readiness v1 (after HF3 cleanup closure).
+2. PRD-046.1.23 - Runtime pilot extension (only after PRD-046.1.22 evidence).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.
@@ -92,3 +92,5 @@ Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуско
 
 
 
+
+- PRD-046.1.21-HF3: registry focus-only cleanup and delete-button chroma guard passed

@@ -1,0 +1,12 @@
+{
+  "schema_version": "source_gate_hf3_v1",
+  "generated_at": "2026-05-19T04:34:10.188041+00:00",
+  "source_hf2_final_status": "passed",
+  "source_hf2_decision": "botdb_live_query_recovery_closed",
+  "source_query_http_200": true,
+  "source_semantic_fallback_used": false,
+  "source_chroma_consistency_passed": true,
+  "source_zero_block_cleanup_performed": false,
+  "source_blocked_delete_candidates_count": 12,
+  "source_gate_passed": true
+}

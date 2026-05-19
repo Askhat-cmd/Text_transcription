@@ -1,0 +1,19 @@
+{
+  "schema_version": "registry_cleanup_no_governance_mutation_hf3_v1",
+  "generated_at": "2026-05-19T04:34:30.104061+00:00",
+  "all_blocks_merged_mutated": false,
+  "all_blocks_merged_text_mutated": false,
+  "all_blocks_merged_governance_mutated": false,
+  "focus_source_registry_mutated": false,
+  "focus_source_deleted": false,
+  "chunk_type_mutated": false,
+  "allowed_use_mutated": false,
+  "safety_flags_mutated": false,
+  "chroma_reindex_performed": false,
+  "chroma_focus_count_changed": false,
+  "config_mutated": false,
+  "private_env_committed": false,
+  "raw_private_logs_committed": false,
+  "registry_non_focus_rows_removed": true,
+  "no_governance_mutation_proof_passed": true
+}

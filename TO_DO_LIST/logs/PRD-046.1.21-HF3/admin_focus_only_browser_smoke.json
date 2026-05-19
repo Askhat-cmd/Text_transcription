@@ -1,0 +1,18 @@
+{
+  "schema_version": "admin_focus_only_browser_smoke_hf3_v1",
+  "generated_at": "2026-05-19T04:34:28.465455+00:00",
+  "sources_count": 1,
+  "remaining_source_ids": [
+    "123__кузница_духа"
+  ],
+  "focus_source_visible": true,
+  "focus_source_protected": true,
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "registry_total_blocks": 247,
+  "active_source_blocks": 247,
+  "registry_stats_http_200": true,
+  "registry_http_200": true,
+  "dashboard_http_200": true,
+  "admin_focus_only_browser_smoke_passed": true
+}

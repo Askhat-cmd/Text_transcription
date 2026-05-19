@@ -1,0 +1,22 @@
+{
+  "schema_version": "registry_focus_only_cleanup_apply_result_hf3_v1",
+  "generated_at": "2026-05-19T04:34:30.104887+00:00",
+  "cleanup_apply_status": "passed",
+  "confirm_used": true,
+  "non_focus_rows_removed_count": 12,
+  "removed_unique_source_ids": [
+    "avtor__книга"
+  ],
+  "remaining_sources_count": 1,
+  "remaining_source_ids": [
+    "123__кузница_духа"
+  ],
+  "remaining_non_focus_rows_count": 0,
+  "focus_source_deleted": false,
+  "focus_source_mutated": true,
+  "registry_total_blocks": 247,
+  "active_source_blocks": 247,
+  "chroma_count": 247,
+  "blocked_reasons": [],
+  "delete_calls_count": 1
+}

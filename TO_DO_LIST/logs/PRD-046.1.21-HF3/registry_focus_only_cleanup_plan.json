@@ -1,0 +1,16 @@
+{
+  "schema_version": "registry_focus_only_cleanup_plan_hf3_v1",
+  "generated_at": "2026-05-19T04:34:28.148016+00:00",
+  "focus_source_id": "123__кузница_духа",
+  "delete_source_ids": [
+    "avtor__книга"
+  ],
+  "blocked_source_ids": [],
+  "cleanup_plan_ready": true,
+  "rules": {
+    "focus_source_protected": true,
+    "require_chroma_records_zero": true,
+    "require_all_blocks_absent": true,
+    "allow_low_block_non_focus_when_test_like": true
+  }
+}

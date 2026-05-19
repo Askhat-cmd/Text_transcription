@@ -1,0 +1,30 @@
+{
+  "schema_version": "delete_button_live_smoke_hf3_v1",
+  "generated_at": "2026-05-19T04:34:28.447034+00:00",
+  "delete_calls": [
+    {
+      "source_id": "avtor__книга",
+      "response": {
+        "ok": true,
+        "status_code": 200,
+        "body": {
+          "deleted": 0,
+          "removed": true,
+          "files_deleted": [],
+          "snapshot_path": "C:/My_practice/Text_transcription/TO_DO_LIST/logs/PRD-046.0.9-RUN1-HF3/registry_snapshot_before_registry_only_blocks_test_like_20260519_043428.json",
+          "message": "Источник удален по политике гигиены",
+          "policy_code": "registry_only_blocks_test_like",
+          "chroma_status": "skipped_absent_with_proof",
+          "chroma_warning": "Источник отсутствует в Chroma; выполнено удаление только из реестра",
+          "timestamp": "2026-05-19T04:34:28.307424+00:00"
+        },
+        "error": null
+      }
+    }
+  ],
+  "delete_button_raw_chroma_error_absent": true,
+  "source_exists_int_len_error_absent": true,
+  "focus_delete_blocked": true,
+  "safe_delete_returns_200_or_row_absent": true,
+  "focus_delete_status": 409
+}

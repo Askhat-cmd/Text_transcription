@@ -250,3 +250,10 @@ Status: accepted
 Context: HF1 restored Chroma counts but left `/api/query` and bot retrieval path ambiguous due live runtime drift.
 Decision: Diagnostic Center continuation is blocked until live proof confirms `dashboard=ok/247`, `registry_stats=200/247`, `/api/query=200` with hits, and bot retrieval path uses API without semantic fallback/circuit-open state.
 Consequences: runtime truth is anchored in live artifacts; continuation PRDs cannot rely on historical/local-only Chroma evidence.
+
+## ADR-042 - Registry cleanup uses focus-only gate with Chroma absence proof
+
+Status: accepted
+Context: post-recovery runtime may keep stale non-focus registry rows, while direct Chroma source checks can fail with runtime binding errors.
+Decision: non-focus deletion is allowed only when independent proof confirms absence from all_blocks and Chroma; focus source is always protected; delete API must not leak raw Chroma tracebacks.
+Consequences: operator-facing registry can be safely reduced to focus-only state without risking production source loss or governance mutation.

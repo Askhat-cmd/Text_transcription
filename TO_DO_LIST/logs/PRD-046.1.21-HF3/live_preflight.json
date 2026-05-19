@@ -1,0 +1,677 @@
+{
+  "schema_version": "live_preflight_hf3_v1",
+  "generated_at": "2026-05-19T04:34:27.690724+00:00",
+  "botdb_live_reachable": true,
+  "dashboard_chroma_status": "ok",
+  "dashboard_chroma_count": 247,
+  "registry_stats_http_200": true,
+  "query_http_200": true,
+  "query_recovery_status": "passed",
+  "semantic_fallback_used": false,
+  "checks": {
+    "dashboard": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-19T04:34:15.857309+00:00",
+        "sources": {
+          "total": 13,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 1,
+          "zero_block": 11
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 248
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 247,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "failed",
+            "blocks": 1,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "title": "Книга",
+            "status": "processing",
+            "blocks": 0,
+            "hygiene_action": "manual_review",
+            "protected": false
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "registry": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 13,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-05-15T03:43:28.740276+00:00",
+            "blocks_count": 247,
+            "sd_distribution": {},
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "failed",
+            "added_at": "2026-05-08T09:43:22.442757",
+            "processed_at": "2026-05-15T09:13:55.692995",
+            "blocks_count": 1,
+            "sd_distribution": {
+              "BEIGE": 1
+            },
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\avtor__книга_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": "Collection expecting embedding with dimension of 1024, got 3",
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "registry_only_blocks_test_like"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "cleanup_test",
+              "reason": "Тестовый источник можно очистить",
+              "code": "registry_only_blocks_test_like",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-12T10:26:05.700252",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-12T10:54:59.943634",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-12T11:38:25.253022",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-12T12:17:04.354085",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T03:42:27.284004",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T04:29:07.173918",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T04:58:41.534381",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T05:37:57.948669",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T06:05:43.380332",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T08:40:00.611014",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          },
+          {
+            "source_id": "avtor__книга",
+            "source_type": "book",
+            "title": "Книга",
+            "author": "Автор",
+            "author_id": "avtor",
+            "language": "ru",
+            "status": "processing",
+            "added_at": "2026-05-15T09:13:52.203035",
+            "processed_at": null,
+            "blocks_count": 0,
+            "sd_distribution": {},
+            "file_paths": {
+              "upload": "data/uploads/books\\book.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0",
+            "is_focus_source": false,
+            "is_test_like": true,
+            "recommended_hygiene_action": "archive",
+            "hygiene_reason": [
+              "test_like",
+              "processing_stale",
+              "zero_blocks"
+            ],
+            "delete_policy": {
+              "allowed": true,
+              "state": "delete",
+              "reason": "Архивный/пустой источник можно удалить",
+              "code": "zero_block_safe_delete",
+              "expect_chroma_absent": true
+            },
+            "delete_allowed": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "stats": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total_sources": 13,
+        "total_blocks": 248,
+        "chroma_total": 247,
+        "chroma_status": "ok",
+        "chroma_error_code": null,
+        "sd_distribution": {},
+        "sources_by_type": {
+          "book": 13
+        },
+        "legacy_sd_active": false,
+        "governance_readiness": {
+          "focus_source_count": 1,
+          "focus_source_blocks": 247,
+          "archive_candidate_sources": 12,
+          "processing_stale_sources": 11,
+          "review_queue_items": 87,
+          "row_policy_errors_count": 0
+        },
+        "warnings": []
+      },
+      "error": null
+    },
+    "query": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "chunks": [
+          {
+            "chunk_id": "7b61940d-f6ff-46f8-9514-797efaf0ad00",
+            "content": "*Это реальные вопросы участников сессий. Они возникают почти у всех. Если ты читаешь и узнаёшь свой вопрос — значит, ты в правильном месте.*\n\n***\n\n**— Я всё понял про программу. Но как её убрать? Должен же быть какой-то метод.**\n\n— Смотри, «убрать» — это уже программа говорит. Она же работает через «надо исправить, надо стать лучше». Теперь объект исправления — она сама. Ловишь иронию?\n\nПрограмма не убирается. Она **теряет власть**. Это разные вещи. Когда ты видишь её в действии — она уже не ты целиком. Это уже изменение. Не «убрать», а — перестать быть ею автоматически.\n\n***\n\n**— Я пробовал осознавать. Замечаю реакцию — и всё равно провожу её до конца. Что я делаю не так?**\n\n— Ничего не делаешь не так. Осознавание — это не выключатель. Это мышца. Сначала замечаешь постфактум — через час. Потом — через минуту. Потом — в процессе. Потом — в начале. Это путь. Не сбой.\n\nИ ещё: то, что ты «всё равно провожу до конца» — это не провал. Это просто скорость нейронной дорожки. Дорожка старая, протоптанная годами. Новая — только формируется. Нужно время и повторение, не самокритика.\n\n***\n\n**— Я понимаю, что программа сформировалась из-за родителей. Я на них злюсь. Что с этим делать?**\n\n— Злость — честная реакция. Не нужно её «отпускать» прямо сейчас или делать вид, что её нет.\n\nНо вот что важно: злость на родителей — это злость **программы на свои источники**. Это она кричит: «из-за вас я такая!». Это тоже часть программы — поиск виноватых. Потому что если есть виноватый — есть объяснение. А если объяснения нет — надо встречаться с собой.\n\nЗлись. Прочувствуй это. А потом спроси себя: что дальше? Злость — не цель. Это проход. Куда ты хочешь выйти?\n\n***\n\n**— Вы говорите «с тобой всё в порядке». Но у меня реальные проблемы. Работа не идёт, отношения разваливаются. Это что — тоже «всё в порядке»?**\n\n— «С тобой всё в порядке» — это не про внешние обстоятельства. Это про **тебя**. Твою суть. То, чем ты являешься.\n\nПроблемы реальные — да. Отношения могут разваливаться — это факт. Работа может не идти — факт. Всё это требует внимания и действий.\n\nНо есть ты — который смотрит на всё это. И этот ты — в порядке. Он не сломан. Не болен. Не «неправильный».\n\nПрограмма говорит: *«раз снаружи плохо — значит, и я плохой»*. Это и есть ошибка. Внешние обстоятельства и твоя суть — не одно и то же.\n\nРазобрать проблему — нужно. Но из позиции «я в порядке, и есть задача» — это совсем другой уровень действия, чем из позиции «я не в порядке, и поэтому всё плохо».\n\n***\n\n**— Как долго это всё длится? Когда ждать результата?**\n\n— Честный ответ: никто не знает. Не потому что метод не работает — а потому что каждый человек идёт своим темпом.\n\nНо вот что точно: **первые сдвиги** — видны быстро. Люди начинают замечать свои реакции раньше. Это происходит за дни или недели. Это уже изменение.\n\n«Полный результат» — это скользкая формулировка. Потому что программа не исчезает бесследно. Она просто перестаёт управлять тобой. Это другая жизнь — но не вакуум на месте старой.",
+            "score": 0.09778883580897041,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "keywords": [],
+            "governance": {}
+          },
+          {
+            "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "content": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы.\n\n***\n\n**— У меня нет никаких воспоминаний о травматичном детстве. Всё было нормально. Откуда тогда берётся эта программа?**\n\n— Это очень частый вопрос. И очень важный.\n\n«Нормальное детство» не значит «без программы». Программа формируется не только через очевидные травмы. Она формируется через **тысячи маленьких обычных моментов**. Родитель, который не заметил. Учитель, который сравнил. Ситуация, где твои чувства были «слишком много» или «не вовремя». Ни одна из этих ситуаций — не трагедия. Но их было много. И они складывались.\n\n«Нормальное детство» — это просто детство, в котором не было ничего из ряда вон выходящего. Но программа не требует из ряда вон выходящего. Ей достаточно повседневного.\n\n***\n\n**— Я начал практиковать осознавание — и стало хуже. Вижу больше, и от этого хуже. Это нормально?**\n\n— Да. Это называется «эффект фонарика».\n\nКогда ты заходишь в тёмную комнату с фонариком — ты начинаешь видеть то, что там было всегда. Не потому что стало больше. А потому что раньше просто не смотрел.\n\nСтало «хуже» — значит, ты просто начал видеть то, что раньше не замечал. Это не ухудшение. Это **честность**.\n\nЧерез какое-то время к этому привыкаешь. Видеть — не то же самое, что страдать. Можно видеть и не тонуть. Это и есть НейроСталкинг — наблюдать то, что есть, без того чтобы быть этим захваченным.\n\nЕсли совсем тяжело — сбавь темп. Одна практика вместо трёх. Пять минут вместо двадцати. Дело не в количестве. Дело в качестве внимания.\n\n***\n\n**— А что если я увижу что-то настолько страшное, что не смогу с этим справиться?**\n\n— Хороший вопрос. Честный.\n\nСмотри: этот страх — сам по себе уже сигнал программы. Она говорит: «там внутри что-то ужасное, лучше не смотри». Это она тебя охраняет от встречи с собой. Это и есть механизм избегания.\n\nЧто ты можешь там найти? Боль — да. Старое горе — да. Злость — да. Пустоту — да. Но ничего из этого не убивает. Всё это — просто части тебя, которые ждут, чтобы их наконец увидели.\n\nИ важный момент: ты идёшь туда не один. Есть практики, есть структура, есть другие люди рядом. Это не прыжок в темноту — это исследование с фонариком.\n\nС тобой всё в порядке. Даже то, что там внутри — тоже в порядке. Просто ждёт, чтобы с ним познакомились.\n\n***\n\n*В следующей главе мы спустимся на уровень глубже — в нейрохимию. Почему мозг не просто «думает в сторону страдания», но буквально зависит от него на химическом уровне. Что происходит, когда дофамин и кортизол становятся не просто химией — а архитекторами твоей реальности.*\n\n***",
+            "score": 0.09646851072596316,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "keywords": [],
+            "governance": {}
+          },
+          {
+            "chunk_id": "a46d2ec4-c016-40bf-806a-6d404cdfec99",
+            "content": "***\n\n**— Вы говорите, что мозг зависим от страдания. Но тогда получается, что я не могу это изменить? Если это химия — значит, это сильнее меня?**\n\n— Химия — это не приговор. Это механизм.\n\nМозг пластичен. Это его главное свойство — он меняется в ответ на опыт. Нейронные пути, которые больше не используются — ослабевают. Новые пути, которые повторяются — укрепляются. Это нейропластичность, и она работает в любом возрасте.\n\nЗависимость от страдания — не навсегда. Это **привычный химический режим**, который можно постепенно менять через новый опыт. Не «силой воли победить химию» — а буквально создавать другую химию через другой опыт. Это долго. Это требует практики. Но это реально.\n\n***\n\n**— Я понял про DMN и нарратив. Но как отличить — это программа говорит, или это реально я думаю?**\n\n— Отличие простое, но требует практики.\n\nПрограмма говорит **автоматически** — ты не выбирал думать эту мысль, она просто появилась. Она повторяется — снова и снова одно и то же. И она окрашена тревогой, сравнением, недостаточностью.\n\n«Ты» — это тот, кто **замечает** мысль. Кто её видит. Мысль появляется — и есть кто-то, кто её замечает. Вот это и есть ты. Не содержание мысли — а тот, кто смотрит на неё.\n\nПрограмма — это мысли. Ты — это осознавание, в котором мысли появляются. Разница между этим и есть вся практика.\n\n***\n\n**— У меня буквально не получается медитировать. Я сижу — и через минуту уже думаю о работе. Это значит, мой мозг «слишком активный»?**\n\n— Нет. Это значит, что у тебя нормальный человеческий мозг.\n\nDMN производит мысли — это её работа. Мозг с «нет мыслей» в медитации — это миф. Даже у людей, которые медитируют двадцать лет, мысли появляются.\n\nМедитация — это не «нет мыслей». Медитация — это «я заметил, что появилась мысль, и вернулся». Вот и всё. Одно возвращение внимания — это одно повторение. Двадцать раз вернулся за десять минут — это двадцать повторений. Это хорошая тренировка.\n\n«Слишком активный мозг» — это просто DMN, которая привыкла работать без остановки. Медитация — это первый раз, когда ты говоришь ей: «подожди». Она удивляется. Это нормально.\n\n***\n\n**— Вы говорили про реконсолидацию памяти. Это значит, что старые травмы можно «перезаписать»? Это реально?**\n\n— Реально — с оговорками.\n\nРеконсолидация — не «стереть и заменить». Это — **добавить новый эмоциональный опыт рядом со старым**. Нейронная сеть, которая держит воспоминание, становится шире. Появляются новые связи — с другими ощущениями, с другим контекстом.\n\nЭто не значит, что память исчезает. Это значит, что она перестаёт быть единственным ответом на похожую ситуацию. Рядом с «тогда было страшно» появляется «сейчас я в порядке». Обе записи есть. Но реакция уже не та же.\n\nИменно поэтому практика 4 в этой главе — медленная. Не нужно «перезаписывать» всё за раз. Нужно просто аккуратно, без насилия, приносить в старое воспоминание новый телесный опыт. Со временем — это работает.\n\n***\n\n**— А если у меня нет сил на практики? Я прихожу домой — и просто не могу. Это freeze?**\n\n— Возможно. Или просто усталость. Или и то, и другое вместе.",
+            "score": 0.09508188264255436,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+            "keywords": [],
+            "governance": {}
+          },
+          {
+            "chunk_id": "ca959d97-21e3-4b7f-9bf7-6482517f483f",
+            "content": "**Цель:** дать нейронной сети по умолчанию паузу — и заметить, что происходит, когда нарратив «я» замолкает.\n\n**Время:** 10 минут.\n\nСядь удобно. Поставь таймер на 10 минут.\n\nЗадача одна: **воспринимать без слов**. Слушать звуки — не называя их. Смотреть на поверхность перед собой — не думая о ней. Чувствовать тело — без комментариев.\n\nКак только появляется мысль — просто замечай: «мысль». Не хорошая, не плохая. Просто — мысль. И возвращай внимание к прямому восприятию.\n\nЧерез три-четыре дня регулярной практики ты начнёшь замечать: между мыслями есть **зазоры тишины**. Сначала — доли секунды. Потом — дольше. В этих зазорах — ты. Не программа. Не нарратив. Ты.\n\n> Из сессии:\n>\n> **Жанар, 31 год:** Я попробовала. И в один момент — буквально на секунду — вдруг всё затихло. И было так странно хорошо. А потом мысль: «ой, что это было?» — и всё снова зашумело.\n>\n> **Саламат:** Именно. Мысль «ой, что это было» — это уже DMN включилась снова. Она не может вынести, что её нет. Смешно, правда? Она сама себя возвращает.\n>\n> **Жанар:** Значит, это правильно — то, что я почувствовала?\n>\n> **Саламат:** Это естественно. Не «правильно» или «неправильно». Это просто — ты. Без нарратива. Просто есть.\n\n***",
+            "score": 0.08231339360539403,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 2. Химия клетки: почему мозг зависит от страдания",
+            "keywords": [],
+            "governance": {}
+          }
+        ],
+        "total_found": 4,
+        "reranked": true,
+        "search_mode": "hybrid",
+        "sd_filter_applied": false,
+        "query_time_ms": 6084,
+        "debug": {
+          "where_filter": {},
+          "candidates": 4,
+          "pre_filter_k": 12,
+          "raw_fetch_k": 14,
+          "legacy_sd_deprecated": true,
+          "sd_filter_applied": false,
+          "sd_level_ignored": false,
+          "botdb_query_route_fallback_used": true,
+          "retrieval_policy_trace": {
+            "policy_version": "retrieval_governance_safety_v1",
+            "safety_context": false,
+            "raw_hits_count": 4,
+            "internal_only_filtered_count": 0,
+            "returned_hits_count": 4,
+            "filter_reasons": []
+          }
+        }
+      },
+      "error": null
+    }
+  },
+  "live_preflight_passed": true
+}

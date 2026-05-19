@@ -126,7 +126,21 @@ def _safe_chroma_source_exists(runner: PipelineRunner, source_id: str) -> tuple[
         try:
             return bool(source_exists(normalized)), None
         except Exception as exc:
-            return None, f"source_exists_error:{exc}"
+            fallback_health = get_chroma_runtime_health("config.yaml")
+            health_status = _normalize(fallback_health.get("status")).lower()
+            if health_status == "ok":
+                source_ids = fallback_health.get("source_ids")
+                if isinstance(source_ids, list):
+                    normalized_source_ids = {_normalize(item) for item in source_ids if _normalize(item)}
+                    if normalized in normalized_source_ids:
+                        return True, "health_source_present"
+                    return False, "health_source_absent"
+                count_by_source = fallback_health.get("count_by_source_id")
+                if isinstance(count_by_source, dict):
+                    if _to_int(count_by_source.get(normalized)) > 0:
+                        return True, "health_count_by_source_present"
+                    return False, "health_count_by_source_absent"
+            return None, f"source_exists_unavailable:{_sanitize_error_detail(exc)}"
 
     collection = getattr(chroma, "_collection", None)
     if collection is not None:
@@ -138,6 +152,67 @@ def _safe_chroma_source_exists(runner: PipelineRunner, source_id: str) -> tuple[
             return None, f"fallback_collection_scan_error:{exc}"
 
     return None, "chroma_source_exists_unavailable"
+
+
+def _safe_chroma_delete_source(
+    runner: PipelineRunner,
+    *,
+    source_id: str,
+    expected_no_chroma_records: bool,
+) -> dict[str, Any]:
+    normalized = _normalize(source_id)
+    if not normalized:
+        return {
+            "deleted": 0,
+            "status": "skipped_empty_source_id",
+            "warning": None,
+            "hard_block": False,
+            "error_code": None,
+        }
+
+    chroma_exists, chroma_reason = _safe_chroma_source_exists(runner, normalized)
+    if chroma_exists is False:
+        return {
+            "deleted": 0,
+            "status": "skipped_absent_with_proof",
+            "warning": "Источник отсутствует в Chroma; выполнено удаление только из реестра",
+            "hard_block": False,
+            "error_code": None,
+        }
+    if chroma_exists is None and not expected_no_chroma_records:
+        return {
+            "deleted": 0,
+            "status": "blocked_presence_unknown",
+            "warning": "Удаление недоступно: не удалось безопасно проверить Chroma",
+            "hard_block": True,
+            "error_code": "chroma_presence_unknown",
+        }
+
+    try:
+        deleted = _to_int(runner.chroma_manager.delete_source(normalized))
+        return {
+            "deleted": deleted,
+            "status": "deleted_from_chroma",
+            "warning": None,
+            "hard_block": False,
+            "error_code": None,
+        }
+    except Exception as exc:
+        if expected_no_chroma_records:
+            return {
+                "deleted": 0,
+                "status": "delete_source_error_ignored_with_proof",
+                "warning": "Источник удалён из реестра; записей Chroma для него не найдено",
+                "hard_block": False,
+                "error_code": f"delete_source_error:{_sanitize_error_detail(exc)}",
+            }
+        return {
+            "deleted": 0,
+            "status": "delete_source_error_blocked",
+            "warning": "Удаление недоступно: не удалось безопасно проверить Chroma",
+            "hard_block": True,
+            "error_code": f"delete_source_error:{_sanitize_error_detail(exc)}",
+        }
 
 
 def _classify_hygiene(source_row: dict[str, Any]) -> tuple[str, list[str]]:
@@ -237,22 +312,39 @@ def _resolve_delete_policy(
             "code": "focus_source_protected",
         }
 
+    if source_id in production_source_ids:
+        return {
+            "allowed": False,
+            "state": "unavailable",
+            "reason": "Источник присутствует в production блоках",
+            "code": "present_in_production",
+        }
+
     if blocks_count == 0 and status in {"archived", "failed", "processing", "done"}:
+        chroma_exists, _ = _safe_chroma_source_exists(runner, source_id)
+        if chroma_exists is True:
+            return {
+                "allowed": False,
+                "state": "unavailable",
+                "reason": "Источник имеет записи в Chroma, требуется ручная проверка",
+                "code": "chroma_has_source",
+            }
+        if chroma_exists is None:
+            return {
+                "allowed": False,
+                "state": "unavailable",
+                "reason": "Удаление недоступно: не удалось безопасно проверить Chroma",
+                "code": "chroma_source_exists_unavailable",
+            }
         return {
             "allowed": True,
             "state": "delete",
             "reason": "Архивный/пустой источник можно удалить",
             "code": "zero_block_safe_delete",
+            "expect_chroma_absent": True,
         }
 
     if blocks_count <= 1 and is_test_like:
-        if source_id in production_source_ids:
-            return {
-                "allowed": False,
-                "state": "unavailable",
-                "reason": "Источник присутствует в production блоках",
-                "code": "present_in_production",
-            }
         chroma_exists, chroma_reason = _safe_chroma_source_exists(runner, source_id)
         if chroma_exists is True:
             return {
@@ -265,7 +357,7 @@ def _resolve_delete_policy(
             return {
                 "allowed": False,
                 "state": "unavailable",
-                "reason": f"Проверка Chroma недоступна: {chroma_reason or 'unknown'}",
+                "reason": "Удаление недоступно: не удалось безопасно проверить Chroma",
                 "code": "chroma_source_exists_unavailable",
             }
         return {
@@ -273,6 +365,7 @@ def _resolve_delete_policy(
             "state": "cleanup_test",
             "reason": "Тестовый источник можно очистить",
             "code": "registry_only_blocks_test_like",
+            "expect_chroma_absent": True,
         }
 
     if status == "archived":
@@ -392,7 +485,16 @@ async def delete_source(source_id: str):
         raise HTTPException(status_code=409, detail=str(policy.get("reason") or "Удаление запрещено"))
 
     snapshot_path = _create_registry_snapshot(runner, str(policy.get("code") or "delete"))
-    chroma_deleted = runner.chroma_manager.delete_source(source_id)
+    chroma_result = _safe_chroma_delete_source(
+        runner,
+        source_id=source_id,
+        expected_no_chroma_records=bool(policy.get("expect_chroma_absent")),
+    )
+    if bool(chroma_result.get("hard_block")):
+        raise HTTPException(
+            status_code=409,
+            detail=str(chroma_result.get("warning") or "Удаление недоступно"),
+        )
     removed = runner.registry.delete_source(source_id)
     files_deleted: list[str] = []
 
@@ -422,12 +524,14 @@ async def delete_source(source_id: str):
                 files_deleted.append(str(file_path.as_posix()))
 
     return {
-        "deleted": int(chroma_deleted),
+        "deleted": _to_int(chroma_result.get("deleted")),
         "removed": bool(removed),
         "files_deleted": files_deleted,
         "snapshot_path": snapshot_path,
         "message": "Источник удален по политике гигиены",
         "policy_code": policy.get("code"),
+        "chroma_status": chroma_result.get("status"),
+        "chroma_warning": chroma_result.get("warning"),
         "timestamp": _utc_now(),
     }
 

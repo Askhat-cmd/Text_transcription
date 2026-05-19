@@ -1,0 +1,10 @@
+﻿COMMAND: python -m pytest Bot_data_base/tests/test_registry_focus_only_cleanup_hf3.py Bot_data_base/tests/test_registry_delete_chroma_guard_hf3.py Bot_data_base/tests/test_registry_low_block_non_focus_cleanup_hf3.py Bot_data_base/tests/test_registry_focus_source_protection_hf3.py Bot_data_base/tests/test_registry_cleanup_no_governance_mutation_hf3.py Bot_data_base/tests/test_admin_focus_only_browser_smoke_hf3.py Bot_data_base/tests/test_query_retrieval_after_registry_cleanup_hf3.py
+RESULT: passed (7 passed, 0 failed)
+
+COMMAND: python -m Bot_data_base.tools.run_registry_focus_only_cleanup_hf3 --repo-root . --admin-base-url http://127.0.0.1:8003 --output-dir TO_DO_LIST/logs/PRD-046.1.21-HF3 --reports-dir TO_DO_LIST/reports --confirm --strict
+RESULT: passed
+KEY: final_status=passed; decision=registry_focus_only_cleanup_closed; remaining_sources_count=1; remaining_source_ids=["123__кузница_духа"]; non_focus_rows_removed_count=12; dashboard_chroma_count=247; query_http_200=true
+
+COMMAND: python -m bot_psychologist.tools.validate_prd_artifact_encoding --prd PRD-046.1.21-HF3 --logs-dir TO_DO_LIST/logs/PRD-046.1.21-HF3 --out-dir TO_DO_LIST/logs/PRD-046.1.21-HF3 --report-prd PRD-046.1.21-HF3 --repo-root .
+RESULT: passed
+KEY: utf8_decode_error_count=0; nul_byte_file_count=0; json_parse_error_count=0

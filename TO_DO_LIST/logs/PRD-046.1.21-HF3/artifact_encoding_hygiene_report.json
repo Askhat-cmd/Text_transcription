@@ -1,0 +1,33 @@
+{
+  "schema_version": "artifact_encoding_hygiene_report_v1",
+  "prd": "PRD-046.1.21-HF3",
+  "checked_prd": "PRD-046.1.21-HF3",
+  "final_status": "passed",
+  "files_checked": 13,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "nul_char_file_count": 0,
+  "replacement_char_warning_count": 0,
+  "mojibake_warning_count": 0,
+  "json_parse_error_count": 0,
+  "empty_text_artifact_count": 0,
+  "unexpected_debug_dir_count": 0,
+  "fixed_files": [],
+  "warnings": [],
+  "blockers": [],
+  "checked_files": [
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/admin_focus_only_browser_smoke.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/artifact_encoding_hygiene_report.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/backup_manifest.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/delete_button_live_smoke.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/live_preflight.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/no_governance_mutation_proof.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/query_retrieval_regression_smoke.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_apply_result.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_audit.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_plan.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/registry_focus_only_cleanup_scorecard.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/source_gate.json",
+    "TO_DO_LIST/logs/PRD-046.1.21-HF3/test_command_output.txt"
+  ]
+}

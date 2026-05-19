@@ -1,0 +1,11 @@
+{
+  "schema_version": "backup_manifest_hf3_v1",
+  "generated_at": "2026-05-19T04:34:28.206524+00:00",
+  "backup_created": true,
+  "registry_backup_exists": true,
+  "chroma_health_backup_exists": true,
+  "dashboard_snapshot_backup_exists": true,
+  "registry_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF3\\registry_before_focus_only_cleanup_20260519_043428.json",
+  "chroma_health_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF3\\chroma_health_before_focus_only_cleanup_20260519_043428.json",
+  "dashboard_snapshot_backup_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\backups\\PRD-046.1.21-HF3\\dashboard_snapshot_before_focus_only_cleanup_20260519_043428.json"
+}

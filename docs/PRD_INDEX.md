@@ -104,4 +104,4 @@
 
 
 
-| PRD-046.1.23 | Diagnostic Center Provider-Backed Limited Smoke Execution v1 | passed_with_warnings | pending | executed one provider-backed limited smoke window (allowlisted operator only, 5 scenarios, provider call budget <=5, rollback-first, normal-user no-effect, no-mutation/hygiene); broad rollout remains prohibited, next step is PRD-046.1.24 results gate | TO_DO_LIST/reports/PRD-046.1.23_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.23 | Diagnostic Center Provider-Backed Limited Smoke Execution v1 | passed | 51e150c | executed one provider-backed limited smoke window (allowlisted operator only, 5 scenarios, provider call budget <=5, rollback-first, normal-user no-effect, no-mutation/hygiene); broad rollout remains prohibited, next step is PRD-046.1.24 results gate | TO_DO_LIST/reports/PRD-046.1.23_IMPLEMENTATION_REPORT.md |

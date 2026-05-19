@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_rollback_plan_v1",
+  "prd_id": "PRD-046.1.30",
+  "rollback_steps": [
+    "set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true",
+    "set PROMPT_CONSTRAINT_PILOT_ENABLED=false",
+    "set PROMPT_CONSTRAINT_PILOT_MODE=shadow",
+    "clear allowlist",
+    "re-run one allowlisted check expecting no apply",
+    "re-run normal-user control expecting no effect",
+    "record rollback proof artifact"
+  ],
+  "ready": true
+}

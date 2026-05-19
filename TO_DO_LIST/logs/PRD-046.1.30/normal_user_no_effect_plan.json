@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_normal_user_no_effect_plan_v1",
+  "prd_id": "PRD-046.1.30",
+  "normal_user_activation_allowed": false,
+  "required_normal_user_control_count": 2,
+  "normal_user_apply_allowed": false,
+  "normal_user_provider_calls_allowed": false,
+  "writer_prompt_change_allowed_for_normal_user": false,
+  "writer_contract_change_allowed_for_normal_user": false,
+  "final_answer_change_allowed_for_normal_user": false,
+  "ready": true
+}

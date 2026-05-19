@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_cohort_policy_v1",
+  "prd_id": "PRD-046.1.30",
+  "max_target_users": 3,
+  "target_user_type": "allowlisted_internal_or_synthetic_operators_only",
+  "normal_user_activation_allowed": false,
+  "broad_rollout_allowed": false,
+  "production_ready_allowed": false,
+  "requires_explicit_allowlist": true,
+  "requires_test_prefix_or_operator_marker": true,
+  "ready": true
+}

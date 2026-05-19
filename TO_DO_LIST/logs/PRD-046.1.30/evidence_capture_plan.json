@@ -1,0 +1,20 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_evidence_plan_v1",
+  "prd_id": "PRD-046.1.30",
+  "required_artifacts": [
+    "execution_manifest",
+    "provider_budget_report",
+    "sanitized_provider_trace",
+    "normal_user_no_effect_report",
+    "quality_micro_shift_report",
+    "safety_kb_boundary_report",
+    "trace_sanitization_report",
+    "rollback_precheck_postcheck_report",
+    "botdb_preflight_postcheck_report",
+    "no_mutation_proof",
+    "artifact_hygiene_report",
+    "operator_summary",
+    "next_prd_recommendation"
+  ],
+  "ready": true
+}

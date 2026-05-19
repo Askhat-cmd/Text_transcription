@@ -1,0 +1,67 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_preflight_gate_v1",
+  "prd_id": "PRD-046.1.30",
+  "checks": [
+    {
+      "id": "botdb_status_ok",
+      "required": true,
+      "description": "BotDB status endpoint is healthy."
+    },
+    {
+      "id": "registry_focus_source_only",
+      "required": true,
+      "description": "Registry contains only focus production source."
+    },
+    {
+      "id": "chroma_count_ok",
+      "required": true,
+      "description": "Chroma count matches expected production count."
+    },
+    {
+      "id": "query_endpoint_200",
+      "required": true,
+      "description": "Query endpoint responds with HTTP 200."
+    },
+    {
+      "id": "semantic_fallback_used_false",
+      "required": true,
+      "description": "Unexpected semantic fallback is not used."
+    },
+    {
+      "id": "botdb_circuit_open_false",
+      "required": true,
+      "description": "BotDB circuit breaker remains closed."
+    },
+    {
+      "id": "runtime_defaults_conservative",
+      "required": true,
+      "description": "Defaults stay conservative and disabled."
+    },
+    {
+      "id": "allowlist_explicitly_set",
+      "required": true,
+      "description": "Allowlist is explicitly configured."
+    },
+    {
+      "id": "rollback_switch_tested_before_execution",
+      "required": true,
+      "description": "Rollback switch validated before execution."
+    },
+    {
+      "id": "artifact_output_path_clean",
+      "required": true,
+      "description": "Output path is prepared and clean."
+    },
+    {
+      "id": "provider_budget_configured",
+      "required": true,
+      "description": "Provider budget is configured for controlled window."
+    },
+    {
+      "id": "normal_user_controls_configured",
+      "required": true,
+      "description": "Normal-user controls are prepared."
+    }
+  ],
+  "ready": true
+}

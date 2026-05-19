@@ -1,0 +1,186 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_plan_v1",
+  "prd_id": "PRD-046.1.30",
+  "rollout_type": "controlled_limited_rollout_execution",
+  "execution_performed": false,
+  "provider_called": false,
+  "runtime_defaults_changed": false,
+  "production_data_mutated": false,
+  "cohort_policy": {
+    "schema_version": "diagnostic_center_controlled_rollout_cohort_policy_v1",
+    "prd_id": "PRD-046.1.30",
+    "max_target_users": 3,
+    "target_user_type": "allowlisted_internal_or_synthetic_operators_only",
+    "normal_user_activation_allowed": false,
+    "broad_rollout_allowed": false,
+    "production_ready_allowed": false,
+    "requires_explicit_allowlist": true,
+    "requires_test_prefix_or_operator_marker": true,
+    "ready": true
+  },
+  "toggle_matrix": {
+    "schema_version": "diagnostic_center_controlled_rollout_toggle_matrix_v1",
+    "prd_id": "PRD-046.1.30",
+    "matrix": {
+      "force_disabled=true": "total disabled",
+      "enabled=false": "total disabled",
+      "mode=shadow": "no apply",
+      "mode=controlled_limited_apply": "apply only allowlisted target users",
+      "normal_user": "never apply",
+      "hard_stop_triggered=true": "forced rollback",
+      "provider_budget_exceeded=true": "forced rollback",
+      "safety_kb_boundary_violation=true": "forced rollback",
+      "trace_sanitization_failure=true": "forced rollback",
+      "botdb_unstable=true": "forced rollback"
+    },
+    "ready": true
+  },
+  "preflight_gates": {
+    "schema_version": "diagnostic_center_controlled_rollout_preflight_gate_v1",
+    "prd_id": "PRD-046.1.30",
+    "checks": [
+      {
+        "id": "botdb_status_ok",
+        "required": true,
+        "description": "BotDB status endpoint is healthy."
+      },
+      {
+        "id": "registry_focus_source_only",
+        "required": true,
+        "description": "Registry contains only focus production source."
+      },
+      {
+        "id": "chroma_count_ok",
+        "required": true,
+        "description": "Chroma count matches expected production count."
+      },
+      {
+        "id": "query_endpoint_200",
+        "required": true,
+        "description": "Query endpoint responds with HTTP 200."
+      },
+      {
+        "id": "semantic_fallback_used_false",
+        "required": true,
+        "description": "Unexpected semantic fallback is not used."
+      },
+      {
+        "id": "botdb_circuit_open_false",
+        "required": true,
+        "description": "BotDB circuit breaker remains closed."
+      },
+      {
+        "id": "runtime_defaults_conservative",
+        "required": true,
+        "description": "Defaults stay conservative and disabled."
+      },
+      {
+        "id": "allowlist_explicitly_set",
+        "required": true,
+        "description": "Allowlist is explicitly configured."
+      },
+      {
+        "id": "rollback_switch_tested_before_execution",
+        "required": true,
+        "description": "Rollback switch validated before execution."
+      },
+      {
+        "id": "artifact_output_path_clean",
+        "required": true,
+        "description": "Output path is prepared and clean."
+      },
+      {
+        "id": "provider_budget_configured",
+        "required": true,
+        "description": "Provider budget is configured for controlled window."
+      },
+      {
+        "id": "normal_user_controls_configured",
+        "required": true,
+        "description": "Normal-user controls are prepared."
+      }
+    ],
+    "ready": true
+  },
+  "hard_stop_criteria": {
+    "schema_version": "diagnostic_center_controlled_rollout_hard_stop_criteria_v1",
+    "prd_id": "PRD-046.1.30",
+    "hard_stops": [
+      "any normal-user apply > 0",
+      "any normal-user provider call > 0",
+      "rollback failure > 0",
+      "raw provider payload persisted",
+      "raw KB text exposed as authority",
+      "KB quote/citation boundary violation",
+      "provider budget exceeded",
+      "BotDB circuit open",
+      "semantic fallback used unexpectedly",
+      "runtime defaults changed",
+      "production data mutation detected",
+      "artifact encoding/hygiene blocker"
+    ],
+    "ready": true
+  },
+  "monitoring_plan": {
+    "schema_version": "diagnostic_center_controlled_rollout_monitoring_plan_v1",
+    "prd_id": "PRD-046.1.30",
+    "metrics": {
+      "apply_count": "count controlled apply events for allowlisted users only",
+      "normal_user_apply_count": "must remain 0",
+      "normal_user_provider_calls": "must remain 0",
+      "rollback_failure_count": "must remain 0",
+      "safety_kb_boundary_violation_count": "must remain 0",
+      "trace_sanitization_failure_count": "must remain 0",
+      "provider_budget_exceeded_count": "must remain 0",
+      "botdb_unstable_events": "must remain 0"
+    },
+    "ready": true
+  },
+  "rollback_plan": {
+    "schema_version": "diagnostic_center_controlled_rollout_rollback_plan_v1",
+    "prd_id": "PRD-046.1.30",
+    "rollback_steps": [
+      "set PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED=true",
+      "set PROMPT_CONSTRAINT_PILOT_ENABLED=false",
+      "set PROMPT_CONSTRAINT_PILOT_MODE=shadow",
+      "clear allowlist",
+      "re-run one allowlisted check expecting no apply",
+      "re-run normal-user control expecting no effect",
+      "record rollback proof artifact"
+    ],
+    "ready": true
+  },
+  "evidence_capture_plan": {
+    "schema_version": "diagnostic_center_controlled_rollout_evidence_plan_v1",
+    "prd_id": "PRD-046.1.30",
+    "required_artifacts": [
+      "execution_manifest",
+      "provider_budget_report",
+      "sanitized_provider_trace",
+      "normal_user_no_effect_report",
+      "quality_micro_shift_report",
+      "safety_kb_boundary_report",
+      "trace_sanitization_report",
+      "rollback_precheck_postcheck_report",
+      "botdb_preflight_postcheck_report",
+      "no_mutation_proof",
+      "artifact_hygiene_report",
+      "operator_summary",
+      "next_prd_recommendation"
+    ],
+    "ready": true
+  },
+  "normal_user_no_effect_plan": {
+    "schema_version": "diagnostic_center_controlled_rollout_normal_user_no_effect_plan_v1",
+    "prd_id": "PRD-046.1.30",
+    "normal_user_activation_allowed": false,
+    "required_normal_user_control_count": 2,
+    "normal_user_apply_allowed": false,
+    "normal_user_provider_calls_allowed": false,
+    "writer_prompt_change_allowed_for_normal_user": false,
+    "writer_contract_change_allowed_for_normal_user": false,
+    "final_answer_change_allowed_for_normal_user": false,
+    "ready": true
+  },
+  "ready": true
+}

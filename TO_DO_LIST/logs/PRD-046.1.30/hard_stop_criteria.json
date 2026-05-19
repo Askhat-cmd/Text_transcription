@@ -1,0 +1,19 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_hard_stop_criteria_v1",
+  "prd_id": "PRD-046.1.30",
+  "hard_stops": [
+    "any normal-user apply > 0",
+    "any normal-user provider call > 0",
+    "rollback failure > 0",
+    "raw provider payload persisted",
+    "raw KB text exposed as authority",
+    "KB quote/citation boundary violation",
+    "provider budget exceeded",
+    "BotDB circuit open",
+    "semantic fallback used unexpectedly",
+    "runtime defaults changed",
+    "production data mutation detected",
+    "artifact encoding/hygiene blocker"
+  ],
+  "ready": true
+}

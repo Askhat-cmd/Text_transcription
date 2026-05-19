@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_planning_source_gate_v1",
+  "prd_id": "PRD-046.1.30",
+  "source_gate_passed": true,
+  "source_046_1_28_passed": true,
+  "source_046_1_29_passed": true,
+  "runtime_map_gate_passed": true,
+  "eval_harness_gate_passed": true,
+  "docs_compaction_gate_passed": true,
+  "blockers": [],
+  "source_046_1_28_final_status": "passed",
+  "source_046_1_28_decision": "accepted_ready_for_cleanup_stabilization",
+  "source_046_1_29_final_status": "passed",
+  "source_046_1_29_decision": "diagnostic_center_stabilized_cleanup_manifested"
+}

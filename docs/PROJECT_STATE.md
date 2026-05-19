@@ -34,7 +34,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-046.1.30 - Diagnostic Center Controlled Rollout Planning v1` (if stabilization cleanup remains green).
+`PRD-046.1.31 - Diagnostic Center Controlled Rollout Execution Gate v1` (controlled, allowlisted, rollback-first execution only).
 
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
@@ -51,4 +51,4 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-05-19
-- Source cycle: PRD-046.1.29 (`70635e1`)
+- Source cycle: PRD-046.1.30

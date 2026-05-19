@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_toggle_matrix_v1",
+  "prd_id": "PRD-046.1.30",
+  "matrix": {
+    "force_disabled=true": "total disabled",
+    "enabled=false": "total disabled",
+    "mode=shadow": "no apply",
+    "mode=controlled_limited_apply": "apply only allowlisted target users",
+    "normal_user": "never apply",
+    "hard_stop_triggered=true": "forced rollback",
+    "provider_budget_exceeded=true": "forced rollback",
+    "safety_kb_boundary_violation=true": "forced rollback",
+    "trace_sanitization_failure=true": "forced rollback",
+    "botdb_unstable=true": "forced rollback"
+  },
+  "ready": true
+}

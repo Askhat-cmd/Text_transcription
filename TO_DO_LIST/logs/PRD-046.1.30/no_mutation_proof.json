@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_planning_no_mutation_proof_v1",
+  "prd_id": "PRD-046.1.30",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "runtime_defaults_changed": false,
+  "production_data_mutated": false,
+  "provider_called": false,
+  "provider_execution_performed": false,
+  "no_mutation_proof_passed": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_monitoring_plan_v1",
+  "prd_id": "PRD-046.1.30",
+  "metrics": {
+    "apply_count": "count controlled apply events for allowlisted users only",
+    "normal_user_apply_count": "must remain 0",
+    "normal_user_provider_calls": "must remain 0",
+    "rollback_failure_count": "must remain 0",
+    "safety_kb_boundary_violation_count": "must remain 0",
+    "trace_sanitization_failure_count": "must remain 0",
+    "provider_budget_exceeded_count": "must remain 0",
+    "botdb_unstable_events": "must remain 0"
+  },
+  "ready": true
+}

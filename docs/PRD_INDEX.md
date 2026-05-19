@@ -1,4 +1,4 @@
-# PRD Index
+﻿# PRD Index
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
@@ -84,7 +84,7 @@
 | PRD-046.1.26 | Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1 | passed | ee395df | consolidated cumulative evidence from `PRD-046.1.23 + PRD-046.1.24 + PRD-046.1.25` with strict no-new-execution/no-new-provider-calls guard; passed source/provider/normal-user/rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates and produced decision `ready_for_controlled_cohort_expansion_prd` while rollout remains constrained | TO_DO_LIST/reports/PRD-046.1.26_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.27 | Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1 | passed | 6de3a86 | executed first controlled cohort expansion on allowlisted synthetic cohort (`pilot_runtime_operator_003/004/005`) with `12` provider-backed scenarios and budget `12/12`; passed source/BotDB/allowlist/normal-user-no-effect/quality/safety-KB/trace/rollback/BotDB-stability/no-mutation/encoding gates, decision `ready_for_final_acceptance_and_stabilization_prd`, broad rollout still prohibited | TO_DO_LIST/reports/PRD-046.1.27_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.28 | Diagnostic Center Final Runtime Governance Acceptance / Stabilization Readiness Gate v1 | passed | e514308 | finalized no-new-execution acceptance over source chain `PRD-046.1.23..PRD-046.1.27`, confirmed cumulative provider evidence (`23` scenarios/calls), normal-user no-effect, rollback/safety-KB/trace/BotDB/no-mutation/encoding/docs gates; decision `accepted_ready_for_cleanup_stabilization`, next step `PRD-046.1.29` | TO_DO_LIST/reports/PRD-046.1.28_IMPLEMENTATION_REPORT.md |
-| PRD-046.1.29 | Diagnostic Center Stabilization / Runtime Cleanup / Eval Harness Consolidation v1 | passed | pending | non-destructive stabilization cleanup: source gate, inventory/classification, manifests, docs compaction snapshots, permanent gate revalidation | TO_DO_LIST/reports/PRD-046.1.29_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.29 | Diagnostic Center Stabilization / Runtime Cleanup / Eval Harness Consolidation v1 | passed | 70635e1 | non-destructive stabilization cleanup: source gate, inventory/classification, manifests, docs compaction snapshots, permanent gate revalidation | TO_DO_LIST/reports/PRD-046.1.29_IMPLEMENTATION_REPORT.md |
 
 ## Documentation Update Rule
 1. Каждый новый PRD после push обновляет `docs/PRD_INDEX.md`.
@@ -92,3 +92,4 @@
 3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+

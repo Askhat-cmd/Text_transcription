@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Post-acceptance stabilization after `PRD-046.1.28`; this cycle (`PRD-046.1.29`) is cleanup/compaction only with non-destructive manifest-first policy.
+Post-acceptance stabilization after `PRD-046.1.28` is completed by `PRD-046.1.29` with cleanup/compaction in non-destructive manifest-first mode.
 
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
@@ -51,4 +51,4 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-05-19
-- Source cycle: PRD-046.1.29
+- Source cycle: PRD-046.1.29 (`70635e1`)

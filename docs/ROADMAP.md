@@ -5,13 +5,14 @@
 - Diagnostic Center readiness, shadow integration, planner/writer pilot, prompt-constraint limited runtime chain through `PRD-046.1.16`.
 - Response quality eval and calibration packs through `PRD-046.1.18`.
 - Controlled runtime pilot readiness/execution/results and provider-backed cycles through `PRD-046.1.28`.
+- `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation.
+- No active cleanup/stabilization PRD in progress.
 
 ## Next
 1. `PRD-046.1.30` - Diagnostic Center Controlled Rollout Planning v1.
-2. Hotfix path only if `PRD-046.1.29` leaves blockers (`cleanup/docs/eval-harness`).
+2. Hotfix path only if new blockers appear in rollout-planning preparation.
 
 ## Later
 - Operational hardening for governed limited runtime.

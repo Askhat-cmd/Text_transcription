@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_trace_provider_sanitization_cumulative_v1",
+  "prd": "PRD-046.1.26",
+  "raw_provider_payload_in_artifacts": false,
+  "raw_private_logs_committed": false,
+  "secret_like_values_count": 0,
+  "env_key_exposure_count": 0,
+  "utf8_clean": true,
+  "json_parseable": true,
+  "nul_byte_count": 0,
+  "trace_provider_sanitization_cumulative_passed": true
+}

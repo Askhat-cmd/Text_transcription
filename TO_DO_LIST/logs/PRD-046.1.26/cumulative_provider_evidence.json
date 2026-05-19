@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_cumulative_provider_evidence_v1",
+  "prd": "PRD-046.1.26",
+  "provider_cycles_total": 2,
+  "provider_cycles_passed": 2,
+  "provider_scenarios_total": 11,
+  "provider_calls_total": 11,
+  "provider_budget_violations": 0,
+  "raw_provider_payload_committed": false,
+  "provider_secret_leak_count": 0,
+  "cumulative_provider_evidence_passed": true
+}

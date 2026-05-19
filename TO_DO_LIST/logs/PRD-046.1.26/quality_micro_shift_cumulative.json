@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_quality_micro_shift_cumulative_v1",
+  "prd": "PRD-046.1.26",
+  "scenario_count_total": 11,
+  "micro_shift_present_count_total": 10,
+  "quality_regression_count_total": 0,
+  "candidate_weaker_than_baseline_count_total": 0,
+  "forbidden_move_violation_count_total": 0,
+  "over_depth_for_low_resource_count_total": 0,
+  "directive_advice_violation_count_total": 0,
+  "quality_micro_shift_gate": "passed"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_botdb_stability_trend_v1",
+  "prd": "PRD-046.1.26",
+  "source_botdb_stability_passed": true,
+  "live_probe": {
+    "dashboard_chroma_count": 247,
+    "dashboard_chroma_status": "ok",
+    "registry_sources_count": 1,
+    "query_http_200": true,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false,
+    "live_dependency_readiness_passed": true
+  },
+  "botdb_unreachable_environment_warning": false,
+  "botdb_runtime_blocker": false,
+  "botdb_stability_gate": "passed"
+}

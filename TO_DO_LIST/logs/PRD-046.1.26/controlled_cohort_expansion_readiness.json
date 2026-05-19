@@ -1,0 +1,28 @@
+{
+  "schema_version": "diagnostic_center_controlled_cohort_expansion_readiness_v1",
+  "prd": "PRD-046.1.26",
+  "controlled_cohort_expansion_readiness_ready": true,
+  "next_candidate_prd": "PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1",
+  "max_target_users": 3,
+  "target_user_type": "allowlisted_synthetic_operators_only",
+  "normal_user_controls_min": 3,
+  "provider_budget_limit_max": 12,
+  "rollback_first_required": true,
+  "hard_stop_required": true,
+  "broad_rollout_allowed": false,
+  "production_ready_allowed": false,
+  "normal_user_activation_allowed": false,
+  "requirements": [
+    "cohort policy",
+    "scenario families",
+    "provider budget",
+    "rollback matrix",
+    "hard-stop criteria",
+    "normal-user controls",
+    "BotDB preflight requirements",
+    "safety/KB boundary requirements",
+    "trace/provider sanitization requirements",
+    "no-mutation proof requirements",
+    "monitoring scorecard template"
+  ]
+}

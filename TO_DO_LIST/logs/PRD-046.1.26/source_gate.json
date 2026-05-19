@@ -1,0 +1,22 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_consolidation_source_gate_v1",
+  "prd": "PRD-046.1.26",
+  "source_chain_complete": true,
+  "source_chain_order_valid": true,
+  "missing_required_artifacts_count": 0,
+  "parse_error_count": 0,
+  "source_decision_mismatch_count": 0,
+  "checks": {
+    "prd_046_1_23_final_status_passed": true,
+    "prd_046_1_23_decision_passed": true,
+    "prd_046_1_24_final_status_passed": true,
+    "prd_046_1_24_decision_continue": true,
+    "prd_046_1_24_blockers_none": true,
+    "prd_046_1_24_warnings_none": true,
+    "prd_046_1_25_final_status_passed": true,
+    "prd_046_1_25_decision_continue": true,
+    "prd_046_1_25_blockers_none": true,
+    "prd_046_1_25_warnings_none": true
+  },
+  "source_gate_passed": true
+}

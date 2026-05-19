@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_rollback_cumulative_v1",
+  "prd": "PRD-046.1.26",
+  "rollback_precheck_failures_total": 0,
+  "rollback_postcheck_failures_total": 0,
+  "stale_apply_after_force_disabled_total": 0,
+  "rollback_first_policy_preserved": true,
+  "rollback_failures_total": 0
+}

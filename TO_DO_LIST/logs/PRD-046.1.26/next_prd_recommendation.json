@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_consolidation_next_prd_recommendation_v1",
+  "prd": "PRD-046.1.26",
+  "final_status": "passed",
+  "decision": "ready_for_controlled_cohort_expansion_prd",
+  "next_recommended_prd": "PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1",
+  "blockers": [],
+  "warnings": []
+}

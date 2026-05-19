@@ -278,3 +278,10 @@ Status: accepted
 Context: PRD-046.1.23 executed the first provider-backed limited smoke, but expanding cohort/execution immediately would risk hiding regressions in rollback, normal-user no-effect, safety/KB boundaries, trace/provider sanitization, and BotDB stability.
 Decision: PRD-046.1.24 is mandatory as a deterministic post-run results gate that consumes prior artifacts only (no new provider calls, no new runtime execution, no production mutation) and emits one of `continue_limited_candidate | fix_required | stop_provider_backed_pilot`.
 Consequences: rollout progression stays evidence-first and reversible; broad rollout remains prohibited and production-ready remains false until a separate future PRD passes after this gate.
+
+## ADR-046 - Controlled cohort expansion requires cumulative provider-backed consolidation gate pass
+
+Status: accepted
+Context: после двух provider-backed limited smoke циклов (`PRD-046.1.23`, `PRD-046.1.25`) и одного post-run results gate (`PRD-046.1.24`) требовалось архитектурно зафиксировать консолидационный decision gate до расширения когорты.
+Decision: перед любым controlled cohort expansion обязателен cumulative consolidation PRD (`PRD-046.1.26`) без новых provider calls/execution/mutation, который детерминированно подтверждает source chain completeness, provider evidence continuity, normal-user no-effect, rollback-first, safety/KB boundary, trace/provider sanitization, BotDB stability, no-mutation и artifact hygiene. Только при `final_status=passed` и `decision=ready_for_controlled_cohort_expansion_prd` допускается следующий PRD расширения когорты.
+Consequences: расширение провайдерного пилота остаётся evidence-first и обратимым; broad rollout/production-ready/normal-user activation остаются запрещёнными до будущих отдельных gate PRD.

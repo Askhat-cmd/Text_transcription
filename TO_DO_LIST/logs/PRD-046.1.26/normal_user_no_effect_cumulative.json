@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_normal_user_no_effect_cumulative_v1",
+  "prd": "PRD-046.1.26",
+  "normal_user_controls_total": 4,
+  "normal_user_apply_count_total": 0,
+  "normal_user_provider_calls_total": 0,
+  "normal_user_prompt_delta_count": 0,
+  "normal_user_final_answer_changed_by_diagnostic_center_count": 0,
+  "normal_user_no_effect_cumulative_passed": true
+}

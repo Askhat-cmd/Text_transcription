@@ -62,13 +62,14 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.22: provider-backed limited smoke readiness delivered (plan-only, no provider execution); source gates + live BotDB dependency + cohort/toggle/scenario/rollback/hard-stop/KB-boundary/trace-sanitization contracts passed, decision=`provider_backed_limited_smoke_readiness_ready`, next execution requires separate PRD-046.1.23.
 - PRD-046.1.24: provider-backed smoke results/quality/rollback post-run gate delivered with no new execution/provider calls; decision=`continue_limited_candidate`, broad rollout remains prohibited, production-ready remains false.
 - PRD-046.1.25: second provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_002`), six provider-backed scenarios, provider budget `6/6`, normal-user no-effect controls (`2`), rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates passed, decision=`continue_limited_candidate`.
+- PRD-046.1.26: limited provider-backed smoke consolidation/expansion decision gate completed over `PRD-046.1.23 + PRD-046.1.24 + PRD-046.1.25`; cumulative gates passed with decision=`ready_for_controlled_cohort_expansion_prd`, while `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.1.26: limited provider-backed smoke consolidation / expansion decision gate preparation.
+- PRD-046.1.27: controlled cohort expansion provider-backed execution gate preparation.
 
 ## Next
-1. PRD-046.1.26 - Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1.
-2. PRD-046.1.26-HF1 - provider-backed consolidation hotfix (only if blockers detected).
+1. PRD-046.1.27 - Diagnostic Center Controlled Cohort Expansion Provider-Backed Execution Gate v1.
+2. PRD-046.1.26-HF1 - provider-backed consolidation hotfix (only if blockers are discovered in retrospective evidence).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.

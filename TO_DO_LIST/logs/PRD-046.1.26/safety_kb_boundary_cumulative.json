@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_safety_kb_boundary_cumulative_v1",
+  "prd": "PRD-046.1.26",
+  "raw_kb_quote_exposure_total": 0,
+  "kb_authority_citation_total": 0,
+  "internal_only_raw_content_exposure_total": 0,
+  "practice_suggestion_policy_violation_total": 0,
+  "llm_governance_authority_mutation_total": 0,
+  "safety_kb_boundary_cumulative_passed": true
+}

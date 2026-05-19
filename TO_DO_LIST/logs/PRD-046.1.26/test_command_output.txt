@@ -1,0 +1,24 @@
+﻿PRD-046.1.26 test command summary (UTF-8 clean log)
+
+Required pytest commands executed:
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_contract.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_source_gate.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_provider_evidence.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_normal_user_no_effect.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_rollback.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_safety_kb_boundary.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_trace_sanitization.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_botdb_stability.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_quality_micro_shift.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_no_mutation.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_expansion_readiness.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_cleanup_requirement.py
+- pytest bot_psychologist/tests/multiagent/test_limited_smoke_consolidation_decision_gate.py
+
+Latest run result: all 13 tests passed.
+
+Strict runner command executed:
+python -m bot_psychologist.tools.run_diagnostic_center_limited_smoke_consolidation_gate --repo-root . --source-dirs TO_DO_LIST/logs/PRD-046.1.23 TO_DO_LIST/logs/PRD-046.1.24 TO_DO_LIST/logs/PRD-046.1.25 --reports-dir TO_DO_LIST/reports --output-dir TO_DO_LIST/logs/PRD-046.1.26 --strict
+
+Initial strict run was blocked by artifact encoding hygiene due NUL bytes in previous version of this log.
+Current file is rewritten to UTF-8 clean content; strict runner re-run required.

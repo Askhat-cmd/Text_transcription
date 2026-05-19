@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_limited_smoke_no_mutation_proof_v1",
+  "prd": "PRD-046.1.26",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindexed": false,
+  "runtime_defaults_changed": false,
+  "production_data_mutated": false,
+  "no_mutation_gate": "passed"
+}

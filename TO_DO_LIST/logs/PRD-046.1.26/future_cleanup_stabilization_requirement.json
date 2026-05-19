@@ -1,0 +1,25 @@
+{
+  "schema_version": "diagnostic_center_future_cleanup_stabilization_requirement_v1",
+  "prd": "PRD-046.1.26",
+  "future_cleanup_stabilization_requirement_created": true,
+  "cleanup_now": false,
+  "zones": [
+    "Production runtime",
+    "Permanent quality/eval/regression tools",
+    "Historical archive",
+    "Temporary/debug artifacts eligible for cleanup"
+  ],
+  "scope": [
+    "classify Diagnostic Center temporary modules",
+    "define permanent regression gates",
+    "classify historical PRD archive artifacts",
+    "classify debug/trace samples for archive/hide",
+    "classify obsolete fixtures",
+    "reduce navigation noise in active docs"
+  ],
+  "must_not": [
+    "delete safety/eval/no-mutation/encoding gates",
+    "delete architectural contracts",
+    "break historical PRD evidence reproducibility"
+  ]
+}

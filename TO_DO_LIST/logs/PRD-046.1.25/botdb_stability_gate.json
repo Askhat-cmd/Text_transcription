@@ -1,0 +1,21 @@
+{
+  "schema_version": "diagnostic_center_second_provider_botdb_stability_gate_v1",
+  "prd": "PRD-046.1.25",
+  "before": {
+    "dashboard_chroma_count": 247,
+    "dashboard_chroma_status": "ok",
+    "registry_sources_count": 1,
+    "query_status_code": 200,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false
+  },
+  "after": {
+    "dashboard_chroma_count": 247,
+    "dashboard_chroma_status": "ok",
+    "registry_sources_count": 1,
+    "query_status_code": 200,
+    "semantic_fallback_used": false,
+    "botdb_circuit_open": false
+  },
+  "botdb_stability_gate_passed": true
+}

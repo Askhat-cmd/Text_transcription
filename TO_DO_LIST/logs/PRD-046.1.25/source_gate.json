@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_second_provider_source_gate_v1",
+  "prd": "PRD-046.1.25",
+  "source_prd": "PRD-046.1.24",
+  "source_023_final_status": "passed",
+  "source_023_decision": "provider_backed_limited_smoke_execution_passed",
+  "source_024_final_status": "passed",
+  "source_024_decision": "continue_limited_candidate",
+  "source_024_blockers": [],
+  "source_024_warnings": [],
+  "reports_and_logs_present": true,
+  "source_gate_passed": true
+}

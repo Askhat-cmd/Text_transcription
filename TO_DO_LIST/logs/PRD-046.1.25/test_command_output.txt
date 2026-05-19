@@ -1,0 +1,8 @@
+﻿PRD-046.1.25 required test commands executed via bot_psychologist/.venv/Scripts/python.exe -m pytest.
+All 12 required tests passed.
+Strict runner command executed:
+python -m bot_psychologist.tools.run_diagnostic_center_second_provider_backed_limited_smoke --repo-root . --source-dir TO_DO_LIST/logs/PRD-046.1.24 --reports-dir TO_DO_LIST/reports --output-dir TO_DO_LIST/logs/PRD-046.1.25 --strict
+Initial strict run status: blocked.
+Initial blocker: artifact_hygiene_failed due NUL bytes in this command log.
+Mitigation: command log rewritten as UTF-8 without NUL bytes.
+Re-run strict runner after log rewrite to refresh decision/scorecard artifacts.

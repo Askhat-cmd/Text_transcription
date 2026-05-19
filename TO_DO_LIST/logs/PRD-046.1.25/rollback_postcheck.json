@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_second_provider_rollback_postcheck_v1",
+  "prd": "PRD-046.1.25",
+  "rollback_postcheck_passed": true,
+  "force_disabled_fully_disables_apply": true,
+  "normal_user_unaffected_after_rollback": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "rollback_failure_count": 0
+}

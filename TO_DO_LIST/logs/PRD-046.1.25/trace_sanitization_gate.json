@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_second_provider_trace_sanitization_gate_v1",
+  "prd": "PRD-046.1.25",
+  "contains_raw_provider_payload": false,
+  "contains_secret_like_values": false,
+  "contains_env_values": false,
+  "contains_raw_private_logs": false,
+  "contains_raw_content_full": false,
+  "contains_raw_user_private_logs": false,
+  "json_parseable": true,
+  "utf8_clean": true,
+  "nul_byte_count": 0,
+  "trace_sanitization_gate_passed": true
+}

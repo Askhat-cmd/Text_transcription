@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_second_provider_quality_micro_shift_gate_v1",
+  "prd": "PRD-046.1.25",
+  "scenario_count": 6,
+  "provider_backed_scenarios_completed": 6,
+  "candidate_weaker_than_baseline_count": 0,
+  "hard_fail_count": 0,
+  "forbidden_move_violation_count": 0,
+  "micro_shift_present_count": 6,
+  "response_goal_match_count": 6,
+  "state_strategy_match_count": 6,
+  "quality_micro_shift_gate_passed": true
+}

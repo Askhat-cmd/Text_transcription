@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_second_provider_normal_user_no_effect_gate_v1",
+  "prd": "PRD-046.1.25",
+  "normal_user_ids": [
+    "normal_user_control_001",
+    "normal_user_control_002"
+  ],
+  "normal_user_control_count": 2,
+  "diagnostic_center_apply_count": 0,
+  "prompt_constraint_apply_count": 0,
+  "provider_call_count": 0,
+  "writer_prompt_changed_by_pilot": false,
+  "final_answer_changed_by_pilot": false,
+  "normal_user_trace_has_apply": false,
+  "normal_user_no_effect_gate_passed": true
+}

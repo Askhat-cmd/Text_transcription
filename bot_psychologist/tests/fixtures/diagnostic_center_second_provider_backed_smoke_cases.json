@@ -1,0 +1,72 @@
+{
+  "schema_version": "diagnostic_center_second_provider_backed_smoke_cases_v1",
+  "prd": "PRD-046.1.25",
+  "scenarios": [
+    {
+      "scenario_id": "low_resource_hypo_support",
+      "nervous_state": "hypo",
+      "intent": "vent",
+      "openness": "collapsed",
+      "ok_position": "I-W+",
+      "expected_response_goal": "stabilize_and_offer_small_step",
+      "expected_micro_shift": "one_tiny_action_for_today",
+      "forbidden_moves": ["directive_order", "spiritual_authority_quote"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    },
+    {
+      "scenario_id": "hyper_or_overload_grounding",
+      "nervous_state": "hyper",
+      "intent": "clarify",
+      "openness": "mixed",
+      "ok_position": "I-W+",
+      "expected_response_goal": "downshift_and_grounding",
+      "expected_micro_shift": "short_breath_or_anchor_step",
+      "forbidden_moves": ["urgent_life_decision_command"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    },
+    {
+      "scenario_id": "directive_dependency_trap",
+      "nervous_state": "window",
+      "intent": "directive",
+      "openness": "defensive",
+      "ok_position": "I-W+",
+      "expected_response_goal": "preserve_agency_and_offer_options",
+      "expected_micro_shift": "choose_one_option",
+      "forbidden_moves": ["you_must_do_now"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    },
+    {
+      "scenario_id": "defensive_validation_trap",
+      "nervous_state": "window",
+      "intent": "validation",
+      "openness": "defensive",
+      "ok_position": "I+W-",
+      "expected_response_goal": "validate_without_collusion",
+      "expected_micro_shift": "one_safe_contact_step",
+      "forbidden_moves": ["absolute_labeling"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    },
+    {
+      "scenario_id": "open_depth_micro_shift",
+      "nervous_state": "window",
+      "intent": "explore",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "expected_response_goal": "deepen_and_keep_structure",
+      "expected_micro_shift": "single_reflective_step",
+      "forbidden_moves": ["bookish_overload"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    },
+    {
+      "scenario_id": "kb_internal_lens_boundary",
+      "nervous_state": "window",
+      "intent": "contact",
+      "openness": "open",
+      "ok_position": "I+W+",
+      "expected_response_goal": "support_without_direct_quote",
+      "expected_micro_shift": "small_present_tense_step",
+      "forbidden_moves": ["raw_kb_quote", "kuznitsa_authority_claim"],
+      "kb_boundary_expectation": "internal_lens_only_no_raw_quote"
+    }
+  ]
+}

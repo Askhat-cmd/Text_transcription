@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_second_provider_execution_manifest_v1",
+  "prd": "PRD-046.1.25",
+  "execution_window_count": 1,
+  "target_user_count": 1,
+  "target_user_ids": [
+    "pilot_runtime_operator_002"
+  ],
+  "normal_user_control_ids": [
+    "normal_user_control_001",
+    "normal_user_control_002"
+  ],
+  "planned_scenarios_count": 6,
+  "provider_budget_max_calls": 6,
+  "broad_rollout_allowed": false,
+  "production_ready": false
+}

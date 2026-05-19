@@ -61,13 +61,14 @@ eady_for_stabilization_cleanup with no provider calls and no production mutation
 - PRD-046.1.21-HF1: emergency BotDB/Admin/Chroma integrity repair cycle delivered (`run_live_botdb_chroma_registry_audit_hf1.py`, persistent-store diagnostic, backup/reindex/hygiene/browser/retrieval/no-mutation artifacts, `/api/registry/stats` degraded-resilience). Live runtime blocker remains on current `:8003`: `/api/query/` still returns `503 ChromaDB unavailable`, so cycle closed as `done_with_query_blocker`.
 - PRD-046.1.22: provider-backed limited smoke readiness delivered (plan-only, no provider execution); source gates + live BotDB dependency + cohort/toggle/scenario/rollback/hard-stop/KB-boundary/trace-sanitization contracts passed, decision=`provider_backed_limited_smoke_readiness_ready`, next execution requires separate PRD-046.1.23.
 - PRD-046.1.24: provider-backed smoke results/quality/rollback post-run gate delivered with no new execution/provider calls; decision=`continue_limited_candidate`, broad rollout remains prohibited, production-ready remains false.
+- PRD-046.1.25: second provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_002`), six provider-backed scenarios, provider budget `6/6`, normal-user no-effect controls (`2`), rollback/safety-KB/trace/BotDB/no-mutation/hygiene gates passed, decision=`continue_limited_candidate`.
 ## Current / In Progress
 - PRD-DOCS-001: living documentation consolidation layer (`docs/`) and report hygiene normalization.
-- PRD-046.1.25: second provider-backed limited smoke planning (next controlled expansion candidate).
+- PRD-046.1.26: limited provider-backed smoke consolidation / expansion decision gate preparation.
 
 ## Next
-1. PRD-046.1.25 - Diagnostic Center Second Provider-Backed Limited Smoke Planning v1.
-2. PRD-046.1.25-HF1 - provider-backed calibration hotfix (only if blockers detected).
+1. PRD-046.1.26 - Diagnostic Center Limited Provider-Backed Smoke Consolidation / Expansion Decision Gate v1.
+2. PRD-046.1.26-HF1 - provider-backed consolidation hotfix (only if blockers detected).
 
 ## Later
 - Diagnostic Center v1 rollout after KB/retrieval/context readiness confirmation.
@@ -98,3 +99,4 @@ Async Turn LLM Summary (`PRD-045.6.3`) внедрен; перед запуско
 - PRD-046.1.21-HF3: registry focus-only cleanup and delete-button chroma guard passed
 - PRD-046.1.23: provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_001`), five provider-backed scenarios, normal-user no-effect controls (`2`), rollback-first/hard-stop/KB-boundary/trace-sanitization gates, no-mutation and artifact hygiene proofs, broad rollout still prohibited.
 - PRD-046.1.24: provider-backed smoke results / quality / rollback decision gate (no new execution, no cohort expansion).
+- PRD-046.1.25: second provider-backed limited smoke execution delivered; one allowlisted operator (`pilot_runtime_operator_002`), six provider-backed scenarios, provider budget `6/6`, normal-user no-effect controls (`2`), rollback-first/hard-stop/KB-boundary/trace-sanitization gates, no-mutation and artifact hygiene proofs, decision `continue_limited_candidate`.

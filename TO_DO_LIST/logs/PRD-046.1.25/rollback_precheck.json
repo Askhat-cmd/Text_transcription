@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_second_provider_rollback_precheck_v1",
+  "prd": "PRD-046.1.25",
+  "force_disabled_baseline_works": true,
+  "normal_user_apply_while_force_disabled": 0,
+  "rollback_switch_can_disable_apply": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "rollback_precheck_passed": true
+}

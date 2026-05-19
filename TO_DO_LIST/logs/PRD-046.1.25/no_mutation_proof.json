@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_second_provider_no_mutation_proof_v1",
+  "prd": "PRD-046.1.25",
+  "all_blocks_merged_mutated": false,
+  "registry_mutated": false,
+  "config_mutated": false,
+  "chroma_reindex_performed": false,
+  "runtime_files_mutated_outside_trace": false,
+  "production_mutation_detected": false,
+  "no_mutation_passed": true
+}

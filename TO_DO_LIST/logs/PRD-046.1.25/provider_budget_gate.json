@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_second_provider_budget_gate_v1",
+  "prd": "PRD-046.1.25",
+  "provider_budget_max_calls": 6,
+  "target_user_provider_calls": 6,
+  "normal_user_provider_calls": 0,
+  "raw_provider_payload_committed": false,
+  "provider_payload_sanitized": true,
+  "provider_budget_gate_passed": true
+}

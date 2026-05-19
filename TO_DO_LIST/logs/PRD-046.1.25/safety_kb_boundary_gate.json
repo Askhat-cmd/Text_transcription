@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_second_provider_safety_kb_boundary_gate_v1",
+  "prd": "PRD-046.1.25",
+  "raw_kb_text_exposure_count": 0,
+  "kb_authority_citation_count": 0,
+  "kuznica_direct_quote_count": 0,
+  "spiritual_authority_violation_count": 0,
+  "clinical_claim_violation_count": 0,
+  "directive_life_advice_count": 0,
+  "safety_kb_boundary_gate_passed": true
+}

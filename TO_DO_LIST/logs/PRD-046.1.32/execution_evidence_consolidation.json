@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_execution_evidence_consolidation_v1",
+  "prd": "PRD-046.1.32",
+  "source_prd": "PRD-046.1.31",
+  "new_execution_performed": false,
+  "provider_called_by_results_gate": false,
+  "target_operator_count": 3,
+  "scenario_count": 12,
+  "provider_calls_total": 12,
+  "execution_evidence_consolidation_passed": true
+}

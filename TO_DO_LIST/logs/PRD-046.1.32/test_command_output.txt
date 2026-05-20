@@ -1,0 +1,21 @@
+﻿PRD-046.1.32 test command log
+
+Executed:
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_contract.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_source.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_execution_evidence.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_provider_budget.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_normal_user_no_effect.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_quality.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_rollback.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_safety_kb_boundary.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_trace_sanitization.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_botdb_stability.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_no_mutation.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_artifact_hygiene.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_docs_consistency.py
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_results_gate_decision.py
+- python -m bot_psychologist.tools.run_diagnostic_center_controlled_rollout_results_gate --repo-root . --source-dir TO_DO_LIST/logs/PRD-046.1.31 --reports-dir TO_DO_LIST/reports --docs-dir docs --output-dir TO_DO_LIST/logs/PRD-046.1.32 --strict
+
+Status: all required pytest commands passed; strict runner passed with final_status=passed and decision=ready_for_limited_runtime_activation_readiness_prd.
+

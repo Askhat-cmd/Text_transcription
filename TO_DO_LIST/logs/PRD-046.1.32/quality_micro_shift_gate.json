@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_quality_micro_shift_gate_v1",
+  "prd": "PRD-046.1.32",
+  "quality_micro_shift_gate_passed": true,
+  "candidate_weaker_than_baseline_count": 0,
+  "hard_fail_count": 0,
+  "response_quality_regression_count": 0
+}

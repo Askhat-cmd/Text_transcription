@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_trace_provider_sanitization_gate_v1",
+  "prd": "PRD-046.1.32",
+  "trace_provider_sanitization_gate_passed": true,
+  "raw_provider_payload_committed_count": 0,
+  "secret_like_value_count": 0,
+  "private_log_leak_count": 0
+}

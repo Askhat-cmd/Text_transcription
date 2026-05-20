@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_safety_kb_boundary_gate_v1",
+  "prd": "PRD-046.1.32",
+  "safety_kb_boundary_gate_passed": true,
+  "raw_kb_text_exposure_count": 0,
+  "kb_authority_violation_count": 0,
+  "unsafe_practice_suggestion_count": 0
+}

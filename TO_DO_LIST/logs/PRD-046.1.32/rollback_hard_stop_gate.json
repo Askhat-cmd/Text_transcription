@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_rollback_hard_stop_gate_v1",
+  "prd": "PRD-046.1.32",
+  "rollback_gate_passed": true,
+  "rollback_failure_count": 0,
+  "stale_apply_after_force_disabled_count": 0,
+  "hard_stop_triggered": false
+}

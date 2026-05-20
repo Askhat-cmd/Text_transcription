@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Post-acceptance stabilization after `PRD-046.1.28` is completed by `PRD-046.1.29` with cleanup/compaction in non-destructive manifest-first mode.
+Post controlled rollout results gate closure after `PRD-046.1.31`: `PRD-046.1.32` completed with no-new-execution evidence consolidation, rollback/safety/quality validation, and docs consistency sync.
 
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
@@ -34,7 +34,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-046.1.31 - Diagnostic Center Controlled Rollout Execution Gate v1` (controlled, allowlisted, rollback-first execution only).
+`PRD-046.1.33 - Diagnostic Center Limited Runtime Activation Readiness / Normal-User Boundary Decision Gate v1` (readiness-only decision gate, no broad rollout activation).
 
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
@@ -50,5 +50,5 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-05-19
-- Source cycle: PRD-046.1.30
+- Date: 2026-05-20
+- Source cycle: PRD-046.1.32

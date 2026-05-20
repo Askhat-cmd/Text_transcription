@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_normal_user_no_effect_gate_v1",
+  "prd": "PRD-046.1.32",
+  "normal_user_controls_total": 3,
+  "normal_user_apply_count": 0,
+  "normal_user_provider_calls_total": 0,
+  "normal_user_no_effect_passed": true
+}

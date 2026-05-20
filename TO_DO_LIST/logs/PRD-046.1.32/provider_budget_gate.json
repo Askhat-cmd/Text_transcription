@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_provider_budget_gate_v1",
+  "prd": "PRD-046.1.32",
+  "provider_calls_total": 12,
+  "provider_call_budget_max": 12,
+  "provider_budget_gate_passed": true,
+  "provider_budget_violation_count": 0
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_artifact_hygiene_gate_v1",
+  "prd": "PRD-046.1.32",
+  "artifact_encoding_hygiene_passed": true,
+  "utf8_decode_error_count": 0,
+  "nul_byte_file_count": 0,
+  "json_parse_error_count": 0,
+  "replacement_char_warning_count": 0
+}

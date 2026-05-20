@@ -1,0 +1,7 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_results_botdb_stability_gate_v1",
+  "prd": "PRD-046.1.32",
+  "botdb_stability_gate_passed": true,
+  "botdb_query_ok": true,
+  "botdb_semantic_fallback_used": false
+}

@@ -571,3 +571,10 @@ Status: accepted
 Context: PRD-046.1.30 prepared plan-only rollout boundaries; PRD-046.1.31 executes the first controlled rollout window.
 Decision: execution remains allowlist-only and rollback-first with strict hard-stop, provider budget cap, normal-user no-effect, BotDB stability, safety/KB boundary, trace sanitization, and no-mutation/hygiene gates.
 Consequences: broad rollout, normal-user activation, and production-ready declaration remain prohibited; post-execution decisions must be taken by a separate consolidation/results PRD.
+
+## ADR-051 - Controlled Rollout Results Gate Boundary
+
+Status: accepted
+Context: after `PRD-046.1.31` execution passed, a separate consolidation stage was required to verify rollback/safety/normal-user/no-mutation continuity and fix docs sync drift before any activation-readiness decision.
+Decision: `PRD-046.1.32` is mandatory as a no-new-execution/no-provider-call results gate that consumes source evidence only, validates provider budget and safety boundaries, enforces normal-user no-effect and no-mutation proofs, and blocks progression when docs consistency remains stale.
+Consequences: rollout governance stays evidence-first and reversible; broad rollout and normal-user activation remain prohibited; next step may only be readiness decision PRD (`PRD-046.1.33`) when this gate is fully green.

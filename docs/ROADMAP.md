@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-046.1.32: controlled rollout results/rollback/quality gate completed with no-new-execution consolidation, docs-sync closure, and readiness decision boundary preserved.
 - PRD-046.1.31: controlled rollout execution gate completed with bounded cohort (<=3 operators), budget/hard-stop/rollback/safety/trace/no-mutation proofs.
 - PRD-046.1.30: controlled rollout planning package completed (plan-only, rollback-first, no provider execution).
 - Runtime foundation and governance chain through `PRD-046.0.x`.
@@ -13,8 +14,7 @@
 - No active cleanup/stabilization PRD in progress.
 
 ## Next
-1. PRD-046.1.32 - Diagnostic Center Controlled Rollout Results / Rollback / Quality Gate v1.
-1. PRD-046.1.31 - Diagnostic Center Controlled Rollout Execution Gate v1.
+1. PRD-046.1.33 - Diagnostic Center Limited Runtime Activation Readiness / Normal-User Boundary Decision Gate v1.
 2. Hotfix path only if new blockers appear in rollout-planning preparation.
 
 ## Later

@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_rollback_hard_stop_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "rollback_controls_present": true,
+  "rollback_priority_force_disabled": true,
+  "hard_stop_criteria_present": true,
+  "hard_stop_criteria_complete": true,
+  "future_execution_without_rollback_blocked": true,
+  "rollback_hard_stop_gate_passed": true
+}

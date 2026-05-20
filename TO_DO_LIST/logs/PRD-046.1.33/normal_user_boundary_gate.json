@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_normal_user_boundary_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "scenarios_checked": [
+    "normal_user_default_path",
+    "normal_user_without_allowlist",
+    "normal_user_with_force_disabled",
+    "normal_user_unknown_flags"
+  ],
+  "normal_user_apply_effect_count": 0,
+  "normal_user_provider_call_count": 0,
+  "normal_user_writer_prompt_delta_count": 0,
+  "normal_user_final_answer_path_delta_count": 0,
+  "normal_user_trace_private_leak_count": 0,
+  "normal_user_boundary_gate_passed": true
+}

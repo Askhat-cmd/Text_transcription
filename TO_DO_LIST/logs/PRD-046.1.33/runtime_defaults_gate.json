@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_runtime_defaults_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "runtime_defaults_changed": false,
+  "broad_rollout_default": false,
+  "normal_user_activation_default": false,
+  "force_disabled_priority_preserved": true,
+  "allowlisted_activation_default": false,
+  "disabled_until_next_prd": true,
+  "runtime_defaults_gate_passed": true
+}

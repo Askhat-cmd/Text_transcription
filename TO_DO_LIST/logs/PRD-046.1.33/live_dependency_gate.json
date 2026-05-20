@@ -1,0 +1,344 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_live_dependency_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "botdb_live_status": "passed",
+  "status_endpoint_ok": true,
+  "registry_endpoint_ok": true,
+  "dashboard_endpoint_ok": true,
+  "focus_source_present": true,
+  "focus_source_id": "123__кузница_духа",
+  "registry_source_count": 1,
+  "blocks_count": 247,
+  "chroma_count": 247,
+  "query_path_ready": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "live_dependency_gate_passed": true,
+  "checks": {
+    "/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "raw_text": "﻿<!doctype html>\n<html lang=\"ru\">\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n  <title>Bot_data_base — Dashboard</title>\n  <link rel=\"stylesheet\" href=\"/static/style.css\" />\n</head>\n<body>\n  <div class=\"bg\"></div>\n  <header class=\"topbar\">\n    <div class=\"brand\">Bot_data_base</div>\n    <nav class=\"nav\">\n      <a href=\"/youtube\">Добавить YouTube</a>\n      <a href=\"/books\">Загрузить книгу</a>\n      <a href=\"/registry\">Реестр</a>\n    </nav>\n  </header>\n\n  <main class=\"container\">\n    <section class=\"hero\">\n      <h1>Панель управления базой знаний</h1>\n      <p>Отслеживайте источники, статистику и состояние индексации.</p>\n      <div class=\"actions\">\n        <a class=\"btn\" href=\"/youtube\">Добавить YouTube</a>\n        <a class=\"btn secondary\" href=\"/books\">Загрузить книгу</a>\n      </div>\n    </section>\n\n    <section class=\"grid stats\" id=\"stats\">\n      <div class=\"card\">\n        <div class=\"card-label\">Источников</div>\n        <div class=\"card-value\" id=\"stat-sources\">—</div>\n        <div class=\"card-meta muted\" id=\"stat-sources-meta\"></div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-label\">Блоков</div>\n        <div class=\"card-value\" id=\"stat-blocks\">—</div>\n        <div class=\"card-meta muted\" id=\"stat-blocks-meta\"></div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-label\">ChromaDB</div>\n        <div class=\"card-value\" id=\"stat-chroma\">—</div>\n        <div class=\"card-meta muted\" id=\"stat-chroma-meta\"></div>\n      </div>\n      <div class=\"card\">\n        <div class=\"card-label\">Enrichment / Review</div>\n        <div class=\"card-value\" id=\"stat-enrichment\">—</div>\n        <div class=\"card-meta muted\" id=\"stat-enrichment-meta\"></div>\n      </div>\n      <div class=\"card wide\">\n        <div class=\"card-label\">Governance readiness</div>\n        <div class=\"sd-bars\" id=\"governance-readiness\"></div>\n      </div>\n    </section>\n\n    <section class=\"card list\" id=\"dashboard-error"
+      },
+      "error": null
+    },
+    "/api/status": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "jobs": []
+      },
+      "error": null
+    },
+    "/api/registry": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 1,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-05-15T03:43:28.740276+00:00",
+            "blocks_count": 247,
+            "sd_distribution": {},
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/registry/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total": 1,
+        "sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "source_type": "book",
+            "title": "Кузница Духа",
+            "author": "Саламат Сарсекенов",
+            "author_id": "123",
+            "language": "ru",
+            "status": "done",
+            "added_at": "2026-03-13T04:38:44.281566",
+            "processed_at": "2026-05-15T03:43:28.740276+00:00",
+            "blocks_count": 247,
+            "sd_distribution": {},
+            "file_paths": {
+              "json": "C:\\My_practice\\Text_transcription\\Bot_data_base\\data\\processed\\books\\123__кузница_духа_blocks.json",
+              "chroma": true,
+              "upload": "data/uploads/books\\КУЗНИЦА ДУХА v.2.md"
+            },
+            "error_message": null,
+            "pipeline_version": "bot_data_base_v1.0+candidate_apply_PRD-046.0.8.1",
+            "is_focus_source": true,
+            "is_test_like": false,
+            "recommended_hygiene_action": "keep",
+            "hygiene_reason": [
+              "focus_source_protected"
+            ],
+            "delete_policy": {
+              "allowed": false,
+              "state": "protected",
+              "reason": "Основной источник базы",
+              "code": "focus_source_protected"
+            },
+            "delete_allowed": false
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-20T06:34:30.385721+00:00",
+        "sources": {
+          "total": 1,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 0,
+          "zero_block": 0
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 247,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/dashboard/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "schema_version": "botdb_dashboard_summary_v1",
+        "status": "ok",
+        "generated_at": "2026-05-20T06:34:32.463703+00:00",
+        "sources": {
+          "total": 1,
+          "active": 1,
+          "protected": 1,
+          "archived": 0,
+          "failed": 0,
+          "zero_block": 0
+        },
+        "blocks": {
+          "production_total": 247,
+          "active_source_blocks": 247,
+          "registry_total": 247
+        },
+        "chroma": {
+          "status": "ok",
+          "count": 247,
+          "indexed_source_ids": [
+            "123__кузница_духа"
+          ]
+        },
+        "governance": {
+          "readiness": "ready",
+          "governance_present_rate": 1.0,
+          "allowed_use_present_rate": 1.0,
+          "safety_flags_present_rate": 1.0,
+          "legacy_sd_active": false
+        },
+        "enrichment": {
+          "provider_status": "called",
+          "items_completed": 247,
+          "validation_errors_count": 0,
+          "validation_warnings_count": 0,
+          "review_queue_items_count": 87,
+          "p0": 0,
+          "p1": 1,
+          "p2": 86,
+          "production_apply_performed": false
+        },
+        "recent_sources": [
+          {
+            "source_id": "123__кузница_духа",
+            "title": "Кузница Духа",
+            "status": "done",
+            "blocks": 247,
+            "hygiene_action": "keep",
+            "protected": true
+          }
+        ],
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/registry/stats": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "total_sources": 1,
+        "total_blocks": 247,
+        "chroma_total": 247,
+        "chroma_status": "ok",
+        "chroma_error_code": null,
+        "sd_distribution": {},
+        "sources_by_type": {
+          "book": 1
+        },
+        "legacy_sd_active": false,
+        "governance_readiness": {
+          "focus_source_count": 1,
+          "focus_source_blocks": 247,
+          "archive_candidate_sources": 0,
+          "processing_stale_sources": 0,
+          "review_queue_items": 87,
+          "row_policy_errors_count": 0
+        },
+        "warnings": []
+      },
+      "error": null
+    },
+    "/api/query/": {
+      "ok": true,
+      "status_code": 200,
+      "body": {
+        "chunks": [
+          {
+            "chunk_id": "7910da47-485f-45c6-b774-0772d5aaddec",
+            "content": "Давай без эзотерики. Только нейрофизиология.\n\nВ возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью. Каждый опыт — новая нейронная дорожка. Чем чаще повторяется — тем глубже прокладывается.\n\nПредставь: ребёнок плачет. Мама говорит: «Прекрати немедленно!». Ребёнок ещё не умеет думать абстрактно — он не может сказать себе «мама устала, у неё тяжёлый день». Он считывает **одно простое послание**: «Когда я выражаю свои чувства — меня отвергают».\n\nЭтот опыт повторяется. Снова. И снова. И снова.\n\nНейронная дорожка превращается в **автомагистраль**. Формируется устойчивая связь: **«Мои чувства = угроза отвержения»**.\n\nА отвержение для мозга ребёнка — это **буквально угроза смерти**. Потому что без родителя ребёнок не выживет. Поэтому мозг запускает программу выживания: **«Подавляй чувства. Соответствуй. Будь удобным»**.\n\nПрограмма записывается не на уровне мыслей. Она записывается на уровне **лимбической системы** — древней части мозга, которая отвечает за инстинкты. Это уровень глубже сознания. Уровень автоматических реакций.\n\nИ вот что показательно: **эта программа продолжает работать всю жизнь**. Даже когда тебе 40 лет и мама давно не имеет над тобой никакой власти. Даже когда ты успешен, любим, признан. Программа всё равно шепчет: «Ты недостаточен. Старайся сильнее».\n\nНе потому что это правда. А потому что никто не сказал ей: «всё, можно остановиться».\n\n***",
+            "score": 0.05569820223129469,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "keywords": [],
+            "governance": {}
+          },
+          {
+            "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+            "content": "И ещё один момент: если ты ждёшь «результата» — спроси себя, что именно ты ждёшь. Часто за этим вопросом стоит драйвер «будь лучшим» — ему нужен конкретный финал, оценка, зачёт. Он тоже часть программы.\n\n***\n\n**— У меня нет никаких воспоминаний о травматичном детстве. Всё было нормально. Откуда тогда берётся эта программа?**\n\n— Это очень частый вопрос. И очень важный.\n\n«Нормальное детство» не значит «без программы». Программа формируется не только через очевидные травмы. Она формируется через **тысячи маленьких обычных моментов**. Родитель, который не заметил. Учитель, который сравнил. Ситуация, где твои чувства были «слишком много» или «не вовремя». Ни одна из этих ситуаций — не трагедия. Но их было много. И они складывались.\n\n«Нормальное детство» — это просто детство, в котором не было ничего из ряда вон выходящего. Но программа не требует из ряда вон выходящего. Ей достаточно повседневного.\n\n***\n\n**— Я начал практиковать осознавание — и стало хуже. Вижу больше, и от этого хуже. Это нормально?**\n\n— Да. Это называется «эффект фонарика».\n\nКогда ты заходишь в тёмную комнату с фонариком — ты начинаешь видеть то, что там было всегда. Не потому что стало больше. А потому что раньше просто не смотрел.\n\nСтало «хуже» — значит, ты просто начал видеть то, что раньше не замечал. Это не ухудшение. Это **честность**.\n\nЧерез какое-то время к этому привыкаешь. Видеть — не то же самое, что страдать. Можно видеть и не тонуть. Это и есть НейроСталкинг — наблюдать то, что есть, без того чтобы быть этим захваченным.\n\nЕсли совсем тяжело — сбавь темп. Одна практика вместо трёх. Пять минут вместо двадцати. Дело не в количестве. Дело в качестве внимания.\n\n***\n\n**— А что если я увижу что-то настолько страшное, что не смогу с этим справиться?**\n\n— Хороший вопрос. Честный.\n\nСмотри: этот страх — сам по себе уже сигнал программы. Она говорит: «там внутри что-то ужасное, лучше не смотри». Это она тебя охраняет от встречи с собой. Это и есть механизм избегания.\n\nЧто ты можешь там найти? Боль — да. Старое горе — да. Злость — да. Пустоту — да. Но ничего из этого не убивает. Всё это — просто части тебя, которые ждут, чтобы их наконец увидели.\n\nИ важный момент: ты идёшь туда не один. Есть практики, есть структура, есть другие люди рядом. Это не прыжок в темноту — это исследование с фонариком.\n\nС тобой всё в порядке. Даже то, что там внутри — тоже в порядке. Просто ждёт, чтобы с ним познакомились.\n\n***\n\n*В следующей главе мы спустимся на уровень глубже — в нейрохимию. Почему мозг не просто «думает в сторону страдания», но буквально зависит от него на химическом уровне. Что происходит, когда дофамин и кортизол становятся не просто химией — а архитекторами твоей реальности.*\n\n***",
+            "score": 0.05279037655038577,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 1. Программа «несовершенное Я»: как работает автопилот",
+            "keywords": [],
+            "governance": {}
+          },
+          {
+            "chunk_id": "6754e5d2-b622-47ad-ae78-b75ebf3412f4",
+            "content": "Когда говорят о страхе, обычно упоминают два состояния: «бей или беги». Но есть третье — и для многих людей оно самое распространённое.\n\nНейробиолог **Стивен Порджес** в своей **Поливагальной теории** описал три режима нервной системы:\n\n**Режим 1: Социальная вовлечённость** — вентральный вагус активен. Человек в безопасности, открыт к контакту, способен к близости и творчеству. Это состояние «всё в порядке».\n\n**Режим 2: Мобилизация (бей или беги)** — симпатическая нервная система активна. Угроза обнаружена — тело готовится к действию. Адреналин, учащённое сердцебиение, напряжение мышц. Это состояние «нужно действовать».\n\n**Режим 3: Замирание (freeze/shutdown)** — дорсальный вагус активен. Угроза слишком велика или слишком долгая — тело отключается. Эмоциональное онемение, диссоциация, ощущение «меня нет», «всё не реально».\n\nБольшинство людей знают о «бей или беги». Но третий режим — замирание — встречается значительно чаще, и его часто не распознают именно как страх.\n\nОн выглядит как: прокрастинация, апатия, неспособность начать, ощущение «стеклянного колпака», хроническое «ничего не чувствую». Это не лень. Это нервная система в режиме выживания через отключение.\n\n**Freeze** — это эволюционно древний ответ на угрозу, которую невозможно ни победить, ни убежать от неё. Замереть — значит стать невидимым, снизить вероятность атаки. У животных это буквальное замирание. У людей — психологическое.\n\nИ именно поэтому так много «успешных» людей с хорошей жизнью вдруг обнаруживают себя в состоянии полной апатии. Снаружи — всё есть. Внутри — ничего. Это не «проблемы с мотивацией». Это хронический freeze, накопившийся от нескрытых страхов.\n\n> **Из сессии**\n>\n> **Роман, 37 лет:** У меня всё хорошо. Бизнес, семья, здоровье. И при этом — я ничего не чувствую. Работаю, делаю всё правильно — как робот. Откуда это?\n>\n> **Саламат:** Что было в последние два-три года, что тебя сильно напрягало — но ты «держался»?\n>\n> **Роман:** Много всего. Партнёр ушёл из бизнеса. Отец тяжело болел, потом умер. Пандемия. Ещё кое-что личное. Но я справился.\n>\n> **Саламат:** Справился — значит не дал страху и горю выйти наружу?\n>\n> **Роман:** Ну... не было времени. Надо было действовать.\n>\n> **Саламат:** Нервная система не забыла. Страх и горе, которые не получили выхода — она хранит. И в какой-то момент включает режим «выключить всё», чтобы не перегореть. Это не поломка. Это защита. Только защита стала стеной между тобой и жизнью.\n>\n> **Роман:** И что с этим делать?\n>\n> **Саламат:** Сначала — признать, что там было. Не «справился» — а «было страшно, было больно, и это нормально». Тело ждёт именно этого признания. Не подвига — признания.\n\n***",
+            "score": 0.04608167481582213,
+            "sd_level": 0,
+            "author_id": "123",
+            "author_name": "Саламат Сарсекенов",
+            "source_type": "book",
+            "youtube_url": null,
+            "start_time": null,
+            "end_time": null,
+            "block_title": "ГЛАВА 7. Страх: союзник, которого ты превратил во врага",
+            "keywords": [],
+            "governance": {}
+          }
+        ],
+        "total_found": 3,
+        "reranked": true,
+        "search_mode": "hybrid",
+        "sd_filter_applied": false,
+        "query_time_ms": 626,
+        "debug": {
+          "where_filter": {},
+          "candidates": 3,
+          "pre_filter_k": 10,
+          "raw_fetch_k": 13,
+          "legacy_sd_deprecated": true,
+          "sd_filter_applied": false,
+          "sd_level_ignored": false,
+          "botdb_query_route_fallback_used": true,
+          "retrieval_policy_trace": {
+            "policy_version": "retrieval_governance_safety_v1",
+            "safety_context": false,
+            "raw_hits_count": 3,
+            "internal_only_filtered_count": 0,
+            "returned_hits_count": 3,
+            "filter_reasons": []
+          }
+        }
+      },
+      "error": null
+    }
+  }
+}

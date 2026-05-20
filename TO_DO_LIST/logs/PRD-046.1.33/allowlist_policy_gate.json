@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_allowlist_policy_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "allowlist_required": true,
+  "allowlist_scope": "explicit_users_only",
+  "max_live_users_recommended": 3,
+  "activation_window_required": true,
+  "provider_budget_required": true,
+  "hard_stop_required": true,
+  "rollback_first_required": true,
+  "normal_user_controls_required": true,
+  "raw_payload_commit_forbidden": true,
+  "allowlist_policy_gate_passed": true
+}

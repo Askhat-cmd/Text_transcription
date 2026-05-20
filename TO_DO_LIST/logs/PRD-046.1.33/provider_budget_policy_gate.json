@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_provider_budget_policy_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "provider_called_by_prd_046_1_33": false,
+  "provider_execution_performed": false,
+  "future_provider_budget_required": true,
+  "future_budget_cap_recommended": true,
+  "future_budget_cap_value_defined": true,
+  "max_provider_calls_recommended": 10,
+  "provider_budget_policy_gate_passed": true
+}

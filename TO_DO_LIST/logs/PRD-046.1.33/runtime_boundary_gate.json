@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_runtime_boundary_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "writer_contract_changed_for_normal_users": false,
+  "writer_prompt_changed_for_normal_users": false,
+  "final_answer_path_changed_for_normal_users": false,
+  "runtime_defaults_changed": false,
+  "diagnostic_center_is_internal_map_layer": true,
+  "writer_remains_user_facing_agent": true,
+  "diagnostic_center_does_not_generate_final_answer": true,
+  "kb_not_used_as_direct_quote_source": true,
+  "runtime_boundary_gate_passed": true
+}

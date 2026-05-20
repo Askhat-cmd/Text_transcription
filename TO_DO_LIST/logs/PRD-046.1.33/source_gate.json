@@ -1,0 +1,21 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_source_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "source_prd_id": "PRD-046.1.32",
+  "source_artifacts_present": true,
+  "source_final_status": "passed",
+  "source_decision": "ready_for_limited_runtime_activation_readiness_prd",
+  "source_blockers_count": 0,
+  "source_warnings_count": 0,
+  "warnings_non_blocking": false,
+  "source_no_mutation_passed": true,
+  "source_docs_synced": true,
+  "source_allows_readiness_prd": true,
+  "source_allows_execution": false,
+  "source_allows_broad_rollout": false,
+  "source_allows_normal_user_activation": false,
+  "source_allows_production_ready": false,
+  "missing_source_artifact_count": 0,
+  "source_parse_error_count": 0,
+  "source_gate_passed": true
+}

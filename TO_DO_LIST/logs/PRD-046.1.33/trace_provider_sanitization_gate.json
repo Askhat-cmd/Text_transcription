@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_limited_activation_trace_provider_sanitization_gate_v1",
+  "prd_id": "PRD-046.1.33",
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "secrets_committed": false,
+  "env_committed": false,
+  "trace_contains_only_sanitized_provider_summary": true,
+  "trace_contains_no_full_user_private_payload": true,
+  "trace_provider_sanitization_gate_passed": true
+}

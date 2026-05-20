@@ -578,3 +578,10 @@ Status: accepted
 Context: after `PRD-046.1.31` execution passed, a separate consolidation stage was required to verify rollback/safety/normal-user/no-mutation continuity and fix docs sync drift before any activation-readiness decision.
 Decision: `PRD-046.1.32` is mandatory as a no-new-execution/no-provider-call results gate that consumes source evidence only, validates provider budget and safety boundaries, enforces normal-user no-effect and no-mutation proofs, and blocks progression when docs consistency remains stale.
 Consequences: rollout governance stays evidence-first and reversible; broad rollout and normal-user activation remain prohibited; next step may only be readiness decision PRD (`PRD-046.1.33`) when this gate is fully green.
+
+## ADR-052 - Limited runtime activation requires readiness/boundary gate before allowlisted live execution
+
+Status: accepted
+Context: after `PRD-046.1.32`, the project had green controlled-rollout results evidence, but broad rollout / normal-user activation / production-ready authority expansion remained prohibited and required an additional boundary decision before any live allowlisted execution.
+Decision: before any allowlisted limited live activation, a dedicated readiness/boundary decision gate is mandatory (`PRD-046.1.33`) to confirm source evidence integrity, strict live dependencies, normal-user no-effect, rollback-first and hard-stop completeness, safety/KB boundary, trace/provider sanitization, no-mutation proof, artifact hygiene, and docs sync. The readiness PRD itself does not perform runtime execution or provider-backed activation.
+Consequences: the next step can only be a separate constrained execution PRD (`PRD-046.1.34`) with allowlist, budget, rollback-first, and post-run results gating; broad rollout and production-ready declaration remain blocked pending future dedicated governance gates.

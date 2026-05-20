@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_preflight_v1",
+  "prd_id": "PRD-046.1.31",
+  "botdb_status_ok": true,
+  "registry_focus_source_only": true,
+  "chroma_count_ok": true,
+  "query_endpoint_200": true,
+  "semantic_fallback_used": false,
+  "botdb_circuit_open": false,
+  "runtime_defaults_conservative": true,
+  "allowlist_explicitly_set": true,
+  "rollback_switch_tested": true,
+  "artifact_output_path_clean": true,
+  "provider_budget_configured": true,
+  "normal_user_controls_configured": true,
+  "preflight_passed": true
+}

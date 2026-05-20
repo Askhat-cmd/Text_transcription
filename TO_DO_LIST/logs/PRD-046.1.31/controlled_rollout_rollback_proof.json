@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_rollback_proof_v1",
+  "prd_id": "PRD-046.1.31",
+  "rollback_precheck_passed": true,
+  "force_disabled_path_available": true,
+  "rollback_postcheck_passed": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "gate_passed": true
+}

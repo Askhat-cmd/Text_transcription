@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_execution_manifest_v1",
+  "prd_id": "PRD-046.1.31",
+  "execution_performed": true,
+  "execution_window_count": 1,
+  "target_operator_count": 3,
+  "target_operator_ids": [
+    "pilot_runtime_operator_001",
+    "pilot_runtime_operator_002",
+    "pilot_runtime_operator_003"
+  ],
+  "scenario_count": 12,
+  "provider_call_budget_max": 12,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false
+}

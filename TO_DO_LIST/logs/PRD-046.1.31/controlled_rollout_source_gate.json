@@ -1,0 +1,18 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_source_gate_v1",
+  "prd_id": "PRD-046.1.31",
+  "source_gate_passed": true,
+  "source_artifacts_present": true,
+  "source_artifacts_parseable": true,
+  "source_final_status": "passed",
+  "source_decision": "ready_for_controlled_rollout_execution_prd",
+  "source_blockers_none": true,
+  "source_warnings_none": true,
+  "no_mutation_proof_passed": true,
+  "docs_synced": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "source_inventory_count": 15,
+  "blockers": []
+}

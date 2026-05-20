@@ -1,0 +1,22 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_execution_result_v1",
+  "prd_id": "PRD-046.1.31",
+  "execution_performed": true,
+  "target_operator_count": 3,
+  "scenario_count": 12,
+  "provider_calls_total": 12,
+  "pilot_apply_count": 12,
+  "all_provider_calls_for_allowed_user": true,
+  "scenario_groups_covered": [
+    "supportive_low_risk_clarity_request",
+    "i_minus_w_plus_defensive_directive_seeking",
+    "i_plus_w_minus_defensive_blame_seeking",
+    "i_minus_w_minus_low_resource_collapsed",
+    "mixed_openness_thread_continuity",
+    "kb_lens_boundary_case",
+    "retrieval_no_retrieval_routing_case",
+    "rollback_simulation_case",
+    "normal_user_control_case"
+  ],
+  "quality_micro_shift_gate_passed": true
+}

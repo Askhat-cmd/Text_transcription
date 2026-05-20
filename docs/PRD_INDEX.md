@@ -2,6 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
+| PRD-046.1.31 | Diagnostic Center Controlled Rollout Execution Gate v1 | passed | pending | executed strict controlled rollout window for allowlisted operators only with provider budget, normal-user no-effect, rollback/hard-stop, safety/KB, trace sanitization, BotDB stability, and no-mutation evidence | TO_DO_LIST/reports/PRD-046.1.31_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.30 | Diagnostic Center Controlled Rollout Planning v1 | passed | 3e24679 | created controlled rollout planning package (source/runtime-map/eval-harness gates, cohort/toggle/preflight/hard-stop/rollback/evidence plans) without execution/provider calls | TO_DO_LIST/reports/PRD-046.1.30_IMPLEMENTATION_REPORT.md |
 | PRD-045.0..045.7.1 | Runtime quality foundation chain | done | historical | multiagent/runtime diagnostics/context/writer contracts | see TO_DO_LIST/reports |
 | PRD-046.0 | KB preparation governance v1 | done | historical | governance baseline for chunks | see report |

@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_quality_micro_shift_gate_v1",
+  "prd_id": "PRD-046.1.31",
+  "scenario_count": 12,
+  "micro_shift_present_rate": 1.0,
+  "forbidden_moves_violation_count": 0,
+  "state_boundary_violation_count": 0,
+  "thread_continuity_hard_fail_count": 0,
+  "candidate_weaker_than_baseline_count": 0,
+  "gate_passed": true
+}

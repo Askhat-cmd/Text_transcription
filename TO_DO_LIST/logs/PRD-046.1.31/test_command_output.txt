@@ -1,0 +1,24 @@
+﻿PRD-046.1.31 command log (UTF-8 normalized)
+
+Executed pytest commands:
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_contract.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_source_gate.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_cohort_policy.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_toggle_matrix.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_preflight.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_runner.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_provider_budget.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_normal_user_no_effect.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_quality_micro_shift.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_safety_kb_boundary.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_trace_sanitization.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_rollback.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_botdb_stability.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_no_mutation.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_artifact_hygiene.py (passed)
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_decision_gate.py (passed)
+Strict runner command:
+- python -m bot_psychologist.tools.run_diagnostic_center_controlled_rollout_execution --repo-root . --reports-dir TO_DO_LIST/reports --docs-dir docs --logs-dir TO_DO_LIST/logs --source-dir TO_DO_LIST/logs/PRD-046.1.30 --output-dir TO_DO_LIST/logs/PRD-046.1.31 --strict (passed)
+
+Verification rerun:
+- python -m pytest bot_psychologist/tests/multiagent/test_controlled_rollout_execution_runner.py bot_psychologist/tests/multiagent/test_controlled_rollout_execution_preflight.py (passed)

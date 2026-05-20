@@ -1,0 +1,25 @@
+{
+  "schema_version": "diagnostic_center_controlled_rollout_hard_stop_report_v1",
+  "prd_id": "PRD-046.1.31",
+  "conditions": {
+    "source_gate_passed=false": false,
+    "botdb_preflight_failed": false,
+    "provider_calls_total > provider_call_budget_max": false,
+    "normal_user_apply_count > 0": false,
+    "normal_user_provider_calls > 0": false,
+    "normal_user_prompt_delta_count > 0": false,
+    "normal_user_final_answer_changed_by_rollout_count > 0": false,
+    "rollback_precheck=false": false,
+    "rollback_postcheck=false": false,
+    "stale_apply_after_force_disabled_count > 0": false,
+    "raw_kb_text_exposure_count > 0": false,
+    "raw_provider_payload_exposure_count > 0": false,
+    "secret_or_env_leak_count > 0": false,
+    "kb_authority_mutation_detected=true": false,
+    "production_data_mutated=true": false,
+    "runtime_defaults_changed=true": false,
+    "artifact_hygiene_failed=true": false
+  },
+  "hard_stop_triggered": false,
+  "final_status": "passed"
+}

@@ -2,7 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-046.1.32 | Diagnostic Center Controlled Rollout Results / Rollback / Quality Gate v1 | passed | pending | consolidated `PRD-046.1.31` execution evidence in strict no-new-execution mode, validated provider budget/normal-user no-effect/quality/rollback/safety/trace/BotDB/no-mutation, and closed docs consistency tail before readiness transition | TO_DO_LIST/reports/PRD-046.1.32_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.32 | Diagnostic Center Controlled Rollout Results / Rollback / Quality Gate v1 | passed | d3f3360 | consolidated `PRD-046.1.31` execution evidence in strict no-new-execution mode, validated provider budget/normal-user no-effect/quality/rollback/safety/trace/BotDB/no-mutation, and closed docs consistency tail before readiness transition | TO_DO_LIST/reports/PRD-046.1.32_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.31 | Diagnostic Center Controlled Rollout Execution Gate v1 | passed | 3702d04 | executed strict controlled rollout window for allowlisted operators only with provider budget, normal-user no-effect, rollback/hard-stop, safety/KB, trace sanitization, BotDB stability, and no-mutation evidence | TO_DO_LIST/reports/PRD-046.1.31_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.30 | Diagnostic Center Controlled Rollout Planning v1 | passed | 3e24679 | created controlled rollout planning package (source/runtime-map/eval-harness gates, cohort/toggle/preflight/hard-stop/rollback/evidence plans) without execution/provider calls | TO_DO_LIST/reports/PRD-046.1.30_IMPLEMENTATION_REPORT.md |
 | PRD-045.0..045.7.1 | Runtime quality foundation chain | done | historical | multiagent/runtime diagnostics/context/writer contracts | see TO_DO_LIST/reports |
@@ -95,3 +95,4 @@
 3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+

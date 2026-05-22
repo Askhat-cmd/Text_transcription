@@ -51,5 +51,6 @@
 
 ## 12. Delivery metadata
 - prd_id: PRD-046.1.37
-- commit_hash: ff77155
-- push_status: pushed_to_origin_main
+- main_commit_hash: ff77155
+- metadata_sync_commit_hash: 7054f99
+- rerun_note: Web UI поднят (`web_ui_status_code=200`), но runtime блокер остается на adaptive/debug timeout.

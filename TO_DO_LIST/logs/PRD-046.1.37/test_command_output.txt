@@ -2,6 +2,13 @@
 python -m pytest bot_psychologist/tests/multiagent/test_prd_046_1_37_contract.py bot_psychologist/tests/multiagent/test_prd_046_1_37_scorecard.py bot_psychologist/tests/multiagent/test_prd_046_1_37_source_gate.py bot_psychologist/tests/multiagent/test_prd_046_1_37_runner.py -q
 result: 4 passed
 
-[runner]
+[runner rerun after Web UI up]
 python -m bot_psychologist.tools.run_diagnostic_center_final_completion_gate --repo-root . --backend-base-url http://localhost:8001 --botdb-base-url http://localhost:8003 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --normal-user-id user_normal_control_prd_046_1_37 --output-dir TO_DO_LIST/logs/PRD-046.1.37 --strict
-result: blocked_runtime_readiness (services on 8001/3000 unavailable)
+result: blocked_runtime_readiness
+runtime_readiness_final_gate=blocked
+backend_health_status_code=200
+backend_adaptive_endpoint_status=0 (TimeoutError)
+backend_debug_trace_endpoint_status=0 (TimeoutError)
+botdb_status_code=200
+botdb_query_status_code=200
+web_ui_status_code=200

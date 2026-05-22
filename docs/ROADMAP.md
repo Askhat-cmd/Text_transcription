@@ -22,10 +22,6 @@
 
 ## Next
 1. Multiagent Quality & Tuning Track.
-1. Multiagent Quality & Tuning Track.
-1. Multiagent Quality & Tuning Track.
-1. Multiagent Quality & Tuning Track.
-1. Multiagent Quality & Tuning Track.
 
 ## Later
 - Operational hardening for governed limited runtime.

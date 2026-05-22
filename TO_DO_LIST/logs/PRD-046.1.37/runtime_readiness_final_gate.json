@@ -9,7 +9,7 @@
   "backend_debug_trace_endpoint_status": 0,
   "botdb_status_code": 200,
   "botdb_query_status_code": 200,
-  "web_ui_status_code": 0,
+  "web_ui_status_code": 200,
   "admin_runtime_controls_status": "passed",
   "admin_runtime_endpoint_status_code": 200,
   "health_endpoint_missing": false,

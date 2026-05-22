@@ -10,8 +10,8 @@
   "trace_private_leak_count": 0,
   "normal_user_activation_allowed": false,
   "adaptive_http_status": 0,
-  "trace_http_status": 0,
+  "trace_http_status": 200,
   "adaptive_error": "TimeoutError",
-  "trace_error": "TimeoutError",
+  "trace_error": null,
   "normal_user_final_no_effect_gate": "blocked"
 }

@@ -591,3 +591,9 @@ Status: accepted
 Context: after `PRD-046.1.33`, limited runtime readiness was passed, but project state still has no external real users; broad rollout and normal-user activation remain prohibited.
 Decision: first live activation step is constrained to `creator_only` runtime mode with explicit creator identity boundary, admin kill switch priority, strict normal-user no-effect controls, sanitized trace monitor, provider budget cap, and rollback/hard-stop governance. External allowlist expansion is deferred to later PRDs.
 Consequences: this step is not broad rollout and not production-ready declaration; `broad_rollout_allowed=false`, `production_ready=false`, and `normal_user_activation_allowed=false` remain invariant.
+## ADR-054 - Creator live continuation requires explicit evidence-strength gate
+
+Status: accepted
+Context: PRD-046.1.34 passed safety/runtime boundaries, but web chat smoke evidence can be probe-level or simulated without strong sanitized live-turn proof.
+Decision: PRD-046.1.35 introduces a dedicated evidence-strength audit that classifies artifacts into `actual_live_turn_evidence`, `runtime_probe_evidence`, `simulated_gate_evidence`, and `missing_evidence`; continuation beyond creator-only stage is blocked when actual live-turn evidence is absent.
+Consequences: safety-green is necessary but insufficient; rollout remains constrained until evidence quality is explicit and reproducible.

@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_rollback_quality_gate_v1",
+  "prd_id": "PRD-046.1.35",
+  "force_disabled_toggle_present": true,
+  "force_disabled_priority_preserved": true,
+  "all_users_control_locked": true,
+  "hard_stop_gate_passed": true,
+  "rollback_kill_switch_gate_passed": true,
+  "rollback_quality_gate_passed": true,
+  "rollback_quality_gate": "passed"
+}

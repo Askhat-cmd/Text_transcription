@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_source_manifest_v1",
+  "prd_id": "PRD-046.1.35",
+  "source_prd_id": "PRD-046.1.34",
+  "required_artifact_count": 25,
+  "present_artifact_count": 25,
+  "missing_artifact_count": 0,
+  "parse_error_count": 0,
+  "report_consistency_warning_count": 0,
+  "source_artifacts_gate": "passed",
+  "missing_artifacts": [],
+  "parse_errors": [],
+  "consistency_warnings": []
+}

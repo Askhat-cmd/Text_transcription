@@ -1,0 +1,14 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_quality_gate_v1",
+  "prd_id": "PRD-046.1.35",
+  "live_turn_quality_evaluable": false,
+  "answer_present": false,
+  "diagnostic_center_mode": "unknown",
+  "writer_completed": false,
+  "validator_completed": false,
+  "trace_sanitized": false,
+  "quality_flags_present": false,
+  "quality_gate_passed": false,
+  "quality_gate_reason": "actual_live_answer_artifact_missing",
+  "live_results_quality_gate": "blocked"
+}

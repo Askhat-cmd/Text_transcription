@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_docs_consistency_gate_v1",
+  "prd_id": "PRD-046.1.35",
+  "project_state_synced": true,
+  "roadmap_synced": true,
+  "prd_index_synced": true,
+  "decisions_synced": true,
+  "stale_next_prd_reference_count": 0,
+  "duplicate_roadmap_next_item_count": 0,
+  "docs_consistency_gate_passed": true
+}

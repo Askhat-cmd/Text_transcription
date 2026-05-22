@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_trace_sanitization_gate_v1",
+  "prd_id": "PRD-046.1.35",
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "secrets_committed": false,
+  "env_committed": false,
+  "trace_sanitized_only": true,
+  "sanitized_trace_sample_present": true,
+  "trace_storage_gate_passed": true,
+  "trace_sanitization_gate_passed": true,
+  "trace_sanitization_gate": "passed"
+}

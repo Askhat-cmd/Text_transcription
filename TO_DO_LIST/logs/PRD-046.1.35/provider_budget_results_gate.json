@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_provider_budget_gate_v1",
+  "prd_id": "PRD-046.1.35",
+  "max_creator_live_provider_calls": 8,
+  "max_normal_user_control_provider_calls": 2,
+  "max_total_provider_calls": 10,
+  "creator_live_provider_calls": 8,
+  "normal_user_control_provider_calls": 0,
+  "total_provider_calls": 8,
+  "counts_known": true,
+  "provider_budget_gate_passed": true,
+  "provider_budget_gate": "passed"
+}

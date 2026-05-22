@@ -1,0 +1,28 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_scorecard_v1",
+  "prd_id": "PRD-046.1.35",
+  "final_status": "evidence_incomplete",
+  "decision": "evidence_incomplete_hotfix_required",
+  "source_artifacts_gate": "passed",
+  "evidence_strength_gate": "warning",
+  "live_results_quality_gate": "blocked",
+  "rollback_quality_gate": "passed",
+  "normal_user_boundary_gate": "passed",
+  "trace_sanitization_gate": "passed",
+  "provider_budget_gate": "passed",
+  "no_mutation_proof": "passed",
+  "docs_consistency_gate": "passed",
+  "artifact_encoding_hygiene": "passed",
+  "actual_live_turn_evidence_count": 0,
+  "runtime_probe_evidence_count": 2,
+  "simulated_gate_evidence_count": 1,
+  "missing_evidence_count": 0,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "next_prd_recommendation": "PRD-046.1.35-HF1 - Creator Live Evidence Capture Repair / Real Sanitized Turn Proof v1",
+  "blockers": [],
+  "warnings": [
+    "actual_live_turn_evidence_missing_or_weak"
+  ]
+}

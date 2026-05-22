@@ -1,0 +1,24 @@
+﻿> python -m pytest bot_psychologist/tests/multiagent/test_creator_live_results_contract.py bot_psychologist/tests/multiagent/test_creator_live_results_source_loader.py bot_psychologist/tests/multiagent/test_creator_live_results_evidence_strength.py bot_psychologist/tests/multiagent/test_creator_live_results_quality_gate.py bot_psychologist/tests/multiagent/test_creator_live_results_rollback_gate.py bot_psychologist/tests/multiagent/test_creator_live_results_normal_user_no_effect.py bot_psychologist/tests/multiagent/test_creator_live_results_trace_sanitization.py bot_psychologist/tests/multiagent/test_creator_live_results_no_mutation.py bot_psychologist/tests/multiagent/test_creator_live_results_docs_consistency.py bot_psychologist/tests/multiagent/test_creator_live_results_decision.py -q
+..........                                                               [100%]
+10 passed in 11.60s
+exit_code=0
+
+> python -m bot_psychologist.tools.run_diagnostic_center_creator_live_results_gate --repo-root . --source-logs-dir TO_DO_LIST/logs/PRD-046.1.34 --source-reports-dir TO_DO_LIST/reports --docs-dir docs --output-dir TO_DO_LIST/logs/PRD-046.1.35 --strict
+status=evidence_incomplete
+decision=evidence_incomplete_hotfix_required
+source_artifacts_gate=passed
+evidence_strength_gate=warning
+live_results_quality_gate=blocked
+rollback_quality_gate=passed
+normal_user_boundary_gate=passed
+trace_sanitization_gate=passed
+provider_budget_gate=passed
+no_mutation_proof=passed
+docs_consistency_gate=passed
+artifact_encoding_hygiene=passed
+actual_live_turn_evidence_count=0
+runtime_probe_evidence_count=2
+simulated_gate_evidence_count=1
+missing_evidence_count=0
+next_prd_recommendation=PRD-046.1.35-HF1 - Creator Live Evidence Capture Repair / Real Sanitized Turn Proof v1
+exit_code=2

@@ -1,8 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-Creator-only live activation stage after `PRD-046.1.33`: `PRD-046.1.34` completed with creator identity boundary, runtime/admin controls, live web chat smoke, trace monitor MVP, rollback/hard-stop controls, and strict no-mutation/docs gates.
-
+PRD-046.1.35 found creator live activation safety gates green, but actual live turn evidence is incomplete/weak. Next: PRD-046.1.35-HF1 evidence capture repair.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 
@@ -34,8 +33,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-046.1.35 - Diagnostic Center Creator Live Results / Rollback / Quality Gate v1` (no-new-execution consolidation of creator-only live evidence, rollback quality, and normal-user boundary proof).
-
+`PRD-046.1.35-HF1 - Creator Live Evidence Capture Repair / Real Sanitized Turn Proof v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -51,4 +49,4 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-05-22
-- Source cycle: PRD-046.1.34
+- Source cycle: PRD-046.1.35

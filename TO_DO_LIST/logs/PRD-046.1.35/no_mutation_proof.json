@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_creator_live_results_no_mutation_proof_v1",
+  "prd_id": "PRD-046.1.35",
+  "production_data_mutated": false,
+  "runtime_defaults_changed": false,
+  "kb_registry_chroma_config_mutated": false,
+  "source_no_mutation_proof_passed": true,
+  "no_mutation_proof_passed": true
+}

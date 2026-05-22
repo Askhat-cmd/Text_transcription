@@ -53,7 +53,7 @@ function createTrace(): MultiAgentTraceData {
           chunk_id: 'c1',
           source: 'lecture_1',
           score: 0.912,
-          content_preview: 'preview',
+          content_preview: 'safe_preview_mock',
           content_full: 'content_full_mock',
         },
       ],
@@ -163,7 +163,7 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     harness.cleanup();
   });
 
-  it('expands chunk card and shows full content', () => {
+  it('expands chunk card and shows safe preview content', () => {
     const harness = renderWidget(
       React.createElement(MultiAgentTraceWidget, {
         trace: createTrace(),
@@ -175,7 +175,26 @@ describe('MultiAgentTraceWidget (rev2)', () => {
     clickButtonContains(harness.container, 'Чанки в Writer');
     clickButtonContains(harness.container, 'score:');
 
-    expect(harness.container.textContent).toContain('content_full_mock');
+    expect(harness.container.textContent).toContain('safe_preview_mock');
+    harness.cleanup();
+  });
+
+  it('falls back to content_full when preview is empty', () => {
+    const trace = createTrace();
+    trace.memory_context.semantic_hits[0].content_preview = '';
+    trace.memory_context.semantic_hits[0].content_full = 'content_full_fallback';
+    const harness = renderWidget(
+      React.createElement(MultiAgentTraceWidget, {
+        trace,
+        isExpanded: true,
+      })
+    );
+
+    clickButtonContains(harness.container, 'Контекст памяти');
+    clickButtonContains(harness.container, 'Чанки в Writer');
+    clickButtonContains(harness.container, 'score:');
+
+    expect(harness.container.textContent).toContain('content_full_fallback');
     harness.cleanup();
   });
 

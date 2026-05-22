@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import logging
 import time
 from datetime import datetime, timezone
@@ -196,11 +197,26 @@ class MultiAgentOrchestrator:
             memory_bundle=memory_bundle,
         )
         diagnostic_card = build_diagnostic_card_v1(
+            user_message=query,
             state_snapshot=state_snapshot,
             thread_state=updated_thread,
             context_package=context_package,
             thread_diagnostics=thread_debug,
         )
+        rules_applied = list(getattr(diagnostic_card.trace, "rules_applied", []) or [])
+        behavior_request_type = "unknown"
+        practice_suppressed = False
+        suppression_reasons: list[str] = []
+        for rule in rules_applied:
+            text = str(rule or "").strip()
+            if text.startswith("request_type="):
+                behavior_request_type = text.split("=", 1)[1].strip() or "unknown"
+            elif text.startswith("practice_suppressed="):
+                practice_suppressed = text.split("=", 1)[1].strip().lower() == "true"
+            elif text.startswith("practice_suppression_reason="):
+                value = text.split("=", 1)[1].strip()
+                if value:
+                    suppression_reasons.append(value)
         diagnostic_center_shadow = build_diagnostic_center_shadow_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -319,6 +335,33 @@ class MultiAgentOrchestrator:
             semantic_hits=list(memory_bundle.semantic_hits or []),
             knowledge_policy_trace=dict(memory_bundle.knowledge_policy_trace or {}),
         )
+        writer_chunks_detail: list[dict[str, object]] = []
+        for item in list(semantic_hits_detail or []):
+            if not isinstance(item, dict):
+                continue
+            chunk_id = str(item.get("chunk_id", "") or "")
+            preview = str(item.get("content_preview", "") or "")
+            writer_chunks_detail.append(
+                {
+                    "chunk_id_hash": (
+                        "sha256:"
+                        + hashlib.sha256(chunk_id.encode("utf-8")).hexdigest()
+                        if chunk_id
+                        else ""
+                    ),
+                    "source": str(item.get("source", "unknown") or "unknown"),
+                    "score": float(item.get("score", 0.0) or 0.0),
+                    "content_preview": preview,
+                    "preview_len": len(preview),
+                    "governance": {
+                        "policy_action": str(item.get("policy_action", "") or ""),
+                        "allowed_for_writer": bool(
+                            str(item.get("policy_action", "") or "")
+                            == "include_writer_context"
+                        ),
+                    },
+                }
+            )
 
         return {
             "status": "ok",
@@ -341,6 +384,7 @@ class MultiAgentOrchestrator:
                 "context_turns": memory_bundle.context_turns,
                 "semantic_hits_count": len(memory_bundle.semantic_hits),
                 "semantic_hits_detail": semantic_hits_detail,
+                "writer_chunks_detail": writer_chunks_detail,
                 "semantic_hits_raw_redacted": True,
                 "rag_retrieval_trace": dict(memory_bundle.rag_retrieval_trace or {}),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
@@ -356,6 +400,9 @@ class MultiAgentOrchestrator:
                 "relation_to_thread": updated_thread.relation_to_thread,
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
+                "request_type": behavior_request_type,
+                "practice_suppressed": practice_suppressed,
+                "practice_suppression_reasons": suppression_reasons,
                 "pattern_core": updated_thread.pattern_core,
                 "active_frame": dict(updated_thread.active_frame),
                 "thread_diagnostics_version": THREAD_DIAGNOSTICS_VERSION,
@@ -382,6 +429,15 @@ class MultiAgentOrchestrator:
                     "current_need": diagnostic_card.current_need,
                     "confidence": float(diagnostic_card.confidence),
                     "risk_flags": list(diagnostic_card.risk_flags),
+                    "request_type": behavior_request_type,
+                    "practice_suppressed": practice_suppressed,
+                    "practice_suppression_reasons": suppression_reasons,
+                },
+                "creator_live_behavior_guard": {
+                    "version": "anti_regulate_loop_v1",
+                    "request_type": behavior_request_type,
+                    "practice_suppressed": practice_suppressed,
+                    "practice_suppression_reasons": suppression_reasons,
                 },
                 "diagnostic_center_shadow": diagnostic_center_shadow,
                 "planner_bridge_candidate": planner_bridge_shadow.get("planner_bridge_candidate", {}),

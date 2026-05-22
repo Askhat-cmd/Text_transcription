@@ -76,6 +76,7 @@ const MetaItem: React.FC<{ label: string; value: React.ReactNode; highlight?: bo
 
 const ChunkCard: React.FC<{ hit: SemanticHitTrace }> = ({ hit }) => {
   const [open, setOpen] = useState(false);
+  const safePreview = hit.content_preview || hit.content_full || '—';
   return (
     <div className="border rounded p-2 mb-1">
       <button
@@ -88,7 +89,7 @@ const ChunkCard: React.FC<{ hit: SemanticHitTrace }> = ({ hit }) => {
           score: {Number.isFinite(hit.score) ? hit.score.toFixed(3) : '0.000'} {open ? '▼' : '▶'}
         </span>
       </button>
-      {open && <pre className="mt-1 text-xs whitespace-pre-wrap text-slate-600">{hit.content_full || '—'}</pre>}
+      {open && <pre className="mt-1 text-xs whitespace-pre-wrap text-slate-600">{safePreview}</pre>}
     </div>
   );
 };

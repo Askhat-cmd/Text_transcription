@@ -38,3 +38,9 @@
 3. Boundary decisions update `docs/DECISIONS.md`.
 4. Every merged PRD updates `docs/PRD_INDEX.md`.
 5. `TO_DO_LIST` is historical evidence; `docs/` is compact operational map.
+
+## PRD-046.1.35-HF4
+Current Stage:
+PRD-046.1.35-HF4 calibrated creator-live response behavior: example/explanation requests no longer trigger regulate_first by default, practice rejection suppresses body-action suggestions, and Web Trace displays non-empty safe Writer chunk previews.
+Next:
+PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.

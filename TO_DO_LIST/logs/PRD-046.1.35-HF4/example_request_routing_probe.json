@@ -1,0 +1,7 @@
+{
+  "schema_version": "example_request_routing_probe_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "example_cases_total": 4,
+  "example_cases_passed": 4,
+  "example_request_routing_gate": "passed"
+}

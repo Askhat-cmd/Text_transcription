@@ -1,0 +1,12 @@
+{
+  "schema_version": "writer_move_calibration_probe_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "give_concrete_example_contract_present": true,
+  "writer_move_calibration_gate": "passed",
+  "contract_expectations": {
+    "move": "give_concrete_example",
+    "max_sentences": 8,
+    "max_questions": 1,
+    "style": "concrete_contextual_example"
+  }
+}

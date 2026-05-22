@@ -1,0 +1,47 @@
+{
+  "schema_version": "creator_live_behavior_hf4_cases_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "cases": [
+    {
+      "id": "A",
+      "name": "definition_no_breathing",
+      "message": "что такое нейросталкинг",
+      "expected_request_type": "explain_request"
+    },
+    {
+      "id": "B",
+      "name": "apply_to_life",
+      "message": "как это можно применить к своей жизни?",
+      "expected_request_type": "explain_request"
+    },
+    {
+      "id": "C",
+      "name": "explicit_no_practice",
+      "message": "объясни мне не практику а просто приведи пример из жизни!",
+      "expected_request_type": "example_request"
+    },
+    {
+      "id": "D",
+      "name": "parent_example",
+      "message": "с родителем пример хочу",
+      "expected_request_type": "example_request",
+      "recent_turns": [
+        {
+          "role": "user",
+          "content": "объясни мне не практику а просто приведи пример из жизни!"
+        },
+        {
+          "role": "assistant",
+          "content": "Тебе пример с партнером или с родителем?"
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "name": "true_regulate_still_allowed",
+      "message": "мне очень тревожно, не могу успокоиться, помоги прямо сейчас",
+      "expected_request_type": "safety_regulation_request"
+    }
+  ]
+}
+

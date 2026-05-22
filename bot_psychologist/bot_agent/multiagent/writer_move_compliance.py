@@ -138,6 +138,27 @@ def build_writer_move_instructions_v1(diagnostic_card: DiagnosticCard | None) ->
                 ],
             }
         )
+    elif move == "give_concrete_example":
+        instructions.update(
+            {
+                "max_sentences": 8,
+                "max_questions": 1,
+                "style": "concrete_contextual_example",
+                "must_do": [
+                    "give_one_concrete_life_example",
+                    "use_user_requested_context",
+                    "avoid_practice_instruction",
+                    "avoid_breathing_instruction",
+                    "connect_example_to_current_thread",
+                ],
+                "must_not_do": [
+                    "do_not_offer_body_action",
+                    "do_not_turn_into_lecture",
+                    "do_not_open_multiple_threads",
+                    "do_not_ignore_user_rejected_practice",
+                ],
+            }
+        )
     elif move == "reflect_pattern_once":
         instructions.update(
             {

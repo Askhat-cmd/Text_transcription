@@ -50,3 +50,9 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 ## Last Updated
 - Date: 2026-05-22
 - Source cycle: PRD-046.1.35-HF3
+
+## PRD-046.1.35-HF4
+Current Stage:
+PRD-046.1.35-HF4 calibrated creator-live response behavior: example/explanation requests no longer trigger regulate_first by default, practice rejection suppresses body-action suggestions, and Web Trace displays non-empty safe Writer chunk previews.
+Next:
+PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.

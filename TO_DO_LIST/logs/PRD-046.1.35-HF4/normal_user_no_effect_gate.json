@@ -1,0 +1,7 @@
+{
+  "schema_version": "normal_user_no_effect_gate_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "normal_user_activation_allowed": false,
+  "all_users_mode_enabled": false,
+  "normal_user_no_effect_gate": "passed"
+}

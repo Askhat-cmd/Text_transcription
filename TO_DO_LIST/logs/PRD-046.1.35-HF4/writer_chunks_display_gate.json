@@ -1,0 +1,13 @@
+{
+  "schema_version": "writer_chunks_display_gate_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "adaptive_http_status": 200,
+  "adaptive_error": null,
+  "trace_http_status": 200,
+  "session_id_present": true,
+  "writer_chunks_count": 3,
+  "writer_chunks_non_empty_preview_count": 3,
+  "writer_chunks_empty_preview_count": 0,
+  "writer_chunks_display_gate": "passed",
+  "warning": ""
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "no_mutation_proof_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "tracked_files": [
+    "all_blocks_merged",
+    "config",
+    "registry"
+  ],
+  "changed_files": [],
+  "no_mutation_proof": "passed",
+  "no_mutation_proof_passed": true
+}

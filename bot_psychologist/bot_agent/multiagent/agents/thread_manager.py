@@ -8,6 +8,13 @@ import uuid
 from datetime import datetime
 from typing import Any, Optional
 
+from ..creator_live_behavior_guard import (
+    REQUEST_TYPE_EXAMPLE,
+    REQUEST_TYPE_EXPLAIN,
+    REQUEST_TYPE_PRACTICE,
+    REQUEST_TYPE_SAFETY,
+    detect_request_type_v1,
+)
 from ..contracts.state_snapshot import StateSnapshot
 from ..contracts.thread_state import ArchivedThread, ThreadState
 from .agent_llm_config import get_model_for_agent
@@ -233,11 +240,28 @@ def _active_frame_continuity_signal(
     return should_continue, diag
 
 
-def _mode_and_goal_with_reason(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str, str]:
+def _mode_and_goal_with_reason(
+    phase: str,
+    state_snapshot: StateSnapshot,
+    *,
+    user_message: str = "",
+) -> tuple[str, str, str]:
+    request_type = detect_request_type_v1(user_message)
+    explicit_practice_request = request_type == REQUEST_TYPE_PRACTICE
+    explicit_safety_request = request_type == REQUEST_TYPE_SAFETY
+    example_or_explain_request = request_type in {REQUEST_TYPE_EXAMPLE, REQUEST_TYPE_EXPLAIN}
+
     if state_snapshot.safety_flag:
         return "safe_override", "stabilize and reduce overload", "safety_override"
     if state_snapshot.intent == "contact":
         return "validate", "hold contact and avoid overload", "explicit_contact_validate"
+    if (
+        example_or_explain_request
+        and not explicit_practice_request
+        and not explicit_safety_request
+        and state_snapshot.nervous_state in {"hyper", "hypo"}
+    ):
+        return "reflect", "give contextual example or explanation", "example_explain_deescalate"
     if state_snapshot.nervous_state in {"hyper", "hypo"}:
         return "regulate", "softly stabilize state", "nervous_regulate"
     if state_snapshot.intent == "solution":
@@ -249,8 +273,17 @@ def _mode_and_goal_with_reason(phase: str, state_snapshot: StateSnapshot) -> tup
     return "validate", "keep safe contact", "fallback_validate"
 
 
-def _mode_and_goal(phase: str, state_snapshot: StateSnapshot) -> tuple[str, str]:
-    mode, goal, _reason = _mode_and_goal_with_reason(phase, state_snapshot)
+def _mode_and_goal(
+    phase: str,
+    state_snapshot: StateSnapshot,
+    *,
+    user_message: str = "",
+) -> tuple[str, str]:
+    mode, goal, _reason = _mode_and_goal_with_reason(
+        phase,
+        state_snapshot,
+        user_message=user_message,
+    )
     return mode, goal
 
 
@@ -370,7 +403,11 @@ class ThreadManagerAgent:
                     selected_relation="new_thread",
                     continuity=new_thread.continuity_score,
                 )
-                mode, goal, mode_reason = _mode_and_goal_with_reason(new_thread.phase, state_snapshot)
+                mode, goal, mode_reason = _mode_and_goal_with_reason(
+                    new_thread.phase,
+                    state_snapshot,
+                    user_message=user_message,
+                )
                 self.last_debug = self._compose_diagnostics(
                     thread_state=new_thread,
                     relation=relation_diag,
@@ -428,7 +465,11 @@ class ThreadManagerAgent:
                     archived_threads_count=len(archived_threads),
                     current_thread_present=True,
                 )
-                mode, goal, mode_reason = _mode_and_goal_with_reason(patched.phase, state_snapshot)
+                mode, goal, mode_reason = _mode_and_goal_with_reason(
+                    patched.phase,
+                    state_snapshot,
+                    user_message=user_message,
+                )
                 self.last_debug = self._compose_diagnostics(
                     thread_state=patched,
                     relation=relation_diag,
@@ -485,7 +526,11 @@ class ThreadManagerAgent:
                     now=now,
                 )
                 if restored is not None:
-                    mode, goal, mode_reason = _mode_and_goal_with_reason(restored.phase, state_snapshot)
+                    mode, goal, mode_reason = _mode_and_goal_with_reason(
+                        restored.phase,
+                        state_snapshot,
+                        user_message=user_message,
+                    )
                     self.last_debug = self._compose_diagnostics(
                         thread_state=restored,
                         relation=relation_diag,
@@ -535,7 +580,11 @@ class ThreadManagerAgent:
                     user_id=user_id,
                     relation="new_thread",
                 )
-                mode, goal, mode_reason = _mode_and_goal_with_reason(new_thread.phase, state_snapshot)
+                mode, goal, mode_reason = _mode_and_goal_with_reason(
+                    new_thread.phase,
+                    state_snapshot,
+                    user_message=user_message,
+                )
                 self.last_debug = self._compose_diagnostics(
                     thread_state=new_thread,
                     relation=relation_diag,
@@ -840,7 +889,7 @@ class ThreadManagerAgent:
         relation: str = "new_thread",
     ) -> ThreadState:
         phase = "stabilize" if state_snapshot.safety_flag else "clarify"
-        mode, goal = _mode_and_goal(phase, state_snapshot)
+        mode, goal = _mode_and_goal(phase, state_snapshot, user_message=user_message)
         pattern_core = _derive_pattern_core_v1(
             user_message=user_message,
             state_snapshot=state_snapshot,
@@ -917,7 +966,11 @@ class ThreadManagerAgent:
             closed_loops_count=len(closed_loops),
             continuity=continuity,
         )
-        mode, goal, mode_reason = _mode_and_goal_with_reason(phase, state_snapshot)
+        mode, goal, mode_reason = _mode_and_goal_with_reason(
+            phase,
+            state_snapshot,
+            user_message=user_message,
+        )
         turns_in_phase = phase_diag["turns_in_phase_after"]
         pattern_core = _derive_pattern_core_v1(
             user_message=user_message,
@@ -1016,7 +1069,11 @@ class ThreadManagerAgent:
             archived_threads,
             key=lambda item: len(message_tokens & _normalize_tokens(item.core_direction)),
         )
-        mode, goal = _mode_and_goal(best.final_phase, state_snapshot)
+        mode, goal = _mode_and_goal(
+            best.final_phase,
+            state_snapshot,
+            user_message=user_message,
+        )
         active_frame = _build_active_frame_v1(
             state_snapshot=state_snapshot,
             relation="return_to_old",

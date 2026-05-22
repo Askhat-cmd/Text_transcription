@@ -4,6 +4,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from .creator_live_behavior_guard import (
+    REQUEST_TYPE_EXAMPLE,
+    REQUEST_TYPE_EXPLAIN,
+    collect_recent_turn_texts_v1,
+    evaluate_anti_regulate_loop_v1,
+)
 from .contracts.context_package import ContextAssemblyPackage
 from .contracts.diagnostic_card import (
     DiagnosticCard,
@@ -114,37 +120,72 @@ def _resolve_situation_label(
 
 def _resolve_writer_move(
     *,
+    user_message: str,
+    context_package: ContextAssemblyPackage | None,
     state_snapshot: StateSnapshot,
     thread_state: ThreadState,
     relation_reason: str,
-) -> tuple[str, list[str]]:
+) -> tuple[str, list[str], dict[str, Any]]:
     rules: list[str] = []
+    guard_payload: dict[str, Any] = {
+        "version": "anti_regulate_loop_v1",
+        "request_type": "unknown",
+        "practice_or_regulate_should_be_suppressed": False,
+        "reasons": [],
+    }
     if state_snapshot.safety_flag or thread_state.safety_active:
         rules.append("move_safe_override")
-        return "safe_override", rules
+        return "safe_override", rules, guard_payload
+
+    recent_turn_texts = collect_recent_turn_texts_v1(
+        list(getattr(context_package, "recent_turns_full", []) or []),
+        last_n=3,
+        assistant_only=True,
+    )
+    guard_payload = evaluate_anti_regulate_loop_v1(
+        user_message=user_message,
+        recent_turn_texts=recent_turn_texts,
+        safety_active=bool(state_snapshot.safety_flag or thread_state.safety_active),
+        response_mode=str(thread_state.response_mode or ""),
+        suggested_writer_move="regulate_first"
+        if state_snapshot.nervous_state in {"hypo", "hyper"}
+        else str(thread_state.response_mode or ""),
+    )
+    request_type = str(guard_payload.get("request_type") or "")
+    suppress = bool(guard_payload.get("practice_or_regulate_should_be_suppressed", False))
+    if suppress:
+        rules.append("anti_regulate_loop_v1_suppress")
+        if request_type == REQUEST_TYPE_EXAMPLE:
+            rules.append("move_give_concrete_example")
+            return "give_concrete_example", rules, guard_payload
+        if request_type == REQUEST_TYPE_EXPLAIN:
+            rules.append("move_clarify_one_point")
+            return "clarify_one_point", rules, guard_payload
+        rules.append("move_validate_briefly")
+        return "validate_briefly", rules, guard_payload
 
     if state_snapshot.nervous_state in {"hypo", "hyper"}:
         rules.append("move_regulate_first")
-        return "regulate_first", rules
+        return "regulate_first", rules, guard_payload
 
     if thread_state.response_mode == "practice":
         rules.append("move_offer_one_micro_step")
-        return "offer_one_micro_step", rules
+        return "offer_one_micro_step", rules, guard_payload
 
     if relation_reason == "active_frame_semantic_continuity":
         rules.append("move_reflect_pattern_once")
-        return "reflect_pattern_once", rules
+        return "reflect_pattern_once", rules, guard_payload
 
     if thread_state.response_mode == "reflect":
         rules.append("move_clarify_one_point")
-        return "clarify_one_point", rules
+        return "clarify_one_point", rules, guard_payload
 
     if thread_state.response_mode == "explore":
         rules.append("move_explore_carefully")
-        return "explore_carefully", rules
+        return "explore_carefully", rules, guard_payload
 
     rules.append("move_validate_briefly")
-    return "validate_briefly", rules
+    return "validate_briefly", rules, guard_payload
 
 
 def _build_avoid_list(
@@ -324,6 +365,7 @@ def _build_evidence_refs(
 
 def build_diagnostic_card_v1(
     *,
+    user_message: str = "",
     state_snapshot: StateSnapshot,
     thread_state: ThreadState,
     context_package: ContextAssemblyPackage | None,
@@ -336,7 +378,9 @@ def build_diagnostic_card_v1(
         thread_state=thread_state,
         relation_reason=relation_reason,
     )
-    suggested_writer_move, move_rules = _resolve_writer_move(
+    suggested_writer_move, move_rules, behavior_guard = _resolve_writer_move(
+        user_message=user_message,
+        context_package=context_package,
         state_snapshot=state_snapshot,
         thread_state=thread_state,
         relation_reason=relation_reason,
@@ -365,6 +409,33 @@ def build_diagnostic_card_v1(
         context_package=context_package,
         relation_reason=relation_reason,
     )
+    request_type = str(behavior_guard.get("request_type", "unknown") or "unknown")
+    practice_suppressed = bool(
+        behavior_guard.get("practice_or_regulate_should_be_suppressed", False)
+    )
+    suppression_reasons = [
+        str(item)
+        for item in list(behavior_guard.get("reasons", []) or [])
+        if str(item).strip()
+    ]
+    evidence_refs.extend(
+        [
+            DiagnosticEvidenceRef("behavior_guard", "request_type", request_type),
+            DiagnosticEvidenceRef(
+                "behavior_guard",
+                "practice_suppressed",
+                "true" if practice_suppressed else "false",
+            ),
+        ]
+    )
+    if suppression_reasons:
+        evidence_refs.append(
+            DiagnosticEvidenceRef(
+                "behavior_guard",
+                "practice_suppression_reasons",
+                ",".join(suppression_reasons),
+            )
+        )
 
     trace = DiagnosticCardTrace(
         version=DIAGNOSTIC_CARD_VERSION,
@@ -374,6 +445,9 @@ def build_diagnostic_card_v1(
             + move_rules
             + avoid_rules
             + risk_rules
+            + [f"request_type={request_type}"]
+            + [f"practice_suppressed={'true' if practice_suppressed else 'false'}"]
+            + [f"practice_suppression_reason={item}" for item in suppression_reasons]
             + [confidence_rule]
         ),
         risk_flags=list(risk_flags),

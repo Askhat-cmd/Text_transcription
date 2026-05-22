@@ -1,0 +1,8 @@
+{
+  "schema_version": "anti_regulate_loop_audit_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "practice_suppressed_after_rejection_count": 4,
+  "unexpected_regulate_first_count": 0,
+  "unexpected_body_action_count": 0,
+  "anti_regulate_loop_gate": "passed"
+}

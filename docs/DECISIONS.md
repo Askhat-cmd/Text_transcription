@@ -611,3 +611,9 @@ Status: accepted
 Context: HF2 showed in-process retrieval success while strict live artifacts still reported zero delivery.
 Decision: HF3 evaluates two live queries, aligns adaptive+multiagent traces, and stores explicit writer KB truncation audit as a non-blocking quality backlog.
 Consequences: rollout remains bounded to creator-only path; broad rollout and normal-user activation stay disabled.
+
+## PRD-046.1.35-HF4
+Current Stage:
+PRD-046.1.35-HF4 calibrated creator-live response behavior: example/explanation requests no longer trigger regulate_first by default, practice rejection suppresses body-action suggestions, and Web Trace displays non-empty safe Writer chunk previews.
+Next:
+PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.

@@ -101,3 +101,9 @@
 3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
+
+## PRD-046.1.35-HF4
+Current Stage:
+PRD-046.1.35-HF4 calibrated creator-live response behavior: example/explanation requests no longer trigger regulate_first by default, practice rejection suppresses body-action suggestions, and Web Trace displays non-empty safe Writer chunk previews.
+Next:
+PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.

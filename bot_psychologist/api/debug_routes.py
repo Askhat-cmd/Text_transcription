@@ -230,6 +230,31 @@ def _compact_trace_payload(raw_trace: Dict[str, Any]) -> Dict[str, Any]:
     return trace
 
 
+def _build_semantic_hit_trace_list(raw_hits: Any) -> List[SemanticHitTrace]:
+    semantic_hits: List[SemanticHitTrace] = []
+    if not isinstance(raw_hits, list):
+        return semantic_hits
+    for item in raw_hits:
+        if not isinstance(item, dict):
+            continue
+        preview = str(
+            item.get("content_preview")
+            or item.get("sanitized_content_preview")
+            or ""
+        )
+        safe_full = str(item.get("content_full") or preview)
+        semantic_hits.append(
+            SemanticHitTrace(
+                chunk_id=str(item.get("chunk_id", "")),
+                source=str(item.get("source", "unknown")),
+                score=float(item.get("score", 0.0) or 0.0),
+                content_preview=preview,
+                content_full=safe_full,
+            )
+        )
+    return semantic_hits
+
+
 @router.get("/blob/{blob_id}")
 async def get_blob(
     blob_id: str,
@@ -354,20 +379,7 @@ async def get_multiagent_trace(
         previous_debug = store.get_multiagent_debug(resolved_session_id, resolved_turn_index - 1)
 
     raw_hits = debug.get("semantic_hits_detail")
-    semantic_hits: List[SemanticHitTrace] = []
-    if isinstance(raw_hits, list):
-        for item in raw_hits:
-            if not isinstance(item, dict):
-                continue
-            semantic_hits.append(
-                SemanticHitTrace(
-                    chunk_id=str(item.get("chunk_id", "")),
-                    source=str(item.get("source", "unknown")),
-                    score=float(item.get("score", 0.0) or 0.0),
-                    content_preview=str(item.get("content_preview", "")),
-                    content_full=str(item.get("content_full", "")),
-                )
-            )
+    semantic_hits = _build_semantic_hit_trace_list(raw_hits)
 
     profile = debug.get("user_profile") if isinstance(debug.get("user_profile"), dict) else {}
     memory_written = debug.get("memory_written")

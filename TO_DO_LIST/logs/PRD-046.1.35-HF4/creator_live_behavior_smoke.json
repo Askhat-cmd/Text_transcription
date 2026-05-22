@@ -1,0 +1,102 @@
+{
+  "schema_version": "creator_live_behavior_smoke_v1",
+  "prd_id": "PRD-046.1.35-HF4",
+  "cases": [
+    {
+      "case_id": "A",
+      "message": "что такое нейросталкинг",
+      "expected_request_type": "explain_request",
+      "request_type": "explain_request",
+      "practice_suppressed": true,
+      "response_mode_input": "regulate",
+      "suggested_writer_move": "clarify_one_point",
+      "writer_move_must_do": [
+        "reflect_one_key_point",
+        "ask_one_specific_question"
+      ],
+      "anti_regulate_reasons": [
+        "user_requested_example_or_explanation"
+      ]
+    },
+    {
+      "case_id": "B",
+      "message": "как это можно применить к своей жизни?",
+      "expected_request_type": "explain_request",
+      "request_type": "explain_request",
+      "practice_suppressed": true,
+      "response_mode_input": "regulate",
+      "suggested_writer_move": "clarify_one_point",
+      "writer_move_must_do": [
+        "reflect_one_key_point",
+        "ask_one_specific_question"
+      ],
+      "anti_regulate_reasons": [
+        "user_requested_example_or_explanation"
+      ]
+    },
+    {
+      "case_id": "C",
+      "message": "объясни мне не практику а просто приведи пример из жизни!",
+      "expected_request_type": "example_request",
+      "request_type": "example_request",
+      "practice_suppressed": true,
+      "response_mode_input": "regulate",
+      "suggested_writer_move": "give_concrete_example",
+      "writer_move_must_do": [
+        "give_one_concrete_life_example",
+        "use_user_requested_context",
+        "avoid_practice_instruction",
+        "avoid_breathing_instruction",
+        "connect_example_to_current_thread"
+      ],
+      "anti_regulate_reasons": [
+        "user_requested_example_or_explanation",
+        "user_rejected_practice"
+      ]
+    },
+    {
+      "case_id": "D",
+      "message": "с родителем пример хочу",
+      "expected_request_type": "example_request",
+      "request_type": "example_request",
+      "practice_suppressed": true,
+      "response_mode_input": "regulate",
+      "suggested_writer_move": "give_concrete_example",
+      "writer_move_must_do": [
+        "give_one_concrete_life_example",
+        "use_user_requested_context",
+        "avoid_practice_instruction",
+        "avoid_breathing_instruction",
+        "connect_example_to_current_thread"
+      ],
+      "anti_regulate_reasons": [
+        "user_requested_example_or_explanation",
+        "user_rejected_practice"
+      ]
+    },
+    {
+      "case_id": "E",
+      "message": "мне очень тревожно, не могу успокоиться, помоги прямо сейчас",
+      "expected_request_type": "safety_regulation_request",
+      "request_type": "safety_regulation_request",
+      "practice_suppressed": false,
+      "response_mode_input": "regulate",
+      "suggested_writer_move": "regulate_first",
+      "writer_move_must_do": [
+        "offer_one_simple_body_action",
+        "keep_language_short",
+        "reduce_pressure"
+      ],
+      "anti_regulate_reasons": [
+        "explicit_regulation_request"
+      ]
+    }
+  ],
+  "example_cases_total": 4,
+  "example_cases_passed": 4,
+  "practice_suppressed_after_rejection_count": 4,
+  "unexpected_regulate_first_count": 0,
+  "unexpected_body_action_count": 0,
+  "true_regulate_case_passed": true,
+  "creator_live_behavior_smoke_gate": "passed"
+}

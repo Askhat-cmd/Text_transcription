@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_no_mutation_final_proof_v1",
+  "prd_id": "PRD-046.1.37",
+  "tracked_files": [
+    "all_blocks_merged",
+    "config",
+    "registry"
+  ],
+  "changed_files": [],
+  "no_mutation_final_proof": "passed",
+  "no_mutation_final_proof_passed": true
+}

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-046.1.37: finalized Diagnostic Center completion decision gate with source/provenance/runtime/live/admin/rollback/normal-user/safety/no-mutation evidence and phase-closure transfer brief.
 - PRD-046.1.35-HF3: synchronized live RAG evidence with multiagent trace and added writer KB truncation audit.
 - PRD-046.1.35-HF2: creator live evidence and BotDB/RAG-to-writer delivery repair with strict diagnostic gates.
 - PRD-046.1.35-HF1: creator live evidence and BotDB/RAG-to-writer delivery repair with strict diagnostic gates.
@@ -17,10 +18,14 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active cleanup/stabilization PRD in progress.
+- No active Diagnostic Center completion PRD in progress.
 
 ## Next
-1. PRD-046.1.37 - Diagnostic Center Final Results / Completion Decision Gate v1.
+1. Multiagent Quality & Tuning Track.
+1. Multiagent Quality & Tuning Track.
+1. Multiagent Quality & Tuning Track.
+1. Multiagent Quality & Tuning Track.
+1. Multiagent Quality & Tuning Track.
 
 ## Later
 - Operational hardening for governed limited runtime.

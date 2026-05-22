@@ -1,0 +1,49 @@
+{
+  "schema_version": "diagnostic_center_final_completion_scorecard_v1",
+  "prd_id": "PRD-046.1.37",
+  "final_status": "blocked",
+  "decision": "blocked_runtime_readiness",
+  "source_gate": "passed",
+  "evidence_provenance_gate": "passed",
+  "runtime_readiness_final_gate": "blocked",
+  "actual_live_creator_smoke_gate": "blocked",
+  "admin_runtime_controls_final_gate": "passed_with_warning",
+  "rollback_hard_stop_final_gate": "blocked",
+  "normal_user_final_no_effect_gate": "blocked",
+  "rag_behavior_final_regression_gate": "blocked",
+  "trace_sanitization_final_gate": "passed",
+  "provider_budget_final_gate": "passed",
+  "no_mutation_final_proof": "passed",
+  "artifact_encoding_hygiene": "passed",
+  "actual_live_cases_total": 5,
+  "actual_live_cases_passed": 0,
+  "diagnostic_center_active_for_creator_count": 1,
+  "diagnostic_center_trace_present_count": 1,
+  "normal_user_live_authority_applied": false,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "all_users_mode_enabled": false,
+  "diagnostic_center_track_closed": false,
+  "next_track_recommendation": "Multiagent Quality & Tuning Track",
+  "blockers": [
+    "runtime_readiness_blocked",
+    "actual_live_creator_smoke_blocked",
+    "rollback_hard_stop_blocked",
+    "normal_user_no_effect_blocked",
+    "rag_behavior_regression_blocked"
+  ],
+  "warnings": [
+    "admin_runtime_controls_warning"
+  ],
+  "backlog_items": [
+    "Writer style/depth tuning",
+    "State Analyzer calibration",
+    "Thread Manager / continuity",
+    "Pattern Core / Active Frame",
+    "KB Context Payload v2",
+    "Web Trace UX polish",
+    "Web Admin advanced controls",
+    "Response quality eval"
+  ]
+}

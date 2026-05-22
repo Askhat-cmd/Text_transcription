@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_rag_behavior_final_regression_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "rag_relevant_cases_count": 3,
+  "rag_safe_summary_present_count": 0,
+  "writer_chunk_non_empty_preview_min": 4,
+  "example_request_unexpected_regulate_first_count": 0,
+  "unexpected_body_action_after_practice_rejection_count": 0,
+  "true_regulate_case_passed": false,
+  "rag_behavior_final_regression_gate": "blocked"
+}

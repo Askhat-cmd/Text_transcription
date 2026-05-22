@@ -1,0 +1,105 @@
+{
+  "schema_version": "diagnostic_center_evidence_provenance_audit_v1",
+  "prd_id": "PRD-046.1.37",
+  "source_prd": "PRD-046.1.36",
+  "actual_live_evidence_count": 0,
+  "runtime_probe_evidence_count": 2,
+  "simulated_contract_evidence_count": 4,
+  "static_source_evidence_count": 12,
+  "missing_or_weak_evidence_count": 0,
+  "items": [
+    {
+      "artifact": "TO_DO_LIST/reports/PRD-046.1.36_IMPLEMENTATION_REPORT.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    },
+    {
+      "artifact": "TO_DO_LIST/reports/PRD-046.1.36_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/prd_046_1_36_scorecard.json",
+      "classification": "static_source_evidence",
+      "reason": "final scorecard summary"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/runtime_readiness_gate.json",
+      "classification": "runtime_probe_evidence",
+      "reason": "endpoint probe from prior PRD"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/admin_runtime_controls_acceptance.json",
+      "classification": "runtime_probe_evidence",
+      "reason": "runtime/admin surface proof artifact"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/creator_live_pilot_acceptance.json",
+      "classification": "simulated_contract_evidence",
+      "reason": "runner-derived deterministic case eval"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/diagnostic_center_trace_acceptance.json",
+      "classification": "simulated_contract_evidence",
+      "reason": "runner-derived unified trace summary"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/rollback_force_disabled_proof.json",
+      "classification": "simulated_contract_evidence",
+      "reason": "fallback proof without guaranteed admin write endpoint"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/normal_user_no_effect_gate.json",
+      "classification": "simulated_contract_evidence",
+      "reason": "contract gate from previous cycle"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/rag_and_behavior_regression_gate.json",
+      "classification": "static_source_evidence",
+      "reason": "regression counters from prior artifacts"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/trace_sanitization_gate.json",
+      "classification": "static_source_evidence",
+      "reason": "trace sanitization summary"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/provider_budget_gate.json",
+      "classification": "static_source_evidence",
+      "reason": "budget counters from prior artifacts"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/no_mutation_proof.json",
+      "classification": "static_source_evidence",
+      "reason": "hash-based production mutation proof"
+    },
+    {
+      "artifact": "TO_DO_LIST/logs/PRD-046.1.36/artifact_encoding_hygiene_report.json",
+      "classification": "static_source_evidence",
+      "reason": "encoding hygiene artifact"
+    },
+    {
+      "artifact": "docs/PROJECT_STATE.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    },
+    {
+      "artifact": "docs/ROADMAP.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    },
+    {
+      "artifact": "docs/PRD_INDEX.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    },
+    {
+      "artifact": "docs/DECISIONS.md",
+      "classification": "static_source_evidence",
+      "reason": "report_or_docs_context"
+    }
+  ],
+  "final_live_gap_detected": true,
+  "final_live_gap_must_be_closed_by_prd_046_1_37": true,
+  "gate": "passed"
+}

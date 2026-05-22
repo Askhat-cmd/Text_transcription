@@ -629,3 +629,10 @@ Status: accepted
 Context: HF4 passed behavior calibration and creator pipeline evidence, while broad rollout and production-ready declaration remain disallowed.
 Decision: PRD-046.1.36 accepts Diagnostic Center as a governed creator-live pilot layer with runtime controls, rollback hard-stop, and strict normal-user no-effect boundary.
 Consequences: next step is final completion decision gate (`PRD-046.1.37`), not broad rollout.
+
+## ADR-057 - Diagnostic Center v1 completion gate closes current creator-pilot phase without rollout expansion
+
+Status: accepted
+Context: PRD-046.1.36 accepted creator-live pilot layer but left runtime readiness warning and mixed evidence provenance strengths.
+Decision: PRD-046.1.37 enforces final source/provenance/runtime/live/admin/rollback/normal-user/safety/no-mutation decision package and closes Diagnostic Center v1 for the current phase.
+Consequences: creator-only/allowlist pilot remains governed; broad rollout stays prohibited; production_ready remains false; next work moves to Multiagent Quality & Tuning Track.

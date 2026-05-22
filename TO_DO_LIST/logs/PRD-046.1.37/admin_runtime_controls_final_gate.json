@@ -1,0 +1,25 @@
+{
+  "schema_version": "diagnostic_center_admin_runtime_controls_final_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "runtime_mode_supported": [
+    "disabled",
+    "shadow_only",
+    "creator_only",
+    "allowlist_live",
+    "all_users_locked"
+  ],
+  "runtime_mode_effective": "creator_only",
+  "all_users_control_locked": true,
+  "force_disabled_toggle_present": true,
+  "creator_user_id_visible": true,
+  "allowlist_status_visible": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "admin_runtime_endpoint_status_code": 200,
+  "admin_write_endpoint_missing": true,
+  "admin_ui_write_toggle_missing": true,
+  "fallback_runtime_toggle_available": true,
+  "admin_runtime_controls_final_gate": "passed_with_warning",
+  "admin_runtime_payload_schema_version": "10.5.1"
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "diagnostic_center_final_source_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "source_prd": "PRD-046.1.36",
+  "checks": {
+    "source_artifacts_present": true,
+    "final_status_passed": true,
+    "decision_ok": true,
+    "admin_runtime_controls_gate_passed": true,
+    "creator_live_pilot_acceptance_gate_passed": true,
+    "diagnostic_center_trace_acceptance_gate_passed": true,
+    "rollback_force_disabled_gate_passed": true,
+    "normal_user_no_effect_gate_passed": true,
+    "rag_and_behavior_regression_gate_passed": true,
+    "trace_sanitization_gate_passed": true,
+    "provider_budget_gate_passed": true,
+    "no_mutation_proof_passed": true,
+    "artifact_encoding_hygiene_passed": true,
+    "broad_rollout_allowed_false": true,
+    "production_ready_false": true,
+    "normal_user_activation_allowed_false": true,
+    "all_users_mode_enabled_false": true
+  },
+  "missing_artifact_count": 0,
+  "parse_error_count": 0,
+  "source_gate": "passed",
+  "source_gate_passed": true
+}

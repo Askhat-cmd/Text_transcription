@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_trace_sanitization_final_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "files_scanned": 14,
+  "secret_pattern_hits": 0,
+  "raw_content_full_hits": 0,
+  "trace_sanitization_final_gate": "passed"
+}

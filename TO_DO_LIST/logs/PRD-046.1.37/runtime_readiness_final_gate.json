@@ -1,0 +1,20 @@
+{
+  "schema_version": "diagnostic_center_runtime_readiness_final_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "backend_base_url": "http://localhost:8001",
+  "botdb_base_url": "http://localhost:8003",
+  "web_ui_base_url": "http://localhost:3000",
+  "backend_health_status_code": 200,
+  "backend_adaptive_endpoint_status": 0,
+  "backend_debug_trace_endpoint_status": 0,
+  "botdb_status_code": 200,
+  "botdb_query_status_code": 200,
+  "web_ui_status_code": 0,
+  "admin_runtime_controls_status": "passed",
+  "admin_runtime_endpoint_status_code": 200,
+  "health_endpoint_missing": false,
+  "actual_backend_runtime_usable": false,
+  "runtime_readiness_final_gate": "blocked",
+  "adaptive_error": "TimeoutError",
+  "debug_error": "TimeoutError"
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_rollback_hard_stop_final_gate_v1",
+  "prd_id": "PRD-046.1.37",
+  "force_disabled_set_attempted": true,
+  "force_disabled_effective": true,
+  "creator_answer_received_while_disabled": false,
+  "diagnostic_center_applied_while_disabled": false,
+  "trace_force_disabled_visible": false,
+  "force_disabled_restored_to_false": true,
+  "admin_write_endpoint_missing": true,
+  "fallback_runtime_toggle_used": true,
+  "probe_adaptive_status": 0,
+  "probe_trace_status": 0,
+  "adaptive_error": "TimeoutError",
+  "rollback_hard_stop_final_gate": "blocked"
+}

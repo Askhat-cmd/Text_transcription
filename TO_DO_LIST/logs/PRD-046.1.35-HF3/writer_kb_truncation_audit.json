@@ -1,0 +1,22 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_writer_kb_truncation_audit_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "truncation_detected": true,
+  "truncation_blocker": false,
+  "writer_kb_truncation_gate": "warning",
+  "kb_context_v2_backlog": true,
+  "knowledge_policy_sanitized_max_chars": 240,
+  "writer_prompt_hit_max_chars": 300,
+  "conversation_context_max_chars": 2000,
+  "boundary_trim_helper_present": true,
+  "selected_query_id": "q1",
+  "selected_writer_prompt_knowledge_hits_count": 5,
+  "selected_context_assembly_knowledge_hits_count": 3,
+  "reasons": [
+    "knowledge_policy_sanitized_cap_present",
+    "writer_prompt_hit_cap_present",
+    "conversation_context_cap_present",
+    "boundary_trim_helper_present"
+  ],
+  "recommended_next_prd": "PRD-046.1.36-KB - Writer KB Context Payload v2 Backlog"
+}

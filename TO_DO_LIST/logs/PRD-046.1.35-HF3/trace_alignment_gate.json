@@ -1,0 +1,10 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_trace_alignment_gate_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "backend_context_knowledge_hits_count": 3,
+  "backend_writer_prompt_knowledge_hits_count": 5,
+  "web_trace_chunks_in_writer_count": 5,
+  "mismatch_detected": false,
+  "trace_alignment_gate": "passed",
+  "trace_alignment_gate_passed": true
+}

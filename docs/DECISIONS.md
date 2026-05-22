@@ -604,3 +604,10 @@ Status: accepted
 Context: PRD-046.1.35 ended with evidence_incomplete; we needed a strict chain proof from BotDB query to writer prompt and debug trace.
 Decision: introduce HF1 scorecard + creator_live_turn_proof + rag_to_writer_delivery_proof with delivery classification and explicit governance-blocked state.
 Consequences: creator-only runtime remains bounded; broad rollout and normal-user activation stay disabled until later PRDs.
+
+## ADR-056 - Live RAG evidence must align adaptive trace, multiagent trace, and writer prompt
+
+Status: accepted
+Context: HF2 showed in-process retrieval success while strict live artifacts still reported zero delivery.
+Decision: HF3 evaluates two live queries, aligns adaptive+multiagent traces, and stores explicit writer KB truncation audit as a non-blocking quality backlog.
+Consequences: rollout remains bounded to creator-only path; broad rollout and normal-user activation stay disabled.

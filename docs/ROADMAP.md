@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-046.1.35-HF3: synchronized live RAG evidence with multiagent trace and added writer KB truncation audit.
 - PRD-046.1.35-HF2: creator live evidence and BotDB/RAG-to-writer delivery repair with strict diagnostic gates.
 - PRD-046.1.35-HF1: creator live evidence and BotDB/RAG-to-writer delivery repair with strict diagnostic gates.
 - PRD-046.1.35: creator-live results/rollback/quality gate completed in no-new-execution mode with evidence-strength audit, safety boundary verification, trace/no-mutation/docs gates, and decision handoff.
@@ -19,7 +20,7 @@
 - No active cleanup/stabilization PRD in progress.
 
 ## Next
-1. PRD-046.1.35-HF3 - Creator Live RAG Delivery Targeted Repair v1.
+1. PRD-046.1.36 - Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 2. Hotfix path only if new blockers appear in rollout-planning preparation.
 
 ## Later

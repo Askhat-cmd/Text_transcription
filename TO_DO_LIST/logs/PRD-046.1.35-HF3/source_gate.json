@@ -1,0 +1,26 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_source_gate_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "required_artifact_count": 9,
+  "present_artifact_count": 9,
+  "missing_artifact_count": 0,
+  "parse_error_count": 0,
+  "missing_artifacts": [],
+  "parse_errors": [],
+  "memory_agent_evidence_from_hf2_command_log": {
+    "rag_raw_hits_count=4": true,
+    "rag_salvaged_hits_count=3": true,
+    "knowledge_policy_included_writer_count=3": true
+  },
+  "source_expectations": {
+    "status_ok": true,
+    "decision_ok": true,
+    "botdb_chunks_ok": true,
+    "normal_user_activation_allowed_false": true,
+    "broad_rollout_allowed_false": true,
+    "production_ready_false": true,
+    "hf2_memory_agent_evidence_ok": true
+  },
+  "source_gate": "passed",
+  "source_gate_passed": true
+}

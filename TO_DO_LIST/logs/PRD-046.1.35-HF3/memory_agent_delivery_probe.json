@@ -1,0 +1,111 @@
+{
+  "schema_version": "hf3_memory_agent_probe_v1",
+  "query": "как это применимо к моей жизни?",
+  "user_id": "user_1772172411219_kamh0",
+  "rag_retrieval_trace": {
+    "version": "rag_retrieval_trace_v1",
+    "query": "как это применимо к моей жизни?",
+    "retrieval_source_attempted": "api",
+    "retrieval_source_used": "api",
+    "raw_hits_count": 4,
+    "raw_scores": [
+      0.08279131421493004,
+      0.07876207484371234,
+      0.07206478243556551,
+      0.06720166410803258
+    ],
+    "rag_min_score": 0.45,
+    "filtered_hits_count": 3,
+    "filtered_by_score_count": 4,
+    "salvaged_hits_count": 3,
+    "score_policy_mode": "source_aware_salvage",
+    "score_policy_reasons": [
+      "all_hits_below_min_score",
+      "low_score_salvage_applied",
+      "source=api"
+    ]
+  },
+  "knowledge_policy_trace": {
+    "version": "knowledge_policy_trace_v1",
+    "input_hits_count": 3,
+    "included_writer_count": 3,
+    "included_diagnostic_count": 0,
+    "included_practice_count": 0,
+    "internal_only_count": 0,
+    "dropped_count": 0,
+    "drop_reasons": [],
+    "risk_flags_count": {
+      "legacy_no_governance": 3
+    },
+    "decisions": [
+      {
+        "chunk_id": "8e6478bc-f679-45f7-8da8-2be60726d1b4",
+        "source": "book",
+        "score": 0.08279131421493004,
+        "action": "include_writer_context",
+        "allowed_for_writer": true,
+        "allowed_for_diagnostic": false,
+        "allowed_for_practice": false,
+        "reasons": [
+          "legacy_no_governance"
+        ],
+        "risk_flags": [
+          "legacy_no_governance"
+        ],
+        "sanitized_content_len": 1665
+      },
+      {
+        "chunk_id": "5ee90710-3923-41b9-9d44-78ccc4b278a6",
+        "source": "book",
+        "score": 0.07876207484371234,
+        "action": "include_writer_context",
+        "allowed_for_writer": true,
+        "allowed_for_diagnostic": false,
+        "allowed_for_practice": false,
+        "reasons": [
+          "legacy_no_governance"
+        ],
+        "risk_flags": [
+          "legacy_no_governance"
+        ],
+        "sanitized_content_len": 2517
+      },
+      {
+        "chunk_id": "1090c2c2-2985-458f-9619-8372a820eba1",
+        "source": "book",
+        "score": 0.07206478243556551,
+        "action": "include_writer_context",
+        "allowed_for_writer": true,
+        "allowed_for_diagnostic": false,
+        "allowed_for_practice": false,
+        "reasons": [
+          "legacy_no_governance"
+        ],
+        "risk_flags": [
+          "legacy_no_governance"
+        ],
+        "sanitized_content_len": 1729
+      }
+    ]
+  },
+  "memory_semantic_hits_count": 3,
+  "knowledge_rag_hits_count": 3,
+  "context_assembly_trace": {
+    "version": "context_assembly_trace_v1",
+    "recent_full_count": 0,
+    "summarized_count": 0,
+    "dropped_count": 0,
+    "semantic_hits_count": 0,
+    "knowledge_hits_count": 3,
+    "duplicates_removed": 0,
+    "budget_used_chars": 5944,
+    "budget_limit_chars": 8000,
+    "reasons": []
+  },
+  "context_assembly_knowledge_hits_count": 3,
+  "writer_prompt_knowledge_hits_count": 2,
+  "writer_prompt_context_preview": {
+    "has_relevant_knowledge": true,
+    "semantic_hits_count": 2
+  }
+}

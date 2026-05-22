@@ -1,0 +1,32 @@
+{
+  "schema_version": "creator_live_turn_proof_hf3_collection_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "selected_query_id": "q1",
+  "actual_live_turn_evidence_count": 2,
+  "query_proofs": [
+    {
+      "schema_version": "creator_live_turn_proof_v1",
+      "prd_id": "PRD-046.1.35-HF3",
+      "query_id": "q1",
+      "query": "как это применимо к моей жизни?",
+      "actual_live_turn": true,
+      "turn_id": "sha256:f8e3c5a8a162be5da035fcdcf",
+      "session_id_hash": "sha256:e313a927f717ae68e497a68170e835e131bb4d6d47d3c7ecefc495eee2c66c99",
+      "user_id_hash": "sha256:65f961c619c081e1601ba55fe20c96a513ca8cd5d904230152c27dbf1029f26d",
+      "answer_received": true,
+      "trace_available": true
+    },
+    {
+      "schema_version": "creator_live_turn_proof_v1",
+      "prd_id": "PRD-046.1.35-HF3",
+      "query_id": "q2",
+      "query": "что такое нейросталкинг",
+      "actual_live_turn": true,
+      "turn_id": "sha256:f8e3c5a8a162be5da035fcdcf",
+      "session_id_hash": "sha256:e313a927f717ae68e497a68170e835e131bb4d6d47d3c7ecefc495eee2c66c99",
+      "user_id_hash": "sha256:65f961c619c081e1601ba55fe20c96a513ca8cd5d904230152c27dbf1029f26d",
+      "answer_received": true,
+      "trace_available": true
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_no_mutation_proof_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "hash_before": {
+    "all_blocks_merged": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+    "registry": "82cca51999de9d4a1150dca54e175bcf5c02a8e6b135b6b6defc41e5e10bec19",
+    "config": "eb617d95061687a2c0005b83c8a1afdd3aee96a1b476f800a610b9956685e8e7"
+  },
+  "hash_after": {
+    "all_blocks_merged": "108429fb5aad8b9a010fc9f4e982aeaef12ed330f54b68959e3c4c055ef0639d",
+    "registry": "82cca51999de9d4a1150dca54e175bcf5c02a8e6b135b6b6defc41e5e10bec19",
+    "config": "eb617d95061687a2c0005b83c8a1afdd3aee96a1b476f800a610b9956685e8e7"
+  },
+  "production_data_mutated": false,
+  "no_mutation_proof_passed": true
+}

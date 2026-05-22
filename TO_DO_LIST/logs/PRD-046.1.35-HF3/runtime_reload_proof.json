@@ -1,0 +1,21 @@
+{
+  "schema_version": "hf3_runtime_reload_proof_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "backend_base_url": "http://localhost:8001",
+  "botdb_base_url": "http://localhost:8003",
+  "web_ui_base_url": "http://localhost:3000",
+  "backend_status": 200,
+  "botdb_status": 200,
+  "web_ui_status": 200,
+  "backend_error": null,
+  "botdb_error": null,
+  "web_ui_error": null,
+  "git_commit_seen": "6d3c48b",
+  "hf2_code_paths_importable": true,
+  "hf2_import_error": "",
+  "memory_retrieval_has_rag_score_policy_v1": true,
+  "memory_retrieval_policy_error": "",
+  "runtime_reload_gate": "passed",
+  "runtime_reload_warnings": [],
+  "runtime_reload_proof_passed": true
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_trace_sanitization_gate_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "secrets_committed": false,
+  "trace_sanitization_gate_passed": true,
+  "trace_sanitization_gate": "passed"
+}

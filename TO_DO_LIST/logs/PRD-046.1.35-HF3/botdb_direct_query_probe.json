@@ -1,0 +1,29 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf3_botdb_probe_v1",
+  "prd_id": "PRD-046.1.35-HF3",
+  "query": "как это применимо к моей жизни?",
+  "botdb_query_attempted": true,
+  "botdb_http_status": 200,
+  "botdb_chunks_returned": 4,
+  "botdb_query_route_fallback_used": true,
+  "botdb_error_class": null,
+  "chunks_preview": [
+    {
+      "chunk_id": "8e6478bc-f679-45f7-8da8-2be60726d1b4",
+      "score": 0.08279131421493004
+    },
+    {
+      "chunk_id": "5ee90710-3923-41b9-9d44-78ccc4b278a6",
+      "score": 0.07876207484371234
+    },
+    {
+      "chunk_id": "1090c2c2-2985-458f-9619-8372a820eba1",
+      "score": 0.07206478243556551
+    },
+    {
+      "chunk_id": "00a10081-935a-4c17-a000-d91c7420ce7f",
+      "score": 0.06720166410803258
+    }
+  ],
+  "botdb_query_gate": "passed"
+}

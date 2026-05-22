@@ -1,0 +1,20 @@
+﻿PRD-046.1.35-HF3 command log (UTF-8 normalized)
+
+[1] python -m pytest bot_psychologist/tests/multiagent/test_hf3_contract.py bot_psychologist/tests/multiagent/test_hf3_source_gate.py bot_psychologist/tests/multiagent/test_hf3_decision.py bot_psychologist/tests/multiagent/test_hf3_truncation_audit.py -q
+result: passed (5 passed)
+
+[2] python -m bot_psychologist.tools.run_creator_live_rag_delivery_hf3 --repo-root . --botdb-base-url http://localhost:8003 --backend-base-url http://localhost:8001 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --query "как это применимо к моей жизни?" --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF3 --strict
+result: status=passed, decision=hf3_passed_with_kb_context_truncation_warning
+
+[3] runtime highlights
+- source_gate=passed
+- runtime_reload_gate=passed
+- botdb_chunks_returned=4
+- rag_raw_hits_count=4
+- rag_filtered_hits_count=3
+- rag_salvaged_hits_count=3
+- knowledge_policy_included_writer_count=3
+- context_assembly_knowledge_hits_count=3
+- writer_prompt_knowledge_hits_count=5
+- web_trace_chunks_in_writer_count=5
+- writer_kb_truncation_gate=warning (non-blocking)

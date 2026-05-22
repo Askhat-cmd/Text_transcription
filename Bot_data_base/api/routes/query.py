@@ -98,15 +98,29 @@ def _parse_float(value: object) -> float | None:
         return None
 
 
+def _normalize_query_row(value: object) -> list:
+    """Normalize Chroma response rows to a flat list."""
+    if not isinstance(value, list):
+        return []
+    if not value:
+        return []
+    first = value[0]
+    if isinstance(first, list):
+        return first
+    return value
+
+
 def _extract_candidates(results: dict) -> List[dict]:
-    documents = (results.get("documents") or [[]])[0]
-    metadatas = (results.get("metadatas") or [[]])[0]
-    distances = (results.get("distances") or [[]])[0]
-    ids = (results.get("ids") or [[]])[0]
+    documents = _normalize_query_row(results.get("documents"))
+    metadatas = _normalize_query_row(results.get("metadatas"))
+    distances = _normalize_query_row(results.get("distances"))
+    ids = _normalize_query_row(results.get("ids"))
 
     candidates = []
     for idx, content in enumerate(documents):
         meta = metadatas[idx] if idx < len(metadatas) else {}
+        if not isinstance(meta, dict):
+            meta = {}
         distance = distances[idx] if idx < len(distances) else None
         block_id = ids[idx] if idx < len(ids) else meta.get("block_id") or ""
         candidates.append(
@@ -126,9 +140,9 @@ def _fallback_candidates_from_collection(collection: object, limit: int) -> List
     raw = collection.get(limit=max(1, int(limit)), include=["documents", "metadatas"])
     if not isinstance(raw, dict):
         return []
-    ids = raw.get("ids") if isinstance(raw.get("ids"), list) else []
-    docs = raw.get("documents") if isinstance(raw.get("documents"), list) else []
-    metas = raw.get("metadatas") if isinstance(raw.get("metadatas"), list) else []
+    ids = _normalize_query_row(raw.get("ids"))
+    docs = _normalize_query_row(raw.get("documents"))
+    metas = _normalize_query_row(raw.get("metadatas"))
 
     candidates: List[dict] = []
     for idx, content in enumerate(docs):

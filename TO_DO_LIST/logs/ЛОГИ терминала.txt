@@ -1,0 +1,519 @@
+tion\Bot_data_base
+PS C:\My_practice\Text_transcription\Bot_datctienv) PS C:\My_practice\Text_transcription
+vate.ps1
+tice\\Text_transcription\\Bot_data_base']
+INFO:     Uvicorn running on http://127.0.0.
+al argument but 3 were given
+INFO:     127.0.0.1:51151 - "GET /api/registry/ HTTP/1.1" 200 OK        / HTTP/1.1" 200 OK                            t: capture() takes 1 posit
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3lectionEvent: capture() ta were given
+Failed to send telemetry event ClientCreateCol23__%D0%BA%D1%83%D0%B7%D0%lectionEvent: capture() takes 1 positional argHTTP/1.1" 200 OKument but 3 were given
+INFO:     127.0.0.1:51156 - "GET /api/blocks/123__%D0%BA%D1%83%D0%B7%D0%BD%D0%B8%D1%86%D0%B0_%D0%B4%D1%83%D1%85%D0%B0 HTTP/1.1" 200 OK    
+Failed to send telemetry event ClientStartEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Batches: 100%|█| 1/1 [00:03<00:00,  3.17s/it]
+[QUERY] Chroma query failed: object of type 'int' has no len()
+[QUERY] Chroma fallback failed: object of type 'int' has no len()
+[QUERY] fallback all_blocks_merged path activated after fallback exception
+INFO:     127.0.0.1:51564 - "POST /api/query/ 
+HTTP/1.1" 200 OK
+Failed to send telemetry event ClientCreateCollectionEvent: capture() takes 1 positional argument but 3 were given
+Batches: 100%|█| 1/1 [00:00<00:00,  4.36it/s]
+[QUERY] Chroma query failed: object of type 'int' has no len()
+[QUERY] Chroma fallback failed: object of type 'int' has no len()
+[QUERY] fallback all_blocks_merged path activated after fallback exception
+INFO:     127.0.0.1:51626 - "POST /api/query/ 
+HTTP/1.1" 200 OK
+
+___
+
+PS C:\My_practice\Text_transcription\Bot_datce\Text_transcription\bot_psychologist
+PS C:\My_practice\Text_transcription\bot_psys\Activate.ps1
+(.venv) PS C:\My_practice\Text_transcriptionon -m uvicorn api.main:app --host 0.0.0.0 --
+2026-05-22 10:06:36,917 | bot_agent.multiageO | [THREAD_STORAGE] storage_dir=C:\My_practbot_psychologist\data\threads
+2026-05-22 10:06:36,931 | bot_agent | INFO |ialized | pipeline: semantic->rerank->topK->abled
+10:06:38 | INFO     | root                  ============================================
+10:06:38 | INFO     | root                   initialized
+10:06:38 | INFO     | root                  ectory: C:\My_practice\Text_transcription\bo
+10:06:38 | INFO     | root                  : logs/app/bot.log
+10:06:38 | INFO     | root                  al log: logs/retrieval/retrieval.log
+10:06:38 | INFO     | root                  og: logs/error/error.log
+10:06:38 | INFO     | root                  ============================================
+INFO:     Started server process [14100]
+INFO:     Waiting for application startup.
+10:06:38 | INFO     | api.main              ver starting
+10:06:38 | INFO     | api.main              : 0.12.0
+10:06:38 | INFO     | api.main              ttp://localhost:8000/api/docs
+10:06:38 | INFO     | api.main              P] runtime config validation: OK
+10:06:38 | INFO     | api.registration.bootse bootstrap complete (tables=5, api_keys_see
+10:06:38 | INFO     | api.main              
+10:06:38 | INFO     | api.main              e); retrieval source is Bot_data_base API
+10:06:38 | INFO     | bot_agent.data_loader 
+10:06:38 | INFO     | bot_agent.semantic_memgual-e5-base
+10:06:39 | INFO     | bot_agent.data_loader P API...
+10:06:46 | INFO     | bot_agent.retriever   
+Warning: You are sending unauthenticated reqts and faster downloads.
+se set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights: 100%|██████████████████████████████████████████████████████| 199/199 [00:00<00:00████████████████████
+se set a HF_TOKEN to enable higher rate limits and faster downloads.     and faster downloads.                        ██████████████████████████
+Loading weights: 100%|██████████████████████████████████████████████████████| 199/199 [00:00y           | [SEMANTIC] e<00:00, 3814.15it/s]
+10:07:18 | INFO     | bot_agent.semantic_memor            | [WARMUP] comy           | [SEMANTIC] embedding model loaded
+10:07:18 | INFO     | api.main                01 (Press CTRL+C to quit) 
+            | [WARMUP] completed
+INFO:     Application startup complete.       
+INFO:     Uvicorn running on http://0.0.0.0:8001 (Press CTRL+C to quit)
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions (key: none)        
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions (key: none)        
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.002s
+INFO:     127.0.0.1:51519 - "OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.002s
+INFO:     127.0.0.1:51520 - "OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:17:51 | ERROR    | asyncio
+            | Exception in callback _ProactorBasePipeTransport._call_connection_lost(None)  
+handle: <Handle _ProactorBasePipeTransport._call_connection_lost(None)>
+10:17:51 | INFO     | api.main
+            | -> GET /api/v1/users/user_1772172411219_kamh0/sessions (key: dev-key-00...)   
+10:17:51 | INFO     | api.conversations.service           | conversation.resumed
+10:17:51 | INFO     | api.main
+            | <- GET /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.081s  
+INFO:     127.0.0.1:51520 - "GET /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> GET /api/v1/users/user_1772172411219_kamh0/sessions (key: dev-key-00...)   
+10:17:51 | INFO     | api.conversations.service           | conversation.resumed
+10:17:51 | INFO     | api.main
+            | <- GET /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.062s  
+INFO:     127.0.0.1:51520 - "GET /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history (key: none)
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history | status=200 | 0.001s
+INFO:     127.0.0.1:51520 - "OPTIONS /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> GET /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history (key: dev-key-00...)
+10:17:51 | INFO     | api.conversations.service           | conversation.resumed
+10:17:51 | INFO     | api.routes.common       
+            | History requested for user=482e11fa-2a32-4d27-836b-445889ca89fd
+10:17:51 | INFO     | api.main
+            | <- GET /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history | status=200 | 0.052s
+INFO:     127.0.0.1:51520 - "GET /api/v1/users/1f52d1ea-ffe0-4caf-947e-66a841110e4b/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: none)
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: none)
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=200 | 0.003s
+INFO:     127.0.0.1:51520 - "OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=200 | 0.004s
+INFO:     127.0.0.1:51524 - "OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: none)
+10:17:51 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: none)
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=200 | 0.003s
+INFO:     127.0.0.1:51520 - "OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=200 | 0.004s
+INFO:     127.0.0.1:51524 - "OPTIONS /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics | status=200 | 0.229s
+INFO:     127.0.0.1:51530 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces | status=200 | 0.210s
+INFO:     127.0.0.1:51531 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces HTTP/1.1" 200 OK
+10:17:51 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=404 | 0.211s
+INFO:     127.0.0.1:51520 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=1 HTTP/1.1" 404 Not Found
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=404 | 0.070s
+INFO:     127.0.0.1:51532 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=2 HTTP/1.1" 404 Not Found
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | -> GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace (key: dev-key-00...)
+10:17:51 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=404 | 0.202s
+INFO:     127.0.0.1:51520 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=1 HTTP/1.1" 404 Not Found
+10:17:52 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics | status=200 | 0.179s
+INFO:     127.0.0.1:51535 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/metrics HTTP/1.1" 200 OK
+10:17:52 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces | status=200 | 0.178s
+INFO:     127.0.0.1:51537 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/traces HTTP/1.1" 200 OK
+10:17:52 | INFO     | api.main
+            | <- GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace | status=404 | 0.140s
+INFO:     127.0.0.1:51538 - "GET /api/debug/session/1f52d1ea-ffe0-4caf-947e-66a841110e4b/multiagent-trace?turn_index=2 HTTP/1.1" 404 Not Found
+10:17:59 | INFO     | api.main
+            | -> OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions (key: none)        
+10:17:59 | INFO     | api.main
+            | <- OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.001s
+INFO:     127.0.0.1:51539 - "OPTIONS /api/v1/users/user_1772172411219_kamh0/sessions HTTP/1.1" 200 OK
+10:17:59 | INFO     | api.main
+            | -> POST /api/v1/users/user_1772172411219_kamh0/sessions (key: dev-key-00...)  
+10:17:59 | INFO     | api.conversations.service           | conversation.resumed
+10:17:59 | INFO     | api.main
+            | <- POST /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.050s 
+INFO:     127.0.0.1:51539 - "POST /api/v1/users/user_1772172411219_kamh0/sessions HTTP/1.1" 
+200 OK
+10:17:59 | INFO     | api.main
+            | -> OPTIONS /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history (key: none)
+10:17:59 | INFO     | api.main
+            | <- OPTIONS /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history | status=200 | 0.001s
+INFO:     127.0.0.1:51539 - "OPTIONS /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:17:59 | INFO     | api.main
+            | -> GET /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history (key: dev-key-00...)
+10:17:59 | INFO     | api.conversations.service           | conversation.resumed
+10:17:59 | INFO     | api.routes.common       
+            | History requested for user=482e11fa-2a32-4d27-836b-445889ca89fd
+10:17:59 | INFO     | api.main
+            | <- GET /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history | status=200 | 0.050s
+INFO:     127.0.0.1:51539 - "GET /api/v1/users/257df8ad-2a84-4dbc-a428-36e02a8155c3/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:18:03 | INFO     | api.main
+            | -> OPTIONS /api/v1/questions/adaptive-stream (key: none)
+10:18:03 | INFO     | api.main
+            | <- OPTIONS /api/v1/questions/adaptive-stream | status=200 | 0.001s
+INFO:     127.0.0.1:51539 - "OPTIONS /api/v1/questions/adaptive-stream HTTP/1.1" 200 OK     
+10:18:03 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+10:18:03 | INFO     | api.identity.service    
+            | identity.user_resolved
+10:18:03 | WARNING  | api.identity.service    
+            | identity.legacy_user_id_used    
+10:18:03 | INFO     | api.identity.service    
+            | identity.session_refreshed      
+10:18:03 | INFO     | api.conversations.service           | conversation.resumed
+10:18:03 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics (key: dev-key-00...)
+10:18:03 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces (key: dev-key-00...)
+10:18:03 | INFO     | api.routes.common       
+            | [ADAPTIVE-STREAM] query: что такое нейросталкинг... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=257df8ad-2a84-4dbc-a428-36e02a8155c3 session=257df8ad-2a84-4dbc-a428-36e02a8155c3)
+10:18:03 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.200s
+INFO:     127.0.0.1:51539 - "POST /api/v1/questions/adaptive-stream HTTP/1.1" 200 OK        
+10:18:03 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics | status=200 | 0.137s
+INFO:     127.0.0.1:51550 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics HTTP/1.1" 200 OK
+10:18:03 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces | status=200 | 0.137s
+INFO:     127.0.0.1:51551 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces HTTP/1.1" 200 OK
+10:18:03 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics (key: dev-key-00...)
+10:18:03 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces (key: dev-key-00...)
+10:18:03 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics | status=200 | 0.111s
+INFO:     127.0.0.1:51558 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/metrics HTTP/1.1" 200 OK
+10:18:03 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces | status=200 | 0.111s
+INFO:     127.0.0.1:51559 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/traces HTTP/1.1" 200 OK
+10:18:05 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-nano selected_mode=responses 
+10:18:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3
+10:18:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3     
+10:18:10 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3      
+10:18:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=0  
+10:18:10 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='что такое нейросталкинг' top_k=4 source=api
+10:18:21 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] API search: 4 блоков10:18:21 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='что такое нейросталкинг...' retrieval_source_used=api circuit_open=False
+10:18:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=0  
+10:18:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=0  
+10:18:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=0  
+10:18:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:18:21 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-mini selected_mode=responses 
+10:18:24 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=0  
+10:18:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns_before=0 
+10:18:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turn_index=1 
+10:18:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turn_index=1
+10:18:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:18:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1 reason=addturn
+10:18:25 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:18:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:18:26 | INFO     | api.main
+            | -> GET /api/v1/users/user_1772172411219_kamh0/sessions (key: dev-key-00...)   
+10:18:26 | INFO     | api.conversations.service           | conversation.resumed
+10:18:26 | INFO     | api.main
+            | <- GET /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.057s  
+INFO:     127.0.0.1:51539 - "GET /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:18:26 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: none)
+10:18:26 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: none)
+10:18:26 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.002s
+INFO:     127.0.0.1:51539 - "OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:18:26 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.002s
+INFO:     127.0.0.1:51540 - "OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:18:26 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: dev-key-00...)
+10:18:26 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.052s
+INFO:     127.0.0.1:51539 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK   
+10:18:26 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: dev-key-00...)
+10:18:26 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.050s
+INFO:     127.0.0.1:51540 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK   
+10:20:16 | INFO     | api.main
+            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+10:20:16 | INFO     | api.identity.service    
+            | identity.user_resolved
+10:20:16 | WARNING  | api.identity.service    
+            | identity.legacy_user_id_used    
+10:20:16 | INFO     | api.identity.service    
+            | identity.session_refreshed      
+10:20:16 | INFO     | api.conversations.service           | conversation.resumed
+10:20:16 | INFO     | api.routes.common       
+            | [ADAPTIVE-STREAM] query: что такое неосталкинг?... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=257df8ad-2a84-4dbc-a428-36e02a8155c3 session=257df8ad-2a84-4dbc-a428-36e02a8155c3)
+10:20:16 | INFO     | api.main
+            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.077s
+INFO:     127.0.0.1:51618 - "POST /api/v1/questions/adaptive-stream HTTP/1.1" 200 OK        
+10:20:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:19 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] query='что такое неосталкинг? что такое нейросталкинг' top_k=4 source=api
+10:20:22 | INFO     | bot_agent.retriever     
+            | [RETRIEVAL] API search: 4 блоков10:20:22 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='что такое неосталкинг? что такое нейросталкинг...' retrieval_source_used=api circuit_open=False
+10:20:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+10:20:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=1   
+10:20:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 results=1 
+threshold=0.600 max_similarity=0.857
+10:20:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.857
+10:20:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=1  
+10:20:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns_before=1 
+10:20:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turn_index=2 
+10:20:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turn_index=2
+10:20:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+10:20:25 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=2 reason=addturn
+10:20:25 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:20:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=257df8ad-2a84-4dbc-a428-36e02a8155c3 turns=2  
+10:20:25 | INFO     | api.main
+            | -> GET /api/v1/users/user_1772172411219_kamh0/sessions (key: dev-key-00...)   
+10:20:25 | INFO     | api.conversations.service           | conversation.resumed
+10:20:25 | INFO     | api.main
+            | <- GET /api/v1/users/user_1772172411219_kamh0/sessions | status=200 | 0.059s  
+INFO:     127.0.0.1:51618 - "GET /api/v1/users/user_1772172411219_kamh0/sessions?limit=200 HTTP/1.1" 200 OK
+10:20:25 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: none)
+10:20:25 | INFO     | api.main
+            | -> OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: none)
+10:20:25 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.001s
+INFO:     127.0.0.1:51618 - "OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:20:25 | INFO     | api.main
+            | <- OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.001s
+INFO:     127.0.0.1:51621 - "OPTIONS /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:20:25 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: dev-key-00...)
+10:20:25 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.051s
+INFO:     127.0.0.1:51618 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK   
+10:20:25 | INFO     | api.main
+            | -> GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace (key: dev-key-00...)
+10:20:25 | INFO     | api.main
+            | <- GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace | status=200 | 0.052s
+INFO:     127.0.0.1:51621 - "GET /api/debug/session/257df8ad-2a84-4dbc-a428-36e02a8155c3/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK   
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/config (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/prompts/stack-v2 (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/status (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/runtime/effective (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/diagnostics/effective (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | -> GET /api/admin/orchestrator/config (key: dev-key-00...)
+10:21:29 | INFO     | api.main
+            | <- GET /api/admin/config | status=200 | 0.076s
+INFO:     127.0.0.1:51655 - "GET /api/admin/config HTTP/1.1" 200 OK
+10:21:29 | INFO     | api.main
+            | <- GET /api/admin/status | status=200 | 0.080s
+INFO:     127.0.0.1:51659 - "GET /api/admin/status HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/prompts/stack-v2 | status=200 | 0.186s
+INFO:     127.0.0.1:51658 - "GET /api/admin/prompts/stack-v2 HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/config (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/status (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/runtime/effective | status=200 | 0.185s
+INFO:     127.0.0.1:51662 - "GET /api/admin/runtime/effective HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/diagnostics/effective | status=200 | 0.184s
+INFO:     127.0.0.1:51663 - "GET /api/admin/diagnostics/effective HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/orchestrator/config | status=200 | 0.184s
+INFO:     127.0.0.1:51665 - "GET /api/admin/orchestrator/config HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/overview (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/prompts/stack-v2 (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/runtime/effective (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/diagnostics/effective (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/status | status=200 | 0.030s
+INFO:     127.0.0.1:51672 - "GET /api/admin/status HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/orchestrator/config (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/runtime/effective | status=200 | 0.047s
+INFO:     127.0.0.1:51683 - "GET /api/admin/runtime/effective HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/prompts/stack-v2 | status=200 | 0.083s
+INFO:     127.0.0.1:51679 - "GET /api/admin/prompts/stack-v2 HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/overview | status=200 | 0.128s
+INFO:     127.0.0.1:51678 - "GET /api/admin/overview HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | -> GET /api/admin/overview (key: dev-key-00...)
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/config | status=200 | 0.160s
+INFO:     127.0.0.1:51671 - "GET /api/admin/config HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/diagnostics/effective | status=200 | 0.154s
+INFO:     127.0.0.1:51684 - "GET /api/admin/diagnostics/effective HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/overview | status=200 | 0.050s
+INFO:     127.0.0.1:51690 - "GET /api/admin/overview HTTP/1.1" 200 OK
+10:21:30 | INFO     | api.main
+            | <- GET /api/admin/orchestrator/config | status=200 | 0.171s
+INFO:     127.0.0.1:51687 - "GET /api/admin/orchestrator/config HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/llm-config (key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/traces 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/status 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/llm-config | status=200 | 0.023s
+INFO:     127.0.0.1:51697 - "GET /api/admin/agents/llm-config HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/llm-config (key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/llm-config | status=200 | 0.022s
+INFO:     127.0.0.1:51704 - "GET /api/admin/agents/llm-config HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/traces 
+| status=200 | 0.071s
+INFO:     127.0.0.1:51700 - "GET /api/admin/agents/traces?limit=50 HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/traces 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/traces 
+| status=200 | 0.032s
+INFO:     127.0.0.1:51707 - "GET /api/admin/agents/traces?limit=50 HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/traces 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/traces 
+| status=200 | 0.021s
+INFO:     127.0.0.1:51710 - "GET /api/admin/agents/traces?limit=50 HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/status 
+| status=200 | 0.137s
+INFO:     127.0.0.1:51701 - "GET /api/admin/agents/status HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/traces 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | -> GET /api/admin/agents/status 
+(key: dev-key-00...)
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/traces 
+| status=200 | 0.036s
+INFO:     127.0.0.1:51713 - "GET /api/admin/agents/traces?limit=50 HTTP/1.1" 200 OK
+10:21:35 | INFO     | api.main
+            | <- GET /api/admin/agents/status 
+| status=200 | 0.055s
+INFO:     127.0.0.1:51716 - "GET /api/admin/agents/status HTTP/1.1" 200 OK
+10:21:42 | INFO     | api.main
+            | -> GET /api/admin/orchestrator/config (key: dev-key-00...)
+10:21:42 | INFO     | api.main
+            | <- GET /api/admin/orchestrator/config | status=200 | 0.020s
+INFO:     127.0.0.1:51721 - "GET /api/admin/orchestrator/config HTTP/1.1" 200 OK
+10:21:42 | INFO     | api.main
+            | -> GET /api/admin/orchestrator/config (key: dev-key-00...)
+10:21:42 | INFO     | api.main
+            | <- GET /api/admin/orchestrator/config | status=200 | 0.018s
+INFO:     127.0.0.1:51724 - "GET /api/admin/orchestrator/config HTTP/1.1" 200 OK
+10:21:53 | INFO     | api.main
+            | -> GET /api/admin/threads (key: 
+dev-key-00...)
+10:21:54 | INFO     | api.main
+            | <- GET /api/admin/threads | status=200 | 0.647s
+INFO:     127.0.0.1:51728 - "GET /api/admin/threads?status=active&limit=100 HTTP/1.1" 200 OK10:21:54 | INFO     | api.main
+            | -> GET /api/admin/threads (key: 
+dev-key-00...)
+10:21:54 | INFO     | api.main
+            | <- GET /api/admin/threads | status=200 | 0.033s
+INFO:     127.0.0.1:51731 - "GET /api/admin/threads?status=active&limit=100 HTTP/1.1" 200 OK10:21:56 | INFO     | api.main
+            | -> GET /api/admin/agents/writer/prompts (key: dev-key-00...)
+10:21:56 | INFO     | api.main
+            | <- GET /api/admin/agents/writer/prompts | status=200 | 0.020s
+INFO:     127.0.0.1:51734 - "GET /api/admin/agents/writer/prompts HTTP/1.1" 200 OK
+10:21:56 | INFO     | api.main
+            | -> GET /api/admin/agents/writer/prompts (key: dev-key-00...)
+10:21:56 | INFO     | api.main
+            | <- GET /api/admin/agents/writer/prompts | status=200 | 0.019s
+INFO:     127.0.0.1:51737 - "GET /api/admin/agents/writer/prompts HTTP/1.1" 200 OK
+
+___
+
+PS C:\My_practice\Text_transcription\bot_psychologist> cd C:\My_practice\Text_transcription\bot_psychologist\web_ui
+PS C:\My_practice\Text_transcription\bot_psychologist\web_ui> npm install
+
+up to date, audited 271 packages in 4s        
+
+106 packages are looking for funding
+  run `npm fund` for details
+14 vulnerabilities (9 moderate, 5 high)       
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+PS C:\My_practice\Text_transcription\bot_psychologist\web_ui> npm run dev
+
+> bot-psychologist-web-ui@1.0.0 dev
+> vite
+
+Port 3000 is in use, trying another one...
+
+  VITE v6.4.1  ready in 559 ms
+
+  ➜  Local:   http://localhost:3001/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help

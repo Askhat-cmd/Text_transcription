@@ -1,0 +1,21 @@
+{
+  "schema_version": "creator_live_turn_proof_v1",
+  "prd_id": "PRD-046.1.35-HF1",
+  "actual_live_turn": true,
+  "turn_id": "sha256:f8e3c5a8a162be5da035fcdcf:0",
+  "session_id_hash": "sha256:e313a927f717ae68e497a68170e835e131bb4d6d47d3c7ecefc495eee2c66c99",
+  "user_id_hash": "sha256:65f961c619c081e1601ba55fe20c96a513ca8cd5d904230152c27dbf1029f26d",
+  "is_creator": true,
+  "timestamp_utc": "2026-05-22T06:20:13.434207+00:00",
+  "input_preview_sanitized": "что такое нейросталкинг",
+  "input_hash": "sha256:b6a50aa00e00556ec69626196343b6f07b989810b3420ddc084516707902286a",
+  "answer_received": true,
+  "answer_preview_sanitized": "Нейросталкинг — термин для навязчивого слежения за чужими мыслями, эмоциями или цифровыми следами, словно пытаются «подсмотреть» в голову. Сделай три медленных…",
+  "answer_hash": "sha256:fc031181b31d080b849dc04f92949a3e9851155f0591063f09e85353b8b6fcdf",
+  "diagnostic_center_runtime_mode": "creator_only",
+  "diagnostic_center_active_for_creator": true,
+  "normal_user_path_unchanged": true,
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "trace_sanitized": true
+}

@@ -1,0 +1,6 @@
+{
+  "schema_version": "creator_live_evidence_rag_repair_retriever_delivery_trace_v1",
+  "retriever_raw_hits_count": 0,
+  "retriever_raw_scores": [],
+  "retriever_source_used": "semantic_fallback"
+}

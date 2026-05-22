@@ -2,6 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
+| PRD-046.1.35-HF1 | Creator Live Evidence + BotDB/RAG-to-Writer Repair v1 | blocked | pending | fixed BotDB query parsing resilience and introduced creator-live evidence/rag-delivery strict gate artifacts | TO_DO_LIST/reports/PRD-046.1.35-HF1_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.35 | Diagnostic Center Creator Live Results / Rollback / Quality Gate v1 | evidence_incomplete | 077650d | consolidated PRD-046.1.34 evidence in no-new-execution mode, added explicit evidence-strength classification and rollback/normal-user/trace/provider/no-mutation/docs gates | TO_DO_LIST/reports/PRD-046.1.35_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.34 | Diagnostic Center Creator-Only Live Activation / Web Chat + Admin Runtime Controls / Trace Monitor MVP v1 | passed | pending | executed creator-only bounded live activation with runtime mode contract, admin controls, web chat smoke, monitor MVP, rollback/hard-stop, strict normal-user no-effect, provider budget, and no-mutation/docs evidence | TO_DO_LIST/reports/PRD-046.1.34_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.33 | Diagnostic Center Limited Runtime Activation Readiness / Normal-User Boundary Decision Gate v1 | passed | 9f1a0af | added readiness-only boundary gate over `PRD-046.1.32` evidence with strict live dependency checks, normal-user no-effect boundary confirmation, rollback/hard-stop policy verification, safety/trace/no-mutation/docs consistency controls, and decision handoff to allowlisted limited live activation PRD | TO_DO_LIST/reports/PRD-046.1.33_IMPLEMENTATION_REPORT.md |
@@ -98,4 +99,3 @@
 3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
-

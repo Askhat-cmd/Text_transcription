@@ -1,0 +1,13 @@
+﻿[2026-05-22] PRD-046.1.35-HF1 command log
+
+1) python -m pytest Bot_data_base/tests/test_query_route_chroma_failure_fallback.py -q
+result: passed (1 passed)
+
+2) python -m pytest bot_psychologist/tests/multiagent/test_hf1_creator_live_evidence_contract.py bot_psychologist/tests/multiagent/test_hf1_botdb_query_probe_contract.py bot_psychologist/tests/multiagent/test_hf1_memory_retrieval_trace.py bot_psychologist/tests/multiagent/test_hf1_knowledge_policy_delivery.py bot_psychologist/tests/multiagent/test_hf1_context_assembly_delivery.py bot_psychologist/tests/multiagent/test_hf1_writer_contract_knowledge_prompt.py bot_psychologist/tests/multiagent/test_hf1_trace_alignment.py bot_psychologist/tests/multiagent/test_hf1_normal_user_no_effect.py bot_psychologist/tests/multiagent/test_hf1_decision_scorecard.py -q
+result: passed (10 passed)
+
+3) python -m bot_psychologist.tools.probe_botdb_rag_to_writer --query "что такое нейросталкинг" --botdb-base-url http://localhost:8003 --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF1
+result: success, botdb_http_status=200, botdb_chunks_returned=4, botdb_query_route_fallback_used=true
+
+4) python -m bot_psychologist.tools.run_creator_live_evidence_rag_repair --repo-root . --botdb-base-url http://localhost:8003 --backend-base-url http://localhost:8001 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --query "что такое нейросталкинг" --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF1 --strict
+result: blocked (hf1_blocked_rag_delivery_failed), actual_live_turn_evidence_count=1, rag_delivery_blocked

@@ -1,4 +1,4 @@
-http://localhost:3000/
+﻿http://localhost:3000/
 http://localhost:3000/admin
 
 АКТУАЛЬНЫЙ СТАРТ ПРОЕКТА ПОСЛЕ МИГРАЦИИ (ПК_2)
@@ -32,7 +32,14 @@ py -3.10 -m venv .venv
 =====================================
 cd C:\My_practice\Text_transcription\Bot_data_base
 .venv\Scripts\Activate.ps1
-python -m uvicorn api.main:app --reload --port 8003
+python -m uvicorn api.main:app --reload --host 127.0.0.1 --port 8003
+
+# если порт 8003 занят:
+netstat -ano | findstr :8003
+# затем остановить старый процесс:
+taskkill /PID <PID> /F
+
+
 
 Проверка:
 http://localhost:8003/
@@ -55,6 +62,13 @@ http://localhost:8001/api/v1/health
 cd C:\My_practice\Text_transcription\bot_psychologist\web_ui
 npm install
 npm run dev
+
+# если порт 3000 занят, сначала остановить старый Vite/Node процесс:
+netstat -ano | findstr :3000
+# затем завершить процесс:
+taskkill /PID <PID> /F
+
+
 
 Открыть:
 http://localhost:3000
@@ -82,10 +96,10 @@ py -0p
 - пересоздать по шагу 0
 
 Если Web UI стартует не на 3000:
-- проверь в терминале строку `Local: http://localhost:<порт>/`
-- либо освободи порт 3000 и перезапусти `npm run dev`
+- проверить в терминале строку `Local: http://localhost:<порт>/`
+- либо освободить порт 3000 и перезапустить `npm run dev`
 
 Если при запуске бота ошибка [Errno 10048] (порт 8001 уже занят):
-- проверь занятый порт: `netstat -ano | findstr :8001`
-- заверши старый процесс: `taskkill /PID <PID> /F`
-- запусти бот заново по шагу 2
+- проверить занятый порт: `netstat -ano | findstr :8001`
+- завершить старый процесс: `taskkill /PID <PID> /F`
+- запустить бота заново по шагу 2

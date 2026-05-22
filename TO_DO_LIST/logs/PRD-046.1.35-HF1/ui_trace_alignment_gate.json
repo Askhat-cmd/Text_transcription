@@ -1,0 +1,9 @@
+{
+  "schema_version": "creator_live_evidence_rag_repair_ui_trace_alignment_gate_v1",
+  "prd_id": "PRD-046.1.35-HF1",
+  "backend_context_knowledge_hits_count": 0,
+  "ui_chunks_in_writer_count": 0,
+  "mismatch_detected": false,
+  "ui_trace_alignment_gate": "passed",
+  "ui_trace_alignment_gate_passed": true
+}

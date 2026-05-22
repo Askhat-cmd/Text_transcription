@@ -597,3 +597,10 @@ Status: accepted
 Context: PRD-046.1.34 passed safety/runtime boundaries, but web chat smoke evidence can be probe-level or simulated without strong sanitized live-turn proof.
 Decision: PRD-046.1.35 introduces a dedicated evidence-strength audit that classifies artifacts into `actual_live_turn_evidence`, `runtime_probe_evidence`, `simulated_gate_evidence`, and `missing_evidence`; continuation beyond creator-only stage is blocked when actual live-turn evidence is absent.
 Consequences: safety-green is necessary but insufficient; rollout remains constrained until evidence quality is explicit and reproducible.
+
+## ADR-055 - Creator live evidence requires end-to-end RAG delivery trace
+
+Status: accepted
+Context: PRD-046.1.35 ended with evidence_incomplete; we needed a strict chain proof from BotDB query to writer prompt and debug trace.
+Decision: introduce HF1 scorecard + creator_live_turn_proof + rag_to_writer_delivery_proof with delivery classification and explicit governance-blocked state.
+Consequences: creator-only runtime remains bounded; broad rollout and normal-user activation stay disabled until later PRDs.

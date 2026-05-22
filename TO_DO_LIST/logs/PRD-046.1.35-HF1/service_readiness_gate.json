@@ -1,0 +1,15 @@
+{
+  "schema_version": "creator_live_evidence_rag_repair_service_readiness_gate_v1",
+  "prd_id": "PRD-046.1.35-HF1",
+  "botdb_status_code": 200,
+  "backend_status_code": 200,
+  "web_ui_status_code": 200,
+  "botdb_error": null,
+  "backend_error": null,
+  "web_ui_error": null,
+  "botdb_ready": true,
+  "backend_ready": true,
+  "web_ui_ready": true,
+  "service_readiness_gate": "passed",
+  "service_readiness_gate_passed": true
+}

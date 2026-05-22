@@ -1,0 +1,9 @@
+{
+  "schema_version": "creator_live_evidence_rag_repair_trace_sanitization_gate_v1",
+  "prd_id": "PRD-046.1.35-HF1",
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "secrets_committed": false,
+  "trace_sanitization_gate_passed": true,
+  "trace_sanitization_gate": "passed"
+}

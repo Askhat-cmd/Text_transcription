@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_hf1_normal_user_live_no_effect_gate_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "normal_user_id_hash": "sha256:c00aa1fb817ac8ad6206b3db8f1b73be61a070ecb677d522e2309efef6478b8c",
+  "normal_user_answer_received": true,
+  "diagnostic_center_live_authority_applied": false,
+  "diagnostic_center_provider_call_count": 0,
+  "writer_prompt_delta_from_dc": 0,
+  "final_answer_path_delta_from_dc": 0,
+  "trace_private_leak_count": 0,
+  "normal_user_activation_allowed": false,
+  "adaptive_http_status": 200,
+  "trace_http_status": 200,
+  "adaptive_error": null,
+  "normal_user_live_no_effect_gate": "passed"
+}

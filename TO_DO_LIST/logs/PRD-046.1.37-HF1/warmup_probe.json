@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_hf1_warmup_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "warmup_session_hash": "sha256:7b1819b3c07cee71cfda291e7a83e6b4c12d8e02703fc8953e96047b4704e78b",
+  "warmup_adaptive_status": 200,
+  "warmup_adaptive_error": null,
+  "warmup_elapsed_ms": 26757.1,
+  "warmup_auth_variant": "x_api_key",
+  "warmup_answer_received": true,
+  "botdb_query_status_code": 200,
+  "botdb_query_error": null
+}

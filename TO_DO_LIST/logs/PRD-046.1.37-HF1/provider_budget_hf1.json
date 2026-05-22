@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_hf1_provider_budget_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "max_actual_live_cases": 5,
+  "max_attempts_per_case": 5,
+  "max_timeout_sec": 90,
+  "max_total_runtime_sec": 900,
+  "total_runtime_sec": 352.73,
+  "total_provider_calls": 12,
+  "max_attempts_seen": 2,
+  "provider_budget_gate": "passed"
+}

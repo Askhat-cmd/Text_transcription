@@ -1,0 +1,45 @@
+﻿[2026-05-22T20:41:52] pytest hf1
+.....                                                                    [100%]
+5 passed in 1.90s
+
+[exit_code]=0
+
+[2026-05-22T20:42:04] run hf1 runner
+python : 2026-05-22 20:42:05,456 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_prac
+tice\Text_transcription\bot_psychologist\data\threads
+At line:2 char:157
++ ... oding utf8; python -m bot_psychologist.tools.run_diagnostic_center_fi ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-22 20:4...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-22 20:42:05,461 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\tools\run_diagnostic_center_final_completion_hf1.py", line 1
+443, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\tools\run_diagnostic_center_final_completion_hf1.py", line 1
+434, in main
+    result = run(args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\tools\run_diagnostic_center_final_completion_hf1.py", line 1
+277, in run
+    endpoint_matrix = _endpoint_matrix_probe(
+        backend_base_url=args.backend_base_url,
+    ...<3 lines>...
+        creator_user_id=args.creator_user_id,
+    )
+  File "C:\My_practice\Text_transcription\bot_psychologist\tools\run_diagnostic_center_final_completion_hf1.py", line 4
+37, in _endpoint_matrix_probe
+    adaptive_status, adaptive_body, adaptive_error, _adaptive_elapsed = _adaptive_call(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 4)
+
+[exit_code]=1
+
+[2026-05-22T21:00:45] runner command (strict) -> passed
+python -m bot_psychologist.tools.run_diagnostic_center_final_completion_hf1 --repo-root . --backend-base-url http://localhost:8001 --botdb-base-url http://localhost:8003 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --normal-user-id user_normal_control_prd_046_1_37_hf1 --output-dir TO_DO_LIST/logs/PRD-046.1.37-HF1 --strict
+[exit_code]=0

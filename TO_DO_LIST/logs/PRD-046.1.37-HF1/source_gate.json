@@ -1,0 +1,20 @@
+{
+  "schema_version": "diagnostic_center_hf1_source_gate_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "source_prd_id": "PRD-046.1.37",
+  "checks": {
+    "source_artifacts_present": true,
+    "final_status_blocked": true,
+    "decision_blocked_runtime_readiness": true,
+    "runtime_readiness_final_gate_blocked": true,
+    "actual_live_creator_smoke_gate_blocked": true,
+    "no_mutation_final_proof_passed": true,
+    "artifact_encoding_hygiene_passed": true,
+    "broad_rollout_allowed_false": true,
+    "production_ready_false": true,
+    "normal_user_activation_allowed_false": true,
+    "all_users_mode_enabled_false": true
+  },
+  "missing_artifacts": [],
+  "source_gate": "passed"
+}

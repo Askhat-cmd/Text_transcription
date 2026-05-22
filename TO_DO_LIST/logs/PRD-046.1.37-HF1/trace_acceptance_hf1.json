@@ -1,0 +1,59 @@
+{
+  "schema_version": "diagnostic_center_hf1_trace_acceptance_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "cases_total": 5,
+  "cases_passed": 5,
+  "trace_acceptance_gate": "passed",
+  "cases": [
+    {
+      "case_id": "actual_live_1",
+      "trace_received": true,
+      "session_id_hash_present": true,
+      "turn_id_hash_present": true,
+      "diagnostic_card_present": true,
+      "writer_move_present": true,
+      "writer_chunk_non_empty_preview_count": 4,
+      "case_trace_acceptance": "passed"
+    },
+    {
+      "case_id": "actual_live_2",
+      "trace_received": true,
+      "session_id_hash_present": true,
+      "turn_id_hash_present": true,
+      "diagnostic_card_present": true,
+      "writer_move_present": true,
+      "writer_chunk_non_empty_preview_count": 4,
+      "case_trace_acceptance": "passed"
+    },
+    {
+      "case_id": "actual_live_3",
+      "trace_received": true,
+      "session_id_hash_present": true,
+      "turn_id_hash_present": true,
+      "diagnostic_card_present": true,
+      "writer_move_present": true,
+      "writer_chunk_non_empty_preview_count": 4,
+      "case_trace_acceptance": "passed"
+    },
+    {
+      "case_id": "actual_live_4",
+      "trace_received": true,
+      "session_id_hash_present": true,
+      "turn_id_hash_present": true,
+      "diagnostic_card_present": true,
+      "writer_move_present": true,
+      "writer_chunk_non_empty_preview_count": 4,
+      "case_trace_acceptance": "passed"
+    },
+    {
+      "case_id": "actual_live_5",
+      "trace_received": true,
+      "session_id_hash_present": true,
+      "turn_id_hash_present": true,
+      "diagnostic_card_present": true,
+      "writer_move_present": true,
+      "writer_chunk_non_empty_preview_count": 4,
+      "case_trace_acceptance": "passed"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_hf1_artifact_safety_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "files_scanned": 17,
+  "secret_pattern_hits": 0,
+  "raw_content_full_hits": 0,
+  "trace_acceptance_safety_gate": "passed"
+}

@@ -1,0 +1,181 @@
+{
+  "schema_version": "diagnostic_center_live_latency_profile_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "cases": [
+    {
+      "case_id": "actual_live_1",
+      "attempts": [
+        {
+          "timeout_sec": 15,
+          "http_status": 0,
+          "elapsed_ms": 17057.3,
+          "error": "TimeoutError",
+          "auth_variant": "x_api_key",
+          "answer_received": false,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_1_1779472469_2d44232145/multiagent-trace",
+          "classification": "adaptive_timeout_before_first_byte",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        },
+        {
+          "timeout_sec": 30,
+          "http_status": 200,
+          "elapsed_ms": 22577.3,
+          "error": null,
+          "auth_variant": "x_api_key",
+          "answer_received": true,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_1_1779472469_2d44232145/multiagent-trace",
+          "classification": "unknown_timeout",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        }
+      ],
+      "selected_success_timeout_sec": 30
+    },
+    {
+      "case_id": "actual_live_2",
+      "attempts": [
+        {
+          "timeout_sec": 15,
+          "http_status": 0,
+          "elapsed_ms": 17041.9,
+          "error": "TimeoutError",
+          "auth_variant": "x_api_key",
+          "answer_received": false,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_2_1779472519_12d33a2d40/multiagent-trace",
+          "classification": "adaptive_timeout_before_first_byte",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        },
+        {
+          "timeout_sec": 30,
+          "http_status": 200,
+          "elapsed_ms": 26885.2,
+          "error": null,
+          "auth_variant": "x_api_key",
+          "answer_received": true,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_2_1779472519_12d33a2d40/multiagent-trace",
+          "classification": "unknown_timeout",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        }
+      ],
+      "selected_success_timeout_sec": 30
+    },
+    {
+      "case_id": "actual_live_3",
+      "attempts": [
+        {
+          "timeout_sec": 15,
+          "http_status": 0,
+          "elapsed_ms": 17078.2,
+          "error": "TimeoutError",
+          "auth_variant": "x_api_key",
+          "answer_received": false,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_3_1779472575_48ce5a392d/multiagent-trace",
+          "classification": "adaptive_timeout_before_first_byte",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        },
+        {
+          "timeout_sec": 30,
+          "http_status": 200,
+          "elapsed_ms": 26281.8,
+          "error": null,
+          "auth_variant": "x_api_key",
+          "answer_received": true,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_3_1779472575_48ce5a392d/multiagent-trace",
+          "classification": "unknown_timeout",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        }
+      ],
+      "selected_success_timeout_sec": 30
+    },
+    {
+      "case_id": "actual_live_4",
+      "attempts": [
+        {
+          "timeout_sec": 15,
+          "http_status": 0,
+          "elapsed_ms": 17050.1,
+          "error": "TimeoutError",
+          "auth_variant": "x_api_key",
+          "answer_received": false,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_4_1779472643_70d9ddfefb/multiagent-trace",
+          "classification": "adaptive_timeout_before_first_byte",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        },
+        {
+          "timeout_sec": 30,
+          "http_status": 200,
+          "elapsed_ms": 24875.8,
+          "error": null,
+          "auth_variant": "x_api_key",
+          "answer_received": true,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_4_1779472643_70d9ddfefb/multiagent-trace",
+          "classification": "unknown_timeout",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        }
+      ],
+      "selected_success_timeout_sec": 30
+    },
+    {
+      "case_id": "actual_live_5",
+      "attempts": [
+        {
+          "timeout_sec": 15,
+          "http_status": 0,
+          "elapsed_ms": 17053.3,
+          "error": "TimeoutError",
+          "auth_variant": "x_api_key",
+          "answer_received": false,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_5_1779472698_4c10f97491/multiagent-trace",
+          "classification": "adaptive_timeout_before_first_byte",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        },
+        {
+          "timeout_sec": 30,
+          "http_status": 200,
+          "elapsed_ms": 22206.4,
+          "error": null,
+          "auth_variant": "x_api_key",
+          "answer_received": true,
+          "trace_received": true,
+          "trace_error": null,
+          "trace_alias_used": "/api/debug/session/prd046137hf1_creator_actual_live_5_1779472698_4c10f97491/multiagent-trace",
+          "classification": "unknown_timeout",
+          "adaptive_timeout_but_trace_arrived": false,
+          "trace_latency_after_timeout_sec": 0
+        }
+      ],
+      "selected_success_timeout_sec": 30
+    }
+  ],
+  "p50_ms": 24875.8,
+  "p90_ms": 26885.2,
+  "max_ms": 26885.2,
+  "recommended_runner_timeout_sec": 42,
+  "latency_profile_gate": "passed"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "diagnostic_center_hf1_rollback_hard_stop_live_proof_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "force_disabled_set_attempted": true,
+  "force_disabled_effective": true,
+  "diagnostic_center_applied_while_disabled": false,
+  "force_disabled_restored_to_false": true,
+  "admin_write_endpoint_missing": true,
+  "set_status_code": 404,
+  "restore_status_code": 0,
+  "probe_case_id": "rollback_live",
+  "rollback_hard_stop_live_gate": "passed_with_warning"
+}

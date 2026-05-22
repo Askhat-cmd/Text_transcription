@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_hf1_rag_behavior_regression_gate_v1",
+  "prd_id": "PRD-046.1.37-HF1",
+  "botdb_query_status_code": 200,
+  "rag_safe_summary_present_count": 5,
+  "writer_chunk_non_empty_preview_min": 4,
+  "example_request_unexpected_regulate_first_count": 0,
+  "unexpected_body_action_after_practice_rejection_count": 0,
+  "rag_behavior_regression_gate": "passed"
+}

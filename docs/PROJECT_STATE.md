@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-046.1.37 completed Diagnostic Center v1 as governed creator-live / developer-pilot layer. Creator-only / allowlist runtime remains allowed for pilot, normal users remain unaffected, broad rollout stays prohibited, and production_ready remains false.
+PRD-046.1.37-HF1 repaired actual-live runtime timeout evidence. Diagnostic Center v1 is completed for current creator-only governed phase. Broad rollout remains prohibited, production_ready remains false.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 

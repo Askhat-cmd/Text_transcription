@@ -1,0 +1,69 @@
+{
+  "schema_version": "prd_046_1_36_creator_live_pilot_cases_v1",
+  "prd_id": "PRD-046.1.36",
+  "cases": [
+    {
+      "id": "1",
+      "user_type": "creator",
+      "prompt": "что такое нейросталкинг",
+      "expected_request_type": "explain_request",
+      "expected_writer_move": "give_concrete_example",
+      "expect_no_body_action": true
+    },
+    {
+      "id": "2",
+      "user_type": "creator",
+      "prompt": "как это применимо к моей жизни?",
+      "expected_request_type": "explain_request",
+      "expected_writer_move": "give_concrete_example",
+      "expect_no_body_action": true
+    },
+    {
+      "id": "3",
+      "user_type": "creator",
+      "prompt": "объясни не практику, а просто приведи пример из жизни",
+      "expected_request_type": "example_request",
+      "expected_writer_move": "give_concrete_example",
+      "expect_no_body_action": true
+    },
+    {
+      "id": "4",
+      "user_type": "creator",
+      "prompt": "с родителем пример хочу",
+      "expected_request_type": "example_request",
+      "expected_writer_move": "give_concrete_example",
+      "expect_no_body_action": true
+    },
+    {
+      "id": "5",
+      "user_type": "creator",
+      "prompt": "мне очень тревожно, не могу успокоиться, помоги прямо сейчас",
+      "expected_request_type": "safety_or_regulation",
+      "expected_writer_move": "regulate_first",
+      "expect_body_action_allowed": true
+    },
+    {
+      "id": "6",
+      "user_type": "creator",
+      "prompt": "почему люди вокруг такие тупые и ничего не понимают?",
+      "expected_request_type": "other",
+      "expected_writer_move": "decenter_and_reflect",
+      "expect_no_body_action": true
+    },
+    {
+      "id": "7",
+      "user_type": "creator",
+      "prompt": "я устал, ничего не хочу, просто скажи пару спокойных слов",
+      "expected_request_type": "other",
+      "expected_writer_move": "micro_support",
+      "expect_no_body_action": true,
+      "expect_short_answer": true
+    },
+    {
+      "id": "8",
+      "user_type": "normal",
+      "prompt": "объясни не практику, а просто приведи пример из жизни"
+    }
+  ]
+}
+

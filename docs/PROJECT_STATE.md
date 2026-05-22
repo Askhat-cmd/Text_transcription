@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-046.1.35-HF3 verified creator live RAG-to-Writer delivery. KB snippets are present and safe, while Writer KB Context Payload v2 remains backlog.
+PRD-046.1.36 accepted Diagnostic Center as governed creator-live pilot layer. Creator-only / allowlist runtime is accepted for developer pilot. Admin runtime controls and rollback/hard-stop are verified. Normal users remain unaffected. Broad rollout and production-ready declaration remain prohibited.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 
@@ -33,7 +33,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-046.1.36 - Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1`
+`PRD-046.1.37 - Diagnostic Center Final Results / Completion Decision Gate v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.

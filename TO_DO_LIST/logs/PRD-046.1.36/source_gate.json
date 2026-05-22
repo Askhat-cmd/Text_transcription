@@ -1,0 +1,25 @@
+{
+  "schema_version": "diagnostic_center_creator_live_pilot_source_gate_v1",
+  "prd_id": "PRD-046.1.36",
+  "source_prd_id": "PRD-046.1.35-HF4",
+  "checks": {
+    "preflight_ok": true,
+    "hf4_final_status_passed": true,
+    "hf4_decision_ok": true,
+    "example_request_routing_gate_passed": true,
+    "anti_regulate_loop_gate_passed": true,
+    "writer_chunks_display_gate_passed": true,
+    "rag_regression_gate_passed": true,
+    "normal_user_no_effect_gate_passed": true,
+    "no_mutation_proof_passed": true,
+    "broad_rollout_allowed_false": true,
+    "production_ready_false": true,
+    "normal_user_activation_allowed_false": true,
+    "supported_modes_present": true,
+    "admin_gate_exists": true
+  },
+  "missing_artifact_count": 0,
+  "parse_error_count": 0,
+  "source_gate": "passed",
+  "source_gate_passed": true
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "diagnostic_center_admin_runtime_controls_acceptance_v1",
+  "prd_id": "PRD-046.1.36",
+  "runtime_tab_present": true,
+  "diagnostic_center_block_present": true,
+  "runtime_mode_supported": [
+    "disabled",
+    "shadow_only",
+    "creator_only",
+    "allowlist_live",
+    "all_users_locked"
+  ],
+  "runtime_mode_effective": "creator_only",
+  "force_disabled_toggle_present": true,
+  "creator_user_id_configured": true,
+  "allowlist_live_supported": true,
+  "all_users_control_locked": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "runtime_readiness_gate": "warning",
+  "admin_runtime_controls_acceptance_gate": "passed"
+}

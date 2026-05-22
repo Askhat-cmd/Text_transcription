@@ -1,0 +1,17 @@
+{
+  "schema_version": "diagnostic_center_creator_live_pilot_runtime_readiness_gate_v1",
+  "prd_id": "PRD-046.1.36",
+  "backend_base_url": "http://localhost:8001",
+  "botdb_base_url": "http://localhost:8003",
+  "web_ui_base_url": "http://localhost:3000",
+  "backend_status_code": 404,
+  "botdb_status_code": 200,
+  "web_ui_status_code": 200,
+  "backend_reachable": false,
+  "botdb_reachable": true,
+  "web_ui_reachable": true,
+  "backend_error": "http_404",
+  "botdb_error": null,
+  "web_ui_error": null,
+  "runtime_readiness_gate": "warning"
+}

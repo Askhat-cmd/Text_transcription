@@ -1,0 +1,15 @@
+﻿PRD-046.1.36 command log
+Date: 2026-05-22
+
+1) python -m pytest bot_psychologist/tests/multiagent/test_prd_046_1_36_*.py -q
+Result: shell wildcard path is not expanded in current PowerShell invocation mode; fallback run used.
+
+2) python -m pytest bot_psychologist/tests/multiagent -k "prd_046_1_36" -q
+Result: PASSED
+Summary: 5 passed, 679 deselected in 13.52s
+
+3) python -m bot_psychologist.tools.run_diagnostic_center_creator_live_pilot_acceptance --repo-root . --backend-base-url http://localhost:8001 --botdb-base-url http://localhost:8003 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --normal-user-id user_normal_control_prd_046_1_36 --output-dir TO_DO_LIST/logs/PRD-046.1.36 --strict
+Result: PASSED
+status=passed
+decision=creator_live_pilot_accepted
+runtime_readiness_gate=warning

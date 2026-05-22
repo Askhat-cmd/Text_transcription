@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_rag_behavior_regression_gate_v1",
+  "prd_id": "PRD-046.1.36",
+  "botdb_chunks_returned_min": 4,
+  "knowledge_policy_included_writer_count_min": 3,
+  "context_assembly_knowledge_hits_count_min": 3,
+  "writer_chunks_non_empty_preview_count_min": 3,
+  "example_request_unexpected_regulate_first_count": 0,
+  "unexpected_body_action_after_practice_rejection_count": 0,
+  "true_regulate_case_passed": true,
+  "rag_and_behavior_regression_gate": "passed"
+}

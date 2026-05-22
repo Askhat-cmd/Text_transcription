@@ -1,0 +1,228 @@
+{
+  "schema_version": "diagnostic_center_trace_acceptance_v1",
+  "prd_id": "PRD-046.1.36",
+  "cases": [
+    {
+      "case_id": "1",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "give_concrete_example",
+        "risk_flags": [],
+        "request_type": "explain_request"
+      },
+      "writer_move": {
+        "move": "give_concrete_example",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "2",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "give_concrete_example",
+        "risk_flags": [],
+        "request_type": "explain_request"
+      },
+      "writer_move": {
+        "move": "give_concrete_example",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "3",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "give_concrete_example",
+        "risk_flags": [],
+        "request_type": "example_request"
+      },
+      "writer_move": {
+        "move": "give_concrete_example",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "4",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "give_concrete_example",
+        "risk_flags": [],
+        "request_type": "example_request"
+      },
+      "writer_move": {
+        "move": "give_concrete_example",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "5",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "regulate_first",
+        "risk_flags": [],
+        "request_type": "safety_regulation_request"
+      },
+      "writer_move": {
+        "move": "regulate_first",
+        "must_do": [
+          "offer_one_simple_body_action"
+        ],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "6",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "decenter_and_reflect",
+        "risk_flags": [],
+        "request_type": "unknown"
+      },
+      "writer_move": {
+        "move": "decenter_and_reflect",
+        "must_do": [],
+        "must_not_do": [
+          "ally_with_blame"
+        ]
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "7",
+      "user_type": "creator",
+      "diagnostic_center": {
+        "active_for_user": true,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": true,
+        "decision_reason": "creator_allowlisted"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "micro_support",
+        "risk_flags": [],
+        "request_type": "unknown"
+      },
+      "writer_move": {
+        "move": "micro_support",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    },
+    {
+      "case_id": "8",
+      "user_type": "normal",
+      "diagnostic_center": {
+        "active_for_user": false,
+        "runtime_mode_effective": "creator_only",
+        "force_disabled": false,
+        "hard_stop_active": false,
+        "decision_applied": false,
+        "decision_reason": "normal_user_control"
+      },
+      "diagnostic_card": {
+        "present": true,
+        "suggested_writer_move": "give_concrete_example",
+        "risk_flags": [],
+        "request_type": "example_request"
+      },
+      "writer_move": {
+        "move": "give_concrete_example",
+        "must_do": [],
+        "must_not_do": []
+      },
+      "rag": {
+        "has_relevant_knowledge": true,
+        "writer_chunks_count": 1
+      }
+    }
+  ],
+  "creator_trace_rows": 7,
+  "trace_acceptance_gate": "passed"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "diagnostic_center_normal_user_no_effect_v1",
+  "prd_id": "PRD-046.1.36",
+  "normal_user_id_hash": "sha256:2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3",
+  "normal_user_answer_received": true,
+  "diagnostic_center_live_authority_applied": false,
+  "diagnostic_center_provider_call_count": 0,
+  "writer_prompt_delta_count": 0,
+  "final_answer_path_delta_count": 0,
+  "trace_private_leak_count": 0,
+  "normal_user_no_effect_gate": "passed"
+}

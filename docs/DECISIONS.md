@@ -622,3 +622,10 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-046.1.35-HF4
 - commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
 - push_status: pushed_to_origin_main
+
+## ADR-055 - Diagnostic Center creator-live pilot acceptance boundary is completion-ready without broad rollout
+
+Status: accepted
+Context: HF4 passed behavior calibration and creator pipeline evidence, while broad rollout and production-ready declaration remain disallowed.
+Decision: PRD-046.1.36 accepts Diagnostic Center as a governed creator-live pilot layer with runtime controls, rollback hard-stop, and strict normal-user no-effect boundary.
+Consequences: next step is final completion decision gate (`PRD-046.1.37`), not broad rollout.

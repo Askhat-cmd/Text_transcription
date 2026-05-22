@@ -20,8 +20,7 @@
 - No active cleanup/stabilization PRD in progress.
 
 ## Next
-1. PRD-046.1.36 - Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
-2. Hotfix path only if new blockers appear in rollout-planning preparation.
+1. PRD-046.1.37 - Diagnostic Center Final Results / Completion Decision Gate v1.
 
 ## Later
 - Operational hardening for governed limited runtime.
@@ -49,3 +48,6 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-046.1.35-HF4
 - commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
 - push_status: pushed_to_origin_main
+
+## Done
+- PRD-046.1.36: creator-live pilot acceptance completed with source/runtime/admin/creator-pilot/rollback/normal-user/safety gates.

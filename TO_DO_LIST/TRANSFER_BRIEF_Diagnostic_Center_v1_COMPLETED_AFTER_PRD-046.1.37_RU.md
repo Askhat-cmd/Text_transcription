@@ -53,4 +53,5 @@
 - prd_id: PRD-046.1.37
 - main_commit_hash: ff77155
 - metadata_sync_commit_hash: 7054f99
+- rerun_sync_commit_hash: 85a783d
 - rerun_note: Web UI поднят (`web_ui_status_code=200`), но runtime блокер остается на adaptive/debug timeout.

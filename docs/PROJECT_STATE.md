@@ -49,7 +49,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-05-22
-- Source cycle: PRD-046.1.35-HF3
+- Source cycle: PRD-046.1.36
 
 ## PRD-046.1.35-HF4
 Current Stage:
@@ -60,4 +60,9 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 ## HF4 Delivery Metadata
 - prd_id: PRD-046.1.35-HF4
 - commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
+- push_status: pushed_to_origin_main
+
+## PRD-046.1.36 Delivery Metadata
+- prd_id: PRD-046.1.36
+- commit_hash: 14a04164059dfff8b9b8e625cb1f3f1578e0d57b
 - push_status: pushed_to_origin_main

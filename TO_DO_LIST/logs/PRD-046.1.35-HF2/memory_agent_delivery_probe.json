@@ -1,0 +1,5 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf2_memory_retrieval_delivery_trace_v1",
+  "memory_semantic_hits_count": 0,
+  "rag_min_score": 0.45
+}

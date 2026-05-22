@@ -1,0 +1,30 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf2_botdb_probe_v1",
+  "prd_id": "PRD-046.1.35-HF2",
+  "query": "что такое нейросталкинг",
+  "botdb_query_attempted": true,
+  "botdb_http_status": 200,
+  "botdb_chunks_returned": 4,
+  "botdb_query_route_fallback_used": true,
+  "botdb_error_class": null,
+  "chunks_preview": [
+    {
+      "chunk_id": "5943bece-db10-460a-bc21-7e23e6485925",
+      "score": 0.09826184176494875
+    },
+    {
+      "chunk_id": "3dfeca39-dbb2-4da0-b12f-15ef07fdad2b",
+      "score": 0.08340599685723227
+    },
+    {
+      "chunk_id": "7f156d38-ec33-48a2-9646-83971eac3421",
+      "score": 0.0679307241150546
+    },
+    {
+      "chunk_id": "cb798df0-e1dc-4225-b216-d8b8e6979d7c",
+      "score": 0.048244420516384355
+    }
+  ],
+  "botdb_query_gate": "passed",
+  "delivery_status": "passed"
+}

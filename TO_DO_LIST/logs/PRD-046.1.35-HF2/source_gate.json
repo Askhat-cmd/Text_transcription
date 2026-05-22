@@ -1,0 +1,24 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf2_source_gate_v1",
+  "prd_id": "PRD-046.1.35-HF2",
+  "required_artifact_count": 11,
+  "present_artifact_count": 11,
+  "missing_artifact_count": 0,
+  "parse_error_count": 0,
+  "missing_artifacts": [],
+  "parse_errors": [],
+  "source_expectations": {
+    "status_ok": true,
+    "decision_ok": true,
+    "creator_evidence_ok": true,
+    "botdb_chunks_ok": true,
+    "normal_user_no_effect_gate_passed": true,
+    "trace_sanitization_gate_passed": true,
+    "no_mutation_proof_passed": true,
+    "broad_rollout_allowed_false": true,
+    "production_ready_false": true,
+    "normal_user_activation_allowed_false": true
+  },
+  "source_gate": "passed",
+  "source_gate_passed": true
+}

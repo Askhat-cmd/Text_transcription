@@ -1,0 +1,7 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf2_knowledge_policy_delivery_trace_v1",
+  "knowledge_policy_input_hits_count": 0,
+  "knowledge_policy_included_writer_count": 0,
+  "knowledge_policy_included_diagnostic_count": 0,
+  "knowledge_policy_drop_reasons": []
+}

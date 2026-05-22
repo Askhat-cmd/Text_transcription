@@ -1,0 +1,16 @@
+﻿PRD-046.1.35-HF2 command log (UTF-8 normalized)
+
+[1] python -m pytest Bot_data_base/tests/test_query_route_chroma_failure_fallback.py -q
+result: passed (1 passed)
+
+[2] python -m pytest bot_psychologist/tests/multiagent/test_hf2_*.py -q
+result: passed (8 passed)
+
+[3] python -m bot_psychologist.tools.probe_botdb_rag_to_writer_hf2 --mode botdb --query "что такое нейросталкинг" --botdb-base-url http://localhost:8003 --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF2
+result: botdb_http_status=200, botdb_chunks_returned=4
+
+[4] python -m bot_psychologist.tools.probe_botdb_rag_to_writer_hf2 --mode memory-agent --query "что такое нейросталкинг" --user-id user_1772172411219_kamh0 --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF2
+result: rag_raw_hits_count=4, rag_salvaged_hits_count=3, knowledge_policy_included_writer_count=3
+
+[5] python -m bot_psychologist.tools.run_creator_live_rag_delivery_hf2 --repo-root . --botdb-base-url http://localhost:8003 --backend-base-url http://localhost:8001 --web-ui-base-url http://localhost:3000 --creator-user-id user_1772172411219_kamh0 --query "что такое нейросталкинг" --output-dir TO_DO_LIST/logs/PRD-046.1.35-HF2 --strict
+result: executed (non-zero exit allowed when final_status != passed)

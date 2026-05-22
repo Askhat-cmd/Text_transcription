@@ -1,0 +1,12 @@
+{
+  "schema_version": "creator_live_rag_delivery_hf2_retriever_delivery_trace_v1",
+  "retriever_raw_hits_count": 0,
+  "retriever_raw_scores": [],
+  "rag_min_score": 0.45,
+  "rag_filtered_hits_count": 0,
+  "rag_filtered_by_score_count": 0,
+  "rag_salvaged_hits_count": 0,
+  "score_policy_mode": "empty",
+  "score_policy_reasons": [],
+  "retriever_source_used": "semantic_fallback"
+}

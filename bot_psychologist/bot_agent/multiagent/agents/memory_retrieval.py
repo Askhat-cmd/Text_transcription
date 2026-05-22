@@ -15,13 +15,116 @@ from .memory_retrieval_config import (
     CONVERSATION_TURNS_DEFAULT,
     CONVERSATION_TURNS_NEW_THREAD,
     CORE_DIRECTION_MIN_LEN,
+    RAG_LOW_SCORE_SALVAGE_ENABLED,
+    RAG_LOW_SCORE_SALVAGE_MAX_HITS,
+    RAG_LOW_SCORE_SALVAGE_MIN_TOP_SCORE,
     RAG_MIN_SCORE,
     RAG_N_RESULTS,
     RAG_QUERY_MAX_LEN,
+    RAG_SCORE_POLICY_V1_ENABLED,
 )
 
 
 logger = logging.getLogger(__name__)
+
+
+def _sanitize_query_preview(query: str, *, max_len: int = 160) -> str:
+    normalized = " ".join((query or "").split())
+    if len(normalized) <= max_len:
+        return normalized
+    return normalized[: max_len - 1].rstrip() + "…"
+
+
+def rag_score_policy_v1(
+    *,
+    raw_hits: list[SemanticHit],
+    rag_min_score: float,
+    retrieval_source_used: str,
+    query: str,
+) -> dict[str, Any]:
+    valid_hits = [hit for hit in list(raw_hits or []) if isinstance(hit, SemanticHit)]
+    raw_scores = [float(hit.score) for hit in valid_hits]
+    filtered_hits = [hit for hit in valid_hits if float(hit.score) >= float(rag_min_score)]
+    filtered_hits.sort(
+        key=lambda h: (1 if getattr(h, "governance", {}) else 0, float(h.score)),
+        reverse=True,
+    )
+
+    trace: dict[str, Any] = {
+        "raw_hits_count": len(valid_hits),
+        "raw_scores": raw_scores,
+        "filtered_hits_count": len(filtered_hits),
+        "filtered_by_score_count": max(0, len(valid_hits) - len(filtered_hits)),
+        "salvaged_hits_count": 0,
+        "score_policy_mode": "standard_threshold",
+        "reasons": [],
+    }
+
+    if not valid_hits:
+        trace["score_policy_mode"] = "empty"
+        trace["reasons"] = ["no_raw_hits"]
+        return {
+            "filtered_hits": [],
+            "trace": trace,
+        }
+
+    if not RAG_SCORE_POLICY_V1_ENABLED:
+        trace["reasons"] = ["score_policy_v1_disabled"]
+        return {
+            "filtered_hits": filtered_hits,
+            "trace": trace,
+        }
+
+    if filtered_hits:
+        trace["reasons"] = ["standard_threshold_passed"]
+        return {
+            "filtered_hits": filtered_hits,
+            "trace": trace,
+        }
+
+    top_score = max(raw_scores) if raw_scores else 0.0
+    source_used = str(retrieval_source_used or "unknown").strip().lower() or "unknown"
+    salvage_allowed_source = source_used in {"api", "semantic_fallback", "tfidf_fallback", "unknown"}
+    salvage_allowed = (
+        RAG_LOW_SCORE_SALVAGE_ENABLED
+        and salvage_allowed_source
+        and top_score >= float(RAG_LOW_SCORE_SALVAGE_MIN_TOP_SCORE)
+        and top_score > 0.0
+    )
+    if not salvage_allowed:
+        reason = "salvage_disabled_or_threshold_not_met"
+        if not RAG_LOW_SCORE_SALVAGE_ENABLED:
+            reason = "low_score_salvage_disabled"
+        elif not salvage_allowed_source:
+            reason = "salvage_source_not_allowed"
+        elif top_score <= 0.0:
+            reason = "top_score_non_positive"
+        elif top_score < float(RAG_LOW_SCORE_SALVAGE_MIN_TOP_SCORE):
+            reason = "top_score_below_salvage_min"
+        trace["reasons"] = ["all_hits_below_min_score", reason]
+        return {
+            "filtered_hits": [],
+            "trace": trace,
+        }
+
+    salvage_cap = max(1, int(RAG_LOW_SCORE_SALVAGE_MAX_HITS))
+    salvaged_hits = sorted(valid_hits, key=lambda hit: float(hit.score), reverse=True)[:salvage_cap]
+    trace.update(
+        {
+            "filtered_hits_count": len(salvaged_hits),
+            "salvaged_hits_count": len(salvaged_hits),
+            "score_policy_mode": "source_aware_salvage",
+            "reasons": [
+                "all_hits_below_min_score",
+                "low_score_salvage_applied",
+                f"source={source_used}",
+            ],
+        }
+    )
+    return {
+        "filtered_hits": salvaged_hits,
+        "trace": trace,
+    }
 
 
 class MemoryRetrievalAgent:
@@ -49,7 +152,7 @@ class MemoryRetrievalAgent:
 
         conversation_context = results[0] if not isinstance(results[0], Exception) else ""
         user_profile = results[1] if not isinstance(results[1], Exception) else UserProfile()
-        raw_hits = results[2] if not isinstance(results[2], Exception) else []
+        rag_result = results[2] if not isinstance(results[2], Exception) else ([], {})
         recent_turns = results[3] if not isinstance(results[3], Exception) else []
         personal_history_context = results[4] if not isinstance(results[4], Exception) else []
         semantic_memory_hits = results[5] if not isinstance(results[5], Exception) else []
@@ -61,13 +164,65 @@ class MemoryRetrievalAgent:
             if isinstance(result, Exception):
                 logger.warning("[MRA] %s load failed: %s", label, result)
 
-        valid_hits = [h for h in raw_hits if isinstance(h, SemanticHit)]
-        filtered_hits = [h for h in valid_hits if float(h.score) >= RAG_MIN_SCORE]
-        # Governed hits go first, legacy hits remain available with lower priority.
-        filtered_hits.sort(
-            key=lambda h: (1 if getattr(h, "governance", {}) else 0, float(h.score)),
-            reverse=True,
+        raw_hits: list[SemanticHit]
+        retrieval_debug: dict[str, Any]
+        if (
+            isinstance(rag_result, tuple)
+            and len(rag_result) >= 2
+            and isinstance(rag_result[0], list)
+            and isinstance(rag_result[1], dict)
+        ):
+            raw_hits = [h for h in rag_result[0] if isinstance(h, SemanticHit)]
+            retrieval_debug = dict(rag_result[1])
+        elif isinstance(rag_result, list):
+            raw_hits = [h for h in rag_result if isinstance(h, SemanticHit)]
+            retrieval_debug = {}
+        else:
+            raw_hits = []
+            retrieval_debug = {}
+
+        retrieval_source_attempted = str(
+            retrieval_debug.get("retrieval_source_attempted", "api") or "api"
         )
+        retrieval_source_used = str(
+            retrieval_debug.get("retrieval_source_used", "unknown") or "unknown"
+        )
+
+        score_policy = rag_score_policy_v1(
+            raw_hits=raw_hits,
+            rag_min_score=float(RAG_MIN_SCORE),
+            retrieval_source_used=retrieval_source_used,
+            query=rag_query,
+        )
+        filtered_hits = [
+            hit for hit in list(score_policy.get("filtered_hits", [])) if isinstance(hit, SemanticHit)
+        ]
+        trace_payload = (
+            dict(score_policy.get("trace", {}))
+            if isinstance(score_policy.get("trace", {}), dict)
+            else {}
+        )
+        raw_scores_value = trace_payload.get("raw_scores", [])
+        if not isinstance(raw_scores_value, list):
+            raw_scores_value = []
+        reasons_value = trace_payload.get("reasons", [])
+        if not isinstance(reasons_value, list):
+            reasons_value = []
+
+        rag_retrieval_trace = {
+            "version": "rag_retrieval_trace_v1",
+            "query": _sanitize_query_preview(rag_query),
+            "retrieval_source_attempted": retrieval_source_attempted,
+            "retrieval_source_used": retrieval_source_used,
+            "raw_hits_count": int(trace_payload.get("raw_hits_count", len(raw_hits)) or 0),
+            "raw_scores": [float(x) for x in raw_scores_value],
+            "rag_min_score": float(RAG_MIN_SCORE),
+            "filtered_hits_count": int(trace_payload.get("filtered_hits_count", len(filtered_hits)) or 0),
+            "filtered_by_score_count": int(trace_payload.get("filtered_by_score_count", 0) or 0),
+            "salvaged_hits_count": int(trace_payload.get("salvaged_hits_count", 0) or 0),
+            "score_policy_mode": str(trace_payload.get("score_policy_mode", "standard_threshold") or "standard_threshold"),
+            "score_policy_reasons": [str(item) for item in reasons_value],
+        }
         policy_decisions, knowledge_policy_trace = apply_knowledge_policy_v1(filtered_hits)
         knowledge_rag_hits = [
             decision.to_writer_hit_dict()
@@ -92,6 +247,7 @@ class MemoryRetrievalAgent:
             has_relevant_knowledge=len(knowledge_rag_hits) > 0,
             context_turns=n_turns,
             knowledge_policy_trace=knowledge_policy_trace,
+            rag_retrieval_trace=rag_retrieval_trace,
         )
 
     async def update(
@@ -339,12 +495,12 @@ class MemoryRetrievalAgent:
             return []
 
     @staticmethod
-    async def _load_rag(query: str) -> list[SemanticHit]:
+    async def _load_rag(query: str) -> tuple[list[SemanticHit], dict[str, Any]]:
         try:
             from ...retriever import get_retriever  # noqa: PLC0415
 
             if not query.strip():
-                return []
+                return [], {}
 
             retriever = get_retriever()
             results = retriever.retrieve(query, top_k=RAG_N_RESULTS)
@@ -391,10 +547,10 @@ class MemoryRetrievalAgent:
                 str(retrieval_debug.get("retrieval_source_used", "unknown")),
                 bool(retrieval_debug.get("bot_db_circuit_open", False)),
             )
-            return hits
+            return hits, dict(retrieval_debug or {})
         except Exception as exc:
             logger.warning("[MRA] rag load error: %s", exc)
-            return []
+            return [], {}
 
 
 memory_retrieval_agent = MemoryRetrievalAgent()

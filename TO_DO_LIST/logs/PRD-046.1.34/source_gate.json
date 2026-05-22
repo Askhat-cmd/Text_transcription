@@ -1,0 +1,18 @@
+{
+  "schema_version": "diagnostic_center_creator_live_source_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "source_prd_id": "PRD-046.1.33",
+  "source_artifacts_present": true,
+  "source_final_status": "passed",
+  "source_decision": "ready_for_allowlisted_limited_live_activation_prd",
+  "source_blockers_count": 0,
+  "source_warnings_count": 0,
+  "source_no_mutation_passed": true,
+  "source_docs_consistency_passed": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "missing_source_artifact_count": 0,
+  "source_parse_error_count": 0,
+  "source_gate_passed": true
+}

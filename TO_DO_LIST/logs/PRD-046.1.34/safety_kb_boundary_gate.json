@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_creator_safety_kb_boundary_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "raw_content_full_exposure_count": 0,
+  "kb_authority_quote_count": 0,
+  "forbidden_practice_suggestion_count": 0,
+  "safety_kb_boundary_gate_passed": true
+}

@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_creator_rollback_kill_switch_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "force_disabled_priority_preserved": true,
+  "rollback_ready": true,
+  "stale_apply_after_force_disabled_count": 0,
+  "rollback_kill_switch_gate_passed": true
+}

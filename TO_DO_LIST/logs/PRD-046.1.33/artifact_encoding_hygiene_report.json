@@ -3,7 +3,7 @@
   "prd": "PRD-046.1.33",
   "checked_prd": "PRD-046.1.33",
   "final_status": "passed",
-  "files_checked": 15,
+  "files_checked": 21,
   "utf8_decode_error_count": 0,
   "nul_byte_file_count": 0,
   "nul_char_file_count": 0,
@@ -30,6 +30,12 @@
     "TO_DO_LIST/logs/PRD-046.1.33/safety_kb_boundary_gate.json",
     "TO_DO_LIST/logs/PRD-046.1.33/source_gate.json",
     "TO_DO_LIST/logs/PRD-046.1.33/test_command_output.txt",
-    "TO_DO_LIST/logs/PRD-046.1.33/trace_provider_sanitization_gate.json"
+    "TO_DO_LIST/logs/PRD-046.1.33/trace_provider_sanitization_gate.json",
+    "TO_DO_LIST/reports/PRD-046.1.33_DOCS_CONSISTENCY_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.33_IMPLEMENTATION_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.33_LIMITED_ACTIVATION_READINESS_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.33_NEXT_PRD_RECOMMENDATION.md",
+    "TO_DO_LIST/reports/PRD-046.1.33_NORMAL_USER_BOUNDARY_REPORT.md",
+    "TO_DO_LIST/reports/PRD-046.1.33_ROLLBACK_HARD_STOP_POLICY_REPORT.md"
   ]
 }

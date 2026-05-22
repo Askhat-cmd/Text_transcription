@@ -2,6 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
+| PRD-046.1.34 | Diagnostic Center Creator-Only Live Activation / Web Chat + Admin Runtime Controls / Trace Monitor MVP v1 | passed | pending | executed creator-only bounded live activation with runtime mode contract, admin controls, web chat smoke, monitor MVP, rollback/hard-stop, strict normal-user no-effect, provider budget, and no-mutation/docs evidence | TO_DO_LIST/reports/PRD-046.1.34_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.33 | Diagnostic Center Limited Runtime Activation Readiness / Normal-User Boundary Decision Gate v1 | passed | 9f1a0af | added readiness-only boundary gate over `PRD-046.1.32` evidence with strict live dependency checks, normal-user no-effect boundary confirmation, rollback/hard-stop policy verification, safety/trace/no-mutation/docs consistency controls, and decision handoff to allowlisted limited live activation PRD | TO_DO_LIST/reports/PRD-046.1.33_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.32 | Diagnostic Center Controlled Rollout Results / Rollback / Quality Gate v1 | passed | d3f3360 | consolidated `PRD-046.1.31` execution evidence in strict no-new-execution mode, validated provider budget/normal-user no-effect/quality/rollback/safety/trace/BotDB/no-mutation, and closed docs consistency tail before readiness transition | TO_DO_LIST/reports/PRD-046.1.32_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.31 | Diagnostic Center Controlled Rollout Execution Gate v1 | passed | 3702d04 | executed strict controlled rollout window for allowlisted operators only with provider budget, normal-user no-effect, rollback/hard-stop, safety/KB, trace sanitization, BotDB stability, and no-mutation evidence | TO_DO_LIST/reports/PRD-046.1.31_IMPLEMENTATION_REPORT.md |
@@ -96,4 +97,3 @@
 3. Если изменилась последовательность шагов - обновляется `docs/ROADMAP.md`.
 4. Если принято новое архитектурное решение - обновляется `docs/DECISIONS.md`.
 5. `TO_DO_LIST` хранит полный архив logs/reports, `docs/` хранит сжатую карту текущего состояния.
-

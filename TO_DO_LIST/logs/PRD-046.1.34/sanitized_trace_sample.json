@@ -1,0 +1,11 @@
+{
+  "schema_version": "diagnostic_center_trace_sanitized_sample_v1",
+  "turn_id": "creator_live_turn_001",
+  "user_id_hash": "sha256:creator_local_web_user",
+  "is_creator": true,
+  "runtime_mode": "creator_only",
+  "diagnostic_center_active": true,
+  "trace_sanitized": true,
+  "hard_stop_triggered": false,
+  "validator_result": "passed"
+}

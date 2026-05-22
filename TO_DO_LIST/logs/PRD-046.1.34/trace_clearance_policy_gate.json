@@ -1,0 +1,15 @@
+{
+  "schema_version": "diagnostic_center_creator_trace_clearance_policy_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "clear_operations_supported": [
+    "conversation",
+    "user",
+    "older_than",
+    "creator_dev"
+  ],
+  "export_before_clear": true,
+  "prd_evidence_preserved": true,
+  "kb_mutated": false,
+  "raw_private_payload_committed": false,
+  "trace_clearance_policy_gate_passed": true
+}

@@ -1,0 +1,26 @@
+﻿> python -m pytest bot_psychologist/tests/multiagent/test_creator_live_activation_contract.py bot_psychologist/tests/multiagent/test_creator_live_activation_source_gate.py bot_psychologist/tests/multiagent/test_creator_identity_gate.py bot_psychologist/tests/multiagent/test_creator_live_activation_admin_controls.py bot_psychologist/tests/multiagent/test_creator_live_activation_web_chat_smoke.py bot_psychologist/tests/multiagent/test_creator_live_activation_normal_user_no_effect.py bot_psychologist/tests/multiagent/test_creator_live_activation_active_influence.py bot_psychologist/tests/multiagent/test_creator_live_activation_rollback.py bot_psychologist/tests/multiagent/test_creator_live_activation_hard_stop.py bot_psychologist/tests/multiagent/test_creator_live_activation_safety_kb_boundary.py bot_psychologist/tests/multiagent/test_creator_live_activation_trace_sanitization.py bot_psychologist/tests/multiagent/test_creator_live_activation_trace_storage.py bot_psychologist/tests/multiagent/test_creator_live_activation_monitor.py bot_psychologist/tests/multiagent/test_creator_live_activation_trace_clearance.py bot_psychologist/tests/multiagent/test_creator_live_activation_provider_budget.py bot_psychologist/tests/multiagent/test_creator_live_activation_no_mutation.py bot_psychologist/tests/multiagent/test_creator_live_activation_artifact_hygiene.py bot_psychologist/tests/multiagent/test_creator_live_activation_docs_consistency.py bot_psychologist/tests/multiagent/test_creator_live_activation_decision.py -q
+...................                                                      [100%]
+19 passed in 0.39s
+exit_code=0
+
+> python -m bot_psychologist.tools.run_diagnostic_center_creator_live_activation --repo-root . --source-logs-dir TO_DO_LIST/logs/PRD-046.1.33 --source-reports-dir TO_DO_LIST/reports --docs-dir docs --output-dir TO_DO_LIST/logs/PRD-046.1.34 --admin-base-url http://localhost:8003 --web-ui-base-url http://localhost:3000 --mode creator_only --strict
+status=passed
+decision=creator_live_activation_passed
+source_gate=passed
+creator_identity_gate=passed
+admin_runtime_controls_gate=passed
+web_chat_creator_live_smoke=passed
+normal_user_no_effect_gate=passed
+diagnostic_center_active_influence_gate=passed
+rollback_kill_switch_gate=passed
+hard_stop_gate=passed
+safety_kb_boundary_gate=passed
+trace_provider_sanitization_gate=passed
+trace_storage_gate=passed
+diagnostic_center_monitor_gate=passed
+trace_clearance_policy_gate=passed
+provider_budget_gate=passed
+no_mutation_proof=passed
+artifact_encoding_hygiene=passed
+docs_consistency_gate=passed
+exit_code=0

@@ -1,0 +1,8 @@
+{
+  "schema_version": "diagnostic_center_creator_hard_stop_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "hard_stop_triggered": false,
+  "triggered_reasons": [],
+  "force_disabled_after_hard_stop": false,
+  "hard_stop_gate_passed": true
+}

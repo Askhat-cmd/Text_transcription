@@ -1,0 +1,9 @@
+{
+  "schema_version": "diagnostic_center_creator_monitor_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "monitor_surface_present": true,
+  "last_turn_visible": true,
+  "sanitized_view_action_present": true,
+  "export_sanitized_action_present": true,
+  "monitor_gate_passed": true
+}

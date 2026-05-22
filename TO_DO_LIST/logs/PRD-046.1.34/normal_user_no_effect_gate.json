@@ -1,0 +1,10 @@
+{
+  "schema_version": "diagnostic_center_creator_normal_user_no_effect_gate_v1",
+  "prd_id": "PRD-046.1.34",
+  "normal_user_apply_effect_count": 0,
+  "normal_user_provider_call_count": 0,
+  "writer_prompt_delta_count": 0,
+  "final_answer_path_delta_count": 0,
+  "trace_private_leak_count": 0,
+  "normal_user_no_effect_gate_passed": true
+}

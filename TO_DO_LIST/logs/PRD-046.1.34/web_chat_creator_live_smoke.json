@@ -1,0 +1,16 @@
+{
+  "schema_version": "diagnostic_center_creator_web_chat_live_smoke_v1",
+  "prd_id": "PRD-046.1.34",
+  "creator_identity_ready": true,
+  "web_chat_reachable": true,
+  "message_sent": true,
+  "answer_received": true,
+  "diagnostic_center_mode": "creator_only",
+  "creator_path_active": true,
+  "normal_user_path_unchanged": true,
+  "trace_saved": true,
+  "monitor_visible": true,
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "smoke_passed": true
+}

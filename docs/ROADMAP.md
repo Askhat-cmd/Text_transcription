@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-046.1.34: creator-only live activation gate completed with creator identity boundary, runtime controls, web chat smoke, trace monitor MVP, rollback/hard-stop, safety/trace/no-mutation/docs checks.
 - PRD-046.1.33: limited runtime activation readiness / normal-user boundary decision gate completed in strict no-new-execution mode; source/live dependency, runtime boundary, rollback/hard-stop, safety/KB, trace sanitization, no-mutation, artifact hygiene, and docs consistency checks consolidated.
 - PRD-046.1.32: controlled rollout results/rollback/quality gate completed with no-new-execution consolidation, docs-sync closure, and readiness decision boundary preserved.
 - PRD-046.1.31: controlled rollout execution gate completed with bounded cohort (<=3 operators), budget/hard-stop/rollback/safety/trace/no-mutation proofs.
@@ -15,7 +16,7 @@
 - No active cleanup/stabilization PRD in progress.
 
 ## Next
-1. PRD-046.1.34 - Diagnostic Center Allowlisted Limited Live Activation Execution Gate v1.
+1. PRD-046.1.35 - Diagnostic Center Creator Live Results / Rollback / Quality Gate v1.
 2. Hotfix path only if new blockers appear in rollout-planning preparation.
 
 ## Later

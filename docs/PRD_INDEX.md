@@ -2,7 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-046.1.37 | Diagnostic Center Final Results / Completion Decision Gate v1 | blocked | pending | closed Diagnostic Center creator-pilot phase with final live/runtime/admin/rollback/normal-user/safety gates and transfer brief | TO_DO_LIST/reports/PRD-046.1.37_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.37 | Diagnostic Center Final Results / Completion Decision Gate v1 | blocked | ff77155 | closed Diagnostic Center creator-pilot phase with final live/runtime/admin/rollback/normal-user/safety gates and transfer brief | TO_DO_LIST/reports/PRD-046.1.37_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.36 | Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1 | passed | 14a0416 | accepted bounded creator-live pilot contract with admin runtime controls, rollback/no-effect proofs, and safety gates | TO_DO_LIST/reports/PRD-046.1.36_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.35-HF3 | Creator Live RAG Evidence Sync / Writer KB Context Boundary Audit v1 | passed | fc1fdb4 | synchronized runtime evidence, added live two-query gate and truncation audit artifacts | TO_DO_LIST/reports/PRD-046.1.35-HF3_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.35-HF2 | Creator Live Evidence + BotDB/RAG-to-Writer Repair v1 | evidence_incomplete | d670cf8 | fixed BotDB query parsing resilience and introduced creator-live evidence/rag-delivery strict gate artifacts | TO_DO_LIST/reports/PRD-046.1.35-HF2_IMPLEMENTATION_REPORT.md |

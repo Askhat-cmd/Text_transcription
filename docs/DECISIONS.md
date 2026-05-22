@@ -617,3 +617,8 @@ Current Stage:
 PRD-046.1.35-HF4 calibrated creator-live response behavior: example/explanation requests no longer trigger regulate_first by default, practice rejection suppresses body-action suggestions, and Web Trace displays non-empty safe Writer chunk previews.
 Next:
 PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
+
+## HF4 Delivery Metadata
+- prd_id: PRD-046.1.35-HF4
+- commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
+- push_status: pushed_to_origin_main

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Any
 
 from ..context_assembly import format_context_for_writer
 from ..writer_move_compliance import build_writer_move_instructions_v1
@@ -21,6 +22,7 @@ class WriterContract:
     memory_bundle: MemoryBundle
     context_package: ContextAssemblyPackage | None = None
     diagnostic_card: DiagnosticCard | None = None
+    knowledge_answer_guard: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -33,6 +35,9 @@ class WriterContract:
             ),
             "diagnostic_card": (
                 self.diagnostic_card.to_dict() if self.diagnostic_card is not None else None
+            ),
+            "knowledge_answer_guard": (
+                dict(self.knowledge_answer_guard) if isinstance(self.knowledge_answer_guard, dict) else None
             ),
             "response_language": self.response_language,
         }
@@ -87,6 +92,21 @@ class WriterContract:
             f"max_questions={writer_move_instructions.get('max_questions')}; "
             f"style={writer_move_instructions.get('style')}"
         )
+        knowledge_answer_guard = (
+            dict(self.knowledge_answer_guard)
+            if isinstance(self.knowledge_answer_guard, dict)
+            else {}
+        )
+        knowledge_answer = (
+            dict(knowledge_answer_guard.get("knowledge_answer", {}))
+            if isinstance(knowledge_answer_guard.get("knowledge_answer"), dict)
+            else {}
+        )
+        practice_gate = (
+            dict(knowledge_answer_guard.get("practice_gate", {}))
+            if isinstance(knowledge_answer_guard.get("practice_gate"), dict)
+            else {}
+        )
 
         return {
             "user_message": self.user_message,
@@ -138,4 +158,7 @@ class WriterContract:
             "writer_move_instruction_summary": writer_move_summary,
             "writer_move_must_do": list(writer_move_instructions.get("must_do", []) or []),
             "writer_move_must_not_do": list(writer_move_instructions.get("must_not_do", []) or []),
+            "knowledge_answer_guard": knowledge_answer_guard,
+            "knowledge_answer": knowledge_answer,
+            "practice_gate": practice_gate,
         }

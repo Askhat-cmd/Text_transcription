@@ -140,6 +140,15 @@ MUST NOT DO:
 ЗНАНИЯ ИЗ БАЗЫ:
 {semantic_hits}
 
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed={knowledge_answer_needed}
+knowledge_answer_concept={knowledge_answer_concept}
+kb_grounding_available={knowledge_answer_kb_grounding}
+knowledge_answer_first={knowledge_answer_first}
+do_not_ask_user_to_define_term_before_answering={do_not_ask_user_to_define_term_before_answering}
+practice_allowed={practice_allowed}
+writer_instruction={knowledge_answer_writer_instruction}
+
 ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
 - главный фокус пользователя;
 - нужную глубину;

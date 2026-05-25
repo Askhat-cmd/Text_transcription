@@ -1,0 +1,69 @@
+[
+  {
+    "id": "PRD0470_GREETING_NO_PRACTICE",
+    "category": "greeting",
+    "turns": [
+      { "role": "user", "content": "Привет! Меня зовут Аскхат!" }
+    ],
+    "expected": {
+      "knowledge_answer_needed": false,
+      "practice_allowed": false,
+      "should_not_force_practice": true
+    }
+  },
+  {
+    "id": "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
+    "category": "known_concept",
+    "turns": [
+      { "role": "user", "content": "Ты вообще понимаешь что такое \"Нейросталкинг\"?" }
+    ],
+    "expected": {
+      "knowledge_answer_needed": true,
+      "should_answer_directly": true,
+      "should_not_ask_user_to_define_term": true,
+      "should_include_any": ["паттерн", "триггер", "автоматическ", "реакц"]
+    }
+  },
+  {
+    "id": "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+    "category": "concept_relation",
+    "turns": [
+      { "role": "user", "content": "Как самореализация коррелируется с нейросталкингом?" }
+    ],
+    "expected": {
+      "knowledge_answer_needed": true,
+      "should_answer_relation": true,
+      "should_not_treat_as_external_surveillance": true,
+      "should_include_any": ["самореализац", "паттерн", "автоматическ", "реакц", "наблюден"]
+    }
+  },
+  {
+    "id": "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
+    "category": "challenge_repair",
+    "turns": [
+      { "role": "user", "content": "Что такое самореализация?" },
+      { "role": "assistant", "content": "Самореализация — это раскрытие своих способностей и ценностей." },
+      { "role": "user", "content": "Как самореализация коррелируется с нейросталкингом?" },
+      { "role": "assistant", "content": "Возможно, ты имеешь в виду внешнее слежение или биофидбек." },
+      { "role": "user", "content": "Ты вообще понимаешь что такое \"Нейросталкинг\"?" }
+    ],
+    "expected": {
+      "knowledge_answer_needed": true,
+      "should_repair_previous_misunderstanding": true,
+      "should_answer_directly": true,
+      "should_not_ask_user_to_define_term": true
+    }
+  },
+  {
+    "id": "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
+    "category": "practice_request",
+    "turns": [
+      { "role": "user", "content": "Дай один конкретный шаг, как начать наблюдать свои реакции." }
+    ],
+    "expected": {
+      "practice_allowed": true,
+      "should_include_micro_step": true
+    }
+  }
+]
+

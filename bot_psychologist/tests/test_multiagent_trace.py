@@ -93,7 +93,7 @@ def test_writer_last_debug_populated(monkeypatch) -> None:
 
 def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
     async def fake_analyze(**_kwargs):
-        return SimpleNamespace(
+        payload = SimpleNamespace(
             nervous_state="calm",
             intent="support",
             openness="open",
@@ -101,9 +101,18 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             safety_flag=False,
             confidence=0.91,
         )
+        payload.to_dict = lambda: {
+            "nervous_state": payload.nervous_state,
+            "intent": payload.intent,
+            "openness": payload.openness,
+            "ok_position": payload.ok_position,
+            "safety_flag": payload.safety_flag,
+            "confidence": payload.confidence,
+        }
+        return payload
 
     async def fake_update_thread(**_kwargs):
-        return SimpleNamespace(
+        payload = SimpleNamespace(
             thread_id="thread-test",
             phase="exploring",
             response_mode="presence",
@@ -116,6 +125,20 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             must_avoid=[],
             safety_active=False,
         )
+        payload.to_dict = lambda: {
+            "thread_id": payload.thread_id,
+            "phase": payload.phase,
+            "response_mode": payload.response_mode,
+            "relation_to_thread": payload.relation_to_thread,
+            "continuity_score": payload.continuity_score,
+            "pattern_core": payload.pattern_core,
+            "active_frame": payload.active_frame,
+            "open_loops": payload.open_loops,
+            "closed_loops": payload.closed_loops,
+            "must_avoid": payload.must_avoid,
+            "safety_active": payload.safety_active,
+        }
+        return payload
 
     async def fake_assemble(**_kwargs):
         return SimpleNamespace(
@@ -125,6 +148,7 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             rag_query="привет поддержка",
             user_profile=SimpleNamespace(patterns=["p1"], values=["v1"], progress_notes=["n1"]),
             knowledge_policy_trace={},
+            rag_retrieval_trace={},
             knowledge_rag_hits=[],
             semantic_hits=[
                 {

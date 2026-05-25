@@ -10,6 +10,7 @@ from typing import Any
 from ..contracts.memory_bundle import MemoryBundle, SemanticHit, UserProfile
 from ..contracts.thread_state import ThreadState
 from ..knowledge_policy import apply_knowledge_policy_v1
+from ..knowledge_answer_routing_guard import select_lexical_override_hits
 from .memory_retrieval_config import (
     CONVERSATION_TURNS_BY_PHASE,
     CONVERSATION_TURNS_DEFAULT,
@@ -79,6 +80,32 @@ def rag_score_policy_v1(
         trace["reasons"] = ["standard_threshold_passed"]
         return {
             "filtered_hits": filtered_hits,
+            "trace": trace,
+        }
+
+    lexical_override_hits, lexical_trace = select_lexical_override_hits(
+        query=query,
+        raw_hits=valid_hits,
+        max_hits=2,
+    )
+    if lexical_override_hits:
+        trace.update(
+            {
+                "filtered_hits_count": len(lexical_override_hits),
+                "salvaged_hits_count": len(lexical_override_hits),
+                "score_policy_mode": "lexical_known_concept_override",
+                "reasons": [
+                    "all_hits_below_min_score",
+                    str(lexical_trace.get("reason", "known_concept_lexical_override_applied")),
+                ],
+                "lexical_override": {
+                    "matched_concepts": list(lexical_trace.get("matched_concepts", [])),
+                    "matched_hits_count": int(lexical_trace.get("matched_hits_count", len(lexical_override_hits))),
+                },
+            }
+        )
+        return {
+            "filtered_hits": lexical_override_hits,
             "trace": trace,
         }
 

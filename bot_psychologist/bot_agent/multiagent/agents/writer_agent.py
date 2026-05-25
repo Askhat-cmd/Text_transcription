@@ -159,6 +159,19 @@ class WriterAgent:
             raise RuntimeError("No LLM client available")
 
         ctx = contract.to_prompt_context()
+        knowledge_answer = (
+            dict(ctx.get("knowledge_answer", {}))
+            if isinstance(ctx.get("knowledge_answer"), dict)
+            else {}
+        )
+        practice_gate = (
+            dict(ctx.get("practice_gate", {}))
+            if isinstance(ctx.get("practice_gate"), dict)
+            else {}
+        )
+        knowledge_answer_first = bool(knowledge_answer.get("should_answer_directly", False))
+        do_not_ask_definition = bool(knowledge_answer.get("should_answer_directly", False))
+        practice_allowed = bool(practice_gate.get("practice_allowed", True))
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
             response_mode=ctx["response_mode"],
@@ -180,6 +193,15 @@ class WriterAgent:
             user_profile_patterns=", ".join(ctx["user_profile_patterns"]) or "нет",
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
             semantic_hits=self._format_hits(ctx["semantic_hits"]),
+            knowledge_answer_needed=str(bool(knowledge_answer.get("needed", False))).lower(),
+            knowledge_answer_concept=str(knowledge_answer.get("concept", "") or "none"),
+            knowledge_answer_kb_grounding=str(bool(knowledge_answer.get("kb_grounding_available", False))).lower(),
+            knowledge_answer_first=str(knowledge_answer_first).lower(),
+            do_not_ask_user_to_define_term_before_answering=str(do_not_ask_definition).lower(),
+            practice_allowed=str(practice_allowed).lower(),
+            knowledge_answer_writer_instruction=str(
+                knowledge_answer.get("writer_instruction", "none") or "none"
+            ),
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)

@@ -643,3 +643,10 @@ Status: accepted
 Context: after PRD-046.1.37-HF1 completion, operational docs and admin control surface needed explicit synchronization to avoid ambiguity between local developer controls and production rollout policy.
 Decision: PRD-046.1.38 introduces a dedicated Diagnostic Center admin contract (`effective/control/reset`) and Web Admin tab with full mode visibility, including `developer_local_all_users`, while preserving strict boundary flags (`production_ready=false`, `broad_rollout_allowed=false`, `normal_user_activation_allowed=false`, `external_users_allowed=false`).
 Consequences: single-developer local operations can exercise full runtime control map with auditable state, but production authority expansion remains blocked until a separate future governance PRD.
+
+## ADR-059 - Known internal concepts must be answered from governed KB grounding before asking the user to define the term
+
+Status: accepted
+Context: live multiagent failures showed that Writer could ask clarifying questions about already-known internal concepts (for example, `нейросталкинг`) even when retrieval/context already contained grounding.
+Decision: introduce deterministic Knowledge Answer Routing Guard before Writer contract. If user asks/challenges a known internal concept and KB grounding is available (including lexical near-exact fallback), runtime sets `knowledge_answer_first`, disables definition-first behavior, and blocks practice-first diversion for that turn.
+Consequences: concept questions are answered from internal governed meaning first, trace explicitly records `knowledge_answer` and `practice_gate`, and future tuning can iterate on measurable failure-case baseline instead of subjective chat impressions.

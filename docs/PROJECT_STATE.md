@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-046.1.38 synchronized documentation state and delivered Diagnostic Center Admin Control readiness map. Diagnostic Center v1 remains completed for current creator-only/developer-local governed phase, with explicit runtime control surface in Web Admin. Broad rollout remains prohibited and production_ready remains false.
+PRD-047.0 launched Multiagent Quality & Tuning with Knowledge Answer Routing Guard baseline for known internal concept questions, plus reproducible live-failure dataset/runner artifacts (`dry/direct/live`). Diagnostic Center v1 remains in governed creator/developer-local boundary; broad rollout remains prohibited and `production_ready=false`.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 
@@ -35,7 +35,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`Multiagent Quality & Tuning Track`
+`PRD-047.1 - Active Frame / Response Planner v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -51,7 +51,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-05-25
-- Source cycle: PRD-046.1.38
+- Source cycle: PRD-047.0
 
 ## PRD-046.1.35-HF4
 Current Stage:

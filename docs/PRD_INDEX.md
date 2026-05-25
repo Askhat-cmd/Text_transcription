@@ -2,6 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
+| PRD-047.0 | Multiagent Quality & Tuning Start: Knowledge Answer Routing + Live Dialogue Failure Baseline v1 | passed | pending | added knowledge-answer routing guard, lexical concept override into retrieval path, writer knowledge-answer contract/prompt wiring, PRD-047.0 failure-cases dataset/runner and trace/no-mutation artifacts | TO_DO_LIST/reports/PRD-047.0_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.38 | Documentation State Sync + Diagnostic Center Admin Control Readiness Map | passed | 371c230 | synced project docs to post-HF1 state, added Diagnostic Center admin effective/control/reset endpoints and Web Admin control tab with developer-local all-users governance labels | TO_DO_LIST/reports/PRD-046.1.38_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.37 | Diagnostic Center Final Results / Completion Decision Gate v1 | blocked | ff77155 | closed Diagnostic Center creator-pilot phase with final live/runtime/admin/rollback/normal-user/safety gates and transfer brief | TO_DO_LIST/reports/PRD-046.1.37_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.36 | Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1 | passed | 14a0416 | accepted bounded creator-live pilot contract with admin runtime controls, rollback/no-effect proofs, and safety gates | TO_DO_LIST/reports/PRD-046.1.36_IMPLEMENTATION_REPORT.md |

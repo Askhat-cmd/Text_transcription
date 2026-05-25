@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.0: launched Multiagent Quality & Tuning baseline with Knowledge Answer Routing Guard, lexical known-concept override path, writer knowledge-answer contract wiring, live-failure dataset/runner (`dry/direct/live`), trace samples, and no-mutation evidence.
 - PRD-046.1.38: synced living docs with post-HF1 runtime reality and added Diagnostic Center Admin Control surface (effective/control/reset contract + Web Admin tab) with developer-local all-users boundary labels.
 - PRD-046.1.37: finalized Diagnostic Center completion decision gate with source/provenance/runtime/live/admin/rollback/normal-user/safety/no-mutation evidence and phase-closure transfer brief.
 - PRD-046.1.35-HF3: synchronized live RAG evidence with multiagent trace and added writer KB truncation audit.
@@ -19,10 +20,10 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active Diagnostic Center completion PRD in progress; admin control map is in place.
+- No active PRD in progress after PRD-047.0 closure.
 
 ## Next
-1. Multiagent Quality & Tuning Track.
+1. PRD-047.1 Active Frame / Response Planner v1.
 
 ## Later
 - Operational hardening for governed limited runtime.

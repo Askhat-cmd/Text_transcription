@@ -1,0 +1,219 @@
+{
+  "prd_id": "PRD-047.0",
+  "mode": "direct",
+  "timestamp_utc": "2026-05-25T12:21:03.299901+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_0_cases.json",
+  "summary": {
+    "cases_total": 5,
+    "cases_passed": 5,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "PRD0470_GREETING_NO_PRACTICE",
+      "mode": "direct",
+      "turn_errors": [],
+      "answer": "Привет, Аскхат. Положи ладонь на грудь, медленно вдохни на 4 счета и выдохни на 6 — повтори два раза, спокойно и без напряжения.",
+      "knowledge_answer": {
+        "needed": false,
+        "reason": "no_known_concept_question",
+        "concept": "",
+        "concept_match_type": "none",
+        "matched_concepts": [],
+        "kb_grounding_available": false,
+        "kb_grounding_sources": [],
+        "kb_grounding_max_score": 0.03884,
+        "should_answer_directly": false,
+        "should_ask_definition_first": true,
+        "practice_allowed": false,
+        "preferred_response_mode": "regulate",
+        "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "greeting_no_practice_default",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "knowledge_answer_needed": true,
+          "should_answer_directly": true,
+          "practice_allowed": true,
+          "should_not_ask_user_to_define_term": true,
+          "should_include_any": true,
+          "should_include_micro_step": true
+        }
+      }
+    },
+    {
+      "case_id": "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
+      "mode": "direct",
+      "turn_errors": [],
+      "answer": "Похоже, ты проверяешь, действительно ли я понимаю термин «нейросталкинг». В общем смысле это внимательное отслеживание своих автоматических мыслей, телесных реакций и триггеров — чтобы заметить паттерны до их эскалации. Иногда под этим словом также понимают чрезмерную фиксацию на чужих цифровых следах — отслеживание в сети; оба смысла встречаются. Ты о каком варианте говоришь?",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг"
+        ],
+        "kb_grounding_available": true,
+        "kb_grounding_sources": [
+          "book"
+        ],
+        "kb_grounding_max_score": 0.105562,
+        "should_answer_directly": true,
+        "should_ask_definition_first": false,
+        "practice_allowed": false,
+        "preferred_response_mode": "inform",
+        "writer_instruction": "knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "explain_request",
+        "is_greeting": false
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "knowledge_answer_needed": true,
+          "should_answer_directly": true,
+          "practice_allowed": true,
+          "should_not_ask_user_to_define_term": true,
+          "should_include_any": true,
+          "should_include_micro_step": true
+        }
+      }
+    },
+    {
+      "case_id": "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+      "mode": "direct",
+      "turn_errors": [],
+      "answer": "Вы снова спрашиваете про связь между самореализацией и «нейросталкингом» — то есть как наблюдение за собственными нейронными или эмоциональными реакциями соотносится с поиском и выражением себя. Такое наблюдение может давать полезную обратную связь и помогать корректировать поведение, но одновременно может превращаться в чрезмерный контроль, который мешает спонтанности и рискованным шагам, важным для роста. Вы имеете в виду технический мониторинг (например, ЭЭГ/нейроинтерфейсы) или скорее внимательное самонаблюдение за состояниями и мыслями?",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг",
+          "самореализация"
+        ],
+        "kb_grounding_available": false,
+        "kb_grounding_sources": [],
+        "kb_grounding_max_score": 0.076204,
+        "should_answer_directly": false,
+        "should_ask_definition_first": true,
+        "practice_allowed": false,
+        "preferred_response_mode": "reflect",
+        "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": false
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "knowledge_answer_needed": true,
+          "should_answer_directly": true,
+          "practice_allowed": true,
+          "should_not_ask_user_to_define_term": true,
+          "should_include_any": true,
+          "should_include_micro_step": true
+        }
+      }
+    },
+    {
+      "case_id": "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
+      "mode": "direct",
+      "turn_errors": [],
+      "answer": "Вы, похоже, сомневаетесь, понимаю ли я термин «нейросталкинг». В определении это либо внешнее отслеживание чужих нейроданных и триггеров с помощью технологий, либо метафорическая/внутренняя практика постоянного наблюдения за собственными нейро‑реакциями. О каком из этих двух смыслов вы говорите?",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг"
+        ],
+        "kb_grounding_available": true,
+        "kb_grounding_sources": [
+          "book"
+        ],
+        "kb_grounding_max_score": 0.105562,
+        "should_answer_directly": true,
+        "should_ask_definition_first": false,
+        "practice_allowed": false,
+        "preferred_response_mode": "inform",
+        "writer_instruction": "knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "explain_request",
+        "is_greeting": false
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "knowledge_answer_needed": true,
+          "should_answer_directly": true,
+          "practice_allowed": true,
+          "should_not_ask_user_to_define_term": true,
+          "should_include_any": true,
+          "should_include_micro_step": true
+        }
+      }
+    },
+    {
+      "case_id": "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
+      "mode": "direct",
+      "turn_errors": [],
+      "answer": "В следующий раз, когда почувствуешь импульс ответить или резко среагировать, включи таймер на 20 секунд: в течение этих 20 секунд не действуй, сделай три спокойных вдоха-выдоха, мысленно назови одним словом, что ты чувствуешь, и отметь, где в теле это ощущение. После таймера продолжи действие или сделай короткую паузу — так повторяй каждый раз, когда появляется импульс.",
+      "knowledge_answer": {
+        "needed": false,
+        "reason": "no_known_concept_question",
+        "concept": "",
+        "concept_match_type": "none",
+        "matched_concepts": [],
+        "kb_grounding_available": false,
+        "kb_grounding_sources": [],
+        "kb_grounding_max_score": 0.087122,
+        "should_answer_directly": false,
+        "should_ask_definition_first": true,
+        "practice_allowed": true,
+        "preferred_response_mode": "practice",
+        "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+      },
+      "practice_gate": {
+        "practice_allowed": true,
+        "reason": "no_guard_restriction",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": false
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "knowledge_answer_needed": true,
+          "should_answer_directly": true,
+          "practice_allowed": true,
+          "should_not_ask_user_to_define_term": true,
+          "should_include_any": true,
+          "should_include_micro_step": true
+        }
+      }
+    }
+  ]
+}

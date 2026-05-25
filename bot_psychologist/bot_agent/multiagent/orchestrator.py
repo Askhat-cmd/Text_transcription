@@ -22,6 +22,7 @@ from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
+from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .planner_bridge_compliance_shadow import (
     build_planner_bridge_compliance_runtime_shadow_v1,
 )
@@ -196,6 +197,11 @@ class MultiAgentOrchestrator:
             thread_state=updated_thread,
             memory_bundle=memory_bundle,
         )
+        knowledge_answer_guard = build_knowledge_answer_routing_guard(
+            user_message=query,
+            rag_hits=list(memory_bundle.semantic_hits or []),
+            response_mode=str(updated_thread.response_mode or ""),
+        )
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -240,6 +246,7 @@ class MultiAgentOrchestrator:
             memory_bundle=memory_bundle,
             context_package=context_package,
             diagnostic_card=diagnostic_card,
+            knowledge_answer_guard=knowledge_answer_guard,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -388,6 +395,18 @@ class MultiAgentOrchestrator:
                 "semantic_hits_raw_redacted": True,
                 "rag_retrieval_trace": dict(memory_bundle.rag_retrieval_trace or {}),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
+                "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
+                "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),
+                "knowledge_answer_trace": {
+                    "schema_version": str(knowledge_answer_guard.get("schema_version", "")),
+                    "concept_aliases_version": str(knowledge_answer_guard.get("concept_aliases_version", "")),
+                    "knowledge_answer_needed": bool(
+                        dict(knowledge_answer_guard.get("knowledge_answer", {})).get("needed", False)
+                    ),
+                    "kb_grounding_available": bool(
+                        dict(knowledge_answer_guard.get("knowledge_answer", {})).get("kb_grounding_available", False)
+                    ),
+                },
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,
                 "user_profile": {

@@ -17,6 +17,8 @@ import type {
   AgentPromptsResponse,
   AgentLLMConfigResponse,
   OverviewData,
+  DiagnosticCenterControlUpdateRequest,
+  DiagnosticCenterEffectiveResponse,
 } from '../types/admin.types';
 
 // Получаем API-ключ из localStorage (так же как и остальные запросы приложения)
@@ -95,6 +97,12 @@ export const adminConfigService = {
     request<AdminRuntimeEffectiveResponse>('GET', '/runtime/effective'),
   getDiagnosticsEffective: () =>
     request<AdminDiagnosticsEffectiveResponse>('GET', '/diagnostics/effective'),
+  getDiagnosticCenterEffective: () =>
+    request<DiagnosticCenterEffectiveResponse>('GET', '/diagnostic-center/effective'),
+  setDiagnosticCenterControl: (payload: DiagnosticCenterControlUpdateRequest) =>
+    request<DiagnosticCenterEffectiveResponse>('POST', '/diagnostic-center/control', payload),
+  resetDiagnosticCenterControl: () =>
+    request<DiagnosticCenterEffectiveResponse>('POST', '/diagnostic-center/reset'),
   reloadData: () =>
     request<{ status: string; blocks_loaded: number; data_source: string; degraded_mode: boolean }>(
       'POST',

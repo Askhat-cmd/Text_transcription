@@ -23,6 +23,11 @@ from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
 from bot_agent.multiagent.thread_storage import thread_storage
+from bot_agent.diagnostic_center_control import (
+    apply_diagnostic_center_control_update,
+    build_diagnostic_center_effective_payload,
+    reset_diagnostic_center_control_state,
+)
 from bot_agent.multiagent.agents.agent_llm_config import (
     ALLOWED_MODELS,
     get_all_agent_models,
@@ -518,6 +523,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "developer_trace_enabled": True,
             "developer_trace_mode_available": True,
         },
+        "diagnostic_center_control": build_diagnostic_center_effective_payload(),
     }
 
 
@@ -889,6 +895,45 @@ async def admin_status():
 )
 async def admin_runtime_effective(session_id: str | None = Query(default=None)):
     return _build_runtime_effective_payload(session_id=session_id)
+
+
+@admin_router.get(
+    "/diagnostic-center/effective",
+    summary="Diagnostic Center admin control effective payload",
+)
+@admin_router_v1.get(
+    "/diagnostic-center/effective",
+    summary="Diagnostic Center admin control effective payload (v1)",
+)
+async def admin_diagnostic_center_effective():
+    return build_diagnostic_center_effective_payload()
+
+
+@admin_router.post(
+    "/diagnostic-center/control",
+    summary="Update Diagnostic Center admin control state",
+)
+@admin_router_v1.post(
+    "/diagnostic-center/control",
+    summary="Update Diagnostic Center admin control state (v1)",
+)
+async def admin_diagnostic_center_control_update(body: dict):
+    try:
+        return apply_diagnostic_center_control_update(body, updated_by="dev")
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc))
+
+
+@admin_router.post(
+    "/diagnostic-center/reset",
+    summary="Reset Diagnostic Center admin control to safe default",
+)
+@admin_router_v1.post(
+    "/diagnostic-center/reset",
+    summary="Reset Diagnostic Center admin control to safe default (v1)",
+)
+async def admin_diagnostic_center_control_reset():
+    return reset_diagnostic_center_control_state(updated_by="dev")
 
 
 @admin_router.get(

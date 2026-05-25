@@ -11,6 +11,7 @@
 ## API / UI / Operations
 - [API](./api.md)
 - [Web UI](./web_ui.md)
+- [Diagnostic Center Admin Control](./diagnostic_center_admin_control.md)
 - [Local Dev Runbook](./local_dev_runbook.md)
 - [Testing Matrix](./testing_matrix.md)
 - [Deployment](./deployment.md)

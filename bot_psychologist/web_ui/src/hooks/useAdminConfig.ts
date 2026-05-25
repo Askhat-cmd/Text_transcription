@@ -9,6 +9,8 @@ import type {
   AdminStatusResponse,
   AdminRuntimeEffectiveResponse,
   AdminDiagnosticsEffectiveResponse,
+  DiagnosticCenterControlUpdateRequest,
+  DiagnosticCenterEffectiveResponse,
 } from '../types/admin.types';
 
 export const useAdminConfig = () => {
@@ -26,6 +28,8 @@ export const useAdminConfig = () => {
     useState<AdminRuntimeEffectiveResponse | null>(null);
   const [diagnosticsEffectiveData, setDiagnosticsEffectiveData] =
     useState<AdminDiagnosticsEffectiveResponse | null>(null);
+  const [diagnosticCenterEffectiveData, setDiagnosticCenterEffectiveData] =
+    useState<DiagnosticCenterEffectiveResponse | null>(null);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -111,6 +115,32 @@ export const useAdminConfig = () => {
     if (data) setDiagnosticsEffectiveData(data);
   }, []);
 
+  const loadDiagnosticCenterEffective = useCallback(async () => {
+    const data = await withLoading(() => adminConfigService.getDiagnosticCenterEffective());
+    if (data) setDiagnosticCenterEffectiveData(data);
+  }, []);
+
+  const saveDiagnosticCenterControl = useCallback(
+    async (payload: DiagnosticCenterControlUpdateRequest) => {
+      const data = await withSaving(() => adminConfigService.setDiagnosticCenterControl(payload));
+      if (data) {
+        setDiagnosticCenterEffectiveData(data);
+        await loadRuntimeEffective();
+        showSuccess('✓ Diagnostic Center control сохранён');
+      }
+    },
+    [loadRuntimeEffective, showSuccess]
+  );
+
+  const resetDiagnosticCenterControl = useCallback(async () => {
+    const data = await withSaving(() => adminConfigService.resetDiagnosticCenterControl());
+    if (data) {
+      setDiagnosticCenterEffectiveData(data);
+      await loadRuntimeEffective();
+      showSuccess('↩ Diagnostic Center control сброшен');
+    }
+  }, [loadRuntimeEffective, showSuccess]);
+
 
 
 
@@ -120,9 +150,10 @@ export const useAdminConfig = () => {
       await loadStatus();
       await loadRuntimeEffective();
       await loadDiagnosticsEffective();
+      await loadDiagnosticCenterEffective();
       showSuccess('✓ База знаний перезагружена');
     }
-  }, [loadDiagnosticsEffective, loadRuntimeEffective, loadStatus, showSuccess]);
+  }, [loadDiagnosticCenterEffective, loadDiagnosticsEffective, loadRuntimeEffective, loadStatus, showSuccess]);
 
   // ── Prompts ─────────────────────────────────────────────────────────
 
@@ -222,6 +253,7 @@ export const useAdminConfig = () => {
     statusData,
     runtimeEffectiveData,
     diagnosticsEffectiveData,
+    diagnosticCenterEffectiveData,
     prompts,
     selectedPrompt,
     isLoading,
@@ -240,6 +272,9 @@ export const useAdminConfig = () => {
     loadStatus,
     loadRuntimeEffective,
     loadDiagnosticsEffective,
+    loadDiagnosticCenterEffective,
+    saveDiagnosticCenterControl,
+    resetDiagnosticCenterControl,
     reloadKnowledgeBase,
     savePrompt,
     resetPrompt,

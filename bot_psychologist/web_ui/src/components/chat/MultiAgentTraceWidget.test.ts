@@ -181,8 +181,13 @@ describe('MultiAgentTraceWidget (rev2)', () => {
 
   it('falls back to content_full when preview is empty', () => {
     const trace = createTrace();
-    trace.memory_context.semantic_hits[0].content_preview = '';
-    trace.memory_context.semantic_hits[0].content_full = 'content_full_fallback';
+    const hits = trace.memory_context?.semantic_hits;
+    expect(Array.isArray(hits) && hits.length > 0).toBe(true);
+    if (!hits || hits.length === 0) {
+      throw new Error('semantic hits missing in trace fixture');
+    }
+    hits[0].content_preview = '';
+    hits[0].content_full = 'content_full_fallback';
     const harness = renderWidget(
       React.createElement(MultiAgentTraceWidget, {
         trace,

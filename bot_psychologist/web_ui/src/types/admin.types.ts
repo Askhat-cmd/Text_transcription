@@ -291,3 +291,56 @@ export interface OverviewData {
   server_time: string;
   schema_version: string;
 }
+
+export interface DiagnosticCenterBoundaryFlags {
+  broad_rollout_allowed: boolean;
+  production_ready: boolean;
+  normal_user_activation_allowed: boolean;
+  external_users_allowed: boolean;
+}
+
+export interface DiagnosticCenterControlState {
+  mode: string;
+  force_disabled: boolean;
+  allowlist_user_ids: string[];
+  developer_all_users_enabled: boolean;
+  updated_at: string;
+  updated_by: string;
+  reason: string;
+}
+
+export interface DiagnosticCenterEffectiveResponse {
+  schema_version: string;
+  status: string;
+  current_mode: string;
+  effective_active: boolean;
+  force_disabled: boolean;
+  kill_switch_available: boolean;
+  single_developer_project: boolean;
+  available_modes: string[];
+  developer_identity: {
+    creator_user_id: string;
+    developer_user_ids: string[];
+    allowlist_user_ids: string[];
+  };
+  boundary_flags: DiagnosticCenterBoundaryFlags;
+  scope: {
+    runtime_scope: string;
+    external_rollout_scope: string;
+    note: string;
+  };
+  last_evidence: {
+    last_prd: string;
+    diagnostic_center_track_status: string;
+    recommended_runner_timeout_sec: number;
+  };
+  control_state: DiagnosticCenterControlState;
+  warnings: string[];
+}
+
+export interface DiagnosticCenterControlUpdateRequest {
+  mode: string;
+  force_disabled: boolean;
+  allowlist_user_ids: string[];
+  reason?: string;
+}

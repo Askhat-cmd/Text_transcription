@@ -636,3 +636,10 @@ Status: accepted
 Context: PRD-046.1.36 accepted creator-live pilot layer but left runtime readiness warning and mixed evidence provenance strengths.
 Decision: PRD-046.1.37 enforces final source/provenance/runtime/live/admin/rollback/normal-user/safety/no-mutation decision package and closes Diagnostic Center v1 for the current phase.
 Consequences: creator-only/allowlist pilot remains governed; broad rollout stays prohibited; production_ready remains false; next work moves to Multiagent Quality & Tuning Track.
+
+## ADR-058 - Diagnostic Center admin controls are available for single-developer local governance without production rollout declaration
+
+Status: accepted
+Context: after PRD-046.1.37-HF1 completion, operational docs and admin control surface needed explicit synchronization to avoid ambiguity between local developer controls and production rollout policy.
+Decision: PRD-046.1.38 introduces a dedicated Diagnostic Center admin contract (`effective/control/reset`) and Web Admin tab with full mode visibility, including `developer_local_all_users`, while preserving strict boundary flags (`production_ready=false`, `broad_rollout_allowed=false`, `normal_user_activation_allowed=false`, `external_users_allowed=false`).
+Consequences: single-developer local operations can exercise full runtime control map with auditable state, but production authority expansion remains blocked until a separate future governance PRD.

@@ -6,6 +6,7 @@ Trace endpoints and UI panels provide observability for each user turn in the mu
 ## Runtime facts
 - Active runtime path: `multiagent_adapter`
 - Legacy cascade trace fields are not part of active runtime contract
+- Runtime effective payload includes compact `diagnostic_center_control` snapshot for admin observability.
 
 ## Quality trace v1
 `quality_trace` — compact deterministic audit layer for answer quality signals.
@@ -28,6 +29,8 @@ but also in external debug surfaces:
 - `GET /api/debug/session/{session_id}/traces?format=full|compact`
 - `GET /api/debug/session/{session_id}/llm-payload?format=structured|flat`
 - `GET /api/debug/session/{session_id}/multiagent-trace`
+- `GET /api/admin/runtime/effective`
+- `GET /api/admin/diagnostic-center/effective`
 
 ## Access
 - Debug endpoints require a development API key (`X-API-Key`).

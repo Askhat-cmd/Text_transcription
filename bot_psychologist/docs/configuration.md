@@ -14,6 +14,14 @@
 - `MULTIAGENT_ENABLED=true` is the expected default.
 - `LEGACY_PIPELINE_ENABLED` is a deprecated compatibility flag and does not switch runtime back to legacy cascade.
 - Source of truth for effective runtime: `GET /api/admin/runtime/effective`.
+- Diagnostic Center admin control source of truth:
+  - `GET /api/admin/diagnostic-center/effective`
+  - `POST /api/admin/diagnostic-center/control`
+  - `POST /api/admin/diagnostic-center/reset`
+- Boundary invariants remain fixed for this phase:
+  - `production_ready=false`
+  - `broad_rollout_allowed=false`
+  - `normal_user_activation_allowed=false`
 
 ## API / Web Defaults
 - API local start: `python -m uvicorn api.main:app --host 0.0.0.0 --port 8001`

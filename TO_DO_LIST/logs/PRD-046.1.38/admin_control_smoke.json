@@ -1,0 +1,23 @@
+{
+  "prd_id": "PRD-046.1.38",
+  "timestamp_utc": "2026-05-25T11:19:40.365372+00:00",
+  "backend": "fastapi_testclient",
+  "effective": {
+    "status_code": 200,
+    "ok": true,
+    "current_mode": "creator_only",
+    "schema_version": "diagnostic_center_control_v1"
+  },
+  "control": {
+    "status_code": 200,
+    "ok": true,
+    "current_mode": "developer_local_all_users",
+    "production_ready": false
+  },
+  "reset": {
+    "status_code": 200,
+    "ok": true,
+    "current_mode": "creator_only"
+  },
+  "smoke_gate": "passed"
+}

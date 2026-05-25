@@ -7,6 +7,11 @@ React application for chat, diagnostics, and admin-adjacent operator workflows o
 - Backend API is multiagent-only at runtime.
 - Trace widgets consume multiagent trace payloads.
 - UI should not display legacy cascade as an active runtime option.
+- Admin includes dedicated `Diagnostic Center` tab backed by:
+  - `GET /api/v1/admin/diagnostic-center/effective`
+  - `POST /api/v1/admin/diagnostic-center/control`
+  - `POST /api/v1/admin/diagnostic-center/reset`
+- `developer_local_all_users` must be clearly labeled as single-developer local mode, not production rollout.
 
 ## Local start
 ```powershell

@@ -12,6 +12,7 @@ import { OrchestratorTab } from './OrchestratorTab';
 import { ThreadsTab } from './ThreadsTab';
 import { AgentPromptEditorPanel } from './AgentPromptEditorPanel';
 import { AdminOverviewTab } from './AdminOverviewTab';
+import { DiagnosticCenterTab } from './DiagnosticCenterTab';
 
 type Tab =
   | 'overview'
@@ -20,6 +21,7 @@ type Tab =
   | 'threads'
   | 'agent_prompts'
   | 'runtime'
+  | 'diagnostic_center'
   | 'memory'
   | 'llm'
   | 'retrieval'
@@ -35,6 +37,7 @@ const PRIMARY_TABS: { key: Tab; label: string; hoverColor: string }[] = [
   { key: 'threads', label: 'Threads', hoverColor: 'hover:bg-teal-500/20' },
   { key: 'agent_prompts', label: 'Agent Prompts', hoverColor: 'hover:bg-fuchsia-500/20' },
   { key: 'runtime', label: 'Runtime', hoverColor: 'hover:bg-slate-500/20' },
+  { key: 'diagnostic_center', label: 'Diagnostic Center', hoverColor: 'hover:bg-orange-500/20' },
   { key: 'memory', label: 'Memory', hoverColor: 'hover:bg-emerald-500/20' },
 ];
 
@@ -70,6 +73,7 @@ export const AdminPanel: React.FC = () => {
     selectedPrompt,
     statusData,
     diagnosticsEffectiveData,
+    diagnosticCenterEffectiveData,
     isLoading,
     isSaving,
     error,
@@ -82,6 +86,9 @@ export const AdminPanel: React.FC = () => {
     retryPromptDetailLoad,
     loadRuntimeEffective,
     loadDiagnosticsEffective,
+    loadDiagnosticCenterEffective,
+    saveDiagnosticCenterControl,
+    resetDiagnosticCenterControl,
     loadStatus,
     reloadKnowledgeBase,
     saveConfigParam,
@@ -106,6 +113,7 @@ export const AdminPanel: React.FC = () => {
     loadStatus();
     loadRuntimeEffective();
     loadDiagnosticsEffective();
+    loadDiagnosticCenterEffective();
     void loadOrchestratorConfig();
   }, []);
 
@@ -305,6 +313,15 @@ export const AdminPanel: React.FC = () => {
             {activeTab === 'agents' && <AgentsTab />}
             {activeTab === 'orchestrator' && <OrchestratorTab />}
             {activeTab === 'threads' && <ThreadsTab />}
+            {activeTab === 'diagnostic_center' && (
+              <DiagnosticCenterTab
+                data={diagnosticCenterEffectiveData}
+                onRefresh={loadDiagnosticCenterEffective}
+                onSave={saveDiagnosticCenterControl}
+                onReset={resetDiagnosticCenterControl}
+                isSaving={isSaving}
+              />
+            )}
             {activeTab === 'agent_prompts' && (
               <div className="mt-4 rounded-xl border border-slate-200 bg-slate-900 shadow-md h-[70vh] overflow-hidden">
                 <AgentPromptEditorPanel />

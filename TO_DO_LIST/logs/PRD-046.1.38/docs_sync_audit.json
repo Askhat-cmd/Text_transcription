@@ -1,0 +1,70 @@
+{
+  "prd_id": "PRD-046.1.38",
+  "timestamp_utc": "2026-05-25T11:22:29.277255+00:00",
+  "status": "passed",
+  "missing_needles": [],
+  "checks": {
+    "PRD-046.1.38": [
+      {
+        "file": "docs/PROJECT_STATE.md",
+        "found": true
+      },
+      {
+        "file": "docs/ROADMAP.md",
+        "found": true
+      },
+      {
+        "file": "docs/PRD_INDEX.md",
+        "found": true
+      },
+      {
+        "file": "docs/DECISIONS.md",
+        "found": true
+      },
+      {
+        "file": "bot_psychologist/docs/diagnostic_center_admin_control.md",
+        "found": true
+      }
+    ],
+    "Diagnostic Center Admin Control": [
+      {
+        "file": "bot_psychologist/docs/diagnostic_center_admin_control.md",
+        "found": true
+      },
+      {
+        "file": "docs/PRD_INDEX.md",
+        "found": true
+      }
+    ],
+    "developer_local_all_users": [
+      {
+        "file": "bot_psychologist/docs/diagnostic_center_admin_control.md",
+        "found": true
+      },
+      {
+        "file": "docs/DECISIONS.md",
+        "found": true
+      }
+    ],
+    "production_ready=false": [
+      {
+        "file": "bot_psychologist/docs/diagnostic_center_admin_control.md",
+        "found": true
+      },
+      {
+        "file": "docs/DECISIONS.md",
+        "found": true
+      }
+    ],
+    "broad_rollout_allowed=false": [
+      {
+        "file": "bot_psychologist/docs/diagnostic_center_admin_control.md",
+        "found": true
+      },
+      {
+        "file": "docs/DECISIONS.md",
+        "found": true
+      }
+    ]
+  }
+}

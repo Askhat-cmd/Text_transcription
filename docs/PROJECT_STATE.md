@@ -1,13 +1,15 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-046.1.37-HF1 repaired actual-live runtime timeout evidence. Diagnostic Center v1 is completed for current creator-only governed phase. Broad rollout remains prohibited, production_ready remains false.
+PRD-046.1.38 synchronized documentation state and delivered Diagnostic Center Admin Control readiness map. Diagnostic Center v1 remains completed for current creator-only/developer-local governed phase, with explicit runtime control surface in Web Admin. Broad rollout remains prohibited and production_ready remains false.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 
 ## Diagnostic Center Acceptance State
 `PRD-046.1.28` accepted provider-backed phase as governed limited-runtime candidate.
 Boundary flags remain strict: `broad_rollout_allowed=false`, `production_ready=false`, `normal_user_activation_allowed=false`.
+Admin control surface is available via `GET/POST /api/admin/diagnostic-center/*` and mirrored `v1` routes.
+`developer_local_all_users` is available for single-developer local governance only and is not production rollout.
 
 ## Current Knowledge Base State
 Focus source remains `123__кузница_духа`; governed blocks/chroma integrity is preserved by no-mutation policy and explicit gates.
@@ -48,8 +50,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-05-22
-- Source cycle: PRD-046.1.37
+- Date: 2026-05-25
+- Source cycle: PRD-046.1.38
 
 ## PRD-046.1.35-HF4
 Current Stage:

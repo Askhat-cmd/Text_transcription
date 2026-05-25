@@ -2,7 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-046.1.38 | Documentation State Sync + Diagnostic Center Admin Control Readiness Map | passed | pending | synced project docs to post-HF1 state, added Diagnostic Center admin effective/control/reset endpoints and Web Admin control tab with developer-local all-users governance labels | TO_DO_LIST/reports/PRD-046.1.38_IMPLEMENTATION_REPORT.md |
+| PRD-046.1.38 | Documentation State Sync + Diagnostic Center Admin Control Readiness Map | passed | 371c230 | synced project docs to post-HF1 state, added Diagnostic Center admin effective/control/reset endpoints and Web Admin control tab with developer-local all-users governance labels | TO_DO_LIST/reports/PRD-046.1.38_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.37 | Diagnostic Center Final Results / Completion Decision Gate v1 | blocked | ff77155 | closed Diagnostic Center creator-pilot phase with final live/runtime/admin/rollback/normal-user/safety gates and transfer brief | TO_DO_LIST/reports/PRD-046.1.37_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.36 | Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1 | passed | 14a0416 | accepted bounded creator-live pilot contract with admin runtime controls, rollback/no-effect proofs, and safety gates | TO_DO_LIST/reports/PRD-046.1.36_IMPLEMENTATION_REPORT.md |
 | PRD-046.1.35-HF3 | Creator Live RAG Evidence Sync / Writer KB Context Boundary Audit v1 | passed | fc1fdb4 | synchronized runtime evidence, added live two-query gate and truncation audit artifacts | TO_DO_LIST/reports/PRD-046.1.35-HF3_IMPLEMENTATION_REPORT.md |

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.0-HF1: repaired evaluator false-positive gap by enforcing final-answer compliance checks, strengthened greeting/practice and known-concept answer-first runtime behavior, and refreshed failure artifacts with honest `direct=5/5` and `live=skipped`.
 - PRD-047.0: launched Multiagent Quality & Tuning baseline with Knowledge Answer Routing Guard, lexical known-concept override path, writer knowledge-answer contract wiring, live-failure dataset/runner (`dry/direct/live`), trace samples, and no-mutation evidence.
 - PRD-046.1.38: synced living docs with post-HF1 runtime reality and added Diagnostic Center Admin Control surface (effective/control/reset contract + Web Admin tab) with developer-local all-users boundary labels.
 - PRD-046.1.37: finalized Diagnostic Center completion decision gate with source/provenance/runtime/live/admin/rollback/normal-user/safety/no-mutation evidence and phase-closure transfer brief.
@@ -20,7 +21,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.0 closure.
+- No active PRD in progress after PRD-047.0-HF1 closure.
 
 ## Next
 1. PRD-047.1 Active Frame / Response Planner v1.

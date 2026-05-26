@@ -1,4 +1,4 @@
-"""Deterministic Knowledge Answer Routing guard for known internal concepts."""
+﻿"""Deterministic Knowledge Answer Routing guard for known internal concepts."""
 
 from __future__ import annotations
 
@@ -31,6 +31,19 @@ CONCEPT_ALIASES: dict[str, list[str]] = {
         "самореализация",
         "самореализоваться",
     ],
+}
+
+INTERNAL_CONCEPT_FALLBACK_SUMMARIES: dict[str, str] = {
+    "нейросталкинг": (
+        "Нейросталкинг — наблюдение за паттернами, триггерами и автоматическими реакциями "
+        "во внутренней рамке."
+    ),
+    "неосталкинг": (
+        "Неосталкинг — следующий уровень осознанного наблюдения за паттернами и выбором."
+    ),
+    "самореализация": (
+        "Самореализация — раскрытие потенциала через осознанный выбор и авторство."
+    ),
 }
 
 _CONCEPT_QUESTION_MARKERS = (
@@ -185,6 +198,16 @@ def build_knowledge_answer_routing_guard(
                 break
 
     known_concept_question = bool(mentions) and _looks_like_concept_question(user_message)
+    fallback_concepts = sorted(
+        concept_item
+        for concept_item in concept_set
+        if concept_item in INTERNAL_CONCEPT_FALLBACK_SUMMARIES
+    )
+    fallback_grounding_used = known_concept_question and not kb_grounding_available and bool(fallback_concepts)
+    if fallback_grounding_used:
+        kb_grounding_available = True
+        grounding_sources.add("internal_concept_fallback")
+
     should_answer_directly = known_concept_question and kb_grounding_available
     should_ask_definition_first = False if should_answer_directly else not kb_grounding_available
 
@@ -205,13 +228,20 @@ def build_knowledge_answer_routing_guard(
         practice_allowed = True
         practice_reason = "no_guard_restriction"
 
-    writer_instruction = (
-        "knowledge_answer_first; answer from internal KB meaning first; "
-        "do_not_ask_user_to_define_term_before_answering; "
-        "do_not_switch_to_practice_before_answering"
-        if should_answer_directly
-        else "follow_response_mode_with_normal_clarification_policy"
-    )
+    if should_answer_directly:
+        base_instruction = (
+            "knowledge_answer_first; answer from internal KB meaning first; "
+            "do_not_ask_user_to_define_term_before_answering; "
+            "do_not_switch_to_practice_before_answering; "
+            "avoid_external_surveillance_interpretation_unless_user_explicitly_requests_it"
+        )
+        if fallback_grounding_used:
+            base_instruction = (
+                f"{base_instruction}; internal_concept_fallback_grounding={','.join(fallback_concepts)}"
+            )
+        writer_instruction = base_instruction
+    else:
+        writer_instruction = "follow_response_mode_with_normal_clarification_policy"
 
     preferred_response_mode = "inform" if should_answer_directly else str(response_mode or "")
 
@@ -231,6 +261,8 @@ def build_knowledge_answer_routing_guard(
             "kb_grounding_available": kb_grounding_available,
             "kb_grounding_sources": sorted(grounding_sources),
             "kb_grounding_max_score": round(float(max_score), 6),
+            "fallback_grounding_used": fallback_grounding_used,
+            "fallback_grounding_concepts": fallback_concepts,
             "should_answer_directly": should_answer_directly,
             "should_ask_definition_first": should_ask_definition_first,
             "practice_allowed": practice_allowed,

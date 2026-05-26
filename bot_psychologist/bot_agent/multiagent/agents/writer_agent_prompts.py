@@ -148,6 +148,9 @@ knowledge_answer_first={knowledge_answer_first}
 do_not_ask_user_to_define_term_before_answering={do_not_ask_user_to_define_term_before_answering}
 practice_allowed={practice_allowed}
 writer_instruction={knowledge_answer_writer_instruction}
+practice_ban_instruction={practice_ban_instruction}
+known_concept_clarification_ban={known_concept_clarification_ban}
+external_surveillance_frame_ban={external_surveillance_frame_ban}
 
 ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
 - главный фокус пользователя;

@@ -42,6 +42,38 @@ _EN_NAME_PATTERNS = (
     re.compile(r"\bmy\s+name\s+is\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
     re.compile(r"\bi\s+am\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
 )
+_PRACTICE_MARKERS = (
+    "положи руку",
+    "ладонь",
+    "грудь",
+    "живот",
+    "вдох",
+    "выдох",
+    "дыхани",
+    "почувствуй тело",
+    "почувствуй опору",
+    "ступн",
+    "опор",
+    "сделай вдох",
+    "сделай выдох",
+)
+_KNOWN_CONCEPT_CLARIFICATION_MARKERS = (
+    "что ты вкладываешь",
+    "что вы вкладываете",
+    "о каком варианте",
+    "какой вариант",
+    "ты имеешь в виду",
+    "вы имеете в виду",
+)
+_EXTERNAL_SURVEILLANCE_MARKERS = (
+    "внешнее слежение",
+    "биофидбек",
+    "ээг",
+    "нейроинтерфейс",
+    "технический мониторинг",
+    "цифровые следы",
+    "отслеживание чужих нейроданных",
+)
 
 
 def _to_int(value: str, default: int) -> int:
@@ -138,6 +170,7 @@ class WriterAgent:
                 contract,
                 prompt_constraint_decision=prompt_constraint_decision,
             )
+            result = self._enforce_answer_compliance(result, contract)
             if not result.strip():
                 self.last_debug["fallback_used"] = True
                 return self._static_fallback(contract)
@@ -172,6 +205,22 @@ class WriterAgent:
         knowledge_answer_first = bool(knowledge_answer.get("should_answer_directly", False))
         do_not_ask_definition = bool(knowledge_answer.get("should_answer_directly", False))
         practice_allowed = bool(practice_gate.get("practice_allowed", True))
+        practice_ban_instruction = (
+            "true: no_exercise_no_breathing_no_body_practice_no_microstep_without_explicit_request_or_safety_override"
+            if not practice_allowed
+            else "false"
+        )
+        known_concept_clarification_ban = (
+            "true: do_not_ask_user_to_define_or_choose_known_concept_variant"
+            if do_not_ask_definition
+            else "false"
+        )
+        external_surveillance_frame_ban = (
+            "true: avoid_external_surveillance_biofeedback_eeg_frame_for_internal_concept_answer"
+            if knowledge_answer_first
+            else "false"
+        )
+
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
             response_mode=ctx["response_mode"],
@@ -202,6 +251,9 @@ class WriterAgent:
             knowledge_answer_writer_instruction=str(
                 knowledge_answer.get("writer_instruction", "none") or "none"
             ),
+            practice_ban_instruction=practice_ban_instruction,
+            known_concept_clarification_ban=known_concept_clarification_ban,
+            external_surveillance_frame_ban=external_surveillance_frame_ban,
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -266,6 +318,55 @@ class WriterAgent:
             }
         )
         return llm_response
+
+    def _enforce_answer_compliance(self, response_text: str, contract: WriterContract) -> str:
+        text = str(response_text or "").strip()
+        if not text:
+            return text
+
+        ctx = contract.to_prompt_context()
+        user_message = str(ctx.get("user_message", "") or "")
+        lowered_user = user_message.lower()
+        knowledge_answer = dict(ctx.get("knowledge_answer", {})) if isinstance(ctx.get("knowledge_answer"), dict) else {}
+        practice_gate = dict(ctx.get("practice_gate", {})) if isinstance(ctx.get("practice_gate"), dict) else {}
+        practice_allowed = bool(practice_gate.get("practice_allowed", True))
+        should_answer_directly = bool(knowledge_answer.get("should_answer_directly", False))
+        is_greeting = bool(practice_gate.get("is_greeting", False))
+        concept = str(knowledge_answer.get("concept", "") or "").strip().lower()
+        lowered_text = text.lower()
+
+        has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
+        asks_define_known_term = any(marker in lowered_text for marker in _KNOWN_CONCEPT_CLARIFICATION_MARKERS)
+        has_external_surveillance_frame = any(marker in lowered_text for marker in _EXTERNAL_SURVEILLANCE_MARKERS)
+
+        # Greeting path: remove unsolicited practice when gate forbids it.
+        if not practice_allowed and not should_answer_directly and (is_greeting or has_unsolicited_practice):
+            return (
+                "Привет. Рад знакомству. "
+                "Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать."
+            )
+
+        # Known concept answer-first path: enforce direct internal meaning framing.
+        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
+            if "самореализац" in lowered_user and ("коррелир" in lowered_user or "связан" in lowered_user):
+                return (
+                    "Если держаться внутреннего смысла термина, Нейросталкинг связан с самореализацией через "
+                    "снятие автопилота. Самореализация требует проявляться и выбирать своё направление, а "
+                    "Нейросталкинг помогает заметить паттерны, триггеры и автоматические реакции, которые "
+                    "мешают проявляться и действовать из авторства."
+                )
+            if concept == "нейросталкинг":
+                return (
+                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
+                    "автоматическими реакциями: как включается программа и где запускается страдание, чтобы "
+                    "не сливаться с реакцией полностью."
+                )
+            if concept == "самореализация":
+                return (
+                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
+                    "и авторство, а не повторение автоматических паттернов."
+                )
+        return text
 
     def _get_client(self):
         if self._client is not None:

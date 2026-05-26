@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Run PRD-047.0 live dialogue failure baseline in dry/direct/live modes."""
 
 from __future__ import annotations
@@ -10,6 +10,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -79,6 +80,15 @@ def _contains_any(text: str, fragments: list[str]) -> bool:
     return any(str(fragment).lower() in lowered for fragment in fragments)
 
 
+def _matched_fragments(text: str, fragments: list[str]) -> list[str]:
+    lowered = (text or "").lower()
+    matches: list[str] = []
+    for fragment in [str(x).strip().lower() for x in fragments if str(x).strip()]:
+        if fragment in lowered:
+            matches.append(fragment)
+    return matches
+
+
 def _evaluate_case(
     *,
     expected: dict[str, Any],
@@ -87,6 +97,43 @@ def _evaluate_case(
     practice_gate: dict[str, Any],
 ) -> dict[str, Any]:
     checks: dict[str, bool] = {}
+    failure_reasons: list[str] = []
+    expected = expected if isinstance(expected, dict) else {}
+    lowered_answer = str(answer or "").lower()
+
+    should_not_include_any = [str(x) for x in expected.get("should_not_include_any", []) if str(x).strip()]
+    forbidden_question_patterns = [
+        str(x) for x in expected.get("forbidden_question_patterns", []) if str(x).strip()
+    ]
+    required_answer_semantics = [
+        str(x) for x in expected.get("required_answer_semantics", []) if str(x).strip()
+    ]
+
+    external_surveillance_markers = [
+        "внешнее слежение",
+        "отслеживание чужих нейроданных",
+        "биофидбек",
+        "ээг",
+        "нейроинтерфейс",
+        "технический мониторинг",
+        "цифровые следы",
+    ]
+    unsolicited_practice_markers = [
+        "положи руку",
+        "ладонь",
+        "грудь",
+        "живот",
+        "вдох",
+        "выдох",
+        "дыхани",
+        "почувствуй тело",
+        "почувствуй опору",
+        "ступн",
+        "опор",
+        "сделай вдох",
+        "сделай выдох",
+    ]
+
     checks["knowledge_answer_needed"] = (
         bool(knowledge_answer.get("needed")) == bool(expected.get("knowledge_answer_needed"))
         if "knowledge_answer_needed" in expected
@@ -95,6 +142,11 @@ def _evaluate_case(
     checks["should_answer_directly"] = (
         bool(knowledge_answer.get("should_answer_directly")) == bool(expected.get("should_answer_directly"))
         if "should_answer_directly" in expected
+        else True
+    )
+    checks["should_answer_relation"] = (
+        ("самореализац" in lowered_answer and "нейросталкинг" in lowered_answer)
+        if expected.get("should_answer_relation")
         else True
     )
     checks["practice_allowed"] = (
@@ -114,10 +166,86 @@ def _evaluate_case(
         if expected.get("should_include_micro_step")
         else True
     )
+    checks["require_kb_grounding_available"] = (
+        bool(knowledge_answer.get("kb_grounding_available", False))
+        if expected.get("require_kb_grounding_available")
+        else True
+    )
+    checks["answer_has_no_forbidden_fragments"] = len(_matched_fragments(lowered_answer, should_not_include_any)) == 0
+    checks["answer_has_no_forbidden_question_patterns"] = (
+        len(_matched_fragments(lowered_answer, forbidden_question_patterns)) == 0
+    )
+    matched_required_semantics = _matched_fragments(lowered_answer, required_answer_semantics)
+    required_semantics_min = int(expected.get("required_answer_semantics_min", 0) or 0)
+    if required_answer_semantics and required_semantics_min <= 0:
+        required_semantics_min = 1 if len(required_answer_semantics) == 1 else 2
+    checks["answer_contains_required_semantics"] = (
+        len(matched_required_semantics) >= required_semantics_min
+        if required_answer_semantics
+        else True
+    )
+    checks["answer_avoids_external_surveillance_frame"] = (
+        len(_matched_fragments(lowered_answer, external_surveillance_markers)) == 0
+        if expected.get("forbid_external_surveillance_frame")
+        else True
+    )
+    checks["answer_has_no_unsolicited_practice"] = (
+        len(_matched_fragments(lowered_answer, unsolicited_practice_markers)) == 0
+        if expected.get("forbid_unsolicited_practice")
+        else True
+    )
+    checks["answer_does_not_ask_user_to_define_term"] = (
+        len(
+            _matched_fragments(
+                lowered_answer,
+                [
+                    "что ты вкладываешь",
+                    "что вы вкладываете",
+                    "о каком варианте",
+                    "какой вариант",
+                    "ты имеешь в виду",
+                    "вы имеете в виду",
+                ],
+            )
+        )
+        == 0
+        if expected.get("should_not_ask_user_to_define_term")
+        else True
+    )
+
+    if not checks["knowledge_answer_needed"]:
+        failure_reasons.append("knowledge_answer_needed_mismatch")
+    if not checks["should_answer_directly"]:
+        failure_reasons.append("should_answer_directly_mismatch")
+    if not checks["should_answer_relation"]:
+        failure_reasons.append("relation_semantics_missing")
+    if not checks["practice_allowed"]:
+        failure_reasons.append("practice_allowed_mismatch")
+    if not checks["should_not_ask_user_to_define_term"]:
+        failure_reasons.append("guard_allows_definition_first")
+    if not checks["require_kb_grounding_available"]:
+        failure_reasons.append("kb_grounding_required_but_false")
+    if not checks["answer_contains_required_semantics"]:
+        failure_reasons.append(
+            f"answer_missing_required_semantics:min={required_semantics_min};matched={len(matched_required_semantics)}"
+        )
+    if not checks["answer_has_no_forbidden_fragments"]:
+        for fragment in _matched_fragments(lowered_answer, should_not_include_any):
+            failure_reasons.append(f"answer_contains_forbidden_phrase:{fragment}")
+    if not checks["answer_has_no_forbidden_question_patterns"]:
+        for fragment in _matched_fragments(lowered_answer, forbidden_question_patterns):
+            failure_reasons.append(f"answer_contains_forbidden_question_pattern:{fragment}")
+    if not checks["answer_does_not_ask_user_to_define_term"]:
+        failure_reasons.append("answer_asks_user_to_define_known_term")
+    if not checks["answer_avoids_external_surveillance_frame"]:
+        for fragment in _matched_fragments(lowered_answer, external_surveillance_markers):
+            failure_reasons.append(f"answer_contains_external_surveillance_frame:{fragment}")
+    if not checks["answer_has_no_unsolicited_practice"]:
+        for fragment in _matched_fragments(lowered_answer, unsolicited_practice_markers):
+            failure_reasons.append(f"answer_contains_unsolicited_practice:{fragment}")
 
     passed = all(checks.values())
-    return {"passed": passed, "checks": checks}
-
+    return {"passed": passed, "checks": checks, "failure_reasons": failure_reasons}
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -162,6 +290,13 @@ def _run_dry(cases: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], list[di
         expected = dict(case.get("expected", {}))
         if expected.get("should_include_micro_step"):
             answer_proxy = "Сделай один конкретный шаг и повтори его сегодня."
+        elif expected.get("forbid_unsolicited_practice") and not bool(knowledge_answer.get("needed")):
+            answer_proxy = "Привет. Рад знакомству. Можем спокойно начать: принеси любой вопрос."
+        elif expected.get("should_answer_relation"):
+            answer_proxy = (
+                "Нейросталкинг помогает самореализации тем, что человек замечает паттерны, "
+                "триггеры и автоматические реакции, которые мешают проявляться и действовать из авторства."
+            )
         elif bool(knowledge_answer.get("needed")):
             answer_proxy = "Нейросталкинг — наблюдение за паттернами, триггерами и автоматическими реакциями."
         else:
@@ -197,9 +332,10 @@ async def _run_direct_async(cases: list[dict[str, Any]]) -> tuple[list[dict[str,
 
     case_results: list[dict[str, Any]] = []
     samples: list[dict[str, Any]] = []
+    run_nonce = uuid.uuid4().hex[:8]
     for idx, case in enumerate(cases, start=1):
         case_id = str(case.get("id", f"case_{idx}"))
-        user_id = f"prd0470_direct_{idx}"
+        user_id = f"prd0470_direct_{run_nonce}_{idx}"
         user_turns = _iter_user_turns(case)
         final_result: dict[str, Any] | None = None
         turn_errors: list[str] = []
@@ -456,3 +592,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

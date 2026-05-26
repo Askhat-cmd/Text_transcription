@@ -31,6 +31,24 @@ class _FakeClient:
         self.chat = type("Chat", (), {"completions": type("Completions", (), {"calls": []})()})()
 
 
+class _BadAnswerFakeResponses:
+    def __init__(self, output_text: str) -> None:
+        self.calls: list[dict] = []
+        self._output_text = output_text
+
+    async def create(self, **kwargs):
+        self.calls.append(kwargs)
+        usage = type("Usage", (), {"input_tokens": 90, "output_tokens": 30, "total_tokens": 120})
+        result = type("Result", (), {"output_text": self._output_text, "usage": usage})
+        return result
+
+
+class _BadAnswerFakeClient:
+    def __init__(self, output_text: str) -> None:
+        self.responses = _BadAnswerFakeResponses(output_text)
+        self.chat = type("Chat", (), {"completions": type("Completions", (), {"calls": []})()})()
+
+
 def _thread() -> ThreadState:
     return ThreadState(
         thread_id="t1",
@@ -83,6 +101,9 @@ def test_writer_contract_prompt_context_contains_knowledge_answer_block() -> Non
     assert ctx["knowledge_answer"]["needed"] is True
     assert ctx["knowledge_answer"]["should_answer_directly"] is True
     assert ctx["practice_gate"]["practice_allowed"] is False
+    assert ctx["practice_ban_enforced"] is True
+    assert ctx["known_concept_clarification_ban"] is True
+    assert ctx["external_surveillance_frame_ban"] is True
 
 
 @pytest.mark.asyncio
@@ -96,4 +117,19 @@ async def test_writer_prompt_contains_knowledge_answer_routing_markers() -> None
     assert "knowledge_answer_first=true" in user_input
     assert "do_not_ask_user_to_define_term_before_answering=true" in user_input
     assert "practice_allowed=false" in user_input
+    assert "practice_ban_instruction=true" in user_input
+    assert "known_concept_clarification_ban=true" in user_input
+    assert "external_surveillance_frame_ban=true" in user_input
 
+
+@pytest.mark.asyncio
+async def test_writer_post_enforces_known_concept_compliance() -> None:
+    bad_answer = "Это внешнее слежение и биофидбек. О каком варианте ты говоришь?"
+    client = _BadAnswerFakeClient(output_text=bad_answer)
+    agent = WriterAgent(client=client, model="gpt-5-mini")
+    fixed_answer = await agent.write(_contract())
+    lowered = fixed_answer.lower()
+    assert "внешнее слежение" not in lowered
+    assert "биофидбек" not in lowered
+    assert "о каком варианте" not in lowered
+    assert "паттерн" in lowered

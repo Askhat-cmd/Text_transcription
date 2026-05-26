@@ -161,4 +161,7 @@ class WriterContract:
             "knowledge_answer_guard": knowledge_answer_guard,
             "knowledge_answer": knowledge_answer,
             "practice_gate": practice_gate,
+            "practice_ban_enforced": not bool(practice_gate.get("practice_allowed", True)),
+            "known_concept_clarification_ban": bool(knowledge_answer.get("should_answer_directly", False)),
+            "external_surveillance_frame_ban": bool(knowledge_answer.get("should_answer_directly", False)),
         }

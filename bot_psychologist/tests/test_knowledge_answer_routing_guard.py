@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from bot_agent.multiagent.agents.memory_retrieval import rag_score_policy_v1
 from bot_agent.multiagent.contracts.memory_bundle import SemanticHit
@@ -110,10 +110,21 @@ def test_guard_payload_does_not_include_raw_private_text() -> None:
 
 def test_empty_rag_hits_does_not_break_guard() -> None:
     payload = build_knowledge_answer_routing_guard(
-        user_message="Что такое самореализация?",
+        user_message="Что такое внутренний резонанс принятия?",
         rag_hits=[],
         response_mode="reflect",
     )
     assert isinstance(payload, dict)
     assert payload["knowledge_answer"]["kb_grounding_available"] is False
 
+
+def test_relation_case_gets_internal_fallback_grounding_when_known_concepts_present() -> None:
+    payload = build_knowledge_answer_routing_guard(
+        user_message="Как самореализация коррелируется с нейросталкингом?",
+        rag_hits=[],
+        response_mode="reflect",
+    )
+    assert payload["knowledge_answer"]["needed"] is True
+    assert payload["knowledge_answer"]["kb_grounding_available"] is True
+    assert payload["knowledge_answer"]["fallback_grounding_used"] is True
+    assert payload["knowledge_answer"]["should_answer_directly"] is True

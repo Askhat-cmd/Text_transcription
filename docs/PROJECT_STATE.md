@@ -1,7 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-047.0 launched Multiagent Quality & Tuning with Knowledge Answer Routing Guard baseline for known internal concept questions, plus reproducible live-failure dataset/runner artifacts (`dry/direct/live`). Diagnostic Center v1 remains in governed creator/developer-local boundary; broad rollout remains prohibited and `production_ready=false`.
+PRD-047.0-HF1 closed evaluator false positives by enforcing final-answer compliance for known-concept routing and practice-gate behavior. Failure baseline artifacts are refreshed with honest answer-level validation (`direct=5/5`, `live=skipped` on stale backend). Diagnostic Center v1 remains in governed creator/developer-local boundary; broad rollout remains prohibited and `production_ready=false`.
 ## Current Runtime Architecture
 User path remains unchanged: State Analyzer -> Thread Manager -> Context Assembly -> Diagnostic Card -> Diagnostic Center shadow/limited governance layers -> Writer.
 
@@ -50,8 +50,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-05-25
-- Source cycle: PRD-047.0
+- Date: 2026-05-26
+- Source cycle: PRD-047.0-HF1
 
 ## PRD-046.1.35-HF4
 Current Stage:

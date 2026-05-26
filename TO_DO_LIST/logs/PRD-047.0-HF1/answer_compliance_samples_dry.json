@@ -1,0 +1,165 @@
+{
+  "prd_id": "PRD-047.0",
+  "samples": [
+    {
+      "mode": "dry",
+      "case_id": "PRD0470_GREETING_NO_PRACTICE",
+      "knowledge_answer": {
+        "needed": false,
+        "reason": "no_known_concept_question",
+        "concept": "",
+        "concept_match_type": "none",
+        "matched_concepts": [],
+        "kb_grounding_available": false,
+        "kb_grounding_sources": [],
+        "kb_grounding_max_score": 0.0,
+        "fallback_grounding_used": false,
+        "fallback_grounding_concepts": [],
+        "should_answer_directly": false,
+        "should_ask_definition_first": true,
+        "practice_allowed": false,
+        "preferred_response_mode": "reflect",
+        "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "greeting_no_practice_default",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": true
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг"
+        ],
+        "kb_grounding_available": true,
+        "kb_grounding_sources": [
+          "dry_kb"
+        ],
+        "kb_grounding_max_score": 0.07,
+        "fallback_grounding_used": false,
+        "fallback_grounding_concepts": [
+          "нейросталкинг"
+        ],
+        "should_answer_directly": true,
+        "should_ask_definition_first": false,
+        "practice_allowed": false,
+        "preferred_response_mode": "inform",
+        "writer_instruction": "knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering; avoid_external_surveillance_interpretation_unless_user_explicitly_requests_it"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "explain_request",
+        "is_greeting": false
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг",
+          "самореализация"
+        ],
+        "kb_grounding_available": true,
+        "kb_grounding_sources": [
+          "dry_kb"
+        ],
+        "kb_grounding_max_score": 0.07,
+        "fallback_grounding_used": false,
+        "fallback_grounding_concepts": [
+          "нейросталкинг",
+          "самореализация"
+        ],
+        "should_answer_directly": true,
+        "should_ask_definition_first": false,
+        "practice_allowed": false,
+        "preferred_response_mode": "inform",
+        "writer_instruction": "knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering; avoid_external_surveillance_interpretation_unless_user_explicitly_requests_it"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": false
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
+      "knowledge_answer": {
+        "needed": true,
+        "reason": "known_internal_concept_question",
+        "concept": "нейросталкинг",
+        "concept_match_type": "exact_or_near_exact",
+        "matched_concepts": [
+          "нейросталкинг"
+        ],
+        "kb_grounding_available": true,
+        "kb_grounding_sources": [
+          "dry_kb"
+        ],
+        "kb_grounding_max_score": 0.07,
+        "fallback_grounding_used": false,
+        "fallback_grounding_concepts": [
+          "нейросталкинг"
+        ],
+        "should_answer_directly": true,
+        "should_ask_definition_first": false,
+        "practice_allowed": false,
+        "preferred_response_mode": "inform",
+        "writer_instruction": "knowledge_answer_first; answer from internal KB meaning first; do_not_ask_user_to_define_term_before_answering; do_not_switch_to_practice_before_answering; avoid_external_surveillance_interpretation_unless_user_explicitly_requests_it"
+      },
+      "practice_gate": {
+        "practice_allowed": false,
+        "reason": "known_concept_answer_first",
+        "explicit_practice_request": false,
+        "request_type": "explain_request",
+        "is_greeting": false
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
+      "knowledge_answer": {
+        "needed": false,
+        "reason": "no_known_concept_question",
+        "concept": "",
+        "concept_match_type": "none",
+        "matched_concepts": [],
+        "kb_grounding_available": false,
+        "kb_grounding_sources": [],
+        "kb_grounding_max_score": 0.0,
+        "fallback_grounding_used": false,
+        "fallback_grounding_concepts": [],
+        "should_answer_directly": false,
+        "should_ask_definition_first": true,
+        "practice_allowed": true,
+        "preferred_response_mode": "reflect",
+        "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+      },
+      "practice_gate": {
+        "practice_allowed": true,
+        "reason": "no_guard_restriction",
+        "explicit_practice_request": false,
+        "request_type": "unknown",
+        "is_greeting": false
+      }
+    }
+  ]
+}

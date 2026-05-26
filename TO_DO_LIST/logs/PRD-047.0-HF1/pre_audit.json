@@ -1,0 +1,15 @@
+﻿{
+  "prd_id": "PRD-047.0-HF1",
+  "source_prd": "PRD-047.0",
+  "observed_false_positive_cases": [
+    "PRD0470_GREETING_NO_PRACTICE",
+    "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+    "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT"
+  ],
+  "root_causes": [
+    "runner_evaluates_guard_flags_more_than_answer_text",
+    "practice_gate_not_enforced_in_final_writer_output",
+    "knowledge_answer_first_not_strict_enough_for_challenge/relation",
+    "relation_case_kb_grounding_can_be_false_but_case_still_passes"
+  ]
+}

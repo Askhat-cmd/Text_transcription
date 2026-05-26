@@ -1,69 +1,225 @@
-[
-  {
-    "id": "PRD0470_GREETING_NO_PRACTICE",
-    "category": "greeting",
-    "turns": [
-      { "role": "user", "content": "Привет! Меня зовут Аскхат!" }
-    ],
-    "expected": {
-      "knowledge_answer_needed": false,
-      "practice_allowed": false,
-      "should_not_force_practice": true
-    }
-  },
-  {
-    "id": "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
-    "category": "known_concept",
-    "turns": [
-      { "role": "user", "content": "Ты вообще понимаешь что такое \"Нейросталкинг\"?" }
-    ],
-    "expected": {
-      "knowledge_answer_needed": true,
-      "should_answer_directly": true,
-      "should_not_ask_user_to_define_term": true,
-      "should_include_any": ["паттерн", "триггер", "автоматическ", "реакц"]
-    }
-  },
-  {
-    "id": "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
-    "category": "concept_relation",
-    "turns": [
-      { "role": "user", "content": "Как самореализация коррелируется с нейросталкингом?" }
-    ],
-    "expected": {
-      "knowledge_answer_needed": true,
-      "should_answer_relation": true,
-      "should_not_treat_as_external_surveillance": true,
-      "should_include_any": ["самореализац", "паттерн", "автоматическ", "реакц", "наблюден"]
-    }
-  },
-  {
-    "id": "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
-    "category": "challenge_repair",
-    "turns": [
-      { "role": "user", "content": "Что такое самореализация?" },
-      { "role": "assistant", "content": "Самореализация — это раскрытие своих способностей и ценностей." },
-      { "role": "user", "content": "Как самореализация коррелируется с нейросталкингом?" },
-      { "role": "assistant", "content": "Возможно, ты имеешь в виду внешнее слежение или биофидбек." },
-      { "role": "user", "content": "Ты вообще понимаешь что такое \"Нейросталкинг\"?" }
-    ],
-    "expected": {
-      "knowledge_answer_needed": true,
-      "should_repair_previous_misunderstanding": true,
-      "should_answer_directly": true,
-      "should_not_ask_user_to_define_term": true
-    }
-  },
-  {
-    "id": "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
-    "category": "practice_request",
-    "turns": [
-      { "role": "user", "content": "Дай один конкретный шаг, как начать наблюдать свои реакции." }
-    ],
-    "expected": {
-      "practice_allowed": true,
-      "should_include_micro_step": true
-    }
-  }
-]
+﻿[
+    {
+        "id":  "PRD0470_GREETING_NO_PRACTICE",
+        "category":  "greeting",
+        "turns":  [
+                      {
+                          "role":  "user",
+                          "content":  "Привет! Меня зовут Асхат!"
+                      }
+                  ],
+        "expected":  {
+                         "knowledge_answer_needed":  false,
+                         "practice_allowed":  false,
+                         "should_not_force_practice":  true,
+                         "forbid_unsolicited_practice":  true,
+                         "should_not_include_any":  [
+                                                        "положи руку",
+                                                        "ладонь",
+                                                        "грудь",
+                                                        "живот",
+                                                        "вдох",
+                                                        "выдох",
+                                                        "дыхание",
+                                                        "почувствуй тело"
+                                                    ],
+                         "forbidden_question_patterns":  [
 
+                                                         ],
+                         "required_answer_semantics":  [
+                                                           "привет",
+                                                           "рад",
+                                                           "вопрос"
+                                                       ],
+                         "forbid_external_surveillance_frame":  false,
+                         "require_kb_grounding_available":  false
+                     }
+    },
+    {
+        "id":  "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
+        "category":  "known_concept",
+        "turns":  [
+                      {
+                          "role":  "user",
+                          "content":  "Ты вообще понимаешь что такое \"Нейросталкинг\"?"
+                      }
+                  ],
+        "expected":  {
+                         "knowledge_answer_needed":  true,
+                         "should_answer_directly":  true,
+                         "should_not_ask_user_to_define_term":  true,
+                         "should_include_any":  [
+                                                    "паттерн",
+                                                    "триггер",
+                                                    "автоматическ",
+                                                    "реакц"
+                                                ],
+                         "required_answer_semantics":  [
+                                                           "паттерн",
+                                                           "триггер",
+                                                           "автоматическ",
+                                                           "реакц",
+                                                           "наблюден"
+                                                       ],
+                         "should_not_include_any":  [
+                                                        "что ты вкладываешь",
+                                                        "что вы вкладываете",
+                                                        "о каком варианте",
+                                                        "какой вариант",
+                                                        "ты имеешь в виду",
+                                                        "вы имеете в виду",
+                                                        "внешнее слежение",
+                                                        "биофидбек",
+                                                        "ээг",
+                                                        "нейроинтерфейс",
+                                                        "технический мониторинг",
+                                                        "цифровые следы"
+                                                    ],
+                         "forbidden_question_patterns":  [
+                                                             "что ты вкладываешь",
+                                                             "о каком варианте",
+                                                             "какой вариант",
+                                                             "ты имеешь в виду",
+                                                             "вы имеете в виду"
+                                                         ],
+                         "forbid_external_surveillance_frame":  true,
+                         "forbid_unsolicited_practice":  true,
+                         "require_kb_grounding_available":  true
+                     }
+    },
+    {
+        "id":  "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+        "category":  "concept_relation",
+        "turns":  [
+                      {
+                          "role":  "user",
+                          "content":  "Как самореализация коррелируется с нейросталкингом?"
+                      }
+                  ],
+        "expected":  {
+                         "knowledge_answer_needed":  true,
+                         "should_answer_relation":  true,
+                         "should_not_treat_as_external_surveillance":  true,
+                         "should_include_any":  [
+                                                    "самореализац",
+                                                    "паттерн",
+                                                    "автоматическ",
+                                                    "реакц",
+                                                    "наблюден"
+                                                ],
+                         "required_answer_semantics":  [
+                                                           "самореализац",
+                                                           "нейросталкинг",
+                                                           "паттерн",
+                                                           "автоматическ",
+                                                           "меша",
+                                                           "прояв"
+                                                       ],
+                         "should_not_include_any":  [
+                                                        "внешнее слежение",
+                                                        "биофидбек",
+                                                        "ээг",
+                                                        "нейроинтерфейс",
+                                                        "технический мониторинг",
+                                                        "цифровые следы"
+                                                    ],
+                         "forbidden_question_patterns":  [
+                                                             "о каком варианте",
+                                                             "какой вариант",
+                                                             "ты имеешь в виду",
+                                                             "вы имеете в виду"
+                                                         ],
+                         "forbid_external_surveillance_frame":  true,
+                         "forbid_unsolicited_practice":  true,
+                         "require_kb_grounding_available":  true,
+                         "should_answer_directly":  true
+                     }
+    },
+    {
+        "id":  "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
+        "category":  "challenge_repair",
+        "turns":  [
+                      {
+                          "role":  "user",
+                          "content":  "Что такое самореализация?"
+                      },
+                      {
+                          "role":  "assistant",
+                          "content":  "Самореализация — это раскрытие своих способностей и ценностей."
+                      },
+                      {
+                          "role":  "user",
+                          "content":  "Как самореализация коррелируется с нейросталкингом?"
+                      },
+                      {
+                          "role":  "assistant",
+                          "content":  "Возможно, ты имеешь в виду внешнее слежение или биофидбек."
+                      },
+                      {
+                          "role":  "user",
+                          "content":  "Ты вообще понимаешь что такое \"Нейросталкинг\"?"
+                      }
+                  ],
+        "expected":  {
+                         "knowledge_answer_needed":  true,
+                         "should_repair_previous_misunderstanding":  true,
+                         "should_answer_directly":  true,
+                         "should_not_ask_user_to_define_term":  true,
+                         "required_answer_semantics":  [
+                                                           "паттерн",
+                                                           "триггер",
+                                                           "автоматическ",
+                                                           "реакц",
+                                                           "наблюден"
+                                                       ],
+                         "should_not_include_any":  [
+                                                        "что ты вкладываешь",
+                                                        "что вы вкладываете",
+                                                        "о каком варианте",
+                                                        "какой вариант",
+                                                        "ты имеешь в виду",
+                                                        "вы имеете в виду",
+                                                        "внешнее слежение",
+                                                        "биофидбек",
+                                                        "ээг",
+                                                        "нейроинтерфейс",
+                                                        "технический мониторинг",
+                                                        "цифровые следы"
+                                                    ],
+                         "forbidden_question_patterns":  [
+                                                             "что ты вкладываешь",
+                                                             "о каком варианте",
+                                                             "какой вариант",
+                                                             "ты имеешь в виду",
+                                                             "вы имеете в виду"
+                                                         ],
+                         "forbid_external_surveillance_frame":  true,
+                         "forbid_unsolicited_practice":  true,
+                         "require_kb_grounding_available":  true
+                     }
+    },
+    {
+        "id":  "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
+        "category":  "practice_request",
+        "turns":  [
+                      {
+                          "role":  "user",
+                          "content":  "Дай один конкретный шаг, как начать наблюдать свои реакции."
+                      }
+                  ],
+        "expected":  {
+                         "practice_allowed":  true,
+                         "should_include_micro_step":  true,
+                         "forbid_unsolicited_practice":  false,
+                         "forbidden_question_patterns":  [
+
+                                                         ],
+                         "required_answer_semantics":  [
+
+                                                       ],
+                         "forbid_external_surveillance_frame":  false,
+                         "require_kb_grounding_available":  false,
+                         "required_answer_semantics_min":  0
+                     }
+    }
+]

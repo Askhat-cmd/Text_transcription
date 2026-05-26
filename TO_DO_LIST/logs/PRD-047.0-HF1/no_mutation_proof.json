@@ -1,0 +1,15 @@
+﻿{
+  "prd_id": "PRD-047.0-HF1",
+  "kb_mutation": false,
+  "chroma_reindex": false,
+  "botdb_ingestion_changed": false,
+  "chunk_type_changed": false,
+  "allowed_use_changed": false,
+  "safety_flags_changed": false,
+  "env_changed": false,
+  "production_ready_changed_to_true": false,
+  "broad_rollout_allowed_changed_to_true": false,
+  "normal_user_activation_allowed_changed_to_true": false,
+  "new_llm_agent_added": false,
+  "notes": []
+}

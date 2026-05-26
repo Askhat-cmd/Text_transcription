@@ -1,0 +1,40 @@
+{
+  "prd_id": "PRD-047.0",
+  "samples": [
+    {
+      "mode": "live",
+      "case_id": "PRD0470_GREETING_NO_PRACTICE",
+      "knowledge_answer": {},
+      "practice_gate": {},
+      "knowledge_answer_trace": {}
+    },
+    {
+      "mode": "live",
+      "case_id": "PRD0470_KNOWN_CONCEPT_NEUROSTALKING_DIRECT_ANSWER",
+      "knowledge_answer": {},
+      "practice_gate": {},
+      "knowledge_answer_trace": {}
+    },
+    {
+      "mode": "live",
+      "case_id": "PRD0470_SELF_REALIZATION_NEUROSTALKING_RELATION",
+      "knowledge_answer": {},
+      "practice_gate": {},
+      "knowledge_answer_trace": {}
+    },
+    {
+      "mode": "live",
+      "case_id": "PRD0470_USER_CHALLENGE_KNOWN_CONCEPT",
+      "knowledge_answer": {},
+      "practice_gate": {},
+      "knowledge_answer_trace": {}
+    },
+    {
+      "mode": "live",
+      "case_id": "PRD0470_EXPLICIT_PRACTICE_ALLOWED",
+      "knowledge_answer": {},
+      "practice_gate": {},
+      "knowledge_answer_trace": {}
+    }
+  ]
+}

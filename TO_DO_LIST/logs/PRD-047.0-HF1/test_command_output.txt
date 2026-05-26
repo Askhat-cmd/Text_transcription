@@ -1,0 +1,854 @@
+﻿# PRD-047.0-HF1 command log
+
+===== python -m pytest tests/test_prd_047_0_failure_case_runner.py -q =====
+[started] 2026-05-26T16:15:51.4536656+05:00
+........                                                                 [100%]
+8 passed in 0.23s
+[finished] 2026-05-26T16:15:53.5875774+05:00
+
+===== python -m pytest tests/test_knowledge_answer_routing_guard.py -q =====
+[started] 2026-05-26T16:15:53.6155737+05:00
+.........                                                                [100%]
+9 passed in 0.24s
+[finished] 2026-05-26T16:15:55.6073837+05:00
+
+===== python -m pytest tests/test_writer_contract_knowledge_answer.py -q =====
+[started] 2026-05-26T16:15:55.6343840+05:00
+...                                                                      [100%]
+============================== warnings summary ===============================
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:59: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_contract_knowledge_answer.py::test_writer_contract_prompt_context_contains_knowledge_answer_block
+tests/test_writer_contract_knowledge_answer.py::test_writer_prompt_contains_knowledge_answer_routing_markers
+tests/test_writer_contract_knowledge_answer.py::test_writer_post_enforces_known_concept_compliance
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_knowledge_answer.py:60: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+3 passed, 6 warnings in 0.25s
+[finished] 2026-05-26T16:15:57.6674121+05:00
+
+===== python -m pytest tests/test_multiagent_trace.py -q =====
+[started] 2026-05-26T16:15:57.6978987+05:00
+..........                                                               [100%]
+============================== warnings summary ===============================
+tests/test_multiagent_trace.py::test_multiagent_trace_endpoint_returns_200
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfTransformer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+tests/test_multiagent_trace.py::test_multiagent_trace_endpoint_returns_200
+  C:\Users\video\AppData\Roaming\Python\Python313\site-packages\sklearn\base.py:380: InconsistentVersionWarning: Trying to unpickle estimator TfidfVectorizer from version 1.8.0 when using version 1.6.1. This might lead to breaking code or invalid results. Use at your own risk. For more info please refer to:
+  https://scikit-learn.org/stable/model_persistence.html#security-maintainability-limitations
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+10 passed, 2 warnings in 15.77s
+[finished] 2026-05-26T16:16:16.1915136+05:00
+
+===== python -m pytest tests/evaluation -q =====
+[started] 2026-05-26T16:16:16.2269941+05:00
+.......                                                                  [100%]
+7 passed in 0.17s
+[finished] 2026-05-26T16:16:18.1954384+05:00
+
+===== python scripts/run_prd_047_0_live_failure_cases.py --mode dry --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_dry.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:16:18.2304371+05:00
+powershell.exe : 2026-05-26 16:16:18,952 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:18 char:10
++   $out = & powershell -NoProfile -Command "Set-Location '$wd'; $c" 2> ...
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:1...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:16:18,955 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_dry.json
+[finished] 2026-05-26T16:16:19.0861046+05:00
+
+===== python scripts/run_prd_047_0_live_failure_cases.py --mode direct --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_direct.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:16:19.1251033+05:00
+powershell.exe : 2026-05-26 16:16:19,833 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:18 char:10
++   $out = & powershell -NoProfile -Command "Set-Location '$wd'; $c" 2> ...
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:1...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:16:19,836 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+2026-05-26 16:16:21,509 | bot_agent.multiagent.agents.agent_llm_client | INFO | [AGENT_LLM] sdk_capabilities has_respon
+ses=True has_chat_completions=True model=gpt-5-nano selected_mode=responses
+2026-05-26 16:16:24,379 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:16:24,535 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_1
+2026-05-26 16:16:24,535 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_1
+2026-05-26 16:16:24,556 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 5 embeddings
+2026-05-26 16:16:24,565 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_1
+2026-05-26 16:16:24,566 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=5 user_id=prd0470_di
+rect_1
+2026-05-26 16:16:24,568 | bot_agent.semantic_memory | INFO | [SEMANTIC] loading embedding model: intfloat/multilingual-
+e5-base
+2026-05-26 16:16:32,156 | datasets | INFO | PyTorch version 2.8.0 available.
+2026-05-26 16:16:32,707 | sentence_transformers.SentenceTransformer | INFO | Load pretrained SentenceTransformer: intfl
+oat/multilingual-e5-base
+2026-05-26 16:16:38,688 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding model loaded
+2026-05-26 16:16:38,688 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_1 top_k=3 m
+in_similarity=0.700 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:16:38,808 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:16:38,809 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_1 results=3 
+threshold=0.700 max_similarity=0.909
+2026-05-26 16:16:38,809 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.909
+2026-05-26 16:16:38,809 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=2 similarity=0.889
+2026-05-26 16:16:38,809 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.881
+2026-05-26 16:16:38,809 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=5
+2026-05-26 16:16:38,817 | bot_agent.retriever | INFO | [RETRIEVAL] query='������! ���� ����� �����! ������! ���� ����� 
+������!' top_k=4 source=api
+2026-05-26 16:16:42,067 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:16:42,068 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:16:42,068 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='������! ���� ��
+��� �����! ������! ���� ����� �����...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:16:42,068 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=5
+2026-05-26 16:16:42,068 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=5
+2026-05-26 16:16:42,069 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=5
+2026-05-26 16:16:42,069 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_1 top_k=3 m
+in_similarity=0.600 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:16:42,133 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:16:42,133 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_1 results=3 
+threshold=0.600 max_similarity=0.909
+2026-05-26 16:16:42,133 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.909
+2026-05-26 16:16:42,133 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=2 similarity=0.889
+2026-05-26 16:16:42,133 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.881
+2026-05-26 16:16:42,541 | bot_agent.multiagent.agents.agent_llm_client | INFO | [AGENT_LLM] sdk_capabilities has_respon
+ses=True has_chat_completions=True model=gpt-5-mini selected_mode=responses
+2026-05-26 16:16:50,312 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:16:50,326 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=5
+2026-05-26 16:16:50,327 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_1 turns_befor
+e=5
+2026-05-26 16:16:50,327 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_1 turn_inde
+x=6
+2026-05-26 16:16:50,327 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_1 tur
+n_index=6
+2026-05-26 16:16:50,421 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=6
+2026-05-26 16:16:50,436 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_1 turns=6 reason=a
+ddturn
+2026-05-26 16:16:53,493 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 500 Internal 
+Server Error"
+2026-05-26 16:16:53,493 | openai._base_client | INFO | Retrying request to /responses in 0.419198 seconds
+2026-05-26 16:16:56,054 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:16:56,057 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_2
+2026-05-26 16:16:56,058 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_2
+2026-05-26 16:16:56,076 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 5 embeddings
+2026-05-26 16:16:56,086 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_2
+2026-05-26 16:16:56,087 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=5 user_id=prd0470_di
+rect_2
+2026-05-26 16:16:56,088 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_2 top_k=3 m
+in_similarity=0.700 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:16:56,156 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:16:56,156 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_2 results=3 
+threshold=0.700 max_similarity=0.894
+2026-05-26 16:16:56,156 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.894
+2026-05-26 16:16:56,156 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=3 similarity=0.890
+2026-05-26 16:16:56,156 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.887
+2026-05-26 16:16:56,156 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=5
+2026-05-26 16:16:56,157 | bot_agent.retriever | INFO | [RETRIEVAL] query='�� ������ ��������� ��� ����� "�������������"
+?' top_k=4 source=api
+2026-05-26 16:16:59,296 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:16:59,297 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:16:59,297 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='�� ������ �����
+���� ��� ����� "�������������"?...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:16:59,297 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=5
+2026-05-26 16:16:59,297 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=5
+2026-05-26 16:16:59,297 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=5
+2026-05-26 16:16:59,297 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_2 top_k=3 m
+in_similarity=0.600 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:16:59,545 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:16:59,545 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_2 results=3 
+threshold=0.600 max_similarity=0.894
+2026-05-26 16:16:59,545 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.894
+2026-05-26 16:16:59,545 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=3 similarity=0.890
+2026-05-26 16:16:59,545 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.887
+2026-05-26 16:17:05,713 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:05,726 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=5
+2026-05-26 16:17:05,726 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_2 turns_befor
+e=5
+2026-05-26 16:17:05,726 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_2 turn_inde
+x=6
+2026-05-26 16:17:05,726 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_2 tur
+n_index=6
+2026-05-26 16:17:05,843 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=6
+2026-05-26 16:17:05,857 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_2 turns=6 reason=a
+ddturn
+2026-05-26 16:17:08,112 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:08,114 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_3
+2026-05-26 16:17:08,115 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_3
+2026-05-26 16:17:08,133 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 5 embeddings
+2026-05-26 16:17:08,143 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_3
+2026-05-26 16:17:08,145 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=5 user_id=prd0470_di
+rect_3
+2026-05-26 16:17:08,145 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_3 top_k=3 m
+in_similarity=0.700 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:08,218 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:17:08,219 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_3 results=3 
+threshold=0.700 max_similarity=0.907
+2026-05-26 16:17:08,219 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=3 similarity=0.907
+2026-05-26 16:17:08,219 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=2 similarity=0.904
+2026-05-26 16:17:08,219 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.902
+2026-05-26 16:17:08,219 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=5
+2026-05-26 16:17:08,220 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� �������������� ������������� � ����������
+�����?' top_k=4 source=api
+2026-05-26 16:17:12,060 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:17:12,061 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:17:12,061 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� �����������
+��� ������������� � ���������������...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:17:12,061 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=5
+2026-05-26 16:17:12,061 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=5
+2026-05-26 16:17:12,061 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=5
+2026-05-26 16:17:12,061 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_3 top_k=3 m
+in_similarity=0.600 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:12,129 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:17:12,129 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_3 results=3 
+threshold=0.600 max_similarity=0.907
+2026-05-26 16:17:12,129 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=3 similarity=0.907
+2026-05-26 16:17:12,129 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=2 similarity=0.904
+2026-05-26 16:17:12,129 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.902
+2026-05-26 16:17:19,790 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:19,812 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=5
+2026-05-26 16:17:19,812 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_3 turns_befor
+e=5
+2026-05-26 16:17:19,812 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_3 turn_inde
+x=6
+2026-05-26 16:17:19,812 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_3 tur
+n_index=6
+2026-05-26 16:17:19,931 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=6
+2026-05-26 16:17:19,946 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_3 turns=6 reason=a
+ddturn
+2026-05-26 16:17:22,328 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:22,330 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_4
+2026-05-26 16:17:22,331 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_4
+2026-05-26 16:17:22,350 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 15 embeddings
+2026-05-26 16:17:22,360 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_4
+2026-05-26 16:17:22,363 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=15 user_id=prd0470_d
+irect_4
+2026-05-26 16:17:22,363 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=15 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:22,428 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=14
+2026-05-26 16:17:22,428 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.911
+2026-05-26 16:17:22,428 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=10 similarity=0.911
+2026-05-26 16:17:22,429 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=13 similarity=0.909
+2026-05-26 16:17:22,429 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=4 similarity=0.866
+2026-05-26 16:17:22,429 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=15
+2026-05-26 16:17:22,429 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� ����� ��������������? �� ������ ���������
+ ��� ����� "�������������"?' top_k=4 source=api
+2026-05-26 16:17:25,619 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:17:25,620 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:17:25,620 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� ����� �����
+���������? �� ������ ��������� ��� ...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:17:25,620 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=15
+2026-05-26 16:17:25,620 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=15
+2026-05-26 16:17:25,620 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=15
+2026-05-26 16:17:25,620 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=15 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:25,683 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=14
+2026-05-26 16:17:25,684 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.911
+2026-05-26 16:17:25,684 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=10 similarity=0.911
+2026-05-26 16:17:25,684 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=13 similarity=0.909
+2026-05-26 16:17:25,684 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=4 similarity=0.866
+2026-05-26 16:17:33,774 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:33,787 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=15
+2026-05-26 16:17:33,787 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=15
+2026-05-26 16:17:33,787 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=16
+2026-05-26 16:17:33,788 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=16
+2026-05-26 16:17:33,885 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=16
+2026-05-26 16:17:33,907 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=16 reason=
+addturn
+2026-05-26 16:17:36,533 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:36,534 | bot_agent.multiagent.agents.state_analyzer | WARNING | [STATE_ANALYZER] json decode failed: U
+nterminated string starting at: line 3 column 13 (char 43) | raw_response_preview={\n  "nervous_state": "window",\n  "i
+ntent": "clar
+2026-05-26 16:17:36,537 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:36,537 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=16 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:36,602 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=15
+2026-05-26 16:17:36,603 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.907
+2026-05-26 16:17:36,603 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=11 similarity=0.907
+2026-05-26 16:17:36,603 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=14 similarity=0.905
+2026-05-26 16:17:36,603 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=2 similarity=0.897
+2026-05-26 16:17:36,603 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:36,603 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� �������������� ������������� � ����������
+�����?' top_k=4 source=api
+2026-05-26 16:17:39,895 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:17:39,896 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:17:39,896 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� �����������
+��� ������������� � ���������������...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:17:39,896 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:39,896 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:39,897 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:39,897 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=16 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:39,966 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=15
+2026-05-26 16:17:39,966 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.907
+2026-05-26 16:17:39,966 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=11 similarity=0.907
+2026-05-26 16:17:39,966 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=14 similarity=0.905
+2026-05-26 16:17:39,966 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=2 similarity=0.897
+2026-05-26 16:17:45,652 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:45,679 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=16
+2026-05-26 16:17:45,680 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=16
+2026-05-26 16:17:45,680 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=17
+2026-05-26 16:17:45,680 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=17
+2026-05-26 16:17:45,797 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=17
+2026-05-26 16:17:45,817 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=17 reason=
+addturn
+2026-05-26 16:17:48,824 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:48,828 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:48,828 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=17 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:48,890 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=16
+2026-05-26 16:17:48,891 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.893
+2026-05-26 16:17:48,891 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=15 similarity=0.893
+2026-05-26 16:17:48,891 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=9 similarity=0.890
+2026-05-26 16:17:48,891 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=6 similarity=0.889
+2026-05-26 16:17:48,891 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:48,892 | bot_agent.retriever | INFO | [RETRIEVAL] query='�� ������ ��������� ��� ����� "�������������"
+?' top_k=4 source=api
+2026-05-26 16:17:52,009 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:17:52,010 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:17:52,010 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='�� ������ �����
+���� ��� ����� "�������������"?...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:17:52,010 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:52,010 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:52,010 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:52,010 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=17 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:17:52,078 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=16
+2026-05-26 16:17:52,079 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.893
+2026-05-26 16:17:52,079 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=15 similarity=0.893
+2026-05-26 16:17:52,079 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=9 similarity=0.890
+2026-05-26 16:17:52,079 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=6 similarity=0.889
+2026-05-26 16:17:57,933 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:17:57,946 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=17
+2026-05-26 16:17:57,946 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=17
+2026-05-26 16:17:57,947 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=18
+2026-05-26 16:17:57,947 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=18
+2026-05-26 16:17:58,056 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=18
+2026-05-26 16:17:58,076 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=18 reason=
+addturn
+2026-05-26 16:18:00,362 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:18:00,365 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_5
+2026-05-26 16:18:00,365 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_5
+2026-05-26 16:18:00,384 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 5 embeddings
+2026-05-26 16:18:00,393 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_5
+2026-05-26 16:18:00,394 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=5 user_id=prd0470_di
+rect_5
+2026-05-26 16:18:00,395 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_5 top_k=3 m
+in_similarity=0.700 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:18:00,461 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:18:00,461 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_5 results=3 
+threshold=0.700 max_similarity=0.874
+2026-05-26 16:18:00,461 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.874
+2026-05-26 16:18:00,462 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=1 similarity=0.870
+2026-05-26 16:18:00,462 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.870
+2026-05-26 16:18:00,462 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=5
+2026-05-26 16:18:00,462 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� ���� ���������� ���, ��� ������ ���������
+ ���� �������.' top_k=4 source=api
+2026-05-26 16:18:03,625 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:18:03,626 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:18:03,626 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� ���� ������
+���� ���, ��� ������ ��������� ����...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:18:03,626 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=5
+2026-05-26 16:18:03,626 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=5
+2026-05-26 16:18:03,626 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=5
+2026-05-26 16:18:03,627 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_5 top_k=3 m
+in_similarity=0.600 total_embeddings=5 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:18:03,695 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=4
+2026-05-26 16:18:03,695 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_5 results=3 
+threshold=0.600 max_similarity=0.874
+2026-05-26 16:18:03,695 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.874
+2026-05-26 16:18:03,695 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=1 similarity=0.870
+2026-05-26 16:18:03,695 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.870
+2026-05-26 16:18:07,625 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:18:07,628 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=5
+2026-05-26 16:18:07,628 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_5 turns_befor
+e=5
+2026-05-26 16:18:07,628 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_5 turn_inde
+x=6
+2026-05-26 16:18:07,628 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_5 tur
+n_index=6
+2026-05-26 16:18:07,760 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=6
+2026-05-26 16:18:07,774 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_5 turns=6 reason=a
+ddturn
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_direct.json
+[finished] 2026-05-26T16:18:08.9301466+05:00
+
+===== python scripts/run_prd_047_0_live_failure_cases.py --mode live --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_live.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:18:08.9762330+05:00
+powershell.exe : 2026-05-26 16:18:09,710 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:18 char:10
++   $out = & powershell -NoProfile -Command "Set-Location '$wd'; $c" 2> ...
++          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:1...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:18:09,714 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_live.json
+[finished] 2026-05-26T16:19:53.5975049+05:00
+
+===== FINAL RERUN: python scripts/run_prd_047_0_live_failure_cases.py --mode dry --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_dry.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:25:13.9883588+05:00
+powershell.exe : 2026-05-26 16:25:14,707 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:2 char:950
++ ... t o)"; $out=& powershell -NoProfile -Command "Set-Location '$wd'; $c" ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:25:14,712 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_dry.json
+[finished] 2026-05-26T16:25:14.8455349+05:00
+
+===== FINAL RERUN: python scripts/run_prd_047_0_live_failure_cases.py --mode direct --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_direct.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:25:14.9191638+05:00
+powershell.exe : 2026-05-26 16:25:15,664 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:2 char:950
++ ... t o)"; $out=& powershell -NoProfile -Command "Set-Location '$wd'; $c" ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:25:15,667 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+2026-05-26 16:25:17,473 | bot_agent.multiagent.agents.agent_llm_client | INFO | [AGENT_LLM] sdk_capabilities has_respon
+ses=True has_chat_completions=True model=gpt-5-nano selected_mode=responses
+2026-05-26 16:25:19,979 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:25:20,146 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_1
+2026-05-26 16:25:20,147 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_1
+2026-05-26 16:25:20,149 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 7 embeddings
+2026-05-26 16:25:20,160 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_1
+2026-05-26 16:25:20,161 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=7 user_id=prd0470_di
+rect_1
+2026-05-26 16:25:20,163 | bot_agent.semantic_memory | INFO | [SEMANTIC] loading embedding model: intfloat/multilingual-
+e5-base
+2026-05-26 16:25:27,914 | datasets | INFO | PyTorch version 2.8.0 available.
+2026-05-26 16:25:28,505 | sentence_transformers.SentenceTransformer | INFO | Load pretrained SentenceTransformer: intfl
+oat/multilingual-e5-base
+2026-05-26 16:25:34,591 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding model loaded
+2026-05-26 16:25:34,591 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_1 top_k=3 m
+in_similarity=0.700 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:25:34,709 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:25:34,710 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_1 results=3 
+threshold=0.700 max_similarity=0.909
+2026-05-26 16:25:34,710 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.909
+2026-05-26 16:25:34,710 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=5 similarity=0.907
+2026-05-26 16:25:34,710 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=6 similarity=0.890
+2026-05-26 16:25:34,710 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=7
+2026-05-26 16:25:34,717 | bot_agent.retriever | INFO | [RETRIEVAL] query='������! ���� ����� �����! ������! ���� ����� 
+������!' top_k=4 source=api
+2026-05-26 16:25:37,957 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:25:37,958 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:25:37,958 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='������! ���� ��
+��� �����! ������! ���� ����� �����...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:25:37,958 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=7
+2026-05-26 16:25:37,958 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=7
+2026-05-26 16:25:37,959 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=7
+2026-05-26 16:25:37,959 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_1 top_k=3 m
+in_similarity=0.600 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:25:38,019 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:25:38,019 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_1 results=3 
+threshold=0.600 max_similarity=0.909
+2026-05-26 16:25:38,019 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=4 similarity=0.909
+2026-05-26 16:25:38,019 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=5 similarity=0.907
+2026-05-26 16:25:38,019 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=6 similarity=0.890
+2026-05-26 16:25:38,435 | bot_agent.multiagent.agents.agent_llm_client | INFO | [AGENT_LLM] sdk_capabilities has_respon
+ses=True has_chat_completions=True model=gpt-5-mini selected_mode=responses
+2026-05-26 16:25:45,389 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:25:45,395 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_1 turns
+=7
+2026-05-26 16:25:45,395 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_1 turns_befor
+e=7
+2026-05-26 16:25:45,395 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_1 turn_inde
+x=8
+2026-05-26 16:25:45,395 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_1 tur
+n_index=8
+2026-05-26 16:25:45,505 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=8
+2026-05-26 16:25:45,523 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_1 turns=8 reason=a
+ddturn
+2026-05-26 16:25:48,245 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:25:48,247 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_2
+2026-05-26 16:25:48,248 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_2
+2026-05-26 16:25:48,249 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 7 embeddings
+2026-05-26 16:25:48,259 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_2
+2026-05-26 16:25:48,261 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=7 user_id=prd0470_di
+rect_2
+2026-05-26 16:25:48,261 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_2 top_k=3 m
+in_similarity=0.700 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:25:48,330 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:25:48,331 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_2 results=3 
+threshold=0.700 max_similarity=0.895
+2026-05-26 16:25:48,331 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=5 similarity=0.895
+2026-05-26 16:25:48,331 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=4 similarity=0.894
+2026-05-26 16:25:48,331 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.890
+2026-05-26 16:25:48,331 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=7
+2026-05-26 16:25:48,332 | bot_agent.retriever | INFO | [RETRIEVAL] query='�� ������ ��������� ��� ����� "�������������"
+?' top_k=4 source=api
+2026-05-26 16:25:51,430 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:25:51,430 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:25:51,430 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='�� ������ �����
+���� ��� ����� "�������������"?...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:25:51,431 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=7
+2026-05-26 16:25:51,431 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=7
+2026-05-26 16:25:51,431 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=7
+2026-05-26 16:25:51,431 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_2 top_k=3 m
+in_similarity=0.600 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:25:51,499 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:25:51,500 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_2 results=3 
+threshold=0.600 max_similarity=0.895
+2026-05-26 16:25:51,500 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=5 similarity=0.895
+2026-05-26 16:25:51,500 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=4 similarity=0.894
+2026-05-26 16:25:51,500 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.890
+2026-05-26 16:25:56,975 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:25:56,979 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_2 turns
+=7
+2026-05-26 16:25:56,980 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_2 turns_befor
+e=7
+2026-05-26 16:25:56,980 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_2 turn_inde
+x=8
+2026-05-26 16:25:56,980 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_2 tur
+n_index=8
+2026-05-26 16:25:57,097 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=8
+2026-05-26 16:25:57,113 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_2 turns=8 reason=a
+ddturn
+2026-05-26 16:26:00,349 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:26:00,352 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_3
+2026-05-26 16:26:00,352 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_3
+2026-05-26 16:26:00,354 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 7 embeddings
+2026-05-26 16:26:00,363 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_3
+2026-05-26 16:26:00,365 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=7 user_id=prd0470_di
+rect_3
+2026-05-26 16:26:00,365 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_3 top_k=3 m
+in_similarity=0.700 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:00,440 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:26:00,440 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_3 results=3 
+threshold=0.700 max_similarity=0.910
+2026-05-26 16:26:00,440 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=5 similarity=0.910
+2026-05-26 16:26:00,440 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=6 similarity=0.909
+2026-05-26 16:26:00,440 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.907
+2026-05-26 16:26:00,440 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=7
+2026-05-26 16:26:00,441 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� �������������� ������������� � ����������
+�����?' top_k=4 source=api
+2026-05-26 16:26:03,571 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:26:03,571 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:26:03,572 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� �����������
+��� ������������� � ���������������...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:26:03,572 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=7
+2026-05-26 16:26:03,572 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=7
+2026-05-26 16:26:03,572 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=7
+2026-05-26 16:26:03,572 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_3 top_k=3 m
+in_similarity=0.600 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:03,642 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:26:03,643 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_3 results=3 
+threshold=0.600 max_similarity=0.910
+2026-05-26 16:26:03,643 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=5 similarity=0.910
+2026-05-26 16:26:03,643 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=6 similarity=0.909
+2026-05-26 16:26:03,643 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=3 similarity=0.907
+2026-05-26 16:26:09,672 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:26:09,678 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_3 turns
+=7
+2026-05-26 16:26:09,678 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_3 turns_befor
+e=7
+2026-05-26 16:26:09,678 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_3 turn_inde
+x=8
+2026-05-26 16:26:09,678 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_3 tur
+n_index=8
+2026-05-26 16:26:09,796 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=8
+2026-05-26 16:26:09,812 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_3 turns=8 reason=a
+ddturn
+2026-05-26 16:26:12,060 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:26:12,063 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_4
+2026-05-26 16:26:12,063 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_4
+2026-05-26 16:26:12,065 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 21 embeddings
+2026-05-26 16:26:12,075 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_4
+2026-05-26 16:26:12,077 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=21 user_id=prd0470_d
+irect_4
+2026-05-26 16:26:12,078 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=21 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:12,137 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=20
+2026-05-26 16:26:12,138 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.911
+2026-05-26 16:26:12,138 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=10 similarity=0.911
+2026-05-26 16:26:12,138 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=13 similarity=0.909
+2026-05-26 16:26:12,138 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=19 similarity=0.908
+2026-05-26 16:26:12,138 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=21
+2026-05-26 16:26:12,138 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� ����� ��������������? �� ������ ���������
+ ��� ����� "�������������"?' top_k=4 source=api
+2026-05-26 16:26:15,282 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:26:15,282 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:26:15,283 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� ����� �����
+���������? �� ������ ��������� ��� ...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:26:15,283 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=21
+2026-05-26 16:26:15,283 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=21
+2026-05-26 16:26:15,283 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=21
+2026-05-26 16:26:15,283 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=21 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:15,347 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=20
+2026-05-26 16:26:15,348 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.911
+2026-05-26 16:26:15,348 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=10 similarity=0.911
+2026-05-26 16:26:15,348 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=13 similarity=0.909
+2026-05-26 16:26:15,348 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=19 similarity=0.908
+2026-05-26 16:26:45,566 | openai._base_client | INFO | Retrying request to /responses in 0.431727 seconds
+2026-05-26 16:26:51,582 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:26:51,595 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=21
+2026-05-26 16:26:51,596 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=21
+2026-05-26 16:26:51,596 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=22
+2026-05-26 16:26:51,596 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=22
+2026-05-26 16:26:51,699 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=22
+2026-05-26 16:26:51,719 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=22 reason=
+addturn
+2026-05-26 16:26:54,214 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:26:54,218 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:26:54,218 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=22 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:54,286 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=21
+2026-05-26 16:26:54,286 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.907
+2026-05-26 16:26:54,286 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=11 similarity=0.907
+2026-05-26 16:26:54,286 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=14 similarity=0.905
+2026-05-26 16:26:54,287 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=17 similarity=0.897
+2026-05-26 16:26:54,287 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:26:54,287 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� �������������� ������������� � ����������
+�����?' top_k=4 source=api
+2026-05-26 16:26:57,450 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:26:57,451 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:26:57,451 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� �����������
+��� ������������� � ���������������...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:26:57,451 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:26:57,451 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:26:57,452 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:26:57,452 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=22 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:26:57,517 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=21
+2026-05-26 16:26:57,518 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.907
+2026-05-26 16:26:57,518 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=11 similarity=0.907
+2026-05-26 16:26:57,518 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=14 similarity=0.905
+2026-05-26 16:26:57,518 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=17 similarity=0.897
+2026-05-26 16:27:02,386 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:27:02,408 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=22
+2026-05-26 16:27:02,408 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=22
+2026-05-26 16:27:02,408 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=23
+2026-05-26 16:27:02,408 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=23
+2026-05-26 16:27:02,528 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=23
+2026-05-26 16:27:02,550 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=23 reason=
+addturn
+2026-05-26 16:27:05,301 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:27:05,305 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:05,306 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.700 total_embeddings=23 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:27:05,369 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=22
+2026-05-26 16:27:05,370 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.700 max_similarity=0.905
+2026-05-26 16:27:05,370 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=21 similarity=0.905
+2026-05-26 16:27:05,370 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=18 similarity=0.904
+2026-05-26 16:27:05,370 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=15 similarity=0.893
+2026-05-26 16:27:05,370 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:05,370 | bot_agent.retriever | INFO | [RETRIEVAL] query='�� ������ ��������� ��� ����� "�������������"
+?' top_k=4 source=api
+2026-05-26 16:27:08,494 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:27:08,494 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:27:08,494 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='�� ������ �����
+���� ��� ����� "�������������"?...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:27:08,495 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:08,495 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:08,495 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:08,495 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_4 top_k=3 m
+in_similarity=0.600 total_embeddings=23 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:27:08,564 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=22
+2026-05-26 16:27:08,565 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_4 results=3 
+threshold=0.600 max_similarity=0.905
+2026-05-26 16:27:08,565 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=21 similarity=0.905
+2026-05-26 16:27:08,565 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=18 similarity=0.904
+2026-05-26 16:27:08,565 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=15 similarity=0.893
+2026-05-26 16:27:14,100 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:27:14,104 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_4 turns
+=23
+2026-05-26 16:27:14,104 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_4 turns_befor
+e=23
+2026-05-26 16:27:14,104 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_4 turn_inde
+x=24
+2026-05-26 16:27:14,104 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_4 tur
+n_index=24
+2026-05-26 16:27:14,219 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=24
+2026-05-26 16:27:14,240 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_4 turns=24 reason=
+addturn
+2026-05-26 16:27:16,810 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:27:16,813 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_miss user_id=prd0470_direct_5
+2026-05-26 16:27:16,814 | bot_agent.semantic_memory | INFO | [SEMANTIC_MEMORY] cache_miss user_id=prd0470_direct_5
+2026-05-26 16:27:16,815 | bot_agent.semantic_memory | INFO | Semantic memory loaded: 7 embeddings
+2026-05-26 16:27:16,825 | bot_agent.conversation_memory | INFO | [MEMORY] load_history start user_id=prd0470_direct_5
+2026-05-26 16:27:16,826 | bot_agent.conversation_memory | INFO | [MEMORY] loaded from sqlite turns=7 user_id=prd0470_di
+rect_5
+2026-05-26 16:27:16,827 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_5 top_k=3 m
+in_similarity=0.700 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:27:16,897 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:27:16,898 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_5 results=3 
+threshold=0.700 max_similarity=0.874
+2026-05-26 16:27:16,898 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.874
+2026-05-26 16:27:16,898 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=5 similarity=0.871
+2026-05-26 16:27:16,898 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.870
+2026-05-26 16:27:16,898 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=7
+2026-05-26 16:27:16,899 | bot_agent.retriever | INFO | [RETRIEVAL] query='��� ���� ���������� ���, ��� ������ ���������
+ ���� �������.' top_k=4 source=api
+2026-05-26 16:27:20,177 | httpx | INFO | HTTP Request: POST http://localhost:8003/api/query/ "HTTP/1.1 200 OK"
+2026-05-26 16:27:20,178 | bot_agent.retriever | INFO | [RETRIEVAL] API search: 4 ������
+2026-05-26 16:27:20,178 | bot_agent.multiagent.agents.memory_retrieval | INFO | [MRA] rag hits=4 query='��� ���� ������
+���� ���, ��� ������ ��������� ����...' retrieval_source_used=api circuit_open=False
+2026-05-26 16:27:20,178 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=7
+2026-05-26 16:27:20,178 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=7
+2026-05-26 16:27:20,179 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=7
+2026-05-26 16:27:20,179 | bot_agent.semantic_memory | INFO | [SEMANTIC] search start user_id=prd0470_direct_5 top_k=3 m
+in_similarity=0.600 total_embeddings=7 exclude_last_n=1 effective_exclude=1
+2026-05-26 16:27:20,249 | bot_agent.semantic_memory | INFO | [SEMANTIC] search_pool_size=6
+2026-05-26 16:27:20,249 | bot_agent.semantic_memory | INFO | [SEMANTIC] search done user_id=prd0470_direct_5 results=3 
+threshold=0.600 max_similarity=0.874
+2026-05-26 16:27:20,249 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #1 turn=2 similarity=0.874
+2026-05-26 16:27:20,249 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #2 turn=5 similarity=0.871
+2026-05-26 16:27:20,249 | bot_agent.semantic_memory | INFO | [SEMANTIC]   #3 turn=1 similarity=0.870
+2026-05-26 16:27:24,411 | httpx | INFO | HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-05-26 16:27:24,414 | bot_agent.conversation_memory | INFO | [CONV_MEMORY] cache_hit user_id=prd0470_direct_5 turns
+=7
+2026-05-26 16:27:24,414 | bot_agent.conversation_memory | INFO | [MEMORY] add_turn user_id=prd0470_direct_5 turns_befor
+e=7
+2026-05-26 16:27:24,415 | bot_agent.conversation_memory | INFO | [MEMORY] turn_added user_id=prd0470_direct_5 turn_inde
+x=8
+2026-05-26 16:27:24,415 | bot_agent.semantic_memory | INFO | [SEMANTIC] add_turn_embedding user_id=prd0470_direct_5 tur
+n_index=8
+2026-05-26 16:27:24,530 | bot_agent.semantic_memory | INFO | [SEMANTIC] embedding added turn_index=8
+2026-05-26 16:27:24,547 | bot_agent.conversation_memory | INFO | [MEMORY] save userid=prd0470_direct_5 turns=8 reason=a
+ddturn
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_direct.json
+[finished] 2026-05-26T16:27:25.6896828+05:00
+
+===== FINAL RERUN: python scripts/run_prd_047_0_live_failure_cases.py --mode live --output TO_DO_LIST/logs/PRD-047.0-HF1/failure_cases_after_live.json --trace-samples-output TO_DO_LIST/logs/PRD-047.0-HF1/answer_compliance_samples.json =====
+[started] 2026-05-26T16:27:25.7677627+05:00
+powershell.exe : 2026-05-26 16:27:26,508 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:
+\My_practice\Text_transcription\bot_psychologist\data\threads
+At line:2 char:950
++ ... t o)"; $out=& powershell -NoProfile -Command "Set-Location '$wd'; $c" ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (2026-05-26 16:2...st\data\threads:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+2026-05-26 16:27:26,511 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | le
+gacy_graph: disabled
+C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.0-HF1\failure_cases_after_live.json
+[finished] 2026-05-26T16:29:04.6127426+05:00
+
+===== HF1 FINAL VERIFICATION RERUN (2026-05-26) =====
+python -m pytest tests/test_prd_047_0_failure_case_runner.py -q -> 8 passed
+python -m pytest tests/test_knowledge_answer_routing_guard.py -q -> 9 passed
+python -m pytest tests/test_writer_contract_knowledge_answer.py -q -> 3 passed
+python -m pytest tests/test_multiagent_trace.py -q -> 10 passed
+python -m pytest tests/evaluation -q -> 7 passed
+python scripts/run_prd_047_0_live_failure_cases.py --mode dry -> summary 5/5
+python scripts/run_prd_047_0_live_failure_cases.py --mode direct -> summary 5/5
+python scripts/run_prd_047_0_live_failure_cases.py --mode live -> skipped (stale backend)

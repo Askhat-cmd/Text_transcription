@@ -650,3 +650,10 @@ Status: accepted
 Context: live multiagent failures showed that Writer could ask clarifying questions about already-known internal concepts (for example, `нейросталкинг`) even when retrieval/context already contained grounding.
 Decision: introduce deterministic Knowledge Answer Routing Guard before Writer contract. If user asks/challenges a known internal concept and KB grounding is available (including lexical near-exact fallback), runtime sets `knowledge_answer_first`, disables definition-first behavior, and blocks practice-first diversion for that turn.
 Consequences: concept questions are answered from internal governed meaning first, trace explicitly records `knowledge_answer` and `practice_gate`, and future tuning can iterate on measurable failure-case baseline instead of subjective chat impressions.
+
+## ADR-059 Amendment - Acceptance requires final-answer compliance, not only guard flags
+
+Status: accepted
+Context: PRD-047.0 showed a false-positive gap where internal guard flags were correct but final user-facing answers still violated known-concept and no-practice expectations.
+Decision: quality acceptance for known-concept routing is valid only when evaluator checks final answer text (forbidden fragments, clarification-question bans, required semantics, practice gate behavior, and required grounding), not trace flags alone.
+Consequences: failure baseline now rejects mismatched final answers even when internal trace appears green; next tuning PRDs can rely on stricter and reproducible acceptance evidence.

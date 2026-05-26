@@ -1,0 +1,14 @@
+{
+  "prd_id": "PRD-047.0",
+  "mode": "live",
+  "timestamp_utc": "2026-05-26T11:34:26.103578+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_0_cases.json",
+  "summary": {
+    "cases_total": 0,
+    "cases_passed": 0,
+    "cases_failed": 0
+  },
+  "case_results": [],
+  "live_status": "skipped",
+  "reason": "live backend appears stale or not restarted after code changes (knowledge_answer trace missing)"
+}

@@ -1,0 +1,2122 @@
+{
+  "prd_id": "PRD-047.5",
+  "mode": "live",
+  "timestamp_utc": "2026-05-28T12:02:22.755523+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_5_planner_answer_fit_cases.json",
+  "summary": {
+    "cases_total": 26,
+    "cases_passed": 26,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "pq_001_low_resource_empty",
+      "group": "low_resource_short_support",
+      "mode": "live",
+      "query": "Я как будто схлопнулся и пустой, не тяну длинные ответы.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики",
+          "без глубокого анализа"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": true,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Low-resource контур: предпочтителен сверхкороткий контакт."
+      },
+      "answer": "Я рядом. Сейчас не нужно всё разбирать. Можно просто немного снизить внутреннее давление.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_002_low_resource_no_energy",
+      "group": "low_resource_short_support",
+      "mode": "live",
+      "query": "Нет сил думать, не грузи, просто поддержи коротко.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики",
+          "без глубокого анализа"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "validate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": true,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Low-resource контур: предпочтителен сверхкороткий контакт."
+      },
+      "answer": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_003_low_resource_tired",
+      "group": "low_resource_short_support",
+      "mode": "live",
+      "query": "Очень устал. Пару спокойных слов, без анализа.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики",
+          "без глубокого анализа"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "short_support",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "validate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": true,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Low-resource контур: предпочтителен сверхкороткий контакт."
+      },
+      "answer": "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_004_low_resource_short",
+      "group": "low_resource_short_support",
+      "mode": "live",
+      "query": "Коротко и без советов, я пустой сегодня.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики",
+          "без глубокого анализа"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "validate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": true,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Low-resource контур: предпочтителен сверхкороткий контакт."
+      },
+      "answer": "Пустота сегодня — принял(а).  \nЭто ощущение может быть тяжёлым и тихим.  \nЯ рядом, если хочешь просто поделиться или помолчать вместе.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_005_soft_distress_bad",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "live",
+      "query": "Мне сейчас очень плохо, не выдерживаю.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "target_micro_shift": "дать короткую опору здесь-и-сейчас без углубления в теорию",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": true,
+        "must_include": [
+          "короткая стабилизация",
+          "простая опора",
+          "здесь-и-сейчас"
+        ],
+        "must_avoid": [
+          "не уходить в философскую глубину",
+          "не расширять анализ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": true,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Текст указывает на мягкий distress: нужен короткий стабилизирующий ход."
+      },
+      "answer": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_006_soft_distress_scared",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "live",
+      "query": "Мне страшно, я разваливаюсь прямо сейчас.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "target_micro_shift": "дать короткую опору здесь-и-сейчас без углубления в теорию",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": true,
+        "must_include": [
+          "короткая стабилизация",
+          "простая опора",
+          "здесь-и-сейчас"
+        ],
+        "must_avoid": [
+          "не уходить в философскую глубину",
+          "не расширять анализ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": true,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Текст указывает на мягкий distress: нужен короткий стабилизирующий ход."
+      },
+      "answer": "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_007_soft_distress_cant",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "live",
+      "query": "Я не справляюсь и не вывожу сейчас.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "target_micro_shift": "дать короткую опору здесь-и-сейчас без углубления в теорию",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": true,
+        "must_include": [
+          "короткая стабилизация",
+          "простая опора",
+          "здесь-и-сейчас"
+        ],
+        "must_avoid": [
+          "не уходить в философскую глубину",
+          "не расширять анализ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": true,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Текст указывает на мягкий distress: нужен короткий стабилизирующий ход."
+      },
+      "answer": "Здесь важнее увидеть механизм: прогнозирование и контроль пытаются снизить риск, но забирают ресурс еще до начала действия.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_008_defensive_world",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "live",
+      "query": "Мир тупит, люди тормозят, мне надо всех дожать.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "clarify_one_point",
+        "answer_shape": "one_question",
+        "response_depth": "short",
+        "target_micro_shift": "снять defensive-поляризацию через один decenter-вопрос",
+        "should_answer_directly": false,
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один вопрос для декентрации"
+        ],
+        "must_avoid": [
+          "не входить в коалицию против мира",
+          "без длинной лекции"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": true,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.84,
+        "rationale": "Defensive контур: лучше один точный вопрос, чем длинный ответ."
+      },
+      "answer": "Злюсь и раздражаешься из-за ощущения, что мир и люди «тормозят», и тебе хочется их подтолкнуть — дожать, чтобы что-то сдвинулось. Похоже, это про контроль над результатом и нетерпение к темпам чужих действий. Что конкретно ты хочешь получить от людей, когда их «дожмёшь»?",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_009_defensive_people",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "live",
+      "query": "Все вокруг неадекватные, почему они такие?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "clarify_one_point",
+        "answer_shape": "one_question",
+        "response_depth": "short",
+        "target_micro_shift": "снять defensive-поляризацию через один decenter-вопрос",
+        "should_answer_directly": false,
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один вопрос для декентрации"
+        ],
+        "must_avoid": [
+          "не входить в коалицию против мира",
+          "без длинной лекции"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": true,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.84,
+        "rationale": "Defensive контур: лучше один точный вопрос, чем длинный ответ."
+      },
+      "answer": "Похоже, сейчас всё вокруг кажется тебе неадекватным и это тебя беспокоит. Такое сильное обобщение часто сопровождается раздражением или усталостью от повторяющихся ситуаций. Может быть, ты ожидаешь от людей другого поведения или чаще замечаешь только то, что не сходится с твоими ожиданиями?",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_010_defensive_idiots",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "live",
+      "query": "Они идиоты и мир не понимает, как с этим быть?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "clarify_one_point",
+        "answer_shape": "one_question",
+        "response_depth": "short",
+        "target_micro_shift": "снять defensive-поляризацию через один decenter-вопрос",
+        "should_answer_directly": false,
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один вопрос для декентрации"
+        ],
+        "must_avoid": [
+          "не входить в коалицию против мира",
+          "без длинной лекции"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": true,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.84,
+        "rationale": "Defensive контур: лучше один точный вопрос, чем длинный ответ."
+      },
+      "answer": "Чувствуешь сильное раздражение на других и ощущение, что мир вокруг не знает, как с этим справляться. Это звучит тяжело и делит ситуацию на «мы» и «они», из-за чего кажется бессмысленным искать общий язык. Кого конкретно ты имеешь в виду под «они» — отдельных людей, группу или вообще большинство людей?",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_011_close_thanks",
+      "group": "thanks_close",
+      "mode": "live",
+      "query": "Спасибо.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "close_gently",
+        "answer_shape": "gentle_close",
+        "response_depth": "very_short",
+        "target_micro_shift": "закрыть контакт без нового цикла задач",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "minimal_allowed",
+        "continuity_policy": "close_without_new_loop",
+        "safety_priority": false,
+        "must_include": [
+          "краткое закрытие контакта"
+        ],
+        "must_avoid": [
+          "не открывать новый шаг",
+          "не давать практику",
+          "не задавать вопрос"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "thanks_close",
+          "active_line_continuity_mode": "close_gently",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": true,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.95,
+        "rationale": "Thanks/close сигнал: нужен мягкий выход без нового loop."
+      },
+      "answer": "Пожалуйста. Рад был помочь — завершаем на сегодня спокойно. Если захочется продолжить позже, приходи.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_012_close_bye",
+      "group": "thanks_close",
+      "mode": "live",
+      "query": "Понял, спасибо.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "close_gently",
+        "answer_shape": "gentle_close",
+        "response_depth": "very_short",
+        "target_micro_shift": "закрыть контакт без нового цикла задач",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "minimal_allowed",
+        "continuity_policy": "close_without_new_loop",
+        "safety_priority": false,
+        "must_include": [
+          "краткое закрытие контакта"
+        ],
+        "must_avoid": [
+          "не открывать новый шаг",
+          "не давать практику",
+          "не задавать вопрос"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": true,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.95,
+        "rationale": "Thanks/close сигнал: нужен мягкий выход без нового loop."
+      },
+      "answer": "Пожалуйста. Рад, что стало чуть яснее.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_013_close_ok",
+      "group": "thanks_close",
+      "mode": "live",
+      "query": "Ок, спасибо.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "close_gently",
+        "answer_shape": "gentle_close",
+        "response_depth": "very_short",
+        "target_micro_shift": "закрыть контакт без нового цикла задач",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "minimal_allowed",
+        "continuity_policy": "close_without_new_loop",
+        "safety_priority": false,
+        "must_include": [
+          "краткое закрытие контакта"
+        ],
+        "must_avoid": [
+          "не открывать новый шаг",
+          "не давать практику",
+          "не задавать вопрос"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": true,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.95,
+        "rationale": "Thanks/close сигнал: нужен мягкий выход без нового loop."
+      },
+      "answer": "Пожалуйста. Рад, что стало чуть яснее.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_014_no_question_continue",
+      "group": "no_question_request",
+      "mode": "live",
+      "query": "Продолжи мысль про механизм застревания без вопросов.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": true,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Один ключевой механизм застревания — усиление самореферентных рутин через сеть пассивного режима (DMN): когда мозг «переключается» на внутренние мысли, он склонен повторять уже устоявшиеся сценарии и эмоции, что делает их фоном опыта. Такие повторения укрепляются нейронными связями (чем чаще возвращаешься к",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_015_no_question_direct",
+      "group": "no_question_request",
+      "mode": "live",
+      "query": "Ответь без вопроса и без практики: почему я застреваю перед стартом?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": true,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": true,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Одна возможная причина — автоматическая тревожная оценка будущего шага: мозг быстро помечает старт как потенциальную угрозу (ошибка, осуждение, потеря контроля) и это запускает цикл ожидания неудачи и откладывания действий. В результате сверху появляется сомнение и тело уменьшается в активности — кажется, что «ничего не делается», хотя работает защитная программа. Хочется уточнить: в момент, когда вы застреваете, что сильнее чувствуется — напряжение/тревога, мысленное «не готов», или пустота/отсутствие импульса.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_016_no_question_ask",
+      "group": "no_question_request",
+      "mode": "live",
+      "query": "Не задавай вопросов, просто продолжи объяснение механизма.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": true,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Механизм — автоматическая нейронная дорожка: устоявшийся паттерн реагирования, который воспроизводит программу «надо исправить» и удерживает внимание на ошибке. Осознавание ставит промежуток между тобой и реакцией — оно уже уменьшает власть дорожки, но не гасит её мгновенно. Поэтому сначала замечаешь постфактум, затем всё быстрее по мере формирования новой дорожки, а не по щелчку выключателя. За последнюю неделю как часто ты ловил реакцию в процессе, а не только потом.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_017_step_now",
+      "group": "explicit_practice_step",
+      "mode": "live",
+      "query": "Дай один шаг, что сделать прямо сейчас.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_direct_step",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": true,
+          "explicit_step_requested": true,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Явный запрос на действие и gate разрешает единичный шаг."
+      },
+      "answer": "Ты просишь один конкретный шаг прямо сейчас — без лишних вариантов. Мне важно понять ваше состояние: вы сейчас относительно спокойно или чувствуете заметное напряжение.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_018_practice_request",
+      "group": "explicit_practice_step",
+      "mode": "live",
+      "query": "Дай практику на сейчас, хочу действие.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": true,
+          "explicit_step_requested": true,
+          "explicit_practice_requested": true
+        },
+        "confidence": 0.9,
+        "rationale": "Явный запрос на действие и gate разрешает единичный шаг."
+      },
+      "answer": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_019_action_simple",
+      "group": "explicit_practice_step",
+      "mode": "live",
+      "query": "Хочу действие: дай один шаг без длинного разбора.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": true,
+          "explicit_step_requested": true,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Явный запрос на действие и gate разрешает единичный шаг."
+      },
+      "answer": "Хочешь один конкретный шаг без лишних слов. В следующий раз, когда поймаешь мысль «что подумают», остановись на 10 секунд и вслух или про себя произнеси: «А что я думаю. ». Сможешь попробовать это в ближайшие 24 часа.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_020_mechanism_core",
+      "group": "mechanism_continue_regression",
+      "mode": "live",
+      "query": "Хочу понять механизм, почему застреваю перед стартом задачи.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Сейчас полезнее удержать фокус на механизме: попытка заранее все проконтролировать съедает ресурс еще до старта действия.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_021_mechanism_forecast",
+      "group": "mechanism_continue_regression",
+      "mode": "live",
+      "query": "В работе зависаю на прогнозах и контроле до старта. Как это работает по механизму?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Смысловой узел тут не в пересказе вопроса, а в том, как попытка заранее обезопасить старт съедает энергию до действия.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_022_mechanism_repeat",
+      "group": "mechanism_continue_regression",
+      "mode": "live",
+      "query": "Продолжи разбор механизма застревания, без перехода в практику.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": true,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "answer": "Главный фокус — что знание само по себе не ломает застрявший паттерн: застревание поддерживается повторяющимися нейронными циклами, которые укрепляют старую реакцию. Один конкретный механизм — замкнутый нейронный цикл (включая сети саморефлексии/DMN и систему вознаграждения), который повторно подкрепляет убеждение «я недостаточен» и тем самым блокирует переход к бытийному опыту. В контексте разрыва между зелёным и жёлтым это выглядит как попытка решить новую, непроживаемую потребность старым инструментарием — и нейроны «привыкают» к знакомой тревоге. Что сейчас для вас ярче: ощущение нехватки и борьбы или устремлённость к смыслу и проживанию?",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_023_known_concept_neurostalking",
+      "group": "known_concept_regression",
+      "mode": "live",
+      "query": "Что такое нейросталкинг в вашей рамке?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "answer_known_concept",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "target_micro_shift": "дать прямой смысл по известному концепту без встречных барьеров",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "дать определение/смысл сразу",
+          "связать с текущей линией"
+        ],
+        "must_avoid": [
+          "не просить пользователя определять термин",
+          "без внешнего surveillance-фрейма"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "known_concept_question",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": false,
+          "knowledge_answer_needed": true,
+          "knowledge_answer_should_answer_directly": true,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.91,
+        "rationale": "Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера."
+      },
+      "answer": "Нейросталкинг в нашей рамке — это внимательное наблюдение за «первым этажом»: паттернами, триггерами и автоматическими реакциями, их нейрофизиологией и тем, как они запускают страдание. Это не про суд или исправление личности, а про понимание механизма: откуда возникает реакция и как она проходит. На этом уровне вы смотрите на программу извне, учитесь не запускаться и отмечаете телесные и мыслительные маркеры. Хотите пример того, как это наблюдение может выглядеть в конкретной жизненной ситуации.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_024_known_concept_relation",
+      "group": "known_concept_regression",
+      "mode": "live",
+      "query": "Как нейросталкинг связан с самореализацией?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "answer_known_concept",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "target_micro_shift": "дать прямой смысл по известному концепту без встречных барьеров",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "дать определение/смысл сразу",
+          "связать с текущей линией"
+        ],
+        "must_avoid": [
+          "не просить пользователя определять термин",
+          "без внешнего surveillance-фрейма"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "known_concept_question",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": false,
+          "knowledge_answer_needed": true,
+          "knowledge_answer_should_answer_directly": true,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.91,
+        "rationale": "Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера."
+      },
+      "answer": "Нейросталкинг — это внимательное, ненавязчивое наблюдение за собственными автоматическими реакциями, триггерами и повторяющимися мыслями без стремления их тут же «поправить». В контексте самореализации это помогает увидеть, какие внутренние программы мешают выбирать то, что действительно важно, и какие желания были подавлены или исказились под влиянием чужих ожиданий. Чем яснее эти механизмы видны, тем больше пространства для сознательного выбора и для жизни, согласной с вашими ценностями и целями. Что вы вкладываете в понятие «самореализация» у себя — скорее свободу выбора, достижение цели или ощущение смысла.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_025_repair_misalignment",
+      "group": "repair_after_bot_misalignment",
+      "mode": "live",
+      "query": "Почему ты снова предлагаешь практику? Я просил разбор механизма.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "repair_misalignment",
+        "answer_shape": "repair_acknowledgement",
+        "response_depth": "short",
+        "target_micro_shift": "признать сдвиг и вернуть ответ к активной линии",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "repair_and_continue",
+        "safety_priority": false,
+        "must_include": [
+          "признать сдвиг",
+          "вернуться к active_line"
+        ],
+        "must_avoid": [
+          "не предлагать новую практику",
+          "не начинать новую теорию"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": true,
+          "practice_suppression_text": false,
+          "repair_text": true,
+          "explicit_action_requested": true,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": true
+        },
+        "confidence": 0.92,
+        "rationale": "Correction/repair сигнал требует короткого repair-хода без практики."
+      },
+      "answer": "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    },
+    {
+      "case_id": "pq_026_repair_shift",
+      "group": "repair_after_bot_misalignment",
+      "mode": "live",
+      "query": "Ты ушел не туда. Вернись к сути и не давай практику.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "repair_misalignment",
+        "answer_shape": "repair_acknowledgement",
+        "response_depth": "short",
+        "target_micro_shift": "признать сдвиг и вернуть ответ к активной линии",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "repair_and_continue",
+        "safety_priority": false,
+        "must_include": [
+          "признать сдвиг",
+          "вернуться к active_line"
+        ],
+        "must_avoid": [
+          "не предлагать новую практику",
+          "не начинать новую теорию"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": true,
+          "repair_text": true,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false
+        },
+        "confidence": 0.92,
+        "rationale": "Correction/repair сигнал требует короткого repair-хода без практики."
+      },
+      "answer": "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики.",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "response_depth_match": true,
+          "question_policy_match": true,
+          "practice_policy_match": true,
+          "revoicing_policy_match": true
+        },
+        "answer_fit_checks": {
+          "answer_present": true,
+          "max_chars": true,
+          "max_questions": true,
+          "forbidden_markers": true,
+          "required_semantics_any": true,
+          "one_step_shape": true,
+          "close_no_new_loop": true,
+          "clarify_has_one_question": true,
+          "short_support_not_lecture": true,
+          "safety_shape_short": true
+        },
+        "failure_reasons": []
+      },
+      "api_errors": []
+    }
+  ],
+  "live_status": "passed",
+  "reason": ""
+}

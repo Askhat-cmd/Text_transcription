@@ -709,3 +709,15 @@ Context: after PRD-047.3, continuity signals reduced drift, but Writer still nee
 Decision: add `Response Planner v1` as deterministic layer between Active Line and WriterContract. Planner does not call LLMs and does not produce user-facing text; it computes compact move/policy fields (`next_move`, `answer_shape`, `response_depth`, `question_policy`, `practice_policy`, `revoicing_policy`, `must_include`, `must_avoid`) from existing runtime signals. Safety, Knowledge Answer routing, and Practice Gate remain hard boundaries; Writer Freedom Contract remains active as guided style/freedom frame.
 
 Consequences: turn-level move selection becomes reproducible and traceable (`debug/api/admin/runtime`), live acceptance can enforce strict no-fallback planner-trace policy, and future quality work can calibrate answer fit on measurable planner outputs without changing governance authority fields or adding a new LLM agent.
+
+## ADR-063 - Planner quality acceptance requires answer-fit calibration on weak live groups, not planner-trace presence alone
+
+Status: accepted
+
+Date: 2026-05-28
+
+Context: PRD-047.4 proved structural planner integration and trace visibility, but live cases still showed weak semantic fit (low-resource, safety-adjacent distress, defensive framing, close turns, no-question requests, explicit step requests, repair turns) despite formally valid planner fields.
+
+Decision: PRD-047.5 introduces mandatory planner quality calibration with deterministic text-level override signals in `response_planner.py`, answer-level fit evaluator over final writer text, and strict runner acceptance across `dry/direct/live` with no runner-side live fallback.
+
+Consequences: acceptance now requires both structural planner trace and behavioral fit between planner decision and final answer; planner remains deterministic and non-LLM, while Writer Freedom Contract remains active under stronger policy-obedience checks.

@@ -39,6 +39,18 @@ Main fields:
 - Practice is not default and requires explicit allow path.
 - If Active Line suppresses revoicing/questions/practice, planner mirrors that in policy fields.
 
+## PRD-047.5 Calibration Additions
+- Added deterministic text detectors for weak live groups:
+  - low-resource
+  - soft-distress (safety-adjacent)
+  - defensive world-blame framing
+  - explicit no-question request
+  - close/thanks turns
+  - explicit direct-step/practice request with negated-practice handling
+  - repair-misalignment text
+- Added mechanism/practice-suppression override path to avoid false action routing when user asks to continue mechanism analysis without practice.
+- Kept safety, knowledge-answer routing, and practice-gate boundaries as hard constraints.
+
 ## Runtime Integration
 - Orchestrator builds planner decision before `WriterContract`.
 - `WriterContract.response_planner` is optional and backward compatible.
@@ -67,3 +79,7 @@ No admin editing surface is added in this PRD.
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_live.json`
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_trace_samples.json`
 - `TO_DO_LIST/logs/PRD-047.4/response_planner_policy_violations_report.json`
+- `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_dry.json`
+- `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_direct.json`
+- `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_live.json`
+- `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_trace_samples.json`

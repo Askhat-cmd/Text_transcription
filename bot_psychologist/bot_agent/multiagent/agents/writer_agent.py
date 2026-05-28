@@ -508,6 +508,8 @@ class WriterAgent:
         active_line_should_offer_practice = bool(active_line.get("should_offer_practice", practice_allowed))
         active_line_practice_suppression = bool(active_line.get("practice_suppression_active", False))
         response_planner = dict(ctx.get("response_planner", {})) if isinstance(ctx.get("response_planner"), dict) else {}
+        planner_next_move = str(response_planner.get("next_move", "continue_active_line") or "continue_active_line")
+        planner_answer_shape = str(response_planner.get("answer_shape", "compact_direct") or "compact_direct")
         planner_question_policy = str(response_planner.get("question_policy", "none") or "none")
         planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
         planner_safety_priority = bool(response_planner.get("safety_priority", False))
@@ -517,6 +519,21 @@ class WriterAgent:
         has_question = "?" in text
         asks_define_known_term = any(marker in lowered_text for marker in _KNOWN_CONCEPT_CLARIFICATION_MARKERS)
         has_external_surveillance_frame = any(marker in lowered_text for marker in _EXTERNAL_SURVEILLANCE_MARKERS)
+        user_requests_no_question = _contains_any(
+            lowered_user, ("без вопросов", "не задавай вопросов", "ответь без вопроса", "без вопроса")
+        )
+        user_requests_no_practice = _contains_any(
+            lowered_user, ("без практик", "без перехода в практик", "не давай практик", "без упражн")
+        )
+        user_repair_signal = _contains_any(
+            lowered_user, ("ушел не туда", "вернись к сути", "снова предлагаешь практику", "я просил разбор механизма")
+        )
+        user_step_request = _contains_any(
+            lowered_user, ("один шаг", "что сделать прямо сейчас", "что делать прямо сейчас", "дай шаг", "хочу действие")
+        )
+        user_mechanism_request = _contains_any(
+            lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
+        )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
         if not practice_allowed and not should_answer_directly and (is_greeting or has_unsolicited_practice):
@@ -539,8 +556,39 @@ class WriterAgent:
         if planner_safety_priority and has_question:
             return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку."
 
+        if planner_next_move == "give_short_support" and (len(text) > 260 or has_question or has_unsolicited_practice):
+            return "Я рядом. Сейчас не нужно всё разбирать. Можно просто немного снизить внутреннее давление."
+
+        if planner_next_move == "stabilize_safety" and (len(text) > 320 or has_question):
+            return "Я рядом. Сейчас важнее короткая опора здесь-и-сейчас, без перегруза."
+
+        if planner_next_move == "close_gently" and (
+            has_question
+            or has_unsolicited_practice
+            or _contains_any(lowered_text, ("новый шаг", "давай продолжим", "в следующий раз разберем"))
+        ):
+            return "Пожалуйста. Рад, что стало чуть яснее."
+
+        if planner_next_move == "clarify_one_point":
+            question_count = text.count("?")
+            if question_count == 0:
+                return "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
+            if question_count > 1:
+                first = text.split("?")[0].strip()
+                return (first + "?").strip()
+            if len(text) > 320:
+                return "Похоже, это сильно выматывает. Если взять один конкретный эпизод, где это ощущается острее всего?"
+
+        if user_repair_signal:
+            return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
+
         if planner_question_policy == "none" and has_question:
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
+
+        if planner_next_move == "repair_misalignment":
+            has_repair_forbidden = _contains_any(lowered_text, ("практик", "упражн", "таймер", "шаг"))
+            if has_question or has_repair_forbidden or len(text) > 480:
+                return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
 
         if planner_practice_policy == "forbidden" and has_unsolicited_practice:
             if active_line_intent == "understand_mechanism":
@@ -549,6 +597,29 @@ class WriterAgent:
                     "съедает ресурс еще до старта действия."
                 )
             return "Сейчас лучше продолжить смысловую линию без перехода к практике."
+
+        if (
+            (planner_next_move == "deepen_mechanism" or user_mechanism_request)
+            and (planner_question_policy == "none" or user_requests_no_question)
+            and (len(text) > 700 or has_question or has_unsolicited_practice or user_requests_no_practice)
+        ):
+            return (
+                "Ключевой механизм застревания в том, что мозг включает контроль и прогнозирование до старта: "
+                "ресурс уходит на проверку риска, а не на действие. Поэтому энергия тратится заранее, и шаг не запускается."
+            )
+
+        if planner_answer_shape == "one_step" or user_step_request or active_line_intent == "ask_for_direct_step":
+            list_like = bool(re.search(r"(^|\n)\s*(?:[-*•]|\d+[.)])\s+", text))
+            if list_like:
+                first_item = re.search(r"(?:[-*•]|\d+[.)])\s+(.+)", text)
+                if first_item:
+                    return first_item.group(1).strip()
+            sentence_parts = [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
+            if len(sentence_parts) > 2:
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            has_step_marker = _contains_any(lowered_text, ("сделай", "начни", "открой", "выбери", "напиши", "шаг"))
+            if not has_step_marker:
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
 
         if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
             if active_line_intent == "correction_of_bot" or active_line_repair_mode:

@@ -1,4 +1,4 @@
-"""Deterministic response planner for next meaningful move selection."""
+﻿"""Deterministic response planner for next meaningful move selection."""
 
 from __future__ import annotations
 
@@ -49,11 +49,84 @@ CONTINUITY_POLICIES = {
     "close_without_new_loop",
 }
 
-_EXPLICIT_PRACTICE_RE = re.compile(r"(практик|упражн|сделай шаг|шаг\b)", re.IGNORECASE)
-_EXPLICIT_STEP_RE = re.compile(r"(один шаг|что делать сейчас|что сделать сейчас)", re.IGNORECASE)
-_LOW_RESOURCE_RE = re.compile(
-    r"(устал|без анализа|пару спокойных слов|просто поддержи|без советов)",
-    re.IGNORECASE,
+_LOW_RESOURCE_MARKERS = (
+    "схлопнул",
+    "пустой",
+    "не тяну длинные",
+    "нет сил",
+    "не могу думать",
+    "очень устал",
+    "без анализа",
+    "пару спокойных слов",
+    "просто поддержи",
+    "не грузи",
+    "коротко",
+)
+_SOFT_DISTRESS_MARKERS = (
+    "очень плохо",
+    "не выдерживаю",
+    "не вывожу",
+    "мне страшно",
+    "разваливаюсь",
+    "не справляюсь",
+)
+_WORLD_BLAME_MARKERS = (
+    "все тупят",
+    "люди тормозят",
+    "они идиоты",
+    "мир не понимает",
+    "мне надо всех дожать",
+    "почему они такие",
+    "все вокруг неадекватные",
+)
+_NO_QUESTION_MARKERS = (
+    "без вопросов",
+    "не задавай вопросов",
+    "просто продолжи мысль",
+    "ответь без вопроса",
+)
+_MECHANISM_MARKERS = (
+    "механизм",
+    "разбор механизма",
+    "почему я застреваю",
+    "почему застреваю",
+    "как это работает",
+)
+_CLOSE_MARKERS = (
+    "спасибо",
+    "благодарю",
+    "понял, спасибо",
+    "ок, спасибо",
+)
+_EXPLICIT_STEP_MARKERS = (
+    "один шаг",
+    "что сделать прямо сейчас",
+    "что делать прямо сейчас",
+    "хочу действие",
+    "дай шаг",
+)
+_EXPLICIT_PRACTICE_MARKERS = (
+    "практик",
+    "упражн",
+    "дай практику",
+)
+_NEGATED_PRACTICE_PATTERNS = (
+    r"\bбез\s+(?:перехода\s+в\s+)?практик\w*",
+    r"\bбез\s+упражнен\w*",
+    r"\bне\s+дава(?:й|йте|ть)\s+практик\w*",
+)
+_REPAIR_TEXT_MARKERS = (
+    "ты ушел не туда",
+    "вернись к сути",
+    "снова предлагаешь практику",
+    "я просил разбор механизма",
+    "это не то, чего я просил",
+)
+_SELF_HARM_MARKERS = (
+    "хочу умер",
+    "убить себя",
+    "суицид",
+    "покончить с собой",
 )
 
 
@@ -98,6 +171,62 @@ def _coerce_text(value: Any, default: str) -> str:
 
 def _safe_confidence(value: float) -> float:
     return max(0.0, min(0.99, round(float(value), 2)))
+
+
+def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
+    lowered = _normalize(text)
+    return any(marker in lowered for marker in markers)
+
+
+def detect_low_resource_text(user_message: str) -> bool:
+    return _contains_any(user_message, _LOW_RESOURCE_MARKERS)
+
+
+def detect_soft_distress_text(user_message: str) -> bool:
+    return _contains_any(user_message, _SOFT_DISTRESS_MARKERS)
+
+
+def detect_world_blame_defensive_text(user_message: str) -> bool:
+    return _contains_any(user_message, _WORLD_BLAME_MARKERS)
+
+
+def detect_no_question_request(user_message: str) -> bool:
+    return _contains_any(user_message, _NO_QUESTION_MARKERS)
+
+
+def detect_close_text(user_message: str) -> bool:
+    message = _normalize(user_message)
+    compact = re.sub(r"[.!?,;:]+", "", message).strip()
+    if compact in {"спасибо", "благодарю"}:
+        return True
+    return _contains_any(message, _CLOSE_MARKERS)
+
+
+def detect_mechanism_request_text(user_message: str) -> bool:
+    return _contains_any(user_message, _MECHANISM_MARKERS)
+
+
+def detect_practice_suppression_text(user_message: str) -> bool:
+    text = _normalize(user_message)
+    return any(re.search(pattern, text) for pattern in _NEGATED_PRACTICE_PATTERNS)
+
+
+def detect_explicit_practice_or_step_request(user_message: str) -> dict[str, bool]:
+    text = _normalize(user_message)
+    wants_step = _contains_any(text, _EXPLICIT_STEP_MARKERS)
+    has_practice_marker = _contains_any(text, _EXPLICIT_PRACTICE_MARKERS)
+    practice_negated = any(re.search(pattern, text) for pattern in _NEGATED_PRACTICE_PATTERNS)
+    wants_practice = has_practice_marker and not practice_negated
+    wants_action = wants_step or wants_practice
+    return {
+        "wants_step": wants_step,
+        "wants_practice": wants_practice,
+        "wants_action": wants_action,
+    }
+
+
+def detect_repair_misalignment_text(user_message: str) -> bool:
+    return _contains_any(user_message, _REPAIR_TEXT_MARKERS)
 
 
 def _build_decision(
@@ -207,9 +336,25 @@ def build_response_planner_decision(
     should_answer_directly = bool(knowledge_answer.get("should_answer_directly", False))
     knowledge_needed = bool(knowledge_answer.get("needed", False))
 
+    low_resource_text = detect_low_resource_text(message)
+    soft_distress_text = detect_soft_distress_text(message)
+    defensive_text = detect_world_blame_defensive_text(message)
+    no_question_text = detect_no_question_request(message)
+    close_text = detect_close_text(message)
+    mechanism_text = detect_mechanism_request_text(message)
+    practice_suppression_text = detect_practice_suppression_text(message)
+    explicit_action = detect_explicit_practice_or_step_request(message)
+    repair_text = detect_repair_misalignment_text(message)
+    explicit_action_requested = bool(explicit_action.get("wants_action", False))
+    explicit_step_requested = bool(explicit_action.get("wants_step", False))
+    explicit_practice_requested = bool(explicit_action.get("wants_practice", False))
+    has_self_harm_marker = _contains_any(message, _SELF_HARM_MARKERS)
+
     safety_priority = bool(safety_active or safety_flag or response_mode == "safe_override")
     revoicing_policy = "allowed" if revoicing_allowed else "suppressed"
     question_policy = "none" if not should_ask_question else "max_one_if_needed"
+    if no_question_text:
+        question_policy = "none"
     practice_policy = "allowed_if_explicit" if practice_allowed else "forbidden"
 
     source_signals = {
@@ -223,6 +368,17 @@ def build_response_planner_decision(
         "safety_active": safety_active,
         "safety_flag": safety_flag,
         "nervous_state": nervous_state,
+        "low_resource_text": low_resource_text,
+        "soft_distress_text": soft_distress_text,
+        "defensive_text": defensive_text,
+        "no_question_text": no_question_text,
+        "close_text": close_text,
+        "mechanism_text": mechanism_text,
+        "practice_suppression_text": practice_suppression_text,
+        "repair_text": repair_text,
+        "explicit_action_requested": explicit_action_requested,
+        "explicit_step_requested": explicit_step_requested,
+        "explicit_practice_requested": explicit_practice_requested,
     }
 
     if safety_priority:
@@ -244,7 +400,26 @@ def build_response_planner_decision(
             rationale="Safety имеет приоритет над обычной логикой planner.",
         )
 
-    if intent == "correction_of_bot" or continuity_mode == "repair_and_continue_line" or repair_mode:
+    if soft_distress_text and not has_self_harm_marker:
+        return _build_decision(
+            next_move="stabilize_safety",
+            answer_shape="safety_grounding",
+            response_depth="short",
+            target_micro_shift="дать короткую опору здесь-и-сейчас без углубления в теорию",
+            should_answer_directly=True,
+            question_policy="none",
+            practice_policy="required_for_safety_or_grounding",
+            revoicing_policy="suppressed",
+            continuity_policy="continue_active_line",
+            safety_priority=True,
+            must_include=["короткая стабилизация", "простая опора", "здесь-и-сейчас"],
+            must_avoid=["не уходить в философскую глубину", "не расширять анализ"],
+            source_signals=source_signals,
+            confidence=0.9,
+            rationale="Текст указывает на мягкий distress: нужен короткий стабилизирующий ход.",
+        )
+
+    if intent == "correction_of_bot" or continuity_mode == "repair_and_continue_line" or repair_mode or repair_text:
         return _build_decision(
             next_move="repair_misalignment",
             answer_shape="repair_acknowledgement",
@@ -263,7 +438,7 @@ def build_response_planner_decision(
             rationale="Correction/repair сигнал требует короткого repair-хода без практики.",
         )
 
-    if intent == "thanks_close":
+    if intent == "thanks_close" or close_text:
         return _build_decision(
             next_move="close_gently",
             answer_shape="gentle_close",
@@ -276,13 +451,13 @@ def build_response_planner_decision(
             continuity_policy="close_without_new_loop",
             safety_priority=False,
             must_include=["краткое закрытие контакта"],
-            must_avoid=["не открывать новый шаг", "не давать практику"],
+            must_avoid=["не открывать новый шаг", "не давать практику", "не задавать вопрос"],
             source_signals=source_signals,
-            confidence=0.94,
+            confidence=0.95,
             rationale="Thanks/close сигнал: нужен мягкий выход без нового loop.",
         )
 
-    if intent == "short_support" or _LOW_RESOURCE_RE.search(message) or nervous_state == "hypo":
+    if low_resource_text or intent == "short_support" or (nervous_state == "hypo" and not explicit_action_requested):
         return _build_decision(
             next_move="give_short_support",
             answer_shape="short_support",
@@ -295,10 +470,10 @@ def build_response_planner_decision(
             continuity_policy="continue_active_line",
             safety_priority=False,
             must_include=["коротко", "без давления"],
-            must_avoid=["без лекции", "без практики и таймеров"],
+            must_avoid=["без лекции", "без практики", "без глубокого анализа"],
             source_signals=source_signals,
-            confidence=0.88,
-            rationale="Low-resource или short-support: предпочтителен сверхкороткий контакт.",
+            confidence=0.9,
+            rationale="Low-resource контур: предпочтителен сверхкороткий контакт.",
         )
 
     if should_answer_directly:
@@ -320,31 +495,25 @@ def build_response_planner_decision(
             rationale="Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера.",
         )
 
-    explicit_step_requested = bool(_EXPLICIT_STEP_RE.search(message))
-    explicit_practice_requested = bool(_EXPLICIT_PRACTICE_RE.search(message))
-    explicit_action_requested = intent in {"ask_for_direct_step", "ask_for_practice"} or explicit_step_requested
-
-    if explicit_action_requested and practice_allowed and should_offer_practice:
-        move = "give_direct_step" if (intent == "ask_for_direct_step" or explicit_step_requested) else "give_practice"
-        return _build_decision(
-            next_move=move,
-            answer_shape="one_step",
-            response_depth="short",
-            target_micro_shift="дать один исполнимый микро-шаг без списка",
-            should_answer_directly=True,
-            question_policy="none",
-            practice_policy="one_micro_step_allowed",
-            revoicing_policy=revoicing_policy,
-            continuity_policy="continue_active_line",
-            safety_priority=False,
-            must_include=["один конкретный шаг"],
-            must_avoid=["без списка шагов", "без новой теории"],
-            source_signals=source_signals,
-            confidence=0.87,
-            rationale="Пользователь явно просит действие и practice gate разрешает единичный шаг.",
-        )
-
-    if explicit_practice_requested and not practice_allowed:
+    if explicit_action_requested:
+        if practice_allowed and (should_offer_practice or explicit_step_requested or explicit_practice_requested):
+            return _build_decision(
+                next_move="give_direct_step",
+                answer_shape="one_step",
+                response_depth="short",
+                target_micro_shift="дать один исполнимый микро-шаг без списка",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="one_micro_step_allowed",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["один конкретный шаг"],
+                must_avoid=["без списка шагов", "без новой теории"],
+                source_signals=source_signals,
+                confidence=0.9,
+                rationale="Явный запрос на действие и gate разрешает единичный шаг.",
+            )
         return _build_decision(
             next_move="clarify_one_point",
             answer_shape="one_question",
@@ -359,30 +528,11 @@ def build_response_planner_decision(
             must_include=["один уточняющий вопрос по контексту"],
             must_avoid=["не давать практику вопреки gate"],
             source_signals=source_signals,
-            confidence=0.84,
-            rationale="Запрос на практику есть, но gate запрещает практический ход.",
+            confidence=0.86,
+            rationale="Запрос на действие есть, но gate запрещает практический ход.",
         )
 
-    if intent == "understand_mechanism":
-        return _build_decision(
-            next_move="deepen_mechanism",
-            answer_shape="mechanism_explanation",
-            response_depth="medium",
-            target_micro_shift="показать один механизм, который продвигает понимание",
-            should_answer_directly=True,
-            question_policy=question_policy if should_ask_question else "none",
-            practice_policy="forbidden",
-            revoicing_policy="suppressed",
-            continuity_policy="continue_active_line",
-            safety_priority=False,
-            must_include=["назвать один механизм", "связать с active_line"],
-            must_avoid=["не предлагать практику", "не начинать механический пересказ"],
-            source_signals=source_signals,
-            confidence=0.9,
-            rationale="Mechanism intent: нужен объяснительный ход без разворота в практику.",
-        )
-
-    if _coerce_text(_get(thread_state, "ok_position", ""), "").upper() == "I+W-":
+    if defensive_text or _coerce_text(_get(thread_state, "ok_position", ""), "").upper() == "I+W-":
         return _build_decision(
             next_move="clarify_one_point",
             answer_shape="one_question",
@@ -397,8 +547,31 @@ def build_response_planner_decision(
             must_include=["один вопрос для декентрации"],
             must_avoid=["не входить в коалицию против мира", "без длинной лекции"],
             source_signals=source_signals,
-            confidence=0.81,
-            rationale="I+W- defensive контур: лучше один точный вопрос, чем длинный ответ.",
+            confidence=0.84,
+            rationale="Defensive контур: лучше один точный вопрос, чем длинный ответ.",
+        )
+
+    mechanism_override = mechanism_text and (no_question_text or practice_suppression_text)
+    if intent == "understand_mechanism" or mechanism_override:
+        mechanism_question_policy = question_policy if should_ask_question else "none"
+        if mechanism_override and not no_question_text:
+            mechanism_question_policy = "max_one_if_needed"
+        return _build_decision(
+            next_move="deepen_mechanism",
+            answer_shape="mechanism_explanation",
+            response_depth="medium",
+            target_micro_shift="показать один механизм, который продвигает понимание",
+            should_answer_directly=True,
+            question_policy=mechanism_question_policy,
+            practice_policy="forbidden",
+            revoicing_policy="suppressed",
+            continuity_policy="continue_active_line",
+            safety_priority=False,
+            must_include=["назвать один механизм", "связать с active_line"],
+            must_avoid=["не предлагать практику", "не начинать механический пересказ"],
+            source_signals=source_signals,
+            confidence=0.9,
+            rationale="Mechanism intent: нужен объяснительный ход без разворота в практику.",
         )
 
     return _build_decision(
@@ -407,7 +580,7 @@ def build_response_planner_decision(
         response_depth="short",
         target_micro_shift="продолжить текущую смысловую линию одним точным ходом",
         should_answer_directly=True,
-        question_policy="none" if not should_ask_question else "max_one_if_needed",
+        question_policy=question_policy,
         practice_policy=practice_policy,
         revoicing_policy="suppressed" if not revoicing_allowed else "minimal_allowed",
         continuity_policy="continue_active_line",
@@ -418,11 +591,3 @@ def build_response_planner_decision(
         confidence=0.75,
         rationale="Default path: continuity-first один компактный ход без unsolicited практики.",
     )
-
-
-__all__ = [
-    "RESPONSE_PLANNER_VERSION",
-    "ResponsePlannerDecision",
-    "build_response_planner_decision",
-    "build_response_planner_fallback_decision",
-]

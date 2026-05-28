@@ -51,4 +51,6 @@ Version:
   - `question_policy=none` suppresses follow-up question behavior.
   - `practice_policy=forbidden` suppresses unsolicited practice steps.
   - `revoicing_policy=suppressed` blocks mechanical revoicing openers.
+  - `answer_shape=one_step` enforces one executable step instead of reflective filler.
+  - `next_move=repair_misalignment` enforces short repair acknowledgement without reopening loops.
 - Writer remains non-scripted: planner is deterministic guidance, not rigid text templating.

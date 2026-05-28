@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.5: calibrated planner quality for live answer-fit groups (low-resource, soft-distress, defensive, close, no-question, direct-step, repair), expanded dataset/runner to 26 cases, tightened writer planner obedience, and refreshed artifacts (`dry=26/26`, `direct=26/26`, `live=26/26` on fresh temporary backend `:8013`).
 - PRD-047.4: added Response Planner v1 deterministic layer (next-move taxonomy + writer contract/prompt/compliance integration), API/debug/admin/runtime visibility, 14-case dataset/runner/evaluator, and refreshed artifacts (`dry=14/14`, `direct=14/14`, `live=14/14` on fresh temporary backend).
 - PRD-047.3: added Active Line continuity layer (deterministic intent + continuity/repair + revoicing/practice suppression), integrated WriterContract/prompt/compliance and admin runtime visibility, and delivered active-line eval artifacts (`dry=10/10`, `direct=10/10`, `live=10/10` on fresh temporary backend).
 - PRD-047.2: added kernel-quality evaluation dataset/runner (`dry/direct/live`), answer-level evaluator checks, selector/prompt calibrations, prompt compactness gate, trace/admin budget visibility, and docs/report/no-mutation artifacts (`direct=12/12`, `live=skipped` honestly).
@@ -25,10 +26,10 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.4 closure.
+- No active PRD in progress after PRD-047.5 closure.
 
 ## Next
-1. PRD-047.5 Planner Quality Calibration / Live Dialogue Answer Fit v1.
+1. PRD-047.6 Planner Runtime Drift Guard / Stability Envelope.
 
 ## Later
 - Operational hardening for governed limited runtime.

@@ -1,0 +1,186 @@
+{
+  "prd_id": "PRD-047.5",
+  "mode": "dry",
+  "samples": [
+    {
+      "mode": "dry",
+      "case_id": "pq_001_low_resource_empty",
+      "group": "low_resource_short_support",
+      "expected_planner": {
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 260,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "практик",
+          "упражн",
+          "таймер"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_002_low_resource_no_energy",
+      "group": "low_resource_short_support",
+      "expected_planner": {
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 260,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "практик",
+          "упражн",
+          "таймер"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_003_low_resource_tired",
+      "group": "low_resource_short_support",
+      "expected_planner": {
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 260,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "практик",
+          "упражн",
+          "таймер"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_004_low_resource_short",
+      "group": "low_resource_short_support",
+      "expected_planner": {
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 260,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "практик",
+          "упражн",
+          "таймер"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_005_soft_distress_bad",
+      "group": "soft_distress_safety_adjacent",
+      "expected_planner": {
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 320,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "теория",
+          "лекция"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_006_soft_distress_scared",
+      "group": "soft_distress_safety_adjacent",
+      "expected_planner": {
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 320,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "теория",
+          "лекция"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_007_soft_distress_cant",
+      "group": "soft_distress_safety_adjacent",
+      "expected_planner": {
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 320,
+        "max_questions": 0,
+        "forbidden_markers": [
+          "теория",
+          "лекция"
+        ],
+        "required_semantics_any": []
+      }
+    },
+    {
+      "mode": "dry",
+      "case_id": "pq_008_defensive_world",
+      "group": "defensive_i_plus_w_minus",
+      "expected_planner": {
+        "next_move": "clarify_one_point",
+        "answer_shape": "one_question",
+        "response_depth": "short",
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed"
+      },
+      "expected_answer_fit": {
+        "max_chars": 320,
+        "max_questions": 1,
+        "forbidden_markers": [
+          "практик",
+          "упражн"
+        ],
+        "required_semantics_any": []
+      }
+    }
+  ]
+}

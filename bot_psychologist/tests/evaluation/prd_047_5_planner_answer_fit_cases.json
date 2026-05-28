@@ -1,0 +1,218 @@
+﻿[
+  {
+    "case_id": "pq_001_low_resource_empty",
+    "group": "low_resource_short_support",
+    "thread_id": "pq_thread_001",
+    "turns": [{"role": "user", "content": "Я как будто схлопнулся и пустой, не тяну длинные ответы."}],
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_002_low_resource_no_energy",
+    "group": "low_resource_short_support",
+    "thread_id": "pq_thread_002",
+    "turns": [{"role": "user", "content": "Нет сил думать, не грузи, просто поддержи коротко."}],
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_003_low_resource_tired",
+    "group": "low_resource_short_support",
+    "thread_id": "pq_thread_003",
+    "turns": [{"role": "user", "content": "Очень устал. Пару спокойных слов, без анализа."}],
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_004_low_resource_short",
+    "group": "low_resource_short_support",
+    "thread_id": "pq_thread_004",
+    "turns": [{"role": "user", "content": "Коротко и без советов, я пустой сегодня."}],
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_005_soft_distress_bad",
+    "group": "soft_distress_safety_adjacent",
+    "thread_id": "pq_thread_005",
+    "turns": [{"role": "user", "content": "Мне сейчас очень плохо, не выдерживаю."}],
+    "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_006_soft_distress_scared",
+    "group": "soft_distress_safety_adjacent",
+    "thread_id": "pq_thread_006",
+    "turns": [{"role": "user", "content": "Мне страшно, я разваливаюсь прямо сейчас."}],
+    "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_007_soft_distress_cant",
+    "group": "soft_distress_safety_adjacent",
+    "thread_id": "pq_thread_007",
+    "turns": [{"role": "user", "content": "Я не справляюсь и не вывожу сейчас."}],
+    "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_008_defensive_world",
+    "group": "defensive_i_plus_w_minus",
+    "thread_id": "pq_thread_008",
+    "turns": [{"role": "user", "content": "Мир тупит, люди тормозят, мне надо всех дожать."}],
+    "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_009_defensive_people",
+    "group": "defensive_i_plus_w_minus",
+    "thread_id": "pq_thread_009",
+    "turns": [{"role": "user", "content": "Все вокруг неадекватные, почему они такие?"}],
+    "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_010_defensive_idiots",
+    "group": "defensive_i_plus_w_minus",
+    "thread_id": "pq_thread_010",
+    "turns": [{"role": "user", "content": "Они идиоты и мир не понимает, как с этим быть?"}],
+    "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_011_close_thanks",
+    "group": "thanks_close",
+    "thread_id": "pq_thread_011",
+    "turns": [{"role": "user", "content": "Спасибо."}],
+    "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+    "expected_answer_fit": {"max_chars": 160, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_012_close_bye",
+    "group": "thanks_close",
+    "thread_id": "pq_thread_012",
+    "turns": [{"role": "user", "content": "Понял, спасибо."}],
+    "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+    "expected_answer_fit": {"max_chars": 180, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_013_close_ok",
+    "group": "thanks_close",
+    "thread_id": "pq_thread_013",
+    "turns": [{"role": "user", "content": "Ок, спасибо."}],
+    "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+    "expected_answer_fit": {"max_chars": 180, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_014_no_question_continue",
+    "group": "no_question_request",
+    "thread_id": "pq_thread_014",
+    "turns": [{"role": "user", "content": "Продолжи мысль про механизм застревания без вопросов."}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_015_no_question_direct",
+    "group": "no_question_request",
+    "thread_id": "pq_thread_015",
+    "turns": [{"role": "user", "content": "Ответь без вопроса и без практики: почему я застреваю перед стартом?"}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_016_no_question_ask",
+    "group": "no_question_request",
+    "thread_id": "pq_thread_016",
+    "turns": [{"role": "user", "content": "Не задавай вопросов, просто продолжи объяснение механизма."}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_017_step_now",
+    "group": "explicit_practice_step",
+    "thread_id": "pq_thread_017",
+    "turns": [{"role": "user", "content": "Дай один шаг, что сделать прямо сейчас."}],
+    "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_018_practice_request",
+    "group": "explicit_practice_step",
+    "thread_id": "pq_thread_018",
+    "turns": [{"role": "user", "content": "Дай практику на сейчас, хочу действие."}],
+    "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_019_action_simple",
+    "group": "explicit_practice_step",
+    "thread_id": "pq_thread_019",
+    "turns": [{"role": "user", "content": "Хочу действие: дай один шаг без длинного разбора."}],
+    "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_020_mechanism_core",
+    "group": "mechanism_continue_regression",
+    "thread_id": "pq_thread_020",
+    "turns": [{"role": "user", "content": "Хочу понять механизм, почему застреваю перед стартом задачи."}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_021_mechanism_forecast",
+    "group": "mechanism_continue_regression",
+    "thread_id": "pq_thread_021",
+    "turns": [{"role": "user", "content": "В работе зависаю на прогнозах и контроле до старта. Как это работает по механизму?"}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_022_mechanism_repeat",
+    "group": "mechanism_continue_regression",
+    "thread_id": "pq_thread_022",
+    "turns": [{"role": "user", "content": "Продолжи разбор механизма застревания, без перехода в практику."}],
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер", "упражн"], "required_semantics_any": []}
+  },
+
+  {
+    "case_id": "pq_023_known_concept_neurostalking",
+    "group": "known_concept_regression",
+    "thread_id": "pq_thread_023",
+    "turns": [{"role": "user", "content": "Что такое нейросталкинг в вашей рамке?"}],
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "compact_direct", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["что ты вкладываешь", "о каком варианте"], "required_semantics_any": ["нейросталкинг"]}
+  },
+  {
+    "case_id": "pq_024_known_concept_relation",
+    "group": "known_concept_regression",
+    "thread_id": "pq_thread_024",
+    "turns": [{"role": "user", "content": "Как нейросталкинг связан с самореализацией?"}],
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "compact_direct", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 820, "max_questions": 0, "forbidden_markers": ["что ты вкладываешь", "о каком варианте"], "required_semantics_any": ["нейросталкинг", "самореализац"]}
+  },
+
+  {
+    "case_id": "pq_025_repair_misalignment",
+    "group": "repair_after_bot_misalignment",
+    "thread_id": "pq_thread_025",
+    "turns": [{"role": "user", "content": "Почему ты снова предлагаешь практику? Я просил разбор механизма."}],
+    "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_acknowledgement", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 480, "max_questions": 0, "forbidden_markers": ["упражн", "таймер", "шаг"], "required_semantics_any": []}
+  },
+  {
+    "case_id": "pq_026_repair_shift",
+    "group": "repair_after_bot_misalignment",
+    "thread_id": "pq_thread_026",
+    "turns": [{"role": "user", "content": "Ты ушел не туда. Вернись к сути и не давай практику."}],
+    "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_acknowledgement", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+    "expected_answer_fit": {"max_chars": 480, "max_questions": 0, "forbidden_markers": ["упражн", "таймер", "шаг"], "required_semantics_any": []}
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "prd_id": "PRD-047.5",
+  "timestamp_utc": "2026-05-28T11:55:00Z",
+  "status": "passed",
+  "checks": {
+    "kb_governance_mutation": false,
+    "chroma_reindex_performed": false,
+    "botdb_registry_mutation": false,
+    "new_llm_agent_added": false,
+    "broad_rollout_enabled": false,
+    "normal_user_activation_enabled": false,
+    "production_ready_enabled": false
+  },
+  "evidence": {
+    "git_scope_is_multiagent_planner_writer_docs": true,
+    "runtime_live_acceptance_no_fallback": true,
+    "artifacts_dir": "TO_DO_LIST/logs/PRD-047.5"
+  },
+  "notes": [
+    "PRD-047.5 implemented planner quality calibration and answer-fit gates only.",
+    "No KB authority fields (chunk_type/allowed_use/safety_flags) were changed.",
+    "No Chroma reindex or BotDB data mutation was executed."
+  ]
+}

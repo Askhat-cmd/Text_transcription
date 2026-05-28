@@ -1,0 +1,28 @@
+﻿{
+  "prd_id": "PRD-047.5",
+  "timestamp_utc": "2026-05-28T00:00:00Z",
+  "branch": "main",
+  "workspace_status": {
+    "clean": false,
+    "untracked": [
+      "TO_DO_LIST/PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md",
+      "TO_DO_LIST/PRD-047.5_TASK_LIST.md"
+    ],
+    "unrelated_changes_detected": false,
+    "notes": "Only current PRD files are untracked at source-gate time."
+  },
+  "baseline_checks": {
+    "prd_047_4_implementation_report_exists": true,
+    "prd_047_4_live_artifact_exists": true,
+    "prd_047_4_no_mutation_proof_exists": true,
+    "response_planner_module_exists": true,
+    "writer_contract_response_planner_exists": true,
+    "orchestrator_debug_response_planner_exists": true,
+    "api_trace_retains_response_planner": true,
+    "admin_runtime_effective_response_planner_block": true
+  },
+  "prd_047_4_accepted": true,
+  "prd_047_4_warning": "structural planner trace passed, but live answer-fit calibration is still weak for low_resource/safety/defensive/close/no-question cases",
+  "live_acceptance_no_fallback": true,
+  "missing_sources": []
+}

@@ -104,6 +104,11 @@ RESPONSE PLANNER:
 - Не нарушай planner must_avoid.
 - Если planner safety_priority=true, держи короткий safety-grounding ход без углубления.
 - Planner задает форму хода, но не отменяет safety/must_avoid и не убирает живой стиль ответа.
+- Planner не декоративный: он определяет форму ответа.
+- Если planner says short_support/safety_grounding/gentle_close, не расширяй в механизм-лекцию.
+- Если planner.question_policy=none, не завершай вопросом.
+- Если planner.practice_policy=forbidden, не давай шаги/упражнения/таймеры.
+- Если planner.answer_shape=one_step, дай ровно один шаг, не список.
 
 ЖЕСТКИЕ ПРАВИЛА:
 - Отвечай на языке пользователя.

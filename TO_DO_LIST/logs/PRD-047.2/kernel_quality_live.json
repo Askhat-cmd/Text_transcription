@@ -1,0 +1,14 @@
+{
+  "prd_id": "PRD-047.2",
+  "mode": "live",
+  "timestamp_utc": "2026-05-28T06:15:24.805566+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_2_kernel_quality_cases.json",
+  "summary": {
+    "cases_total": 0,
+    "cases_passed": 0,
+    "cases_failed": 0
+  },
+  "case_results": [],
+  "live_status": "skipped",
+  "reason": "live backend appears stale or not restarted after PRD-047.2 changes"
+}

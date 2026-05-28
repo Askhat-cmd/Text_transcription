@@ -1,7 +1,7 @@
-# Writer Freedom Contract
+﻿# Writer Freedom Contract
 
 ## Scope
-`PRD-047.1` introduces `Writer Freedom Contract v1` as an explicit guided-freedom policy for Writer.
+`Writer Freedom Contract v1` is the guided-freedom policy for Writer.
 
 Version:
 - `writer_freedom_contract_v1`
@@ -15,14 +15,24 @@ Version:
 - `practice_requires_gate`
 - `practice_allowed`
 - `hard_boundaries`
+- `must_follow_exact_mode`
 
 ## Contract Semantics
-- Writer mode is a hint, not a strict cage.
-- One main move per answer is preferred.
-- Practice content requires gate permission.
-- Hard boundaries remain mandatory (`no_diagnosis`, `no_spiritual_authority`, `no_raw_kb_quote_dumping`, `no_unsolicited_practice`).
+- Response mode is guidance, not a strict cage.
+- Keep one main move per answer.
+- Practice requires explicit gate/safety need.
+- Hard boundaries are mandatory (`no_diagnosis`, `no_spiritual_authority`, `no_raw_kb_quote_dumping`, `no_unsolicited_practice`).
 
-## Integration
-- Attached to `WriterContract` (`philosophy_kernel`, `writer_freedom_contract`).
-- Propagated to writer prompt template and debug trace.
-- Exposed in admin runtime effective payload as read-only state.
+## Prompt Integration
+- Prompt block renderer: `render_writer_freedom_contract_prompt_block(...)`.
+- Writer prompt includes compact freedom block instead of verbose contract dump.
+- Micro-guidance in Writer prompt:
+  - speak from lens, not about lens
+  - avoid exposing internal lens names unless useful
+  - avoid bureaucratic phrasing on personal tone
+  - warm direct style for vulnerable user messages
+
+## Runtime / Trace / Admin
+- Propagated through `WriterContract` prompt context.
+- Trace includes `debug.writer_freedom_contract.prompt_block_chars`.
+- Admin runtime effective exposes read-only freedom contract state.

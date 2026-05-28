@@ -422,6 +422,7 @@ class MultiAgentOrchestrator:
                 },
                 "philosophy_kernel": {
                     "kernel_version": str(philosophy_kernel_payload.get("kernel_version", "")),
+                    "enabled": bool(philosophy_kernel_payload.get("kernel_enabled", True)),
                     "selected_lenses": list(
                         dict(philosophy_kernel_payload.get("selection", {})).get("selected_lenses", [])
                         if isinstance(philosophy_kernel_payload.get("selection"), dict)
@@ -437,8 +438,18 @@ class MultiAgentOrchestrator:
                         if isinstance(philosophy_kernel_payload.get("selection"), dict)
                         else False
                     ),
+                    "depth_mode": str(
+                        dict(philosophy_kernel_payload.get("selection", {})).get("depth_mode", "guided")
+                        if isinstance(philosophy_kernel_payload.get("selection"), dict)
+                        else "guided"
+                    ),
                     "quote_policy": str(philosophy_kernel_payload.get("quote_policy", "")),
                     "practice_policy": str(philosophy_kernel_payload.get("practice_policy", "")),
+                    "prompt_compactness": (
+                        dict(philosophy_kernel_payload.get("prompt_compactness", {}))
+                        if isinstance(philosophy_kernel_payload.get("prompt_compactness"), dict)
+                        else {}
+                    ),
                 },
                 "writer_freedom_contract": {
                     "enabled": bool(
@@ -464,6 +475,9 @@ class MultiAgentOrchestrator:
                         dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get(
                             "practice_requires_gate", True
                         )
+                    ),
+                    "prompt_block_chars": len(
+                        str(philosophy_kernel_payload.get("writer_freedom_prompt_block", "") or "")
                     ),
                 },
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",

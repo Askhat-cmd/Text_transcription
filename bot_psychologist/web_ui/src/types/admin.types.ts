@@ -144,6 +144,9 @@ export interface AdminRuntimeEffectiveResponse {
   philosophy_kernel?: {
     enabled: boolean;
     version: string;
+    kernel_enabled?: boolean;
+    kernel_version?: string;
+    selected_lenses_visible?: boolean;
     identity?: {
       bot_identity?: string;
       role?: string;
@@ -153,6 +156,19 @@ export interface AdminRuntimeEffectiveResponse {
     principles_count?: number;
     boundaries_count?: number;
     lenses?: string[];
+    prompt_budget?: {
+      max_kernel_chars?: number;
+      max_freedom_chars?: number;
+      max_combined_chars?: number;
+      max_selected_lenses?: number;
+    };
+    quality_calibration?: {
+      last_prd?: string;
+      last_direct_passed?: boolean;
+      last_direct_cases_total?: number;
+      last_direct_cases_failed?: number;
+      artifact_found?: boolean;
+    };
   };
   writer_freedom_contract?: {
     enabled: boolean;

@@ -1,0 +1,1031 @@
+{
+  "prd_id": "PRD-047.2",
+  "mode": "direct",
+  "timestamp_utc": "2026-05-28T06:12:18.682695+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_2_kernel_quality_cases.json",
+  "summary": {
+    "cases_total": 12,
+    "cases_passed": 12,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "a1_greeting_short_contact",
+      "group": "A",
+      "mode": "direct",
+      "query": "Привет",
+      "answer": "Привет. Рад знакомству. Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать.",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [],
+        "selection_reason": [
+          "greeting_light_contact"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "light",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 613,
+          "writer_freedom_contract_chars": 246,
+          "combined_chars": 859,
+          "selected_lenses_count": 0,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 246
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 613,
+        "writer_freedom_contract_chars": 246,
+        "combined_chars": 859,
+        "selected_lenses_count": 0,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "a2_short_support_no_analysis",
+      "group": "A",
+      "mode": "direct",
+      "query": "Я устал, скажи пару спокойных слов без анализа",
+      "answer": "Я рядом. Сейчас не нужно ничего разбирать. Просто побудь немного в тишине и опоре.",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "resource_first_contact"
+        ],
+        "selection_reason": [
+          "short_support_request"
+        ],
+        "prompt_block_included": false,
+        "depth_mode": "suppressed",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 0,
+          "writer_freedom_contract_chars": 246,
+          "combined_chars": 246,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 246
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 246,
+        "combined_chars": 246,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "a3_no_practice_presence",
+      "group": "A",
+      "mode": "direct",
+      "query": "Мне сейчас не нужны практики, просто побудь со мной коротко",
+      "answer": "Я рядом. Сейчас не нужно ничего разбирать. Просто побудь немного в тишине и опоре.",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "resource_first_contact"
+        ],
+        "selection_reason": [
+          "short_support_request"
+        ],
+        "prompt_block_included": false,
+        "depth_mode": "suppressed",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 0,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 245,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 245,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "b1_imperfect_self_not_coping",
+      "group": "B",
+      "mode": "direct",
+      "query": "Я боюсь, что уже всё упустил и не справлюсь",
+      "answer": "Вы говорите, что боитесь — будто уже всё упустили и теперь не справитесь. В этом слышится сильное чувство потери контроля и тревога, что вернуть ситуацию невозможно. Это звучит тяжело и занимает вас прямо сейчас. Что именно вы переживаете как «упущенное» — какая сфера жизни вам кажется самой критичной?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 649,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 894,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 649,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 894,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "b2_imperfect_self_something_wrong",
+      "group": "B",
+      "mode": "direct",
+      "query": "Такое чувство, что со мной что-то не так",
+      "answer": "Ты говоришь про ощущение, что с тобой что-то не так — это звучит тяжело и постоянно отвлекает. Похоже, это не единичный эпизод, а фоновое чувство, которое окрашивает и мысли, и поведение. Мне кажется, оно может мешать тебе чувствовать себя уверенно или спокойно в повседневных вещах. Хочешь ли ты описать, когда это чувство чаще всего появляется — в конкретных ситуациях или мыслях?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 649,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 894,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 649,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 894,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "b3_imperfect_self_firmware_fail",
+      "group": "B",
+      "mode": "direct",
+      "query": "Я всё понимаю, но внутри будто прошивка: я потерплю неудачу",
+      "answer": "Звучит так, будто внутри действительно есть автоматический шаблон — почти как прошивка, которая заранее предсказывает провал и переводит тебя в режим осторожности. Это не про то, кто ты как человек, а про старую защитную программу, которая срабатывает в важных моментах. Такое ощущение может отбирать энергию и мешать действовать, даже если сознательно ты другого хочешь. Хочешь ли ты указать, в каких ситуациях этот голос «прошивки» проявляется особенно сильно — перед стартом нового дела, при решении важных задач или постоянно?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 649,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 894,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 649,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 894,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "c1_driver_try_harder",
+      "group": "C",
+      "mode": "direct",
+      "query": "Мне всё время кажется, что надо стараться сильнее",
+      "answer": "Похоже, у тебя постоянно присутствает ощущение внутреннего давления — будто всегда нужно делать больше и стараться сильнее. Это звучит как постоянная напряжённость, которая не даёт спокойно остановиться. Возможно, это сопровождается усталостью или чувством, что то, что сделано, никогда не достаточно. Скажи, в каких ситуациях это чувство проявляется сильнее — на работе, в отношениях или в каких-то других моментах?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 632,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 877,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 632,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 877,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "c2_driver_be_strong",
+      "group": "C",
+      "mode": "direct",
+      "query": "Если я не буду сильным, всё развалится",
+      "answer": "Похоже, ты ощущаешь: если ты не будешь сильным, то всё вокруг развалится. В этой фразе слышится большая тяжесть ответственности и опасение последствий. Возможно, за этим стоит привычка самому держать ситуацию под контролем, чтобы не допустить потерь. Что именно для тебя значит «быть сильным» — держать всё под контролем или не показывать слабость?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 632,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 877,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 632,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 877,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "c3_driver_hurry",
+      "group": "C",
+      "mode": "direct",
+      "query": "Я постоянно спешу, будто уже опаздываю жить",
+      "answer": "Ты чувствуешь постоянную спешку, как будто опаздываешь жить — это звучит утомительно и нарушает ощущение присутствия. Похоже, в фоне постоянно работает напряжение, которое толкает делать всё быстрее, а не останавливаться. Такое впечатление может красть момент за моментом, оставляя чувство, что жизнь проходит мимо. Когда это ощущение особенно сильно — утром, перед делами или в какие-то другие моменты дня?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 632,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 877,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 632,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 877,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "d1_what_is_neurostalking",
+      "group": "D",
+      "mode": "direct",
+      "query": "Что такое нейросталкинг?",
+      "answer": "Нейросталкинг — это внимательное наблюдение за первичным «планом» реакции: паттернами, триггерами и автоматическими реакциями тела и ума, то есть за нейрофизиологией страдания, без попытки сразу всё исправить. По сути ты смотришь на программу изнутри — замечаешь, что запускается, где именно «срабатывает» и какие ощущения или мысли при этом возникают. Это скорее исследование и распознавание механики, а не оценка личности или поиск виноватых. Такое наблюдение помогает перестать автоматически поддаваться реакциям, потому что сначала появляется ясность о том, что именно происходит. Хотите, чтобы привёл короткий пример из повседневной ситуации?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "neurostalking"
+        ],
+        "selection_reason": [
+          "known_concept_neurostalking"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 709,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 954,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 709,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 954,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "d2_neurostalking_and_selfrealization",
+      "group": "D",
+      "mode": "direct",
+      "query": "Как нейросталкинг связан с самореализацией?",
+      "answer": "Вы спрашиваете, как именно внутренняя практика внимательного наблюдения за своими автоматизмами (нейросталкинг) соотносится с процессом самореализации. Нейросталкинг — это не про то, чтобы менять себя сразу, а про то, чтобы заметить привычные реакции, мотивационные «программы» и триггеры, которые раньше работали вне сознания. Когда эти механизмы становятся видимыми, появляется пространство выбора: не следовать им автоматически, а действовать в соответствии с ценностями и целью — то есть двигаться к самореализации осознаннее. Какой аспект самореализации вам сейчас наиболее интересен — понять мотивации, выявить преграды или прояснить желаемый образ жизни?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "neurostalking"
+        ],
+        "selection_reason": [
+          "known_concept_neurostalking"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 709,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 954,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 709,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 954,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "d3_inner_loop_return",
+      "group": "D",
+      "mode": "direct",
+      "query": "Почему я всё время возвращаюсь к одному и тому же внутреннему кругу?",
+      "answer": "Похоже, ты замечаешь, что внутренне застреваешь в одном и том же повторяющемся круге — как будто мысль или чувство возвращается снова и снова и не даёт продвинуться дальше. Это ощущение может быть и простым повторением привычной реакции, и знаком того, что за кругом стоит какая‑то неизведанная тема. Мне важно не додумывать за тебя, а услышать точнее: что обычно появляется первым — мысль, образ или чувство — когда этот круг начинается?",
+      "kernel_trace": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "enabled": true,
+        "selected_lenses": [
+          "autopilot"
+        ],
+        "selection_reason": [
+          "autopilot_loop_signal"
+        ],
+        "prompt_block_included": true,
+        "depth_mode": "guided",
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required",
+        "prompt_compactness": {
+          "philosophy_kernel_prompt_block_chars": 672,
+          "writer_freedom_contract_chars": 245,
+          "combined_chars": 917,
+          "selected_lenses_count": 1,
+          "principles_count": 4,
+          "boundaries_count": 6,
+          "budgets": {
+            "max_kernel_chars": 1800,
+            "max_freedom_chars": 1000,
+            "max_combined_chars": 2600,
+            "max_selected_lenses": 3,
+            "max_principles_in_prompt": 4,
+            "max_boundaries_in_prompt": 8
+          },
+          "within_budget": true
+        }
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true,
+        "prompt_block_chars": 245
+      },
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 672,
+        "writer_freedom_contract_chars": 245,
+        "combined_chars": 917,
+        "selected_lenses_count": 1,
+        "principles_count": 4,
+        "boundaries_count": 6,
+        "budgets": {
+          "max_kernel_chars": 1800,
+          "max_freedom_chars": 1000,
+          "max_combined_chars": 2600,
+          "max_selected_lenses": 3,
+          "max_principles_in_prompt": 4,
+          "max_boundaries_in_prompt": 8
+        },
+        "within_budget": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "selected_lens_match": true,
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_quote_source": true,
+          "no_diagnosis": true,
+          "no_hard_label": true,
+          "short_answer_when_requested": true,
+          "no_analysis_when_requested": true,
+          "mechanism_not_defect_frame": true,
+          "required_semantics_present": true,
+          "forbidden_fragments_absent": true,
+          "answer_not_too_technical": true,
+          "answer_not_too_generic": true,
+          "question_count_lte_1": true,
+          "internal_lens_framing": true,
+          "prompt_compactness_within_budget": true
+        },
+        "failure_reasons": []
+      }
+    }
+  ]
+}

@@ -68,6 +68,7 @@ async def test_writer_prompt_contains_kernel_and_freedom_blocks() -> None:
     assert "NEO PHILOSOPHY KERNEL" in user_prompt
     assert "WRITER FREEDOM CONTRACT" in user_prompt
     assert "internal_lens_not_citation" in user_prompt
+    assert "speak_from_lens_not_about_lens" in user_prompt
     assert "mode_is_hint_not_cage=true" in user_prompt
     assert "practice_requires_gate=true" in user_prompt
     assert "hard_boundaries=" in user_prompt
@@ -83,3 +84,18 @@ async def test_writer_prompt_has_no_long_raw_source_passages() -> None:
     assert "В книге сказано" not in user_prompt
     assert len(user_prompt) < 14000
 
+
+@pytest.mark.asyncio
+async def test_writer_prompt_compactness_is_within_thresholds_for_representative_case() -> None:
+    client = _FakeClient()
+    agent = WriterAgent(client=client, model="gpt-5-mini")
+    await agent._call_llm(_contract())
+    user_prompt = str(client.responses.calls[0]["input"])
+    assert "prompt_compactness={" in user_prompt
+
+    ctx = _contract().to_prompt_context()
+    compactness = dict(ctx.get("philosophy_kernel_prompt_compactness", {}))
+    assert int(compactness.get("philosophy_kernel_prompt_block_chars", 0)) <= 1800
+    assert int(compactness.get("writer_freedom_contract_chars", 0)) <= 1000
+    assert int(compactness.get("combined_chars", 0)) <= 2600
+    assert bool(compactness.get("within_budget", False)) is True

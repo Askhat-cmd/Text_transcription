@@ -669,3 +669,19 @@ Context: PRD-047.1 required stable philosophical grounding for Writer without tu
 Decision: introduce versioned `NEO Philosophy Kernel` and `Writer Freedom Contract v1` as compact internal prompt/context layers. Kernel content is structured and short, selected deterministically per turn, and exposed in trace/admin only as sanitized metadata (no raw long source passages).
 
 Consequences: Writer receives clearer identity/lens boundaries with guided freedom (`mode_is_hint_not_cage`, `practice_requires_gate`) while safety/hard-boundary governance remains strict. Future PRDs can tune depth/quality using measurable kernel fields without mutating KB authority or copying source text verbatim.
+
+## ADR-060 Amendment - Philosophy Kernel acceptance requires answer-quality and prompt-compactness gates
+
+Status: accepted
+
+Date: 2026-05-28
+
+Context: PRD-047.1 established structural kernel/freedom foundation, but quality acceptance still needed reproducible answer-level validation and prompt-size safeguards to avoid verbose or technical drift.
+
+Decision: PRD-047.2 adds mandatory acceptance gates:
+- reproducible kernel quality dataset (>=12 cases),
+- answer-level evaluator over final text (not trace flags only),
+- prompt compactness budgets for kernel/freedom sections,
+- direct-run pass requirement (`12/12`) before acceptance.
+
+Consequences: Philosophy Kernel governance now requires both structural correctness and measurable response quality/compactness; future expansions should build on this gate before dialogue continuity layers.

@@ -209,7 +209,15 @@ class WriterContract:
             "philosophy_kernel_quote_policy": str(
                 philosophy_kernel.get("quote_policy", "internal_lens_not_citation")
             ),
+            "philosophy_kernel_prompt_compactness": (
+                dict(philosophy_kernel.get("prompt_compactness", {}))
+                if isinstance(philosophy_kernel.get("prompt_compactness"), dict)
+                else {}
+            ),
             "writer_freedom_contract": writer_freedom_contract,
+            "writer_freedom_prompt_block": str(
+                philosophy_kernel.get("writer_freedom_prompt_block", "") or ""
+            ),
             "writer_freedom_contract_version": str(
                 writer_freedom_contract.get("version", "writer_freedom_contract_v1")
             ),

@@ -1,28 +1,28 @@
-# Web Admin Runtime Controls
+﻿# Web Admin Runtime Controls
 
-## Runtime Effective Endpoint
+## Runtime Effective Endpoints
 Read-only runtime truth:
 - `GET /api/admin/runtime/effective`
 - `GET /api/v1/admin/runtime/effective`
 
-`PRD-047.1` adds two blocks:
-- `philosophy_kernel`
-- `writer_freedom_contract`
-
-## Effective Philosophy Kernel Block
-Fields:
-- `enabled`
-- `version`
-- `identity.bot_identity`
-- `identity.role`
+## Philosophy Kernel Effective Block
+Includes:
+- `kernel_enabled`
+- `kernel_version`
+- `selected_lenses_visible`
 - `quote_policy`
 - `practice_policy`
-- `principles_count`
-- `boundaries_count`
-- `lenses`
+- `prompt_budget`
+- `quality_calibration`
 
-## Effective Writer Freedom Block
-Fields:
+`quality_calibration` is loaded from PRD-047.2 direct artifact when available:
+- `last_prd`
+- `last_direct_passed`
+- `last_direct_cases_total`
+- `artifact_present`
+
+## Writer Freedom Effective Block
+Includes:
 - `enabled`
 - `version`
 - `freedom_level`
@@ -31,8 +31,10 @@ Fields:
 - `practice_requires_gate`
 
 ## Admin UI Surface
-`web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards:
-- Philosophy Kernel
-- Writer Freedom Contract
+`web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
+- philosophy kernel version/enabled/selected-lenses visibility
+- prompt budget limits
+- last quality calibration status
+- writer freedom contract state
 
-This keeps Web Admin as the operational control plane while avoiding prompt-source leakage.
+No prompt/source editor is added in this PRD.

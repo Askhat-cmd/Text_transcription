@@ -220,6 +220,8 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
     assert debug.get("tokens_total") == 140
     assert debug.get("philosophy_kernel", {}).get("kernel_version") == "neo_philosophy_kernel_v1"
     assert isinstance(debug.get("philosophy_kernel", {}).get("selected_lenses"), list)
+    assert isinstance(debug.get("philosophy_kernel", {}).get("prompt_compactness"), dict)
+    assert "within_budget" in debug.get("philosophy_kernel", {}).get("prompt_compactness", {})
     assert "prompt_block" not in debug.get("philosophy_kernel", {})
     assert debug.get("writer_freedom_contract", {}).get("mode_is_hint_not_cage") is True
     assert debug.get("writer_freedom_contract", {}).get("practice_requires_gate") is True

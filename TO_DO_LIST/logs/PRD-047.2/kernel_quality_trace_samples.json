@@ -1,0 +1,174 @@
+{
+  "prd_id": "PRD-047.2",
+  "mode": "live",
+  "samples": [
+    {
+      "mode": "live",
+      "case_id": "a1_greeting_short_contact",
+      "group": "A",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a2_short_support_no_analysis",
+      "group": "A",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a3_no_practice_presence",
+      "group": "A",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "b1_imperfect_self_not_coping",
+      "group": "B",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "b2_imperfect_self_something_wrong",
+      "group": "B",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "b3_imperfect_self_firmware_fail",
+      "group": "B",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "c1_driver_try_harder",
+      "group": "C",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "c2_driver_be_strong",
+      "group": "C",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "c3_driver_hurry",
+      "group": "C",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "d1_what_is_neurostalking",
+      "group": "D",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "d2_neurostalking_and_selfrealization",
+      "group": "D",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "d3_inner_loop_return",
+      "group": "D",
+      "kernel_trace": {},
+      "writer_freedom_contract": {},
+      "prompt_compactness": {
+        "philosophy_kernel_prompt_block_chars": 0,
+        "writer_freedom_contract_chars": 0,
+        "combined_chars": 0,
+        "selected_lenses_count": 0,
+        "within_budget": true
+      }
+    }
+  ]
+}

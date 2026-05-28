@@ -1,0 +1,13 @@
+{
+  "max_kernel_chars": 709,
+  "max_freedom_chars": 246,
+  "max_combined_chars": 954,
+  "max_selected_lenses": 1,
+  "within_budget_all": true,
+  "budgets": {
+    "max_kernel_chars": 1800,
+    "max_freedom_chars": 1000,
+    "max_combined_chars": 2600,
+    "max_selected_lenses": 3
+  }
+}

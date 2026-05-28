@@ -1,0 +1,12 @@
+﻿{
+    "prd_id":  "PRD-047.2",
+    "snapshot_type":  "before_direct_from_prd_047_1",
+    "captured_at":  "2026-05-28T10:39:10.7031834+05:00",
+    "source_file":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.1\\philosophy_kernel_smoke_direct.json",
+    "summary":  {
+                    "cases_total":  5,
+                    "cases_passed":  5,
+                    "cases_failed":  0
+                },
+    "note":  "Baseline copied from PRD-047.1 direct smoke as pre-change snapshot."
+}

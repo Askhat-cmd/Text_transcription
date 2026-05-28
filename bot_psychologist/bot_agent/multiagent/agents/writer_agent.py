@@ -80,6 +80,8 @@ _LOW_RESOURCE_NO_PRACTICE_MARKERS = (
     "просто поддержи",
     "без советов",
     "я устал",
+    "не нужны практики",
+    "побудь со мной коротко",
 )
 
 
@@ -297,6 +299,12 @@ class WriterAgent:
             ),
             philosophy_kernel_selected_lenses=", ".join(selected_lenses) or "none",
             philosophy_kernel_prompt_block=str(ctx.get("philosophy_kernel_prompt_block", "") or "none"),
+            philosophy_kernel_prompt_compactness=str(
+                ctx.get("philosophy_kernel_prompt_compactness", {}) or {}
+            ),
+            writer_freedom_prompt_block=str(
+                ctx.get("writer_freedom_prompt_block", "") or "none"
+            ),
             writer_freedom_contract_version=str(
                 ctx.get("writer_freedom_contract_version", writer_freedom_contract.get("version", ""))
             ),
@@ -402,8 +410,9 @@ class WriterAgent:
             )
 
         # Low-resource contact: keep response short and do not insert practice instructions.
-        if _contains_any(lowered_user, _LOW_RESOURCE_NO_PRACTICE_MARKERS) and has_unsolicited_practice:
-            return "Ты устал. Сейчас не надо ничего разбирать. Можно просто выдохнуть и немного отпустить напряжение."
+        if _contains_any(lowered_user, _LOW_RESOURCE_NO_PRACTICE_MARKERS):
+            if has_unsolicited_practice or len(text) > 280 or "?" in text:
+                return "Я рядом. Сейчас не нужно ничего разбирать. Просто побудь немного в тишине и опоре."
 
         # Known concept answer-first path: enforce direct internal meaning framing.
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):

@@ -1,7 +1,8 @@
-# Philosophy Kernel
+﻿# Philosophy Kernel
 
 ## Scope
-`PRD-047.1` adds a compact internal `NEO Philosophy Kernel` for multiagent Writer guidance.
+`PRD-047.1` introduced internal `NEO Philosophy Kernel`.
+`PRD-047.2` calibrated quality and compactness gates.
 
 Module:
 - `bot_agent/multiagent/philosophy_kernel.py`
@@ -10,10 +11,10 @@ Version:
 - `neo_philosophy_kernel_v1`
 
 ## Design Rules
-- Kernel is internal lensing, not a user-facing quote source.
-- Kernel payload stays compact and structured.
-- Long raw source excerpts are forbidden in prompt/trace artifacts.
-- Safety and hard-boundary rules remain dominant.
+- Internal lens layer only, not a user quote source.
+- Compact and structured prompt blocks.
+- No long raw source passages in prompt/trace.
+- Safety and hard boundaries remain authoritative.
 
 ## Runtime Payload
 `build_philosophy_kernel_runtime_payload(...)` returns:
@@ -24,14 +25,29 @@ Version:
 - `selection`
 - `prompt_block`
 - `writer_freedom_contract`
+- `writer_freedom_prompt_block`
+- `prompt_compactness`
 
-## Lens Selection (v0)
-Deterministic rules include:
+## Deterministic Lens Selection
+Rules include:
 - `нейросталкинг` -> `neurostalking`
-- imperfect-self phrases (`не справлюсь`, `я недостаточен`, etc.) -> `imperfect_self_program`
-- driver pressure phrases (`должен`, `надо быть сильным`, etc.) -> `drivers`
-- low-resource short-support -> `resource_first_contact` with suppressed depth
+- imperfect-self phrases -> `imperfect_self_program`
+- driver-pressure phrases -> `drivers`
+- inner-loop phrases -> `autopilot`
+- short-support requests -> `resource_first_contact` + depth suppression
+
+PRD-047.2 selector calibration aliases include:
+- imperfect-self: `прошивка`, `потерплю неудачу`
+- drivers: `не буду сильным`
+- short-support: `не нужны практики`, `побудь со мной коротко`
+
+## Prompt Compactness Gate
+Tracked and enforced:
+- `philosophy_kernel_prompt_block_chars <= 1800`
+- `writer_freedom_contract_chars <= 1000`
+- `combined_chars <= 2600`
+- `selected_lenses_count <= 3`
 
 ## Trace and Admin
-- Multiagent trace stores sanitized kernel metadata only.
-- Admin runtime effective payload exposes kernel status in read-only form.
+- Trace includes sanitized kernel metadata + compactness block.
+- Admin runtime effective includes kernel status, budget limits, and last quality calibration summary.

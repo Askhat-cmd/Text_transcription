@@ -1,0 +1,30 @@
+﻿{
+    "prd_id":  "PRD-047.2",
+    "checked_at_local":  "2026-05-28T10:39:25.8800092+05:00",
+    "git":  {
+                "branch":  "main",
+                "status_clean":  false,
+                "local_changes":  [
+                                      "?? TO_DO_LIST/PRD-047.2_Philosophy_Kernel_Quality_Calibration_Prompt_Compactness_Gate.md",
+                                      "?? TO_DO_LIST/PRD-047.2_TASK_LIST.md",
+                                      "?? TO_DO_LIST/logs/PRD-047.2/",
+                                      "?? TO_DO_LIST/source_materials/"
+                                  ]
+            },
+    "checks":  {
+                   "prd_047_1_artifacts":  {
+                                               "TO_DO_LIST/reports/PRD-047.1_IMPLEMENTATION_REPORT.md":  true,
+                                               "TO_DO_LIST/logs/PRD-047.1/philosophy_kernel_smoke_direct.json":  true,
+                                               "bot_psychologist/bot_agent/multiagent/philosophy_kernel.py":  true,
+                                               "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py":  true,
+                                               "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py":  true,
+                                               "bot_psychologist/api/admin_routes.py":  true,
+                                               "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx":  true
+                                           },
+                   "writer_contract_fields_present":  true,
+                   "writer_prompt_blocks_present":  true,
+                   "admin_runtime_effective_kernel_blocks_present":  true,
+                   "source_pack_manifest_or_prior_gate_present":  true
+               },
+    "blocker":  false
+}

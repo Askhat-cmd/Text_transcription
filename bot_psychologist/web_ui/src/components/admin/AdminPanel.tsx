@@ -379,6 +379,12 @@ export const AdminPanel: React.FC = () => {
                         <div>principles_count: {runtimeEffectiveData.philosophy_kernel?.principles_count ?? 0}</div>
                         <div>boundaries_count: {runtimeEffectiveData.philosophy_kernel?.boundaries_count ?? 0}</div>
                         <div>lenses: {(runtimeEffectiveData.philosophy_kernel?.lenses ?? []).join(', ') || 'n/a'}</div>
+                        <div>selected_lenses_visible: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.selected_lenses_visible))}</div>
+                        <div>budget.max_kernel_chars: {runtimeEffectiveData.philosophy_kernel?.prompt_budget?.max_kernel_chars ?? 'n/a'}</div>
+                        <div>budget.max_combined_chars: {runtimeEffectiveData.philosophy_kernel?.prompt_budget?.max_combined_chars ?? 'n/a'}</div>
+                        <div>quality.last_prd: {runtimeEffectiveData.philosophy_kernel?.quality_calibration?.last_prd ?? 'n/a'}</div>
+                        <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.quality_calibration?.last_direct_passed))}</div>
+                        <div>quality.last_direct_cases_total: {runtimeEffectiveData.philosophy_kernel?.quality_calibration?.last_direct_cases_total ?? 0}</div>
                       </div>
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Writer Freedom Contract</div>

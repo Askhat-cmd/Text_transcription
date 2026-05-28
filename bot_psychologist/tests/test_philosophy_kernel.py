@@ -41,6 +41,24 @@ def test_selector_picks_imperfect_self_lens() -> None:
     assert "imperfect_self_program" in payload["selected_lenses"]
 
 
+def test_selector_picks_driver_lens_for_pressure_language() -> None:
+    payload = select_philosophy_lenses(
+        user_message="Я постоянно спешу и будто опаздываю жить",
+        safety_active=False,
+        response_mode="reflect",
+    )
+    assert "drivers" in payload["selected_lenses"]
+
+
+def test_selector_uses_autopilot_for_inner_loop_phrase() -> None:
+    payload = select_philosophy_lenses(
+        user_message="Почему я возвращаюсь к одному и тому же внутреннему кругу?",
+        safety_active=False,
+        response_mode="reflect",
+    )
+    assert "autopilot" in payload["selected_lenses"]
+
+
 def test_greeting_does_not_activate_deep_lens() -> None:
     payload = select_philosophy_lenses(
         user_message="Привет, как ты?",
@@ -100,3 +118,15 @@ def test_runtime_payload_supports_kernel_disabled_mode() -> None:
     selection = payload["selection"]
     assert selection["prompt_block_included"] is False
     assert "kernel_disabled" in selection["selection_reason"]
+
+
+def test_short_support_suppresses_prompt_block() -> None:
+    payload = build_philosophy_kernel_runtime_payload(
+        user_message="Я устал, скажи пару спокойных слов без анализа",
+        safety_active=False,
+        response_mode="reflect",
+        practice_allowed=False,
+    )
+    selection = payload["selection"]
+    assert selection["depth_mode"] == "suppressed"
+    assert selection["prompt_block_included"] is False

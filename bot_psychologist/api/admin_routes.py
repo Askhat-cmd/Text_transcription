@@ -471,6 +471,39 @@ def _group_param_value(group_name: str, key: str, default: Any = None) -> Any:
     return params[key].get("value", default)
 
 
+def _load_prd_047_2_quality_calibration_status() -> dict[str, Any]:
+    repo_root = Path(__file__).resolve().parents[2]
+    artifact_path = repo_root / "TO_DO_LIST" / "logs" / "PRD-047.2" / "kernel_quality_direct.json"
+    if not artifact_path.exists():
+        return {
+            "last_prd": "PRD-047.2",
+            "last_direct_passed": False,
+            "last_direct_cases_total": 0,
+            "last_direct_cases_failed": 0,
+            "artifact_found": False,
+        }
+    try:
+        payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+        summary = dict(payload.get("summary", {}))
+        total = int(summary.get("cases_total", 0) or 0)
+        failed = int(summary.get("cases_failed", 0) or 0)
+        return {
+            "last_prd": "PRD-047.2",
+            "last_direct_passed": total > 0 and failed == 0,
+            "last_direct_cases_total": total,
+            "last_direct_cases_failed": failed,
+            "artifact_found": True,
+        }
+    except Exception:
+        return {
+            "last_prd": "PRD-047.2",
+            "last_direct_passed": False,
+            "last_direct_cases_total": 0,
+            "last_direct_cases_failed": 0,
+            "artifact_found": False,
+        }
+
+
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
@@ -481,6 +514,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     _ = session_id
     pipeline_version = str(getattr(orchestrator, "pipeline_version", "multiagent_v1") or "multiagent_v1")
     compatibility_payload = _compatibility_runtime_payload()
+    quality_calibration = _load_prd_047_2_quality_calibration_status()
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -530,6 +564,8 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
         "philosophy_kernel": {
             "enabled": True,
             "version": KERNEL_V1.version,
+            "kernel_enabled": True,
+            "kernel_version": KERNEL_V1.version,
             "identity": {
                 "bot_identity": str(KERNEL_V1.identity.get("bot_identity", "")),
                 "role": str(KERNEL_V1.identity.get("role", "")),
@@ -539,6 +575,14 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "principles_count": len(KERNEL_V1.principles),
             "boundaries_count": len(KERNEL_V1.boundaries),
             "lenses": sorted(list(KERNEL_V1.lens_map.keys())),
+            "selected_lenses_visible": True,
+            "prompt_budget": {
+                "max_kernel_chars": 1800,
+                "max_freedom_chars": 1000,
+                "max_combined_chars": 2600,
+                "max_selected_lenses": 3,
+            },
+            "quality_calibration": quality_calibration,
         },
         "writer_freedom_contract": {
             "enabled": True,

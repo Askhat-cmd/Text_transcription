@@ -1,0 +1,148 @@
+﻿[
+  {
+    "id": "a1_greeting_short_contact",
+    "group": "A",
+    "query": "Привет",
+    "response_mode": "reflect",
+    "expected": {
+      "no_practice": true,
+      "no_deep_lens": true,
+      "short_answer": true,
+      "no_analysis_lecture": true
+    }
+  },
+  {
+    "id": "a2_short_support_no_analysis",
+    "group": "A",
+    "query": "Я устал, скажи пару спокойных слов без анализа",
+    "response_mode": "reflect",
+    "expected": {
+      "no_practice": true,
+      "no_deep_lens": false,
+      "short_answer": true,
+        "no_analysis_lecture": true
+    }
+  },
+  {
+    "id": "a3_no_practice_presence",
+    "group": "A",
+    "query": "Мне сейчас не нужны практики, просто побудь со мной коротко",
+    "response_mode": "validate",
+    "expected": {
+      "no_practice": true,
+      "short_answer": true,
+        "no_analysis_lecture": true
+    }
+  },
+  {
+    "id": "b1_imperfect_self_not_coping",
+    "group": "B",
+    "query": "Я боюсь, что уже всё упустил и не справлюсь",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["imperfect_self_program"],
+      "must_frame_as_mechanism_not_defect": true,
+      "must_not_diagnose": true,
+      "should_include_any": ["программа", "механизм", "голос", "автоматизм", "защита"],
+      "should_not_include_any": ["у вас травма", "диагноз", "патология", "согласно книге"]
+    }
+  },
+  {
+    "id": "b2_imperfect_self_something_wrong",
+    "group": "B",
+    "query": "Такое чувство, что со мной что-то не так",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["imperfect_self_program"],
+      "must_frame_as_mechanism_not_defect": true,
+      "must_not_diagnose": true,
+      "should_include_any": ["механизм", "голос", "защита"],
+      "should_not_include_any": ["диагноз", "патология", "согласно книге"]
+    }
+  },
+  {
+    "id": "b3_imperfect_self_firmware_fail",
+    "group": "B",
+    "query": "Я всё понимаю, но внутри будто прошивка: я потерплю неудачу",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["imperfect_self_program"],
+      "must_frame_as_mechanism_not_defect": true,
+      "must_not_diagnose": true,
+      "should_include_any": ["программа", "автоматизм", "защита"],
+      "should_not_include_any": ["диагноз", "патология", "согласно книге"]
+    }
+  },
+  {
+    "id": "c1_driver_try_harder",
+    "group": "C",
+    "query": "Мне всё время кажется, что надо стараться сильнее",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["drivers"],
+      "must_soft_mirror": true,
+      "must_not_hard_label": true,
+      "should_not_include_any": ["у вас драйвер", "ваш тип", "диагноз"]
+    }
+  },
+  {
+    "id": "c2_driver_be_strong",
+    "group": "C",
+    "query": "Если я не буду сильным, всё развалится",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["drivers"],
+      "must_soft_mirror": true,
+      "must_not_hard_label": true,
+      "should_not_include_any": ["у вас драйвер", "ваш тип", "диагноз"]
+    }
+  },
+  {
+    "id": "c3_driver_hurry",
+    "group": "C",
+    "query": "Я постоянно спешу, будто уже опаздываю жить",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses": ["drivers"],
+      "must_soft_mirror": true,
+      "must_not_hard_label": true,
+      "should_not_include_any": ["у вас драйвер", "ваш тип", "диагноз"]
+    }
+  },
+  {
+    "id": "d1_what_is_neurostalking",
+    "group": "D",
+    "query": "Что такое нейросталкинг?",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses_any": ["neurostalking", "autopilot"],
+      "must_be_internal_lens": true,
+      "must_not_external_surveillance": true,
+      "must_not_quote_source": true
+    }
+  },
+  {
+    "id": "d2_neurostalking_and_selfrealization",
+    "group": "D",
+    "query": "Как нейросталкинг связан с самореализацией?",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses_any": ["neurostalking", "autopilot"],
+      "must_be_internal_lens": true,
+      "must_not_external_surveillance": true,
+      "must_not_quote_source": true
+    }
+  },
+  {
+    "id": "d3_inner_loop_return",
+    "group": "D",
+    "query": "Почему я всё время возвращаюсь к одному и тому же внутреннему кругу?",
+    "response_mode": "reflect",
+    "expected": {
+      "selected_lenses_any": ["autopilot", "imperfect_self_program", "neurostalking"],
+      "must_be_internal_lens": true,
+      "must_not_external_surveillance": true,
+      "must_not_quote_source": true
+    }
+  }
+]

@@ -1,0 +1,68 @@
+﻿{
+    "prd_id":  "PRD-047.1",
+    "checked_at_local":  "2026-05-28T10:04:57+05:00",
+    "git":  {
+                "branch":  "main",
+                "status_clean":  false,
+                "local_changes":  [
+                                      "?? TO_DO_LIST/PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md",
+                                      "?? TO_DO_LIST/PRD-047.1_TASK_LIST.md"
+                                  ],
+                "assessment":  "acceptable_pre_implementation_prd_and_tasklist_only"
+            },
+    "prerequisites":  {
+                          "prd_047_0_hf1_artifacts_present":  true,
+                          "writer_contract_read":  true,
+                          "writer_prompt_read":  true,
+                          "orchestrator_read":  true,
+                          "admin_routes_read":  true,
+                          "web_admin_components_read":  true
+                      },
+    "source_pack":  {
+                        "base_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1",
+                        "required_count":  6,
+                        "present_count":  6,
+                        "missing_count":  0,
+                        "files":  [
+                                      {
+                                          "file":  "КУЗНИЦА ДУХА v.2.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\КУЗНИЦА ДУХА v.2.md"
+                                      },
+                                      {
+                                          "file":  "Neo MindBot КОНСПЕКТ.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\Neo MindBot КОНСПЕКТ.md"
+                                      },
+                                      {
+                                          "file":  "Концептуальная структура бота.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\Концептуальная структура бота.md"
+                                      },
+                                      {
+                                          "file":  "🧭 ИЕРАРХИЧЕСКАЯ КАРТА НЕЙРОСТАЛКИНГА.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\🧭 ИЕРАРХИЧЕСКАЯ КАРТА НЕЙРОСТАЛКИНГА.md"
+                                      },
+                                      {
+                                          "file":  "STRATEGIC_PLAN_NEO_MindBot_Flexible_Live_Bot_Roadmap.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\STRATEGIC_PLAN_NEO_MindBot_Flexible_Live_Bot_Roadmap.md"
+                                      },
+                                      {
+                                          "file":  "SOURCE_MANIFEST.md",
+                                          "exists":  true,
+                                          "full_path":  "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\source_materials\\PRD-047.1\\SOURCE_MANIFEST.md"
+                                      }
+                                  ],
+                        "missing_sources":  [
+
+                                            ]
+                    },
+    "source_only_policy":  {
+                               "no_long_raw_quotes_in_prompt_trace_or_user_response":  true,
+                               "kernel_compact_structured_summary_required":  true,
+                               "no_raw_source_material_commit_without_explicit_permission":  true
+                           },
+    "ready_to_implement":  true
+}

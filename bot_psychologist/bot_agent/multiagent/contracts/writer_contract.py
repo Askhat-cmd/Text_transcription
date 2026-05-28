@@ -23,6 +23,8 @@ class WriterContract:
     context_package: ContextAssemblyPackage | None = None
     diagnostic_card: DiagnosticCard | None = None
     knowledge_answer_guard: dict[str, Any] | None = None
+    philosophy_kernel: dict[str, Any] | None = None
+    writer_freedom_contract: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -38,6 +40,14 @@ class WriterContract:
             ),
             "knowledge_answer_guard": (
                 dict(self.knowledge_answer_guard) if isinstance(self.knowledge_answer_guard, dict) else None
+            ),
+            "philosophy_kernel": (
+                dict(self.philosophy_kernel) if isinstance(self.philosophy_kernel, dict) else None
+            ),
+            "writer_freedom_contract": (
+                dict(self.writer_freedom_contract)
+                if isinstance(self.writer_freedom_contract, dict)
+                else None
             ),
             "response_language": self.response_language,
         }
@@ -107,6 +117,30 @@ class WriterContract:
             if isinstance(knowledge_answer_guard.get("practice_gate"), dict)
             else {}
         )
+        philosophy_kernel = (
+            dict(self.philosophy_kernel)
+            if isinstance(self.philosophy_kernel, dict)
+            else {}
+        )
+        writer_freedom_contract = (
+            dict(self.writer_freedom_contract)
+            if isinstance(self.writer_freedom_contract, dict)
+            else (
+                dict(philosophy_kernel.get("writer_freedom_contract", {}))
+                if isinstance(philosophy_kernel.get("writer_freedom_contract"), dict)
+                else {}
+            )
+        )
+        mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
+        freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
+        mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
+        question_limit = int(writer_freedom_contract.get("question_limit", 1) or 1)
+        practice_requires_gate = bool(writer_freedom_contract.get("practice_requires_gate", True))
+        freedom_hard_boundaries = [
+            str(item)
+            for item in list(writer_freedom_contract.get("hard_boundaries", []) or [])
+            if str(item).strip()
+        ]
 
         return {
             "user_message": self.user_message,
@@ -164,4 +198,25 @@ class WriterContract:
             "practice_ban_enforced": not bool(practice_gate.get("practice_allowed", True)),
             "known_concept_clarification_ban": bool(knowledge_answer.get("should_answer_directly", False)),
             "external_surveillance_frame_ban": bool(knowledge_answer.get("should_answer_directly", False)),
+            "philosophy_kernel": philosophy_kernel,
+            "philosophy_kernel_prompt_block": str(philosophy_kernel.get("prompt_block", "") or ""),
+            "philosophy_kernel_version": str(philosophy_kernel.get("kernel_version", "") or ""),
+            "philosophy_kernel_selected_lenses": list(
+                dict(philosophy_kernel.get("selection", {})).get("selected_lenses", [])
+                if isinstance(philosophy_kernel.get("selection"), dict)
+                else []
+            ),
+            "philosophy_kernel_quote_policy": str(
+                philosophy_kernel.get("quote_policy", "internal_lens_not_citation")
+            ),
+            "writer_freedom_contract": writer_freedom_contract,
+            "writer_freedom_contract_version": str(
+                writer_freedom_contract.get("version", "writer_freedom_contract_v1")
+            ),
+            "writer_freedom_level": freedom_level,
+            "writer_mode_hint": mode_hint,
+            "mode_is_hint_not_cage": mode_is_hint_not_cage,
+            "writer_question_limit": question_limit,
+            "practice_requires_gate": practice_requires_gate,
+            "writer_freedom_hard_boundaries": freedom_hard_boundaries,
         }

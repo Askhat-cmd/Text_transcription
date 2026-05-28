@@ -72,6 +72,7 @@ export const AdminPanel: React.FC = () => {
     prompts,
     selectedPrompt,
     statusData,
+    runtimeEffectiveData,
     diagnosticsEffectiveData,
     diagnosticCenterEffectiveData,
     isLoading,
@@ -361,6 +362,33 @@ export const AdminPanel: React.FC = () => {
                       >
                         Reload knowledge base
                       </button>
+                    </div>
+                  </div>
+                )}
+
+                {activeTab === 'runtime' && runtimeEffectiveData && (
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
+                    <h3 className="font-semibold text-slate-800 mb-3">Philosophy Kernel / Writer Freedom (Effective)</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-700">
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Philosophy Kernel</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.philosophy_kernel?.version ?? 'n/a'}</div>
+                        <div>quote_policy: {runtimeEffectiveData.philosophy_kernel?.quote_policy ?? 'n/a'}</div>
+                        <div>practice_policy: {runtimeEffectiveData.philosophy_kernel?.practice_policy ?? 'n/a'}</div>
+                        <div>principles_count: {runtimeEffectiveData.philosophy_kernel?.principles_count ?? 0}</div>
+                        <div>boundaries_count: {runtimeEffectiveData.philosophy_kernel?.boundaries_count ?? 0}</div>
+                        <div>lenses: {(runtimeEffectiveData.philosophy_kernel?.lenses ?? []).join(', ') || 'n/a'}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Writer Freedom Contract</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.writer_freedom_contract?.version ?? 'n/a'}</div>
+                        <div>freedom_level: {runtimeEffectiveData.writer_freedom_contract?.freedom_level ?? 'n/a'}</div>
+                        <div>mode_is_hint_not_cage: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.mode_is_hint_not_cage))}</div>
+                        <div>question_limit: {runtimeEffectiveData.writer_freedom_contract?.question_limit ?? 1}</div>
+                        <div>practice_requires_gate: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.practice_requires_gate))}</div>
+                      </div>
                     </div>
                   </div>
                 )}

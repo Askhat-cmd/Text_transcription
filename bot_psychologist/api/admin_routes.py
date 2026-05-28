@@ -22,6 +22,10 @@ from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
+from bot_agent.multiagent.philosophy_kernel import (
+    KERNEL_V1,
+    WRITER_FREEDOM_CONTRACT_VERSION,
+)
 from bot_agent.multiagent.thread_storage import thread_storage
 from bot_agent.diagnostic_center_control import (
     apply_diagnostic_center_control_update,
@@ -522,6 +526,27 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "developer_trace_supported": True,
             "developer_trace_enabled": True,
             "developer_trace_mode_available": True,
+        },
+        "philosophy_kernel": {
+            "enabled": True,
+            "version": KERNEL_V1.version,
+            "identity": {
+                "bot_identity": str(KERNEL_V1.identity.get("bot_identity", "")),
+                "role": str(KERNEL_V1.identity.get("role", "")),
+            },
+            "quote_policy": "internal_lens_not_citation",
+            "practice_policy": "gate_required",
+            "principles_count": len(KERNEL_V1.principles),
+            "boundaries_count": len(KERNEL_V1.boundaries),
+            "lenses": sorted(list(KERNEL_V1.lens_map.keys())),
+        },
+        "writer_freedom_contract": {
+            "enabled": True,
+            "version": WRITER_FREEDOM_CONTRACT_VERSION,
+            "freedom_level": "guided",
+            "mode_is_hint_not_cage": True,
+            "question_limit": 1,
+            "practice_requires_gate": True,
         },
         "diagnostic_center_control": build_diagnostic_center_effective_payload(),
     }

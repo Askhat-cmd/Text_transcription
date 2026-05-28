@@ -141,6 +141,27 @@ export interface AdminRuntimeEffectiveResponse {
     developer_trace_enabled?: boolean;
     developer_trace_mode_available?: boolean;
   };
+  philosophy_kernel?: {
+    enabled: boolean;
+    version: string;
+    identity?: {
+      bot_identity?: string;
+      role?: string;
+    };
+    quote_policy?: string;
+    practice_policy?: string;
+    principles_count?: number;
+    boundaries_count?: number;
+    lenses?: string[];
+  };
+  writer_freedom_contract?: {
+    enabled: boolean;
+    version: string;
+    freedom_level?: string;
+    mode_is_hint_not_cage?: boolean;
+    question_limit?: number;
+    practice_requires_gate?: boolean;
+  };
 }
 
 export type AgentId =

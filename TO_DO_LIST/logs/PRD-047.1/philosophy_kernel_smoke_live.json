@@ -1,0 +1,13 @@
+{
+  "prd_id": "PRD-047.1",
+  "mode": "live",
+  "timestamp_utc": "2026-05-28T05:15:56.489136+00:00",
+  "summary": {
+    "cases_total": 0,
+    "cases_passed": 0,
+    "cases_failed": 0
+  },
+  "case_results": [],
+  "live_status": "skipped",
+  "reason": "live backend appears stale or not restarted after PRD-047.1 changes"
+}

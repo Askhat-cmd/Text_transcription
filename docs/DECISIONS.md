@@ -657,3 +657,15 @@ Status: accepted
 Context: PRD-047.0 showed a false-positive gap where internal guard flags were correct but final user-facing answers still violated known-concept and no-practice expectations.
 Decision: quality acceptance for known-concept routing is valid only when evaluator checks final answer text (forbidden fragments, clarification-question bans, required semantics, practice gate behavior, and required grounding), not trace flags alone.
 Consequences: failure baseline now rejects mismatched final answers even when internal trace appears green; next tuning PRDs can rely on stricter and reproducible acceptance evidence.
+
+## ADR-060 - NEO Philosophy Kernel is an internal lens layer, not a user-facing quotation source
+
+Status: accepted
+
+Date: 2026-05-28
+
+Context: PRD-047.1 required stable philosophical grounding for Writer without turning source materials into raw quote output or authority references in user-facing responses.
+
+Decision: introduce versioned `NEO Philosophy Kernel` and `Writer Freedom Contract v1` as compact internal prompt/context layers. Kernel content is structured and short, selected deterministically per turn, and exposed in trace/admin only as sanitized metadata (no raw long source passages).
+
+Consequences: Writer receives clearer identity/lens boundaries with guided freedom (`mode_is_hint_not_cage`, `practice_requires_gate`) while safety/hard-boundary governance remains strict. Future PRDs can tune depth/quality using measurable kernel fields without mutating KB authority or copying source text verbatim.

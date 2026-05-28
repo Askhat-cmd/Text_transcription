@@ -15,6 +15,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from api.main import app
 from api.routes.chat import _resolve_multiagent_turn_index
 from api.session_store import SessionStore, get_session_store
+from bot_agent.multiagent.philosophy_kernel import build_philosophy_kernel_runtime_payload
 
 orchestrator_module = importlib.import_module("bot_agent.multiagent.orchestrator")
 writer_module = importlib.import_module("bot_agent.multiagent.agents.writer_agent")
@@ -217,6 +218,11 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
     assert debug.get("writer_system_prompt") == "sys prompt"
     assert debug.get("writer_user_prompt") == "user prompt"
     assert debug.get("tokens_total") == 140
+    assert debug.get("philosophy_kernel", {}).get("kernel_version") == "neo_philosophy_kernel_v1"
+    assert isinstance(debug.get("philosophy_kernel", {}).get("selected_lenses"), list)
+    assert "prompt_block" not in debug.get("philosophy_kernel", {})
+    assert debug.get("writer_freedom_contract", {}).get("mode_is_hint_not_cage") is True
+    assert debug.get("writer_freedom_contract", {}).get("practice_requires_gate") is True
 
 
 def test_session_store_multiagent_debug_roundtrip() -> None:
@@ -451,3 +457,16 @@ def test_resolve_multiagent_turn_index_ignores_stale_debug_turn_number() -> None
     )
 
     assert resolved == 3
+
+
+def test_kernel_payload_can_be_disabled_without_prompt_block() -> None:
+    payload = build_philosophy_kernel_runtime_payload(
+        user_message="Привет",
+        safety_active=False,
+        response_mode="reflect",
+        practice_allowed=False,
+        kernel_enabled=False,
+    )
+    assert payload["kernel_enabled"] is False
+    assert payload["prompt_block"] == ""
+    assert payload["selection"]["prompt_block_included"] is False

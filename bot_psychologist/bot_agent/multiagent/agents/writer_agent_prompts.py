@@ -152,6 +152,22 @@ practice_ban_instruction={practice_ban_instruction}
 known_concept_clarification_ban={known_concept_clarification_ban}
 external_surveillance_frame_ban={external_surveillance_frame_ban}
 
+NEO PHILOSOPHY KERNEL:
+kernel_version={philosophy_kernel_version}
+quote_policy={philosophy_kernel_quote_policy}
+selected_lenses={philosophy_kernel_selected_lenses}
+kernel_block:
+{philosophy_kernel_prompt_block}
+
+WRITER FREEDOM CONTRACT:
+version={writer_freedom_contract_version}
+freedom_level={writer_freedom_level}
+mode_hint={writer_mode_hint}
+mode_is_hint_not_cage={mode_is_hint_not_cage}
+question_limit={writer_question_limit}
+practice_requires_gate={practice_requires_gate}
+hard_boundaries={writer_freedom_hard_boundaries}
+
 ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
 - главный фокус пользователя;
 - нужную глубину;

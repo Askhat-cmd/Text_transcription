@@ -1,0 +1,19 @@
+﻿{
+  "prd_id": "PRD-047.1",
+  "kb_mutation": false,
+  "chroma_reindex": false,
+  "botdb_ingestion_changed": false,
+  "chunk_type_changed": false,
+  "allowed_use_changed": false,
+  "safety_flags_changed": false,
+  "env_changed": false,
+  "production_ready_changed_to_true": false,
+  "broad_rollout_allowed_changed_to_true": false,
+  "normal_user_activation_allowed_changed_to_true": false,
+  "new_llm_agent_added": false,
+  "raw_kb_quotes_in_user_prompt": false,
+  "notes": [
+    "PRD-047.1 is prompt/runtime-contract level only.",
+    "Smoke/live artifacts include honest skip when backend trace is stale."
+  ]
+}

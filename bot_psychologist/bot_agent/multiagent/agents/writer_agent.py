@@ -74,6 +74,13 @@ _EXTERNAL_SURVEILLANCE_MARKERS = (
     "цифровые следы",
     "отслеживание чужих нейроданных",
 )
+_LOW_RESOURCE_NO_PRACTICE_MARKERS = (
+    "без анализа",
+    "пару спокойных слов",
+    "просто поддержи",
+    "без советов",
+    "я устал",
+)
 
 
 def _to_int(value: str, default: int) -> int:
@@ -88,6 +95,11 @@ def _to_float(value: str, default: float) -> float:
         return float(value)
     except (TypeError, ValueError):
         return default
+
+
+def _contains_any(text: str, markers: tuple[str, ...]) -> bool:
+    lowered = str(text or "").lower()
+    return any(marker in lowered for marker in markers)
 
 
 class WriterAgent:
@@ -220,6 +232,26 @@ class WriterAgent:
             if knowledge_answer_first
             else "false"
         )
+        philosophy_kernel = (
+            dict(ctx.get("philosophy_kernel", {}))
+            if isinstance(ctx.get("philosophy_kernel"), dict)
+            else {}
+        )
+        writer_freedom_contract = (
+            dict(ctx.get("writer_freedom_contract", {}))
+            if isinstance(ctx.get("writer_freedom_contract"), dict)
+            else {}
+        )
+        selected_lenses = [
+            str(item)
+            for item in list(ctx.get("philosophy_kernel_selected_lenses", []) or [])
+            if str(item).strip()
+        ]
+        freedom_hard_boundaries = [
+            str(item)
+            for item in list(ctx.get("writer_freedom_hard_boundaries", []) or [])
+            if str(item).strip()
+        ]
 
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
@@ -254,6 +286,29 @@ class WriterAgent:
             practice_ban_instruction=practice_ban_instruction,
             known_concept_clarification_ban=known_concept_clarification_ban,
             external_surveillance_frame_ban=external_surveillance_frame_ban,
+            philosophy_kernel_version=str(
+                ctx.get("philosophy_kernel_version", philosophy_kernel.get("kernel_version", ""))
+            ),
+            philosophy_kernel_quote_policy=str(
+                ctx.get(
+                    "philosophy_kernel_quote_policy",
+                    philosophy_kernel.get("quote_policy", "internal_lens_not_citation"),
+                )
+            ),
+            philosophy_kernel_selected_lenses=", ".join(selected_lenses) or "none",
+            philosophy_kernel_prompt_block=str(ctx.get("philosophy_kernel_prompt_block", "") or "none"),
+            writer_freedom_contract_version=str(
+                ctx.get("writer_freedom_contract_version", writer_freedom_contract.get("version", ""))
+            ),
+            writer_freedom_level=str(
+                ctx.get("writer_freedom_level", writer_freedom_contract.get("freedom_level", "guided"))
+            ),
+            writer_mode_hint=str(ctx.get("writer_mode_hint", writer_freedom_contract.get("mode_hint", ""))),
+            mode_is_hint_not_cage=str(bool(ctx.get("mode_is_hint_not_cage", True))).lower(),
+            writer_question_limit=int(ctx.get("writer_question_limit", 1) or 1),
+            practice_requires_gate=str(bool(ctx.get("practice_requires_gate", True))).lower(),
+            writer_freedom_hard_boundaries=", ".join(freedom_hard_boundaries)
+            or "no_diagnosis,no_unsolicited_practice",
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -345,6 +400,10 @@ class WriterAgent:
                 "Привет. Рад знакомству. "
                 "Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать."
             )
+
+        # Low-resource contact: keep response short and do not insert practice instructions.
+        if _contains_any(lowered_user, _LOW_RESOURCE_NO_PRACTICE_MARKERS) and has_unsolicited_practice:
+            return "Ты устал. Сейчас не надо ничего разбирать. Можно просто выдохнуть и немного отпустить напряжение."
 
         # Known concept answer-first path: enforce direct internal meaning framing.
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):

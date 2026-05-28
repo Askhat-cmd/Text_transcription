@@ -1,0 +1,119 @@
+{
+  "prd_id": "PRD-047.1",
+  "mode": "direct",
+  "samples": [
+    {
+      "mode": "direct",
+      "case_id": "greeting",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [],
+        "selection_reason": [
+          "greeting_light_contact"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      }
+    },
+    {
+      "mode": "direct",
+      "case_id": "known_concept",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "neurostalking"
+        ],
+        "selection_reason": [
+          "known_concept_neurostalking"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      }
+    },
+    {
+      "mode": "direct",
+      "case_id": "imperfect_self",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      }
+    },
+    {
+      "mode": "direct",
+      "case_id": "driver",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      }
+    },
+    {
+      "mode": "direct",
+      "case_id": "short_support",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "resource_first_contact"
+        ],
+        "selection_reason": [
+          "short_support_request"
+        ],
+        "prompt_block_included": false,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "prd_id": "PRD-047.1",
+  "mode": "dry",
+  "timestamp_utc": "2026-05-28T05:14:57.042172+00:00",
+  "summary": {
+    "cases_total": 5,
+    "cases_passed": 5,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "greeting",
+      "mode": "dry",
+      "query": "Привет",
+      "answer": "Привет. Рад знакомству. Можем спокойно начать с твоего вопроса.",
+      "selection": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [],
+        "selection_reason": [
+          "greeting_light_contact"
+        ],
+        "depth_mode": "light",
+        "prompt_block_included": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_deep_lens": true,
+          "simple_contact": true
+        }
+      }
+    },
+    {
+      "case_id": "known_concept",
+      "mode": "dry",
+      "query": "Что такое нейросталкинг?",
+      "answer": "В нашей внутренней рамке нейросталкинг — это наблюдение за паттернами, триггерами и автоматическими реакциями, чтобы не сливаться с ними полностью.",
+      "selection": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "neurostalking"
+        ],
+        "selection_reason": [
+          "known_concept_neurostalking"
+        ],
+        "depth_mode": "guided",
+        "prompt_block_included": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_neurostalking": true,
+          "direct_answer": true
+        }
+      }
+    },
+    {
+      "case_id": "imperfect_self",
+      "mode": "dry",
+      "query": "Я боюсь, что уже всё упустил и не справлюсь",
+      "answer": "Похоже, включается не поломка личности, а защитная программа: заранее объявить, что ничего не выйдет, чтобы не рисковать.",
+      "selection": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "depth_mode": "guided",
+        "prompt_block_included": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_imperfect_self_program": true,
+          "no_diagnosis": true
+        }
+      }
+    },
+    {
+      "case_id": "driver",
+      "mode": "dry",
+      "query": "Мне всё время кажется, что надо стараться сильнее",
+      "answer": "Слышно сильное внутреннее давление 'надо больше'. Можно мягко заметить этот голос и проверить, что в тебе реально живое, а что идет на автопилоте.",
+      "selection": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "depth_mode": "guided",
+        "prompt_block_included": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_drivers": true,
+          "no_hard_label": true,
+          "soft_mirror": true
+        }
+      }
+    },
+    {
+      "case_id": "short_support",
+      "mode": "dry",
+      "query": "Я устал, скажи пару спокойных слов без анализа",
+      "answer": "Ты устал. Сейчас можно чуть выдохнуть и не решать все в эту минуту.",
+      "selection": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "resource_first_contact"
+        ],
+        "selection_reason": [
+          "short_support_request"
+        ],
+        "depth_mode": "suppressed",
+        "prompt_block_included": false
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "depth_suppressed": true,
+          "short_answer": true,
+          "no_analysis_lecture": true
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "prd_id": "PRD-047.1",
+  "mode": "direct",
+  "timestamp_utc": "2026-05-28T05:19:47.526597+00:00",
+  "summary": {
+    "cases_total": 5,
+    "cases_passed": 5,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "greeting",
+      "mode": "direct",
+      "query": "Привет",
+      "answer": "Привет. Рад знакомству. Можем спокойно начать: принеси любой вопрос или тему, которую хочешь разобрать.",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [],
+        "selection_reason": [
+          "greeting_light_contact"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "no_deep_lens": true,
+          "simple_contact": true
+        }
+      }
+    },
+    {
+      "case_id": "known_concept",
+      "mode": "direct",
+      "query": "Что такое нейросталкинг?",
+      "answer": "Вы спрашиваете про нейросталкинг — это наблюдение за своими автоматическими реакциями: паттернами, триггерами и телесно‑нейрофизиологическими запускателями, как бы смотрение на «программу», чтобы не попадать под её управление. На этом «первом этаже» задача — заметить, как именно срабатывает привычная реакция, и научиться не запускаться автоматически. Это не про изменение личности или диагнозы, а про распознавание механики страдания. Вам полезнее краткое определение этого уровня или сравнение с «неосталкингом» (вторым уровнем)?",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "neurostalking"
+        ],
+        "selection_reason": [
+          "known_concept_neurostalking"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_neurostalking": true,
+          "direct_answer": true
+        }
+      }
+    },
+    {
+      "case_id": "imperfect_self",
+      "mode": "direct",
+      "query": "Я боюсь, что уже всё упустил и не справлюсь",
+      "answer": "Похоже, основная тревога — не просто страх перед задачами, а ощущение, что ты уже всё упустил и поэтому точно не справишься. В этом звучит и потеря контроля, и страх, что возможностей больше нет. Такое чувство может давить и мешать увидеть, что ещё возможно. Могу спросить: что конкретно кажется упущенным в первую очередь?",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "imperfect_self_program"
+        ],
+        "selection_reason": [
+          "imperfect_self_signal"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_imperfect_self_program": true,
+          "no_diagnosis": true
+        }
+      }
+    },
+    {
+      "case_id": "driver",
+      "mode": "direct",
+      "query": "Мне всё время кажется, что надо стараться сильнее",
+      "answer": "Вы говорите, что у вас «всё время кажется, что надо стараться сильнее» — слышу постоянное ощущение давления и необходимости делать больше, даже когда, возможно, хочется остановиться. Похоже, это не эпизодическое чувство, а фоновая установка, которая сопровождает вас в повседневности. Как именно это проявляется чаще всего — на работе, в отношениях или в чём-то другом?",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "drivers"
+        ],
+        "selection_reason": [
+          "driver_pressure_signal"
+        ],
+        "prompt_block_included": true,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "lens_drivers": true,
+          "no_hard_label": true,
+          "soft_mirror": true
+        }
+      }
+    },
+    {
+      "case_id": "short_support",
+      "mode": "direct",
+      "query": "Я устал, скажи пару спокойных слов без анализа",
+      "answer": "Ты устал. Сейчас не надо ничего разбирать. Можно просто выдохнуть и немного отпустить напряжение.",
+      "philosophy_kernel": {
+        "kernel_version": "neo_philosophy_kernel_v1",
+        "selected_lenses": [
+          "resource_first_contact"
+        ],
+        "selection_reason": [
+          "short_support_request"
+        ],
+        "prompt_block_included": false,
+        "quote_policy": "internal_lens_not_citation",
+        "practice_policy": "gate_required"
+      },
+      "writer_freedom_contract": {
+        "enabled": true,
+        "freedom_level": "guided",
+        "mode_is_hint_not_cage": true,
+        "question_limit": 1,
+        "practice_requires_gate": true
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "no_unsolicited_practice": true,
+          "no_external_surveillance": true,
+          "depth_suppressed": true,
+          "short_answer": true,
+          "no_analysis_lecture": true
+        }
+      }
+    }
+  ]
+}

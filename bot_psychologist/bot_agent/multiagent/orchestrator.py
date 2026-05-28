@@ -29,6 +29,7 @@ from .planner_bridge_compliance_shadow import (
 from .planner_bridge_writer_contract_pilot import (
     build_planner_bridge_writer_contract_pilot_runtime_shadow_v1,
 )
+from .philosophy_kernel import build_philosophy_kernel_runtime_payload
 from .prompt_constraint_pilot_runtime import (
     build_prompt_constraint_pilot_runtime_decision_v1,
 )
@@ -202,6 +203,14 @@ class MultiAgentOrchestrator:
             rag_hits=list(memory_bundle.semantic_hits or []),
             response_mode=str(updated_thread.response_mode or ""),
         )
+        philosophy_kernel_payload = build_philosophy_kernel_runtime_payload(
+            user_message=query,
+            safety_active=bool(updated_thread.safety_active),
+            response_mode=str(updated_thread.response_mode or ""),
+            practice_allowed=bool(
+                dict(knowledge_answer_guard.get("practice_gate", {})).get("practice_allowed", True)
+            ),
+        )
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -247,6 +256,10 @@ class MultiAgentOrchestrator:
             context_package=context_package,
             diagnostic_card=diagnostic_card,
             knowledge_answer_guard=knowledge_answer_guard,
+            philosophy_kernel=philosophy_kernel_payload,
+            writer_freedom_contract=dict(
+                philosophy_kernel_payload.get("writer_freedom_contract", {})
+            ),
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -405,6 +418,52 @@ class MultiAgentOrchestrator:
                     ),
                     "kb_grounding_available": bool(
                         dict(knowledge_answer_guard.get("knowledge_answer", {})).get("kb_grounding_available", False)
+                    ),
+                },
+                "philosophy_kernel": {
+                    "kernel_version": str(philosophy_kernel_payload.get("kernel_version", "")),
+                    "selected_lenses": list(
+                        dict(philosophy_kernel_payload.get("selection", {})).get("selected_lenses", [])
+                        if isinstance(philosophy_kernel_payload.get("selection"), dict)
+                        else []
+                    ),
+                    "selection_reason": list(
+                        dict(philosophy_kernel_payload.get("selection", {})).get("selection_reason", [])
+                        if isinstance(philosophy_kernel_payload.get("selection"), dict)
+                        else []
+                    ),
+                    "prompt_block_included": bool(
+                        dict(philosophy_kernel_payload.get("selection", {})).get("prompt_block_included", False)
+                        if isinstance(philosophy_kernel_payload.get("selection"), dict)
+                        else False
+                    ),
+                    "quote_policy": str(philosophy_kernel_payload.get("quote_policy", "")),
+                    "practice_policy": str(philosophy_kernel_payload.get("practice_policy", "")),
+                },
+                "writer_freedom_contract": {
+                    "enabled": bool(
+                        dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get("enabled", False)
+                    ),
+                    "freedom_level": str(
+                        dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get(
+                            "freedom_level", ""
+                        )
+                    ),
+                    "mode_is_hint_not_cage": bool(
+                        dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get(
+                            "mode_is_hint_not_cage", False
+                        )
+                    ),
+                    "question_limit": int(
+                        dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get(
+                            "question_limit", 1
+                        )
+                        or 1
+                    ),
+                    "practice_requires_gate": bool(
+                        dict(philosophy_kernel_payload.get("writer_freedom_contract", {})).get(
+                            "practice_requires_gate", True
+                        )
                     ),
                 },
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",

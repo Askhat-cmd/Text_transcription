@@ -1,0 +1,37 @@
+﻿PRD-047.1 test/command execution log
+Date: 2026-05-28
+Workspace: C:\My_practice\Text_transcription\bot_psychologist
+
+1) python -m pytest tests/test_philosophy_kernel.py -q
+Result: 9 passed
+
+2) python -m pytest tests/test_writer_freedom_contract.py -q
+Result: 4 passed (warnings: datetime.utcnow deprecation)
+
+3) python -m pytest tests/test_writer_prompt_philosophy_kernel.py -q
+Result: 2 passed (warnings: datetime.utcnow deprecation)
+
+4) python -m pytest tests/test_writer_contract_knowledge_answer.py -q
+Result: 3 passed
+
+5) python -m pytest tests/test_multiagent_trace.py -q
+Result: 11 passed (warnings: sklearn model version mismatch)
+
+6) python -m pytest tests/evaluation -q
+Result: 7 passed
+
+7) python scripts/run_prd_047_1_philosophy_kernel_smoke.py --mode dry
+Result: output written to TO_DO_LIST/logs/PRD-047.1/philosophy_kernel_smoke_dry.json
+Summary: cases_total=5, cases_passed=5, cases_failed=0
+
+8) python scripts/run_prd_047_1_philosophy_kernel_smoke.py --mode direct
+Result: output written to TO_DO_LIST/logs/PRD-047.1/philosophy_kernel_smoke_direct.json
+Summary: cases_total=5, cases_passed=5, cases_failed=0
+
+9) python scripts/run_prd_047_1_philosophy_kernel_smoke.py --mode live
+Result: output written to TO_DO_LIST/logs/PRD-047.1/philosophy_kernel_smoke_live.json
+Summary: live_status=skipped (reason: live backend appears stale or not restarted after PRD-047.1 changes)
+
+10) npm run build (workdir: bot_psychologist/web_ui)
+Result: success (vite build complete)
+Notes: chunk-size warnings and dynamic import warning only.

@@ -234,6 +234,22 @@ class WriterAgent:
         ctx.setdefault("active_line_revoicing_style", "suppressed")
         ctx.setdefault("active_line_repair_mode", "")
         ctx.setdefault("active_line_practice_suppression_active", False)
+        ctx.setdefault("response_planner_version", "response_planner_v1")
+        ctx.setdefault("response_planner_enabled", False)
+        ctx.setdefault("response_planner_next_move", "continue_active_line")
+        ctx.setdefault("response_planner_answer_shape", "compact_direct")
+        ctx.setdefault("response_planner_response_depth", "short")
+        ctx.setdefault("response_planner_target_micro_shift", "")
+        ctx.setdefault("response_planner_should_answer_directly", False)
+        ctx.setdefault("response_planner_question_policy", "none")
+        ctx.setdefault("response_planner_practice_policy", "forbidden")
+        ctx.setdefault("response_planner_revoicing_policy", "suppressed")
+        ctx.setdefault("response_planner_continuity_policy", "continue_active_line")
+        ctx.setdefault("response_planner_safety_priority", False)
+        ctx.setdefault("response_planner_confidence", 0.0)
+        ctx.setdefault("response_planner_rationale", "")
+        ctx.setdefault("response_planner_must_include", [])
+        ctx.setdefault("response_planner_must_avoid", [])
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -363,6 +379,49 @@ class WriterAgent:
             active_line_practice_suppression_active=str(
                 bool(ctx.get("active_line_practice_suppression_active", False))
             ).lower(),
+            response_planner_version=str(ctx.get("response_planner_version", "response_planner_v1")),
+            response_planner_enabled=str(bool(ctx.get("response_planner_enabled", False))).lower(),
+            response_planner_next_move=str(
+                ctx.get("response_planner_next_move", "continue_active_line") or "continue_active_line"
+            ),
+            response_planner_answer_shape=str(
+                ctx.get("response_planner_answer_shape", "compact_direct") or "compact_direct"
+            ),
+            response_planner_response_depth=str(
+                ctx.get("response_planner_response_depth", "short") or "short"
+            ),
+            response_planner_target_micro_shift=str(
+                ctx.get("response_planner_target_micro_shift", "") or ""
+            ),
+            response_planner_should_answer_directly=str(
+                bool(ctx.get("response_planner_should_answer_directly", False))
+            ).lower(),
+            response_planner_question_policy=str(
+                ctx.get("response_planner_question_policy", "none") or "none"
+            ),
+            response_planner_practice_policy=str(
+                ctx.get("response_planner_practice_policy", "forbidden") or "forbidden"
+            ),
+            response_planner_revoicing_policy=str(
+                ctx.get("response_planner_revoicing_policy", "suppressed") or "suppressed"
+            ),
+            response_planner_continuity_policy=str(
+                ctx.get("response_planner_continuity_policy", "continue_active_line")
+                or "continue_active_line"
+            ),
+            response_planner_safety_priority=str(
+                bool(ctx.get("response_planner_safety_priority", False))
+            ).lower(),
+            response_planner_must_include=", ".join(
+                [str(item) for item in list(ctx.get("response_planner_must_include", []) or []) if str(item).strip()]
+            )
+            or "none",
+            response_planner_must_avoid=", ".join(
+                [str(item) for item in list(ctx.get("response_planner_must_avoid", []) or []) if str(item).strip()]
+            )
+            or "none",
+            response_planner_confidence=float(ctx.get("response_planner_confidence", 0.0) or 0.0),
+            response_planner_rationale=str(ctx.get("response_planner_rationale", "") or ""),
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -448,9 +507,14 @@ class WriterAgent:
         active_line_revoicing_allowed = bool(active_line.get("revoicing_allowed", True))
         active_line_should_offer_practice = bool(active_line.get("should_offer_practice", practice_allowed))
         active_line_practice_suppression = bool(active_line.get("practice_suppression_active", False))
+        response_planner = dict(ctx.get("response_planner", {})) if isinstance(ctx.get("response_planner"), dict) else {}
+        planner_question_policy = str(response_planner.get("question_policy", "none") or "none")
+        planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
+        planner_safety_priority = bool(response_planner.get("safety_priority", False))
         lowered_text = text.lower()
 
         has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
+        has_question = "?" in text
         asks_define_known_term = any(marker in lowered_text for marker in _KNOWN_CONCEPT_CLARIFICATION_MARKERS)
         has_external_surveillance_frame = any(marker in lowered_text for marker in _EXTERNAL_SURVEILLANCE_MARKERS)
 
@@ -471,6 +535,20 @@ class WriterAgent:
             or _contains_any(lowered_text, ("шаг", "давай сделаем", "предложу еще"))
         ):
             return "Пожалуйста. Рад, что стало чуть яснее."
+
+        if planner_safety_priority and has_question:
+            return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку."
+
+        if planner_question_policy == "none" and has_question:
+            return re.sub(r"\s*\?+\s*", ". ", text).strip()
+
+        if planner_practice_policy == "forbidden" and has_unsolicited_practice:
+            if active_line_intent == "understand_mechanism":
+                return (
+                    "Сейчас полезнее удержать фокус на механизме: попытка заранее все проконтролировать "
+                    "съедает ресурс еще до старта действия."
+                )
+            return "Сейчас лучше продолжить смысловую линию без перехода к практике."
 
         if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
             if active_line_intent == "correction_of_bot" or active_line_repair_mode:

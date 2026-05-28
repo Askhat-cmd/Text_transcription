@@ -35,6 +35,11 @@ from .prompt_constraint_pilot_runtime import (
     build_prompt_constraint_pilot_runtime_decision_v1,
 )
 from .quality_trace import QUALITY_TRACE_VERSION, build_quality_trace
+from .response_planner import (
+    RESPONSE_PLANNER_VERSION,
+    build_response_planner_decision,
+    build_response_planner_fallback_decision,
+)
 from .thread_storage import thread_storage
 from .writer_prompt_replay import build_writer_prompt_replay_runtime_shadow_v1
 
@@ -221,6 +226,31 @@ class MultiAgentOrchestrator:
             ),
             evidence_turn_ids=[],
         ).to_dict()
+        response_planner_error: str | None = None
+        try:
+            response_planner_state = build_response_planner_decision(
+                user_message=query,
+                state_snapshot=state_snapshot,
+                thread_state=updated_thread,
+                diagnostic_card=None,
+                active_line=active_line_state,
+                knowledge_answer_guard=knowledge_answer_guard,
+                philosophy_kernel=philosophy_kernel_payload,
+                context_package=context_package,
+            ).to_dict()
+        except Exception as exc:  # noqa: BLE001
+            response_planner_error = f"response_planner_build_failed:{exc.__class__.__name__}"
+            response_planner_state = build_response_planner_fallback_decision(
+                reason=response_planner_error,
+                source_signals={
+                    "response_mode": str(updated_thread.response_mode or ""),
+                    "active_line_user_intent": str(active_line_state.get("user_intent", "unknown")),
+                    "practice_gate_allowed": bool(
+                        dict(knowledge_answer_guard.get("practice_gate", {})).get("practice_allowed", True)
+                    ),
+                },
+            ).to_dict()
+            response_planner_state["_fallback_source"] = "orchestrator_exception_fallback"
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -271,6 +301,7 @@ class MultiAgentOrchestrator:
                 philosophy_kernel_payload.get("writer_freedom_contract", {})
             ),
             active_line=active_line_state,
+            response_planner=response_planner_state,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -492,6 +523,9 @@ class MultiAgentOrchestrator:
                     ),
                 },
                 "active_line": dict(active_line_state),
+                "response_planner_version": RESPONSE_PLANNER_VERSION,
+                "response_planner": dict(response_planner_state),
+                "response_planner_error": response_planner_error,
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,
                 "user_profile": {

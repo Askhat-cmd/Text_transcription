@@ -48,6 +48,9 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert "trace" in payload
     assert payload["trace"]["developer_trace_supported"] is True
     assert payload["trace"]["developer_trace_enabled"] is True
+    assert "response_planner" in payload
+    assert payload["response_planner"]["version"] == "response_planner_v1"
+    assert payload["response_planner"]["kind"] == "deterministic"
 
     assert "config_validation_status" in payload["validation"]
     assert isinstance(payload["validation"]["config_validation_status"]["valid"], bool)

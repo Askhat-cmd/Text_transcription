@@ -98,6 +98,13 @@ ACTIVE LINE / CONTINUITY:
 - Если active_line.should_offer_practice=false, не предлагай практику, упражнение, таймер, дыхание или шаг.
 - Если active_line.repair_mode задан, сначала признай сдвиг и вернись к механизму, без новой практики.
 
+RESPONSE PLANNER:
+- Используй response_planner как компас следующего хода (next_move, answer_shape, response_depth).
+- Соблюдай planner question_policy и practice_policy.
+- Не нарушай planner must_avoid.
+- Если planner safety_priority=true, держи короткий safety-grounding ход без углубления.
+- Planner задает форму хода, но не отменяет safety/must_avoid и не убирает живой стиль ответа.
+
 ЖЕСТКИЕ ПРАВИЛА:
 - Отвечай на языке пользователя.
 - Не включай темы из must_avoid.
@@ -189,6 +196,24 @@ revoicing_allowed={active_line_revoicing_allowed}
 revoicing_style={active_line_revoicing_style}
 repair_mode={active_line_repair_mode}
 practice_suppression_active={active_line_practice_suppression_active}
+
+RESPONSE PLANNER:
+response_planner_version={response_planner_version}
+response_planner_enabled={response_planner_enabled}
+next_move={response_planner_next_move}
+answer_shape={response_planner_answer_shape}
+response_depth={response_planner_response_depth}
+target_micro_shift={response_planner_target_micro_shift}
+should_answer_directly={response_planner_should_answer_directly}
+question_policy={response_planner_question_policy}
+practice_policy={response_planner_practice_policy}
+revoicing_policy={response_planner_revoicing_policy}
+continuity_policy={response_planner_continuity_policy}
+safety_priority={response_planner_safety_priority}
+must_include={response_planner_must_include}
+must_avoid={response_planner_must_avoid}
+confidence={response_planner_confidence}
+rationale={response_planner_rationale}
 
 ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
 - главный фокус пользователя;

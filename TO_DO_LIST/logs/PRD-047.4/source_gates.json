@@ -1,0 +1,24 @@
+﻿{
+  "prd_id": "PRD-047.4",
+  "timestamp_utc": "2026-05-28T00:00:00Z",
+  "branch": "main",
+  "workspace_status": {
+    "clean": false,
+    "untracked": [
+      "TO_DO_LIST/PRD-047.4_Response_Planner_v1_RU.md",
+      "TO_DO_LIST/PRD-047.4_TASK_LIST.md"
+    ],
+    "unrelated_changes_detected": false,
+    "notes": "Only current PRD files are untracked at source-gate time."
+  },
+  "baseline_checks": {
+    "prd_047_3_artifacts_exist": true,
+    "active_line_module_exists": true,
+    "writer_contract_active_line_exists": true,
+    "orchestrator_debug_active_line_exists": true,
+    "active_line_live_warning_recorded": true,
+    "botdb_kb_governance_targeted": false
+  },
+  "active_line_live_warning": "Live runner may rely on local active-line fallback when adaptive API returns compatibility trace without embedded debug.active_line field.",
+  "missing_sources": []
+}

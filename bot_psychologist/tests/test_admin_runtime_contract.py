@@ -55,6 +55,10 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     thread_manager = payload["agents"]["thread_manager"]
     assert thread_manager["kind"] == "heuristic"
     assert thread_manager["llm_model_effective"] is False
+    assert payload["response_planner"]["enabled"] is True
+    assert payload["response_planner"]["version"] == "response_planner_v1"
+    assert payload["response_planner"]["kind"] == "deterministic"
+    assert payload["response_planner"]["live_acceptance_requires_api_trace"] is True
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

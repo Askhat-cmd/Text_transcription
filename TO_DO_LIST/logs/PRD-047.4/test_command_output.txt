@@ -1,0 +1,38 @@
+﻿PRD-047.4 command log (UTF-8)
+Date: 2026-05-28
+
+[1] pytest core + regressions
+Command:
+python -m pytest tests/test_active_line.py tests/test_writer_contract_active_line.py tests/test_prd_047_3_active_line_runner.py tests/test_knowledge_answer_routing_guard.py tests/test_writer_prompt_philosophy_kernel.py tests/test_response_planner.py tests/test_writer_contract_response_planner.py tests/test_prd_047_4_response_planner_runner.py tests/test_api_trace_response_planner.py tests/test_multiagent_trace.py tests/test_admin_runtime_contract.py tests/contract/test_admin_runtime_effective_payload_schema_v1041.py tests/ui/test_runtime_tab_response_planner_visible.py -q
+Result:
+60 passed, 20 warnings
+
+[2] pytest evaluation
+Command:
+python -m pytest tests/evaluation -q
+Result:
+7 passed
+
+[3] runner dry
+Command:
+python scripts/run_prd_047_4_response_planner_cases.py --mode dry
+Result:
+summary={"cases_total":14,"cases_passed":14,"cases_failed":0}
+
+[4] runner direct
+Command:
+python scripts/run_prd_047_4_response_planner_cases.py --mode direct
+Result:
+summary={"cases_total":14,"cases_passed":14,"cases_failed":0}
+
+[5] runner live (fresh backend :8012)
+Command:
+python scripts/run_prd_047_4_response_planner_cases.py --mode live --api-base-url http://127.0.0.1:8012/api/v1 --admin-runtime-url http://127.0.0.1:8012/api/admin/runtime/effective
+Result:
+live_status=passed; summary={"cases_total":14,"cases_passed":14,"cases_failed":0}
+
+[6] web ui build
+Command:
+npm run build
+Result:
+PASS (vite build completed); non-blocking chunk-size warnings present.

@@ -43,3 +43,12 @@ Version:
 - `active_line_revoicing_allowed=false` suppresses mechanical question revoicing openers.
 - `active_line_repair_mode` prioritizes acknowledgement + return to mechanism on correction turns.
 - This keeps `mode_is_hint_not_cage` semantics while enforcing continuity-quality boundaries.
+
+## Interaction With Response Planner
+- `response_planner` provides compact per-turn move shape, depth, and policy hints.
+- Freedom contract is still the style/governance frame; planner is the turn-level move selector.
+- Compliance keeps hard limits even with freedom preserved:
+  - `question_policy=none` suppresses follow-up question behavior.
+  - `practice_policy=forbidden` suppresses unsolicited practice steps.
+  - `revoicing_policy=suppressed` blocks mechanical revoicing openers.
+- Writer remains non-scripted: planner is deterministic guidance, not rigid text templating.

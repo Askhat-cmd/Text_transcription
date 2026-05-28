@@ -26,6 +26,7 @@ class WriterContract:
     philosophy_kernel: dict[str, Any] | None = None
     writer_freedom_contract: dict[str, Any] | None = None
     active_line: dict[str, Any] | None = None
+    response_planner: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -52,6 +53,9 @@ class WriterContract:
             ),
             "active_line": (
                 dict(self.active_line) if isinstance(self.active_line, dict) else None
+            ),
+            "response_planner": (
+                dict(self.response_planner) if isinstance(self.response_planner, dict) else None
             ),
             "response_language": self.response_language,
         }
@@ -136,6 +140,9 @@ class WriterContract:
             )
         )
         active_line = dict(self.active_line) if isinstance(self.active_line, dict) else {}
+        response_planner = (
+            dict(self.response_planner) if isinstance(self.response_planner, dict) else {}
+        )
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
         freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
         mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
@@ -254,5 +261,53 @@ class WriterContract:
             ),
             "active_line_practice_suppression_active": bool(
                 active_line.get("practice_suppression_active", False)
+            ),
+            "response_planner": response_planner,
+            "response_planner_version": str(
+                response_planner.get("version", "response_planner_v1")
+            ),
+            "response_planner_enabled": bool(response_planner.get("enabled", False)),
+            "response_planner_next_move": str(
+                response_planner.get("next_move", "continue_active_line") or "continue_active_line"
+            ),
+            "response_planner_answer_shape": str(
+                response_planner.get("answer_shape", "compact_direct") or "compact_direct"
+            ),
+            "response_planner_response_depth": str(
+                response_planner.get("response_depth", "short") or "short"
+            ),
+            "response_planner_target_micro_shift": str(
+                response_planner.get("target_micro_shift", "") or ""
+            ),
+            "response_planner_should_answer_directly": bool(
+                response_planner.get("should_answer_directly", False)
+            ),
+            "response_planner_question_policy": str(
+                response_planner.get("question_policy", "none") or "none"
+            ),
+            "response_planner_practice_policy": str(
+                response_planner.get("practice_policy", "forbidden") or "forbidden"
+            ),
+            "response_planner_revoicing_policy": str(
+                response_planner.get("revoicing_policy", "suppressed") or "suppressed"
+            ),
+            "response_planner_continuity_policy": str(
+                response_planner.get("continuity_policy", "continue_active_line")
+                or "continue_active_line"
+            ),
+            "response_planner_safety_priority": bool(
+                response_planner.get("safety_priority", False)
+            ),
+            "response_planner_confidence": float(
+                response_planner.get("confidence", 0.0) or 0.0
+            ),
+            "response_planner_rationale": str(
+                response_planner.get("rationale", "") or ""
+            ),
+            "response_planner_must_include": list(
+                response_planner.get("must_include", []) or []
+            ),
+            "response_planner_must_avoid": list(
+                response_planner.get("must_avoid", []) or []
             ),
         }

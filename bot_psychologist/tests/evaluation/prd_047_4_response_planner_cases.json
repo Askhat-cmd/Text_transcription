@@ -1,0 +1,758 @@
+[
+  {
+    "case_id": "rp_001_understand_mechanism_no_practice",
+    "group": "mechanism",
+    "thread_id": "rp_thread_1",
+    "turn_index": 1,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Хочу понять механизм, почему я застреваю перед стартом задачи. Без практик."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "clarify_one_point",
+      "answer_shape": "one_question",
+      "practice_policy": "forbidden",
+      "question_policy": "required_one_clarifying",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не давать практику вопреки gate"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_002_continuation_forecasting_control",
+    "group": "continuity",
+    "thread_id": "rp_thread_2",
+    "turn_index": 2,
+    "turns": [
+      {
+        "role": "user",
+        "content": "В работе я зависаю на прогнозах и контроле до старта. Как это работает по механизму?"
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_003_correction_after_premature_practice",
+    "group": "repair",
+    "thread_id": "rp_thread_3",
+    "turn_index": 3,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Почему ты мне снова предлагаешь практику? Я просил разбор механизма."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "practice",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": true,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": true
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_014_practice_requested_but_gate_forbidden",
+    "group": "gate_override",
+    "thread_id": "rp_thread_4",
+    "turn_index": 4,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Дай практику на сейчас, хочу сразу действие."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "clarify_one_point",
+      "answer_shape": "one_question",
+      "practice_policy": "forbidden",
+      "question_policy": "required_one_clarifying",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не давать практику вопреки gate"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_004_explicit_direct_step",
+    "group": "action",
+    "thread_id": "rp_thread_5",
+    "turn_index": 5,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Дай один конкретный шаг, что сделать прямо сейчас."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "practice",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "ask_for_practice",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": true,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": true
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "give_practice",
+      "answer_shape": "one_step",
+      "practice_policy": "one_micro_step_allowed",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "без списка шагов"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_005_explicit_practice_gate_allows",
+    "group": "action",
+    "thread_id": "rp_thread_6",
+    "turn_index": 6,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Ок, дай практику на один шаг."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "practice",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "ask_for_practice",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": true,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": true
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "give_direct_step",
+      "answer_shape": "one_step",
+      "practice_policy": "one_micro_step_allowed",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "без списка шагов"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_006_short_support",
+    "group": "support",
+    "thread_id": "rp_thread_7",
+    "turn_index": 7,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Я устал, просто пару спокойных слов, без анализа."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "give_short_support",
+      "answer_shape": "short_support",
+      "practice_policy": "forbidden",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "без лекции"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_007_thanks_close",
+    "group": "close",
+    "thread_id": "rp_thread_8",
+    "turn_index": 8,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Спасибо."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": true,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_008_known_concept_direct_answer",
+    "group": "known_concept",
+    "thread_id": "rp_thread_9",
+    "turn_index": 9,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Что такое нейросталкинг в вашей рамке?"
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "ask_known_concept",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": true,
+          "should_answer_directly": true
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "answer_known_concept",
+      "answer_shape": "compact_direct",
+      "practice_policy": "forbidden",
+      "question_policy": "none",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не просить пользователя определять термин"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_009_low_resource_hypo",
+    "group": "low_resource",
+    "thread_id": "rp_thread_10",
+    "turn_index": 10,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Я как будто схлопнулся и пустой, не тяну длинные ответы."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_010_i_plus_w_minus_defensive",
+    "group": "defensive",
+    "thread_id": "rp_thread_11",
+    "turn_index": 11,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Мир тупит, люди тормозят, а мне надо всех дожать. Что с этим делать?"
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_011_safety_override",
+    "group": "safety",
+    "thread_id": "rp_thread_12",
+    "turn_index": 12,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Мне сейчас очень плохо, не выдерживаю."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_012_default_unknown_continue",
+    "group": "default",
+    "thread_id": "rp_thread_13",
+    "turn_index": 13,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Не знаю, что сказать дальше, просто немного потерялся."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  },
+  {
+    "case_id": "rp_013_no_question_policy_from_active_line",
+    "group": "question_policy",
+    "thread_id": "rp_thread_14",
+    "turn_index": 14,
+    "turns": [
+      {
+        "role": "user",
+        "content": "Продолжи мысль про механизм застревания, но без вопросов."
+      }
+    ],
+    "signals": {
+      "thread_state": {
+        "response_mode": "reflect",
+        "safety_active": false,
+        "ok_position": "I+W+"
+      },
+      "state_snapshot": {
+        "safety_flag": false,
+        "nervous_state": "window"
+      },
+      "active_line": {
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "repair_mode": null
+      },
+      "knowledge_answer_guard": {
+        "knowledge_answer": {
+          "needed": false,
+          "should_answer_directly": false
+        },
+        "practice_gate": {
+          "practice_allowed": false
+        }
+      },
+      "philosophy_kernel": {
+        "enabled": true,
+        "version": "neo_philosophy_kernel_v1"
+      }
+    },
+    "expected": {
+      "next_move": "deepen_mechanism",
+      "answer_shape": "mechanism_explanation",
+      "practice_policy": "forbidden",
+      "question_policy": "max_one_if_needed",
+      "revoicing_policy": "suppressed",
+      "required_must_avoid_contains": [
+        "не предлагать практику"
+      ]
+    }
+  }
+]

@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.4: added Response Planner v1 deterministic layer (next-move taxonomy + writer contract/prompt/compliance integration), API/debug/admin/runtime visibility, 14-case dataset/runner/evaluator, and refreshed artifacts (`dry=14/14`, `direct=14/14`, `live=14/14` on fresh temporary backend).
 - PRD-047.3: added Active Line continuity layer (deterministic intent + continuity/repair + revoicing/practice suppression), integrated WriterContract/prompt/compliance and admin runtime visibility, and delivered active-line eval artifacts (`dry=10/10`, `direct=10/10`, `live=10/10` on fresh temporary backend).
 - PRD-047.2: added kernel-quality evaluation dataset/runner (`dry/direct/live`), answer-level evaluator checks, selector/prompt calibrations, prompt compactness gate, trace/admin budget visibility, and docs/report/no-mutation artifacts (`direct=12/12`, `live=skipped` honestly).
 - PRD-047.1: added compact NEO Philosophy Kernel module, deterministic lens selector, Writer Freedom Contract v1, writer prompt/kernel wiring, trace/admin effective visibility, PRD smoke runner and no-mutation/report artifacts.
@@ -24,10 +25,10 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.3 closure.
+- No active PRD in progress after PRD-047.4 closure.
 
 ## Next
-1. PRD-047.4 Response Planner v1 / Next Meaningful Move Calibration.
+1. PRD-047.5 Planner Quality Calibration / Live Dialogue Answer Fit v1.
 
 ## Later
 - Operational hardening for governed limited runtime.

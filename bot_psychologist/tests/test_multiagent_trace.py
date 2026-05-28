@@ -225,6 +225,9 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
     assert "prompt_block" not in debug.get("philosophy_kernel", {})
     assert debug.get("writer_freedom_contract", {}).get("mode_is_hint_not_cage") is True
     assert debug.get("writer_freedom_contract", {}).get("practice_requires_gate") is True
+    assert debug.get("response_planner_version") == "response_planner_v1"
+    assert isinstance(debug.get("response_planner"), dict)
+    assert debug.get("response_planner", {}).get("enabled") is True
 
 
 def test_session_store_multiagent_debug_roundtrip() -> None:
@@ -332,6 +335,17 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
             "validator_blocked": False,
             "validator_block_reason": None,
             "validator_quality_flags": [],
+            "response_planner_version": "response_planner_v1",
+            "response_planner": {
+                "version": "response_planner_v1",
+                "enabled": True,
+                "next_move": "deepen_mechanism",
+                "answer_shape": "mechanism_explanation",
+                "practice_policy": "forbidden",
+                "question_policy": "none",
+                "revoicing_policy": "suppressed",
+            },
+            "response_planner_error": None,
             "timings": {
                 "state_analyzer_ms": 100,
                 "thread_manager_ms": 50,
@@ -353,6 +367,9 @@ def test_multiagent_trace_endpoint_returns_200() -> None:
     assert payload["agents"]["writer"]["tokens_used"] == 321
     assert payload["writer_llm"]["system_prompt"] == "sys"
     assert payload["writer_llm"]["api_mode"] == "responses"
+    assert payload["response_planner_version"] == "response_planner_v1"
+    assert payload["response_planner"]["next_move"] == "deepen_mechanism"
+    assert payload["response_planner_error"] is None
     assert payload["memory_context"]["rag_query"] == "hi hello"
     assert "sd_level" not in payload
     assert "user_level" not in payload

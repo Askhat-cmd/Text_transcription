@@ -697,3 +697,15 @@ Context: live dialogue failures after PRD-047.2 showed repeated mechanical revoi
 Decision: introduce `Active Line / Dialogue Continuity v1` as lightweight deterministic layer (`active_line.py`) that computes per-turn intent/continuity/repair/revoicing/practice signals and passes them into Writer contract/prompt/compliance. Diagnostic Center and admin runtime surfaces expose this layer read-only; they do not become a rigid command system for Writer.
 
 Consequences: dialogue continuity behavior becomes reproducible and testable (`dry/direct/live` runners), practice suppression is explicit on mechanism-first turns, correction turns use repair mode, and architecture keeps Writer freedom with bounded deterministic guardrails.
+
+## ADR-062 - Response Planner v1 is deterministic next-meaningful-move layer, not a new answer-writing agent
+
+Status: accepted
+
+Date: 2026-05-28
+
+Context: after PRD-047.3, continuity signals reduced drift, but Writer still needed compact per-turn guidance about answer shape/depth/question/practice behavior to keep one coherent move per turn without turning Writer into a rigid script.
+
+Decision: add `Response Planner v1` as deterministic layer between Active Line and WriterContract. Planner does not call LLMs and does not produce user-facing text; it computes compact move/policy fields (`next_move`, `answer_shape`, `response_depth`, `question_policy`, `practice_policy`, `revoicing_policy`, `must_include`, `must_avoid`) from existing runtime signals. Safety, Knowledge Answer routing, and Practice Gate remain hard boundaries; Writer Freedom Contract remains active as guided style/freedom frame.
+
+Consequences: turn-level move selection becomes reproducible and traceable (`debug/api/admin/runtime`), live acceptance can enforce strict no-fallback planner-trace policy, and future quality work can calibrate answer fit on measurable planner outputs without changing governance authority fields or adding a new LLM agent.

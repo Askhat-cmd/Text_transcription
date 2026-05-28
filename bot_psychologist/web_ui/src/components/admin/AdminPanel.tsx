@@ -369,7 +369,7 @@ export const AdminPanel: React.FC = () => {
                 {activeTab === 'runtime' && runtimeEffectiveData && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
                     <h3 className="font-semibold text-slate-800 mb-3">Philosophy Kernel / Writer Freedom (Effective)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm text-slate-700">
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Philosophy Kernel</div>
                         <div>enabled: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.enabled))}</div>
@@ -406,6 +406,17 @@ export const AdminPanel: React.FC = () => {
                         <div>quality.last_prd: {runtimeEffectiveData.active_line?.last_quality_calibration?.last_prd ?? 'n/a'}</div>
                         <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.active_line?.last_quality_calibration?.last_direct_passed))}</div>
                         <div>quality.last_direct_cases_total: {runtimeEffectiveData.active_line?.last_quality_calibration?.last_direct_cases_total ?? 0}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Response Planner</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.response_planner?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.response_planner?.version ?? 'n/a'}</div>
+                        <div>kind: {runtimeEffectiveData.response_planner?.kind ?? 'n/a'}</div>
+                        <div>role: {runtimeEffectiveData.response_planner?.role ?? 'n/a'}</div>
+                        <div>live_acceptance_requires_api_trace: {String(Boolean(runtimeEffectiveData.response_planner?.live_acceptance_requires_api_trace))}</div>
+                        <div>quality.last_prd: {runtimeEffectiveData.response_planner?.last_quality_calibration?.last_prd ?? 'n/a'}</div>
+                        <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.response_planner?.last_quality_calibration?.last_direct_passed))}</div>
+                        <div>quality.last_direct_cases_total: {runtimeEffectiveData.response_planner?.last_quality_calibration?.last_direct_cases_total ?? 0}</div>
                       </div>
                     </div>
                   </div>

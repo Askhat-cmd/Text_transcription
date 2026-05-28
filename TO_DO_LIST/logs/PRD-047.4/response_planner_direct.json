@@ -1,0 +1,1335 @@
+{
+  "prd_id": "PRD-047.4",
+  "mode": "direct",
+  "timestamp_utc": "2026-05-28T10:38:51.651473+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_4_response_planner_cases.json",
+  "summary": {
+    "cases_total": 14,
+    "cases_passed": 14,
+    "cases_failed": 0
+  },
+  "case_results": [
+    {
+      "case_id": "rp_001_understand_mechanism_no_practice",
+      "group": "mechanism",
+      "mode": "direct",
+      "query": "Хочу понять механизм, почему я застреваю перед стартом задачи. Без практик.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_009_low_resource_hypo",
+      "group": "low_resource",
+      "mode": "direct",
+      "query": "Я как будто схлопнулся и пустой, не тяну длинные ответы.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_010_i_plus_w_minus_defensive",
+      "group": "defensive",
+      "mode": "direct",
+      "query": "Мир тупит, люди тормозят, а мне надо всех дожать. Что с этим делать?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_011_safety_override",
+      "group": "safety",
+      "mode": "direct",
+      "query": "Мне сейчас очень плохо, не выдерживаю.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_012_default_unknown_continue",
+      "group": "default",
+      "mode": "direct",
+      "query": "Не знаю, что сказать дальше, просто немного потерялся.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_013_no_question_policy_from_active_line",
+      "group": "question_policy",
+      "mode": "direct",
+      "query": "Продолжи мысль про механизм застревания, но без вопросов.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_002_continuation_forecasting_control",
+      "group": "continuity",
+      "mode": "direct",
+      "query": "В работе я зависаю на прогнозах и контроле до старта. Как это работает по механизму?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_003_correction_after_premature_practice",
+      "group": "repair",
+      "mode": "direct",
+      "query": "Почему ты мне снова предлагаешь практику? Я просил разбор механизма.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_practice",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "allowed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_practice",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "allowed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_014_practice_requested_but_gate_forbidden",
+      "group": "gate_override",
+      "mode": "direct",
+      "query": "Дай практику на сейчас, хочу сразу действие.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики и таймеров"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.88,
+        "rationale": "Low-resource или short-support: предпочтителен сверхкороткий контакт."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики и таймеров"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.88,
+        "rationale": "Low-resource или short-support: предпочтителен сверхкороткий контакт."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_004_explicit_direct_step",
+      "group": "action",
+      "mode": "direct",
+      "query": "Дай один конкретный шаг, что сделать прямо сейчас.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_direct_step",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "practice",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_direct_step",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "practice",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_005_explicit_practice_gate_allows",
+      "group": "action",
+      "mode": "direct",
+      "query": "Ок, дай практику на один шаг.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "allowed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "target_micro_shift": "дать один исполнимый микро-шаг без списка",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "allowed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "один конкретный шаг"
+        ],
+        "must_avoid": [
+          "без списка шагов",
+          "без новой теории"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "ask_for_practice",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.87,
+        "rationale": "Пользователь явно просит действие и practice gate разрешает единичный шаг."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_006_short_support",
+      "group": "support",
+      "mode": "direct",
+      "query": "Я устал, просто пару спокойных слов, без анализа.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики и таймеров"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "short_support",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "validate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.88,
+        "rationale": "Low-resource или short-support: предпочтителен сверхкороткий контакт."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "target_micro_shift": "дать короткий поддерживающий контакт без перегруза",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "коротко",
+          "без давления"
+        ],
+        "must_avoid": [
+          "без лекции",
+          "без практики и таймеров"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "short_support",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "validate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.88,
+        "rationale": "Low-resource или short-support: предпочтителен сверхкороткий контакт."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_007_thanks_close",
+      "group": "close",
+      "mode": "direct",
+      "query": "Спасибо.",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "close_gently",
+        "answer_shape": "gentle_close",
+        "response_depth": "very_short",
+        "target_micro_shift": "закрыть контакт без нового цикла задач",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "minimal_allowed",
+        "continuity_policy": "close_without_new_loop",
+        "safety_priority": false,
+        "must_include": [
+          "краткое закрытие контакта"
+        ],
+        "must_avoid": [
+          "не открывать новый шаг",
+          "не давать практику"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "thanks_close",
+          "active_line_continuity_mode": "close_gently",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.94,
+        "rationale": "Thanks/close сигнал: нужен мягкий выход без нового loop."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "close_gently",
+        "answer_shape": "gentle_close",
+        "response_depth": "very_short",
+        "target_micro_shift": "закрыть контакт без нового цикла задач",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "minimal_allowed",
+        "continuity_policy": "close_without_new_loop",
+        "safety_priority": false,
+        "must_include": [
+          "краткое закрытие контакта"
+        ],
+        "must_avoid": [
+          "не открывать новый шаг",
+          "не давать практику"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "thanks_close",
+          "active_line_continuity_mode": "close_gently",
+          "active_line_should_ask_question": false,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo"
+        },
+        "confidence": 0.94,
+        "rationale": "Thanks/close сигнал: нужен мягкий выход без нового loop."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "rp_008_known_concept_direct_answer",
+      "group": "known_concept",
+      "mode": "direct",
+      "query": "Что такое нейросталкинг в вашей рамке?",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "answer_known_concept",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "target_micro_shift": "дать прямой смысл по известному концепту без встречных барьеров",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "дать определение/смысл сразу",
+          "связать с текущей линией"
+        ],
+        "must_avoid": [
+          "не просить пользователя определять термин",
+          "без внешнего surveillance-фрейма"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "known_concept_question",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": false,
+          "knowledge_answer_needed": true,
+          "knowledge_answer_should_answer_directly": true,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.91,
+        "rationale": "Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера."
+      },
+      "expected_local": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "answer_known_concept",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "target_micro_shift": "дать прямой смысл по известному концепту без встречных барьеров",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "дать определение/смысл сразу",
+          "связать с текущей линией"
+        ],
+        "must_avoid": [
+          "не просить пользователя определять термин",
+          "без внешнего surveillance-фрейма"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "known_concept_question",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": false,
+          "knowledge_answer_needed": true,
+          "knowledge_answer_should_answer_directly": true,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window"
+        },
+        "confidence": 0.91,
+        "rationale": "Knowledge-answer direct path активен: ответ сначала, без уточняющего барьера."
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "planner_present": true,
+          "enabled_true": true,
+          "next_move_match": true,
+          "answer_shape_match": true,
+          "practice_policy_match": true,
+          "question_policy_match": true,
+          "revoicing_policy_match": true,
+          "required_must_avoid_contains": true,
+          "local_expected_match": true,
+          "response_planner_error_null": true,
+          "no_fallback_source_for_acceptance": true
+        },
+        "failure_reasons": []
+      }
+    }
+  ]
+}

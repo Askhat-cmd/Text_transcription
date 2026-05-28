@@ -542,6 +542,21 @@ async def get_multiagent_trace(
             if isinstance(debug.get("thread_diagnostics"), dict)
             else None
         ),
+        response_planner_version=(
+            str(debug.get("response_planner_version"))
+            if debug.get("response_planner_version") is not None
+            else None
+        ),
+        response_planner=(
+            debug.get("response_planner")
+            if isinstance(debug.get("response_planner"), dict)
+            else None
+        ),
+        response_planner_error=(
+            str(debug.get("response_planner_error"))
+            if debug.get("response_planner_error") is not None
+            else None
+        ),
     )
 
 

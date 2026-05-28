@@ -193,6 +193,20 @@ export interface AdminRuntimeEffectiveResponse {
       artifact_found?: boolean;
     };
   };
+  response_planner?: {
+    enabled?: boolean;
+    version?: string;
+    kind?: string;
+    role?: string;
+    live_acceptance_requires_api_trace?: boolean;
+    last_quality_calibration?: {
+      last_prd?: string;
+      last_direct_passed?: boolean;
+      last_direct_cases_total?: number;
+      last_direct_cases_failed?: number;
+      artifact_found?: boolean;
+    };
+  };
 }
 
 export type AgentId =

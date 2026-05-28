@@ -72,6 +72,7 @@ async def test_writer_prompt_contains_kernel_and_freedom_blocks() -> None:
     assert "mode_is_hint_not_cage=true" in user_prompt
     assert "practice_requires_gate=true" in user_prompt
     assert "hard_boundaries=" in user_prompt
+    assert "RESPONSE PLANNER" in user_prompt
 
 
 @pytest.mark.asyncio

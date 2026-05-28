@@ -40,6 +40,15 @@ Includes:
 - `continuity_mode`
 - `last_quality_calibration`
 
+## Response Planner Effective Block
+Includes:
+- `enabled`
+- `version`
+- `kind`
+- `role`
+- `live_acceptance_requires_api_trace`
+- `last_quality_calibration`
+
 ## Admin UI Surface
 `web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
 - philosophy kernel version/enabled/selected-lenses visibility
@@ -47,5 +56,6 @@ Includes:
 - last quality calibration status
 - writer freedom contract state
 - active line runtime state/calibration summary
+- response planner runtime state/calibration summary
 
 No prompt/source editor is added in this PRD.

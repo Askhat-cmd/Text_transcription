@@ -178,6 +178,21 @@ export interface AdminRuntimeEffectiveResponse {
     question_limit?: number;
     practice_requires_gate?: boolean;
   };
+  active_line?: {
+    enabled?: boolean;
+    version?: string;
+    user_intent?: string;
+    continuity_mode?: string;
+    revoicing_policy?: string;
+    practice_suppression_active?: boolean;
+    last_quality_calibration?: {
+      last_prd?: string;
+      last_direct_passed?: boolean;
+      last_direct_cases_total?: number;
+      last_direct_cases_failed?: number;
+      artifact_found?: boolean;
+    };
+  };
 }
 
 export type AgentId =

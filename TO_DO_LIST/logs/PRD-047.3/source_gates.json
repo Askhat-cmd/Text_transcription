@@ -1,0 +1,31 @@
+﻿{
+  "prd_id": "PRD-047.3",
+  "timestamp_utc": "2026-05-28T12:15:00Z",
+  "git": {
+    "branch": "main",
+    "workspace_dirty_before": true
+  },
+  "checks": {
+    "prd_047_2_artifacts_exist": true,
+    "philosophy_kernel_enabled_path_exists": true,
+    "writer_freedom_contract_exists": true,
+    "practice_gate_exists": true,
+    "admin_runtime_effective_exists": true,
+    "active_line_runtime_effective_visible_on_fresh_backend": true,
+    "live_chat_cases_transcribed_to_sanitized_dataset": true,
+    "no_raw_private_chat_logs_committed": true
+  },
+  "evidence": {
+    "prd_047_2_artifacts": [
+      "TO_DO_LIST/logs/PRD-047.2/kernel_quality_dry.json",
+      "TO_DO_LIST/logs/PRD-047.2/kernel_quality_direct.json",
+      "TO_DO_LIST/logs/PRD-047.2/kernel_quality_trace_samples.json"
+    ],
+    "active_line_dataset": "bot_psychologist/tests/evaluation/prd_047_3_active_line_cases.json",
+    "fresh_backend_probe": {
+      "url": "http://127.0.0.1:8011/api/admin/runtime/effective",
+      "active_line_block_present": true
+    }
+  },
+  "missing_sources": []
+}

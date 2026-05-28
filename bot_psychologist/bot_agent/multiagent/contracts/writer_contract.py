@@ -25,6 +25,7 @@ class WriterContract:
     knowledge_answer_guard: dict[str, Any] | None = None
     philosophy_kernel: dict[str, Any] | None = None
     writer_freedom_contract: dict[str, Any] | None = None
+    active_line: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -48,6 +49,9 @@ class WriterContract:
                 dict(self.writer_freedom_contract)
                 if isinstance(self.writer_freedom_contract, dict)
                 else None
+            ),
+            "active_line": (
+                dict(self.active_line) if isinstance(self.active_line, dict) else None
             ),
             "response_language": self.response_language,
         }
@@ -131,6 +135,7 @@ class WriterContract:
                 else {}
             )
         )
+        active_line = dict(self.active_line) if isinstance(self.active_line, dict) else {}
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
         freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
         mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
@@ -227,4 +232,27 @@ class WriterContract:
             "writer_question_limit": question_limit,
             "practice_requires_gate": practice_requires_gate,
             "writer_freedom_hard_boundaries": freedom_hard_boundaries,
+            "active_line": active_line,
+            "active_line_version": str(active_line.get("version", "active_line_v1")),
+            "active_line_text": str(active_line.get("active_line", "") or ""),
+            "active_line_user_intent": str(active_line.get("user_intent", "unknown") or "unknown"),
+            "active_line_continuity_mode": str(
+                active_line.get("continuity_mode", "continue_existing_line") or "continue_existing_line"
+            ),
+            "active_line_next_meaningful_move": str(
+                active_line.get("next_meaningful_move", "") or ""
+            ),
+            "active_line_should_continue_line": bool(active_line.get("should_continue_line", True)),
+            "active_line_should_ask_question": bool(active_line.get("should_ask_question", False)),
+            "active_line_should_offer_practice": bool(active_line.get("should_offer_practice", False)),
+            "active_line_revoicing_allowed": bool(active_line.get("revoicing_allowed", False)),
+            "active_line_revoicing_style": str(active_line.get("revoicing_style", "suppressed") or "suppressed"),
+            "active_line_repair_mode": (
+                str(active_line.get("repair_mode"))
+                if active_line.get("repair_mode") is not None
+                else ""
+            ),
+            "active_line_practice_suppression_active": bool(
+                active_line.get("practice_suppression_active", False)
+            ),
         }

@@ -369,7 +369,7 @@ export const AdminPanel: React.FC = () => {
                 {activeTab === 'runtime' && runtimeEffectiveData && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
                     <h3 className="font-semibold text-slate-800 mb-3">Philosophy Kernel / Writer Freedom (Effective)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm text-slate-700">
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Philosophy Kernel</div>
                         <div>enabled: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.enabled))}</div>
@@ -394,6 +394,18 @@ export const AdminPanel: React.FC = () => {
                         <div>mode_is_hint_not_cage: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.mode_is_hint_not_cage))}</div>
                         <div>question_limit: {runtimeEffectiveData.writer_freedom_contract?.question_limit ?? 1}</div>
                         <div>practice_requires_gate: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.practice_requires_gate))}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Active Line</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.active_line?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.active_line?.version ?? 'n/a'}</div>
+                        <div>user_intent: {runtimeEffectiveData.active_line?.user_intent ?? 'n/a'}</div>
+                        <div>continuity_mode: {runtimeEffectiveData.active_line?.continuity_mode ?? 'n/a'}</div>
+                        <div>revoicing_policy: {runtimeEffectiveData.active_line?.revoicing_policy ?? 'n/a'}</div>
+                        <div>practice_suppression_active: {String(Boolean(runtimeEffectiveData.active_line?.practice_suppression_active))}</div>
+                        <div>quality.last_prd: {runtimeEffectiveData.active_line?.last_quality_calibration?.last_prd ?? 'n/a'}</div>
+                        <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.active_line?.last_quality_calibration?.last_direct_passed))}</div>
+                        <div>quality.last_direct_cases_total: {runtimeEffectiveData.active_line?.last_quality_calibration?.last_direct_cases_total ?? 0}</div>
                       </div>
                     </div>
                   </div>

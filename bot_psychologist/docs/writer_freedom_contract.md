@@ -36,3 +36,10 @@ Version:
 - Propagated through `WriterContract` prompt context.
 - Trace includes `debug.writer_freedom_contract.prompt_block_chars`.
 - Admin runtime effective exposes read-only freedom contract state.
+
+## Interaction With Active Line
+- Writer freedom remains guided, but continuity constraints come from `active_line` signals.
+- `active_line_should_offer_practice=false` suppresses unsolicited action-step behavior.
+- `active_line_revoicing_allowed=false` suppresses mechanical question revoicing openers.
+- `active_line_repair_mode` prioritizes acknowledgement + return to mechanism on correction turns.
+- This keeps `mode_is_hint_not_cage` semantics while enforcing continuity-quality boundaries.

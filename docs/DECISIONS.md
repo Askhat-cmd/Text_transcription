@@ -685,3 +685,15 @@ Decision: PRD-047.2 adds mandatory acceptance gates:
 - direct-run pass requirement (`12/12`) before acceptance.
 
 Consequences: Philosophy Kernel governance now requires both structural correctness and measurable response quality/compactness; future expansions should build on this gate before dialogue continuity layers.
+
+## ADR-061 - Active Line is a continuity layer; Diagnostic Center observes but does not rigidly command Writer
+
+Status: accepted
+
+Date: 2026-05-28
+
+Context: live dialogue failures after PRD-047.2 showed repeated mechanical revoicing and unsolicited action-step drift even when kernel and practice gates were present.
+
+Decision: introduce `Active Line / Dialogue Continuity v1` as lightweight deterministic layer (`active_line.py`) that computes per-turn intent/continuity/repair/revoicing/practice signals and passes them into Writer contract/prompt/compliance. Diagnostic Center and admin runtime surfaces expose this layer read-only; they do not become a rigid command system for Writer.
+
+Consequences: dialogue continuity behavior becomes reproducible and testable (`dry/direct/live` runners), practice suppression is explicit on mechanism-first turns, correction turns use repair mode, and architecture keeps Writer freedom with bounded deterministic guardrails.

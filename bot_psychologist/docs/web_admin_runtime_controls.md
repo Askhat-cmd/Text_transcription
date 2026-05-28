@@ -30,11 +30,22 @@ Includes:
 - `question_limit`
 - `practice_requires_gate`
 
+## Active Line Effective Block
+Includes:
+- `enabled`
+- `version`
+- `revoicing_policy`
+- `practice_suppression_active`
+- `user_intent`
+- `continuity_mode`
+- `last_quality_calibration`
+
 ## Admin UI Surface
 `web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
 - philosophy kernel version/enabled/selected-lenses visibility
 - prompt budget limits
 - last quality calibration status
 - writer freedom contract state
+- active line runtime state/calibration summary
 
 No prompt/source editor is added in this PRD.

@@ -1,0 +1,226 @@
+{
+  "prd_id": "PRD-047.3",
+  "mode": "live",
+  "samples": [
+    {
+      "mode": "live",
+      "case_id": "a1_open_understand",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "start_new_line",
+        "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+        "should_continue_line": false,
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a2_clarify_forecasting",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "next_meaningful_move": "показать, как прогнозирование и контроль забирают энергию до старта",
+        "should_continue_line": true,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.85,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a3_work_context",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "next_meaningful_move": "показать, как прогнозирование и контроль забирают энергию до старта",
+        "should_continue_line": true,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.85,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a4_delayed_start_tired",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "next_meaningful_move": "показать, как прогнозирование и контроль забирают энергию до старта",
+        "should_continue_line": true,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.85,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a5_user_correction_no_practice",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "возврат к разбору механизма после жалобы на преждевременную практику",
+        "user_intent": "correction_of_bot",
+        "continuity_mode": "repair_and_continue_line",
+        "next_meaningful_move": "признать сдвиг и вернуть фокус на механизм, без новой практики",
+        "should_continue_line": true,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": "acknowledge_and_return_to_mechanism",
+        "evidence_turn_ids": [],
+        "confidence": 0.95,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "a6_thanks_close",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "завершение контакта без нового шага",
+        "user_intent": "thanks_close",
+        "continuity_mode": "close_gently",
+        "next_meaningful_move": "кратко закрыть контакт без нового задания",
+        "should_continue_line": false,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.85,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "d1_known_concept_continuity",
+      "thread_id": "live_thread_a",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "застревание на старте рабочей задачи: прогнозирование и контроль съедают ресурс до действия",
+        "user_intent": "known_concept_question",
+        "continuity_mode": "continue_existing_line",
+        "next_meaningful_move": "связать смысл концепта с текущим узлом диалога",
+        "should_continue_line": true,
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.85,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "c1_explicit_no_practice",
+      "thread_id": "no_practice_thread_c",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "start_new_line",
+        "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+        "should_continue_line": false,
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "b1_explicit_direct_step",
+      "thread_id": "practice_thread_b",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "дать один уместный шаг как продолжение уже понятой линии",
+        "user_intent": "ask_for_direct_step",
+        "continuity_mode": "start_new_line",
+        "next_meaningful_move": "дать один конкретный шаг без списка и лекции",
+        "should_continue_line": false,
+        "should_ask_question": false,
+        "should_offer_practice": true,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": false,
+        "_fallback_source": "local_builder"
+      }
+    },
+    {
+      "mode": "live",
+      "case_id": "d2_short_support",
+      "thread_id": "support_thread_d",
+      "active_line_trace": {
+        "version": "active_line_v1",
+        "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+        "user_intent": "short_support",
+        "continuity_mode": "start_new_line",
+        "next_meaningful_move": "дать короткий поддерживающий контакт без анализа и практики",
+        "should_continue_line": false,
+        "should_ask_question": false,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": true,
+        "_fallback_source": "local_builder"
+      }
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+﻿[
+  {
+    "id": "a1_open_understand",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 1,
+    "query": "Как перестать беспокоиться по мелочам и сосредоточиться на важных делах?",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "start_new_line",
+      "no_practice": true,
+      "no_mechanical_revoicing": true
+    }
+  },
+  {
+    "id": "a2_clarify_forecasting",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 2,
+    "query": "привычка пытаться все спрогнозировать и подстелить соломку заранее, в итоге энергии на нужное мало остается",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "continue_existing_line",
+      "active_line_should_contain_any": ["прогноз", "контрол", "старт"],
+      "no_practice": true,
+      "no_mechanical_revoicing": true
+    }
+  },
+  {
+    "id": "a3_work_context",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 3,
+    "query": "На работе. Я слишком много думаю прежде чем действовать",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "continue_existing_line",
+      "no_practice": true,
+      "no_mechanical_revoicing": true,
+      "question_count_lte": 1
+    }
+  },
+  {
+    "id": "a4_delayed_start_tired",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 4,
+    "query": "да, я откладываю старт, но когда начинаю, чувствую что уже устал",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "continue_existing_line",
+      "no_practice": true,
+      "no_mechanical_revoicing": true,
+      "should_include_any": ["прогноз", "контрол", "энерги", "старт"]
+    }
+  },
+  {
+    "id": "a5_user_correction_no_practice",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 5,
+    "query": "Почему ты мне предлагаешь практику? Я ведь хочу разобраться с ситуацией? что делать, чтобы не застревать на мелочах?",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "correction_of_bot",
+      "continuity_mode": "repair_and_continue_line",
+      "repair_required": true,
+      "no_practice": true,
+      "no_new_practice_after_correction": true
+    }
+  },
+  {
+    "id": "a6_thanks_close",
+    "group": "A",
+    "thread_id": "live_thread_a",
+    "turn_index": 6,
+    "query": "спасибо",
+    "response_mode": "validate",
+    "expected": {
+      "user_intent": "thanks_close",
+      "continuity_mode": "close_gently",
+      "no_practice": true,
+      "no_step_offer": true,
+      "max_answer_chars": 220
+    }
+  },
+  {
+    "id": "b1_explicit_direct_step",
+    "group": "B",
+    "thread_id": "practice_thread_b",
+    "turn_index": 1,
+    "query": "Теперь дай один конкретный шаг, что сделать прямо сейчас",
+    "response_mode": "practice",
+    "expected": {
+      "user_intent": "ask_for_direct_step",
+      "continuity_mode": "start_new_line",
+      "practice_allowed": true,
+      "question_count_lte": 1
+    }
+  },
+  {
+    "id": "c1_explicit_no_practice",
+    "group": "C",
+    "thread_id": "no_practice_thread_c",
+    "turn_index": 1,
+    "query": "Только не предлагай практику, помоги понять сам механизм",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "start_new_line",
+      "no_practice": true,
+      "no_mechanical_revoicing": true
+    }
+  },
+  {
+    "id": "d1_known_concept_continuity",
+    "group": "D",
+    "thread_id": "live_thread_a",
+    "turn_index": 7,
+    "query": "То есть это похоже на нейросталкинг?",
+    "response_mode": "reflect",
+    "expected": {
+      "user_intent": "known_concept_question",
+      "continuity_mode": "continue_existing_line",
+      "no_practice": true,
+      "no_external_surveillance": true,
+      "no_mechanical_revoicing": true
+    }
+  },
+  {
+    "id": "d2_short_support",
+    "group": "D",
+    "thread_id": "support_thread_d",
+    "turn_index": 1,
+    "query": "Я устал, просто побудь со мной коротко",
+    "response_mode": "validate",
+    "expected": {
+      "user_intent": "short_support",
+      "continuity_mode": "start_new_line",
+      "no_practice": true,
+      "short_answer": true,
+      "question_count_lte": 0
+    }
+  }
+]

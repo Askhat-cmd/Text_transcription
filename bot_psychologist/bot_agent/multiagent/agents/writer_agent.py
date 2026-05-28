@@ -9,6 +9,7 @@ from typing import Any, Optional
 
 from ...config import config
 from ...feature_flags import feature_flags
+from ..active_line import starts_with_mechanical_revoicing
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
@@ -43,6 +44,21 @@ _EN_NAME_PATTERNS = (
     re.compile(r"\bi\s+am\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
 )
 _PRACTICE_MARKERS = (
+    "практик",
+    "упражн",
+    "сделай шаг",
+    "сделайте шаг",
+    "сделайте один",
+    "начни одно простое действие",
+    "поставь таймер",
+    "таймер",
+    "60 секунд",
+    "5 минут",
+    "10 минут",
+    "15 минут",
+    "20 минут",
+    "открой документ",
+    "напиши заголовок",
     "положи руку",
     "ладонь",
     "грудь",
@@ -206,6 +222,18 @@ class WriterAgent:
             raise RuntimeError("No LLM client available")
 
         ctx = contract.to_prompt_context()
+        ctx.setdefault("active_line_version", "active_line_v1")
+        ctx.setdefault("active_line_text", "")
+        ctx.setdefault("active_line_user_intent", "unknown")
+        ctx.setdefault("active_line_continuity_mode", "continue_existing_line")
+        ctx.setdefault("active_line_next_meaningful_move", "")
+        ctx.setdefault("active_line_should_continue_line", True)
+        ctx.setdefault("active_line_should_ask_question", False)
+        ctx.setdefault("active_line_should_offer_practice", False)
+        ctx.setdefault("active_line_revoicing_allowed", False)
+        ctx.setdefault("active_line_revoicing_style", "suppressed")
+        ctx.setdefault("active_line_repair_mode", "")
+        ctx.setdefault("active_line_practice_suppression_active", False)
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -317,6 +345,24 @@ class WriterAgent:
             practice_requires_gate=str(bool(ctx.get("practice_requires_gate", True))).lower(),
             writer_freedom_hard_boundaries=", ".join(freedom_hard_boundaries)
             or "no_diagnosis,no_unsolicited_practice",
+            active_line_version=str(ctx.get("active_line_version", "active_line_v1")),
+            active_line_text=str(ctx.get("active_line_text", "") or ""),
+            active_line_user_intent=str(ctx.get("active_line_user_intent", "unknown") or "unknown"),
+            active_line_continuity_mode=str(
+                ctx.get("active_line_continuity_mode", "continue_existing_line")
+            ),
+            active_line_next_meaningful_move=str(
+                ctx.get("active_line_next_meaningful_move", "") or ""
+            ),
+            active_line_should_continue_line=str(bool(ctx.get("active_line_should_continue_line", True))).lower(),
+            active_line_should_ask_question=str(bool(ctx.get("active_line_should_ask_question", False))).lower(),
+            active_line_should_offer_practice=str(bool(ctx.get("active_line_should_offer_practice", False))).lower(),
+            active_line_revoicing_allowed=str(bool(ctx.get("active_line_revoicing_allowed", False))).lower(),
+            active_line_revoicing_style=str(ctx.get("active_line_revoicing_style", "suppressed") or "suppressed"),
+            active_line_repair_mode=str(ctx.get("active_line_repair_mode", "") or ""),
+            active_line_practice_suppression_active=str(
+                bool(ctx.get("active_line_practice_suppression_active", False))
+            ).lower(),
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -396,6 +442,12 @@ class WriterAgent:
         should_answer_directly = bool(knowledge_answer.get("should_answer_directly", False))
         is_greeting = bool(practice_gate.get("is_greeting", False))
         concept = str(knowledge_answer.get("concept", "") or "").strip().lower()
+        active_line = dict(ctx.get("active_line", {})) if isinstance(ctx.get("active_line"), dict) else {}
+        active_line_intent = str(active_line.get("user_intent", "unknown") or "unknown")
+        active_line_repair_mode = str(active_line.get("repair_mode", "") or "")
+        active_line_revoicing_allowed = bool(active_line.get("revoicing_allowed", True))
+        active_line_should_offer_practice = bool(active_line.get("should_offer_practice", practice_allowed))
+        active_line_practice_suppression = bool(active_line.get("practice_suppression_active", False))
         lowered_text = text.lower()
 
         has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
@@ -412,7 +464,41 @@ class WriterAgent:
         # Low-resource contact: keep response short and do not insert practice instructions.
         if _contains_any(lowered_user, _LOW_RESOURCE_NO_PRACTICE_MARKERS):
             if has_unsolicited_practice or len(text) > 280 or "?" in text:
-                return "Я рядом. Сейчас не нужно ничего разбирать. Просто побудь немного в тишине и опоре."
+                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+
+        if active_line_intent == "thanks_close" and (
+            has_unsolicited_practice
+            or _contains_any(lowered_text, ("шаг", "давай сделаем", "предложу еще"))
+        ):
+            return "Пожалуйста. Рад, что стало чуть яснее."
+
+        if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
+            if active_line_intent == "correction_of_bot" or active_line_repair_mode:
+                return (
+                    "Да, ты прав: я слишком рано сдвинулся в действие. "
+                    "Тут важнее вернуться к механизму застревания и его разбору."
+                )
+            if active_line_intent == "understand_mechanism":
+                return (
+                    "Здесь важнее увидеть механизм: прогнозирование и контроль пытаются снизить риск, "
+                    "но забирают ресурс еще до начала действия."
+                )
+            return "Сейчас лучше остаться в разборе смысла и механизма, без перехода к действиям."
+
+        if not active_line_revoicing_allowed and starts_with_mechanical_revoicing(text):
+            if active_line_intent == "correction_of_bot" or active_line_repair_mode:
+                return (
+                    "Да, здесь я сдвинулся не туда. Вернусь к сути: не к практике, "
+                    "а к механизму, из-за которого ты застреваешь."
+                )
+            if active_line_intent == "understand_mechanism":
+                return (
+                    "Смысловой узел тут не в пересказе вопроса, а в том, "
+                    "как попытка заранее обезопасить старт съедает энергию до действия."
+                )
+            parts = re.split(r"(?<=[.!?])\s+", text, maxsplit=1)
+            if len(parts) == 2 and parts[1].strip():
+                return parts[1].strip()
 
         # Known concept answer-first path: enforce direct internal meaning framing.
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):

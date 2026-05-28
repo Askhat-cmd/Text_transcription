@@ -504,6 +504,39 @@ def _load_prd_047_2_quality_calibration_status() -> dict[str, Any]:
         }
 
 
+def _load_prd_047_3_active_line_calibration_status() -> dict[str, Any]:
+    repo_root = Path(__file__).resolve().parents[2]
+    artifact_path = repo_root / "TO_DO_LIST" / "logs" / "PRD-047.3" / "active_line_direct.json"
+    if not artifact_path.exists():
+        return {
+            "last_prd": "PRD-047.3",
+            "last_direct_passed": False,
+            "last_direct_cases_total": 0,
+            "last_direct_cases_failed": 0,
+            "artifact_found": False,
+        }
+    try:
+        payload = json.loads(artifact_path.read_text(encoding="utf-8"))
+        summary = dict(payload.get("summary", {}))
+        total = int(summary.get("cases_total", 0) or 0)
+        failed = int(summary.get("cases_failed", 0) or 0)
+        return {
+            "last_prd": "PRD-047.3",
+            "last_direct_passed": total > 0 and failed == 0,
+            "last_direct_cases_total": total,
+            "last_direct_cases_failed": failed,
+            "artifact_found": True,
+        }
+    except Exception:
+        return {
+            "last_prd": "PRD-047.3",
+            "last_direct_passed": False,
+            "last_direct_cases_total": 0,
+            "last_direct_cases_failed": 0,
+            "artifact_found": False,
+        }
+
+
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
@@ -515,6 +548,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     pipeline_version = str(getattr(orchestrator, "pipeline_version", "multiagent_v1") or "multiagent_v1")
     compatibility_payload = _compatibility_runtime_payload()
     quality_calibration = _load_prd_047_2_quality_calibration_status()
+    active_line_calibration = _load_prd_047_3_active_line_calibration_status()
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -591,6 +625,15 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "mode_is_hint_not_cage": True,
             "question_limit": 1,
             "practice_requires_gate": True,
+        },
+        "active_line": {
+            "enabled": True,
+            "version": "active_line_v1",
+            "revoicing_policy": "suppress_mechanical_revoicing",
+            "practice_suppression_active": True,
+            "user_intent": "runtime_per_turn",
+            "continuity_mode": "runtime_per_turn",
+            "last_quality_calibration": active_line_calibration,
         },
         "diagnostic_center_control": build_diagnostic_center_effective_payload(),
     }

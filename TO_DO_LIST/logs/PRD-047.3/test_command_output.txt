@@ -1,0 +1,42 @@
+﻿PRD-047.3 test command output (2026-05-28)
+
+python -m pytest tests/test_active_line.py -q
+-> 8 passed
+
+python -m pytest tests/test_writer_contract_active_line.py -q
+-> 4 passed
+
+python -m pytest tests/test_prd_047_3_active_line_runner.py -q
+-> 5 passed
+
+python -m pytest tests/test_prd_047_2_kernel_quality_runner.py -q
+-> 8 passed
+
+python -m pytest tests/test_knowledge_answer_routing_guard.py -q
+-> 9 passed
+
+python -m pytest tests/test_writer_prompt_philosophy_kernel.py -q
+-> 3 passed
+
+python -m pytest tests/test_multiagent_trace.py -q
+-> 11 passed
+
+python -m pytest tests/evaluation -q
+-> 7 passed
+
+python scripts/run_prd_047_3_active_line_cases.py --mode dry
+-> summary: 10/10 passed
+
+python scripts/run_prd_047_3_active_line_cases.py --mode direct
+-> summary: 10/10 passed
+
+python scripts/run_prd_047_3_active_line_cases.py --mode live --api-base-url http://127.0.0.1:8011/api/v1 --admin-runtime-url http://127.0.0.1:8011/api/admin/runtime/effective
+-> live_status=passed, summary: 10/10 passed
+
+npm run build
+-> success (vite build completed)
+
+Warnings observed:
+- DeprecationWarning: datetime.utcnow in tests.
+- sklearn model version mismatch warnings in multiagent trace tests.
+- vite chunk-size warning (>500kB) in web_ui build.

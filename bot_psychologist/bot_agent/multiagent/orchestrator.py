@@ -14,6 +14,7 @@ from .agents.state_analyzer import state_analyzer_agent
 from .agents.thread_manager import THREAD_DIAGNOSTICS_VERSION, thread_manager_agent
 from .agents.validator_agent import validator_agent
 from .agents.writer_agent import writer_agent
+from .active_line import build_active_line_state
 from .context_assembly import (
     CONTEXT_ASSEMBLY_TRACE_VERSION,
     build_context_assembly_package_v1,
@@ -211,6 +212,15 @@ class MultiAgentOrchestrator:
                 dict(knowledge_answer_guard.get("practice_gate", {})).get("practice_allowed", True)
             ),
         )
+        active_line_state = build_active_line_state(
+            user_message=query,
+            conversation_context=str(memory_bundle.conversation_context or ""),
+            response_mode=str(updated_thread.response_mode or ""),
+            practice_allowed=bool(
+                dict(knowledge_answer_guard.get("practice_gate", {})).get("practice_allowed", True)
+            ),
+            evidence_turn_ids=[],
+        ).to_dict()
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -260,6 +270,7 @@ class MultiAgentOrchestrator:
             writer_freedom_contract=dict(
                 philosophy_kernel_payload.get("writer_freedom_contract", {})
             ),
+            active_line=active_line_state,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -480,6 +491,7 @@ class MultiAgentOrchestrator:
                         str(philosophy_kernel_payload.get("writer_freedom_prompt_block", "") or "")
                     ),
                 },
+                "active_line": dict(active_line_state),
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,
                 "user_profile": {

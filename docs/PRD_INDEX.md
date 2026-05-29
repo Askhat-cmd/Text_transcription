@@ -2,7 +2,7 @@
 
 | PRD | Название | Статус | Commit | Что изменилось | Отчёт |
 | --- | --- | --- | --- | --- | --- |
-| PRD-047.9 | MVP Context Unclamp + Unified Adaptive Dialogue Policy v1 | passed | pending | unified dialogue policy authority resolver, recency-preserved context unclamp, practice-overview routing/planner shape, admin effective policy visibility, runner/test pack with mandatory live acceptance (`dry/direct/live=passed` on fresh backend `:8016`) | TO_DO_LIST/reports/PRD-047.9_IMPLEMENTATION_REPORT.md |
+| PRD-047.9 | MVP Context Unclamp + Unified Adaptive Dialogue Policy v1 | passed | 5463c9c | unified dialogue policy authority resolver, recency-preserved context unclamp, practice-overview routing/planner shape, admin effective policy visibility, runner/test pack with mandatory live acceptance (`dry/direct/live=passed` on fresh backend `:8016`) | TO_DO_LIST/reports/PRD-047.9_IMPLEMENTATION_REPORT.md |
 | PRD-047.7 | Guided Live User Testing Protocol / Human Feedback Capture v1 | passed | 19013ba | added guided live scenario set (18), sanitized feedback schema/storage, CLI capture, summary builder, dry/live smoke runner, admin/web runtime read-only visibility and feedback artifacts | TO_DO_LIST/reports/PRD-047.7_IMPLEMENTATION_REPORT.md |
 | PRD-047.6 | Planner Runtime Drift Guard / Stability Envelope | passed | ba39e23 | added observe-only `planner_drift_guard_v1` (deterministic planner-vs-answer checks, rolling monitor, trace/debug/admin visibility, 32-case dataset + dry/direct/live replay artifacts, strict live no-fallback acceptance on fresh backend `:8015`) | TO_DO_LIST/reports/PRD-047.6_IMPLEMENTATION_REPORT.md |
 | PRD-047.5-HF1 | Answer-Fit Evaluator False-Positive Repair + Safety-Adjacent Compliance | passed | 956cf67 | closed false-positive class for `stabilize_safety/safety_grounding`, tightened strict evaluator (`question/practice/shape`) and minimal writer compliance; refreshed HF1 artifacts (`dry=26/26`, `direct=26/26`, `live=26/26` on fresh temporary backend `:8014`) | TO_DO_LIST/reports/PRD-047.5-HF1_IMPLEMENTATION_REPORT.md |
@@ -126,3 +126,4 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 - prd_id: PRD-046.1.35-HF4
 - commit_hash: 3a3c6a32a0c29551440432c0a266ab7cbab25b20
 - push_status: pushed_to_origin_main
+

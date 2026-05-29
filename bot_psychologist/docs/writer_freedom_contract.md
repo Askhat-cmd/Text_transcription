@@ -74,3 +74,9 @@ Version:
   - trace/debug/admin visibility;
   - replay artifact evidence.
 - Drift guard does not block or replace user-visible final answer.
+
+## PRD-047.9 Unified Adaptive Policy Alignment
+- `mvp_free_dialogue` remains a developer-local preset within one runtime path.
+- In MVP profile, explicit user request for explanation/overview/examples has higher practical authority than advisory planner/diagnostic constraints, while minimal safety baseline stays mandatory.
+- Writer prompt now receives explicit `MVP FREE DIALOGUE OVERRIDES` block and context diagnostics (`context_budget_chars`, truncation flags, preserved recent turns counters).
+- Context assembly is recency-preserving: latest turns are kept first within profile budget; old-prefix clipping (`[:2000]`) is removed from writer prompt path.

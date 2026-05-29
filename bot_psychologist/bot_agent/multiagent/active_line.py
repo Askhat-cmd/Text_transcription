@@ -12,6 +12,8 @@ ACTIVE_LINE_VERSION = "active_line_v1"
 USER_INTENTS = {
     "understand_mechanism",
     "ask_for_practice",
+    "ask_for_practice_catalog",
+    "ask_for_practice_explanation",
     "ask_for_direct_step",
     "short_support",
     "known_concept_question",
@@ -37,6 +39,14 @@ _UNDERSTAND_RE = re.compile(
 )
 _ASK_PRACTICE_RE = re.compile(
     r"(практик\w+|упражн\w+)",
+    re.IGNORECASE,
+)
+_ASK_PRACTICE_CATALOG_RE = re.compile(
+    r"(какие\s+практик\w+|какие\s+способ\w+|какие\s+вариант\w+|какие\s+направлен\w+)",
+    re.IGNORECASE,
+)
+_ASK_PRACTICE_EXPLANATION_RE = re.compile(
+    r"(объясни\s+практик\w+|как\s+применя\w+|как\s+это\s+видеть)",
     re.IGNORECASE,
 )
 _ASK_DIRECT_STEP_RE = re.compile(
@@ -104,6 +114,10 @@ def classify_user_intent(user_message: str) -> str:
         return "understand_mechanism"
     if _ASK_DIRECT_STEP_RE.search(message):
         return "ask_for_direct_step"
+    if _ASK_PRACTICE_CATALOG_RE.search(message):
+        return "ask_for_practice_catalog"
+    if _ASK_PRACTICE_EXPLANATION_RE.search(message):
+        return "ask_for_practice_explanation"
     if _ASK_PRACTICE_RE.search(message):
         return "ask_for_practice"
     if _SHORT_SUPPORT_RE.search(message):
@@ -129,6 +143,8 @@ def _build_active_line_text(*, message: str, context: str, intent: str) -> str:
         return "связать известный концепт с текущей линией разговора без перезапуска"
     if intent in {"understand_mechanism", "short_support"}:
         return "помочь увидеть механизм происходящего без ухода в практику"
+    if intent in {"ask_for_practice_catalog", "ask_for_practice_explanation"}:
+        return "дать обзор практических направлений и объяснить применение без сжатия в один шаг"
     if intent in {"ask_for_practice", "ask_for_direct_step"}:
         return "дать один уместный шаг как продолжение уже понятой линии"
     return "продолжить текущую смысловую линию без механического пересказа"
@@ -141,6 +157,10 @@ def _build_next_move(*, intent: str, message: str, context: str) -> str:
         return "кратко закрыть контакт без нового задания"
     if intent == "ask_for_direct_step":
         return "дать один конкретный шаг без списка и лекции"
+    if intent == "ask_for_practice_catalog":
+        return "дать обзор нескольких практических направлений без редукции к одному шагу"
+    if intent == "ask_for_practice_explanation":
+        return "объяснить практические варианты и где какой применять"
     if intent == "ask_for_practice":
         return "дать короткую практику только в пределах одного шага"
     if intent == "known_concept_question":
@@ -184,12 +204,23 @@ def build_active_line_state(
     should_offer_practice = (
         intent in {"ask_for_practice", "ask_for_direct_step"} and practice_allowed and not practice_forbidden
     )
-    if intent in {"understand_mechanism", "correction_of_bot", "thanks_close", "short_support"}:
+    if intent in {
+        "understand_mechanism",
+        "correction_of_bot",
+        "thanks_close",
+        "short_support",
+        "ask_for_practice_catalog",
+        "ask_for_practice_explanation",
+    }:
         should_offer_practice = False
     if response_mode == "safe_override":
         should_offer_practice = True
 
-    should_ask_question = intent in {"understand_mechanism", "known_concept_question"} and not bool(
+    should_ask_question = intent in {
+        "understand_mechanism",
+        "known_concept_question",
+        "ask_for_practice_explanation",
+    } and not bool(
         _FORECASTING_WORK_RE.search(message)
     )
     if intent in {"thanks_close", "short_support", "correction_of_bot"}:

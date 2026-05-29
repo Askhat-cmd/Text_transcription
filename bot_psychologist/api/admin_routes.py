@@ -25,6 +25,7 @@ from bot_agent.multiagent.orchestrator import orchestrator
 from bot_agent.multiagent.dialogue_policy import (
     ALLOWED_DIALOGUE_PROFILES,
     DIALOGUE_PROFILE_MVP_FREE,
+    build_effective_dialogue_policy,
     normalize_dialogue_profile,
 )
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
@@ -655,6 +656,13 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
     guided_live_testing_status = _load_prd_047_7_guided_live_testing_status()
     dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
+    effective_dialogue_policy = build_effective_dialogue_policy(
+        profile=dialogue_profile,
+        user_message="",
+        state_snapshot={"safety_flag": False},
+        thread_state={"safety_active": False, "response_mode": "reflect"},
+        knowledge_answer_guard={},
+    )
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -727,7 +735,11 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
         "writer_freedom_contract": {
             "enabled": True,
             "version": WRITER_FREEDOM_CONTRACT_VERSION,
-            "freedom_level": "mvp_free" if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else "guided",
+            "freedom_level": (
+                "mvp_free"
+                if str(effective_dialogue_policy.get("writer_autonomy", "")) == "high"
+                else "guided"
+            ),
             "mode_is_hint_not_cage": True,
             "question_limit": 1,
             "practice_requires_gate": True,
@@ -735,6 +747,33 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "writer_target_tokens_default": 700 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 300,
             "writer_target_tokens_expanded": 1500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 700,
             "writer_allow_long_answer": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+        },
+        "dialogue_policy": {
+            "profile": str(effective_dialogue_policy.get("profile", dialogue_profile)),
+            "writer_autonomy": str(effective_dialogue_policy.get("writer_autonomy", "guided")),
+            "planner_authority": str(effective_dialogue_policy.get("planner_authority", "guided")),
+            "diagnostic_card_authority": str(
+                effective_dialogue_policy.get("diagnostic_card_authority", "guided")
+            ),
+            "writer_move_authority": str(
+                effective_dialogue_policy.get("writer_move_authority", "guided")
+            ),
+            "active_line_authority": str(
+                effective_dialogue_policy.get("active_line_authority", "guided")
+            ),
+            "context_budget_chars": int(
+                effective_dialogue_policy.get("context_budget_chars", 2800) or 2800
+            ),
+            "allow_numbered_lists": bool(
+                effective_dialogue_policy.get("allow_numbered_lists", False)
+            ),
+            "allow_examples": bool(effective_dialogue_policy.get("allow_examples", False)),
+            "allow_practice_catalog": bool(
+                effective_dialogue_policy.get("allow_practice_catalog", False)
+            ),
+            "writer_runtime_max_tokens_effective": (
+                2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600
+            ),
         },
         "dialogue_profile": {
             "value": dialogue_profile,

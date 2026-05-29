@@ -8,7 +8,11 @@ from typing import Any
 
 from .dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
+    detect_examples_request,
     detect_expansion_request,
+    detect_explicit_one_step_request,
+    detect_numbered_list_request,
+    detect_practice_overview_request,
     detect_repair_and_expand_request,
     detect_short_support_request,
     normalize_dialogue_profile,
@@ -27,6 +31,7 @@ NEXT_MOVES = {
     "stabilize_safety",
     "clarify_one_point",
     "continue_active_line",
+    "answer_practice_overview",
 }
 
 ANSWER_SHAPES = {
@@ -42,15 +47,17 @@ ANSWER_SHAPES = {
     "expanded_explanation",
     "example_driven_explanation",
     "repair_and_expand",
+    "practice_catalog_explanation",
 }
 
 RESPONSE_DEPTHS = {"very_short", "short", "medium", "long", "deep"}
-QUESTION_POLICIES = {"none", "max_one_if_needed", "required_one_clarifying"}
+QUESTION_POLICIES = {"none", "max_one_if_needed", "required_one_clarifying", "optional_none"}
 PRACTICE_POLICIES = {
     "forbidden",
     "allowed_if_explicit",
     "one_micro_step_allowed",
     "required_for_safety_or_grounding",
+    "overview_allowed",
 }
 REVOICING_POLICIES = {"suppressed", "minimal_allowed", "allowed"}
 CONTINUITY_POLICIES = {
@@ -103,6 +110,13 @@ _MECHANISM_MARKERS = (
     "почему застреваю",
     "как это работает",
 )
+_APPLICATION_MARKERS = (
+    "как применять",
+    "как применить",
+    "как его можно применять",
+    "как это применять",
+    "в жизни",
+)
 _CLOSE_MARKERS = (
     "спасибо",
     "благодарю",
@@ -111,6 +125,8 @@ _CLOSE_MARKERS = (
 )
 _EXPLICIT_STEP_MARKERS = (
     "один шаг",
+    "один конкретный шаг",
+    "один микро-шаг",
     "что сделать прямо сейчас",
     "что делать прямо сейчас",
     "хочу действие",
@@ -120,6 +136,13 @@ _EXPLICIT_PRACTICE_MARKERS = (
     "практик",
     "упражн",
     "дай практику",
+)
+_PRACTICE_OVERVIEW_MARKERS = (
+    "какие практики",
+    "какие способы",
+    "какие варианты",
+    "какие направления",
+    "как это видеть",
 )
 _NEGATED_PRACTICE_PATTERNS = (
     r"\bбез\s+(?:перехода\s+в\s+)?практик\w*",
@@ -226,13 +249,15 @@ def detect_explicit_practice_or_step_request(user_message: str) -> dict[str, boo
     text = _normalize(user_message)
     wants_step = _contains_any(text, _EXPLICIT_STEP_MARKERS)
     has_practice_marker = _contains_any(text, _EXPLICIT_PRACTICE_MARKERS)
+    wants_practice_overview = _contains_any(text, _PRACTICE_OVERVIEW_MARKERS)
     practice_negated = any(re.search(pattern, text) for pattern in _NEGATED_PRACTICE_PATTERNS)
-    wants_practice = has_practice_marker and not practice_negated
+    wants_practice = has_practice_marker and not practice_negated and not wants_practice_overview
     wants_action = wants_step or wants_practice
     return {
         "wants_step": wants_step,
         "wants_practice": wants_practice,
         "wants_action": wants_action,
+        "wants_practice_overview": wants_practice_overview,
     }
 
 
@@ -360,6 +385,7 @@ def build_response_planner_decision(
     explicit_action_requested = bool(explicit_action.get("wants_action", False))
     explicit_step_requested = bool(explicit_action.get("wants_step", False))
     explicit_practice_requested = bool(explicit_action.get("wants_practice", False))
+    explicit_practice_overview_requested = bool(explicit_action.get("wants_practice_overview", False))
     has_self_harm_marker = _contains_any(message, _SELF_HARM_MARKERS)
     dialogue_policy_payload = dict(dialogue_policy or {})
     dialogue_profile = normalize_dialogue_profile(dialogue_policy_payload.get("profile", "safe_guided"))
@@ -369,6 +395,21 @@ def build_response_planner_decision(
     ) or detect_repair_and_expand_request(message)
     active_concept = str(dialogue_policy_payload.get("active_concept", "") or "").strip().lower()
     explicit_short_support = detect_short_support_request(message)
+    practice_overview_requested = bool(
+        dialogue_policy_payload.get("practice_overview_requested", False)
+    ) or detect_practice_overview_request(message)
+    explicit_one_step_requested = bool(
+        dialogue_policy_payload.get("explicit_one_step_requested", False)
+    ) or detect_explicit_one_step_request(message)
+    examples_requested = bool(dialogue_policy_payload.get("examples_requested", False)) or detect_examples_request(message)
+    numbered_list_requested = bool(
+        dialogue_policy_payload.get("numbered_list_requested", False)
+    ) or detect_numbered_list_request(message)
+    application_requested = _contains_any(message, _APPLICATION_MARKERS)
+    active_line_stale = bool(
+        practice_overview_requested
+        and intent not in {"ask_for_practice", "ask_for_practice_catalog", "ask_for_practice_explanation"}
+    )
 
     safety_priority = bool(safety_active or safety_flag or response_mode == "safe_override")
     revoicing_policy = "allowed" if revoicing_allowed else "suppressed"
@@ -399,12 +440,47 @@ def build_response_planner_decision(
         "explicit_action_requested": explicit_action_requested,
         "explicit_step_requested": explicit_step_requested,
         "explicit_practice_requested": explicit_practice_requested,
+        "explicit_practice_overview_requested": explicit_practice_overview_requested,
         "dialogue_profile": dialogue_profile,
         "expansion_requested": expansion_requested,
         "repair_and_expand_requested": repair_and_expand_requested,
         "active_concept": active_concept,
         "explicit_short_support": explicit_short_support,
+        "practice_overview_requested": practice_overview_requested,
+        "explicit_one_step_requested": explicit_one_step_requested,
+        "examples_requested": examples_requested,
+        "numbered_list_requested": numbered_list_requested,
+        "application_requested": application_requested,
+        "active_line_stale": active_line_stale,
     }
+
+    if (
+        dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+        and practice_overview_requested
+        and not explicit_one_step_requested
+        and not safety_priority
+    ):
+        return _build_decision(
+            next_move="answer_practice_overview",
+            answer_shape="practice_catalog_explanation",
+            response_depth="long",
+            target_micro_shift="дать обзор нескольких практических направлений, а не один микрошаг",
+            should_answer_directly=True,
+            question_policy="optional_none",
+            practice_policy="overview_allowed",
+            revoicing_policy="suppressed",
+            continuity_policy="continue_active_line",
+            safety_priority=False,
+            must_include=[
+                "дать минимум 3 практических направления",
+                "объяснить зачем нужна каждая практика",
+                "добавить пример применения",
+            ],
+            must_avoid=["не сводить к одному микрошагу"],
+            source_signals=source_signals,
+            confidence=0.95,
+            rationale="MVP free dialogue: practice overview request must not collapse into one-step action.",
+        )
 
     if (
         dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
@@ -566,7 +642,65 @@ def build_response_planner_decision(
             rationale="Low-resource контур: предпочтителен сверхкороткий контакт.",
         )
 
+    if explicit_one_step_requested:
+        if practice_allowed:
+            return _build_decision(
+                next_move="give_direct_step",
+                answer_shape="one_step",
+                response_depth="short",
+                target_micro_shift="дать один исполнимый микро-шаг без списка",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="one_micro_step_allowed",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["один конкретный шаг"],
+                must_avoid=["без списка шагов", "без новой теории"],
+                source_signals=source_signals,
+                confidence=0.92,
+                rationale="Explicit one-step request overrides broader concept/planner expansion in current turn.",
+            )
+        return _build_decision(
+            next_move="clarify_one_point",
+            answer_shape="one_question",
+            response_depth="short",
+            target_micro_shift="удержать линию без практики и уточнить один нужный фокус",
+            should_answer_directly=False,
+            question_policy="required_one_clarifying",
+            practice_policy="forbidden",
+            revoicing_policy="suppressed",
+            continuity_policy="continue_active_line",
+            safety_priority=False,
+            must_include=["один уточняющий вопрос по контексту"],
+            must_avoid=["не давать практику вопреки gate"],
+            source_signals=source_signals,
+            confidence=0.86,
+            rationale="Explicit one-step request present but practice gate blocks direct action.",
+        )
+
     if should_answer_directly:
+        if (
+            dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+            and (expansion_requested or examples_requested or numbered_list_requested or application_requested)
+        ):
+            return _build_decision(
+                next_move="answer_known_concept",
+                answer_shape="concept_explanation_full",
+                response_depth="deep",
+                target_micro_shift="дать определение, объяснение, пример и применение без сжатия",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="allowed_if_explicit",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["дать определение", "дать пример", "показать применение"],
+                must_avoid=["не сводить ответ к одной короткой формулировке"],
+                source_signals=source_signals,
+                confidence=0.93,
+                rationale="MVP known concept with application/example request needs full/deep explanation.",
+            )
         return _build_decision(
             next_move="answer_known_concept",
             answer_shape="compact_direct",

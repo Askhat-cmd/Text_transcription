@@ -24,6 +24,7 @@ from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
 from .dialogue_policy import (
     apply_active_concept_continuation,
+    build_effective_dialogue_policy,
     detect_expansion_request,
     detect_repair_and_expand_request,
     normalize_dialogue_profile,
@@ -237,13 +238,16 @@ class MultiAgentOrchestrator:
         if active_concept:
             updated_thread.active_frame = dict(updated_thread.active_frame or {})
             updated_thread.active_frame["active_concept"] = active_concept
-        dialogue_policy = {
-            "profile": dialogue_profile,
-            "expansion_requested": detect_expansion_request(query),
-            "repair_and_expand_requested": detect_repair_and_expand_request(query),
-            "active_concept": active_concept,
-            "planner_is_advisory": dialogue_profile == "mvp_free_dialogue",
-        }
+        dialogue_policy = build_effective_dialogue_policy(
+            profile=dialogue_profile,
+            user_message=query,
+            state_snapshot=state_snapshot,
+            thread_state=updated_thread,
+            knowledge_answer_guard=knowledge_answer_guard,
+        )
+        dialogue_policy["expansion_requested"] = detect_expansion_request(query)
+        dialogue_policy["repair_and_expand_requested"] = detect_repair_and_expand_request(query)
+        dialogue_policy["active_concept"] = active_concept
         philosophy_kernel_payload = build_philosophy_kernel_runtime_payload(
             user_message=query,
             safety_active=bool(updated_thread.safety_active),

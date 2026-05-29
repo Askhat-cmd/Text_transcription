@@ -118,3 +118,14 @@ No admin editing surface is added in this PRD.
   - `TO_DO_LIST/logs/PRD-047.6/planner_drift_live.json`
   - `TO_DO_LIST/logs/PRD-047.6/planner_drift_summary.json`
   - `TO_DO_LIST/logs/PRD-047.6/planner_drift_negative_regression.json`
+
+## PRD-047.9 Unified Adaptive Policy Additions
+- Added planner shape for concept-practice overview requests:
+  - `next_move=answer_practice_overview`
+  - `answer_shape=practice_catalog_explanation`
+  - `response_depth=long`
+  - `question_policy=optional_none`
+  - `practice_policy=overview_allowed`
+- Added explicit one-step override branch:
+  - if user explicitly asks for one micro-step, planner still returns `one_step`.
+- Added stale-active-line signal support (`active_line_stale`) so current concept/practice request can override old line pressure in MVP profile.

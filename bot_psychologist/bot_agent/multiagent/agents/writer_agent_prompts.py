@@ -177,6 +177,10 @@ MUST NOT DO:
 
 КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
 {conversation_context}
+context_budget_chars={context_budget_chars}
+context_truncated={context_truncated}
+preserved_recent_turns_count={preserved_recent_turns_count}
+older_context_omitted_chars={older_context_omitted_chars}
 
 ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
 Паттерны: {user_profile_patterns}
@@ -247,6 +251,8 @@ dialogue_profile={dialogue_profile}
 expansion_requested={dialogue_expansion_requested}
 repair_and_expand_requested={dialogue_repair_and_expand_requested}
 active_concept={dialogue_active_concept}
+mvp_free_dialogue_overrides:
+{mvp_free_dialogue_overrides}
 
 ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
 - главный фокус пользователя;

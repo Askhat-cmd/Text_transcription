@@ -1,0 +1,90 @@
+[
+  {
+    "case_id": "neurostalking_definition_full",
+    "group": "known_concept_full",
+    "user_message": "что такое нейросталкинг, и как его можно применять в жизни?",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "known_concept_question", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "concept_explanation_full", "response_depth": "deep"}
+  },
+  {
+    "case_id": "followup_expand_inherits_concept",
+    "group": "expansion_followup",
+    "user_message": "можешь дать более развернутый ответ?",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "known_concept_question", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "concept_explanation_full", "response_depth": "deep"}
+  },
+  {
+    "case_id": "repair_expand_after_user_not_understand",
+    "group": "repair_expand",
+    "user_message": "я не понимаю, ты не дал понятный ответ",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "correction_of_bot", "continuity_mode": "repair_and_continue_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false, "repair_mode": "acknowledge_and_return_to_mechanism"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "repair_and_expand_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_and_expand", "response_depth": "long"}
+  },
+  {
+    "case_id": "boss_example_explanation",
+    "group": "example_driven",
+    "user_message": "начальник не прав, но я зажимаю себя и не могу спокойно возразить, объясни подробно",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "examples_requested": true},
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "expanded_explanation", "response_depth": "long"}
+  },
+  {
+    "case_id": "practice_catalog_not_one_step",
+    "group": "practice_catalog",
+    "user_message": "скажи, а в нейросталкинге какие практики предлагаются чтобы это видеть",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true, "answer_type": "practice_overview"}, "practice_gate": {"practice_allowed": true}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "practice_overview_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_practice_overview", "answer_shape": "practice_catalog_explanation", "response_depth": "long"}
+  },
+  {
+    "case_id": "explicit_one_step_still_one_step",
+    "group": "explicit_one_step",
+    "user_message": "дай один конкретный шаг прямо сейчас",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "practice", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "ask_for_direct_step", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": true, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": true}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "explicit_one_step_requested": true},
+    "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short"}
+  },
+  {
+    "case_id": "explicit_short_still_short",
+    "group": "explicit_short",
+    "user_message": "коротко, без анализа",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "hypo"},
+    "thread_state": {"response_mode": "validate", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "short_support", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue"},
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short"}
+  },
+  {
+    "case_id": "safety_still_safety",
+    "group": "safety_baseline",
+    "user_message": "мне очень плохо, я не справляюсь",
+    "state_snapshot": {"safety_flag": true, "nervous_state": "hyper"},
+    "thread_state": {"response_mode": "safe_override", "safety_active": true, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "short_support", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": true}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue"},
+    "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short"}
+  }
+]

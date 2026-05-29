@@ -58,6 +58,13 @@ _CONCEPT_QUESTION_MARKERS = (
     "ты неправильно понял",
     "объясни",
 )
+_PRACTICE_OVERVIEW_MARKERS = (
+    "какие практики",
+    "какие способы",
+    "какие варианты",
+    "какие направления",
+    "как это видеть",
+)
 
 _GREETING_MARKERS = (
     "привет",
@@ -124,6 +131,13 @@ def _looks_like_concept_question(text: str) -> bool:
     if any(marker in normalized for marker in _CONCEPT_QUESTION_MARKERS):
         return True
     return "?" in normalized
+
+
+def _looks_like_practice_overview_request(text: str) -> bool:
+    normalized = _normalize_text(text)
+    if not normalized:
+        return False
+    return any(marker in normalized for marker in _PRACTICE_OVERVIEW_MARKERS)
 
 
 def _safe_hit_content(raw_hit: Any) -> tuple[str, str, float]:
@@ -198,27 +212,33 @@ def build_knowledge_answer_routing_guard(
                 break
 
     known_concept_question = bool(mentions) and _looks_like_concept_question(user_message)
+    practice_overview_request = bool(mentions) and _looks_like_practice_overview_request(user_message)
+    answer_type = "practice_overview" if practice_overview_request else "concept_explanation"
+    knowledge_needed = bool(known_concept_question or practice_overview_request)
     fallback_concepts = sorted(
         concept_item
         for concept_item in concept_set
         if concept_item in INTERNAL_CONCEPT_FALLBACK_SUMMARIES
     )
-    fallback_grounding_used = known_concept_question and not kb_grounding_available and bool(fallback_concepts)
+    fallback_grounding_used = knowledge_needed and not kb_grounding_available and bool(fallback_concepts)
     if fallback_grounding_used:
         kb_grounding_available = True
         grounding_sources.add("internal_concept_fallback")
 
-    should_answer_directly = known_concept_question and kb_grounding_available
+    should_answer_directly = knowledge_needed and kb_grounding_available
     should_ask_definition_first = False if should_answer_directly else not kb_grounding_available
 
     request_type = detect_request_type_v1(user_message)
-    explicit_practice_request = request_type in {REQUEST_TYPE_PRACTICE, REQUEST_TYPE_SAFETY}
+    explicit_practice_request = request_type in {REQUEST_TYPE_PRACTICE, REQUEST_TYPE_SAFETY} or practice_overview_request
     greeting = _is_greeting(user_message)
 
-    if explicit_practice_request:
+    if practice_overview_request:
+        practice_allowed = True
+        practice_reason = "explicit_practice_overview_request"
+    elif explicit_practice_request:
         practice_allowed = True
         practice_reason = "explicit_practice_request"
-    elif known_concept_question:
+    elif knowledge_needed:
         practice_allowed = False
         practice_reason = "known_concept_answer_first"
     elif greeting:
@@ -249,13 +269,14 @@ def build_knowledge_answer_routing_guard(
         "schema_version": KNOWLEDGE_ANSWER_ROUTING_VERSION,
         "concept_aliases_version": CONCEPT_ALIASES_VERSION,
         "knowledge_answer": {
-            "needed": known_concept_question,
+            "needed": knowledge_needed,
             "reason": (
                 "known_internal_concept_question"
-                if known_concept_question
+                if knowledge_needed
                 else "no_known_concept_question"
             ),
             "concept": concept,
+            "answer_type": answer_type,
             "concept_match_type": "exact_or_near_exact" if concept else "none",
             "matched_concepts": sorted(concept_set),
             "kb_grounding_available": kb_grounding_available,
@@ -265,6 +286,12 @@ def build_knowledge_answer_routing_guard(
             "fallback_grounding_concepts": fallback_concepts,
             "should_answer_directly": should_answer_directly,
             "should_ask_definition_first": should_ask_definition_first,
+            "practice_overview_requested": practice_overview_request,
+            "preferred_hit_tags": (
+                ["chunk_type=practice", "lens_family=neurostalking", "allowed_use=practice_suggestion_or_writer_context"]
+                if practice_overview_request
+                else []
+            ),
             "practice_allowed": practice_allowed,
             "preferred_response_mode": preferred_response_mode,
             "writer_instruction": writer_instruction,

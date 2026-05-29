@@ -36,6 +36,26 @@ Consequences:
 - `final_answer` не переписывается и не блокируется;
 - новый LLM-агент не добавляется, governance authority не мутируется.
 
+## ADR-066 Amendment - Dialogue profiles are presets over one unified adaptive policy surface
+
+Status: accepted
+
+Date: 2026-05-29
+
+Context: `mvp_free_dialogue` introduced higher Writer freedom, but residual conflicts remained when old planner/diagnostic constraints and context truncation still dominated prompt behavior.
+
+Decision:
+- keep single multiagent runtime path (no duplicated orchestrator/writer/planner);
+- treat `safe_guided` and `mvp_free_dialogue` as presets of one `dialogue_policy` authority resolver;
+- enforce authority order: minimal safety > explicit user request > knowledge/concept need > writer freedom > planner/diagnostic advisory;
+- preserve Writer context by recency with profile-specific budgets, instead of fixed `[:2000]` prefix slicing;
+- keep planner drift guard observe-only (no blocking/rewrite of final answer).
+
+Consequences:
+- mode switching becomes parameterized behavior, not architecture branching;
+- explanation/overview/practice requests can expand in MVP profile without removing minimal safety baseline;
+- runtime/admin/trace can expose one coherent effective policy contract.
+
 ## ADR-001 - Multiagent-only runtime
 
 Status: accepted

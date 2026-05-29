@@ -1,0 +1,26 @@
+﻿{
+  "prd_id": "PRD-047.9",
+  "timestamp_utc": "2026-05-29T11:21:30Z",
+  "status": "passed",
+  "branch": "main",
+  "workspace": "c:/My_practice/Text_transcription",
+  "required_sources": [
+    {
+      "path": "TO_DO_LIST/PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md",
+      "exists": true
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.9_TASK_LIST.md",
+      "exists": true
+    },
+    {
+      "path": "bot_psychologist/scripts/run_prd_047_9_mvp_context_unclamp_cases.py",
+      "exists": true
+    },
+    {
+      "path": "bot_psychologist/tests/evaluation/prd_047_9_mvp_context_unclamp_cases.json",
+      "exists": true
+    }
+  ],
+  "missing_sources": []
+}

@@ -82,6 +82,13 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["dialogue_profile"]["developer_local_only"] is True
     assert payload["response_planner"]["advisory_mode"] in {True, False}
     assert payload["writer_freedom_contract"]["writer_max_tokens"] >= 600
+    assert "dialogue_policy" in payload
+    assert payload["dialogue_policy"]["profile"] in {"safe_guided", "mvp_free_dialogue"}
+    assert payload["dialogue_policy"]["planner_authority"] in {"guided", "advisory"}
+    assert payload["dialogue_policy"]["diagnostic_card_authority"] in {"guided", "advisory"}
+    assert payload["dialogue_policy"]["writer_move_authority"] in {"guided", "advisory"}
+    assert isinstance(payload["dialogue_policy"]["context_budget_chars"], int)
+    assert payload["dialogue_policy"]["writer_runtime_max_tokens_effective"] >= 600
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

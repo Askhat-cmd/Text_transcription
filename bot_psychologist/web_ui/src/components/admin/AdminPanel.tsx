@@ -407,6 +407,12 @@ export const AdminPanel: React.FC = () => {
                         <div>scope: {runtimeEffectiveData.dialogue_profile?.scope ?? 'n/a'}</div>
                         <div>developer_local_only: {String(Boolean(runtimeEffectiveData.dialogue_profile?.developer_local_only))}</div>
                         <div>description: {runtimeEffectiveData.dialogue_profile?.description ?? 'n/a'}</div>
+                        <div>effective.writer_autonomy: {runtimeEffectiveData.dialogue_policy?.writer_autonomy ?? 'n/a'}</div>
+                        <div>effective.planner_authority: {runtimeEffectiveData.dialogue_policy?.planner_authority ?? 'n/a'}</div>
+                        <div>effective.diagnostic_card_authority: {runtimeEffectiveData.dialogue_policy?.diagnostic_card_authority ?? 'n/a'}</div>
+                        <div>effective.writer_move_authority: {runtimeEffectiveData.dialogue_policy?.writer_move_authority ?? 'n/a'}</div>
+                        <div>effective.context_budget_chars: {runtimeEffectiveData.dialogue_policy?.context_budget_chars ?? 'n/a'}</div>
+                        <div>effective.allow_practice_catalog: {String(Boolean(runtimeEffectiveData.dialogue_policy?.allow_practice_catalog))}</div>
                         {runtimeEffectiveData.dialogue_profile?.warning && (
                           <div className="mt-1 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-800">
                             {runtimeEffectiveData.dialogue_profile.warning}

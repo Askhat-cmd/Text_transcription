@@ -1,0 +1,9 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-05-29T11:19:09.150243+00:00",
+  "dataset_total": 8,
+  "errors": [],
+  "prd": "PRD-047.9",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_9_mvp_context_unclamp_cases.json"
+}

@@ -54,6 +54,9 @@ def test_admin_runtime_effective_payload_shape(admin_client):
     assert "dialogue_profile" in payload
     assert payload["dialogue_profile"]["value"] in {"safe_guided", "mvp_free_dialogue"}
     assert payload["dialogue_profile"]["scope"] == "developer_local"
+    assert "dialogue_policy" in payload
+    assert payload["dialogue_policy"]["profile"] in {"safe_guided", "mvp_free_dialogue"}
+    assert payload["dialogue_policy"]["planner_authority"] in {"guided", "advisory"}
 
     assert "config_validation_status" in payload["validation"]
     assert isinstance(payload["validation"]["config_validation_status"]["valid"], bool)

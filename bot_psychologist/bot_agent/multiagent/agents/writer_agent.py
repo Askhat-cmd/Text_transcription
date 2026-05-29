@@ -12,8 +12,13 @@ from ...feature_flags import feature_flags
 from ..active_line import starts_with_mechanical_revoicing
 from ..dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
+    context_budget_for_profile,
+    detect_examples_request,
     detect_expansion_request,
+    detect_numbered_list_request,
+    detect_practice_overview_request,
     detect_repair_and_expand_request,
+    format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
@@ -203,6 +208,10 @@ class WriterAgent:
             "prompt_constraint_pilot_applied": False,
             "prompt_constraint_pilot_blocked_reasons": [],
             "prompt_constraint_pilot_prompt_section_chars": 0,
+            "context_budget_chars": None,
+            "context_truncated": None,
+            "preserved_recent_turns_count": None,
+            "older_context_omitted_chars": None,
         }
         try:
             if contract.thread_state.safety_active:
@@ -330,6 +339,62 @@ class WriterAgent:
             if str(item).strip()
         ]
 
+        dialogue_policy_payload = (
+            dict(ctx.get("dialogue_policy", {}))
+            if isinstance(ctx.get("dialogue_policy"), dict)
+            else {}
+        )
+        dialogue_profile = normalize_dialogue_profile(
+            dialogue_policy_payload.get("profile", ctx.get("dialogue_profile", "safe_guided"))
+        )
+        context_budget_chars = int(
+            dialogue_policy_payload.get("context_budget_chars", context_budget_for_profile(dialogue_profile))
+            or context_budget_for_profile(dialogue_profile)
+        )
+        formatted_context, context_meta = format_conversation_context_for_writer_with_meta(
+            conversation_context=str(ctx.get("conversation_context", "") or ""),
+            profile=dialogue_profile,
+            budget_chars=context_budget_chars,
+        )
+
+        mvp_overrides_payload = (
+            dict(dialogue_policy_payload.get("mvp_overrides", {}))
+            if isinstance(dialogue_policy_payload.get("mvp_overrides"), dict)
+            else {}
+        )
+        practice_overview_requested = bool(
+            dialogue_policy_payload.get("practice_overview_requested", False)
+        ) or detect_practice_overview_request(str(ctx.get("user_message", "") or ""))
+        examples_requested = bool(
+            dialogue_policy_payload.get("examples_requested", False)
+        ) or detect_examples_request(str(ctx.get("user_message", "") or ""))
+        numbered_list_requested = bool(
+            dialogue_policy_payload.get("numbered_list_requested", False)
+        ) or detect_numbered_list_request(str(ctx.get("user_message", "") or ""))
+        expansion_requested = bool(
+            dialogue_policy_payload.get("expansion_requested", False)
+        ) or detect_expansion_request(str(ctx.get("user_message", "") or ""))
+        rich_user_request = (
+            practice_overview_requested
+            or examples_requested
+            or numbered_list_requested
+            or expansion_requested
+            or bool(dialogue_policy_payload.get("repair_and_expand_requested", False))
+        )
+        mvp_override_block = "not_applicable_for_safe_guided_profile"
+        if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
+            mvp_override_block = "\n".join(
+                [
+                    "MVP FREE DIALOGUE OVERRIDES:",
+                    f"- explicit_user_request_wins={str(bool(mvp_overrides_payload.get('explicit_user_request_wins', True))).lower()}",
+                    f"- old_max_sentence_constraints_softened={str(bool(mvp_overrides_payload.get('old_max_sentence_constraints_softened', True))).lower()}",
+                    f"- planner_advisory={str(bool(mvp_overrides_payload.get('planner_advisory', True))).lower()}",
+                    f"- overview_questions_allow_lists={str(bool(mvp_overrides_payload.get('overview_questions_allow_lists', practice_overview_requested))).lower()}",
+                    f"- target_answer_depth={str(mvp_overrides_payload.get('target_answer_depth', dialogue_policy_payload.get('answer_depth', 'medium')) or 'medium')}",
+                    f"- rich_user_request_detected={str(bool(rich_user_request)).lower()}",
+                ]
+            )
+
         user_prompt = WRITER_USER_TEMPLATE.format(
             user_message=ctx["user_message"],
             response_mode=ctx["response_mode"],
@@ -347,7 +412,11 @@ class WriterAgent:
             writer_move_instruction_summary=ctx.get("writer_move_instruction_summary") or "нет",
             writer_move_must_do=", ".join(ctx.get("writer_move_must_do", []) or []) or "нет",
             writer_move_must_not_do=", ".join(ctx.get("writer_move_must_not_do", []) or []) or "нет",
-            conversation_context=(ctx["conversation_context"] or "нет")[:2000],
+            conversation_context=formatted_context,
+            context_budget_chars=int(context_meta.get("context_budget_chars", 0) or 0),
+            context_truncated=str(bool(context_meta.get("context_truncated", False))).lower(),
+            preserved_recent_turns_count=int(context_meta.get("preserved_recent_turns_count", 0) or 0),
+            older_context_omitted_chars=int(context_meta.get("older_context_omitted_chars", 0) or 0),
             user_profile_patterns=", ".join(ctx["user_profile_patterns"]) or "нет",
             user_profile_values=", ".join(ctx["user_profile_values"]) or "нет",
             semantic_hits=self._format_hits(ctx["semantic_hits"]),
@@ -459,6 +528,7 @@ class WriterAgent:
                 bool(ctx.get("dialogue_repair_and_expand_requested", False))
             ).lower(),
             dialogue_active_concept=str(ctx.get("dialogue_active_concept", "") or ""),
+            mvp_free_dialogue_overrides=mvp_override_block,
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -483,9 +553,17 @@ class WriterAgent:
         self.last_debug["prompt_constraint_pilot_applied"] = bool(prompt_section)
         self.last_debug["prompt_constraint_pilot_blocked_reasons"] = blocked_reasons
         self.last_debug["prompt_constraint_pilot_prompt_section_chars"] = len(prompt_section)
+        self.last_debug["context_budget_chars"] = int(context_meta.get("context_budget_chars", 0) or 0)
+        self.last_debug["context_truncated"] = bool(context_meta.get("context_truncated", False))
+        self.last_debug["preserved_recent_turns_count"] = int(
+            context_meta.get("preserved_recent_turns_count", 0) or 0
+        )
+        self.last_debug["older_context_omitted_chars"] = int(
+            context_meta.get("older_context_omitted_chars", 0) or 0
+        )
 
         start_ts = time.perf_counter()
-        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", "safe_guided"))
+        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", dialogue_profile))
         runtime_settings = self._resolve_runtime_settings(dialogue_profile=dialogue_profile)
         system_prompt = (
             WRITER_SYSTEM_MVP_FREE_DIALOGUE
@@ -563,6 +641,12 @@ class WriterAgent:
         planner_question_policy = str(response_planner.get("question_policy", "none") or "none")
         planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
         planner_safety_priority = bool(response_planner.get("safety_priority", False))
+        dialogue_policy_payload = dict(ctx.get("dialogue_policy", {})) if isinstance(ctx.get("dialogue_policy"), dict) else {}
+        practice_overview_requested = bool(
+            dialogue_policy_payload.get("practice_overview_requested", False)
+            or planner_next_move == "answer_practice_overview"
+            or planner_answer_shape == "practice_catalog_explanation"
+        )
         lowered_text = text.lower()
         self.last_debug["compliance_planner_next_move"] = planner_next_move
         self.last_debug["compliance_planner_answer_shape"] = planner_answer_shape
@@ -610,6 +694,7 @@ class WriterAgent:
                 repair_and_expand_requested=repair_and_expand_requested,
                 user_repair_signal=user_repair_signal,
                 active_line_intent=active_line_intent,
+                practice_overview_requested=practice_overview_requested,
             )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
@@ -858,6 +943,7 @@ class WriterAgent:
         repair_and_expand_requested: bool,
         user_repair_signal: bool,
         active_line_intent: str,
+        practice_overview_requested: bool,
     ) -> str:
         if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
             if has_question or len(text) > 380:
@@ -869,6 +955,24 @@ class WriterAgent:
                 "Сфокусируюсь на разборе, без практик по умолчанию. "
                 "Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия."
             )
+
+        if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
+            list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)
+            if len(list_items) < 3 or len(text) < 420:
+                return (
+                    "В нашей рамке нейросталкинга это лучше смотреть не как один шаг, а как несколько "
+                    "практических направлений.\n\n"
+                    "1. Практика наблюдения триггера. Смысл: вовремя заметить момент, где включается автопилот. "
+                    "Пример: в разговоре с начальником отследить первую мысль «сейчас лучше промолчать», чтобы не "
+                    "провалиться в автоматическое согласие.\n"
+                    "2. Практика распознавания паттерна реакции. Смысл: увидеть повторяющийся сценарий (контроль, "
+                    "самообесценивание, избегание) и назвать его простыми словами. Пример: заметить, что перед "
+                    "важной задачей включается цикл «перепроверяю и откладываю старт».\n"
+                    "3. Практика микро-сдвига поведения. Смысл: вернуть себе выбор через небольшой осознанный ход. "
+                    "Пример: вместо внутреннего спора сформулировать одну короткую фактическую реплику или начать "
+                    "первый фрагмент задачи на фиксированное короткое время.\n\n"
+                    "Если хочешь, могу затем развернуть любую из этих практик в более подробный пошаговый разбор."
+                )
 
         if planner_question_policy == "none" and has_question and not expansion_requested:
             return re.sub(r"\s*\?+\s*", ". ", text).strip()

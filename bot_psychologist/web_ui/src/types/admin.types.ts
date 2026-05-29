@@ -190,6 +190,19 @@ export interface AdminRuntimeEffectiveResponse {
     developer_local_only?: boolean;
     warning?: string;
   };
+  dialogue_policy?: {
+    profile?: string;
+    writer_autonomy?: string;
+    planner_authority?: string;
+    diagnostic_card_authority?: string;
+    writer_move_authority?: string;
+    active_line_authority?: string;
+    context_budget_chars?: number;
+    allow_numbered_lists?: boolean;
+    allow_examples?: boolean;
+    allow_practice_catalog?: boolean;
+    writer_runtime_max_tokens_effective?: number;
+  };
   active_line?: {
     enabled?: boolean;
     version?: string;

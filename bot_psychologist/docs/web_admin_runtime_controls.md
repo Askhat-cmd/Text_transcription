@@ -84,3 +84,19 @@ Includes:
 - guided live testing runtime capture mode/status
 
 No prompt/source editor is added in this PRD.
+
+## PRD-047.9 Dialogue Policy Effective Block
+`/api/admin/runtime/effective` now also exposes explicit effective profile policy:
+- `dialogue_policy.profile`
+- `dialogue_policy.writer_autonomy`
+- `dialogue_policy.planner_authority`
+- `dialogue_policy.diagnostic_card_authority`
+- `dialogue_policy.writer_move_authority`
+- `dialogue_policy.active_line_authority`
+- `dialogue_policy.context_budget_chars`
+- `dialogue_policy.allow_numbered_lists`
+- `dialogue_policy.allow_examples`
+- `dialogue_policy.allow_practice_catalog`
+- `dialogue_policy.writer_runtime_max_tokens_effective`
+
+Web Admin Runtime tab renders these fields as read-only so profile value and effective behavior stay consistent.

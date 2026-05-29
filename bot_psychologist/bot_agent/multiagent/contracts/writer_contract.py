@@ -150,6 +150,22 @@ class WriterContract:
         dialogue_policy = (
             dict(self.dialogue_policy) if isinstance(self.dialogue_policy, dict) else {}
         )
+        semantic_hits_budget = (
+            dict(dialogue_policy.get("semantic_hits_budget", {}))
+            if isinstance(dialogue_policy.get("semantic_hits_budget"), dict)
+            else {}
+        )
+        semantic_hits_max = int(semantic_hits_budget.get("max_hits", 2) or 2)
+        if semantic_hits_max < 1:
+            semantic_hits_max = 1
+        semantic_hit_chars = int(semantic_hits_budget.get("max_chars_per_hit", 300) or 300)
+        if semantic_hit_chars < 120:
+            semantic_hit_chars = 120
+        semantic_hits_trimmed = [
+            str(item or "")[:semantic_hit_chars]
+            for item in semantic_hits[:semantic_hits_max]
+            if str(item or "").strip()
+        ]
         dialogue_profile = str(dialogue_policy.get("profile", "safe_guided") or "safe_guided")
         dialogue_active_concept = str(dialogue_policy.get("active_concept", "") or "")
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
@@ -181,8 +197,12 @@ class WriterContract:
             "conversation_context": conversation_context,
             "user_profile_patterns": self.memory_bundle.user_profile.patterns,
             "user_profile_values": self.memory_bundle.user_profile.values,
-            "semantic_hits": semantic_hits[:2],
+            "semantic_hits": semantic_hits_trimmed,
             "has_relevant_knowledge": self.memory_bundle.has_relevant_knowledge,
+            "semantic_hits_budget": {
+                "max_hits": semantic_hits_max,
+                "max_chars_per_hit": semantic_hit_chars,
+            },
             "context_assembly_trace": context_assembly_trace,
             "context_package_summary": {
                 "present": self.context_package is not None,

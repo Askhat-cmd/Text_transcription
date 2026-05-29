@@ -66,3 +66,6 @@ async def test_writer_uses_mvp_free_system_prompt_and_higher_tokens(monkeypatch)
     system_message = captured["messages"][0]["content"]  # type: ignore[index]
     assert "developer-local MVP free dialogue режиме" in str(system_message)
     assert int(captured["max_tokens"]) >= 2500
+    user_message = captured["messages"][1]["content"]  # type: ignore[index]
+    assert "MVP FREE DIALOGUE OVERRIDES:" in str(user_message)
+    assert "context_budget_chars=" in str(user_message)

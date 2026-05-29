@@ -16,3 +16,5 @@ def test_runtime_tab_shows_dialogue_profile_control_block() -> None:
     assert "Dialogue Profile" in text
     assert "mvp_free_dialogue" in text
     assert "dialogue_profile?.warning" in text
+    assert "effective.writer_autonomy" in text
+    assert "effective.planner_authority" in text

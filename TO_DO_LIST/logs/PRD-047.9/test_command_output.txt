@@ -1,0 +1,28 @@
+﻿PRD-047.9 test command output
+
+[pytest]
+python -m pytest tests/test_dialogue_policy_effective_profile.py tests/test_writer_context_recency_preservation.py tests/test_response_planner_mvp_practice_catalog.py tests/test_knowledge_answer_practice_overview_routing.py tests/test_prd_047_9_mvp_context_unclamp_runner.py tests/test_writer_prompt_mvp_free_dialogue.py tests/test_admin_runtime_contract.py tests/contract/test_admin_runtime_effective_payload_schema_v1041.py tests/ui/test_dialogue_profile_admin_control_visible.py tests/multiagent/test_writer_agent.py -q
+RESULT: 33 passed
+
+python -m pytest tests/evaluation -q
+RESULT: 7 passed
+
+python -m pytest tests/test_prd_047_9_mvp_context_unclamp_runner.py -q
+RESULT: 2 passed
+
+[runner]
+python scripts/run_prd_047_9_mvp_context_unclamp_cases.py --mode dry
+RESULT: passed
+
+python scripts/run_prd_047_9_mvp_context_unclamp_cases.py --mode direct
+RESULT: passed
+
+python scripts/run_prd_047_9_mvp_context_unclamp_cases.py --mode live --api-base-url http://127.0.0.1:8016/api/v1 --admin-runtime-url http://127.0.0.1:8016/api/admin/runtime/effective
+RESULT: passed
+
+[notes]
+- Live on stale backend :8001 was failed due old process code; fresh backend :8016 from current workspace passed live acceptance.
+
+[web_ui]
+npm run build
+RESULT: passed (vite build ok; non-blocking chunk warnings)

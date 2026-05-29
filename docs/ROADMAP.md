@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.9: unified adaptive dialogue policy context-unclamp for `mvp_free_dialogue` (recency-preserved writer context budget, authority resolver, practice-overview routing shape, admin effective visibility, and mandatory live acceptance passed on fresh backend `:8016`).
 - PRD-047.7: added guided live testing protocol v1 (18-scenario set, sanitized feedback capture/storage, summary builder, smoke runner, admin/web runtime read-only visibility, and evidence artifacts for human-feedback loop readiness).
 - PRD-047.6: added observe-only `planner_drift_guard_v1` runtime monitor (deterministic planner-vs-answer drift checks, rolling monitor window=100, trace/debug/admin runtime visibility, 32-case dataset + dry/direct/live replay runner, strict live no-fallback acceptance on fresh backend `:8015`).
 - PRD-047.5-HF1: repaired evaluator false-positive class for planner-vs-answer mismatch, tightened strict answer-fit checks/counters, applied minimal writer compliance hotfixes, and regenerated HF1 artifacts with strict acceptance (`dry=26/26`, `direct=26/26`, `live=26/26` on fresh temporary backend `:8014`).
@@ -29,11 +30,11 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.7 closure.
+- No active PRD in progress after PRD-047.9 closure.
 
 ## Next
-1. Run real guided live sessions with project owner using PRD-047.7 protocol and accumulate feedback evidence.
-2. Decide PRD-047.8 path from real feedback (`tone calibration` vs `planner calibration` vs `feedback UI`).
+1. Execute PRD-047.10 tone/depth/human-like quality calibration on top of unified adaptive policy.
+2. Run extended guided live sessions and collect additional evidence for retrieval/practice-overview consistency.
 
 ## Later
 - Operational hardening for governed limited runtime.

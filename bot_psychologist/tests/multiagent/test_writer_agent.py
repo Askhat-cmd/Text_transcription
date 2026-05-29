@@ -187,14 +187,17 @@ async def test_prompt_contains_open_loops_for_responses_path() -> None:
 
 @pytest.mark.asyncio
 async def test_conversation_context_truncated() -> None:
-    long_ctx = "x" * 2600
+    old_part = "legacy_context " * 260
+    tail = "RECENT FULL TURNS:\nUSER#turn_9: last user turn\nASSISTANT#turn_9: last assistant turn"
+    long_ctx = old_part + "\n" + tail
     client = _FakeClient("ok")
     agent = WriterAgent(client=client, model="gpt-5-mini")
     await agent._call_llm(_contract(conversation_context=long_ctx))
 
     user_input = str(client.responses.calls[0]["input"])
-    assert "x" * 2000 in user_input
-    assert "x" * 2200 not in user_input
+    assert "[older context omitted:" in user_input
+    assert "USER#turn_9: last user turn" in user_input
+    assert "ASSISTANT#turn_9: last assistant turn" in user_input
 
 
 @pytest.mark.asyncio

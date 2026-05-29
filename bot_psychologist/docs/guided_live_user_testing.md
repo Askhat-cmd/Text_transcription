@@ -78,3 +78,10 @@ python scripts/run_prd_047_7_guided_live_feedback_smoke.py --mode live --api-bas
 - no secrets/.env in artifacts
 - feedback does not auto-mutate runtime behavior
 - no answer blocking and no final answer rewrite
+
+## PRD-047.9 Note
+- For MVP context-unclamp acceptance, use:
+```powershell
+python scripts/run_prd_047_9_mvp_context_unclamp_cases.py --mode live --api-base-url http://127.0.0.1:8016/api/v1 --admin-runtime-url http://127.0.0.1:8016/api/admin/runtime/effective
+```
+- Live acceptance must be `passed` (not `blocked`) on a fresh backend process.

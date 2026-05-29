@@ -1,0 +1,40 @@
+{
+  "prd_id": "PRD-047.5-HF1",
+  "regression_case_id": "hf1_negative_safety_mechanism_answer",
+  "expected_passed": false,
+  "actual_passed": false,
+  "planner": {
+    "next_move": "stabilize_safety",
+    "answer_shape": "safety_grounding",
+    "response_depth": "short",
+    "question_policy": "none",
+    "practice_policy": "required_for_safety_or_grounding",
+    "revoicing_policy": "suppressed"
+  },
+  "answer": "Здесь важнее увидеть механизм: прогнозирование и контроль пытаются снизить риск, но забирают ресурс еще до начала действия.",
+  "answer_fit_checks": {
+    "answer_present": true,
+    "max_chars": true,
+    "max_questions": true,
+    "forbidden_markers": true,
+    "required_semantics_any": true,
+    "one_step_shape": true,
+    "close_no_new_loop": true,
+    "clarify_has_one_question": true,
+    "short_support_not_lecture": true,
+    "short_support_supportive_contact": true,
+    "short_support_no_practice": true,
+    "short_support_no_question": true,
+    "safety_shape_short": true,
+    "safety_no_mechanism_language": false,
+    "safety_has_grounding_semantics": true,
+    "safety_no_unsolicited_practice": true,
+    "question_policy_none_strict": true,
+    "practice_policy_forbidden_strict": true,
+    "planner_answer_shape_alignment": false
+  },
+  "failure_reasons": [
+    "safety_no_mechanism_language",
+    "planner_answer_shape_alignment"
+  ]
+}

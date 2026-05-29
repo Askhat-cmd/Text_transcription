@@ -187,6 +187,7 @@ class WriterAgent:
                         contract,
                         prompt_constraint_decision=prompt_constraint_decision,
                     )
+                    result = self._enforce_answer_compliance(result, contract)
                     if not result.strip():
                         self.last_debug["fallback_used"] = True
                         return fallback
@@ -514,6 +515,10 @@ class WriterAgent:
         planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
         planner_safety_priority = bool(response_planner.get("safety_priority", False))
         lowered_text = text.lower()
+        self.last_debug["compliance_planner_next_move"] = planner_next_move
+        self.last_debug["compliance_planner_answer_shape"] = planner_answer_shape
+        self.last_debug["compliance_planner_question_policy"] = planner_question_policy
+        self.last_debug["compliance_response_planner_present"] = bool(response_planner)
 
         has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
         has_question = "?" in text
@@ -556,11 +561,20 @@ class WriterAgent:
         if planner_safety_priority and has_question:
             return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку."
 
+        if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
+            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+
         if planner_next_move == "give_short_support" and (len(text) > 260 or has_question or has_unsolicited_practice):
             return "Я рядом. Сейчас не нужно всё разбирать. Можно просто немного снизить внутреннее давление."
 
         if planner_next_move == "stabilize_safety" and (len(text) > 320 or has_question):
             return "Я рядом. Сейчас важнее короткая опора здесь-и-сейчас, без перегруза."
+
+        if planner_next_move == "stabilize_safety" and _contains_any(
+            lowered_text,
+            ("механизм", "прогнозирован", "контрол", "паттерн", "драйвер", "до начала действия"),
+        ):
+            return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
 
         if planner_next_move == "close_gently" and (
             has_question
@@ -568,6 +582,12 @@ class WriterAgent:
             or _contains_any(lowered_text, ("новый шаг", "давай продолжим", "в следующий раз разберем"))
         ):
             return "Пожалуйста. Рад, что стало чуть яснее."
+
+        if planner_next_move == "give_short_support" and _contains_any(
+            lowered_text,
+            ("механизм", "теория", "стратегия", "прогнозирован", "контрол", "паттерн"),
+        ):
+            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
 
         if planner_next_move == "clarify_one_point":
             question_count = text.count("?")
@@ -583,7 +603,44 @@ class WriterAgent:
             return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
 
         if planner_question_policy == "none" and has_question:
+            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
+                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+            if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
+                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+            if planner_next_move == "answer_known_concept":
+                if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
+                    return (
+                        "В нашей внутренней рамке Нейросталкинг поддерживает самореализацию: он помогает заметить "
+                        "автоматические паттерны, которые мешают действовать из авторства и собственного выбора."
+                    )
+                if "нейросталкинг" in lowered_user:
+                    return (
+                        "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
+                        "автоматическими реакциями, чтобы не сливаться с ними и возвращать себе выбор."
+                    )
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
+        if planner_question_policy == "none" and _contains_any(
+            lowered_text, ("что именно", "почему", "как ты", "можешь ли", "хочешь")
+        ):
+            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            if planner_next_move == "give_short_support":
+                return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+            if planner_next_move == "stabilize_safety":
+                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+            if planner_next_move == "close_gently":
+                return "Пожалуйста. Рад, что стало чуть яснее."
+            return "Я рядом. Продолжим спокойно и без лишней нагрузки."
+        if planner_question_policy == "none":
+            if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            if planner_next_move == "deepen_mechanism" or planner_answer_shape == "mechanism_explanation":
+                return (
+                    "Ключевой механизм застревания в том, что мозг включает контроль и прогнозирование до старта: "
+                    "ресурс уходит на проверку риска, а не на действие. Поэтому энергия тратится заранее, и шаг не запускается."
+                )
 
         if planner_next_move == "repair_misalignment":
             has_repair_forbidden = _contains_any(lowered_text, ("практик", "упражн", "таймер", "шаг"))
@@ -608,6 +665,9 @@ class WriterAgent:
                 "ресурс уходит на проверку риска, а не на действие. Поэтому энергия тратится заранее, и шаг не запускается."
             )
 
+        if planner_answer_shape == "one_step" or planner_next_move == "give_direct_step":
+            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+
         if planner_answer_shape == "one_step" or user_step_request or active_line_intent == "ask_for_direct_step":
             list_like = bool(re.search(r"(^|\n)\s*(?:[-*•]|\d+[.)])\s+", text))
             if list_like:
@@ -617,11 +677,26 @@ class WriterAgent:
             sentence_parts = [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
             if len(sentence_parts) > 2:
                 return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+            if planner_question_policy == "none" and _contains_any(
+                lowered_text,
+                (
+                    "хочешь",
+                    "хочется",
+                    "можешь",
+                    "уточни",
+                    "попробу",
+                    "какой",
+                    "что выбрать",
+                ),
+            ):
+                return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
             has_step_marker = _contains_any(lowered_text, ("сделай", "начни", "открой", "выбери", "напиши", "шаг"))
             if not has_step_marker:
                 return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
 
         if active_line_practice_suppression and not active_line_should_offer_practice and has_unsolicited_practice:
+            if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
+                return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
             if active_line_intent == "correction_of_bot" or active_line_repair_mode:
                 return (
                     "Да, ты прав: я слишком рано сдвинулся в действие. "
@@ -668,6 +743,22 @@ class WriterAgent:
                 return (
                     "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
                     "и авторство, а не повторение автоматических паттернов."
+                )
+        if planner_next_move == "answer_known_concept" and planner_practice_policy == "forbidden":
+            if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
+                return (
+                    "В нашей внутренней рамке Нейросталкинг поддерживает самореализацию: он помогает заметить "
+                    "автоматические паттерны, которые мешают действовать из авторства и собственного выбора."
+                )
+            if "нейросталкинг" in lowered_user:
+                return (
+                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
+                    "автоматическими реакциями, чтобы не сливаться с ними и возвращать себе выбор."
+                )
+            if "самореализац" in lowered_user:
+                return (
+                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
+                    "и авторство, а не движение по автоматическим сценариям."
                 )
         return text
 
@@ -719,11 +810,34 @@ class WriterAgent:
 
     @staticmethod
     def _static_fallback(contract: WriterContract) -> str:
+        response_planner = (
+            dict(contract.response_planner) if isinstance(getattr(contract, "response_planner", None), dict) else {}
+        )
+        planner_next_move = str(response_planner.get("next_move", "") or "")
+        planner_answer_shape = str(response_planner.get("answer_shape", "") or "")
+        planner_question_policy = str(response_planner.get("question_policy", "") or "")
+        planner_practice_policy = str(response_planner.get("practice_policy", "") or "")
+
+        if planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
+            return "Я рядом. Сейчас важнее чуть стабилизироваться и снизить внутреннюю перегрузку. Без разбора, только опора здесь-и-сейчас."
+        if planner_next_move == "give_short_support" or planner_answer_shape == "short_support":
+            return "Я рядом. Сейчас не нужно ничего разбирать. Можно просто немного снизить внутреннее давление."
+        if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
+            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+        if planner_next_move == "close_gently" or planner_answer_shape == "gentle_close":
+            return "Пожалуйста. Рад, что стало чуть яснее."
+        if planner_next_move == "clarify_one_point" or planner_answer_shape == "one_question":
+            return "Если выбрать один узел прямо сейчас, что больше всего сжимает тебя в этой ситуации?"
+        if planner_question_policy == "none":
+            if planner_practice_policy == "forbidden":
+                return "Я рядом. Давай продолжим спокойно, без лишней нагрузки."
+            return "Я рядом. Продолжим спокойно."
+
         mode = contract.thread_state.response_mode
         if mode == "safe_override":
             return "Я здесь. Ты не один."
         if mode == "validate":
-            return "Я слышу тебя. Расскажи больше, если хочешь."
+            return "Я слышу тебя. Я рядом."
         if mode == "regulate":
             return "Сделай медленный вдох. Я рядом."
         return "Я слышу тебя."

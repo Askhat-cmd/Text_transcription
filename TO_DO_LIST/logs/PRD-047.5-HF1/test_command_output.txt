@@ -1,0 +1,37 @@
+﻿PRD-047.5-HF1 final command log (UTC+5)
+
+[pytest]
+python -m pytest tests/test_writer_contract_response_planner_answer_fit.py tests/test_prd_047_5_planner_answer_fit_runner.py tests/test_response_planner_quality_calibration.py -q
+-> 19 passed, 2 warnings
+
+[direct runner]
+python scripts/run_prd_047_5_planner_answer_fit_cases.py --mode direct
+-> planner_answer_fit_direct.json
+-> summary: 26/26
+-> strict_answer_fit:
+   safety_grounding_mismatch_count=0
+   short_support_mismatch_count=0
+   question_policy_violation_count=0
+   practice_policy_violation_count=0
+   planner_answer_shape_mismatch_count=0
+
+[live runner]
+python scripts/run_prd_047_5_planner_answer_fit_cases.py --mode live --api-base-url http://127.0.0.1:8014/api/v1 --admin-runtime-url http://127.0.0.1:8014/api/admin/runtime/effective
+-> planner_answer_fit_live.json
+-> summary: 26/26
+-> strict_answer_fit:
+   safety_grounding_mismatch_count=0
+   short_support_mismatch_count=0
+   question_policy_violation_count=0
+   practice_policy_violation_count=0
+   planner_answer_shape_mismatch_count=0
+
+[dry runner]
+python scripts/run_prd_047_5_planner_answer_fit_cases.py --mode dry
+-> planner_answer_fit_dry.json
+-> schema/status: passed
+
+[live backend refresh]
+Stop previous listener on :8014
+Start-Process .venv\Scripts\python.exe -m uvicorn api.main:app --host 127.0.0.1 --port 8014
+-> listener confirmed on :8014 (fresh process)

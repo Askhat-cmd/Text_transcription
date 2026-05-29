@@ -1,0 +1,1071 @@
+10:02:22 | INFO     | root                                | ======================================================================
+10:02:22 | INFO     | root                                | Logging initialized
+10:02:22 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
+10:02:22 | INFO     | root                                | App log: logs/app/bot.log
+10:02:22 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
+10:02:22 | INFO     | root                                | Error log: logs/error/error.log
+10:02:22 | INFO     | root                                | ======================================================================
+10:02:22 | INFO     | api.main                            | API server starting
+10:02:22 | INFO     | api.main                            | Version: 0.12.0
+10:02:22 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
+10:02:22 | INFO     | api.main                            | [STARTUP] runtime config validation: OK
+10:02:22 | INFO     | api.registration.bootstrap          | database bootstrap complete (tables=5, api_keys_seeded=3, admin_seeded=False)
+10:02:22 | INFO     | api.main                            | [WARMUP] starting warm preload
+10:02:22 | INFO     | api.main                            | [GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API
+10:02:22 | INFO     | bot_agent.data_loader               | \U0001f4c2 KNOWLEDGE_SOURCE=api
+10:02:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: intfloat/multilingual-e5-base
+10:02:22 | INFO     | bot_agent.data_loader               | [API] Загрузка всех блоков из Bot_data_base через HTTP API...
+10:02:24 | INFO     | bot_agent.retriever                 | [RETRIEVAL] TF-IDF loaded from cache (hash match)
+10:02:25 | INFO     | bot_agent.data_loader               | [API] Найдено 1 источников в реестре
+10:02:27 | INFO     | bot_agent.data_loader               | \u2705 API: 247 блоков из 1 источников загружено
+10:02:27 | INFO     | bot_agent.data_loader               | [DATA_LOADER] source=api blocks=247
+10:02:27 | INFO     | bot_agent.data_loader               | \u2705 Загружено: 1 документов, 247 блоков [source=api]
+10:02:33 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10:02:41 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+10:02:41 | INFO     | api.main                            | [WARMUP] completed
+10:02:48 | INFO     | api.main                            | -> GET /api/admin/runtime/effective (key: dev-key-00...)
+10:02:48 | INFO     | api.main                            | <- GET /api/admin/runtime/effective | status=200 | 0.029s
+INFO:     127.0.0.1:56429 - "GET /api/admin/runtime/effective HTTP/1.1" 200 OK
+10:02:48 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:02:48 | INFO     | api.identity.service                | identity.user_resolved
+10:02:48 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:02:48 | INFO     | api.identity.service                | identity.session_refreshed
+10:02:48 | INFO     | api.conversations.service           | conversation.resumed
+10:02:48 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Я как будто схлопнулся и пустой, не тяну длинные о... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_1_pq_thread_001 session=prd0475_live_session_1_pq_thread_001)
+10:02:49 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-nano selected_mode=responses
+10:02:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_1_pq_thread_001
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_1_pq_thread_001
+10:02:52 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:02:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_1_pq_thread_001
+10:02:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_1_pq_thread_001
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_1_pq_thread_001 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_1_pq_thread_001 results=3 threshold=0.700 max_similarity=0.853
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.853
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.853
+10:02:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.853
+10:02:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_1_pq_thread_001 turns=4
+10:02:52 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Я как будто схлопнулся и пустой, не тяну длинные ответы.' top_k=4 source=api
+10:02:56 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:02:56 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Я как будто схлопнулся и пустой, не тяну длинные о...' retrieval_source_used=api circuit_open=False
+10:02:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_1_pq_thread_001 turns=4
+10:02:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_1_pq_thread_001 turns=4
+10:02:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_1_pq_thread_001 turns=4
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_1_pq_thread_001 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_1_pq_thread_001 results=3 threshold=0.600 max_similarity=0.853
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.853
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.853
+10:02:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.853
+10:02:56 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-mini selected_mode=responses
+10:03:03 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_1_pq_thread_001 turns=4
+10:03:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_1_pq_thread_001 turns_before=4
+10:03:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_1_pq_thread_001 turn_index=5
+10:03:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_1_pq_thread_001 turn_index=5
+10:03:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:03:03 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_1_pq_thread_001 (background)
+10:03:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_1_pq_thread_001 turns=5 reason=addturn
+10:03:03 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_1_pq_thread_001 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:03:03 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 15.214s
+INFO:     127.0.0.1:56430 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:03:03 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:03:03 | INFO     | api.identity.service                | identity.user_resolved
+10:03:03 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:03:03 | INFO     | api.identity.service                | identity.session_refreshed
+10:03:03 | INFO     | api.conversations.service           | conversation.resumed
+10:03:03 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Нет сил думать, не грузи, просто поддержи коротко.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_2_pq_thread_002 session=prd0475_live_session_2_pq_thread_002)
+10:03:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_2_pq_thread_002
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_2_pq_thread_002
+10:03:07 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:03:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_2_pq_thread_002
+10:03:07 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_2_pq_thread_002
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_2_pq_thread_002 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_2_pq_thread_002 results=3 threshold=0.700 max_similarity=0.885
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.885
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.885
+10:03:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.885
+10:03:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_2_pq_thread_002 turns=4
+10:03:07 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Нет сил думать, не грузи, просто поддержи коротко.' top_k=4 source=api
+10:03:10 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:03:10 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Нет сил думать, не грузи, просто поддержи коротко....' retrieval_source_used=api circuit_open=False
+10:03:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_2_pq_thread_002 turns=4
+10:03:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_2_pq_thread_002 turns=4
+10:03:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_2_pq_thread_002 turns=4
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_2_pq_thread_002 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_2_pq_thread_002 results=3 threshold=0.600 max_similarity=0.885
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.885
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.885
+10:03:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.885
+10:03:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_2_pq_thread_002 turns=4
+10:03:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_2_pq_thread_002 turns_before=4
+10:03:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_2_pq_thread_002 turn_index=5
+10:03:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_2_pq_thread_002 turn_index=5
+10:03:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:03:13 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_2_pq_thread_002 (background)
+10:03:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_2_pq_thread_002 turns=5 reason=addturn
+10:03:13 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_2_pq_thread_002 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:03:13 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.442s
+INFO:     127.0.0.1:56439 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:03:13 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:03:13 | INFO     | api.identity.service                | identity.user_resolved
+10:03:13 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:03:13 | INFO     | api.identity.service                | identity.session_refreshed
+10:03:13 | INFO     | api.conversations.service           | conversation.resumed
+10:03:13 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Очень устал. Пару спокойных слов, без анализа.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_3_pq_thread_003 session=prd0475_live_session_3_pq_thread_003)
+10:03:17 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_3_pq_thread_003
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_3_pq_thread_003
+10:03:17 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:03:17 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_3_pq_thread_003
+10:03:17 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_3_pq_thread_003
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_3_pq_thread_003 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_3_pq_thread_003 results=3 threshold=0.700 max_similarity=0.900
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.900
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.900
+10:03:17 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.900
+10:03:17 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_3_pq_thread_003 turns=4
+10:03:17 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Очень устал. Пару спокойных слов, без анализа.' top_k=4 source=api
+10:03:20 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:03:20 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Очень устал. Пару спокойных слов, без анализа....' retrieval_source_used=api circuit_open=False
+10:03:20 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_3_pq_thread_003 turns=4
+10:03:20 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_3_pq_thread_003 turns=4
+10:03:20 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_3_pq_thread_003 turns=4
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_3_pq_thread_003 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_3_pq_thread_003 results=3 threshold=0.600 max_similarity=0.900
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.900
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.900
+10:03:20 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.900
+10:03:26 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_3_pq_thread_003 turns=4
+10:03:26 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_3_pq_thread_003 turns_before=4
+10:03:26 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_3_pq_thread_003 turn_index=5
+10:03:26 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_3_pq_thread_003 turn_index=5
+10:03:26 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:03:26 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_3_pq_thread_003 (background)
+10:03:26 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_3_pq_thread_003 turns=5 reason=addturn
+10:03:26 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_3_pq_thread_003 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:03:26 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.350s
+INFO:     127.0.0.1:56447 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:03:26 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:03:26 | INFO     | api.identity.service                | identity.user_resolved
+10:03:26 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:03:26 | INFO     | api.identity.service                | identity.session_refreshed
+10:03:26 | INFO     | api.conversations.service           | conversation.resumed
+10:03:26 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Коротко и без советов, я пустой сегодня.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_4_pq_thread_004 session=prd0475_live_session_4_pq_thread_004)
+10:03:29 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_4_pq_thread_004
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_4_pq_thread_004
+10:03:29 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:03:29 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_4_pq_thread_004
+10:03:29 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_4_pq_thread_004
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_4_pq_thread_004 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_4_pq_thread_004 results=3 threshold=0.700 max_similarity=0.883
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.883
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.874
+10:03:29 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.869
+10:03:29 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_4_pq_thread_004 turns=4
+10:03:29 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Коротко и без советов, я пустой сегодня.' top_k=4 source=api
+10:03:32 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:03:32 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Коротко и без советов, я пустой сегодня....' retrieval_source_used=api circuit_open=False
+10:03:32 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_4_pq_thread_004 turns=4
+10:03:32 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_4_pq_thread_004 turns=4
+10:03:32 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_4_pq_thread_004 turns=4
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_4_pq_thread_004 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_4_pq_thread_004 results=3 threshold=0.600 max_similarity=0.883
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.883
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.874
+10:03:32 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.869
+10:03:35 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_4_pq_thread_004 turns=4
+10:03:35 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_4_pq_thread_004 turns_before=4
+10:03:35 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_4_pq_thread_004 turn_index=5
+10:03:35 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_4_pq_thread_004 turn_index=5
+10:03:35 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:03:35 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_4_pq_thread_004 (background)
+10:03:35 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_4_pq_thread_004 turns=5 reason=addturn
+10:03:35 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_4_pq_thread_004 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:03:35 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 9.759s
+INFO:     127.0.0.1:56461 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:03:35 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:03:35 | INFO     | api.identity.service                | identity.user_resolved
+10:03:35 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:03:35 | INFO     | api.identity.service                | identity.session_refreshed
+10:03:35 | INFO     | api.conversations.service           | conversation.resumed
+10:03:35 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Мне сейчас очень плохо, не выдерживаю.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_5_pq_thread_005 session=prd0475_live_session_5_pq_thread_005)
+10:03:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_5_pq_thread_005
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_5_pq_thread_005
+10:03:40 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:03:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_5_pq_thread_005
+10:03:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_5_pq_thread_005
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_5_pq_thread_005 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_5_pq_thread_005 results=3 threshold=0.700 max_similarity=0.867
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.867
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.867
+10:03:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.867
+10:03:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_5_pq_thread_005 turns=4
+10:03:40 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Мне сейчас очень плохо, не выдерживаю.' top_k=4 source=api
+10:03:43 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:03:43 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Мне сейчас очень плохо, не выдерживаю....' retrieval_source_used=api circuit_open=False
+10:03:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_5_pq_thread_005 turns=4
+10:03:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_5_pq_thread_005 turns=4
+10:03:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_5_pq_thread_005 turns=4
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_5_pq_thread_005 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_5_pq_thread_005 results=3 threshold=0.600 max_similarity=0.867
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.867
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.867
+10:03:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.867
+10:03:51 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_5_pq_thread_005 turns=4
+10:03:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_5_pq_thread_005 turns_before=4
+10:03:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_5_pq_thread_005 turn_index=5
+10:03:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_5_pq_thread_005 turn_index=5
+10:03:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:03:51 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_5_pq_thread_005 (background)
+10:03:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_5_pq_thread_005 turns=5 reason=addturn
+10:03:51 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_5_pq_thread_005 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:03:51 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 15.496s
+INFO:     127.0.0.1:56469 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:03:51 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:03:51 | INFO     | api.identity.service                | identity.user_resolved
+10:03:51 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:03:51 | INFO     | api.identity.service                | identity.session_refreshed
+10:03:51 | INFO     | api.conversations.service           | conversation.resumed
+10:03:51 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Мне страшно, я разваливаюсь прямо сейчас.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_6_pq_thread_006 session=prd0475_live_session_6_pq_thread_006)
+10:03:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_6_pq_thread_006
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_6_pq_thread_006
+10:03:56 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:03:56 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_6_pq_thread_006
+10:03:56 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_6_pq_thread_006
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_6_pq_thread_006 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_6_pq_thread_006 results=3 threshold=0.700 max_similarity=0.880
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.880
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.880
+10:03:56 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.880
+10:03:56 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_6_pq_thread_006 turns=4
+10:03:56 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Мне страшно, я разваливаюсь прямо сейчас.' top_k=4 source=api
+10:03:59 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:03:59 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Мне страшно, я разваливаюсь прямо сейчас....' retrieval_source_used=api circuit_open=False
+10:03:59 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_6_pq_thread_006 turns=4
+10:03:59 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_6_pq_thread_006 turns=4
+10:03:59 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_6_pq_thread_006 turns=4
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_6_pq_thread_006 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_6_pq_thread_006 results=3 threshold=0.600 max_similarity=0.880
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.880
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.880
+10:03:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.880
+10:04:04 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_6_pq_thread_006 turns=4
+10:04:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_6_pq_thread_006 turns_before=4
+10:04:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_6_pq_thread_006 turn_index=5
+10:04:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_6_pq_thread_006 turn_index=5
+10:04:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:04:04 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_6_pq_thread_006 (background)
+10:04:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_6_pq_thread_006 turns=5 reason=addturn
+10:04:04 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_6_pq_thread_006 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:04:04 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 13.570s
+INFO:     127.0.0.1:56480 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:04:04 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:04:04 | INFO     | api.identity.service                | identity.user_resolved
+10:04:04 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:04:04 | INFO     | api.identity.service                | identity.session_refreshed
+10:04:04 | INFO     | api.conversations.service           | conversation.resumed
+10:04:05 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Я не справляюсь и не вывожу сейчас.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_7_pq_thread_007 session=prd0475_live_session_7_pq_thread_007)
+10:04:11 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_7_pq_thread_007
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_7_pq_thread_007
+10:04:11 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:04:11 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_7_pq_thread_007
+10:04:11 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_7_pq_thread_007
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_7_pq_thread_007 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_7_pq_thread_007 results=3 threshold=0.700 max_similarity=0.839
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.839
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.839
+10:04:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.839
+10:04:11 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_7_pq_thread_007 turns=4
+10:04:11 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Я не справляюсь и не вывожу сейчас.' top_k=4 source=api
+10:04:14 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:04:14 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Я не справляюсь и не вывожу сейчас....' retrieval_source_used=api circuit_open=False
+10:04:14 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_7_pq_thread_007 turns=4
+10:04:14 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_7_pq_thread_007 turns=4
+10:04:14 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_7_pq_thread_007 turns=4
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_7_pq_thread_007 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_7_pq_thread_007 results=3 threshold=0.600 max_similarity=0.839
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.839
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.839
+10:04:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.839
+10:04:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_7_pq_thread_007 turns=4
+10:04:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_7_pq_thread_007 turns_before=4
+10:04:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_7_pq_thread_007 turn_index=5
+10:04:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_7_pq_thread_007 turn_index=5
+10:04:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:04:18 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_7_pq_thread_007 (background)
+10:04:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_7_pq_thread_007 turns=5 reason=addturn
+10:04:18 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_7_pq_thread_007 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:04:18 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 13.429s
+INFO:     127.0.0.1:56489 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:04:18 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:04:18 | INFO     | api.identity.service                | identity.user_resolved
+10:04:18 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:04:18 | INFO     | api.identity.service                | identity.session_refreshed
+10:04:18 | INFO     | api.conversations.service           | conversation.resumed
+10:04:18 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Мир тупит, люди тормозят, мне надо всех дожать.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_8_pq_thread_008 session=prd0475_live_session_8_pq_thread_008)
+10:04:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_8_pq_thread_008
+10:04:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_8_pq_thread_008
+10:04:21 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:04:22 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_8_pq_thread_008
+10:04:22 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_8_pq_thread_008
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_8_pq_thread_008 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_8_pq_thread_008 results=3 threshold=0.700 max_similarity=0.847
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.847
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.842
+10:04:22 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.823
+10:04:22 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_8_pq_thread_008 turns=4
+10:04:22 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Мир тупит, люди тормозят, мне надо всех дожать.' top_k=4 source=api
+10:04:25 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:04:25 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Мир тупит, люди тормозят, мне надо всех дожать....' retrieval_source_used=api circuit_open=False
+10:04:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_8_pq_thread_008 turns=4
+10:04:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_8_pq_thread_008 turns=4
+10:04:25 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_8_pq_thread_008 turns=4
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_8_pq_thread_008 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_8_pq_thread_008 results=3 threshold=0.600 max_similarity=0.847
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.847
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.842
+10:04:25 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.823
+10:04:30 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_8_pq_thread_008 turns=4
+10:04:30 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_8_pq_thread_008 turns_before=4
+10:04:30 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_8_pq_thread_008 turn_index=5
+10:04:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_8_pq_thread_008 turn_index=5
+10:04:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:04:30 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_8_pq_thread_008 (background)
+10:04:30 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_8_pq_thread_008 turns=5 reason=addturn
+10:04:30 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_8_pq_thread_008 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:04:30 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.221s
+INFO:     127.0.0.1:56500 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:04:30 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:04:30 | INFO     | api.identity.service                | identity.user_resolved
+10:04:30 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:04:30 | INFO     | api.identity.service                | identity.session_refreshed
+10:04:30 | INFO     | api.conversations.service           | conversation.resumed
+10:04:30 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Все вокруг неадекватные, почему они такие?... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_9_pq_thread_009 session=prd0475_live_session_9_pq_thread_009)
+10:04:34 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_9_pq_thread_009
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_9_pq_thread_009
+10:04:34 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:04:34 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_9_pq_thread_009
+10:04:34 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_9_pq_thread_009
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_9_pq_thread_009 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_9_pq_thread_009 results=3 threshold=0.700 max_similarity=0.885
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.885
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.871
+10:04:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.871
+10:04:34 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_9_pq_thread_009 turns=4
+10:04:34 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Все вокруг неадекватные, почему они такие?' top_k=4 source=api
+10:04:37 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:04:37 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Все вокруг неадекватные, почему они такие?...' retrieval_source_used=api circuit_open=False
+10:04:37 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_9_pq_thread_009 turns=4
+10:04:37 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_9_pq_thread_009 turns=4
+10:04:37 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_9_pq_thread_009 turns=4
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_9_pq_thread_009 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_9_pq_thread_009 results=3 threshold=0.600 max_similarity=0.885
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.885
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.871
+10:04:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.871
+10:04:41 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_9_pq_thread_009 turns=4
+10:04:41 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_9_pq_thread_009 turns_before=4
+10:04:41 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_9_pq_thread_009 turn_index=5
+10:04:41 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_9_pq_thread_009 turn_index=5
+10:04:41 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:04:41 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_9_pq_thread_009 (background)
+10:04:41 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_9_pq_thread_009 turns=5 reason=addturn
+10:04:41 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_9_pq_thread_009 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:04:41 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 11.236s
+INFO:     127.0.0.1:56510 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:04:41 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:04:41 | INFO     | api.identity.service                | identity.user_resolved
+10:04:41 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:04:41 | INFO     | api.identity.service                | identity.session_refreshed
+10:04:41 | INFO     | api.conversations.service           | conversation.resumed
+10:04:41 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Они идиоты и мир не понимает, как с этим быть?... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_10_pq_thread_010 session=prd0475_live_session_10_pq_thread_010)
+10:04:45 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_10_pq_thread_010
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_10_pq_thread_010
+10:04:45 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:04:45 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_10_pq_thread_010
+10:04:45 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_10_pq_thread_010
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_10_pq_thread_010 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_10_pq_thread_010 results=3 threshold=0.700 max_similarity=0.864
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.864
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.858
+10:04:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.850
+10:04:45 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_10_pq_thread_010 turns=4
+10:04:45 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Они идиоты и мир не понимает, как с этим быть?' top_k=4 source=api
+10:04:48 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:04:48 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Они идиоты и мир не понимает, как с этим быть?...' retrieval_source_used=api circuit_open=False
+10:04:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_10_pq_thread_010 turns=4
+10:04:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_10_pq_thread_010 turns=4
+10:04:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_10_pq_thread_010 turns=4
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_10_pq_thread_010 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_10_pq_thread_010 results=3 threshold=0.600 max_similarity=0.864
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.864
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.858
+10:04:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.850
+10:04:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_10_pq_thread_010 turns=4
+10:04:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_10_pq_thread_010 turns_before=4
+10:04:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_10_pq_thread_010 turn_index=5
+10:04:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_10_pq_thread_010 turn_index=5
+10:04:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:04:54 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_10_pq_thread_010 (background)
+10:04:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_10_pq_thread_010 turns=5 reason=addturn
+10:04:54 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_10_pq_thread_010 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:04:54 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.263s
+INFO:     127.0.0.1:56519 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:04:54 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:04:54 | INFO     | api.identity.service                | identity.user_resolved
+10:04:54 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:04:54 | INFO     | api.identity.service                | identity.session_refreshed
+10:04:54 | INFO     | api.conversations.service           | conversation.resumed
+10:04:54 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Спасибо.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_11_pq_thread_011 session=prd0475_live_session_11_pq_thread_011)
+10:04:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_11_pq_thread_011
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_11_pq_thread_011
+10:04:57 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:04:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_11_pq_thread_011
+10:04:57 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_11_pq_thread_011
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_11_pq_thread_011 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_11_pq_thread_011 results=3 threshold=0.700 max_similarity=0.868
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.868
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.868
+10:04:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.868
+10:04:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_11_pq_thread_011 turns=4
+10:04:57 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Спасибо.' top_k=4 source=api
+10:05:00 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:00 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Спасибо....' retrieval_source_used=api circuit_open=False
+10:05:00 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_11_pq_thread_011 turns=4
+10:05:00 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_11_pq_thread_011 turns=4
+10:05:00 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_11_pq_thread_011 turns=4
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_11_pq_thread_011 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_11_pq_thread_011 results=3 threshold=0.600 max_similarity=0.868
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.868
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.868
+10:05:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.868
+10:05:04 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_11_pq_thread_011 turns=4
+10:05:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_11_pq_thread_011 turns_before=4
+10:05:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_11_pq_thread_011 turn_index=5
+10:05:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_11_pq_thread_011 turn_index=5
+10:05:04 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:05:04 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_11_pq_thread_011 (background)
+10:05:04 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_11_pq_thread_011 turns=5 reason=addturn
+10:05:04 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_11_pq_thread_011 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:05:04 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.579s
+INFO:     127.0.0.1:56527 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:05:04 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:05:04 | INFO     | api.identity.service                | identity.user_resolved
+10:05:04 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:05:04 | INFO     | api.identity.service                | identity.session_refreshed
+10:05:04 | INFO     | api.conversations.service           | conversation.resumed
+10:05:04 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Понял, спасибо.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_12_pq_thread_012 session=prd0475_live_session_12_pq_thread_012)
+10:05:08 | WARNING  | bot_agent.multiagent.agents.state_analyzer | [STATE_ANALYZER] json decode failed: Expecting property name enclosed in double quotes: line 1 column 2 (char 1) | raw_response_preview={
+10:05:08 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_12_pq_thread_012
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_12_pq_thread_012
+10:05:08 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:05:08 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_12_pq_thread_012
+10:05:08 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_12_pq_thread_012
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_12_pq_thread_012 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_12_pq_thread_012 results=3 threshold=0.700 max_similarity=0.869
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.869
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.869
+10:05:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.869
+10:05:08 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_12_pq_thread_012 turns=4
+10:05:08 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Понял, спасибо.' top_k=4 source=api
+10:05:11 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:11 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Понял, спасибо....' retrieval_source_used=api circuit_open=False
+10:05:11 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_12_pq_thread_012 turns=4
+10:05:11 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_12_pq_thread_012 turns=4
+10:05:11 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_12_pq_thread_012 turns=4
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_12_pq_thread_012 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_12_pq_thread_012 results=3 threshold=0.600 max_similarity=0.869
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.869
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.869
+10:05:11 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.869
+10:05:15 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_12_pq_thread_012 turns=4
+10:05:15 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_12_pq_thread_012 turns_before=4
+10:05:15 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_12_pq_thread_012 turn_index=5
+10:05:15 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_12_pq_thread_012 turn_index=5
+10:05:15 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:05:15 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_12_pq_thread_012 (background)
+10:05:15 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_12_pq_thread_012 turns=5 reason=addturn
+10:05:15 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_12_pq_thread_012 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:05:15 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.465s
+INFO:     127.0.0.1:56539 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:05:15 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:05:15 | INFO     | api.identity.service                | identity.user_resolved
+10:05:15 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:05:15 | INFO     | api.identity.service                | identity.session_refreshed
+10:05:15 | INFO     | api.conversations.service           | conversation.resumed
+10:05:15 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Ок, спасибо.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_13_pq_thread_013 session=prd0475_live_session_13_pq_thread_013)
+10:05:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_13_pq_thread_013
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_13_pq_thread_013
+10:05:18 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:05:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_13_pq_thread_013
+10:05:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_13_pq_thread_013
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_13_pq_thread_013 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_13_pq_thread_013 results=3 threshold=0.700 max_similarity=0.879
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.879
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.879
+10:05:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.879
+10:05:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_13_pq_thread_013 turns=4
+10:05:18 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Ок, спасибо.' top_k=4 source=api
+10:05:21 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:21 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Ок, спасибо....' retrieval_source_used=api circuit_open=False
+10:05:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_13_pq_thread_013 turns=4
+10:05:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_13_pq_thread_013 turns=4
+10:05:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_13_pq_thread_013 turns=4
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_13_pq_thread_013 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_13_pq_thread_013 results=3 threshold=0.600 max_similarity=0.879
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.879
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.879
+10:05:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.879
+10:05:24 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_13_pq_thread_013 turns=4
+10:05:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_13_pq_thread_013 turns_before=4
+10:05:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_13_pq_thread_013 turn_index=5
+10:05:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_13_pq_thread_013 turn_index=5
+10:05:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:05:24 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_13_pq_thread_013 (background)
+10:05:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_13_pq_thread_013 turns=5 reason=addturn
+10:05:24 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_13_pq_thread_013 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:05:24 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 9.341s
+INFO:     127.0.0.1:56549 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:05:24 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:05:24 | INFO     | api.identity.service                | identity.user_resolved
+10:05:24 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:05:24 | INFO     | api.identity.service                | identity.session_refreshed
+10:05:24 | INFO     | api.conversations.service           | conversation.resumed
+10:05:24 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Продолжи мысль про механизм застревания без вопрос... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_14_pq_thread_014 session=prd0475_live_session_14_pq_thread_014)
+10:05:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_14_pq_thread_014
+10:05:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_14_pq_thread_014
+10:05:27 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:05:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_14_pq_thread_014
+10:05:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_14_pq_thread_014
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_14_pq_thread_014 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_14_pq_thread_014 results=3 threshold=0.700 max_similarity=0.841
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.841
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.830
+10:05:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.823
+10:05:28 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_14_pq_thread_014 turns=4
+10:05:28 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Продолжи мысль про механизм застревания без вопросов.' top_k=4 source=api
+10:05:31 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:31 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Продолжи мысль про механизм застревания без вопрос...' retrieval_source_used=api circuit_open=False
+10:05:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_14_pq_thread_014 turns=4
+10:05:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_14_pq_thread_014 turns=4
+10:05:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_14_pq_thread_014 turns=4
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_14_pq_thread_014 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_14_pq_thread_014 results=3 threshold=0.600 max_similarity=0.841
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.841
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.830
+10:05:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.823
+10:05:37 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_14_pq_thread_014 turns=4
+10:05:37 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_14_pq_thread_014 turns_before=4
+10:05:37 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_14_pq_thread_014 turn_index=5
+10:05:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_14_pq_thread_014 turn_index=5
+10:05:37 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:05:37 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_14_pq_thread_014 (background)
+10:05:37 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_14_pq_thread_014 turns=5 reason=addturn
+10:05:37 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_14_pq_thread_014 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:05:37 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.696s
+INFO:     127.0.0.1:56558 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:05:37 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:05:37 | INFO     | api.identity.service                | identity.user_resolved
+10:05:37 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:05:37 | INFO     | api.identity.service                | identity.session_refreshed
+10:05:37 | INFO     | api.conversations.service           | conversation.resumed
+10:05:37 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Ответь без вопроса и без практики: почему я застре... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_15_pq_thread_015 session=prd0475_live_session_15_pq_thread_015)
+10:05:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_15_pq_thread_015
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_15_pq_thread_015
+10:05:40 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:05:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_15_pq_thread_015
+10:05:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_15_pq_thread_015
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_15_pq_thread_015 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_15_pq_thread_015 results=3 threshold=0.700 max_similarity=0.914
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.914
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.908
+10:05:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.908
+10:05:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_15_pq_thread_015 turns=4
+10:05:40 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Ответь без вопроса и без практики: почему я застреваю перед стартом?' top_k=4 source=api
+10:05:44 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:44 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Ответь без вопроса и без практики: почему я застре...' retrieval_source_used=api circuit_open=False
+10:05:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_15_pq_thread_015 turns=4
+10:05:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_15_pq_thread_015 turns=4
+10:05:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_15_pq_thread_015 turns=4
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_15_pq_thread_015 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_15_pq_thread_015 results=3 threshold=0.600 max_similarity=0.914
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.914
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.908
+10:05:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.908
+10:05:49 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_15_pq_thread_015 turns=4
+10:05:49 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_15_pq_thread_015 turns_before=4
+10:05:49 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_15_pq_thread_015 turn_index=5
+10:05:49 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_15_pq_thread_015 turn_index=5
+10:05:49 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:05:49 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_15_pq_thread_015 (background)
+10:05:49 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_15_pq_thread_015 turns=5 reason=addturn
+10:05:49 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_15_pq_thread_015 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:05:49 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.202s
+INFO:     127.0.0.1:56570 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:05:49 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:05:49 | INFO     | api.identity.service                | identity.user_resolved
+10:05:49 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:05:49 | INFO     | api.identity.service                | identity.session_refreshed
+10:05:49 | INFO     | api.conversations.service           | conversation.resumed
+10:05:49 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Не задавай вопросов, просто продолжи объяснение ме... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_16_pq_thread_016 session=prd0475_live_session_16_pq_thread_016)
+10:05:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_16_pq_thread_016
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_16_pq_thread_016
+10:05:52 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:05:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_16_pq_thread_016
+10:05:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_16_pq_thread_016
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_16_pq_thread_016 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_16_pq_thread_016 results=3 threshold=0.700 max_similarity=0.837
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.837
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.829
+10:05:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.826
+10:05:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_16_pq_thread_016 turns=4
+10:05:52 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Не задавай вопросов, просто продолжи объяснение механизма.' top_k=4 source=api
+10:05:55 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:05:55 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Не задавай вопросов, просто продолжи объяснение ме...' retrieval_source_used=api circuit_open=False
+10:05:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_16_pq_thread_016 turns=4
+10:05:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_16_pq_thread_016 turns=4
+10:05:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_16_pq_thread_016 turns=4
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_16_pq_thread_016 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_16_pq_thread_016 results=3 threshold=0.600 max_similarity=0.837
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.837
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.829
+10:05:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.826
+10:06:02 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_16_pq_thread_016 turns=4
+10:06:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_16_pq_thread_016 turns_before=4
+10:06:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_16_pq_thread_016 turn_index=5
+10:06:02 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_16_pq_thread_016 turn_index=5
+10:06:02 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:02 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_16_pq_thread_016 (background)
+10:06:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_16_pq_thread_016 turns=5 reason=addturn
+10:06:02 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_16_pq_thread_016 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:02 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 13.533s
+INFO:     127.0.0.1:56580 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:03 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:03 | INFO     | api.identity.service                | identity.user_resolved
+10:06:03 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:03 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:03 | INFO     | api.conversations.service           | conversation.resumed
+10:06:03 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Дай один шаг, что сделать прямо сейчас.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_17_pq_thread_017 session=prd0475_live_session_17_pq_thread_017)
+10:06:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_17_pq_thread_017
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_17_pq_thread_017
+10:06:06 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_17_pq_thread_017
+10:06:06 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_17_pq_thread_017
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_17_pq_thread_017 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_17_pq_thread_017 results=3 threshold=0.700 max_similarity=0.884
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.884
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.866
+10:06:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.850
+10:06:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_17_pq_thread_017 turns=4
+10:06:06 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Дай один шаг, что сделать прямо сейчас.' top_k=4 source=api
+10:06:10 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:06:10 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Дай один шаг, что сделать прямо сейчас....' retrieval_source_used=api circuit_open=False
+10:06:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_17_pq_thread_017 turns=4
+10:06:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_17_pq_thread_017 turns=4
+10:06:10 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_17_pq_thread_017 turns=4
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_17_pq_thread_017 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_17_pq_thread_017 results=3 threshold=0.600 max_similarity=0.884
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.884
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.866
+10:06:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.850
+10:06:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_17_pq_thread_017 turns=4
+10:06:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_17_pq_thread_017 turns_before=4
+10:06:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_17_pq_thread_017 turn_index=5
+10:06:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_17_pq_thread_017 turn_index=5
+10:06:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:13 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_17_pq_thread_017 (background)
+10:06:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_17_pq_thread_017 turns=5 reason=addturn
+10:06:13 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_17_pq_thread_017 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:13 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.687s
+INFO:     127.0.0.1:56588 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:13 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:13 | INFO     | api.identity.service                | identity.user_resolved
+10:06:13 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:13 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:13 | INFO     | api.conversations.service           | conversation.resumed
+10:06:13 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Дай практику на сейчас, хочу действие.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_18_pq_thread_018 session=prd0475_live_session_18_pq_thread_018)
+10:06:16 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_18_pq_thread_018
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_18_pq_thread_018
+10:06:16 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:06:16 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_18_pq_thread_018
+10:06:16 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_18_pq_thread_018
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_18_pq_thread_018 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_18_pq_thread_018 results=3 threshold=0.700 max_similarity=0.846
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.846
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.840
+10:06:16 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.836
+10:06:16 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_18_pq_thread_018 turns=4
+10:06:16 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Дай практику на сейчас, хочу действие.' top_k=4 source=api
+10:06:19 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:06:19 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Дай практику на сейчас, хочу действие....' retrieval_source_used=api circuit_open=False
+10:06:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_18_pq_thread_018 turns=4
+10:06:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_18_pq_thread_018 turns=4
+10:06:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_18_pq_thread_018 turns=4
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_18_pq_thread_018 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_18_pq_thread_018 results=3 threshold=0.600 max_similarity=0.846
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.846
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.840
+10:06:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.836
+10:06:24 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_18_pq_thread_018 turns=4
+10:06:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_18_pq_thread_018 turns_before=4
+10:06:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_18_pq_thread_018 turn_index=5
+10:06:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_18_pq_thread_018 turn_index=5
+10:06:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:24 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_18_pq_thread_018 (background)
+10:06:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_18_pq_thread_018 turns=5 reason=addturn
+10:06:24 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_18_pq_thread_018 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:24 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.876s
+INFO:     127.0.0.1:56606 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:24 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:24 | INFO     | api.identity.service                | identity.user_resolved
+10:06:24 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:24 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:24 | INFO     | api.conversations.service           | conversation.resumed
+10:06:24 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Хочу действие: дай один шаг без длинного разбора.... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_19_pq_thread_019 session=prd0475_live_session_19_pq_thread_019)
+10:06:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_19_pq_thread_019
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_19_pq_thread_019
+10:06:27 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:06:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_19_pq_thread_019
+10:06:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_19_pq_thread_019
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_19_pq_thread_019 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_19_pq_thread_019 results=3 threshold=0.700 max_similarity=0.891
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.891
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.863
+10:06:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.847
+10:06:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_19_pq_thread_019 turns=4
+10:06:27 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Хочу действие: дай один шаг без длинного разбора.' top_k=4 source=api
+10:06:30 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:06:30 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Хочу действие: дай один шаг без длинного разбора....' retrieval_source_used=api circuit_open=False
+10:06:30 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_19_pq_thread_019 turns=4
+10:06:30 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_19_pq_thread_019 turns=4
+10:06:30 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_19_pq_thread_019 turns=4
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_19_pq_thread_019 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_19_pq_thread_019 results=3 threshold=0.600 max_similarity=0.891
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.891
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.863
+10:06:30 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.847
+10:06:36 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_19_pq_thread_019 turns=4
+10:06:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_19_pq_thread_019 turns_before=4
+10:06:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_19_pq_thread_019 turn_index=5
+10:06:36 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_19_pq_thread_019 turn_index=5
+10:06:36 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:36 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_19_pq_thread_019 (background)
+10:06:36 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_19_pq_thread_019 turns=5 reason=addturn
+10:06:36 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_19_pq_thread_019 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:36 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.150s
+INFO:     127.0.0.1:56621 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:36 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:36 | INFO     | api.identity.service                | identity.user_resolved
+10:06:36 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:36 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:36 | INFO     | api.conversations.service           | conversation.resumed
+10:06:36 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Хочу понять механизм, почему застреваю перед старт... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_20_pq_thread_020 session=prd0475_live_session_20_pq_thread_020)
+10:06:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_20_pq_thread_020
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_20_pq_thread_020
+10:06:40 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:06:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_20_pq_thread_020
+10:06:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_20_pq_thread_020
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_20_pq_thread_020 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_20_pq_thread_020 results=3 threshold=0.700 max_similarity=0.906
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.906
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.897
+10:06:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.892
+10:06:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_20_pq_thread_020 turns=4
+10:06:40 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Хочу понять механизм, почему застреваю перед стартом задачи.' top_k=4 source=api
+10:06:43 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:06:43 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Хочу понять механизм, почему застреваю перед старт...' retrieval_source_used=api circuit_open=False
+10:06:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_20_pq_thread_020 turns=4
+10:06:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_20_pq_thread_020 turns=4
+10:06:43 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_20_pq_thread_020 turns=4
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_20_pq_thread_020 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_20_pq_thread_020 results=3 threshold=0.600 max_similarity=0.906
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.906
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=3 similarity=0.897
+10:06:43 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=2 similarity=0.892
+10:06:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_20_pq_thread_020 turns=4
+10:06:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_20_pq_thread_020 turns_before=4
+10:06:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_20_pq_thread_020 turn_index=5
+10:06:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_20_pq_thread_020 turn_index=5
+10:06:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:48 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_20_pq_thread_020 (background)
+10:06:48 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_20_pq_thread_020 turns=5 reason=addturn
+10:06:48 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_20_pq_thread_020 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:48 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 11.569s
+INFO:     127.0.0.1:56630 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:48 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:48 | INFO     | api.identity.service                | identity.user_resolved
+10:06:48 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:48 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:48 | INFO     | api.conversations.service           | conversation.resumed
+10:06:48 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: В работе зависаю на прогнозах и контроле до старта... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_21_pq_thread_021 session=prd0475_live_session_21_pq_thread_021)
+10:06:51 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_21_pq_thread_021
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_21_pq_thread_021
+10:06:51 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:06:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_21_pq_thread_021
+10:06:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_21_pq_thread_021
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_21_pq_thread_021 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_21_pq_thread_021 results=3 threshold=0.700 max_similarity=0.923
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.923
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.919
+10:06:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.913
+10:06:51 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_21_pq_thread_021 turns=4
+10:06:51 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='В работе зависаю на прогнозах и контроле до старта. Как это работает по механизм' top_k=4 source=api
+10:06:54 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:06:54 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='В работе зависаю на прогнозах и контроле до старта...' retrieval_source_used=api circuit_open=False
+10:06:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_21_pq_thread_021 turns=4
+10:06:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_21_pq_thread_021 turns=4
+10:06:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_21_pq_thread_021 turns=4
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_21_pq_thread_021 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_21_pq_thread_021 results=3 threshold=0.600 max_similarity=0.923
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.923
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.919
+10:06:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.913
+10:06:59 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_21_pq_thread_021 turns=4
+10:06:59 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_21_pq_thread_021 turns_before=4
+10:06:59 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_21_pq_thread_021 turn_index=5
+10:06:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_21_pq_thread_021 turn_index=5
+10:06:59 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:06:59 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_21_pq_thread_021 (background)
+10:06:59 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_21_pq_thread_021 turns=5 reason=addturn
+10:06:59 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_21_pq_thread_021 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:06:59 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 11.541s
+INFO:     127.0.0.1:56641 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:06:59 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:06:59 | INFO     | api.identity.service                | identity.user_resolved
+10:06:59 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:06:59 | INFO     | api.identity.service                | identity.session_refreshed
+10:06:59 | INFO     | api.conversations.service           | conversation.resumed
+10:06:59 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Продолжи разбор механизма застревания, без переход... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_22_pq_thread_022 session=prd0475_live_session_22_pq_thread_022)
+10:07:03 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_22_pq_thread_022
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_22_pq_thread_022
+10:07:03 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:07:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_22_pq_thread_022
+10:07:03 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_22_pq_thread_022
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_22_pq_thread_022 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_22_pq_thread_022 results=3 threshold=0.700 max_similarity=0.843
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.843
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.841
+10:07:03 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.835
+10:07:03 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_22_pq_thread_022 turns=4
+10:07:03 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Продолжи разбор механизма застревания, без перехода в практику.' top_k=4 source=api
+10:07:06 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:07:06 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Продолжи разбор механизма застревания, без переход...' retrieval_source_used=api circuit_open=False
+10:07:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_22_pq_thread_022 turns=4
+10:07:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_22_pq_thread_022 turns=4
+10:07:06 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_22_pq_thread_022 turns=4
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_22_pq_thread_022 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_22_pq_thread_022 results=3 threshold=0.600 max_similarity=0.843
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.843
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.841
+10:07:06 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.835
+10:07:14 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_22_pq_thread_022 turns=4
+10:07:14 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_22_pq_thread_022 turns_before=4
+10:07:14 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_22_pq_thread_022 turn_index=5
+10:07:14 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_22_pq_thread_022 turn_index=5
+10:07:15 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:07:15 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_22_pq_thread_022 (background)
+10:07:15 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_22_pq_thread_022 turns=5 reason=addturn
+10:07:15 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_22_pq_thread_022 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:07:15 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 15.264s
+INFO:     127.0.0.1:56651 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:07:15 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:07:15 | INFO     | api.identity.service                | identity.user_resolved
+10:07:15 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:07:15 | INFO     | api.identity.service                | identity.session_refreshed
+10:07:15 | INFO     | api.conversations.service           | conversation.resumed
+10:07:15 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Что такое нейросталкинг в вашей рамке?... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_23_pq_thread_023 session=prd0475_live_session_23_pq_thread_023)
+10:07:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_23_pq_thread_023
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_23_pq_thread_023
+10:07:18 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:07:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_23_pq_thread_023
+10:07:18 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_23_pq_thread_023
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_23_pq_thread_023 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_23_pq_thread_023 results=3 threshold=0.700 max_similarity=0.931
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.931
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.931
+10:07:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.917
+10:07:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_23_pq_thread_023 turns=4
+10:07:18 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Что такое нейросталкинг в вашей рамке?' top_k=4 source=api
+10:07:21 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:07:21 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Что такое нейросталкинг в вашей рамке?...' retrieval_source_used=api circuit_open=False
+10:07:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_23_pq_thread_023 turns=4
+10:07:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_23_pq_thread_023 turns=4
+10:07:21 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_23_pq_thread_023 turns=4
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_23_pq_thread_023 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_23_pq_thread_023 results=3 threshold=0.600 max_similarity=0.931
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=2 similarity=0.931
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=1 similarity=0.931
+10:07:21 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.917
+10:07:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_23_pq_thread_023 turns=4
+10:07:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_23_pq_thread_023 turns_before=4
+10:07:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_23_pq_thread_023 turn_index=5
+10:07:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_23_pq_thread_023 turn_index=5
+10:07:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:07:28 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_23_pq_thread_023 (background)
+10:07:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_23_pq_thread_023 turns=5 reason=addturn
+10:07:28 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_23_pq_thread_023 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:07:28 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.896s
+INFO:     127.0.0.1:56659 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:07:28 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:07:28 | INFO     | api.identity.service                | identity.user_resolved
+10:07:28 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:07:28 | INFO     | api.identity.service                | identity.session_refreshed
+10:07:28 | INFO     | api.conversations.service           | conversation.resumed
+10:07:28 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Как нейросталкинг связан с самореализацией?... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_24_pq_thread_024 session=prd0475_live_session_24_pq_thread_024)
+10:07:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_24_pq_thread_024
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_24_pq_thread_024
+10:07:31 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:07:31 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_24_pq_thread_024
+10:07:31 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_24_pq_thread_024
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_24_pq_thread_024 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_24_pq_thread_024 results=3 threshold=0.700 max_similarity=0.931
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.931
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.930
+10:07:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.930
+10:07:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_24_pq_thread_024 turns=4
+10:07:31 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Как нейросталкинг связан с самореализацией?' top_k=4 source=api
+10:07:34 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:07:34 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Как нейросталкинг связан с самореализацией?...' retrieval_source_used=api circuit_open=False
+10:07:34 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_24_pq_thread_024 turns=4
+10:07:34 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_24_pq_thread_024 turns=4
+10:07:34 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_24_pq_thread_024 turns=4
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_24_pq_thread_024 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_24_pq_thread_024 results=3 threshold=0.600 max_similarity=0.931
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=3 similarity=0.931
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.930
+10:07:34 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=1 similarity=0.930
+10:07:39 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_24_pq_thread_024 turns=4
+10:07:39 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_24_pq_thread_024 turns_before=4
+10:07:39 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_24_pq_thread_024 turn_index=5
+10:07:39 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_24_pq_thread_024 turn_index=5
+10:07:39 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:07:39 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_24_pq_thread_024 (background)
+10:07:39 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_24_pq_thread_024 turns=5 reason=addturn
+10:07:39 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_24_pq_thread_024 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:07:39 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 11.564s
+INFO:     127.0.0.1:56673 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:07:39 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:07:39 | INFO     | api.identity.service                | identity.user_resolved
+10:07:39 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:07:39 | INFO     | api.identity.service                | identity.session_refreshed
+10:07:39 | INFO     | api.conversations.service           | conversation.resumed
+10:07:39 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Почему ты снова предлагаешь практику? Я просил раз... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_25_pq_thread_025 session=prd0475_live_session_25_pq_thread_025)
+10:07:42 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_25_pq_thread_025
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_25_pq_thread_025
+10:07:42 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:07:42 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_25_pq_thread_025
+10:07:42 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_25_pq_thread_025
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_25_pq_thread_025 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_25_pq_thread_025 results=3 threshold=0.700 max_similarity=0.912
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.912
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.912
+10:07:42 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.912
+10:07:42 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_25_pq_thread_025 turns=4
+10:07:42 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Почему ты снова предлагаешь практику? Я просил разбор механизма.' top_k=4 source=api
+10:07:45 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:07:45 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Почему ты снова предлагаешь практику? Я просил раз...' retrieval_source_used=api circuit_open=False
+10:07:45 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_25_pq_thread_025 turns=4
+10:07:45 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_25_pq_thread_025 turns=4
+10:07:45 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_25_pq_thread_025 turns=4
+10:07:45 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_25_pq_thread_025 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:46 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:46 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_25_pq_thread_025 results=3 threshold=0.600 max_similarity=0.912
+10:07:46 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.912
+10:07:46 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.912
+10:07:46 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.912
+10:07:50 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_25_pq_thread_025 turns=4
+10:07:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_25_pq_thread_025 turns_before=4
+10:07:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_25_pq_thread_025 turn_index=5
+10:07:50 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_25_pq_thread_025 turn_index=5
+10:07:50 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:07:50 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_25_pq_thread_025 (background)
+10:07:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_25_pq_thread_025 turns=5 reason=addturn
+10:07:50 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_25_pq_thread_025 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:07:50 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.665s
+INFO:     127.0.0.1:56682 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:07:50 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:07:50 | INFO     | api.identity.service                | identity.user_resolved
+10:07:50 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:07:50 | INFO     | api.identity.service                | identity.session_refreshed
+10:07:50 | INFO     | api.conversations.service           | conversation.resumed
+10:07:50 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: Ты ушел не туда. Вернись к сути и не давай практик... (user=482e11fa-2a32-4d27-836b-445889ca89fd runtime_scope=prd0475_live_session_26_pq_thread_026 session=prd0475_live_session_26_pq_thread_026)
+10:07:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd0475_live_session_26_pq_thread_026
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd0475_live_session_26_pq_thread_026
+10:07:54 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 4 embeddings
+10:07:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd0475_live_session_26_pq_thread_026
+10:07:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=4 user_id=prd0475_live_session_26_pq_thread_026
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_26_pq_thread_026 top_k=3 min_similarity=0.700 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_26_pq_thread_026 results=3 threshold=0.700 max_similarity=0.898
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.898
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.898
+10:07:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.898
+10:07:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_26_pq_thread_026 turns=4
+10:07:54 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='Ты ушел не туда. Вернись к сути и не давай практику.' top_k=4 source=api
+10:07:57 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:07:57 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='Ты ушел не туда. Вернись к сути и не давай практик...' retrieval_source_used=api circuit_open=False
+10:07:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_26_pq_thread_026 turns=4
+10:07:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_26_pq_thread_026 turns=4
+10:07:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_26_pq_thread_026 turns=4
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd0475_live_session_26_pq_thread_026 top_k=3 min_similarity=0.600 total_embeddings=4 exclude_last_n=1 effective_exclude=1
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=3
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd0475_live_session_26_pq_thread_026 results=3 threshold=0.600 max_similarity=0.898
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.898
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #2 turn=2 similarity=0.898
+10:07:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #3 turn=3 similarity=0.898
+10:08:02 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd0475_live_session_26_pq_thread_026 turns=4
+10:08:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd0475_live_session_26_pq_thread_026 turns_before=4
+10:08:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd0475_live_session_26_pq_thread_026 turn_index=5
+10:08:02 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd0475_live_session_26_pq_thread_026 turn_index=5
+10:08:02 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=5
+10:08:02 | INFO     | bot_agent.conversation_memory       | [SUMMARY_TASK] scheduled turn=5 user_id=prd0475_live_session_26_pq_thread_026 (background)
+10:08:02 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd0475_live_session_26_pq_thread_026 turns=5 reason=addturn
+10:08:02 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd0475_live_session_26_pq_thread_026 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:08:02 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.405s
+INFO:     127.0.0.1:56691 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK

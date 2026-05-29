@@ -1,6 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.5-HF1 repaired the answer-fit false-positive class (planner `stabilize_safety` / `safety_grounding` incorrectly passing mechanism-style answers), hardened final-answer compliance gates, and refreshed HF1 artifacts with strict green matrix (`dry=26/26`, `direct=26/26`, `live=26/26` on fresh temporary backend `:8014`).
 PRD-047.5 completed planner quality calibration over live dialogue answer-fit groups and hardened Writer compliance for planner policies (`question/practice/revoicing/shape`), with refreshed artifacts (`dry=26/26`, `direct=26/26`, `live=26/26` on fresh temporary backend `:8013`).
 PRD-047.4 added `Response Planner v1` as deterministic next-meaningful-move layer between Active Line and WriterContract, with trace/API/admin visibility and reproducible calibration artifacts (`dry=14/14`, `direct=14/14`, `live=14/14` on fresh temporary backend `:8012`).
 PRD-047.0-HF1 closed evaluator false positives by enforcing final-answer compliance for known-concept routing and practice-gate behavior. Failure baseline artifacts are refreshed with honest answer-level validation (`direct=5/5`, `live=skipped` on stale backend). Diagnostic Center v1 remains in governed creator/developer-local boundary; broad rollout remains prohibited and `production_ready=false`.
@@ -55,8 +56,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-05-28
-- Source cycle: PRD-047.5
+- Date: 2026-05-29
+- Source cycle: PRD-047.5-HF1
 
 ## PRD-046.1.35-HF4
 Current Stage:

@@ -1,5 +1,5 @@
 ﻿#!/usr/bin/env python3
-"""Run PRD-047.5 planner quality calibration and answer-fit cases."""
+"""Run PRD-047.5-HF1 planner quality calibration and answer-fit cases."""
 
 from __future__ import annotations
 
@@ -34,7 +34,72 @@ REQUIRED_GROUP_MIN_COUNTS = {
 }
 
 DEFAULT_DATASET = PROJECT_ROOT / "tests" / "evaluation" / "prd_047_5_planner_answer_fit_cases.json"
-DEFAULT_LOG_DIR = REPO_ROOT / "TO_DO_LIST" / "logs" / "PRD-047.5"
+DEFAULT_LOG_DIR = REPO_ROOT / "TO_DO_LIST" / "logs" / "PRD-047.5-HF1"
+_QUESTION_POLICY_NONE_MARKERS = [
+    "что именно",
+    "почему",
+    "как ты",
+    "можешь ли",
+    "хочешь",
+]
+_PRACTICE_POLICY_FORBIDDEN_MARKERS = [
+    "практик",
+    "упражн",
+]
+_PRACTICE_POLICY_FORBIDDEN_PATTERNS = [
+    r"\bсделай\b",
+    r"\bпопробуй\b",
+    r"\bпоставь\s+таймер\b",
+    r"\bтаймер\b",
+    r"\bвдох\b",
+    r"\bвыдох\b",
+    r"\b(?:один|первый)\s+шаг\b",
+    r"\bзапиши\b",
+    r"\bвыпиши\b",
+]
+_PRACTICE_NEGATION_PATTERNS = [
+    r"\bне\s+даю\b",
+    r"\bне\s+нужно\b",
+    r"\bбез\s+практик\w*",
+    r"\bне\s+предлага\w+\s+практик\w*",
+]
+_SAFETY_ANALYSIS_MARKERS = [
+    "механизм",
+    "прогнозирован",
+    "контрол",
+    "съедает ресурс",
+    "до начала действия",
+    "активная линия",
+    "паттерн",
+    "драйвер",
+    "программа",
+]
+_SAFETY_GROUNDING_MARKERS = [
+    "я рядом",
+    "сейчас",
+    "здесь",
+    "опора",
+    "стабилизир",
+    "снизить перегруз",
+    "не нужно разбирать",
+    "коротко",
+    "без давления",
+]
+_SHORT_SUPPORT_ANALYSIS_MARKERS = [
+    "механизм",
+    "теория",
+    "стратегия",
+    "прогнозирован",
+    "контрол",
+    "паттерн",
+]
+_SUPPORTIVE_CONTACT_MARKERS = [
+    "я рядом",
+    "коротко",
+    "без давления",
+    "не нужно",
+    "поддерж",
+]
 
 
 def _now_iso() -> str:
@@ -73,6 +138,29 @@ def _contains_any(text: str, markers: list[str]) -> bool:
 
 def _count_questions(text: str) -> int:
     return str(text or "").count("?")
+
+
+def _contains_any_regex(text: str, patterns: list[str]) -> bool:
+    lowered = str(text or "").lower()
+    return any(re.search(pattern, lowered) for pattern in patterns)
+
+
+def _has_forbidden_practice_instruction(text: str) -> bool:
+    lowered = str(text or "").lower()
+    has_marker = _contains_any(lowered, _PRACTICE_POLICY_FORBIDDEN_MARKERS) or _contains_any_regex(
+        lowered, _PRACTICE_POLICY_FORBIDDEN_PATTERNS
+    )
+    if not has_marker:
+        return False
+    if _contains_any_regex(lowered, _PRACTICE_NEGATION_PATTERNS):
+        return False
+    return True
+
+
+def _planner_case_signature(planner: dict[str, Any]) -> str:
+    next_move = str(planner.get("next_move", "") or "")
+    answer_shape = str(planner.get("answer_shape", "") or "")
+    return f"{next_move}:{answer_shape}"
 
 
 def _validate_dataset(cases: list[dict[str, Any]]) -> tuple[bool, list[str], dict[str, int]]:
@@ -173,6 +261,8 @@ def _evaluate_answer_fit(answer: str, expected_fit: dict[str, Any], expected_pla
 
     expected_shape = str(expected_planner.get("answer_shape", "") or "")
     expected_move = str(expected_planner.get("next_move", "") or "")
+    expected_question_policy = str(expected_planner.get("question_policy", "") or "")
+    expected_practice_policy = str(expected_planner.get("practice_policy", "") or "")
 
     if expected_shape == "one_step":
         checks["one_step_shape"] = _answer_has_one_step(text)
@@ -190,14 +280,58 @@ def _evaluate_answer_fit(answer: str, expected_fit: dict[str, Any], expected_pla
         checks["clarify_has_one_question"] = True
 
     if expected_move == "give_short_support":
-        checks["short_support_not_lecture"] = len(text) <= max_chars and not _contains_any(lowered, ["механизм", "теория", "стратегия"])
+        checks["short_support_not_lecture"] = len(text) <= max_chars and not _contains_any(lowered, _SHORT_SUPPORT_ANALYSIS_MARKERS)
+        checks["short_support_supportive_contact"] = _contains_any(lowered, _SUPPORTIVE_CONTACT_MARKERS)
+        checks["short_support_no_practice"] = not _has_forbidden_practice_instruction(lowered)
+        checks["short_support_no_question"] = _count_questions(text) == 0
     else:
         checks["short_support_not_lecture"] = True
+        checks["short_support_supportive_contact"] = True
+        checks["short_support_no_practice"] = True
+        checks["short_support_no_question"] = True
 
     if expected_move == "stabilize_safety":
         checks["safety_shape_short"] = len(text) <= max_chars and _count_questions(text) == 0
+        checks["safety_no_mechanism_language"] = not _contains_any(lowered, _SAFETY_ANALYSIS_MARKERS)
+        checks["safety_has_grounding_semantics"] = _contains_any(lowered, _SAFETY_GROUNDING_MARKERS)
+        checks["safety_no_unsolicited_practice"] = not _has_forbidden_practice_instruction(lowered)
     else:
         checks["safety_shape_short"] = True
+        checks["safety_no_mechanism_language"] = True
+        checks["safety_has_grounding_semantics"] = True
+        checks["safety_no_unsolicited_practice"] = True
+
+    if expected_question_policy == "none":
+        checks["question_policy_none_strict"] = (_count_questions(text) == 0) and not _contains_any(lowered, _QUESTION_POLICY_NONE_MARKERS)
+    else:
+        checks["question_policy_none_strict"] = True
+
+    if expected_practice_policy == "forbidden":
+        checks["practice_policy_forbidden_strict"] = not _has_forbidden_practice_instruction(lowered)
+    else:
+        checks["practice_policy_forbidden_strict"] = True
+
+    if expected_shape == "safety_grounding":
+        checks["planner_answer_shape_alignment"] = (
+            checks["safety_shape_short"]
+            and checks["safety_no_mechanism_language"]
+            and checks["safety_has_grounding_semantics"]
+        )
+    elif expected_shape == "short_support":
+        checks["planner_answer_shape_alignment"] = (
+            checks["short_support_not_lecture"]
+            and checks["short_support_supportive_contact"]
+            and checks["short_support_no_practice"]
+            and checks["short_support_no_question"]
+        )
+    elif expected_shape == "one_question":
+        checks["planner_answer_shape_alignment"] = checks["clarify_has_one_question"] and len(text) <= max_chars
+    elif expected_shape == "gentle_close":
+        checks["planner_answer_shape_alignment"] = checks["close_no_new_loop"] and len(text) <= max_chars
+    elif expected_shape == "one_step":
+        checks["planner_answer_shape_alignment"] = checks["one_step_shape"]
+    else:
+        checks["planner_answer_shape_alignment"] = True
 
     for key, ok in checks.items():
         if not ok:
@@ -473,9 +607,78 @@ def _build_summary(case_results: list[dict[str, Any]]) -> dict[str, int]:
     return {"cases_total": total, "cases_passed": passed, "cases_failed": max(0, total - passed)}
 
 
+def _build_strict_answer_fit_summary(case_results: list[dict[str, Any]]) -> dict[str, int]:
+    summary = {
+        "safety_grounding_mismatch_count": 0,
+        "short_support_mismatch_count": 0,
+        "question_policy_violation_count": 0,
+        "practice_policy_violation_count": 0,
+        "planner_answer_shape_mismatch_count": 0,
+    }
+    for item in case_results:
+        planner = dict(item.get("response_planner", {})) if isinstance(item.get("response_planner"), dict) else {}
+        checks = dict(item.get("evaluation", {}).get("answer_fit_checks", {}))
+        reasons = [str(x) for x in list(item.get("evaluation", {}).get("failure_reasons", []))]
+        signature = _planner_case_signature(planner)
+        if signature == "stabilize_safety:safety_grounding" and (
+            "safety_no_mechanism_language" in reasons
+            or "safety_has_grounding_semantics" in reasons
+            or "safety_shape_short" in reasons
+            or checks.get("planner_answer_shape_alignment") is False
+        ):
+            summary["safety_grounding_mismatch_count"] += 1
+        if signature == "give_short_support:short_support" and (
+            "short_support_not_lecture" in reasons
+            or "short_support_supportive_contact" in reasons
+            or "short_support_no_practice" in reasons
+            or "short_support_no_question" in reasons
+            or checks.get("planner_answer_shape_alignment") is False
+        ):
+            summary["short_support_mismatch_count"] += 1
+        if "question_policy_none_strict" in reasons:
+            summary["question_policy_violation_count"] += 1
+        if "practice_policy_forbidden_strict" in reasons:
+            summary["practice_policy_violation_count"] += 1
+        if "planner_answer_shape_alignment" in reasons:
+            summary["planner_answer_shape_mismatch_count"] += 1
+    return summary
+
+
+def _build_false_positive_regression() -> dict[str, Any]:
+    expected_planner = {
+        "next_move": "stabilize_safety",
+        "answer_shape": "safety_grounding",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding",
+        "revoicing_policy": "suppressed",
+    }
+    expected_fit = {
+        "max_chars": 320,
+        "max_questions": 0,
+        "forbidden_markers": ["теория", "лекция"],
+        "required_semantics_any": [],
+    }
+    answer = (
+        "Здесь важнее увидеть механизм: прогнозирование и контроль пытаются снизить риск, "
+        "но забирают ресурс еще до начала действия."
+    )
+    checks, reasons = _evaluate_answer_fit(answer, expected_fit, expected_planner)
+    return {
+        "prd_id": "PRD-047.5-HF1",
+        "regression_case_id": "hf1_negative_safety_mechanism_answer",
+        "expected_passed": False,
+        "actual_passed": len(reasons) == 0,
+        "planner": expected_planner,
+        "answer": answer,
+        "answer_fit_checks": checks,
+        "failure_reasons": reasons,
+    }
+
+
 def _build_summary_md(*, mode: str, summary: dict[str, int], dataset_path: Path, extra: dict[str, Any] | None = None) -> str:
     lines = [
-        f"# PRD-047.5 Planner Answer-Fit Summary ({mode})",
+        f"# PRD-047.5-HF1 Planner Answer-Fit Summary ({mode})",
         "",
         f"- dataset: `{dataset_path}`",
         f"- cases_total: `{summary.get('cases_total', 0)}`",
@@ -501,7 +704,7 @@ def _select_cases(cases: list[dict[str, Any]], case_id: str | None, limit: int |
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run PRD-047.5 planner answer-fit calibration cases.")
+    parser = argparse.ArgumentParser(description="Run PRD-047.5-HF1 planner answer-fit calibration cases.")
     parser.add_argument("--mode", choices=("dry", "direct", "live"), default="dry")
     parser.add_argument("--dataset", default=str(DEFAULT_DATASET))
     parser.add_argument("--case-id", default=None)
@@ -522,6 +725,7 @@ def main() -> int:
     output_json = output_dir / f"planner_answer_fit_{args.mode}.json"
     trace_json = output_dir / "planner_answer_fit_trace_samples.json"
     summary_md = output_dir / "planner_answer_fit_summary.md"
+    false_positive_json = output_dir / "answer_fit_false_positive_regression.json"
 
     cases = _load_cases(dataset_path)
     cases = _select_cases(cases, args.case_id, args.limit)
@@ -531,11 +735,12 @@ def main() -> int:
         case_results = list(payload.get("case_results", []))
         summary = _build_summary(case_results)
         final = {
-            "prd_id": "PRD-047.5",
+            "prd_id": "PRD-047.5-HF1",
             "mode": "dry",
             "timestamp_utc": _now_iso(),
             "dataset": str(dataset_path),
             "summary": summary,
+            "strict_answer_fit": _build_strict_answer_fit_summary(case_results),
             "dataset_validation": {
                 "dataset_valid": bool(payload.get("dataset_valid", False)),
                 "schema_errors": list(payload.get("schema_errors", [])),
@@ -544,7 +749,8 @@ def main() -> int:
             "case_results": case_results,
         }
         _write_json(output_json, final)
-        _write_json(trace_json, {"prd_id": "PRD-047.5", "mode": "dry", "samples": samples})
+        _write_json(false_positive_json, _build_false_positive_regression())
+        _write_json(trace_json, {"prd_id": "PRD-047.5-HF1", "mode": "dry", "samples": samples})
         _write_md(
             summary_md,
             _build_summary_md(
@@ -561,15 +767,17 @@ def main() -> int:
         case_results, samples = asyncio.run(_run_direct_async(cases))
         summary = _build_summary(case_results)
         final = {
-            "prd_id": "PRD-047.5",
+            "prd_id": "PRD-047.5-HF1",
             "mode": "direct",
             "timestamp_utc": _now_iso(),
             "dataset": str(dataset_path),
             "summary": summary,
+            "strict_answer_fit": _build_strict_answer_fit_summary(case_results),
             "case_results": case_results,
         }
         _write_json(output_json, final)
-        _write_json(trace_json, {"prd_id": "PRD-047.5", "mode": "direct", "samples": samples})
+        _write_json(false_positive_json, _build_false_positive_regression())
+        _write_json(trace_json, {"prd_id": "PRD-047.5-HF1", "mode": "direct", "samples": samples})
         _write_md(summary_md, _build_summary_md(mode="direct", summary=summary, dataset_path=dataset_path))
         print(output_json)
         return 0
@@ -582,17 +790,25 @@ def main() -> int:
     )
     if str(live_payload.get("live_status")) != "passed":
         final = {
-            "prd_id": "PRD-047.5",
+            "prd_id": "PRD-047.5-HF1",
             "mode": "live",
             "timestamp_utc": _now_iso(),
             "dataset": str(dataset_path),
             "summary": {"cases_total": 0, "cases_passed": 0, "cases_failed": 0},
+            "strict_answer_fit": {
+                "safety_grounding_mismatch_count": 0,
+                "short_support_mismatch_count": 0,
+                "question_policy_violation_count": 0,
+                "practice_policy_violation_count": 0,
+                "planner_answer_shape_mismatch_count": 0,
+            },
             "case_results": [],
             "live_status": str(live_payload.get("live_status", "failed")),
             "reason": str(live_payload.get("reason", "")),
         }
         _write_json(output_json, final)
-        _write_json(trace_json, {"prd_id": "PRD-047.5", "mode": "live", "samples": samples})
+        _write_json(false_positive_json, _build_false_positive_regression())
+        _write_json(trace_json, {"prd_id": "PRD-047.5-HF1", "mode": "live", "samples": samples})
         _write_md(
             summary_md,
             _build_summary_md(
@@ -608,17 +824,19 @@ def main() -> int:
     case_results = list(live_payload.get("case_results", []))
     summary = _build_summary(case_results)
     final = {
-        "prd_id": "PRD-047.5",
+        "prd_id": "PRD-047.5-HF1",
         "mode": "live",
         "timestamp_utc": _now_iso(),
         "dataset": str(dataset_path),
         "summary": summary,
+        "strict_answer_fit": _build_strict_answer_fit_summary(case_results),
         "case_results": case_results,
         "live_status": "passed",
         "reason": "",
     }
     _write_json(output_json, final)
-    _write_json(trace_json, {"prd_id": "PRD-047.5", "mode": "live", "samples": samples})
+    _write_json(false_positive_json, _build_false_positive_regression())
+    _write_json(trace_json, {"prd_id": "PRD-047.5-HF1", "mode": "live", "samples": samples})
     _write_md(summary_md, _build_summary_md(mode="live", summary=summary, dataset_path=dataset_path, extra={"live_status": "passed"}))
     print(output_json)
     return 0

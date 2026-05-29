@@ -1,0 +1,373 @@
+{
+  "prd_id": "PRD-047.5-HF1",
+  "mode": "dry",
+  "timestamp_utc": "2026-05-29T05:08:16.074303+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_5_planner_answer_fit_cases.json",
+  "summary": {
+    "cases_total": 26,
+    "cases_passed": 26,
+    "cases_failed": 0
+  },
+  "strict_answer_fit": {
+    "safety_grounding_mismatch_count": 0,
+    "short_support_mismatch_count": 0,
+    "question_policy_violation_count": 0,
+    "practice_policy_violation_count": 0,
+    "planner_answer_shape_mismatch_count": 0
+  },
+  "dataset_validation": {
+    "dataset_valid": true,
+    "schema_errors": [],
+    "group_coverage": {
+      "low_resource_short_support": 4,
+      "soft_distress_safety_adjacent": 3,
+      "defensive_i_plus_w_minus": 3,
+      "thanks_close": 3,
+      "no_question_request": 3,
+      "explicit_practice_step": 3,
+      "mechanism_continue_regression": 3,
+      "known_concept_regression": 2,
+      "repair_after_bot_misalignment": 2
+    }
+  },
+  "case_results": [
+    {
+      "case_id": "pq_001_low_resource_empty",
+      "group": "low_resource_short_support",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_002_low_resource_no_energy",
+      "group": "low_resource_short_support",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_003_low_resource_tired",
+      "group": "low_resource_short_support",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_004_low_resource_short",
+      "group": "low_resource_short_support",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_005_soft_distress_bad",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_006_soft_distress_scared",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_007_soft_distress_cant",
+      "group": "soft_distress_safety_adjacent",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_008_defensive_world",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_009_defensive_people",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_010_defensive_idiots",
+      "group": "defensive_i_plus_w_minus",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_011_close_thanks",
+      "group": "thanks_close",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_012_close_bye",
+      "group": "thanks_close",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_013_close_ok",
+      "group": "thanks_close",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_014_no_question_continue",
+      "group": "no_question_request",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_015_no_question_direct",
+      "group": "no_question_request",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_016_no_question_ask",
+      "group": "no_question_request",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_017_step_now",
+      "group": "explicit_practice_step",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_018_practice_request",
+      "group": "explicit_practice_step",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_019_action_simple",
+      "group": "explicit_practice_step",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_020_mechanism_core",
+      "group": "mechanism_continue_regression",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_021_mechanism_forecast",
+      "group": "mechanism_continue_regression",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_022_mechanism_repeat",
+      "group": "mechanism_continue_regression",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_023_known_concept_neurostalking",
+      "group": "known_concept_regression",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_024_known_concept_relation",
+      "group": "known_concept_regression",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_025_repair_misalignment",
+      "group": "repair_after_bot_misalignment",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "pq_026_repair_shift",
+      "group": "repair_after_bot_misalignment",
+      "mode": "dry",
+      "evaluation": {
+        "passed": true,
+        "schema_checks": {
+          "has_expected_planner": true,
+          "has_expected_answer_fit": true
+        },
+        "failure_reasons": []
+      }
+    }
+  ]
+}

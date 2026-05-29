@@ -54,3 +54,11 @@ Version:
   - `answer_shape=one_step` enforces one executable step instead of reflective filler.
   - `next_move=repair_misalignment` enforces short repair acknowledgement without reopening loops.
 - Writer remains non-scripted: planner is deterministic guidance, not rigid text templating.
+
+## PRD-047.5-HF1 Compliance Tightening
+- Added targeted compliance repair for cases exposed by strict evaluator:
+  - safety-adjacent outputs (`stabilize_safety`) are forced away from mechanism-language drift;
+  - `question_policy=none` avoids latent question invites in final text;
+  - `answer_known_concept` + `practice_policy=forbidden` avoids unsolicited practice framing.
+- Compliance remains trace-visible and deterministic; no hidden runner-side fallback was introduced.
+- Writer freedom stays active, but final-answer policy obedience is now stricter for acceptance-critical planner shapes.

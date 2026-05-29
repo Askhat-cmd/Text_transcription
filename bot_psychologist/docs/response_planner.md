@@ -83,3 +83,17 @@ No admin editing surface is added in this PRD.
 - `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_direct.json`
 - `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_live.json`
 - `TO_DO_LIST/logs/PRD-047.5/planner_answer_fit_trace_samples.json`
+
+## PRD-047.5-HF1 Repair Notes
+- Fixed false-positive acceptance class where planner selected `stabilize_safety/safety_grounding` but final answer drifted to mechanism explanation.
+- Runner strict checks now gate:
+  - safety-grounding no-mechanism language
+  - short-support compact support shape
+  - `question_policy=none` strict no-question/no-question-invite markers
+  - `practice_policy=forbidden` strict no-practice-instruction markers
+  - planner-shape alignment counters
+- HF1 artifacts:
+  - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_dry.json`
+  - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_direct.json`
+  - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_live.json`
+  - `TO_DO_LIST/logs/PRD-047.5-HF1/answer_fit_false_positive_regression.json`

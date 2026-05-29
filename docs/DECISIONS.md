@@ -721,3 +721,15 @@ Context: PRD-047.4 proved structural planner integration and trace visibility, b
 Decision: PRD-047.5 introduces mandatory planner quality calibration with deterministic text-level override signals in `response_planner.py`, answer-level fit evaluator over final writer text, and strict runner acceptance across `dry/direct/live` with no runner-side live fallback.
 
 Consequences: acceptance now requires both structural planner trace and behavioral fit between planner decision and final answer; planner remains deterministic and non-LLM, while Writer Freedom Contract remains active under stronger policy-obedience checks.
+
+## ADR-064 - PRD-047.5-HF1 enforces strict planner-vs-final-answer obedience and closes safety-adjacent false positives
+
+Status: accepted
+
+Date: 2026-05-29
+
+Context: post-acceptance audit of PRD-047.5 found a critical false-positive class: `response_planner` selected `stabilize_safety / safety_grounding`, but final answer drifted into mechanism/explanation text while evaluator still returned `passed=true`.
+
+Decision: PRD-047.5-HF1 hardens answer-fit acceptance on final text with strict shape/policy checks and mismatch counters (`safety_grounding`, `short_support`, `question_policy=none`, `practice_policy=forbidden`, `planner_answer_shape_alignment`), keeps live runner planner source API-trace-only, and applies minimal writer compliance repair where strict evaluator exposed real runtime drift.
+
+Consequences: acceptance evidence now rejects planner/answer mismatch in safety-adjacent and no-question paths; HF1 artifacts are green only when final answer obeys planner shape/policy (`dry=26/26`, `direct=26/26`, `live=26/26`).

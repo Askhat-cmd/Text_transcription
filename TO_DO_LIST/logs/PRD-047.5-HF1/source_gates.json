@@ -1,0 +1,25 @@
+﻿{
+    "prd_id":  "PRD-047.5-HF1",
+    "timestamp_utc":  "2026-05-29T03:34:52.7454708Z",
+    "branch":  "main",
+    "workspace_status":  {
+                             "clean":  false,
+                             "entries":  [
+                                             "?? TO_DO_LIST/PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md",
+                                             "?? TO_DO_LIST/PRD-047.5-HF1_TASK_LIST.md"
+                                         ]
+                         },
+    "prd_047_5_artifacts_exist":  true,
+    "false_positive_class_confirmed":  true,
+    "example_case_id":  "pq_007_soft_distress_cant",
+    "example_signature":  {
+                              "next_move":  "stabilize_safety",
+                              "answer_shape":  "safety_grounding",
+                              "answer_contains_mechanism_language":  true,
+                              "evaluation_passed":  true
+                          },
+    "live_acceptance_no_fallback_baseline":  true,
+    "missing_sources":  [
+
+                        ]
+}

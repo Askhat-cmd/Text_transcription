@@ -99,6 +99,7 @@ class Config:
     MAX_TOKENS: Optional[int] = _parse_optional_int_env("MAX_TOKENS", None)
     MAX_TOKENS_SOFT_CAP: int = int(os.getenv("MAX_TOKENS_SOFT_CAP", "8192"))
     FREE_CONVERSATION_MODE: bool = os.getenv("FREE_CONVERSATION_MODE", "False").lower() == "true"
+    DIALOGUE_PROFILE: str = os.getenv("DIALOGUE_PROFILE", "safe_guided")
     # Token limits per response mode (aligned with ResponseFormatter char_limits)
     # Formula: char_limit × 1.7 (ru tokens/char) × 1.2 (safety margin)
     MODE_MAX_TOKENS: dict = {
@@ -330,6 +331,7 @@ class Config:
 | CLASSIFIER:   {cls.CLASSIFIER_MODEL}
 | TOKEN_PARAM:  {token_param}
 | FREE_MODE:    {cls.FREE_CONVERSATION_MODE}
+| DIALOGUE_PROFILE: {cls.DIALOGUE_PROFILE}
 | MAX_TOKENS:   {cls.MAX_TOKENS}
 | SOFT_CAP:     {cls.MAX_TOKENS_SOFT_CAP}
 | TOP_K:        {cls.TOP_K_BLOCKS}

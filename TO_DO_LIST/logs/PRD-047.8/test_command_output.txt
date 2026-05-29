@@ -1,0 +1,36 @@
+﻿[PRD-047.8 command log]
+
+# pytest
+.......................                                                  [100%]
+============================== warnings summary ===============================
+tests/test_writer_prompt_mvp_free_dialogue.py::test_writer_uses_mvp_free_system_prompt_and_higher_tokens
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_prompt_mvp_free_dialogue.py:47: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    created_at=datetime.utcnow(),
+
+tests/test_writer_prompt_mvp_free_dialogue.py::test_writer_uses_mvp_free_system_prompt_and_higher_tokens
+  C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_prompt_mvp_free_dialogue.py:48: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    updated_at=datetime.utcnow(),
+
+tests/test_prd_047_8_mvp_free_dialogue_runner.py::test_direct_mode_has_active_concept_inheritance_and_relaxed_writer
+  <string>:23: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+tests/test_prd_047_8_mvp_free_dialogue_runner.py::test_direct_mode_has_active_concept_inheritance_and_relaxed_writer
+  <string>:24: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+23 passed, 4 warnings in 6.53s
+
+# runner dry
+2026-05-29 15:01:25,386 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-29 15:01:25,389 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{"status": "passed", "output": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.8\\mvp_free_dialogue_dry.json"}
+
+# runner direct
+2026-05-29 15:01:25,966 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-29 15:01:25,969 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{"status": "passed", "output": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.8\\mvp_free_dialogue_direct.json"}
+
+# runner live
+2026-05-29 15:01:26,596 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-05-29 15:01:26,599 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+{"status": "blocked", "output": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.8\\mvp_free_dialogue_live.json"}

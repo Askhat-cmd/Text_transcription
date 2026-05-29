@@ -22,6 +22,11 @@ from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
+from bot_agent.multiagent.dialogue_policy import (
+    ALLOWED_DIALOGUE_PROFILES,
+    DIALOGUE_PROFILE_MVP_FREE,
+    normalize_dialogue_profile,
+)
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
     KERNEL_V1,
@@ -649,6 +654,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     response_planner_calibration = _load_prd_047_4_response_planner_calibration_status()
     planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
     guided_live_testing_status = _load_prd_047_7_guided_live_testing_status()
+    dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -721,10 +727,26 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
         "writer_freedom_contract": {
             "enabled": True,
             "version": WRITER_FREEDOM_CONTRACT_VERSION,
-            "freedom_level": "guided",
+            "freedom_level": "mvp_free" if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else "guided",
             "mode_is_hint_not_cage": True,
             "question_limit": 1,
             "practice_requires_gate": True,
+            "writer_max_tokens": 2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600,
+            "writer_target_tokens_default": 700 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 300,
+            "writer_target_tokens_expanded": 1500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 700,
+            "writer_allow_long_answer": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+        },
+        "dialogue_profile": {
+            "value": dialogue_profile,
+            "allowed_values": list(ALLOWED_DIALOGUE_PROFILES),
+            "scope": "developer_local",
+            "description": "Controls Writer freedom and response-depth behavior for MVP owner testing.",
+            "developer_local_only": True,
+            "warning": (
+                "Developer-local MVP mode. Freer, longer answers. Not production-ready."
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else ""
+            ),
         },
         "active_line": {
             "enabled": True,
@@ -740,6 +762,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "version": "response_planner_v1",
             "kind": "deterministic",
             "role": "next_meaningful_move_selector",
+            "advisory_mode": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
             "live_acceptance_requires_api_trace": True,
             "last_quality_calibration": response_planner_calibration,
         },
@@ -752,6 +775,11 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "thresholds": {
                 "warning_violation_rate": 0.10,
                 "critical_rate": 0.03,
+            },
+            "mvp_expansion_exceptions": {
+                "answer_length_long_when_expansion_requested": True,
+                "numbered_list_when_expansion_requested": True,
+                "multi_block_answer_when_concept_explanation_full": True,
             },
             "last_summary": get_planner_drift_summary(),
             "last_replay_status": planner_drift_replay_status,

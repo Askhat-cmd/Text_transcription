@@ -22,6 +22,12 @@ from .context_assembly import (
 from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
+from .dialogue_policy import (
+    apply_active_concept_continuation,
+    detect_expansion_request,
+    detect_repair_and_expand_request,
+    normalize_dialogue_profile,
+)
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .planner_bridge_compliance_shadow import (
@@ -217,6 +223,27 @@ class MultiAgentOrchestrator:
             rag_hits=list(memory_bundle.semantic_hits or []),
             response_mode=str(updated_thread.response_mode or ""),
         )
+        dialogue_profile = normalize_dialogue_profile(getattr(config, "DIALOGUE_PROFILE", "safe_guided"))
+        knowledge_answer_guard, active_concept = apply_active_concept_continuation(
+            user_message=query,
+            dialogue_profile=dialogue_profile,
+            knowledge_answer_guard=knowledge_answer_guard,
+            thread_active_frame=(
+                dict(updated_thread.active_frame)
+                if isinstance(updated_thread.active_frame, dict)
+                else {}
+            ),
+        )
+        if active_concept:
+            updated_thread.active_frame = dict(updated_thread.active_frame or {})
+            updated_thread.active_frame["active_concept"] = active_concept
+        dialogue_policy = {
+            "profile": dialogue_profile,
+            "expansion_requested": detect_expansion_request(query),
+            "repair_and_expand_requested": detect_repair_and_expand_request(query),
+            "active_concept": active_concept,
+            "planner_is_advisory": dialogue_profile == "mvp_free_dialogue",
+        }
         philosophy_kernel_payload = build_philosophy_kernel_runtime_payload(
             user_message=query,
             safety_active=bool(updated_thread.safety_active),
@@ -245,6 +272,7 @@ class MultiAgentOrchestrator:
                 knowledge_answer_guard=knowledge_answer_guard,
                 philosophy_kernel=philosophy_kernel_payload,
                 context_package=context_package,
+                dialogue_policy=dialogue_policy,
             ).to_dict()
         except Exception as exc:  # noqa: BLE001
             response_planner_error = f"response_planner_build_failed:{exc.__class__.__name__}"
@@ -310,6 +338,7 @@ class MultiAgentOrchestrator:
             ),
             active_line=active_line_state,
             response_planner=response_planner_state,
+            dialogue_policy=dialogue_policy,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -519,6 +548,7 @@ class MultiAgentOrchestrator:
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
                 "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),
+                "dialogue_policy": dict(dialogue_policy),
                 "knowledge_answer_trace": {
                     "schema_version": str(knowledge_answer_guard.get("schema_version", "")),
                     "concept_aliases_version": str(knowledge_answer_guard.get("concept_aliases_version", "")),
@@ -609,6 +639,7 @@ class MultiAgentOrchestrator:
                 "relation_to_thread": updated_thread.relation_to_thread,
                 "continuity_score": updated_thread.continuity_score,
                 "response_mode": updated_thread.response_mode,
+                "dialogue_profile": dialogue_profile,
                 "request_type": behavior_request_type,
                 "practice_suppressed": practice_suppressed,
                 "practice_suppression_reasons": suppression_reasons,

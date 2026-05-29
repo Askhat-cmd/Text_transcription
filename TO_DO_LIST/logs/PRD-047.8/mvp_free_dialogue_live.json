@@ -1,0 +1,10 @@
+{
+  "mode": "live",
+  "status": "blocked",
+  "timestamp": "2026-05-29T10:01:28.678993+00:00",
+  "reason": "admin_runtime_unavailable:URLError",
+  "runtime_checked": false,
+  "chat_checked": false,
+  "prd": "PRD-047.8",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_8_mvp_free_dialogue_cases.json"
+}

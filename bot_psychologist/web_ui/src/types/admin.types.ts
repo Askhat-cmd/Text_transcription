@@ -177,6 +177,18 @@ export interface AdminRuntimeEffectiveResponse {
     mode_is_hint_not_cage?: boolean;
     question_limit?: number;
     practice_requires_gate?: boolean;
+    writer_max_tokens?: number;
+    writer_target_tokens_default?: number;
+    writer_target_tokens_expanded?: number;
+    writer_allow_long_answer?: boolean;
+  };
+  dialogue_profile?: {
+    value?: string;
+    allowed_values?: string[];
+    scope?: string;
+    description?: string;
+    developer_local_only?: boolean;
+    warning?: string;
   };
   active_line?: {
     enabled?: boolean;
@@ -198,6 +210,7 @@ export interface AdminRuntimeEffectiveResponse {
     version?: string;
     kind?: string;
     role?: string;
+    advisory_mode?: boolean;
     live_acceptance_requires_api_trace?: boolean;
     last_quality_calibration?: {
       last_prd?: string;
@@ -216,6 +229,11 @@ export interface AdminRuntimeEffectiveResponse {
     thresholds?: {
       warning_violation_rate?: number;
       critical_rate?: number;
+    };
+    mvp_expansion_exceptions?: {
+      answer_length_long_when_expansion_requested?: boolean;
+      numbered_list_when_expansion_requested?: boolean;
+      multi_block_answer_when_concept_explanation_full?: boolean;
     };
     last_summary?: {
       total?: number;

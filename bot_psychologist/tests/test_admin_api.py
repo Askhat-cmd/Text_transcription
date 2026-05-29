@@ -45,18 +45,25 @@ def test_post_grouped_config_updates_runtime(admin_client):
     res = client.post(
         "/api/v1/admin/config",
         headers=ADMIN_HEADERS,
-        json={"routing": {"FREE_CONVERSATION_MODE": True}, "llm": {"MAX_TOKENS_SOFT_CAP": 4096}},
+        json={
+            "routing": {"FREE_CONVERSATION_MODE": True},
+            "llm": {"MAX_TOKENS_SOFT_CAP": 4096},
+            "runtime": {"DIALOGUE_PROFILE": "mvp_free_dialogue"},
+        },
     )
     assert res.status_code == 200
     payload = res.json()
     assert payload["updated"]["FREE_CONVERSATION_MODE"] is True
     assert payload["updated"]["MAX_TOKENS_SOFT_CAP"] == 4096
+    assert payload["updated"]["DIALOGUE_PROFILE"] == "mvp_free_dialogue"
     assert config.FREE_CONVERSATION_MODE is True
     assert config.MAX_TOKENS_SOFT_CAP == 4096
+    assert config.DIALOGUE_PROFILE == "mvp_free_dialogue"
 
     data = json.loads(Path(override_path).read_text(encoding="utf-8"))
     assert data["config"]["FREE_CONVERSATION_MODE"] is True
     assert data["config"]["MAX_TOKENS_SOFT_CAP"] == 4096
+    assert data["config"]["DIALOGUE_PROFILE"] == "mvp_free_dialogue"
 
 
 def test_post_grouped_config_sets_null_max_tokens(admin_client):

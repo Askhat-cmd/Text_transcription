@@ -83,6 +83,10 @@ _MAX_CHARS_BY_SHAPE = {
     "compact_direct": 820,
     "repair_acknowledgement": 520,
     "mechanism_explanation": 900,
+    "concept_explanation_full": 5000,
+    "expanded_explanation": 4200,
+    "example_driven_explanation": 4200,
+    "repair_and_expand": 4200,
 }
 
 
@@ -212,10 +216,21 @@ def build_planner_drift_check(
     planner_question_policy = str(planner.get("question_policy", "none") or "none")
     planner_practice_policy = str(planner.get("practice_policy", "forbidden") or "forbidden")
     planner_revoicing_policy = str(planner.get("revoicing_policy", "suppressed") or "suppressed")
+    source_signals = dict(planner.get("source_signals", {})) if isinstance(planner.get("source_signals"), dict) else {}
+    mvp_profile = str(source_signals.get("dialogue_profile", "") or "") == "mvp_free_dialogue"
+    expansion_requested = bool(source_signals.get("expansion_requested", False))
+    expanded_shape = planner_answer_shape in {
+        "concept_explanation_full",
+        "expanded_explanation",
+        "example_driven_explanation",
+        "repair_and_expand",
+    }
 
     question_count = _question_count(answer_text)
     max_chars = _shape_max_chars(planner_answer_shape)
     answer_length_obedience = len(answer_text) <= max_chars
+    if mvp_profile and expansion_requested and expanded_shape:
+        answer_length_obedience = len(answer_text) <= 6000
 
     question_policy_obedience = True
     if planner_question_policy == "none":

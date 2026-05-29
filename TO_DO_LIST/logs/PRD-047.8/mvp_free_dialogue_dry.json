@@ -1,0 +1,17 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-05-29T10:01:25.393883+00:00",
+  "dataset_total": 18,
+  "coverage": {
+    "known_concept_full_answer": 3,
+    "continuation_not_short_support": 2,
+    "explicit_short_user": 2,
+    "developer_free_answer": 5,
+    "minimal_guardrails": 3,
+    "practice_gate": 3
+  },
+  "errors": [],
+  "prd": "PRD-047.8",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_8_mvp_free_dialogue_cases.json"
+}

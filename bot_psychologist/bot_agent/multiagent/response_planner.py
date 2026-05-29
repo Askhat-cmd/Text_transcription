@@ -6,6 +6,13 @@ import re
 from dataclasses import asdict, dataclass
 from typing import Any
 
+from .dialogue_policy import (
+    DIALOGUE_PROFILE_MVP_FREE,
+    detect_expansion_request,
+    detect_repair_and_expand_request,
+    detect_short_support_request,
+    normalize_dialogue_profile,
+)
 
 RESPONSE_PLANNER_VERSION = "response_planner_v1"
 
@@ -31,9 +38,13 @@ ANSWER_SHAPES = {
     "gentle_close",
     "safety_grounding",
     "one_question",
+    "concept_explanation_full",
+    "expanded_explanation",
+    "example_driven_explanation",
+    "repair_and_expand",
 }
 
-RESPONSE_DEPTHS = {"very_short", "short", "medium"}
+RESPONSE_DEPTHS = {"very_short", "short", "medium", "long", "deep"}
 QUESTION_POLICIES = {"none", "max_one_if_needed", "required_one_clarifying"}
 PRACTICE_POLICIES = {
     "forbidden",
@@ -302,6 +313,7 @@ def build_response_planner_decision(
     knowledge_answer_guard: dict[str, Any],
     philosophy_kernel: dict[str, Any],
     context_package: Any | None = None,
+    dialogue_policy: dict[str, Any] | None = None,
 ) -> ResponsePlannerDecision:
     del context_package, diagnostic_card, philosophy_kernel
 
@@ -349,6 +361,14 @@ def build_response_planner_decision(
     explicit_step_requested = bool(explicit_action.get("wants_step", False))
     explicit_practice_requested = bool(explicit_action.get("wants_practice", False))
     has_self_harm_marker = _contains_any(message, _SELF_HARM_MARKERS)
+    dialogue_policy_payload = dict(dialogue_policy or {})
+    dialogue_profile = normalize_dialogue_profile(dialogue_policy_payload.get("profile", "safe_guided"))
+    expansion_requested = bool(dialogue_policy_payload.get("expansion_requested", False)) or detect_expansion_request(message)
+    repair_and_expand_requested = bool(
+        dialogue_policy_payload.get("repair_and_expand_requested", False)
+    ) or detect_repair_and_expand_request(message)
+    active_concept = str(dialogue_policy_payload.get("active_concept", "") or "").strip().lower()
+    explicit_short_support = detect_short_support_request(message)
 
     safety_priority = bool(safety_active or safety_flag or response_mode == "safe_override")
     revoicing_policy = "allowed" if revoicing_allowed else "suppressed"
@@ -379,7 +399,73 @@ def build_response_planner_decision(
         "explicit_action_requested": explicit_action_requested,
         "explicit_step_requested": explicit_step_requested,
         "explicit_practice_requested": explicit_practice_requested,
+        "dialogue_profile": dialogue_profile,
+        "expansion_requested": expansion_requested,
+        "repair_and_expand_requested": repair_and_expand_requested,
+        "active_concept": active_concept,
+        "explicit_short_support": explicit_short_support,
     }
+
+    if (
+        dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+        and expansion_requested
+        and not safety_priority
+        and not soft_distress_text
+        and not explicit_short_support
+    ):
+        if repair_and_expand_requested:
+            return _build_decision(
+                next_move="repair_misalignment",
+                answer_shape="repair_and_expand",
+                response_depth="long",
+                target_micro_shift="исправить непонятность и дать полноценное объяснение",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="allowed_if_explicit",
+                revoicing_policy="suppressed",
+                continuity_policy="repair_and_continue",
+                safety_priority=False,
+                must_include=["дать ясное объяснение", "дать пример", "показать применение"],
+                must_avoid=["не повторять прежнюю короткую формулировку"],
+                source_signals=source_signals,
+                confidence=0.93,
+                rationale="MVP free dialogue: repair+expand запрос приоритетен.",
+            )
+        if should_answer_directly or active_concept:
+            return _build_decision(
+                next_move="answer_known_concept",
+                answer_shape="concept_explanation_full",
+                response_depth="deep",
+                target_micro_shift="дать полноценное объяснение known concept в несколько смысловых блоков",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="allowed_if_explicit",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["дать ясное объяснение", "дать пример", "показать применение"],
+                must_avoid=["не сводить ответ к одной короткой фразе"],
+                source_signals=source_signals,
+                confidence=0.94,
+                rationale="MVP free dialogue: expansion follow-up inherits active concept and allows deep answer.",
+            )
+        return _build_decision(
+            next_move="deepen_mechanism",
+            answer_shape="expanded_explanation",
+            response_depth="long",
+            target_micro_shift="дать развёрнутое объяснение по текущей линии без укорачивания",
+            should_answer_directly=True,
+            question_policy="none",
+            practice_policy="allowed_if_explicit",
+            revoicing_policy="suppressed",
+            continuity_policy="continue_active_line",
+            safety_priority=False,
+            must_include=["дать ясное объяснение", "дать пример", "показать применение"],
+            must_avoid=["не уходить в short_support без явного запроса"],
+            source_signals=source_signals,
+            confidence=0.9,
+            rationale="MVP free dialogue: explicit expansion request overrides short-support tendencies.",
+        )
 
     if safety_priority:
         return _build_decision(
@@ -457,7 +543,11 @@ def build_response_planner_decision(
             rationale="Thanks/close сигнал: нужен мягкий выход без нового loop.",
         )
 
-    if low_resource_text or intent == "short_support" or (nervous_state == "hypo" and not explicit_action_requested):
+    if low_resource_text or intent == "short_support" or (
+        dialogue_profile != DIALOGUE_PROFILE_MVP_FREE
+        and nervous_state == "hypo"
+        and not explicit_action_requested
+    ):
         return _build_decision(
             next_move="give_short_support",
             answer_shape="short_support",

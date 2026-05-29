@@ -10,11 +10,21 @@ from typing import Any, Optional
 from ...config import config
 from ...feature_flags import feature_flags
 from ..active_line import starts_with_mechanical_revoicing
+from ..dialogue_policy import (
+    DIALOGUE_PROFILE_MVP_FREE,
+    detect_expansion_request,
+    detect_repair_and_expand_request,
+    normalize_dialogue_profile,
+)
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
 from .agent_llm_config import get_model_for_agent, get_temperature_for_agent
-from .writer_agent_prompts import WRITER_SYSTEM, WRITER_USER_TEMPLATE
+from .writer_agent_prompts import (
+    WRITER_SYSTEM,
+    WRITER_SYSTEM_MVP_FREE_DIALOGUE,
+    WRITER_USER_TEMPLATE,
+)
 
 
 logger = logging.getLogger(__name__)
@@ -131,21 +141,26 @@ class WriterAgent:
     def _resolve_model(self) -> str:
         return self._model_override or get_model_for_agent("writer")
 
-    def _resolve_runtime_settings(self) -> dict[str, Any]:
+    def _resolve_runtime_settings(self, dialogue_profile: str = "safe_guided") -> dict[str, Any]:
         model = self._resolve_model()
+        profile = normalize_dialogue_profile(dialogue_profile)
+        configured_max_tokens = _to_int(
+            feature_flags.value(
+                "MULTIAGENT_MAX_TOKENS",
+                feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
+            ),
+            WRITER_MAX_TOKENS_DEFAULT,
+        )
+        max_tokens = configured_max_tokens
+        if profile == DIALOGUE_PROFILE_MVP_FREE:
+            max_tokens = max(configured_max_tokens, 2500)
         return {
             "model": model,
             "timeout": _to_float(
                 feature_flags.value("MULTIAGENT_LLM_TIMEOUT", str(WRITER_TIMEOUT_DEFAULT)),
                 WRITER_TIMEOUT_DEFAULT,
             ),
-            "max_tokens": _to_int(
-                feature_flags.value(
-                    "MULTIAGENT_MAX_TOKENS",
-                    feature_flags.value("WRITER_MAX_TOKENS", str(WRITER_MAX_TOKENS_DEFAULT)),
-                ),
-                WRITER_MAX_TOKENS_DEFAULT,
-            ),
+            "max_tokens": max_tokens,
             "temperature": get_temperature_for_agent("writer"),
         }
 
@@ -156,14 +171,25 @@ class WriterAgent:
         prompt_constraint_decision: dict[str, Any] | None = None,
     ) -> str:
         """Write one answer text with safe fallback behavior."""
-        runtime_settings = self._resolve_runtime_settings()
+        dialogue_profile = normalize_dialogue_profile(
+            getattr(contract, "dialogue_policy", {}).get("profile", "safe_guided")
+            if isinstance(getattr(contract, "dialogue_policy", None), dict)
+            else "safe_guided"
+        )
+        runtime_settings = self._resolve_runtime_settings(dialogue_profile=dialogue_profile)
+        system_prompt = (
+            WRITER_SYSTEM_MVP_FREE_DIALOGUE
+            if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+            else WRITER_SYSTEM
+        )
         self.last_debug = {
             "model": runtime_settings["model"],
             "api_mode": None,
             "temperature": runtime_settings["temperature"],
             "max_tokens": runtime_settings["max_tokens"],
             "timeout": runtime_settings["timeout"],
-            "system_prompt": WRITER_SYSTEM,
+            "dialogue_profile": dialogue_profile,
+            "system_prompt": system_prompt,
             "user_prompt": "",
             "llm_response": "",
             "tokens_prompt": None,
@@ -251,6 +277,10 @@ class WriterAgent:
         ctx.setdefault("response_planner_rationale", "")
         ctx.setdefault("response_planner_must_include", [])
         ctx.setdefault("response_planner_must_avoid", [])
+        ctx.setdefault("dialogue_profile", "safe_guided")
+        ctx.setdefault("dialogue_expansion_requested", False)
+        ctx.setdefault("dialogue_repair_and_expand_requested", False)
+        ctx.setdefault("dialogue_active_concept", "")
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -423,6 +453,12 @@ class WriterAgent:
             or "none",
             response_planner_confidence=float(ctx.get("response_planner_confidence", 0.0) or 0.0),
             response_planner_rationale=str(ctx.get("response_planner_rationale", "") or ""),
+            dialogue_profile=str(ctx.get("dialogue_profile", "safe_guided") or "safe_guided"),
+            dialogue_expansion_requested=str(bool(ctx.get("dialogue_expansion_requested", False))).lower(),
+            dialogue_repair_and_expand_requested=str(
+                bool(ctx.get("dialogue_repair_and_expand_requested", False))
+            ).lower(),
+            dialogue_active_concept=str(ctx.get("dialogue_active_concept", "") or ""),
         )
         prompt_section = (
             format_prompt_constraint_section_v1(prompt_constraint_decision)
@@ -449,12 +485,20 @@ class WriterAgent:
         self.last_debug["prompt_constraint_pilot_prompt_section_chars"] = len(prompt_section)
 
         start_ts = time.perf_counter()
-        runtime_settings = self._resolve_runtime_settings()
+        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", "safe_guided"))
+        runtime_settings = self._resolve_runtime_settings(dialogue_profile=dialogue_profile)
+        system_prompt = (
+            WRITER_SYSTEM_MVP_FREE_DIALOGUE
+            if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+            else WRITER_SYSTEM
+        )
+        self.last_debug["system_prompt"] = system_prompt
+        self.last_debug["dialogue_profile"] = dialogue_profile
         result = await create_agent_completion(
             client=client,
             model=runtime_settings["model"],
             messages=[
-                {"role": "system", "content": WRITER_SYSTEM},
+                {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
             temperature=runtime_settings["temperature"],
@@ -496,6 +540,11 @@ class WriterAgent:
         ctx = contract.to_prompt_context()
         user_message = str(ctx.get("user_message", "") or "")
         lowered_user = user_message.lower()
+        dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", "safe_guided"))
+        expansion_requested = bool(ctx.get("dialogue_expansion_requested", False)) or detect_expansion_request(user_message)
+        repair_and_expand_requested = bool(
+            ctx.get("dialogue_repair_and_expand_requested", False)
+        ) or detect_repair_and_expand_request(user_message)
         knowledge_answer = dict(ctx.get("knowledge_answer", {})) if isinstance(ctx.get("knowledge_answer"), dict) else {}
         practice_gate = dict(ctx.get("practice_gate", {})) if isinstance(ctx.get("practice_gate"), dict) else {}
         practice_allowed = bool(practice_gate.get("practice_allowed", True))
@@ -539,6 +588,29 @@ class WriterAgent:
         user_mechanism_request = _contains_any(
             lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
         )
+
+        if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
+            return self._enforce_mvp_free_dialogue_compliance(
+                text=text,
+                lowered_text=lowered_text,
+                lowered_user=lowered_user,
+                concept=concept,
+                should_answer_directly=should_answer_directly,
+                planner_next_move=planner_next_move,
+                planner_answer_shape=planner_answer_shape,
+                planner_question_policy=planner_question_policy,
+                planner_practice_policy=planner_practice_policy,
+                planner_safety_priority=planner_safety_priority,
+                has_unsolicited_practice=has_unsolicited_practice,
+                has_question=has_question,
+                asks_define_known_term=asks_define_known_term,
+                has_external_surveillance_frame=has_external_surveillance_frame,
+                user_step_request=user_step_request,
+                expansion_requested=expansion_requested,
+                repair_and_expand_requested=repair_and_expand_requested,
+                user_repair_signal=user_repair_signal,
+                active_line_intent=active_line_intent,
+            )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
         if not practice_allowed and not should_answer_directly and (is_greeting or has_unsolicited_practice):
@@ -601,6 +673,28 @@ class WriterAgent:
 
         if user_repair_signal:
             return "Да, ты прав: я сдвинулся не туда. Вернусь к сути и продолжу разбор механизма без практики."
+
+        # Known concept answer-first path: enforce direct internal meaning framing
+        # before generic question-policy rewrites.
+        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
+            if "самореализац" in lowered_user and ("коррелир" in lowered_user or "связан" in lowered_user):
+                return (
+                    "Если держаться внутреннего смысла термина, Нейросталкинг связан с самореализацией через "
+                    "снятие автопилота. Самореализация требует проявляться и выбирать своё направление, а "
+                    "Нейросталкинг помогает заметить паттерны, триггеры и автоматические реакции, которые "
+                    "мешают проявляться и действовать из авторства."
+                )
+            if concept == "нейросталкинг":
+                return (
+                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
+                    "автоматическими реакциями: как включается программа и где запускается страдание, чтобы "
+                    "не сливаться с реакцией полностью."
+                )
+            if concept == "самореализация":
+                return (
+                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
+                    "и авторство, а не повторение автоматических паттернов."
+                )
 
         if planner_question_policy == "none" and has_question:
             if planner_next_move == "give_direct_step" or planner_answer_shape == "one_step":
@@ -724,26 +818,6 @@ class WriterAgent:
             if len(parts) == 2 and parts[1].strip():
                 return parts[1].strip()
 
-        # Known concept answer-first path: enforce direct internal meaning framing.
-        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
-            if "самореализац" in lowered_user and ("коррелир" in lowered_user or "связан" in lowered_user):
-                return (
-                    "Если держаться внутреннего смысла термина, Нейросталкинг связан с самореализацией через "
-                    "снятие автопилота. Самореализация требует проявляться и выбирать своё направление, а "
-                    "Нейросталкинг помогает заметить паттерны, триггеры и автоматические реакции, которые "
-                    "мешают проявляться и действовать из авторства."
-                )
-            if concept == "нейросталкинг":
-                return (
-                    "В нашей внутренней рамке Нейросталкинг — это наблюдение за паттернами, триггерами и "
-                    "автоматическими реакциями: как включается программа и где запускается страдание, чтобы "
-                    "не сливаться с реакцией полностью."
-                )
-            if concept == "самореализация":
-                return (
-                    "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
-                    "и авторство, а не повторение автоматических паттернов."
-                )
         if planner_next_move == "answer_known_concept" and planner_practice_policy == "forbidden":
             if "самореализац" in lowered_user and "нейросталкинг" in lowered_user:
                 return (
@@ -760,6 +834,82 @@ class WriterAgent:
                     "В нашей внутренней рамке самореализация — это раскрытие потенциала через осознанный выбор "
                     "и авторство, а не движение по автоматическим сценариям."
                 )
+        return text
+
+    def _enforce_mvp_free_dialogue_compliance(
+        self,
+        *,
+        text: str,
+        lowered_text: str,
+        lowered_user: str,
+        concept: str,
+        should_answer_directly: bool,
+        planner_next_move: str,
+        planner_answer_shape: str,
+        planner_question_policy: str,
+        planner_practice_policy: str,
+        planner_safety_priority: bool,
+        has_unsolicited_practice: bool,
+        has_question: bool,
+        asks_define_known_term: bool,
+        has_external_surveillance_frame: bool,
+        user_step_request: bool,
+        expansion_requested: bool,
+        repair_and_expand_requested: bool,
+        user_repair_signal: bool,
+        active_line_intent: str,
+    ) -> str:
+        if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
+            if has_question or len(text) > 380:
+                return "Я рядом. Сейчас важнее немного стабилизироваться и снизить перегруз, без лишнего давления."
+            return text
+
+        if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
+            return (
+                "Сфокусируюсь на разборе, без практик по умолчанию. "
+                "Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия."
+            )
+
+        if planner_question_policy == "none" and has_question and not expansion_requested:
+            return re.sub(r"\s*\?+\s*", ". ", text).strip()
+
+        if repair_and_expand_requested or user_repair_signal:
+            return (
+                "Ты прав, мой прошлый ответ был слишком узким. Объясню ясно и по-человечески.\n\n"
+                "Нейросталкинг в нашей рамке - это способ замечать автоматические паттерны мышления и реакции до того, "
+                "как они полностью перехватят твоё поведение. Это не про внешнюю слежку и не про поиск \"правильного состояния\", "
+                "а про возвращение себе выбора в конкретном моменте.\n\n"
+                "Как это применять в жизни: сначала замечаешь триггер, потом паттерн реакции, потом делаешь минимальный осознанный сдвиг "
+                "в сторону нужного действия. Например, в разговоре с начальником можно поймать момент, когда включается страх выглядеть грубо, "
+                "и вместо молчаливого согласия дать короткую уважительную реплику по факту."
+            )
+
+        if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
+            return (
+                "В нашей внутренней рамке нейросталкинг - это наблюдение за паттернами, триггерами и автоматическими реакциями, "
+                "чтобы не сливаться с ними и возвращать себе выбор. Это не внешнее слежение и не биофидбек-термин, а практичный язык "
+                "для осознанного поведения в повседневных ситуациях.\n\n"
+                "На практике это выглядит так: замечаешь, где включается автопилот, называешь механизм простыми словами и выбираешь "
+                "следующий шаг, который поддерживает твою цель."
+            )
+
+        if expansion_requested and len(text) < 260:
+            if concept == "нейросталкинг" or "нейросталкинг" in lowered_user or active_line_intent == "known_concept_question":
+                return (
+                    "Давай развернуто. Нейросталкинг - это наблюдение за внутренними паттернами: что запускает реакцию, "
+                    "как она раскручивается и где ты теряешь выбор. Смысл не в том, чтобы подавить эмоции, а в том, чтобы увидеть "
+                    "механизм до автоматического действия.\n\n"
+                    "Это не теория ради теории. В жизни он помогает в переговорах, конфликтах и откладывании: ты замечаешь триггер, "
+                    "отделяешь факт от внутреннего прогноза и выбираешь более точный ответ по ситуации.\n\n"
+                    "Пример: в разговоре с начальником появляется мысль \"если возражу, буду невежливым\". Нейросталкинг позволяет "
+                    "увидеть этот автопилот и перейти к спокойной фактической формулировке вместо молчаливого согласия."
+                )
+            return (
+                "Разверну объяснение глубже. Здесь важно не сводить ответ к одной фразе: сначала обозначить механизм, "
+                "потом показать, как он проявляется в быту, и затем дать практический способ применения без перегруза.\n\n"
+                "Если держать этот порядок, ответ становится понятным и полезным, а не абстрактным."
+            )
+
         return text
 
     def _get_client(self):

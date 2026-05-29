@@ -286,6 +286,13 @@ class RuntimeConfig(Config):
             "group": "routing",
             "label": "Режим свободного собеседника",
         },
+        "DIALOGUE_PROFILE": {
+            "type": "select",
+            "options": ["safe_guided", "mvp_free_dialogue"],
+            "group": "runtime",
+            "label": "Профиль диалога",
+            "note": "safe_guided=осторожный, mvp_free_dialogue=developer-local свободный MVP режим",
+        },
         "FAST_DETECTOR_ENABLED": {
             "type": "bool",
             "group": "routing",
@@ -787,6 +794,7 @@ class RuntimeConfig(Config):
         self.MAX_TOKENS = None if max_tokens_raw in ("", "none", "null") else int(max_tokens_raw)
         self.MAX_TOKENS_SOFT_CAP = int(os.getenv("MAX_TOKENS_SOFT_CAP", "8192"))
         self.FREE_CONVERSATION_MODE = os.getenv("FREE_CONVERSATION_MODE", "false").lower() == "true"
+        self.DIALOGUE_PROFILE = os.getenv("DIALOGUE_PROFILE", "safe_guided")
 
         self.CONFIDENCE_CAP_HIGH = int(os.getenv("CONFIDENCE_CAP_HIGH", "7"))
         self.CONFIDENCE_CAP_MEDIUM = int(os.getenv("CONFIDENCE_CAP_MEDIUM", "5"))

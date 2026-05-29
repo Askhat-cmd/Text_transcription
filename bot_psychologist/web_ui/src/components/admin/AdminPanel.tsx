@@ -394,6 +394,24 @@ export const AdminPanel: React.FC = () => {
                         <div>mode_is_hint_not_cage: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.mode_is_hint_not_cage))}</div>
                         <div>question_limit: {runtimeEffectiveData.writer_freedom_contract?.question_limit ?? 1}</div>
                         <div>practice_requires_gate: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.practice_requires_gate))}</div>
+                        <div>writer_max_tokens: {runtimeEffectiveData.writer_freedom_contract?.writer_max_tokens ?? 'n/a'}</div>
+                        <div>writer_target_tokens_default: {runtimeEffectiveData.writer_freedom_contract?.writer_target_tokens_default ?? 'n/a'}</div>
+                        <div>writer_target_tokens_expanded: {runtimeEffectiveData.writer_freedom_contract?.writer_target_tokens_expanded ?? 'n/a'}</div>
+                        <div>writer_allow_long_answer: {String(Boolean(runtimeEffectiveData.writer_freedom_contract?.writer_allow_long_answer))}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Dialogue Profile</div>
+                        <div>Dialogue Profile: safe_guided / mvp_free_dialogue</div>
+                        <div>value: {runtimeEffectiveData.dialogue_profile?.value ?? 'safe_guided'}</div>
+                        <div>allowed_values: {(runtimeEffectiveData.dialogue_profile?.allowed_values ?? []).join(', ') || 'n/a'}</div>
+                        <div>scope: {runtimeEffectiveData.dialogue_profile?.scope ?? 'n/a'}</div>
+                        <div>developer_local_only: {String(Boolean(runtimeEffectiveData.dialogue_profile?.developer_local_only))}</div>
+                        <div>description: {runtimeEffectiveData.dialogue_profile?.description ?? 'n/a'}</div>
+                        {runtimeEffectiveData.dialogue_profile?.warning && (
+                          <div className="mt-1 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-800">
+                            {runtimeEffectiveData.dialogue_profile.warning}
+                          </div>
+                        )}
                       </div>
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Active Line</div>
@@ -413,6 +431,7 @@ export const AdminPanel: React.FC = () => {
                         <div>version: {runtimeEffectiveData.response_planner?.version ?? 'n/a'}</div>
                         <div>kind: {runtimeEffectiveData.response_planner?.kind ?? 'n/a'}</div>
                         <div>role: {runtimeEffectiveData.response_planner?.role ?? 'n/a'}</div>
+                        <div>advisory_mode: {String(Boolean(runtimeEffectiveData.response_planner?.advisory_mode))}</div>
                         <div>live_acceptance_requires_api_trace: {String(Boolean(runtimeEffectiveData.response_planner?.live_acceptance_requires_api_trace))}</div>
                         <div>quality.last_prd: {runtimeEffectiveData.response_planner?.last_quality_calibration?.last_prd ?? 'n/a'}</div>
                         <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.response_planner?.last_quality_calibration?.last_direct_passed))}</div>
@@ -431,6 +450,9 @@ export const AdminPanel: React.FC = () => {
                         <div>summary.warning_count: {runtimeEffectiveData.planner_drift_guard?.last_summary?.warning_count ?? 0}</div>
                         <div>summary.critical_count: {runtimeEffectiveData.planner_drift_guard?.last_summary?.critical_count ?? 0}</div>
                         <div>summary.threshold_status: {runtimeEffectiveData.planner_drift_guard?.last_summary?.threshold_status ?? 'n/a'}</div>
+                        <div>mvp_expansion.answer_length_long_when_expansion_requested: {String(Boolean(runtimeEffectiveData.planner_drift_guard?.mvp_expansion_exceptions?.answer_length_long_when_expansion_requested))}</div>
+                        <div>mvp_expansion.numbered_list_when_expansion_requested: {String(Boolean(runtimeEffectiveData.planner_drift_guard?.mvp_expansion_exceptions?.numbered_list_when_expansion_requested))}</div>
+                        <div>mvp_expansion.multi_block_answer_when_concept_explanation_full: {String(Boolean(runtimeEffectiveData.planner_drift_guard?.mvp_expansion_exceptions?.multi_block_answer_when_concept_explanation_full))}</div>
                         <div>replay.direct: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.direct ?? 'n/a'}</div>
                         <div>replay.live: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.live ?? 'n/a'}</div>
                       </div>

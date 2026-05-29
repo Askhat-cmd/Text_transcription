@@ -27,6 +27,7 @@ class WriterContract:
     writer_freedom_contract: dict[str, Any] | None = None
     active_line: dict[str, Any] | None = None
     response_planner: dict[str, Any] | None = None
+    dialogue_policy: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -56,6 +57,9 @@ class WriterContract:
             ),
             "response_planner": (
                 dict(self.response_planner) if isinstance(self.response_planner, dict) else None
+            ),
+            "dialogue_policy": (
+                dict(self.dialogue_policy) if isinstance(self.dialogue_policy, dict) else None
             ),
             "response_language": self.response_language,
         }
@@ -143,6 +147,11 @@ class WriterContract:
         response_planner = (
             dict(self.response_planner) if isinstance(self.response_planner, dict) else {}
         )
+        dialogue_policy = (
+            dict(self.dialogue_policy) if isinstance(self.dialogue_policy, dict) else {}
+        )
+        dialogue_profile = str(dialogue_policy.get("profile", "safe_guided") or "safe_guided")
+        dialogue_active_concept = str(dialogue_policy.get("active_concept", "") or "")
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
         freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
         mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
@@ -310,4 +319,11 @@ class WriterContract:
             "response_planner_must_avoid": list(
                 response_planner.get("must_avoid", []) or []
             ),
+            "dialogue_policy": dialogue_policy,
+            "dialogue_profile": dialogue_profile,
+            "dialogue_expansion_requested": bool(dialogue_policy.get("expansion_requested", False)),
+            "dialogue_repair_and_expand_requested": bool(
+                dialogue_policy.get("repair_and_expand_requested", False)
+            ),
+            "dialogue_active_concept": dialogue_active_concept,
         }

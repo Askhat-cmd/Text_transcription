@@ -76,6 +76,12 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["guided_live_testing"]["scenario_set"] == "prd_047_7_guided_live_scenarios"
     assert isinstance(payload["guided_live_testing"]["scenario_count"], int)
     assert isinstance(payload["guided_live_testing"]["last_session_summary_available"], bool)
+    assert payload["dialogue_profile"]["value"] in {"safe_guided", "mvp_free_dialogue"}
+    assert payload["dialogue_profile"]["allowed_values"] == ["safe_guided", "mvp_free_dialogue"]
+    assert payload["dialogue_profile"]["scope"] == "developer_local"
+    assert payload["dialogue_profile"]["developer_local_only"] is True
+    assert payload["response_planner"]["advisory_mode"] in {True, False}
+    assert payload["writer_freedom_contract"]["writer_max_tokens"] >= 600
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

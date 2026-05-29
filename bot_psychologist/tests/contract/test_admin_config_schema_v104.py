@@ -37,11 +37,14 @@ def test_admin_config_schema_v104_exists_and_contains_markers(admin_client):
     assert "llm" in editable_groups
     assert "retrieval" in editable_groups
     assert "routing" in editable_groups
+    assert "runtime" in editable_groups
 
     routing_params = editable_groups["routing"]["params"]
     assert "STATE_CLASSIFIER_ENABLED" in routing_params
     assert routing_params["STATE_CLASSIFIER_ENABLED"]["deprecated"] is True
     assert routing_params["STATE_CLASSIFIER_ENABLED"]["compatibility_only"] is False
+    runtime_params = editable_groups["runtime"]["params"]
+    assert runtime_params["DIALOGUE_PROFILE"]["type"] == "select"
 
     assert "runtime_status" in payload["read_only"]
     assert "feature_flags" in payload["read_only"]

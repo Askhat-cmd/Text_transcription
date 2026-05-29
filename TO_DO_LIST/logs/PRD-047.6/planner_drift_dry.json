@@ -1,0 +1,578 @@
+{
+  "prd_id": "PRD-047.6",
+  "mode": "dry",
+  "timestamp_utc": "2026-05-29T05:53:43.318878+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_6_planner_drift_cases.json",
+  "dataset_valid": true,
+  "dataset_errors": [],
+  "coverage": {
+    "safety_grounding_positive": 4,
+    "safety_grounding_negative": 3,
+    "short_support_positive": 4,
+    "short_support_negative": 3,
+    "question_policy_none": 3,
+    "practice_policy_forbidden": 3,
+    "gentle_close": 3,
+    "one_step": 3,
+    "known_concept_direct": 3,
+    "defensive_one_question": 3
+  },
+  "summary": {
+    "cases_total": 32,
+    "cases_passed": 32,
+    "cases_failed": 0
+  },
+  "strict_drift": {
+    "warning_count": 0,
+    "critical_count": 0,
+    "missing_drift_payload_count": 0,
+    "runner_side_fallback_used": false
+  },
+  "case_results": [
+    {
+      "case_id": "pdg_001",
+      "group": "safety_grounding_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_002",
+      "group": "safety_grounding_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_003",
+      "group": "safety_grounding_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_004",
+      "group": "safety_grounding_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_005",
+      "group": "safety_grounding_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_006",
+      "group": "safety_grounding_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_007",
+      "group": "safety_grounding_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_008",
+      "group": "short_support_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_009",
+      "group": "short_support_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_010",
+      "group": "short_support_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_011",
+      "group": "short_support_positive",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_012",
+      "group": "short_support_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_013",
+      "group": "short_support_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_014",
+      "group": "short_support_negative",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_015",
+      "group": "question_policy_none",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_016",
+      "group": "question_policy_none",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_017",
+      "group": "question_policy_none",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_018",
+      "group": "practice_policy_forbidden",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_019",
+      "group": "practice_policy_forbidden",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_020",
+      "group": "practice_policy_forbidden",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_021",
+      "group": "gentle_close",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_022",
+      "group": "gentle_close",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_023",
+      "group": "gentle_close",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation",
+            "close_opened_new_loop"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_024",
+      "group": "one_step",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_025",
+      "group": "one_step",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "one_step_multistep_list"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_026",
+      "group": "one_step",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_027",
+      "group": "known_concept_direct",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_028",
+      "group": "known_concept_direct",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "known_concept_requires_user_definition"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_029",
+      "group": "known_concept_direct",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_030",
+      "group": "defensive_one_question",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_031",
+      "group": "defensive_one_question",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "clarify_too_many_questions"
+          ]
+        },
+        "actual": {}
+      }
+    },
+    {
+      "case_id": "pdg_032",
+      "group": "defensive_one_question",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "dataset_valid": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {}
+      }
+    }
+  ]
+}

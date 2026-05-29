@@ -1,0 +1,54 @@
+{
+  "prd_id": "PRD-047.6",
+  "version": "planner_drift_guard_v1",
+  "expected_passed": false,
+  "actual_passed": true,
+  "case_results": [
+    {
+      "case_id": "neg_001_safety_mechanism",
+      "required_flag": "safety_mechanism_drift",
+      "actual_status": "critical",
+      "actual_flags": [
+        "safety_mechanism_drift"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "neg_002_short_support_lecture",
+      "required_flag": "short_support_missing_contact",
+      "actual_status": "warning",
+      "actual_flags": [
+        "short_support_missing_contact"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "neg_003_question_policy",
+      "required_flag": "question_policy_violation",
+      "actual_status": "warning",
+      "actual_flags": [
+        "question_policy_violation"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "neg_004_practice_forbidden",
+      "required_flag": "practice_policy_forbidden_violation",
+      "actual_status": "critical",
+      "actual_flags": [
+        "practice_policy_forbidden_violation"
+      ],
+      "passed": true
+    },
+    {
+      "case_id": "neg_005_close_new_loop",
+      "required_flag": "close_opened_new_loop",
+      "actual_status": "warning",
+      "actual_flags": [
+        "question_policy_violation",
+        "close_opened_new_loop"
+      ],
+      "passed": true
+    }
+  ]
+}

@@ -22,6 +22,7 @@ from bot_agent.config_validation import validate_runtime_config
 from bot_agent.data_loader import data_loader
 from bot_agent.feature_flags import feature_flags
 from bot_agent.multiagent.orchestrator import orchestrator
+from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
     KERNEL_V1,
     WRITER_FREEDOM_CONTRACT_VERSION,
@@ -570,6 +571,30 @@ def _load_prd_047_4_response_planner_calibration_status() -> dict[str, Any]:
         }
 
 
+def _load_prd_047_6_planner_drift_replay_status() -> dict[str, Any]:
+    repo_root = Path(__file__).resolve().parents[2]
+    logs_dir = repo_root / "TO_DO_LIST" / "logs" / "PRD-047.6"
+    direct_path = logs_dir / "planner_drift_direct.json"
+    live_path = logs_dir / "planner_drift_live.json"
+
+    def _extract_status(path: Path) -> str:
+        if not path.exists():
+            return "missing"
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            summary = dict(payload.get("summary", {}))
+            failed = int(summary.get("cases_failed", 1) or 1)
+            return "passed" if failed == 0 else "failed"
+        except Exception:
+            return "invalid"
+
+    return {
+        "prd": "PRD-047.6",
+        "direct": _extract_status(direct_path),
+        "live": _extract_status(live_path),
+    }
+
+
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
@@ -583,6 +608,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     quality_calibration = _load_prd_047_2_quality_calibration_status()
     active_line_calibration = _load_prd_047_3_active_line_calibration_status()
     response_planner_calibration = _load_prd_047_4_response_planner_calibration_status()
+    planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -676,6 +702,19 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "role": "next_meaningful_move_selector",
             "live_acceptance_requires_api_trace": True,
             "last_quality_calibration": response_planner_calibration,
+        },
+        "planner_drift_guard": {
+            "enabled": True,
+            "version": "planner_drift_guard_v1",
+            "mode": "observe_only",
+            "blocking_user_answers": False,
+            "window_size": 100,
+            "thresholds": {
+                "warning_violation_rate": 0.10,
+                "critical_rate": 0.03,
+            },
+            "last_summary": get_planner_drift_summary(),
+            "last_replay_status": planner_drift_replay_status,
         },
         "diagnostic_center_control": build_diagnostic_center_effective_payload(),
     }

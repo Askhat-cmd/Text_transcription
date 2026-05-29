@@ -1,0 +1,19 @@
+{
+  "prd_id": "PRD-047.6",
+  "mode": "live",
+  "timestamp_utc": "2026-05-29T05:50:03.690527+00:00",
+  "summary": {
+    "cases_total": 12,
+    "cases_passed": 12,
+    "cases_failed": 0
+  },
+  "strict_drift": {
+    "warning_count": 0,
+    "critical_count": 0,
+    "missing_drift_payload_count": 0,
+    "runner_side_fallback_used": false
+  },
+  "dataset_valid": true,
+  "dataset_errors_count": 0,
+  "negative_regression_actual_passed": true
+}

@@ -31,6 +31,14 @@ from .planner_bridge_writer_contract_pilot import (
     build_planner_bridge_writer_contract_pilot_runtime_shadow_v1,
 )
 from .philosophy_kernel import build_philosophy_kernel_runtime_payload
+from .planner_drift_guard import (
+    PLANNER_DRIFT_GUARD_VERSION,
+    build_planner_drift_check,
+)
+from .planner_drift_monitor import (
+    get_planner_drift_summary,
+    record_planner_drift_check,
+)
 from .prompt_constraint_pilot_runtime import (
     build_prompt_constraint_pilot_runtime_decision_v1,
 )
@@ -384,6 +392,65 @@ class MultiAgentOrchestrator:
             quality_trace_error = f"quality_trace_failed:{exc.__class__.__name__}"
             logger.warning("[MULTIAGENT] quality_trace build failed: %s", exc.__class__.__name__)
 
+        planner_drift_guard_error = None
+        planner_drift_guard = {}
+        planner_drift_summary = {}
+        try:
+            planner_drift_guard = build_planner_drift_check(
+                response_planner=response_planner_state,
+                final_answer=final_answer,
+                enabled=True,
+            ).to_dict()
+            record_planner_drift_check(user_id=user_id, check=planner_drift_guard)
+            planner_drift_summary = get_planner_drift_summary()
+            rolling_total = int(planner_drift_summary.get("total", 0) or 0)
+            rolling_violations = int(
+                planner_drift_summary.get("warning_count", 0) or 0
+            ) + int(planner_drift_summary.get("critical_count", 0) or 0)
+            planner_drift_guard["rolling_window"] = {
+                "size": int(planner_drift_summary.get("window_size", 100) or 100),
+                "total": rolling_total,
+                "violations": rolling_violations,
+                "violation_rate": float(planner_drift_summary.get("violation_rate", 0.0) or 0.0),
+                "by_flag": dict(planner_drift_summary.get("by_flag", {})),
+            }
+        except Exception as exc:  # noqa: BLE001
+            planner_drift_guard_error = (
+                f"planner_drift_guard_failed:{exc.__class__.__name__}"
+            )
+            logger.warning("[MULTIAGENT] planner drift guard build failed: %s", exc.__class__.__name__)
+            planner_drift_guard = {
+                "version": PLANNER_DRIFT_GUARD_VERSION,
+                "enabled": False,
+                "status": "warning",
+                "severity": "medium",
+                "flags": ["drift_guard_exception"],
+                "shape_obedience": False,
+                "policy_obedience": False,
+                "question_policy_obedience": False,
+                "practice_policy_obedience": False,
+                "revoicing_policy_obedience": False,
+                "answer_length_obedience": False,
+                "safety_grounding_obedience": False,
+                "short_support_obedience": False,
+                "close_obedience": False,
+                "final_answer_chars": len(str(final_answer or "")),
+                "final_answer_question_count": str(final_answer or "").count("?"),
+                "planner_next_move": str(response_planner_state.get("next_move", "") or ""),
+                "planner_answer_shape": str(response_planner_state.get("answer_shape", "") or ""),
+                "planner_question_policy": str(response_planner_state.get("question_policy", "none") or "none"),
+                "planner_practice_policy": str(response_planner_state.get("practice_policy", "forbidden") or "forbidden"),
+                "rationale": "drift guard exception fallback",
+                "rolling_window": {
+                    "size": 100,
+                    "total": 0,
+                    "violations": 0,
+                    "violation_rate": 0.0,
+                    "by_flag": {},
+                },
+            }
+            planner_drift_summary = get_planner_drift_summary()
+
         asyncio.create_task(
             memory_retrieval_agent.update(
                 user_id=user_id,
@@ -526,6 +593,10 @@ class MultiAgentOrchestrator:
                 "response_planner_version": RESPONSE_PLANNER_VERSION,
                 "response_planner": dict(response_planner_state),
                 "response_planner_error": response_planner_error,
+                "planner_drift_guard_version": PLANNER_DRIFT_GUARD_VERSION,
+                "planner_drift_guard": dict(planner_drift_guard),
+                "planner_drift_guard_error": planner_drift_guard_error,
+                "planner_drift_summary": dict(planner_drift_summary),
                 "rag_query": getattr(memory_bundle, "rag_query", "") or "",
                 "conversation_context": memory_bundle.conversation_context,
                 "user_profile": {

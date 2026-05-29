@@ -621,6 +621,10 @@ async def ask_adaptive_question(
                     "response_planner_version",
                     "response_planner",
                     "response_planner_error",
+                    "planner_drift_guard_version",
+                    "planner_drift_guard",
+                    "planner_drift_guard_error",
+                    "planner_drift_summary",
                 ]:
                     if key in raw_dict and raw_dict.get(key) is not None:
                         if key == "config_snapshot" and isinstance(raw_dict.get(key), dict):

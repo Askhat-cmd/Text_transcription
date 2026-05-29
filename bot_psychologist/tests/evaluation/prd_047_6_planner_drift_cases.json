@@ -1,0 +1,803 @@
+﻿[
+    {
+        "case_id":  "pdg_001",
+        "group":  "safety_grounding_positive",
+        "turns":  [
+                      {
+                          "content":  "Мне сейчас очень тяжело.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Я рядом. Сейчас важнее короткая опора здесь и сейчас, чтобы снизить перегруз.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  true
+    },
+    {
+        "case_id":  "pdg_002",
+        "group":  "safety_grounding_positive",
+        "turns":  [
+                      {
+                          "content":  "Паника накрывает.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Я рядом. Давай мягко стабилизируем состояние и вернем опору без лишнего давления.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  true
+    },
+    {
+        "case_id":  "pdg_003",
+        "group":  "safety_grounding_positive",
+        "turns":  [
+                      {
+                          "content":  "Все валится из рук.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Я рядом. Сейчас лучше коротко заземлиться и немного снизить внутренний перегруз.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_004",
+        "group":  "safety_grounding_positive",
+        "turns":  [
+                      {
+                          "content":  "Слишком много напряжения.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Я рядом. Здесь и сейчас можно выбрать спокойную опору и бережный темп.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_005",
+        "group":  "safety_grounding_negative",
+        "turns":  [
+                      {
+                          "content":  "Мне страшно и пусто.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Здесь работает механизм прогнозирования: контроль усиливает тревогу и запускает разбор.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "safety_mechanism_drift"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_006",
+        "group":  "safety_grounding_negative",
+        "turns":  [
+                      {
+                          "content":  "Я не вывожу.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Нужно увидеть механизм: через контроль формируется перегруз и разбор.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "safety_mechanism_drift"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_007",
+        "group":  "safety_grounding_negative",
+        "turns":  [
+                      {
+                          "content":  "Очень нестабильно.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "safety_grounding",
+                        "next_move":  "stabilize_safety",
+                        "question_policy":  "none",
+                        "practice_policy":  "required_for_safety_or_grounding"
+                    },
+        "candidate_answer":  "Разбор механизма покажет, почему контроль съедает ресурс.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "safety_mechanism_drift"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_008",
+        "group":  "short_support_positive",
+        "turns":  [
+                      {
+                          "content":  "Просто поддержи, без анализа.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Я рядом. Сейчас не нужно ничего доказывать, можно просто выдохнуть и дать себе мягкую паузу.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  true
+    },
+    {
+        "case_id":  "pdg_009",
+        "group":  "short_support_positive",
+        "turns":  [
+                      {
+                          "content":  "Нет сил на длинный ответ.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Я рядом. Коротко: ты не обязан тянуть больше, чем можешь сейчас.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_010",
+        "group":  "short_support_positive",
+        "turns":  [
+                      {
+                          "content":  "Мне нужен короткий контакт.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Я рядом. Без давления, просто немного опоры на этот момент.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_011",
+        "group":  "short_support_positive",
+        "turns":  [
+                      {
+                          "content":  "Скажи пару спокойных слов.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Я рядом. Коротко и бережно: с тобой все не сломано, тебе можно снизить темп.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_012",
+        "group":  "short_support_negative",
+        "turns":  [
+                      {
+                          "content":  "Поддержи меня.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Это сложный механизм: прогнозирование, контроль и стратегия выживания создают паттерн. Что ты об этом думаешь?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_013",
+        "group":  "short_support_negative",
+        "turns":  [
+                      {
+                          "content":  "Мне тяжело.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Это длинный анализ механизма контроля и стратегии, который разворачивает теорию на несколько уровней и добавляет расширенное объяснение паттерна с множеством уточнений и повторений. Что ты чувствуешь сейчас?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_014",
+        "group":  "short_support_negative",
+        "turns":  [
+                      {
+                          "content":  "Просто будь рядом.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "short_support",
+                        "next_move":  "give_short_support",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Опиши, пожалуйста, почему это так и какой механизм ты видишь?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_015",
+        "group":  "question_policy_none",
+        "turns":  [
+                      {
+                          "content":  "Объясни коротко.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Тут важен один вопрос: что именно ты хочешь изменить?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_016",
+        "group":  "question_policy_none",
+        "turns":  [
+                      {
+                          "content":  "Продолжи мысль без вопросов.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Как ты думаешь, где начинается этот цикл?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_017",
+        "group":  "question_policy_none",
+        "turns":  [
+                      {
+                          "content":  "Разбери механизм.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Механизм понятен, но почему ты снова выбираешь контроль?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_018",
+        "group":  "practice_policy_forbidden",
+        "turns":  [
+                      {
+                          "content":  "Почему я залипаю в контроль?",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Сделай упражнение: поставь таймер на минуту и выпиши три мысли.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "practice_policy_forbidden_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_019",
+        "group":  "practice_policy_forbidden",
+        "turns":  [
+                      {
+                          "content":  "Объясни без практик.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Попробуй практику на дыхание и сделай шаг 1 прямо сейчас.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "practice_policy_forbidden_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_020",
+        "group":  "practice_policy_forbidden",
+        "turns":  [
+                      {
+                          "content":  "Хочу понять паттерн.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "mechanism_explanation",
+                        "next_move":  "deepen_mechanism",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Сначала сделай небольшой шаг: упражнение с таймером на 30 секунд.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "practice_policy_forbidden_violation"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_021",
+        "group":  "gentle_close",
+        "turns":  [
+                      {
+                          "content":  "Спасибо, этого достаточно.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "minimal_allowed",
+                        "answer_shape":  "gentle_close",
+                        "next_move":  "close_gently",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Рад, что это полезно. Береги темп и возвращайся, когда будет уместно.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  true
+    },
+    {
+        "case_id":  "pdg_022",
+        "group":  "gentle_close",
+        "turns":  [
+                      {
+                          "content":  "Благодарю.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "minimal_allowed",
+                        "answer_shape":  "gentle_close",
+                        "next_move":  "close_gently",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Принято. Пусть дальше будет спокойнее.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_023",
+        "group":  "gentle_close",
+        "turns":  [
+                      {
+                          "content":  "Ок, спасибо.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "minimal_allowed",
+                        "answer_shape":  "gentle_close",
+                        "next_move":  "close_gently",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Хочешь, я дам новое задание на завтра?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "question_policy_violation",
+                                                       "close_opened_new_loop"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_024",
+        "group":  "one_step",
+        "turns":  [
+                      {
+                          "content":  "Дай один шаг.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_step",
+                        "next_move":  "give_direct_step",
+                        "question_policy":  "none",
+                        "practice_policy":  "one_micro_step_allowed"
+                    },
+        "candidate_answer":  "Открой заметки и одной строкой запиши, что сейчас забирает больше всего энергии.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_025",
+        "group":  "one_step",
+        "turns":  [
+                      {
+                          "content":  "Что сделать прямо сейчас?",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_step",
+                        "next_move":  "give_direct_step",
+                        "question_policy":  "none",
+                        "practice_policy":  "one_micro_step_allowed"
+                    },
+        "candidate_answer":  "Шаг 1: поставь таймер. Шаг 2: выпиши мысли. Шаг 3: выбери действие.",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "one_step_multistep_list"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_026",
+        "group":  "one_step",
+        "turns":  [
+                      {
+                          "content":  "Нужен конкретный ход.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_step",
+                        "next_move":  "give_direct_step",
+                        "question_policy":  "none",
+                        "practice_policy":  "one_micro_step_allowed"
+                    },
+        "candidate_answer":  "Начни с одного хода: сократи ближайшую задачу до формулировки в одну строку.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_027",
+        "group":  "known_concept_direct",
+        "turns":  [
+                      {
+                          "content":  "Что такое нейросталкинг?",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "compact_direct",
+                        "next_move":  "answer_known_concept",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Нейросталкинг — это способ наблюдать автоматические циклы внимания и возвращать осознанный выбор в действие.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_028",
+        "group":  "known_concept_direct",
+        "turns":  [
+                      {
+                          "content":  "Объясни термин нейросталкинг.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "compact_direct",
+                        "next_move":  "answer_known_concept",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Что ты вкладываешь в понятие нейросталкинг?",
+        "expected_drift":  {
+                               "status":  "critical",
+                               "must_have_flags":  [
+                                                       "known_concept_requires_user_definition"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_029",
+        "group":  "known_concept_direct",
+        "turns":  [
+                      {
+                          "content":  "Дай прямое определение нейросталкинга.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "compact_direct",
+                        "next_move":  "answer_known_concept",
+                        "question_policy":  "none",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Нейросталкинг — это способ заметить внутренний автопилот и вернуть осознанный выбор в действие.",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_030",
+        "group":  "defensive_one_question",
+        "turns":  [
+                      {
+                          "content":  "Ты опять ушел в теорию, вернись к сути.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_question",
+                        "next_move":  "clarify_one_point",
+                        "question_policy":  "required_one_clarifying",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Принял. Что именно сейчас важнее: ясность причины или один проверочный критерий?",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_031",
+        "group":  "defensive_one_question",
+        "turns":  [
+                      {
+                          "content":  "Не уходи в длинный разбор.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_question",
+                        "next_move":  "clarify_one_point",
+                        "question_policy":  "required_one_clarifying",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Где это случается чаще? И когда впервые заметил этот цикл?",
+        "expected_drift":  {
+                               "status":  "warning",
+                               "must_have_flags":  [
+                                                       "clarify_too_many_questions"
+                                                   ]
+                           },
+        "live_replay":  false
+    },
+    {
+        "case_id":  "pdg_032",
+        "group":  "defensive_one_question",
+        "turns":  [
+                      {
+                          "content":  "Уточни один момент.",
+                          "role":  "user"
+                      }
+                  ],
+        "planner":  {
+                        "revoicing_policy":  "suppressed",
+                        "answer_shape":  "one_question",
+                        "next_move":  "clarify_one_point",
+                        "question_policy":  "required_one_clarifying",
+                        "practice_policy":  "forbidden"
+                    },
+        "candidate_answer":  "Принял. Какой один признак ты хочешь научиться замечать первым?",
+        "expected_drift":  {
+                               "status":  "ok",
+                               "must_have_flags":  [
+
+                                                   ]
+                           },
+        "live_replay":  false
+    }
+]

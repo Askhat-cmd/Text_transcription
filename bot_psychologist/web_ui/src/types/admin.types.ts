@@ -207,6 +207,31 @@ export interface AdminRuntimeEffectiveResponse {
       artifact_found?: boolean;
     };
   };
+  planner_drift_guard?: {
+    enabled?: boolean;
+    version?: string;
+    mode?: string;
+    blocking_user_answers?: boolean;
+    window_size?: number;
+    thresholds?: {
+      warning_violation_rate?: number;
+      critical_rate?: number;
+    };
+    last_summary?: {
+      total?: number;
+      ok_count?: number;
+      warning_count?: number;
+      critical_count?: number;
+      violation_rate?: number;
+      critical_rate?: number;
+      threshold_status?: string;
+    };
+    last_replay_status?: {
+      prd?: string;
+      direct?: string;
+      live?: string;
+    };
+  };
 }
 
 export type AgentId =

@@ -49,6 +49,18 @@ Includes:
 - `live_acceptance_requires_api_trace`
 - `last_quality_calibration`
 
+## Planner Drift Guard Effective Block
+Includes:
+- `enabled`
+- `version`
+- `mode=observe_only`
+- `blocking_user_answers=false`
+- `window_size`
+- `thresholds.warning_violation_rate`
+- `thresholds.critical_rate`
+- `last_summary` (rolling counters/rates/by_flag)
+- `last_replay_status` (last PRD-047.6 direct/live artifact status)
+
 ## Admin UI Surface
 `web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
 - philosophy kernel version/enabled/selected-lenses visibility
@@ -57,5 +69,6 @@ Includes:
 - writer freedom contract state
 - active line runtime state/calibration summary
 - response planner runtime state/calibration summary
+- planner drift guard runtime status/thresholds/rolling counters/replay status
 
 No prompt/source editor is added in this PRD.

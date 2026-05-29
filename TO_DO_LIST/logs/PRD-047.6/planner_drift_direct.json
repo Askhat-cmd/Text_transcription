@@ -1,0 +1,1671 @@
+{
+  "prd_id": "PRD-047.6",
+  "mode": "direct",
+  "timestamp_utc": "2026-05-29T05:47:04.350052+00:00",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_6_planner_drift_cases.json",
+  "dataset_valid": true,
+  "dataset_errors": [],
+  "coverage": {
+    "safety_grounding_positive": 4,
+    "safety_grounding_negative": 3,
+    "short_support_positive": 4,
+    "short_support_negative": 3,
+    "question_policy_none": 3,
+    "practice_policy_forbidden": 3,
+    "gentle_close": 3,
+    "one_step": 3,
+    "known_concept_direct": 3,
+    "defensive_one_question": 3
+  },
+  "summary": {
+    "cases_total": 32,
+    "cases_passed": 32,
+    "cases_failed": 0
+  },
+  "strict_drift": {
+    "warning_count": 8,
+    "critical_count": 8,
+    "missing_drift_payload_count": 0,
+    "runner_side_fallback_used": false
+  },
+  "case_results": [
+    {
+      "case_id": "pdg_001",
+      "group": "safety_grounding_positive",
+      "query": "Мне сейчас очень тяжело.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 77,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_002",
+      "group": "safety_grounding_positive",
+      "query": "Паника накрывает.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 81,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_003",
+      "group": "safety_grounding_positive",
+      "query": "Все валится из рук.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 80,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_004",
+      "group": "safety_grounding_positive",
+      "query": "Слишком много напряжения.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 70,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_005",
+      "group": "safety_grounding_negative",
+      "query": "Мне страшно и пусто.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "safety_mechanism_drift"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": false,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 87,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; flags=safety_mechanism_drift"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_006",
+      "group": "safety_grounding_negative",
+      "query": "Я не вывожу.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "safety_mechanism_drift"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": false,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 69,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; flags=safety_mechanism_drift"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_007",
+      "group": "safety_grounding_negative",
+      "query": "Очень нестабильно.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "safety_mechanism_drift"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "safety_mechanism_drift"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": false,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 57,
+          "final_answer_question_count": 0,
+          "planner_next_move": "stabilize_safety",
+          "planner_answer_shape": "safety_grounding",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "required_for_safety_or_grounding",
+          "rationale": "planner=stabilize_safety/safety_grounding; flags=safety_mechanism_drift"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "safety_grounding",
+        "next_move": "stabilize_safety",
+        "question_policy": "none",
+        "practice_policy": "required_for_safety_or_grounding"
+      }
+    },
+    {
+      "case_id": "pdg_008",
+      "group": "short_support_positive",
+      "query": "Просто поддержи, без анализа.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 92,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_009",
+      "group": "short_support_positive",
+      "query": "Нет сил на длинный ответ.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 64,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_010",
+      "group": "short_support_positive",
+      "query": "Мне нужен короткий контакт.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 59,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_011",
+      "group": "short_support_positive",
+      "query": "Скажи пару спокойных слов.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 76,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_012",
+      "group": "short_support_negative",
+      "query": "Поддержи меня.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation",
+            "short_support_missing_contact"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": false,
+          "close_obedience": true,
+          "final_answer_chars": 110,
+          "final_answer_question_count": 1,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; flags=question_policy_violation,short_support_missing_contact"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_013",
+      "group": "short_support_negative",
+      "query": "Мне тяжело.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation",
+            "short_support_missing_contact"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": false,
+          "close_obedience": true,
+          "final_answer_chars": 207,
+          "final_answer_question_count": 1,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; flags=question_policy_violation,short_support_missing_contact"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_014",
+      "group": "short_support_negative",
+      "query": "Просто будь рядом.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation",
+            "short_support_missing_contact"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": false,
+          "close_obedience": true,
+          "final_answer_chars": 61,
+          "final_answer_question_count": 1,
+          "planner_next_move": "give_short_support",
+          "planner_answer_shape": "short_support",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=give_short_support/short_support; flags=question_policy_violation,short_support_missing_contact"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "short_support",
+        "next_move": "give_short_support",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_015",
+      "group": "question_policy_none",
+      "query": "Объясни коротко.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 53,
+          "final_answer_question_count": 1,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=question_policy_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_016",
+      "group": "question_policy_none",
+      "query": "Продолжи мысль без вопросов.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 41,
+          "final_answer_question_count": 1,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=question_policy_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_017",
+      "group": "question_policy_none",
+      "query": "Разбери механизм.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 56,
+          "final_answer_question_count": 1,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=question_policy_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_018",
+      "group": "practice_policy_forbidden",
+      "query": "Почему я залипаю в контроль?",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "practice_policy_forbidden_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": false,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 63,
+          "final_answer_question_count": 0,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=practice_policy_forbidden_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_019",
+      "group": "practice_policy_forbidden",
+      "query": "Объясни без практик.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "practice_policy_forbidden_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": false,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 57,
+          "final_answer_question_count": 0,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=practice_policy_forbidden_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_020",
+      "group": "practice_policy_forbidden",
+      "query": "Хочу понять паттерн.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "practice_policy_forbidden_violation"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "practice_policy_forbidden_violation"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": false,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 65,
+          "final_answer_question_count": 0,
+          "planner_next_move": "deepen_mechanism",
+          "planner_answer_shape": "mechanism_explanation",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=practice_policy_forbidden_violation"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "mechanism_explanation",
+        "next_move": "deepen_mechanism",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_021",
+      "group": "gentle_close",
+      "query": "Спасибо, этого достаточно.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 69,
+          "final_answer_question_count": 0,
+          "planner_next_move": "close_gently",
+          "planner_answer_shape": "gentle_close",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=close_gently/gentle_close; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "minimal_allowed",
+        "answer_shape": "gentle_close",
+        "next_move": "close_gently",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_022",
+      "group": "gentle_close",
+      "query": "Благодарю.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 38,
+          "final_answer_question_count": 0,
+          "planner_next_move": "close_gently",
+          "planner_answer_shape": "gentle_close",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=close_gently/gentle_close; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "minimal_allowed",
+        "answer_shape": "gentle_close",
+        "next_move": "close_gently",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_023",
+      "group": "gentle_close",
+      "query": "Ок, спасибо.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "question_policy_violation",
+            "close_opened_new_loop"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation",
+            "close_opened_new_loop"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": false,
+          "final_answer_chars": 38,
+          "final_answer_question_count": 1,
+          "planner_next_move": "close_gently",
+          "planner_answer_shape": "gentle_close",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=close_gently/gentle_close; flags=question_policy_violation,close_opened_new_loop"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "minimal_allowed",
+        "answer_shape": "gentle_close",
+        "next_move": "close_gently",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_024",
+      "group": "one_step",
+      "query": "Дай один шаг.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 80,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "one_micro_step_allowed",
+          "rationale": "planner=give_direct_step/one_step; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_step",
+        "next_move": "give_direct_step",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      }
+    },
+    {
+      "case_id": "pdg_025",
+      "group": "one_step",
+      "query": "Что сделать прямо сейчас?",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "one_step_multistep_list"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "one_step_multistep_list"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 67,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "one_micro_step_allowed",
+          "rationale": "planner=give_direct_step/one_step; flags=one_step_multistep_list"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_step",
+        "next_move": "give_direct_step",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      }
+    },
+    {
+      "case_id": "pdg_026",
+      "group": "one_step",
+      "query": "Нужен конкретный ход.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 76,
+          "final_answer_question_count": 0,
+          "planner_next_move": "give_direct_step",
+          "planner_answer_shape": "one_step",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "one_micro_step_allowed",
+          "rationale": "planner=give_direct_step/one_step; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_step",
+        "next_move": "give_direct_step",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      }
+    },
+    {
+      "case_id": "pdg_027",
+      "group": "known_concept_direct",
+      "query": "Что такое нейросталкинг?",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 108,
+          "final_answer_question_count": 0,
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=answer_known_concept/compact_direct; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "compact_direct",
+        "next_move": "answer_known_concept",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_028",
+      "group": "known_concept_direct",
+      "query": "Объясни термин нейросталкинг.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "critical",
+          "must_have_flags": [
+            "known_concept_requires_user_definition"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "critical",
+          "severity": "high",
+          "flags": [
+            "question_policy_violation",
+            "known_concept_requires_user_definition"
+          ],
+          "shape_obedience": true,
+          "policy_obedience": false,
+          "question_policy_obedience": false,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 43,
+          "final_answer_question_count": 1,
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=answer_known_concept/compact_direct; flags=question_policy_violation,known_concept_requires_user_definition"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "compact_direct",
+        "next_move": "answer_known_concept",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_029",
+      "group": "known_concept_direct",
+      "query": "Дай прямое определение нейросталкинга.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 95,
+          "final_answer_question_count": 0,
+          "planner_next_move": "answer_known_concept",
+          "planner_answer_shape": "compact_direct",
+          "planner_question_policy": "none",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=answer_known_concept/compact_direct; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "compact_direct",
+        "next_move": "answer_known_concept",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_030",
+      "group": "defensive_one_question",
+      "query": "Ты опять ушел в теорию, вернись к сути.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 80,
+          "final_answer_question_count": 1,
+          "planner_next_move": "clarify_one_point",
+          "planner_answer_shape": "one_question",
+          "planner_question_policy": "required_one_clarifying",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=clarify_one_point/one_question; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_question",
+        "next_move": "clarify_one_point",
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_031",
+      "group": "defensive_one_question",
+      "query": "Не уходи в длинный разбор.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "warning",
+          "must_have_flags": [
+            "clarify_too_many_questions"
+          ]
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "clarify_too_many_questions"
+          ],
+          "shape_obedience": false,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 58,
+          "final_answer_question_count": 2,
+          "planner_next_move": "clarify_one_point",
+          "planner_answer_shape": "one_question",
+          "planner_question_policy": "required_one_clarifying",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=clarify_one_point/one_question; flags=clarify_too_many_questions"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_question",
+        "next_move": "clarify_one_point",
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden"
+      }
+    },
+    {
+      "case_id": "pdg_032",
+      "group": "defensive_one_question",
+      "query": "Уточни один момент.",
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "status_match": true,
+          "must_have_flags": true,
+          "must_not_have_flags": true,
+          "version_match": true
+        },
+        "failure_reasons": [],
+        "expected": {
+          "status": "ok",
+          "must_have_flags": []
+        },
+        "actual": {
+          "version": "planner_drift_guard_v1",
+          "enabled": true,
+          "status": "ok",
+          "severity": "none",
+          "flags": [],
+          "shape_obedience": true,
+          "policy_obedience": true,
+          "question_policy_obedience": true,
+          "practice_policy_obedience": true,
+          "revoicing_policy_obedience": true,
+          "answer_length_obedience": true,
+          "safety_grounding_obedience": true,
+          "short_support_obedience": true,
+          "close_obedience": true,
+          "final_answer_chars": 63,
+          "final_answer_question_count": 1,
+          "planner_next_move": "clarify_one_point",
+          "planner_answer_shape": "one_question",
+          "planner_question_policy": "required_one_clarifying",
+          "planner_practice_policy": "forbidden",
+          "rationale": "planner=clarify_one_point/one_question; no drift flags"
+        }
+      },
+      "planner": {
+        "revoicing_policy": "suppressed",
+        "answer_shape": "one_question",
+        "next_move": "clarify_one_point",
+        "question_policy": "required_one_clarifying",
+        "practice_policy": "forbidden"
+      }
+    }
+  ]
+}

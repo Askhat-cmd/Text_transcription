@@ -97,3 +97,24 @@ No admin editing surface is added in this PRD.
   - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_direct.json`
   - `TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_live.json`
   - `TO_DO_LIST/logs/PRD-047.5-HF1/answer_fit_false_positive_regression.json`
+
+## PRD-047.6 Runtime Drift Guard
+- Added deterministic runtime monitor `planner_drift_guard_v1`:
+  - compares `response_planner` vs `final_answer`;
+  - emits per-turn `status`, `severity`, `flags`, and obedience fields;
+  - stores rolling counters in an in-memory monitor window (`max=100`).
+- Drift guard is `observe_only`:
+  - does not block user answers;
+  - does not rewrite final answer text;
+  - does not introduce new LLM agents.
+- New trace fields:
+  - `planner_drift_guard_version`
+  - `planner_drift_guard`
+  - `planner_drift_guard_error`
+  - `planner_drift_summary`
+- Runtime replay artifacts:
+  - `TO_DO_LIST/logs/PRD-047.6/planner_drift_dry.json`
+  - `TO_DO_LIST/logs/PRD-047.6/planner_drift_direct.json`
+  - `TO_DO_LIST/logs/PRD-047.6/planner_drift_live.json`
+  - `TO_DO_LIST/logs/PRD-047.6/planner_drift_summary.json`
+  - `TO_DO_LIST/logs/PRD-047.6/planner_drift_negative_regression.json`

@@ -59,6 +59,15 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["response_planner"]["version"] == "response_planner_v1"
     assert payload["response_planner"]["kind"] == "deterministic"
     assert payload["response_planner"]["live_acceptance_requires_api_trace"] is True
+    assert payload["planner_drift_guard"]["enabled"] is True
+    assert payload["planner_drift_guard"]["version"] == "planner_drift_guard_v1"
+    assert payload["planner_drift_guard"]["mode"] == "observe_only"
+    assert payload["planner_drift_guard"]["blocking_user_answers"] is False
+    assert payload["planner_drift_guard"]["window_size"] == 100
+    assert payload["planner_drift_guard"]["thresholds"]["warning_violation_rate"] == 0.10
+    assert payload["planner_drift_guard"]["thresholds"]["critical_rate"] == 0.03
+    assert isinstance(payload["planner_drift_guard"]["last_summary"], dict)
+    assert isinstance(payload["planner_drift_guard"]["last_replay_status"], dict)
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

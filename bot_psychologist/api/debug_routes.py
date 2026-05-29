@@ -557,6 +557,26 @@ async def get_multiagent_trace(
             if debug.get("response_planner_error") is not None
             else None
         ),
+        planner_drift_guard_version=(
+            str(debug.get("planner_drift_guard_version"))
+            if debug.get("planner_drift_guard_version") is not None
+            else None
+        ),
+        planner_drift_guard=(
+            debug.get("planner_drift_guard")
+            if isinstance(debug.get("planner_drift_guard"), dict)
+            else None
+        ),
+        planner_drift_guard_error=(
+            str(debug.get("planner_drift_guard_error"))
+            if debug.get("planner_drift_guard_error") is not None
+            else None
+        ),
+        planner_drift_summary=(
+            debug.get("planner_drift_summary")
+            if isinstance(debug.get("planner_drift_summary"), dict)
+            else None
+        ),
     )
 
 

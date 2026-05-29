@@ -1,7 +1,23 @@
 ﻿# Architecture Decisions
 
+## ADR-065 - Planner Drift Guard is observe-only runtime quality monitor
 
+Status: accepted
 
+Context: после PRD-047.5-HF1 оставался эксплуатационный риск runtime drift (model/provider/prompt/runtime variability) даже при зелёных калибровочных прогонах.
+
+Decision: введён детерминированный `planner_drift_guard_v1` как observability-first слой:
+- сверяет `response_planner` и `final_answer` на каждом ходе;
+- пишет `status/severity/flags` в trace/debug;
+- ведёт rolling summary counters (in-memory, max window=100);
+- публикует read-only runtime block в admin effective;
+- используется для dry/direct/live replay regression артефактов.
+
+Consequences:
+- drift guard не блокирует и не переписывает пользовательский ответ;
+- drift guard не является новым LLM-агентом;
+- governance authority (`chunk_type`, `allowed_use`, `safety_flags`) не меняется;
+- runtime quality drift становится наблюдаемым без broad rollout / production activation.
 ## ADR-001 - Multiagent-only runtime
 
 Status: accepted
@@ -733,3 +749,4 @@ Context: post-acceptance audit of PRD-047.5 found a critical false-positive clas
 Decision: PRD-047.5-HF1 hardens answer-fit acceptance on final text with strict shape/policy checks and mismatch counters (`safety_grounding`, `short_support`, `question_policy=none`, `practice_policy=forbidden`, `planner_answer_shape_alignment`), keeps live runner planner source API-trace-only, and applies minimal writer compliance repair where strict evaluator exposed real runtime drift.
 
 Consequences: acceptance evidence now rejects planner/answer mismatch in safety-adjacent and no-question paths; HF1 artifacts are green only when final answer obeys planner shape/policy (`dry=26/26`, `direct=26/26`, `live=26/26`).
+

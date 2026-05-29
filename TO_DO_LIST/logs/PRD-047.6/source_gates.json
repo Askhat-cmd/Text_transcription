@@ -1,0 +1,24 @@
+﻿{
+    "prd_id":  "PRD-047.6",
+    "timestamp_utc":  "2026-05-29T05:34:42.2448532Z",
+    "branch":  "main",
+    "workspace_status":  " M bot_psychologist/api/admin_routes.py\r\n M bot_psychologist/api/debug_routes.py\r\n M bot_psychologist/api/models.py\r\n M bot_psychologist/api/routes/chat.py\r\n M bot_psychologist/bot_agent/multiagent/orchestrator.py\r\n M bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx\r\n M bot_psychologist/web_ui/src/types/admin.types.ts\r\n?? TO_DO_LIST/PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md\r\n?? TO_DO_LIST/PRD-047.6_TASK_LIST.md\r\n?? bot_psychologist/bot_agent/multiagent/planner_drift_guard.py\r\n?? bot_psychologist/bot_agent/multiagent/planner_drift_monitor.py",
+    "status":  "passed",
+    "required_artifacts":  {
+                               "TO_DO_LIST/logs/PRD-047.5-HF1/no_mutation_proof.json":  true,
+                               "TO_DO_LIST/reports/PRD-047.5-HF1_IMPLEMENTATION_REPORT.md":  true,
+                               "TO_DO_LIST/logs/PRD-047.5-HF1/planner_answer_fit_live.json":  true,
+                               "bot_psychologist/bot_agent/multiagent/response_planner.py":  true,
+                               "TO_DO_LIST/logs/PRD-047.5-HF1/answer_fit_false_positive_regression.json":  true,
+                               "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py":  true
+                           },
+    "false_positive_regression_checks":  {
+                                             "actual_passed_false":  true,
+                                             "safety_no_mechanism_language_false":  true,
+                                             "planner_answer_shape_alignment_false":  true
+                                         },
+    "missing_sources":  [
+
+                        ],
+    "hard_stop_required":  false
+}

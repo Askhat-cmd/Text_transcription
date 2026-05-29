@@ -62,3 +62,15 @@ Version:
   - `answer_known_concept` + `practice_policy=forbidden` avoids unsolicited practice framing.
 - Compliance remains trace-visible and deterministic; no hidden runner-side fallback was introduced.
 - Writer freedom stays active, but final-answer policy obedience is now stricter for acceptance-critical planner shapes.
+
+## PRD-047.6 Observability Guard Boundary
+- Runtime drift guard is external to Writer generation path.
+- Writer freedom remains intact when answer complies with:
+  - planner `answer_shape`
+  - planner `question_policy`
+  - planner `practice_policy`
+  - safety policy boundaries
+- Drift guard produces warning/critical diagnostics only:
+  - trace/debug/admin visibility;
+  - replay artifact evidence.
+- Drift guard does not block or replace user-visible final answer.

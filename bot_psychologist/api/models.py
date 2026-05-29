@@ -307,6 +307,10 @@ class DebugTrace(BaseModel):
     response_planner_version: Optional[str] = None
     response_planner: Optional[Dict[str, Any]] = None
     response_planner_error: Optional[str] = None
+    planner_drift_guard_version: Optional[str] = None
+    planner_drift_guard: Optional[Dict[str, Any]] = None
+    planner_drift_guard_error: Optional[str] = None
+    planner_drift_summary: Optional[Dict[str, Any]] = None
 
 
 class AgentTimings(BaseModel):
@@ -445,6 +449,10 @@ class MultiAgentTraceResponse(BaseModel):
     response_planner_version: Optional[str] = None
     response_planner: Optional[Dict[str, Any]] = None
     response_planner_error: Optional[str] = None
+    planner_drift_guard_version: Optional[str] = None
+    planner_drift_guard: Optional[Dict[str, Any]] = None
+    planner_drift_guard_error: Optional[str] = None
+    planner_drift_summary: Optional[Dict[str, Any]] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

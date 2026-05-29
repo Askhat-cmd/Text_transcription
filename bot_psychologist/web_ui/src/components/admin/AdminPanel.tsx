@@ -369,7 +369,7 @@ export const AdminPanel: React.FC = () => {
                 {activeTab === 'runtime' && runtimeEffectiveData && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
                     <h3 className="font-semibold text-slate-800 mb-3">Philosophy Kernel / Writer Freedom (Effective)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 text-sm text-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-3 text-sm text-slate-700">
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Philosophy Kernel</div>
                         <div>enabled: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.enabled))}</div>
@@ -417,6 +417,22 @@ export const AdminPanel: React.FC = () => {
                         <div>quality.last_prd: {runtimeEffectiveData.response_planner?.last_quality_calibration?.last_prd ?? 'n/a'}</div>
                         <div>quality.last_direct_passed: {String(Boolean(runtimeEffectiveData.response_planner?.last_quality_calibration?.last_direct_passed))}</div>
                         <div>quality.last_direct_cases_total: {runtimeEffectiveData.response_planner?.last_quality_calibration?.last_direct_cases_total ?? 0}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Planner Drift Guard</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.planner_drift_guard?.enabled))}</div>
+                        <div>version: {runtimeEffectiveData.planner_drift_guard?.version ?? 'n/a'}</div>
+                        <div>mode: {runtimeEffectiveData.planner_drift_guard?.mode ?? 'n/a'}</div>
+                        <div>blocking_user_answers: {String(Boolean(runtimeEffectiveData.planner_drift_guard?.blocking_user_answers))}</div>
+                        <div>window_size: {runtimeEffectiveData.planner_drift_guard?.window_size ?? 0}</div>
+                        <div>threshold.warning_violation_rate: {runtimeEffectiveData.planner_drift_guard?.thresholds?.warning_violation_rate ?? 'n/a'}</div>
+                        <div>threshold.critical_rate: {runtimeEffectiveData.planner_drift_guard?.thresholds?.critical_rate ?? 'n/a'}</div>
+                        <div>summary.total: {runtimeEffectiveData.planner_drift_guard?.last_summary?.total ?? 0}</div>
+                        <div>summary.warning_count: {runtimeEffectiveData.planner_drift_guard?.last_summary?.warning_count ?? 0}</div>
+                        <div>summary.critical_count: {runtimeEffectiveData.planner_drift_guard?.last_summary?.critical_count ?? 0}</div>
+                        <div>summary.threshold_status: {runtimeEffectiveData.planner_drift_guard?.last_summary?.threshold_status ?? 'n/a'}</div>
+                        <div>replay.direct: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.direct ?? 'n/a'}</div>
+                        <div>replay.live: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.live ?? 'n/a'}</div>
                       </div>
                     </div>
                   </div>

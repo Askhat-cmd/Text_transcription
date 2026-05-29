@@ -369,7 +369,7 @@ export const AdminPanel: React.FC = () => {
                 {activeTab === 'runtime' && runtimeEffectiveData && (
                   <div className="bg-white rounded-xl border border-slate-200 shadow-md p-4">
                     <h3 className="font-semibold text-slate-800 mb-3">Philosophy Kernel / Writer Freedom (Effective)</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-3 text-sm text-slate-700">
+                    <div className="grid grid-cols-1 md:grid-cols-6 gap-3 text-sm text-slate-700">
                       <div className="rounded border border-slate-200 p-3">
                         <div className="font-medium">Philosophy Kernel</div>
                         <div>enabled: {String(Boolean(runtimeEffectiveData.philosophy_kernel?.enabled))}</div>
@@ -433,6 +433,17 @@ export const AdminPanel: React.FC = () => {
                         <div>summary.threshold_status: {runtimeEffectiveData.planner_drift_guard?.last_summary?.threshold_status ?? 'n/a'}</div>
                         <div>replay.direct: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.direct ?? 'n/a'}</div>
                         <div>replay.live: {runtimeEffectiveData.planner_drift_guard?.last_replay_status?.live ?? 'n/a'}</div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3">
+                        <div className="font-medium">Guided Live Testing</div>
+                        <div>enabled: {String(Boolean(runtimeEffectiveData.guided_live_testing?.enabled))}</div>
+                        <div>schema_version: {runtimeEffectiveData.guided_live_testing?.schema_version ?? 'n/a'}</div>
+                        <div>mode: {runtimeEffectiveData.guided_live_testing?.mode ?? 'n/a'}</div>
+                        <div>feedback_storage: {runtimeEffectiveData.guided_live_testing?.feedback_storage ?? 'n/a'}</div>
+                        <div>raw_dialogue_saved_by_default: {String(Boolean(runtimeEffectiveData.guided_live_testing?.raw_dialogue_saved_by_default))}</div>
+                        <div>scenario_set: {runtimeEffectiveData.guided_live_testing?.scenario_set ?? 'n/a'}</div>
+                        <div>scenario_count: {runtimeEffectiveData.guided_live_testing?.scenario_count ?? 0}</div>
+                        <div>last_session_summary_available: {String(Boolean(runtimeEffectiveData.guided_live_testing?.last_session_summary_available))}</div>
                       </div>
                     </div>
                   </div>

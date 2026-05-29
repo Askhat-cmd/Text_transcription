@@ -1,0 +1,30 @@
+{
+  "prd_id": "PRD-047.7",
+  "mode": "dry",
+  "timestamp_utc": "2026-05-29T06:14:30.842770+00:00",
+  "scenario_set": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_7_guided_live_scenarios.json",
+  "scenario_count": 18,
+  "scenario_validation_passed": true,
+  "scenario_validation_errors": [],
+  "scenario_coverage": {
+    "ordinary_understanding": 3,
+    "low_resource": 3,
+    "soft_distress": 3,
+    "practice_boundary": 3,
+    "defensive_i_plus_w_minus": 2,
+    "known_concept_kb": 2,
+    "close_continuation": 2
+  },
+  "result": {
+    "mode": "dry",
+    "timestamp_utc": "2026-05-29T06:14:30.842466+00:00",
+    "summary": "passed",
+    "session_id": "sample_session",
+    "records_created": 3,
+    "raw_dialogue_saved": false,
+    "sanitized_summary_created": true,
+    "summary_json": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\live_feedback\\PRD-047.7\\reports\\sample_session_summary.json",
+    "summary_md": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\live_feedback\\PRD-047.7\\reports\\sample_session_summary.md",
+    "recommended_next_action": "no_op"
+  }
+}

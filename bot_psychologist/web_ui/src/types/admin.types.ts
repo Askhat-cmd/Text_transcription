@@ -232,6 +232,16 @@ export interface AdminRuntimeEffectiveResponse {
       live?: string;
     };
   };
+  guided_live_testing?: {
+    enabled?: boolean;
+    schema_version?: string;
+    mode?: string;
+    feedback_storage?: string;
+    raw_dialogue_saved_by_default?: boolean;
+    scenario_set?: string;
+    scenario_count?: number;
+    last_session_summary_available?: boolean;
+  };
 }
 
 export type AgentId =

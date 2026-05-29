@@ -1,0 +1,26 @@
+{
+  "prd_id": "PRD-047.7",
+  "mode": "live",
+  "timestamp_utc": "2026-05-29T06:14:33.529641+00:00",
+  "scenario_set": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_7_guided_live_scenarios.json",
+  "scenario_count": 18,
+  "scenario_validation_passed": true,
+  "scenario_validation_errors": [],
+  "scenario_coverage": {
+    "ordinary_understanding": 3,
+    "low_resource": 3,
+    "soft_distress": 3,
+    "practice_boundary": 3,
+    "defensive_i_plus_w_minus": 2,
+    "known_concept_kb": 2,
+    "close_continuation": 2
+  },
+  "result": {
+    "mode": "live",
+    "summary": "blocked",
+    "reason": "admin_runtime_unavailable:<urlopen error [WinError 10061] Подключение не установлено, т.к. конечный компьютер отверг запрос на подключение>",
+    "records_created": 0,
+    "raw_dialogue_saved": false,
+    "sanitized_summary_created": false
+  }
+}

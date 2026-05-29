@@ -18,6 +18,24 @@ Consequences:
 - drift guard не является новым LLM-агентом;
 - governance authority (`chunk_type`, `allowed_use`, `safety_flags`) не меняется;
 - runtime quality drift становится наблюдаемым без broad rollout / production activation.
+## ADR-066 - Guided Live Feedback Protocol is evidence loop, not runtime mutation
+
+Status: accepted
+
+Context: после runtime observability (PRD-047.6) отсутствовал структурированный процесс живого пользовательского тестирования и связки human feedback с trace/debug.
+
+Decision: введён guided live testing protocol v1 с санитизированным feedback capture/storage и summary workflow:
+- feedback хранится как file-based sanitized artifacts;
+- feedback связывается с compact trace summary (`active_line`, `response_planner`, `planner_drift_guard`, `writer`);
+- runtime/admin/web отображают read-only guided live testing status;
+- feedback не изменяет runtime поведение автоматически.
+
+Consequences:
+- feedback становится first-class evidence для следующих PRD;
+- Writer hard constraints не усиливаются в feedback layer;
+- `final_answer` не переписывается и не блокируется;
+- новый LLM-агент не добавляется, governance authority не мутируется.
+
 ## ADR-001 - Multiagent-only runtime
 
 Status: accepted
@@ -749,4 +767,5 @@ Context: post-acceptance audit of PRD-047.5 found a critical false-positive clas
 Decision: PRD-047.5-HF1 hardens answer-fit acceptance on final text with strict shape/policy checks and mismatch counters (`safety_grounding`, `short_support`, `question_policy=none`, `practice_policy=forbidden`, `planner_answer_shape_alignment`), keeps live runner planner source API-trace-only, and applies minimal writer compliance repair where strict evaluator exposed real runtime drift.
 
 Consequences: acceptance evidence now rejects planner/answer mismatch in safety-adjacent and no-question paths; HF1 artifacts are green only when final answer obeys planner shape/policy (`dry=26/26`, `direct=26/26`, `live=26/26`).
+
 

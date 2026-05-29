@@ -595,6 +595,45 @@ def _load_prd_047_6_planner_drift_replay_status() -> dict[str, Any]:
     }
 
 
+def _load_prd_047_7_guided_live_testing_status() -> dict[str, Any]:
+    repo_root = Path(__file__).resolve().parents[2]
+    scenarios_path = (
+        repo_root
+        / "bot_psychologist"
+        / "tests"
+        / "evaluation"
+        / "prd_047_7_guided_live_scenarios.json"
+    )
+    sample_summary_path = (
+        repo_root
+        / "TO_DO_LIST"
+        / "live_feedback"
+        / "PRD-047.7"
+        / "reports"
+        / "sample_session_summary.json"
+    )
+
+    scenario_count = 0
+    if scenarios_path.exists():
+        try:
+            payload = json.loads(scenarios_path.read_text(encoding="utf-8"))
+            if isinstance(payload, list):
+                scenario_count = len([item for item in payload if isinstance(item, dict)])
+        except Exception:
+            scenario_count = 0
+
+    return {
+        "schema_version": "live_feedback_v1",
+        "enabled": True,
+        "mode": "developer_local",
+        "feedback_storage": "file_sanitized",
+        "raw_dialogue_saved_by_default": False,
+        "scenario_set": "prd_047_7_guided_live_scenarios",
+        "scenario_count": scenario_count,
+        "last_session_summary_available": sample_summary_path.exists(),
+    }
+
+
 def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str, Any]:
     status_payload = _status_snapshot()
     flags_snapshot = _filter_operational_flags(feature_flags.snapshot())
@@ -609,6 +648,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
     active_line_calibration = _load_prd_047_3_active_line_calibration_status()
     response_planner_calibration = _load_prd_047_4_response_planner_calibration_status()
     planner_drift_replay_status = _load_prd_047_6_planner_drift_replay_status()
+    guided_live_testing_status = _load_prd_047_7_guided_live_testing_status()
 
     return {
         "schema_version": ADMIN_EFFECTIVE_SCHEMA_VERSION,
@@ -716,6 +756,7 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "last_summary": get_planner_drift_summary(),
             "last_replay_status": planner_drift_replay_status,
         },
+        "guided_live_testing": guided_live_testing_status,
         "diagnostic_center_control": build_diagnostic_center_effective_payload(),
     }
 

@@ -1,0 +1,19 @@
+﻿{
+    "prd_id":  "PRD-047.7",
+    "timestamp_utc":  "2026-05-29T06:06:18.6341552Z",
+    "branch":  "main",
+    "workspace_status":  "?? TO_DO_LIST/PRD-047.7_Guided_Live_User_Testing_Protocol_Human_Feedback_Capture_v1_RU.md\r\n?? TO_DO_LIST/PRD-047.7_TASK_LIST.md",
+    "status":  "passed",
+    "required_artifacts":  {
+                               "TO_DO_LIST/logs/PRD-047.6/planner_drift_live.json":  true,
+                               "bot_psychologist/bot_agent/multiagent/planner_drift_guard.py":  true,
+                               "TO_DO_LIST/logs/PRD-047.6/no_mutation_proof.json":  true,
+                               "TO_DO_LIST/reports/PRD-047.6_IMPLEMENTATION_REPORT.md":  true,
+                               "TO_DO_LIST/PRD-047.6_TASK_LIST.md":  true,
+                               "TO_DO_LIST/logs/PRD-047.6/planner_drift_direct.json":  true
+                           },
+    "missing_sources":  [
+
+                        ],
+    "hard_stop_required":  false
+}

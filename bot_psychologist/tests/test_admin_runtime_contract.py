@@ -68,6 +68,14 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["planner_drift_guard"]["thresholds"]["critical_rate"] == 0.03
     assert isinstance(payload["planner_drift_guard"]["last_summary"], dict)
     assert isinstance(payload["planner_drift_guard"]["last_replay_status"], dict)
+    assert payload["guided_live_testing"]["enabled"] is True
+    assert payload["guided_live_testing"]["schema_version"] == "live_feedback_v1"
+    assert payload["guided_live_testing"]["mode"] == "developer_local"
+    assert payload["guided_live_testing"]["feedback_storage"] == "file_sanitized"
+    assert payload["guided_live_testing"]["raw_dialogue_saved_by_default"] is False
+    assert payload["guided_live_testing"]["scenario_set"] == "prd_047_7_guided_live_scenarios"
+    assert isinstance(payload["guided_live_testing"]["scenario_count"], int)
+    assert isinstance(payload["guided_live_testing"]["last_session_summary_available"], bool)
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

@@ -61,6 +61,17 @@ Includes:
 - `last_summary` (rolling counters/rates/by_flag)
 - `last_replay_status` (last PRD-047.6 direct/live artifact status)
 
+## Guided Live Testing Effective Block
+Includes:
+- `enabled`
+- `schema_version` (`live_feedback_v1`)
+- `mode` (`developer_local`)
+- `feedback_storage` (`file_sanitized`)
+- `raw_dialogue_saved_by_default=false`
+- `scenario_set`
+- `scenario_count`
+- `last_session_summary_available`
+
 ## Admin UI Surface
 `web_ui/src/components/admin/AdminPanel.tsx` renders read-only runtime cards for:
 - philosophy kernel version/enabled/selected-lenses visibility
@@ -70,5 +81,6 @@ Includes:
 - active line runtime state/calibration summary
 - response planner runtime state/calibration summary
 - planner drift guard runtime status/thresholds/rolling counters/replay status
+- guided live testing runtime capture mode/status
 
 No prompt/source editor is added in this PRD.

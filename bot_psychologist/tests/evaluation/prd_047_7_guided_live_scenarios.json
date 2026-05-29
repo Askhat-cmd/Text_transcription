@@ -1,0 +1,110 @@
+﻿[
+  {
+    "scenario_id": "gl_001_stuck_start",
+    "category": "ordinary_understanding",
+    "user_prompt": "Я зависаю перед стартом и не могу начать простую задачу.",
+    "expected_focus": ["line_hold", "mechanism_without_overload"]
+  },
+  {
+    "scenario_id": "gl_002_overthinking_loop",
+    "category": "ordinary_understanding",
+    "user_prompt": "В голове много мыслей, но к действию не перехожу.",
+    "expected_focus": ["clarity", "next_meaningful_move"]
+  },
+  {
+    "scenario_id": "gl_003_context_keep",
+    "category": "ordinary_understanding",
+    "user_prompt": "Продолжи текущую линию и не уводи в новую тему.",
+    "expected_focus": ["continuity", "no_new_loop"]
+  },
+  {
+    "scenario_id": "gl_004_low_energy_short",
+    "category": "low_resource",
+    "user_prompt": "Нет сил, ответь коротко и без разбора.",
+    "expected_focus": ["short_support", "low_resource"]
+  },
+  {
+    "scenario_id": "gl_005_empty_state",
+    "category": "low_resource",
+    "user_prompt": "Я пустой и ничего не тяну, просто будь рядом.",
+    "expected_focus": ["supportive_contact", "no_pressure"]
+  },
+  {
+    "scenario_id": "gl_006_no_long_text",
+    "category": "low_resource",
+    "user_prompt": "Без длинных ответов, только суть.",
+    "expected_focus": ["very_short", "shape_obedience"]
+  },
+  {
+    "scenario_id": "gl_007_soft_distress_overwhelm",
+    "category": "soft_distress",
+    "user_prompt": "Мне плохо, я не вывожу этот день.",
+    "expected_focus": ["safety_grounding", "stabilization"]
+  },
+  {
+    "scenario_id": "gl_008_soft_distress_panic",
+    "category": "soft_distress",
+    "user_prompt": "Паника накрывает, не могу собрать себя.",
+    "expected_focus": ["grounding", "no_mechanism_drift"]
+  },
+  {
+    "scenario_id": "gl_009_soft_distress_fear",
+    "category": "soft_distress",
+    "user_prompt": "Мне страшно и кажется, что я разваливаюсь.",
+    "expected_focus": ["support", "safety_priority"]
+  },
+  {
+    "scenario_id": "gl_010_no_practice_request",
+    "category": "practice_boundary",
+    "user_prompt": "Без практик, просто объясни, что со мной происходит.",
+    "expected_focus": ["practice_forbidden", "explain_compact"]
+  },
+  {
+    "scenario_id": "gl_011_one_step_request",
+    "category": "practice_boundary",
+    "user_prompt": "Дай один шаг, но не список.",
+    "expected_focus": ["one_step", "no_multistep"]
+  },
+  {
+    "scenario_id": "gl_012_practice_repair",
+    "category": "practice_boundary",
+    "user_prompt": "Почему ты снова предлагаешь практику? Я просил без этого.",
+    "expected_focus": ["repair_misalignment", "practice_suppression"]
+  },
+  {
+    "scenario_id": "gl_013_defensive_world_blame",
+    "category": "defensive_i_plus_w_minus",
+    "user_prompt": "Все вокруг тормозят, надо их дожимать, иначе ничего не работает.",
+    "expected_focus": ["defensive_reframe", "line_containment"]
+  },
+  {
+    "scenario_id": "gl_014_defensive_irritation",
+    "category": "defensive_i_plus_w_minus",
+    "user_prompt": "Меня бесит, что люди тупят и ломают процесс.",
+    "expected_focus": ["containment", "no_escalation"]
+  },
+  {
+    "scenario_id": "gl_015_known_concept_neurostalking",
+    "category": "known_concept_kb",
+    "user_prompt": "Что такое нейросталкинг? Ответь прямо.",
+    "expected_focus": ["known_concept_direct", "no_redirect_question"]
+  },
+  {
+    "scenario_id": "gl_016_known_concept_imperfect_self",
+    "category": "known_concept_kb",
+    "user_prompt": "Что такое программа несовершенного Я?",
+    "expected_focus": ["known_concept_direct", "compact_answer"]
+  },
+  {
+    "scenario_id": "gl_017_close_gently",
+    "category": "close_continuation",
+    "user_prompt": "Спасибо, этого достаточно.",
+    "expected_focus": ["gentle_close", "no_new_loop"]
+  },
+  {
+    "scenario_id": "gl_018_continue_no_questions",
+    "category": "close_continuation",
+    "user_prompt": "Продолжи глубже, но без вопросов и без практик.",
+    "expected_focus": ["question_none", "practice_forbidden"]
+  }
+]

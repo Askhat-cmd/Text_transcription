@@ -1,0 +1,154 @@
+{
+  "session_id": "sample_session",
+  "started_at_utc": "2026-05-29T06:14:30.806953+00:00",
+  "ended_at_utc": "2026-05-29T06:14:30.829631+00:00",
+  "tester_role": "project_owner",
+  "runtime_mode": "developer_local",
+  "backend_url": "http://127.0.0.1:dev",
+  "frontend_url": "http://localhost:3000",
+  "scenario_set": "guided_live_v1",
+  "turns_total": 3,
+  "feedback_count": 3,
+  "drift_warning_count": 1,
+  "drift_critical_count": 0,
+  "notes": [],
+  "records": [
+    {
+      "schema_version": "live_feedback_v1",
+      "session_id": "sample_session",
+      "turn_id": "turn_1",
+      "created_at_utc": "2026-05-29T06:14:30.806638+00:00",
+      "scenario_id": "gl_001_stuck_start",
+      "user_rating": 4,
+      "felt_alive": true,
+      "felt_understood": true,
+      "felt_too_rigid": false,
+      "felt_too_generic": false,
+      "felt_too_long": null,
+      "felt_too_short": null,
+      "too_much_practice": false,
+      "too_many_questions": false,
+      "missed_context": false,
+      "safety_concern": null,
+      "comment": "smoke comment for gl_001_stuck_start",
+      "trace_summary": {
+        "active_line": {
+          "user_intent": "understand_self_pattern",
+          "continuity_mode": "continue_existing_line",
+          "next_meaningful_move": "deepen_mechanism"
+        },
+        "response_planner": {
+          "next_move": "deepen_mechanism",
+          "answer_shape": "mechanism_explanation",
+          "response_depth": "short",
+          "question_policy": "none",
+          "practice_policy": "forbidden"
+        },
+        "planner_drift_guard": {
+          "status": "warning",
+          "severity": "medium",
+          "flags": [
+            "question_policy_violation"
+          ]
+        },
+        "writer": {
+          "model": "gpt-5-mini",
+          "fallback_used": false
+        },
+        "user_message_preview": "Я зависаю перед стартом и не могу начать простую задачу.",
+        "answer_preview": "Короткий поддерживающий ответ для smoke-проверки.",
+        "user_id_hash": "u:704205c44a1c"
+      }
+    },
+    {
+      "schema_version": "live_feedback_v1",
+      "session_id": "sample_session",
+      "turn_id": "turn_2",
+      "created_at_utc": "2026-05-29T06:14:30.807834+00:00",
+      "scenario_id": "gl_002_overthinking_loop",
+      "user_rating": 4,
+      "felt_alive": true,
+      "felt_understood": true,
+      "felt_too_rigid": false,
+      "felt_too_generic": false,
+      "felt_too_long": null,
+      "felt_too_short": null,
+      "too_much_practice": false,
+      "too_many_questions": false,
+      "missed_context": false,
+      "safety_concern": null,
+      "comment": "smoke comment for gl_002_overthinking_loop",
+      "trace_summary": {
+        "active_line": {
+          "user_intent": "understand_self_pattern",
+          "continuity_mode": "continue_existing_line",
+          "next_meaningful_move": "deepen_mechanism"
+        },
+        "response_planner": {
+          "next_move": "deepen_mechanism",
+          "answer_shape": "mechanism_explanation",
+          "response_depth": "short",
+          "question_policy": "none",
+          "practice_policy": "forbidden"
+        },
+        "planner_drift_guard": {
+          "status": "ok",
+          "severity": "none",
+          "flags": []
+        },
+        "writer": {
+          "model": "gpt-5-mini",
+          "fallback_used": false
+        },
+        "user_message_preview": "В голове много мыслей, но к действию не перехожу.",
+        "answer_preview": "Короткий поддерживающий ответ для smoke-проверки.",
+        "user_id_hash": "u:704205c44a1c"
+      }
+    },
+    {
+      "schema_version": "live_feedback_v1",
+      "session_id": "sample_session",
+      "turn_id": "turn_3",
+      "created_at_utc": "2026-05-29T06:14:30.819223+00:00",
+      "scenario_id": "gl_003_context_keep",
+      "user_rating": 4,
+      "felt_alive": true,
+      "felt_understood": true,
+      "felt_too_rigid": false,
+      "felt_too_generic": false,
+      "felt_too_long": null,
+      "felt_too_short": null,
+      "too_much_practice": false,
+      "too_many_questions": false,
+      "missed_context": false,
+      "safety_concern": null,
+      "comment": "smoke comment for gl_003_context_keep",
+      "trace_summary": {
+        "active_line": {
+          "user_intent": "understand_self_pattern",
+          "continuity_mode": "continue_existing_line",
+          "next_meaningful_move": "deepen_mechanism"
+        },
+        "response_planner": {
+          "next_move": "deepen_mechanism",
+          "answer_shape": "mechanism_explanation",
+          "response_depth": "short",
+          "question_policy": "none",
+          "practice_policy": "forbidden"
+        },
+        "planner_drift_guard": {
+          "status": "ok",
+          "severity": "none",
+          "flags": []
+        },
+        "writer": {
+          "model": "gpt-5-mini",
+          "fallback_used": false
+        },
+        "user_message_preview": "Продолжи текущую линию и не уводи в новую тему.",
+        "answer_preview": "Короткий поддерживающий ответ для smoke-проверки.",
+        "user_id_hash": "u:704205c44a1c"
+      }
+    }
+  ]
+}

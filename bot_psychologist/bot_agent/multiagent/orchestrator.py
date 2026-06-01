@@ -33,6 +33,7 @@ from .dialogue_policy import (
     detect_repair_and_expand_request,
     normalize_dialogue_profile,
 )
+from .final_answer_directive import build_final_answer_directive_v1
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .live_turn_evidence import build_live_turn_evidence_v1
@@ -364,6 +365,19 @@ class MultiAgentOrchestrator:
             thread_state=updated_thread,
             state_snapshot=state_snapshot,
         )
+        final_answer_directive = build_final_answer_directive_v1(
+            user_message=query,
+            dialogue_policy=dialogue_policy,
+            dialogue_pragmatics=dialogue_pragmatics,
+            response_planner=response_planner_state,
+            active_line=active_line_state,
+            diagnostic_card=diagnostic_card.to_dict(),
+            diagnostic_center_shadow=diagnostic_center_shadow,
+            retrieval_decision=retrieval_decision,
+            knowledge_answer_guard=knowledge_answer_guard,
+            thread_state=updated_thread,
+            state_snapshot=state_snapshot,
+        ).to_dict()
 
         writer_contract = WriterContract(
             user_message=query,
@@ -381,6 +395,7 @@ class MultiAgentOrchestrator:
             dialogue_policy=dialogue_policy,
             dialogue_pragmatics=dialogue_pragmatics,
             retrieval_decision=retrieval_decision,
+            final_answer_directive=final_answer_directive,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -632,6 +647,7 @@ class MultiAgentOrchestrator:
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "dialogue_pragmatics": dict(dialogue_pragmatics),
                 "retrieval_decision": dict(retrieval_decision),
+                "final_answer_directive": dict(final_answer_directive),
                 "live_turn_evidence": dict(live_turn_evidence),
                 "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
                 "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),

@@ -1,0 +1,22 @@
+﻿{
+  "schema_version": "prd_047_11_artifact_encoding_hygiene_v1",
+  "prd": "PRD-047.11",
+  "status": "passed",
+  "checked_files": [
+    "TO_DO_LIST/PRD-047.11_TASK_LIST.md",
+    "TO_DO_LIST/logs/PRD-047.11/source_gates.json",
+    "TO_DO_LIST/logs/PRD-047.11/stale_stub_source_audit.json",
+    "TO_DO_LIST/logs/PRD-047.11/prompt_assembly_source_audit.json",
+    "TO_DO_LIST/logs/PRD-047.11/writer_first_eval_dry.json",
+    "TO_DO_LIST/logs/PRD-047.11/writer_first_eval_direct.json",
+    "TO_DO_LIST/logs/PRD-047.11/writer_first_eval_live.json",
+    "TO_DO_LIST/logs/PRD-047.11/writer_first_eval_live.md",
+    "TO_DO_LIST/logs/PRD-047.11/web_chat_markdown_real_smoke.json",
+    "TO_DO_LIST/logs/PRD-047.11/web_chat_markdown_real_smoke.html",
+    "TO_DO_LIST/logs/PRD-047.11/test_command_output.txt"
+  ],
+  "notes": [
+    "Artifacts were saved with UTF-8 encoding.",
+    "Legacy mojibake is present only in historical runtime payload text from external live backend responses."
+  ]
+}

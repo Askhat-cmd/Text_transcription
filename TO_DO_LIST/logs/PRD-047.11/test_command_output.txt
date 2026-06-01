@@ -1,0 +1,17 @@
+﻿[PRD-047.11] Test/Eval command summary
+
+1) pytest targeted suite (bot_psychologist workdir)
+   command: .venv\Scripts\python.exe -m pytest tests\test_final_answer_directive_v1.py tests\test_writer_first_prompt_assembly_v1.py tests\test_mvp_legacy_constraint_suppression.py tests\test_diagnostic_center_advisory_only_role.py tests\test_stale_regulate_stub_detector.py tests\test_admin_effective_writer_first_policy.py tests\test_web_chat_markdown_real_render.py
+   result: 12 passed, 2 warnings
+
+2) runner dry
+   command: python bot_psychologist\scripts\run_prd_047_11_writer_first_eval.py --mode dry --log-dir TO_DO_LIST\logs\PRD-047.11
+   result: passed
+
+3) runner direct
+   command: python bot_psychologist\scripts\run_prd_047_11_writer_first_eval.py --mode direct --log-dir TO_DO_LIST\logs\PRD-047.11
+   result: passed
+
+4) runner live (fresh backend on :8011, real web chat on :5173)
+   command: python bot_psychologist\scripts\run_prd_047_11_writer_first_eval.py --mode live --base-url http://127.0.0.1:8011/api/v1 --admin-runtime-url http://127.0.0.1:8011/api/v1/admin/runtime/effective --chat-url http://127.0.0.1:5173/chat --log-dir TO_DO_LIST\logs\PRD-047.11
+   result: passed

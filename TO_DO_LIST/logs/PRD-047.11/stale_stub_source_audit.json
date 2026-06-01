@@ -1,0 +1,24 @@
+﻿{
+  "schema_version": "prd_047_11_stale_stub_source_audit_v1",
+  "runtime_source_paths": [
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+      "line_hint": 1303,
+      "kind": "hardcoded_fallback_return",
+      "contains": "Отвечу по сути без навязывания практик. Ключевой узел..."
+    }
+  ],
+  "historical_artifact_hits": [
+    "TO_DO_LIST/logs/PRD-047.10-HF2/live_turn_exports/**",
+    "TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_live.*"
+  ],
+  "fixture_mentions": [
+    "bot_psychologist/scripts/run_prd_047_10_hf1_dialogue_pragmatics_eval.py",
+    "bot_psychologist/tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py"
+  ],
+  "action_required": [
+    "Remove stale stub from MVP runtime fallback path.",
+    "Keep strict detector across dry/direct/live outputs and live exports.",
+    "Allow phrase references only in PRD/docs historical context, not answer fields."
+  ]
+}

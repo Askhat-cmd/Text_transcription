@@ -1,0 +1,11 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-06-01T10:46:32.186847+00:00",
+  "checks": {
+    "bot_psychologist/bot_agent/multiagent/final_answer_directive.py": true,
+    "bot_psychologist/bot_agent/multiagent/stale_stub_detector.py": true,
+    "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py": true
+  },
+  "prd": "PRD-047.11"
+}

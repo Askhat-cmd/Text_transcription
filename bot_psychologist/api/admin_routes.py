@@ -28,6 +28,7 @@ from bot_agent.multiagent.dialogue_policy import (
     build_effective_dialogue_policy,
     normalize_dialogue_profile,
 )
+from bot_agent.multiagent.final_answer_directive import FINAL_ANSWER_DIRECTIVE_VERSION
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
     KERNEL_V1,
@@ -784,6 +785,34 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "writer_runtime_max_tokens_effective": (
                 2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600
             ),
+            "final_answer_directive_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "final_answer_directive_version": FINAL_ANSWER_DIRECTIVE_VERSION,
+            "diagnostic_center_role": (
+                "advisory_context_only"
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else "guided_legacy"
+            ),
+            "planner_role": (
+                "advisory_context_only"
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else "guided_legacy"
+            ),
+            "active_line_role": (
+                "advisory_context_only"
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else "guided_legacy"
+            ),
+            "diagnostic_card_role": (
+                "advisory_context_only"
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else "guided_legacy"
+            ),
+            "legacy_prompt_blocks_mode": (
+                "source_signals_only"
+                if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                else "legacy_visible_debug_only"
+            ),
+            "writer_first_prompt_assembly_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
         },
         "dialogue_profile": {
             "value": dialogue_profile,

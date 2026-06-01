@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 from typing import Any
 
 from ..context_assembly import format_context_for_writer
@@ -30,6 +31,7 @@ class WriterContract:
     dialogue_policy: dict[str, Any] | None = None
     dialogue_pragmatics: dict[str, Any] | None = None
     retrieval_decision: dict[str, Any] | None = None
+    final_answer_directive: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -71,6 +73,11 @@ class WriterContract:
             "retrieval_decision": (
                 dict(self.retrieval_decision)
                 if isinstance(self.retrieval_decision, dict)
+                else None
+            ),
+            "final_answer_directive": (
+                dict(self.final_answer_directive)
+                if isinstance(self.final_answer_directive, dict)
                 else None
             ),
             "response_language": self.response_language,
@@ -209,6 +216,18 @@ class WriterContract:
         ]
         dialogue_profile = str(dialogue_policy.get("profile", "safe_guided") or "safe_guided")
         dialogue_active_concept = str(dialogue_policy.get("active_concept", "") or "")
+        final_answer_directive = (
+            dict(self.final_answer_directive)
+            if isinstance(self.final_answer_directive, dict)
+            else {}
+        )
+        suppressed_legacy_constraints = [
+            str(item)
+            for item in list(final_answer_directive.get("suppressed_legacy_constraints", []) or [])
+            if str(item).strip()
+        ]
+        writer_first_enabled = bool(final_answer_directive)
+        legacy_blocks_source_only = bool(dialogue_profile == "mvp_free_dialogue")
         mode_hint = str(writer_freedom_contract.get("mode_hint", self.thread_state.response_mode) or self.thread_state.response_mode)
         freedom_level = str(writer_freedom_contract.get("freedom_level", "guided") or "guided")
         mode_is_hint_not_cage = bool(writer_freedom_contract.get("mode_is_hint_not_cage", True))
@@ -382,6 +401,39 @@ class WriterContract:
             ),
             "dialogue_policy": dialogue_policy,
             "dialogue_profile": dialogue_profile,
+            "final_answer_directive": final_answer_directive,
+            "final_answer_directive_json": json.dumps(
+                final_answer_directive,
+                ensure_ascii=False,
+                indent=2,
+            )
+            if final_answer_directive
+            else "{}",
+            "final_answer_directive_version": str(
+                final_answer_directive.get("version", "final_answer_directive_v1")
+                or "final_answer_directive_v1"
+            ),
+            "final_answer_diagnostic_center_role": str(
+                final_answer_directive.get("diagnostic_center_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_planner_role": str(
+                final_answer_directive.get("planner_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_active_line_role": str(
+                final_answer_directive.get("active_line_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_diagnostic_card_role": str(
+                final_answer_directive.get("diagnostic_card_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "legacy_constraints_suppressed": suppressed_legacy_constraints,
+            "legacy_constraints_suppressed_csv": ", ".join(suppressed_legacy_constraints) or "none",
+            "writer_first_prompt_assembly_enabled": writer_first_enabled,
+            "legacy_blocks_visible_to_writer": not legacy_blocks_source_only,
+            "legacy_blocks_source_signals_only": legacy_blocks_source_only,
             "dialogue_expansion_requested": bool(dialogue_policy.get("expansion_requested", False)),
             "dialogue_repair_and_expand_requested": bool(
                 dialogue_policy.get("repair_and_expand_requested", False)

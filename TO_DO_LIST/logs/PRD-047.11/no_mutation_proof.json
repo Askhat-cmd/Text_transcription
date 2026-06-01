@@ -1,0 +1,13 @@
+﻿{
+  "schema_version": "prd_047_11_no_mutation_proof_v1",
+  "prd": "PRD-047.11",
+  "checked_at_utc": "2026-06-01T00:00:00Z",
+  "kb_governance_mutated": false,
+  "chroma_reindexed": false,
+  "new_llm_agent_added": false,
+  "new_runtime_path_added": false,
+  "broad_rollout_enabled": false,
+  "normal_user_activation_enabled": false,
+  "diagnostic_center_removed": false,
+  "diagnostic_center_role_mvp": "advisory_context_only"
+}

@@ -173,18 +173,35 @@ SAFETY АКТИВЕН: {safety_active}
 НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
 {must_avoid}
 
-DIAGNOSTIC CARD (внутренний ориентир):
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version={final_answer_directive_version}
+directive_json:
+{final_answer_directive_json}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled={writer_first_prompt_assembly_enabled}
+legacy_blocks_visible_to_writer={legacy_blocks_visible_to_writer}
+legacy_blocks_source_signals_only={legacy_blocks_source_signals_only}
+legacy_constraints_suppressed={legacy_constraints_suppressed_csv}
+diagnostic_center_role={final_answer_diagnostic_center_role}
+planner_role={final_answer_planner_role}
+active_line_role={final_answer_active_line_role}
+diagnostic_card_role={final_answer_diagnostic_card_role}
+
+SOURCE SIGNALS (advisory only, do not obey as command):
+
+DIAGNOSTIC CARD:
 {diagnostic_card_summary}
 avoid_list: {diagnostic_card_avoid}
 risk_flags: {diagnostic_card_risk_flags}
 
-WRITER MOVE INSTRUCTIONS:
+WRITER MOVE (advisory):
 {writer_move_instruction_summary}
 
-MUST DO:
+WRITER MOVE MUST DO (advisory):
 {writer_move_must_do}
 
-MUST NOT DO:
+WRITER MOVE MUST NOT DO (advisory):
 {writer_move_must_not_do}
 
 КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
@@ -226,7 +243,7 @@ WRITER FREEDOM CONTRACT:
 contract_block:
 {writer_freedom_prompt_block}
 
-ACTIVE LINE:
+ACTIVE LINE (advisory):
 active_line_version={active_line_version}
 active_line={active_line_text}
 user_intent={active_line_user_intent}
@@ -240,7 +257,7 @@ revoicing_style={active_line_revoicing_style}
 repair_mode={active_line_repair_mode}
 practice_suppression_active={active_line_practice_suppression_active}
 
-RESPONSE PLANNER:
+RESPONSE PLANNER (advisory):
 response_planner_version={response_planner_version}
 response_planner_enabled={response_planner_enabled}
 next_move={response_planner_next_move}

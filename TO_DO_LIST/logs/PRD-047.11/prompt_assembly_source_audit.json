@@ -1,0 +1,25 @@
+﻿{
+  "schema_version": "prd_047_11_prompt_assembly_source_audit_v1",
+  "sources": {
+    "writer_template": "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py",
+    "writer_payload_builder": "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+    "writer_llm_call": "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+    "orchestrator_contract_builder": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+    "runtime_policy": "bot_psychologist/bot_agent/multiagent/dialogue_policy.py",
+    "live_evidence": "bot_psychologist/bot_agent/multiagent/live_turn_evidence.py",
+    "admin_effective": "bot_psychologist/api/admin_routes.py",
+    "admin_ui_runtime_tab": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+  },
+  "legacy_imperative_blocks_in_writer_prompt": [
+    "DIAGNOSTIC CARD avoid_list / risk_flags as command context",
+    "WRITER MOVE INSTRUCTIONS",
+    "MUST DO / MUST NOT DO",
+    "ACTIVE LINE block with command-like booleans",
+    "RESPONSE PLANNER block with command-like policy fields"
+  ],
+  "target_state": {
+    "writer_first_prompt_assembly": true,
+    "single_final_command_block": "FINAL ANSWER DIRECTIVE",
+    "legacy_blocks_mode": "source_signals_advisory_only"
+  }
+}

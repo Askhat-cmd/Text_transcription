@@ -1,0 +1,21 @@
+﻿{
+  "schema_version": "prd_047_11_source_gates_v1",
+  "prd": "PRD-047.11",
+  "checked_at_utc": "2026-06-01T00:00:00Z",
+  "status": "passed",
+  "gates": {
+    "stale_stub_phrase_repo_scan": true,
+    "writer_prompt_assembly_path_identified": true,
+    "diagnostic_card_injection_path_identified": true,
+    "response_planner_injection_path_identified": true,
+    "diagnostic_center_contribution_path_identified": true,
+    "admin_runtime_effective_surface_identified": true,
+    "web_chat_markdown_renderer_path_identified": true
+  },
+  "notes": [
+    "Stale stub runtime source found in bot_psychologist/bot_agent/multiagent/agents/writer_agent.py (MVP compliance fallback branch).",
+    "Legacy imperative prompt blocks currently present in bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py template.",
+    "Writer prompt payload built via WriterContract.to_prompt_context -> WriterAgent._call_llm.",
+    "Admin Runtime effective payload built in bot_psychologist/api/admin_routes.py and rendered in web_ui/src/components/admin/AdminPanel.tsx."
+  ]
+}

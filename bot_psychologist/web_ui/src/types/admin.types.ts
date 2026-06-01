@@ -224,6 +224,14 @@ export interface AdminRuntimeEffectiveResponse {
       overrule_reason?: string;
     };
     writer_runtime_max_tokens_effective?: number;
+    final_answer_directive_enabled?: boolean;
+    final_answer_directive_version?: string;
+    diagnostic_center_role?: string;
+    planner_role?: string;
+    active_line_role?: string;
+    diagnostic_card_role?: string;
+    legacy_prompt_blocks_mode?: string;
+    writer_first_prompt_assembly_enabled?: boolean;
   };
   active_line?: {
     enabled?: boolean;

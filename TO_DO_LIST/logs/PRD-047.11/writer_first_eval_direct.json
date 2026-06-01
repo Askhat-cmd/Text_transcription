@@ -1,0 +1,50 @@
+{
+  "mode": "direct",
+  "status": "passed",
+  "timestamp": "2026-06-01T10:46:32.181841+00:00",
+  "case_results": [
+    {
+      "case_id": "WFA-001",
+      "user_intent": "continuity",
+      "obligation": "continue_line_with_focus",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    },
+    {
+      "case_id": "WFA-002",
+      "user_intent": "repair_after_failed_answer",
+      "obligation": "answer_previous_question_directly",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    },
+    {
+      "case_id": "WFA-003",
+      "user_intent": "concept_comparison",
+      "obligation": "compare_two_concepts_directly",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    },
+    {
+      "case_id": "WFA-004",
+      "user_intent": "repair_after_failed_answer",
+      "obligation": "answer_previous_question_directly",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    },
+    {
+      "case_id": "WFA-005",
+      "user_intent": "continuity",
+      "obligation": "continue_line_with_focus",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    },
+    {
+      "case_id": "WFA-006",
+      "user_intent": "close_ack",
+      "obligation": "close_gently",
+      "planner_role": "advisory_context_only",
+      "has_suppressed_constraints": true
+    }
+  ],
+  "prd": "PRD-047.11"
+}

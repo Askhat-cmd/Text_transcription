@@ -26,6 +26,7 @@ from ..dialogue_policy import (
     format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
+from ..stale_stub_detector import detect_stale_stub
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
 from .agent_llm_client import create_agent_completion
@@ -326,6 +327,18 @@ class WriterAgent:
         ctx.setdefault("retrieval_rag_relevance", "unknown")
         ctx.setdefault("retrieval_inherited_topic", "")
         ctx.setdefault("retrieval_inherited_offer_type", "unknown")
+        ctx.setdefault("final_answer_directive", {})
+        ctx.setdefault("final_answer_directive_json", "{}")
+        ctx.setdefault("final_answer_directive_version", "final_answer_directive_v1")
+        ctx.setdefault("final_answer_diagnostic_center_role", "guided_legacy")
+        ctx.setdefault("final_answer_planner_role", "guided_legacy")
+        ctx.setdefault("final_answer_active_line_role", "guided_legacy")
+        ctx.setdefault("final_answer_diagnostic_card_role", "guided_legacy")
+        ctx.setdefault("legacy_constraints_suppressed", [])
+        ctx.setdefault("legacy_constraints_suppressed_csv", "none")
+        ctx.setdefault("writer_first_prompt_assembly_enabled", False)
+        ctx.setdefault("legacy_blocks_visible_to_writer", True)
+        ctx.setdefault("legacy_blocks_source_signals_only", False)
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -544,6 +557,35 @@ class WriterAgent:
             practice_requires_gate=str(bool(ctx.get("practice_requires_gate", True))).lower(),
             writer_freedom_hard_boundaries=", ".join(freedom_hard_boundaries)
             or "no_diagnosis,no_unsolicited_practice",
+            final_answer_directive_json=str(ctx.get("final_answer_directive_json", "{}") or "{}"),
+            final_answer_directive_version=str(
+                ctx.get("final_answer_directive_version", "final_answer_directive_v1")
+                or "final_answer_directive_v1"
+            ),
+            final_answer_diagnostic_center_role=str(
+                ctx.get("final_answer_diagnostic_center_role", "guided_legacy") or "guided_legacy"
+            ),
+            final_answer_planner_role=str(
+                ctx.get("final_answer_planner_role", "guided_legacy") or "guided_legacy"
+            ),
+            final_answer_active_line_role=str(
+                ctx.get("final_answer_active_line_role", "guided_legacy") or "guided_legacy"
+            ),
+            final_answer_diagnostic_card_role=str(
+                ctx.get("final_answer_diagnostic_card_role", "guided_legacy") or "guided_legacy"
+            ),
+            writer_first_prompt_assembly_enabled=str(
+                bool(ctx.get("writer_first_prompt_assembly_enabled", False))
+            ).lower(),
+            legacy_blocks_visible_to_writer=str(
+                bool(ctx.get("legacy_blocks_visible_to_writer", True))
+            ).lower(),
+            legacy_blocks_source_signals_only=str(
+                bool(ctx.get("legacy_blocks_source_signals_only", False))
+            ).lower(),
+            legacy_constraints_suppressed_csv=str(
+                ctx.get("legacy_constraints_suppressed_csv", "none") or "none"
+            ),
             active_line_version=str(ctx.get("active_line_version", "active_line_v1")),
             active_line_text=str(ctx.get("active_line_text", "") or ""),
             active_line_user_intent=str(ctx.get("active_line_user_intent", "unknown") or "unknown"),
@@ -897,6 +939,16 @@ class WriterAgent:
         self.last_debug["overruled_constraints"] = [
             str(item)
             for item in list(constraint_resolution.get("overruled_constraints", []) or [])
+            if str(item).strip()
+        ]
+        self.last_debug["final_answer_directive"] = (
+            dict(ctx.get("final_answer_directive", {}))
+            if isinstance(ctx.get("final_answer_directive"), dict)
+            else {}
+        )
+        self.last_debug["legacy_constraints_suppressed"] = [
+            str(item)
+            for item in list(ctx.get("legacy_constraints_suppressed", []) or [])
             if str(item).strip()
         ]
         self.last_debug["question_forced"] = bool(
@@ -1300,8 +1352,8 @@ class WriterAgent:
         if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
             self._set_final_answer_shape_debug("mechanism_without_unsolicited_practice")
             return (
-                "Отвечу по сути без навязывания практик. "
-                "Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия."
+                "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, "
+                "поэтому энергия уходит в внутренний спор вместо реального шага."
             )
 
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
@@ -1366,6 +1418,15 @@ class WriterAgent:
                 "Разверну объяснение глубже. Здесь важно не сводить ответ к одной фразе: сначала обозначить механизм, "
                 "потом показать, как он проявляется в быту, и затем дать практический способ применения без перегруза.\n\n"
                 "Если держать этот порядок, ответ становится понятным и полезным, а не абстрактным."
+            )
+
+        stale_stub = detect_stale_stub(text)
+        if bool(stale_stub.get("detected", False)):
+            self._set_final_answer_shape_debug("stale_stub_repaired_direct")
+            return (
+                "Исправляю прошлую заготовку и отвечаю прямо. "
+                "Здесь механизм в том, что контроль включается заранее и забирает ресурс до действия; "
+                "поэтому важно сначала увидеть триггер и вернуть себе выбор в следующем конкретном ходе."
             )
 
         self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")

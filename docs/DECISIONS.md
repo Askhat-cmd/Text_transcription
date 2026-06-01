@@ -1,5 +1,24 @@
 ﻿# Architecture Decisions
 
+## ADR-068 - Writer-first prompt assembly for MVP profile
+
+Status: accepted
+
+Date: 2026-06-01
+
+Context: PRD-047.10/HF cycles left residual conflicts where legacy prompt blocks (writer_move, diagnostic_card, ctive_line, esponse_planner) still appeared as imperative commands and repeatedly produced stale regulate-style stub answers in live dialogue.
+
+Decision:
+- add deterministic inal_answer_directive_v1 as single conflict-resolved command block for Writer in mvp_free_dialogue;
+- keep Diagnostic Center / Planner / Active Line / Diagnostic Card as advisory context providers for MVP profile;
+- keep minimal safety/privacy/no-diagnosis boundaries as hard limits;
+- expose writer-first assembly and role fields in admin runtime effective payload + live evidence export;
+- add strict stale-stub detector for regression checks across answer payloads and artifacts.
+
+Consequences:
+- no new LLM agent and no new runtime path were added;
+- governance authority fields and Chroma index were not mutated;
+- live acceptance remains explicitly blocked until runtime profile activation and real web markdown smoke pass are green.
 ## ADR-065 - Planner Drift Guard is observe-only runtime quality monitor
 
 Status: accepted
@@ -807,5 +826,6 @@ Context: post-acceptance audit of PRD-047.5 found a critical false-positive clas
 Decision: PRD-047.5-HF1 hardens answer-fit acceptance on final text with strict shape/policy checks and mismatch counters (`safety_grounding`, `short_support`, `question_policy=none`, `practice_policy=forbidden`, `planner_answer_shape_alignment`), keeps live runner planner source API-trace-only, and applies minimal writer compliance repair where strict evaluator exposed real runtime drift.
 
 Consequences: acceptance evidence now rejects planner/answer mismatch in safety-adjacent and no-question paths; HF1 artifacts are green only when final answer obeys planner shape/policy (`dry=26/26`, `direct=26/26`, `live=26/26`).
+
 
 

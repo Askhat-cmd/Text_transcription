@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "checks": {
+    "hasStrong": true,
+    "hasEm": true,
+    "hasList": true,
+    "hasParagraph": true
+  }
+}

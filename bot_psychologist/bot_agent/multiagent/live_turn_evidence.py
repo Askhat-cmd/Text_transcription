@@ -6,6 +6,8 @@ import hashlib
 from datetime import datetime, timezone
 from typing import Any
 
+from .stale_stub_detector import detect_stale_stub
+
 
 LIVE_TURN_EVIDENCE_VERSION = "live_turn_evidence_v1"
 
@@ -56,6 +58,13 @@ def build_live_turn_evidence_v1(
     user_prompt = _safe_text(writer_debug.get("user_prompt", ""), limit=2200)
     system_prompt = _safe_text(writer_debug.get("system_prompt", ""), limit=1800)
     writer_answer = _safe_text(orchestrator_result.get("answer", ""), limit=2200)
+    stale_stub_result = detect_stale_stub(str(orchestrator_result.get("answer", "") or ""))
+    final_answer_directive = _safe_dict(contract_context.get("final_answer_directive", {}))
+    suppressed_legacy_constraints = [
+        str(item)
+        for item in list(contract_context.get("legacy_constraints_suppressed", []) or [])
+        if str(item).strip()
+    ]
 
     semantic_hits = []
     for hit in list(getattr(memory_bundle, "semantic_hits", []) or []):
@@ -126,6 +135,35 @@ def build_live_turn_evidence_v1(
                     contract_context.get("dialogue_pragmatics_short_type", "") or ""
                 ),
             },
+            "final_answer_directive": final_answer_directive,
+            "prompt_assembly": {
+                "writer_first_enabled": bool(
+                    contract_context.get("writer_first_prompt_assembly_enabled", False)
+                ),
+                "legacy_blocks_visible_to_writer": bool(
+                    contract_context.get("legacy_blocks_visible_to_writer", True)
+                ),
+                "legacy_blocks_source_signals_only": bool(
+                    contract_context.get("legacy_blocks_source_signals_only", False)
+                ),
+                "suppressed_legacy_constraints": suppressed_legacy_constraints,
+                "diagnostic_center_role": str(
+                    contract_context.get("final_answer_diagnostic_center_role", "guided_legacy")
+                    or "guided_legacy"
+                ),
+                "planner_role": str(
+                    contract_context.get("final_answer_planner_role", "guided_legacy")
+                    or "guided_legacy"
+                ),
+                "active_line_role": str(
+                    contract_context.get("final_answer_active_line_role", "guided_legacy")
+                    or "guided_legacy"
+                ),
+                "diagnostic_card_role": str(
+                    contract_context.get("final_answer_diagnostic_card_role", "guided_legacy")
+                    or "guided_legacy"
+                ),
+            },
             "prompt_canvas": {
                 "system_prompt_sha256": _sha256(system_prompt),
                 "system_prompt_preview": system_prompt,
@@ -147,6 +185,8 @@ def build_live_turn_evidence_v1(
             },
             "answer": writer_answer,
             "answer_chars": len(str(orchestrator_result.get("answer", "") or "")),
+            "stale_stub_detected": bool(stale_stub_result.get("detected", False)),
+            "stale_stub_match": str(stale_stub_result.get("matched_phrase", "") or ""),
         },
         "validator": validation_payload,
         "diagnostic_card": {

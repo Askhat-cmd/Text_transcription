@@ -413,6 +413,14 @@ export const AdminPanel: React.FC = () => {
                         <div>effective.writer_move_authority: {runtimeEffectiveData.dialogue_policy?.writer_move_authority ?? 'n/a'}</div>
                         <div>effective.context_budget_chars: {runtimeEffectiveData.dialogue_policy?.context_budget_chars ?? 'n/a'}</div>
                         <div>effective.allow_practice_catalog: {String(Boolean(runtimeEffectiveData.dialogue_policy?.allow_practice_catalog))}</div>
+                        <div>final_answer_directive_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_directive_enabled))}</div>
+                        <div>final_answer_directive_version: {runtimeEffectiveData.dialogue_policy?.final_answer_directive_version ?? 'n/a'}</div>
+                        <div>writer_first_prompt_assembly_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.writer_first_prompt_assembly_enabled))}</div>
+                        <div>legacy_prompt_blocks_mode: {runtimeEffectiveData.dialogue_policy?.legacy_prompt_blocks_mode ?? 'n/a'}</div>
+                        <div>diagnostic_center_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_center_role ?? 'n/a'}</div>
+                        <div>planner_role: {runtimeEffectiveData.dialogue_policy?.planner_role ?? 'n/a'}</div>
+                        <div>active_line_role: {runtimeEffectiveData.dialogue_policy?.active_line_role ?? 'n/a'}</div>
+                        <div>diagnostic_card_role: {runtimeEffectiveData.dialogue_policy?.diagnostic_card_role ?? 'n/a'}</div>
                         <div>human_like.enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.enabled))}</div>
                         <div>human_like.answer_style: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.answer_style ?? 'n/a'}</div>
                         <div>human_like.default_depth: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.default_depth ?? 'n/a'}</div>

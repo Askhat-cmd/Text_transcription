@@ -1,0 +1,473 @@
+{
+  "trace_contract_version": "multiagent_compat_v2",
+  "turn_number": null,
+  "dialogue_pragmatics": {
+    "version": "dialogue_pragmatics_v1",
+    "is_short_utterance": true,
+    "short_utterance_type": "affirmation",
+    "is_contextual_followup": true,
+    "followup_relation": "accepts_previous_assistant_offer",
+    "previous_assistant_offer_type": "practice_observation",
+    "inherited_user_intent": "give_practice_observation",
+    "inherited_topic": "",
+    "should_answer_directly": true,
+    "should_not_ask_confirmation_again": true,
+    "allow_concrete_step_or_phrase": true,
+    "retrieval_need_hint": "contextual_optional",
+    "repair_user_dissatisfaction": false,
+    "should_apologize_briefly": false,
+    "reason": "user_affirmed_previous_offer"
+  },
+  "retrieval_decision": {
+    "version": "contextual_retrieval_gating_v1",
+    "retrieval_decision_version": "contextual_retrieval_gating_v1",
+    "retrieval_action": "memory_only",
+    "rag_candidates_count": 3,
+    "rag_included_count": 0,
+    "rag_included_reason": "",
+    "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+    "writer_can_ignore_rag": true,
+    "rag_relevance_to_current_turn": "medium",
+    "inherited_topic": "",
+    "inherited_offer_type": "practice_observation",
+    "why_memory_only_still_included_rag": "",
+    "rag_included_for_writer": []
+  },
+  "live_turn_evidence": {
+    "version": "live_turn_evidence_v1",
+    "created_at_utc": "2026-06-01T07:29:38.321555+00:00",
+    "turn_identity": {
+      "user_id": "prd04710hf2-hf2-001-8c8638aa",
+      "session_id": "prd04710hf2-hf2-001-8c8638aa",
+      "turn_index": null
+    },
+    "input": {
+      "query": "да",
+      "query_chars": 2
+    },
+    "state_thread": {
+      "nervous_state": "hypo",
+      "intent": "explore",
+      "safety_flag": false,
+      "thread_id": "tm_d678c97a8f3b",
+      "phase": "clarify",
+      "relation_to_thread": "new_thread",
+      "response_mode": "regulate"
+    },
+    "dialogue": {
+      "policy": {
+        "profile": "mvp_free_dialogue",
+        "authority_order": [
+          "minimal_safety_baseline",
+          "explicit_user_request",
+          "knowledge_or_concept_need",
+          "writer_freedom",
+          "planner_and_diagnostic_advisory"
+        ],
+        "minimal_safety_baseline": true,
+        "writer_autonomy": "high",
+        "planner_authority": "advisory",
+        "diagnostic_card_authority": "advisory",
+        "writer_move_authority": "advisory",
+        "active_line_authority": "advisory",
+        "knowledge_answer_priority": "normal",
+        "user_explicit_request_priority": "highest_after_safety",
+        "answer_depth": "medium",
+        "allow_numbered_lists": false,
+        "allow_examples": false,
+        "allow_practice_catalog": false,
+        "allow_multi_step_overview": false,
+        "human_like_answer_policy": {
+          "enabled": true,
+          "answer_style": "human_chatgpt_like",
+          "default_depth": "medium_to_long",
+          "allow_long_answers": true,
+          "allow_lists": false,
+          "allow_examples": false,
+          "allow_direct_answer": true,
+          "allow_reflection_plus_explanation_plus_step": true,
+          "allow_multiple_options": true,
+          "question_is_optional": true,
+          "micro_step_only_when_user_explicitly_requests_one_step": true,
+          "do_not_force_question_at_end": true,
+          "do_not_force_practice_frame": true,
+          "do_not_force_max_sentences": true,
+          "respect_user_requested_format": true,
+          "sarcasm_and_dissatisfaction_repair": true,
+          "direct_answer_repair_when_user_complains": true
+        },
+        "constraint_resolution": {
+          "profile": "mvp_free_dialogue",
+          "planner_authority": "advisory",
+          "overruled_constraints": [],
+          "overrule_reason": "none"
+        },
+        "must_not_force_one_step": false,
+        "context_budget_chars": 7000,
+        "semantic_hits_budget": {
+          "max_hits": 4,
+          "max_chars_per_hit": 900
+        },
+        "expansion_requested": false,
+        "repair_and_expand_requested": false,
+        "explicit_short_support_requested": false,
+        "explicit_one_step_requested": false,
+        "practice_overview_requested": false,
+        "examples_requested": false,
+        "numbered_list_requested": false,
+        "explicit_answer_need": false,
+        "direct_concrete_request": false,
+        "summary_request": false,
+        "sarcasm_or_negative_feedback": false,
+        "application_request": false,
+        "active_concept": "",
+        "knowledge_answer_type": "concept_explanation",
+        "planner_is_advisory": true,
+        "mvp_overrides": {
+          "explicit_user_request_wins": true,
+          "old_max_sentence_constraints_softened": true,
+          "planner_advisory": true,
+          "overview_questions_allow_lists": false,
+          "question_is_optional": true,
+          "repair_user_dissatisfaction": false,
+          "target_answer_depth": "medium"
+        },
+        "knowledge_answer": {
+          "needed": false,
+          "reason": "no_known_concept_question",
+          "concept": "",
+          "answer_type": "concept_explanation",
+          "concept_match_type": "none",
+          "matched_concepts": [],
+          "kb_grounding_available": false,
+          "kb_grounding_sources": [],
+          "kb_grounding_max_score": 0.040531,
+          "fallback_grounding_used": false,
+          "fallback_grounding_concepts": [],
+          "should_answer_directly": false,
+          "should_ask_definition_first": true,
+          "practice_overview_requested": false,
+          "preferred_hit_tags": [],
+          "practice_allowed": true,
+          "preferred_response_mode": "regulate",
+          "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+        },
+        "dialogue_pragmatics": {
+          "version": "dialogue_pragmatics_v1",
+          "is_short_utterance": true,
+          "short_utterance_type": "affirmation",
+          "is_contextual_followup": true,
+          "followup_relation": "accepts_previous_assistant_offer",
+          "previous_assistant_offer_type": "practice_observation",
+          "inherited_user_intent": "give_practice_observation",
+          "inherited_topic": "",
+          "should_answer_directly": true,
+          "should_not_ask_confirmation_again": true,
+          "allow_concrete_step_or_phrase": true,
+          "retrieval_need_hint": "contextual_optional",
+          "repair_user_dissatisfaction": false,
+          "should_apologize_briefly": false,
+          "reason": "user_affirmed_previous_offer"
+        },
+        "retrieval_decision": {
+          "version": "contextual_retrieval_gating_v1",
+          "retrieval_decision_version": "contextual_retrieval_gating_v1",
+          "retrieval_action": "memory_only",
+          "rag_candidates_count": 3,
+          "rag_included_count": 0,
+          "rag_included_reason": "",
+          "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+          "writer_can_ignore_rag": true,
+          "rag_relevance_to_current_turn": "medium",
+          "inherited_topic": "",
+          "inherited_offer_type": "practice_observation",
+          "why_memory_only_still_included_rag": "",
+          "rag_included_for_writer": []
+        }
+      },
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "practice_observation",
+        "inherited_user_intent": "give_practice_observation",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "memory_only",
+        "rag_candidates_count": 3,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "medium",
+        "inherited_topic": "",
+        "inherited_offer_type": "practice_observation",
+        "why_memory_only_still_included_rag": "",
+        "rag_included_for_writer": []
+      },
+      "active_line": {
+        "version": "active_line_v1",
+        "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+        "user_intent": "understand_mechanism",
+        "continuity_mode": "continue_existing_line",
+        "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+        "should_continue_line": true,
+        "should_ask_question": true,
+        "should_offer_practice": false,
+        "revoicing_allowed": false,
+        "revoicing_style": "suppressed",
+        "repair_mode": null,
+        "evidence_turn_ids": [],
+        "confidence": 0.7,
+        "practice_suppression_active": true
+      },
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "continue_active_line",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "target_micro_shift": "выполнить подтвержденный короткий follow-up без перезапроса",
+        "should_answer_directly": true,
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "выполнить обещанный follow-up"
+        ],
+        "must_avoid": [
+          "не переспрашивать подтверждение",
+          "не уходить в заглушку"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "continue_existing_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "regulate",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "hypo",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": false,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false,
+          "explicit_practice_overview_requested": false,
+          "dialogue_profile": "mvp_free_dialogue",
+          "expansion_requested": false,
+          "repair_and_expand_requested": false,
+          "active_concept": "",
+          "explicit_short_support": false,
+          "practice_overview_requested": false,
+          "explicit_one_step_requested": false,
+          "examples_requested": false,
+          "numbered_list_requested": false,
+          "application_requested": false,
+          "active_line_stale": false,
+          "dialogue_pragmatics_contextual_followup": true,
+          "dialogue_pragmatics_offer_type": "practice_observation",
+          "dialogue_pragmatics_repair_user_dissatisfaction": false
+        },
+        "confidence": 0.9,
+        "rationale": "Dialogue pragmatics accepted short follow-up."
+      },
+      "thread_debug": {
+        "version": "thread_diagnostics_v1",
+        "relation": {
+          "selected_relation": "new_thread",
+          "relation_reason": "continuity_below_threshold",
+          "continuity_score": 0.0,
+          "new_thread_threshold": 0.2,
+          "current_thread_present": true,
+          "archived_threads_count": 0,
+          "return_marker_hit": false,
+          "followup_continue_marker_hit": false,
+          "low_resource_continue_marker_hit": false,
+          "branch_marker_hit": false,
+          "resolution_marker_hit": false,
+          "message_token_count": 0,
+          "core_token_count": 6,
+          "token_intersection_count": 0,
+          "token_union_count": 6,
+          "active_frame_semantic_continue_hit": false,
+          "active_frame_semantic_continue_reason": "",
+          "semantic_frame_token_overlap": 0,
+          "semantic_frame_token_count": 18,
+          "semantic_frame_sources_checked": [],
+          "continuity_raw": 0.0,
+          "recurrence_marker_hit": false
+        },
+        "phase": {
+          "previous_phase": "clarify",
+          "selected_phase": "clarify",
+          "phase_reason": "new_thread_default_clarify",
+          "turns_in_phase_before": 1,
+          "turns_in_phase_after": 1,
+          "closed_loops_count": 0,
+          "continuity_score": 0.0
+        },
+        "mode": {
+          "selected_mode": "regulate",
+          "response_goal": "softly stabilize state",
+          "mode_reason": "nervous_regulate",
+          "safety_flag": false,
+          "intent": "explore",
+          "nervous_state": "hypo",
+          "phase": "clarify"
+        },
+        "loops": {
+          "open_loops_before": 1,
+          "open_loops_after": 0,
+          "closed_loops_before": 0,
+          "closed_loops_after": 0,
+          "open_loop_added": false,
+          "closed_loop_added": false,
+          "resolution_marker_hit": false
+        },
+        "action": {
+          "thread_action": "new_thread",
+          "previous_thread_id_present": true,
+          "selected_thread_id_present": true,
+          "archived_previous_thread": true,
+          "restored_archived_thread": false,
+          "safety_patch_used": false
+        },
+        "semantic_frame": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "explore perspective carefully",
+          "next_recommended_direction": "expand carefully without strong interpretation"
+        },
+        "summary_flags": [
+          "low_continuity_new_thread",
+          "nervous_regulate_mode",
+          "pattern_core_present",
+          "active_frame_present"
+        ]
+      }
+    },
+    "memory": {
+      "conversation_context": "СТОРЯ ДАЛОГА (последние обороты):\n\nОбмен #1:\n  Пользователь: что такое нейросталкинг и как применять в жизни?\n  Бот: Нейросталкинг — это внимательное, безоценочное наблюдение за своими автоматическими паттернами, триггерами и телесными реакциями: ты смотришь «как запускается программа», а не отождествляешься с ней. ...\n---",
+      "conversation_context_chars": 324,
+      "semantic_hits_count": 3,
+      "semantic_hits": [
+        {
+          "chunk_id_hash": "sha256:e96185636ab789bcadaa1bc26c90a786f90db86e616bd77abc1a92c76be941b4",
+          "source": "book",
+          "score": 0.040530754816474245,
+          "content_preview": "Давай без эзотерики. Только нейрофизиология.\n\nВ возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью. Каждый опыт — новая нейронная дорожка. Чем чаще повторяется —...[truncated:1214]"
+        },
+        {
+          "chunk_id_hash": "sha256:35bfb447ebb4fce1aac91a84c666ae79601edf70a54e45a2815ad0c8d7ecb012",
+          "source": "book",
+          "score": 0.023368208962853323,
+          "content_preview": "Ты открыл эту книгу не случайно. Скорее всего, ты уже прошёл терапию, читал умные книжки, медитировал, делал практики. И всё равно что-то внутри скребёт. Какой-то фоновый шум, который не даёт покоя. Ощущение, что ты не дотягиваешь, не доста...[truncated:700]"
+        },
+        {
+          "chunk_id_hash": "sha256:86d11b712e02e2116c14567ebab1532090a5abd32571b8f1c689d63e2dcbc7df",
+          "source": "book",
+          "score": 0.01963606523453398,
+          "content_preview": "Здесь важно одно различение — оно многое проясняет.\n\nУ тебя в голове два этажа, которые работают одновременно.\n\n**Нижний этаж** — древний. Ему миллионы лет. Это лимбическая система — та часть мозга, которая досталась нам от предков, живших ...[truncated:1262]"
+        }
+      ]
+    },
+    "writer": {
+      "contract_excerpt": {
+        "response_mode": "regulate",
+        "response_goal": "softly stabilize state",
+        "must_avoid": [],
+        "dialogue_profile": "mvp_free_dialogue",
+        "retrieval_action": "memory_only",
+        "dialogue_pragmatics_short_type": "affirmation"
+      },
+      "prompt_canvas": {
+        "system_prompt_sha256": "sha256:beb0b33693e8bc084c916f6543a9d1f64bc5e19e7744c722dcac3080e8aa6bfe",
+        "system_prompt_preview": "Ты — NEO, живой психологический бот-собеседник в developer-local MVP free dialogue режиме.\nТы работаешь внутри мультиагентной системы и даёшь итоговый ответ пользователю.\n\nПРИОРИТЕТ:\n- Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.\n- Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.\n- Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.\n- Planner — компас, не клетка: соблюдай safety и must_avoid, но не искусственно укорачивай ответ.\n\nФОРМА ОТВЕТА:\n- Разрешены несколько абзацев, нумерованные списки и примеры, если это повышает ясность.\n- Сохраняй один главный фокус, но раскрывай его полно.\n- Не экономь токены искусственно, если нужен глубокий ответ.\n- Для known concept давай определение, объяснение человеческим языком, пример и применение.\n- Если пользователь просит обобщение, дай структурный summary по сути разговора, а не новый микро-шаг.\n\nБАЗОВЫЕ ОГРАНИЧЕНИЯ:\n- Отвечай на языке пользователя.\n- Не раскрывай внутренние метки/системные роли.\n- Не давай медицинских/юридических/финансовых директив.\n- Не убирай minimal safety baseline.",
+        "system_prompt_chars": 1221,
+        "user_prompt_sha256": "sha256:9c957a35d91799e76e7aa3567ab9663bf85f67b2342956de128d7cd648d127ed",
+        "user_prompt_preview": "СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:\nда\n\nРЕЖИМ ОТВЕТА: regulate\nЦЕЛЬ: softly stabilize state\nФАЗА РАЗГОВОРА: clarify\nСОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: hypo\nOK-ПОЗИЦИЯ: I+W+\nОТКРЫТОСТЬ: open\nSAFETY АКТИВЕН: False\n\nОТКРЫТЫЕ ПЕТЛИ:\nнет\n\nНЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):\nнет\n\nDIAGNOSTIC CARD (внутренний ориентир):\nsituation_label=new_exploration; current_need=explore perspective carefully; suggested_writer_move=regulate_first; confidence=0.67\navoid_list: do_not_give_directive_life_advice, do_not_diagnose, do_not_over_explain, ask_at_most_one_question, avoid_deep_analysis, avoid_long_explanations, avoid_multiple_steps\nrisk_flags: low_resource, avoid_over_exploration\n\nWRITER MOVE INSTRUCTIONS:\nmove=regulate_first; max_sentences=4; max_questions=0; style=brief_low_pressure\n\nMUST DO:\noffer_one_simple_body_action, keep_language_short, reduce_pressure\n\nMUST NOT DO:\ndo_not_analyze, do_not_explain_pattern, do_not_ask_followup_question, do_not_offer_multiple_steps, do_not_give_directive_life_advice, do_not_diagnose, do_not_over_explain, ask_at_most_one_question, avoid_deep_analysis, avoid_long_explanations, avoid_multiple_steps\n\nКОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:\nRECENT FULL TURNS:\nUSER#turn_1_user: что такое нейросталкинг и как применять в жизни?\nASSISTANT#turn_1_assistant: Нейросталкинг — это внимательное, безоценочное наблюдение за своими автоматическими паттернами, триггерами и телесными реакциями: ты смотришь «как запускается программа», а не отождествляешься с ней. Проще: заметил, что при опоздании партнёра в груди сжимается, появляется мысль «меня не ценят», — ты фиксируешь сигнал (тело, мысль, эмоция), называешь его и смотришь, как он развивается, вместо того чтобы сразу действовать порывом. В жизни это применяют как инструмент паузы — заметил реакцию, дал ей имя, и только потом выбираешь ответ (или решаешь приостановиться, разобраться глубже), что снижает повторные автоматические «запуски». Хотите, чтобы я показал развернутый пример нейросталкинга на вашей конкретной ситуации.\n\nKNOWLEDGE RAG HITS:\nДавай без эзотерики. Только нейрофизиология. В возрасте от 2 до 6 лет мозг ребёнка находится в состоянии **гиперпластичности**. Нейронные связи формируются с огромной скоростью. Каждый опыт — новая нейро...[truncated:8788]",
+        "user_prompt_chars": 10990
+      },
+      "writer_debug": {
+        "model": "gpt-5-mini",
+        "api_mode": "responses",
+        "temperature": 0.7,
+        "max_tokens": 2500,
+        "fallback_used": false,
+        "overruled_constraints": [],
+        "final_answer_shape": "compact_direct",
+        "retrieval_action": "memory_only",
+        "dialogue_pragmatics_offer_type": "practice_observation"
+      },
+      "answer": "Хорошо — краткий пример. Представь: партнёр опаздывает, ты чувствуешь сжатие в груди — сделай три медленных глубоких вдоха, тихо назови то, что заметил («сжатие в груди; мысль: меня не ценят»), и просто наблюдай эти ощущения 30 секунд без действий. Это и есть мини‑нейросталкинг: зафиксировать сигнал в теле, дать ему имя и подождать, пока импульс не утихнет.",
+      "answer_chars": 359
+    },
+    "validator": {
+      "is_blocked": false,
+      "block_reason": "",
+      "quality_flags": []
+    },
+    "diagnostic_card": {
+      "present": true,
+      "summary": {
+        "situation_label": "new_exploration",
+        "current_need": "explore perspective carefully",
+        "suggested_writer_move": "regulate_first",
+        "confidence": 0.67
+      },
+      "trace": {
+        "version": "diagnostic_card_v1",
+        "builder": "deterministic_rules_v1",
+        "rules_applied": [
+          "new_exploration_rule",
+          "move_regulate_first",
+          "base_avoid_rules",
+          "low_resource_avoid_rules",
+          "risk_low_resource",
+          "risk_avoid_over_exploration",
+          "request_type=unknown",
+          "practice_suppressed=false",
+          "confidence_medium_mixed_signals"
+        ],
+        "risk_flags": [
+          "low_resource",
+          "avoid_over_exploration"
+        ],
+        "evidence_sources": [
+          "state",
+          "thread",
+          "context",
+          "behavior_guard"
+        ]
+      }
+    }
+  }
+}

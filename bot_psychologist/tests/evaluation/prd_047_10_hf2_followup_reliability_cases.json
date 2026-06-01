@@ -1,0 +1,173 @@
+﻿[
+  {
+    "case_id": "HF2-001",
+    "title": "Short yes after example offer must not 422",
+    "direct": {
+      "user_message": "да",
+      "conversation_context": "Assistant: Хочешь, объясню это на примере?",
+      "previous_assistant_message": "Хочешь, объясню это на примере?",
+      "dialogue_policy": {"active_concept": "нейросталкинг"},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "answer_type": "known_concept"}},
+      "semantic_hits": [
+        {"chunk_id": "c1", "content": "Нейросталкинг в примере с рабочим конфликтом", "source": "kb", "score": 0.92}
+      ]
+    },
+    "expected": {
+      "is_contextual_followup": true,
+      "offer_type": "example",
+      "retrieval_action_allowed": ["example_grounding", "kb_optional", "concept_answer", "recent_context_only"]
+    },
+    "live_turns": [
+      "что такое нейросталкинг и как применять в жизни?",
+      "да"
+    ]
+  },
+  {
+    "case_id": "HF2-002",
+    "title": "Explicit example request after offer",
+    "direct": {
+      "user_message": "Да, конечно, дай пример!",
+      "conversation_context": "Assistant: Хочешь, объясню это на примере?",
+      "previous_assistant_message": "Хочешь, объясню это на примере?",
+      "dialogue_policy": {"active_concept": "нейросталкинг"},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": true}},
+      "semantic_hits": [
+        {"chunk_id": "c2", "content": "Пример распаковки триггера и автопаттерна", "source": "kb", "score": 0.91}
+      ]
+    },
+    "expected": {
+      "retrieval_action_allowed": ["example_grounding", "kb_optional", "concept_answer"]
+    },
+    "live_turns": [
+      "что такое нейросталкинг?",
+      "Да, конечно, дай пример!"
+    ]
+  },
+  {
+    "case_id": "HF2-003",
+    "title": "Concrete boss example",
+    "direct": {
+      "user_message": "давай разберем это на примере: на работе, когда начальник не прав, я зажимаю себя",
+      "conversation_context": "Assistant: Хочешь, разберем это на примере?",
+      "previous_assistant_message": "Хочешь, разберем это на примере?",
+      "dialogue_policy": {"active_concept": "нейросталкинг"},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "answer_type": "known_concept"}},
+      "semantic_hits": [
+        {"chunk_id": "c3", "content": "Сценарий с иерархией и страхом конфликта", "source": "kb", "score": 0.9}
+      ]
+    },
+    "expected": {
+      "retrieval_action_allowed": ["example_grounding", "kb_optional", "concept_answer", "recent_context_only"]
+    },
+    "live_turns": [
+      "что такое нейросталкинг?",
+      "давай разберем это на примере: на работе, когда начальник не прав, я зажимаю себя"
+    ]
+  },
+  {
+    "case_id": "HF2-004",
+    "title": "User dissatisfaction direct repair",
+    "direct": {
+      "user_message": "ты не ответил мне на вопрос!",
+      "conversation_context": "Assistant: Хочешь, я предложу одну короткую фразу?",
+      "previous_assistant_message": "Хочешь, я предложу одну короткую фразу?",
+      "dialogue_policy": {},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+      "semantic_hits": []
+    },
+    "expected": {
+      "is_contextual_followup": true,
+      "repair_user_dissatisfaction": true,
+      "retrieval_action_allowed": ["recent_context_only", "none"]
+    },
+    "live_turns": [
+      "что такое нейросталкинг?",
+      "ты не ответил мне на вопрос!"
+    ]
+  },
+  {
+    "case_id": "HF2-005",
+    "title": "Answer previous question repair",
+    "direct": {
+      "user_message": "ответь на вопрос который я задавал ранее",
+      "conversation_context": "Assistant: Хочешь, объясню это на примере?",
+      "previous_assistant_message": "Хочешь, объясню это на примере?",
+      "dialogue_policy": {},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+      "semantic_hits": []
+    },
+    "expected": {
+      "repair_user_dissatisfaction": true,
+      "retrieval_action_allowed": ["recent_context_only", "none"]
+    },
+    "live_turns": [
+      "что такое нейросталкинг?",
+      "ответь на вопрос который я задавал ранее"
+    ]
+  },
+  {
+    "case_id": "HF2-006",
+    "title": "Phrase offer continuation",
+    "direct": {
+      "user_message": "да предложи",
+      "conversation_context": "Assistant: Хочешь, я предложу одну короткую фразу для внутренней пометки?",
+      "previous_assistant_message": "Хочешь, я предложу одну короткую фразу для внутренней пометки?",
+      "dialogue_policy": {},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+      "semantic_hits": [
+        {"chunk_id": "c6", "content": "Нерелевантный шумовой чанк", "source": "kb", "score": 0.5}
+      ]
+    },
+    "expected": {
+      "is_contextual_followup": true,
+      "offer_type": "short_phrase",
+      "retrieval_action_allowed": ["recent_context_only"]
+    },
+    "live_turns": [
+      "предложи короткую фразу для внутренней пометки",
+      "да предложи"
+    ]
+  },
+  {
+    "case_id": "HF2-007",
+    "title": "Thanks close no rag",
+    "direct": {
+      "user_message": "спасибо",
+      "conversation_context": "Assistant: Рад, что это помогло.",
+      "previous_assistant_message": "Рад, что это помогло.",
+      "dialogue_policy": {},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+      "semantic_hits": [
+        {"chunk_id": "c7", "content": "Потенциальный KB чанк", "source": "kb", "score": 0.7}
+      ]
+    },
+    "expected": {
+      "short_type": "close_ack",
+      "retrieval_action_allowed": ["none", "recent_context_only"]
+    },
+    "live_turns": [
+      "спасибо"
+    ]
+  },
+  {
+    "case_id": "HF2-008",
+    "title": "Very short input robustness",
+    "direct": {
+      "user_message": "ок",
+      "conversation_context": "Assistant: Понял тебя.",
+      "previous_assistant_message": "Понял тебя.",
+      "dialogue_policy": {},
+      "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+      "semantic_hits": []
+    },
+    "expected": {
+      "retrieval_action_allowed": ["none", "recent_context_only", "memory_only"]
+    },
+    "live_turns": [
+      "👍",
+      "?",
+      "ок"
+    ]
+  }
+]
+

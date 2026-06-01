@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from bot_agent.multiagent.contracts.memory_bundle import SemanticHit
 from bot_agent.multiagent.dialogue_pragmatics import build_contextual_retrieval_decision_v1
@@ -19,11 +19,12 @@ def test_example_followup_can_include_kb_grounding() -> None:
             "is_contextual_followup": True,
             "previous_assistant_offer_type": "example",
             "inherited_topic": "нейросталкинг",
+            "inherited_user_intent": "give_example",
         },
         knowledge_answer_guard={"knowledge_answer": {"needed": True}},
         semantic_hits=[_hit("c1", "Нейросталкинг — наблюдение паттернов.")],
     )
-    assert decision["retrieval_action"] in {"kb_grounding", "concept_answer"}
+    assert decision["retrieval_action"] in {"example_grounding", "concept_answer", "kb_optional"}
     assert decision["rag_included_count"] >= 1
     assert decision["writer_can_ignore_rag"] is True
 
@@ -52,3 +53,13 @@ def test_no_blanket_short_message_suppression_when_knowledge_needed() -> None:
         semantic_hits=[_hit("c1", "Контекст по концепту")],
     )
     assert decision["retrieval_action"] in {"concept_answer", "kb_grounding", "memory_only"}
+
+
+def test_memory_only_never_includes_kb_chunks() -> None:
+    decision = build_contextual_retrieval_decision_v1(
+        dialogue_pragmatics={"is_contextual_followup": False, "previous_assistant_offer_type": "unknown"},
+        knowledge_answer_guard={"knowledge_answer": {"needed": False}},
+        semantic_hits=[_hit("c1", "Кандидат")],
+    )
+    if decision["retrieval_action"] == "memory_only":
+        assert decision["rag_included_count"] == 0

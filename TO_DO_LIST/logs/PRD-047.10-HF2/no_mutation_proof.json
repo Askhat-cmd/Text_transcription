@@ -1,0 +1,11 @@
+﻿{
+  "kb_governance_mutated": false,
+  "chroma_reindexed": false,
+  "new_llm_agent_added": false,
+  "new_runtime_path_added": false,
+  "broad_rollout_enabled": false,
+  "normal_user_activation_enabled": false,
+  "production_ready_changed": false,
+  "raw_provider_payload_committed": false,
+  "secrets_committed": false
+}

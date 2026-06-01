@@ -1,0 +1,9 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-06-01T07:16:29.138327+00:00",
+  "dataset_total": 8,
+  "errors": [],
+  "prd": "PRD-047.10-HF2",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_hf2_followup_reliability_cases.json"
+}

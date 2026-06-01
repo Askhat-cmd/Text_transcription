@@ -1,0 +1,50 @@
+{
+  "status": "passed",
+  "files": [
+    {
+      "file": "source_gates.json",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "test_command_output.txt",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "followup_reliability_dry.json",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "followup_reliability_direct.json",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "followup_reliability_live.json",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "followup_reliability_live.md",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "markdown_smoke.md",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "markdown_smoke_dom.html",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    },
+    {
+      "file": "markdown_smoke_result.json",
+      "status": "ok",
+      "detected_encoding": "utf-8"
+    }
+  ]
+}

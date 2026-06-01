@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.10-HF2: added `live_turn_evidence_v1` export path (orchestrator/debug/API trace), follow-up reliability repair runner/dataset (`HF2-001..HF2-008`), short-input robustness fix (`AskQuestionRequest.query min_length=1`), contextual retrieval taxonomy refinement (`example_grounding/practice_catalog/kb_optional/...`) and markdown smoke DOM artifact flow; acceptance `dry/direct/live=passed` on fresh backend `:8020`.
 - PRD-047.10-HF1: added deterministic contextual follow-up pragmatics (`dialogue_pragmatics_v1`), contextual retrieval gating (`included` vs `candidates`, `writer_can_ignore_rag`), writer direct-repair/follow-up compliance patch, trace/API visibility updates, and safe Web Chat markdown rendering (`react-markdown` + `remark-gfm` + `skipHtml`) with runner acceptance (`dry=passed`, `direct=passed`, `live=passed` on fresh backend `:8019`).
 - PRD-047.10: calibrated human-like writer autonomy in MVP profile (added `human_like_answer_policy` + `constraint_resolution`, Writer repair/summary/direct-answer mappings, admin/runtime/trace visibility extensions, and mandatory dry/direct/live acceptance on fresh backend `:8018`).
 - PRD-047.9: unified adaptive dialogue policy context-unclamp for `mvp_free_dialogue` (recency-preserved writer context budget, authority resolver, practice-overview routing shape, admin effective visibility, and mandatory live acceptance passed on fresh backend `:8016`).

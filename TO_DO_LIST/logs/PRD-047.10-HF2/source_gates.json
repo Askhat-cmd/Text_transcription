@@ -1,0 +1,16 @@
+﻿{
+  "git_branch": "main",
+  "working_tree_clean_before_start": false,
+  "working_tree_note": "session started with untracked PRD input file and newly created TASK_LIST artifact",
+  "latest_prd_047_10_hf1_commits_present": true,
+  "dialogue_profile_mvp_free_available": true,
+  "dialogue_pragmatics_v1_exists": true,
+  "contextual_retrieval_gating_v1_exists": true,
+  "web_chat_markdown_dependency_present": true,
+  "botdb_mutation_planned": false,
+  "chroma_reindex_planned": false,
+  "gates_status": "warning",
+  "warnings": [
+    "working tree not clean before start due incoming PRD file"
+  ]
+}

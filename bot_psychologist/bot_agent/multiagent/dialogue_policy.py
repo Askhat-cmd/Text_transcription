@@ -1,4 +1,4 @@
-"""Unified dialogue policy profile helpers for multiagent runtime."""
+﻿"""Unified dialogue policy profile helpers for multiagent runtime."""
 
 from __future__ import annotations
 
@@ -22,16 +22,12 @@ _EXPANSION_MARKERS = (
     "подробно",
     "подробнее",
     "полное объяснение",
-    "полное разъяснение",
     "объясни нормально",
-    "объясни подробнее",
     "я не понял",
     "не понимаю",
     "дай полный ответ",
-    "максимально подробно",
     "обзор",
 )
-
 _REPAIR_AND_EXPAND_MARKERS = (
     "я не понял",
     "не понимаю",
@@ -39,7 +35,6 @@ _REPAIR_AND_EXPAND_MARKERS = (
     "объясни нормально",
     "дай понятный полный ответ",
 )
-
 _SHORT_SUPPORT_MARKERS = (
     "коротко",
     "без анализа",
@@ -48,15 +43,14 @@ _SHORT_SUPPORT_MARKERS = (
     "не вывожу",
     "не справляюсь",
 )
-
 _PRACTICE_OVERVIEW_MARKERS = (
     "какие практики",
     "какие способы",
     "какие варианты",
     "какие направления",
     "как это видеть",
+    "практики предлагаются",
 )
-
 _EXPLICIT_ONE_STEP_MARKERS = (
     "один шаг",
     "один конкретный шаг",
@@ -65,7 +59,6 @@ _EXPLICIT_ONE_STEP_MARKERS = (
     "что сделать прямо сейчас",
     "что делать прямо сейчас",
 )
-
 _EXAMPLES_MARKERS = ("пример", "примеры", "на примере")
 _NUMBERED_LIST_MARKERS = ("по пунктам", "списком", "по шагам")
 _EXPLICIT_ANSWER_NEED_MARKERS = (
@@ -95,6 +88,7 @@ _SARCASM_OR_NEGATIVE_FEEDBACK_MARKERS = (
     "ты не дал мне ответ",
     "это не ответ",
     "ты ушел от вопроса",
+    "ты не ответил мне на вопрос",
 )
 _APPLICATION_REQUEST_MARKERS = (
     "как применять",
@@ -280,12 +274,17 @@ def build_effective_dialogue_policy(
         )
     )
 
+    overrule_reason = "none"
+    if allow_constraint_overrule:
+        overrule_reason = "explicit_user_request_or_human_like_policy"
+    if explicit_answer_need:
+        overrule_reason = "direct_contextual_followup_to_previous_offer"
+
     return {
         "profile": normalized_profile,
         "authority_order": [
             "minimal_safety_baseline",
             "explicit_user_request",
-            "live_dialogue_pragmatics",
             "knowledge_or_concept_need",
             "writer_freedom",
             "planner_and_diagnostic_advisory",
@@ -302,9 +301,7 @@ def build_effective_dialogue_policy(
         "active_line_authority": "advisory" if planner_advisory else "guided",
         "knowledge_answer_priority": "high" if concept_or_practice_need else "normal",
         "user_explicit_request_priority": (
-            "highest_after_safety"
-            if normalized_profile == DIALOGUE_PROFILE_MVP_FREE
-            else "balanced"
+            "highest_after_safety" if normalized_profile == DIALOGUE_PROFILE_MVP_FREE else "balanced"
         ),
         "answer_depth": answer_depth,
         "allow_numbered_lists": allow_richer_format or numbered_list_requested,
@@ -338,11 +335,7 @@ def build_effective_dialogue_policy(
             "profile": normalized_profile,
             "planner_authority": "advisory" if planner_advisory else "guided",
             "overruled_constraints": base_constraints if allow_constraint_overrule else [],
-            "overrule_reason": (
-                "explicit_user_request_or_human_like_policy"
-                if allow_constraint_overrule
-                else "none"
-            ),
+            "overrule_reason": overrule_reason,
         },
         "must_not_force_one_step": must_not_force_one_step,
         "context_budget_chars": context_budget_for_profile(normalized_profile),
@@ -420,6 +413,7 @@ def format_conversation_context_for_writer_with_meta(
             "older_context_omitted_chars": 0,
         }
 
+    # Keep latest context tail, not first N chars.
     tail = raw_context[-limit:]
     split_match = re.search(
         r"(RECENT\s+(?:FULL|EXACT|SUMMARIZED)\s+TURNS:|USER#turn_|ASSISTANT#turn_)",
@@ -469,11 +463,7 @@ def apply_active_concept_continuation(
     if concept:
         return guard, concept
 
-    if (
-        profile == DIALOGUE_PROFILE_MVP_FREE
-        and expansion_requested
-        and previous
-    ):
+    if profile == DIALOGUE_PROFILE_MVP_FREE and expansion_requested and previous:
         knowledge_answer["needed"] = True
         knowledge_answer["concept"] = previous
         knowledge_answer["should_answer_directly"] = True

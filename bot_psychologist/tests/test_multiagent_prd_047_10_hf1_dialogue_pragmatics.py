@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from bot_agent.multiagent.agents.writer_agent import WriterAgent
 from bot_agent.multiagent.contracts.memory_bundle import MemoryBundle, SemanticHit

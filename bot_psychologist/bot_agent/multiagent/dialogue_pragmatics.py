@@ -1,4 +1,4 @@
-"""Deterministic dialogue pragmatics and contextual retrieval gating helpers."""
+﻿"""Deterministic dialogue pragmatics and contextual retrieval gating helpers."""
 
 from __future__ import annotations
 
@@ -22,6 +22,17 @@ _AFFIRM_SHORT_MARKERS = {
     "yes",
     "sure",
 }
+_CLOSE_ACK_MARKERS = {
+    "спасибо",
+    "благодарю",
+    "понял",
+    "поняла",
+    "ясно",
+    "ок",
+    "окей",
+    "thanks",
+    "thank you",
+}
 _FOLLOWUP_IMPERATIVE_MARKERS = (
     "предложи",
     "покажи",
@@ -29,33 +40,42 @@ _FOLLOWUP_IMPERATIVE_MARKERS = (
     "объясни",
     "разверни",
     "дальше",
+    "ответь",
+    "разберем",
+    "разберём",
     "continue",
     "show",
     "explain",
 )
 _REPAIR_DISSATISFACTION_MARKERS = (
     "ты снова не ответил",
-    "ты опять заглючил",
-    "ты не ответил на свой вопрос",
+    "ты опять не ответил",
+    "ты не ответил мне на вопрос",
     "ты обещал предложить",
     "ты сам это предложил",
     "ты снова ушел не туда",
+    "ответь на вопрос который я задавал ранее",
     "you did not answer",
     "you promised",
 )
 _OFFER_PATTERNS: list[tuple[str, tuple[str, ...]]] = [
     (
         "short_phrase",
-        ("короткую фразу", "одну фразу", "короткую формулировку", "короткую реплику", "short phrase"),
+        (
+            "короткую фразу",
+            "одну фразу",
+            "короткую формулировку",
+            "короткую реплику",
+            "short phrase",
+        ),
     ),
-    ("example", ("на примере", "привести пример", "пример?", "example")),
+    ("example", ("на примере", "привести пример", "дай пример", "example")),
     ("one_step", ("один шаг", "один способ", "простой шаг", "one step")),
     ("explanation", ("объясню", "объяснить", "explain")),
     ("practice_observation", ("практик", "наблюдени", "practice", "observation")),
     ("summary", ("суммир", "итог", "summary")),
     ("application", ("примен", "в жизни", "apply")),
 ]
-_YES_CLEAN_RE = re.compile(r"^[\s!.,;:()\-]*$")
 _WORD_RE = re.compile(r"[a-zA-Zа-яА-ЯёЁ]+")
 
 
@@ -72,7 +92,7 @@ def _is_short_utterance(user_message: str) -> bool:
     if not words:
         return False
     compact = _normalize(user_message)
-    return len(words) <= 4 and len(compact) <= 48
+    return len(words) <= 10 and len(compact) <= 120
 
 
 def _detect_short_utterance_type(user_message: str) -> str:
@@ -80,10 +100,14 @@ def _detect_short_utterance_type(user_message: str) -> str:
     words = _extract_words(lowered)
     if any(marker in lowered for marker in _REPAIR_DISSATISFACTION_MARKERS):
         return "repair_feedback"
+    if words and (" ".join(words) in _CLOSE_ACK_MARKERS or all(word in _CLOSE_ACK_MARKERS for word in words)):
+        return "close_ack"
+    if any(marker in lowered for marker in _FOLLOWUP_IMPERATIVE_MARKERS):
+        if words and any(word in _AFFIRM_SHORT_MARKERS for word in words):
+            return "affirmation_with_intent"
+        return "imperative_followup"
     if words and all(word in _AFFIRM_SHORT_MARKERS for word in words):
         return "affirmation"
-    if any(marker in lowered for marker in _FOLLOWUP_IMPERATIVE_MARKERS):
-        return "imperative_followup"
     if words and any(word in _AFFIRM_SHORT_MARKERS for word in words):
         return "affirmation_with_intent"
     return "short_unknown"
@@ -119,6 +143,8 @@ def _extract_previous_assistant_from_context(conversation_context: str) -> str:
 def _choose_inherited_intent(*, offer_type: str, short_type: str) -> str:
     if short_type == "repair_feedback":
         return "repair_direct_answer"
+    if short_type == "close_ack":
+        return "close_contact"
     mapping = {
         "short_phrase": "give_short_phrase",
         "example": "give_example",
@@ -151,11 +177,15 @@ def _retrieve_topic(
     return ""
 
 
-def _retrieval_need_hint(*, offer_type: str, has_topic: bool, knowledge_needed: bool) -> str:
+def _retrieval_need_hint(*, offer_type: str, short_type: str, has_topic: bool, knowledge_needed: bool) -> str:
+    if short_type == "close_ack":
+        return "none"
     if offer_type in {"short_phrase", "one_step"} and not knowledge_needed:
         return "recent_context_only"
-    if offer_type in {"example", "explanation", "application", "practice_observation"}:
-        return "kb_grounding_useful" if (has_topic or knowledge_needed) else "contextual_optional"
+    if offer_type in {"example", "explanation", "application"}:
+        return "example_or_concept_grounding" if (has_topic or knowledge_needed) else "contextual_optional"
+    if offer_type == "practice_observation":
+        return "practice_catalog" if (has_topic or knowledge_needed) else "contextual_optional"
     if knowledge_needed:
         return "kb_grounding_useful"
     return "contextual_optional"
@@ -180,19 +210,20 @@ def build_dialogue_pragmatics_v1(
     offer_type = _detect_offer_type(previous)
     repair_dissatisfaction = any(marker in lowered for marker in _REPAIR_DISSATISFACTION_MARKERS)
 
-    is_affirm_like = False
     words = _extract_words(user_message)
-    if words:
-        cleaned = _normalize(" ".join(words))
-        is_affirm_like = all(token in _AFFIRM_SHORT_MARKERS for token in cleaned.split())
+    is_affirm_like = bool(words) and all(token in _AFFIRM_SHORT_MARKERS for token in words)
     contextual_followup = bool(
         short_utterance
         and previous
-        and (offer_type not in {"unknown", "unknown_offer"} or is_affirm_like or short_type == "imperative_followup")
+        and short_type != "close_ack"
+        and (offer_type not in {"unknown", "unknown_offer"} or is_affirm_like or short_type in {"imperative_followup", "affirmation_with_intent"})
     )
+
     relation = "none"
     if repair_dissatisfaction:
         relation = "repair_after_failed_answer"
+    elif short_type == "close_ack":
+        relation = "close_acknowledgement"
     elif contextual_followup:
         relation = "accepts_previous_assistant_offer"
 
@@ -207,6 +238,7 @@ def build_dialogue_pragmatics_v1(
     knowledge_needed = bool(knowledge_answer.get("needed", False))
     retrieval_hint = _retrieval_need_hint(
         offer_type=offer_type,
+        short_type=short_type,
         has_topic=bool(inherited_topic),
         knowledge_needed=knowledge_needed,
     )
@@ -222,6 +254,8 @@ def build_dialogue_pragmatics_v1(
     reason = "none"
     if repair_dissatisfaction:
         reason = "user_reports_previous_non_answer"
+    elif short_type == "close_ack":
+        reason = "close_acknowledgement"
     elif contextual_followup:
         reason = "user_affirmed_previous_offer"
     elif short_utterance and not conversation_context.strip():
@@ -262,11 +296,14 @@ def build_contextual_retrieval_decision_v1(
     hits = [item for item in list(semantic_hits or []) if isinstance(item, SemanticHit)]
     candidates_count = len(hits)
     offer_type = str(pragmatics.get("previous_assistant_offer_type", "unknown") or "unknown")
+    short_type = str(pragmatics.get("short_utterance_type", "not_short") or "not_short")
+    inherited_intent = str(pragmatics.get("inherited_user_intent", "") or "")
     inherited_topic = str(
         pragmatics.get("inherited_topic") or knowledge_answer.get("concept") or ""
     ).strip()
     repair_mode = bool(pragmatics.get("repair_user_dissatisfaction", False))
     knowledge_needed = bool(knowledge_answer.get("needed", False))
+    knowledge_answer_type = str(knowledge_answer.get("answer_type", "") or "").strip().lower()
     contextual_followup = bool(pragmatics.get("is_contextual_followup", False))
 
     action = "none"
@@ -274,8 +311,13 @@ def build_contextual_retrieval_decision_v1(
     suppressed_reason = ""
     included_hits: list[SemanticHit] = []
     relevance = "unknown"
+    memory_only_still_included_rag = ""
 
-    if repair_mode and not knowledge_needed and not inherited_topic:
+    if short_type == "close_ack":
+        action = "none"
+        suppressed_reason = "close_ack_turn_no_kb_needed"
+        relevance = "low"
+    elif repair_mode and not knowledge_needed and not inherited_topic:
         action = "recent_context_only"
         suppressed_reason = "repair_turn_prefers_direct_contextual_answer"
         relevance = "low"
@@ -283,30 +325,52 @@ def build_contextual_retrieval_decision_v1(
         action = "recent_context_only"
         suppressed_reason = "local_followup_does_not_require_kb_grounding"
         relevance = "low"
-    elif contextual_followup and offer_type in {"example", "explanation", "application", "practice_observation"}:
+    elif contextual_followup and offer_type in {"example", "application", "explanation"}:
         if candidates_count > 0:
-            action = "kb_grounding"
+            action = "example_grounding" if offer_type == "example" or inherited_intent == "give_example" else "kb_optional"
             included_hits = hits[:2]
-            included_reason = "previous_offer_needs_concept_grounding"
+            included_reason = "previous_offer_needs_example_or_concept_grounding"
             relevance = "high"
         else:
             action = "recent_context_only"
             suppressed_reason = "accepted_offer_but_no_relevant_kb_hits"
             relevance = "medium"
+    elif knowledge_answer_type == "practice_overview":
+        action = "practice_catalog"
+        if candidates_count > 0:
+            included_hits = hits[:3]
+            included_reason = "practice_overview_with_kb_support"
+            relevance = "high"
+        else:
+            suppressed_reason = "practice_overview_without_hits"
+            relevance = "medium"
     elif knowledge_needed and candidates_count > 0:
-        action = "concept_answer"
+        if knowledge_answer_type in {"known_concept", "concept", "term"} or inherited_topic:
+            action = "concept_answer"
+            included_reason = "knowledge_answer_guard_needed"
+        else:
+            action = "kb_grounding"
+            included_reason = "knowledge_needed_with_relevant_hits"
         included_hits = hits[:2]
-        included_reason = "knowledge_answer_guard_needed"
         relevance = "high"
+    elif knowledge_needed:
+        action = "memory_only"
+        suppressed_reason = "knowledge_needed_without_kb_hits"
+        relevance = "medium"
     elif candidates_count > 0:
         action = "memory_only"
-        included_hits = hits[:1]
-        included_reason = "candidate_available_but_context_priority"
+        suppressed_reason = "candidate_available_but_current_turn_prefers_recent_context"
         relevance = "medium"
     else:
         action = "none"
         suppressed_reason = "no_candidates"
         relevance = "low"
+
+    if action == "memory_only" and included_hits:
+        memory_only_still_included_rag = "invalid_memory_only_configuration"
+
+    if action == "memory_only":
+        included_hits = []
 
     return {
         "version": CONTEXTUAL_RETRIEVAL_GATING_VERSION,
@@ -320,6 +384,7 @@ def build_contextual_retrieval_decision_v1(
         "rag_relevance_to_current_turn": relevance,
         "inherited_topic": inherited_topic,
         "inherited_offer_type": offer_type,
+        "why_memory_only_still_included_rag": memory_only_still_included_rag,
         "rag_included_for_writer": [
             {
                 "chunk_id": str(item.chunk_id or ""),

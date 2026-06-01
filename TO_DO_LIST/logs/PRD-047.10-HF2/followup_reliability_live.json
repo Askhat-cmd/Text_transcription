@@ -1,0 +1,240 @@
+{
+  "mode": "live",
+  "status": "passed",
+  "timestamp": "2026-06-01T07:32:21.077312+00:00",
+  "summary": {
+    "cases_total": 8,
+    "statuses_total": 16,
+    "stale_stub_count": 0
+  },
+  "checks": {
+    "no_422_global": true,
+    "all_cases_checks_passed": true,
+    "required_cases_count": true,
+    "stale_stub_absent": true,
+    "markdown_smoke_passed": true
+  },
+  "case_results": [
+    {
+      "case_id": "HF2-001",
+      "session_id": "prd04710hf2-hf2-001-8c8638aa",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Нейросталкинг — это внимательное, безоценочное наблюдение за своими автоматическими паттернами, триггерами и телесными реакциями: ты смотришь «как запускается программа», а не отождествляешься с ней. Проще: заметил, что при опоздании партнёра в груди сжимается, появляется мысль «меня не ценят», — ты фиксируешь сигнал (тело, мысль, эмоция), называешь его и смотришь, как он развивается, вместо того чтобы сразу действовать порывом. В жизни это применяют как инструмент паузы — заметил реакцию, дал ей имя, и только потом выбираешь ответ (или решаешь приостановиться, разобраться глубже), что снижает",
+        "Хорошо — краткий пример. Представь: партнёр опаздывает, ты чувствуешь сжатие в груди — сделай три медленных глубоких вдоха, тихо назови то, что заметил («сжатие в груди; мысль: меня не ценят»), и просто наблюдай эти ощущения 30 секунд без действий. Это и есть мини‑нейросталкинг: зафиксировать сигнал в теле, дать ему имя и подождать, пока импульс не утихнет."
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-001\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-001\\turn_02.json"
+      ],
+      "latest_retrieval_action": "memory_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-002",
+      "session_id": "prd04710hf2-hf2-002-382995fa",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+        "Представь Анну: ей предстоит короткая презентация на работе — и ещё до выхода к коллегам в голове включается поток мыслей: «Они подумают, что я туплю», «Если запнусь — все подумают, что я некомпетентна», она автоматически прокручивает возможные осуждения и начинает заранее мониторить каждое слово. Из-за этого тело напрягается, голос садится, и вместо простого фокуса на сути выступления она ловит себя на попытках контролировать впечатление — результат: презентация получается скованной, а после Анна пережёвывает каждую реакцию коллег, собирая «доказательства» своего провала. Это иллюстрирует, ка"
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-002\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-002\\turn_02.json"
+      ],
+      "latest_retrieval_action": "memory_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-003",
+      "session_id": "prd04710hf2-hf2-003-e270ffa1",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Нейросталкинг — это внутренняя наблюдательная работа с «первым этажом»: замечать и исследовать свои автоматические паттерны, триггеры и реактивные программы (как они запускаются, какие ощущения и мысли сопровождают их), чтобы научиться не включаться в них. Главное здесь — смотреть на механизм со стороны, не осуждая и не отождествляясь с содержимым — цель не изменить личность сразу, а вернуть свободу выбора в момент реакции. Это отличается от НеоСталкинга, который поднимает наблюдение на уровень «кто наблюдает» — когда сама личность перестаёт быть организующим центром опыта. Хотите, чтобы я объ",
+        "Понимаю: в ситуации, когда начальник не прав, вы как бы «зажимаете» себя — замолкаете или подавляете реакцию. Один ключевой механизм здесь — прогнозирующая контрольная программа: мозг заранее моделирует возможные негативные последствия (конфликт, наказание, потеря статуса) и из соображений безопасности выключает выражение чувств ещё до того, как вы успеваете действовать. Это объясняет, почему энергия уходит до старта — весь ресурс уходит на внутреннюю проверку и подавление, а не на реальное взаимодействие. Что в этот момент вы больше замечаете — напряжение в теле, конкретные мысли («лучше пром"
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-003\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-003\\turn_02.json"
+      ],
+      "latest_retrieval_action": "memory_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-004",
+      "session_id": "prd04710hf2-hf2-004-6040d0ee",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+        "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\nФраза может быть такой: **«Сейчас во мне включилась реакция: тело напряглось, мысль появилась, импульс пошёл. Я это вижу — и беру паузу перед действием».**"
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-004\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-004\\turn_02.json"
+      ],
+      "latest_retrieval_action": "recent_context_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-005",
+      "session_id": "prd04710hf2-hf2-005-58b11966",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+        "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\nФраза может быть такой: **«Сейчас во мне включилась реакция: тело напряглось, мысль появилась, импульс пошёл. Я это вижу — и беру паузу перед действием».**"
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-005\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-005\\turn_02.json"
+      ],
+      "latest_retrieval_action": "recent_context_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-006",
+      "session_id": "prd04710hf2-hf2-006-1541a712",
+      "statuses": [
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Ключевая пометка: с тобой всё в порядке — это отправная точка.  \nКороткие варианты: «Я в порядке», «Программа — не я», «Дышу, и это достаточно».  \nКакой из трёх ближе по тону — спокойный, отстранённый или ободряющий?",
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия."
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-006\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-006\\turn_02.json"
+      ],
+      "latest_retrieval_action": "memory_only",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-007",
+      "session_id": "prd04710hf2-hf2-007-70bf5257",
+      "statuses": [
+        200
+      ],
+      "answers_preview": [
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия."
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true,
+        "thanks_close_no_rag": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-007\\turn_01.json"
+      ],
+      "latest_retrieval_action": "none",
+      "latest_rag_included_count": 0
+    },
+    {
+      "case_id": "HF2-008",
+      "session_id": "prd04710hf2-hf2-008-bda61efa",
+      "statuses": [
+        200,
+        200,
+        200
+      ],
+      "answers_preview": [
+        "Рад видеть 👍 — похоже, вам удобно или вы подтверждаете. Я рядом и готов поддержать дальше, если нужно. Хотите продолжить разговор сейчас или предпочитаете паузу?",
+        "Вижу ваш вопрос — похоже, вы ждёте отклика или просто проверяете, что я на связи. Один механизм, который помогает в такой ситуации: короткий уточняющий сигнал (вопрос или эмодзи) быстро устанавливает контакт и позволяет понять намерение собеседника. Я рядом и готов продолжить — хотите ли вы поговорить дальше сейчас?",
+        "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия."
+      ],
+      "checks": {
+        "no_422": true,
+        "all_status_200": true,
+        "non_empty_last_answer": true,
+        "no_stale_regulate_stub": true,
+        "trace_endpoint_ok": true,
+        "traces_endpoint_ok": true
+      },
+      "exported_files": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-008\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-008\\turn_02.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\live_turn_exports\\HF2-008\\turn_03.json"
+      ],
+      "latest_retrieval_action": "none",
+      "latest_rag_included_count": 0
+    }
+  ],
+  "markdown_smoke": {
+    "status": "passed",
+    "checks": {
+      "has_strong": true,
+      "has_ol_or_ul": true,
+      "has_em": true
+    },
+    "markdown_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\markdown_smoke.md",
+    "dom_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\markdown_smoke_dom.html"
+  },
+  "prd": "PRD-047.10-HF2",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_hf2_followup_reliability_cases.json"
+}

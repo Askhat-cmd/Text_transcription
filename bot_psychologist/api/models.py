@@ -24,7 +24,7 @@ class FeedbackType(str, Enum):
 
 class AskQuestionRequest(BaseModel):
     """Запрос на ответ на вопрос"""
-    query: str = Field(..., min_length=3, max_length=2000, description="Вопрос пользователя")
+    query: str = Field(..., min_length=1, max_length=2000, description="Вопрос пользователя")
     user_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="[DEPRECATED] Legacy user id. Use X-Session-Id and X-Device-Fingerprint headers.")
     session_id: Optional[str] = Field(default=None, min_length=1, max_length=100, description="ID chat session")
     include_path: bool = Field(default=False, description="Включить рекомендацию пути")
@@ -313,6 +313,7 @@ class DebugTrace(BaseModel):
     planner_drift_summary: Optional[Dict[str, Any]] = None
     dialogue_pragmatics: Optional[Dict[str, Any]] = None
     retrieval_decision: Optional[Dict[str, Any]] = None
+    live_turn_evidence: Optional[Dict[str, Any]] = None
 
 
 class AgentTimings(BaseModel):
@@ -466,6 +467,7 @@ class MultiAgentTraceResponse(BaseModel):
     planner_drift_summary: Optional[Dict[str, Any]] = None
     dialogue_pragmatics: Optional[Dict[str, Any]] = None
     retrieval_decision: Optional[Dict[str, Any]] = None
+    live_turn_evidence: Optional[Dict[str, Any]] = None
 
 
 class AdaptiveAnswerResponse(BaseModel):

@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 from bot_agent.multiagent.dialogue_pragmatics import build_dialogue_pragmatics_v1
 
@@ -26,7 +26,7 @@ def test_da_konechno_after_example_offer_keeps_context() -> None:
     )
     assert payload["is_contextual_followup"] is True
     assert payload["previous_assistant_offer_type"] == "example"
-    assert payload["retrieval_need_hint"] in {"kb_grounding_useful", "contextual_optional"}
+    assert payload["retrieval_need_hint"] in {"example_or_concept_grounding", "contextual_optional"}
 
 
 def test_short_yes_without_context_is_not_crash_contextual_false() -> None:

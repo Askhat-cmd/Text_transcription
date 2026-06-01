@@ -632,6 +632,11 @@ async def get_multiagent_trace(
             if isinstance(debug.get("retrieval_decision"), dict)
             else None
         ),
+        live_turn_evidence=(
+            debug.get("live_turn_evidence")
+            if isinstance(debug.get("live_turn_evidence"), dict)
+            else None
+        ),
     )
 
 

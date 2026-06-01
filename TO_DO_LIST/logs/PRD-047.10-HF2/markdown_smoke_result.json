@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "checks": {
+    "has_strong": true,
+    "has_ol_or_ul": true,
+    "has_em": true
+  },
+  "markdown_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\markdown_smoke.md",
+  "dom_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.10-HF2\\markdown_smoke_dom.html"
+}

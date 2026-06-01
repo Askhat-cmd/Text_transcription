@@ -1,0 +1,50 @@
+﻿# PRD-047.10-HF2 command output log
+
+## pytest
+Command:
+python -m pytest tests/test_dialogue_pragmatics_v1.py tests/test_contextual_retrieval_gating_v1.py tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py tests/test_live_turn_evidence_export_v1.py tests/test_dialogue_pragmatics_followup_v2.py tests/test_contextual_retrieval_gating_v2.py tests/test_prd_047_10_hf2_followup_runner.py -q
+
+Result:
+- 19 passed
+- 4 warnings (existing datetime.utcnow deprecation)
+
+## HF2 Runner Dry
+Command:
+python scripts/run_prd_047_10_hf2_followup_reliability.py --mode dry --save-evidence
+
+Result:
+- status=passed
+- output=TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_dry.json
+
+## HF2 Runner Direct
+Command:
+python scripts/run_prd_047_10_hf2_followup_reliability.py --mode direct --save-evidence
+
+Result:
+- status=passed
+- output=TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_direct.json
+
+## HF2 Runner Live (reproduce on stale backend)
+Command:
+python scripts/run_prd_047_10_hf2_followup_reliability.py --mode live --save-evidence
+
+Result:
+- status=failed (stale backend runtime)
+- observed: short-input 422 + stale-stub recurrence
+
+## HF2 Runner Live (fresh backend rerun)
+Command:
+python scripts/run_prd_047_10_hf2_followup_reliability.py --mode live --base-url http://127.0.0.1:8020/api/v1 --admin-runtime-url http://127.0.0.1:8020/api/admin/runtime/effective --save-evidence
+
+Result:
+- status=passed
+- checks: no_422_global=true, all_cases_checks_passed=true, stale_stub_absent=true
+- output=TO_DO_LIST/logs/PRD-047.10-HF2/followup_reliability_live.json
+
+## Frontend Build
+Command:
+npm run build
+
+Result:
+- passed (vite build complete)
+- bundle-size warnings only

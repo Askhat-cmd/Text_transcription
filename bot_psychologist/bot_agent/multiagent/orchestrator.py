@@ -35,6 +35,7 @@ from .dialogue_policy import (
 )
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
+from .live_turn_evidence import build_live_turn_evidence_v1
 from .planner_bridge_compliance_shadow import (
     build_planner_bridge_compliance_runtime_shadow_v1,
 )
@@ -447,6 +448,27 @@ class MultiAgentOrchestrator:
         else:
             final_answer = draft_answer
 
+        live_turn_evidence = build_live_turn_evidence_v1(
+            query=query,
+            user_id=user_id,
+            session_id=user_id,
+            turn_index=None,
+            orchestrator_result={"answer": final_answer},
+            writer_contract=writer_contract,
+            writer_debug=writer_debug,
+            memory_bundle=memory_bundle,
+            state_snapshot=state_snapshot,
+            thread_state=updated_thread,
+            thread_debug=thread_debug,
+            diagnostic_card=diagnostic_card,
+            active_line_state=active_line_state,
+            response_planner_state=response_planner_state,
+            dialogue_policy=dialogue_policy,
+            dialogue_pragmatics=dialogue_pragmatics,
+            contextual_retrieval_decision=retrieval_decision,
+            validation_result=validation_result,
+        )
+
         quality_trace_error = None
         try:
             quality_trace = build_quality_trace(
@@ -610,6 +632,7 @@ class MultiAgentOrchestrator:
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "dialogue_pragmatics": dict(dialogue_pragmatics),
                 "retrieval_decision": dict(retrieval_decision),
+                "live_turn_evidence": dict(live_turn_evidence),
                 "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
                 "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),
                 "dialogue_policy": dict(dialogue_policy),

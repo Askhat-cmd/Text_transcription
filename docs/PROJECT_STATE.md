@@ -63,7 +63,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-06-01
-- Source cycle: PRD-047.10-HF1
+- Source cycle: PRD-047.10-HF2
 
 ## PRD-046.1.35-HF4
 Current Stage:

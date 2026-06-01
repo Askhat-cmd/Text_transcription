@@ -7,6 +7,7 @@
 
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { FiClock } from 'react-icons/fi';
 import type { Message } from '../../types';
 import { useMultiAgentTrace } from '../../hooks';
@@ -61,7 +62,9 @@ export const MessageItem: React.FC<MessageItemProps> = ({
           'prose prose-sm max-w-none',
           isUser ? 'text-zinc-900' : 'dark:prose-invert'
         )}>
-          <ReactMarkdown>{message.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>
+            {message.content}
+          </ReactMarkdown>
         </div>
 
         {/* Bot-specific content */}

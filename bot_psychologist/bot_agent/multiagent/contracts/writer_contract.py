@@ -28,6 +28,8 @@ class WriterContract:
     active_line: dict[str, Any] | None = None
     response_planner: dict[str, Any] | None = None
     dialogue_policy: dict[str, Any] | None = None
+    dialogue_pragmatics: dict[str, Any] | None = None
+    retrieval_decision: dict[str, Any] | None = None
     response_language: str | None = None
 
     def to_dict(self) -> dict:
@@ -60,6 +62,16 @@ class WriterContract:
             ),
             "dialogue_policy": (
                 dict(self.dialogue_policy) if isinstance(self.dialogue_policy, dict) else None
+            ),
+            "dialogue_pragmatics": (
+                dict(self.dialogue_pragmatics)
+                if isinstance(self.dialogue_pragmatics, dict)
+                else None
+            ),
+            "retrieval_decision": (
+                dict(self.retrieval_decision)
+                if isinstance(self.retrieval_decision, dict)
+                else None
             ),
             "response_language": self.response_language,
         }
@@ -150,6 +162,29 @@ class WriterContract:
         dialogue_policy = (
             dict(self.dialogue_policy) if isinstance(self.dialogue_policy, dict) else {}
         )
+        dialogue_pragmatics = (
+            dict(self.dialogue_pragmatics)
+            if isinstance(self.dialogue_pragmatics, dict)
+            else (
+                dict(dialogue_policy.get("dialogue_pragmatics", {}))
+                if isinstance(dialogue_policy.get("dialogue_pragmatics"), dict)
+                else {}
+            )
+        )
+        retrieval_decision = (
+            dict(self.retrieval_decision)
+            if isinstance(self.retrieval_decision, dict)
+            else (
+                dict(dialogue_policy.get("retrieval_decision", {}))
+                if isinstance(dialogue_policy.get("retrieval_decision"), dict)
+                else {}
+            )
+        )
+        included_writer_hits = [
+            str(item.get("content", "") or "")
+            for item in list(retrieval_decision.get("rag_included_for_writer", []) or [])
+            if isinstance(item, dict) and str(item.get("content", "") or "").strip()
+        ]
         semantic_hits_budget = (
             dict(dialogue_policy.get("semantic_hits_budget", {}))
             if isinstance(dialogue_policy.get("semantic_hits_budget"), dict)
@@ -161,9 +196,15 @@ class WriterContract:
         semantic_hit_chars = int(semantic_hits_budget.get("max_chars_per_hit", 300) or 300)
         if semantic_hit_chars < 120:
             semantic_hit_chars = 120
+        has_explicit_retrieval_decision = "rag_included_count" in retrieval_decision
+        semantic_source = (
+            included_writer_hits
+            if has_explicit_retrieval_decision
+            else semantic_hits
+        )
         semantic_hits_trimmed = [
             str(item or "")[:semantic_hit_chars]
-            for item in semantic_hits[:semantic_hits_max]
+            for item in semantic_source[:semantic_hits_max]
             if str(item or "").strip()
         ]
         dialogue_profile = str(dialogue_policy.get("profile", "safe_guided") or "safe_guided")
@@ -346,4 +387,56 @@ class WriterContract:
                 dialogue_policy.get("repair_and_expand_requested", False)
             ),
             "dialogue_active_concept": dialogue_active_concept,
+            "dialogue_pragmatics": dialogue_pragmatics,
+            "dialogue_pragmatics_version": str(
+                dialogue_pragmatics.get("version", "dialogue_pragmatics_v1")
+            ),
+            "dialogue_pragmatics_short_utterance": bool(
+                dialogue_pragmatics.get("is_short_utterance", False)
+            ),
+            "dialogue_pragmatics_short_type": str(
+                dialogue_pragmatics.get("short_utterance_type", "not_short") or "not_short"
+            ),
+            "dialogue_pragmatics_is_contextual_followup": bool(
+                dialogue_pragmatics.get("is_contextual_followup", False)
+            ),
+            "dialogue_pragmatics_offer_type": str(
+                dialogue_pragmatics.get("previous_assistant_offer_type", "unknown") or "unknown"
+            ),
+            "dialogue_pragmatics_inherited_intent": str(
+                dialogue_pragmatics.get("inherited_user_intent", "continue_previous_offer")
+                or "continue_previous_offer"
+            ),
+            "dialogue_pragmatics_should_answer_directly": bool(
+                dialogue_pragmatics.get("should_answer_directly", False)
+            ),
+            "dialogue_pragmatics_should_not_ask_confirmation_again": bool(
+                dialogue_pragmatics.get("should_not_ask_confirmation_again", False)
+            ),
+            "dialogue_pragmatics_repair_user_dissatisfaction": bool(
+                dialogue_pragmatics.get("repair_user_dissatisfaction", False)
+            ),
+            "dialogue_pragmatics_reason": str(dialogue_pragmatics.get("reason", "none") or "none"),
+            "retrieval_decision": retrieval_decision,
+            "retrieval_decision_version": str(
+                retrieval_decision.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
+                or "contextual_retrieval_gating_v1"
+            ),
+            "retrieval_action": str(retrieval_decision.get("retrieval_action", "none") or "none"),
+            "retrieval_rag_candidates_count": int(retrieval_decision.get("rag_candidates_count", 0) or 0),
+            "retrieval_rag_included_count": int(retrieval_decision.get("rag_included_count", 0) or 0),
+            "retrieval_rag_included_reason": str(retrieval_decision.get("rag_included_reason", "") or ""),
+            "retrieval_rag_suppressed_reason": str(
+                retrieval_decision.get("rag_suppressed_reason", "") or ""
+            ),
+            "retrieval_writer_can_ignore_rag": bool(
+                retrieval_decision.get("writer_can_ignore_rag", True)
+            ),
+            "retrieval_rag_relevance": str(
+                retrieval_decision.get("rag_relevance_to_current_turn", "unknown") or "unknown"
+            ),
+            "retrieval_inherited_topic": str(retrieval_decision.get("inherited_topic", "") or ""),
+            "retrieval_inherited_offer_type": str(
+                retrieval_decision.get("inherited_offer_type", "unknown") or "unknown"
+            ),
         }

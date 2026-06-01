@@ -1,0 +1,17 @@
+﻿[2026-06-01] .venv\Scripts\python -m pytest tests/test_dialogue_pragmatics_v1.py tests/test_contextual_retrieval_gating_v1.py tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py tests/test_prd_047_10_hf1_dialogue_pragmatics_runner.py -q
+RESULT: passed (11 passed)
+
+[2026-06-01] .venv\Scripts\python -m pytest tests/test_dialogue_policy_effective_profile.py tests/test_response_planner_mvp_free_dialogue.py tests/test_writer_contract_response_planner.py tests/test_writer_contract_response_planner_answer_fit.py tests/test_writer_contract_active_line.py tests/test_dialogue_pragmatics_v1.py tests/test_contextual_retrieval_gating_v1.py tests/test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py tests/test_prd_047_10_hf1_dialogue_pragmatics_runner.py -q
+RESULT: passed (27 passed)
+
+[2026-06-01] .venv\Scripts\python scripts/run_prd_047_10_hf1_dialogue_pragmatics_eval.py --mode dry
+RESULT: passed
+
+[2026-06-01] .venv\Scripts\python scripts/run_prd_047_10_hf1_dialogue_pragmatics_eval.py --mode direct
+RESULT: passed
+
+[2026-06-01] .venv\Scripts\python scripts/run_prd_047_10_hf1_dialogue_pragmatics_eval.py --mode live --base-url http://127.0.0.1:8019/api/v1 --admin-runtime-url http://127.0.0.1:8019/api/admin/runtime/effective
+RESULT: passed
+
+[2026-06-01] npm run build (web_ui)
+RESULT: passed

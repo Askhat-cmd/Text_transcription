@@ -389,6 +389,11 @@ def build_response_planner_decision(
     has_self_harm_marker = _contains_any(message, _SELF_HARM_MARKERS)
     dialogue_policy_payload = dict(dialogue_policy or {})
     dialogue_profile = normalize_dialogue_profile(dialogue_policy_payload.get("profile", "safe_guided"))
+    dialogue_pragmatics = (
+        dict(dialogue_policy_payload.get("dialogue_pragmatics", {}))
+        if isinstance(dialogue_policy_payload.get("dialogue_pragmatics"), dict)
+        else {}
+    )
     expansion_requested = bool(dialogue_policy_payload.get("expansion_requested", False)) or detect_expansion_request(message)
     repair_and_expand_requested = bool(
         dialogue_policy_payload.get("repair_and_expand_requested", False)
@@ -452,7 +457,89 @@ def build_response_planner_decision(
         "numbered_list_requested": numbered_list_requested,
         "application_requested": application_requested,
         "active_line_stale": active_line_stale,
+        "dialogue_pragmatics_contextual_followup": bool(
+            dialogue_pragmatics.get("is_contextual_followup", False)
+        ),
+        "dialogue_pragmatics_offer_type": str(
+            dialogue_pragmatics.get("previous_assistant_offer_type", "unknown") or "unknown"
+        ),
+        "dialogue_pragmatics_repair_user_dissatisfaction": bool(
+            dialogue_pragmatics.get("repair_user_dissatisfaction", False)
+        ),
     }
+
+    pragmatics_contextual_followup = bool(dialogue_pragmatics.get("is_contextual_followup", False))
+    pragmatics_offer_type = str(
+        dialogue_pragmatics.get("previous_assistant_offer_type", "unknown") or "unknown"
+    )
+    pragmatics_repair_dissatisfaction = bool(
+        dialogue_pragmatics.get("repair_user_dissatisfaction", False)
+    )
+    pragmatics_direct = bool(dialogue_pragmatics.get("should_answer_directly", False))
+    if pragmatics_repair_dissatisfaction:
+        return _build_decision(
+            next_move="repair_misalignment",
+            answer_shape="repair_and_expand",
+            response_depth="medium",
+            target_micro_shift="признать промах и ответить напрямую без повторного подтверждения",
+            should_answer_directly=True,
+            question_policy="none",
+            practice_policy="forbidden",
+            revoicing_policy="suppressed",
+            continuity_policy="repair_and_continue",
+            safety_priority=False,
+            must_include=["признать сдвиг", "сразу дать прямой ответ"],
+            must_avoid=["не переспрашивать подтверждение"],
+            source_signals=source_signals,
+            confidence=0.95,
+            rationale="Dialogue pragmatics dissatisfaction follow-up.",
+        )
+
+    if pragmatics_contextual_followup and pragmatics_direct:
+        if pragmatics_offer_type in {"short_phrase", "one_step", "practice_observation"}:
+            return _build_decision(
+                next_move=(
+                    "give_direct_step"
+                    if practice_allowed and pragmatics_offer_type == "one_step"
+                    else "continue_active_line"
+                ),
+                answer_shape="one_step" if pragmatics_offer_type == "one_step" else "compact_direct",
+                response_depth="short",
+                target_micro_shift="выполнить подтвержденный короткий follow-up без перезапроса",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="one_micro_step_allowed" if practice_allowed else "forbidden",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["выполнить обещанный follow-up"],
+                must_avoid=["не переспрашивать подтверждение", "не уходить в заглушку"],
+                source_signals=source_signals,
+                confidence=0.9,
+                rationale="Dialogue pragmatics accepted short follow-up.",
+            )
+        if pragmatics_offer_type in {"example", "explanation", "application", "summary"}:
+            return _build_decision(
+                next_move="answer_known_concept" if (knowledge_needed or active_concept) else "deepen_mechanism",
+                answer_shape=(
+                    "concept_explanation_full"
+                    if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE
+                    else "compact_direct"
+                ),
+                response_depth="long" if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else "short",
+                target_micro_shift="продолжить подтвержденный follow-up содержательным ответом",
+                should_answer_directly=True,
+                question_policy="none",
+                practice_policy="allowed_if_explicit" if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else "forbidden",
+                revoicing_policy="suppressed",
+                continuity_policy="continue_active_line",
+                safety_priority=False,
+                must_include=["дать обещанное продолжение"],
+                must_avoid=["не переспрашивать подтверждение"],
+                source_signals=source_signals,
+                confidence=0.9,
+                rationale="Dialogue pragmatics accepted concept/example follow-up.",
+            )
 
     if (
         dialogue_profile == DIALOGUE_PROFILE_MVP_FREE

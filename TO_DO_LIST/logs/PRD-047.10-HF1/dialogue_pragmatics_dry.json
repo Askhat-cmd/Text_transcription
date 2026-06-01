@@ -1,0 +1,9 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-06-01T05:48:37.335548+00:00",
+  "dataset_total": 14,
+  "errors": [],
+  "prd": "PRD-047.10-HF1",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_hf1_dialogue_pragmatics_cases.json"
+}

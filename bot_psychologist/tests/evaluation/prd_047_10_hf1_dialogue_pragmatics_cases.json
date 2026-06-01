@@ -1,0 +1,188 @@
+[
+  {
+    "case_id": "HF1_SHORT_YES_PHRASE",
+    "group": "short_followup",
+    "user_message": "да",
+    "previous_assistant_message": "Хочешь, я предложу одну короткую фразу для внутренней пометки?",
+    "conversation_context": "Assistant: Хочешь, я предложу одну короткую фразу для внутренней пометки?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "short_phrase",
+      "should_answer_directly": true,
+      "retrieval_action_allowed": ["recent_context_only", "memory_only"]
+    }
+  },
+  {
+    "case_id": "HF1_DA_PREDLOJI_PHRASE",
+    "group": "short_followup",
+    "user_message": "да, предложи",
+    "previous_assistant_message": "Хочешь, я предложу одну короткую фразу?",
+    "conversation_context": "Assistant: Хочешь, я предложу одну короткую фразу?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "short_phrase",
+      "should_answer_directly": true
+    }
+  },
+  {
+    "case_id": "HF1_DA_KONECHNO_NO_REGULATE_STUB",
+    "group": "short_followup",
+    "user_message": "да конечно",
+    "previous_assistant_message": "Хочешь, я покажу короткую формулировку?",
+    "conversation_context": "Assistant: Хочешь, я покажу короткую формулировку?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "should_answer_directly": true,
+      "retrieval_action_allowed": ["recent_context_only", "memory_only"]
+    }
+  },
+  {
+    "case_id": "HF1_YES_EXAMPLE_WITH_KB",
+    "group": "rag_include",
+    "user_message": "да",
+    "previous_assistant_message": "Хочешь, объясню это на примере?",
+    "conversation_context": "Assistant: Хочешь, объясню это на примере?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true}},
+    "semantic_hits": [{"chunk_id": "c1", "content": "Нейросталкинг как наблюдение паттернов", "source": "kb", "score": 0.91}],
+    "expected": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "example",
+      "retrieval_action_allowed": ["kb_grounding", "concept_answer"],
+      "rag_included_min": 1
+    }
+  },
+  {
+    "case_id": "HF1_YES_EXPLANATION_WITH_TOPIC",
+    "group": "rag_include",
+    "user_message": "ок",
+    "previous_assistant_message": "Хочешь, я объясню это подробнее?",
+    "conversation_context": "Assistant: Хочешь, я объясню это подробнее?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true}},
+    "semantic_hits": [{"chunk_id": "c1", "content": "Определение нейросталкинга", "source": "kb", "score": 0.88}],
+    "expected": {
+      "retrieval_action_allowed": ["kb_grounding", "concept_answer"],
+      "rag_included_min": 1
+    }
+  },
+  {
+    "case_id": "HF1_YES_SHORT_PHRASE_RECENT_ONLY",
+    "group": "rag_suppress",
+    "user_message": "да предложи",
+    "previous_assistant_message": "Хочешь короткую фразу для паузы?",
+    "conversation_context": "Assistant: Хочешь короткую фразу для паузы?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "semantic_hits": [{"chunk_id": "c1", "content": "Шумный нерелевантный блок", "source": "kb", "score": 0.65}],
+    "expected": {
+      "retrieval_action_allowed": ["recent_context_only"],
+      "rag_included_max": 0
+    }
+  },
+  {
+    "case_id": "HF1_USER_SAYS_YOU_DID_NOT_ANSWER",
+    "group": "repair",
+    "user_message": "ты снова не ответил на свой же вопрос, да предложи",
+    "previous_assistant_message": "Хочешь, я предложу короткую фразу?",
+    "conversation_context": "Assistant: Хочешь, я предложу короткую фразу?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "repair_user_dissatisfaction": true,
+      "should_answer_directly": true,
+      "retrieval_action_allowed": ["recent_context_only", "none"]
+    }
+  },
+  {
+    "case_id": "HF1_REPAIR_PROMISED_YOU_OFFERED",
+    "group": "repair",
+    "user_message": "ты сам это предложил и снова не ответил",
+    "previous_assistant_message": "Хочешь, я покажу пример?",
+    "conversation_context": "Assistant: Хочешь, я покажу пример?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "repair_user_dissatisfaction": true,
+      "should_answer_directly": true
+    }
+  },
+  {
+    "case_id": "HF1_SHORT_YES_NO_CONTEXT",
+    "group": "no_context",
+    "user_message": "да",
+    "previous_assistant_message": "",
+    "conversation_context": "",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": false,
+      "is_short_utterance": true
+    }
+  },
+  {
+    "case_id": "HF1_SHORT_OK_NO_CONTEXT",
+    "group": "no_context",
+    "user_message": "ок",
+    "previous_assistant_message": "",
+    "conversation_context": "",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": false,
+      "is_short_utterance": true
+    }
+  },
+  {
+    "case_id": "HF1_POKAZHI_FOLLOWUP",
+    "group": "short_followup",
+    "user_message": "покажи",
+    "previous_assistant_message": "Хочешь, я покажу на твоей ситуации?",
+    "conversation_context": "Assistant: Хочешь, я покажу на твоей ситуации?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "should_answer_directly": true
+    }
+  },
+  {
+    "case_id": "HF1_DAVAI_ONE_STEP",
+    "group": "short_followup",
+    "user_message": "давай",
+    "previous_assistant_message": "Хочешь, я дам один простой шаг?",
+    "conversation_context": "Assistant: Хочешь, я дам один простой шаг?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "one_step"
+    }
+  },
+  {
+    "case_id": "HF1_APPLICATION_FOLLOWUP",
+    "group": "rag_include",
+    "user_message": "да",
+    "previous_assistant_message": "Хочешь, покажу как это применить в жизни?",
+    "conversation_context": "Assistant: Хочешь, покажу как это применить в жизни?",
+    "dialogue_policy": {"active_concept": "нейросталкинг"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true}},
+    "semantic_hits": [{"chunk_id": "c7", "content": "Применение нейросталкинга в жизни", "source": "kb", "score": 0.84}],
+    "expected": {
+      "retrieval_action_allowed": ["kb_grounding", "concept_answer"],
+      "rag_included_min": 1
+    }
+  },
+  {
+    "case_id": "HF1_SUMMARY_FOLLOWUP",
+    "group": "followup_summary",
+    "user_message": "да",
+    "previous_assistant_message": "Хочешь, я подведу короткий итог?",
+    "conversation_context": "Assistant: Хочешь, я подведу короткий итог?",
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false}},
+    "expected": {
+      "is_contextual_followup": true,
+      "previous_assistant_offer_type": "summary",
+      "should_answer_directly": true
+    }
+  }
+]

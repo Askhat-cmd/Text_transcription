@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.10-HF1: added deterministic contextual follow-up pragmatics (`dialogue_pragmatics_v1`), contextual retrieval gating (`included` vs `candidates`, `writer_can_ignore_rag`), writer direct-repair/follow-up compliance patch, trace/API visibility updates, and safe Web Chat markdown rendering (`react-markdown` + `remark-gfm` + `skipHtml`) with runner acceptance (`dry=passed`, `direct=passed`, `live=passed` on fresh backend `:8019`).
 - PRD-047.10: calibrated human-like writer autonomy in MVP profile (added `human_like_answer_policy` + `constraint_resolution`, Writer repair/summary/direct-answer mappings, admin/runtime/trace visibility extensions, and mandatory dry/direct/live acceptance on fresh backend `:8018`).
 - PRD-047.9: unified adaptive dialogue policy context-unclamp for `mvp_free_dialogue` (recency-preserved writer context budget, authority resolver, practice-overview routing shape, admin effective visibility, and mandatory live acceptance passed on fresh backend `:8016`).
 - PRD-047.7: added guided live testing protocol v1 (18-scenario set, sanitized feedback capture/storage, summary builder, smoke runner, admin/web runtime read-only visibility, and evidence artifacts for human-feedback loop readiness).
@@ -31,7 +32,7 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.10 closure.
+- No active PRD in progress after PRD-047.10-HF1 closure.
 
 ## Next
 1. Execute PRD-047.11 contextual dialogue pragmatics / repair-and-summary calibration on top of PRD-047.10 baseline.

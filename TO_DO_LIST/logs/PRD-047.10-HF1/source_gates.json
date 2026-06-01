@@ -1,0 +1,47 @@
+﻿{
+    "prd":  "PRD-047.10-HF1",
+    "captured_at":  "2026-06-01T05:29:36.9957686Z",
+    "base_head":  "44835d96f3639c7f82d08218bfaf283ce4361e1b",
+    "files":  [
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/dialogue_policy.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/response_planner.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/active_line.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/agents/state_analyzer.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/agents/memory_retrieval.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/agents/writer_agent.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py",
+                      "exists":  true
+                  },
+                  {
+                      "path":  "bot_psychologist/web_ui/src/components/chat/Message.tsx",
+                      "exists":  true
+                  }
+              ],
+    "missing_sources":  [
+
+                        ],
+    "gate_passed":  true
+}

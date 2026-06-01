@@ -22,6 +22,10 @@ from .context_assembly import (
 from .contracts.writer_contract import WriterContract
 from .diagnostic_center import DIAGNOSTIC_CARD_VERSION, build_diagnostic_card_v1
 from .diagnostic_center_shadow import build_diagnostic_center_shadow_v1
+from .dialogue_pragmatics import (
+    build_contextual_retrieval_decision_v1,
+    build_dialogue_pragmatics_v1,
+)
 from .dialogue_policy import (
     apply_active_concept_continuation,
     build_effective_dialogue_policy,
@@ -245,9 +249,34 @@ class MultiAgentOrchestrator:
             thread_state=updated_thread,
             knowledge_answer_guard=knowledge_answer_guard,
         )
+        dialogue_policy["knowledge_answer"] = dict(knowledge_answer_guard.get("knowledge_answer", {}))
         dialogue_policy["expansion_requested"] = detect_expansion_request(query)
         dialogue_policy["repair_and_expand_requested"] = detect_repair_and_expand_request(query)
         dialogue_policy["active_concept"] = active_concept
+        previous_assistant_message = ""
+        for recent_turn in reversed(list(memory_bundle.recent_turns or [])):
+            if not isinstance(recent_turn, dict):
+                continue
+            candidate = str(recent_turn.get("bot_response", "") or "").strip()
+            if candidate:
+                previous_assistant_message = candidate
+                break
+        dialogue_pragmatics = build_dialogue_pragmatics_v1(
+            user_message=query,
+            conversation_context=str(memory_bundle.conversation_context or ""),
+            previous_assistant_message=previous_assistant_message,
+            thread_state=updated_thread,
+            active_frame=(
+                dict(updated_thread.active_frame)
+                if isinstance(updated_thread.active_frame, dict)
+                else {}
+            ),
+            dialogue_policy=dialogue_policy,
+        )
+        dialogue_policy["dialogue_pragmatics"] = dict(dialogue_pragmatics)
+        if bool(dialogue_pragmatics.get("repair_user_dissatisfaction", False)):
+            dialogue_policy["sarcasm_or_negative_feedback"] = True
+            dialogue_policy["explicit_answer_need"] = True
         philosophy_kernel_payload = build_philosophy_kernel_runtime_payload(
             user_message=query,
             safety_active=bool(updated_thread.safety_active),
@@ -291,6 +320,12 @@ class MultiAgentOrchestrator:
                 },
             ).to_dict()
             response_planner_state["_fallback_source"] = "orchestrator_exception_fallback"
+        retrieval_decision = build_contextual_retrieval_decision_v1(
+            dialogue_pragmatics=dialogue_pragmatics,
+            knowledge_answer_guard=knowledge_answer_guard,
+            semantic_hits=list(memory_bundle.semantic_hits or []),
+        )
+        dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
         diagnostic_card = build_diagnostic_card_v1(
             user_message=query,
             state_snapshot=state_snapshot,
@@ -343,6 +378,8 @@ class MultiAgentOrchestrator:
             active_line=active_line_state,
             response_planner=response_planner_state,
             dialogue_policy=dialogue_policy,
+            dialogue_pragmatics=dialogue_pragmatics,
+            retrieval_decision=retrieval_decision,
         )
         planner_bridge_writer_contract_pilot = (
             build_planner_bridge_writer_contract_pilot_runtime_shadow_v1(
@@ -493,17 +530,18 @@ class MultiAgentOrchestrator:
             )
         )
         total_latency_ms = int(t_state + t_thread + t_memory + t_writer + t_validator)
+        semantic_hits_candidates = list(memory_bundle.semantic_hits or [])
         semantic_hits_detail = build_safe_knowledge_debug_detail_v1(
-            semantic_hits=list(memory_bundle.semantic_hits or []),
+            semantic_hits=semantic_hits_candidates,
             knowledge_policy_trace=dict(memory_bundle.knowledge_policy_trace or {}),
         )
-        writer_chunks_detail: list[dict[str, object]] = []
+        writer_chunks_candidate_detail: list[dict[str, object]] = []
         for item in list(semantic_hits_detail or []):
             if not isinstance(item, dict):
                 continue
             chunk_id = str(item.get("chunk_id", "") or "")
             preview = str(item.get("content_preview", "") or "")
-            writer_chunks_detail.append(
+            writer_chunks_candidate_detail.append(
                 {
                     "chunk_id_hash": (
                         "sha256:"
@@ -524,6 +562,25 @@ class MultiAgentOrchestrator:
                     },
                 }
             )
+        included_raw = [
+            item
+            for item in list(retrieval_decision.get("rag_included_for_writer", []) or [])
+            if isinstance(item, dict)
+        ]
+        writer_chunks_included_detail = [
+            {
+                "chunk_id_hash": (
+                    "sha256:"
+                    + hashlib.sha256(str(item.get("chunk_id", "")).encode("utf-8")).hexdigest()
+                    if str(item.get("chunk_id", ""))
+                    else ""
+                ),
+                "source": str(item.get("source", "unknown") or "unknown"),
+                "score": float(item.get("score", 0.0) or 0.0),
+                "content_preview": str(item.get("content", "") or "")[:280],
+            }
+            for item in included_raw
+        ]
 
         return {
             "status": "ok",
@@ -544,12 +601,15 @@ class MultiAgentOrchestrator:
                 "confidence": state_snapshot.confidence,
                 "has_relevant_knowledge": memory_bundle.has_relevant_knowledge,
                 "context_turns": memory_bundle.context_turns,
-                "semantic_hits_count": len(memory_bundle.semantic_hits),
+                "semantic_hits_count": len(semantic_hits_candidates),
                 "semantic_hits_detail": semantic_hits_detail,
-                "writer_chunks_detail": writer_chunks_detail,
+                "writer_chunks_detail": writer_chunks_included_detail,
+                "writer_chunks_candidate_detail": writer_chunks_candidate_detail,
                 "semantic_hits_raw_redacted": True,
                 "rag_retrieval_trace": dict(memory_bundle.rag_retrieval_trace or {}),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
+                "dialogue_pragmatics": dict(dialogue_pragmatics),
+                "retrieval_decision": dict(retrieval_decision),
                 "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
                 "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),
                 "dialogue_policy": dict(dialogue_policy),

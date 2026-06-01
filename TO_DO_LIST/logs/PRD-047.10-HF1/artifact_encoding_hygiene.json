@@ -1,0 +1,16 @@
+﻿{
+  "encoding": "utf-8",
+  "checked_at_utc": "2026-06-01T05:47:00Z",
+  "artifacts_checked": [
+    "dialogue_pragmatics_dry.json",
+    "dialogue_pragmatics_direct.json",
+    "dialogue_pragmatics_live.json",
+    "dialogue_pragmatics_live.md",
+    "web_chat_markdown_smoke.md",
+    "test_command_output.txt",
+    "source_gates.json",
+    "no_mutation_proof.json"
+  ],
+  "issues": [],
+  "status": "passed"
+}

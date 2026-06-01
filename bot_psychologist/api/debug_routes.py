@@ -622,6 +622,16 @@ async def get_multiagent_trace(
             if isinstance(debug.get("planner_drift_summary"), dict)
             else None
         ),
+        dialogue_pragmatics=(
+            debug.get("dialogue_pragmatics")
+            if isinstance(debug.get("dialogue_pragmatics"), dict)
+            else None
+        ),
+        retrieval_decision=(
+            debug.get("retrieval_decision")
+            if isinstance(debug.get("retrieval_decision"), dict)
+            else None
+        ),
     )
 
 

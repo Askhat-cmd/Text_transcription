@@ -1,0 +1,728 @@
+{
+  "mode": "direct",
+  "status": "passed",
+  "timestamp": "2026-06-01T05:48:37.360551+00:00",
+  "summary": {
+    "cases_total": 14,
+    "cases_passed": 14,
+    "cases_failed": 0
+  },
+  "checks": {
+    "cases_passed": true,
+    "required_cases_present": true
+  },
+  "case_results": [
+    {
+      "case_id": "HF1_SHORT_YES_PHRASE",
+      "group": "short_followup",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "short_phrase",
+        "inherited_user_intent": "give_short_phrase",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "local_followup_does_not_require_kb_grounding",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "short_phrase"
+      },
+      "planner": {
+        "next_move": "continue_active_line",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "previous_assistant_offer_type": true,
+          "should_answer_directly": true,
+          "retrieval_action_allowed": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_DA_PREDLOJI_PHRASE",
+      "group": "short_followup",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "imperative_followup",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "short_phrase",
+        "inherited_user_intent": "give_short_phrase",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "local_followup_does_not_require_kb_grounding",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "short_phrase"
+      },
+      "planner": {
+        "next_move": "continue_active_line",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "previous_assistant_offer_type": true,
+          "should_answer_directly": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_DA_KONECHNO_NO_REGULATE_STUB",
+      "group": "short_followup",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "short_phrase",
+        "inherited_user_intent": "give_short_phrase",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "local_followup_does_not_require_kb_grounding",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "short_phrase"
+      },
+      "planner": {
+        "next_move": "continue_active_line",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "should_answer_directly": true,
+          "retrieval_action_allowed": true,
+          "planner_has_shape": true,
+          "no_regulate_stub": true,
+          "followup_fulfilled": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_YES_EXAMPLE_WITH_KB",
+      "group": "rag_include",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "example",
+        "inherited_user_intent": "give_example",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "kb_grounding_useful",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "kb_grounding",
+        "rag_candidates_count": 1,
+        "rag_included_count": 1,
+        "rag_included_reason": "previous_offer_needs_concept_grounding",
+        "rag_suppressed_reason": "",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "high",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "example"
+      },
+      "planner": {
+        "next_move": "answer_known_concept",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "long",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "previous_assistant_offer_type": true,
+          "retrieval_action_allowed": true,
+          "rag_included_min": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_YES_EXPLANATION_WITH_TOPIC",
+      "group": "rag_include",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "explanation",
+        "inherited_user_intent": "explain_concept",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "kb_grounding_useful",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "kb_grounding",
+        "rag_candidates_count": 1,
+        "rag_included_count": 1,
+        "rag_included_reason": "previous_offer_needs_concept_grounding",
+        "rag_suppressed_reason": "",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "high",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "explanation"
+      },
+      "planner": {
+        "next_move": "answer_known_concept",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "long",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "retrieval_action_allowed": true,
+          "rag_included_min": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_YES_SHORT_PHRASE_RECENT_ONLY",
+      "group": "rag_suppress",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "imperative_followup",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "short_phrase",
+        "inherited_user_intent": "give_short_phrase",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 1,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "local_followup_does_not_require_kb_grounding",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "short_phrase"
+      },
+      "planner": {
+        "next_move": "continue_active_line",
+        "answer_shape": "compact_direct",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "retrieval_action_allowed": true,
+          "rag_included_max": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_USER_SAYS_YOU_DID_NOT_ANSWER",
+      "group": "repair",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": false,
+        "short_utterance_type": "not_short",
+        "is_contextual_followup": false,
+        "followup_relation": "repair_after_failed_answer",
+        "previous_assistant_offer_type": "short_phrase",
+        "inherited_user_intent": "give_short_phrase",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": true,
+        "should_apologize_briefly": true,
+        "reason": "user_reports_previous_non_answer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "repair_turn_prefers_direct_contextual_answer",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "short_phrase"
+      },
+      "planner": {
+        "next_move": "repair_misalignment",
+        "answer_shape": "repair_and_expand",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "should_answer_directly": true,
+          "repair_user_dissatisfaction": true,
+          "retrieval_action_allowed": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_REPAIR_PROMISED_YOU_OFFERED",
+      "group": "repair",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": false,
+        "short_utterance_type": "not_short",
+        "is_contextual_followup": false,
+        "followup_relation": "repair_after_failed_answer",
+        "previous_assistant_offer_type": "example",
+        "inherited_user_intent": "give_example",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": true,
+        "should_apologize_briefly": true,
+        "reason": "user_reports_previous_non_answer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "repair_turn_prefers_direct_contextual_answer",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "example"
+      },
+      "planner": {
+        "next_move": "repair_misalignment",
+        "answer_shape": "repair_and_expand",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "should_answer_directly": true,
+          "repair_user_dissatisfaction": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_SHORT_YES_NO_CONTEXT",
+      "group": "no_context",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": false,
+        "followup_relation": "none",
+        "previous_assistant_offer_type": "unknown",
+        "inherited_user_intent": "continue_previous_offer",
+        "inherited_topic": "",
+        "should_answer_directly": false,
+        "should_not_ask_confirmation_again": false,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "short_utterance_without_context"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "none",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "no_candidates",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown"
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "is_short_utterance": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_SHORT_OK_NO_CONTEXT",
+      "group": "no_context",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": false,
+        "followup_relation": "none",
+        "previous_assistant_offer_type": "unknown",
+        "inherited_user_intent": "continue_previous_offer",
+        "inherited_topic": "",
+        "should_answer_directly": false,
+        "should_not_ask_confirmation_again": false,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "short_utterance_without_context"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "none",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "no_candidates",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown"
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "is_short_utterance": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_POKAZHI_FOLLOWUP",
+      "group": "short_followup",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "imperative_followup",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "unknown_offer",
+        "inherited_user_intent": "continue_previous_offer",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "none",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "no_candidates",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown_offer"
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "should_answer_directly": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_DAVAI_ONE_STEP",
+      "group": "short_followup",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "one_step",
+        "inherited_user_intent": "give_one_step",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": true,
+        "retrieval_need_hint": "recent_context_only",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "recent_context_only",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "local_followup_does_not_require_kb_grounding",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "one_step"
+      },
+      "planner": {
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "previous_assistant_offer_type": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_APPLICATION_FOLLOWUP",
+      "group": "rag_include",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "application",
+        "inherited_user_intent": "show_application",
+        "inherited_topic": "нейросталкинг",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "kb_grounding_useful",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "kb_grounding",
+        "rag_candidates_count": 1,
+        "rag_included_count": 1,
+        "rag_included_reason": "previous_offer_needs_concept_grounding",
+        "rag_suppressed_reason": "",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "high",
+        "inherited_topic": "нейросталкинг",
+        "inherited_offer_type": "application"
+      },
+      "planner": {
+        "next_move": "answer_known_concept",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "long",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "retrieval_action_allowed": true,
+          "rag_included_min": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    },
+    {
+      "case_id": "HF1_SUMMARY_FOLLOWUP",
+      "group": "followup_summary",
+      "pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": true,
+        "short_utterance_type": "affirmation",
+        "is_contextual_followup": true,
+        "followup_relation": "accepts_previous_assistant_offer",
+        "previous_assistant_offer_type": "summary",
+        "inherited_user_intent": "give_summary",
+        "inherited_topic": "",
+        "should_answer_directly": true,
+        "should_not_ask_confirmation_again": true,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "user_affirmed_previous_offer"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "none",
+        "rag_candidates_count": 0,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "no_candidates",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "low",
+        "inherited_topic": "",
+        "inherited_offer_type": "summary"
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "long",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "evaluation": {
+        "passed": true,
+        "checks": {
+          "is_contextual_followup": true,
+          "previous_assistant_offer_type": true,
+          "should_answer_directly": true,
+          "planner_has_shape": true
+        },
+        "failure_reasons": []
+      }
+    }
+  ],
+  "prd": "PRD-047.10-HF1",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_hf1_dialogue_pragmatics_cases.json"
+}

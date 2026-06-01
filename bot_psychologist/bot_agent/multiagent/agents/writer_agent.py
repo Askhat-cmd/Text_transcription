@@ -304,6 +304,28 @@ class WriterAgent:
         ctx.setdefault("dialogue_expansion_requested", False)
         ctx.setdefault("dialogue_repair_and_expand_requested", False)
         ctx.setdefault("dialogue_active_concept", "")
+        ctx.setdefault("dialogue_pragmatics", {})
+        ctx.setdefault("dialogue_pragmatics_version", "dialogue_pragmatics_v1")
+        ctx.setdefault("dialogue_pragmatics_short_utterance", False)
+        ctx.setdefault("dialogue_pragmatics_short_type", "not_short")
+        ctx.setdefault("dialogue_pragmatics_is_contextual_followup", False)
+        ctx.setdefault("dialogue_pragmatics_offer_type", "unknown")
+        ctx.setdefault("dialogue_pragmatics_inherited_intent", "continue_previous_offer")
+        ctx.setdefault("dialogue_pragmatics_should_answer_directly", False)
+        ctx.setdefault("dialogue_pragmatics_should_not_ask_confirmation_again", False)
+        ctx.setdefault("dialogue_pragmatics_repair_user_dissatisfaction", False)
+        ctx.setdefault("dialogue_pragmatics_reason", "none")
+        ctx.setdefault("retrieval_decision", {})
+        ctx.setdefault("retrieval_decision_version", "contextual_retrieval_gating_v1")
+        ctx.setdefault("retrieval_action", "none")
+        ctx.setdefault("retrieval_rag_candidates_count", 0)
+        ctx.setdefault("retrieval_rag_included_count", 0)
+        ctx.setdefault("retrieval_rag_included_reason", "")
+        ctx.setdefault("retrieval_rag_suppressed_reason", "")
+        ctx.setdefault("retrieval_writer_can_ignore_rag", True)
+        ctx.setdefault("retrieval_rag_relevance", "unknown")
+        ctx.setdefault("retrieval_inherited_topic", "")
+        ctx.setdefault("retrieval_inherited_offer_type", "unknown")
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -589,6 +611,56 @@ class WriterAgent:
                 bool(ctx.get("dialogue_repair_and_expand_requested", False))
             ).lower(),
             dialogue_active_concept=str(ctx.get("dialogue_active_concept", "") or ""),
+            dialogue_pragmatics_version=str(
+                ctx.get("dialogue_pragmatics_version", "dialogue_pragmatics_v1")
+            ),
+            dialogue_pragmatics_short_utterance=str(
+                bool(ctx.get("dialogue_pragmatics_short_utterance", False))
+            ).lower(),
+            dialogue_pragmatics_short_type=str(
+                ctx.get("dialogue_pragmatics_short_type", "not_short") or "not_short"
+            ),
+            dialogue_pragmatics_is_contextual_followup=str(
+                bool(ctx.get("dialogue_pragmatics_is_contextual_followup", False))
+            ).lower(),
+            dialogue_pragmatics_offer_type=str(
+                ctx.get("dialogue_pragmatics_offer_type", "unknown") or "unknown"
+            ),
+            dialogue_pragmatics_inherited_intent=str(
+                ctx.get("dialogue_pragmatics_inherited_intent", "continue_previous_offer")
+                or "continue_previous_offer"
+            ),
+            dialogue_pragmatics_should_answer_directly=str(
+                bool(ctx.get("dialogue_pragmatics_should_answer_directly", False))
+            ).lower(),
+            dialogue_pragmatics_should_not_ask_confirmation_again=str(
+                bool(ctx.get("dialogue_pragmatics_should_not_ask_confirmation_again", False))
+            ).lower(),
+            dialogue_pragmatics_repair_user_dissatisfaction=str(
+                bool(ctx.get("dialogue_pragmatics_repair_user_dissatisfaction", False))
+            ).lower(),
+            dialogue_pragmatics_reason=str(ctx.get("dialogue_pragmatics_reason", "none") or "none"),
+            retrieval_decision_version=str(
+                ctx.get("retrieval_decision_version", "contextual_retrieval_gating_v1")
+                or "contextual_retrieval_gating_v1"
+            ),
+            retrieval_action=str(ctx.get("retrieval_action", "none") or "none"),
+            retrieval_rag_candidates_count=int(ctx.get("retrieval_rag_candidates_count", 0) or 0),
+            retrieval_rag_included_count=int(ctx.get("retrieval_rag_included_count", 0) or 0),
+            retrieval_rag_included_reason=str(
+                ctx.get("retrieval_rag_included_reason", "") or ""
+            ),
+            retrieval_rag_suppressed_reason=str(
+                ctx.get("retrieval_rag_suppressed_reason", "") or ""
+            ),
+            retrieval_writer_can_ignore_rag=str(
+                bool(ctx.get("retrieval_writer_can_ignore_rag", True))
+            ).lower(),
+            retrieval_rag_relevance=str(ctx.get("retrieval_rag_relevance", "unknown") or "unknown"),
+            retrieval_inherited_topic=str(ctx.get("retrieval_inherited_topic", "") or ""),
+            retrieval_inherited_offer_type=str(
+                ctx.get("retrieval_inherited_offer_type", "unknown") or "unknown"
+            ),
             human_like_enabled=str(bool(human_like_answer_policy.get("enabled", False))).lower(),
             human_like_answer_style=str(
                 human_like_answer_policy.get("answer_style", "guided_compact") or "guided_compact"
@@ -665,6 +737,16 @@ class WriterAgent:
         self.last_debug["repair_user_dissatisfaction"] = bool(repair_user_dissatisfaction)
         self.last_debug["sarcasm_or_negative_feedback"] = bool(sarcasm_or_negative_feedback)
         self.last_debug["overruled_constraints"] = overruled_constraints
+        self.last_debug["dialogue_pragmatics_contextual_followup"] = bool(
+            ctx.get("dialogue_pragmatics_is_contextual_followup", False)
+        )
+        self.last_debug["dialogue_pragmatics_offer_type"] = str(
+            ctx.get("dialogue_pragmatics_offer_type", "unknown") or "unknown"
+        )
+        self.last_debug["retrieval_action"] = str(ctx.get("retrieval_action", "none") or "none")
+        self.last_debug["retrieval_rag_included_count"] = int(
+            ctx.get("retrieval_rag_included_count", 0) or 0
+        )
 
         start_ts = time.perf_counter()
         dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", dialogue_profile))
@@ -746,6 +828,11 @@ class WriterAgent:
         planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
         planner_safety_priority = bool(response_planner.get("safety_priority", False))
         dialogue_policy_payload = dict(ctx.get("dialogue_policy", {})) if isinstance(ctx.get("dialogue_policy"), dict) else {}
+        dialogue_pragmatics_payload = (
+            dict(ctx.get("dialogue_pragmatics", {}))
+            if isinstance(ctx.get("dialogue_pragmatics"), dict)
+            else {}
+        )
         explicit_answer_need = bool(
             dialogue_policy_payload.get("explicit_answer_need", False)
         ) or detect_explicit_answer_need(user_message)
@@ -775,6 +862,18 @@ class WriterAgent:
             dialogue_policy_payload.get("practice_overview_requested", False)
             or planner_next_move == "answer_practice_overview"
             or planner_answer_shape == "practice_catalog_explanation"
+        )
+        pragmatics_contextual_followup = bool(
+            dialogue_pragmatics_payload.get("is_contextual_followup", False)
+        )
+        pragmatics_offer_type = str(
+            dialogue_pragmatics_payload.get("previous_assistant_offer_type", "unknown") or "unknown"
+        )
+        pragmatics_should_not_reconfirm = bool(
+            dialogue_pragmatics_payload.get("should_not_ask_confirmation_again", False)
+        )
+        pragmatics_repair_dissatisfaction = bool(
+            dialogue_pragmatics_payload.get("repair_user_dissatisfaction", False)
         )
         lowered_text = text.lower()
         self.last_debug["compliance_planner_next_move"] = planner_next_move
@@ -858,6 +957,10 @@ class WriterAgent:
                 summary_request=summary_request,
                 sarcasm_or_negative_feedback=sarcasm_or_negative_feedback,
                 application_request=application_request,
+                pragmatics_contextual_followup=pragmatics_contextual_followup,
+                pragmatics_offer_type=pragmatics_offer_type,
+                pragmatics_should_not_reconfirm=pragmatics_should_not_reconfirm,
+                pragmatics_repair_dissatisfaction=pragmatics_repair_dissatisfaction,
             )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
@@ -1112,7 +1215,35 @@ class WriterAgent:
         summary_request: bool,
         sarcasm_or_negative_feedback: bool,
         application_request: bool,
+        pragmatics_contextual_followup: bool,
+        pragmatics_offer_type: str,
+        pragmatics_should_not_reconfirm: bool,
+        pragmatics_repair_dissatisfaction: bool,
     ) -> str:
+        if pragmatics_repair_dissatisfaction:
+            self._set_final_answer_shape_debug("repair_plus_direct_answer")
+            return (
+                "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\n"
+                "Фраза может быть такой: **«Сейчас во мне включилась реакция: тело напряглось, мысль появилась, "
+                "импульс пошёл. Я это вижу — и беру паузу перед действием».**"
+            )
+
+        if pragmatics_contextual_followup and pragmatics_should_not_reconfirm:
+            if "хочешь" in lowered_text and "?" in text:
+                text = re.sub(r"\s*\?+\s*", ". ", text).strip()
+                lowered_text = text.lower()
+            if "сфокусируюсь на разборе" in lowered_text or "без практик по умолчанию" in lowered_text:
+                self._set_final_answer_shape_debug("contextual_followup_direct_fulfillment")
+                if pragmatics_offer_type in {"short_phrase", "one_step", "practice_observation"}:
+                    return (
+                        "Да. Фраза может быть такой: **«Тело напряглось — я это замечаю — беру паузу и выбираю ответ, "
+                        "а не автопилот».**"
+                    )
+                return (
+                    "Да, продолжаю по твоему запросу прямо. "
+                    "Ключевой механизм здесь в том, что реакция включается автоматически, и пауза возвращает выбор."
+                )
+
         if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
             if has_question or len(text) > 380:
                 self._set_final_answer_shape_debug("safety_grounding")

@@ -110,6 +110,16 @@ RESPONSE PLANNER:
 - Если planner.practice_policy=forbidden, не давай шаги/упражнения/таймеры.
 - Если planner.answer_shape=one_step, дай ровно один шаг, не список.
 
+DIALOGUE PRAGMATICS:
+- Если пользователь уже подтвердил прошлое предложение бота, не переспрашивай подтверждение.
+- Если есть сигнал repair_user_dissatisfaction=true, кратко признай промах и сразу дай прямой ответ.
+- Короткая реплика пользователя может быть осмысленным follow-up, а не пустым запросом.
+
+RAG USAGE:
+- Используй блок знаний только если он реально помогает текущему ответу.
+- Если retrieval_action=recent_context_only/none, не заполняй ответ пересказом базы знаний.
+- Если writer_can_ignore_rag=true и знания не по теме текущего хода, опирайся на диалоговый контекст.
+
 ЖЕСТКИЕ ПРАВИЛА:
 - Отвечай на языке пользователя.
 - Не включай темы из must_avoid.
@@ -253,6 +263,30 @@ dialogue_profile={dialogue_profile}
 expansion_requested={dialogue_expansion_requested}
 repair_and_expand_requested={dialogue_repair_and_expand_requested}
 active_concept={dialogue_active_concept}
+
+DIALOGUE PRAGMATICS:
+version={dialogue_pragmatics_version}
+is_short_utterance={dialogue_pragmatics_short_utterance}
+short_utterance_type={dialogue_pragmatics_short_type}
+is_contextual_followup={dialogue_pragmatics_is_contextual_followup}
+previous_assistant_offer_type={dialogue_pragmatics_offer_type}
+inherited_user_intent={dialogue_pragmatics_inherited_intent}
+should_answer_directly={dialogue_pragmatics_should_answer_directly}
+should_not_ask_confirmation_again={dialogue_pragmatics_should_not_ask_confirmation_again}
+repair_user_dissatisfaction={dialogue_pragmatics_repair_user_dissatisfaction}
+reason={dialogue_pragmatics_reason}
+
+CONTEXTUAL RETRIEVAL DECISION:
+version={retrieval_decision_version}
+retrieval_action={retrieval_action}
+rag_candidates_count={retrieval_rag_candidates_count}
+rag_included_count={retrieval_rag_included_count}
+rag_included_reason={retrieval_rag_included_reason}
+rag_suppressed_reason={retrieval_rag_suppressed_reason}
+writer_can_ignore_rag={retrieval_writer_can_ignore_rag}
+rag_relevance_to_current_turn={retrieval_rag_relevance}
+inherited_topic={retrieval_inherited_topic}
+inherited_offer_type={retrieval_inherited_offer_type}
 
 HUMAN-LIKE ANSWER POLICY:
 human_like_enabled={human_like_enabled}

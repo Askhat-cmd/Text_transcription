@@ -1,0 +1,11 @@
+﻿{
+  "no_new_llm_agent": true,
+  "no_new_runtime_path": true,
+  "no_blocking_answer_rewrite": true,
+  "no_safety_guard_strengthening": true,
+  "no_kb_governance_mutation": true,
+  "no_chroma_reindex": true,
+  "no_broad_rollout": true,
+  "no_normal_user_activation": true,
+  "no_production_ready_declaration": true
+}

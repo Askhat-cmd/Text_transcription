@@ -71,3 +71,36 @@ def test_explicit_one_step_keeps_short_depth() -> None:
     )
     assert payload["explicit_one_step_requested"] is True
     assert payload["answer_depth"] == "short"
+
+
+def test_human_like_policy_and_constraint_resolution_present_for_mvp() -> None:
+    payload = build_effective_dialogue_policy(
+        profile="mvp_free_dialogue",
+        user_message="тебя что, заглючило? ответь мне на вопрос по сути и по пунктам",
+        state_snapshot=_state(),
+        thread_state=_thread(),
+        knowledge_answer_guard={},
+    )
+    policy = payload["human_like_answer_policy"]
+    assert policy["enabled"] is True
+    assert policy["question_is_optional"] is True
+    assert payload["explicit_answer_need"] is True
+    assert payload["sarcasm_or_negative_feedback"] is True
+
+    constraint = payload["constraint_resolution"]
+    assert constraint["planner_authority"] == "advisory"
+    assert isinstance(constraint["overruled_constraints"], list)
+    assert "max_sentences=5" in constraint["overruled_constraints"]
+    assert constraint["overrule_reason"] == "explicit_user_request_or_human_like_policy"
+
+
+def test_safe_guided_keeps_human_like_disabled() -> None:
+    payload = build_effective_dialogue_policy(
+        profile="safe_guided",
+        user_message="обобщи весь разговор и приведи примеры",
+        state_snapshot=_state(),
+        thread_state=_thread(),
+        knowledge_answer_guard={},
+    )
+    assert payload["human_like_answer_policy"]["enabled"] is False
+    assert payload["constraint_resolution"]["overruled_constraints"] == []

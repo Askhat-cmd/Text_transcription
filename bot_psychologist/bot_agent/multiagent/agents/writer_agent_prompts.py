@@ -128,6 +128,7 @@ WRITER_SYSTEM_MVP_FREE_DIALOGUE = """
 ПРИОРИТЕТ:
 - Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.
 - Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.
+- Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.
 - Planner — компас, не клетка: соблюдай safety и must_avoid, но не искусственно укорачивай ответ.
 
 ФОРМА ОТВЕТА:
@@ -135,6 +136,7 @@ WRITER_SYSTEM_MVP_FREE_DIALOGUE = """
 - Сохраняй один главный фокус, но раскрывай его полно.
 - Не экономь токены искусственно, если нужен глубокий ответ.
 - Для known concept давай определение, объяснение человеческим языком, пример и применение.
+- Если пользователь просит обобщение, дай структурный summary по сути разговора, а не новый микро-шаг.
 
 БАЗОВЫЕ ОГРАНИЧЕНИЯ:
 - Отвечай на языке пользователя.
@@ -251,6 +253,25 @@ dialogue_profile={dialogue_profile}
 expansion_requested={dialogue_expansion_requested}
 repair_and_expand_requested={dialogue_repair_and_expand_requested}
 active_concept={dialogue_active_concept}
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled={human_like_enabled}
+answer_style={human_like_answer_style}
+default_depth={human_like_default_depth}
+question_is_optional={human_like_question_is_optional}
+do_not_force_question_at_end={human_like_do_not_force_question}
+do_not_force_practice_frame={human_like_do_not_force_practice}
+do_not_force_max_sentences={human_like_do_not_force_max_sentences}
+respect_user_requested_format={human_like_respect_user_requested_format}
+repair_user_dissatisfaction={human_like_repair_user_dissatisfaction}
+direct_answer_repair_when_user_complains={human_like_direct_answer_repair}
+
+CONSTRAINT RESOLUTION:
+constraint_profile={constraint_resolution_profile}
+constraint_planner_authority={constraint_resolution_planner_authority}
+overruled_constraints={constraint_resolution_overruled}
+overrule_reason={constraint_resolution_reason}
+
 mvp_free_dialogue_overrides:
 {mvp_free_dialogue_overrides}
 

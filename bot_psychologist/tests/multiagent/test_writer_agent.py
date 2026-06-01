@@ -108,6 +108,25 @@ def _contract(
     )
 
 
+def _mvp_contract(*, message: str, dialogue_policy: dict | None = None, response_planner: dict | None = None) -> WriterContract:
+    contract = _contract(message=message)
+    contract.dialogue_policy = {
+        "profile": "mvp_free_dialogue",
+        **(dialogue_policy or {}),
+    }
+    contract.response_planner = {
+        "enabled": True,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "expanded_explanation",
+        "response_depth": "long",
+        "question_policy": "optional_none",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        **(response_planner or {}),
+    }
+    return contract
+
+
 @pytest.mark.asyncio
 async def test_write_returns_non_empty() -> None:
     agent = WriterAgent(client=_FakeClient("готовый ответ"), model="gpt-5-mini")
@@ -274,3 +293,41 @@ def test_detect_language_ru() -> None:
 
 def test_detect_language_en() -> None:
     assert WriterAgent._detect_language("Hello there, how are you?") == "en"
+
+
+def test_mvp_sarcasm_triggers_repair_answer_shape() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="спасибо что ты не дал мне никаких ответов",
+        dialogue_policy={
+            "sarcasm_or_negative_feedback": True,
+            "explicit_answer_need": True,
+        },
+    )
+    result = agent._enforce_answer_compliance("Спасибо за сообщение, чем еще помочь?", contract)
+    assert "исправляюсь" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "repair_plus_direct_answer"
+
+
+def test_mvp_summary_request_returns_structured_summary() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="обобщи весь разговор",
+        dialogue_policy={"summary_request": True},
+    )
+    result = agent._enforce_answer_compliance("Давай сделаем один шаг прямо сейчас.", contract)
+    assert "итог" in result.lower()
+    assert "1." in result
+    assert agent.last_debug.get("final_answer_shape") == "structured_summary"
+
+
+def test_mvp_direct_concrete_request_returns_variants() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="назови конкретно, какая черта во мне может цепляться",
+        dialogue_policy={"direct_concrete_request": True},
+    )
+    result = agent._enforce_answer_compliance("Давай исследуем это мягко.", contract)
+    assert "гиперконтроль" in result.lower()
+    assert "самообесценивание" in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "direct_answer_with_variants"

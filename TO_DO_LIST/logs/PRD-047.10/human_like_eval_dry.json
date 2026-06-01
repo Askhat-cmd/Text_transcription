@@ -1,0 +1,9 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-06-01T03:54:03.389322+00:00",
+  "dataset_total": 9,
+  "errors": [],
+  "prd": "PRD-047.10",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_human_like_cases.json"
+}

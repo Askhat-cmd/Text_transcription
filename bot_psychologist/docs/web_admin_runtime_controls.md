@@ -100,3 +100,10 @@ No prompt/source editor is added in this PRD.
 - `dialogue_policy.writer_runtime_max_tokens_effective`
 
 Web Admin Runtime tab renders these fields as read-only so profile value and effective behavior stay consistent.
+
+## PRD-047.10 Update (2026-06-01)
+- Runtime effective `dialogue_policy` now includes:
+  - `human_like_answer_policy` (MVP human-like autonomy contract),
+  - `constraint_resolution` (advisory overrule audit metadata).
+- Runtime tab should display these blocks as read-only effective truth.
+- This remains developer-local calibration surface; no production rollout semantics are implied.

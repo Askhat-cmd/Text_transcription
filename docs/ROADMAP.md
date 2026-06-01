@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.10: calibrated human-like writer autonomy in MVP profile (added `human_like_answer_policy` + `constraint_resolution`, Writer repair/summary/direct-answer mappings, admin/runtime/trace visibility extensions, and mandatory dry/direct/live acceptance on fresh backend `:8018`).
 - PRD-047.9: unified adaptive dialogue policy context-unclamp for `mvp_free_dialogue` (recency-preserved writer context budget, authority resolver, practice-overview routing shape, admin effective visibility, and mandatory live acceptance passed on fresh backend `:8016`).
 - PRD-047.7: added guided live testing protocol v1 (18-scenario set, sanitized feedback capture/storage, summary builder, smoke runner, admin/web runtime read-only visibility, and evidence artifacts for human-feedback loop readiness).
 - PRD-047.6: added observe-only `planner_drift_guard_v1` runtime monitor (deterministic planner-vs-answer drift checks, rolling monitor window=100, trace/debug/admin runtime visibility, 32-case dataset + dry/direct/live replay runner, strict live no-fallback acceptance on fresh backend `:8015`).
@@ -30,10 +31,10 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD in progress after PRD-047.9 closure.
+- No active PRD in progress after PRD-047.10 closure.
 
 ## Next
-1. Execute PRD-047.10 tone/depth/human-like quality calibration on top of unified adaptive policy.
+1. Execute PRD-047.11 contextual dialogue pragmatics / repair-and-summary calibration on top of PRD-047.10 baseline.
 2. Run extended guided live sessions and collect additional evidence for retrieval/practice-overview consistency.
 
 ## Later

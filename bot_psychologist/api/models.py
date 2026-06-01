@@ -402,6 +402,15 @@ class WriterLLMTrace(BaseModel):
     api_mode: Optional[str] = None
     error: Optional[str] = None
     fallback_used: Optional[bool] = None
+    human_like_answer_policy_enabled: Optional[bool] = None
+    explicit_answer_need: Optional[bool] = None
+    repair_user_dissatisfaction: Optional[bool] = None
+    sarcasm_or_negative_feedback: Optional[bool] = None
+    overruled_constraints: List[str] = Field(default_factory=list)
+    final_answer_shape: Optional[str] = None
+    question_forced: Optional[bool] = None
+    practice_forced: Optional[bool] = None
+    microstep_forced: Optional[bool] = None
 
 
 class TurnDiffTrace(BaseModel):

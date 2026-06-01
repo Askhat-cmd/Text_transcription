@@ -413,6 +413,13 @@ export const AdminPanel: React.FC = () => {
                         <div>effective.writer_move_authority: {runtimeEffectiveData.dialogue_policy?.writer_move_authority ?? 'n/a'}</div>
                         <div>effective.context_budget_chars: {runtimeEffectiveData.dialogue_policy?.context_budget_chars ?? 'n/a'}</div>
                         <div>effective.allow_practice_catalog: {String(Boolean(runtimeEffectiveData.dialogue_policy?.allow_practice_catalog))}</div>
+                        <div>human_like.enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.enabled))}</div>
+                        <div>human_like.answer_style: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.answer_style ?? 'n/a'}</div>
+                        <div>human_like.default_depth: {runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.default_depth ?? 'n/a'}</div>
+                        <div>human_like.question_is_optional: {String(Boolean(runtimeEffectiveData.dialogue_policy?.human_like_answer_policy?.question_is_optional))}</div>
+                        <div>constraint.planner_authority: {runtimeEffectiveData.dialogue_policy?.constraint_resolution?.planner_authority ?? 'n/a'}</div>
+                        <div>constraint.overruled_constraints: {(runtimeEffectiveData.dialogue_policy?.constraint_resolution?.overruled_constraints ?? []).join(', ') || 'none'}</div>
+                        <div>constraint.overrule_reason: {runtimeEffectiveData.dialogue_policy?.constraint_resolution?.overrule_reason ?? 'n/a'}</div>
                         {runtimeEffectiveData.dialogue_profile?.warning && (
                           <div className="mt-1 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-800">
                             {runtimeEffectiveData.dialogue_profile.warning}

@@ -1,0 +1,110 @@
+[
+  {
+    "case_id": "anger_truth",
+    "group": "human_like_depth",
+    "user_message": "все верно, а что делать с гневом который внутри кричит и хочет правды?",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "application_request": true},
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium"},
+    "live_expectations": {"min_chars": 220, "contains_any": ["гиперконтроль", "вариант", "гипотез"], "must_not_contain_any": ["сделай один шаг прямо сейчас"]}
+  },
+  {
+    "case_id": "direct_concrete_shadow",
+    "group": "direct_answer",
+    "user_message": "назови конкретно, какая черта во мне может цепляться за эту ситуацию",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "direct_concrete_request": true},
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium"},
+    "live_expectations": {"min_chars": 180, "contains_any": ["гипотез", "черта", "конкрет"], "must_not_contain_any": ["давай исследуем это потом"]}
+  },
+  {
+    "case_id": "sarcastic_dissatisfaction",
+    "group": "repair",
+    "user_message": "спасибо что ты не дал мне никаких ответов",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "correction_of_bot", "continuity_mode": "repair_and_continue_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false, "repair_mode": "acknowledge_and_return_to_mechanism"},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "sarcasm_or_negative_feedback": true, "explicit_answer_need": true},
+    "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_acknowledgement", "response_depth": "short"},
+    "live_expectations": {"min_chars": 110, "contains_any": ["прав", "исправ", "отвеч"], "must_not_contain_any": ["спасибо за отзыв и все"]}
+  },
+  {
+    "case_id": "summarize_full_chat",
+    "group": "summary",
+    "user_message": "обобщи весь разговор и дай главное",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "summary_request": true},
+    "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium"},
+    "live_expectations": {"min_chars": 160, "contains_any": ["итог", "1.", "2."], "must_not_contain_any": ["сделай один шаг прямо сейчас"]}
+  },
+  {
+    "case_id": "explain_neurostalking",
+    "group": "knowledge",
+    "user_message": "объясни как chatgpt: что такое нейросталкинг, подробно и с примером",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "known_concept_question", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "examples_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "concept_explanation_full", "response_depth": "deep"},
+    "live_expectations": {"min_chars": 260, "contains_any": ["нейросталкинг", "пример", "примен"], "must_not_contain_any": ["не могу ответить"]}
+  },
+  {
+    "case_id": "apply_neurostalking",
+    "group": "knowledge_apply",
+    "user_message": "как применять нейросталкинг в жизни, дай варианты и пример",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "known_concept_question", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "expansion_requested": true, "application_request": true, "numbered_list_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "concept_explanation_full", "response_depth": "deep"},
+    "live_expectations": {"min_chars": 240, "contains_any": ["вариант", "пример", "примен"]}
+  },
+  {
+    "case_id": "short_support",
+    "group": "short_mode",
+    "user_message": "коротко поддержи, без анализа",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "hypo"},
+    "thread_state": {"response_mode": "validate", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "short_support", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": false}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue"},
+    "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short"},
+    "live_expectations": {"max_chars": 220, "max_questions": 0, "contains_any": ["рядом", "коротко"]}
+  },
+  {
+    "case_id": "explicit_one_step",
+    "group": "one_step",
+    "user_message": "дай один конкретный шаг прямо сейчас, без теории",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "practice", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "ask_for_direct_step", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": true, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": false, "concept": "", "should_answer_directly": false, "kb_grounding_available": false}, "practice_gate": {"practice_allowed": true}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "explicit_one_step_requested": true},
+    "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short"},
+    "live_expectations": {"max_chars": 260, "max_questions": 0, "must_not_contain_any": ["1.", "2.", "3."]}
+  },
+  {
+    "case_id": "practice_catalog",
+    "group": "practice_catalog",
+    "user_message": "скажи, а в нейросталкинге какие практики предлагаются чтобы это видеть?",
+    "state_snapshot": {"safety_flag": false, "nervous_state": "window"},
+    "thread_state": {"response_mode": "reflect", "safety_active": false, "ok_position": "I+W+"},
+    "active_line": {"user_intent": "understand_mechanism", "continuity_mode": "continue_existing_line", "should_ask_question": false, "should_offer_practice": false, "revoicing_allowed": false},
+    "knowledge_answer_guard": {"knowledge_answer": {"needed": true, "concept": "нейросталкинг", "should_answer_directly": true, "kb_grounding_available": true, "answer_type": "practice_overview"}, "practice_gate": {"practice_allowed": true}},
+    "dialogue_policy": {"profile": "mvp_free_dialogue", "practice_overview_requested": true, "active_concept": "нейросталкинг"},
+    "expected_planner": {"next_move": "answer_practice_overview", "answer_shape": "practice_catalog_explanation", "response_depth": "long"},
+    "live_expectations": {"min_chars": 260, "list_min": 3, "contains_any": ["практик", "направлен", "пример"]}
+  }
+]

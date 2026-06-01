@@ -69,3 +69,6 @@ async def test_writer_uses_mvp_free_system_prompt_and_higher_tokens(monkeypatch)
     user_message = captured["messages"][1]["content"]  # type: ignore[index]
     assert "MVP FREE DIALOGUE OVERRIDES:" in str(user_message)
     assert "context_budget_chars=" in str(user_message)
+    assert "HUMAN-LIKE ANSWER POLICY:" in str(user_message)
+    assert "CONSTRAINT RESOLUTION:" in str(user_message)
+    assert "do_not_force_max_sentences=" in str(user_message)

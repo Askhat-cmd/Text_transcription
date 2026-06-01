@@ -80,3 +80,8 @@ Version:
 - In MVP profile, explicit user request for explanation/overview/examples has higher practical authority than advisory planner/diagnostic constraints, while minimal safety baseline stays mandatory.
 - Writer prompt now receives explicit `MVP FREE DIALOGUE OVERRIDES` block and context diagnostics (`context_budget_chars`, truncation flags, preserved recent turns counters).
 - Context assembly is recency-preserving: latest turns are kept first within profile budget; old-prefix clipping (`[:2000]`) is removed from writer prompt path.
+
+## PRD-047.10 Update (2026-06-01)
+- In `mvp_free_dialogue`, writer freedom is calibrated through unified `dialogue_policy.human_like_answer_policy`.
+- Legacy hard-style constraints are represented in `constraint_resolution.overruled_constraints` as audit metadata when explicit user request or human-like policy requires richer response shape.
+- Minimal safety and hard boundaries remain mandatory.

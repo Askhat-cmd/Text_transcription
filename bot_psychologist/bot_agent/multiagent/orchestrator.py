@@ -697,6 +697,21 @@ class MultiAgentOrchestrator:
                 "writer_api_mode": writer_debug.get("api_mode"),
                 "writer_error": writer_debug.get("error"),
                 "writer_fallback_used": bool(writer_debug.get("fallback_used", False)),
+                "writer_human_like_answer_policy_enabled": writer_debug.get(
+                    "human_like_answer_policy_enabled"
+                ),
+                "writer_explicit_answer_need": writer_debug.get("explicit_answer_need"),
+                "writer_repair_user_dissatisfaction": writer_debug.get(
+                    "repair_user_dissatisfaction"
+                ),
+                "writer_sarcasm_or_negative_feedback": writer_debug.get(
+                    "sarcasm_or_negative_feedback"
+                ),
+                "writer_overruled_constraints": writer_debug.get("overruled_constraints"),
+                "writer_final_answer_shape": writer_debug.get("final_answer_shape"),
+                "writer_question_forced": writer_debug.get("question_forced"),
+                "writer_practice_forced": writer_debug.get("practice_forced"),
+                "writer_microstep_forced": writer_debug.get("microstep_forced"),
                 "tokens_prompt": writer_debug.get("tokens_prompt"),
                 "tokens_completion": writer_debug.get("tokens_completion"),
                 "tokens_total": writer_debug.get("tokens_total"),

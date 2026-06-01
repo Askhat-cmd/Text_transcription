@@ -1,0 +1,26 @@
+﻿PRD-047.10 command log (UTC)
+
+1) Targeted backend/tests
+- .\\.venv\\Scripts\\python -m pytest -q tests/test_dialogue_policy_effective_profile.py tests/test_writer_prompt_mvp_free_dialogue.py tests/test_admin_runtime_contract.py tests/contract/test_admin_runtime_effective_payload_schema_v1041.py tests/multiagent/test_writer_agent.py tests/test_prd_047_10_human_like_runner.py
+  result: 31 passed, 52 warnings
+
+2) Frontend build
+- npm run build (bot_psychologist/web_ui)
+  result: success (vite build complete)
+
+3) PRD-047.10 eval runner
+- .\\.venv\\Scripts\\python scripts/run_prd_047_10_human_like_eval.py --mode dry
+  result: passed -> TO_DO_LIST/logs/PRD-047.10/human_like_eval_dry.json
+
+- .\\.venv\\Scripts\\python scripts/run_prd_047_10_human_like_eval.py --mode direct
+  result: passed -> TO_DO_LIST/logs/PRD-047.10/human_like_eval_direct.json
+
+4) Fresh backend for mandatory live
+- Start-Process powershell ... python -m uvicorn api.main:app --host 127.0.0.1 --port 8018
+- Probe: GET http://127.0.0.1:8018/api/admin/runtime/effective
+  result: dialogue_profile.value = mvp_free_dialogue
+
+5) Live eval (mandatory)
+- .\\.venv\\Scripts\\python scripts/run_prd_047_10_human_like_eval.py --mode live --base-url http://127.0.0.1:8018/api/v1 --admin-runtime-url http://127.0.0.1:8018/api/admin/runtime/effective --api-key dev-key-001
+  result: passed -> TO_DO_LIST/logs/PRD-047.10/human_like_eval_live.json
+  md: TO_DO_LIST/logs/PRD-047.10/human_like_eval_live.md

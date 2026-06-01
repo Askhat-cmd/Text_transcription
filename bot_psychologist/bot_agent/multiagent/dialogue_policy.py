@@ -68,6 +68,40 @@ _EXPLICIT_ONE_STEP_MARKERS = (
 
 _EXAMPLES_MARKERS = ("пример", "примеры", "на примере")
 _NUMBERED_LIST_MARKERS = ("по пунктам", "списком", "по шагам")
+_EXPLICIT_ANSWER_NEED_MARKERS = (
+    "прямо ответь",
+    "ответь на вопрос",
+    "не уходи от вопроса",
+    "скажи конкретно",
+    "ответь мне на вопрос",
+    "это не ответ",
+)
+_DIRECT_CONCRETE_MARKERS = (
+    "назови конкретно",
+    "какая конкретно",
+    "что мне делать с",
+    "что делать с",
+    "конкретный ответ",
+)
+_SUMMARY_REQUEST_MARKERS = (
+    "обобщи весь разговор",
+    "суммируй весь разговор",
+    "подведи итог",
+    "сделай summary",
+)
+_SARCASM_OR_NEGATIVE_FEEDBACK_MARKERS = (
+    "спасибо что ты не дал мне никаких ответов",
+    "тебя что, заглючило",
+    "ты не дал мне ответ",
+    "это не ответ",
+    "ты ушел от вопроса",
+)
+_APPLICATION_REQUEST_MARKERS = (
+    "как применять",
+    "как применить",
+    "в жизни",
+    "как это использовать",
+)
 
 
 def normalize_dialogue_profile(value: Any) -> str:
@@ -112,6 +146,31 @@ def detect_numbered_list_request(user_message: str) -> bool:
     return any(marker in lowered for marker in _NUMBERED_LIST_MARKERS)
 
 
+def detect_explicit_answer_need(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _EXPLICIT_ANSWER_NEED_MARKERS)
+
+
+def detect_direct_concrete_request(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _DIRECT_CONCRETE_MARKERS)
+
+
+def detect_summary_request(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _SUMMARY_REQUEST_MARKERS)
+
+
+def detect_sarcasm_or_negative_feedback(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _SARCASM_OR_NEGATIVE_FEEDBACK_MARKERS)
+
+
+def detect_application_request(user_message: str) -> bool:
+    lowered = _normalize(user_message)
+    return any(marker in lowered for marker in _APPLICATION_REQUEST_MARKERS)
+
+
 def context_budget_for_profile(profile: str) -> int:
     normalized = normalize_dialogue_profile(profile)
     if normalized == DIALOGUE_PROFILE_MVP_FREE:
@@ -147,6 +206,11 @@ def build_effective_dialogue_policy(
     explicit_one_step_requested = detect_explicit_one_step_request(message)
     examples_requested = detect_examples_request(message)
     numbered_list_requested = detect_numbered_list_request(message)
+    explicit_answer_need = detect_explicit_answer_need(message)
+    direct_concrete_request = detect_direct_concrete_request(message)
+    summary_request = detect_summary_request(message)
+    sarcasm_or_negative_feedback = detect_sarcasm_or_negative_feedback(message)
+    application_request = detect_application_request(message)
 
     knowledge_needed = bool(knowledge_answer.get("needed", False))
     active_concept = str(knowledge_answer.get("concept", "") or "").strip().lower()
@@ -160,6 +224,11 @@ def build_effective_dialogue_policy(
         or practice_overview_requested
         or examples_requested
         or numbered_list_requested
+        or summary_request
+        or direct_concrete_request
+        or application_request
+        or explicit_answer_need
+        or sarcasm_or_negative_feedback
     )
 
     if safety_priority:
@@ -167,7 +236,7 @@ def build_effective_dialogue_policy(
     elif explicit_short_support_requested and not rich_answer_requested:
         answer_depth = "short"
     elif normalized_profile == DIALOGUE_PROFILE_MVP_FREE and (
-        rich_answer_requested or concept_or_practice_need
+        rich_answer_requested or concept_or_practice_need or explicit_answer_need
     ):
         answer_depth = "long"
     elif explicit_one_step_requested:
@@ -189,11 +258,34 @@ def build_effective_dialogue_policy(
         and (rich_answer_requested or concept_or_practice_need)
     )
 
+    human_like_enabled = normalized_profile == DIALOGUE_PROFILE_MVP_FREE and not safety_priority
+    base_constraints = [
+        "max_sentences=5",
+        "do_not_over_explain",
+        "do_not_offer_list",
+        "do_not_expand_theory",
+        "offer_only_one_next_step",
+        "ask_at_most_one_question",
+    ]
+    allow_constraint_overrule = bool(
+        human_like_enabled
+        and (
+            explicit_answer_need
+            or rich_answer_requested
+            or concept_or_practice_need
+            or sarcasm_or_negative_feedback
+            or summary_request
+            or direct_concrete_request
+            or application_request
+        )
+    )
+
     return {
         "profile": normalized_profile,
         "authority_order": [
             "minimal_safety_baseline",
             "explicit_user_request",
+            "live_dialogue_pragmatics",
             "knowledge_or_concept_need",
             "writer_freedom",
             "planner_and_diagnostic_advisory",
@@ -223,6 +315,35 @@ def build_effective_dialogue_policy(
         "allow_multi_step_overview": bool(
             normalized_profile == DIALOGUE_PROFILE_MVP_FREE and practice_overview_requested
         ),
+        "human_like_answer_policy": {
+            "enabled": human_like_enabled,
+            "answer_style": "human_chatgpt_like" if human_like_enabled else "guided_compact",
+            "default_depth": "medium_to_long" if human_like_enabled else "short_to_medium",
+            "allow_long_answers": human_like_enabled,
+            "allow_lists": bool(human_like_enabled and (numbered_list_requested or rich_answer_requested)),
+            "allow_examples": bool(human_like_enabled and (examples_requested or rich_answer_requested)),
+            "allow_direct_answer": True,
+            "allow_reflection_plus_explanation_plus_step": human_like_enabled,
+            "allow_multiple_options": human_like_enabled,
+            "question_is_optional": human_like_enabled,
+            "micro_step_only_when_user_explicitly_requests_one_step": True,
+            "do_not_force_question_at_end": human_like_enabled,
+            "do_not_force_practice_frame": human_like_enabled,
+            "do_not_force_max_sentences": human_like_enabled,
+            "respect_user_requested_format": human_like_enabled,
+            "sarcasm_and_dissatisfaction_repair": human_like_enabled,
+            "direct_answer_repair_when_user_complains": human_like_enabled,
+        },
+        "constraint_resolution": {
+            "profile": normalized_profile,
+            "planner_authority": "advisory" if planner_advisory else "guided",
+            "overruled_constraints": base_constraints if allow_constraint_overrule else [],
+            "overrule_reason": (
+                "explicit_user_request_or_human_like_policy"
+                if allow_constraint_overrule
+                else "none"
+            ),
+        },
         "must_not_force_one_step": must_not_force_one_step,
         "context_budget_chars": context_budget_for_profile(normalized_profile),
         "semantic_hits_budget": {
@@ -236,6 +357,11 @@ def build_effective_dialogue_policy(
         "practice_overview_requested": practice_overview_requested,
         "examples_requested": examples_requested,
         "numbered_list_requested": numbered_list_requested,
+        "explicit_answer_need": explicit_answer_need,
+        "direct_concrete_request": direct_concrete_request,
+        "summary_request": summary_request,
+        "sarcasm_or_negative_feedback": sarcasm_or_negative_feedback,
+        "application_request": application_request,
         "active_concept": active_concept,
         "knowledge_answer_type": knowledge_answer_type,
         "planner_is_advisory": planner_advisory,
@@ -246,6 +372,8 @@ def build_effective_dialogue_policy(
             "overview_questions_allow_lists": bool(
                 normalized_profile == DIALOGUE_PROFILE_MVP_FREE and practice_overview_requested
             ),
+            "question_is_optional": human_like_enabled,
+            "repair_user_dissatisfaction": bool(human_like_enabled and sarcasm_or_negative_feedback),
             "target_answer_depth": answer_depth,
         },
     }
@@ -398,9 +526,14 @@ __all__ = [
     "build_effective_dialogue_policy",
     "context_budget_for_profile",
     "detect_examples_request",
+    "detect_explicit_answer_need",
     "detect_expansion_request",
     "detect_explicit_one_step_request",
+    "detect_direct_concrete_request",
     "detect_numbered_list_request",
+    "detect_summary_request",
+    "detect_sarcasm_or_negative_feedback",
+    "detect_application_request",
     "detect_practice_overview_request",
     "detect_repair_and_expand_request",
     "detect_short_support_request",

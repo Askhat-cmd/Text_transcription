@@ -1,0 +1,444 @@
+{
+  "mode": "direct",
+  "status": "passed",
+  "timestamp": "2026-06-01T03:54:53.920251+00:00",
+  "summary": {
+    "cases_total": 9,
+    "cases_passed": 9,
+    "cases_failed": 0
+  },
+  "checks": {
+    "cases_passed": true,
+    "required_cases_present": true
+  },
+  "case_results": [
+    {
+      "case_id": "anger_truth",
+      "group": "human_like_depth",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "compliance_answer_preview": "Если отвечать прямо, чаще всего цепляет не одна «черта», а связка из нескольких паттернов.\n\n1. Гиперконтроль: попытка заранее исключить риск, из-за чего шаг откладывается.\n2. Самообесценивание: внутренний фильтр «мой ответ недостаточно хороший».\n3. Избегание конфликта: импульс не проявляться, чтобы не встретиться с напряжением.\n\nЭто не диагноз, а рабочие гипотезы. Можно проверить, какая из них сильнее включается в твоей конкретной ситуации.",
+      "writer_debug": {
+        "final_answer_shape": "direct_answer_with_variants",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "apply_neurostalking",
+      "group": "knowledge_apply",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "answer_known_concept",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "deep",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "compliance_answer_preview": "Давай развернуто. Нейросталкинг - это наблюдение за внутренними паттернами: что запускает реакцию, как она раскручивается и где ты теряешь выбор. Смысл не в том, чтобы подавить эмоции, а в том, чтобы увидеть механизм до автоматического действия.\n\nЭто не теория ради теории. В жизни он помогает в переговорах, конфликтах и откладывании: ты замечаешь триггер, отделяешь факт от внутреннего прогноза и выбираешь более точный ответ по ситуации.\n\nПример: в разговоре с начальником появляется мысль \"если возражу, буду невежливым\". Нейросталкинг позволяет увидеть этот автопилот и перейти к спокойной фактической формулировке вместо молчаливого согласия.",
+      "writer_debug": {
+        "final_answer_shape": "concept_explanation_full",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "direct_concrete_shadow",
+      "group": "direct_answer",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "compliance_answer_preview": "Если отвечать прямо, чаще всего цепляет не одна «черта», а связка из нескольких паттернов.\n\n1. Гиперконтроль: попытка заранее исключить риск, из-за чего шаг откладывается.\n2. Самообесценивание: внутренний фильтр «мой ответ недостаточно хороший».\n3. Избегание конфликта: импульс не проявляться, чтобы не встретиться с напряжением.\n\nЭто не диагноз, а рабочие гипотезы. Можно проверить, какая из них сильнее включается в твоей конкретной ситуации.",
+      "writer_debug": {
+        "final_answer_shape": "direct_answer_with_variants",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "explain_neurostalking",
+      "group": "knowledge",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "answer_known_concept",
+        "answer_shape": "concept_explanation_full",
+        "response_depth": "deep",
+        "question_policy": "none",
+        "practice_policy": "allowed_if_explicit"
+      },
+      "compliance_answer_preview": "Давай развернуто. Нейросталкинг - это наблюдение за внутренними паттернами: что запускает реакцию, как она раскручивается и где ты теряешь выбор. Смысл не в том, чтобы подавить эмоции, а в том, чтобы увидеть механизм до автоматического действия.\n\nЭто не теория ради теории. В жизни он помогает в переговорах, конфликтах и откладывании: ты замечаешь триггер, отделяешь факт от внутреннего прогноза и выбираешь более точный ответ по ситуации.\n\nПример: в разговоре с начальником появляется мысль \"если возражу, буду невежливым\". Нейросталкинг позволяет увидеть этот автопилот и перейти к спокойной фактической формулировке вместо молчаливого согласия.",
+      "writer_debug": {
+        "final_answer_shape": "concept_explanation_full",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "explicit_one_step",
+      "group": "one_step",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "max_chars": true,
+          "max_questions": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "give_direct_step",
+        "answer_shape": "one_step",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "one_micro_step_allowed"
+      },
+      "compliance_answer_preview": "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут.",
+      "writer_debug": {
+        "final_answer_shape": "one_step",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": true
+      }
+    },
+    {
+      "case_id": "practice_catalog",
+      "group": "practice_catalog",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "list_min": true,
+          "contains_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "answer_practice_overview",
+        "answer_shape": "practice_catalog_explanation",
+        "response_depth": "long",
+        "question_policy": "optional_none",
+        "practice_policy": "overview_allowed"
+      },
+      "compliance_answer_preview": "В нашей рамке нейросталкинга это лучше смотреть не как один шаг, а как несколько практических направлений.\n\n1. Практика наблюдения триггера. Смысл: вовремя заметить момент, где включается автопилот. Пример: в разговоре с начальником отследить первую мысль «сейчас лучше промолчать», чтобы не провалиться в автоматическое согласие.\n2. Практика распознавания паттерна реакции. Смысл: увидеть повторяющийся сценарий (контроль, самообесценивание, избегание) и назвать его простыми словами. Пример: заметить, что перед важной задачей включается цикл «перепроверяю и откладываю старт».\n3. Практика микро-сдвига поведения. Смысл: вернуть себе выбор через небольшой осознанный ход. Пример: вместо внутреннего спора сформулировать одну короткую фактическую реплику или начать первый фрагмент задачи на фиксиро",
+      "writer_debug": {
+        "final_answer_shape": "practice_catalog_explanation",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "sarcastic_dissatisfaction",
+      "group": "repair",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "repair_misalignment",
+        "answer_shape": "repair_acknowledgement",
+        "response_depth": "short",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "compliance_answer_preview": "Ты прав, прошлый ответ был мимо сути. Исправляюсь и отвечаю прямо.\n\nЕсли тебе нужен рабочий ориентир, смотри на три узла: где запускается триггер, какой автопаттерн перехватывает реакцию, и какой конкретный ответ возвращает тебе выбор в этой ситуации.\n\nЕсли хочешь, могу сразу разобрать это на твоем примере в формате: механизм -> варианты -> фраза/действие.",
+      "writer_debug": {
+        "final_answer_shape": "repair_plus_direct_answer",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": true,
+        "sarcasm_or_negative_feedback": true,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "short_support",
+      "group": "short_mode",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "max_chars": true,
+          "max_questions": true,
+          "contains_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "give_short_support",
+        "answer_shape": "short_support",
+        "response_depth": "very_short",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "compliance_answer_preview": "Я рядом. Просто береги себя.",
+      "writer_debug": {
+        "final_answer_shape": "short_support",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    },
+    {
+      "case_id": "summarize_full_chat",
+      "group": "summary",
+      "evaluation": {
+        "passed": true,
+        "planner_checks": {
+          "next_move": true,
+          "answer_shape": true,
+          "response_depth": true
+        },
+        "expectation_checks": {
+          "min_chars": true,
+          "contains_any": true,
+          "must_not_contain_any": true
+        },
+        "metadata_checks": {
+          "human_like_policy_present": true,
+          "constraint_resolution_present": true,
+          "trace_final_answer_shape_present": true
+        },
+        "failure_reasons": []
+      },
+      "planner": {
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "question_policy": "none",
+        "practice_policy": "forbidden"
+      },
+      "compliance_answer_preview": "Соберу итог по разговору коротко и по сути.\n\n1. Что с тобой происходит сейчас. Есть внутренний конфликт между желанием действовать и автоматической защитой через контроль.\n2. Где застревание. До действия включается прогноз риска, и ресурс уходит в внутренний спор вместо шага.\n3. Ключевой сдвиг. Отделять факт ситуации от автоматической реакции и возвращать себе выбор в моменте.\n4. Куда двигаться дальше. Выбрать один повторяющийся триггер и посмотреть, какой ответ по факту поддерживает твою цель.",
+      "writer_debug": {
+        "final_answer_shape": "structured_summary",
+        "human_like_answer_policy_enabled": true,
+        "explicit_answer_need": false,
+        "repair_user_dissatisfaction": false,
+        "sarcasm_or_negative_feedback": false,
+        "overruled_constraints": [
+          "max_sentences=5",
+          "do_not_over_explain",
+          "do_not_offer_list",
+          "do_not_expand_theory",
+          "offer_only_one_next_step",
+          "ask_at_most_one_question"
+        ],
+        "question_forced": false,
+        "practice_forced": false,
+        "microstep_forced": false
+      }
+    }
+  ],
+  "prd": "PRD-047.10",
+  "dataset": "C:\\My_practice\\Text_transcription\\bot_psychologist\\tests\\evaluation\\prd_047_10_human_like_cases.json"
+}

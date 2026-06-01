@@ -1,0 +1,36 @@
+﻿{
+    "prd_id":  "PRD-047.10",
+    "status":  "passed",
+    "checks":  [
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/source_gates.json",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   },
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/human_like_eval_dry.json",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   },
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/human_like_eval_direct.json",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   },
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/human_like_eval_live.json",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   },
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/human_like_eval_live.md",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   },
+                   {
+                       "path":  "TO_DO_LIST/logs/PRD-047.10/no_mutation_proof.json",
+                       "utf8_readable":  true,
+                       "contains_nul":  false
+                   }
+               ]
+}

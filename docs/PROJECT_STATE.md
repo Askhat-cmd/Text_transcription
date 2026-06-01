@@ -1,6 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.10 completed human-like writer autonomy calibration in `mvp_free_dialogue`: `human_like_answer_policy` + `constraint_resolution` are now part of unified effective dialogue policy, Writer MVP compliance now handles sarcasm/dissatisfaction repair, structured summary requests, direct concrete answers, and explicit one-step preservation with trace/admin visibility; acceptance runner passed (`dry=passed`, `direct=passed`, `live=passed` on fresh backend `:8018`).
 PRD-047.9 completed Unified Adaptive Dialogue Policy context-unclamp for `mvp_free_dialogue`: effective authority resolver (`minimal safety > explicit user request > knowledge/concept need > writer freedom > planner/diagnostic advisory`), recency-preserved writer context budget, practice-overview routing/planner shape, admin effective visibility, and live acceptance passed on fresh backend (`dry=passed`, `direct=passed`, `live=passed` on `:8016`).
 PRD-047.7 added Guided Live User Testing Protocol v1: structured scenario set (18), sanitized feedback capture/storage, summary builder, smoke runner, and admin/web runtime visibility for feedback loop readiness (`dry smoke passed`, optional live smoke blocked on unavailable backend and recorded as such).
 PRD-047.6 added `planner_drift_guard_v1` as observe-only runtime stability envelope: deterministic planner-vs-answer drift checks, rolling in-memory counters, trace/debug/admin visibility, and dry/direct/live replay artifacts (`dry=32/32`, `direct=32/32`, `live=12/12`, `repeat=3`, `warnings=0`, `criticals=0`, `missing_payload=0`, no runner fallback on fresh backend `:8015`).
@@ -44,7 +45,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`No-op implementation PRD for immediate real guided sessions (recommended)`
+`PRD-047.11 — Contextual Dialogue Pragmatics / Repair & Summary Calibration v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -59,8 +60,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-05-29
-- Source cycle: PRD-047.9
+- Date: 2026-06-01
+- Source cycle: PRD-047.10
 
 ## PRD-046.1.35-HF4
 Current Stage:

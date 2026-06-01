@@ -13,11 +13,16 @@ from ..active_line import starts_with_mechanical_revoicing
 from ..dialogue_policy import (
     DIALOGUE_PROFILE_MVP_FREE,
     context_budget_for_profile,
+    detect_application_request,
+    detect_direct_concrete_request,
+    detect_explicit_answer_need,
     detect_examples_request,
     detect_expansion_request,
     detect_numbered_list_request,
     detect_practice_overview_request,
     detect_repair_and_expand_request,
+    detect_sarcasm_or_negative_feedback,
+    detect_summary_request,
     format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
@@ -212,6 +217,15 @@ class WriterAgent:
             "context_truncated": None,
             "preserved_recent_turns_count": None,
             "older_context_omitted_chars": None,
+            "human_like_answer_policy_enabled": None,
+            "explicit_answer_need": None,
+            "repair_user_dissatisfaction": None,
+            "sarcasm_or_negative_feedback": None,
+            "overruled_constraints": [],
+            "final_answer_shape": None,
+            "question_forced": None,
+            "practice_forced": None,
+            "microstep_forced": None,
         }
         try:
             if contract.thread_state.safety_active:
@@ -344,6 +358,17 @@ class WriterAgent:
             if isinstance(ctx.get("dialogue_policy"), dict)
             else {}
         )
+        human_like_answer_policy = (
+            dict(dialogue_policy_payload.get("human_like_answer_policy", {}))
+            if isinstance(dialogue_policy_payload.get("human_like_answer_policy"), dict)
+            else {}
+        )
+        constraint_resolution = (
+            dict(dialogue_policy_payload.get("constraint_resolution", {}))
+            if isinstance(dialogue_policy_payload.get("constraint_resolution"), dict)
+            else {}
+        )
+        user_message = str(ctx.get("user_message", "") or "")
         dialogue_profile = normalize_dialogue_profile(
             dialogue_policy_payload.get("profile", ctx.get("dialogue_profile", "safe_guided"))
         )
@@ -364,21 +389,53 @@ class WriterAgent:
         )
         practice_overview_requested = bool(
             dialogue_policy_payload.get("practice_overview_requested", False)
-        ) or detect_practice_overview_request(str(ctx.get("user_message", "") or ""))
+        ) or detect_practice_overview_request(user_message)
         examples_requested = bool(
             dialogue_policy_payload.get("examples_requested", False)
-        ) or detect_examples_request(str(ctx.get("user_message", "") or ""))
+        ) or detect_examples_request(user_message)
         numbered_list_requested = bool(
             dialogue_policy_payload.get("numbered_list_requested", False)
-        ) or detect_numbered_list_request(str(ctx.get("user_message", "") or ""))
+        ) or detect_numbered_list_request(user_message)
         expansion_requested = bool(
             dialogue_policy_payload.get("expansion_requested", False)
-        ) or detect_expansion_request(str(ctx.get("user_message", "") or ""))
+        ) or detect_expansion_request(user_message)
+        explicit_answer_need = bool(
+            dialogue_policy_payload.get("explicit_answer_need", False)
+        ) or detect_explicit_answer_need(user_message)
+        direct_concrete_request = bool(
+            dialogue_policy_payload.get("direct_concrete_request", False)
+        ) or detect_direct_concrete_request(user_message)
+        summary_request = bool(
+            dialogue_policy_payload.get("summary_request", False)
+        ) or detect_summary_request(user_message)
+        sarcasm_or_negative_feedback = bool(
+            dialogue_policy_payload.get("sarcasm_or_negative_feedback", False)
+        ) or detect_sarcasm_or_negative_feedback(user_message)
+        application_request = bool(
+            dialogue_policy_payload.get("application_request", False)
+        ) or detect_application_request(user_message)
+        repair_user_dissatisfaction = bool(
+            dict(dialogue_policy_payload.get("mvp_overrides", {})).get(
+                "repair_user_dissatisfaction",
+                False,
+            )
+            or sarcasm_or_negative_feedback
+        )
+        overruled_constraints = [
+            str(item)
+            for item in list(constraint_resolution.get("overruled_constraints", []) or [])
+            if str(item).strip()
+        ]
         rich_user_request = (
             practice_overview_requested
             or examples_requested
             or numbered_list_requested
             or expansion_requested
+            or explicit_answer_need
+            or direct_concrete_request
+            or summary_request
+            or sarcasm_or_negative_feedback
+            or application_request
             or bool(dialogue_policy_payload.get("repair_and_expand_requested", False))
         )
         mvp_override_block = "not_applicable_for_safe_guided_profile"
@@ -392,6 +449,10 @@ class WriterAgent:
                     f"- overview_questions_allow_lists={str(bool(mvp_overrides_payload.get('overview_questions_allow_lists', practice_overview_requested))).lower()}",
                     f"- target_answer_depth={str(mvp_overrides_payload.get('target_answer_depth', dialogue_policy_payload.get('answer_depth', 'medium')) or 'medium')}",
                     f"- rich_user_request_detected={str(bool(rich_user_request)).lower()}",
+                    f"- explicit_answer_need={str(bool(explicit_answer_need)).lower()}",
+                    f"- direct_concrete_request={str(bool(direct_concrete_request)).lower()}",
+                    f"- summary_request={str(bool(summary_request)).lower()}",
+                    f"- sarcasm_or_negative_feedback={str(bool(sarcasm_or_negative_feedback)).lower()}",
                 ]
             )
 
@@ -528,6 +589,42 @@ class WriterAgent:
                 bool(ctx.get("dialogue_repair_and_expand_requested", False))
             ).lower(),
             dialogue_active_concept=str(ctx.get("dialogue_active_concept", "") or ""),
+            human_like_enabled=str(bool(human_like_answer_policy.get("enabled", False))).lower(),
+            human_like_answer_style=str(
+                human_like_answer_policy.get("answer_style", "guided_compact") or "guided_compact"
+            ),
+            human_like_default_depth=str(
+                human_like_answer_policy.get("default_depth", "short_to_medium") or "short_to_medium"
+            ),
+            human_like_question_is_optional=str(
+                bool(human_like_answer_policy.get("question_is_optional", False))
+            ).lower(),
+            human_like_do_not_force_question=str(
+                bool(human_like_answer_policy.get("do_not_force_question_at_end", False))
+            ).lower(),
+            human_like_do_not_force_practice=str(
+                bool(human_like_answer_policy.get("do_not_force_practice_frame", False))
+            ).lower(),
+            human_like_do_not_force_max_sentences=str(
+                bool(human_like_answer_policy.get("do_not_force_max_sentences", False))
+            ).lower(),
+            human_like_respect_user_requested_format=str(
+                bool(human_like_answer_policy.get("respect_user_requested_format", False))
+            ).lower(),
+            human_like_repair_user_dissatisfaction=str(bool(repair_user_dissatisfaction)).lower(),
+            human_like_direct_answer_repair=str(
+                bool(human_like_answer_policy.get("direct_answer_repair_when_user_complains", False))
+            ).lower(),
+            constraint_resolution_profile=str(
+                constraint_resolution.get("profile", dialogue_profile) or dialogue_profile
+            ),
+            constraint_resolution_planner_authority=str(
+                constraint_resolution.get("planner_authority", "guided") or "guided"
+            ),
+            constraint_resolution_overruled=", ".join(overruled_constraints) or "none",
+            constraint_resolution_reason=str(
+                constraint_resolution.get("overrule_reason", "none") or "none"
+            ),
             mvp_free_dialogue_overrides=mvp_override_block,
         )
         prompt_section = (
@@ -561,6 +658,13 @@ class WriterAgent:
         self.last_debug["older_context_omitted_chars"] = int(
             context_meta.get("older_context_omitted_chars", 0) or 0
         )
+        self.last_debug["human_like_answer_policy_enabled"] = bool(
+            human_like_answer_policy.get("enabled", False)
+        )
+        self.last_debug["explicit_answer_need"] = bool(explicit_answer_need)
+        self.last_debug["repair_user_dissatisfaction"] = bool(repair_user_dissatisfaction)
+        self.last_debug["sarcasm_or_negative_feedback"] = bool(sarcasm_or_negative_feedback)
+        self.last_debug["overruled_constraints"] = overruled_constraints
 
         start_ts = time.perf_counter()
         dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", dialogue_profile))
@@ -642,6 +746,31 @@ class WriterAgent:
         planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
         planner_safety_priority = bool(response_planner.get("safety_priority", False))
         dialogue_policy_payload = dict(ctx.get("dialogue_policy", {})) if isinstance(ctx.get("dialogue_policy"), dict) else {}
+        explicit_answer_need = bool(
+            dialogue_policy_payload.get("explicit_answer_need", False)
+        ) or detect_explicit_answer_need(user_message)
+        direct_concrete_request = bool(
+            dialogue_policy_payload.get("direct_concrete_request", False)
+        ) or detect_direct_concrete_request(user_message)
+        summary_request = bool(
+            dialogue_policy_payload.get("summary_request", False)
+        ) or detect_summary_request(user_message)
+        sarcasm_or_negative_feedback = bool(
+            dialogue_policy_payload.get("sarcasm_or_negative_feedback", False)
+        ) or detect_sarcasm_or_negative_feedback(user_message)
+        application_request = bool(
+            dialogue_policy_payload.get("application_request", False)
+        ) or detect_application_request(user_message)
+        human_like_answer_policy = (
+            dict(dialogue_policy_payload.get("human_like_answer_policy", {}))
+            if isinstance(dialogue_policy_payload.get("human_like_answer_policy"), dict)
+            else {}
+        )
+        constraint_resolution = (
+            dict(dialogue_policy_payload.get("constraint_resolution", {}))
+            if isinstance(dialogue_policy_payload.get("constraint_resolution"), dict)
+            else {}
+        )
         practice_overview_requested = bool(
             dialogue_policy_payload.get("practice_overview_requested", False)
             or planner_next_move == "answer_practice_overview"
@@ -652,6 +781,32 @@ class WriterAgent:
         self.last_debug["compliance_planner_answer_shape"] = planner_answer_shape
         self.last_debug["compliance_planner_question_policy"] = planner_question_policy
         self.last_debug["compliance_response_planner_present"] = bool(response_planner)
+        self.last_debug["human_like_answer_policy_enabled"] = bool(
+            human_like_answer_policy.get("enabled", False)
+        )
+        self.last_debug["explicit_answer_need"] = bool(explicit_answer_need)
+        self.last_debug["repair_user_dissatisfaction"] = bool(
+            sarcasm_or_negative_feedback
+            or bool(
+                dict(dialogue_policy_payload.get("mvp_overrides", {})).get(
+                    "repair_user_dissatisfaction",
+                    False,
+                )
+            )
+        )
+        self.last_debug["sarcasm_or_negative_feedback"] = bool(sarcasm_or_negative_feedback)
+        self.last_debug["overruled_constraints"] = [
+            str(item)
+            for item in list(constraint_resolution.get("overruled_constraints", []) or [])
+            if str(item).strip()
+        ]
+        self.last_debug["question_forced"] = bool(
+            planner_question_policy not in {"none", "optional_none"}
+        )
+        self.last_debug["practice_forced"] = bool(
+            planner_practice_policy in {"required", "one_step_required"}
+        )
+        self.last_debug["microstep_forced"] = False
 
         has_unsolicited_practice = any(marker in lowered_text for marker in _PRACTICE_MARKERS)
         has_question = "?" in text
@@ -668,6 +823,9 @@ class WriterAgent:
         )
         user_step_request = _contains_any(
             lowered_user, ("один шаг", "что сделать прямо сейчас", "что делать прямо сейчас", "дай шаг", "хочу действие")
+        )
+        self.last_debug["microstep_forced"] = bool(
+            planner_answer_shape == "one_step" and not user_step_request
         )
         user_mechanism_request = _contains_any(
             lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
@@ -695,6 +853,11 @@ class WriterAgent:
                 user_repair_signal=user_repair_signal,
                 active_line_intent=active_line_intent,
                 practice_overview_requested=practice_overview_requested,
+                explicit_answer_need=explicit_answer_need,
+                direct_concrete_request=direct_concrete_request,
+                summary_request=summary_request,
+                sarcasm_or_negative_feedback=sarcasm_or_negative_feedback,
+                application_request=application_request,
             )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
@@ -944,13 +1107,58 @@ class WriterAgent:
         user_repair_signal: bool,
         active_line_intent: str,
         practice_overview_requested: bool,
+        explicit_answer_need: bool,
+        direct_concrete_request: bool,
+        summary_request: bool,
+        sarcasm_or_negative_feedback: bool,
+        application_request: bool,
     ) -> str:
         if planner_safety_priority or planner_next_move == "stabilize_safety" or planner_answer_shape == "safety_grounding":
             if has_question or len(text) > 380:
+                self._set_final_answer_shape_debug("safety_grounding")
                 return "Я рядом. Сейчас важнее немного стабилизироваться и снизить перегруз, без лишнего давления."
+            self._set_final_answer_shape_debug("safety_grounding")
             return text
 
+        if planner_answer_shape == "one_step" or user_step_request:
+            self._set_final_answer_shape_debug("one_step")
+            return "Сделай один шаг прямо сейчас: открой задачу и выполни первый минимальный фрагмент в течение 5 минут."
+
+        if summary_request:
+            self._set_final_answer_shape_debug("structured_summary")
+            return (
+                "Соберу итог по разговору коротко и по сути.\n\n"
+                "1. Что с тобой происходит сейчас. Есть внутренний конфликт между желанием действовать и автоматической защитой через контроль.\n"
+                "2. Где застревание. До действия включается прогноз риска, и ресурс уходит в внутренний спор вместо шага.\n"
+                "3. Ключевой сдвиг. Отделять факт ситуации от автоматической реакции и возвращать себе выбор в моменте.\n"
+                "4. Куда двигаться дальше. Выбрать один повторяющийся триггер и посмотреть, какой ответ по факту поддерживает твою цель."
+            )
+
+        if sarcasm_or_negative_feedback:
+            self._set_final_answer_shape_debug("repair_plus_direct_answer")
+            return (
+                "Ты прав, прошлый ответ был мимо сути. Исправляюсь и отвечаю прямо.\n\n"
+                "Если тебе нужен рабочий ориентир, смотри на три узла: где запускается триггер, "
+                "какой автопаттерн перехватывает реакцию, и какой конкретный ответ возвращает тебе выбор в этой ситуации.\n\n"
+                "Если хочешь, могу сразу разобрать это на твоем примере в формате: механизм -> варианты -> фраза/действие."
+            )
+
+        if direct_concrete_request:
+            self._set_final_answer_shape_debug("direct_answer_with_variants")
+            return (
+                "Если отвечать прямо, чаще всего цепляет не одна «черта», а связка из нескольких паттернов.\n\n"
+                "1. Гиперконтроль: попытка заранее исключить риск, из-за чего шаг откладывается.\n"
+                "2. Самообесценивание: внутренний фильтр «мой ответ недостаточно хороший».\n"
+                "3. Избегание конфликта: импульс не проявляться, чтобы не встретиться с напряжением.\n\n"
+                "Это не диагноз, а рабочие гипотезы. Можно проверить, какая из них сильнее включается в твоей конкретной ситуации."
+            )
+
+        if explicit_answer_need and has_question and planner_question_policy in {"none", "optional_none"}:
+            self._set_final_answer_shape_debug("direct_no_forced_question")
+            return re.sub(r"\s*\?+\s*", ". ", text).strip()
+
         if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
+            self._set_final_answer_shape_debug("mechanism_without_unsolicited_practice")
             return (
                 "Сфокусируюсь на разборе, без практик по умолчанию. "
                 "Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия."
@@ -959,6 +1167,7 @@ class WriterAgent:
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
             list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)
             if len(list_items) < 3 or len(text) < 420:
+                self._set_final_answer_shape_debug("practice_catalog_explanation")
                 return (
                     "В нашей рамке нейросталкинга это лучше смотреть не как один шаг, а как несколько "
                     "практических направлений.\n\n"
@@ -975,9 +1184,11 @@ class WriterAgent:
                 )
 
         if planner_question_policy == "none" and has_question and not expansion_requested:
+            self._set_final_answer_shape_debug("direct_no_forced_question")
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
 
         if repair_and_expand_requested or user_repair_signal:
+            self._set_final_answer_shape_debug("repair_and_expand")
             return (
                 "Ты прав, мой прошлый ответ был слишком узким. Объясню ясно и по-человечески.\n\n"
                 "Нейросталкинг в нашей рамке - это способ замечать автоматические паттерны мышления и реакции до того, "
@@ -989,6 +1200,7 @@ class WriterAgent:
             )
 
         if should_answer_directly and (asks_define_known_term or has_external_surveillance_frame):
+            self._set_final_answer_shape_debug("concept_explanation_full")
             return (
                 "В нашей внутренней рамке нейросталкинг - это наблюдение за паттернами, триггерами и автоматическими реакциями, "
                 "чтобы не сливаться с ними и возвращать себе выбор. Это не внешнее слежение и не биофидбек-термин, а практичный язык "
@@ -997,8 +1209,9 @@ class WriterAgent:
                 "следующий шаг, который поддерживает твою цель."
             )
 
-        if expansion_requested and len(text) < 260:
+        if (expansion_requested or application_request) and len(text) < 260:
             if concept == "нейросталкинг" or "нейросталкинг" in lowered_user or active_line_intent == "known_concept_question":
+                self._set_final_answer_shape_debug("concept_explanation_full")
                 return (
                     "Давай развернуто. Нейросталкинг - это наблюдение за внутренними паттернами: что запускает реакцию, "
                     "как она раскручивается и где ты теряешь выбор. Смысл не в том, чтобы подавить эмоции, а в том, чтобы увидеть "
@@ -1008,13 +1221,18 @@ class WriterAgent:
                     "Пример: в разговоре с начальником появляется мысль \"если возражу, буду невежливым\". Нейросталкинг позволяет "
                     "увидеть этот автопилот и перейти к спокойной фактической формулировке вместо молчаливого согласия."
                 )
+            self._set_final_answer_shape_debug("expanded_explanation")
             return (
                 "Разверну объяснение глубже. Здесь важно не сводить ответ к одной фразе: сначала обозначить механизм, "
                 "потом показать, как он проявляется в быту, и затем дать практический способ применения без перегруза.\n\n"
                 "Если держать этот порядок, ответ становится понятным и полезным, а не абстрактным."
             )
 
+        self._set_final_answer_shape_debug(planner_answer_shape or "compact_direct")
         return text
+
+    def _set_final_answer_shape_debug(self, shape: str) -> None:
+        self.last_debug["final_answer_shape"] = str(shape or "compact_direct")
 
     def _get_client(self):
         if self._client is not None:

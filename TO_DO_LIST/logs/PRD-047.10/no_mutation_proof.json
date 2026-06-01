@@ -1,0 +1,17 @@
+﻿{
+    "prd_id":  "PRD-047.10",
+    "kb_governance_mutated":  false,
+    "chroma_reindex_performed":  false,
+    "new_llm_agent_added":  false,
+    "new_runtime_path_added":  false,
+    "broad_rollout_enabled":  false,
+    "normal_user_activation_enabled":  false,
+    "production_ready_declared":  false,
+    "runtime_answer_blocking_added":  false,
+    "auto_rewrite_final_answer_added":  false,
+    "raw_private_dialogue_committed":  false,
+    "raw_provider_payload_committed":  false,
+    "secrets_committed":  false,
+    "single_runtime_path_retained":  true,
+    "mvp_profile_is_policy_preset_not_branch":  true
+}

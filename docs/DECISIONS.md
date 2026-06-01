@@ -56,6 +56,26 @@ Consequences:
 - explanation/overview/practice requests can expand in MVP profile without removing minimal safety baseline;
 - runtime/admin/trace can expose one coherent effective policy contract.
 
+## ADR-067 - MVP human-like writer autonomy uses policy-level constraint resolution, not new guard/runtime branch
+
+Status: accepted
+
+Date: 2026-06-01
+
+Context: after PRD-047.9 architectural unification, live owner feedback still showed formal/over-constrained answers in `mvp_free_dialogue` for direct concrete requests, dissatisfaction repair, and summary requests.
+
+Decision:
+- add `human_like_answer_policy` and `constraint_resolution` to unified effective `dialogue_policy`;
+- keep authority order within single runtime path (`minimal safety > explicit user request > live dialogue pragmatics > knowledge/concept need > writer autonomy > planner advisory`);
+- treat legacy restrictive constraints as advisory-overridable metadata in MVP profile;
+- expose human-like/constraint-resolution metadata in admin effective and trace payloads.
+
+Consequences:
+- no new LLM agent and no new runtime path were introduced;
+- no blocking evaluator or final-answer auto-rewrite layer was added;
+- writer keeps freedom in MVP while minimal safety baseline remains intact;
+- observability of constraint overrule reasons is explicit and auditable.
+
 ## ADR-001 - Multiagent-only runtime
 
 Status: accepted

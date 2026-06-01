@@ -771,6 +771,16 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "allow_practice_catalog": bool(
                 effective_dialogue_policy.get("allow_practice_catalog", False)
             ),
+            "human_like_answer_policy": (
+                dict(effective_dialogue_policy.get("human_like_answer_policy", {}))
+                if isinstance(effective_dialogue_policy.get("human_like_answer_policy"), dict)
+                else {}
+            ),
+            "constraint_resolution": (
+                dict(effective_dialogue_policy.get("constraint_resolution", {}))
+                if isinstance(effective_dialogue_policy.get("constraint_resolution"), dict)
+                else {}
+            ),
             "writer_runtime_max_tokens_effective": (
                 2500 if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else 600
             ),

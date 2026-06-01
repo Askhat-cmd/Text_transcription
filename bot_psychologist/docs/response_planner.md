@@ -129,3 +129,7 @@ No admin editing surface is added in this PRD.
 - Added explicit one-step override branch:
   - if user explicitly asks for one micro-step, planner still returns `one_step`.
 - Added stale-active-line signal support (`active_line_stale`) so current concept/practice request can override old line pressure in MVP profile.
+
+## PRD-047.10 Update (2026-06-01)
+- `response_planner` remains advisory in MVP profile and does not become a blocking rewriter layer.
+- Human-like behavior upgrades (repair/summary/direct concrete response shapes) are applied in Writer compliance and unified policy, while planner authority stays deterministic advisory.

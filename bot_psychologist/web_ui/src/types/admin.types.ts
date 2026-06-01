@@ -201,6 +201,28 @@ export interface AdminRuntimeEffectiveResponse {
     allow_numbered_lists?: boolean;
     allow_examples?: boolean;
     allow_practice_catalog?: boolean;
+    human_like_answer_policy?: {
+      enabled?: boolean;
+      answer_style?: string;
+      default_depth?: string;
+      allow_long_answers?: boolean;
+      allow_lists?: boolean;
+      allow_examples?: boolean;
+      allow_direct_answer?: boolean;
+      question_is_optional?: boolean;
+      do_not_force_question_at_end?: boolean;
+      do_not_force_practice_frame?: boolean;
+      do_not_force_max_sentences?: boolean;
+      respect_user_requested_format?: boolean;
+      sarcasm_and_dissatisfaction_repair?: boolean;
+      direct_answer_repair_when_user_complains?: boolean;
+    };
+    constraint_resolution?: {
+      profile?: string;
+      planner_authority?: string;
+      overruled_constraints?: string[];
+      overrule_reason?: string;
+    };
     writer_runtime_max_tokens_effective?: number;
   };
   active_line?: {

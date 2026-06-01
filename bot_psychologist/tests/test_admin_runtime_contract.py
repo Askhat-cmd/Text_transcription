@@ -89,6 +89,9 @@ def test_runtime_effective_multiagent_only_contract(admin_client):
     assert payload["dialogue_policy"]["writer_move_authority"] in {"guided", "advisory"}
     assert isinstance(payload["dialogue_policy"]["context_budget_chars"], int)
     assert payload["dialogue_policy"]["writer_runtime_max_tokens_effective"] >= 600
+    assert isinstance(payload["dialogue_policy"]["human_like_answer_policy"], dict)
+    assert isinstance(payload["dialogue_policy"]["constraint_resolution"], dict)
+    assert payload["dialogue_policy"]["constraint_resolution"]["planner_authority"] in {"guided", "advisory"}
 
     assert payload["pipeline_mode"] not in {"legacy_adaptive", "hybrid"}
 

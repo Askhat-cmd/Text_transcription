@@ -428,6 +428,51 @@ async def get_multiagent_trace(
             else None
         ),
         fallback_used=bool(debug.get("writer_fallback_used", False)),
+        human_like_answer_policy_enabled=(
+            bool(debug.get("writer_human_like_answer_policy_enabled"))
+            if debug.get("writer_human_like_answer_policy_enabled") is not None
+            else None
+        ),
+        explicit_answer_need=(
+            bool(debug.get("writer_explicit_answer_need"))
+            if debug.get("writer_explicit_answer_need") is not None
+            else None
+        ),
+        repair_user_dissatisfaction=(
+            bool(debug.get("writer_repair_user_dissatisfaction"))
+            if debug.get("writer_repair_user_dissatisfaction") is not None
+            else None
+        ),
+        sarcasm_or_negative_feedback=(
+            bool(debug.get("writer_sarcasm_or_negative_feedback"))
+            if debug.get("writer_sarcasm_or_negative_feedback") is not None
+            else None
+        ),
+        overruled_constraints=[
+            str(item)
+            for item in list(debug.get("writer_overruled_constraints", []) or [])
+            if str(item).strip()
+        ],
+        final_answer_shape=(
+            str(debug.get("writer_final_answer_shape"))
+            if debug.get("writer_final_answer_shape") is not None
+            else None
+        ),
+        question_forced=(
+            bool(debug.get("writer_question_forced"))
+            if debug.get("writer_question_forced") is not None
+            else None
+        ),
+        practice_forced=(
+            bool(debug.get("writer_practice_forced"))
+            if debug.get("writer_practice_forced") is not None
+            else None
+        ),
+        microstep_forced=(
+            bool(debug.get("writer_microstep_forced"))
+            if debug.get("writer_microstep_forced") is not None
+            else None
+        ),
     )
 
     anomalies = _build_anomalies(debug)

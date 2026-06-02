@@ -163,6 +163,15 @@ def build_live_turn_evidence_v1(
                     contract_context.get("final_answer_diagnostic_card_role", "guided_legacy")
                     or "guided_legacy"
                 ),
+                "legacy_advisory_sanitization": _safe_dict(
+                    contract_context.get("legacy_advisory_sanitization", {})
+                ),
+                "writer_visible_practice_instruction": str(
+                    contract_context.get("writer_visible_practice_instruction", "") or ""
+                ),
+                "practice_rewrite_applied": bool(
+                    contract_context.get("practice_rewrite_applied", False)
+                ),
             },
             "prompt_canvas": {
                 "system_prompt_sha256": _sha256(system_prompt),

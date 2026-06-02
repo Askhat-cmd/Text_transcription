@@ -329,6 +329,7 @@ class WriterAgent:
         ctx.setdefault("retrieval_inherited_offer_type", "unknown")
         ctx.setdefault("final_answer_directive", {})
         ctx.setdefault("final_answer_directive_json", "{}")
+        ctx.setdefault("writer_visible_final_answer_directive_json", "{}")
         ctx.setdefault("final_answer_directive_version", "final_answer_directive_v1")
         ctx.setdefault("final_answer_diagnostic_center_role", "guided_legacy")
         ctx.setdefault("final_answer_planner_role", "guided_legacy")
@@ -339,6 +340,11 @@ class WriterAgent:
         ctx.setdefault("writer_first_prompt_assembly_enabled", False)
         ctx.setdefault("legacy_blocks_visible_to_writer", True)
         ctx.setdefault("legacy_blocks_source_signals_only", False)
+        ctx.setdefault("writer_visible_advisory_summary", "")
+        ctx.setdefault("writer_visible_practice_instruction", "")
+        ctx.setdefault("writer_visible_practice_note", "")
+        ctx.setdefault("practice_rewrite_applied", False)
+        ctx.setdefault("legacy_advisory_sanitization", {})
         knowledge_answer = (
             dict(ctx.get("knowledge_answer", {}))
             if isinstance(ctx.get("knowledge_answer"), dict)
@@ -353,7 +359,7 @@ class WriterAgent:
         do_not_ask_definition = bool(knowledge_answer.get("should_answer_directly", False))
         practice_allowed = bool(practice_gate.get("practice_allowed", True))
         practice_ban_instruction = (
-            "true: no_exercise_no_breathing_no_body_practice_no_microstep_without_explicit_request_or_safety_override"
+            str(ctx.get("writer_visible_practice_instruction", "") or "no_exercise_but_answer_normally")
             if not practice_allowed
             else "false"
         )
@@ -558,6 +564,9 @@ class WriterAgent:
             writer_freedom_hard_boundaries=", ".join(freedom_hard_boundaries)
             or "no_diagnosis,no_unsolicited_practice",
             final_answer_directive_json=str(ctx.get("final_answer_directive_json", "{}") or "{}"),
+            writer_visible_final_answer_directive_json=str(
+                ctx.get("writer_visible_final_answer_directive_json", "{}") or "{}"
+            ),
             final_answer_directive_version=str(
                 ctx.get("final_answer_directive_version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"
@@ -586,6 +595,13 @@ class WriterAgent:
             legacy_constraints_suppressed_csv=str(
                 ctx.get("legacy_constraints_suppressed_csv", "none") or "none"
             ),
+            writer_visible_advisory_summary=str(
+                ctx.get("writer_visible_advisory_summary", "") or "нет"
+            ),
+            writer_visible_practice_note=str(
+                ctx.get("writer_visible_practice_note", "") or "нет"
+            ),
+            practice_rewrite_applied=str(bool(ctx.get("practice_rewrite_applied", False))).lower(),
             active_line_version=str(ctx.get("active_line_version", "active_line_v1")),
             active_line_text=str(ctx.get("active_line_text", "") or ""),
             active_line_user_intent=str(ctx.get("active_line_user_intent", "unknown") or "unknown"),
@@ -719,7 +735,7 @@ class WriterAgent:
             human_like_do_not_force_practice=str(
                 bool(human_like_answer_policy.get("do_not_force_practice_frame", False))
             ).lower(),
-            human_like_do_not_force_max_sentences=str(
+            human_like_flexible_length_allowed=str(
                 bool(human_like_answer_policy.get("do_not_force_max_sentences", False))
             ).lower(),
             human_like_respect_user_requested_format=str(
@@ -1352,8 +1368,8 @@ class WriterAgent:
         if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
             self._set_final_answer_shape_debug("mechanism_without_unsolicited_practice")
             return (
-                "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, "
-                "поэтому энергия уходит в внутренний спор вместо реального шага."
+                "Сейчас полезнее не упражнение, а прямое объяснение: автоматический контроль может перегружать "
+                "внимание еще до действия, поэтому энергия уходит в внутренний спор и подготовку вместо самого шага."
             )
 
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":

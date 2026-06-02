@@ -1,0 +1,11 @@
+{
+  "kb_governance_mutated": false,
+  "chroma_reindexed": false,
+  "new_llm_agent_added": false,
+  "new_runtime_path_added": false,
+  "broad_rollout_enabled": false,
+  "normal_user_activation_enabled": false,
+  "model_defaults_changed": false,
+  "safety_policy_strengthened": false,
+  "runtime_bad_phrase_blocklist_added_to_writer_prompt": false
+}

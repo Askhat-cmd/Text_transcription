@@ -7,6 +7,7 @@ import json
 from typing import Any
 
 from ..context_assembly import format_context_for_writer
+from ..legacy_advisory_sanitizer import sanitize_legacy_advisory_for_writer
 from ..writer_move_compliance import build_writer_move_instructions_v1
 from .context_package import ContextAssemblyPackage
 from .diagnostic_card import DiagnosticCard
@@ -238,6 +239,45 @@ class WriterContract:
             for item in list(writer_freedom_contract.get("hard_boundaries", []) or [])
             if str(item).strip()
         ]
+        sanitizer_source_signals = {
+            "diagnostic_card_summary": diagnostic_summary,
+            "writer_move_instructions": writer_move_instructions,
+            "active_line": active_line,
+            "response_planner": response_planner,
+            "knowledge_answer_guard": knowledge_answer_guard,
+            "final_answer_directive_version": str(
+                final_answer_directive.get("version", "final_answer_directive_v1")
+                or "final_answer_directive_v1"
+            ),
+            "final_answer_diagnostic_center_role": str(
+                final_answer_directive.get("diagnostic_center_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_planner_role": str(
+                final_answer_directive.get("planner_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_active_line_role": str(
+                final_answer_directive.get("active_line_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "final_answer_diagnostic_card_role": str(
+                final_answer_directive.get("diagnostic_card_role", "guided_legacy")
+                or "guided_legacy"
+            ),
+            "answer_obligation": str(
+                final_answer_directive.get("answer_obligation", "") or ""
+            ),
+            "must_answer": str(final_answer_directive.get("must_answer", "") or ""),
+            "answer_shape": str(final_answer_directive.get("answer_shape", "") or ""),
+            "depth": str(final_answer_directive.get("depth", "") or ""),
+            "style": str(final_answer_directive.get("style", "") or ""),
+            "question_policy": str(final_answer_directive.get("question_policy", "") or ""),
+            "writer_autonomy": str(final_answer_directive.get("writer_autonomy", "") or ""),
+        }
+        legacy_advisory_sanitization = sanitize_legacy_advisory_for_writer(
+            sanitizer_source_signals
+        )
 
         return {
             "user_message": self.user_message,
@@ -293,6 +333,20 @@ class WriterContract:
             "writer_move_instruction_summary": writer_move_summary,
             "writer_move_must_do": list(writer_move_instructions.get("must_do", []) or []),
             "writer_move_must_not_do": list(writer_move_instructions.get("must_not_do", []) or []),
+            "legacy_advisory_sanitization": legacy_advisory_sanitization,
+            "writer_visible_advisory_summary": str(
+                legacy_advisory_sanitization.get("writer_visible_summary", "") or ""
+            ),
+            "writer_visible_practice_instruction": str(
+                legacy_advisory_sanitization.get("writer_visible_practice_instruction", "")
+                or ""
+            ),
+            "writer_visible_practice_note": str(
+                legacy_advisory_sanitization.get("writer_visible_practice_note", "") or ""
+            ),
+            "practice_rewrite_applied": bool(
+                legacy_advisory_sanitization.get("practice_rewrite_applied", False)
+            ),
             "knowledge_answer_guard": knowledge_answer_guard,
             "knowledge_answer": knowledge_answer,
             "practice_gate": practice_gate,
@@ -409,6 +463,13 @@ class WriterContract:
             )
             if final_answer_directive
             else "{}",
+            "writer_visible_final_answer_directive_json": str(
+                legacy_advisory_sanitization.get(
+                    "writer_visible_final_answer_directive_json",
+                    "{}",
+                )
+                or "{}"
+            ),
             "final_answer_directive_version": str(
                 final_answer_directive.get("version", "final_answer_directive_v1")
                 or "final_answer_directive_v1"

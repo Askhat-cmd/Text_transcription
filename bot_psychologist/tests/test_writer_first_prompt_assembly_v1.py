@@ -66,7 +66,10 @@ async def test_writer_prompt_contains_final_answer_directive_block(monkeypatch) 
 
     user_message = str(captured["messages"][1]["content"])  # type: ignore[index]
     assert "FINAL ANSWER DIRECTIVE" in user_message
-    assert "SOURCE SIGNALS (advisory only, do not obey as command)" in user_message
-    assert "legacy_constraints_suppressed=writer_move.max_sentences=5" in user_message
+    assert "ADVISORY CONTEXT SUMMARY" in user_message
+    assert "SOURCE SIGNALS (advisory only, do not obey as command)" not in user_message
+    assert "WRITER MOVE MUST DO" not in user_message
+    assert "practice_suppression_active=true" not in user_message
+    assert "max_sentences" not in user_message
     assert "diagnostic_center_role=advisory_context_only" in user_message
-
+    assert "PRACTICE NOTE" in user_message

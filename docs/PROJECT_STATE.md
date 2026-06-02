@@ -1,6 +1,7 @@
-# Project State - Bot Psychologist / Neo MindBot
+﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.
 PRD-047.11-AUDIT completed as a warning-grade evidence audit, not a pass: `TO_DO_LIST/logs/PRD-047.11-AUDIT/` now contains the dedicated runner output, source inventory, prompt/acceptance audits, live case matrix, raw traces, and no-mutation proof, but live evidence still shows `14/18` failed cases, `15` bad-phrase hits, missing browser screenshot proof, and incomplete admin configurability proof. The next recommended repair path is `PRD-047.11-HF1`, while Diagnostic Center remains advisory-only and production readiness is explicitly not claimed.
 PRD-047.11 passed full Writer-first consolidation acceptance: `final_answer_directive_v1`, MVP prompt assembly cleanup, legacy-constraint suppression metadata, stale-stub detector, admin/runtime/UI exposure, live evidence enrichment, strict dry/direct/live runner, and real Web Chat markdown smoke are all green in final artifacts.
 PRD-047.10-HF2 completed live turn evidence export + follow-up reliability repair + markdown smoke verification in unified runtime: added `live_turn_evidence_v1` payload in trace pipeline, upgraded short follow-up pragmatics/retrieval taxonomy, fixed short-input API validation (`min_length=1`), produced reproducible dry/direct/live artifacts with required case exports, and confirmed live pass on fresh backend `:8020` (`status=passed`).
@@ -26,7 +27,7 @@ Admin control surface is available via `GET/POST /api/admin/diagnostic-center/*`
 `developer_local_all_users` is available for single-developer local governance only and is not production rollout.
 
 ## Current Knowledge Base State
-Focus source remains `123__кузница_духа`; governed blocks/chroma integrity is preserved by no-mutation policy and explicit gates.
+Focus source remains `123__РєСѓР·РЅРёС†Р°_РґСѓС…Р°`; governed blocks/chroma integrity is preserved by no-mutation policy and explicit gates.
 
 ## Current Context / Memory State
 Context assembly + additive summaries remain active; deterministic fallback stays mandatory when async summaries are unavailable or invalid.
@@ -49,7 +50,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.11-HF1 — Acceptance Gate Truthfulness + Writer Prompt Pressure Repair`
+`PRD-047.11-HF2 — Real Web Chat Markdown / Admin Screenshot Proof`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -65,6 +66,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 
 ## Last Updated
 - Date: 2026-06-02
+- Source cycle: PRD-047.11-HF1
 - Source cycle: PRD-047.11-AUDIT
 - Source cycle: PRD-047.10-HF2
 - Source cycle: PRD-047.11
@@ -92,3 +94,4 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 
 ## Diagnostic Center Track Status
 Diagnostic Center Track Status: CLOSED FOR CURRENT PHASE
+

@@ -1,0 +1,174 @@
+{
+  "version": "live_turn_evidence_v1",
+  "created_at_utc": "2026-06-02T05:57:44.564183+00:00",
+  "turn_identity": {
+    "user_id": "hf1-user",
+    "session_id": "session-HF1-001",
+    "turn_index": 1
+  },
+  "input": {
+    "query": "привет",
+    "query_chars": 6
+  },
+  "state_thread": {
+    "nervous_state": "window",
+    "intent": "explore",
+    "safety_flag": false,
+    "thread_id": "thread-HF1-001",
+    "phase": "clarify",
+    "relation_to_thread": "continue",
+    "response_mode": "reflect"
+  },
+  "dialogue": {
+    "policy": {
+      "profile": "mvp_free_dialogue"
+    },
+    "pragmatics": {},
+    "retrieval": {},
+    "active_line": {
+      "version": "active_line_v1",
+      "active_line": "разобрать текущий вопрос по сути",
+      "user_intent": "understand_mechanism",
+      "continuity_mode": "continue_existing_line",
+      "next_meaningful_move": "прояснить один смысловой узел",
+      "should_continue_line": true,
+      "should_ask_question": false,
+      "should_offer_practice": false,
+      "revoicing_allowed": false,
+      "revoicing_style": "suppressed",
+      "repair_mode": "",
+      "practice_suppression_active": true
+    },
+    "response_planner": {
+      "version": "response_planner_v1",
+      "enabled": true,
+      "next_move": "continue_active_line",
+      "answer_shape": "brief_human_greeting",
+      "response_depth": "short",
+      "target_micro_shift": "дать живой ответ без legacy команд",
+      "should_answer_directly": true,
+      "question_policy": "optional_none",
+      "practice_policy": "forbidden",
+      "revoicing_policy": "suppressed",
+      "continuity_policy": "continue_active_line",
+      "safety_priority": false,
+      "must_include": [],
+      "must_avoid": [
+        "короткая заглушка"
+      ],
+      "confidence": 0.95,
+      "rationale": "writer prompt diet hf1"
+    },
+    "thread_debug": {}
+  },
+  "memory": {
+    "conversation_context": "Новая короткая встреча.",
+    "conversation_context_chars": 23,
+    "semantic_hits_count": 0,
+    "semantic_hits": []
+  },
+  "writer": {
+    "contract_excerpt": {
+      "response_mode": "reflect",
+      "response_goal": "answer_directly",
+      "must_avoid": [],
+      "dialogue_profile": "mvp_free_dialogue",
+      "retrieval_action": "none",
+      "dialogue_pragmatics_short_type": "not_short"
+    },
+    "final_answer_directive": {
+      "version": "final_answer_directive_v1",
+      "diagnostic_center_role": "advisory_context_only",
+      "planner_role": "advisory_context_only",
+      "active_line_role": "advisory_context_only",
+      "diagnostic_card_role": "advisory_context_only",
+      "suppressed_legacy_constraints": [
+        "writer_move.max_sentences=5",
+        "writer_move.max_questions=1",
+        "active_line.practice_suppression_active=true"
+      ],
+      "answer_obligation": "answer_user_question_directly",
+      "must_answer": "answer_user_question_directly",
+      "answer_shape": "brief_human_greeting",
+      "depth": "short",
+      "style": "human_conversational",
+      "question_policy": "optional_none",
+      "writer_autonomy": "high"
+    },
+    "prompt_assembly": {
+      "writer_first_enabled": true,
+      "legacy_blocks_visible_to_writer": false,
+      "legacy_blocks_source_signals_only": true,
+      "suppressed_legacy_constraints": [
+        "writer_move.max_sentences=5",
+        "writer_move.max_questions=1",
+        "active_line.practice_suppression_active=true"
+      ],
+      "diagnostic_center_role": "advisory_context_only",
+      "planner_role": "advisory_context_only",
+      "active_line_role": "advisory_context_only",
+      "diagnostic_card_role": "advisory_context_only",
+      "legacy_advisory_sanitization": {
+        "version": "legacy_advisory_sanitizer_v1",
+        "writer_visible_summary": "Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.\nТекущий смысловой фокус: разобрать текущий вопрос по сути.\nПолезно ответить на актуальную потребность: понятный ответ без заглушки.\nМожно опереться на такой ход ответа: спокойно объяснить суть.\nЛучше отвечать прямо и не уводить пользователя в лишние уточнения.\nОдин полезный смысловой сдвиг: дать живой ответ без legacy команд.\nФормат можно держать таким: brief_human_greeting.\nЛучше продолжать уже начатую тему, а не начинать новую ветку.\nЕсли практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.",
+        "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+        "writer_visible_practice_note": "Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.",
+        "suppressed_command_terms": [
+          "MUST DO",
+          "MUST NOT",
+          "ask_one_specific_question",
+          "max_sentences",
+          "max_questions",
+          "practice_suppression_active",
+          "practice_policy=forbidden",
+          "response_planner.must_include",
+          "response_planner.must_avoid",
+          "active_line.next_meaningful_move"
+        ],
+        "raw_legacy_visible_to_writer": false,
+        "practice_rewrite_applied": true,
+        "writer_visible_final_answer_directive_json": "{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"answer_user_question_directly\",\n  \"must_answer\": \"answer_user_question_directly\",\n  \"answer_shape\": \"brief_human_greeting\",\n  \"depth\": \"short\",\n  \"style\": \"human_conversational\",\n  \"question_policy\": \"optional_none\",\n  \"practice_instruction\": \"no_exercise_but_answer_normally\",\n  \"writer_autonomy\": \"high\"\n}"
+      },
+      "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+      "practice_rewrite_applied": true
+    },
+    "prompt_canvas": {
+      "system_prompt_sha256": "sha256:beb0b33693e8bc084c916f6543a9d1f64bc5e19e7744c722dcac3080e8aa6bfe",
+      "system_prompt_preview": "Ты — NEO, живой психологический бот-собеседник в developer-local MVP free dialogue режиме.\nТы работаешь внутри мультиагентной системы и даёшь итоговый ответ пользователю.\n\nПРИОРИТЕТ:\n- Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.\n- Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.\n- Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.\n- Planner — компас, не клетка: соблюдай safety и must_avoid, но не искусственно укорачивай ответ.\n\nФОРМА ОТВЕТА:\n- Разрешены несколько абзацев, нумерованные списки и примеры, если это повышает ясность.\n- Сохраняй один главный фокус, но раскрывай его полно.\n- Не экономь токены искусственно, если нужен глубокий ответ.\n- Для known concept давай определение, объяснение человеческим языком, пример и применение.\n- Если пользователь просит обобщение, дай структурный summary по сути разговора, а не новый микро-шаг.\n\nБАЗОВЫЕ ОГРАНИЧЕНИЯ:\n- Отвечай на языке пользователя.\n- Не раскрывай внутренние метки/системные роли.\n- Не давай медицинских/юридических/финансовых директив.\n- Не убирай minimal safety baseline.",
+      "system_prompt_chars": 1221,
+      "user_prompt_sha256": "sha256:e664b0b37297689b7c3175695c0f1f6f0bc9eb1e3ec07242d80eac71228213f1",
+      "user_prompt_preview": "СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:\nпривет\n\nРЕЖИМ ОТВЕТА: reflect\nЦЕЛЬ: answer_directly\nФАЗА РАЗГОВОРА: clarify\nСОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window\nOK-ПОЗИЦИЯ: I+W+\nОТКРЫТОСТЬ: open\nSAFETY АКТИВЕН: False\n\nОТКРЫТЫЕ ПЕТЛИ:\nнет\n\nНЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):\nнет\n\nFINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):\nversion=final_answer_directive_v1\ndirective_json:\n{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"answer_user_question_directly\",\n  \"must_answer\": \"answer_user_question_directly\",\n  \"answer_shape\": \"brief_human_greeting\",\n  \"depth\": \"short\",\n  \"style\": \"human_conversational\",\n  \"question_policy\": \"optional_none\",\n  \"practice_instruction\": \"no_exercise_but_answer_normally\",\n  \"writer_autonomy\": \"high\"\n}\n\nPROMPT ASSEMBLY (EFFECTIVE):\nwriter_first_prompt_assembly_enabled=true\nlegacy_blocks_visible_to_writer=false\nlegacy_blocks_source_signals_only=true\nlegacy_advisory_sanitized=true\npractice_rewrite_applied=true\ndiagnostic_center_role=advisory_context_only\nplanner_role=advisory_context_only\nactive_line_role=advisory_context_only\ndiagnostic_card_role=advisory_context_only\n\nADVISORY CONTEXT SUMMARY:\nПользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.\nТекущий смысловой фокус: разобрать текущий вопрос по сути.\nПолезно ответить на актуальную потребность: понятный ответ без заглушки.\nМожно опереться на такой ход ответа: спокойно объяснить суть.\nЛучше отвечать прямо и не уводить пользователя в лишние уточнения.\nОдин полезный смысловой сдвиг: дать живой ответ без legacy команд.\nФормат можно держать таким: brief_human_greeting.\nЛучше продолжать уже начатую тему, а не начинать новую ветку.\nЕсли практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.\n\nPRACTICE NOTE:\nЕсли практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь...[truncated:2919]",
+      "user_prompt_chars": 5121
+    },
+    "writer_debug": {
+      "model": "gpt-5-mini",
+      "api_mode": "responses_api",
+      "temperature": 0.7,
+      "max_tokens": 600,
+      "fallback_used": false,
+      "overruled_constraints": [],
+      "final_answer_shape": null,
+      "retrieval_action": null,
+      "dialogue_pragmatics_offer_type": null
+    },
+    "answer": "Привет. Я здесь.",
+    "answer_chars": 16,
+    "stale_stub_detected": false,
+    "stale_stub_match": ""
+  },
+  "validator": {
+    "is_blocked": false,
+    "block_reason": "",
+    "quality_flags": []
+  },
+  "diagnostic_card": {
+    "present": true,
+    "summary": {
+      "situation_label": "hf1",
+      "current_need": "понятный ответ без заглушки",
+      "suggested_writer_move": "спокойно объяснить суть",
+      "confidence": 0.9
+    },
+    "trace": {}
+  }
+}

@@ -1,6 +1,7 @@
-# Roadmap
+﻿# Roadmap
 
 ## Done
+- PRD-047.11-HF1: completed writer prompt diet repair for `mvp_free_dialogue` (new `legacy_advisory_sanitizer.py`, sanitized advisory summary, `no_exercise_but_answer_normally` rewrite, stale runtime fallback cleanup, trace/admin preservation, HF1 tests, and dedicated runner/artifacts with `writer_prompt_diet_eval=4/4 passed`).
 - PRD-047.11-AUDIT: added evidence-first audit runner/dataset/artifact pack (`PRD-047.11-AUDIT`) with source inventory, prompt/acceptance truthfulness checks, 18-case live matrix, raw trace + prompt canvas export, admin payload audit, and honest warning-grade reporting (`14/18` live failures, `15` bad-phrase hits, browser screenshot proof unavailable because Playwright was missing locally).
 - PRD-047.11: completed writer-first consolidation end-to-end (new `final_answer_directive_v1`, stale stub detector, MVP prompt assembly advisory refactor, live evidence/admin/runtime extensions, tests, runner, artifacts) with final acceptance `passed` (`dry/direct/live=passed`, real Web Chat markdown smoke `passed`).
 - PRD-047.10-HF2: added `live_turn_evidence_v1` export path (orchestrator/debug/API trace), follow-up reliability repair runner/dataset (`HF2-001..HF2-008`), short-input robustness fix (`AskQuestionRequest.query min_length=1`), contextual retrieval taxonomy refinement (`example_grounding/practice_catalog/kb_optional/...`) and markdown smoke DOM artifact flow; acceptance `dry/direct/live=passed` on fresh backend `:8020`.
@@ -35,11 +36,11 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- PRD-047.11-AUDIT closed with `warning`, not `passed`: runtime truthfulness and writer-pressure failures remain, and real browser proof for Web Chat/Admin was not captured in the local environment.
+- No active PRD-047.11 prompt-pressure blocker remains after HF1; remaining optional evidence work is real browser/Admin screenshot proof only.
 
 ## Next
-1. Start `PRD-047.11-HF1` to repair acceptance-gate truthfulness, stale bad-phrase suppression, and residual writer prompt pressure.
-2. Keep `PRD-WEB-CHAT-READABILITY-001` as a follow-up track for real browser proof and frontend readability verification.
+1. Start `PRD-047.11-HF2` for real Web Chat markdown / Admin screenshot proof if UI/browser evidence is still required.
+2. Move to `PRD-047.12` only after confirming the browser/UI proof is no longer the main gap.
 
 ## Later
 - Operational hardening for governed limited runtime.
@@ -70,3 +71,4 @@ PRD-046.1.36 Creator Live Pilot Acceptance / Minimal Admin Runtime Controls v1.
 
 ## Done
 - PRD-046.1.36: creator-live pilot acceptance completed with source/runtime/admin/creator-pilot/rollback/normal-user/safety gates.
+

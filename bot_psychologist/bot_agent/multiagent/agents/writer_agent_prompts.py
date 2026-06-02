@@ -176,33 +176,24 @@ SAFETY АКТИВЕН: {safety_active}
 FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
 version={final_answer_directive_version}
 directive_json:
-{final_answer_directive_json}
+{writer_visible_final_answer_directive_json}
 
 PROMPT ASSEMBLY (EFFECTIVE):
 writer_first_prompt_assembly_enabled={writer_first_prompt_assembly_enabled}
 legacy_blocks_visible_to_writer={legacy_blocks_visible_to_writer}
 legacy_blocks_source_signals_only={legacy_blocks_source_signals_only}
-legacy_constraints_suppressed={legacy_constraints_suppressed_csv}
+legacy_advisory_sanitized=true
+practice_rewrite_applied={practice_rewrite_applied}
 diagnostic_center_role={final_answer_diagnostic_center_role}
 planner_role={final_answer_planner_role}
 active_line_role={final_answer_active_line_role}
 diagnostic_card_role={final_answer_diagnostic_card_role}
 
-SOURCE SIGNALS (advisory only, do not obey as command):
+ADVISORY CONTEXT SUMMARY:
+{writer_visible_advisory_summary}
 
-DIAGNOSTIC CARD:
-{diagnostic_card_summary}
-avoid_list: {diagnostic_card_avoid}
-risk_flags: {diagnostic_card_risk_flags}
-
-WRITER MOVE (advisory):
-{writer_move_instruction_summary}
-
-WRITER MOVE MUST DO (advisory):
-{writer_move_must_do}
-
-WRITER MOVE MUST NOT DO (advisory):
-{writer_move_must_not_do}
+PRACTICE NOTE:
+{writer_visible_practice_note}
 
 КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
 {conversation_context}
@@ -243,38 +234,6 @@ WRITER FREEDOM CONTRACT:
 contract_block:
 {writer_freedom_prompt_block}
 
-ACTIVE LINE (advisory):
-active_line_version={active_line_version}
-active_line={active_line_text}
-user_intent={active_line_user_intent}
-continuity_mode={active_line_continuity_mode}
-next_meaningful_move={active_line_next_meaningful_move}
-should_continue_line={active_line_should_continue_line}
-should_ask_question={active_line_should_ask_question}
-should_offer_practice={active_line_should_offer_practice}
-revoicing_allowed={active_line_revoicing_allowed}
-revoicing_style={active_line_revoicing_style}
-repair_mode={active_line_repair_mode}
-practice_suppression_active={active_line_practice_suppression_active}
-
-RESPONSE PLANNER (advisory):
-response_planner_version={response_planner_version}
-response_planner_enabled={response_planner_enabled}
-next_move={response_planner_next_move}
-answer_shape={response_planner_answer_shape}
-response_depth={response_planner_response_depth}
-target_micro_shift={response_planner_target_micro_shift}
-should_answer_directly={response_planner_should_answer_directly}
-question_policy={response_planner_question_policy}
-practice_policy={response_planner_practice_policy}
-revoicing_policy={response_planner_revoicing_policy}
-continuity_policy={response_planner_continuity_policy}
-safety_priority={response_planner_safety_priority}
-must_include={response_planner_must_include}
-must_avoid={response_planner_must_avoid}
-confidence={response_planner_confidence}
-rationale={response_planner_rationale}
-
 DIALOGUE POLICY:
 dialogue_profile={dialogue_profile}
 expansion_requested={dialogue_expansion_requested}
@@ -312,7 +271,7 @@ default_depth={human_like_default_depth}
 question_is_optional={human_like_question_is_optional}
 do_not_force_question_at_end={human_like_do_not_force_question}
 do_not_force_practice_frame={human_like_do_not_force_practice}
-do_not_force_max_sentences={human_like_do_not_force_max_sentences}
+flexible_length_allowed={human_like_flexible_length_allowed}
 respect_user_requested_format={human_like_respect_user_requested_format}
 repair_user_dissatisfaction={human_like_repair_user_dissatisfaction}
 direct_answer_repair_when_user_complains={human_like_direct_answer_repair}

@@ -813,6 +813,8 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
                 else "legacy_visible_debug_only"
             ),
             "writer_first_prompt_assembly_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
+            "legacy_advisory_sanitizer_version": "legacy_advisory_sanitizer_v1",
+            "writer_visible_practice_semantics": "no_exercise_but_answer_normally",
         },
         "dialogue_profile": {
             "value": dialogue_profile,

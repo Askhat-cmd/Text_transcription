@@ -1,0 +1,869 @@
+# PRD-047.11-HF1 Source Audit
+
+- generated_at_utc: `2026-06-02T05:57:44.550184+00:00`
+- search_scope: `bot_psychologist + docs + TO_DO_LIST (logs/source_materials/node_modules excluded)`
+
+## runtime_prompt_source
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:9` :: query=`MUST DO` :: "MUST DO",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:10` :: query=`MUST NOT` :: "MUST NOT",
+- `C:\My_practice\Text_transcription\bot_psychologist\api\admin_routes.py:835` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\active_line.py:95` :: query=`practice_suppression_active` :: practice_suppression_active: bool
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\active_line.py:258` :: query=`practice_suppression_active` :: practice_suppression_active=not bool(should_offer_practice),
+- `C:\My_practice\Text_transcription\bot_psychologist\web_ui\src\types\admin.types.ts:242` :: query=`practice_suppression_active` :: practice_suppression_active?: boolean;
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:14` :: query=`practice_suppression_active` :: "practice_suppression_active",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:95` :: query=`practice_suppression_active` :: practice_suppressed = bool(active_line.get("practice_suppression_active", False)) or not bool(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:116` :: query=`practice_suppression_active` :: "practice_suppression_active",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:197` :: query=`practice_suppression_active` :: "active_line.practice_suppression_active=true",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:405` :: query=`practice_suppression_active` :: "active_line_practice_suppression_active": bool(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:406` :: query=`practice_suppression_active` :: active_line.get("practice_suppression_active", False)
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\web_admin_runtime_controls.md:38` :: query=`practice_suppression_active` :: - `practice_suppression_active`
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\active_line.md:25` :: query=`practice_suppression_active` :: - `practice_suppression_active`
+- `C:\My_practice\Text_transcription\bot_psychologist\web_ui\src\components\admin\AdminPanel.tsx:444` :: query=`practice_suppression_active` :: <div>practice_suppression_active: {String(Boolean(runtimeEffectiveData.active_line?.practice_suppression_active))}</div>
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\philosophy_kernel.md:24` :: query=`practice_policy` :: - `practice_policy`
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\writer_freedom_contract.md:52` :: query=`practice_policy` :: - `practice_policy=forbidden` suppresses unsolicited practice steps.
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\writer_freedom_contract.md:62` :: query=`practice_policy` :: - `answer_known_concept` + `practice_policy=forbidden` avoids unsolicited practice framing.
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\writer_freedom_contract.md:71` :: query=`practice_policy` :: - planner `practice_policy`
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\web_admin_runtime_controls.md:14` :: query=`practice_policy` :: - `practice_policy`
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\response_planner.md:27` :: query=`practice_policy` :: - `practice_policy`
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\response_planner.md:93` :: query=`practice_policy` :: - `practice_policy=forbidden` strict no-practice-instruction markers
+- `C:\My_practice\Text_transcription\bot_psychologist\docs\response_planner.md:128` :: query=`practice_policy` :: - `practice_policy=overview_allowed`
+- `C:\My_practice\Text_transcription\bot_psychologist\web_ui\src\types\admin.types.ts:155` :: query=`practice_policy` :: practice_policy?: string;
+- `C:\My_practice\Text_transcription\bot_psychologist\api\admin_routes.py:723` :: query=`practice_policy` :: "practice_policy": "gate_required",
+- `C:\My_practice\Text_transcription\bot_psychologist\web_ui\src\components\admin\AdminPanel.tsx:378` :: query=`practice_policy` :: <div>practice_policy: {runtimeEffectiveData.philosophy_kernel?.practice_policy ?? 'n/a'}</div>
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\live_testing\feedback_capture.py:123` :: query=`practice_policy` :: "practice_policy": str(planner.get("practice_policy", "") or ""),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\philosophy_kernel.py:28` :: query=`practice_policy` :: practice_policy: dict[str, Any]
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\philosophy_kernel.py:103` :: query=`practice_policy` :: practice_policy={
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\philosophy_kernel.py:371` :: query=`practice_policy` :: "practice_policy": "gate_required",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\orchestrator.py:538` :: query=`practice_policy` :: "practice_policy_obedience": False,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\orchestrator.py:549` :: query=`practice_policy` :: "planner_practice_policy": str(response_planner_state.get("practice_policy", "forbidden") or "forbidden"),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\orchestrator.py:689` :: query=`practice_policy` :: "practice_policy": str(philosophy_kernel_payload.get("practice_policy", "")),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:15` :: query=`practice_policy` :: "practice_policy=forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:177` :: query=`practice_policy` :: practice_policy: str
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:276` :: query=`practice_policy` :: practice_policy: str,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:295` :: query=`practice_policy` :: practice_policy=practice_policy if practice_policy in PRACTICE_POLICIES else "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:319` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:424` :: query=`practice_policy` :: practice_policy = "allowed_if_explicit" if practice_allowed else "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:487` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:511` :: query=`practice_policy` :: practice_policy="one_micro_step_allowed" if practice_allowed else "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:533` :: query=`practice_policy` :: practice_policy="allowed_if_explicit" if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE else "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:557` :: query=`practice_policy` :: practice_policy="overview_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:587` :: query=`practice_policy` :: practice_policy="allowed_if_explicit",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:605` :: query=`practice_policy` :: practice_policy="allowed_if_explicit",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:622` :: query=`practice_policy` :: practice_policy="allowed_if_explicit",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:641` :: query=`practice_policy` :: practice_policy="required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:660` :: query=`practice_policy` :: practice_policy="required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:679` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:698` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:721` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:741` :: query=`practice_policy` :: practice_policy="one_micro_step_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:758` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:781` :: query=`practice_policy` :: practice_policy="allowed_if_explicit",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:798` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:818` :: query=`practice_policy` :: practice_policy="one_micro_step_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:835` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:854` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:877` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\response_planner.py:895` :: query=`practice_policy` :: practice_policy=practice_policy,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:45` :: query=`practice_policy` :: practice_policy: str
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:69` :: query=`practice_policy` :: "practice_policy": self.practice_policy,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:280` :: query=`practice_policy` :: practice_policy=(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:283` :: query=`practice_policy` :: else str(planner.get("practice_policy", "forbidden") or "forbidden")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent_prompts.py:103` :: query=`practice_policy` :: - Соблюдай planner question_policy и practice_policy.
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent_prompts.py:110` :: query=`practice_policy` :: - Если planner.practice_policy=forbidden, не давай шаги/упражнения/таймеры.
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_limited_activation_readiness.py:387` :: query=`practice_policy` :: and gate.practice_policy_violation_count == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:103` :: query=`practice_policy` :: practice_policy_obedience: bool
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:114` :: query=`practice_policy` :: planner_practice_policy: str
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:179` :: query=`practice_policy` :: "practice_policy_forbidden_violation",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:217` :: query=`practice_policy` :: planner_practice_policy = str(planner.get("practice_policy", "forbidden") or "forbidden")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:239` :: query=`practice_policy` :: practice_policy_obedience = True
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:240` :: query=`practice_policy` :: if planner_practice_policy == "forbidden":
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:241` :: query=`practice_policy` :: practice_policy_obedience = not _has_forbidden_practice_instruction(answer_text)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:288` :: query=`practice_policy` :: if not practice_policy_obedience:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:289` :: query=`practice_policy` :: flags.append("practice_policy_forbidden_violation")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:323` :: query=`practice_policy` :: policy_obedience = question_policy_obedience and practice_policy_obedience and revoicing_policy_obedience
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:336` :: query=`practice_policy` :: practice_policy_obedience=bool(practice_policy_obedience),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_drift_guard.py:347` :: query=`practice_policy` :: planner_practice_policy=planner_practice_policy,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_limited_activation_readiness_v1.py:278` :: query=`practice_policy` :: practice_policy_violation_count: int = 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_limited_activation_readiness_v1.py:287` :: query=`practice_policy` :: self.practice_policy_violation_count = _as_int(self.practice_policy_violation_count, 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:431` :: query=`practice_policy` :: "response_planner_practice_policy": str(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:432` :: query=`practice_policy` :: response_planner.get("practice_policy", "forbidden") or "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:188` :: query=`ask_one_specific_question` :: "ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:11` :: query=`ask_one_specific_question` :: "ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:115` :: query=`ask_one_specific_question` :: "ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:193` :: query=`ask_one_specific_question` :: "writer_move.must_do.ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\web_ui\src\types\admin.types.ts:215` :: query=`max_sentences` :: do_not_force_max_sentences?: boolean;
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:54` :: query=`max_sentences` :: def _take_sentences(text: str, max_sentences: int) -> str:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:55` :: query=`max_sentences` :: if max_sentences <= 0:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:58` :: query=`max_sentences` :: if len(chunks) <= max_sentences:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:60` :: query=`max_sentences` :: trimmed = " ".join(chunks[:max_sentences]).rstrip()
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:74` :: query=`max_sentences` :: {"max_sentences": int, "mode": str}
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:81` :: query=`max_sentences` :: max_sentences = min(base, 2)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:83` :: query=`max_sentences` :: max_sentences = base
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:85` :: query=`max_sentences` :: max_sentences = base + 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:87` :: query=`max_sentences` :: return {"max_sentences": max(1, max_sentences), "mode": mode}
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\response\response_formatter.py:123` :: query=`max_sentences` :: text = self._take_sentences(text, int(target["max_sentences"]))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\creator_live_behavior_hf4.py:363` :: query=`max_sentences` :: "max_sentences": 8,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\dialogue_policy.py:257` :: query=`max_sentences` :: "max_sentences=5",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\dialogue_policy.py:329` :: query=`max_sentences` :: "do_not_force_max_sentences": human_like_enabled,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:12` :: query=`max_sentences` :: "max_sentences",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:118` :: query=`max_sentences` :: "max_sentences",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:191` :: query=`max_sentences` :: "writer_move.max_sentences=5",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:200` :: query=`max_sentences` :: "max_sentences": int(writer_move_instructions.get("max_sentences", 5) or 5),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:124` :: query=`max_sentences` :: "writer_move_max_sentences": int(writer_move.get("max_sentences", 0) or 0),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:52` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:72` :: query=`max_sentences` :: "max_sentences": 3,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:88` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:107` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:128` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:144` :: query=`max_sentences` :: "max_sentences": 8,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:165` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:183` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:198` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:231` :: query=`max_sentences` :: raw_max_sentences = instructions.get("max_sentences", 5)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:234` :: query=`max_sentences` :: max_sentences = int(raw_max_sentences)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:236` :: query=`max_sentences` :: max_sentences = 5
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:247` :: query=`max_sentences` :: if sentence_count > max_sentences:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:265` :: query=`max_sentences` :: "max_sentences": max_sentences,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_compliance_v1.py:80` :: query=`max_sentences` :: "max_sentences": max(1, _as_int(self.existing_writer_move.get("max_sentences"), 5)),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:133` :: query=`max_sentences` :: f"max_sentences={writer_move_instructions.get('max_sentences')}; "
+- `C:\My_practice\Text_transcription\bot_psychologist\tools\run_writer_prompt_replay_eval.py:320` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\tools\run_prompt_constraint_pilot_runtime_eval.py:144` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tools\run_prompt_constraint_pilot_quality_gate.py:216` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tools\run_prompt_constraint_pilot_quality_gate.py:343` :: query=`max_questions` :: questions = _as_int(constraints.get("max_questions"), 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\tools\run_planner_bridge_writer_contract_pilot_eval.py:466` :: query=`max_questions` :: and int(_safe_dict(overlay.get("candidate_constraints")).get("max_questions", 0) or 0) == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:123` :: query=`max_questions` :: "writer_move_max_questions": int(writer_move.get("max_questions", 0) or 0),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:148` :: query=`max_questions` :: "max_questions": max(0, int(candidate_constraints.get("max_questions", 0) or 0)),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:169` :: query=`max_questions` :: baseline_max_questions = max(0, int(writer_move.get("max_questions", 0) or 0))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:170` :: query=`max_questions` :: candidate_max_questions = max(0, int(constraints.get("max_questions", 0) or 0))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:177` :: query=`max_questions` :: and candidate_max_questions <= 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:198` :: query=`max_questions` :: if candidate_max_questions > baseline_max_questions:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_prompt_replay.py:211` :: query=`max_questions` :: candidate_max_questions < baseline_max_questions
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:53` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:73` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:89` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:108` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:121` :: query=`max_questions` :: instructions["max_questions"] = 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:129` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:145` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:166` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:184` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:199` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:232` :: query=`max_questions` :: raw_max_questions = instructions.get("max_questions", 1)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:238` :: query=`max_questions` :: max_questions = int(raw_max_questions)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:240` :: query=`max_questions` :: max_questions = 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:249` :: query=`max_questions` :: if question_count > max_questions:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\writer_move_compliance.py:266` :: query=`max_questions` :: "max_questions": max_questions,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\creator_live_behavior_hf4.py:364` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_supervised_execution.py:158` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_supervised_continuation.py:166` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_section.py:46` :: query=`max_questions` :: f"- max_questions: {int(constraints.get('max_questions', 0) or 0)}\n"
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_production_limited_execution.py:167` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_pilot_runtime.py:117` :: query=`max_questions` :: max_questions = _as_int(candidate_constraints.get("max_questions"), 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\prompt_constraint_pilot_runtime.py:119` :: query=`max_questions` :: return _DEPTH_ORDER.get(depth, 2) <= _DEPTH_ORDER["low"] and max_questions <= 0 and max_concepts <= 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:102` :: query=`max_questions` :: max_questions = int(candidate.get("max_questions", writer_move.get("max_questions", 1)) or 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:103` :: query=`max_questions` :: max_questions = max(0, max_questions)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:110` :: query=`max_questions` :: max_questions = 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:153` :: query=`max_questions` :: "max_questions": max_questions,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:180` :: query=`max_questions` :: max_questions = int(candidate_constraints.get("max_questions", 0) or 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:181` :: query=`max_questions` :: if _DEPTH_ORDER.get(depth, 2) > _DEPTH_ORDER["low"] or max_questions > 0:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_writer_contract_pilot.py:346` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:105` :: query=`max_questions` :: writer_max_questions = int(writer_move_instructions.get("max_questions", 1) or 1)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:110` :: query=`max_questions` :: bridge_max_questions = int(bridge.get("max_questions", 1) or 1)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:132` :: query=`max_questions` :: question_limit_compatible = bridge_max_questions <= writer_max_questions
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:146` :: query=`max_questions` :: tightened_question_limit = bridge_max_questions < writer_max_questions
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:201` :: query=`max_questions` :: "max_questions": writer_max_questions,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_compliance_shadow.py:211` :: query=`max_questions` :: "max_questions": bridge_max_questions,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_candidate.py:93` :: query=`max_questions` :: max_questions = 0
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_candidate.py:102` :: query=`max_questions` :: max_questions = min(1, int(output.next_micro_shift.max_questions))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_candidate.py:109` :: query=`max_questions` :: max_questions = min(max_questions, 0)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\planner_bridge_candidate.py:151` :: query=`max_questions` :: max_questions=max_questions,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:13` :: query=`max_questions` :: "max_questions",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\legacy_advisory_sanitizer.py:117` :: query=`max_questions` :: "max_questions",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\final_answer_directive.py:192` :: query=`max_questions` :: "writer_move.max_questions=1",
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:68` :: query=`max_questions` :: max_questions=0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:80` :: query=`max_questions` :: max_questions=1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:92` :: query=`max_questions` :: max_questions=1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:104` :: query=`max_questions` :: max_questions=0,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:116` :: query=`max_questions` :: max_questions=1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:128` :: query=`max_questions` :: max_questions=1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\diagnostic_center_v1_builder.py:139` :: query=`max_questions` :: max_questions=1,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\writer_contract.py:134` :: query=`max_questions` :: f"max_questions={writer_move_instructions.get('max_questions')}; "
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_writer_contract_pilot_v1.py:98` :: query=`max_questions` :: "max_questions": _as_int(candidate.get("max_questions"), default=0, minimum=0),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_v1.py:161` :: query=`max_questions` :: max_questions: int = 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_v1.py:190` :: query=`max_questions` :: self.max_questions = max(0, int(self.max_questions))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_v1.py:192` :: query=`max_questions` :: self.max_questions = 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_v1.py:233` :: query=`max_questions` :: "max_questions": int(self.max_questions),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_v1.py:258` :: query=`max_questions` :: max_questions=int(payload.get("max_questions", 1) or 1),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_compliance_v1.py:81` :: query=`max_questions` :: "max_questions": max(0, _as_int(self.existing_writer_move.get("max_questions"), 1)),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\planner_bridge_compliance_v1.py:99` :: query=`max_questions` :: "max_questions": max(0, _as_int(self.planner_bridge_candidate.get("max_questions"), 1)),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_v1.py:129` :: query=`max_questions` :: max_questions: int = 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_v1.py:141` :: query=`max_questions` :: self.max_questions = max(0, int(self.max_questions))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_v1.py:143` :: query=`max_questions` :: self.max_questions = 1
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_v1.py:157` :: query=`max_questions` :: "max_questions": int(self.max_questions),
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\contracts\diagnostic_center_v1.py:170` :: query=`max_questions` :: max_questions=int(payload.get("max_questions", 1) or 1),
+
+## runtime_fallback_source
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:287` :: query=`practice_suppression_active` :: ctx.setdefault("active_line_practice_suppression_active", False)
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:620` :: query=`practice_suppression_active` :: active_line_practice_suppression_active=str(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:621` :: query=`practice_suppression_active` :: bool(ctx.get("active_line_practice_suppression_active", False))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:881` :: query=`practice_suppression_active` :: active_line_practice_suppression = bool(active_line.get("practice_suppression_active", False))
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:296` :: query=`practice_policy` :: ctx.setdefault("response_planner_practice_policy", "forbidden")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:643` :: query=`practice_policy` :: response_planner_practice_policy=str(
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:644` :: query=`practice_policy` :: ctx.get("response_planner_practice_policy", "forbidden") or "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:886` :: query=`practice_policy` :: planner_practice_policy = str(response_planner.get("practice_policy", "forbidden") or "forbidden")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:974` :: query=`practice_policy` :: planner_practice_policy in {"required", "one_step_required"}
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1011` :: query=`practice_policy` :: planner_practice_policy=planner_practice_policy,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1163` :: query=`practice_policy` :: if planner_practice_policy == "forbidden" and has_unsolicited_practice:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1240` :: query=`practice_policy` :: if planner_next_move == "answer_known_concept" and planner_practice_policy == "forbidden":
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1269` :: query=`practice_policy` :: planner_practice_policy: str,
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1368` :: query=`practice_policy` :: if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1508` :: query=`practice_policy` :: planner_practice_policy = str(response_planner.get("practice_policy", "") or "")
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:1521` :: query=`practice_policy` :: if planner_practice_policy == "forbidden":
+- `C:\My_practice\Text_transcription\bot_psychologist\bot_agent\multiagent\agents\writer_agent.py:739` :: query=`max_sentences` :: bool(human_like_answer_policy.get("do_not_force_max_sentences", False))
+
+## tests_or_eval_only
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:36` :: query=`MUST DO` :: "WRITER MOVE MUST DO",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:49` :: query=`MUST DO` :: "MUST DO",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:149` :: query=`MUST DO` :: assert "WRITER MOVE MUST DO" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_first_prompt_assembly_v1.py:71` :: query=`MUST DO` :: assert "WRITER MOVE MUST DO" not in user_message
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:37` :: query=`MUST NOT` :: "WRITER MOVE MUST NOT DO",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:50` :: query=`MUST NOT` :: "MUST NOT",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:150` :: query=`MUST NOT` :: assert "WRITER MOVE MUST NOT DO" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_active_line.py:43` :: query=`practice_suppression_active` :: assert payload["practice_suppression_active"] is True
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:38` :: query=`practice_suppression_active` :: "practice_suppression_active=true",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:51` :: query=`practice_suppression_active` :: "practice_suppression_active",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:261` :: query=`practice_suppression_active` :: "practice_suppression_active": not bool(case.get("practice_allowed", False)),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:290` :: query=`practice_suppression_active` :: "active_line.practice_suppression_active=true",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:67` :: query=`practice_suppression_active` :: "practice_suppression_active",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_3_active_line_runner.py:38` :: query=`practice_suppression_active` :: "practice_suppression_active": not should_offer_practice,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:76` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:104` :: query=`practice_suppression_active` :: "active_line.practice_suppression_active=true",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:115` :: query=`practice_suppression_active` :: "active_line": {"practice_suppression_active": True},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:153` :: query=`practice_suppression_active` :: assert "practice_suppression_active=true" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:204` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:222` :: query=`practice_suppression_active` :: assert "practice_suppression_active" not in summary
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_active_line.py:42` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_active_line.py:65` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_active_line.py:70` :: query=`practice_suppression_active` :: assert ctx["active_line_practice_suppression_active"] is True
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_active_line.py:87` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_active_line.py:109` :: query=`practice_suppression_active` :: "practice_suppression_active": True,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_first_prompt_assembly_v1.py:72` :: query=`practice_suppression_active` :: assert "practice_suppression_active=true" not in user_message
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:16` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:41` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:66` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:91` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:116` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:141` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:166` :: query=`practice_policy` :: "practice_policy":  "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:191` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:216` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:241` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:266` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:291` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:316` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:341` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:366` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:391` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:416` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:429` :: query=`practice_policy` :: "group":  "practice_policy_forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:441` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:447` :: query=`practice_policy` :: "practice_policy_forbidden_violation"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:454` :: query=`practice_policy` :: "group":  "practice_policy_forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:466` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:472` :: query=`practice_policy` :: "practice_policy_forbidden_violation"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:479` :: query=`practice_policy` :: "group":  "practice_policy_forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:491` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:497` :: query=`practice_policy` :: "practice_policy_forbidden_violation"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:516` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:541` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:566` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:592` :: query=`practice_policy` :: "practice_policy":  "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:617` :: query=`practice_policy` :: "practice_policy":  "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:642` :: query=`practice_policy` :: "practice_policy":  "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:667` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:692` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:717` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:742` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:767` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_6_planner_drift_cases.json:792` :: query=`practice_policy` :: "practice_policy":  "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:7` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:15` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:23` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:31` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_short_support", "answer_shape": "short_support", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:40` :: query=`practice_policy` :: "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:48` :: query=`practice_policy` :: "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:56` :: query=`practice_policy` :: "expected_planner": {"next_move": "stabilize_safety", "answer_shape": "safety_grounding", "response_depth": "short", "question_policy": "none", "practice_policy": "required_for_safety_or_grounding", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:65` :: query=`practice_policy` :: "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:73` :: query=`practice_policy` :: "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:81` :: query=`practice_policy` :: "expected_planner": {"next_move": "clarify_one_point", "answer_shape": "one_question", "response_depth": "short", "question_policy": "required_one_clarifying", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:90` :: query=`practice_policy` :: "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:98` :: query=`practice_policy` :: "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:106` :: query=`practice_policy` :: "expected_planner": {"next_move": "close_gently", "answer_shape": "gentle_close", "response_depth": "very_short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "minimal_allowed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:115` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:123` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:131` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:140` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:148` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:156` :: query=`practice_policy` :: "expected_planner": {"next_move": "give_direct_step", "answer_shape": "one_step", "response_depth": "short", "question_policy": "none", "practice_policy": "one_micro_step_allowed", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:165` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:173` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:181` :: query=`practice_policy` :: "expected_planner": {"next_move": "deepen_mechanism", "answer_shape": "mechanism_explanation", "response_depth": "medium", "question_policy": "max_one_if_needed", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:190` :: query=`practice_policy` :: "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "compact_direct", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:198` :: query=`practice_policy` :: "expected_planner": {"next_move": "answer_known_concept", "answer_shape": "compact_direct", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:207` :: query=`practice_policy` :: "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_acknowledgement", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:215` :: query=`practice_policy` :: "expected_planner": {"next_move": "repair_misalignment", "answer_shape": "repair_acknowledgement", "response_depth": "short", "question_policy": "none", "practice_policy": "forbidden", "revoicing_policy": "suppressed"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:48` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:102` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:156` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:210` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:264` :: query=`practice_policy` :: "practice_policy": "one_micro_step_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:318` :: query=`practice_policy` :: "practice_policy": "one_micro_step_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:372` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:426` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:480` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:534` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:588` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:642` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:696` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_4_response_planner_cases.json:750` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_prompt_mvp_free_dialogue.py:58` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_first_prompt_assembly_v1.py:52` :: query=`practice_policy` :: response_planner={"practice_policy": "forbidden", "answer_shape": "compact_direct"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_response_planner_answer_fit.py:30` :: query=`practice_policy` :: "practice_policy": "one_micro_step_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_response_planner_answer_fit.py:43` :: query=`practice_policy` :: assert ctx["response_planner_practice_policy"] == "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_response_planner.py:32` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_response_planner.py:49` :: query=`practice_policy` :: assert ctx["response_planner_practice_policy"] == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_contract_response_planner.py:64` :: query=`practice_policy` :: assert ctx["response_planner_practice_policy"] == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_api_trace_response_planner.py:25` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_api_trace_planner_drift_guard.py:25` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner_quality_calibration.py:119` :: query=`practice_policy` :: assert decision.practice_policy == "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner_mvp_practice_catalog.py:62` :: query=`practice_policy` :: assert decision.practice_policy == "overview_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:73` :: query=`practice_policy` :: assert decision.practice_policy == "required_for_safety_or_grounding"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:95` :: query=`practice_policy` :: assert decision.practice_policy == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:112` :: query=`practice_policy` :: assert decision.practice_policy == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:128` :: query=`practice_policy` :: assert decision.practice_policy == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:154` :: query=`practice_policy` :: assert denied.practice_policy == "forbidden"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_planner.py:156` :: query=`practice_policy` :: assert allowed.practice_policy == "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_6_planner_drift_runner.py:33` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:27` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:65` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:81` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:97` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:112` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:115` :: query=`practice_policy` :: assert checks["practice_policy_forbidden_strict"] is False
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:116` :: query=`practice_policy` :: assert "practice_policy_forbidden_strict" in reasons
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:127` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:143` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_4_response_planner_runner.py:23` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_4_response_planner_runner.py:37` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_4_response_planner_runner.py:45` :: query=`practice_policy` :: actual=_planner(practice_policy="one_micro_step_allowed"),
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_4_response_planner_runner.py:50` :: query=`practice_policy` :: assert result["checks"]["practice_policy_match"] is False
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_multiagent_trace.py:344` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:87` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:114` :: query=`practice_policy` :: "response_planner": {"practice_policy": "forbidden"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:154` :: query=`practice_policy` :: assert "practice_policy=forbidden" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:209` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_multiagent_prd_047_10_hf1_dialogue_pragmatics.py:63` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_mvp_legacy_constraint_suppression.py:13` :: query=`practice_policy` :: response_planner={"practice_policy": "forbidden"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_final_answer_directive_v1.py:13` :: query=`practice_policy` :: response_planner={"answer_shape": "compact_direct", "practice_policy": "forbidden"},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_monitor.py:22` :: query=`practice_policy` :: {"status": "critical", "severity": "high", "flags": ["practice_policy_forbidden_violation"]},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_monitor.py:31` :: query=`practice_policy` :: assert summary["by_flag"]["practice_policy_forbidden_violation"] == 1
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:11` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:32` :: query=`practice_policy` :: practice_policy="forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:45` :: query=`practice_policy` :: response_planner=_planner(next_move="deepen_mechanism", answer_shape="mechanism_explanation", practice_policy="forbidden"),
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:52` :: query=`practice_policy` :: def test_practice_policy_forbidden_with_exercise_is_high() -> None:
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:54` :: query=`practice_policy` :: response_planner=_planner(next_move="deepen_mechanism", answer_shape="mechanism_explanation", practice_policy="forbidden"),
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:58` :: query=`practice_policy` :: assert "practice_policy_forbidden_violation" in check["flags"]
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_planner_drift_guard.py:63` :: query=`practice_policy` :: response_planner=_planner(next_move="give_short_support", answer_shape="short_support", practice_policy="forbidden"),
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_guided_live_feedback_storage.py:20` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_hf1_dialogue_pragmatics_eval.py:225` :: query=`practice_policy` :: "practice_policy": planner.get("practice_policy"),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_human_like_eval.py:241` :: query=`practice_policy` :: "practice_policy": planner.get("practice_policy"),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_human_like_eval.py:465` :: query=`practice_policy` :: "practice_policy": planner_payload.get("practice_policy"),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:39` :: query=`practice_policy` :: "practice_policy=forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:52` :: query=`practice_policy` :: "practice_policy",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:272` :: query=`practice_policy` :: "practice_policy": "forbidden" if not bool(case.get("practice_allowed", False)) else "optional_if_relevant",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_4_response_planner_cases.py:148` :: query=`practice_policy` :: checks["practice_policy_match"] = (
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_4_response_planner_cases.py:149` :: query=`practice_policy` :: str(planner.get("practice_policy", "")) == str(expected.get("practice_policy", ""))
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_4_response_planner_cases.py:172` :: query=`practice_policy` :: keys = ("next_move", "answer_shape", "practice_policy", "question_policy", "revoicing_policy")
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:187` :: query=`practice_policy` :: for key in ("next_move", "answer_shape", "response_depth", "question_policy", "practice_policy", "revoicing_policy"):
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:221` :: query=`practice_policy` :: for key in ("next_move", "answer_shape", "response_depth", "question_policy", "practice_policy", "revoicing_policy"):
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:265` :: query=`practice_policy` :: expected_practice_policy = str(expected_planner.get("practice_policy", "") or "")
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:309` :: query=`practice_policy` :: if expected_practice_policy == "forbidden":
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:310` :: query=`practice_policy` :: checks["practice_policy_forbidden_strict"] = not _has_forbidden_practice_instruction(lowered)
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:312` :: query=`practice_policy` :: checks["practice_policy_forbidden_strict"] = True
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:615` :: query=`practice_policy` :: "practice_policy_violation_count": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:640` :: query=`practice_policy` :: if "practice_policy_forbidden_strict" in reasons:
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:641` :: query=`practice_policy` :: summary["practice_policy_violation_count"] += 1
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:653` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:802` :: query=`practice_policy` :: "practice_policy_violation_count": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:33` :: query=`practice_policy` :: "practice_policy_forbidden": 3,
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:94` :: query=`practice_policy` :: "practice_policy",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:266` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:278` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:294` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:306` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:310` :: query=`practice_policy` :: "required_flag": "practice_policy_forbidden_violation",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_6_planner_drift_guard_cases.py:318` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_7_guided_live_feedback_smoke.py:108` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_8_mvp_free_dialogue_cases.py:143` :: query=`practice_policy` :: "practice_policy_present": bool(str(planner.get("practice_policy", "")).strip()),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_8_mvp_free_dialogue_cases.py:162` :: query=`practice_policy` :: "practice_policy",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_8_mvp_free_dialogue_cases.py:196` :: query=`practice_policy` :: "practice_policy": "allowed_if_explicit",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_9_mvp_context_unclamp_cases.py:156` :: query=`practice_policy` :: "practice_policy": planner.get("practice_policy"),
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_9_mvp_context_unclamp_cases.py:180` :: query=`practice_policy` :: "practice_policy": "overview_allowed",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_agent.py:123` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:156` :: query=`ask_one_specific_question` :: assert "ask_one_specific_question" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:199` :: query=`ask_one_specific_question` :: "must_do": ["ask_one_specific_question"],
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:221` :: query=`ask_one_specific_question` :: assert "ask_one_specific_question" not in summary
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:249` :: query=`ask_one_specific_question` :: assert "ask_one_specific_question" in combined
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:64` :: query=`ask_one_specific_question` :: "ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:165` :: query=`ask_one_specific_question` :: if "must do" in lower_match or "ask_one_specific_question" in lower_match:
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:53` :: query=`ask_one_specific_question` :: "ask_one_specific_question",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:54` :: query=`max_sentences` :: "max_sentences",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:288` :: query=`max_sentences` :: "writer_move.max_sentences=5",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:65` :: query=`max_sentences` :: "max_sentences",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_dialogue_policy_effective_profile.py:93` :: query=`max_sentences` :: assert "max_sentences=5" in constraint["overruled_constraints"]
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_mvp_legacy_constraint_suppression.py:24` :: query=`max_sentences` :: assert "writer_move.max_sentences=5" in suppressed
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_prompt_mvp_free_dialogue.py:74` :: query=`max_sentences` :: assert "do_not_force_max_sentences=" in str(user_message)
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\test_quality_baseline_runner.py:69` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_first_prompt_assembly_v1.py:59` :: query=`max_sentences` :: "suppressed_legacy_constraints": ["writer_move.max_sentences=5"],
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_first_prompt_assembly_v1.py:73` :: query=`max_sentences` :: assert "max_sentences" not in user_message
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_formatter.py:50` :: query=`max_sentences` :: assert target["max_sentences"] == 2
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_response_formatter.py:59` :: query=`max_sentences` :: assert target["max_sentences"] == 6
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:103` :: query=`max_sentences` :: "writer_move.max_sentences=5",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:155` :: query=`max_sentences` :: assert "max_sentences" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:52` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:121` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:190` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:259` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:328` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:397` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:466` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:535` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:604` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:673` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:742` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:811` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:880` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:949` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1018` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1087` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1156` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1225` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1294` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1363` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1432` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1501` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1570` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1639` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1708` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1779` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1850` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1921` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:1992` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2063` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2134` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2205` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2276` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2347` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2418` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2487` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2556` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2625` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2694` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2763` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2832` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2901` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:2970` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3039` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3109` :: query=`max_questions` :: "max_questions": 2,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3176` :: query=`max_questions` :: "max_questions": 2,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3243` :: query=`max_questions` :: "max_questions": 2,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3313` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3386` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\prompt_constraint_pilot_runtime_cases.json:3459` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:850` :: query=`max_questions` :: "overlay.candidate_constraints.max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:895` :: query=`max_questions` :: "overlay.candidate_constraints.max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:1114` :: query=`max_questions` :: "case_id": "pbwcp_25_max_questions_tightening",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:1115` :: query=`max_questions` :: "description": "max_questions tightening",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:1116` :: query=`max_questions` :: "user_message": "Pilot case 25: max_questions tightening.",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:1154` :: query=`max_questions` :: "overlay.candidate_constraints.max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\planner_bridge_writer_contract_pilot_cases.json:1158` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_v1_cases.json:84` :: query=`max_questions` :: "next_micro_shift.max_questions_lte": 1
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_v1_cases.json:123` :: query=`max_questions` :: "next_micro_shift.max_questions_lte": 1
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:50` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:101` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:152` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:429` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:987` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\fixtures\diagnostic_center_planner_bridge_cases.json:1038` :: query=`max_questions` :: "max_questions": 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\test_quality_baseline_runner.py:70` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:8` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:16` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:24` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:32` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:41` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:49` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:57` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:66` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:74` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:82` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 320, "max_questions": 1, "forbidden_markers": ["практик", "упражн"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:91` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 160, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:99` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 180, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:107` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 180, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "шаг"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:116` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:124` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:132` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:141` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:149` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:157` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 420, "max_questions": 0, "forbidden_markers": ["шаг 1", "1.", "2."], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:166` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:174` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:182` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 900, "max_questions": 1, "forbidden_markers": ["таймер", "упражн"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:191` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 700, "max_questions": 0, "forbidden_markers": ["что ты вкладываешь", "о каком варианте"], "required_semantics_any": ["нейросталкинг"]}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:199` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 820, "max_questions": 0, "forbidden_markers": ["что ты вкладываешь", "о каком варианте"], "required_semantics_any": ["нейросталкинг", "самореализац"]}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:208` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 480, "max_questions": 0, "forbidden_markers": ["упражн", "таймер", "шаг"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_5_planner_answer_fit_cases.json:216` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 480, "max_questions": 0, "forbidden_markers": ["упражн", "таймер", "шаг"], "required_semantics_any": []}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_10_human_like_cases.json:84` :: query=`max_questions` :: "live_expectations": {"max_chars": 220, "max_questions": 0, "contains_any": ["рядом", "коротко"]}
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\evaluation\prd_047_10_human_like_cases.json:96` :: query=`max_questions` :: "live_expectations": {"max_chars": 260, "max_questions": 0, "must_not_contain_any": ["1.", "2.", "3."]}
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_quality_baseline.py:696` :: query=`max_questions` :: + f"max_questions={writer_move_compliance.get('max_questions')}, "
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:192` :: query=`max_questions` :: if "max_questions" not in expected_fit:
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:193` :: query=`max_questions` :: errors.append(f"{case_id}:missing_expected_answer_fit_max_questions")
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:251` :: query=`max_questions` :: max_questions_raw = expected_fit.get("max_questions", 10)
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:253` :: query=`max_questions` :: max_questions = int(max_questions_raw if max_questions_raw is not None else 10)
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:258` :: query=`max_questions` :: checks["max_questions"] = _count_questions(text) <= max_questions
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_5_planner_answer_fit_cases.py:658` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_2_kernel_quality_cases.py:184` :: query=`max_questions` :: max_questions = 0 if bool(expected.get("must_not_ask_question", False)) else 1
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_2_kernel_quality_cases.py:185` :: query=`max_questions` :: checks["question_count_lte_1"] = _count_questions(answer) <= max_questions
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:55` :: query=`max_questions` :: "max_questions",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:289` :: query=`max_questions` :: "writer_move.max_questions=1",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:66` :: query=`max_questions` :: "max_questions",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_human_like_eval.py:127` :: query=`max_questions` :: max_questions = expectations.get("max_questions")
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_human_like_eval.py:128` :: query=`max_questions` :: if max_questions is not None:
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_10_human_like_eval.py:129` :: query=`max_questions` :: checks["max_questions"] = text.count("?") <= int(max_questions)
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_diagnostic_center_safety_priority.py:31` :: query=`max_questions` :: assert out["next_micro_shift"]["max_questions"] <= 1
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_move_compliance.py:48` :: query=`max_questions` :: assert instructions["max_questions"] == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_move_compliance.py:54` :: query=`max_questions` :: assert instructions["max_questions"] == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_move_compliance.py:61` :: query=`max_questions` :: assert instructions["max_questions"] == 1
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_writer_move_compliance.py:72` :: query=`max_questions` :: assert trace["max_questions"] == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:30` :: query=`max_questions` :: "expected_answer_fit": {"max_chars": 260, "max_questions": 0},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:41` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:53` :: query=`max_questions` :: assert checks["max_questions"] is False
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:54` :: query=`max_questions` :: assert "max_questions" in reasons
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:60` :: query=`max_questions` :: {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"]},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:76` :: query=`max_questions` :: {"max_chars": 260, "max_questions": 0, "forbidden_markers": []},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:92` :: query=`max_questions` :: {"max_chars": 260, "max_questions": 1, "forbidden_markers": []},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:107` :: query=`max_questions` :: {"max_chars": 420, "max_questions": 0, "forbidden_markers": []},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:122` :: query=`max_questions` :: {"max_chars": 320, "max_questions": 0, "forbidden_markers": ["теория", "лекция"]},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_5_planner_answer_fit_runner.py:138` :: query=`max_questions` :: {"max_chars": 260, "max_questions": 0, "forbidden_markers": ["практик", "упражн", "таймер"]},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_contract.py:39` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_safety_guards.py:62` :: query=`max_questions` :: assert bridge["max_questions"] == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_writer_contract_pilot_builder.py:58` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_writer_contract_pilot_immutability.py:60` :: query=`max_questions` :: "planner_bridge_candidate": {"depth_limit": "low_to_medium", "max_questions": 1, "max_concepts": 1},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_writer_contract_pilot_no_user_path_effect.py:55` :: query=`max_questions` :: "planner_bridge_candidate": {"depth_limit": "low_to_medium", "max_questions": 1, "max_concepts": 1},
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_writer_contract_pilot_safety.py:58` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_planner_bridge_writer_contract_pilot_safety.py:70` :: query=`max_questions` :: assert candidate["max_questions"] == 0
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_prompt_constraint_pilot_quality_delta.py:29` :: query=`max_questions` :: target["decision"]["candidate_constraints"]["max_questions"] = 3
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_prompt_constraint_pilot_runtime_builder.py:53` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_prompt_constraint_pilot_runtime_prompt_section.py:25` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_prompt_constraint_pilot_runtime_safety.py:34` :: query=`max_questions` :: "max_questions": 2,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_prompt_replay_builder.py:62` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\multiagent\test_writer_prompt_replay_safety.py:56` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:44` :: query=`Ответь по сути без навязывания практик` :: "Ответь по сути без навязывания практик",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:56` :: query=`Ответь по сути без навязывания практик` :: "Ответь по сути без навязывания практик",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:187` :: query=`Ответь по сути без навязывания практик` :: assert "Ответь по сути без навязывания практик" not in prompt
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:235` :: query=`Ответь по сути без навязывания практик` :: "Ответь по сути без навязывания практик",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:45` :: query=`Отвечу прямо по сути` :: "Отвечу прямо по сути: автоматический контроль",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:57` :: query=`Отвечу прямо по сути` :: "Отвечу прямо по сути",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:236` :: query=`Отвечу прямо по сути` :: "Отвечу прямо по сути: автоматический контроль",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:46` :: query=`Ключевой узел` :: "Ключевой узел в том, что автоматический контроль",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_hf1_writer_prompt_diet.py:58` :: query=`Ключевой узел` :: "Ключевой узел",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:779` :: query=`Ключевой узел` :: "Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+- `C:\My_practice\Text_transcription\bot_psychologist\scripts\run_prd_047_11_audit.py:781` :: query=`Ключевой узел` :: "Ключевой узел в том, как автоматический контроль включает перегруз.",
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_bad_phrase_detector_truthfulness.py:8` :: query=`Ключевой узел` :: "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия."
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_stale_regulate_stub_detector.py:8` :: query=`Ключевой узел` :: "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку."
+- `C:\My_practice\Text_transcription\bot_psychologist\tests\test_prd_047_11_hf1_writer_prompt_diet.py:237` :: query=`Ключевой узел` :: "Ключевой узел в том, что автоматический контроль",
+
+## logs_or_historical_artifacts
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:448` :: query=`MUST DO` :: MUST DO:
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:99` :: query=`MUST DO` :: 2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:67` :: query=`MUST DO` :: MUST DO: ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:199` :: query=`MUST DO` :: MUST DO ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:20` :: query=`MUST DO` :: MUST DO
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:148` :: query=`MUST DO` :: WRITER MOVE MUST DO
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:150` :: query=`MUST DO` :: MUST DO
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:171` :: query=`MUST DO` :: WRITER MOVE MUST DO:
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`MUST DO` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:314` :: query=`MUST DO` :: "suppressed_command_terms": ["MUST DO", "ask_one_specific_question", "practice_suppression_active"],
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:443` :: query=`MUST DO` :: Если хотя бы один live case выдаёт старую заглушку или prompt canvas содержит raw `MUST DO` / `MUST NOT` / `practice_suppression_active=true` как writer-visible command — статус `warning` или `blocker`, не `passed`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:22` :: query=`MUST DO` :: - [x] Удалить imperative термины `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `max_sentences`, `max_questions` из writer-visible summary.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:76` :: query=`MUST DO` :: MUST DO=ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.8_MVP_Free_Dialogue_Mode_Writer_Freedom_Unlock_RU.md:97` :: query=`MUST DO` :: MUST DO: offer_one_simple_body_action
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_WRITER_MOVE_COMPLIANCE_REPORT.md:5` :: query=`MUST DO` :: - Added prompt constraints (`summary`, `MUST DO`, `MUST NOT DO`) for Writer.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-047.11_IMPLEMENTATION_REPORT.md:26` :: query=`MUST DO` :: - Before: legacy imperative blocks could conflict (`WRITER MOVE`, `MUST DO`, strict short constraints).
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:451` :: query=`MUST NOT` :: MUST NOT DO:
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:68` :: query=`MUST NOT` :: MUST NOT: do_not_over_explain
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:200` :: query=`MUST NOT` :: MUST NOT do_not_over_explain
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:21` :: query=`MUST NOT` :: MUST NOT
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:149` :: query=`MUST NOT` :: WRITER MOVE MUST NOT
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:151` :: query=`MUST NOT` :: MUST NOT
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:174` :: query=`MUST NOT` :: MUST NOT:
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`MUST NOT` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:443` :: query=`MUST NOT` :: Если хотя бы один live case выдаёт старую заглушку или prompt canvas содержит raw `MUST DO` / `MUST NOT` / `practice_suppression_active=true` как writer-visible command — статус `warning` или `blocker`, не `passed`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:22` :: query=`MUST NOT` :: - [x] Удалить imperative термины `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `max_sentences`, `max_questions` из writer-visible summary.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:99` :: query=`MUST NOT` :: 2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:199` :: query=`MUST NOT` :: - hidden from hard MUST NOT sections if they conflict with live answer need;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_WRITER_MOVE_COMPLIANCE_REPORT.md:5` :: query=`MUST NOT` :: - Added prompt constraints (`summary`, `MUST DO`, `MUST NOT DO`) for Writer.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:69` :: query=`practice_suppression_active` :: practice_suppression_active=true
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:204` :: query=`practice_suppression_active` :: practice_suppression_active=true как приказ
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:24` :: query=`practice_suppression_active` :: practice_suppression_active=true
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:71` :: query=`practice_suppression_active` :: `practice_forbidden` / `practice_suppression_active` сейчас может восприниматься как запрет на нормальный содержательный ответ.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:155` :: query=`practice_suppression_active` :: practice_suppression_active=true
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:178` :: query=`practice_suppression_active` :: practice_suppression_active=true
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:191` :: query=`practice_suppression_active` :: Важно: summary не должно содержать слов `must`, `forbidden`, `do_not`, `ask_one_specific_question`, `practice_suppression_active`, `max_questions`, `max_sentences`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:205` :: query=`practice_suppression_active` :: `practice_policy=forbidden` / `practice_suppression_active=true` НЕ должны попадать в prompt как raw text.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:211` :: query=`practice_suppression_active` :: "practice_suppression_active": true,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:314` :: query=`practice_suppression_active` :: "suppressed_command_terms": ["MUST DO", "ask_one_specific_question", "practice_suppression_active"],
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:443` :: query=`practice_suppression_active` :: Если хотя бы один live case выдаёт старую заглушку или prompt canvas содержит raw `MUST DO` / `MUST NOT` / `practice_suppression_active=true` как writer-visible command — статус `warning` или `blocker`, не `passed`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:17` :: query=`practice_suppression_active` :: - [x] Не допускать raw `practice_suppression_active=true` / `practice_policy=forbidden` в writer prompt.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:551` :: query=`practice_suppression_active` :: practice_suppression_active
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:31` :: query=`practice_suppression_active` :: - `practice_suppression_active=true`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:338` :: query=`practice_suppression_active` :: - `practice_suppression_active` must become advisory, not blocking.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.3_Active_Line_Dialogue_Continuity_v1.md:763` :: query=`practice_suppression_active` :: practice_suppression_active
+- `C:\My_practice\Text_transcription\TO_DO_LIST\live_feedback\PRD-047.7\sessions\sample_session.json:45` :: query=`practice_policy` :: "practice_policy": "forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\live_feedback\PRD-047.7\sessions\sample_session.json:92` :: query=`practice_policy` :: "practice_policy": "forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\live_feedback\PRD-047.7\sessions\sample_session.json:137` :: query=`practice_policy` :: "practice_policy": "forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:199` :: query=`practice_policy` :: practice_policy_obedience: bool
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:210` :: query=`practice_policy` :: planner_practice_policy: str
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:253` :: query=`practice_policy` :: 7. `practice_policy=forbidden`:
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:289` :: query=`practice_policy` :: practice_policy forbidden violation
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:478` :: query=`practice_policy` :: practice_policy_forbidden        >= 3
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:572` :: query=`practice_policy` :: - practice_policy forbidden + practice answer;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.6_Planner_Runtime_Drift_Guard_Stability_Envelope_RU.md:595` :: query=`practice_policy` :: 4. `practice_policy=forbidden` + "сделай упражнение" -> high flag.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_TASK_LIST.md:32` :: query=`practice_policy` :: - [x] `practice_policy=forbidden`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:254` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:308` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:349` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:374` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:439` :: query=`practice_policy` :: planner.practice_policy=forbidden          → final answer has no practice/step/timer markers
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:455` :: query=`practice_policy` :: If planner.practice_policy=forbidden, do not give steps, exercises, timers, or practice-like instructions.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:516` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_TASK_LIST.md:20` :: query=`practice_policy` :: - [x] Tighten `practice_policy=forbidden` checks.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:73` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:103` :: query=`practice_policy` :: 6. `practice_policy=forbidden` не мог быть засчитан, если финальный ответ предлагает практику, упражнение, таймер, дыхание, шаг или действие.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:339` :: query=`practice_policy` :: practice_policy=forbidden
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:373` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:412` :: query=`practice_policy` :: "practice_policy": "forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:446` :: query=`practice_policy` :: 4. Для `practice_policy=forbidden` удалять практические инструкции.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:491` :: query=`practice_policy` :: answer_fit_negative_practice_policy
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5-HF1_Answer_Fit_Evaluator_False_Positive_Repair_RU.md:524` :: query=`practice_policy` :: "practice_policy_violation_count": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:143` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:244` :: query=`practice_policy` :: - planner выбрал practice_policy != forbidden.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:277` :: query=`practice_policy` :: practice_policy = required_for_safety_or_grounding
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:310` :: query=`practice_policy` :: practice_policy: str
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:404` :: query=`practice_policy` :: ### 6.5. `practice_policy`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:460` :: query=`practice_policy` :: "practice_policy": "required_for_safety_or_grounding",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:484` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:514` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:535` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:558` :: query=`practice_policy` :: "practice_policy": "forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:594` :: query=`practice_policy` :: "practice_policy": "one_micro_step_allowed"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:615` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:655` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:696` :: query=`practice_policy` :: planner_practice_policy
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:796` :: query=`practice_policy` :: - practice_policy: {planner_practice_policy}
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:809` :: query=`practice_policy` :: 5. Если planner.practice_policy=forbidden — не предлагай практику, упражнение, шаг, таймер, технику.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:826` :: query=`practice_policy` :: planner.practice_policy=forbidden -> ответ не содержит практику/упражнение/шаг/таймер
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.4_Response_Planner_v1_RU.md:982` :: query=`practice_policy` :: "practice_policy": "forbidden",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.2_Philosophy_Kernel_Quality_Calibration_Prompt_Compactness_Gate.md:462` :: query=`practice_policy` :: "practice_policy": "gate_required",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:254` :: query=`practice_policy` :: practice_policy: dict
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:501` :: query=`practice_policy` :: practice_policy: gate_required
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:552` :: query=`practice_policy` :: "practice_policy": "practice_requires_gate",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:574` :: query=`practice_policy` :: "practice_policy": "gate_required"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:297` :: query=`practice_policy` :: practice_policy: str
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:23` :: query=`practice_policy` :: practice_policy=forbidden
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:156` :: query=`practice_policy` :: practice_policy=forbidden
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:205` :: query=`practice_policy` :: `practice_policy=forbidden` / `practice_suppression_active=true` НЕ должны попадать в prompt как raw text.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:245` :: query=`practice_policy` :: 3. Все места, где упоминается practice_suppression/practice_forbidden/practice_policy.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`practice_policy` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:17` :: query=`practice_policy` :: - [x] Не допускать raw `practice_suppression_active=true` / `practice_policy=forbidden` в writer prompt.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:99` :: query=`practice_policy` :: 2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:430` :: query=`practice_policy` :: 9. Держит `practice_policy=forbidden`, когда пользователь явно просит применить/пример/что делать.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:304` :: query=`practice_policy` :: "practice_policy": "not_forced"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:795` :: query=`practice_policy` :: practice_policy=forbidden
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:808` :: query=`practice_policy` :: "planner.practice_policy.forbidden"
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:30` :: query=`practice_policy` :: - `practice_policy=forbidden`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:123` :: query=`practice_policy` :: если practice_policy=forbidden -> никогда не давать короткий способ
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:339` :: query=`practice_policy` :: - `practice_policy=forbidden` must not prevent a concrete answer if the bot itself offered a phrase/example/simple method.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:840` :: query=`practice_policy` :: - Stale `practice_policy=forbidden` does not block accepted offer.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md:233` :: query=`practice_policy` :: "practice_policy": "overview_allowed",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.8_MVP_Free_Dialogue_Mode_Writer_Freedom_Unlock_RU.md:283` :: query=`practice_policy` :: "practice_policy": "allowed_if_explicit",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.7_Guided_Live_User_Testing_Protocol_Human_Feedback_Capture_v1_RU.md:253` :: query=`practice_policy` :: "practice_policy": "..."
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-047.5-HF1_IMPLEMENTATION_REPORT.md:27` :: query=`practice_policy` :: - `practice_policy_violation_count`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:405` :: query=`ask_one_specific_question` :: - ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:22` :: query=`ask_one_specific_question` :: - [x] Удалить imperative термины `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `max_sentences`, `max_questions` из writer-visible summary.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:99` :: query=`ask_one_specific_question` :: 2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:548` :: query=`ask_one_specific_question` :: ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.0_Multiagent_Quality_Knowledge_Answer_Routing_Live_Failure_Baseline.md:324` :: query=`ask_one_specific_question` :: и запретить `ask_one_specific_question` как обязательный ход в этом сценарии.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md:76` :: query=`ask_one_specific_question` :: MUST DO=ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:67` :: query=`ask_one_specific_question` :: MUST DO: ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:199` :: query=`ask_one_specific_question` :: MUST DO ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:448` :: query=`ask_one_specific_question` :: - `ask_one_specific_question`;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:22` :: query=`ask_one_specific_question` :: ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:152` :: query=`ask_one_specific_question` :: ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:172` :: query=`ask_one_specific_question` :: reflect_one_key_point, ask_one_specific_question
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:191` :: query=`ask_one_specific_question` :: Важно: summary не должно содержать слов `must`, `forbidden`, `do_not`, `ask_one_specific_question`, `practice_suppression_active`, `max_questions`, `max_sentences`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`ask_one_specific_question` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:314` :: query=`ask_one_specific_question` :: "suppressed_command_terms": ["MUST DO", "ask_one_specific_question", "practice_suppression_active"],
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md:452` :: query=`ask_one_specific_question` :: MUST_DO ask_one_specific_question -> optional
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:305` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:325` :: query=`max_sentences` :: max_sentences: 3
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:338` :: query=`max_sentences` :: max_sentences: 4
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:354` :: query=`max_sentences` :: max_sentences: 4
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:373` :: query=`max_sentences` :: max_sentences: 5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:386` :: query=`max_sentences` :: max_sentences: 6
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:401` :: query=`max_sentences` :: max_sentences: 5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:413` :: query=`max_sentences` :: max_sentences: 6
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:431` :: query=`max_sentences` :: "writer_move_instruction_summary": "move=...; max_sentences=...; max_questions=..."
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:438` :: query=`max_sentences` :: max_sentences=5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:482` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.35-HF4_Creator_Live_Response_Behavior_Calibration_Anti_Regulate_Loop_Trace_Chunk_Display_v1.md:315` :: query=`max_sentences` :: max_sentences=5-8
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.35-HF4_Creator_Live_Response_Behavior_Calibration_Anti_Regulate_Loop_Trace_Chunk_Display_v1.md:332` :: query=`max_sentences` :: "max_sentences": 8,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.3_Diagnostic_Center_Planner_Bridge_Shadow_to_Compliance_Integration_v1_RU.md:221` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:33` :: query=`max_sentences` :: - `max_sentences`
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF1_Direct_Follow-up_Repair_Retrieval_Noise_Reduction_Chat_Markdown_Readability_RU.md:341` :: query=`max_sentences` :: - `max_sentences` must not force a useless stub.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:792` :: query=`max_sentences` :: max_sentences
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10-HF2_Live_Turn_Evidence_Export_Follow-up_Reliability_Repair_Markdown_Smoke_Verification_RU.md:806` :: query=`max_sentences` :: "diagnostic_card.max_sentences",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:54` :: query=`max_sentences` :: max_sentences=5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:233` :: query=`max_sentences` :: "do_not_force_max_sentences": true,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:258` :: query=`max_sentences` :: "max_sentences=5",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:378` :: query=`max_sentences` :: max_sentences=5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:901` :: query=`max_sentences` :: old max_sentences/one_step constraints are overruled in MVP when incompatible;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.10_Human-like_Writer_Autonomy_MVP_Dialogue_Quality_Calibration_v1_RU.md:912` :: query=`max_sentences` :: does not contain hard max_sentences=5 as unqualified MUST;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:549` :: query=`max_sentences` :: max_sentences
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:22` :: query=`max_sentences` :: - [x] Удалить imperative термины `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `max_sentences`, `max_questions` из writer-visible summary.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:153` :: query=`max_sentences` :: max_sentences
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:191` :: query=`max_sentences` :: Важно: summary не должно содержать слов `must`, `forbidden`, `do_not`, `ask_one_specific_question`, `practice_suppression_active`, `max_questions`, `max_sentences`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`max_sentences` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:65` :: query=`max_sentences` :: max_sentences=5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:197` :: query=`max_sentences` :: max_sentences
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:447` :: query=`max_sentences` :: - `max_sentences`;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.8_MVP_Free_Dialogue_Mode_Writer_Freedom_Unlock_RU.md:95` :: query=`max_sentences` :: max_sentences=4
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md:18` :: query=`max_sentences` :: WRITER MOVE: clarify_one_point, max_sentences=5
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md:439` :: query=`max_sentences` :: 4. Если они требуют "max_sentences=5", "do_not_over_explain", "one_step", но пользователь просит обзор или подробное объяснение — раскрывай ответ полно.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_MVP_Context_Unclamp_Unified_Adaptive_Dialogue_Policy_RU.md:451` :: query=`max_sentences` :: WRITER_MOVE max_sentences=5 -> ignore if answer_depth long/deep or overview request
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.9_TASK_LIST.md:30` :: query=`max_sentences` :: - [x] In MVP profile, soften `max_sentences/do_not_over_explain` when user requests explanation/overview/examples/practices.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:156` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:293` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:467` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:604` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:805` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:942` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1116` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1253` :: query=`max_sentences` :: "max_sentences": 5,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1455` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1597` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1778` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1920` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2097` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2241` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2416` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2560` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2763` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2903` :: query=`max_sentences` :: "max_sentences": 4,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3083` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3217` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3391` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3527` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3698` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3834` :: query=`max_sentences` :: "max_sentences": 6,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:306` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:326` :: query=`max_questions` :: max_questions: 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:339` :: query=`max_questions` :: max_questions: 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:355` :: query=`max_questions` :: max_questions: 0 или 1 по context
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:367` :: query=`max_questions` :: max_questions = 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:374` :: query=`max_questions` :: max_questions: 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:387` :: query=`max_questions` :: max_questions: 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:402` :: query=`max_questions` :: max_questions: 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:414` :: query=`max_questions` :: max_questions: 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:431` :: query=`max_questions` :: "writer_move_instruction_summary": "move=...; max_sentences=...; max_questions=..."
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:439` :: query=`max_questions` :: max_questions=1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:483` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:515` :: query=`max_questions` :: - max_questions: 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:547` :: query=`max_questions` :: max_questions == 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:562` :: query=`max_questions` :: max_questions == 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:578` :: query=`max_questions` :: max_questions == 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:591` :: query=`max_questions` :: with `max_questions=0`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-045.7.1_writer_move_compliance_diagnostic_card_alignment.md:705` :: query=`max_questions` :: 4. `regulate_first + low_resource` sets `max_questions=0`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.2_Diagnostic_Center_v1_Shadow_Divergence_Calibration_Planner_Bridge_RU.md:246` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.2_Diagnostic_Center_v1_Shadow_Divergence_Calibration_Planner_Bridge_RU.md:479` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.35-HF4_Creator_Live_Response_Behavior_Calibration_Anti_Regulate_Loop_Trace_Chunk_Display_v1.md:316` :: query=`max_questions` :: max_questions=0 или 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.35-HF4_Creator_Live_Response_Behavior_Calibration_Anti_Regulate_Loop_Trace_Chunk_Display_v1.md:333` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.3_Diagnostic_Center_Planner_Bridge_Shadow_to_Compliance_Integration_v1_RU.md:128` :: query=`max_questions` :: → max_questions
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.3_Diagnostic_Center_Planner_Bridge_Shadow_to_Compliance_Integration_v1_RU.md:222` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.3_Diagnostic_Center_Planner_Bridge_Shadow_to_Compliance_Integration_v1_RU.md:233` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.3_Diagnostic_Center_Planner_Bridge_Shadow_to_Compliance_Integration_v1_RU.md:337` :: query=`max_questions` :: max_questions меньше или равно;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.5_Controlled_Writer_Prompt_Replay_Quality_Eval_v1_RU.md:230` :: query=`max_questions` :: "max_questions": ...,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.5_Controlled_Writer_Prompt_Replay_Quality_Eval_v1_RU.md:254` :: query=`max_questions` :: - max_questions в safety/low-resource <= 0;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.5_Controlled_Writer_Prompt_Replay_Quality_Eval_v1_RU.md:285` :: query=`max_questions` :: - max_questions не увеличивается относительно baseline writer_move_instructions;
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.4_Diagnostic_Center_Planner_Bridge_Controlled_Writer_Contract_Pilot_v1_RU.md:184` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.4_Diagnostic_Center_Planner_Bridge_Controlled_Writer_Contract_Pilot_v1_RU.md:345` :: query=`max_questions` :: 25. max_questions tightening
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.4_Diagnostic_Center_Planner_Bridge_Controlled_Writer_Contract_Pilot_v1_RU.md:509` :: query=`max_questions` :: max_questions = 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md:286` :: query=`max_questions` :: max_questions
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md:300` :: query=`max_questions` :: "max_questions": 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md:588` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md:701` :: query=`max_questions` :: max_questions <= 1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-046.1.6_Controlled_Prompt_Constraint_Pilot_Limited_Runtime_Flag_v1_RU.md:312` :: query=`max_questions` :: - max_questions: 0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:99` :: query=`max_questions` :: 2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:550` :: query=`max_questions` :: max_questions
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:66` :: query=`max_questions` :: max_questions=1
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:198` :: query=`max_questions` :: max_questions
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:482` :: query=`max_questions` :: "writer_move.max_questions=1",
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_TASK_LIST.md:22` :: query=`max_questions` :: - [x] Удалить imperative термины `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `max_sentences`, `max_questions` из writer-visible summary.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:154` :: query=`max_questions` :: max_questions
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:191` :: query=`max_questions` :: Важно: summary не должно содержать слов `must`, `forbidden`, `do_not`, `ask_one_specific_question`, `practice_suppression_active`, `max_questions`, `max_sentences`.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`max_questions` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.5_Planner_Quality_Calibration_Live_Dialogue_Answer_Fit_v1_RU.md:521` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.8_MVP_Free_Dialogue_Mode_Writer_Freedom_Unlock_RU.md:96` :: query=`max_questions` :: max_questions=0
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_IMPLEMENTATION_REPORT.md:71` :: query=`max_questions` :: - `max_questions=0` was incorrectly coerced to `1` by `or 1` fallback.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_IMPLEMENTATION_REPORT.md:96` :: query=`max_questions` :: - move compliance: `regulate_first`, `max_questions=0`, `question_count=0`, violations=[]
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.md:48` :: query=`max_questions` :: - Writer move compliance: move=regulate_first, max_questions=0, question_count=0, sentence_count=3, violations=[]
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.md:62` :: query=`max_questions` :: - Writer move compliance: move=offer_one_micro_step, max_questions=0, question_count=0, sentence_count=3, violations=[]
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.md:76` :: query=`max_questions` :: - Writer move compliance: move=regulate_first, max_questions=0, question_count=0, sentence_count=3, violations=[]
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.md:90` :: query=`max_questions` :: - Writer move compliance: move=reflect_pattern_once, max_questions=1, question_count=1, sentence_count=4, violations=[]
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:157` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:294` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:468` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:605` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:806` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:943` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1117` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1254` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1456` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1598` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1779` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:1921` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2098` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2242` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2417` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2561` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2764` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:2904` :: query=`max_questions` :: "max_questions": 0,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3084` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3218` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3392` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3528` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3699` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-045.7.1_BASELINE_DIRECT_SMOKE_REPORT.json:3835` :: query=`max_questions` :: "max_questions": 1,
+- `C:\My_practice\Text_transcription\TO_DO_LIST\reports\PRD-046.1.4_WRITER_CONTRACT_PILOT_REPORT.md:22` :: query=`max_questions` :: - Safety contexts clamp overlay to low-load constraints (`depth <= low`, `max_questions = 0`, `max_concepts <= 1`).
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:222` :: query=`Отвечу прямо по сути` :: Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`Отвечу прямо по сути` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:223` :: query=`Ключевой узел` :: Ключевой узел в том, что автоматический контроль...
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-HF1_Writer_Prompt_Diet_Practice_Suppression_Rewrite_Legacy_Advisory_Sanitization_v1_RU.md:253` :: query=`Ключевой узел` :: rg -n "Отвечу по сути|Отвечу прямо по сути|автоматический контроль|Ключевой узел|practice_suppression|practice_policy|practice_forbidden|MUST DO|MUST NOT|ask_one_specific_question|max_sentences|max_questions" C:\My_practice\Text_transcription\bot_psychologist C:\My_practice\Text_transcription\TO_DO_LIST C:\My_practice\Text_transcription\docs
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:413` :: query=`Ключевой узел` :: Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11-AUDIT_Runtime_Quality_Audit_Evidence_Truthfulness_Web_Chat_Rendering_Verification_v1_RU.md:414` :: query=`Ключевой узел` :: Ключевой узел в том, как автоматический контроль включает перегруз
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:26` :: query=`Ключевой узел` :: Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:383` :: query=`Ключевой узел` :: Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия
+- `C:\My_practice\Text_transcription\TO_DO_LIST\PRD-047.11_MVP_Dialogue_Policy_Consolidation_Writer-First_Prompt_Assembly_v1_RU.md:619` :: query=`Ключевой узел` :: Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку
+
+## docs_only
+- `C:\My_practice\Text_transcription\docs\DECISIONS.md:802` :: query=`practice_policy` :: Decision: add `Response Planner v1` as deterministic layer between Active Line and WriterContract. Planner does not call LLMs and does not produce user-facing text; it computes compact move/policy fields (`next_move`, `answer_shape`, `response_depth`, `question_policy`, `practice_policy`, `revoicing_policy`, `must_include`, `must_avoid`) from existing runtime signals. Safety, Knowledge Answer routing, and Practice Gate remain hard boundaries; Writer Freedom Contract remains active as guided style/freedom frame.
+- `C:\My_practice\Text_transcription\docs\DECISIONS.md:826` :: query=`practice_policy` :: Decision: PRD-047.5-HF1 hardens answer-fit acceptance on final text with strict shape/policy checks and mismatch counters (`safety_grounding`, `short_support`, `question_policy=none`, `practice_policy=forbidden`, `planner_answer_shape_alignment`), keeps live runner planner source API-trace-only, and applies minimal writer compliance repair where strict evaluator exposed real runtime drift.

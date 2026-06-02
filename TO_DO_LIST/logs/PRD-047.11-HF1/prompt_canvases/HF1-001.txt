@@ -1,0 +1,172 @@
+
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+привет
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: answer_directly
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+нет
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "answer_user_question_directly",
+  "must_answer": "answer_user_question_directly",
+  "answer_shape": "brief_human_greeting",
+  "depth": "short",
+  "style": "human_conversational",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: разобрать текущий вопрос по сути.
+Полезно ответить на актуальную потребность: понятный ответ без заглушки.
+Можно опереться на такой ход ответа: спокойно объяснить суть.
+Лучше отвечать прямо и не уводить пользователя в лишние уточнения.
+Один полезный смысловой сдвиг: дать живой ответ без legacy команд.
+Формат можно держать таким: brief_human_greeting.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
+Новая короткая встреча.
+context_budget_chars=7000
+context_truncated=false
+preserved_recent_turns_count=0
+older_context_omitted_chars=0
+
+ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ:
+Паттерны: нет
+Ценности: нет
+
+ЗНАНИЯ ИЗ БАЗЫ:
+нет релевантных знаний
+
+KNOWLEDGE ANSWER ROUTING:
+knowledge_answer_needed=true
+knowledge_answer_concept=none
+kb_grounding_available=true
+knowledge_answer_first=true
+do_not_ask_user_to_define_term_before_answering=true
+practice_allowed=false
+writer_instruction=answer_normally
+practice_ban_instruction=no_exercise_but_answer_normally
+known_concept_clarification_ban=true: do_not_ask_user_to_define_or_choose_known_concept_variant
+external_surveillance_frame_ban=true: avoid_external_surveillance_biofeedback_eeg_frame_for_internal_concept_answer
+
+NEO PHILOSOPHY KERNEL:
+kernel_version=
+quote_policy=internal_lens_not_citation
+selected_lenses=none
+guidance=speak_from_lens_not_about_lens
+kernel_block:
+none
+prompt_compactness={}
+
+WRITER FREEDOM CONTRACT:
+contract_block:
+none
+
+DIALOGUE POLICY:
+dialogue_profile=mvp_free_dialogue
+expansion_requested=false
+repair_and_expand_requested=false
+active_concept=
+
+DIALOGUE PRAGMATICS:
+version=dialogue_pragmatics_v1
+is_short_utterance=false
+short_utterance_type=not_short
+is_contextual_followup=false
+previous_assistant_offer_type=unknown
+inherited_user_intent=continue_previous_offer
+should_answer_directly=false
+should_not_ask_confirmation_again=false
+repair_user_dissatisfaction=false
+reason=none
+
+CONTEXTUAL RETRIEVAL DECISION:
+version=contextual_retrieval_gating_v1
+retrieval_action=none
+rag_candidates_count=0
+rag_included_count=0
+rag_included_reason=
+rag_suppressed_reason=
+writer_can_ignore_rag=true
+rag_relevance_to_current_turn=unknown
+inherited_topic=
+inherited_offer_type=unknown
+
+HUMAN-LIKE ANSWER POLICY:
+human_like_enabled=false
+answer_style=guided_compact
+default_depth=short_to_medium
+question_is_optional=false
+do_not_force_question_at_end=false
+do_not_force_practice_frame=false
+flexible_length_allowed=false
+respect_user_requested_format=false
+repair_user_dissatisfaction=false
+direct_answer_repair_when_user_complains=false
+
+CONSTRAINT RESOLUTION:
+constraint_profile=mvp_free_dialogue
+constraint_planner_authority=guided
+overruled_constraints=none
+overrule_reason=none
+
+mvp_free_dialogue_overrides:
+MVP FREE DIALOGUE OVERRIDES:
+- explicit_user_request_wins=true
+- old_max_sentence_constraints_softened=true
+- planner_advisory=true
+- overview_questions_allow_lists=false
+- target_answer_depth=medium
+- rich_user_request_detected=false
+- explicit_answer_need=false
+- direct_concrete_request=false
+- summary_request=false
+- sarcasm_or_negative_feedback=false
+
+ПЕРЕД ОТВЕТОМ ВНУТРИ СЕБЯ ВЫБЕРИ:
+- главный фокус пользователя;
+- нужную глубину;
+- один следующий ход.
+
+В ответе не показывай этот анализ.
+
+Напиши ответ. Только текст ответа, без кавычек и пояснений.

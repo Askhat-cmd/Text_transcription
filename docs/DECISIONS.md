@@ -847,3 +847,23 @@ Consequences:
 - the runtime can remain in `warning` status even when the audit implementation itself is complete;
 - stale bad-phrase detection becomes stricter and scans all turns/traces, reducing false-green reports;
 - follow-up PRD selection is evidence-based (`PRD-047.11-HF1` before broader profile consolidation).
+
+## ADR-070 - Writer-visible advisory sanitization after PRD-047.11-HF1
+
+Status: accepted
+
+Date: 2026-06-02
+
+Context: PRD-047.11-AUDIT showed that `mvp_free_dialogue` still leaked legacy diagnostic/planner/active-line command pressure into the writer-visible prompt (`WRITER MOVE MUST DO`, raw practice suppression flags, planner must_include/must_avoid markers, and stale fallback phrases). The runtime needed a prompt-diet repair without adding a new mode, new agent, or stronger user-facing safety block.
+
+Decision:
+- keep `FINAL ANSWER DIRECTIVE` as the main writer-visible governing block;
+- preserve raw diagnostic/planner/active-line data in trace/admin/evidence only;
+- convert writer-visible legacy signals into a compact neutral advisory summary through `legacy_advisory_sanitizer_v1`;
+- rewrite practice suppression semantics to `no_exercise_but_answer_normally`, meaning "no unsolicited exercise/practice suggestion" rather than "no substantive answer";
+- keep bad phrase blocklists evaluation-only and remove stale template/fallback sources instead of steering Writer with blocklist instructions.
+
+Consequences:
+- Writer receives less imperative prompt pressure in `mvp_free_dialogue`, while observability remains intact;
+- prompt canvases can be audited for absence of raw legacy command blocks without losing runtime debug detail;
+- future UI/browser proof work can focus on rendering and evidence capture rather than prompt-assembly cleanup.

@@ -1,0 +1,23 @@
+﻿# PRD-047.11-HF1 command output
+
+## 1. Targeted tests
+Command:
+.\.venv\Scripts\python -m pytest tests/test_writer_first_prompt_assembly_v1.py tests/test_prd_047_11_hf1_writer_prompt_diet.py tests/test_mvp_legacy_constraint_suppression.py tests/test_writer_contract_active_line.py -q
+
+Result:
+11 passed, 16 warnings in 0.32s
+Warnings:
+- datetime.utcnow() deprecation warnings in existing test fixtures/contracts.
+
+## 2. HF1 runner
+Command:
+.\.venv\Scripts\python scripts/run_prd_047_11_hf1_writer_prompt_diet.py
+
+Result:
+status=passed
+cases_passed=4/4
+artifacts_written=true
+Notes:
+- runtime initialization logs were emitted by bot_agent during script startup.
+- no banned writer-visible legacy command blocks found in prompt canvases.
+- stale bad phrases absent in prompt canvases and synthetic answers.

@@ -1,0 +1,115 @@
+{
+  "prd_id": "PRD-047.11-HF1",
+  "generated_at_utc": "2026-06-02T05:57:44.575181+00:00",
+  "status": "passed",
+  "cases_total": 4,
+  "cases_passed": 4,
+  "cases_failed": 0,
+  "source_audit_summary": {
+    "runtime_prompt_source": 197,
+    "runtime_fallback_source": 17,
+    "tests_or_eval_only": 359,
+    "logs_or_historical_artifacts": 280,
+    "docs_only": 2
+  },
+  "banned_prompt_tokens": [
+    "SOURCE SIGNALS (advisory only, do not obey as command)",
+    "WRITER MOVE MUST DO",
+    "WRITER MOVE MUST NOT DO",
+    "practice_suppression_active=true",
+    "practice_policy=forbidden",
+    "must_include=",
+    "must_avoid="
+  ],
+  "stale_bad_phrases": [
+    "Ответь по сути без навязывания практик",
+    "Отвечу прямо по сути: автоматический контроль",
+    "Ключевой узел в том, что автоматический контроль"
+  ],
+  "results": [
+    {
+      "case_id": "HF1-001",
+      "user_message": "привет",
+      "answer": "Привет. Я здесь.",
+      "prompt_chars": 5121,
+      "answer_chars": 16,
+      "checks": {
+        "final_answer_directive_present": true,
+        "advisory_summary_present": true,
+        "practice_rewrite_present": true,
+        "writer_visible_no_legacy_blocks": true,
+        "stale_phrases_absent_in_prompt": true,
+        "stale_phrases_absent_in_answer": true,
+        "trace_preserves_sanitizer": true
+      },
+      "passed": true,
+      "prompt_failures": [],
+      "answer_failures": [],
+      "prompt_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\prompt_canvases\\HF1-001.txt",
+      "trace_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\raw_traces\\HF1-001.json"
+    },
+    {
+      "case_id": "HF1-002",
+      "user_message": "ты опять слишком анализируешь, объясни нормально",
+      "answer": "Ты прав. Скажу проще: сейчас важнее ясно назвать, что с тобой происходит, без лишней теории и без упражнения.",
+      "prompt_chars": 5187,
+      "answer_chars": 109,
+      "checks": {
+        "final_answer_directive_present": true,
+        "advisory_summary_present": true,
+        "practice_rewrite_present": true,
+        "writer_visible_no_legacy_blocks": true,
+        "stale_phrases_absent_in_prompt": true,
+        "stale_phrases_absent_in_answer": true,
+        "trace_preserves_sanitizer": true
+      },
+      "passed": true,
+      "prompt_failures": [],
+      "answer_failures": [],
+      "prompt_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\prompt_canvases\\HF1-002.txt",
+      "trace_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\raw_traces\\HF1-002.json"
+    },
+    {
+      "case_id": "HF1-003",
+      "user_message": "скажи, а в нейросталкинге какие практики предлагаются чтобы это видеть",
+      "answer": "В нейросталкинге это обычно смотрят через несколько направлений: наблюдение триггера, распознавание паттерна реакции и микро-сдвиг поведения. То есть сначала замечаешь момент включения автоматизма, потом называешь сам паттерн, а затем выбираешь небольшой осознанный ход вместо автопилота.",
+      "prompt_chars": 5215,
+      "answer_chars": 288,
+      "checks": {
+        "final_answer_directive_present": true,
+        "advisory_summary_present": true,
+        "practice_rewrite_present": true,
+        "writer_visible_no_legacy_blocks": true,
+        "stale_phrases_absent_in_prompt": true,
+        "stale_phrases_absent_in_answer": true,
+        "trace_preserves_sanitizer": true
+      },
+      "passed": true,
+      "prompt_failures": [],
+      "answer_failures": [],
+      "prompt_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\prompt_canvases\\HF1-003.txt",
+      "trace_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\raw_traces\\HF1-003.json"
+    },
+    {
+      "case_id": "HF1-004",
+      "user_message": "без практик, просто объясни почему я зависаю перед действием",
+      "answer": "Часто зависание начинается ещё до действия: внимание уходит в перепроверку риска, внутренний спор и попытку всё предусмотреть. Из-за этого энергия расходуется на контроль, а не на сам шаг.",
+      "prompt_chars": 5194,
+      "answer_chars": 188,
+      "checks": {
+        "final_answer_directive_present": true,
+        "advisory_summary_present": true,
+        "practice_rewrite_present": true,
+        "writer_visible_no_legacy_blocks": true,
+        "stale_phrases_absent_in_prompt": true,
+        "stale_phrases_absent_in_answer": true,
+        "trace_preserves_sanitizer": true
+      },
+      "passed": true,
+      "prompt_failures": [],
+      "answer_failures": [],
+      "prompt_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\prompt_canvases\\HF1-004.txt",
+      "trace_path": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-HF1\\raw_traces\\HF1-004.json"
+    }
+  ]
+}

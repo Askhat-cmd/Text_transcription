@@ -1,0 +1,26 @@
+{
+  "prd_id": "PRD-047.11-AUDIT",
+  "generated_at": "2026-06-01T12:11:50.235346+00:00",
+  "status": "warning",
+  "mode": "live",
+  "required_artifacts": [
+    "00_audit_manifest.json",
+    "01_source_inventory.md",
+    "02_prompt_assembly_audit.md",
+    "03_acceptance_gate_audit.md",
+    "04_dialogue_quality_matrix.md",
+    "05_web_chat_rendering_audit.md",
+    "06_admin_configurability_audit.md",
+    "07_failure_clusters.md",
+    "08_next_prd_recommendation.md",
+    "09_no_mutation_proof.json",
+    "10_docs_update_report.md"
+  ],
+  "required_subdirs": [
+    "live_turn_exports",
+    "screenshots",
+    "dom_snapshots",
+    "raw_traces",
+    "prompt_canvases"
+  ]
+}

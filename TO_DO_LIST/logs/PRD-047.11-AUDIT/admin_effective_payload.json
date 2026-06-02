@@ -1,0 +1,376 @@
+{
+  "schema_version": "10.5.1",
+  "admin_schema_version": "10.5",
+  "prompt_stack_version": "2.0",
+  "active_runtime": "multiagent",
+  "runtime_entrypoint": "multiagent_adapter",
+  "pipeline_version": "multiagent_v1",
+  "legacy": {
+    "fallback_enabled": false,
+    "fallback_used": false,
+    "cascade_available": false,
+    "cascade_status": "physically_removed",
+    "purge_planned_prd": null,
+    "purge_completed_prd": "PRD-041"
+  },
+  "compatibility": {
+    "pipeline_mode": "multiagent_only",
+    "pipeline_mode_legacy_value": null,
+    "pipeline_mode_read_only": true,
+    "legacy_modes_selectable": false
+  },
+  "pipeline_mode": "multiagent_only",
+  "pipeline_mode_read_only": true,
+  "pipeline_mode_legacy_value": null,
+  "legacy_modes_selectable": false,
+  "deprecated_runtime_flags": {
+    "MULTIAGENT_ENABLED": "ignored_as_runtime_switch_after_PRD_036",
+    "LEGACY_PIPELINE_ENABLED": "legacy_runtime_disabled_after_PRD_036"
+  },
+  "runtime_warnings": [],
+  "agents": {
+    "state_analyzer": {
+      "kind": "llm"
+    },
+    "thread_manager": {
+      "kind": "heuristic",
+      "llm_model_effective": false,
+      "note": "Model selection is reserved for future LLM thread manager; current implementation is heuristic."
+    },
+    "memory_retrieval": {
+      "kind": "retrieval"
+    },
+    "writer": {
+      "kind": "llm"
+    },
+    "validator": {
+      "kind": "deterministic"
+    }
+  },
+  "status": {
+    "degraded_mode": false,
+    "data_source": "api",
+    "blocks_loaded": 247,
+    "version": "0.7.0",
+    "feature_flags": {
+      "NEO_MINDBOT_ENABLED": true,
+      "LEGACY_PIPELINE_ENABLED": false,
+      "DISABLE_USER_LEVEL_ADAPTER": true,
+      "USER_LEVEL_ADAPTER_ENABLED": false,
+      "PRE_ROUTING_ENABLED": false,
+      "USE_NEW_DIAGNOSTICS_V1": true,
+      "USE_DETERMINISTIC_ROUTE_RESOLVER": true,
+      "USE_PROMPT_STACK_V2": true,
+      "USE_OUTPUT_VALIDATION": false,
+      "INFORMATIONAL_BRANCH_ENABLED": true,
+      "ENABLE_EMBEDDING_PROVIDER": true,
+      "ENABLE_CONDITIONAL_RERANKER": true,
+      "ENABLE_FAST_STATE_DETECTOR": true,
+      "MULTIAGENT_ENABLED": true,
+      "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+      "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true
+    }
+  },
+  "feature_flags": {
+    "all": {
+      "NEO_MINDBOT_ENABLED": true,
+      "LEGACY_PIPELINE_ENABLED": false,
+      "DISABLE_USER_LEVEL_ADAPTER": true,
+      "USER_LEVEL_ADAPTER_ENABLED": false,
+      "PRE_ROUTING_ENABLED": false,
+      "USE_NEW_DIAGNOSTICS_V1": true,
+      "USE_DETERMINISTIC_ROUTE_RESOLVER": true,
+      "USE_PROMPT_STACK_V2": true,
+      "USE_OUTPUT_VALIDATION": false,
+      "INFORMATIONAL_BRANCH_ENABLED": true,
+      "ENABLE_EMBEDDING_PROVIDER": true,
+      "ENABLE_CONDITIONAL_RERANKER": true,
+      "ENABLE_FAST_STATE_DETECTOR": true,
+      "MULTIAGENT_ENABLED": true,
+      "PROMPT_CONSTRAINT_PILOT_ENABLED": false,
+      "PROMPT_CONSTRAINT_PILOT_FORCE_DISABLED": true
+    },
+    "groups": {
+      "neo_runtime": {
+        "NEO_MINDBOT_ENABLED": true,
+        "LEGACY_PIPELINE_ENABLED": false,
+        "DISABLE_USER_LEVEL_ADAPTER": true
+      },
+      "pipeline": {
+        "USE_NEW_DIAGNOSTICS_V1": true,
+        "USE_DETERMINISTIC_ROUTE_RESOLVER": true,
+        "USE_PROMPT_STACK_V2": true,
+        "USE_OUTPUT_VALIDATION": false,
+        "INFORMATIONAL_BRANCH_ENABLED": true
+      },
+      "quality": {
+        "ENABLE_CONDITIONAL_RERANKER": true,
+        "ENABLE_EMBEDDING_PROVIDER": true
+      }
+    }
+  },
+  "diagnostics": {
+    "contract": "v1",
+    "enabled": true,
+    "informational_branch_enabled": true
+  },
+  "routing": {
+    "deterministic_resolver_enabled": true,
+    "curiosity_decoupling_enabled": true,
+    "false_inform_protection_enabled": false,
+    "practice_trigger_guard_enabled": false
+  },
+  "validation": {
+    "enabled": false,
+    "config_validation_status": {
+      "valid": true,
+      "errors": []
+    }
+  },
+  "trace": {
+    "available": true,
+    "developer_trace_supported": true,
+    "developer_trace_enabled": true,
+    "developer_trace_mode_available": true
+  },
+  "philosophy_kernel": {
+    "enabled": true,
+    "version": "neo_philosophy_kernel_v1",
+    "kernel_enabled": true,
+    "kernel_version": "neo_philosophy_kernel_v1",
+    "identity": {
+      "bot_identity": "NEO / Bot Psychologist",
+      "role": "само-диагностирующаяся диалоговая система"
+    },
+    "quote_policy": "internal_lens_not_citation",
+    "practice_policy": "gate_required",
+    "principles_count": 6,
+    "boundaries_count": 6,
+    "lenses": [
+      "autopilot",
+      "drivers",
+      "imperfect_self_program",
+      "neurostalking",
+      "resource_first_contact"
+    ],
+    "selected_lenses_visible": true,
+    "prompt_budget": {
+      "max_kernel_chars": 1800,
+      "max_freedom_chars": 1000,
+      "max_combined_chars": 2600,
+      "max_selected_lenses": 3
+    },
+    "quality_calibration": {
+      "last_prd": "PRD-047.2",
+      "last_direct_passed": true,
+      "last_direct_cases_total": 12,
+      "last_direct_cases_failed": 0,
+      "artifact_found": true
+    }
+  },
+  "writer_freedom_contract": {
+    "enabled": true,
+    "version": "writer_freedom_contract_v1",
+    "freedom_level": "mvp_free",
+    "mode_is_hint_not_cage": true,
+    "question_limit": 1,
+    "practice_requires_gate": true,
+    "writer_max_tokens": 2500,
+    "writer_target_tokens_default": 700,
+    "writer_target_tokens_expanded": 1500,
+    "writer_allow_long_answer": true
+  },
+  "dialogue_policy": {
+    "profile": "mvp_free_dialogue",
+    "writer_autonomy": "high",
+    "planner_authority": "advisory",
+    "diagnostic_card_authority": "advisory",
+    "writer_move_authority": "advisory",
+    "active_line_authority": "advisory",
+    "context_budget_chars": 7000,
+    "allow_numbered_lists": false,
+    "allow_examples": false,
+    "allow_practice_catalog": false,
+    "human_like_answer_policy": {
+      "enabled": true,
+      "answer_style": "human_chatgpt_like",
+      "default_depth": "medium_to_long",
+      "allow_long_answers": true,
+      "allow_lists": false,
+      "allow_examples": false,
+      "allow_direct_answer": true,
+      "allow_reflection_plus_explanation_plus_step": true,
+      "allow_multiple_options": true,
+      "question_is_optional": true,
+      "micro_step_only_when_user_explicitly_requests_one_step": true,
+      "do_not_force_question_at_end": true,
+      "do_not_force_practice_frame": true,
+      "do_not_force_max_sentences": true,
+      "respect_user_requested_format": true,
+      "sarcasm_and_dissatisfaction_repair": true,
+      "direct_answer_repair_when_user_complains": true
+    },
+    "constraint_resolution": {
+      "profile": "mvp_free_dialogue",
+      "planner_authority": "advisory",
+      "overruled_constraints": [],
+      "overrule_reason": "none"
+    },
+    "writer_runtime_max_tokens_effective": 2500,
+    "final_answer_directive_enabled": true,
+    "final_answer_directive_version": "final_answer_directive_v1",
+    "diagnostic_center_role": "advisory_context_only",
+    "planner_role": "advisory_context_only",
+    "active_line_role": "advisory_context_only",
+    "diagnostic_card_role": "advisory_context_only",
+    "legacy_prompt_blocks_mode": "source_signals_only",
+    "writer_first_prompt_assembly_enabled": true
+  },
+  "dialogue_profile": {
+    "value": "mvp_free_dialogue",
+    "allowed_values": [
+      "safe_guided",
+      "mvp_free_dialogue"
+    ],
+    "scope": "developer_local",
+    "description": "Controls Writer freedom and response-depth behavior for MVP owner testing.",
+    "developer_local_only": true,
+    "warning": "Developer-local MVP mode. Freer, longer answers. Not production-ready."
+  },
+  "active_line": {
+    "enabled": true,
+    "version": "active_line_v1",
+    "revoicing_policy": "suppress_mechanical_revoicing",
+    "practice_suppression_active": true,
+    "user_intent": "runtime_per_turn",
+    "continuity_mode": "runtime_per_turn",
+    "last_quality_calibration": {
+      "last_prd": "PRD-047.3",
+      "last_direct_passed": true,
+      "last_direct_cases_total": 10,
+      "last_direct_cases_failed": 0,
+      "artifact_found": true
+    }
+  },
+  "response_planner": {
+    "enabled": true,
+    "version": "response_planner_v1",
+    "kind": "deterministic",
+    "role": "next_meaningful_move_selector",
+    "advisory_mode": true,
+    "live_acceptance_requires_api_trace": true,
+    "last_quality_calibration": {
+      "last_prd": "PRD-047.4",
+      "last_direct_passed": true,
+      "last_direct_cases_total": 14,
+      "last_direct_cases_failed": 0,
+      "artifact_found": true
+    }
+  },
+  "planner_drift_guard": {
+    "enabled": true,
+    "version": "planner_drift_guard_v1",
+    "mode": "observe_only",
+    "blocking_user_answers": false,
+    "window_size": 100,
+    "thresholds": {
+      "warning_violation_rate": 0.1,
+      "critical_rate": 0.03
+    },
+    "mvp_expansion_exceptions": {
+      "answer_length_long_when_expansion_requested": true,
+      "numbered_list_when_expansion_requested": true,
+      "multi_block_answer_when_concept_explanation_full": true
+    },
+    "last_summary": {
+      "version": "planner_drift_guard_v1",
+      "window_size": 100,
+      "total": 13,
+      "ok_count": 9,
+      "warning_count": 4,
+      "critical_count": 0,
+      "violation_rate": 0.3077,
+      "critical_rate": 0.0,
+      "by_flag": {
+        "answer_length_warning": 4
+      },
+      "last_status": "warning",
+      "last_flags": [
+        "answer_length_warning"
+      ],
+      "threshold_status": "ok",
+      "thresholds": {
+        "warning_violation_rate": 0.1,
+        "critical_rate": 0.03,
+        "min_samples": 20,
+        "recent_medium_window": 5,
+        "recent_high_window": 3
+      }
+    },
+    "last_replay_status": {
+      "prd": "PRD-047.6",
+      "direct": "failed",
+      "live": "failed"
+    }
+  },
+  "guided_live_testing": {
+    "schema_version": "live_feedback_v1",
+    "enabled": true,
+    "mode": "developer_local",
+    "feedback_storage": "file_sanitized",
+    "raw_dialogue_saved_by_default": false,
+    "scenario_set": "prd_047_7_guided_live_scenarios",
+    "scenario_count": 0,
+    "last_session_summary_available": true
+  },
+  "diagnostic_center_control": {
+    "schema_version": "diagnostic_center_control_v1",
+    "status": "completed_for_current_creator_only_phase",
+    "current_mode": "creator_only",
+    "effective_active": true,
+    "force_disabled": false,
+    "kill_switch_available": true,
+    "single_developer_project": true,
+    "developer_identity": {
+      "creator_user_id": "creator",
+      "developer_user_ids": [
+        "creator"
+      ],
+      "allowlist_user_ids": []
+    },
+    "available_modes": [
+      "disabled",
+      "shadow",
+      "developer",
+      "creator_only",
+      "allowlist",
+      "developer_local_all_users"
+    ],
+    "boundary_flags": {
+      "broad_rollout_allowed": false,
+      "production_ready": false,
+      "normal_user_activation_allowed": false,
+      "external_users_allowed": false
+    },
+    "scope": {
+      "runtime_scope": "developer_local",
+      "external_rollout_scope": "blocked",
+      "note": "creator/developer governed mode"
+    },
+    "last_evidence": {
+      "last_prd": "PRD-046.1.37-HF1",
+      "diagnostic_center_track_status": "closed_for_current_phase",
+      "recommended_runner_timeout_sec": 42
+    },
+    "control_state": {
+      "mode": "creator_only",
+      "force_disabled": false,
+      "allowlist_user_ids": [],
+      "developer_all_users_enabled": false,
+      "updated_at": "2026-05-25T11:19:53.524781+00:00",
+      "updated_by": "dev",
+      "reason": "reset_to_safe_default"
+    },
+    "warnings": []
+  }
+}

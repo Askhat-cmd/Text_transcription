@@ -1,0 +1,16 @@
+{
+  "mode": "dry",
+  "status": "passed",
+  "timestamp": "2026-06-02T04:53:11.073309+00:00",
+  "checks": {
+    "bot_psychologist/bot_agent/multiagent/stale_stub_detector.py": true,
+    "bot_psychologist/bot_agent/multiagent/agents/writer_agent_prompts.py": true,
+    "bot_psychologist/bot_agent/multiagent/orchestrator.py": true,
+    "bot_psychologist/api/admin_routes.py": true,
+    "bot_psychologist/tests/evaluation/prd_047_11_audit_cases.json": true,
+    "dataset_not_empty": true,
+    "required_case_id_prefix": true
+  },
+  "dataset_total": 18,
+  "prd": "PRD-047.11-AUDIT"
+}

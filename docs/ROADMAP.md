@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Done
+- PRD-047.11-AUDIT: added evidence-first audit runner/dataset/artifact pack (`PRD-047.11-AUDIT`) with source inventory, prompt/acceptance truthfulness checks, 18-case live matrix, raw trace + prompt canvas export, admin payload audit, and honest warning-grade reporting (`14/18` live failures, `15` bad-phrase hits, browser screenshot proof unavailable because Playwright was missing locally).
 - PRD-047.11: completed writer-first consolidation end-to-end (new `final_answer_directive_v1`, stale stub detector, MVP prompt assembly advisory refactor, live evidence/admin/runtime extensions, tests, runner, artifacts) with final acceptance `passed` (`dry/direct/live=passed`, real Web Chat markdown smoke `passed`).
 - PRD-047.10-HF2: added `live_turn_evidence_v1` export path (orchestrator/debug/API trace), follow-up reliability repair runner/dataset (`HF2-001..HF2-008`), short-input robustness fix (`AskQuestionRequest.query min_length=1`), contextual retrieval taxonomy refinement (`example_grounding/practice_catalog/kb_optional/...`) and markdown smoke DOM artifact flow; acceptance `dry/direct/live=passed` on fresh backend `:8020`.
 - PRD-047.10-HF1: added deterministic contextual follow-up pragmatics (`dialogue_pragmatics_v1`), contextual retrieval gating (`included` vs `candidates`, `writer_can_ignore_rag`), writer direct-repair/follow-up compliance patch, trace/API visibility updates, and safe Web Chat markdown rendering (`react-markdown` + `remark-gfm` + `skipHtml`) with runner acceptance (`dry=passed`, `direct=passed`, `live=passed` on fresh backend `:8019`).
@@ -34,11 +35,11 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active blocker for PRD-047.11; cycle closed as passed.
+- PRD-047.11-AUDIT closed with `warning`, not `passed`: runtime truthfulness and writer-pressure failures remain, and real browser proof for Web Chat/Admin was not captured in the local environment.
 
 ## Next
-1. Start PRD-047.12 to consolidate `safe_guided` and `mvp_free_dialogue` into one adaptive policy layer.
-2. Preserve Writer-first contract, advisory-role boundaries, and current runtime/admin observability surface.
+1. Start `PRD-047.11-HF1` to repair acceptance-gate truthfulness, stale bad-phrase suppression, and residual writer prompt pressure.
+2. Keep `PRD-WEB-CHAT-READABILITY-001` as a follow-up track for real browser proof and frontend readability verification.
 
 ## Later
 - Operational hardening for governed limited runtime.

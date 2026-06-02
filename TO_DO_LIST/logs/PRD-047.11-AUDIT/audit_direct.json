@@ -1,0 +1,32 @@
+{
+  "mode": "direct",
+  "status": "passed",
+  "timestamp": "2026-06-01T12:13:12.533159+00:00",
+  "checks": {
+    "bad_phrase_detector_hits_all_known_samples": true,
+    "dataset_size_gte_10": true
+  },
+  "detector_samples": [
+    {
+      "detected": true,
+      "matched_phrase": "отвечу по сути без навязывания практик",
+      "detector_kind": "exact"
+    },
+    {
+      "detected": true,
+      "matched_phrase": "ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия",
+      "detector_kind": "exact"
+    },
+    {
+      "detected": true,
+      "matched_phrase": "сфокусируюсь на разборе, без практик по умолчанию",
+      "detector_kind": "exact"
+    },
+    {
+      "detected": true,
+      "matched_phrase": "ключевой узел в том, как автоматический контроль включает перегруз",
+      "detector_kind": "exact"
+    }
+  ],
+  "prd": "PRD-047.11-AUDIT"
+}

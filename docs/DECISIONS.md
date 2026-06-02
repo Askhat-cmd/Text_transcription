@@ -829,3 +829,21 @@ Consequences: acceptance evidence now rejects planner/answer mismatch in safety-
 
 
 
+## ADR-069 - PRD-047.11-AUDIT is evidence-first and may close as warning
+
+Status: accepted
+
+Date: 2026-06-02
+
+Context: after PRD-047.11, previous dry/direct/live artifacts claimed writer-first acceptance, but live owner feedback still reported greeting over-analysis, stale mechanism phrases, and weak truthfulness between synthetic checks and real dialogue quality.
+
+Decision:
+- add a dedicated `PRD-047.11-AUDIT` runner/dataset/artifact pack focused on source inventory, acceptance-gate truthfulness, live case matrix, raw traces, and prompt canvases;
+- treat missing browser proof (`playwright_not_installed`) and incomplete admin screenshot evidence as warning-grade audit outcomes, not silent passes;
+- keep single runtime / single Writer / advisory-only Diagnostic Center intact during the audit;
+- select the next repair PRD by strongest confirmed failure cluster, not by the easiest visible symptom.
+
+Consequences:
+- the runtime can remain in `warning` status even when the audit implementation itself is complete;
+- stale bad-phrase detection becomes stricter and scans all turns/traces, reducing false-green reports;
+- follow-up PRD selection is evidence-based (`PRD-047.11-HF1` before broader profile consolidation).

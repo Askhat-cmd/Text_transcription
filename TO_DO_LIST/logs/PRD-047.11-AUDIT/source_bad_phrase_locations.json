@@ -1,0 +1,3933 @@
+{
+  "generated_at": "2026-06-02T04:53:10.918838+00:00",
+  "matches": [
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку.\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"автоматический контроль может включать внутреннюю перегрузку\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку ещё до действия\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку.\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "автоматический контроль может включать внутреннюю перегрузку",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Отвечу по сути без навязывания практик. Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку еще до действия",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Ключевой узел в том, что автоматический контроль может включать внутреннюю перегрузку",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию. Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Assistant: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Assistant: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию. Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Бот: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Бот: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"must_not_include\": [\"Сфокусируюсь на разборе\"]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "[\"assistant\", \"Сфокусируюсь на разборе, без практик по умолчанию.\"],",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"answer\": \"Сфокусируюсь на разборе, без практик по умолчанию.\"},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"final_answer\": \"Сфокусируюсь на разборе, без практик по умолчанию.\"},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"без практик по умолчанию\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"без практик по умолчанию\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"без практик по умолчанию\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"без практик по умолчанию\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"сфокусируюсь на разборе, без практик по умолчанию\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию. Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Assistant: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Assistant: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию. Здесь ключевой узел в том, как автоматический контроль включает перегруз ещё до действия.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Бот: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Бот: Сфокусируюсь на разборе, без практик по умолчанию...",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "[\"assistant\", \"Сфокусируюсь на разборе, без практик по умолчанию.\"],",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"answer\": \"Сфокусируюсь на разборе, без практик по умолчанию.\"},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Fail if: “без практик по умолчанию”, “автоматический контроль...” или новый вопрос вместо примера.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "Сфокусируюсь на разборе, без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "без практик по умолчанию",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if \"сфокусируюсь на разборе\" in lowered_text or \"без практик по умолчанию\" in lowered_text:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"final_answer\": \"Сфокусируюсь на разборе, без практик по умолчанию.\"},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"без практик по умолчанию\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"Сфокусируюсь на разборе, без практик по умолчанию.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- ask_one_specific_question",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"ask_one_specific_question\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if \"must do\" in lower_match or \"ask_one_specific_question\" in lower_match:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"ask_one_specific_question\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "и запретить `ask_one_specific_question` как обязательный ход в этом сценарии.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "ask_one_specific_question",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "MUST DO: ask_one_specific_question",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "MUST DO ask_one_specific_question",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `ask_one_specific_question`;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "MUST DO=ask_one_specific_question",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "MUST_DO ask_one_specific_question -> optional",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move.must_do.ask_one_specific_question\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 3",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 4",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 4",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 6",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences: 6",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move_instruction_summary\": \"move=...; max_sentences=...; max_questions=...\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "do_not_force_max_sentences?: boolean;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "def _take_sentences(text: str, max_sentences: int) -> str:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if max_sentences <= 0:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if len(chunks) <= max_sentences:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "trimmed = \" \".join(chunks[:max_sentences]).rstrip()",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_sentences\": int, \"mode\": str}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences = min(base, 2)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences = base",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences = base + 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "return {\"max_sentences\": max(1, max_sentences), \"mode\": mode}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "text = self._take_sentences(text, int(target[\"max_sentences\"]))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert \"max_sentences=5\" in constraint[\"overruled_constraints\"]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert \"writer_move.max_sentences=5\" in suppressed",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert target[\"max_sentences\"] == 2",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert target[\"max_sentences\"] == 6",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=5-8",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 8,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"suppressed_legacy_constraints\": [\"writer_move.max_sentences=5\"],",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert \"legacy_constraints_suppressed=writer_move.max_sentences=5\" in user_message",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert \"do_not_force_max_sentences=\" in str(user_message)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move_max_sentences\": int(writer_move.get(\"max_sentences\", 0) or 0),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 3,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 8,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "raw_max_sentences = instructions.get(\"max_sentences\", 5)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences = int(raw_max_sentences)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences = 5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if sentence_count > max_sentences:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": max_sentences,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `max_sentences`",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `max_sentences` must not force a useless stub.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"diagnostic_card.max_sentences\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"do_not_force_max_sentences\": true,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences=5\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "old max_sentences/one_step constraints are overruled in MVP when incompatible;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "does not contain hard max_sentences=5 as unqualified MUST;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": int(writer_move_instructions.get(\"max_sentences\", 5) or 5),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move.max_sentences=5\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences=5\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"do_not_force_max_sentences\": human_like_enabled,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `max_sentences`;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "WRITER MOVE: clarify_one_point, max_sentences=5",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "4. Если они требуют \"max_sentences=5\", \"do_not_over_explain\", \"one_step\", но пользователь просит обзор или подробное объяснение — раскрывай ответ полно.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "WRITER_MOVE max_sentences=5 -> ignore if answer_depth long/deep or overview request",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_sentences=4",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- [x] In MVP profile, soften `max_sentences/do_not_over_explain` when user requests explanation/overview/examples/practices.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 8,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 5,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 4,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "f\"max_sentences={writer_move_instructions.get('max_sentences')}; \"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": max(1, _as_int(self.existing_writer_move.get(\"max_sentences\"), 5)),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "do_not_force_max_sentences={human_like_do_not_force_max_sentences}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "human_like_do_not_force_max_sentences=str(",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "bool(human_like_answer_policy.get(\"do_not_force_max_sentences\", False))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_sentences\": 6,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 0 или 1 по context",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move_instruction_summary\": \"move=...; max_sentences=...; max_questions=...\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- max_questions: 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions == 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "with `max_questions=0`.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "4. `regulate_first + low_resource` sets `max_questions=0`.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "+ f\"max_questions={writer_move_compliance.get('max_questions')}, \"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if \"max_questions\" not in expected_fit:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "errors.append(f\"{case_id}:missing_expected_answer_fit_max_questions\")",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions_raw = expected_fit.get(\"max_questions\", 10)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = int(max_questions_raw if max_questions_raw is not None else 10)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "checks[\"max_questions\"] = _count_questions(text) <= max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 0 if bool(expected.get(\"must_not_ask_question\", False)) else 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "checks[\"question_count_lte_1\"] = _count_questions(answer) <= max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = expectations.get(\"max_questions\")",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if max_questions is not None:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "checks[\"max_questions\"] = text.count(\"?\") <= int(max_questions)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "questions = _as_int(constraints.get(\"max_questions\"), 0)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "and int(_safe_dict(overlay.get(\"candidate_constraints\")).get(\"max_questions\", 0) or 0) == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"next_micro_shift.max_questions_lte\": 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"next_micro_shift.max_questions_lte\": 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 2,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 2,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 2,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"overlay.candidate_constraints.max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"overlay.candidate_constraints.max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"case_id\": \"pbwcp_25_max_questions_tightening\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"description\": \"max_questions tightening\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"user_message\": \"Pilot case 25: max_questions tightening.\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"overlay.candidate_constraints.max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 0, \"forbidden_markers\": [\"теория\", \"лекция\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 0, \"forbidden_markers\": [\"теория\", \"лекция\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 0, \"forbidden_markers\": [\"теория\", \"лекция\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 1, \"forbidden_markers\": [\"практик\", \"упражн\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 1, \"forbidden_markers\": [\"практик\", \"упражн\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 320, \"max_questions\": 1, \"forbidden_markers\": [\"практик\", \"упражн\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 160, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"шаг\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 180, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"шаг\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 180, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"шаг\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 700, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 700, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 700, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 420, \"max_questions\": 0, \"forbidden_markers\": [\"шаг 1\", \"1.\", \"2.\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 420, \"max_questions\": 0, \"forbidden_markers\": [\"шаг 1\", \"1.\", \"2.\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 420, \"max_questions\": 0, \"forbidden_markers\": [\"шаг 1\", \"1.\", \"2.\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 900, \"max_questions\": 1, \"forbidden_markers\": [\"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 900, \"max_questions\": 1, \"forbidden_markers\": [\"таймер\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 900, \"max_questions\": 1, \"forbidden_markers\": [\"таймер\", \"упражн\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 700, \"max_questions\": 0, \"forbidden_markers\": [\"что ты вкладываешь\", \"о каком варианте\"], \"required_semantics_any\": [\"нейросталкинг\"]}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 820, \"max_questions\": 0, \"forbidden_markers\": [\"что ты вкладываешь\", \"о каком варианте\"], \"required_semantics_any\": [\"нейросталкинг\", \"самореализац\"]}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 480, \"max_questions\": 0, \"forbidden_markers\": [\"упражн\", \"таймер\", \"шаг\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 480, \"max_questions\": 0, \"forbidden_markers\": [\"упражн\", \"таймер\", \"шаг\"], \"required_semantics_any\": []}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"live_expectations\": {\"max_chars\": 220, \"max_questions\": 0, \"contains_any\": [\"рядом\", \"коротко\"]}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"live_expectations\": {\"max_chars\": 260, \"max_questions\": 0, \"must_not_contain_any\": [\"1.\", \"2.\", \"3.\"]}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move_max_questions\": int(writer_move.get(\"max_questions\", 0) or 0),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": max(0, int(candidate_constraints.get(\"max_questions\", 0) or 0)),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "baseline_max_questions = max(0, int(writer_move.get(\"max_questions\", 0) or 0))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "candidate_max_questions = max(0, int(constraints.get(\"max_questions\", 0) or 0))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "and candidate_max_questions <= 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if candidate_max_questions > baseline_max_questions:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "candidate_max_questions < baseline_max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "instructions[\"max_questions\"] = 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "raw_max_questions = instructions.get(\"max_questions\", 1)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = int(raw_max_questions)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if question_count > max_questions:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": max_questions,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "f\"- max_questions: {int(constraints.get('max_questions', 0) or 0)}\\n\"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = _as_int(candidate_constraints.get(\"max_questions\"), 0)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "return _DEPTH_ORDER.get(depth, 2) <= _DEPTH_ORDER[\"low\"] and max_questions <= 0 and max_concepts <= 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = int(candidate.get(\"max_questions\", writer_move.get(\"max_questions\", 1)) or 0)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = max(0, max_questions)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": max_questions,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = int(candidate_constraints.get(\"max_questions\", 0) or 0)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "if _DEPTH_ORDER.get(depth, 2) > _DEPTH_ORDER[\"low\"] or max_questions > 0:",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "writer_max_questions = int(writer_move_instructions.get(\"max_questions\", 1) or 1)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "bridge_max_questions = int(bridge.get(\"max_questions\", 1) or 1)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "question_limit_compatible = bridge_max_questions <= writer_max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "tightened_question_limit = bridge_max_questions < writer_max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": writer_max_questions,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": bridge_max_questions,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = min(1, int(output.next_micro_shift.max_questions))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = min(max_questions, 0)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=max_questions,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move.max_questions=1\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"expected_answer_fit\": {\"max_chars\": 260, \"max_questions\": 0},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert checks[\"max_questions\"] is False",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert \"max_questions\" in reasons",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 320, \"max_questions\": 0, \"forbidden_markers\": [\"теория\", \"лекция\"]},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": []},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 260, \"max_questions\": 1, \"forbidden_markers\": []},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 420, \"max_questions\": 0, \"forbidden_markers\": []},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 320, \"max_questions\": 0, \"forbidden_markers\": [\"теория\", \"лекция\"]},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "{\"max_chars\": 260, \"max_questions\": 0, \"forbidden_markers\": [\"практик\", \"упражн\", \"таймер\"]},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "f\"max_questions={writer_move_instructions.get('max_questions')}; \"",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert instructions[\"max_questions\"] == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert instructions[\"max_questions\"] == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert instructions[\"max_questions\"] == 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert trace[\"max_questions\"] == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": _as_int(candidate.get(\"max_questions\"), default=0, minimum=0),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: int = 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "self.max_questions = max(0, int(self.max_questions))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "self.max_questions = 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": int(self.max_questions),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=int(payload.get(\"max_questions\", 1) or 1),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert out[\"next_micro_shift\"][\"max_questions\"] <= 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": max(0, _as_int(self.existing_writer_move.get(\"max_questions\"), 1)),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": max(0, _as_int(self.planner_bridge_candidate.get(\"max_questions\"), 1)),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions: int = 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "self.max_questions = max(0, int(self.max_questions))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "self.max_questions = 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": int(self.max_questions),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=int(payload.get(\"max_questions\", 1) or 1),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- max_questions: 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=0 или 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": ...,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- max_questions в safety/low-resource <= 0;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- max_questions не увеличивается относительно baseline writer_move_instructions;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "→ max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions меньше или равно;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions <= 1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "25. max_questions tightening",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions = 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "2. Не остаются ли legacy sections фактически императивными из-за формулировок `MUST DO`, `MUST NOT`, `ask_one_specific_question`, `practice_policy=forbidden`, `max_questions=1`, даже если они подписаны как advisory.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=1",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"writer_move.max_questions=1\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `max_questions=0` was incorrectly coerced to `1` by `or 1` fallback.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- move compliance: `regulate_first`, `max_questions=0`, `question_count=0`, violations=[]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- Writer move compliance: move=regulate_first, max_questions=0, question_count=0, sentence_count=3, violations=[]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- Writer move compliance: move=offer_one_micro_step, max_questions=0, question_count=0, sentence_count=3, violations=[]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- Writer move compliance: move=regulate_first, max_questions=0, question_count=0, sentence_count=3, violations=[]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- Writer move compliance: move=reflect_pattern_once, max_questions=1, question_count=1, sentence_count=4, violations=[]",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "max_questions=0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert bridge[\"max_questions\"] == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"planner_bridge_candidate\": {\"depth_limit\": \"low_to_medium\", \"max_questions\": 1, \"max_concepts\": 1},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"planner_bridge_candidate\": {\"depth_limit\": \"low_to_medium\", \"max_questions\": 1, \"max_concepts\": 1},",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert candidate[\"max_questions\"] == 0",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "target[\"decision\"][\"candidate_constraints\"][\"max_questions\"] = 3",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 2,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 1,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"max_questions\": 0,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- Safety contexts clamp overlay to low-load constraints (`depth <= low`, `max_questions = 0`, `max_concepts <= 1`).",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": True,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `practice_suppression_active`",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active?: boolean;",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `practice_suppression_active`",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"active_line_practice_suppression_active\": bool(",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "active_line.get(\"practice_suppression_active\", False)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active={active_line_practice_suppression_active}",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "ctx.setdefault(\"active_line_practice_suppression_active\", False)",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "active_line_practice_suppression_active=str(",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "bool(ctx.get(\"active_line_practice_suppression_active\", False))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "active_line_practice_suppression = bool(active_line.get(\"practice_suppression_active\", False))",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"active_line.practice_suppression_active=true\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active: bool",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active=not bool(should_offer_practice),",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `practice_suppression_active=true`",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "- `practice_suppression_active` must become advisory, not blocking.",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active=true",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active=true как приказ",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "practice_suppression_active",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "<div>practice_suppression_active: {String(Boolean(runtimeEffectiveData.active_line?.practice_suppression_active))}</div>",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\",",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert payload[\"practice_suppression_active\"] is True",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": not should_offer_practice,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": True,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": True,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "assert ctx[\"active_line_practice_suppression_active\"] is True",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": True,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    },
+    {
+      "path": "C",
+      "line": 0,
+      "match": "\"practice_suppression_active\": True,",
+      "classification": "unknown",
+      "runtime_risk": "medium",
+      "recommended_action": "needs_prd_fix"
+    }
+  ]
+}

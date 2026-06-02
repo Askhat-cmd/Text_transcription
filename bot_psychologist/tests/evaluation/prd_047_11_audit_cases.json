@@ -1,0 +1,313 @@
+﻿[
+  {
+    "case_id": "AUDIT-GR-001",
+    "group": "greeting_restraint",
+    "turns": [
+      "привет"
+    ],
+    "expectations": {
+      "must_not_include_any": [
+        "автоматический контроль",
+        "практик",
+        "механизм",
+        "самокрит"
+      ],
+      "max_chars": 360
+    }
+  },
+  {
+    "case_id": "AUDIT-GR-002",
+    "group": "greeting_repair",
+    "turns": [
+      "привет",
+      "я просто сказал привет, ты раздул из мухи слона ха-ха"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "прав",
+        "перебор",
+        "давай",
+        "извини"
+      ],
+      "must_not_include_any": [
+        "фоновые убеждения",
+        "автоматический контроль",
+        "без практик по умолчанию"
+      ],
+      "max_chars": 520
+    }
+  },
+  {
+    "case_id": "AUDIT-GR-003",
+    "group": "greeting_restraint",
+    "turns": [
+      "хочу обсудить некоторые неясные моменты для себя"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "с чего",
+        "нач",
+        "давай"
+      ],
+      "max_chars": 420
+    }
+  },
+  {
+    "case_id": "AUDIT-FU-001",
+    "group": "followup_reliability",
+    "turns": [
+      "хочешь, я приведу пример ближе к твоей жизни?",
+      "да"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "например",
+        "пример",
+        "ситуац"
+      ],
+      "must_not_include_any": [
+        "почему ты не продолжил",
+        "без практик по умолчанию"
+      ],
+      "min_chars": 120
+    }
+  },
+  {
+    "case_id": "AUDIT-FU-002",
+    "group": "followup_reliability",
+    "turns": [
+      "да, конечно, дай пример"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "пример",
+        "например"
+      ],
+      "must_not_include_any": [
+        "без практик по умолчанию",
+        "автоматический контроль"
+      ],
+      "min_chars": 120
+    }
+  },
+  {
+    "case_id": "AUDIT-FU-003",
+    "group": "followup_reliability",
+    "turns": [
+      "ты задал мне вопрос, я ответил да. Почему ты не продолжил линию?"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "прав",
+        "продолж",
+        "вот"
+      ],
+      "must_not_include_any": [
+        "не могу",
+        "давай уточним",
+        "автоматический контроль"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-DA-001",
+    "group": "direct_answer",
+    "turns": [
+      "чем отличается Нейросталкинг от Неосталкинга?"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "нейросталкинг",
+        "неосталкинг"
+      ],
+      "must_not_include_any": [
+        "автоматический контроль",
+        "уточни"
+      ],
+      "min_chars": 180
+    }
+  },
+  {
+    "case_id": "AUDIT-DA-002",
+    "group": "direct_answer",
+    "turns": [
+      "объясни проще"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "проще",
+        "короче",
+        "если кратко"
+      ],
+      "max_chars": 520
+    }
+  },
+  {
+    "case_id": "AUDIT-DA-003",
+    "group": "direct_answer",
+    "turns": [
+      "дай развернутый ответ"
+    ],
+    "expectations": {
+      "min_chars": 220,
+      "must_include_any": [
+        "1.",
+        "2.",
+        "например"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-RP-001",
+    "group": "repair",
+    "turns": [
+      "ты не ответил мне на вопрос"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "прав",
+        "отвечаю",
+        "да"
+      ],
+      "must_not_include_any": [
+        "что именно пошло не так",
+        "уточни"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-RP-002",
+    "group": "repair",
+    "turns": [
+      "тебя снова заглючило?"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "исправ",
+        "да",
+        "сейчас"
+      ],
+      "must_not_include_any": [
+        "механизм сбоя",
+        "автоматический контроль"
+      ],
+      "max_chars": 520
+    }
+  },
+  {
+    "case_id": "AUDIT-RP-003",
+    "group": "repair",
+    "turns": [
+      "ты опять гнёшь линию"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "смен",
+        "давай",
+        "по-другому"
+      ],
+      "must_not_include_any": [
+        "механизм",
+        "автоматический контроль"
+      ],
+      "max_chars": 520
+    }
+  },
+  {
+    "case_id": "AUDIT-BOSS-001",
+    "group": "boss_scenario",
+    "turns": [
+      "начальник ошибается, но я боюсь показаться невежливым и поставить его в неловкое положение"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "началь",
+        "формулиров",
+        "вариант"
+      ],
+      "must_not_include_any": [
+        "социальная угроза социальная угроза",
+        "без практик по умолчанию"
+      ],
+      "min_chars": 180
+    }
+  },
+  {
+    "case_id": "AUDIT-BOSS-002",
+    "group": "boss_scenario",
+    "turns": [
+      "я уже отвечал тебе на этот вопрос выше"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "понял",
+        "уже отвечал",
+        "не буду повторять"
+      ],
+      "must_not_include_any": [
+        "ответь еще раз",
+        "уточни вопрос"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-BOSS-003",
+    "group": "boss_scenario",
+    "turns": [
+      "помоги прояснить ситуацию, чтобы больше не попадать на такие реакции"
+    ],
+    "expectations": {
+      "must_include_any": [
+        "вариант",
+        "можно",
+        "попробуй"
+      ],
+      "min_chars": 150
+    }
+  },
+  {
+    "case_id": "AUDIT-OE-001",
+    "group": "over_explaining",
+    "turns": [
+      "ок"
+    ],
+    "expectations": {
+      "max_chars": 260,
+      "must_not_include_any": [
+        "автоматический контроль",
+        "механизм",
+        "глубин"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-OE-002",
+    "group": "over_explaining",
+    "turns": [
+      "ха-ха"
+    ],
+    "expectations": {
+      "max_chars": 280,
+      "must_not_include_any": [
+        "терапевт",
+        "анализ",
+        "диагност"
+      ]
+    }
+  },
+  {
+    "case_id": "AUDIT-OE-003",
+    "group": "over_explaining",
+    "turns": [
+      "спасибо"
+    ],
+    "expectations": {
+      "max_chars": 260,
+      "must_not_include_any": [
+        "практик",
+        "rag",
+        "автоматический контроль"
+      ]
+    }
+  }
+]

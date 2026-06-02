@@ -1,6 +1,7 @@
 # Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.11-AUDIT completed as a warning-grade evidence audit, not a pass: `TO_DO_LIST/logs/PRD-047.11-AUDIT/` now contains the dedicated runner output, source inventory, prompt/acceptance audits, live case matrix, raw traces, and no-mutation proof, but live evidence still shows `14/18` failed cases, `15` bad-phrase hits, missing browser screenshot proof, and incomplete admin configurability proof. The next recommended repair path is `PRD-047.11-HF1`, while Diagnostic Center remains advisory-only and production readiness is explicitly not claimed.
 PRD-047.11 passed full Writer-first consolidation acceptance: `final_answer_directive_v1`, MVP prompt assembly cleanup, legacy-constraint suppression metadata, stale-stub detector, admin/runtime/UI exposure, live evidence enrichment, strict dry/direct/live runner, and real Web Chat markdown smoke are all green in final artifacts.
 PRD-047.10-HF2 completed live turn evidence export + follow-up reliability repair + markdown smoke verification in unified runtime: added `live_turn_evidence_v1` payload in trace pipeline, upgraded short follow-up pragmatics/retrieval taxonomy, fixed short-input API validation (`min_length=1`), produced reproducible dry/direct/live artifacts with required case exports, and confirmed live pass on fresh backend `:8020` (`status=passed`).
 PRD-047.10-HF1 completed direct follow-up repair + contextual retrieval noise reduction + chat markdown readability calibration in unified runtime: added deterministic `dialogue_pragmatics_v1`, contextual retrieval gating (`included` vs `candidates`, `writer_can_ignore_rag`), writer follow-up/repair compliance fixes, explicit trace/API visibility (`dialogue_pragmatics`, `retrieval_decision`), and safe markdown rendering (`react-markdown + remark-gfm + skipHtml`), with runner acceptance `dry/direct/live=passed` on fresh backend `:8019`.
@@ -48,7 +49,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.12 — Unified Dialogue Profile Simplification / Safe Guided + MVP Consolidation v1`
+`PRD-047.11-HF1 — Acceptance Gate Truthfulness + Writer Prompt Pressure Repair`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -63,7 +64,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-06-01
+- Date: 2026-06-02
+- Source cycle: PRD-047.11-AUDIT
 - Source cycle: PRD-047.10-HF2
 - Source cycle: PRD-047.11
 

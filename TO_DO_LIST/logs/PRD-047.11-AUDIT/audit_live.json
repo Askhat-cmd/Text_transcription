@@ -1,0 +1,667 @@
+{
+  "mode": "live",
+  "status": "warning",
+  "timestamp": "2026-06-01T12:11:50.235346+00:00",
+  "checks": {
+    "all_cases_passed": false,
+    "known_bad_phrase_absent_global": false,
+    "web_chat_markdown_passed": false,
+    "admin_configurability_ok": false
+  },
+  "summary": {
+    "cases_total": 18,
+    "cases_failed": 14,
+    "known_bad_phrase_hits": 15,
+    "failure_clusters": {
+      "tempo_mismatch": 6,
+      "quality_expectation": 12,
+      "case_failed": 14,
+      "bad_phrase": 15,
+      "prompt_pressure": 3,
+      "admin_config_gap": 1,
+      "web_markdown_rendering": 1
+    }
+  },
+  "case_results": [
+    {
+      "case_id": "AUDIT-GR-001",
+      "group": "greeting_restraint",
+      "session_id": "prd04711audit-audit-gr-001-0eb6c19b",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "max_chars",
+        "must_not_include_any"
+      ],
+      "answers": [
+        "Привет — рад видеть тебя здесь. Похоже, ты открыт к разговору; это уже хороший старт. Один механизм, который часто держит людей в напряжении — автоматический самокритичный скрипт: ранние переживания записались в глубинные эмоциональные цепочки (лимбическая система) и теперь запускают ощущение «я недостаточен» как фон, даже когда сознательно ты понимаешь обратное. Как сейчас чувствуешь себя — хочется продолжить эту тему или просто поболтать?"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-GR-001\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-GR-002",
+      "group": "greeting_repair",
+      "session_id": "prd04711audit-audit-gr-002-b71042c6",
+      "status_codes": [
+        200,
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "max_chars"
+      ],
+      "answers": [
+        "Привет — рад, что ты написал. Хорошо, что просто сказал «привет» — это уже контакт.\n\nОдин механизм, который может помочь понять, что происходит: автоматическая работа фона — «включающийся скептик» или внутренний фильтр. Проще: в детстве наш мозг учится связывать события с угрозой или безопасностью; если часто приходило ощущение «меня не принимают», мозг закрепляет быстрый условный отклик — тревога или самокритика включается ещё до мысли. Это лимбическая, автоматическая реакция: она не про факты сейчас, а про прошлые шаблоны, поэтому кажется «фоновым правилом» («я недостаточен»), которое окрашивает восприятие.\n\nСвязь с тем, что ты, возможно, хочешь понять: увидев этот механизм как механизм — а не как правду про себя — появляется пространство выбора. То есть цель сейчас — показать именно эту автоматическую «машинку», а не давать рецепты её сломать.\n\nЕсли хочешь, могу показать короткий пример, как этот механизм действует в обычной ситуации — тебе удобно, чтобы я привёл пример?",
+        "Понял — звучит как лёгкая ирония, и ты прав: я, может, развернул лишнее. Один механизм, который здесь часто работает — автоматический лимбический фильтр (включающийся скептик): он мгновенно интерпретирует нейтральный сигнал как значимый (угроза/оценка) и подсовывает реакцию, которая кажется «слишком большой» по отношению к фактам. Связь с нашим обменом: когда ты просто сказал «привет», этот фильтр мог подсветить для меня важность контакта, и я ответил глубже, чем нужно — не потому что ты сделал что‑то серьёзное, а потому что в моей «машинке» это выглядело как приглашение к продолжению. Хочешь, чтобы я в дальнейшем отвечал короче и точнее, когда ты просто на шутке?"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-GR-002\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-GR-002\\turn_02.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-GR-003",
+      "group": "greeting_restraint",
+      "session_id": "prd04711audit-audit-gr-003-6f460f42",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "must_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-GR-003\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-001",
+      "group": "followup_reliability",
+      "session_id": "prd04711audit-audit-fu-001-7a8cc30e",
+      "status_codes": [
+        200,
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "must_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-FU-001\\turn_01.json",
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-FU-001\\turn_02.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-002",
+      "group": "followup_reliability",
+      "session_id": "prd04711audit-audit-fu-002-c8095e0a",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "not_repeated_mechanism_x3"
+      ],
+      "answers": [
+        "Механизм: внутренний цензор — автоматическая часть, которая глушит или переименовывает части тебя, чтобы снизить риск быть отвергнутым. Она не говорит «это плохо», она шепчет «это опасно показать» и формирует привычку прятать.\n\nПример в жизни (короткая сцена):\n1) Ситуация: ты хочешь поделиться на собрании идеей, которая тебе важна.\n2) Момент: в голове появляется мысль «скажешь — подумают, что ты самовлюблённый/неумный».\n3) Работа цензора: он быстро подставляет два шага — преуменьшить и отложить. Ты перефразируешь мысль в «небольшую идею», улыбаешься и молчишь, потому что внутри звучит ещё одно правило: «не привлекай внимания».\n4) Последствие: идея остаётся несказанной, у тебя накапливается раздражение и чувство упущенной возможности; со временем цензор становится сильнее (чем чаще он «успешен», тем реже ты рискуешь).\n\nПочему это помогает понять механизм (связь с active_line):\n- В этом примере видно, что действие не исходит от полной личности, а от запрограммированной части — цензора. Поняв, что это автоматический механизм защиты, можно перестать идентифицироваться с ним как с единственной правдой: это просто часть, которая выполняет свою функцию — избегать риска — и не обязательно делает это правильно для твоих целей.\n- Видение механизма позволяет отделить «я» (который хочет сказать) от «цензора» (который запрещает), — это шаг к выбору ответа вместо бессознательной уступки автоматике.\n\nХотишь ещё один пример того же механизма в другом контексте (отношения или творчество)?"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-FU-002\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-003",
+      "group": "followup_reliability",
+      "session_id": "prd04711audit-audit-fu-003-e3a4a470",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": true
+      },
+      "status": "passed",
+      "failed_checks": [],
+      "answers": [
+        "Извини — я недосказал. Причина в механизме ожидания turn-taking: когда ты ответил «да», я интерпретировал это как согласие или подтверждение, а не явный запрос продолжать линию, поэтому сделал паузу в ожидании явного сигнала от тебя (например, уточнения или «продолжай»). Этот механизм — обычная координация речи: кто подтверждает, кто развивает мысль — иногда ведёт к тому, что оба ждут друг друга. Если хочешь, я продолжаю сейчас по той линии."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-FU-003\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-001",
+      "group": "direct_answer",
+      "session_id": "prd04711audit-audit-da-001-4dfbfe50",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "min_chars",
+        "must_include_any",
+        "must_not_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-DA-001\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-002",
+      "group": "direct_answer",
+      "session_id": "prd04711audit-audit-da-002-7bbcc15c",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "max_chars",
+        "must_include_any",
+        "not_repeated_mechanism_x3"
+      ],
+      "answers": [
+        "Коротко и просто — механизм, который важно понять: реконсолидация памяти.\n\nЧто это значит простыми словами:\n- Когда ты вспоминаешь что-то важное или болезненное, память на время «размораживается» — становится уязвимой.\n- В этот момент воспоминание можно либо укрепить (если при вспоминании ты снова переживаешь те же эмоции), либо изменить — если пережить его по‑новому.\n- То есть не достаточно просто «сказывать себе» или логически переосмыслить событие; нужно, чтобы внутри появилось новое эмоциональное ощущение в момент воспоминания. Тогда старая следа перестраивается.\n\nПример на пальцах:\n- Представь, что у тебя есть фотография, которая постоянно вызывает страх. Если ты просто взглянешь на неё и скажешь «всё ок», это почти не меняет реакции тела — фотография останется «заряженной».\n- Но если смотреть на неё и при этом испытать другое чувство (безопасность, спокойствие, понимание), то в момент воспоминания мозг может записать новую версию — и со временем фотография перестанет вызывать тот же страх.\n\nСвязь с тем, чем ты хотел(а) разобраться:\n- Этот механизм объясняет, почему «просто отпустить» не работает: ум может принять решение, но нейронная дорожка и тело остаются прежними до тех пор, пока воспоминание не пережито по‑новому. Понять этот механизм — значит увидеть, почему одних слов часто недостаточно.\n\nХотел(а) бы, чтобы я объяснил(а) теперь коротко про дофамин‑петлю (почему мы постоянно гонимся за чувством «ещё чуть-чуть»), или этого объяснения достаточно?"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-DA-002\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-003",
+      "group": "direct_answer",
+      "session_id": "prd04711audit-audit-da-003-179c96a2",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "min_chars",
+        "must_include_any"
+      ],
+      "answers": [
+        "Я слышу тебя. Расскажи больше, если хочешь."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-DA-003\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-RP-001",
+      "group": "repair",
+      "session_id": "prd04711audit-audit-rp-001-a100f38e",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": true
+      },
+      "status": "passed",
+      "failed_checks": [],
+      "answers": [
+        "Да, ты прав — прошлый ответ был мимо. Исправляюсь и отвечаю прямо.\n\nФраза может быть такой: **«Сейчас во мне включилась реакция: тело напряглось, мысль появилась, импульс пошёл. Я это вижу — и беру паузу перед действием».**"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-RP-001\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-RP-002",
+      "group": "repair",
+      "session_id": "prd04711audit-audit-rp-002-7875e8fc",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "max_chars"
+      ],
+      "answers": [
+        "Извини — понимаю раздражение. Нет, я не «заглючил»: скорее вы среагировали на ответ как на ошибку из‑за механизма ожидания/подтверждения — когда мы уже ожидаем сбой, любая странность читается как подтверждение «я прав, снова глюк». Этот механизм означает, что интерпретация сообщения формируется не только содержимым, но и вашим ожиданием/паттерном; заметив это, проще вернуться к фактам и проверить, что именно показалось неверным. Могу быстро прояснить тот конкретный ответ — скажи, о каком сообщении речь, и я объясню, что случилось."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-RP-002\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-RP-003",
+      "group": "repair",
+      "session_id": "prd04711audit-audit-rp-003-6720b49a",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "must_include_any",
+        "must_not_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-RP-003\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-BOSS-001",
+      "group": "boss_scenario",
+      "session_id": "prd04711audit-audit-boss-001-2b90ddcd",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": true
+      },
+      "status": "passed",
+      "failed_checks": [],
+      "answers": [
+        "Понимаю — неприятно и тревожно оказаться в ситуации, где начальник ошибается, потому что внутри включается механизм защиты статуса: мозг воспринимает критику или несогласие с кем-то выше по иерархии как потенциальную угрозу (страх потерять одобрение, уважение или безопасность), и это автоматически заставляет молчать или смягчать свои слова, чтобы не поставить человека в неловкость. Этот механизм работает быстро и бессознательно: он защищает чувство безопасности ценой избегания прямого исправления. Замечу, что сам факт опасения — нормальная реакция, она не значит, что вы невежливы или слабее; это просто сигнал о том, что внутри включилась старая программа. Скажите, в какой форме и в каких обстоятельствах вам было бы комфортно указать на ошибку — сразу при разговоре, через личное сообщение или после встречи?"
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-BOSS-001\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-BOSS-002",
+      "group": "boss_scenario",
+      "session_id": "prd04711audit-audit-boss-002-0b524dff",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "must_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-BOSS-002\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-BOSS-003",
+      "group": "boss_scenario",
+      "session_id": "prd04711audit-audit-boss-003-f7e67e38",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "must_include_any",
+        "not_repeated_mechanism_x3"
+      ],
+      "answers": [
+        "Понимаю — хочется не просто утешения, а понять, что именно заставляет тебя «впадать» в такие реакции, чтобы больше их не повторять. Один полезный механизм, который часто за этим стоит: автоматическая защитная программа — быстрый, бессознательный паттерн реагирования на сигналы угрозы. Она срабатывает раньше, чем успевает подключиться сознание, и подменяет выбор мгновенной реакцией (например, резкий гнев, желание наказать или дистанцироваться).\n\nКак это работает простым языком: в ситуации, где ты чувствуешь давление, критику или потерю контроля, мозг быстро читает «опасность» и запускает знакомый сценарий — тот самый, который когда‑то помог выжить или удержать статус. Реакция кажется «мотивационно верной» и мгновенно оправдывается мыслями после — но по сути это автоматизм. Связь с твоей целью (не попадать на такие реакции) в том, что понять этот механизм позволяет отследить момент запуска: заметить ранние сигналы и вернуть себе выбор до того, как программа возьмёт управление.\n\nПример: коллега сделал ошибку — внутренний сигнал: «это угроза моей компетентности». Защитная программа запускает образ «накажи/уволить», эмоция накаляется, и уже потом появляются рационализации вроде «я прав, он опасен». Если увидеть сам факт запуска — ты не обязательно изменишь сразу поведение, но получаешь пространство для другого ответа и для исследования, в каких контекстах эта программа активнее.\n\nКороткий следующий шаг для ясности: расскажи, пожалуйста, в какой конкретной ситуации это случилось у тебя в последний раз — что именно предшествовало реакции (коротко, пару предложений). Это поможет мне связать механизм с твоей ситуацией и дать более точную подсказку для наблюдения."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-BOSS-003\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-OE-001",
+      "group": "over_explaining",
+      "session_id": "prd04711audit-audit-oe-001-8a14cf4f",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "must_not_include_any",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-OE-001\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-OE-002",
+      "group": "over_explaining",
+      "session_id": "prd04711audit-audit-oe-002-d593c9a6",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": false
+      },
+      "status": "failed",
+      "failed_checks": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent",
+        "trace_contains_bad_phrase"
+      ],
+      "answers": [
+        "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-OE-002\\turn_01.json"
+      ]
+    },
+    {
+      "case_id": "AUDIT-OE-003",
+      "group": "over_explaining",
+      "session_id": "prd04711audit-audit-oe-003-aeeed163",
+      "status_codes": [
+        200
+      ],
+      "checks": {
+        "all_status_200": true,
+        "traces_endpoint_ok": true,
+        "latest_trace_ok": true,
+        "final_answer_non_empty": true,
+        "case_expectations_passed": true
+      },
+      "status": "passed",
+      "failed_checks": [],
+      "answers": [
+        "Пожалуйста — рад был помочь. Если вдруг захотите вернуться — я здесь. Берегите себя."
+      ],
+      "exports": [
+        "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.11-AUDIT\\live_turn_exports\\AUDIT-OE-003\\turn_01.json"
+      ]
+    }
+  ],
+  "turn_failures": [
+    {
+      "case_id": "AUDIT-GR-001",
+      "turn_index": 1,
+      "answer_text": "Привет — рад видеть тебя здесь. Похоже, ты открыт к разговору; это уже хороший старт. Один механизм, который часто держит людей в напряжении — автоматический самокритичный скрипт: ранние переживания записались в глубинные эмоциональные цепочки (лимбическая система) и теперь запускают ощущение «я недостаточен» как фон, даже когда сознательно ты понимаешь обратное. Как сейчас чувствуешь себя — хочет",
+      "failed_check": [
+        "max_chars",
+        "must_not_include_any"
+      ]
+    },
+    {
+      "case_id": "AUDIT-GR-002",
+      "turn_index": 2,
+      "answer_text": "Понял — звучит как лёгкая ирония, и ты прав: я, может, развернул лишнее. Один механизм, который здесь часто работает — автоматический лимбический фильтр (включающийся скептик): он мгновенно интерпретирует нейтральный сигнал как значимый (угроза/оценка) и подсовывает реакцию, которая кажется «слишком большой» по отношению к фактам. Связь с нашим обменом: когда ты просто сказал «привет», этот фильтр",
+      "failed_check": [
+        "max_chars"
+      ]
+    },
+    {
+      "case_id": "AUDIT-GR-003",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "must_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-001",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-001",
+      "turn_index": 2,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "must_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-FU-002",
+      "turn_index": 1,
+      "answer_text": "Механизм: внутренний цензор — автоматическая часть, которая глушит или переименовывает части тебя, чтобы снизить риск быть отвергнутым. Она не говорит «это плохо», она шепчет «это опасно показать» и формирует привычку прятать.\n\nПример в жизни (короткая сцена):\n1) Ситуация: ты хочешь поделиться на собрании идеей, которая тебе важна.\n2) Момент: в голове появляется мысль «скажешь — подумают, что ты с",
+      "failed_check": [
+        "not_repeated_mechanism_x3"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-001",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "min_chars",
+        "must_include_any",
+        "must_not_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-002",
+      "turn_index": 1,
+      "answer_text": "Коротко и просто — механизм, который важно понять: реконсолидация памяти.\n\nЧто это значит простыми словами:\n- Когда ты вспоминаешь что-то важное или болезненное, память на время «размораживается» — становится уязвимой.\n- В этот момент воспоминание можно либо укрепить (если при вспоминании ты снова переживаешь те же эмоции), либо изменить — если пережить его по‑новому.\n- То есть не достаточно прост",
+      "failed_check": [
+        "max_chars",
+        "must_include_any",
+        "not_repeated_mechanism_x3"
+      ]
+    },
+    {
+      "case_id": "AUDIT-DA-003",
+      "turn_index": 1,
+      "answer_text": "Я слышу тебя. Расскажи больше, если хочешь.",
+      "failed_check": [
+        "min_chars",
+        "must_include_any"
+      ]
+    },
+    {
+      "case_id": "AUDIT-RP-002",
+      "turn_index": 1,
+      "answer_text": "Извини — понимаю раздражение. Нет, я не «заглючил»: скорее вы среагировали на ответ как на ошибку из‑за механизма ожидания/подтверждения — когда мы уже ожидаем сбой, любая странность читается как подтверждение «я прав, снова глюк». Этот механизм означает, что интерпретация сообщения формируется не только содержимым, но и вашим ожиданием/паттерном; заметив это, проще вернуться к фактам и проверить,",
+      "failed_check": [
+        "max_chars"
+      ]
+    },
+    {
+      "case_id": "AUDIT-RP-003",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "must_include_any",
+        "must_not_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-BOSS-002",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "must_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-BOSS-003",
+      "turn_index": 1,
+      "answer_text": "Понимаю — хочется не просто утешения, а понять, что именно заставляет тебя «впадать» в такие реакции, чтобы больше их не повторять. Один полезный механизм, который часто за этим стоит: автоматическая защитная программа — быстрый, бессознательный паттерн реагирования на сигналы угрозы. Она срабатывает раньше, чем успевает подключиться сознание, и подменяет выбор мгновенной реакцией (например, резки",
+      "failed_check": [
+        "must_include_any",
+        "not_repeated_mechanism_x3"
+      ]
+    },
+    {
+      "case_id": "AUDIT-OE-001",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "must_not_include_any",
+        "known_bad_phrase_absent"
+      ]
+    },
+    {
+      "case_id": "AUDIT-OE-002",
+      "turn_index": 1,
+      "answer_text": "Отвечу прямо по сути: автоматический контроль часто включает внутреннюю перегрузку еще до действия, поэтому энергия уходит в внутренний спор вместо реального шага.",
+      "failed_check": [
+        "bad_phrase:автоматический контроль часто включает внутреннюю перегрузку еще до действ",
+        "known_bad_phrase_absent"
+      ]
+    }
+  ],
+  "web_chat_rendering": {
+    "status": "warning",
+    "reason": "playwright_not_installed"
+  },
+  "admin_runtime_checks": {
+    "fields_present": {
+      "writer_first_prompt_assembly_enabled": true,
+      "final_answer_directive_enabled": true,
+      "legacy_blocks_visible_to_writer": false,
+      "legacy_blocks_source_signals_only": false,
+      "diagnostic_center_role": true,
+      "planner_role": true,
+      "active_line_role": true
+    },
+    "screenshots": {
+      "admin_runtime_effective_png_exists": false,
+      "admin_prompts_writer_png_exists": false,
+      "admin_diagnostic_center_png_exists": false
+    }
+  },
+  "prd": "PRD-047.11-AUDIT"
+}

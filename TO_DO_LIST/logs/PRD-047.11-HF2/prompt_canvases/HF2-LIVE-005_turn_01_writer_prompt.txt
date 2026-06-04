@@ -1,0 +1,58 @@
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+что такое нейросталкинг простыми словами? После короткого ответа предложи, если нужно, объяснить на примере.
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+что такое нейросталкинг простыми словами? После короткого ответа предложи, если нужно, объяснить на примере.
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "answer_user_question_directly",
+  "must_answer": "что такое нейросталкинг простыми словами? После короткого ответа предложи, если нужно, объяснить на примере.",
+  "answer_shape": "short_support",
+  "depth": "medium",
+  "style": "human_conversational",
+  "question_policy": "optional_none",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: связать известный концепт с текущей линией разговора без перезапуска.
+Полезно ответить на актуальную потребность: explore perspective carefully.
+Можно опереться на такой ход ответа: clarify_one_point.
+Лучше отвечать прямо по известному понятию: нейросталкинг.
+Один полезный смысловой сдвиг: дать короткий поддерживающий контакт без перегруза.
+Формат можно держать таким: short_support.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику и...[truncated:5688]

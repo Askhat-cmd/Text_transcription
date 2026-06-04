@@ -498,20 +498,44 @@ const ChatPage: React.FC = () => {
     if (!activeChatId) return;
 
     try {
-      await apiService.deleteUserSession(userId, activeChatId);
-      const created = await apiService.createUserSession(userId);
-      const mapped = mapServerSession(created);
-
-      setSessions((prev) => {
-        const remaining = prev.filter((session) => session.id !== activeChatId);
-        return sortSessionsByUpdatedAt([mapped, ...remaining]);
-      });
-      setActiveChatId(mapped.id);
-      setMessagesSessionId(mapped.id);
+      await apiService.resetUserSessionContext(userId, activeChatId);
+      setSessions((prev) => sortSessionsByUpdatedAt(
+        prev.map((session) => (
+          session.id === activeChatId
+            ? {
+              ...session,
+              preview: 'Контекст сброшен. Сообщений пока нет',
+              turnsCount: 0,
+              updatedAt: new Date().toISOString(),
+            }
+            : session
+        ))
+      ));
+      setMessagesSessionId(activeChatId);
       replaceMessages([]);
       clearError();
     } catch (clearChatError) {
-      setSidebarError(clearChatError instanceof Error ? clearChatError.message : 'Не удалось очистить чат');
+      setSidebarError(clearChatError instanceof Error ? clearChatError.message : 'Не удалось сбросить контекст чата');
+    }
+  };
+
+  const handleClearMemoryProfile = async () => {
+    const confirmed = window.confirm(
+      'Сбросить memory profile пользователя? Это очистит user-level history/profile state.'
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    setDataActionStatus('deleting');
+    setDataActionMessage(null);
+    try {
+      await apiService.clearUserMemoryProfile(userId);
+      setDataActionMessage('User memory profile очищен');
+    } catch (error) {
+      setDataActionMessage(error instanceof Error ? error.message : 'Не удалось очистить memory profile');
+    } finally {
+      setDataActionStatus('idle');
     }
   };
 
@@ -1011,9 +1035,21 @@ const ChatPage: React.FC = () => {
                     <FiAlertTriangle className="w-4 h-4" />
                     {dataActionStatus === 'deleting' ? 'Удаление...' : 'Удалить все чаты'}
                   </button>
+                  {apiService.hasDevKey() && (
+                    <button
+                      type="button"
+                      onClick={() => void handleClearMemoryProfile()}
+                      disabled={dataActionStatus !== 'idle'}
+                      className="inline-flex items-center justify-center gap-2 rounded-lg border border-amber-300 dark:border-amber-700 px-3 py-2 text-sm text-amber-700 dark:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 disabled:opacity-60"
+                    >
+                      <FiAlertTriangle className="w-4 h-4" />
+                      Сбросить memory profile
+                    </button>
+                  )}
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
                   Всего сессий: {sessions.length}. Активная: {activeSession?.title || 'нет'}.
+                  Сброс контекста в шапке очищает только текущий чат.
                 </p>
               </section>
 

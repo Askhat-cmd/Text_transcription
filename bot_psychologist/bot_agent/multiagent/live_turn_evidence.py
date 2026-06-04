@@ -113,6 +113,9 @@ def build_live_turn_evidence_v1(
         "dialogue": {
             "policy": _safe_dict(dialogue_policy),
             "pragmatics": _safe_dict(dialogue_pragmatics),
+            "fresh_chat_context_policy": _safe_dict(
+                contract_context.get("fresh_chat_context_policy", {})
+            ),
             "retrieval": _safe_dict(contextual_retrieval_decision),
             "active_line": _safe_dict(active_line_state),
             "response_planner": _safe_dict(response_planner_state),
@@ -139,6 +142,12 @@ def build_live_turn_evidence_v1(
             "prompt_assembly": {
                 "writer_first_enabled": bool(
                     contract_context.get("writer_first_prompt_assembly_enabled", False)
+                ),
+                "fresh_chat_context_policy": _safe_dict(
+                    contract_context.get("fresh_chat_context_policy", {})
+                ),
+                "writer_context_package": _safe_dict(
+                    contract_context.get("writer_context_package", {})
                 ),
                 "legacy_blocks_visible_to_writer": bool(
                     contract_context.get("legacy_blocks_visible_to_writer", True)

@@ -53,6 +53,21 @@ _telegram_adapter_service: Optional[TelegramAdapterService] = None
 logger = logging.getLogger(__name__)
 
 
+async def _extract_requested_runtime_session_id(request: Request) -> str:
+    if request.method.upper() not in {"POST", "PUT", "PATCH"}:
+        return ""
+    content_type = (request.headers.get("content-type") or "").lower()
+    if "application/json" not in content_type:
+        return ""
+    try:
+        payload = await request.json()
+    except Exception:
+        return ""
+    if not isinstance(payload, dict):
+        return ""
+    return str(payload.get("session_id", "") or "").strip()
+
+
 def set_preloaded_components(
     data_loader: DataLoader,
     graph_client: KnowledgeGraphClient,
@@ -229,6 +244,7 @@ async def get_identity_context(
 
     try:
         identity: Optional[IdentityContext] = None
+        requested_runtime_session_id = await _extract_requested_runtime_session_id(request)
         if session_id_header:
             restored = await identity_service.resolve_by_session(session_id_header)
             if restored is not None and not legacy_user_id:
@@ -256,10 +272,12 @@ async def get_identity_context(
                 resolved_conversation = None
 
         if resolved_conversation is None:
+            conversation_scope_session_id = requested_runtime_session_id or identity.session_id
             resolved_conversation = await conversation_service.get_or_create_conversation(
                 user_id=identity.user_id,
-                session_id=identity.session_id,
+                session_id=conversation_scope_session_id,
                 channel=identity.channel,
+                allow_user_fallback=not bool(requested_runtime_session_id),
             )
 
         profile = get_registration_repository().get_profile_by_user_id(identity.user_id)

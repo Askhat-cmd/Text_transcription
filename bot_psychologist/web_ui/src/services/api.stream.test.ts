@@ -62,18 +62,19 @@ describe('APIService.streamAdaptiveAnswer', () => {
   });
 
   it('accumulates all chunks into full text', async () => {
+    const fetchMock = vi.fn().mockResolvedValue(
+      buildResponseFromSSE(
+        buildSSEStream([
+          { dataLines: ['{"text":"First paragraph."}'] },
+          { dataLines: ['{"text":" Second paragraph."}'] },
+          { dataLines: ['{"text":" Third paragraph."}'] },
+          { dataLines: ['[DONE]'] },
+        ])
+      )
+    );
     vi.stubGlobal(
       'fetch',
-      vi.fn().mockResolvedValue(
-        buildResponseFromSSE(
-          buildSSEStream([
-            { dataLines: ['{"text":"First paragraph."}'] },
-            { dataLines: ['{"text":" Second paragraph."}'] },
-            { dataLines: ['{"text":" Third paragraph."}'] },
-            { dataLines: ['[DONE]'] },
-          ])
-        )
-      )
+      fetchMock
     );
 
     let finalText = '';
@@ -89,6 +90,15 @@ describe('APIService.streamAdaptiveAnswer', () => {
     );
 
     expect(finalText).toBe('First paragraph. Second paragraph. Third paragraph.');
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          'Content-Type': 'application/json',
+          'X-Session-Id': expect.any(String),
+        }),
+      })
+    );
   });
 
   it('onToken receives accumulated text (not delta)', async () => {

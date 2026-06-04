@@ -601,6 +601,41 @@ class WriterAgent:
             writer_visible_practice_note=str(
                 ctx.get("writer_visible_practice_note", "") or "нет"
             ),
+            fresh_chat_context_policy_version=str(
+                ctx.get("fresh_chat_context_policy_version", "fresh_chat_context_policy_v1")
+                or "fresh_chat_context_policy_v1"
+            ),
+            fresh_chat_is_new_chat=str(bool(ctx.get("fresh_chat_is_new_chat", False))).lower(),
+            fresh_chat_turn_index=int(ctx.get("fresh_chat_turn_index", 1) or 1),
+            fresh_chat_is_greeting_or_contact=str(
+                bool(ctx.get("fresh_chat_is_greeting_or_contact", False))
+            ).lower(),
+            fresh_chat_cross_session_memory_allowed=str(
+                bool(ctx.get("fresh_chat_cross_session_memory_allowed", True))
+            ).lower(),
+            fresh_chat_cross_session_memory_reason=str(
+                ctx.get("fresh_chat_cross_session_memory_reason", "") or ""
+            ),
+            fresh_chat_active_context_source=str(
+                ctx.get("fresh_chat_active_context_source", "current_chat_only")
+                or "current_chat_only"
+            ),
+            writer_context_package_version=str(
+                ctx.get("writer_context_package_version", "writer_context_package_v1")
+                or "writer_context_package_v1"
+            ),
+            writer_context_recent_turns_count=int(
+                ctx.get("writer_context_recent_turns_count", 0) or 0
+            ),
+            writer_context_profile_present=str(
+                bool(ctx.get("writer_context_profile_present", False))
+            ).lower(),
+            writer_context_rag_candidates_count=int(
+                ctx.get("writer_context_rag_candidates_count", 0) or 0
+            ),
+            writer_context_rag_for_writer_count=int(
+                ctx.get("writer_context_rag_for_writer_count", 0) or 0
+            ),
             practice_rewrite_applied=str(bool(ctx.get("practice_rewrite_applied", False))).lower(),
             active_line_version=str(ctx.get("active_line_version", "active_line_v1")),
             active_line_text=str(ctx.get("active_line_text", "") or ""),

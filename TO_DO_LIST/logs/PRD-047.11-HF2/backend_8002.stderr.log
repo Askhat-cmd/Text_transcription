@@ -1,0 +1,530 @@
+2026-06-04 10:30:25,015 | bot_agent.multiagent.thread_storage | INFO | [THREAD_STORAGE] storage_dir=C:\My_practice\Text_transcription\bot_psychologist\data\threads
+2026-06-04 10:30:25,018 | bot_agent | INFO | Bot Agent v0.11.0 initialized | pipeline: semantic->rerank->topK->llm | legacy_graph: disabled
+INFO:     Started server process [22560]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|##########| 199/199 [00:00<00:00, 5518.31it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8002 (Press CTRL+C to quit)
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()
+--- Logging error ---
+Traceback (most recent call last):
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 276, in get_identity_context
+    resolved_conversation = await conversation_service.get_or_create_conversation(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\service.py", line 76, in get_or_create_conversation
+    created = await self._repo.create_conversation(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\conversations\repository.py", line 161, in create_conversation
+    conn.execute(
+sqlite3.IntegrityError: FOREIGN KEY constraint failed
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 74, in emit
+    self.doRollover()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 443, in doRollover
+    self.rotate(self.baseFilename, dfn)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\logging\handlers.py", line 115, in rotate
+    os.rename(source, dest)
+PermissionError: [WinError 32] Процесс не может получить доступ к файлу, так как этот файл занят другим процессом: 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log' -> 'C:\\My_practice\\Text_transcription\\bot_psychologist\\logs\\error\\error.log.20260601'
+Call stack:
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\__main__.py", line 4, in <module>
+    uvicorn.main()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1514, in __call__
+    return self.main(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1435, in main
+    rv = self.invoke(ctx)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 1298, in invoke
+    return ctx.invoke(self.callback, **ctx.params)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\click\core.py", line 853, in invoke
+    return callback(*args, **kwargs)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 441, in main
+    run(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\main.py", line 617, in run
+    server.run()
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\uvicorn\server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 194, in run
+    return runner.run(main)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 674, in run_until_complete
+    self.run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\windows_events.py", line 322, in run_forever
+    super().run_forever()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 641, in run_forever
+    self._run_once()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\base_events.py", line 1987, in _run_once
+    handle._run()
+  File "C:\Users\video\AppData\Local\Programs\Python\Python312\Lib\asyncio\events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\trustedhost.py", line 51, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\cors.py", line 88, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\routing.py", line 457, in app
+    solved_result = await solve_dependencies(
+  File "C:\My_practice\Text_transcription\bot_psychologist\.venv\Lib\site-packages\fastapi\dependencies\utils.py", line 678, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "C:\My_practice\Text_transcription\bot_psychologist\api\dependencies.py", line 302, in get_identity_context
+    logger.error(
+Message: 'identity.resolve_failed'
+Arguments: ()

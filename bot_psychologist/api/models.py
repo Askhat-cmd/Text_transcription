@@ -528,6 +528,7 @@ class DeleteHistoryResponse(BaseModel):
     status: str
     message: str
     user_id: str
+    memory_control_event: Optional[Dict[str, Any]] = None
 
 
 class ChatSessionInfoResponse(BaseModel):
@@ -562,6 +563,16 @@ class DeleteSessionResponse(BaseModel):
     message: str
     user_id: str
     session_id: str
+
+
+class ResetSessionResponse(BaseModel):
+    """Reset current chat context while preserving session identity."""
+    status: str
+    message: str
+    user_id: str
+    session_id: str
+    recreated: bool = True
+    memory_control_event: Optional[Dict[str, Any]] = None
 
 
 class SessionInfoResponse(BaseModel):

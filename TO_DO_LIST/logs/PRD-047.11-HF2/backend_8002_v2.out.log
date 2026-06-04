@@ -1,0 +1,365 @@
+10:24:10 | INFO     | root                                | ======================================================================
+10:24:10 | INFO     | root                                | Logging initialized
+10:24:10 | INFO     | root                                | Log directory: C:\My_practice\Text_transcription\bot_psychologist\logs
+10:24:10 | INFO     | root                                | App log: logs/app/bot.log
+10:24:10 | INFO     | root                                | Retrieval log: logs/retrieval/retrieval.log
+10:24:10 | INFO     | root                                | Error log: logs/error/error.log
+10:24:10 | INFO     | root                                | ======================================================================
+10:24:10 | INFO     | api.main                            | API server starting
+10:24:10 | INFO     | api.main                            | Version: 0.12.0
+10:24:10 | INFO     | api.main                            | Docs: http://localhost:8000/api/docs
+10:24:10 | INFO     | api.main                            | [STARTUP] runtime config validation: OK
+10:24:10 | INFO     | api.registration.bootstrap          | database bootstrap complete (tables=5, api_keys_seeded=3, admin_seeded=False)
+10:24:10 | INFO     | api.main                            | [WARMUP] starting warm preload
+10:24:10 | INFO     | api.main                            | [GRAPH][LEGACY] disabled (ENABLE_KNOWLEDGE_GRAPH=false); retrieval source is Bot_data_base API
+10:24:10 | INFO     | bot_agent.data_loader               | \U0001f4c2 KNOWLEDGE_SOURCE=api
+10:24:10 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] loading embedding model: intfloat/multilingual-e5-base
+10:24:10 | INFO     | bot_agent.data_loader               | [API] «агрузка всех блоков из Bot_data_base через HTTP API...
+10:24:12 | INFO     | bot_agent.retriever                 | [RETRIEVAL] TF-IDF loaded from cache (hash match)
+10:24:12 | INFO     | bot_agent.data_loader               | [API] Ќайдено 1 источников в реестре
+10:24:15 | INFO     | bot_agent.data_loader               | \u2705 API: 247 блоков из 1 источников загружено
+10:24:15 | INFO     | bot_agent.data_loader               | [DATA_LOADER] source=api blocks=247
+10:24:15 | INFO     | bot_agent.data_loader               | \u2705 «агружено: 1 документов, 247 блоков [source=api]
+10:24:20 | WARNING  | huggingface_hub.utils._http         | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10:24:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding model loaded
+10:24:28 | INFO     | api.main                            | [WARMUP] completed
+10:24:28 | INFO     | api.main                            | -> GET /api/v1/health (key: none)
+10:24:28 | INFO     | api.main                            | <- GET /api/v1/health | status=200 | 0.003s
+INFO:     127.0.0.1:54490 - "GET /api/v1/health HTTP/1.1" 200 OK
+10:24:38 | INFO     | api.main                            | -> GET /api/admin/runtime/effective (key: dev-key-00...)
+10:24:38 | INFO     | api.main                            | <- GET /api/admin/runtime/effective | status=200 | 0.031s
+INFO:     127.0.0.1:54498 - "GET /api/admin/runtime/effective HTTP/1.1" 200 OK
+10:24:38 | INFO     | api.main                            | -> GET /api/v1/identity/me (key: dev-key-00...)
+10:24:38 | INFO     | api.conversations.service           | conversation.resumed
+10:24:38 | INFO     | api.main                            | <- GET /api/v1/identity/me | status=200 | 0.047s
+INFO:     127.0.0.1:54499 - "GET /api/v1/identity/me HTTP/1.1" 200 OK
+10:24:38 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:24:38 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:24:38 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: привет, мен€ зовут јсхат!... (user=anon_8489dbe4065340639d97d823cf7f5bdd runtime_scope=prd04711hf2-hf2-live-001-b23a7f31 session=prd04711hf2-hf2-live-001-b23a7f31)
+10:24:40 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-nano selected_mode=responses
+10:24:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-001-b23a7f31
+10:24:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-001-b23a7f31
+10:24:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-001-b23a7f31
+10:24:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-001-b23a7f31 turns=0
+10:24:44 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='привет, мен€ зовут јсхат!' top_k=4 source=api
+10:24:48 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:24:48 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='привет, мен€ зовут јсхат!...' retrieval_source_used=api circuit_open=False
+10:24:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-001-b23a7f31 turns=0
+10:24:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-001-b23a7f31 turns=0
+10:24:48 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-001-b23a7f31 turns=0
+10:24:48 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-001-b23a7f31 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:24:48 | INFO     | bot_agent.multiagent.agents.agent_llm_client | [AGENT_LLM] sdk_capabilities has_responses=True has_chat_completions=True model=gpt-5-mini selected_mode=responses
+10:24:52 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-001-b23a7f31 turns=0
+10:24:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-001-b23a7f31 turns_before=0
+10:24:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-001-b23a7f31 turn_index=1
+10:24:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-001-b23a7f31 turn_index=1
+10:24:52 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:24:52 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-001-b23a7f31 turns=1 reason=addturn
+10:24:52 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-001-b23a7f31 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:24:52 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 14.000s
+INFO:     127.0.0.1:54500 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:24:52 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/traces (key: dev-key-00...)
+10:24:52 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/traces | status=200 | 0.056s
+INFO:     127.0.0.1:54514 - "GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/traces?format=full HTTP/1.1" 200 OK
+10:24:52 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/multiagent-trace (key: dev-key-00...)
+10:24:52 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/multiagent-trace | status=200 | 0.057s
+INFO:     127.0.0.1:54515 - "GET /api/debug/session/prd04711hf2-hf2-live-001-b23a7f31/multiagent-trace HTTP/1.1" 200 OK
+10:24:52 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:24:52 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:24:52 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: привет, мен€ зовут јсхат!... (user=anon_85587626c26e443a86fa5814f34861cf runtime_scope=prd04711hf2-hf2-live-002-828913fb session=prd04711hf2-hf2-live-002-828913fb)
+10:24:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-002-828913fb
+10:24:55 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-002-828913fb
+10:24:55 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-002-828913fb
+10:24:55 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=0
+10:24:55 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='привет, мен€ зовут јсхат!' top_k=4 source=api
+10:24:58 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:24:58 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='привет, мен€ зовут јсхат!...' retrieval_source_used=api circuit_open=False
+10:24:58 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=0
+10:24:58 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=0
+10:24:58 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=0
+10:24:58 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-002-828913fb top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:25:01 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=0
+10:25:01 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-002-828913fb turns_before=0
+10:25:01 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-002-828913fb turn_index=1
+10:25:01 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-002-828913fb turn_index=1
+10:25:01 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:25:01 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-002-828913fb turns=1 reason=addturn
+10:25:01 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-002-828913fb model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:25:01 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 9.167s
+INFO:     127.0.0.1:54516 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:25:01 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:25:01 | INFO     | api.conversations.service           | conversation.created
+10:25:02 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: почему ты начал объ€сн€ть механизм, € просто поздо... (user=d37bd9c4-9b86-4aae-af19-ec376c4db978 runtime_scope=prd04711hf2-hf2-live-002-828913fb session=prd04711hf2-hf2-live-002-828913fb)
+10:25:04 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:04 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:04 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='почему ты начал объ€сн€ть механизм, € просто поздоровалс€?' top_k=4 source=api
+10:25:07 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:25:07 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='почему ты начал объ€сн€ть механизм, € просто поздо...' retrieval_source_used=api circuit_open=False
+10:25:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:07 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:07 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-002-828913fb top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+10:25:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=1
+10:25:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd04711hf2-hf2-live-002-828913fb results=1 threshold=0.600 max_similarity=0.833
+10:25:08 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.833
+10:25:12 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-002-828913fb turns=1
+10:25:12 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-002-828913fb turns_before=1
+10:25:12 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-002-828913fb turn_index=2
+10:25:12 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-002-828913fb turn_index=2
+10:25:12 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+10:25:12 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-002-828913fb turns=2 reason=addturn
+10:25:12 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-002-828913fb model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:25:12 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 10.474s
+INFO:     127.0.0.1:54524 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:25:12 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/traces (key: dev-key-00...)
+10:25:12 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/traces | status=200 | 0.068s
+INFO:     127.0.0.1:54535 - "GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/traces?format=full HTTP/1.1" 200 OK
+10:25:12 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/multiagent-trace (key: dev-key-00...)
+10:25:12 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/multiagent-trace | status=200 | 0.054s
+INFO:     127.0.0.1:54536 - "GET /api/debug/session/prd04711hf2-hf2-live-002-828913fb/multiagent-trace HTTP/1.1" 200 OK
+10:25:12 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:25:12 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:25:12 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: объ€сни простыми словами, что такое автоматический... (user=anon_ec4421a0fcb74da09940b6b69a9997ba runtime_scope=prd04711hf2-hf2-live-003-f9269c6a-seed session=prd04711hf2-hf2-live-003-f9269c6a-seed)
+10:25:15 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-003-f9269c6a-seed
+10:25:15 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-003-f9269c6a-seed
+10:25:15 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-003-f9269c6a-seed
+10:25:15 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns=0
+10:25:15 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='объ€сни простыми словами, что такое автоматический контроль' top_k=4 source=api
+10:25:18 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:25:18 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='объ€сни простыми словами, что такое автоматический...' retrieval_source_used=api circuit_open=False
+10:25:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns=0
+10:25:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns=0
+10:25:18 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns=0
+10:25:18 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-003-f9269c6a-seed top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:25:24 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns=0
+10:25:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turns_before=0
+10:25:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turn_index=1
+10:25:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-003-f9269c6a-seed turn_index=1
+10:25:24 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:25:24 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-003-f9269c6a-seed turns=1 reason=addturn
+10:25:24 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-003-f9269c6a-seed model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:25:24 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 12.403s
+INFO:     127.0.0.1:54537 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:25:24 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:25:24 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:25:25 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: продолжим прошлую тему про автоматический контроль... (user=anon_aab08afc7b5848468d24a676a5d91b6f runtime_scope=prd04711hf2-hf2-live-003-f9269c6a session=prd04711hf2-hf2-live-003-f9269c6a)
+10:25:28 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-003-f9269c6a
+10:25:28 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-003-f9269c6a
+10:25:28 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-003-f9269c6a
+10:25:28 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a turns=0
+10:25:28 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='продолжим прошлую тему про автоматический контроль' top_k=4 source=api
+10:25:31 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:25:31 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='продолжим прошлую тему про автоматический контроль...' retrieval_source_used=api circuit_open=False
+10:25:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a turns=0
+10:25:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a turns=0
+10:25:31 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a turns=0
+10:25:31 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-003-f9269c6a top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:25:40 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-003-f9269c6a turns=0
+10:25:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-003-f9269c6a turns_before=0
+10:25:40 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-003-f9269c6a turn_index=1
+10:25:40 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-003-f9269c6a turn_index=1
+10:25:41 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:25:41 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-003-f9269c6a turns=1 reason=addturn
+10:25:41 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-003-f9269c6a model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:25:41 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 16.166s
+INFO:     127.0.0.1:54548 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:25:41 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/traces (key: dev-key-00...)
+10:25:41 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/traces | status=200 | 0.063s
+INFO:     127.0.0.1:54570 - "GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/traces?format=full HTTP/1.1" 200 OK
+10:25:41 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/multiagent-trace (key: dev-key-00...)
+10:25:41 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/multiagent-trace | status=200 | 0.064s
+INFO:     127.0.0.1:54571 - "GET /api/debug/session/prd04711hf2-hf2-live-003-f9269c6a/multiagent-trace HTTP/1.1" 200 OK
+10:25:41 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:25:41 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:25:41 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: что такое нейросталкинг простыми словами?... (user=anon_a6109142618c446f8079c8173485a5e5 runtime_scope=prd04711hf2-hf2-live-004-61d3db91 session=prd04711hf2-hf2-live-004-61d3db91)
+10:25:44 | WARNING  | bot_agent.multiagent.agents.state_analyzer | [STATE_ANALYZER] json decode failed: Unterminated string starting at: line 4 column 3 (char 56) | raw_response_preview={\n  "nervous_state": "window",\n  "intent": "clarify",\n  "openness
+10:25:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-004-61d3db91
+10:25:44 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-004-61d3db91
+10:25:44 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-004-61d3db91
+10:25:44 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-004-61d3db91 turns=0
+10:25:44 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='что такое нейросталкинг простыми словами?' top_k=4 source=api
+10:25:47 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:25:47 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='что такое нейросталкинг простыми словами?...' retrieval_source_used=api circuit_open=False
+10:25:47 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-004-61d3db91 turns=0
+10:25:47 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-004-61d3db91 turns=0
+10:25:47 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-004-61d3db91 turns=0
+10:25:47 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-004-61d3db91 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:25:50 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-004-61d3db91 turns=0
+10:25:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-004-61d3db91 turns_before=0
+10:25:50 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-004-61d3db91 turn_index=1
+10:25:50 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-004-61d3db91 turn_index=1
+10:25:51 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:25:51 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-004-61d3db91 turns=1 reason=addturn
+10:25:51 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-004-61d3db91 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:25:51 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 9.810s
+INFO:     127.0.0.1:54572 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:25:51 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/traces (key: dev-key-00...)
+10:25:51 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/traces | status=200 | 0.065s
+INFO:     127.0.0.1:54583 - "GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/traces?format=full HTTP/1.1" 200 OK
+10:25:51 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/multiagent-trace (key: dev-key-00...)
+10:25:51 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/multiagent-trace | status=200 | 0.055s
+INFO:     127.0.0.1:54584 - "GET /api/debug/session/prd04711hf2-hf2-live-004-61d3db91/multiagent-trace HTTP/1.1" 200 OK
+10:25:51 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:25:51 | ERROR    | api.dependencies                    | identity.resolve_failed
+10:25:51 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: что такое нейросталкинг простыми словами? ѕосле ко... (user=anon_98079240f3ee48cabd6b660de141918b runtime_scope=prd04711hf2-hf2-live-005-01940c52 session=prd04711hf2-hf2-live-005-01940c52)
+10:25:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-005-01940c52
+10:25:54 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=prd04711hf2-hf2-live-005-01940c52
+10:25:54 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=prd04711hf2-hf2-live-005-01940c52
+10:25:54 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=0
+10:25:54 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='что такое нейросталкинг простыми словами? ѕосле короткого ответа предложи, если ' top_k=4 source=api
+10:25:57 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:25:57 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='что такое нейросталкинг простыми словами? ѕосле ко...' retrieval_source_used=api circuit_open=False
+10:25:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=0
+10:25:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=0
+10:25:57 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=0
+10:25:57 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-005-01940c52 top_k=3 min_similarity=0.600 total_embeddings=0 exclude_last_n=1 effective_exclude=0
+10:26:00 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=0
+10:26:00 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-005-01940c52 turns_before=0
+10:26:00 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-005-01940c52 turn_index=1
+10:26:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-005-01940c52 turn_index=1
+10:26:00 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=1
+10:26:00 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-005-01940c52 turns=1 reason=addturn
+10:26:00 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-005-01940c52 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:26:00 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 9.072s
+INFO:     127.0.0.1:54585 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:26:00 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive (key: dev-key-00...)
+10:26:00 | INFO     | api.conversations.service           | conversation.created
+10:26:00 | INFO     | api.routes.common                   | [ADAPTIVE] Adaptive question: да... (user=d37bd9c4-9b86-4aae-af19-ec376c4db978 runtime_scope=prd04711hf2-hf2-live-005-01940c52 session=prd04711hf2-hf2-live-005-01940c52)
+10:26:02 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:02 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:02 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='да' top_k=4 source=api
+10:26:05 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:26:05 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='да...' retrieval_source_used=api circuit_open=False
+10:26:05 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:05 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:05 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:05 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=prd04711hf2-hf2-live-005-01940c52 top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+10:26:05 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=1
+10:26:05 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=prd04711hf2-hf2-live-005-01940c52 results=1 threshold=0.600 max_similarity=0.741
+10:26:05 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.741
+10:26:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=prd04711hf2-hf2-live-005-01940c52 turns=1
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=prd04711hf2-hf2-live-005-01940c52 turns_before=1
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=prd04711hf2-hf2-live-005-01940c52 turn_index=2
+10:26:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=prd04711hf2-hf2-live-005-01940c52 turn_index=2
+10:26:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=prd04711hf2-hf2-live-005-01940c52 turns=2 reason=addturn
+10:26:13 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=prd04711hf2-hf2-live-005-01940c52 model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:26:13 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive | status=200 | 13.108s
+INFO:     127.0.0.1:54594 - "POST /api/v1/questions/adaptive HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/traces (key: dev-key-00...)
+10:26:13 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/traces | status=200 | 0.064s
+INFO:     127.0.0.1:54627 - "GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/traces?format=full HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/multiagent-trace (key: dev-key-00...)
+10:26:13 | INFO     | api.main                            | <- GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/multiagent-trace | status=200 | 0.053s
+INFO:     127.0.0.1:54628 - "GET /api/debug/session/prd04711hf2-hf2-live-005-01940c52/multiagent-trace HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions (key: dev-key-00...)
+10:26:13 | INFO     | api.conversations.service           | conversation.resumed
+10:26:13 | INFO     | api.main                            | <- POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions | status=200 | 0.052s
+INFO:     127.0.0.1:54629 - "POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions/b166b337-d27d-4cbd-9106-08548deb3e67/reset-context (key: dev-key-00...)
+10:26:13 | INFO     | api.conversations.service           | conversation.resumed
+10:26:13 | INFO     | api.main                            | <- POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions/b166b337-d27d-4cbd-9106-08548deb3e67/reset-context | status=200 | 0.056s
+INFO:     127.0.0.1:54630 - "POST /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/sessions/b166b337-d27d-4cbd-9106-08548deb3e67/reset-context HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> GET /api/v1/users/b166b337-d27d-4cbd-9106-08548deb3e67/history (key: dev-key-00...)
+10:26:13 | INFO     | api.conversations.service           | conversation.resumed
+10:26:13 | INFO     | api.routes.common                   | History requested for user=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | api.main                            | <- GET /api/v1/users/b166b337-d27d-4cbd-9106-08548deb3e67/history | status=200 | 0.046s
+INFO:     127.0.0.1:54631 - "GET /api/v1/users/b166b337-d27d-4cbd-9106-08548deb3e67/history?last_n_turns=10 HTTP/1.1" 200 OK
+10:26:13 | INFO     | api.main                            | -> DELETE /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/history (key: dev-key-00...)
+10:26:13 | INFO     | api.conversations.service           | conversation.resumed
+10:26:13 | INFO     | api.routes.common                   | History cleanup for user=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from json turns=0 user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] clear_history user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | bot_agent.semantic_memory           | Semantic memory cleared
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=d37bd9c4-9b86-4aae-af19-ec376c4db978 turns=0 reason=shutdown
+10:26:13 | INFO     | bot_agent.conversation_memory       | [MEMORY] history_cleared user_id=d37bd9c4-9b86-4aae-af19-ec376c4db978
+10:26:13 | INFO     | api.main                            | <- DELETE /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/history | status=200 | 0.076s
+INFO:     127.0.0.1:54632 - "DELETE /api/v1/users/d37bd9c4-9b86-4aae-af19-ec376c4db978/history HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions (key: none)
+10:26:14 | INFO     | api.main                            | -> OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions (key: none)
+10:26:14 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions | status=200 | 0.003s
+INFO:     127.0.0.1:54640 - "OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions?limit=200 HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | <- OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions | status=200 | 0.002s
+INFO:     127.0.0.1:54641 - "OPTIONS /api/v1/users/user_1780550774824_t636tdi/sessions?limit=200 HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | -> GET /api/v1/users/user_1780550774824_t636tdi/sessions (key: dev-key-00...)
+10:26:14 | INFO     | api.conversations.service           | conversation.resumed
+10:26:14 | INFO     | api.main                            | <- GET /api/v1/users/user_1780550774824_t636tdi/sessions | status=200 | 0.046s
+INFO:     127.0.0.1:54640 - "GET /api/v1/users/user_1780550774824_t636tdi/sessions?limit=200 HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | -> GET /api/v1/users/user_1780550774824_t636tdi/sessions (key: dev-key-00...)
+10:26:14 | INFO     | api.conversations.service           | conversation.resumed
+10:26:14 | INFO     | api.main                            | -> OPTIONS /api/v1/users/hf2-web-chat-smoke/history (key: none)
+10:26:14 | INFO     | api.main                            | <- GET /api/v1/users/user_1780550774824_t636tdi/sessions | status=200 | 0.050s
+INFO:     127.0.0.1:54641 - "GET /api/v1/users/user_1780550774824_t636tdi/sessions?limit=200 HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | <- OPTIONS /api/v1/users/hf2-web-chat-smoke/history | status=200 | 0.002s
+INFO:     127.0.0.1:54640 - "OPTIONS /api/v1/users/hf2-web-chat-smoke/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:26:14 | INFO     | api.main                            | -> GET /api/v1/users/hf2-web-chat-smoke/history (key: dev-key-00...)
+10:26:14 | INFO     | api.conversations.service           | conversation.resumed
+10:26:15 | INFO     | api.routes.common                   | History requested for user=7d22d1a4-d95f-409f-bc8a-b5c069b5dcc3
+10:26:15 | INFO     | api.main                            | <- GET /api/v1/users/hf2-web-chat-smoke/history | status=200 | 0.046s
+INFO:     127.0.0.1:54641 - "GET /api/v1/users/hf2-web-chat-smoke/history?last_n_turns=100 HTTP/1.1" 200 OK
+10:26:15 | INFO     | api.main                            | -> OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: none)
+10:26:15 | INFO     | api.main                            | -> OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: none)
+10:26:15 | INFO     | api.main                            | <- OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.002s
+INFO:     127.0.0.1:54641 - "OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:26:15 | INFO     | api.main                            | <- OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.002s
+INFO:     127.0.0.1:54640 - "OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:26:15 | INFO     | api.main                            | -> GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: dev-key-00...)
+10:26:15 | INFO     | api.main                            | <- GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.176s
+INFO:     127.0.0.1:54642 - "GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:26:15 | INFO     | api.main                            | -> GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: dev-key-00...)
+10:26:15 | INFO     | api.main                            | <- GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.207s
+INFO:     127.0.0.1:54640 - "GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=1 HTTP/1.1" 200 OK
+10:26:16 | INFO     | api.main                            | -> OPTIONS /api/v1/questions/adaptive-stream (key: none)
+10:26:16 | INFO     | api.main                            | <- OPTIONS /api/v1/questions/adaptive-stream | status=200 | 0.000s
+INFO:     127.0.0.1:54640 - "OPTIONS /api/v1/questions/adaptive-stream HTTP/1.1" 200 OK
+10:26:16 | INFO     | api.main                            | -> POST /api/v1/questions/adaptive-stream (key: dev-key-00...)
+10:26:16 | INFO     | api.identity.service                | identity.user_resolved
+10:26:16 | WARNING  | api.identity.service                | identity.legacy_user_id_used
+10:26:16 | INFO     | api.identity.service                | identity.session_refreshed
+10:26:16 | INFO     | api.conversations.service           | conversation.resumed
+10:26:16 | INFO     | api.routes.common                   | [ADAPTIVE-STREAM] query: ќтветь строго одним markdown-сообщением без по€сне... (user=7d22d1a4-d95f-409f-bc8a-b5c069b5dcc3 runtime_scope=hf2-web-chat-smoke session=hf2-web-chat-smoke)
+10:26:16 | INFO     | api.main                            | <- POST /api/v1/questions/adaptive-stream | status=200 | 0.092s
+INFO:     127.0.0.1:54642 - "POST /api/v1/questions/adaptive-stream HTTP/1.1" 200 OK
+10:26:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_miss user_id=hf2-web-chat-smoke
+10:26:19 | INFO     | bot_agent.semantic_memory           | [SEMANTIC_MEMORY] cache_miss user_id=hf2-web-chat-smoke
+10:26:19 | INFO     | bot_agent.semantic_memory           | Semantic memory loaded: 1 embeddings
+10:26:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] load_history start user_id=hf2-web-chat-smoke
+10:26:19 | INFO     | bot_agent.conversation_memory       | [MEMORY] loaded from sqlite turns=1 user_id=hf2-web-chat-smoke
+10:26:19 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=1
+10:26:19 | INFO     | bot_agent.retriever                 | [RETRIEVAL] query='ќтветь строго одним markdown-сообщением без по€снений: **∆ирный заголовок**. ѕот' top_k=4 source=api
+10:26:23 | INFO     | bot_agent.retriever                 | [RETRIEVAL] API search: 4 блоков
+10:26:23 | INFO     | bot_agent.multiagent.agents.memory_retrieval | [MRA] rag hits=4 query='ќтветь строго одним markdown-сообщением без по€сне...' retrieval_source_used=api circuit_open=False
+10:26:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=1
+10:26:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=1
+10:26:23 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=1
+10:26:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search start user_id=hf2-web-chat-smoke top_k=3 min_similarity=0.600 total_embeddings=1 exclude_last_n=1 effective_exclude=0
+10:26:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search_pool_size=1
+10:26:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] search done user_id=hf2-web-chat-smoke results=1 threshold=0.600 max_similarity=0.905
+10:26:23 | INFO     | bot_agent.semantic_memory           | [SEMANTIC]   #1 turn=1 similarity=0.905
+10:26:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=1
+10:26:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] add_turn user_id=hf2-web-chat-smoke turns_before=1
+10:26:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] turn_added user_id=hf2-web-chat-smoke turn_index=2
+10:26:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] add_turn_embedding user_id=hf2-web-chat-smoke turn_index=2
+10:26:27 | INFO     | bot_agent.semantic_memory           | [SEMANTIC] embedding added turn_index=2
+10:26:27 | INFO     | bot_agent.conversation_memory       | [MEMORY] save userid=hf2-web-chat-smoke turns=2 reason=addturn
+10:26:27 | INFO     | bot_agent.multiagent.runtime_adapter | [MULTIAGENT_ADAPTER] served query user_id=hf2-web-chat-smoke model=gpt-5-mini writer_api_mode=responses state_api_mode=responses
+10:26:27 | INFO     | bot_agent.conversation_memory       | [CONV_MEMORY] cache_hit user_id=hf2-web-chat-smoke turns=2
+10:26:28 | INFO     | api.main                            | -> GET /api/v1/users/user_1780550774824_t636tdi/sessions (key: dev-key-00...)
+10:26:28 | INFO     | api.conversations.service           | conversation.resumed
+10:26:28 | INFO     | api.main                            | <- GET /api/v1/users/user_1780550774824_t636tdi/sessions | status=200 | 0.055s
+INFO:     127.0.0.1:54642 - "GET /api/v1/users/user_1780550774824_t636tdi/sessions?limit=200 HTTP/1.1" 200 OK
+10:26:28 | INFO     | api.main                            | -> OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: none)
+10:26:28 | INFO     | api.main                            | -> OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: none)
+10:26:28 | INFO     | api.main                            | <- OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.005s
+INFO:     127.0.0.1:54658 - "OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:26:28 | INFO     | api.main                            | <- OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.003s
+INFO:     127.0.0.1:54659 - "OPTIONS /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:26:28 | INFO     | api.main                            | -> GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: dev-key-00...)
+10:26:28 | INFO     | api.main                            | <- GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.055s
+INFO:     127.0.0.1:54642 - "GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK
+10:26:28 | INFO     | api.main                            | -> GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace (key: dev-key-00...)
+10:26:28 | INFO     | api.main                            | <- GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace | status=200 | 0.051s
+INFO:     127.0.0.1:54659 - "GET /api/debug/session/hf2-web-chat-smoke/multiagent-trace?turn_index=2 HTTP/1.1" 200 OK

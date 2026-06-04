@@ -1,0 +1,61 @@
+СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:
+почему ты начал объяснять механизм, я просто поздоровался?
+
+РЕЖИМ ОТВЕТА: reflect
+ЦЕЛЬ: clarify key point
+ФАЗА РАЗГОВОРА: clarify
+СОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window
+OK-ПОЗИЦИЯ: I+W+
+ОТКРЫТОСТЬ: open
+SAFETY АКТИВЕН: False
+
+ОТКРЫТЫЕ ПЕТЛИ:
+почему ты начал объяснять механизм, я просто поздоровался?
+
+НЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):
+нет
+
+FINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):
+version=final_answer_directive_v1
+directive_json:
+{
+  "version": "final_answer_directive_v1",
+  "roles": {
+    "diagnostic_center": "advisory_context_only",
+    "planner": "advisory_context_only",
+    "active_line": "advisory_context_only",
+    "diagnostic_card": "advisory_context_only"
+  },
+  "answer_obligation": "answer_previous_question_directly",
+  "must_answer": "brief_apology_then_direct_answer",
+  "answer_shape": "repair_acknowledgement",
+  "depth": "short",
+  "style": "brief_apology_then_direct_answer",
+  "question_policy": "do_not_ask_until_answered",
+  "practice_instruction": "no_exercise_but_answer_normally",
+  "writer_autonomy": "high"
+}
+
+PROMPT ASSEMBLY (EFFECTIVE):
+writer_first_prompt_assembly_enabled=true
+legacy_blocks_visible_to_writer=false
+legacy_blocks_source_signals_only=true
+legacy_advisory_sanitized=true
+practice_rewrite_applied=true
+diagnostic_center_role=advisory_context_only
+planner_role=advisory_context_only
+active_line_role=advisory_context_only
+diagnostic_card_role=advisory_context_only
+
+ADVISORY CONTEXT SUMMARY:
+Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.
+Текущий смысловой фокус: помочь увидеть механизм происходящего без ухода в практику.
+Полезно ответить на актуальную потребность: explore perspective carefully.
+Можно опереться на такой ход ответа: clarify_one_point.
+Один полезный смысловой сдвиг: признать промах и ответить напрямую без повторного подтверждения.
+Формат можно держать таким: repair_and_expand.
+Лучше продолжать уже начатую тему, а не начинать новую ветку.
+Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.
+
+PRACTICE NOTE:
+Е...[truncated:4997]

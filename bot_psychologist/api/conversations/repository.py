@@ -213,6 +213,7 @@ class ConversationRepository:
         user_id: str,
         session_id: str,
         channel: str = "web",
+        allow_user_fallback: bool = True,
     ) -> tuple[Optional[ConversationRecord], Optional[str]]:
         await self.ensure_schema()
         with self._connect() as conn:
@@ -228,6 +229,8 @@ class ConversationRepository:
             ).fetchone()
             if row is not None:
                 return self._to_record(row), "session_id"
+            if not allow_user_fallback:
+                return None, None
 
             # Fallback для web: если session_id технически сменился,
             # пробуем последнюю активную conversation пользователя в том же канале.

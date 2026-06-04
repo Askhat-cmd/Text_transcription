@@ -195,6 +195,22 @@ ADVISORY CONTEXT SUMMARY:
 PRACTICE NOTE:
 {writer_visible_practice_note}
 
+FRESH CHAT CONTEXT POLICY:
+version={fresh_chat_context_policy_version}
+is_new_chat={fresh_chat_is_new_chat}
+turn_index={fresh_chat_turn_index}
+is_greeting_or_contact={fresh_chat_is_greeting_or_contact}
+cross_session_memory_allowed={fresh_chat_cross_session_memory_allowed}
+cross_session_memory_reason={fresh_chat_cross_session_memory_reason}
+active_context_source={fresh_chat_active_context_source}
+
+WRITER CONTEXT PACKAGE:
+version={writer_context_package_version}
+recent_turns_for_writer_count={writer_context_recent_turns_count}
+profile_for_writer_present={writer_context_profile_present}
+rag_candidates_for_trace_count={writer_context_rag_candidates_count}
+rag_for_writer_count={writer_context_rag_for_writer_count}
+
 КОНТЕКСТ ПРЕДЫДУЩИХ ХОДОВ:
 {conversation_context}
 context_budget_chars={context_budget_chars}

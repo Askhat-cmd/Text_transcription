@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "chat_url": "http://127.0.0.1:3001/chat",
+  "checks": {
+    "has_strong": true,
+    "has_ul_or_ol": true,
+    "paragraph_count_gte_2": true,
+    "not_plain_markdown_text": true
+  }
+}

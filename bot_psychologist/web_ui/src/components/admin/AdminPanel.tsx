@@ -488,6 +488,42 @@ export const AdminPanel: React.FC = () => {
                         <div>scenario_count: {runtimeEffectiveData.guided_live_testing?.scenario_count ?? 0}</div>
                         <div>last_session_summary_available: {String(Boolean(runtimeEffectiveData.guided_live_testing?.last_session_summary_available))}</div>
                       </div>
+                      <div className="rounded border border-slate-200 p-3" data-testid="hf2-fresh-chat-runtime">
+                        <div className="font-medium">Fresh Chat Isolation</div>
+                        <div>policy_version: {runtimeEffectiveData.dialogue_policy?.fresh_chat_context_policy_version ?? 'n/a'}</div>
+                        <div>rag_default: {runtimeEffectiveData.dialogue_policy?.fresh_chat_rag_default ?? 'n/a'}</div>
+                        <div>current_chat_reset.endpoint: {runtimeEffectiveData.dialogue_policy?.current_chat_reset_control?.endpoint ?? 'n/a'}</div>
+                        <div>current_chat_reset.scope: {runtimeEffectiveData.dialogue_policy?.current_chat_reset_control?.scope ?? 'n/a'}</div>
+                        <div>
+                          current_chat_reset.preserves_session_id:{' '}
+                          {String(Boolean(runtimeEffectiveData.dialogue_policy?.current_chat_reset_control?.preserves_session_id))}
+                        </div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3" data-testid="hf2-writer-context-runtime">
+                        <div className="font-medium">Writer Context Gate</div>
+                        <div>package_version: {runtimeEffectiveData.dialogue_policy?.writer_context_package_version ?? 'n/a'}</div>
+                        <div>markdown_renderer: {runtimeEffectiveData.dialogue_policy?.web_chat_markdown_renderer ?? 'n/a'}</div>
+                        <div>legacy_prompt_blocks_mode: {runtimeEffectiveData.dialogue_policy?.legacy_prompt_blocks_mode ?? 'n/a'}</div>
+                        <div>
+                          final_answer_directive_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_directive_enabled))}
+                        </div>
+                        <div>
+                          writer_first_prompt_assembly_enabled:{' '}
+                          {String(Boolean(runtimeEffectiveData.dialogue_policy?.writer_first_prompt_assembly_enabled))}
+                        </div>
+                      </div>
+                      <div className="rounded border border-slate-200 p-3" data-testid="hf2-memory-controls-runtime">
+                        <div className="font-medium">Memory Controls</div>
+                        <div>clear_profile.endpoint: {runtimeEffectiveData.dialogue_policy?.user_memory_profile_clear_control?.endpoint ?? 'n/a'}</div>
+                        <div>clear_profile.scope: {runtimeEffectiveData.dialogue_policy?.user_memory_profile_clear_control?.scope ?? 'n/a'}</div>
+                        <div>
+                          clear_profile.developer_visible:{' '}
+                          {String(Boolean(runtimeEffectiveData.dialogue_policy?.user_memory_profile_clear_control?.developer_visible))}
+                        </div>
+                        <div className="mt-2 rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs text-amber-900">
+                          Current chat reset is session-only. Memory profile clear stays developer-visible only.
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}

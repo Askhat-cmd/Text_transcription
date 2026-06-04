@@ -867,3 +867,41 @@ Consequences:
 - Writer receives less imperative prompt pressure in `mvp_free_dialogue`, while observability remains intact;
 - prompt canvases can be audited for absence of raw legacy command blocks without losing runtime debug detail;
 - future UI/browser proof work can focus on rendering and evidence capture rather than prompt-assembly cleanup.
+
+## ADR-071 - Fresh chat starts as a local context line until continuation or knowledge need is explicit
+
+Status: accepted
+
+Date: 2026-06-04
+
+Context: live evidence after PRD-047.11-HF1 showed that a new greeting-only chat could still inherit stale mechanism/topic steering from prior sessions, producing over-analytical first answers and repair friction.
+
+Decision:
+- add deterministic `fresh_chat_context_policy_v1`;
+- treat the first 1-2 turns of a new chat as local current-chat scope by default;
+- block cross-session topic continuation on greeting/contact turns unless the user explicitly asks to continue a previous topic or asks a real knowledge/concept question;
+- expose the policy in trace, live evidence, and admin runtime effective payload.
+
+Consequences:
+- fresh greetings no longer pull stale mechanism context into the active writer path;
+- explicit continuation still re-enables cross-session grounding with auditable reasons;
+- no new agent, no new runtime path, and no governance/KB mutation were introduced.
+
+## ADR-072 - Writer-visible RAG must pass one final context package gate
+
+Status: accepted
+
+Date: 2026-06-04
+
+Context: live prompt canvases showed a contradiction where retrieval could be classified as `memory_only` or `none`, yet raw `KNOWLEDGE RAG HITS` still leaked into the writer-visible prompt.
+
+Decision:
+- introduce `writer_context_package_v1` as the final assembly boundary for writer-visible context;
+- allow trace/admin to retain `rag_candidates_for_trace`, but pass `rag_for_writer` only when the gate explicitly includes it;
+- keep greeting repairs, short social/contact turns, and fresh-chat non-knowledge turns free from writer-visible raw RAG chunks;
+- expose gate counts/reasons and runtime versions in admin effective payload and live evidence exports.
+
+Consequences:
+- retrieval observability remains intact without bypassing the writer-visible gate;
+- real browser/live cases can verify both prompt hygiene and answer behavior on the same runtime path;
+- the system stays unified: no duplicated orchestrator, no new guard branch, no KB/governance mutation.

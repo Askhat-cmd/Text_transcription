@@ -5,6 +5,8 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import type { Message } from '../../types';
 import MessageList from './MessageList';
 import InputBox from './InputBox';
@@ -110,7 +112,7 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
               <button
                 onClick={onClearChat}
                 className="p-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
-                title="Очистить чат"
+                title="Сбросить контекст этого чата"
               >
                 <FiRefreshCw size={17} />
               </button>
@@ -203,7 +205,9 @@ export const ChatWindow: React.FC<ChatWindowProps> = ({
             {streamingText && (
               <div className="message-bot streaming-message">
                 <div className="prose prose-sm max-w-none dark:prose-invert">
-                  {streamingText}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>
+                    {streamingText}
+                  </ReactMarkdown>
                   <span className="cursor-blink" />
                 </div>
               </div>

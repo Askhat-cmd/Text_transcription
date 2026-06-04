@@ -21,6 +21,7 @@ from ..models import (
     CreateSessionRequest,
     DeleteHistoryResponse,
     DeleteSessionResponse,
+    ResetSessionResponse,
     SessionInfoResponse,
     UserHistoryResponse,
     UserSessionsResponse,
@@ -158,6 +159,70 @@ async def delete_user_session(
         raise
     except Exception as exc:
         logger.error("Error deleting session %s: %s", session_id, exc)
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
+
+
+@router.post(
+    "/users/{user_id}/sessions/{session_id}/reset-context",
+    response_model=ResetSessionResponse,
+    summary="Reset current chat context",
+    description="Clear current chat turns/embeddings and preserve the same session id",
+)
+async def reset_user_session_context(
+    user_id: str,
+    session_id: str,
+    identity: IdentityContext = Depends(get_identity_context),
+    api_key: str = Depends(verify_api_key),
+):
+    try:
+        canonical_user_id = identity.user_id
+        manager = SessionManager(str(config.BOT_DB_PATH))
+        payload = manager.load_session(session_id)
+        if not payload:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Session {session_id} not found",
+            )
+
+        session_info = payload.get("session_info", {})
+        session_user_id = session_info.get("user_id")
+        if session_user_id and session_user_id != canonical_user_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Session does not belong to user",
+            )
+
+        metadata = session_info.get("metadata")
+        metadata_payload = dict(metadata) if isinstance(metadata, dict) else {}
+        metadata_payload["reset_context_at"] = datetime.now().isoformat()
+
+        deleted = manager.delete_session_data(session_id)
+        if not deleted:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Session {session_id} not found",
+            )
+        manager.create_session(
+            session_id=session_id,
+            user_id=canonical_user_id,
+            metadata=metadata_payload,
+        )
+        return ResetSessionResponse(
+            status="success",
+            message=f"Session {session_id} context reset",
+            user_id=canonical_user_id,
+            session_id=session_id,
+            recreated=True,
+            memory_control_event={
+                "event": "current_chat_context_reset",
+                "scope": "session_only",
+                "user_profile_deleted": False,
+            },
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.error("Error resetting session %s: %s", session_id, exc)
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc))
 
 
@@ -480,6 +545,11 @@ async def delete_user_history(
             status="success",
             message=f"History for user {canonical_user_id} cleared",
             user_id=canonical_user_id,
+            memory_control_event={
+                "event": "user_memory_profile_cleared",
+                "scope": "user_profile",
+                "user_profile_deleted": True,
+            },
         )
     except Exception as exc:
         logger.error("Error deleting history: %s", exc)

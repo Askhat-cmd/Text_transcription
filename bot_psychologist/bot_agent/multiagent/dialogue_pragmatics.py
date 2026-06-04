@@ -54,6 +54,10 @@ _REPAIR_DISSATISFACTION_MARKERS = (
     "ты обещал предложить",
     "ты сам это предложил",
     "ты снова ушел не туда",
+    "почему ты начал объяснять",
+    "почему ты начал объяснять механизм",
+    "я просто поздоровался",
+    "я только поздоровался",
     "ответь на вопрос который я задавал ранее",
     "you did not answer",
     "you promised",
@@ -285,9 +289,11 @@ def build_contextual_retrieval_decision_v1(
     dialogue_pragmatics: dict[str, Any],
     knowledge_answer_guard: dict[str, Any] | None,
     semantic_hits: list[SemanticHit] | None,
+    fresh_chat_context_policy: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     pragmatics = dict(dialogue_pragmatics or {})
     guard = dict(knowledge_answer_guard or {})
+    fresh_policy = dict(fresh_chat_context_policy or {})
     knowledge_answer = (
         dict(guard.get("knowledge_answer", {}))
         if isinstance(guard.get("knowledge_answer"), dict)
@@ -305,6 +311,10 @@ def build_contextual_retrieval_decision_v1(
     knowledge_needed = bool(knowledge_answer.get("needed", False))
     knowledge_answer_type = str(knowledge_answer.get("answer_type", "") or "").strip().lower()
     contextual_followup = bool(pragmatics.get("is_contextual_followup", False))
+    fresh_greeting = bool(fresh_policy.get("is_greeting_or_contact", False))
+    fresh_turn_index = int(fresh_policy.get("turn_index", 1) or 1)
+    fresh_window_active = bool(fresh_policy.get("fresh_window_active", fresh_turn_index <= 2))
+    explicit_question = bool(fresh_policy.get("explicit_question_or_knowledge_need", False))
 
     action = "none"
     included_reason = ""
@@ -313,7 +323,11 @@ def build_contextual_retrieval_decision_v1(
     relevance = "unknown"
     memory_only_still_included_rag = ""
 
-    if short_type == "close_ack":
+    if fresh_window_active and fresh_greeting and not knowledge_needed and not explicit_question:
+        action = "none"
+        suppressed_reason = "fresh_greeting_no_kb_needed"
+        relevance = "low"
+    elif short_type == "close_ack":
         action = "none"
         suppressed_reason = "close_ack_turn_no_kb_needed"
         relevance = "low"
@@ -385,6 +399,7 @@ def build_contextual_retrieval_decision_v1(
         "inherited_topic": inherited_topic,
         "inherited_offer_type": offer_type,
         "why_memory_only_still_included_rag": memory_only_still_included_rag,
+        "fresh_chat_context_policy": fresh_policy,
         "rag_included_for_writer": [
             {
                 "chunk_id": str(item.chunk_id or ""),

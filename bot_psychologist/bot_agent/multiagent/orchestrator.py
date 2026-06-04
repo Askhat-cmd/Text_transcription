@@ -34,6 +34,10 @@ from .dialogue_policy import (
     normalize_dialogue_profile,
 )
 from .final_answer_directive import build_final_answer_directive_v1
+from .fresh_chat_context_policy import (
+    FRESH_CHAT_CONTEXT_POLICY_VERSION,
+    build_fresh_chat_context_policy_v1,
+)
 from .knowledge_policy import build_safe_knowledge_debug_detail_v1
 from .knowledge_answer_routing_guard import build_knowledge_answer_routing_guard
 from .live_turn_evidence import build_live_turn_evidence_v1
@@ -276,6 +280,12 @@ class MultiAgentOrchestrator:
             dialogue_policy=dialogue_policy,
         )
         dialogue_policy["dialogue_pragmatics"] = dict(dialogue_pragmatics)
+        fresh_chat_context_policy = build_fresh_chat_context_policy_v1(
+            user_message=query,
+            recent_turns=list(memory_bundle.recent_turns or []),
+            knowledge_answer_guard=knowledge_answer_guard,
+        )
+        dialogue_policy["fresh_chat_context_policy"] = dict(fresh_chat_context_policy)
         if bool(dialogue_pragmatics.get("repair_user_dissatisfaction", False)):
             dialogue_policy["sarcasm_or_negative_feedback"] = True
             dialogue_policy["explicit_answer_need"] = True
@@ -326,6 +336,7 @@ class MultiAgentOrchestrator:
             dialogue_pragmatics=dialogue_pragmatics,
             knowledge_answer_guard=knowledge_answer_guard,
             semantic_hits=list(memory_bundle.semantic_hits or []),
+            fresh_chat_context_policy=fresh_chat_context_policy,
         )
         dialogue_policy["retrieval_decision"] = dict(retrieval_decision)
         diagnostic_card = build_diagnostic_card_v1(
@@ -646,6 +657,8 @@ class MultiAgentOrchestrator:
                 "rag_retrieval_trace": dict(memory_bundle.rag_retrieval_trace or {}),
                 "knowledge_policy_trace": dict(memory_bundle.knowledge_policy_trace or {}),
                 "dialogue_pragmatics": dict(dialogue_pragmatics),
+                "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,
+                "fresh_chat_context_policy": dict(fresh_chat_context_policy),
                 "retrieval_decision": dict(retrieval_decision),
                 "final_answer_directive": dict(final_answer_directive),
                 "live_turn_evidence": dict(live_turn_evidence),

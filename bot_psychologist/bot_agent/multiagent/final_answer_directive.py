@@ -115,8 +115,33 @@ def _derive_obligation(
     user_message: str,
     dialogue_policy: dict[str, Any],
     dialogue_pragmatics: dict[str, Any],
+    knowledge_answer_guard: dict[str, Any],
 ) -> tuple[str, str, str, str, str, str]:
     lowered = _normalize(user_message)
+    fresh_chat_policy = (
+        dict(dialogue_policy.get("fresh_chat_context_policy", {}))
+        if isinstance(dialogue_policy.get("fresh_chat_context_policy"), dict)
+        else {}
+    )
+    knowledge_answer = (
+        dict(knowledge_answer_guard.get("knowledge_answer", {}))
+        if isinstance(knowledge_answer_guard.get("knowledge_answer"), dict)
+        else {}
+    )
+    fresh_simple_contact = bool(
+        fresh_chat_policy.get("is_greeting_or_contact", False)
+        and not bool(knowledge_answer.get("needed", False))
+        and not bool(dialogue_policy.get("explicit_answer_need", False))
+    )
+    if fresh_simple_contact:
+        return (
+            "fresh_contact",
+            "respond_to_contact",
+            "simple_contact",
+            "short",
+            "optional_none",
+            "none",
+        )
     if _is_close_ack(user_message):
         return (
             "close_ack",
@@ -131,9 +156,9 @@ def _derive_obligation(
             "repair_after_failed_answer",
             "answer_previous_question_directly",
             "brief_apology_then_direct_answer",
-            "medium",
+            "short",
             "do_not_ask_until_answered",
-            "optional_if_relevant",
+            "none",
         )
     if bool(dialogue_pragmatics.get("is_contextual_followup", False)) and bool(
         dialogue_pragmatics.get("should_not_ask_confirmation_again", False)
@@ -229,10 +254,16 @@ def build_final_answer_directive_v1(
         user_message=user_message,
         dialogue_policy=policy,
         dialogue_pragmatics=pragmatics,
+        knowledge_answer_guard=knowledge,
     )
-    answer_shape = "definition_then_difference_then_example" if user_intent == "concept_comparison" else str(
-        planner.get("answer_shape", "compact_direct") or "compact_direct"
-    )
+    if user_intent == "fresh_contact":
+        answer_shape = "simple_contact"
+    elif user_intent == "repair_after_failed_answer":
+        answer_shape = "repair_acknowledgement"
+    elif user_intent == "concept_comparison":
+        answer_shape = "definition_then_difference_then_example"
+    else:
+        answer_shape = str(planner.get("answer_shape", "compact_direct") or "compact_direct")
     style = "human_conversational"
     if user_intent == "repair_after_failed_answer":
         style = "brief_apology_then_direct_answer"
@@ -311,4 +342,3 @@ __all__ = [
     "FinalAnswerDirective",
     "build_final_answer_directive_v1",
 ]
-

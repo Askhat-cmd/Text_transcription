@@ -1,0 +1,324 @@
+{
+  "prd_id": "PRD-047.11-HF2",
+  "generated_at_utc": "2026-06-04T05:30:57.850071+00:00",
+  "targets": [
+    {
+      "label": "conversation_context",
+      "files": [
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/context_assembly.py",
+          "exists": true,
+          "pattern": "conversation_context",
+          "matches": []
+        },
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/contracts/writer_contract.py",
+          "exists": true,
+          "pattern": "conversation_context",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "conversation_context,"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "semantic_hits",
+      "files": [
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/writer_context_package.py",
+          "exists": true,
+          "pattern": "semantic_hits",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": ""
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/live_turn_evidence.py",
+          "exists": true,
+          "pattern": "semantic_hits",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": ""
+            },
+            {
+              "line": 0,
+              "snippet": "len(semantic_hits),"
+            },
+            {
+              "line": 0,
+              "snippet": "semantic_hits,"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "contextual_retrieval_gating",
+      "files": [
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/dialogue_pragmatics.py",
+          "exists": true,
+          "pattern": "rag_included_count",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "len(included_hits),"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/orchestrator.py",
+          "exists": true,
+          "pattern": "rag_included_count",
+          "matches": []
+        }
+      ]
+    },
+    {
+      "label": "knowledge_answer_routing",
+      "files": [
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/knowledge_answer_routing_guard.py",
+          "exists": true,
+          "pattern": "knowledge_answer",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "{"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/bot_agent/multiagent/final_answer_directive.py",
+          "exists": true,
+          "pattern": "knowledge_answer",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "dict[str, Any],"
+            },
+            {
+              "line": 0,
+              "snippet": "dict[str, Any] | None,"
+            },
+            {
+              "line": 0,
+              "snippet": "knowledge,"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "session_new_chat_creation",
+      "files": [
+        {
+          "path": "bot_psychologist/api/dependencies.py",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "Request) -> str:"
+            },
+            {
+              "line": 0,
+              "snippet": "Optional[str] = Header(default=None, alias=\"X-Session-Id\"),"
+            },
+            {
+              "line": 0,
+              "snippet": "32]"
+            },
+            {
+              "line": 0,
+              "snippet": ""
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/api/conversations/repository.py",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "если session_id технически сменился,"
+            },
+            {
+              "line": 0,
+              "snippet": "str,"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/api/conversations/service.py",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "lookup or \"session_id\","
+            },
+            {
+              "line": 0,
+              "snippet": "str,"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/api/routes/chat.py",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "str,"
+            },
+            {
+              "line": 0,
+              "snippet": "identity.user_id, \"session_id\": identity.session_id},"
+            },
+            {
+              "line": 0,
+              "snippet": "identity.user_id, \"session_id\": identity.session_id},"
+            },
+            {
+              "line": 0,
+              "snippet": "identity.user_id, \"session_id\": identity.session_id},"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/web_ui/src/pages/ChatPage.tsx",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "item.session_id,"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/web_ui/src/services/api.service.ts",
+          "exists": true,
+          "pattern": "session_id",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "sessionId,"
+            },
+            {
+              "line": 0,
+              "snippet": "options?.sessionId,"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "persistence_memory_update",
+      "files": [
+        {
+          "path": "bot_psychologist/api/routes/users.py",
+          "exists": true,
+          "pattern": "clear",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "\"user_memory_profile_cleared\","
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/bot_agent/conversation_memory.py",
+          "exists": true,
+          "pattern": "clear",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "web_chat_rendering",
+      "files": [
+        {
+          "path": "bot_psychologist/web_ui/src/components/chat/Message.tsx",
+          "exists": true,
+          "pattern": "ReactMarkdown",
+          "matches": []
+        },
+        {
+          "path": "bot_psychologist/web_ui/src/components/chat/ChatWindow.tsx",
+          "exists": true,
+          "pattern": "ReactMarkdown",
+          "matches": []
+        }
+      ]
+    },
+    {
+      "label": "admin_runtime_effective_payload",
+      "files": [
+        {
+          "path": "bot_psychologist/api/admin_routes.py",
+          "exists": true,
+          "pattern": "fresh_chat_context_policy_version",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "FRESH_CHAT_CONTEXT_POLICY_VERSION,"
+            }
+          ]
+        },
+        {
+          "path": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx",
+          "exists": true,
+          "pattern": "fresh_chat_context_policy_version",
+          "matches": [
+            {
+              "line": 0,
+              "snippet": "{runtimeEffectiveData.dialogue_policy?.fresh_chat_context_policy_version ?? 'n/a'}</div>"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hf1_invariants_expected": {
+    "legacy_blocks_visible_to_writer": false,
+    "legacy_advisory_sanitized": true,
+    "practice_rewrite_applied": true,
+    "raw_legacy_visible_to_writer": false
+  }
+}

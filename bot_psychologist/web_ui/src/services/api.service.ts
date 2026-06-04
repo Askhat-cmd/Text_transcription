@@ -16,7 +16,9 @@ import type {
   UserSessionsResponse,
   ChatSessionInfo,
   CreateSessionRequest,
+  DeleteHistoryResponse,
   DeleteSessionResponse,
+  ResetSessionResponse,
 } from '../types/api.types';
 import type { InlineTrace, MultiAgentTraceData } from '../types';
 
@@ -176,6 +178,7 @@ class APIService {
           headers: {
             'Content-Type': 'application/json',
             ...(this.apiKey ? { 'X-API-Key': this.apiKey } : {}),
+            ...(this.webSessionId ? { 'X-Session-Id': this.webSessionId } : {}),
           },
           body: JSON.stringify({
             query,
@@ -489,6 +492,17 @@ class APIService {
     }
   }
 
+  async resetUserSessionContext(userId: string, sessionId: string): Promise<ResetSessionResponse> {
+    try {
+      const response = await this.api.post<ResetSessionResponse>(
+        `/users/${encodeURIComponent(userId)}/sessions/${encodeURIComponent(sessionId)}/reset-context`
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
   // === USER ENDPOINTS ===
 
   async getUserHistory(userId: string, lastNTurns: number = 10): Promise<UserHistoryResponse> {
@@ -498,6 +512,17 @@ class APIService {
         {
           params: { last_n_turns: lastNTurns },
         }
+      );
+      return response.data;
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async clearUserMemoryProfile(userId: string): Promise<DeleteHistoryResponse> {
+    try {
+      const response = await this.api.delete<DeleteHistoryResponse>(
+        `/users/${encodeURIComponent(userId)}/history`
       );
       return response.data;
     } catch (error) {

@@ -29,12 +29,14 @@ from bot_agent.multiagent.dialogue_policy import (
     normalize_dialogue_profile,
 )
 from bot_agent.multiagent.final_answer_directive import FINAL_ANSWER_DIRECTIVE_VERSION
+from bot_agent.multiagent.fresh_chat_context_policy import FRESH_CHAT_CONTEXT_POLICY_VERSION
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
     KERNEL_V1,
     WRITER_FREEDOM_CONTRACT_VERSION,
 )
 from bot_agent.multiagent.thread_storage import thread_storage
+from bot_agent.multiagent.writer_context_package import WRITER_CONTEXT_PACKAGE_VERSION
 from bot_agent.diagnostic_center_control import (
     apply_diagnostic_center_control_update,
     build_diagnostic_center_effective_payload,
@@ -815,6 +817,20 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "writer_first_prompt_assembly_enabled": dialogue_profile == DIALOGUE_PROFILE_MVP_FREE,
             "legacy_advisory_sanitizer_version": "legacy_advisory_sanitizer_v1",
             "writer_visible_practice_semantics": "no_exercise_but_answer_normally",
+            "fresh_chat_context_policy_version": FRESH_CHAT_CONTEXT_POLICY_VERSION,
+            "writer_context_package_version": WRITER_CONTEXT_PACKAGE_VERSION,
+            "fresh_chat_rag_default": "suppress_on_greeting_without_explicit_question",
+            "current_chat_reset_control": {
+                "endpoint": "/api/v1/users/{user_id}/sessions/{session_id}/reset-context",
+                "scope": "session_only",
+                "preserves_session_id": True,
+            },
+            "user_memory_profile_clear_control": {
+                "endpoint": "/api/v1/users/{user_id}/history",
+                "scope": "user_level",
+                "developer_visible": True,
+            },
+            "web_chat_markdown_renderer": "react_markdown_gfm",
         },
         "dialogue_profile": {
             "value": dialogue_profile,

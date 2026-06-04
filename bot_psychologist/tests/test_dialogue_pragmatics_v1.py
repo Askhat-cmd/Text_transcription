@@ -51,3 +51,16 @@ def test_dissatisfaction_is_repair_signal() -> None:
     assert payload["repair_user_dissatisfaction"] is True
     assert payload["should_answer_directly"] is True
     assert payload["should_not_ask_confirmation_again"] is True
+
+
+def test_greeting_repair_complaint_is_repair_signal() -> None:
+    payload = build_dialogue_pragmatics_v1(
+        user_message="почему ты начал объяснять механизм, я просто поздоровался?",
+        conversation_context="Assistant: Привет, рад знакомству. Как ты сейчас себя чувствуешь?",
+        previous_assistant_message="Привет, рад знакомству. Как ты сейчас себя чувствуешь?",
+        dialogue_policy={},
+    )
+    assert payload["short_utterance_type"] == "repair_feedback"
+    assert payload["repair_user_dissatisfaction"] is True
+    assert payload["followup_relation"] == "repair_after_failed_answer"
+    assert payload["should_answer_directly"] is True

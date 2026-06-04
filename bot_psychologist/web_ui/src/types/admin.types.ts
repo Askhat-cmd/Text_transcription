@@ -232,6 +232,20 @@ export interface AdminRuntimeEffectiveResponse {
     diagnostic_card_role?: string;
     legacy_prompt_blocks_mode?: string;
     writer_first_prompt_assembly_enabled?: boolean;
+    fresh_chat_context_policy_version?: string;
+    writer_context_package_version?: string;
+    fresh_chat_rag_default?: string;
+    current_chat_reset_control?: {
+      endpoint?: string;
+      scope?: string;
+      preserves_session_id?: boolean;
+    };
+    user_memory_profile_clear_control?: {
+      endpoint?: string;
+      scope?: string;
+      developer_visible?: boolean;
+    };
+    web_chat_markdown_renderer?: string;
   };
   active_line?: {
     enabled?: boolean;

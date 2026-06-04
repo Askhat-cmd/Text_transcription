@@ -36,6 +36,7 @@ class ConversationService:
         session_id: str,
         channel: str = "web",
         force_new: bool = False,
+        allow_user_fallback: bool = True,
     ) -> ConversationContext:
         if force_new:
             created = await self._repo.create_conversation(
@@ -58,6 +59,7 @@ class ConversationService:
             user_id=user_id,
             session_id=session_id,
             channel=channel,
+            allow_user_fallback=allow_user_fallback,
         )
         if active is not None:
             logger.info(

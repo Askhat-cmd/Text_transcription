@@ -326,6 +326,30 @@ export interface DeleteSessionResponse {
   session_id: string;
 }
 
+export interface ResetSessionResponse {
+  status: string;
+  message: string;
+  user_id: string;
+  session_id: string;
+  recreated: boolean;
+  memory_control_event?: {
+    event: string;
+    scope: string;
+    user_profile_deleted: boolean;
+  };
+}
+
+export interface DeleteHistoryResponse {
+  status: string;
+  message: string;
+  user_id: string;
+  memory_control_event?: {
+    event: string;
+    scope: string;
+    user_profile_deleted: boolean;
+  };
+}
+
 export interface FeedbackResponse {
   status: string;
   message: string;

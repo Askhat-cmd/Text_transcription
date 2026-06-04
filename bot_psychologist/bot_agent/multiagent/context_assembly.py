@@ -627,7 +627,13 @@ def build_context_assembly_package_v1(
     )
 
 
-def format_context_for_writer(package: ContextAssemblyPackage) -> str:
+def format_context_for_writer(
+    package: ContextAssemblyPackage,
+    *,
+    include_personal_history: bool = True,
+    include_semantic_hits: bool = True,
+    include_knowledge_hits: bool = True,
+) -> str:
     """Render compact text block for prompt compatibility."""
     sections: list[str] = []
     if package.recent_turns_full:
@@ -645,7 +651,7 @@ def format_context_for_writer(package: ContextAssemblyPackage) -> str:
             for item in package.recent_turns_summarized
         ]
         sections.append("RECENT SUMMARIZED TURNS:\n" + "\n".join(lines))
-    if package.personal_history_context:
+    if include_personal_history and package.personal_history_context:
         lines = [
             str(item.get("content", "") or "")
             for item in package.personal_history_context
@@ -653,10 +659,10 @@ def format_context_for_writer(package: ContextAssemblyPackage) -> str:
         ]
         if lines:
             sections.append("PERSONAL HISTORY:\n" + "\n".join(lines))
-    if package.semantic_memory_hits:
+    if include_semantic_hits and package.semantic_memory_hits:
         lines = [str(item.get("content", "") or "") for item in package.semantic_memory_hits]
         sections.append("SEMANTIC MEMORY HITS:\n" + "\n".join(lines))
-    if package.knowledge_rag_hits:
+    if include_knowledge_hits and package.knowledge_rag_hits:
         lines = [str(item.get("content", "") or "") for item in package.knowledge_rag_hits]
         sections.append("KNOWLEDGE RAG HITS:\n" + "\n".join(lines))
     return "\n\n".join(section for section in sections if section.strip())

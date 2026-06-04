@@ -1,6 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
+PRD-047.11-HF2 completed as a passed runtime/frontend repair: fresh chats now start under `fresh_chat_context_policy_v1`, Writer receives RAG only through `writer_context_package_v1`, greeting/repair turns no longer inherit stale mechanism context, current-chat reset and dev-only user-memory clear controls are explicit, and real browser/Admin proof passed on isolated live runtime (`8002/3001`). Required HF2 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF2/`, with `live_cases_passed=true`, `memory_controls_passed=true`, `markdown_browser_passed=true`, and `admin_screenshots_passed=true`.
 PRD-047.11-HF1 completed as a passed writer-prompt-diet repair: `mvp_free_dialogue` now keeps `FINAL ANSWER DIRECTIVE` writer-visible while collapsing legacy diagnostic/planner/active-line command pressure into a sanitized advisory summary, rewriting practice suppression to `no_exercise_but_answer_normally`, preserving raw observability in trace/admin, and removing stale runtime fallback phrases. Required HF1 artifacts are stored in `TO_DO_LIST/logs/PRD-047.11-HF1/`, with `writer_prompt_diet_eval=4/4 passed`.
 PRD-047.11-AUDIT completed as a warning-grade evidence audit, not a pass: `TO_DO_LIST/logs/PRD-047.11-AUDIT/` now contains the dedicated runner output, source inventory, prompt/acceptance audits, live case matrix, raw traces, and no-mutation proof, but live evidence still shows `14/18` failed cases, `15` bad-phrase hits, missing browser screenshot proof, and incomplete admin configurability proof. The next recommended repair path is `PRD-047.11-HF1`, while Diagnostic Center remains advisory-only and production readiness is explicitly not claimed.
 PRD-047.11 passed full Writer-first consolidation acceptance: `final_answer_directive_v1`, MVP prompt assembly cleanup, legacy-constraint suppression metadata, stale-stub detector, admin/runtime/UI exposure, live evidence enrichment, strict dry/direct/live runner, and real Web Chat markdown smoke are all green in final artifacts.
@@ -50,7 +51,7 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 - Historical artifact encoding noise may be misread as current runtime corruption without normalization report.
 
 ## Next Planned PRD
-`PRD-047.11-HF2 — Real Web Chat Markdown / Admin Screenshot Proof`
+`PRD-047.12 — Unified Dialogue Profile Simplification / Safe Guided + MVP Consolidation v1`
 ## Do Not Do Yet
 - Do not activate broad Diagnostic Center runtime authority.
 - Do not enable normal-user activation.
@@ -65,7 +66,8 @@ Context assembly + additive summaries remain active; deterministic fallback stay
 5. Keep full historical details in `TO_DO_LIST`, keep docs operational and compact.
 
 ## Last Updated
-- Date: 2026-06-02
+- Date: 2026-06-04
+- Source cycle: PRD-047.11-HF2
 - Source cycle: PRD-047.11-HF1
 - Source cycle: PRD-047.11-AUDIT
 - Source cycle: PRD-047.10-HF2

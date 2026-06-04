@@ -1,0 +1,39 @@
+﻿PRD-047.11-HF2 verification command log
+Generated at: 2026-06-04T10:38:00+05:00
+
+[1] Backend targeted pytest
+Command:
+cd c:\My_practice\Text_transcription\bot_psychologist
+.\.venv\Scripts\python -m pytest tests\api\test_dependencies_conversation.py tests\api\test_user_session_reset.py tests\multiagent\test_fresh_chat_context_policy.py tests\multiagent\test_writer_context_package_rag_gate.py tests\multiagent\test_greeting_final_answer_directive.py tests\test_dialogue_pragmatics_v1.py tests\test_dialogue_pragmatics_followup_v2.py tests\test_admin_runtime_contract.py -q
+Result:
+24 passed, 2 warnings in 9.96s
+Warnings:
+- datetime.datetime.utcnow() deprecation warning in tests/multiagent/test_writer_context_package_rag_gate.py (2 occurrences)
+
+[2] Frontend test suite
+Command:
+cd c:\My_practice\Text_transcription\bot_psychologist\web_ui
+npm test -- --runInBand
+Result:
+9 test files passed
+35 tests passed
+Duration: 5.32s
+
+[3] HF2 live/browser/admin runner
+Command:
+cd c:\My_practice\Text_transcription\bot_psychologist
+$env:PRD04711HF2_BASE_URL='http://127.0.0.1:8002/api/v1'
+$env:PRD04711HF2_ADMIN_RUNTIME_URL='http://127.0.0.1:8002/api/admin/runtime/effective'
+$env:PRD04711HF2_CHAT_URL='http://127.0.0.1:3001/chat'
+$env:PRD04711HF2_ADMIN_UI_URL='http://127.0.0.1:3001/admin'
+.\.venv\Scripts\python scripts\run_prd_047_11_hf2.py
+Result:
+status=passed
+output=C:\My_practice\Text_transcription\TO_DO_LIST\logs\PRD-047.11-HF2\live_cases_result.json
+
+[4] Focused regression pytest before final live rerun
+Command:
+cd c:\My_practice\Text_transcription\bot_psychologist
+.\.venv\Scripts\python -m pytest tests\test_dialogue_pragmatics_v1.py tests\test_dialogue_pragmatics_followup_v2.py tests\multiagent\test_greeting_final_answer_directive.py -q
+Result:
+10 passed in 0.30s

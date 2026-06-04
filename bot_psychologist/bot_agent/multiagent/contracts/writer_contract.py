@@ -7,7 +7,9 @@ import json
 from typing import Any
 
 from ..context_assembly import format_context_for_writer
+from ..fresh_chat_context_policy import build_fresh_chat_context_policy_v1
 from ..legacy_advisory_sanitizer import sanitize_legacy_advisory_for_writer
+from ..writer_context_package import build_writer_context_package_v1
 from ..writer_move_compliance import build_writer_move_instructions_v1
 from .context_package import ContextAssemblyPackage
 from .diagnostic_card import DiagnosticCard
@@ -86,13 +88,35 @@ class WriterContract:
 
     def to_prompt_context(self) -> dict:
         """Serialize context for Writer prompt templates."""
+        fresh_chat_context_policy = build_fresh_chat_context_policy_v1(
+            user_message=self.user_message,
+            recent_turns=list(self.memory_bundle.recent_turns or []),
+            knowledge_answer_guard=self.knowledge_answer_guard,
+        )
+        writer_context_package = build_writer_context_package_v1(
+            memory_bundle=self.memory_bundle,
+            context_package=self.context_package,
+            retrieval_decision=self.retrieval_decision,
+            fresh_chat_context_policy=fresh_chat_context_policy,
+        )
         if self.context_package is not None:
-            conversation_context = format_context_for_writer(self.context_package)
+            conversation_context = format_context_for_writer(
+                self.context_package,
+                include_personal_history=False,
+                include_semantic_hits=False,
+                include_knowledge_hits=False,
+            )
             semantic_hits = [
                 str(item.get("content", "") or "")
-                for item in self.context_package.knowledge_rag_hits
-                if str(item.get("content", "") or "").strip()
+                for item in list(writer_context_package.get("rag_for_writer", []) or [])
+                if isinstance(item, dict) and str(item.get("content", "") or "").strip()
             ]
+            if not semantic_hits:
+                semantic_hits = [
+                    str(item.get("content", "") or "")
+                    for item in self.context_package.knowledge_rag_hits
+                    if str(item.get("content", "") or "").strip()
+                ]
             if not semantic_hits:
                 semantic_hits = [
                     str(item.get("content", "") or "")
@@ -215,6 +239,21 @@ class WriterContract:
             for item in semantic_source[:semantic_hits_max]
             if str(item or "").strip()
         ]
+        profile_for_writer = (
+            dict(writer_context_package.get("profile_for_writer", {}))
+            if isinstance(writer_context_package.get("profile_for_writer"), dict)
+            else {}
+        )
+        profile_patterns = [
+            str(item)
+            for item in list(profile_for_writer.get("patterns", []) or [])
+            if str(item).strip()
+        ]
+        profile_values = [
+            str(item)
+            for item in list(profile_for_writer.get("values", []) or [])
+            if str(item).strip()
+        ]
         dialogue_profile = str(dialogue_policy.get("profile", "safe_guided") or "safe_guided")
         dialogue_active_concept = str(dialogue_policy.get("active_concept", "") or "")
         final_answer_directive = (
@@ -295,10 +334,45 @@ class WriterContract:
             "nervous_state": self.thread_state.nervous_state,
             "safety_active": self.thread_state.safety_active,
             "conversation_context": conversation_context,
-            "user_profile_patterns": self.memory_bundle.user_profile.patterns,
-            "user_profile_values": self.memory_bundle.user_profile.values,
+            "user_profile_patterns": profile_patterns,
+            "user_profile_values": profile_values,
             "semantic_hits": semantic_hits_trimmed,
             "has_relevant_knowledge": self.memory_bundle.has_relevant_knowledge,
+            "fresh_chat_context_policy": fresh_chat_context_policy,
+            "fresh_chat_context_policy_version": str(
+                fresh_chat_context_policy.get("version", "fresh_chat_context_policy_v1")
+                or "fresh_chat_context_policy_v1"
+            ),
+            "fresh_chat_is_new_chat": bool(fresh_chat_context_policy.get("is_new_chat", False)),
+            "fresh_chat_turn_index": int(fresh_chat_context_policy.get("turn_index", 1) or 1),
+            "fresh_chat_is_greeting_or_contact": bool(
+                fresh_chat_context_policy.get("is_greeting_or_contact", False)
+            ),
+            "fresh_chat_cross_session_memory_allowed": bool(
+                fresh_chat_context_policy.get("cross_session_memory_allowed", True)
+            ),
+            "fresh_chat_cross_session_memory_reason": str(
+                fresh_chat_context_policy.get("cross_session_memory_reason", "") or ""
+            ),
+            "fresh_chat_active_context_source": str(
+                fresh_chat_context_policy.get("active_context_source", "current_chat_only")
+                or "current_chat_only"
+            ),
+            "writer_context_package": writer_context_package,
+            "writer_context_package_version": str(
+                writer_context_package.get("version", "writer_context_package_v1")
+                or "writer_context_package_v1"
+            ),
+            "writer_context_recent_turns_count": len(
+                list(writer_context_package.get("recent_turns_for_writer", []) or [])
+            ),
+            "writer_context_profile_present": bool(profile_for_writer),
+            "writer_context_rag_candidates_count": len(
+                list(writer_context_package.get("rag_candidates_for_trace", []) or [])
+            ),
+            "writer_context_rag_for_writer_count": len(
+                list(writer_context_package.get("rag_for_writer", []) or [])
+            ),
             "semantic_hits_budget": {
                 "max_hits": semantic_hits_max,
                 "max_chars_per_hit": semantic_hit_chars,

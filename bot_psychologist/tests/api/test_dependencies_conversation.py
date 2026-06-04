@@ -7,6 +7,7 @@ from fastapi.testclient import TestClient
 
 from api import dependencies as deps
 from api.main import app
+from api import routes as routes_pkg
 from bot_agent.config import config
 
 
@@ -78,3 +79,37 @@ def test_without_session_header_conversation_is_stable_by_fingerprint(client: Te
     assert first.status_code == 200
     assert second.status_code == 200
     assert first.json()["conversation_id"] == second.json()["conversation_id"]
+
+
+def test_request_body_session_id_creates_isolated_conversation_scope(
+    client: TestClient,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    headers = _headers("dep-runtime-body", "sha256:dep-runtime-body")
+    monkeypatch.setattr(
+        routes_pkg,
+        "run_multiagent_adaptive_sync",
+        lambda **kwargs: {
+            "status": "ok",
+            "answer": "stub",
+            "metadata": {"recommended_mode": "reflect"},
+            "debug": {"multiagent_enabled": True, "pipeline_version": "multiagent_v1"},
+            "processing_time_seconds": 0.01,
+        },
+        raising=False,
+    )
+
+    first = client.post(
+        "/api/v1/questions/adaptive",
+        headers=headers,
+        json={"query": "привет", "session_id": "chat-body-a"},
+    )
+    second = client.post(
+        "/api/v1/questions/adaptive",
+        headers=headers,
+        json={"query": "привет", "session_id": "chat-body-b"},
+    )
+
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert first.json()["metadata"]["conversation_id"] != second.json()["metadata"]["conversation_id"]

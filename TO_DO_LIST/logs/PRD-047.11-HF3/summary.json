@@ -1,0 +1,9 @@
+{
+  "prd": "PRD-047.11-HF3",
+  "generated_at_utc": "2026-06-04T11:21:17.591215+00:00",
+  "final_status": "warning",
+  "live_status": "passed",
+  "browser_status": "warning",
+  "admin_inventory_status": "passed",
+  "encoding_hygiene_issue_file_count": 0
+}

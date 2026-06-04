@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from pathlib import Path
 
 import pytest
@@ -7,7 +8,9 @@ from fastapi.testclient import TestClient
 
 from api import dependencies as deps
 from api.main import app
+from api.session_store import get_session_store
 from bot_agent.config import config
+from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.storage import SessionManager
 
 
@@ -46,6 +49,21 @@ def test_reset_context_preserves_session_id_and_clears_turns(client: TestClient,
         bot_response="before answer",
         mode="presence",
     )
+    memory = get_conversation_memory("chat-reset-a")
+    memory.add_turn("before", "before answer", schedule_summary_task=False)
+    conversation_service = deps.get_conversation_service()
+    active_before = asyncio.run(
+        conversation_service.get_or_create_conversation(
+            user_id=user_id,
+            session_id="chat-reset-a",
+            channel="web",
+            allow_user_fallback=False,
+        )
+    )
+    assert active_before.is_new is True
+    store = get_session_store()
+    store.append_trace("chat-reset-a", {"turn_number": 1, "raw": "before"})
+    store.save_multiagent_debug("chat-reset-a", 1, {"turn_index": 1, "pipeline_version": "multiagent_v1"})
 
     response = client.post(
         "/api/v1/users/user-placeholder/sessions/chat-reset-a/reset-context",
@@ -65,6 +83,18 @@ def test_reset_context_preserves_session_id_and_clears_turns(client: TestClient,
     assert refreshed is not None
     assert refreshed["session_info"]["user_id"] == user_id
     assert refreshed["conversation_turns"] == []
+    assert store.get_session_traces("chat-reset-a") == []
+    assert store.get_latest_multiagent_debug("chat-reset-a") is None
+    assert memory.turns == []
+    active_after = asyncio.run(
+        conversation_service.get_or_create_conversation(
+            user_id=user_id,
+            session_id="chat-reset-a",
+            channel="web",
+            allow_user_fallback=False,
+        )
+    )
+    assert active_after.is_new is True
 
 
 def test_clear_user_memory_profile_returns_explicit_memory_control_event(client: TestClient) -> None:

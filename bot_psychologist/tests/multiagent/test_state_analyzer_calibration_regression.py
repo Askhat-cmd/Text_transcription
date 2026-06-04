@@ -116,3 +116,12 @@ async def test_qb010_phrases_map_to_low_resource_hints() -> None:
 
     assert hypo_snapshot.nervous_state == "hypo"
     assert followup_snapshot.intent in {"contact", "solution"}
+
+
+@pytest.mark.asyncio
+async def test_thanks_close_keeps_contact_and_window() -> None:
+    agent = StateAnalyzerAgent(client=None, model="gpt-5-nano")
+    agent._get_client = lambda: None  # type: ignore[method-assign]
+    snapshot = await agent.analyze("Спасибо.")
+    assert snapshot.intent == "contact"
+    assert snapshot.nervous_state == "window"

@@ -331,3 +331,38 @@ def test_mvp_direct_concrete_request_returns_variants() -> None:
     assert "гиперконтроль" in result.lower()
     assert "самообесценивание" in result.lower()
     assert agent.last_debug.get("final_answer_shape") == "direct_answer_with_variants"
+
+
+def test_mvp_formula_stub_rewritten_into_contextual_no_practice_answer() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    contract = _mvp_contract(
+        message="в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик",
+        dialogue_policy={
+            "explicit_answer_need": True,
+            "application_request": True,
+        },
+    )
+    response_text = (
+        "Сейчас полезнее не упражнение, а прямое объяснение: автоматический контроль может перегружать "
+        "внимание еще до действия, поэтому энергия уходит в внутренний спор."
+    )
+    result = agent._enforce_answer_compliance(response_text, contract)
+    assert "в разговоре с начальником" in result.lower()
+    assert "сейчас полезнее не упражнение" not in result.lower()
+    assert agent.last_debug.get("final_answer_shape") == "contextual_direct_no_practice"
+    evaluator = agent.last_debug.get("answer_fit_evaluator") or {}
+    assert evaluator.get("fit_status") == "fail"
+    assert agent.last_debug.get("answer_fit_repair_applied") is True
+
+
+def test_literal_markdown_echo_request_is_preserved() -> None:
+    agent = WriterAgent(client=_FakeClient("ok"), model="gpt-5-mini")
+    requested_markdown = "**Жирный заголовок**\n\nПервый абзац.\n\n- Пункт один\n- Пункт два"
+    contract = _mvp_contract(
+        message=f"Верни без объяснений и без изменений следующий markdown-блок: {requested_markdown}",
+        dialogue_policy={"explicit_answer_need": True},
+    )
+    result = agent._enforce_answer_compliance("Я слышу тебя. Расскажи больше, если хочешь.", contract)
+    assert result == requested_markdown
+    assert agent.last_debug.get("format_request_repair_applied") is True
+    assert agent.last_debug.get("final_answer_shape") == "literal_markdown_echo"

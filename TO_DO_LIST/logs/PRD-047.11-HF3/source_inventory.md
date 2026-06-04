@@ -1,0 +1,54 @@
+# PRD-047.11-HF3 Source Inventory
+
+- generated_at_utc: `2026-06-04T11:18:26.453047+00:00`
+- head: `2af7ad98cd426007cd14cfa8815a6f4c54c87831`
+- git_status_short:
+  - ` M bot_psychologist/api/conversations/service.py`
+  - ` M bot_psychologist/api/routes/users.py`
+  - ` M bot_psychologist/api/session_store.py`
+  - ` M bot_psychologist/bot_agent/conversation_memory.py`
+  - ` M bot_psychologist/bot_agent/multiagent/agents/state_analyzer.py`
+  - ` M bot_psychologist/bot_agent/multiagent/agents/writer_agent.py`
+  - ` M bot_psychologist/bot_agent/multiagent/live_turn_evidence.py`
+  - ` M bot_psychologist/tests/api/test_user_session_reset.py`
+  - ` M bot_psychologist/tests/multiagent/test_state_analyzer_calibration_regression.py`
+  - ` M bot_psychologist/tests/multiagent/test_writer_agent.py`
+  - ` M bot_psychologist/tests/test_live_turn_evidence_export_v1.py`
+  - ` M bot_psychologist/tests/test_multiagent_trace.py`
+  - ` M docs/DECISIONS.md`
+  - ` M docs/PRD_INDEX.md`
+  - ` M docs/PROJECT_STATE.md`
+  - ` M docs/ROADMAP.md`
+  - `?? TO_DO_LIST/PRD-047.11-HF3.md`
+  - `?? TO_DO_LIST/PRD-047.11-HF3_TASK_LIST.md`
+  - `?? TO_DO_LIST/logs/PRD-047.11-HF3/`
+  - `?? TO_DO_LIST/reports/PRD-047.11-HF3_IMPLEMENTATION_REPORT.md`
+  - `?? TO_DO_LIST/reports/PRD-047.11-HF3_NEXT_PRD_RECOMMENDATION.md`
+  - `?? bot_psychologist/bot_agent/multiagent/concrete_answer_fit.py`
+  - `?? bot_psychologist/scripts/run_prd_047_11_hf3.py`
+- last_10_commits:
+  - `2af7ad9 PRD-047.11-HF2 fix artifact encoding`
+  - `041922b PRD-047.11-HF2 post-push metadata sync`
+  - `97b07c0 PRD-047.11-HF2 fresh chat isolation and real web proof`
+  - `3fa0d28 PRD-047.11-HF1 post-push metadata sync`
+  - `563a25e PRD-047.11-HF1 writer prompt diet and advisory sanitization`
+  - `9ab4d9b PRD-047.11-AUDIT mark warning status and delivery metadata`
+  - `e751188 PRD-047.11-AUDIT evidence-first runtime quality audit`
+  - `5ad243e PRD-047.11: mark completed and record delivery metadata`
+  - `1a47748 PRD-047.11: writer-first consolidation with live+markdown pass`
+  - `c03bf48 PRD-047.10-HF2 post-push metadata sync`
+- file_presence:
+  - `docs/PROJECT_STATE.md` => `True`
+  - `docs/ROADMAP.md` => `True`
+  - `docs/PRD_INDEX.md` => `True`
+  - `docs/DECISIONS.md` => `True`
+  - `bot_psychologist/docs/PROJECT_STATE.md` => `False`
+  - `bot_psychologist/docs/ROADMAP.md` => `True`
+  - `bot_psychologist/docs/PRD_INDEX.md` => `False`
+  - `bot_psychologist/docs/DECISIONS.md` => `False`
+  - `bot_psychologist/api/admin_routes.py` => `True`
+  - `bot_psychologist/api/routes/users.py` => `True`
+  - `bot_psychologist/web_ui/src/pages/ChatPage.tsx` => `True`
+  - `bot_psychologist/web_ui/src/components/chat/Message.tsx` => `True`
+  - `bot_psychologist/bot_agent/multiagent/agents/writer_agent.py` => `True`
+  - `bot_psychologist/bot_agent/multiagent/agents/state_analyzer.py` => `True`

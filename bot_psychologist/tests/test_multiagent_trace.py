@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import asyncio
 import importlib
@@ -117,6 +117,7 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             thread_id="thread-test",
             phase="exploring",
             response_mode="presence",
+            response_goal="support",
             relation_to_thread="continue",
             continuity_score=0.77,
             pattern_core="",
@@ -124,12 +125,17 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             open_loops=[],
             closed_loops=[],
             must_avoid=[],
+            core_direction="привет",
+            nervous_state="calm",
+            openness="open",
+            ok_position="I+W+",
             safety_active=False,
         )
         payload.to_dict = lambda: {
             "thread_id": payload.thread_id,
             "phase": payload.phase,
             "response_mode": payload.response_mode,
+            "response_goal": payload.response_goal,
             "relation_to_thread": payload.relation_to_thread,
             "continuity_score": payload.continuity_score,
             "pattern_core": payload.pattern_core,
@@ -137,15 +143,19 @@ def test_orchestrator_returns_multiagent_timings(monkeypatch) -> None:
             "open_loops": payload.open_loops,
             "closed_loops": payload.closed_loops,
             "must_avoid": payload.must_avoid,
+            "core_direction": payload.core_direction,
+            "nervous_state": payload.nervous_state,
+            "openness": payload.openness,
+            "ok_position": payload.ok_position,
             "safety_active": payload.safety_active,
         }
         return payload
-
     async def fake_assemble(**_kwargs):
         return SimpleNamespace(
             has_relevant_knowledge=True,
             context_turns=2,
             conversation_context="User: привет\nAssistant: привет!",
+            recent_turns=[],
             rag_query="привет поддержка",
             user_profile=SimpleNamespace(patterns=["p1"], values=["v1"], progress_notes=["n1"]),
             knowledge_policy_trace={},
@@ -246,6 +256,20 @@ def test_session_store_multiagent_debug_roundtrip() -> None:
     assert by_turn["turn_index"] == 3
     assert latest is not None
     assert latest["pipeline_version"] == "multiagent_v1"
+
+
+def test_session_store_clear_session_removes_traces_debug_stats() -> None:
+    store = SessionStore()
+    store.append_trace("sess-clear", {"turn_number": 1})
+    store.save_multiagent_debug("sess-clear", 1, {"turn_index": 1, "pipeline_version": "multiagent_v1"})
+    store.accumulate_session_stats("sess-clear", {"tokens_total": 10, "total_latency_ms": 5})
+    store.save_blob("blob-content", session_id="sess-clear")
+
+    store.clear_session("sess-clear")
+
+    assert store.get_session_traces("sess-clear") == []
+    assert store.get_latest_multiagent_debug("sess-clear") is None
+    assert store.get_session_stats("sess-clear")["total_turns"] == 0
 
 
 def test_session_store_stats_accumulation() -> None:
@@ -489,3 +513,4 @@ def test_kernel_payload_can_be_disabled_without_prompt_block() -> None:
     assert payload["kernel_enabled"] is False
     assert payload["prompt_block"] == ""
     assert payload["selection"]["prompt_block_included"] is False
+

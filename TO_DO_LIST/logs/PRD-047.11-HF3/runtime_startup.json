@@ -1,0 +1,29 @@
+{
+  "generated_at_utc": "2026-06-04T11:18:59.702224+00:00",
+  "health_status": 200,
+  "health_payload": {
+    "status": "healthy",
+    "version": "0.6.1",
+    "timestamp": "2026-06-04T16:18:59.654222",
+    "data_source": "api",
+    "blocks_loaded": 247,
+    "bot_data_base_api": "available",
+    "modules": {
+      "bot_agent": true,
+      "conversation_memory": true,
+      "state_classifier": true,
+      "path_builder": true,
+      "api": true
+    }
+  },
+  "admin_runtime_status": 200,
+  "admin_runtime_profile": "mvp_free_dialogue",
+  "chat_url_check": {
+    "status": 200,
+    "length": 642
+  },
+  "admin_ui_url_check": {
+    "status": 200,
+    "length": 642
+  }
+}

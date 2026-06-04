@@ -1,0 +1,103 @@
+{
+  "generated_at_utc": "2026-06-04T11:18:59.598713+00:00",
+  "issue_file_count": 16,
+  "issue_count": 16,
+  "files": [
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/tools/validate_prd_artifact_encoding.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/click/utils.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/pkg_resources/__init__.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/transformers/tokenization_mistral_common.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/huggingface_hub/utils/_subprocess.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/joblib/test/test_func_inspect_special_encoding.py",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv/Lib/site-packages/pip/_vendor/pkg_resources/__init__.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/click/utils.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/pkg_resources/__init__.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/transformers/tokenization_mistral_common.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/huggingface_hub/utils/_subprocess.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/joblib/test/test_func_inspect_special_encoding.py",
+      "issues": [
+        "utf8_decode_error"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/.venv_migrated_backup_2026-04-24/Lib/site-packages/pip/_vendor/pkg_resources/__init__.py",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/iconv-lite/README.md",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-decode-numeric-character-reference/readme.md",
+      "issues": [
+        "replacement_char"
+      ]
+    },
+    {
+      "path": "C:/My_practice/Text_transcription/bot_psychologist/web_ui/node_modules/micromark-util-symbol/lib/values.d.ts",
+      "issues": [
+        "replacement_char"
+      ]
+    }
+  ]
+}

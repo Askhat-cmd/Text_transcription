@@ -12,8 +12,9 @@ from bot_agent.conversation_memory import get_conversation_memory
 from bot_agent.storage import SessionManager
 
 from ..auth import verify_api_key
-from ..dependencies import get_identity_context
+from ..dependencies import get_conversation_service, get_identity_context
 from ..identity import IdentityContext
+from ..conversations import ConversationService
 from ..models import (
     ArchiveSessionsResponse,
     ChatSessionInfoResponse,
@@ -27,6 +28,7 @@ from ..models import (
     UserSessionsResponse,
     UserSummaryResponse,
 )
+from ..session_store import SessionStore, get_session_store
 from .common import _session_title, logger
 
 router = APIRouter(prefix="/api/v1", tags=["bot"])
@@ -123,6 +125,7 @@ async def delete_user_session(
     session_id: str,
     identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
+    store: SessionStore = Depends(get_session_store),
 ):
     try:
         canonical_user_id = identity.user_id
@@ -148,6 +151,7 @@ async def delete_user_session(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Session {session_id} not found",
             )
+        store.clear_session(session_id)
 
         return DeleteSessionResponse(
             status="success",
@@ -173,6 +177,8 @@ async def reset_user_session_context(
     session_id: str,
     identity: IdentityContext = Depends(get_identity_context),
     api_key: str = Depends(verify_api_key),
+    store: SessionStore = Depends(get_session_store),
+    conversation_service: ConversationService = Depends(get_conversation_service),
 ):
     try:
         canonical_user_id = identity.user_id
@@ -202,6 +208,39 @@ async def reset_user_session_context(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"Session {session_id} not found",
             )
+        store.clear_session(session_id)
+        memory = get_conversation_memory(session_id)
+        memory.turns = []
+        memory.summary = None
+        memory.summary_updated_at = None
+        memory.working_state = None
+        memory.metadata["last_updated"] = datetime.now().isoformat()
+        memory.metadata["total_turns"] = 0
+        memory.metadata["current_chat_context_reset"] = True
+        memory.metadata.pop("summary_pending_turn", None)
+        memory.metadata.pop("summary_task_status", None)
+        memory.metadata.pop("summary_last_generated_turn", None)
+        if getattr(memory, "_summary_task", None) and not memory._summary_task.done():
+            memory._summary_task.cancel()
+        memory._summary_task = None
+        memory._summary_task_turn = None
+        memory._summary_due_turn = None
+        if memory.semantic_memory:
+            memory.semantic_memory.clear()
+        try:
+            await conversation_service.reset_session_context(
+                user_id=canonical_user_id,
+                session_id=session_id,
+                channel=identity.channel,
+            )
+        except Exception as exc:
+            logger.warning("Failed to pause active conversation during reset-context: %s", exc)
+        saved_session_manager = memory.session_manager
+        memory.session_manager = None
+        try:
+            memory.save_to_disk(reason="current_chat_context_reset")
+        finally:
+            memory.session_manager = saved_session_manager
         manager.create_session(
             session_id=session_id,
             user_id=canonical_user_id,

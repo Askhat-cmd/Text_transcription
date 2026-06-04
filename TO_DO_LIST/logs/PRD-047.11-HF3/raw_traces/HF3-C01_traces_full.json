@@ -1,0 +1,1504 @@
+{
+  "session_id": "prd04711hf3-hf3-c01-da6eb990",
+  "format": "full",
+  "traces": [
+    {
+      "trace_contract_version": "multiagent_compat_v2",
+      "chunks_retrieved": [],
+      "chunks_after_filter": [],
+      "llm_calls": [],
+      "context_written_to_memory": "",
+      "context_written": "",
+      "total_duration_ms": 26618,
+      "primary_model": "gpt-5-mini",
+      "classifier_model": "gpt-4o-mini",
+      "embedding_model": "intfloat/multilingual-e5-base",
+      "reranker_model": "rerank-2",
+      "reranker_enabled": true,
+      "tokens_prompt": 2216,
+      "tokens_completion": 902,
+      "tokens_total": 3118,
+      "memory_turns_content": [],
+      "semantic_hits_detail": [
+        {
+          "block_id": "5ee90710-3923-41b9-9d44-78ccc4b278a6",
+          "score": 0.09477768921086988,
+          "text_preview": "Здесь важное различие — и оно принципиальное. Современная психология часто говорит: прими свою тень. Прими злость.…",
+          "source": "book"
+        },
+        {
+          "block_id": "de859f51-da62-4aee-854b-2a2a6e6b3d8e",
+          "score": 0.0945325937406276,
+          "text_preview": "Если информационный метаболизм — это процесс переработки опыта, то **интегративная саморегуляция** — это когда этот…",
+          "source": "book"
+        },
+        {
+          "block_id": "648f6960-e5cf-4558-a111-fcd668b2096a",
+          "score": 0.09279156207796115,
+          "text_preview": "Когда слышишь безусловная любовь — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое.…",
+          "source": "book"
+        }
+      ],
+      "state_secondary": [],
+      "state_trajectory": [],
+      "pipeline_stages": [],
+      "anomalies": [],
+      "estimated_cost_usd": 0.002358,
+      "session_id": "prd04711hf3-hf3-c01-da6eb990",
+      "user_state": "window",
+      "runtime_entrypoint": "multiagent_adapter",
+      "legacy_fallback_used": false,
+      "direct_multiagent_cutover": true,
+      "state_analyzer_fallback_used": false,
+      "recommended_mode": "reflect",
+      "quality_trace_version": "quality_trace_v1",
+      "quality_trace": {
+        "version": "quality_trace_v1",
+        "answer": {
+          "chars": 673,
+          "sentences": 11,
+          "questions": 0,
+          "too_short": false,
+          "too_long": false,
+          "too_many_questions": false,
+          "contains_numbered_list": true,
+          "generic_phrase_risk": false,
+          "generic_markers_count": 0
+        },
+        "state": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "openness": "open",
+          "ok_position": "I+W+",
+          "safety_flag": false,
+          "confidence": null,
+          "confidence_bucket": "unknown"
+        },
+        "thread": {
+          "thread_id_present": true,
+          "phase": "clarify",
+          "relation_to_thread": "new_thread",
+          "continuity_score": 1.0,
+          "continuity_bucket": "high",
+          "open_loops_count": 0,
+          "closed_loops_count": 0,
+          "has_open_loops": false,
+          "has_closed_loops": false,
+          "turns_in_phase": 1
+        },
+        "memory": {
+          "context_turns": 5,
+          "semantic_hits_count": 3,
+          "has_relevant_knowledge": true,
+          "rag_query_present": true,
+          "conversation_context_present": false,
+          "user_profile_non_empty": false,
+          "retrieval_status": "has_hits"
+        },
+        "continuity": {
+          "answer_mentions_recent_context": false,
+          "answer_mentions_open_loop": false,
+          "possible_closed_loop_repetition": false,
+          "context_overlap_terms_count": 0,
+          "open_loop_overlap_terms_count": 0,
+          "closed_loop_overlap_terms_count": 0
+        },
+        "response_mode": {
+          "mode": "reflect",
+          "goal_present": true,
+          "practice_step_present": false,
+          "mode_risk_flags": []
+        },
+        "writer_move_compliance": {
+          "version": "writer_move_compliance_trace_v1",
+          "move": "clarify_one_point",
+          "max_sentences": 5,
+          "max_questions": 1,
+          "sentence_count": 11,
+          "question_count": 0,
+          "contains_numbered_list": true,
+          "violations": [
+            "too_many_sentences"
+          ],
+          "risk_flags": [
+            "context_sparse"
+          ]
+        },
+        "validator": {
+          "blocked": false,
+          "block_reason_present": false,
+          "quality_flags_count": 0,
+          "quality_flags": []
+        },
+        "summary_flags": [
+          "writer_move_violation",
+          "writer_move_too_many_sentences"
+        ]
+      },
+      "thread_diagnostics_version": "thread_diagnostics_v1",
+      "thread_diagnostics": {
+        "version": "thread_diagnostics_v1",
+        "relation": {
+          "selected_relation": "new_thread",
+          "relation_reason": "no_current_thread",
+          "continuity_score": 1.0,
+          "new_thread_threshold": 0.2,
+          "current_thread_present": false,
+          "archived_threads_count": 0,
+          "return_marker_hit": false,
+          "followup_continue_marker_hit": false,
+          "low_resource_continue_marker_hit": false,
+          "branch_marker_hit": false,
+          "resolution_marker_hit": false,
+          "message_token_count": 11,
+          "core_token_count": 11,
+          "token_intersection_count": 11,
+          "token_union_count": 11,
+          "active_frame_semantic_continue_hit": false,
+          "active_frame_semantic_continue_reason": "",
+          "semantic_frame_token_overlap": 0,
+          "semantic_frame_token_count": 0,
+          "semantic_frame_sources_checked": []
+        },
+        "phase": {
+          "previous_phase": null,
+          "selected_phase": "clarify",
+          "phase_reason": "new_thread_default_clarify",
+          "turns_in_phase_before": 0,
+          "turns_in_phase_after": 1,
+          "closed_loops_count": 0,
+          "continuity_score": 1.0
+        },
+        "mode": {
+          "selected_mode": "reflect",
+          "response_goal": "clarify key point",
+          "mode_reason": "phase_clarify_reflect",
+          "safety_flag": false,
+          "intent": "explore",
+          "nervous_state": "window",
+          "phase": "clarify"
+        },
+        "loops": {
+          "open_loops_before": 0,
+          "open_loops_after": 0,
+          "closed_loops_before": 0,
+          "closed_loops_after": 0,
+          "open_loop_added": false,
+          "closed_loop_added": false,
+          "resolution_marker_hit": false
+        },
+        "action": {
+          "thread_action": "new_thread",
+          "previous_thread_id_present": false,
+          "selected_thread_id_present": true,
+          "archived_previous_thread": false,
+          "restored_archived_thread": false,
+          "safety_patch_used": false
+        },
+        "semantic_frame": {
+          "pattern_core_present": true,
+          "active_frame_present": true,
+          "active_frame_keys": [
+            "current_need",
+            "last_supportive_move",
+            "next_recommended_direction"
+          ],
+          "current_need": "explore perspective carefully",
+          "next_recommended_direction": "expand carefully without strong interpretation"
+        },
+        "summary_flags": [
+          "phase_transition",
+          "pattern_core_present",
+          "active_frame_present"
+        ]
+      },
+      "response_planner_version": "response_planner_v1",
+      "response_planner": {
+        "version": "response_planner_v1",
+        "enabled": true,
+        "next_move": "deepen_mechanism",
+        "answer_shape": "mechanism_explanation",
+        "response_depth": "medium",
+        "target_micro_shift": "показать один механизм, который продвигает понимание",
+        "should_answer_directly": true,
+        "question_policy": "max_one_if_needed",
+        "practice_policy": "forbidden",
+        "revoicing_policy": "suppressed",
+        "continuity_policy": "continue_active_line",
+        "safety_priority": false,
+        "must_include": [
+          "назвать один механизм",
+          "связать с active_line"
+        ],
+        "must_avoid": [
+          "не предлагать практику",
+          "не начинать механический пересказ"
+        ],
+        "source_signals": {
+          "active_line_user_intent": "understand_mechanism",
+          "active_line_continuity_mode": "start_new_line",
+          "active_line_should_ask_question": true,
+          "practice_gate_allowed": true,
+          "knowledge_answer_needed": false,
+          "knowledge_answer_should_answer_directly": false,
+          "response_mode": "reflect",
+          "safety_active": false,
+          "safety_flag": false,
+          "nervous_state": "window",
+          "low_resource_text": false,
+          "soft_distress_text": false,
+          "defensive_text": false,
+          "no_question_text": false,
+          "close_text": false,
+          "mechanism_text": false,
+          "practice_suppression_text": true,
+          "repair_text": false,
+          "explicit_action_requested": false,
+          "explicit_step_requested": false,
+          "explicit_practice_requested": false,
+          "explicit_practice_overview_requested": false,
+          "dialogue_profile": "mvp_free_dialogue",
+          "expansion_requested": false,
+          "repair_and_expand_requested": false,
+          "active_concept": "",
+          "explicit_short_support": false,
+          "practice_overview_requested": false,
+          "explicit_one_step_requested": false,
+          "examples_requested": false,
+          "numbered_list_requested": false,
+          "application_requested": false,
+          "active_line_stale": false,
+          "dialogue_pragmatics_contextual_followup": false,
+          "dialogue_pragmatics_offer_type": "unknown",
+          "dialogue_pragmatics_repair_user_dissatisfaction": false
+        },
+        "confidence": 0.9,
+        "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+      },
+      "planner_drift_guard_version": "planner_drift_guard_v1",
+      "planner_drift_guard": {
+        "version": "planner_drift_guard_v1",
+        "enabled": true,
+        "status": "critical",
+        "severity": "high",
+        "flags": [
+          "practice_policy_forbidden_violation"
+        ],
+        "shape_obedience": true,
+        "policy_obedience": false,
+        "question_policy_obedience": true,
+        "practice_policy_obedience": false,
+        "revoicing_policy_obedience": true,
+        "answer_length_obedience": true,
+        "safety_grounding_obedience": true,
+        "short_support_obedience": true,
+        "close_obedience": true,
+        "final_answer_chars": 673,
+        "final_answer_question_count": 0,
+        "planner_next_move": "deepen_mechanism",
+        "planner_answer_shape": "mechanism_explanation",
+        "planner_question_policy": "max_one_if_needed",
+        "planner_practice_policy": "forbidden",
+        "rationale": "planner=deepen_mechanism/mechanism_explanation; flags=practice_policy_forbidden_violation",
+        "rolling_window": {
+          "size": 100,
+          "total": 22,
+          "violations": 11,
+          "violation_rate": 0.5,
+          "by_flag": {
+            "answer_length_warning": 7,
+            "practice_policy_forbidden_violation": 4
+          }
+        }
+      },
+      "planner_drift_summary": {
+        "version": "planner_drift_guard_v1",
+        "window_size": 100,
+        "total": 22,
+        "ok_count": 11,
+        "warning_count": 7,
+        "critical_count": 4,
+        "violation_rate": 0.5,
+        "critical_rate": 0.1818,
+        "by_flag": {
+          "answer_length_warning": 7,
+          "practice_policy_forbidden_violation": 4
+        },
+        "last_status": "critical",
+        "last_flags": [
+          "practice_policy_forbidden_violation"
+        ],
+        "threshold_status": "critical",
+        "thresholds": {
+          "warning_violation_rate": 0.1,
+          "critical_rate": 0.03,
+          "min_samples": 20,
+          "recent_medium_window": 5,
+          "recent_high_window": 3
+        }
+      },
+      "dialogue_pragmatics": {
+        "version": "dialogue_pragmatics_v1",
+        "is_short_utterance": false,
+        "short_utterance_type": "not_short",
+        "is_contextual_followup": false,
+        "followup_relation": "none",
+        "previous_assistant_offer_type": "unknown",
+        "inherited_user_intent": "continue_previous_offer",
+        "inherited_topic": "",
+        "should_answer_directly": false,
+        "should_not_ask_confirmation_again": false,
+        "allow_concrete_step_or_phrase": false,
+        "retrieval_need_hint": "contextual_optional",
+        "repair_user_dissatisfaction": false,
+        "should_apologize_briefly": false,
+        "reason": "none"
+      },
+      "retrieval_decision": {
+        "version": "contextual_retrieval_gating_v1",
+        "retrieval_decision_version": "contextual_retrieval_gating_v1",
+        "retrieval_action": "memory_only",
+        "rag_candidates_count": 3,
+        "rag_included_count": 0,
+        "rag_included_reason": "",
+        "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+        "writer_can_ignore_rag": true,
+        "rag_relevance_to_current_turn": "medium",
+        "inherited_topic": "",
+        "inherited_offer_type": "unknown",
+        "why_memory_only_still_included_rag": "",
+        "fresh_chat_context_policy": {
+          "version": "fresh_chat_context_policy_v1",
+          "is_new_chat": true,
+          "turn_index": 1,
+          "fresh_window_active": true,
+          "is_greeting_or_contact": false,
+          "explicit_continuation_requested": false,
+          "explicit_question_or_knowledge_need": true,
+          "cross_session_memory_allowed": true,
+          "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+          "active_context_source": "current_chat_runtime_scope"
+        },
+        "rag_included_for_writer": []
+      },
+      "live_turn_evidence": {
+        "version": "live_turn_evidence_v1",
+        "created_at_utc": "2026-06-04T11:19:26.309220+00:00",
+        "turn_identity": {
+          "user_id": "prd04711hf3-hf3-c01-da6eb990",
+          "session_id": "prd04711hf3-hf3-c01-da6eb990",
+          "turn_index": null
+        },
+        "input": {
+          "query": "в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик",
+          "query_chars": 99
+        },
+        "state_thread": {
+          "nervous_state": "window",
+          "intent": "explore",
+          "safety_flag": false,
+          "thread_id": "tm_548ad65aca29",
+          "phase": "clarify",
+          "relation_to_thread": "new_thread",
+          "response_mode": "reflect"
+        },
+        "dialogue": {
+          "policy": {
+            "profile": "mvp_free_dialogue",
+            "authority_order": [
+              "minimal_safety_baseline",
+              "explicit_user_request",
+              "knowledge_or_concept_need",
+              "writer_freedom",
+              "planner_and_diagnostic_advisory"
+            ],
+            "minimal_safety_baseline": true,
+            "writer_autonomy": "high",
+            "planner_authority": "advisory",
+            "diagnostic_card_authority": "advisory",
+            "writer_move_authority": "advisory",
+            "active_line_authority": "advisory",
+            "knowledge_answer_priority": "normal",
+            "user_explicit_request_priority": "highest_after_safety",
+            "answer_depth": "medium",
+            "allow_numbered_lists": false,
+            "allow_examples": false,
+            "allow_practice_catalog": false,
+            "allow_multi_step_overview": false,
+            "human_like_answer_policy": {
+              "enabled": true,
+              "answer_style": "human_chatgpt_like",
+              "default_depth": "medium_to_long",
+              "allow_long_answers": true,
+              "allow_lists": false,
+              "allow_examples": false,
+              "allow_direct_answer": true,
+              "allow_reflection_plus_explanation_plus_step": true,
+              "allow_multiple_options": true,
+              "question_is_optional": true,
+              "micro_step_only_when_user_explicitly_requests_one_step": true,
+              "do_not_force_question_at_end": true,
+              "do_not_force_practice_frame": true,
+              "do_not_force_max_sentences": true,
+              "respect_user_requested_format": true,
+              "sarcasm_and_dissatisfaction_repair": true,
+              "direct_answer_repair_when_user_complains": true
+            },
+            "constraint_resolution": {
+              "profile": "mvp_free_dialogue",
+              "planner_authority": "advisory",
+              "overruled_constraints": [],
+              "overrule_reason": "none"
+            },
+            "must_not_force_one_step": false,
+            "context_budget_chars": 7000,
+            "semantic_hits_budget": {
+              "max_hits": 4,
+              "max_chars_per_hit": 900
+            },
+            "expansion_requested": false,
+            "repair_and_expand_requested": false,
+            "explicit_short_support_requested": false,
+            "explicit_one_step_requested": false,
+            "practice_overview_requested": false,
+            "examples_requested": false,
+            "numbered_list_requested": false,
+            "explicit_answer_need": false,
+            "direct_concrete_request": false,
+            "summary_request": false,
+            "sarcasm_or_negative_feedback": false,
+            "application_request": false,
+            "active_concept": "",
+            "knowledge_answer_type": "concept_explanation",
+            "planner_is_advisory": true,
+            "mvp_overrides": {
+              "explicit_user_request_wins": true,
+              "old_max_sentence_constraints_softened": true,
+              "planner_advisory": true,
+              "overview_questions_allow_lists": false,
+              "question_is_optional": true,
+              "repair_user_dissatisfaction": false,
+              "target_answer_depth": "medium"
+            },
+            "knowledge_answer": {
+              "needed": false,
+              "reason": "no_known_concept_question",
+              "concept": "",
+              "answer_type": "concept_explanation",
+              "concept_match_type": "none",
+              "matched_concepts": [],
+              "kb_grounding_available": false,
+              "kb_grounding_sources": [],
+              "kb_grounding_max_score": 0.094778,
+              "fallback_grounding_used": false,
+              "fallback_grounding_concepts": [],
+              "should_answer_directly": false,
+              "should_ask_definition_first": true,
+              "practice_overview_requested": false,
+              "preferred_hit_tags": [],
+              "practice_allowed": true,
+              "preferred_response_mode": "reflect",
+              "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+            },
+            "dialogue_pragmatics": {
+              "version": "dialogue_pragmatics_v1",
+              "is_short_utterance": false,
+              "short_utterance_type": "not_short",
+              "is_contextual_followup": false,
+              "followup_relation": "none",
+              "previous_assistant_offer_type": "unknown",
+              "inherited_user_intent": "continue_previous_offer",
+              "inherited_topic": "",
+              "should_answer_directly": false,
+              "should_not_ask_confirmation_again": false,
+              "allow_concrete_step_or_phrase": false,
+              "retrieval_need_hint": "contextual_optional",
+              "repair_user_dissatisfaction": false,
+              "should_apologize_briefly": false,
+              "reason": "none"
+            },
+            "fresh_chat_context_policy": {
+              "version": "fresh_chat_context_policy_v1",
+              "is_new_chat": true,
+              "turn_index": 1,
+              "fresh_window_active": true,
+              "is_greeting_or_contact": false,
+              "explicit_continuation_requested": false,
+              "explicit_question_or_knowledge_need": true,
+              "cross_session_memory_allowed": true,
+              "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+              "active_context_source": "current_chat_runtime_scope"
+            },
+            "retrieval_decision": {
+              "version": "contextual_retrieval_gating_v1",
+              "retrieval_decision_version": "contextual_retrieval_gating_v1",
+              "retrieval_action": "memory_only",
+              "rag_candidates_count": 3,
+              "rag_included_count": 0,
+              "rag_included_reason": "",
+              "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+              "writer_can_ignore_rag": true,
+              "rag_relevance_to_current_turn": "medium",
+              "inherited_topic": "",
+              "inherited_offer_type": "unknown",
+              "why_memory_only_still_included_rag": "",
+              "fresh_chat_context_policy": {
+                "version": "fresh_chat_context_policy_v1",
+                "is_new_chat": true,
+                "turn_index": 1,
+                "fresh_window_active": true,
+                "is_greeting_or_contact": false,
+                "explicit_continuation_requested": false,
+                "explicit_question_or_knowledge_need": true,
+                "cross_session_memory_allowed": true,
+                "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+                "active_context_source": "current_chat_runtime_scope"
+              },
+              "rag_included_for_writer": []
+            }
+          },
+          "pragmatics": {
+            "version": "dialogue_pragmatics_v1",
+            "is_short_utterance": false,
+            "short_utterance_type": "not_short",
+            "is_contextual_followup": false,
+            "followup_relation": "none",
+            "previous_assistant_offer_type": "unknown",
+            "inherited_user_intent": "continue_previous_offer",
+            "inherited_topic": "",
+            "should_answer_directly": false,
+            "should_not_ask_confirmation_again": false,
+            "allow_concrete_step_or_phrase": false,
+            "retrieval_need_hint": "contextual_optional",
+            "repair_user_dissatisfaction": false,
+            "should_apologize_briefly": false,
+            "reason": "none"
+          },
+          "fresh_chat_context_policy": {
+            "version": "fresh_chat_context_policy_v1",
+            "is_new_chat": true,
+            "turn_index": 1,
+            "fresh_window_active": true,
+            "is_greeting_or_contact": false,
+            "explicit_continuation_requested": false,
+            "explicit_question_or_knowledge_need": true,
+            "cross_session_memory_allowed": true,
+            "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+            "active_context_source": "current_chat_runtime_scope"
+          },
+          "retrieval": {
+            "version": "contextual_retrieval_gating_v1",
+            "retrieval_decision_version": "contextual_retrieval_gating_v1",
+            "retrieval_action": "memory_only",
+            "rag_candidates_count": 3,
+            "rag_included_count": 0,
+            "rag_included_reason": "",
+            "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+            "writer_can_ignore_rag": true,
+            "rag_relevance_to_current_turn": "medium",
+            "inherited_topic": "",
+            "inherited_offer_type": "unknown",
+            "why_memory_only_still_included_rag": "",
+            "fresh_chat_context_policy": {
+              "version": "fresh_chat_context_policy_v1",
+              "is_new_chat": true,
+              "turn_index": 1,
+              "fresh_window_active": true,
+              "is_greeting_or_contact": false,
+              "explicit_continuation_requested": false,
+              "explicit_question_or_knowledge_need": true,
+              "cross_session_memory_allowed": true,
+              "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+              "active_context_source": "current_chat_runtime_scope"
+            },
+            "rag_included_for_writer": []
+          },
+          "active_line": {
+            "version": "active_line_v1",
+            "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+            "user_intent": "understand_mechanism",
+            "continuity_mode": "start_new_line",
+            "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+            "should_continue_line": false,
+            "should_ask_question": true,
+            "should_offer_practice": false,
+            "revoicing_allowed": false,
+            "revoicing_style": "suppressed",
+            "repair_mode": null,
+            "evidence_turn_ids": [],
+            "confidence": 0.7,
+            "practice_suppression_active": true
+          },
+          "response_planner": {
+            "version": "response_planner_v1",
+            "enabled": true,
+            "next_move": "deepen_mechanism",
+            "answer_shape": "mechanism_explanation",
+            "response_depth": "medium",
+            "target_micro_shift": "показать один механизм, который продвигает понимание",
+            "should_answer_directly": true,
+            "question_policy": "max_one_if_needed",
+            "practice_policy": "forbidden",
+            "revoicing_policy": "suppressed",
+            "continuity_policy": "continue_active_line",
+            "safety_priority": false,
+            "must_include": [
+              "назвать один механизм",
+              "связать с active_line"
+            ],
+            "must_avoid": [
+              "не предлагать практику",
+              "не начинать механический пересказ"
+            ],
+            "source_signals": {
+              "active_line_user_intent": "understand_mechanism",
+              "active_line_continuity_mode": "start_new_line",
+              "active_line_should_ask_question": true,
+              "practice_gate_allowed": true,
+              "knowledge_answer_needed": false,
+              "knowledge_answer_should_answer_directly": false,
+              "response_mode": "reflect",
+              "safety_active": false,
+              "safety_flag": false,
+              "nervous_state": "window",
+              "low_resource_text": false,
+              "soft_distress_text": false,
+              "defensive_text": false,
+              "no_question_text": false,
+              "close_text": false,
+              "mechanism_text": false,
+              "practice_suppression_text": true,
+              "repair_text": false,
+              "explicit_action_requested": false,
+              "explicit_step_requested": false,
+              "explicit_practice_requested": false,
+              "explicit_practice_overview_requested": false,
+              "dialogue_profile": "mvp_free_dialogue",
+              "expansion_requested": false,
+              "repair_and_expand_requested": false,
+              "active_concept": "",
+              "explicit_short_support": false,
+              "practice_overview_requested": false,
+              "explicit_one_step_requested": false,
+              "examples_requested": false,
+              "numbered_list_requested": false,
+              "application_requested": false,
+              "active_line_stale": false,
+              "dialogue_pragmatics_contextual_followup": false,
+              "dialogue_pragmatics_offer_type": "unknown",
+              "dialogue_pragmatics_repair_user_dissatisfaction": false
+            },
+            "confidence": 0.9,
+            "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+          },
+          "thread_debug": {
+            "version": "thread_diagnostics_v1",
+            "relation": {
+              "selected_relation": "new_thread",
+              "relation_reason": "no_current_thread",
+              "continuity_score": 1.0,
+              "new_thread_threshold": 0.2,
+              "current_thread_present": false,
+              "archived_threads_count": 0,
+              "return_marker_hit": false,
+              "followup_continue_marker_hit": false,
+              "low_resource_continue_marker_hit": false,
+              "branch_marker_hit": false,
+              "resolution_marker_hit": false,
+              "message_token_count": 11,
+              "core_token_count": 11,
+              "token_intersection_count": 11,
+              "token_union_count": 11,
+              "active_frame_semantic_continue_hit": false,
+              "active_frame_semantic_continue_reason": "",
+              "semantic_frame_token_overlap": 0,
+              "semantic_frame_token_count": 0,
+              "semantic_frame_sources_checked": []
+            },
+            "phase": {
+              "previous_phase": null,
+              "selected_phase": "clarify",
+              "phase_reason": "new_thread_default_clarify",
+              "turns_in_phase_before": 0,
+              "turns_in_phase_after": 1,
+              "closed_loops_count": 0,
+              "continuity_score": 1.0
+            },
+            "mode": {
+              "selected_mode": "reflect",
+              "response_goal": "clarify key point",
+              "mode_reason": "phase_clarify_reflect",
+              "safety_flag": false,
+              "intent": "explore",
+              "nervous_state": "window",
+              "phase": "clarify"
+            },
+            "loops": {
+              "open_loops_before": 0,
+              "open_loops_after": 0,
+              "closed_loops_before": 0,
+              "closed_loops_after": 0,
+              "open_loop_added": false,
+              "closed_loop_added": false,
+              "resolution_marker_hit": false
+            },
+            "action": {
+              "thread_action": "new_thread",
+              "previous_thread_id_present": false,
+              "selected_thread_id_present": true,
+              "archived_previous_thread": false,
+              "restored_archived_thread": false,
+              "safety_patch_used": false
+            },
+            "semantic_frame": {
+              "pattern_core_present": true,
+              "active_frame_present": true,
+              "active_frame_keys": [
+                "current_need",
+                "last_supportive_move",
+                "next_recommended_direction"
+              ],
+              "current_need": "explore perspective carefully",
+              "next_recommended_direction": "expand carefully without strong interpretation"
+            },
+            "summary_flags": [
+              "phase_transition",
+              "pattern_core_present",
+              "active_frame_present"
+            ]
+          }
+        },
+        "memory": {
+          "conversation_context": "",
+          "conversation_context_chars": 0,
+          "semantic_hits_count": 3,
+          "semantic_hits": [
+            {
+              "chunk_id_hash": "sha256:1abf977122717c7c8d1b3f444be9d6fe4a86491fc82f6e246eedeeabe39c56df",
+              "source": "book",
+              "score": 0.09477768921086988,
+              "content_preview": "Здесь важное различие — и оно принципиальное.\n\nСовременная психология часто говорит: «прими свою тень». Прими злость. Прими зависть. Прими тёмные мысли.\n\nЭто хорошее направление — но неточная формулировка. Потому что «принять» часто понимае...[truncated:2289]"
+            },
+            {
+              "chunk_id_hash": "sha256:5523b46f8faf12209d53e06cba28cc63b52b77f278231f9a52b629c39f2ec620",
+              "source": "book",
+              "score": 0.0945325937406276,
+              "content_preview": "Если информационный метаболизм — это процесс переработки опыта, то **интегративная саморегуляция** — это когда этот процесс работает без сбоев.\n\nЧто это значит на практике?\n\n**Первое** — опыт не блокируется на входе. Ты позволяешь себе почу...[truncated:1155]"
+            },
+            {
+              "chunk_id_hash": "sha256:0990e02b16b90ca1a1604e9a4f9b17744ee7972e5c4b1029c8af62c69921ca0d",
+              "source": "book",
+              "score": 0.09279156207796115,
+              "content_preview": "Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое.\n\nЗдесь — другое.\n\nБезусловная любовь в понимании НеоСталкинга — это не эмоция. Не решение «любить всех». Не духовная практика. Это...[truncated:1482]"
+            }
+          ]
+        },
+        "writer": {
+          "contract_excerpt": {
+            "response_mode": "reflect",
+            "response_goal": "clarify key point",
+            "must_avoid": [],
+            "dialogue_profile": "mvp_free_dialogue",
+            "retrieval_action": "memory_only",
+            "dialogue_pragmatics_short_type": "not_short"
+          },
+          "final_answer_directive": {
+            "version": "final_answer_directive_v1",
+            "profile": "mvp_free_dialogue",
+            "user_intent": "continuity",
+            "answer_obligation": "continue_line_with_focus",
+            "must_answer": "в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик",
+            "answer_shape": "mechanism_explanation",
+            "depth": "medium",
+            "style": "human_conversational",
+            "question_policy": "optional_none",
+            "practice_policy": "forbidden",
+            "rag_policy": "optional_if_relevant",
+            "diagnostic_center_role": "advisory_context_only",
+            "planner_role": "advisory_context_only",
+            "active_line_role": "advisory_context_only",
+            "diagnostic_card_role": "advisory_context_only",
+            "writer_autonomy": "high",
+            "hard_boundaries": [
+              "minimal_safety",
+              "privacy",
+              "no_diagnosis",
+              "no_medical_legal_financial_directives"
+            ],
+            "advisory_context": {
+              "planner_suggestion": "deepen_mechanism",
+              "active_line_intent": "understand_mechanism",
+              "diagnostic_need": "explore perspective carefully",
+              "diagnostic_suggested_move": "clarify_one_point"
+            },
+            "suppressed_legacy_constraints": [
+              "writer_move.max_sentences=5",
+              "writer_move.max_questions=1",
+              "writer_move.must_do.ask_one_specific_question",
+              "diagnostic_card.ask_at_most_one_question",
+              "response_planner.response_depth=short",
+              "active_line.should_ask_question=true",
+              "active_line.practice_suppression_active=true"
+            ],
+            "source_signals": {
+              "dialogue_policy": {
+                "profile": "mvp_free_dialogue",
+                "authority_order": [
+                  "minimal_safety_baseline",
+                  "explicit_user_request",
+                  "knowledge_or_concept_need",
+                  "writer_freedom",
+                  "planner_and_diagnostic_advisory"
+                ],
+                "minimal_safety_baseline": true,
+                "writer_autonomy": "high",
+                "planner_authority": "advisory",
+                "diagnostic_card_authority": "advisory",
+                "writer_move_authority": "advisory",
+                "active_line_authority": "advisory",
+                "knowledge_answer_priority": "normal",
+                "user_explicit_request_priority": "highest_after_safety",
+                "answer_depth": "medium",
+                "allow_numbered_lists": false,
+                "allow_examples": false,
+                "allow_practice_catalog": false,
+                "allow_multi_step_overview": false,
+                "human_like_answer_policy": {
+                  "enabled": true,
+                  "answer_style": "human_chatgpt_like",
+                  "default_depth": "medium_to_long",
+                  "allow_long_answers": true,
+                  "allow_lists": false,
+                  "allow_examples": false,
+                  "allow_direct_answer": true,
+                  "allow_reflection_plus_explanation_plus_step": true,
+                  "allow_multiple_options": true,
+                  "question_is_optional": true,
+                  "micro_step_only_when_user_explicitly_requests_one_step": true,
+                  "do_not_force_question_at_end": true,
+                  "do_not_force_practice_frame": true,
+                  "do_not_force_max_sentences": true,
+                  "respect_user_requested_format": true,
+                  "sarcasm_and_dissatisfaction_repair": true,
+                  "direct_answer_repair_when_user_complains": true
+                },
+                "constraint_resolution": {
+                  "profile": "mvp_free_dialogue",
+                  "planner_authority": "advisory",
+                  "overruled_constraints": [],
+                  "overrule_reason": "none"
+                },
+                "must_not_force_one_step": false,
+                "context_budget_chars": 7000,
+                "semantic_hits_budget": {
+                  "max_hits": 4,
+                  "max_chars_per_hit": 900
+                },
+                "expansion_requested": false,
+                "repair_and_expand_requested": false,
+                "explicit_short_support_requested": false,
+                "explicit_one_step_requested": false,
+                "practice_overview_requested": false,
+                "examples_requested": false,
+                "numbered_list_requested": false,
+                "explicit_answer_need": false,
+                "direct_concrete_request": false,
+                "summary_request": false,
+                "sarcasm_or_negative_feedback": false,
+                "application_request": false,
+                "active_concept": "",
+                "knowledge_answer_type": "concept_explanation",
+                "planner_is_advisory": true,
+                "mvp_overrides": {
+                  "explicit_user_request_wins": true,
+                  "old_max_sentence_constraints_softened": true,
+                  "planner_advisory": true,
+                  "overview_questions_allow_lists": false,
+                  "question_is_optional": true,
+                  "repair_user_dissatisfaction": false,
+                  "target_answer_depth": "medium"
+                },
+                "knowledge_answer": {
+                  "needed": false,
+                  "reason": "no_known_concept_question",
+                  "concept": "",
+                  "answer_type": "concept_explanation",
+                  "concept_match_type": "none",
+                  "matched_concepts": [],
+                  "kb_grounding_available": false,
+                  "kb_grounding_sources": [],
+                  "kb_grounding_max_score": 0.094778,
+                  "fallback_grounding_used": false,
+                  "fallback_grounding_concepts": [],
+                  "should_answer_directly": false,
+                  "should_ask_definition_first": true,
+                  "practice_overview_requested": false,
+                  "preferred_hit_tags": [],
+                  "practice_allowed": true,
+                  "preferred_response_mode": "reflect",
+                  "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+                },
+                "dialogue_pragmatics": {
+                  "version": "dialogue_pragmatics_v1",
+                  "is_short_utterance": false,
+                  "short_utterance_type": "not_short",
+                  "is_contextual_followup": false,
+                  "followup_relation": "none",
+                  "previous_assistant_offer_type": "unknown",
+                  "inherited_user_intent": "continue_previous_offer",
+                  "inherited_topic": "",
+                  "should_answer_directly": false,
+                  "should_not_ask_confirmation_again": false,
+                  "allow_concrete_step_or_phrase": false,
+                  "retrieval_need_hint": "contextual_optional",
+                  "repair_user_dissatisfaction": false,
+                  "should_apologize_briefly": false,
+                  "reason": "none"
+                },
+                "fresh_chat_context_policy": {
+                  "version": "fresh_chat_context_policy_v1",
+                  "is_new_chat": true,
+                  "turn_index": 1,
+                  "fresh_window_active": true,
+                  "is_greeting_or_contact": false,
+                  "explicit_continuation_requested": false,
+                  "explicit_question_or_knowledge_need": true,
+                  "cross_session_memory_allowed": true,
+                  "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+                  "active_context_source": "current_chat_runtime_scope"
+                },
+                "retrieval_decision": {
+                  "version": "contextual_retrieval_gating_v1",
+                  "retrieval_decision_version": "contextual_retrieval_gating_v1",
+                  "retrieval_action": "memory_only",
+                  "rag_candidates_count": 3,
+                  "rag_included_count": 0,
+                  "rag_included_reason": "",
+                  "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+                  "writer_can_ignore_rag": true,
+                  "rag_relevance_to_current_turn": "medium",
+                  "inherited_topic": "",
+                  "inherited_offer_type": "unknown",
+                  "why_memory_only_still_included_rag": "",
+                  "fresh_chat_context_policy": {
+                    "version": "fresh_chat_context_policy_v1",
+                    "is_new_chat": true,
+                    "turn_index": 1,
+                    "fresh_window_active": true,
+                    "is_greeting_or_contact": false,
+                    "explicit_continuation_requested": false,
+                    "explicit_question_or_knowledge_need": true,
+                    "cross_session_memory_allowed": true,
+                    "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+                    "active_context_source": "current_chat_runtime_scope"
+                  },
+                  "rag_included_for_writer": []
+                }
+              },
+              "dialogue_pragmatics": {
+                "version": "dialogue_pragmatics_v1",
+                "is_short_utterance": false,
+                "short_utterance_type": "not_short",
+                "is_contextual_followup": false,
+                "followup_relation": "none",
+                "previous_assistant_offer_type": "unknown",
+                "inherited_user_intent": "continue_previous_offer",
+                "inherited_topic": "",
+                "should_answer_directly": false,
+                "should_not_ask_confirmation_again": false,
+                "allow_concrete_step_or_phrase": false,
+                "retrieval_need_hint": "contextual_optional",
+                "repair_user_dissatisfaction": false,
+                "should_apologize_briefly": false,
+                "reason": "none"
+              },
+              "response_planner": {
+                "version": "response_planner_v1",
+                "enabled": true,
+                "next_move": "deepen_mechanism",
+                "answer_shape": "mechanism_explanation",
+                "response_depth": "medium",
+                "target_micro_shift": "показать один механизм, который продвигает понимание",
+                "should_answer_directly": true,
+                "question_policy": "max_one_if_needed",
+                "practice_policy": "forbidden",
+                "revoicing_policy": "suppressed",
+                "continuity_policy": "continue_active_line",
+                "safety_priority": false,
+                "must_include": [
+                  "назвать один механизм",
+                  "связать с active_line"
+                ],
+                "must_avoid": [
+                  "не предлагать практику",
+                  "не начинать механический пересказ"
+                ],
+                "source_signals": {
+                  "active_line_user_intent": "understand_mechanism",
+                  "active_line_continuity_mode": "start_new_line",
+                  "active_line_should_ask_question": true,
+                  "practice_gate_allowed": true,
+                  "knowledge_answer_needed": false,
+                  "knowledge_answer_should_answer_directly": false,
+                  "response_mode": "reflect",
+                  "safety_active": false,
+                  "safety_flag": false,
+                  "nervous_state": "window",
+                  "low_resource_text": false,
+                  "soft_distress_text": false,
+                  "defensive_text": false,
+                  "no_question_text": false,
+                  "close_text": false,
+                  "mechanism_text": false,
+                  "practice_suppression_text": true,
+                  "repair_text": false,
+                  "explicit_action_requested": false,
+                  "explicit_step_requested": false,
+                  "explicit_practice_requested": false,
+                  "explicit_practice_overview_requested": false,
+                  "dialogue_profile": "mvp_free_dialogue",
+                  "expansion_requested": false,
+                  "repair_and_expand_requested": false,
+                  "active_concept": "",
+                  "explicit_short_support": false,
+                  "practice_overview_requested": false,
+                  "explicit_one_step_requested": false,
+                  "examples_requested": false,
+                  "numbered_list_requested": false,
+                  "application_requested": false,
+                  "active_line_stale": false,
+                  "dialogue_pragmatics_contextual_followup": false,
+                  "dialogue_pragmatics_offer_type": "unknown",
+                  "dialogue_pragmatics_repair_user_dissatisfaction": false
+                },
+                "confidence": 0.9,
+                "rationale": "Mechanism intent: нужен объяснительный ход без разворота в практику."
+              },
+              "active_line": {
+                "version": "active_line_v1",
+                "active_line": "помочь увидеть механизм происходящего без ухода в практику",
+                "user_intent": "understand_mechanism",
+                "continuity_mode": "start_new_line",
+                "next_meaningful_move": "назвать механизм и при необходимости задать один уточняющий вопрос",
+                "should_continue_line": false,
+                "should_ask_question": true,
+                "should_offer_practice": false,
+                "revoicing_allowed": false,
+                "revoicing_style": "suppressed",
+                "repair_mode": null,
+                "evidence_turn_ids": [],
+                "confidence": 0.7,
+                "practice_suppression_active": true
+              },
+              "diagnostic_card_summary": {
+                "situation_label": "new_exploration",
+                "suggested_writer_move": "clarify_one_point",
+                "current_need": "explore perspective carefully",
+                "confidence": 0.45
+              },
+              "diagnostic_center_shadow": {
+                "enabled": true,
+                "status": "ok",
+                "schema_version": "diagnostic_center_output_v1",
+                "runtime_mode": "shadow_only",
+                "user_path_effect": "none",
+                "output": {
+                  "schema_version": "diagnostic_center_output_v1",
+                  "status": "ok",
+                  "nervous_state": "window",
+                  "intent": "explore",
+                  "openness": "open",
+                  "ok_position": "I+W+",
+                  "relation_to_thread": "new_thread",
+                  "phase": "clarify",
+                  "working_hypothesis": {
+                    "pattern_candidate": "integration_ready_exploration",
+                    "mechanism_summary": "user appears able to tolerate perspective broadening",
+                    "blind_spot_candidate": "premature advice may reduce reflective quality",
+                    "confidence": 0.62,
+                    "evidence": [
+                      "nervous_state:window",
+                      "intent:explore",
+                      "openness:open",
+                      "ok_position:I+W+",
+                      "relation_to_thread:new_thread",
+                      "phase:clarify",
+                      "pattern_core:в разговоре с начальником я опять сжимаюсь и ухожу в молчание, о",
+                      "lens_hint:unknown"
+                    ],
+                    "counter_evidence": [],
+                    "risk_flags": []
+                  },
+                  "lens_signals": [
+                    {
+                      "lens_family": "unknown",
+                      "score": 0.09477768921086988,
+                      "source": "knowledge_hits",
+                      "rationale": "retrieval metadata hint"
+                    }
+                  ],
+                  "next_micro_shift": {
+                    "response_goal": "deepen_and_integrate",
+                    "response_mode": "reflect_plus_alternative",
+                    "target_micro_shift": "expand perspective while preserving agency",
+                    "must_do": [
+                      "validate_feeling",
+                      "offer_alternative_perspective"
+                    ],
+                    "must_not_do": [
+                      "give_final_advice",
+                      "quote_kb_directly",
+                      "introduce_new_framework"
+                    ],
+                    "depth_allowed": "medium|high",
+                    "max_questions": 1,
+                    "max_concepts": 2
+                  },
+                  "trace": {
+                    "version": "diagnostic_center_trace_v1",
+                    "builder": "diagnostic_center_dry_run_v1",
+                    "rules_applied": [
+                      "deterministic_dry_run_v1",
+                      "internal_only_contract",
+                      "kb_lens_internal_rule",
+                      "must_not_quote_source_rule"
+                    ],
+                    "safety_priority_applied": false,
+                    "evidence_sources": [
+                      "state_snapshot",
+                      "thread_state",
+                      "context_package",
+                      "knowledge_hits"
+                    ],
+                    "kb_usage_mode": "internal_lens_only",
+                    "must_not_quote_source": true
+                  },
+                  "diagnostic_center_runtime_enabled": false,
+                  "user_facing_text_generated": false
+                },
+                "divergence": {
+                  "safety_priority_match": true,
+                  "depth_compatible": true,
+                  "writer_move_compatible": true,
+                  "response_mode_compatible": true,
+                  "relation_to_thread_match": true,
+                  "phase_match": true,
+                  "pattern_core_present": true,
+                  "kb_boundary_ok": true,
+                  "raw_kb_text_exposed": false,
+                  "thread_risk": "none",
+                  "warnings": [],
+                  "hard_blocker_reasons": [],
+                  "expected_divergence": true,
+                  "confidence": 0.62,
+                  "diagnostic_card_alignment": {
+                    "safety_priority_match": true,
+                    "low_resource_depth_match": true,
+                    "writer_move_compatible": true,
+                    "response_mode_compatible": true
+                  },
+                  "thread_alignment": {
+                    "relation_to_thread_match": true,
+                    "phase_match": true,
+                    "pattern_core_present": true,
+                    "continuity_risk": "none"
+                  },
+                  "kb_boundary": {
+                    "kb_usage_mode": "internal_lens_only",
+                    "must_not_quote_source": true,
+                    "raw_kb_text_exposed": false
+                  },
+                  "user_path": {
+                    "writer_contract_changed": false,
+                    "writer_prompt_changed_by_shadow": false,
+                    "final_answer_changed_by_shadow": false,
+                    "diagnostic_center_output_passed_to_writer": false
+                  }
+                },
+                "kb_sanitization": {
+                  "source_hits_count": 6,
+                  "sanitized_hits_count": 6,
+                  "forbidden_fields_stripped": 0,
+                  "raw_kb_text_exposed": false
+                },
+                "timing_ms": 0,
+                "error": null
+              },
+              "retrieval_decision": {
+                "version": "contextual_retrieval_gating_v1",
+                "retrieval_decision_version": "contextual_retrieval_gating_v1",
+                "retrieval_action": "memory_only",
+                "rag_candidates_count": 3,
+                "rag_included_count": 0,
+                "rag_included_reason": "",
+                "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+                "writer_can_ignore_rag": true,
+                "rag_relevance_to_current_turn": "medium",
+                "inherited_topic": "",
+                "inherited_offer_type": "unknown",
+                "why_memory_only_still_included_rag": "",
+                "fresh_chat_context_policy": {
+                  "version": "fresh_chat_context_policy_v1",
+                  "is_new_chat": true,
+                  "turn_index": 1,
+                  "fresh_window_active": true,
+                  "is_greeting_or_contact": false,
+                  "explicit_continuation_requested": false,
+                  "explicit_question_or_knowledge_need": true,
+                  "cross_session_memory_allowed": true,
+                  "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+                  "active_context_source": "current_chat_runtime_scope"
+                },
+                "rag_included_for_writer": []
+              },
+              "knowledge_answer_guard": {
+                "schema_version": "knowledge_answer_routing_v1",
+                "concept_aliases_version": "concept_aliases_v1",
+                "knowledge_answer": {
+                  "needed": false,
+                  "reason": "no_known_concept_question",
+                  "concept": "",
+                  "answer_type": "concept_explanation",
+                  "concept_match_type": "none",
+                  "matched_concepts": [],
+                  "kb_grounding_available": false,
+                  "kb_grounding_sources": [],
+                  "kb_grounding_max_score": 0.094778,
+                  "fallback_grounding_used": false,
+                  "fallback_grounding_concepts": [],
+                  "should_answer_directly": false,
+                  "should_ask_definition_first": true,
+                  "practice_overview_requested": false,
+                  "preferred_hit_tags": [],
+                  "practice_allowed": true,
+                  "preferred_response_mode": "reflect",
+                  "writer_instruction": "follow_response_mode_with_normal_clarification_policy"
+                },
+                "practice_gate": {
+                  "practice_allowed": true,
+                  "reason": "no_guard_restriction",
+                  "explicit_practice_request": false,
+                  "request_type": "explain_request",
+                  "is_greeting": false
+                }
+              }
+            },
+            "conflict_resolution": {
+              "authority_order": [
+                "minimal_safety_baseline",
+                "explicit_user_request",
+                "repair_or_dissatisfaction",
+                "accepted_previous_offer",
+                "knowledge_or_concept_need",
+                "conversation_continuity",
+                "writer_freedom",
+                "planner_and_diagnostic_advisory"
+              ],
+              "safety_active": false,
+              "advisory_mode": true
+            }
+          },
+          "prompt_assembly": {
+            "writer_first_enabled": true,
+            "fresh_chat_context_policy": {
+              "version": "fresh_chat_context_policy_v1",
+              "is_new_chat": true,
+              "turn_index": 1,
+              "fresh_window_active": true,
+              "is_greeting_or_contact": false,
+              "explicit_continuation_requested": false,
+              "explicit_question_or_knowledge_need": true,
+              "cross_session_memory_allowed": true,
+              "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+              "active_context_source": "current_chat_runtime_scope"
+            },
+            "writer_context_package": {
+              "version": "writer_context_package_v1",
+              "recent_turns_for_writer": [],
+              "profile_for_writer": {
+                "patterns": [],
+                "values": [],
+                "progress_notes": []
+              },
+              "rag_for_writer": [],
+              "rag_candidates_for_trace": [
+                {
+                  "chunk_id": "5ee90710-3923-41b9-9d44-78ccc4b278a6",
+                  "source": "book",
+                  "score": 0.09477768921086988,
+                  "content_preview": "Здесь важное различие — и оно принципиальное.\n\nСовременная психология часто говорит: «прими свою тень». Прими злость. Прими зависть. Прими тёмные мысли.\n\nЭто хорошее направление — но неточная формулировка. Потому что «принять» часто понимае",
+                  "included_for_writer": false,
+                  "reason_not_included": "candidate_available_but_current_turn_prefers_recent_context"
+                },
+                {
+                  "chunk_id": "de859f51-da62-4aee-854b-2a2a6e6b3d8e",
+                  "source": "book",
+                  "score": 0.0945325937406276,
+                  "content_preview": "Если информационный метаболизм — это процесс переработки опыта, то **интегративная саморегуляция** — это когда этот процесс работает без сбоев.\n\nЧто это значит на практике?\n\n**Первое** — опыт не блокируется на входе. Ты позволяешь себе почу",
+                  "included_for_writer": false,
+                  "reason_not_included": "candidate_available_but_current_turn_prefers_recent_context"
+                },
+                {
+                  "chunk_id": "648f6960-e5cf-4558-a111-fcd668b2096a",
+                  "source": "book",
+                  "score": 0.09279156207796115,
+                  "content_preview": "Когда слышишь «безусловная любовь» — первый импульс обычно: умиление, что-то про принятие, про добро. Мягкое.\n\nЗдесь — другое.\n\nБезусловная любовь в понимании НеоСталкинга — это не эмоция. Не решение «любить всех». Не духовная практика. Это",
+                  "included_for_writer": false,
+                  "reason_not_included": "candidate_available_but_current_turn_prefers_recent_context"
+                }
+              ],
+              "rag_gate_decision": {
+                "version": "contextual_retrieval_gating_v1",
+                "retrieval_decision_version": "contextual_retrieval_gating_v1",
+                "retrieval_action": "memory_only",
+                "rag_candidates_count": 3,
+                "rag_included_count": 0,
+                "rag_included_reason": "",
+                "rag_suppressed_reason": "candidate_available_but_current_turn_prefers_recent_context",
+                "writer_can_ignore_rag": true,
+                "rag_relevance_to_current_turn": "medium",
+                "inherited_topic": "",
+                "inherited_offer_type": "unknown",
+                "why_memory_only_still_included_rag": "",
+                "fresh_chat_context_policy": {
+                  "version": "fresh_chat_context_policy_v1",
+                  "is_new_chat": true,
+                  "turn_index": 1,
+                  "fresh_window_active": true,
+                  "is_greeting_or_contact": false,
+                  "explicit_continuation_requested": false,
+                  "explicit_question_or_knowledge_need": true,
+                  "cross_session_memory_allowed": true,
+                  "cross_session_memory_reason": "explicit_question_or_knowledge_need",
+                  "active_context_source": "current_chat_runtime_scope"
+                },
+                "rag_included_for_writer": []
+              }
+            },
+            "legacy_blocks_visible_to_writer": false,
+            "legacy_blocks_source_signals_only": true,
+            "suppressed_legacy_constraints": [
+              "writer_move.max_sentences=5",
+              "writer_move.max_questions=1",
+              "writer_move.must_do.ask_one_specific_question",
+              "diagnostic_card.ask_at_most_one_question",
+              "response_planner.response_depth=short",
+              "active_line.should_ask_question=true",
+              "active_line.practice_suppression_active=true"
+            ],
+            "diagnostic_center_role": "advisory_context_only",
+            "planner_role": "advisory_context_only",
+            "active_line_role": "advisory_context_only",
+            "diagnostic_card_role": "advisory_context_only",
+            "legacy_advisory_sanitization": {
+              "version": "legacy_advisory_sanitizer_v1",
+              "writer_visible_summary": "Пользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.\nТекущий смысловой фокус: помочь увидеть механизм происходящего без ухода в практику.\nПолезно ответить на актуальную потребность: explore perspective carefully.\nМожно опереться на такой ход ответа: clarify_one_point.\nОдин полезный смысловой сдвиг: показать один механизм, который продвигает понимание.\nФормат можно держать таким: mechanism_explanation.\nЕсли практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.",
+              "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+              "writer_visible_practice_note": "Если практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.",
+              "suppressed_command_terms": [
+                "MUST DO",
+                "MUST NOT",
+                "ask_one_specific_question",
+                "max_sentences",
+                "max_questions",
+                "practice_suppression_active",
+                "practice_policy=forbidden",
+                "response_planner.must_include",
+                "response_planner.must_avoid",
+                "active_line.next_meaningful_move"
+              ],
+              "raw_legacy_visible_to_writer": false,
+              "practice_rewrite_applied": true,
+              "writer_visible_final_answer_directive_json": "{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"continue_line_with_focus\",\n  \"must_answer\": \"в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик\",\n  \"answer_shape\": \"mechanism_explanation\",\n  \"depth\": \"medium\",\n  \"style\": \"human_conversational\",\n  \"question_policy\": \"optional_none\",\n  \"practice_instruction\": \"no_exercise_but_answer_normally\",\n  \"writer_autonomy\": \"high\"\n}"
+            },
+            "writer_visible_practice_instruction": "no_exercise_but_answer_normally",
+            "practice_rewrite_applied": true
+          },
+          "prompt_canvas": {
+            "system_prompt_sha256": "sha256:beb0b33693e8bc084c916f6543a9d1f64bc5e19e7744c722dcac3080e8aa6bfe",
+            "system_prompt_preview": "Ты — NEO, живой психологический бот-собеседник в developer-local MVP free dialogue режиме.\nТы работаешь внутри мультиагентной системы и даёшь итоговый ответ пользователю.\n\nПРИОРИТЕТ:\n- Если пользователь просит объяснить развернуто/подробно/понятно — отвечай полно, глубоко и структурно.\n- Если пользователь говорит «я не понял» — сначала исправь и расширь ответ, не защищай систему.\n- Если пользователь прямо просит ответить по сути или выражает недовольство ответом, сначала признай промах и дай прямой ответ.\n- Planner — компас, не клетка: соблюдай safety и must_avoid, но не искусственно укорачивай ответ.\n\nФОРМА ОТВЕТА:\n- Разрешены несколько абзацев, нумерованные списки и примеры, если это повышает ясность.\n- Сохраняй один главный фокус, но раскрывай его полно.\n- Не экономь токены искусственно, если нужен глубокий ответ.\n- Для known concept давай определение, объяснение человеческим языком, пример и применение.\n- Если пользователь просит обобщение, дай структурный summary по сути разговора, а не новый микро-шаг.\n\nБАЗОВЫЕ ОГРАНИЧЕНИЯ:\n- Отвечай на языке пользователя.\n- Не раскрывай внутренние метки/системные роли.\n- Не давай медицинских/юридических/финансовых директив.\n- Не убирай minimal safety baseline.",
+            "system_prompt_chars": 1221,
+            "user_prompt_sha256": "sha256:12c8090cb4a8aa51fde7ec61c10450da2e1e24fa95690575a9c8a6033c2e6de3",
+            "user_prompt_preview": "СООБЩЕНИЕ ПОЛЬЗОВАТЕЛЯ:\nв разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик\n\nРЕЖИМ ОТВЕТА: reflect\nЦЕЛЬ: clarify key point\nФАЗА РАЗГОВОРА: clarify\nСОСТОЯНИЕ НЕРВНОЙ СИСТЕМЫ: window\nOK-ПОЗИЦИЯ: I+W+\nОТКРЫТОСТЬ: open\nSAFETY АКТИВЕН: False\n\nОТКРЫТЫЕ ПЕТЛИ:\nнет\n\nНЕЛЬЗЯ ВКЛЮЧАТЬ (must_avoid):\nнет\n\nFINAL ANSWER DIRECTIVE (ЕДИНСТВЕННЫЙ УПРАВЛЯЮЩИЙ БЛОК):\nversion=final_answer_directive_v1\ndirective_json:\n{\n  \"version\": \"final_answer_directive_v1\",\n  \"roles\": {\n    \"diagnostic_center\": \"advisory_context_only\",\n    \"planner\": \"advisory_context_only\",\n    \"active_line\": \"advisory_context_only\",\n    \"diagnostic_card\": \"advisory_context_only\"\n  },\n  \"answer_obligation\": \"continue_line_with_focus\",\n  \"must_answer\": \"в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик\",\n  \"answer_shape\": \"mechanism_explanation\",\n  \"depth\": \"medium\",\n  \"style\": \"human_conversational\",\n  \"question_policy\": \"optional_none\",\n  \"practice_instruction\": \"no_exercise_but_answer_normally\",\n  \"writer_autonomy\": \"high\"\n}\n\nPROMPT ASSEMBLY (EFFECTIVE):\nwriter_first_prompt_assembly_enabled=true\nlegacy_blocks_visible_to_writer=false\nlegacy_blocks_source_signals_only=true\nlegacy_advisory_sanitized=true\npractice_rewrite_applied=true\ndiagnostic_center_role=advisory_context_only\nplanner_role=advisory_context_only\nactive_line_role=advisory_context_only\ndiagnostic_card_role=advisory_context_only\n\nADVISORY CONTEXT SUMMARY:\nПользователь продолжает текущую линию разговора; ответ лучше держать живым, спокойным и по сути.\nТекущий смысловой фокус: помочь увидеть механизм происходящего без ухода в практику.\nПолезно ответить на актуальную потребность: explore perspective carefully.\nМожно опереться на такой ход ответа: clarify_one_point.\nОдин полезный смысловой сдвиг: показать один механизм, который продвигает понимание.\nФормат можно держать таким: mechanism_explanation.\nЕсли практика сейчас не запрошена или неуместна, не предлагай упражнение, технику или пошаговую практику. Вместо этого ответь нормально: объяснением, примером, отражением или продолжением мысли.\n\nPRACTICE NOTE:\nЕсли практика сейчас не запрошена или неуместна, не...[truncated:4620]",
+            "user_prompt_chars": 6822
+          },
+          "writer_debug": {
+            "model": "gpt-5-mini",
+            "api_mode": "responses",
+            "temperature": 0.7,
+            "max_tokens": 2500,
+            "fallback_used": false,
+            "overruled_constraints": [],
+            "final_answer_shape": "contextual_direct_no_practice",
+            "retrieval_action": "memory_only",
+            "dialogue_pragmatics_offer_type": "unknown",
+            "answer_fit_evaluator": {
+              "version": "concrete_answer_fit_v1",
+              "concrete_need": true,
+              "formulaic_opening_detected": false,
+              "context_anchor": "в разговоре с начальником я опять сжимаюсь и ухожу в молчание",
+              "answer_mentions_context_anchor": false,
+              "structured_answer": true,
+              "answer_long_enough": true,
+              "fit_status": "pass",
+              "needs_repair": false
+            },
+            "answer_fit_repair_applied": true
+          },
+          "answer": "ключевой узел в разговоре с начальником я опять сжимаюсь и ухожу в молчание не в упражнении, а в том, как внутри быстро собирается автоматическая реакция.\n\n1. Триггер. Есть момент, после которого тело и мысль мгновенно уходят в знакомый сценарий.\n2. Автопаттерн. Внутри появляется готовая интерпретация вроде защиты, контроля или избегания, и она сужает выбор.\n3. Что важно увидеть. Проблема не в самом факте ситуации, а в том, что реакция успевает стать единственным вариантом ответа.\n\nПоэтому полезный разбор здесь такой: что именно запускает сжатие, какой внутренний сценарий включается первым, и какой более точный ответ по факту ты хотел бы выбрать вместо автоматизма.",
+          "answer_chars": 673,
+          "stale_stub_detected": false,
+          "stale_stub_match": ""
+        },
+        "validator": {
+          "is_blocked": false,
+          "block_reason": "",
+          "quality_flags": []
+        },
+        "diagnostic_card": {
+          "present": true,
+          "summary": {
+            "situation_label": "new_exploration",
+            "current_need": "explore perspective carefully",
+            "suggested_writer_move": "clarify_one_point",
+            "confidence": 0.45
+          },
+          "trace": {
+            "version": "diagnostic_card_v1",
+            "builder": "deterministic_rules_v1",
+            "rules_applied": [
+              "new_exploration_rule",
+              "move_clarify_one_point",
+              "base_avoid_rules",
+              "risk_context_sparse",
+              "request_type=explain_request",
+              "practice_suppressed=false",
+              "practice_suppression_reason=user_requested_example_or_explanation",
+              "practice_suppression_reason=user_rejected_practice",
+              "confidence_low_fallback"
+            ],
+            "risk_flags": [
+              "context_sparse"
+            ],
+            "evidence_sources": [
+              "state",
+              "thread",
+              "context",
+              "behavior_guard"
+            ]
+          }
+        }
+      },
+      "turn_diff": {
+        "route_changed": false,
+        "state_changed": false,
+        "config_changed_keys": [],
+        "memory_delta": {
+          "turns_added": 0,
+          "summary_changed": false,
+          "semantic_hits_delta": 0
+        }
+      }
+    }
+  ]
+}

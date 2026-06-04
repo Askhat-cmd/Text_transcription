@@ -53,7 +53,13 @@ def test_build_live_turn_evidence_v1_has_required_sections() -> None:
         turn_index=2,
         orchestrator_result={"answer": "Ответ"},
         writer_contract=_DummyContract(),
-        writer_debug={"system_prompt": "sys", "user_prompt": "usr", "model": "gpt-5-mini"},
+        writer_debug={
+            "system_prompt": "sys",
+            "user_prompt": "usr",
+            "model": "gpt-5-mini",
+            "answer_fit_evaluator": {"fit_status": "pass"},
+            "answer_fit_repair_applied": False,
+        },
         memory_bundle=_DummyMemory(),
         state_snapshot=_DummyState(),
         thread_state=_DummyThread(),
@@ -71,4 +77,5 @@ def test_build_live_turn_evidence_v1_has_required_sections() -> None:
     assert payload["turn_identity"]["user_id"] == "u1"
     assert payload["writer"]["prompt_canvas"]["system_prompt_sha256"].startswith("sha256:")
     assert "writer_debug" in payload["writer"]
+    assert payload["writer"]["writer_debug"]["answer_fit_evaluator"]["fit_status"] == "pass"
     assert payload["validator"]["is_blocked"] is False

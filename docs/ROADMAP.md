@@ -1,6 +1,7 @@
 ﻿# Roadmap
 
 ## Done
+- PRD-047.11-HF3: completed residual live UX reality-repair cycle on the unified runtime (`writer` concrete-answer-fit hotfix, deterministic thanks-close state repair, localhost `:3000` browser/admin proof, explicit reset/memory proof refresh, admin legacy inventory, and docs/encoding hygiene artifacts) without adding a new runtime branch or broadening activation.
 - PRD-047.11-HF2: passed fresh-chat isolation / context-aware RAG gate / real Web Chat markdown proof cycle (new `fresh_chat_context_policy_v1`, `writer_context_package_v1`, explicit current-chat reset + dev memory clear controls, writer-visible RAG suppression when gate denies inclusion, admin/runtime/UI visibility, browser markdown smoke, admin screenshots, and live acceptance on isolated backend/UI `:8002/:3001`).
 - PRD-047.11-HF1: completed writer prompt diet repair for `mvp_free_dialogue` (new `legacy_advisory_sanitizer.py`, sanitized advisory summary, `no_exercise_but_answer_normally` rewrite, stale runtime fallback cleanup, trace/admin preservation, HF1 tests, and dedicated runner/artifacts with `writer_prompt_diet_eval=4/4 passed`).
 - PRD-047.11-AUDIT: added evidence-first audit runner/dataset/artifact pack (`PRD-047.11-AUDIT`) with source inventory, prompt/acceptance truthfulness checks, 18-case live matrix, raw trace + prompt canvas export, admin payload audit, and honest warning-grade reporting (`14/18` live failures, `15` bad-phrase hits, browser screenshot proof unavailable because Playwright was missing locally).
@@ -37,11 +38,11 @@
 - `PRD-046.1.29`: stabilization cleanup, artifact classification, docs compaction, permanent gate revalidation (`70635e1`).
 
 ## Current / In Progress
-- No active PRD-047.11 blocker remains; HF2 closed fresh-chat context leakage and real browser/Admin proof on a passed baseline.
+- No active PRD-047.11 blocker remains; HF3 closed the residual concrete-answer-fit / thanks-close / localhost-proof / encoding-hygiene class without changing runtime authority boundaries.
 
 ## Next
-1. Start `PRD-047.12` for Unified Dialogue Profile Simplification / Safe Guided + MVP Consolidation on top of the now-passed HF2 baseline.
-2. Treat any further PRD-047.11 hotfix only as residual regression repair if new live evidence reopens context leakage or UI proof issues.
+1. Start `PRD-047.12` for Unified Dialogue Profile Simplification / Safe Guided + MVP Consolidation on top of the HF3-stabilized baseline.
+2. Treat any further PRD-047.11 hotfix only as residual regression repair if new live evidence reopens concrete answer-fit, reset proof, or localhost UI proof issues.
 
 ## Later
 - Operational hardening for governed limited runtime.

@@ -26,6 +26,7 @@ from ..dialogue_policy import (
     format_conversation_context_for_writer_with_meta,
     normalize_dialogue_profile,
 )
+from ..concrete_answer_fit import build_contextual_no_practice_answer, evaluate_concrete_answer_fit
 from ..stale_stub_detector import detect_stale_stub
 from ..prompt_constraint_section import format_prompt_constraint_section_v1
 from ..contracts.writer_contract import WriterContract
@@ -63,6 +64,16 @@ _RU_NAME_PATTERNS = (
 _EN_NAME_PATTERNS = (
     re.compile(r"\bmy\s+name\s+is\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
     re.compile(r"\bi\s+am\s+([A-Z][A-Za-z\-]{1,30})", re.IGNORECASE),
+)
+_LITERAL_MARKDOWN_ECHO_PATTERNS = (
+    re.compile(
+        r"(?:верни\s+без\s+объяснений\s+и\s+без\s+изменений\s+следующий\s+markdown(?:-блок)?\s*:)(.+)",
+        re.IGNORECASE | re.DOTALL,
+    ),
+    re.compile(
+        r"(?:return\s+the\s+following\s+markdown\s+block\s+without\s+changes\s*:)(.+)",
+        re.IGNORECASE | re.DOTALL,
+    ),
 )
 _PRACTICE_MARKERS = (
     "практик",
@@ -120,6 +131,22 @@ _LOW_RESOURCE_NO_PRACTICE_MARKERS = (
     "не нужны практики",
     "побудь со мной коротко",
 )
+
+
+def _extract_literal_markdown_echo_request(user_message: str) -> str:
+    text = str(user_message or "").strip()
+    if not text:
+        return ""
+    for pattern in _LITERAL_MARKDOWN_ECHO_PATTERNS:
+        match = pattern.search(text)
+        if not match:
+            continue
+        candidate = str(match.group(1) or "").strip()
+        if not candidate:
+            return ""
+        if any(marker in candidate for marker in ("**", "- ", "* ", "1.", "##", "```")):
+            return candidate
+    return ""
 
 
 def _to_int(value: str, default: int) -> int:
@@ -897,6 +924,7 @@ class WriterAgent:
         ctx = contract.to_prompt_context()
         user_message = str(ctx.get("user_message", "") or "")
         lowered_user = user_message.lower()
+        literal_markdown_echo = _extract_literal_markdown_echo_request(user_message)
         dialogue_profile = normalize_dialogue_profile(ctx.get("dialogue_profile", "safe_guided"))
         expansion_requested = bool(ctx.get("dialogue_expansion_requested", False)) or detect_expansion_request(user_message)
         repair_and_expand_requested = bool(
@@ -1032,10 +1060,27 @@ class WriterAgent:
         user_mechanism_request = _contains_any(
             lowered_user, ("механизм", "почему застреваю", "как это работает", "разбор")
         )
+        answer_fit = evaluate_concrete_answer_fit(
+            user_message=user_message,
+            answer_text=text,
+            direct_concrete_request=direct_concrete_request,
+            application_request=application_request,
+            explicit_answer_need=explicit_answer_need,
+        )
+        self.last_debug["answer_fit_evaluator"] = dict(answer_fit)
+
+        if literal_markdown_echo:
+            normalized_requested = literal_markdown_echo.strip()
+            normalized_response = text.strip()
+            if normalized_response != normalized_requested:
+                self.last_debug["format_request_repair_applied"] = True
+                self.last_debug["final_answer_shape"] = "literal_markdown_echo"
+                return normalized_requested
 
         if dialogue_profile == DIALOGUE_PROFILE_MVP_FREE:
             return self._enforce_mvp_free_dialogue_compliance(
                 text=text,
+                user_message=user_message,
                 lowered_text=lowered_text,
                 lowered_user=lowered_user,
                 concept=concept,
@@ -1064,6 +1109,7 @@ class WriterAgent:
                 pragmatics_offer_type=pragmatics_offer_type,
                 pragmatics_should_not_reconfirm=pragmatics_should_not_reconfirm,
                 pragmatics_repair_dissatisfaction=pragmatics_repair_dissatisfaction,
+                answer_fit=answer_fit,
             )
 
         # Greeting path: remove unsolicited practice when gate forbids it.
@@ -1294,6 +1340,7 @@ class WriterAgent:
         self,
         *,
         text: str,
+        user_message: str,
         lowered_text: str,
         lowered_user: str,
         concept: str,
@@ -1322,6 +1369,7 @@ class WriterAgent:
         pragmatics_offer_type: str,
         pragmatics_should_not_reconfirm: bool,
         pragmatics_repair_dissatisfaction: bool,
+        answer_fit: dict[str, Any],
     ) -> str:
         if pragmatics_repair_dissatisfaction:
             self._set_final_answer_shape_debug("repair_plus_direct_answer")
@@ -1401,9 +1449,13 @@ class WriterAgent:
             return re.sub(r"\s*\?+\s*", ". ", text).strip()
 
         if planner_practice_policy == "forbidden" and has_unsolicited_practice and not user_step_request:
+            if bool(answer_fit.get("needs_repair", False)) or bool(answer_fit.get("concrete_need", False)) or application_request:
+                self.last_debug["answer_fit_repair_applied"] = True
+                self._set_final_answer_shape_debug("contextual_direct_no_practice")
+                return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
             self._set_final_answer_shape_debug("mechanism_without_unsolicited_practice")
             return (
-                "Сейчас полезнее не упражнение, а прямое объяснение: автоматический контроль может перегружать "
+                "Сейчас полезнее прямое объяснение механизма: автоматический контроль может перегружать "
                 "внимание еще до действия, поэтому энергия уходит в внутренний спор и подготовку вместо самого шага."
             )
 
@@ -1473,6 +1525,10 @@ class WriterAgent:
 
         stale_stub = detect_stale_stub(text)
         if bool(stale_stub.get("detected", False)):
+            if bool(answer_fit.get("concrete_need", False)):
+                self.last_debug["answer_fit_repair_applied"] = True
+                self._set_final_answer_shape_debug("contextual_stale_stub_repair")
+                return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
             self._set_final_answer_shape_debug("stale_stub_repaired_direct")
             return (
                 "Исправляю прошлую заготовку и отвечаю прямо. "

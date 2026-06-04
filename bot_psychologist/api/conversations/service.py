@@ -157,3 +157,26 @@ class ConversationService:
 
     async def touch_conversation(self, conversation_id: str) -> None:
         await self._repo.update_last_message_at(conversation_id)
+
+    async def reset_session_context(
+        self,
+        *,
+        user_id: str,
+        session_id: str,
+        channel: str = "web",
+    ) -> int:
+        paused = await self._repo.pause_active_conversations(
+            user_id=user_id,
+            session_id=session_id,
+            channel=channel,
+        )
+        logger.info(
+            "conversation.session_context_reset",
+            extra={
+                "user_id": user_id,
+                "session_id": session_id,
+                "channel": channel,
+                "paused_count": paused,
+            },
+        )
+        return paused

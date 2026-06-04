@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "message": "Session d39fdc65-722b-4666-9777-ffc3fbb2284c context reset",
+  "user_id": "6c88f71c-a7c4-4ec3-8eb3-11752e1a2483",
+  "session_id": "d39fdc65-722b-4666-9777-ffc3fbb2284c",
+  "recreated": true,
+  "memory_control_event": {
+    "event": "current_chat_context_reset",
+    "scope": "session_only",
+    "user_profile_deleted": false
+  }
+}

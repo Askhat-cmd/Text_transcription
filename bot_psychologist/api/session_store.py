@@ -80,6 +80,20 @@ class SessionStore:
                 return []
             return list(session.traces)
 
+    def clear_session(self, session_id: str) -> None:
+        if not session_id:
+            return
+        with self._lock:
+            self._sessions.pop(session_id, None)
+            self._multiagent_debug.pop(session_id, None)
+            self._multiagent_updated.pop(session_id, None)
+            self._session_stats.pop(session_id, None)
+            self._session_stats_updated.pop(session_id, None)
+            blob_prefix = f"{session_id}:"
+            stale_blobs = [key for key in self._blobs.keys() if key.startswith(blob_prefix)]
+            for key in stale_blobs:
+                self._blobs.pop(key, None)
+
     def get_last_session_id(self) -> Optional[str]:
         with self._lock:
             if not self._sessions:

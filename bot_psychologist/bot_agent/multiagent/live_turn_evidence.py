@@ -200,6 +200,8 @@ def build_live_turn_evidence_v1(
                 "final_answer_shape": writer_debug.get("final_answer_shape"),
                 "retrieval_action": writer_debug.get("retrieval_action"),
                 "dialogue_pragmatics_offer_type": writer_debug.get("dialogue_pragmatics_offer_type"),
+                "answer_fit_evaluator": _safe_dict(writer_debug.get("answer_fit_evaluator")),
+                "answer_fit_repair_applied": bool(writer_debug.get("answer_fit_repair_applied", False)),
             },
             "answer": writer_answer,
             "answer_chars": len(str(orchestrator_result.get("answer", "") or "")),

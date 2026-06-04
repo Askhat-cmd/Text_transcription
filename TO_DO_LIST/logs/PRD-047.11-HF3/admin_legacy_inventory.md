@@ -1,0 +1,30 @@
+# PRD-047.11-HF3 Admin Legacy Inventory
+
+- status: `passed`
+- admin_ui_url: `http://localhost:3000/admin`
+- counts:
+  - unknown: `14`
+  - active_surface: `7`
+  - legacy_or_historical: `1`
+- `Admin Config Panel` => `unknown`
+- `show` => `unknown`
+- `Export` => `unknown`
+- `Full reset` => `unknown`
+- `Overview` => `unknown`
+- `Agents` => `unknown`
+- `Orchestrator` => `unknown`
+- `Threads` => `unknown`
+- `Agent Prompts` => `active_surface`
+- `Runtime` => `active_surface`
+- `Diagnostic Center` => `active_surface`
+- `Memory` => `active_surface`
+- `Advanced Controls` => `unknown`
+- `LLM` => `active_surface`
+- `Retrieval` => `unknown`
+- `Diagnostics` => `unknown`
+- `Routing` => `legacy_or_historical`
+- `Prompts` => `active_surface`
+- `Compatibility` => `unknown`
+- `Обзор мультиагентного runtime` => `active_surface`
+- `Обновить` => `unknown`
+- `Последние трассы агентов` => `unknown`

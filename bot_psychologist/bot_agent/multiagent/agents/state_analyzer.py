@@ -203,6 +203,25 @@ _CONTACT_PHRASES = frozenset(
     }
 )
 
+_THANKS_CLOSE_PHRASES = frozenset(
+    {
+        "\u0441\u043f\u0430\u0441\u0438\u0431\u043e",
+        "\u0441\u043f\u0430\u0441\u0438\u0431\u043e.",
+        "\u0441\u043f\u0430\u0441\u0438\u0431\u043e!",
+        "\u0431\u043b\u0430\u0433\u043e\u0434\u0430\u0440\u044e",
+        "\u043f\u043e\u043d\u044f\u043b",
+        "\u043f\u043e\u043d\u044f\u043b\u0430",
+        "\u044f\u0441\u043d\u043e",
+        "\u043e\u043a\u0435\u0439",
+        "\u043e\u043a",
+        "thanks",
+        "thank you",
+        "got it",
+        "okay",
+        "ok",
+    }
+)
+
 _SOLUTION_PHRASES = frozenset(
     {
         "один конкретный шаг",
@@ -500,6 +519,8 @@ class StateAnalyzerAgent:
             return "hyper", 0.92
         if _contains_any(message, _HYPO_KEYWORDS):
             return "hypo", 0.9
+        if _contains_any(message, _THANKS_CLOSE_PHRASES):
+            return "window", 0.72
         caps_chars = sum(1 for ch in message if ch.isupper())
         alpha_chars = sum(1 for ch in message if ch.isalpha())
         caps_ratio = caps_chars / max(alpha_chars, 1)
@@ -513,6 +534,8 @@ class StateAnalyzerAgent:
     def _detect_intent(self, message: str) -> tuple[Optional[str], float]:
         if _contains_any(message, _CONTACT_PHRASES):
             return "contact", 0.93
+        if _contains_any(message, _THANKS_CLOSE_PHRASES):
+            return "contact", 0.88
         if _contains_any(message, _SOLUTION_PHRASES):
             return "solution", 0.9
         if _contains_any(message, _VENT_PHRASES):

@@ -1,0 +1,10 @@
+{
+  "status": "warning",
+  "chat_url": "http://localhost:3000/chat",
+  "checks": {
+    "has_strong": false,
+    "has_list": false,
+    "paragraph_count": 1,
+    "raw_markdown_not_visible": true
+  }
+}

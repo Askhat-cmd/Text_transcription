@@ -1,0 +1,169 @@
+{
+  "prd": "PRD-047.11-HF3",
+  "generated_at_utc": "2026-06-04T11:20:54.305885+00:00",
+  "status": "passed",
+  "case_results": [
+    {
+      "case_id": "HF3-C01",
+      "title": "concrete no-practice answer fit",
+      "session_id": "prd04711hf3-hf3-c01-da6eb990",
+      "status": "passed",
+      "answers": [
+        "ключевой узел в разговоре с начальником я опять сжимаюсь и ухожу в молчание не в упражнении, а в том, как внутри быстро собирается автоматическая реакция.\n\n1. Триггер. Есть момент, после которого тело и мысль мгновенно уходят в знакомый сценарий.\n2. Автопаттерн. Внутри появляется готовая интерпретация вроде защиты, контроля или избегания, и она сужает выбор.\n3. Что важно увидеть. Проблема не в самом факте ситуации, а в том, что реакция успевает стать единственным вариантом ответа.\n\nПоэтому полезный разбор здесь такой: что именно запускает сжатие, какой внутренний сценарий включается первым, и какой более точный ответ по факту ты хотел бы выбрать вместо автоматизма."
+      ],
+      "checks": {
+        "all_status_200": true,
+        "latest_trace_status_200": true,
+        "full_traces_status_200": true,
+        "forbid_phrase::СЃРµР№С‡Р°СЃ РїРѕР»РµР·РЅРµРµ РЅРµ СѓРїСЂР°Р¶РЅРµРЅРёРµ": true,
+        "answer_fit_not_fail": true
+      },
+      "failed_checks": [],
+      "answer_fit": {
+        "version": "concrete_answer_fit_v1",
+        "concrete_need": true,
+        "formulaic_opening_detected": false,
+        "context_anchor": "в разговоре с начальником я опять сжимаюсь и ухожу в молчание",
+        "answer_mentions_context_anchor": false,
+        "structured_answer": true,
+        "answer_long_enough": true,
+        "fit_status": "pass",
+        "needs_repair": false
+      },
+      "state_thread": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "thread_id": "tm_548ad65aca29",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "response_mode": "reflect"
+      }
+    },
+    {
+      "case_id": "HF3-C02",
+      "title": "concrete conflict answer fit",
+      "session_id": "prd04711hf3-hf3-c02-a6bf2bc9",
+      "status": "passed",
+      "answers": [
+        "Понял — разберём по ситуациям, где обычно происходит резкий выход из себя, без диагнозов и без рекомендаций-практик. Сфокусируюсь на типичных контекстах, что в них может происходить «в момент», и на том, как это выглядит со стороны и внутри вас.\n\n1) Конфликт о делах по дому (бытовые обязанности, время, деньги)\n- Что происходит в момент: накопившееся раздражение от нерешённых мелочей превращается в ощущение, что вас не слышат или не ценят. Низкий порог — одна последняя мелочь, и вы «взорветесь».\n- Внутреннее переживание: чувство усталости, несправедливости, обиды; иногда внезапная волна ярости как способ защитить границы.\n- Как это выглядит внешне: резкая фраза, повышение голоса, уход из комнаты.\n- Последствия: временное облегчение эмоций, но ухудшение отношений и ощущение вины или дистанции после ссоры.\n\n2) Разногласия при воспитании детей (подходы, дисциплина)\n- В момент: конфликт запускает представления о «правильном» и «неправильном» — ощущение, что ситуация влияет на благополучие ребёнка, что повышает эмоциональную ставку.\n- Внутреннее: страх, ответственность, иррациональная сила реакции (защита ребёнка/ценностей).\n- Внешне: резкие замечания, требование немедленного подчинения, возможно использование авторитарного тона.\n- Последствия: дети или партнёр реагируют испугом, закрываются, конфликт повторяется.\n\n3) Непонимание или упрёки от партнёра (эмоциональные темы)\n- В момент: вы чувствуете себя обвинённым или непонятым; реакция — защита собственной личности.\n- Внутренне: ранимость, ощущение несправедливости, стремление «поставить точку».\n- Внешне: контр-нападение, сарказм, быстрое повышение тона.\n- Последствия: сжигается возможность конструктивного диалога; после — сожаление или отстранённость.\n\n4) Ощущение вторжения в личное пространство (временно/постоянно)\n- В момент: нужно восстановить контроль — реакция резкая, чтобы вернуть своё пространство.\n- Внутренне: раздражение от нарушения границы, чувство бессилия, иногда стыд за сильную реакцию.\n- Внешне: резко уходите, закрываетесь, кричите.\n- Последствия: партнёр может воспринимать реакцию как непропорциональную; ситуация остаётся нерешённой.\n\n5) Когда стресс с работы/с других сфер переносится домой\n- В момент: накопившийся стресс делает вас более уязвимым к малым раздражителям; любая провокация кажется большой.\n- Внутренне: усталость, раздражение, ощущение «переполненности».\n- Внешне: вспышка гнева на несвязанный с работой предмет — человек рядом становится мишенью.\n- Последствия: вина, смятение, усиление стресса в семье.\n\nОбщие признаки ваших вспышек\n- Накопление эмоций до порога, затем быстрое высвобождение.\n- Чувство, что реакция «быстрая и не под контролем» — как будто сама выходит из тела.\n- После вспышки часто приходят сожаление, попытки примириться или, наоборот, уход в молчание.\n- Взаимный цикл: чья-то реакция усиливает вашу, и конфликт «раскручивается».\n\nКоротко о том, что это даёт в моменте\n- Быстрая эмоция защищает, сигнализирует о границе, приносит кратковременное облегчение.\n- Но одновременно мешает услышать другую сторону, решать проблему и сохранять близость.\n\nЕсли хотите, могу следующей репликой уточнить: в каких из этих ситуаций вы чаще всего замечаете вспышки. Это поможет сузить фокус и понять, какой следующий шаг будет наиболее полезен."
+      ],
+      "checks": {
+        "all_status_200": true,
+        "latest_trace_status_200": true,
+        "full_traces_status_200": true,
+        "forbid_phrase::СЃРµР№С‡Р°СЃ РїРѕР»РµР·РЅРµРµ РЅРµ СѓРїСЂР°Р¶РЅРµРЅРёРµ": true,
+        "answer_fit_not_fail": true
+      },
+      "failed_checks": [],
+      "answer_fit": {
+        "version": "concrete_answer_fit_v1",
+        "concrete_need": true,
+        "formulaic_opening_detected": false,
+        "context_anchor": "когда дома начинается конфликт",
+        "answer_mentions_context_anchor": false,
+        "structured_answer": true,
+        "answer_long_enough": true,
+        "fit_status": "pass",
+        "needs_repair": false
+      },
+      "state_thread": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "thread_id": "tm_261880be7ef3",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "response_mode": "reflect"
+      }
+    },
+    {
+      "case_id": "HF3-C03",
+      "title": "thanks close intent/state",
+      "session_id": "prd04711hf3-hf3-c03-1f29bb52",
+      "status": "passed",
+      "answers": [
+        "Пожалуйста — рад был помочь. Если захочешь продолжить или просто поговорить, я рядом."
+      ],
+      "checks": {
+        "all_status_200": true,
+        "latest_trace_status_200": true,
+        "full_traces_status_200": true,
+        "answer_fit_not_fail": true,
+        "state::intent": true,
+        "state::nervous_state": true
+      },
+      "failed_checks": [],
+      "answer_fit": {
+        "version": "concrete_answer_fit_v1",
+        "concrete_need": false,
+        "formulaic_opening_detected": false,
+        "context_anchor": "",
+        "answer_mentions_context_anchor": false,
+        "structured_answer": false,
+        "answer_long_enough": false,
+        "fit_status": "pass",
+        "needs_repair": false
+      },
+      "state_thread": {
+        "nervous_state": "window",
+        "intent": "contact",
+        "safety_flag": false,
+        "thread_id": "tm_803427c7160c",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "response_mode": "validate"
+      }
+    },
+    {
+      "case_id": "HF3-C04",
+      "title": "localhost chat markdown",
+      "session_id": "prd04711hf3-hf3-c04-385b1351",
+      "status": "passed",
+      "answers": [
+        "Ты прав, мой прошлый ответ был слишком узким. Объясню ясно и по-человечески.\n\nНейросталкинг в нашей рамке - это способ замечать автоматические паттерны мышления и реакции до того, как они полностью перехватят твоё поведение. Это не про внешнюю слежку и не про поиск \"правильного состояния\", а про возвращение себе выбора в конкретном моменте.\n\nКак это применять в жизни: сначала замечаешь триггер, потом паттерн реакции, потом делаешь минимальный осознанный сдвиг в сторону нужного действия. Например, в разговоре с начальником можно поймать момент, когда включается страх выглядеть грубо, и вместо молчаливого согласия дать короткую уважительную реплику по факту."
+      ],
+      "checks": {
+        "all_status_200": true,
+        "latest_trace_status_200": true,
+        "full_traces_status_200": true,
+        "forbid_phrase::СЃРµР№С‡Р°СЃ РїРѕР»РµР·РЅРµРµ РЅРµ СѓРїСЂР°Р¶РЅРµРЅРёРµ": true,
+        "answer_fit_not_fail": true
+      },
+      "failed_checks": [],
+      "answer_fit": {
+        "version": "concrete_answer_fit_v1",
+        "concrete_need": true,
+        "formulaic_opening_detected": false,
+        "context_anchor": "когда я заранее напрягаюсь перед разговором",
+        "answer_mentions_context_anchor": false,
+        "structured_answer": false,
+        "answer_long_enough": true,
+        "fit_status": "pass",
+        "needs_repair": false
+      },
+      "state_thread": {
+        "nervous_state": "window",
+        "intent": "explore",
+        "safety_flag": false,
+        "thread_id": "tm_ef78c4c21695",
+        "phase": "clarify",
+        "relation_to_thread": "new_thread",
+        "response_mode": "reflect"
+      }
+    }
+  ],
+  "memory_control_checks": {
+    "identity_status_200": true,
+    "canonical_user_id_present": true,
+    "reset_context_status_200": true,
+    "create_session_status_200": true,
+    "reset_context_event_present": true,
+    "new_turn_after_reset_status_200": true,
+    "latest_trace_after_reset_status_200": true,
+    "reset_context_removed_old_topic_from_trace": true,
+    "history_endpoint_ok": true,
+    "clear_profile_status_200": true,
+    "clear_profile_event_present": true
+  }
+}

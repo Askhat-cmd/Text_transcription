@@ -1,0 +1,48 @@
+{
+  "prd": "PRD-047.11-HF3",
+  "cases": [
+    {
+      "case_id": "HF3-C01",
+      "title": "concrete no-practice answer fit",
+      "turns": [
+        "в разговоре с начальником я опять сжимаюсь и ухожу в молчание, объясни по моей ситуации без практик"
+      ],
+      "expect_anchor": "начальник",
+      "forbid_phrases": [
+        "сейчас полезнее не упражнение"
+      ]
+    },
+    {
+      "case_id": "HF3-C02",
+      "title": "concrete conflict answer fit",
+      "turns": [
+        "когда дома начинается конфликт, я резко выхожу из себя. разбери по ситуации без диагноза и без упражнений"
+      ],
+      "expect_anchor": "конфликт",
+      "forbid_phrases": [
+        "сейчас полезнее не упражнение"
+      ]
+    },
+    {
+      "case_id": "HF3-C03",
+      "title": "thanks close intent/state",
+      "turns": [
+        "Спасибо."
+      ],
+      "expect_state": {
+        "intent": "contact",
+        "nervous_state": "window"
+      }
+    },
+    {
+      "case_id": "HF3-C04",
+      "title": "localhost chat markdown",
+      "turns": [
+        "объясни нормально, что происходит в такой ситуации, когда я заранее напрягаюсь перед разговором"
+      ],
+      "forbid_phrases": [
+        "сейчас полезнее не упражнение"
+      ]
+    }
+  ]
+}

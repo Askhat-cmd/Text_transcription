@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "admin_ui_url": "http://localhost:3000/admin",
+  "counts": {
+    "unknown": 14,
+    "active_surface": 7,
+    "legacy_or_historical": 1
+  },
+  "items": [
+    {
+      "label": "Admin Config Panel",
+      "category": "unknown"
+    },
+    {
+      "label": "show",
+      "category": "unknown"
+    },
+    {
+      "label": "Export",
+      "category": "unknown"
+    },
+    {
+      "label": "Full reset",
+      "category": "unknown"
+    },
+    {
+      "label": "Overview",
+      "category": "unknown"
+    },
+    {
+      "label": "Agents",
+      "category": "unknown"
+    },
+    {
+      "label": "Orchestrator",
+      "category": "unknown"
+    },
+    {
+      "label": "Threads",
+      "category": "unknown"
+    },
+    {
+      "label": "Agent Prompts",
+      "category": "active_surface"
+    },
+    {
+      "label": "Runtime",
+      "category": "active_surface"
+    },
+    {
+      "label": "Diagnostic Center",
+      "category": "active_surface"
+    },
+    {
+      "label": "Memory",
+      "category": "active_surface"
+    },
+    {
+      "label": "Advanced Controls",
+      "category": "unknown"
+    },
+    {
+      "label": "LLM",
+      "category": "active_surface"
+    },
+    {
+      "label": "Retrieval",
+      "category": "unknown"
+    },
+    {
+      "label": "Diagnostics",
+      "category": "unknown"
+    },
+    {
+      "label": "Routing",
+      "category": "legacy_or_historical"
+    },
+    {
+      "label": "Prompts",
+      "category": "active_surface"
+    },
+    {
+      "label": "Compatibility",
+      "category": "unknown"
+    },
+    {
+      "label": "Обзор мультиагентного runtime",
+      "category": "active_surface"
+    },
+    {
+      "label": "Обновить",
+      "category": "unknown"
+    },
+    {
+      "label": "Последние трассы агентов",
+      "category": "unknown"
+    }
+  ]
+}

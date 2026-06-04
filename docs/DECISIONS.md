@@ -6,10 +6,10 @@ Status: accepted
 
 Date: 2026-06-01
 
-Context: PRD-047.10/HF cycles left residual conflicts where legacy prompt blocks (writer_move, diagnostic_card, ctive_line, esponse_planner) still appeared as imperative commands and repeatedly produced stale regulate-style stub answers in live dialogue.
+Context: PRD-047.10/HF cycles left residual conflicts where legacy prompt blocks (`writer_move`, `diagnostic_card`, `active_line`, `response_planner`) still appeared as imperative commands and repeatedly produced stale regulate-style stub answers in live dialogue.
 
 Decision:
-- add deterministic inal_answer_directive_v1 as single conflict-resolved command block for Writer in mvp_free_dialogue;
+- add deterministic `final_answer_directive_v1` as single conflict-resolved command block for Writer in `mvp_free_dialogue`;
 - keep Diagnostic Center / Planner / Active Line / Diagnostic Card as advisory context providers for MVP profile;
 - keep minimal safety/privacy/no-diagnosis boundaries as hard limits;
 - expose writer-first assembly and role fields in admin runtime effective payload + live evidence export;
@@ -19,6 +19,26 @@ Consequences:
 - no new LLM agent and no new runtime path were added;
 - governance authority fields and Chroma index were not mutated;
 - live acceptance remains explicitly blocked until runtime profile activation and real web markdown smoke pass are green.
+
+## ADR-069 - HF3 repairs concrete formula-stub answers at answer level, not by adding new runtime authority
+
+Status: accepted
+
+Date: 2026-06-04
+
+Context: after HF2, real owner feedback still showed a residual class where concrete user situations could receive a generic formula opening like `Сейчас полезнее не упражнение...`, and bare gratitude turns could still surface misleading deterministic `hypo/explore` signals in trace.
+
+Decision:
+- add a lightweight concrete-answer-fit heuristic (`concrete_answer_fit_v1`) and contextual no-practice rewrite only for concrete formula-stub failures;
+- keep Writer freedom intact in MVP profile and do not add a new guard, mode, runtime path, or LLM agent;
+- repair deterministic gratitude/close handling so simple `Спасибо.` maps to `intent=contact` and `nervous_state=window`;
+- revalidate browser/admin proof on real `localhost:3000` and capture explicit reset/memory/admin inventory artifacts;
+- treat docs/encoding hygiene as part of the runtime truthfulness boundary for this cycle.
+
+Consequences:
+- the fix remains observability-friendly and local to answer-level/runtime evidence without broadening authority;
+- concrete situation answers are less likely to pass through stale generic mechanism stubs;
+- localhost UX and docs truthfulness are now part of the same stabilization evidence pack before `PRD-047.12`.
 ## ADR-065 - Planner Drift Guard is observe-only runtime quality monitor
 
 Status: accepted
@@ -905,3 +925,4 @@ Consequences:
 - retrieval observability remains intact without bypassing the writer-visible gate;
 - real browser/live cases can verify both prompt hygiene and answer behavior on the same runtime path;
 - the system stays unified: no duplicated orchestrator, no new guard branch, no KB/governance mutation.
+

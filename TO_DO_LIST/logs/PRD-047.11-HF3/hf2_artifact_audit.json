@@ -1,0 +1,19 @@
+{
+  "prd": "PRD-047.11-HF3",
+  "generated_at_utc": "2026-06-04T11:18:26.456050+00:00",
+  "hf2_exists": true,
+  "browser_screenshots_count": 4,
+  "prompt_canvas_count": 0,
+  "memory_controls_proof_present": true,
+  "live_cases_result_present": true,
+  "port_signals": [
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "port": "3001"
+    },
+    {
+      "path": "docs/PROJECT_STATE.md",
+      "port": "3000"
+    }
+  ]
+}

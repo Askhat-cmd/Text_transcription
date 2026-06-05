@@ -419,6 +419,11 @@ export const AdminPanel: React.FC = () => {
                         <div>final_answer_directive_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_directive_enabled))}</div>
                         <div>final_answer_directive_version: {runtimeEffectiveData.dialogue_policy?.final_answer_directive_version ?? 'n/a'}</div>
                         <div>final_answer_directive_role: {runtimeEffectiveData.dialogue_policy?.final_answer_directive_role ?? 'n/a'}</div>
+                        <div>final_answer_acceptance_gate.enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_acceptance_gate?.enabled))}</div>
+                        <div>final_answer_acceptance_gate.version: {runtimeEffectiveData.dialogue_policy?.final_answer_acceptance_gate?.version ?? 'n/a'}</div>
+                        <div>final_answer_acceptance_gate.status_source: {runtimeEffectiveData.dialogue_policy?.final_answer_acceptance_gate?.status_source ?? 'n/a'}</div>
+                        <div>final_answer_acceptance_gate.quarantine_supported: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_acceptance_gate?.quarantine_supported))}</div>
+                        <div>final_answer_acceptance_gate.retry_supported: {String(Boolean(runtimeEffectiveData.dialogue_policy?.final_answer_acceptance_gate?.retry_supported))}</div>
                         <div>writer_context_package_role: {runtimeEffectiveData.dialogue_policy?.writer_context_package_role ?? 'n/a'}</div>
                         <div>writer_first_prompt_assembly_enabled: {String(Boolean(runtimeEffectiveData.dialogue_policy?.writer_first_prompt_assembly_enabled))}</div>
                         <div>legacy_prompt_blocks_mode: {runtimeEffectiveData.dialogue_policy?.legacy_prompt_blocks_mode ?? 'n/a'}</div>

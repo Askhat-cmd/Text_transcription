@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "2026-06-05T10:09:48.808Z",
+  "status": "passed",
+  "screenshot": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.12-HF1\\screenshots\\browser_markdown_real_dom.png",
+  "dom_snapshot": "C:\\My_practice\\Text_transcription\\TO_DO_LIST\\logs\\PRD-047.12-HF1\\dom_snapshots\\browser_markdown_real_dom.html",
+  "checks": {
+    "assistant_message_count": 5,
+    "has_assistant_markdown_class": true,
+    "has_strong": true,
+    "has_list": true,
+    "li_count": 3,
+    "paragraph_count": 2,
+    "raw_markdown_visible": false,
+    "line_height": "25.8048px",
+    "paragraph_margin_ok": true,
+    "list_display": "list-item"
+  }
+}

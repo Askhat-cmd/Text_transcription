@@ -276,6 +276,85 @@
   @apply text-gray-900 dark:text-white;
 }
 
+.chat-markdown > :first-child {
+  margin-top: 0;
+}
+
+.chat-markdown > :last-child {
+  margin-bottom: 0;
+}
+
+.assistant-markdown {
+  line-height: 1.68;
+  font-size: 0.96rem;
+}
+
+.assistant-markdown p {
+  margin: 0.62rem 0;
+}
+
+.assistant-markdown strong {
+  font-weight: 760;
+  color: #111827;
+}
+
+.assistant-markdown h1,
+.assistant-markdown h2,
+.assistant-markdown h3 {
+  margin: 0.35rem 0 0.75rem;
+  font-weight: 760;
+  line-height: 1.22;
+  color: #111827;
+}
+
+.assistant-markdown h1 {
+  font-size: 1.28rem;
+}
+
+.assistant-markdown h2 {
+  font-size: 1.17rem;
+}
+
+.assistant-markdown h3 {
+  font-size: 1.05rem;
+}
+
+.assistant-markdown ul,
+.assistant-markdown ol {
+  display: grid;
+  gap: 0.48rem;
+  margin: 0.72rem 0 0.78rem 1.15rem;
+  padding-left: 1rem;
+}
+
+.assistant-markdown ul {
+  list-style: disc;
+}
+
+.assistant-markdown ol {
+  list-style: decimal;
+}
+
+.assistant-markdown li {
+  padding-left: 0.15rem;
+}
+
+.assistant-markdown li::marker {
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.dark .assistant-markdown strong,
+.dark .assistant-markdown h1,
+.dark .assistant-markdown h2,
+.dark .assistant-markdown h3 {
+  color: #f8fafc;
+}
+
+.dark .assistant-markdown li::marker {
+  color: #93c5fd;
+}
+
 /* ===== DARK MODE TRANSITIONS ===== */
 html.dark {
   color-scheme: dark;

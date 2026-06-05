@@ -1,0 +1,20 @@
+{
+  "generated_at_utc": "2026-06-05T10:09:49.071081+00:00",
+  "status": "passed",
+  "diagnostic_center_not_deleted": true,
+  "diagnostic_center_advisory_only": true,
+  "planner_advisory_only": true,
+  "active_line_advisory_only": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false,
+  "new_runtime_path_created": false,
+  "new_llm_agent_added": false,
+  "legacy_cascade_returned": false,
+  "kb_governance_authority_fields_mutated": false,
+  "chroma_reindex_executed": false,
+  "raw_provider_payload_committed": false,
+  "raw_private_logs_committed": false,
+  "env_or_secrets_committed": false,
+  "static_psychological_stub_answer_factory_added": false
+}

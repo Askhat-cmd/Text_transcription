@@ -81,6 +81,14 @@ Status: accepted
 
 Date: 2026-05-29
 
+## PRD-047.12-HF1 Final Answer Acceptance Gate
+
+Decision: add `final_answer_acceptance_gate_v1` after Writer and Validator, before unanswered-question closure, last-offer seeding, and healthy context memory write.
+
+Rationale: PRD-047.12 unified the architecture, but live evidence showed false positives where stale/generic answers could be accepted as answered. The fix is a truth gate and quarantine layer in the same runtime path, not a new mode, LLM agent, or static answer factory.
+
+Consequences: failed final answers can trigger one Writer retry with gate feedback. If still failed, the answer is quarantined from healthy state while trace/debug exposes status and failed checks. Diagnostic Center, Planner, and Active Line remain advisory-only.
+
 Context: `mvp_free_dialogue` introduced higher Writer freedom, but residual conflicts remained when old planner/diagnostic constraints and context truncation still dominated prompt behavior.
 
 Decision:

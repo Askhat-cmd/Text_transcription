@@ -191,8 +191,13 @@ export interface AdminRuntimeEffectiveResponse {
     warning?: string;
   };
   dialogue_policy?: {
+    version?: string;
     profile?: string;
+    active_profile_alias?: string;
+    profile_preset?: string;
     writer_autonomy?: string;
+    effective_writer_autonomy?: string;
+    effective_safety_floor?: string;
     planner_authority?: string;
     diagnostic_card_authority?: string;
     writer_move_authority?: string;
@@ -226,12 +231,31 @@ export interface AdminRuntimeEffectiveResponse {
     writer_runtime_max_tokens_effective?: number;
     final_answer_directive_enabled?: boolean;
     final_answer_directive_version?: string;
+    final_answer_directive_role?: string;
+    final_answer_acceptance_gate?: {
+      enabled?: boolean;
+      version?: string;
+      runtime_position?: string;
+      status_source?: string;
+      counters_visible_in_trace?: boolean;
+      quarantine_supported?: boolean;
+      retry_supported?: boolean;
+    };
+    writer_context_package_role?: string;
     diagnostic_center_role?: string;
     planner_role?: string;
     active_line_role?: string;
     diagnostic_card_role?: string;
     legacy_prompt_blocks_mode?: string;
+    legacy_blocks_visible_to_writer?: boolean;
+    legacy_blocks_source_signals_only?: boolean;
     writer_first_prompt_assembly_enabled?: boolean;
+    dialogue_act_resolver_enabled?: boolean;
+    last_offer_tracker_enabled?: boolean;
+    unanswered_question_tracker_enabled?: boolean;
+    style_state_enabled?: boolean;
+    broad_rollout_allowed?: boolean;
+    production_ready?: boolean;
     fresh_chat_context_policy_version?: string;
     writer_context_package_version?: string;
     fresh_chat_rag_default?: string;

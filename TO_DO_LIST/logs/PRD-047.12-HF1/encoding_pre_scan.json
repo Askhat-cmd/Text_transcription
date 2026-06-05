@@ -1,0 +1,23 @@
+{
+  "generated_at_utc": "2026-06-05T10:07:41.808568+00:00",
+  "status": "passed",
+  "changed_files_encoding_issue_count": 0,
+  "new_files_encoding_issue_count": 0,
+  "files": [],
+  "historical_or_source_only_files": [
+    {
+      "path": "bot_psychologist/api/admin_routes.py",
+      "historical_or_source_only_issues": [
+        "contains:вЂ"
+      ]
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.12.md",
+      "source_only_issues": [
+        "contains:РЎ",
+        "contains:Рџ",
+        "contains:�"
+      ]
+    }
+  ]
+}

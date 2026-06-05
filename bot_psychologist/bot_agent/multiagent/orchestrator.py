@@ -40,6 +40,7 @@ from .dialogue_policy import (
 )
 from .answer_obligation_resolver import build_answer_obligation_resolver_v1
 from .final_answer_directive import build_final_answer_directive_v1
+from .final_answer_acceptance_gate import build_final_answer_acceptance_gate_v1
 from .fresh_chat_context_policy import (
     FRESH_CHAT_CONTEXT_POLICY_VERSION,
     build_fresh_chat_context_policy_v1,
@@ -548,18 +549,125 @@ class MultiAgentOrchestrator:
         else:
             final_answer = draft_answer
 
-        updated_unanswered_question_state = update_unanswered_question_state_after_answer_v1(
-            current_state=unanswered_question_state,
+        final_answer_acceptance_gate = build_final_answer_acceptance_gate_v1(
+            user_message=query,
+            final_answer=final_answer,
+            dialogue_act_resolution=dialogue_act_resolution,
             answer_obligation_resolution=answer_obligation_resolution,
+            unanswered_question_state_before=unanswered_question_state,
+            last_assistant_offer_before=last_assistant_offer,
+            dialogue_style_state=dialogue_style_state,
+            final_answer_directive=final_answer_directive,
+            writer_debug=writer_debug,
+            validator_result=validation_result,
+            previous_assistant_message=previous_assistant_message,
         )
+        acceptance_retry_attempted = False
+        first_acceptance_gate = dict(final_answer_acceptance_gate)
+        if (
+            bool(final_answer_acceptance_gate.get("retry_recommended", False))
+            and not bool(getattr(updated_thread, "safety_active", False))
+        ):
+            acceptance_retry_attempted = True
+            retry_directive = dict(final_answer_directive)
+            retry_directive["acceptance_gate_feedback"] = {
+                "version": str(final_answer_acceptance_gate.get("version", "")),
+                "failed_checks": list(final_answer_acceptance_gate.get("failed_checks", []) or []),
+                "instruction": (
+                    "Rewrite the answer as a real user-facing reply. Address the user's current concrete "
+                    "question directly, reuse relevant user anchors, avoid stale generic mechanism phrases, "
+                    "and preserve requested markdown/list formatting when requested."
+                ),
+            }
+            writer_contract.final_answer_directive = retry_directive
+            t0_retry = time.perf_counter()
+            if (
+                str(prompt_constraint_pilot_runtime_decision.get("activation_mode", "disabled"))
+                == "test_apply"
+                and bool(prompt_constraint_pilot_runtime_decision.get("apply_to_writer_prompt", False))
+            ):
+                retry_draft_answer = await writer_agent.write(
+                    writer_contract,
+                    prompt_constraint_decision=prompt_constraint_pilot_runtime_decision,
+                )
+            else:
+                retry_draft_answer = await writer_agent.write(writer_contract)
+            t_writer += int((time.perf_counter() - t0_retry) * 1000)
+            writer_debug = writer_agent.last_debug if isinstance(writer_agent.last_debug, dict) else {}
+            validation_result = validator_agent.validate(retry_draft_answer, writer_contract)
+            if validation_result.is_blocked:
+                final_answer = validation_result.safe_replacement or retry_draft_answer
+            else:
+                final_answer = retry_draft_answer
+            final_answer_acceptance_gate = build_final_answer_acceptance_gate_v1(
+                user_message=query,
+                final_answer=final_answer,
+                dialogue_act_resolution=dialogue_act_resolution,
+                answer_obligation_resolution=answer_obligation_resolution,
+                unanswered_question_state_before=unanswered_question_state,
+                last_assistant_offer_before=last_assistant_offer,
+                dialogue_style_state=dialogue_style_state,
+                final_answer_directive=retry_directive,
+                writer_debug=writer_debug,
+                validator_result=validation_result,
+                previous_assistant_message=previous_assistant_message,
+            )
+            final_answer_acceptance_gate["retry"] = {
+                "attempted": True,
+                "first_status": str(first_acceptance_gate.get("status", "")),
+                "first_failed_checks": list(first_acceptance_gate.get("failed_checks", []) or []),
+            }
+        else:
+            final_answer_acceptance_gate["retry"] = {
+                "attempted": False,
+                "first_status": str(first_acceptance_gate.get("status", "")),
+                "first_failed_checks": list(first_acceptance_gate.get("failed_checks", []) or []),
+            }
+
+        if bool(final_answer_acceptance_gate.get("can_mark_question_answered", False)):
+            updated_unanswered_question_state = update_unanswered_question_state_after_answer_v1(
+                current_state=unanswered_question_state,
+                answer_obligation_resolution=answer_obligation_resolution,
+            )
+        else:
+            updated_unanswered_question_state = dict(unanswered_question_state)
+            should_hold_pending = bool(
+                set(final_answer_acceptance_gate.get("failed_checks", []) or [])
+                & {
+                    "stale_stub_detected",
+                    "answer_too_generic_for_concrete_situation",
+                    "answer_does_not_address_direct_question",
+                    "repair_failed_to_answer_recovered_question",
+                }
+            )
+            if should_hold_pending and not str(
+                updated_unanswered_question_state.get("last_direct_user_question", "") or ""
+            ).strip():
+                updated_unanswered_question_state["last_direct_user_question"] = query
+            updated_unanswered_question_state["answer_required"] = bool(
+                updated_unanswered_question_state.get("answer_required", False)
+                or should_hold_pending
+            )
+            if updated_unanswered_question_state.get("answer_required"):
+                updated_unanswered_question_state["answer_status"] = "pending_quarantined_answer"
+            updated_unanswered_question_state["quarantine_reason"] = str(
+                final_answer_acceptance_gate.get("quarantine_reason", "")
+            )
         updated_dialogue_style_state = finalize_dialogue_style_state_v1(
             current_state=dialogue_style_state,
             turn_index=current_turn_index,
         )
-        updated_last_assistant_offer = update_last_assistant_offer_after_answer_v1(
-            final_answer=final_answer,
-            turn_index=current_turn_index,
-        )
+        if bool(final_answer_acceptance_gate.get("can_save_last_assistant_offer", False)):
+            updated_last_assistant_offer = update_last_assistant_offer_after_answer_v1(
+                final_answer=final_answer,
+                turn_index=current_turn_index,
+            )
+        else:
+            updated_last_assistant_offer = dict(last_assistant_offer)
+            updated_last_assistant_offer["quarantine_skipped_update"] = True
+            updated_last_assistant_offer["quarantine_reason"] = str(
+                final_answer_acceptance_gate.get("quarantine_reason", "")
+            )
         updated_thread.active_frame = dict(updated_thread.active_frame or {})
         updated_thread.active_frame["dialogue_state"] = {
             "unified_dialogue_profile": dict(unified_dialogue_profile),
@@ -601,6 +709,7 @@ class MultiAgentOrchestrator:
             dialogue_style_state=updated_dialogue_style_state,
             answer_obligation_resolution=answer_obligation_resolution,
             validation_result=validation_result,
+            final_answer_acceptance_gate=final_answer_acceptance_gate,
         )
 
         quality_trace_error = None
@@ -677,14 +786,17 @@ class MultiAgentOrchestrator:
             }
             planner_drift_summary = get_planner_drift_summary()
 
-        asyncio.create_task(
-            memory_retrieval_agent.update(
-                user_id=user_id,
-                user_message=query,
-                assistant_response=final_answer,
-                thread_state=updated_thread,
+        memory_write_scheduled = False
+        if bool(final_answer_acceptance_gate.get("can_save_as_healthy_context", False)):
+            asyncio.create_task(
+                memory_retrieval_agent.update(
+                    user_id=user_id,
+                    user_message=query,
+                    assistant_response=final_answer,
+                    thread_state=updated_thread,
+                )
             )
-        )
+            memory_write_scheduled = True
         total_latency_ms = int(t_state + t_thread + t_memory + t_writer + t_validator)
         semantic_hits_candidates = list(memory_bundle.semantic_hits or [])
         semantic_hits_detail = build_safe_knowledge_debug_detail_v1(
@@ -769,6 +881,8 @@ class MultiAgentOrchestrator:
                 "fresh_chat_context_policy": dict(fresh_chat_context_policy),
                 "retrieval_decision": dict(retrieval_decision),
                 "final_answer_directive": dict(final_answer_directive),
+                "final_answer_acceptance_gate": dict(final_answer_acceptance_gate),
+                "final_answer_acceptance_retry_attempted": bool(acceptance_retry_attempted),
                 "live_turn_evidence": dict(live_turn_evidence),
                 "knowledge_answer": dict(knowledge_answer_guard.get("knowledge_answer", {})),
                 "practice_gate": dict(knowledge_answer_guard.get("practice_gate", {})),
@@ -960,10 +1074,19 @@ class MultiAgentOrchestrator:
                 "quality_trace": quality_trace,
                 "quality_trace_error": quality_trace_error,
                 "memory_written": {
+                    "scheduled": bool(memory_write_scheduled),
+                    "healthy_context_allowed": bool(
+                        final_answer_acceptance_gate.get("can_save_as_healthy_context", False)
+                    ),
                     "user_input": query[:200],
-                    "bot_response": final_answer[:200],
+                    "bot_response": final_answer[:200] if memory_write_scheduled else "",
                     "thread_id": updated_thread.thread_id,
                     "phase": updated_thread.phase,
+                    "quarantine_reason": (
+                        ""
+                        if memory_write_scheduled
+                        else str(final_answer_acceptance_gate.get("quarantine_reason", ""))
+                    ),
                 },
                 "timings": {
                     "state_analyzer_ms": t_state,

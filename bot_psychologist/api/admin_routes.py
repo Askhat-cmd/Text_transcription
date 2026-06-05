@@ -32,6 +32,7 @@ from bot_agent.multiagent.dialogue_policy import (
     resolve_profile_preset,
 )
 from bot_agent.multiagent.final_answer_directive import FINAL_ANSWER_DIRECTIVE_VERSION
+from bot_agent.multiagent.final_answer_acceptance_gate import FINAL_ANSWER_ACCEPTANCE_GATE_VERSION
 from bot_agent.multiagent.fresh_chat_context_policy import FRESH_CHAT_CONTEXT_POLICY_VERSION
 from bot_agent.multiagent.planner_drift_monitor import get_planner_drift_summary
 from bot_agent.multiagent.philosophy_kernel import (
@@ -797,6 +798,15 @@ def _build_runtime_effective_payload(session_id: str | None = None) -> dict[str,
             "final_answer_directive_enabled": True,
             "final_answer_directive_version": FINAL_ANSWER_DIRECTIVE_VERSION,
             "final_answer_directive_role": str(effective_dialogue_policy.get("final_answer_directive_role", "single_control_block")),
+            "final_answer_acceptance_gate": {
+                "enabled": True,
+                "version": FINAL_ANSWER_ACCEPTANCE_GATE_VERSION,
+                "runtime_position": "after_writer_validator_before_state_memory_offer_acceptance",
+                "status_source": "latest_turn_debug.final_answer_acceptance_gate",
+                "counters_visible_in_trace": True,
+                "quarantine_supported": True,
+                "retry_supported": True,
+            },
             "writer_context_package_role": str(effective_dialogue_policy.get("writer_context_package_role", "single_context_package")),
             "diagnostic_center_role": str(effective_dialogue_policy.get("diagnostic_center_role", "advisory_context_only")),
             "planner_role": str(effective_dialogue_policy.get("planner_role", "advisory_context_only")),

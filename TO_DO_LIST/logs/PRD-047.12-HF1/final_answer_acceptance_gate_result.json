@@ -1,0 +1,86 @@
+{
+  "generated_at_utc": "2026-06-05T10:07:41.982170+00:00",
+  "version": "final_answer_acceptance_gate_v1",
+  "status": "passed",
+  "cases": {
+    "stale": {
+      "version": "final_answer_acceptance_gate_v1",
+      "status": "failed",
+      "severity": "blocker",
+      "failed_checks": [
+        "answer_does_not_address_direct_question",
+        "answer_too_generic_for_concrete_situation",
+        "stale_stub_detected"
+      ],
+      "warnings": [],
+      "stale_stub_detected": true,
+      "stale_stub_detail": {
+        "detected": true,
+        "matched_phrase": "сейчас полезнее прямое объяснение механизма",
+        "detector_kind": "exact"
+      },
+      "answer_considered_real": false,
+      "can_mark_question_answered": false,
+      "can_save_as_healthy_context": false,
+      "can_save_last_assistant_offer": false,
+      "must_quarantine_answer": true,
+      "retry_recommended": true,
+      "input_summary": {
+        "dialogue_act": "concrete_situation_question",
+        "answer_obligation": "answer_concrete_situation",
+        "unanswered_answer_required": true,
+        "last_offer_open": false,
+        "style_length_preference": ""
+      },
+      "quality_signals": {
+        "concrete_need": true,
+        "concrete_anchor_hits": [],
+        "user_answer_overlap_ratio": 0.0,
+        "previous_answer_similarity": 0.0,
+        "markdown_requested": false,
+        "markdown_detected": false
+      },
+      "quarantine_reason": "answer_does_not_address_direct_question, answer_too_generic_for_concrete_situation, stale_stub_detected"
+    },
+    "concrete": {
+      "version": "final_answer_acceptance_gate_v1",
+      "status": "passed",
+      "severity": "none",
+      "failed_checks": [],
+      "warnings": [],
+      "stale_stub_detected": false,
+      "stale_stub_detail": {
+        "detected": false,
+        "matched_phrase": "",
+        "detector_kind": ""
+      },
+      "answer_considered_real": true,
+      "can_mark_question_answered": true,
+      "can_save_as_healthy_context": true,
+      "can_save_last_assistant_offer": true,
+      "must_quarantine_answer": false,
+      "retry_recommended": false,
+      "input_summary": {
+        "dialogue_act": "concrete_situation_question",
+        "answer_obligation": "answer_concrete_situation",
+        "unanswered_answer_required": true,
+        "last_offer_open": false,
+        "style_length_preference": ""
+      },
+      "quality_signals": {
+        "concrete_need": true,
+        "concrete_anchor_hits": [
+          "работ",
+          "сокращ",
+          "50",
+          "ступор"
+        ],
+        "user_answer_overlap_ratio": 0.333,
+        "previous_answer_similarity": 0.0,
+        "markdown_requested": false,
+        "markdown_detected": false
+      },
+      "quarantine_reason": ""
+    }
+  }
+}

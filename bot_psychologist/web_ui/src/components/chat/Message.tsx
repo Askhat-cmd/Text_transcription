@@ -59,7 +59,8 @@ export const MessageItem: React.FC<MessageItemProps> = ({
       >
         {/* Message Content */}
         <div className={clsx(
-          'prose prose-sm max-w-none',
+          'prose prose-sm max-w-none chat-markdown',
+          !isUser && 'assistant-markdown',
           isUser ? 'text-zinc-900' : 'dark:prose-invert'
         )}>
           <ReactMarkdown remarkPlugins={[remarkGfm]} skipHtml>

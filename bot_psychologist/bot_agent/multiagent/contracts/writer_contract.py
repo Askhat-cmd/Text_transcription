@@ -345,6 +345,11 @@ class WriterContract:
             "style": str(final_answer_directive.get("style", "") or ""),
             "question_policy": str(final_answer_directive.get("question_policy", "") or ""),
             "writer_autonomy": str(final_answer_directive.get("writer_autonomy", "") or ""),
+            "acceptance_gate_feedback": (
+                dict(final_answer_directive.get("acceptance_gate_feedback", {}))
+                if isinstance(final_answer_directive.get("acceptance_gate_feedback"), dict)
+                else {}
+            ),
         }
         legacy_advisory_sanitization = sanitize_legacy_advisory_for_writer(
             sanitizer_source_signals

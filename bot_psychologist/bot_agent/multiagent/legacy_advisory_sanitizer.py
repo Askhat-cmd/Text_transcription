@@ -138,6 +138,22 @@ def sanitize_legacy_advisory_for_writer(source_signals: dict) -> dict[str, Any]:
         "practice_instruction": writer_visible_practice_instruction,
         "writer_autonomy": _clean_text(signals.get("writer_autonomy", "")) or "guided",
     }
+    gate_feedback = signals.get("acceptance_gate_feedback")
+    if isinstance(gate_feedback, dict) and gate_feedback:
+        directive_writer_payload["acceptance_gate_feedback"] = {
+            "version": _clean_text(gate_feedback.get("version", "")) or "final_answer_acceptance_gate_v1",
+            "failed_checks": [
+                _clean_text(item)
+                for item in list(gate_feedback.get("failed_checks", []) or [])
+                if _clean_text(item)
+            ][:8],
+            "instruction": _clean_text(
+                gate_feedback.get(
+                    "instruction",
+                    "Rewrite the answer so it directly addresses the user's current question and avoids stale generic phrasing.",
+                )
+            ),
+        }
 
     return {
         "version": LEGACY_ADVISORY_SANITIZER_VERSION,

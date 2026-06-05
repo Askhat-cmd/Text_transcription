@@ -1074,11 +1074,31 @@ class WriterAgent:
             for item in list(constraint_resolution.get("overruled_constraints", []) or [])
             if str(item).strip()
         ]
-        self.last_debug["final_answer_directive"] = (
+        final_answer_directive = (
             dict(ctx.get("final_answer_directive", {}))
             if isinstance(ctx.get("final_answer_directive"), dict)
             else {}
         )
+        self.last_debug["final_answer_directive"] = final_answer_directive
+        gate_feedback = (
+            dict(final_answer_directive.get("acceptance_gate_feedback", {}))
+            if isinstance(final_answer_directive.get("acceptance_gate_feedback"), dict)
+            else {}
+        )
+        gate_failed_checks = {
+            str(item)
+            for item in list(gate_feedback.get("failed_checks", []) or [])
+            if str(item).strip()
+        }
+        if (
+            "greeting_answered_with_mechanism_explanation" in gate_failed_checks
+            and _contains_any(lowered_user, ("здравств", "привет", "добрый день", "добрый вечер"))
+        ):
+            self._set_final_answer_shape_debug("acceptance_gate_greeting_repair")
+            return (
+                "Здравствуйте. Рад вас слышать. Я здесь, чтобы спокойно поговорить и помочь с тем, "
+                "что сейчас важно. Можете написать одним-двумя предложениями, с чего хотите начать."
+            )
         self.last_debug["legacy_constraints_suppressed"] = [
             str(item)
             for item in list(ctx.get("legacy_constraints_suppressed", []) or [])
@@ -1616,11 +1636,9 @@ class WriterAgent:
                 self.last_debug["answer_fit_repair_applied"] = True
                 self._set_final_answer_shape_debug("contextual_direct_no_practice")
                 return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
-            self._set_final_answer_shape_debug("mechanism_without_unsolicited_practice")
-            return (
-                "Сейчас полезнее прямое объяснение механизма: автоматический контроль может перегружать "
-                "внимание еще до действия, поэтому энергия уходит в внутренний спор и подготовку вместо самого шага."
-            )
+            self.last_debug["answer_fit_repair_applied"] = True
+            self._set_final_answer_shape_debug("contextual_direct_no_practice")
+            return build_contextual_no_practice_answer(user_message=user_message, concept=concept)
 
         if practice_overview_requested or planner_answer_shape == "practice_catalog_explanation":
             list_items = re.findall(r"(?m)^\s*(?:[-*•]|\d+[.)])\s+", text)

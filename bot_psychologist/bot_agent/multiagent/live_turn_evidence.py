@@ -55,6 +55,7 @@ def build_live_turn_evidence_v1(
     dialogue_style_state: dict,
     answer_obligation_resolution: dict,
     validation_result: Any,
+    final_answer_acceptance_gate: dict[str, Any] | None = None,
 ) -> dict:
     contract_context = writer_contract.to_prompt_context() if hasattr(writer_contract, "to_prompt_context") else {}
     conversation_context = _safe_text(
@@ -219,6 +220,7 @@ def build_live_turn_evidence_v1(
             "answer_chars": len(str(orchestrator_result.get("answer", "") or "")),
             "stale_stub_detected": bool(stale_stub_result.get("detected", False)),
             "stale_stub_match": str(stale_stub_result.get("matched_phrase", "") or ""),
+            "final_answer_acceptance_gate": _safe_dict(final_answer_acceptance_gate),
         },
         "validator": validation_payload,
         "diagnostic_card": {

@@ -1,0 +1,234 @@
+{
+  "generated_at_utc": "2026-06-05T10:09:28.169325+00:00",
+  "status": "passed",
+  "cycles": [
+    {
+      "cycle": 1,
+      "status": "passed",
+      "case_results": [
+        {
+          "case_id": "HF1-L01",
+          "title": "greeting no mechanism lecture",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l01-663a8e69",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "forbid::автоматический контроль": true,
+            "forbid::механизм": true,
+            "forbid::паттерн": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "Здравствуйте. Рад вас слышать. Я здесь, чтобы спокойно поговорить и помочь с тем, что сейчас важно. Можете написать одним-двумя предложениями, с чего хотите начать."
+        },
+        {
+          "case_id": "HF1-L05",
+          "title": "concrete adult life knot",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l05-1bd62316",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "forbid::Сейчас полезнее прямое объяснение механизма": true,
+            "forbid::Ключевой узел в том": true,
+            "anchors_min": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "в твоем описании важно не свести все к одному общему механизму. Здесь вместе держатся 50, семья, сокращение на работе, работа, ступор, невостребованность, голос 'я бесполезен', ощущение, что время упущено и узел убеждений. Такой клубок убеждений обычно распутывается не через давление на себя, а через разделение фактов, выводов и внутреннего приговора.\n\n1. Сначала отдели факты от вывода. Факты могут звучать так: есть напряжение в семье, есть риск или факт сокращения на работе, есть ступор. Вывод "
+        },
+        {
+          "case_id": "HF1-L06",
+          "title": "repair complaint answers previous question",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l06-925d9081",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "contains_any": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\nНейросталкинг в нашей внутренней рамке - это наблюдение за триггерами, паттернами и автоматическими реакциями до того, как они полностью захватят поведение. Смысл не в том, чтобы подавить себя, а в том, чтобы заметить механизм и вернуть себе выбор.\n\nПрименяется это так: ты видишь, что именно запускает реакцию, распознаешь привычный сценарий и вместо автопилота выбираешь более точный ответ по ситуации."
+        },
+        {
+          "case_id": "HF1-L07",
+          "title": "repeated question wins",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l07-ef8fc30f",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "forbid::Сейчас полезнее прямое": true,
+            "contains_any": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "Коротко — нейросталкинг (в предложенной внутренней терминологии) — это внимательное, невмешательное наблюдение за своими автоматическими реакциями: за паттернами поведения, триггерами и соматическими ощущениями, которые запускают страдание. Цель — увидеть «программу» изнутри, отличить автоматическую реакцию от собственной воли и личности, и тем самым уменьшить её власть над поведением.\n\nОбъяснение понятным языком:\n- Что именно наблюдаем: мысли, эмоции, телесные ощущения и моментальные побуждения"
+        },
+        {
+          "case_id": "HF1-L08",
+          "title": "negative goodbye closes",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l08-8d21d9a4",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "forbid::продолж": true,
+            "forbid::практик": true,
+            "forbid::механизм": true,
+            "forbid::разбер": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "Понял — звучит так, будто вы расстроены и хотите прервать разговор. Жаль, что я не оправдал ожиданий.\n\nЕсли хотите — можем закончить на этом. Если решите вернуться позже или объяснить, что именно не устроило, я выслушаю без защиты."
+        },
+        {
+          "case_id": "HF1-L10",
+          "title": "markdown answer request",
+          "cycle": 1,
+          "session_id": "prd04712hf1-hf1-l10-c2db4d05",
+          "status": "passed",
+          "failed_checks": [],
+          "checks": {
+            "markdown_markers_present": true,
+            "acceptance_gate_passed": true,
+            "gate_no_stale_stub": true,
+            "stale_stub_not_detected": true,
+            "all_http_200": true,
+            "trace_http_200": true
+          },
+          "answer_preview": "**Если тревожно — как начать разговор с ботом**\n\n1. Назовите ощущение коротко: скажите, что именно чувствуете (например, «тревога» или «сердцебиение»).  \n2. Сформулируйте намерение: скажите, чего хотите сейчас — быть услышанным, получить успокоение или просто помолчать вместе.  \n3. Установите границу по объёму: добавьте, сколько слов или времени вам удобно (например, «коротко» или «могу писать долго»).\n\nПример начала: «Мне сейчас тревожно, сердце колотится. Хочу просто, чтобы ты меня выслушал — "
+        }
+      ]
+    }
+  ],
+  "case_results": [
+    {
+      "case_id": "HF1-L01",
+      "title": "greeting no mechanism lecture",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l01-663a8e69",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "forbid::автоматический контроль": true,
+        "forbid::механизм": true,
+        "forbid::паттерн": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "Здравствуйте. Рад вас слышать. Я здесь, чтобы спокойно поговорить и помочь с тем, что сейчас важно. Можете написать одним-двумя предложениями, с чего хотите начать."
+    },
+    {
+      "case_id": "HF1-L05",
+      "title": "concrete adult life knot",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l05-1bd62316",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "forbid::Сейчас полезнее прямое объяснение механизма": true,
+        "forbid::Ключевой узел в том": true,
+        "anchors_min": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "в твоем описании важно не свести все к одному общему механизму. Здесь вместе держатся 50, семья, сокращение на работе, работа, ступор, невостребованность, голос 'я бесполезен', ощущение, что время упущено и узел убеждений. Такой клубок убеждений обычно распутывается не через давление на себя, а через разделение фактов, выводов и внутреннего приговора.\n\n1. Сначала отдели факты от вывода. Факты могут звучать так: есть напряжение в семье, есть риск или факт сокращения на работе, есть ступор. Вывод "
+    },
+    {
+      "case_id": "HF1-L06",
+      "title": "repair complaint answers previous question",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l06-925d9081",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "contains_any": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "Ты прав, я ушел мимо вопроса. Отвечаю прямо.\n\nНейросталкинг в нашей внутренней рамке - это наблюдение за триггерами, паттернами и автоматическими реакциями до того, как они полностью захватят поведение. Смысл не в том, чтобы подавить себя, а в том, чтобы заметить механизм и вернуть себе выбор.\n\nПрименяется это так: ты видишь, что именно запускает реакцию, распознаешь привычный сценарий и вместо автопилота выбираешь более точный ответ по ситуации."
+    },
+    {
+      "case_id": "HF1-L07",
+      "title": "repeated question wins",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l07-ef8fc30f",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "forbid::Сейчас полезнее прямое": true,
+        "contains_any": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "Коротко — нейросталкинг (в предложенной внутренней терминологии) — это внимательное, невмешательное наблюдение за своими автоматическими реакциями: за паттернами поведения, триггерами и соматическими ощущениями, которые запускают страдание. Цель — увидеть «программу» изнутри, отличить автоматическую реакцию от собственной воли и личности, и тем самым уменьшить её власть над поведением.\n\nОбъяснение понятным языком:\n- Что именно наблюдаем: мысли, эмоции, телесные ощущения и моментальные побуждения"
+    },
+    {
+      "case_id": "HF1-L08",
+      "title": "negative goodbye closes",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l08-8d21d9a4",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "forbid::продолж": true,
+        "forbid::практик": true,
+        "forbid::механизм": true,
+        "forbid::разбер": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "Понял — звучит так, будто вы расстроены и хотите прервать разговор. Жаль, что я не оправдал ожиданий.\n\nЕсли хотите — можем закончить на этом. Если решите вернуться позже или объяснить, что именно не устроило, я выслушаю без защиты."
+    },
+    {
+      "case_id": "HF1-L10",
+      "title": "markdown answer request",
+      "cycle": 1,
+      "session_id": "prd04712hf1-hf1-l10-c2db4d05",
+      "status": "passed",
+      "failed_checks": [],
+      "checks": {
+        "markdown_markers_present": true,
+        "acceptance_gate_passed": true,
+        "gate_no_stale_stub": true,
+        "stale_stub_not_detected": true,
+        "all_http_200": true,
+        "trace_http_200": true
+      },
+      "answer_preview": "**Если тревожно — как начать разговор с ботом**\n\n1. Назовите ощущение коротко: скажите, что именно чувствуете (например, «тревога» или «сердцебиение»).  \n2. Сформулируйте намерение: скажите, чего хотите сейчас — быть услышанным, получить успокоение или просто помолчать вместе.  \n3. Установите границу по объёму: добавьте, сколько слов или времени вам удобно (например, «коротко» или «могу писать долго»).\n\nПример начала: «Мне сейчас тревожно, сердце колотится. Хочу просто, чтобы ты меня выслушал — "
+    }
+  ]
+}

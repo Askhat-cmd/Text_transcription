@@ -1,0 +1,16 @@
+{
+  "generated_at_utc": "2026-06-05T10:09:49.069081+00:00",
+  "status": "passed",
+  "bot_docs_present": {
+    "ARCHITECTURE_CURRENT.md": true,
+    "UNIFIED_DIALOGUE_POLICY_V2.md": true,
+    "RUNTIME_PROFILES_AND_PRESETS.md": true,
+    "FINAL_ANSWER_ACCEPTANCE_GATE.md": true,
+    "REAL_LIVE_ACCEPTANCE_PROTOCOL.md": true,
+    "WEB_CHAT_MARKDOWN_RENDERING.md": true,
+    "NO_STUB_DIALOGUE_POLICY.md": true,
+    "DIAGNOSTIC_CENTER_BOUNDARY.md": true,
+    "PROJECT_STATUS_CURRENT.md": true
+  },
+  "root_docs_updated": true
+}

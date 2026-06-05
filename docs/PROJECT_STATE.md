@@ -1,7 +1,7 @@
 ﻿# Project State - Bot Psychologist / Neo MindBot
 
 ## Current Stage
-PRD-047.13 is the current cleanup-only step. It inventories docs, reports, logs, admin surfaces, legacy terms, empty artifacts, and encoding/corruption candidates after the accepted PRD-047.12-HF1 baseline. It must not change Writer, Orchestrator, Final Answer Acceptance Gate, Stale Stub Detector, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, or prompt/runtime behavior.
+PRD-047.13 completed as the cleanup-only inventory and docs truth-sync step. It inventoried docs, reports, logs, admin surfaces, legacy terms, empty artifacts, and encoding/corruption candidates after the accepted PRD-047.12-HF1 baseline, without changing Writer, Orchestrator, Final Answer Acceptance Gate, Stale Stub Detector, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, or prompt/runtime behavior.
 
 PRD-047.12-HF1 is accepted as the current engineering baseline: `final_answer_acceptance_gate_v1` runs after Writer/Validator, failed/stale final answers are quarantined before unanswered-question closure, healthy context memory, and last-offer seeding, and Admin Runtime exposes gate capability. Web Chat markdown rendering uses the existing `ReactMarkdown` path with stronger real assistant bubble styling. Required live/browser/encoding/no-mutation artifacts passed under `TO_DO_LIST/logs/PRD-047.12-HF1/`.
 

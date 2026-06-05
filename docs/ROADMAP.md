@@ -1,7 +1,7 @@
 ﻿# Roadmap
 
 ## Done
-Current cleanup: PRD-047.13 inventories project/docs/admin/log noise after the accepted PRD-047.12-HF1 baseline. It is cleanup-only: no Writer, Orchestrator, Gate, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, prompt behavior, production rollout, or normal-user activation changes.
+- PRD-047.13: completed project cleanup/docs truth-sync/admin surface inventory after the accepted PRD-047.12-HF1 baseline. It was cleanup-only: no Writer, Orchestrator, Gate, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, prompt behavior, production rollout, or normal-user activation changes.
 
 - PRD-047.12-HF1: accepted final-answer acceptance hotfix over the existing unified runtime (`final_answer_acceptance_gate_v1`, stale-stub quarantine, one Writer retry through existing contract, real live/browser evidence, Admin Runtime gate visibility, Web Chat markdown proof, docs truth sync). It remains developer-local and not a production rollout.
 

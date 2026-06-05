@@ -1,0 +1,15 @@
+{
+  "generated_at_utc": "2026-06-05T11:25:53.513684+00:00",
+  "status": "passed",
+  "duplicate_groups_count": 1,
+  "groups": [
+    {
+      "hash": "2cd43d37e8be1e6b5e70b74d5800b4f633229f4109e16d86883e7f84f5db91ac",
+      "paths": [
+        "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/01_final_answer.md",
+        "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/01_final_answer.md"
+      ],
+      "classification": "duplicate_doc_candidate"
+    }
+  ]
+}

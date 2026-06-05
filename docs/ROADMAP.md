@@ -1,7 +1,9 @@
 ﻿# Roadmap
 
 ## Done
-Current hotfix: PRD-047.12-HF1 adds final-answer acceptance, stale-stub quarantine, real live/browser evidence, and docs truth sync over the existing unified runtime. It is developer-local and not a production rollout.
+Current cleanup: PRD-047.13 inventories project/docs/admin/log noise after the accepted PRD-047.12-HF1 baseline. It is cleanup-only: no Writer, Orchestrator, Gate, Dialogue Act Resolver, RAG/Chroma, Diagnostic Center authority, prompt behavior, production rollout, or normal-user activation changes.
+
+- PRD-047.12-HF1: accepted final-answer acceptance hotfix over the existing unified runtime (`final_answer_acceptance_gate_v1`, stale-stub quarantine, one Writer retry through existing contract, real live/browser evidence, Admin Runtime gate visibility, Web Chat markdown proof, docs truth sync). It remains developer-local and not a production rollout.
 
 - PRD-047.12: completed unified dialogue-policy consolidation over a single runtime path (`unified_dialogue_policy_v2`, preset resolution for `safe_guided`/`free_dialogue_default`/`mvp_free_dialogue`, dialogue-act + last-offer + unanswered-question + style-state + answer-obligation layers, writer-first prompt contract/admin visibility, and passed dry/direct/live/browser/admin evidence pack).
 - PRD-047.11-HF3: completed residual live UX reality-repair cycle on the unified runtime (`writer` concrete-answer-fit hotfix, deterministic thanks-close state repair, localhost `:3000` browser/admin proof, explicit reset/memory proof refresh, admin legacy inventory, and docs/encoding hygiene artifacts) without adding a new runtime branch or broadening activation.

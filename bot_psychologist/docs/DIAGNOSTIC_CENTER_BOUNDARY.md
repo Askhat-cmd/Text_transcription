@@ -1,7 +1,7 @@
-# Diagnostic Center Boundary
+﻿# Diagnostic Center Boundary
 
 - status: current
-- last_verified_prd: PRD-047.12-HF1
+- last_verified_prd: PRD-047.13
 
 ## Active Now
 - Diagnostic Center remains present and visible for admin/runtime observability.
@@ -14,3 +14,7 @@
 ## How To Test
 - Check Admin Runtime roles: `diagnostic_center_role=advisory_context_only`.
 - Run no-mutation proof artifacts.
+
+## PRD-047.13 cleanup note
+- This document was re-verified during cleanup-only inventory; runtime behavior was not changed.
+

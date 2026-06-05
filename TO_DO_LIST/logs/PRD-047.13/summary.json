@@ -1,0 +1,11 @@
+{
+  "prd": "PRD-047.13",
+  "generated_at_utc": "2026-06-05T11:26:13.522145+00:00",
+  "final_status": "passed",
+  "files_scanned_count": 3891,
+  "empty_artifacts_count": 90,
+  "encoding_issues_found": 95,
+  "regression_status": "passed",
+  "runtime_mutation_status": "passed",
+  "git_hygiene_status": "passed"
+}

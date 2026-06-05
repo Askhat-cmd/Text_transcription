@@ -1,7 +1,7 @@
-# No Stub Dialogue Policy
+﻿# No Stub Dialogue Policy
 
 - status: current
-- last_verified_prd: PRD-047.12-HF1
+- last_verified_prd: PRD-047.13
 
 ## Active Now
 - Known stale phrases are detected by `stale_stub_detector`.
@@ -14,3 +14,7 @@
 ## How To Test
 - Run stale detector tests.
 - Run gate tests with PRD-HF1 stale phrases.
+
+## PRD-047.13 cleanup note
+- This document was re-verified during cleanup-only inventory; runtime behavior was not changed.
+

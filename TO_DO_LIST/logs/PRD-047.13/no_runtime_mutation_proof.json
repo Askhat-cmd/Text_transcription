@@ -1,0 +1,18 @@
+{
+  "generated_at_utc": "2026-06-05T11:25:53.588684+00:00",
+  "status": "passed",
+  "changed_runtime_files": [],
+  "no_writer_logic_changed": true,
+  "no_orchestrator_logic_changed": true,
+  "no_final_answer_acceptance_gate_logic_changed": true,
+  "no_dialogue_act_resolver_logic_changed": true,
+  "no_rag_chroma_changes": true,
+  "no_prompt_behavior_changes": true,
+  "new_runtime_path_created": false,
+  "new_llm_agent_added": false,
+  "diagnostic_center_not_deleted": true,
+  "diagnostic_center_advisory_only": true,
+  "broad_rollout_allowed": false,
+  "production_ready": false,
+  "normal_user_activation_allowed": false
+}

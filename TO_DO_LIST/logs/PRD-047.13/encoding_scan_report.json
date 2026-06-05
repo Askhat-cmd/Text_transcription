@@ -1,0 +1,782 @@
+{
+  "generated_at_utc": "2026-06-05T11:25:53.510684+00:00",
+  "status": "passed_with_classified_historical_warnings",
+  "encoding_issues_found": 95,
+  "encoding_issues_fixed": 0,
+  "items": [
+    {
+      "path": "bot_psychologist/bot_agent/multiagent/prompts/turn_llm_summary_v1.md",
+      "classification": "runtime_scan_only_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "bot_psychologist/scripts/run_prd_047_12_unified_dialogue_acceptance.py",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "bot_psychologist/scripts/run_prd_047_13_cleanup_inventory.py",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u045a",
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "bot_psychologist/tests/inventory/test_admin_runtime_contract_no_mojibake.py",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0420\\xa0\\u0421\\u045f",
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "bot_psychologist/tests/inventory/test_no_mojibake_in_active_text_files.py",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402",
+        "marker:\\u0432\\u0459",
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "bot_psychologist/tests/multiagent/test_validator_agent.py",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.0/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xfd in position 13978: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.3.1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.5/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6.3/summary_processor_smoke.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.6/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.7.1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xfd in position 54953: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-045.7/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xfd in position 55189: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.10-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.10/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.11/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.2/synthetic_boundary_smoke_output.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.4.2.1/manual_review_queue.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.4.2.1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.4.2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.4.3/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xfd in position 148757: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.4/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xca in position 1565: invalid continuation byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-APPLY1/sanitized_runtime_logs.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00",
+        "duplicate_or_internal_bom"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-APPLY1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1-HF3/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5-RUN1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.5/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.6-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.6/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7-HF2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7.2-HF3/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7.2-HF4/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.7/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8-HF2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8.1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.8/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.9-RUN1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0.9/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.0/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.20/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/admin_browser_visible_smoke.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "duplicate_or_internal_bom"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_acceptance.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "duplicate_or_internal_bom"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.21-HF2/admin_browser_visible_smoke.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "duplicate_or_internal_bom"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.22/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.23/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.28/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.29/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.33/live_dependency_gate.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "duplicate_or_internal_bom"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-046.1.38/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00",
+        "marker:\\x1b"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.0-HF1/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.0/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "utf8_decode_error:'utf-8' codec can't decode byte 0xfd in position 17577: invalid start byte"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.10-HF2/markdown_smoke.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/02_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-001-ddee6668/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-002-2aa1fe77/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-003-849d4585/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-004-5d2cfa1f/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-005-1ad6b671/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/01_final_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.11/live_turn_exports/prd04711-wfa-006-8b62b29f/conversation.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/encoding_hygiene_report.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\u0432\\u0402",
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.12-HF1/encoding_pre_scan.json",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\u0432\\u0402",
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.2/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x1b",
+        "marker:\\ufffd",
+        "marker:\\x1b"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.6/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00",
+        "marker:\\x1b"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.7/test_command_output.txt",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x00",
+        "marker:\\x1b"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/logs/PRD-047.9/live_neurostalking_practice_catalog_answer.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "markdown_missing_h1"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-045.3.1_calibrate_state_analyzer_routing.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.0.11_Final_Runtime_Readiness_Summary_v1_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.0.2.1_TASK_LIST.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "control_char:0x00",
+        "marker:\\x07"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.0.7-HF2_TASK_LIST.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1.14_Production_Limited_Prompt_Constraint_Pilot_Results_Rollback_Quality_Gate_v1.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1.1_Diagnostic_Center_v1_Minimal_Runtime_Shadow_Mode_Contract_Eval_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1.2-HF1_Artifact_Encoding_Hygiene_Test_Command_Log_UTF8_Guard_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1.21_Diagnostic_Center_Runtime_Pilot_Results_Rollback_Quality_Gate_v1.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1.6_Controlled_Prompt_Constraint_Pilot_Limited_Runtime_Flag_v1_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-046.1_Diagnostic_Center_v1_Readiness_Architecture_PRD_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.12.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.12_NEW.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.13.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\ufffd"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.1_NEO_Philosophy_Kernel_Writer_Freedom_Contract_Foundation_v1.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.7_Guided_Live_User_Testing_Protocol_Human_Feedback_Capture_v1_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/PRD-047.8_MVP_Free_Dialogue_Mode_Writer_Freedom_Unlock_RU.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.0.4.1_IMPLEMENTATION_REPORT.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "control_char:0x08"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/reports/PRD-046.0.4.2.1_NEXT_PRD_RECOMMENDATION.md",
+      "classification": "historical_evidence_issue",
+      "issues": [
+        "marker:\\u0432\\u0402"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    },
+    {
+      "path": "TO_DO_LIST/source_materials/PRD-047.1/Концептуальная структура бота.md",
+      "classification": "unknown_do_not_touch",
+      "issues": [
+        "markdown_missing_h1",
+        "marker:\\u0432\\u201d"
+      ],
+      "action": "fix_active_doc_or_keep_historical_classified"
+    }
+  ]
+}

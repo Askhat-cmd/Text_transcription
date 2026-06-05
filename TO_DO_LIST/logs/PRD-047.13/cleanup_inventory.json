@@ -1,0 +1,28 @@
+{
+  "generated_at_utc": "2026-06-05T11:25:53.464683+00:00",
+  "files_scanned_count": 3891,
+  "classification_counts": {
+    "active_admin_surface": 12,
+    "active_docs": 49,
+    "active_observability": 36,
+    "active_runtime": 149,
+    "active_test": 919,
+    "empty_artifact_candidate": 59,
+    "historical_evidence_keep": 2148,
+    "legacy_reference_keep": 280,
+    "unknown_do_not_touch": 239
+  },
+  "scope": [
+    "docs",
+    "bot_psychologist/docs",
+    "TO_DO_LIST",
+    "TO_DO_LIST/reports",
+    "TO_DO_LIST/logs",
+    "bot_psychologist/scripts",
+    "bot_psychologist/tests",
+    "bot_psychologist/web_ui/src/components/admin",
+    "bot_psychologist/web_ui/src/components/chat",
+    "bot_psychologist/web_ui/src/styles",
+    "bot_psychologist/bot_agent/multiagent"
+  ]
+}

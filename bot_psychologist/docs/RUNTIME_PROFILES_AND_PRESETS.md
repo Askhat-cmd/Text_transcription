@@ -1,7 +1,7 @@
-# Runtime Profiles And Presets
+﻿# Runtime Profiles And Presets
 
 - status: current
-- last_verified_prd: PRD-047.12-HF1
+- last_verified_prd: PRD-047.13
 
 ## Active Now
 - `safe_guided` remains a conservative preset of the unified runtime.
@@ -15,3 +15,7 @@
 ## How To Test
 - Use Admin Runtime effective payload.
 - Verify there is no duplicate orchestrator, Writer, Planner, or API path for these profiles.
+
+## PRD-047.13 cleanup note
+- This document was re-verified during cleanup-only inventory; runtime behavior was not changed.
+

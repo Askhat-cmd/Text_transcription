@@ -1,7 +1,7 @@
-# Architecture Current
+﻿# Architecture Current
 
 - status: current
-- last_verified_prd: PRD-047.12-HF1
+- last_verified_prd: PRD-047.13
 
 ## Active Now
 - The active user path is the single multiagent runtime in `bot_agent.multiagent.orchestrator`.
@@ -17,3 +17,7 @@
 ## How To Test
 - Run targeted backend tests for final answer gate and orchestrator quarantine.
 - Run `scripts/run_prd_047_12_hf1_acceptance.py --live --browser` against local backend and Web UI.
+
+## PRD-047.13 cleanup note
+- This document was re-verified during cleanup-only inventory; runtime behavior was not changed.
+

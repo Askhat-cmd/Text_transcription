@@ -1,7 +1,7 @@
-# Real Live Acceptance Protocol
+﻿# Real Live Acceptance Protocol
 
 - status: current
-- last_verified_prd: PRD-047.12-HF1
+- last_verified_prd: PRD-047.13
 
 ## Active Now
 - Live acceptance must call the running backend and export real turn traces.
@@ -14,3 +14,7 @@
 ## How To Test
 - Start services from `запуск проека.txt`.
 - Run `python scripts/run_prd_047_12_hf1_acceptance.py --live --browser`.
+
+## PRD-047.13 cleanup note
+- This document was re-verified during cleanup-only inventory; runtime behavior was not changed.
+

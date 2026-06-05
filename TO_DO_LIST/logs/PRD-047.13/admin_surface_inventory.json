@@ -1,0 +1,141 @@
+{
+  "generated_at_utc": "2026-06-05T11:25:53.524682+00:00",
+  "status": "passed",
+  "sections": [
+    {
+      "section": "Overview",
+      "current_label": "Overview",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Runtime summary and compatibility visibility.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Agents",
+      "current_label": "Agents",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Agent status/cards are observability.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Orchestrator",
+      "current_label": "Orchestrator",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Pipeline visibility surface.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Threads",
+      "current_label": "Threads",
+      "classification": "dev_only_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "keep",
+      "reason": "Developer thread inspection.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Agent Prompts",
+      "current_label": "Agent Prompts",
+      "classification": "dev_only_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "keep",
+      "reason": "Developer prompt editing surface.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Runtime",
+      "current_label": "Runtime",
+      "classification": "active_runtime_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "keep",
+      "reason": "Effective runtime policy visibility.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Diagnostic Center",
+      "current_label": "Diagnostic Center",
+      "classification": "advisory_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "keep",
+      "reason": "Governed advisory/admin control; not hard authority.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Memory",
+      "current_label": "Memory",
+      "classification": "dev_only_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "cleanup_later",
+      "reason": "Memory controls need careful future UX audit.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Advanced Controls",
+      "current_label": "Advanced Controls",
+      "classification": "dev_only_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "cleanup_later",
+      "reason": "Developer controls should remain non-production.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "LLM",
+      "current_label": "LLM",
+      "classification": "dev_only_surface",
+      "runtime_dependency": "medium",
+      "recommendation": "keep",
+      "reason": "Model/config observability.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Extraction",
+      "current_label": "Extraction",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Data extraction visibility.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Diagnostics",
+      "current_label": "Diagnostics",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Runtime diagnostics visibility.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Routing",
+      "current_label": "Routing",
+      "classification": "active_observability_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Routing flags and resolver visibility.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Hints",
+      "current_label": "Hints",
+      "classification": "legacy_or_historical_surface",
+      "runtime_dependency": "low",
+      "recommendation": "rename_later",
+      "reason": "Potential legacy UX label; inventory only.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    },
+    {
+      "section": "Compatibility",
+      "current_label": "Compatibility",
+      "classification": "legacy_or_historical_surface",
+      "runtime_dependency": "low",
+      "recommendation": "keep",
+      "reason": "Compatibility status is useful when labeled historical.",
+      "evidence": "bot_psychologist/web_ui/src/components/admin/AdminPanel.tsx"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "generated_at_utc": "2026-06-05T11:26:13.425211+00:00",
+  "status": "passed",
+  "git_status_short": [
+    " M bot_psychologist/docs/ARCHITECTURE_CURRENT.md",
+    " M bot_psychologist/docs/DIAGNOSTIC_CENTER_BOUNDARY.md",
+    " M bot_psychologist/docs/FINAL_ANSWER_ACCEPTANCE_GATE.md",
+    " M bot_psychologist/docs/NO_STUB_DIALOGUE_POLICY.md",
+    " M bot_psychologist/docs/PROJECT_STATUS_CURRENT.md",
+    " M bot_psychologist/docs/README.md",
+    " M bot_psychologist/docs/REAL_LIVE_ACCEPTANCE_PROTOCOL.md",
+    " M bot_psychologist/docs/RUNTIME_PROFILES_AND_PRESETS.md",
+    " M bot_psychologist/docs/UNIFIED_DIALOGUE_POLICY_V2.md",
+    " M bot_psychologist/docs/WEB_CHAT_MARKDOWN_RENDERING.md",
+    " M docs/DECISIONS.md",
+    " M docs/PRD_INDEX.md",
+    " M docs/PROJECT_STATE.md",
+    " M docs/ROADMAP.md",
+    "?? TO_DO_LIST/PRD-047.13.md",
+    "?? TO_DO_LIST/PRD-047.13_TASK_LIST.md",
+    "?? TO_DO_LIST/logs/PRD-047.13/",
+    "?? TO_DO_LIST/reports/PRD-047.13_IMPLEMENTATION_REPORT.md",
+    "?? TO_DO_LIST/reports/PRD-047.13_NEXT_PRD_RECOMMENDATION.md",
+    "?? bot_psychologist/scripts/run_prd_047_13_cleanup_inventory.py"
+  ],
+  "diff_name_only": [
+    "bot_psychologist/docs/ARCHITECTURE_CURRENT.md",
+    "bot_psychologist/docs/DIAGNOSTIC_CENTER_BOUNDARY.md",
+    "bot_psychologist/docs/FINAL_ANSWER_ACCEPTANCE_GATE.md",
+    "bot_psychologist/docs/NO_STUB_DIALOGUE_POLICY.md",
+    "bot_psychologist/docs/PROJECT_STATUS_CURRENT.md",
+    "bot_psychologist/docs/README.md",
+    "bot_psychologist/docs/REAL_LIVE_ACCEPTANCE_PROTOCOL.md",
+    "bot_psychologist/docs/RUNTIME_PROFILES_AND_PRESETS.md",
+    "bot_psychologist/docs/UNIFIED_DIALOGUE_POLICY_V2.md",
+    "bot_psychologist/docs/WEB_CHAT_MARKDOWN_RENDERING.md",
+    "docs/DECISIONS.md",
+    "docs/PRD_INDEX.md",
+    "docs/PROJECT_STATE.md",
+    "docs/ROADMAP.md"
+  ],
+  "staged_name_only": [],
+  "diff_stat": " bot_psychologist/docs/ARCHITECTURE_CURRENT.md      |  8 ++-\n .../docs/DIAGNOSTIC_CENTER_BOUNDARY.md             |  8 ++-\n .../docs/FINAL_ANSWER_ACCEPTANCE_GATE.md           |  8 ++-\n bot_psychologist/docs/NO_STUB_DIALOGUE_POLICY.md   |  8 ++-\n bot_psychologist/docs/PROJECT_STATUS_CURRENT.md    |  8 ++-\n bot_psychologist/docs/README.md                    | 81 ++++++++++++++--------\n .../docs/REAL_LIVE_ACCEPTANCE_PROTOCOL.md          |  8 ++-\n .../docs/RUNTIME_PROFILES_AND_PRESETS.md           |  8 ++-\n .../docs/UNIFIED_DIALOGUE_POLICY_V2.md             |  8 ++-\n .../docs/WEB_CHAT_MARKDOWN_RENDERING.md            |  8 ++-\n docs/DECISIONS.md                                  | 16 +++++\n docs/PRD_INDEX.md                                  |  3 +-\n docs/PROJECT_STATE.md                              |  6 +-\n docs/ROADMAP.md                                    |  4 +-\n 14 files changed, 132 insertions(+), 50 deletions(-)\n",
+  "runtime_logic_diff": [],
+  "expected_change_classes": [
+    "docs updates",
+    "PRD-047.13 reports/logs",
+    "cleanup inventory script"
+  ]
+}

@@ -1,5 +1,20 @@
 ﻿# Architecture Decisions
 
+## ADR-070 - PRD-047.13 cleanup boundary preserves runtime baseline
+
+Status: accepted
+
+Date: 2026-06-05
+
+Context: after PRD-047.12-HF1, the unified dialogue runtime has an accepted engineering baseline, but the repository still contains historical PRDs, logs, reports, admin labels, and docs that can be confused with active runtime instructions.
+
+Decision:
+- PRD-047.13 is limited to inventory, classification, docs truth sync, admin surface inventory, and manifest-backed cleanup reporting;
+- Writer, Orchestrator, Final Answer Acceptance Gate, Stale Stub Detector, Dialogue Act Resolver, RAG/Chroma, prompt behavior, and Diagnostic Center authority remain out of scope;
+- archive/delete actions require explicit manifests;
+- `production_ready=false`, `broad_rollout_allowed=false`, and `normal_user_activation_allowed=false` remain invariant.
+
+Consequences: cleanup evidence lives under `TO_DO_LIST/logs/PRD-047.13/`; live dialogue quality work moves to PRD-047.14.
 ## ADR-068 - Writer-first prompt assembly for MVP profile
 
 Status: accepted
@@ -954,3 +969,4 @@ Consequences:
 - short follow-ups, repairs, confirmations, and style requests are handled through reusable runtime state instead of exact-text patches;
 - Admin Runtime, live evidence, and browser/admin acceptance expose one coherent effective policy contract;
 - no new LLM agent, no new runtime branch, no KB governance mutation, and no production rollout were introduced.
+
